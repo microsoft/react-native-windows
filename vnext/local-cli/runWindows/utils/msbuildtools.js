@@ -22,7 +22,7 @@ const {
 } = require('./commandWithProgress');
 const execSync = require('child_process').execSync;
 
-const MSBUILD_VERSIONS = ['16.0', '15.0', '14.0', '12.0', '4.0'];
+const MSBUILD_VERSIONS = ['16.0'];
 
 class MSBuildTools {
   // version is something like 16.0 for 2019
@@ -61,12 +61,6 @@ class MSBuildTools {
       '/p:AppxBundle=Never',
     ];
 
-    // Set platform toolset for VS 2017 (this way we can keep the base sln file working for VS 2015)
-    if (this.version === '15.0') {
-      args.push('/p:VisualStudioVersion=15.0');
-    } else if (this.version === '16.0') {
-      args.push('/p:VisualStudioVersion=16.0');
-    }
     args.push('/bl');
 
     if (config) {
@@ -123,10 +117,7 @@ function VSWhere(requires, version, property) {
       if (toolsPathOutput) {
         let toolsPathOutputStr = toolsPathOutput[1];
         // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
-        if (
-          version === '15.0' ||
-          (version === '14.0' && toolsPathOutputStr.indexOf('amd64') > -1)
-        ) {
+        if (version === '16.0') {
           toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
         }
         toolsPath = toolsPathOutputStr;
@@ -138,27 +129,15 @@ function VSWhere(requires, version, property) {
   }
 }
 
-function getVC141Component(version, buildArch) {
-  if (version === '16.0') {
-    switch (buildArch.toLowerCase()) {
-      case 'x86':
-      case 'x64':
-        return 'Microsoft.VisualStudio.Component.VC.v141.x86.x64';
-      case 'arm':
-        return 'Microsoft.VisualStudio.Component.VC.v141.ARM';
-      case 'arm64':
-        return 'Microsoft.VisualStudio.Component.VC.v141.ARM64';
-    }
-  } else {
-    switch (buildArch.toLowerCase()) {
-      case 'x86':
-      case 'x64':
-        return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
-      case 'arm':
-        return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
-      case 'arm64':
-        return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
-    }
+function getVCToolsByArch(buildArch) {
+  switch (buildArch.toLowerCase()) {
+    case 'x86':
+    case 'x64':
+      return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
+    case 'arm':
+      return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
+    case 'arm64':
+      return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
   }
 }
 
@@ -169,18 +148,11 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 
   // https://aka.ms/vs/workloads
-  const requires16 = [
+  const requires = [
     'Microsoft.Component.MSBuild',
-    getVC141Component(version, buildArch),
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141',
-  ];
-  const requires15 = [
-    'Microsoft.Component.MSBuild',
-    getVC141Component(version, buildArch),
+    getVCToolsByArch(buildArch),
     'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
   ];
-
-  const requires = version === '16.0' ? requires16 : requires15;
 
   const vsPath = VSWhere(requires.join(' '), version, 'installationPath');
   const installationVersion = VSWhere(
@@ -232,11 +204,11 @@ module.exports.findAvailableVersion = function(buildArch, verbose) {
       throw new Error(
         `MSBuild tools not found for version ${
           process.env.VisualStudioVersion
-        } (from environment). Make sure all required components have been installed (e.g. v141 support)`,
+        } (from environment). Make sure all required components have been installed`,
       );
     } else {
       throw new Error(
-        'MSBuild tools not found. Make sure all required components have been installed (e.g. v141 support)',
+        'MSBuild tools not found. Make sure all required components have been installed',
       );
     }
   }
