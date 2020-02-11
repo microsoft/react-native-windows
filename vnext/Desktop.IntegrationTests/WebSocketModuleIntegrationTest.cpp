@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 
 using namespace facebook::react;
 using namespace folly;
