@@ -73,7 +73,7 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          testPlatformVersion: 15.9.2
+          testPlatformVersion: latestStable
         condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
 
       - template: templates/build-rnw.yml
@@ -97,7 +97,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: 15.0
+          vsTestVersion: latest
         condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
