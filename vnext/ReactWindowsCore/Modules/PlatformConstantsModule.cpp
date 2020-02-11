@@ -28,9 +28,10 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
       // better source of truth later. Tracked by Issue #4073
       {"reactNativeVersion", folly::dynamic::object("major", 0)("minor", 61)("patch", 0)}
 
-      // Intentionally do not provide an OS version constant. Windows discourages
-      // testing for real version, and universal API contract isn't quite accurate
-      // here either since we can run on pre-10 and need to use hacks to query it.
+      // We don't provide the typical OS version here. Windows make it hard to
+      // get an exact version by-design. In the future we should consider
+      // exposing something here like a facility to check Universal API
+      // Contract.
   };
 }
 
