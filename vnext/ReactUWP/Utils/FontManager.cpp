@@ -8,21 +8,26 @@
 namespace react {
 namespace uwp {
 
+FontManager FontManager::getInstance() {
+  static FontManager s_fontManager;
+  return s_fontManager;
+}
+
 void FontManager::SetFont(
-    const std::wstring &fontFamily,
+    const std::wstring &fontFamilyName,
     winrt::Windows::UI::Text::FontWeight weight,
     winrt::Windows::UI::Text::FontStyle style,
     const std::wstring &filePath) {
-  FontKey f{fontFamily, weight.Weight, static_cast<int32_t>(style)};
+  FontKey f{fontFamilyName, weight.Weight, static_cast<int32_t>(style)};
 
   m_fonts.emplace(f, winrt::Windows::UI::Xaml::Media::FontFamily(filePath));
 }
 
 winrt::Windows::UI::Xaml::Media::FontFamily FontManager::GetFont(
-    const std::wstring &fontFamily,
+    const std::wstring &fontFamilyName,
     winrt::Windows::UI::Text::FontWeight weight,
     winrt::Windows::UI::Text::FontStyle style) {
-  FontKey f{fontFamily, weight.Weight, static_cast<int32_t>(style)};
+  FontKey f{fontFamilyName, weight.Weight, static_cast<int32_t>(style)};
 
   // Use exact match if available
   auto iter = m_fonts.find(f);
@@ -42,11 +47,11 @@ winrt::Windows::UI::Xaml::Media::FontFamily FontManager::GetFont(
   // Fall back to system font
 
   // FontFamily ctor throws if name is empty, so use a default
-  if (fontFamily.size() == 0) {
+  if (fontFamilyName.size() == 0) {
     return winrt::Windows::UI::Xaml::Media::FontFamily::XamlAutoFontFamily();
   }
 
-  return winrt::Windows::UI::Xaml::Media::FontFamily(fontFamily);
+  return winrt::Windows::UI::Xaml::Media::FontFamily(fontFamilyName);
 }
 
 } // namespace uwp

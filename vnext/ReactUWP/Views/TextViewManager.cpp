@@ -90,7 +90,7 @@ void TextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
   if (textBlock == nullptr)
     return;
 
-  TryUpdateFontProperties(textBlock, reactDiffMap);
+  UpdateFontProperties(textBlock, reactDiffMap);
 
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();

@@ -37,13 +37,13 @@ DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime, int64_t timeZon
 
 REACTWINDOWS_API_(void)
 SetFontPath(
-    const std::wstring &fontFamily,
+    const std::wstring &fontFamilyName,
     winrt::Windows::UI::Text::FontWeight weight,
     winrt::Windows::UI::Text::FontStyle style,
     const std::wstring &filePath);
 REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::FontFamily)
 FontFamilyFrom(
-    const std::wstring &fontFamily,
+    const std::wstring &fontFamilyName,
     winrt::Windows::UI::Text::FontWeight weight,
     winrt::Windows::UI::Text::FontStyle style);
 

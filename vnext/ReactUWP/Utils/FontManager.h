@@ -43,40 +43,44 @@ struct FontKeyHasher {
 /// font files with short names to simplify usage in React.
 /// </summary>
 /// <example>
-///   SetFont("MyFontName", 400, 0, "msappx://Assets/Fonts/MyFont.ttf#My Font");
+///   SetFont("MyFontName", 400, 0, "msappx:///Assets/Fonts/MyFont.ttf#My Font");
 ///
 ///   auto fontFamily = GetFont("MyFontName", 400, 0); // Retrieves FontFamily pointing to MyFont.ttf
 /// </example>
 class FontManager {
  public:
-  FontManager() = default;
+  static FontManager getInstance();
 
   /// <summary>
-  /// Configures an alias mapping [fontFamily, weight, style] to a FontFamily with the specified path.
+  /// Configures an alias mapping [fontFamilyName, weight, style] to a FontFamily with the specified path.
   /// </summary>
-  /// <param name="fontFamily"></param>
-  /// <param name="weight"></param>
-  /// <param name="style"></param>
-  /// <param name="filePath">The path to the font file, suffixed with '#' and the name of
-  /// the font family inside the file (e.g. "/Assets/Fonts/MyFont.ttf#My Font")</param>
+  /// <param name="fontFamilyName">The name of the font family</param>
+  /// <param name="weight">The weight of the font</param>
+  /// <param name="style">The style of the font, such as italic</param>
+  /// <param name="filePath">Either a path-like string in the form of "ms-appx:///Assets/Fonts/FontFile.ttf#Font Name" or a system font name.</param>
   void SetFont(
-      const std::wstring &fontFamily,
+      const std::wstring &fontFamilyName,
       winrt::Windows::UI::Text::FontWeight weight,
       winrt::Windows::UI::Text::FontStyle style,
       const std::wstring &filePath);
 
   /// <summary>
-  /// Gets the closest matching FontFamily instance
+  /// Gets the closest matching FontFamily instance. In order, it searches for:
+  /// 1) Exact match in alias map.
+  /// 2) [fontFamilyName, Normal, Normal] in alias map
+  /// 3) The system font with the given name
   /// </summary>
-  /// <param name="fontFamily"></param>
+  /// <param name="fontFamilyName"></param>
   /// <param name="weight"></param>
   /// <param name="style"></param>
   winrt::Windows::UI::Xaml::Media::FontFamily GetFont(
-      const std::wstring &fontFamily,
+      const std::wstring &fontFamilyName,
       winrt::Windows::UI::Text::FontWeight weight,
       winrt::Windows::UI::Text::FontStyle style);
 
  private:
+  FontManager() = default;
+
   std::unordered_map<FontKey, winrt::Windows::UI::Xaml::Media::FontFamily, FontKeyHasher> m_fonts;
 };
 

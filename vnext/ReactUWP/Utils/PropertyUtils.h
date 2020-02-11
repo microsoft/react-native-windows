@@ -348,7 +348,7 @@ winrt::Windows::UI::Text::FontStyle SetFontStyle(const T &element, const folly::
 // FontFamily can only have one font. Thus to support weights and styles for custom fonts, we need to do some juggling
 // of FontFamily.
 template <class T>
-void TryUpdateFontProperties(const T &element, const folly::dynamic &reactDiffMap) {
+void UpdateFontProperties(const T &element, const folly::dynamic &reactDiffMap) {
   const folly::dynamic *fontFamilyProp = nullptr;
   const folly::dynamic *fontWeightProp = nullptr;
   const folly::dynamic *fontStyleProp = nullptr;

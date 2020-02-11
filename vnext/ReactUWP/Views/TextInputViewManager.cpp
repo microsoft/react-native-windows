@@ -374,7 +374,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
   auto textBox = control.try_as<winrt::TextBox>();
   auto passwordBox = control.try_as<winrt::PasswordBox>();
 
-  TryUpdateFontProperties(control, props);
+  UpdateFontProperties(control, props);
 
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();

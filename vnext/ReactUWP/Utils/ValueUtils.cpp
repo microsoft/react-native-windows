@@ -187,23 +187,21 @@ DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds) {
 // app developers to register their custom font paths with aliases and use those aliases in React for any
 // FontFamily styles.
 
-static FontManager s_FontManager{};
-
 REACTWINDOWS_API_(void)
 SetFontPath(
-    const std::wstring &fontFamily,
+    const std::wstring &fontFamilyName,
     winrt::Windows::UI::Text::FontWeight weight,
     winrt::Windows::UI::Text::FontStyle style,
     const std::wstring &filePath) {
-  s_FontManager.SetFont(fontFamily, weight, style, filePath);
+  FontManager::getInstance().SetFont(fontFamilyName, weight, style, filePath);
 }
 
 REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::FontFamily)
 FontFamilyFrom(
-    const std::wstring &fontFamily,
+    const std::wstring &fontFamilyName,
     winrt::Windows::UI::Text::FontWeight weight,
     winrt::Windows::UI::Text::FontStyle style) {
-  return s_FontManager.GetFont(fontFamily, weight, style);
+  return FontManager::getInstance().GetFont(fontFamilyName, weight, style);
 }
 
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d) {

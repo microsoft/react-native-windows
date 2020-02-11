@@ -38,7 +38,7 @@ void VirtualTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, cons
   if (span == nullptr)
     return;
 
-  TryUpdateFontProperties<winrt::TextElement>(span, reactDiffMap);
+  UpdateFontProperties<winrt::TextElement>(span, reactDiffMap);
 
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
