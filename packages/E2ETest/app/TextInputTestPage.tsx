@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {Text, TextInput, View, Alert} from 'react-native';
+import {Text, TextInput, View} from 'react-native';
 import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT, CURTEXT_ON_TEXTINPUT,
   PREVTEXT_ON_TEXTINPUT, PREV2TEXT_ON_TEXTINPUT, CAP_TEXTINPUT_ON_TEXTINPUT} from './Consts';
 
