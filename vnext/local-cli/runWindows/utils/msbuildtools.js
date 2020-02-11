@@ -102,10 +102,9 @@ function VSWhere(requires, version, property) {
     const vsCommand = `"${vsWherePath}" -version [${version},${Number(version) +
       1}) -products * -requires ${requires} -property ${property}`;
     console.log('Command: ' + vsCommand);
-    const vsPath = child_process
-      .execSync(`${vsCommand}`)
-      .toString()
-      .split(EOL)[0];
+    const result = child_process.execSync(`${vsCommand}`).toString();
+    console.log('Result:' + result);
+    const vsPath = result.split(EOL)[0];
     return vsPath;
   } else {
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
