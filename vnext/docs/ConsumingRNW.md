@@ -11,7 +11,7 @@
 
   Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
   ```
-  react-native init <project name> --version 0.60.6
+  react-native init <project name> --version 0.61.5
   ```
   Navigate into this newly created directory:
   ```
@@ -31,9 +31,9 @@
   npm install --save rnpm-plugin-windows
   ```
 
-* Next, initialize your React Native Windows `vnext` in the project directory. This step may take a while during first run due to dependency download.
+* Next, initialize your React Native Windows `beta` in the project directory. This step may take a while during first run due to dependency download.
   ```
-  react-native windows --template vnext
+  react-native windows --template beta
   ```
 
 ## Running a React Native Windows App

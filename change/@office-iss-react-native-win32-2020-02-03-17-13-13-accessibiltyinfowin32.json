@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add AccessibilityInfo native module to react-native-win32",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "adrum@microsoft.com",
-  "commit": "f3db1f409a128a83d68451bb921d95dec99c1837",
-  "dependentChangeType": "patch",
-  "date": "2020-02-04T01:13:13.794Z"
-}

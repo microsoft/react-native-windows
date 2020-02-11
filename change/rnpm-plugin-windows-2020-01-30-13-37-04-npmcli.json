@@ -1,8 +1,0 @@
-{
-  "comment": "Fix CLI dependency",
-  "packageName": "rnpm-plugin-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "33f9509e627c111fa5582e11c78d0b00a3b6ce05",
-  "dependentChangeType": "patch",
-  "date": "2020-01-30T21:37:04.338Z"
-}

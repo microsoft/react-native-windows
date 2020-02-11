@@ -5,6 +5,8 @@
 #include "ShadowNode.h"
 #include "ViewManager.h"
 
+#include <glog/logging.h>
+
 namespace facebook {
 namespace react {
 

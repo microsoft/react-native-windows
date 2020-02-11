@@ -10,17 +10,23 @@
 
 'use strict';
 
-const NativeModules = require('NativeModules');
-const RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-// const UIManager = require('UIManager');
+import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 
-const RCTAccessibilityInfo = NativeModules.AccessibilityInfo;
+const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
+
+// [Windows
+//const UIManager = require('../../ReactNative/UIManager');
 
 const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
+// Windows]
+
+const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
+const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
 
 type ChangeEventName = $Keys<{
   change: string,
-  screenReaderChanged: string
+  reduceMotionChanged: string,
+  screenReaderChanged: string,
 }>;
 
 const _subscriptions = new Map();
@@ -57,9 +63,14 @@ const AccessibilityInfo = {
     return Promise.resolve(false);
   },
 
-  /** mobile only */
   isReduceMotionEnabled: function(): Promise<boolean> {
-    return Promise.resolve(false);
+    return new Promise((resolve, reject) => {
+      if (NativeAccessibilityInfo) {
+        NativeAccessibilityInfo.isReduceMotionEnabled(resolve);
+      } else {
+        reject(false);
+      }
+    });
   },
 
   /**
@@ -71,10 +82,12 @@ const AccessibilityInfo = {
 
   isScreenReaderEnabled: function(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (RCTAccessibilityInfo) {
-        RCTAccessibilityInfo.isScreenReaderEnabled(resolve);
+      if (NativeAccessibilityInfo) {
+        // [Windows
+        NativeAccessibilityInfo.isScreenReaderEnabled(resolve);
+        // Windows]
       } else {
-        reject(reject);
+        reject(false);
       }
     });
   },
@@ -88,19 +101,35 @@ const AccessibilityInfo = {
     return this.isScreenReaderEnabled;
   },
 
-  addEventListener: function(eventName: ChangeEventName, handler: Function): void {
+  addEventListener: function(
+    eventName: ChangeEventName,
+    handler: Function,
+  ): void {
     let listener;
 
     if (eventName === 'change' || eventName === 'screenReaderChanged') {
-      listener = RCTDeviceEventEmitter.addListener(SCREEN_READER_CHANGED_EVENT, enabled => {
-        handler(enabled);
-      });
+      listener = RCTDeviceEventEmitter.addListener(
+        SCREEN_READER_CHANGED_EVENT, // Windows: Change from TOUCH_EXPLORATION_EVENT to SCREEN_READER_CHANGED_EVENT
+        enabled => {
+          handler(enabled);
+        },
+      );
+    } else if (eventName === 'reduceMotionChanged') {
+      listener = RCTDeviceEventEmitter.addListener(
+        REDUCE_MOTION_EVENT,
+        enabled => {
+          handler(enabled);
+        },
+      );
     }
 
     _subscriptions.set(handler, listener);
   },
 
-  removeEventListener: function(eventName: ChangeEventName, handler: Function): void {
+  removeEventListener: function(
+    eventName: ChangeEventName,
+    handler: Function,
+  ): void {
     const listener = _subscriptions.get(handler);
     if (!listener) {
       return;
@@ -115,7 +144,12 @@ const AccessibilityInfo = {
    * See http://facebook.github.io/react-native/docs/accessibilityinfo.html#setaccessibilityfocus
    */
   setAccessibilityFocus: function(reactTag: number): void {
-    // UIManager.sendAccessibilityEvent(reactTag, UIManager.AccessibilityEventTypes.typeViewFocused);
+    // [Windows
+    // UIManager.sendAccessibilityEvent(
+    //   reactTag,
+    //   UIManager.getConstants().AccessibilityEventTypes.typeViewFocused,
+    // );
+    // Windows]
   },
 
   /**
@@ -123,9 +157,12 @@ const AccessibilityInfo = {
    *
    * See http://facebook.github.io/react-native/docs/accessibilityinfo.html#announceforaccessibility
    */
+  // [Windows] add reactTag
   announceForAccessibility: function(announcement: string, reactTag?: ?number): void {
-    RCTAccessibilityInfo && RCTAccessibilityInfo.announceForAccessibility(announcement, reactTag);
-  }
+    if (NativeAccessibilityInfo) {
+      NativeAccessibilityInfo.announceForAccessibility(announcement, reactTag);
+    }
+  },
 };
 
 module.exports = AccessibilityInfo;
