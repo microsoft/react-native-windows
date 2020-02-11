@@ -1,7 +1,15 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 30 Jan 2020 23:29:21 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
 
+## 0.61.0-beta.1
+Tue, 11 Feb 2020 01:21:44 GMT
+
+### Changes
+
+- Use unforked react-native 0.60.6 (nick@nickgerleman.com)
+- upgrade to 61 (kmelmon@microsoft.com)
+- upgrade to 61 (kmelmon@microsoft.com)
 ## 0.60.69-11
 Thu, 30 Jan 2020 23:29:21 GMT
 

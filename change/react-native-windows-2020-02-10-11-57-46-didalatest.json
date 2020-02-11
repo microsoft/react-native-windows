@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "upgrade to 61",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "ad2efd6b1785ce42b55f35742f81eb9cf0e7ec87",
-  "dependentChangeType": "patch",
-  "date": "2020-02-10T19:57:46.733Z"
-}

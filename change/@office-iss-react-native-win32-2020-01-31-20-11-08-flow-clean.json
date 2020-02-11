@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "More Patches, IntegrationTests and RNTester Cleanup",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "nick@nickgerleman.com",
-  "commit": "abf3a584449a7e33b280f094e7a62a39ce0a6832",
-  "dependentChangeType": "patch",
-  "date": "2020-02-01T04:11:06.021Z"
-}

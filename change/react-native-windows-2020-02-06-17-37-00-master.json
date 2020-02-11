@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix compilation errors with LLVM9.0.1/clang",
-  "packageName": "react-native-windows",
-  "email": "chpurrer@fb.com",
-  "commit": "7a2fe1f7b3c29ab8b2707c0db760ed43a492bad7",
-  "dependentChangeType": "patch",
-  "date": "2020-02-07T01:37:00.357Z"
-}
