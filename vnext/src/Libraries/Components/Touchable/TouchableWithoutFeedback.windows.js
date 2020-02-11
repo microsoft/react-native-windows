@@ -342,8 +342,6 @@ const TouchableWithoutFeedback = ((createReactClass({
       onResponderTerminate: this.touchableHandleResponderTerminate,
       onKeyUp: this._onKeyUp,
       onKeyDown: this._onKeyDown,
-      onFocus: this.props.onFocus,
-      onBlur: this.props.onBlur,
       tooltip: this.props.tooltip, // TODO(macOS/win ISS#2323203)
       clickable:
         this.props.clickable !== false && this.props.onPress !== undefined, // TODO(android ISS)
