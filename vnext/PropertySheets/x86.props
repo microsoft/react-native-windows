@@ -9,7 +9,7 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <CallingConvention>StdCall</CallingConvention>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
   </ItemDefinitionGroup>
 
