@@ -43,7 +43,7 @@
           DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\jsireact\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\ReactCommon\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

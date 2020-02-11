@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enabled C++/WinRT heap enforcement",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "0eb4d076e3fe339ec92445ada236607e6bd89ebd",
-  "dependentChangeType": "patch",
-  "date": "2020-02-06T22:30:18.833Z"
-}

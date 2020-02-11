@@ -71,6 +71,11 @@ jobs:
         clean: false
         submodules: false
 
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          testPlatformVersion: 15.9.2
+        condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
+
       - template: templates/build-rnw.yml
         parameters:
           applyRnPatches: $(applyRnPatches)
@@ -78,6 +83,23 @@ jobs:
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
 
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe 
+          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: 15.0
+        condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
+          
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows

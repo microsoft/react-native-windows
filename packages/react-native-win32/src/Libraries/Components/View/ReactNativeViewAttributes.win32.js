@@ -1,6 +1,8 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow strict-local
  * @format
@@ -10,9 +12,7 @@
 
 const ReactNativeStyleAttributes = require('./ReactNativeStyleAttributes');
 
-const ReactNativeViewAttributes = {};
-
-ReactNativeViewAttributes.UIView = {
+const UIView = {
   pointerEvents: true,
   accessible: true,
   accessibilityActions: true,
@@ -20,15 +20,11 @@ ReactNativeViewAttributes.UIView = {
   accessibilityLiveRegion: true,
   accessibilityRole: true,
   accessibilityStates: true,
+  accessibilityState: true,
   accessibilityHint: true,
-  acceptsKeyboardFocus: true, // TODO(macOS ISS#2323203)
-  enableFocusRing: true, // TODO(macOS ISS#2323203)
   importantForAccessibility: true,
   nativeID: true,
   testID: true,
-  textStyle: true, // [Win32] Once we flush out our JS theming story this property will no longer be needed
-  tooltip: true, // [Win32]
-  tabIndex: true, // TODO(win ISS#2323203)
   renderToHardwareTextureAndroid: true,
   shouldRasterizeIOS: true,
   onLayout: true,
@@ -38,17 +34,24 @@ ReactNativeViewAttributes.UIView = {
   onAccessibilityEscape: true,
   collapsable: true,
   needsOffscreenAlphaCompositing: true,
-  onMouseEnter: true, // [TODO(macOS ISS#2323203)
+  style: ReactNativeStyleAttributes,
+  // [Windows
+  acceptsKeyboardFocus: true,
+  enableFocusRing: true,
+  textStyle: true, // Once we flush out our JS theming story this property will no longer be needed
+  tooltip: true, 
+  tabIndex: true,
+  onMouseEnter: true,
   onMouseLeave: true,
   onDragEnter: true,
   onDragLeave: true,
   onDrop: true,
-  draggedTypes: true, // ]TODO(macOS ISS#2323203)
-  style: ReactNativeStyleAttributes,
+  draggedTypes: true,
+  // Windows]
 };
 
-ReactNativeViewAttributes.RCTView = {
-  ...ReactNativeViewAttributes.UIView,
+const RCTView = {
+  ...UIView,
 
   // This is a special performance property exposed by RCTView and useful for
   // scrolling content when there are many subviews, most of which are offscreen.
@@ -56,6 +59,11 @@ ReactNativeViewAttributes.RCTView = {
   // many subviews that extend outside its bound. The subviews must also have
   // overflow: hidden, as should the containing view (or one of its superviews).
   removeClippedSubviews: true,
+};
+
+const ReactNativeViewAttributes = {
+  UIView: UIView,
+  RCTView: RCTView,
 };
 
 module.exports = ReactNativeViewAttributes;

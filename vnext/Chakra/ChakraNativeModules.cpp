@@ -6,6 +6,7 @@
 #include "ChakraNativeModules.h"
 #include "ChakraValue.h"
 
+#include <glog/logging.h>
 #include <string>
 
 namespace facebook {
