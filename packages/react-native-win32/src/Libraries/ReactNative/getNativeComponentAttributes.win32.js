@@ -1,6 +1,8 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow
  * @format
@@ -12,16 +14,17 @@ const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleA
 const UIManager = require('./UIManager');
 
 const insetsDiffer = require('../Utilities/differ/insetsDiffer');
+const invariant = require('invariant');
 const matricesDiffer = require('../Utilities/differ/matricesDiffer');
 const pointsDiffer = require('../Utilities/differ/pointsDiffer');
 const processColor = require('../StyleSheet/processColor');
 const resolveAssetSource = require('../Image/resolveAssetSource');
 const sizesDiffer = require('../Utilities/differ/sizesDiffer');
-const invariant = require('invariant');
 const warning = require('fbjs/lib/warning');
 import type {NativeOrDynamicColorType} from 'NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
 
-function getNativeComponentAttributes(uiViewClassName: string) {
+
+function getNativeComponentAttributes(uiViewClassName: string): any {
   const viewConfig = UIManager.getViewManagerConfig(uiViewClassName);
 
   invariant(
@@ -95,17 +98,18 @@ function attachDefaultEventTypes(viewConfig: any) {
   // This is supported on UIManager platforms (ex: Android),
   // as lazy view managers are not implemented for all platforms.
   // See [UIManager] for details on constants and implementations.
-  if (UIManager.ViewManagerNames || UIManager.LazyViewManagersEnabled) {
+  const constants = UIManager.getConstants();
+  if (constants.ViewManagerNames || constants.LazyViewManagersEnabled) {
     // Lazy view managers enabled.
     viewConfig = merge(viewConfig, UIManager.getDefaultEventTypes());
   } else {
     viewConfig.bubblingEventTypes = merge(
       viewConfig.bubblingEventTypes,
-      UIManager.genericBubblingEventTypes,
+      constants.genericBubblingEventTypes,
     );
     viewConfig.directEventTypes = merge(
       viewConfig.directEventTypes,
-      UIManager.genericDirectEventTypes,
+      constants.genericDirectEventTypes,
     );
   }
 }
