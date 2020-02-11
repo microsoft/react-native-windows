@@ -257,9 +257,9 @@ bool TryUpdateBorderProperties(
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::BorderBrushProperty());
   } else {
-    auto iter = borderTypeMap.find(propertyName);
-    if (iter != borderTypeMap.end()) {
-      SetBorderThickness(node, element, iter->second, propertyValue);
+    ShadowEdges edgeType;
+    if (TryGetBorderEdgeType(propertyName, &edgeType)) {
+      SetBorderThickness(node, element, edgeType, propertyValue);
     } else {
       isBorderProperty = false;
     }
