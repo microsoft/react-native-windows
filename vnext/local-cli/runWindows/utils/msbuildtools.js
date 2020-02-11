@@ -99,11 +99,11 @@ function VSWhere(requires, version, property) {
 
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
+    const vsCommand = `"${vsWherePath}" -version [${version},${Number(version) +
+      1}) -products * -requires ${requires} -property ${property}`;
+    console.log('Command: ' + vsCommand);
     const vsPath = child_process
-      .execSync(
-        `"${vsWherePath}" -version [${version},${Number(version) +
-          1}) -products * -requires ${requires} -property ${property}`,
-      )
+      .execSync(`${vsCommand}`)
       .toString()
       .split(EOL)[0];
     return vsPath;
