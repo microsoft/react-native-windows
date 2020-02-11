@@ -2,6 +2,44 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Tue, 11 Feb 2020 01:21:44 GMT",
+      "tag": "react-native-windows-extended_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use unforked react-native 0.60.6",
+            "author": "nick@nickgerleman.com",
+            "commit": "da8b7814a8d32b35a7765d43a8f1b7fac6ac0a5e"
+          },
+          {
+            "comment": "upgrade to 61",
+            "author": "kmelmon@microsoft.com",
+            "commit": "b156ea72264e6b7b4f0ae2f73cb8f21ab5724b36"
+          },
+          {
+            "comment": "upgrade to 61",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ad2efd6b1785ce42b55f35742f81eb9cf0e7ec87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 23:29:21 GMT",
+      "tag": "react-native-windows-extended_v0.60.69-11",
+      "version": "0.60.69-11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow Any Prerelease Version 0f 0.60 as Peer Dependency",
+            "author": "nick@nickgerleman.com",
+            "commit": "0461a6f5689e2c8fe99a05d5cef6ee263a070803"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jan 2020 18:08:35 GMT",
       "tag": "react-native-windows-extended_v0.60.69-4",
       "version": "0.60.69-4",

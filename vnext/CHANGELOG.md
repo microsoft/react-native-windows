@@ -1,7 +1,61 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Jan 2020 18:08:35 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
 
+## 0.61.0-beta.1
+Tue, 11 Feb 2020 01:21:44 GMT
+
+### Changes
+
+- Fix Dimension returning DIP instead of physical pixels (dida@ntdev.microsoft.com)
+- Added Microsoft.ReactNative dependency on Mso (vmorozov@microsoft.com)
+- Merge IntegrationTests and RNTester with Stock React Native 60.0.6 (nick@nickgerleman.com)
+- Add Flow Check Suppressions (nick@nickgerleman.com)
+- Export loadScriptFromString from react-native-win32 (acoates@microsoft.com)
+- Export Instance->getModuleRegistry from react-native-win32.dll (acoates@microsoft.com)
+- More Patches, IntegrationTests and RNTester Cleanup (nick@nickgerleman.com)
+- Use unforked react-native 0.60.6 (nick@nickgerleman.com)
+- Implemented ReactHost for Microsoft.ReactNative (vmorozov@microsoft.com)
+- Implemented ReactPromise<void> (vmorozov@microsoft.com)
+- Enable screen reader announcements for accessibilityLiveRegion (jagorrin@microsoft.com)
+- Enabled C++/WinRT heap enforcement (vmorozov@microsoft.com)
+- upgrade to 61 (kmelmon@microsoft.com)
+## 0.60.0-vnext.133
+Thu, 30 Jan 2020 23:29:21 GMT
+
+### Changes
+
+- Allow Any Prerelease Version 0f 0.60 as Peer Dependency (nick@nickgerleman.com)
+## 0.60.0-vnext.132
+Thu, 30 Jan 2020 22:08:51 GMT
+
+### Changes
+
+- Simple fixes to IReactContext.cpp and add a writer helper function for direct event type constant (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.131
+Thu, 30 Jan 2020 21:10:31 GMT
+
+### Changes
+
+- Add callstack to the error message when a JS error occurs. (kinhln@microsoft.com)
+## 0.60.0-vnext.130
+Thu, 30 Jan 2020 09:17:27 GMT
+
+### Changes
+
+- Add as Windows Overrides (nick@nickgerleman.com)
+## 0.60.0-vnext.129
+Thu, 30 Jan 2020 01:22:53 GMT
+
+### Changes
+
+- Share RCTNetworking Library Between windows and windesktop (nick@nickgerleman.com)
+## 0.60.0-vnext.128
+Wed, 29 Jan 2020 01:55:04 GMT
+
+### Changes
+
+- Fix Crash When Running CLI Projects (nick@nickgerleman.com)
 ## 0.60.0-vnext.127
 Tue, 28 Jan 2020 18:08:35 GMT
 

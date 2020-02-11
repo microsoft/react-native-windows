@@ -43,7 +43,15 @@ struct ReactPromise : ReactPromiseBase {
   void Resolve(T const &value) noexcept;
 };
 
-//  Successfully resolve the ReactPromise with an optional value.
+template <>
+struct ReactPromise<void> : ReactPromiseBase {
+  using ReactPromiseBase::ReactPromiseBase;
+
+  // Successfully resolve the IReactPromise with an optional value.
+  void Resolve() noexcept;
+};
+
+// Successfully resolve the ReactPromise with an optional value.
 template <class T>
 void ReactPromise<T>::Resolve(T const &value) noexcept {
   if (m_resolve) {

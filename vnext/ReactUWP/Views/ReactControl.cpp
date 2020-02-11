@@ -191,7 +191,7 @@ void ReactControl::AttachRoot() noexcept {
     });
   });
 
-  // Register callback from instance for degugger attaching
+  // Register callback from instance for debugger attaching
   m_debuggerAttachCallbackCookie =
       m_reactInstance->RegisterDebuggerAttachCallback([this]() { HandleDebuggerAttach(); });
 
@@ -482,6 +482,5 @@ void ReactControl::ToggleInspector() {
   }
 }
 
-TriBit g_HasActualSizeProperty{TriBit::Undefined};
 } // namespace uwp
 } // namespace react

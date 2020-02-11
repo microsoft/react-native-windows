@@ -11,10 +11,12 @@ void ReactContext::DispatchEvent(
     hstring const &eventName,
     ReactArgWriter const &eventDataArgWriter) noexcept {
   if (auto instance = m_instance.lock()) {
-    IJSValueWriter eventDataWriter = winrt::make<DynamicWriter>();
-    eventDataArgWriter(eventDataWriter);
-
-    auto eventData = eventDataWriter.as<DynamicWriter>()->TakeValue();
+    folly::dynamic eventData; // default to NULLT
+    if (eventDataArgWriter != nullptr) {
+      IJSValueWriter eventDataWriter = winrt::make<DynamicWriter>();
+      eventDataArgWriter(eventDataWriter);
+      eventData = eventDataWriter.as<DynamicWriter>()->TakeValue();
+    }
     instance->DispatchEvent(unbox_value<int64_t>(view.Tag()), to_string(eventName), std::move(eventData));
   }
 }

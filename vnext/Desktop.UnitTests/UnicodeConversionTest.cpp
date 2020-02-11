@@ -12,7 +12,7 @@ using Microsoft::VisualStudio::CppUnitTestFramework::Assert;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(UnicodeConversionTest) {
+TEST_CLASS (UnicodeConversionTest) {
  public:
   TEST_METHOD(PrerequisiteTest) {
     Assert::IsTrue(strlen(SimpleTestStringNoBomUtf8) == 3);

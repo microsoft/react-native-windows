@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "DynamicWriter.h"
-#include "Crash.h"
+#include <crash/verifyElseCrash.h>
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -136,6 +136,16 @@ void DynamicWriter::WriteValue(folly::dynamic &&value) noexcept {
   } else {
     VerifyElseCrash(false);
   }
+}
+
+/*static*/ folly::dynamic DynamicWriter::ToDynamic(JSValueArgWriter const &argWriter) noexcept {
+  if (argWriter) {
+    IJSValueWriter dynamicWriter = winrt::make<DynamicWriter>();
+    argWriter(dynamicWriter);
+    return dynamicWriter.as<DynamicWriter>()->TakeValue();
+  }
+
+  return {};
 }
 
 } // namespace winrt::Microsoft::ReactNative

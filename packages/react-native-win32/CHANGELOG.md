@@ -1,7 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 24 Jan 2020 21:21:47 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
 
+## 0.61.0-beta.1
+Tue, 11 Feb 2020 01:21:44 GMT
+
+### Changes
+
+- Add Flow Check Suppressions (nick@nickgerleman.com)
+- More Patches, IntegrationTests and RNTester Cleanup (nick@nickgerleman.com)
+- Use unforked react-native 0.60.6 (nick@nickgerleman.com)
+- Add AccessibilityInfo native module to react-native-win32 (adrum@microsoft.com)
+- Implement Picker component for win32 (kinhln@microsoft.com)
+- upgrade to 61 (kmelmon@microsoft.com)
+## 0.26.4
+Wed, 29 Jan 2020 20:47:03 GMT
+
+### Patches
+
+- Dont use haste imports (acoates@microsoft.com)
 ## 0.26.3
 Fri, 24 Jan 2020 21:21:47 GMT
 

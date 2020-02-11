@@ -1,12 +1,21 @@
 'use strict';
 import * as React from 'react';
-import { FlatList, StyleSheet, Text, TouchableHighlight, ListRenderItemInfo } from 'react-native';
+import {
+  View,
+  findNodeHandle,
+  AccessibilityInfo,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  ListRenderItemInfo
+} from 'react-native';
 import { ViewWin32 } from '../../Libraries/Components/View/ViewWin32';
 
 const styles = StyleSheet.create({
   border: {
     borderStyle: 'dotted',
-    borderColor: 'black',
+    borderColor: 'black'
   },
   box: {
     borderWidth: 2,
@@ -14,11 +23,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     height: 20,
     backgroundColor: 'whitesmoke',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   listContainer: {
-    height: 150,
-  },
+    height: 150
+  }
 });
 
 interface IFocusableComponentState {
@@ -49,7 +58,7 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
     super(props);
     this.state = {
       hasFocus: false,
-      expanded: false,
+      expanded: false
     };
   }
 
@@ -91,25 +100,25 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
 
   private _expand = () => {
     this.setState({
-      expanded: true,
+      expanded: true
     });
   };
 
   private _collapse = () => {
     this.setState({
-      expanded: false,
+      expanded: false
     });
   };
 
   private _onFocus = () => {
     this.setState({
-      hasFocus: true,
+      hasFocus: true
     });
   };
 
   private _onBlur = () => {
     this.setState({
-      hasFocus: false,
+      hasFocus: false
     });
   };
 
@@ -127,14 +136,14 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
     super(props);
 
     this.state = {
-      selectedItems: [],
+      selectedItems: []
     };
   }
 
   public handleAdd = item => {
     if (this.state.selectedItems.indexOf(item) === -1) {
       this.setState({
-        selectedItems: this.state.selectedItems.concat([item]),
+        selectedItems: this.state.selectedItems.concat([item])
       });
     }
   };
@@ -145,7 +154,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
       const index = array.indexOf(item);
       array.splice(index, 1);
       this.setState({
-        selectedItems: array,
+        selectedItems: array
       });
     }
   };
@@ -201,7 +210,7 @@ interface ISelectionItemComponentProps {
 
 const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentProps> = props => {
   return (
-    <TouchableHighlight onPress={this._onPress} underlayColor={'transparent'}>
+    <TouchableHighlight onPress={_onPress} underlayColor={'transparent'}>
       <ViewWin32
         accessible
         acceptsKeyboardFocus
@@ -255,7 +264,7 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
   public constructor(props) {
     super(props);
     this.state = {
-      hasFocus: false,
+      hasFocus: false
     };
   }
 
@@ -280,13 +289,13 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
 
   private _onFocus = () => {
     this.setState({
-      hasFocus: true,
+      hasFocus: true
     });
   };
 
   private _onBlur = () => {
     this.setState({
-      hasFocus: false,
+      hasFocus: false
     });
   };
 }
@@ -343,12 +352,33 @@ function generateList(size: number): Array<IListProps> {
       label: i.toString(),
       level: 1,
       setSize: size,
-      positionInSet: i,
+      positionInSet: i
     };
     list[i - 1] = item;
   }
   return list;
 }
+
+const AccessibilityInfoExample: React.FunctionComponent<{}> = props => {
+  const onClick = React.useCallback(() => {
+    AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement succeeded!');
+  }, []);
+  const ref = React.useRef();
+  const onClickTag = React.useCallback(() => {
+     // @ts-ignore (We changed the API for announceForAccessibility)
+    AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement from tag', findNodeHandle(ref.current));
+  }, [ref.current]);
+  return (
+    <View style={styles.box}>
+      <TouchableHighlight onPress={onClick}>
+        <Text>AccessibilityInfo.announceForAccessibility</Text>
+      </TouchableHighlight>
+      <TouchableHighlight ref={ref} onPress={onClickTag}>
+        <Text>AccessibilityInfo.announceForAccessibility with target</Text>
+      </TouchableHighlight>
+    </View>
+  );
+};
 
 export const title = 'Accessibility Examples';
 export const displayName = 'Accessibility Examples';
@@ -357,26 +387,31 @@ export const examples = [
     {
       title: 'Annotation Example',
       description: 'A comment that exposes annotation properties.',
-      render: () => <AnnotationExample />,
+      render: () => <AnnotationExample />
     },
     {
       title: 'Button Example',
       description: 'A button with some basic accessibility props and expand/collapse',
-      render: () => <ButtonExample />,
+      render: () => <ButtonExample />
     },
     {
       title: 'MultiSelection Example',
       description: 'A list of items that can be selected',
-      render: () => <MultiSelectionExample />,
+      render: () => <MultiSelectionExample />
     },
     {
       title: 'FlatList Example',
       description: 'A flat list of headers with n of m support',
-      render: () => <FlatListExample renderItem={renderItem} keyExtractor={keyExtractor} />,
+      render: () => <FlatListExample renderItem={renderItem} keyExtractor={keyExtractor} />
     },
     {
       title: 'Virtualized FlatList Example',
       description: 'A virtualized flat list of 30 items with n of m support',
-      render: () => <VirtualizedFlatListExample renderItem={renderItem} getItemLayout={getItemLayout} keyExtractor={keyExtractor} />,
+      render: () => <VirtualizedFlatListExample renderItem={renderItem} getItemLayout={getItemLayout} keyExtractor={keyExtractor} />
     },
+    {
+      title: 'AccessibilityInfo Example',
+      description: 'AccessibilityInfo Native Module announcement',
+      render: () => <AccessibilityInfoExample />
+    }
   ];

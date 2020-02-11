@@ -50,36 +50,35 @@ namespace Microsoft.ReactNative.Managed
       {
         m_writer.WriteArgs(value);
         m_resolve(m_writer);
-        Clear();
       }
+
+      Clear();
     }
 
     // Reject the ReactPromise and report an error.
     public void Reject(ReactError error)
     {
-      if (m_reject == null)
+      if (m_reject != null)
       {
-        Clear();
-        return;
+        var errorInfo = new Dictionary<string, JSValue>
+        {
+          [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
+          [ErrorMapKeyMessage] = new JSValue(error?.Message ?? error?.Exception?.Message ?? ErrorDefaultMessage),
+
+          // For consistency with iOS ensure userInfo key exists, even if we null it.
+          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+          [ErrorMapKeyUserInfo] = (error?.UserInfo != null) ? new JSValue(error.UserInfo) : new JSValue(),
+
+          // Attach a nativeStackWindows string if an exception was passed.
+          // This matches iOS behavior - iOS adds a `nativeStackIOS` property
+          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+          [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
+        };
+
+        m_writer.WriteArgs(errorInfo);
+        m_reject(m_writer);
       }
 
-      var errorInfo = new Dictionary<string, JSValue>
-      {
-        [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
-        [ErrorMapKeyMessage] = new JSValue(error?.Message ?? error?.Exception?.Message ?? ErrorDefaultMessage),
-
-        // For consistency with iOS ensure userInfo key exists, even if we null it.
-        // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-        [ErrorMapKeyUserInfo] = (error?.UserInfo != null) ? new JSValue(error.UserInfo) : new JSValue(),
-
-        // Attach a nativeStackWindows string if an exception was passed.
-        // This matches iOS behavior - iOS adds a `nativeStackIOS` property
-        // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-        [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
-      };
-
-      m_writer.WriteArgs(errorInfo);
-      m_reject(m_writer);
       Clear();
     }
 

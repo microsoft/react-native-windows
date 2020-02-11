@@ -4,6 +4,7 @@
 using namespace std;
 #include <cxxreact/JsArgumentHelpers.h>
 #include <folly/json.h>
+#include <glog/logging.h>
 #include <algorithm>
 #include <iostream>
 

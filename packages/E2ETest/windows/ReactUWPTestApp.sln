@@ -49,6 +49,7 @@ Global
 		..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}*SharedItemsImports = 4
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		..\..\..\vnext\Mso\Mso.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 		..\..\..\vnext\Shared\Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

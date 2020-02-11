@@ -5,9 +5,12 @@
 #include "NativeModulesProvider.h"
 #include "ABICxxModule.h"
 #include "IReactModuleBuilder.h"
+#include "Threading/MessageQueueThreadFactory.h"
 
 #include <ReactUWP/ReactUwp.h>
 #include <folly/json.h>
+
+#include "ReactHost/MsoUtils.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -17,6 +20,7 @@ namespace winrt::Microsoft::ReactNative {
   NativeModulesProvider::GetModules
 -------------------------------------------------------------------------------*/
 std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::GetModules(
+    Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
     std::shared_ptr<facebook::react::MessageQueueThread> const & /*defaultQueueThread*/) {
   // std::shared_ptr<facebook::react::MessageQueueThread>
   // queueThread(defaultQueueThread);
@@ -26,14 +30,14 @@ std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::Get
     // TODO: The queue provided is the UIMessageQueueThread which isn't needed
     // for native modules. As a workaround for now let's just use a new worker
     // message queue.
-    m_modulesWorkerQueue = react::uwp::CreateWorkerMessageQueue();
+    m_modulesWorkerQueue = react::uwp::MakeSerialQueueThread();
   }
 
   for (auto &entry : m_moduleProviders) {
     modules.emplace_back(
         entry.first,
-        [moduleName = entry.first, moduleProvider = entry.second]() {
-          IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>();
+        [ moduleName = entry.first, moduleProvider = entry.second, reactContext = Mso::Copy(reactContext) ]() noexcept {
+          IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>(Mso::Copy(reactContext));
           auto providedModule = moduleProvider(moduleBuilder);
           return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(moduleName, providedModule);
         },
@@ -42,8 +46,6 @@ std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::Get
 
   return modules;
 }
-
-NativeModulesProvider::NativeModulesProvider() noexcept {}
 
 void NativeModulesProvider::AddModuleProvider(
     winrt::hstring const &moduleName,

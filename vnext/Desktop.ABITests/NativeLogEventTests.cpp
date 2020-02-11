@@ -11,7 +11,7 @@ using namespace winrt;
 
 namespace ABITests {
 
-TEST_CLASS(NativeLogEventTests) {
+TEST_CLASS (NativeLogEventTests) {
   // RAII helper to ensure log handlers get unregistered
   struct NativeLogInitializationGuard {
     NativeLogInitializationGuard(::winrt::facebook::react::NativeLogHandler const &handler) noexcept {

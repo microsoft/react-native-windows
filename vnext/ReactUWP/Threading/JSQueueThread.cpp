@@ -40,7 +40,7 @@ static void SetThreadName(std::thread &thread, const char *threadName) {
   SetThreadName(threadId, threadName);
 }
 
-std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread() {
+std::shared_ptr<facebook::react::MessageQueueThread> CreateAndStartJSQueueThread() {
   auto q = std::make_shared<facebook::react::CxxMessageQueue>();
   std::thread t([q]() mutable {
     auto loop = facebook::react::CxxMessageQueue::getRunLoop(q);

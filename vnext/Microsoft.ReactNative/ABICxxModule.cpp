@@ -14,17 +14,19 @@ constexpr auto DefaultEventEmitterName = "RCTDeviceEventEmitter";
 
 ABICxxModule::ABICxxModule(
     winrt::Windows::Foundation::IInspectable &nativeModule,
-    std::string name,
-    std::string eventEmitterName,
-    std::vector<CxxModule::Method> methods,
+    std::string &&name,
+    std::string &&eventEmitterName,
+    std::vector<CxxModule::Method> &&methods,
     std::vector<ConstantProvider> constants,
-    std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept
+    std::vector<ABICxxModuleEventHandlerSetter> &&eventHandlerSetters,
+    Mso::CntPtr<Mso::React::IReactContext> &&reactContext) noexcept
     : m_nativeModule{nativeModule},
       m_name{std::move(name)},
       m_eventEmitterName{std::move(eventEmitterName)},
-      m_methods{std::move(methods)},
-      m_constants(std::move(constants)) {
-  InitEvents(std::move(eventHandlerSetters));
+      m_methods(std::move(methods)),
+      m_constants(std::move(constants)),
+      m_reactContext{std::move(reactContext)} {
+  InitEvents(eventHandlerSetters);
 }
 
 std::string ABICxxModule::getName() {
@@ -53,19 +55,17 @@ std::vector<CxxModule::Method> ABICxxModule::getMethods() {
   return m_methods;
 }
 
-void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept {
+void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> const &eventHandlerSetters) noexcept {
   for (auto &eventHandler : eventHandlerSetters) {
     eventHandler.EventHandlerSetter([ this, name = eventHandler.Name ](ReactArgWriter const &argWriter) noexcept {
-      if (std::shared_ptr<facebook::react::Instance> instance = getInstance().lock()) {
-        DynamicWriter writer;
-        writer.WriteArrayBegin();
-        writer.WriteString(winrt::to_hstring(name));
-        argWriter(writer);
-        writer.WriteArrayEnd();
+      auto writer = make<DynamicWriter>();
+      writer.WriteArrayBegin();
+      writer.WriteString(winrt::to_hstring(name));
+      argWriter(writer);
+      writer.WriteArrayEnd();
 
-        std::string emitterName = m_eventEmitterName.empty() ? DefaultEventEmitterName : m_eventEmitterName;
-        instance->callJSFunction(std::move(emitterName), "emit", writer.TakeValue());
-      }
+      std::string emitterName = m_eventEmitterName.empty() ? DefaultEventEmitterName : m_eventEmitterName;
+      m_reactContext->CallJSFunction(std::move(emitterName), "emit", get_self<DynamicWriter>(writer)->TakeValue());
     });
   }
 }
