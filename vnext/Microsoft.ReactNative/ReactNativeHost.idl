@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import "IReactPackageProvider.idl";
-import "ReactInstanceManager.idl";
 import "ReactInstanceSettings.idl";
-import "ReactRootView2.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -16,23 +14,15 @@ namespace Microsoft.ReactNative {
   runtimeclass ReactNativeHost {
     [noexcept2] ReactNativeHost();
 
-    [noexcept2] ReactInstanceManager ReactInstanceManager{ get; };
-    [noexcept2] ReactInstanceSettings InstanceSettings{ get; set; };
-
-    [noexcept2] Boolean HasInstance { get; };
-
     [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
+    [noexcept2] ReactInstanceSettings InstanceSettings { get; set; };
 
-    [noexcept2] String MainComponentName{ get; set; };
-    [noexcept2] Boolean UseDeveloperSupport{ get; set; };
-    [noexcept2] String JavaScriptMainModuleName{ get; set; };
-    [noexcept2] String JavaScriptBundleFile{ get; set; };
-
-    [noexcept2] Windows.UI.Xaml.UIElement GetOrCreateRootView(IInspectable initialProps);
+    [noexcept2] void ReloadInstance();
 
     [noexcept2] void OnSuspend();
     [noexcept2] void OnEnteredBackground();
     [noexcept2] void OnLeavingBackground();
     [noexcept2] void OnResume(OnResumeAction action);
+    [noexcept2] void OnBackPressed();
   }
 } // namespace Microsoft.ReactNative

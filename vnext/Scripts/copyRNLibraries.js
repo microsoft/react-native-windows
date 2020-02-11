@@ -88,6 +88,11 @@ exports.copyRNLibraries = baseDir => {
       src: 'RNTesterCopy',
       dest: 'RNTester',
     },
+    {
+      src: 'IntegrationTestsCopy',
+      dest: 'IntegrationTests',
+      rmFilter: '*.js',
+    },
   ]);
 
   copyDirectories(reactNativePath, baseDir, [
@@ -98,11 +103,6 @@ exports.copyRNLibraries = baseDir => {
     {
       src: 'flow-typed',
       dest: 'flow-typed',
-    },
-    {
-      src: 'IntegrationTests',
-      dest: 'IntegrationTests',
-      rmFilter: '*.js',
     },
     {
       src: 'jest',

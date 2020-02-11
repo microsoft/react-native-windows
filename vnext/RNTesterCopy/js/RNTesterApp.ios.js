@@ -10,7 +10,15 @@
 
 'use strict';
 
+const RNTesterActions = require('./utils/RNTesterActions');
+const RNTesterExampleContainer = require('./components/RNTesterExampleContainer');
+const RNTesterExampleList = require('./components/RNTesterExampleList');
+const RNTesterList = require('./utils/RNTesterList.ios');
+const RNTesterNavigationReducer = require('./utils/RNTesterNavigationReducer');
 const React = require('react');
+const SnapshotViewIOS = require('./examples/Snapshot/SnapshotViewIOS.ios');
+const URIActionMap = require('./utils/URIActionMap');
+
 const {
   AppRegistry,
   AsyncStorage,
@@ -23,20 +31,13 @@ const {
   View,
   YellowBox,
 } = require('react-native');
-const RNTesterActions = require('./RNTesterActions');
-const RNTesterExampleContainer = require('./RNTesterExampleContainer');
-const RNTesterExampleList = require('./RNTesterExampleList');
-const RNTesterList = require('./RNTesterList.ios');
-const RNTesterNavigationReducer = require('./RNTesterNavigationReducer');
-const SnapshotViewIOS = require('./SnapshotViewIOS.ios');
-const URIActionMap = require('./URIActionMap');
 
-import type {RNTesterExample} from './Shared/RNTesterTypes';
-import type {RNTesterAction} from './RNTesterActions';
-import type {RNTesterNavigationState} from './RNTesterNavigationReducer';
+import type {RNTesterExample} from './types/RNTesterTypes';
+import type {RNTesterAction} from './utils/RNTesterActions';
+import type {RNTesterNavigationState} from './utils/RNTesterNavigationReducer';
 
 type Props = {
-  exampleFromAppetizeParams: string,
+  exampleFromAppetizeParams?: ?string,
 };
 
 YellowBox.ignoreWarnings([
@@ -61,21 +62,19 @@ const Header = ({onBack, title}: {onBack?: () => mixed, title: string}) => (
 );
 
 class RNTesterApp extends React.Component<Props, RNTesterNavigationState> {
-  _mounted: boolean; // TODO(OSS Candidate ISS#2710739)
+  _mounted: boolean;
 
   UNSAFE_componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this._handleBack);
   }
 
   componentDidMount() {
-    this._mounted = true; // TODO(OSS Candidate ISS#2710739)
+    this._mounted = true;
     Linking.getInitialURL().then(url => {
       AsyncStorage.getItem(APP_STATE_KEY, (err, storedString) => {
-        // [TODO(OSS Candidate ISS#2710739)
         if (!this._mounted) {
           return;
         }
-        // ]TODO(OSS Candidate ISS#2710739)
         const exampleAction = URIActionMap(
           this.props.exampleFromAppetizeParams,
         );
@@ -91,11 +90,9 @@ class RNTesterApp extends React.Component<Props, RNTesterNavigationState> {
     });
   }
 
-  // [TODO(OSS Candidate ISS#2710739)
   componentWillUnmount() {
     this._mounted = false;
   }
-  // ]TODO(OSS Candidate ISS#2710739)
 
   _handleBack = () => {
     this._handleAction(RNTesterActions.Back());
@@ -113,7 +110,7 @@ class RNTesterApp extends React.Component<Props, RNTesterNavigationState> {
     }
   };
 
-  render() {
+  render(): React.Node | null {
     if (!this.state) {
       return null;
     }
@@ -145,8 +142,8 @@ class RNTesterApp extends React.Component<Props, RNTesterNavigationState> {
 const styles = StyleSheet.create({
   headerContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: {semantic: 'separatorColor'}, // TODO(OSS Candidate ISS#2710739)
-    backgroundColor: {semantic: 'tertiarySystemBackgroundColor'}, // TODO(OSS Candidate ISS#2710739)
+    borderBottomColor: '#96969A',
+    backgroundColor: '#F5F5F6',
   },
   header: {
     height: 40,
@@ -165,7 +162,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: '600',
     textAlign: 'center',
-    color: {dynamic: {light: 'black', dark: 'white'}}, // TODO(OSS Candidate ISS#2710739)
   },
   exampleContainer: {
     flex: 1,
@@ -173,10 +169,10 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('SetPropertiesExampleApp', () =>
-  require('./SetPropertiesExampleApp'),
+  require('./examples/SetPropertiesExample/SetPropertiesExampleApp'),
 );
 AppRegistry.registerComponent('RootViewSizeFlexibilityExampleApp', () =>
-  require('./RootViewSizeFlexibilityExampleApp'),
+  require('./examples/RootViewSizeFlexibilityExample/RootViewSizeFlexibilityExampleApp'),
 );
 AppRegistry.registerComponent('RNTesterApp', () => RNTesterApp);
 
@@ -189,10 +185,7 @@ RNTesterList.ComponentExamples.concat(RNTesterList.APIExamples).forEach(
         render() {
           return (
             <SnapshotViewIOS>
-              <RNTesterExampleContainer
-                module={ExampleModule}
-                displayFilter={false}
-              />
+              <RNTesterExampleContainer module={ExampleModule} />
             </SnapshotViewIOS>
           );
         }

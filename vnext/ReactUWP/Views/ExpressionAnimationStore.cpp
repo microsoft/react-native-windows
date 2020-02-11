@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "ExpressionAnimationStore.h"
-#include "ReactControl.h"
+#include "XamlFeatures.h"
 
 namespace winrt {
 using namespace Windows::UI::Xaml;

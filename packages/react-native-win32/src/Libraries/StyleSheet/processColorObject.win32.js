@@ -7,7 +7,7 @@
 'use strict';
 
 const invariant = require('invariant');
-const processColor = require('processColor');
+const processColor = require('./processColor');
 
 import type {
   ColorStop,

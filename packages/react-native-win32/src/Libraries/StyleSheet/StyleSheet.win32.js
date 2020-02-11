@@ -1,5 +1,8 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow
  * @format
@@ -278,7 +281,7 @@ module.exports = {
    * > **NOTE**: Exercise caution as abusing this can tax you in terms of
    * > optimizations.
    * >
-   * > IDs enable optimizations through the bridge and memory in general. Refering
+   * > IDs enable optimizations through the bridge and memory in general. Referring
    * > to style objects directly will deprive you of these optimizations.
    *
    * Example:

@@ -12,7 +12,7 @@ using namespace winrt;
 
 namespace ABITests {
 
-TEST_CLASS(NativeTraceEventTests) {
+TEST_CLASS (NativeTraceEventTests) {
   struct TestTraceHandler : public winrt::implements<TestTraceHandler, ::winrt::facebook::react::INativeTraceHandler> {
     void JSBeginSection(param::hstring const &profileName, param::hstring const &args) const {
       if (this->OnJSBeginSection) {

@@ -5,6 +5,7 @@
 #include "IReactModuleBuilder.h"
 #include "ABICxxModule.h"
 #include "DynamicWriter.h"
+#include "ReactHost/MsoUtils.h"
 
 using namespace facebook::xplat::module;
 
@@ -14,7 +15,8 @@ namespace winrt::Microsoft::ReactNative {
 // ReactModuleBuilder implementation
 //===========================================================================
 
-ReactModuleBuilder::ReactModuleBuilder() noexcept {}
+ReactModuleBuilder::ReactModuleBuilder(Mso::CntPtr<Mso::React::IReactContext> &&reactContext) noexcept
+    : m_reactContext{std::move(reactContext)} {}
 
 void ReactModuleBuilder::SetEventEmitterName(hstring const &name) noexcept {
   m_eventEmitterName = to_string(name);
@@ -28,8 +30,8 @@ void ReactModuleBuilder::AddMethod(
       to_string(name),
       [method = std::move(method)](
           folly::dynamic args, CxxModule::Callback resolve, CxxModule::Callback reject) mutable noexcept {
-        DynamicReader argReader{args};
-        DynamicWriter resultWriter;
+        auto argReader = make<DynamicReader>(args);
+        auto resultWriter = make<DynamicWriter>();
         auto resolveCallback = MakeMethodResultCallback(std::move(resolve));
         auto rejectCallback = MakeMethodResultCallback(std::move(reject));
         method(argReader, resultWriter, resolveCallback, rejectCallback);
@@ -60,10 +62,10 @@ void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate c
   CxxModule::Method cxxMethod(
       to_string(name),
       [method = std::move(method)](folly::dynamic args) mutable noexcept {
-        DynamicReader argReader{args};
-        DynamicWriter resultWriter;
+        auto argReader = make<DynamicReader>(args);
+        auto resultWriter = make<DynamicWriter>();
         method(argReader, resultWriter);
-        return resultWriter.TakeValue();
+        return get_self<DynamicWriter>(resultWriter)->TakeValue();
       },
       CxxModule::SyncTag);
 
@@ -99,7 +101,13 @@ std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
     std::string const &name,
     IInspectable &nativeModule) noexcept {
   return std::make_unique<ABICxxModule>(
-      nativeModule, name, m_eventEmitterName, m_methods, m_constants, m_eventHandlerSetters);
+      nativeModule,
+      Mso::Copy(name),
+      Mso::Copy(m_eventEmitterName),
+      Mso::Copy(m_methods),
+      Mso::Copy(m_constants),
+      Mso::Copy(m_eventHandlerSetters),
+      Mso::Copy(m_reactContext));
 }
 
 } // namespace winrt::Microsoft::ReactNative

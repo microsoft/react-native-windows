@@ -38,13 +38,13 @@ ReactApplication::ReactApplication() noexcept {
 ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
-    m_instanceSettings.UseWebDebugger(false);
-    m_instanceSettings.UseLiveReload(true);
-    m_instanceSettings.UseJsi(true);
-    m_instanceSettings.EnableDeveloperMenu(REACT_DEFAULT_ENABLE_DEVELOPER_MENU);
   }
 
   return m_instanceSettings;
+}
+
+void ReactApplication::InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept {
+  m_instanceSettings = value;
 }
 
 IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
@@ -55,18 +55,51 @@ IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
   return m_packageProviders;
 }
 
+void ReactApplication::PackageProviders(
+    Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept {
+  m_packageProviders = value;
+}
+
 ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   if (!m_host) {
     m_host = make<ReactNativeHost>();
     m_host.InstanceSettings(InstanceSettings());
     m_host.PackageProviders(PackageProviders());
-    m_host.MainComponentName(MainComponentName());
-    m_host.UseDeveloperSupport(UseDeveloperSupport());
-    m_host.JavaScriptMainModuleName(JavaScriptMainModuleName());
-    m_host.JavaScriptBundleFile(JavaScriptBundleFile());
   }
 
   return m_host;
+}
+
+hstring ReactApplication::MainComponentName() noexcept {
+  return InstanceSettings().MainComponentName();
+}
+
+void ReactApplication::MainComponentName(hstring const &value) noexcept {
+  InstanceSettings().MainComponentName(value);
+}
+
+bool ReactApplication::UseDeveloperSupport() noexcept {
+  return InstanceSettings().UseDeveloperSupport();
+}
+
+void ReactApplication::UseDeveloperSupport(bool value) noexcept {
+  InstanceSettings().UseDeveloperSupport(value);
+}
+
+hstring ReactApplication::JavaScriptMainModuleName() noexcept {
+  return InstanceSettings().JavaScriptMainModuleName();
+}
+
+void ReactApplication::JavaScriptMainModuleName(hstring const &value) noexcept {
+  InstanceSettings().JavaScriptMainModuleName(value);
+}
+
+hstring ReactApplication::JavaScriptBundleFile() noexcept {
+  return InstanceSettings().JavaScriptBundleFile();
+}
+
+void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
+  InstanceSettings().JavaScriptBundleFile(value);
 }
 
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
