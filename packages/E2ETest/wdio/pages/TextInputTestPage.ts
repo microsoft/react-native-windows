@@ -9,11 +9,21 @@ import {
   ML_TEXTINPUT_ON_TEXTINPUT,
   CAP_TEXTINPUT_ON_TEXTINPUT,
   PREVTEXT_ON_TEXTINPUT,
+  PREV2TEXT_ON_TEXTINPUT,
+  CURTEXT_ON_TEXTINPUT,
 } from '../../app/Consts';
 
 class TextInputTestPage extends BasePage {
   isPageLoaded() {
     return super.isPageLoaded() && this.textInput.isDisplayed();
+  }
+
+  clickTextInput() {
+    this.textInput.click();
+  }
+
+  clickMultilineTextInput() {
+    this.multiLineTextInput.click();
   }
 
   clearAndTypeOnTextInput(text: string) {
@@ -39,8 +49,16 @@ class TextInputTestPage extends BasePage {
     this.multiLineTextInput.addValue(text);
   }
 
+  getTextInputCurText() {
+    return this.curTextInput.getText();
+  }
+
   getTextInputPrevText() {
     return this.prevTextInput.getText();
+  }
+
+  getTextInputPrev2Text() {
+    return this.prev2TextInput.getText();
   }
 
   getTextInputText() {
@@ -59,8 +77,16 @@ class TextInputTestPage extends BasePage {
     return By(TEXTINPUT_ON_TEXTINPUT);
   }
 
+  private get curTextInput() {
+    return By(CURTEXT_ON_TEXTINPUT);
+  }
+
   private get prevTextInput() {
     return By(PREVTEXT_ON_TEXTINPUT);
+  }
+
+  private get prev2TextInput() {
+    return By(PREV2TEXT_ON_TEXTINPUT);
   }
 
   private get multiLineTextInput() {

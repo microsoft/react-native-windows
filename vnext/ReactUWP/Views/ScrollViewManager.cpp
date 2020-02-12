@@ -449,8 +449,8 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
 XamlView ScrollViewManager::CreateViewCore(int64_t tag) {
   const auto scrollViewer = winrt::ScrollViewer{};
 
-  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
-  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);
+  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);
   scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
   scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
   scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);

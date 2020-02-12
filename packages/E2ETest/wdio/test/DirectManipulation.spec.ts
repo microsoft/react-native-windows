@@ -21,4 +21,13 @@ describe('DirectManipulationTest', () => {
     );
     assert.ok(result.includes('x=0;'), 'measureInWindow response x=0');
   });
+
+  it('measureLayout Test', () => {
+    const result = DirectManipulationPage.clickMeasureLayoutAndGetResult();
+    assert.ok(
+      result.includes('width=50'),
+      'measureLayout response has correct width'
+    );
+    assert.ok(result.includes('x=20;'), 'measureLayout response x=20');
+  });
 });

@@ -26,4 +26,4 @@ These tests can run on the local development host.
 
 ### E2E Tests
 *Implemented in packages/E2ETest*
-<BR/>Please follow [Author and Run E2E Test for React Native Windows](E2ETest.md) for E2E Tests
+<BR/>Please follow [Author and Run E2E Test for React Native Windows](e2e-testing.md) for E2E Tests

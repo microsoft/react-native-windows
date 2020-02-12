@@ -86,7 +86,14 @@ void LooperScheduler::Shutdown() noexcept {
 void LooperScheduler::AwaitTermination() noexcept {
   Shutdown();
   if (m_looperThread.joinable()) {
-    m_looperThread.join();
+    if (m_looperThread.get_id() != std::this_thread::get_id()) {
+      m_looperThread.join();
+    } else {
+      // We are on the same thread. We cannot join because it would crash because of a deadlock.
+      // We also cannot allow std::thread destructor to run because it would crash on non-joined thread.
+      // So, we just detach and let the underlying system thread finish on its own.
+      m_looperThread.detach();
+    }
   }
 }
 

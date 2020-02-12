@@ -75,7 +75,7 @@ struct SampleModuleCppImpl {
   }
 
   REACT_METHOD(ExplicitPromiseMethod);
-  void ExplicitPromiseMethod(winrt::Microsoft::ReactNative::ReactPromise<double> &&result) noexcept {
+  void ExplicitPromiseMethod(winrt::Microsoft::ReactNative::ReactPromise<double> const &result) noexcept {
     DEBUG_OUTPUT("ExplicitPromiseMethod");
     try {
       result.Resolve(M_PI);
@@ -87,12 +87,24 @@ struct SampleModuleCppImpl {
   REACT_METHOD(ExplicitPromiseMethodWithArgs);
   void ExplicitPromiseMethodWithArgs(
       double arg,
-      winrt::Microsoft::ReactNative::ReactPromise<double> &&result) noexcept {
+      winrt::Microsoft::ReactNative::ReactPromise<double> const &result) noexcept {
     DEBUG_OUTPUT("ExplicitPromiseMethodWithArgs", arg);
     try {
       result.Resolve(M_PI);
     } catch (const std::exception &ex) {
       result.Reject(ex.what());
+    }
+  }
+
+  REACT_METHOD(NegateAsyncPromise)
+  winrt::fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+    co_await winrt::resume_background();
+    if (x >= 0) {
+      safeResult.Resolve(-x);
+    } else {
+      safeResult.Reject("Already negative");
     }
   }
 
@@ -129,7 +141,7 @@ struct SampleModuleCppImpl {
             TimedEvent(++m_timerCount);
           }
         },
-        std::chrono::milliseconds(TimedEventIntervalMS));
+        TimedEventInterval);
   }
 
   ~SampleModuleCppImpl() {
@@ -139,9 +151,9 @@ struct SampleModuleCppImpl {
   }
 
  private:
-  winrt::Windows::System::Threading::ThreadPoolTimer m_timer = nullptr;
-  int m_timerCount = 0;
-  const int TimedEventIntervalMS = 5000;
+  winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};
+  int m_timerCount{0};
+  static constexpr std::chrono::milliseconds TimedEventInterval{5000};
 };
 
 } // namespace SampleLibraryCpp
