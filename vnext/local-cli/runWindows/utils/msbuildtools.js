@@ -99,12 +99,13 @@ function VSWhere(requires, version, property) {
 
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
-    const vsCommand = `"${vsWherePath}" -version [${version},${Number(version) +
-      1}) -products * -requires ${requires} -property ${property}`;
-    console.log('Command: ' + vsCommand);
-    const result = child_process.execSync(`${vsCommand}`).toString();
-    console.log('Result:' + result);
-    const vsPath = result.split(EOL)[0];
+    const vsPath = child_process
+      .execSync(
+        `"${vsWherePath}" -version [${version},${Number(version) +
+          1}) -products * -requires ${requires} -property ${property}`,
+      )
+      .toString()
+      .split(EOL)[0];
     return vsPath;
   } else {
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
@@ -169,8 +170,6 @@ function checkMSBuildVersion(version, buildArch, verbose) {
     vsVersion,
     'Bin/MSBuild.exe',
   );
-
-  console.log('Looking for ' + msBuildPath);
 
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
 
