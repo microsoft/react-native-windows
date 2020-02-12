@@ -6,7 +6,8 @@
 import { BasePage, By } from './BasePage';
 import {
   MEASURE_IN_WINDOW_BUTTON,
-  MEASURE_IN_WINDOW_RESULT,
+  DIRECT_MANIPULATION_RESULT,
+  MEASURE_LAYOUT_BUTTON,
 } from '../../app/Consts';
 
 class DirectManipulationPage extends BasePage {
@@ -21,15 +22,24 @@ class DirectManipulationPage extends BasePage {
 
   clickMeasureInWindowAndGetResult() {
     this.measureInWindowButton.click();
-    return this.measureInWindowResult.getText();
+    return this.directManipulationResult.getText();
+  }
+
+  clickMeasureLayoutAndGetResult() {
+    this.measureLayoutButton.click();
+    return this.directManipulationResult.getText();
   }
 
   private get measureInWindowButton() {
     return By(MEASURE_IN_WINDOW_BUTTON);
   }
 
-  private get measureInWindowResult() {
-    return By(MEASURE_IN_WINDOW_RESULT);
+  private get measureLayoutButton() {
+    return By(MEASURE_LAYOUT_BUTTON);
+  }
+
+  private get directManipulationResult() {
+    return By(DIRECT_MANIPULATION_RESULT);
   }
 }
 
