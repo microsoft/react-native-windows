@@ -111,7 +111,6 @@
     <ClInclude Include="DevServerHelper.h" />
     <ClInclude Include="DevSettings.h" />
     <ClInclude Include="etw\react_native_windows.h" />
-    <ClInclude Include="HermesRuntimeHolder.h" />
     <ClInclude Include="IDevSupportManager.h" />
     <ClInclude Include="INativeUIManager.h" />
     <ClInclude Include="InstanceManager.h" />
@@ -142,7 +141,6 @@
     <ClInclude Include="tracing\fbsystrace.h" />
     <ClInclude Include="Tracing.h" />
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="V8JSIRuntimeHolder.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
     <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
@@ -154,7 +152,6 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="BaseScriptStoreImpl.cpp" Condition="'$(PATCH_RN)' == 'true'" />
     <ClCompile Include="CxxMessageQueue.cpp" />
-    <ClCompile Include="HermesRuntimeHolder.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
@@ -173,7 +170,6 @@
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="tracing\tracing.cpp" />
     <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="V8JSIRuntimeHolder.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="ChakraRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />

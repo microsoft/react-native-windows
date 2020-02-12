@@ -8,10 +8,10 @@ using Method = facebook::xplat::module::CxxModule::Method;
 
 namespace facebook::react {
 
-const char *PlatformConstantsModule::name = "PlatformConstants";
+const char *PlatformConstantsModule::Name = "PlatformConstants";
 
 std::string PlatformConstantsModule::getName() {
-  return PlatformConstantsModule::name;
+  return PlatformConstantsModule::Name;
 }
 
 std::vector<Method> PlatformConstantsModule::getMethods() {

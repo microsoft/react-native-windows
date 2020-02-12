@@ -99,8 +99,6 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HermesRuntimeHolder.cpp" />
-    <ClCompile Include="V8JSIRuntimeHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
@@ -239,8 +237,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Modules\SourceCodeModule.h" />
-    <ClInclude Include="HermesRuntimeHolder.h" />
-    <ClInclude Include="V8JSIRuntimeHolder.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">

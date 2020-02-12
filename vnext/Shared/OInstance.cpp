@@ -739,7 +739,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      facebook::react::SourceCodeModule::name,
+      facebook::react::SourceCodeModule::Name,
       [bundleUrl]() -> std::unique_ptr<xplat::module::CxxModule> {
         return std::make_unique<SourceCodeModule>(bundleUrl);
       },
@@ -755,7 +755,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      PlatformConstantsModule::name,
+      PlatformConstantsModule::Name,
       []() { return std::make_unique<PlatformConstantsModule>(); },
       nativeQueue));
 
