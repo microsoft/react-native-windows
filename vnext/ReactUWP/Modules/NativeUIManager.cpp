@@ -991,7 +991,9 @@ void NativeUIManager::measureLayout(
     const auto ancenstorElement = ancestor.GetView().as<winrt::FrameworkElement>();
 
     const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
-    const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, targetElement.ActualWidth(), targetElement.ActualHeight()));
+    const auto width = static_cast<float>(targetElement.ActualWidth());
+    const auto height = static_cast<float>(targetElement.ActualHeight());
+    const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
 
     // x, y
     args.push_back(transformedBounds.X);
