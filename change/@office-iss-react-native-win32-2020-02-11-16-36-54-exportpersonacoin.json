@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Export PersonaCoin",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "acoates@microsoft.com",
-  "commit": "1fdcd51932f2ec13b68003c5a168ac9c511195a3",
-  "dependentChangeType": "patch",
-  "date": "2020-02-12T00:36:53.975Z"
-}

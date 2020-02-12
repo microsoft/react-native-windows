@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 02:40:30 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.2",
+      "version": "0.61.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Export PersonaCoin",
+            "author": "acoates@microsoft.com",
+            "commit": "1fdcd51932f2ec13b68003c5a168ac9c511195a3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Feb 2020 01:21:44 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.1",
       "version": "0.61.0-beta.1",
