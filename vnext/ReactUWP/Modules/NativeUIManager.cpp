@@ -987,19 +987,19 @@ void NativeUIManager::measureLayout(
   try {
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
     const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
-    const auto targetView = target.GetView().as<winrt::FrameworkElement>();
-    const auto ancenstorView = ancestor.GetView().as<winrt::FrameworkElement>();
+    const auto targetElement = target.GetView().as<winrt::FrameworkElement>();
+    const auto ancenstorElement = ancestor.GetView().as<winrt::FrameworkElement>();
 
-    const auto ancestorViewtransform = targetView.TransformToVisual(ancenstorView);
-    const auto relativePosition = ancestorViewtransform.TransformPoint({0, 0});
+    const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
+    const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, targetElement.ActualWidth(), targetElement.ActualHeight()));
 
     // x, y
-    args.push_back(relativePosition.X);
-    args.push_back(relativePosition.Y);
+    args.push_back(transformedBounds.X);
+    args.push_back(transformedBounds.Y);
 
     // Size
-    args.push_back(targetView.ActualWidth());
-    args.push_back(targetView.ActualHeight());
+    args.push_back(transformedBounds.Width);
+    args.push_back(transformedBounds.Height);
     callback(args);
   } catch (winrt::hresult_error const &e) {
     const auto &msg = e.message();
