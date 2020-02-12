@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Feb 2020 11:16:52 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Feb 2020 21:40:06 GMT and should not be manually modified.
 
+## 0.61.0-beta.4
+Wed, 12 Feb 2020 21:40:06 GMT
+
+### Changes
+
+- Fixed Developer menu and Live Reaload (vmorozov@microsoft.com)
 ## 0.61.0-beta.3
 Wed, 12 Feb 2020 11:16:52 GMT
 

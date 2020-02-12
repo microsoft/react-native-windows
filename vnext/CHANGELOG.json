@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 21:40:06 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.4",
+      "version": "0.61.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed Developer menu and Live Reaload",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c6217cd2228493c884d0b61c45f1059f8010dd66"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2020 18:07:36 GMT",
       "tag": "react-native-windows_v0.61.0-beta.3",
       "version": "0.61.0-beta.3",
