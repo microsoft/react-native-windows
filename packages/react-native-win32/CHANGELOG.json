@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 02:13:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.2",
+      "version": "0.27.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Export PersonaCoin",
+            "author": "acoates@microsoft.com",
+            "commit": "993c5940b0b00e0c4b9b929e0e1ad804262b6344"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Feb 2020 22:09:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.27.1",
       "version": "0.27.1",

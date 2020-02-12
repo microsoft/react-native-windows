@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 05 Feb 2020 22:09:28 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Feb 2020 02:13:44 GMT and should not be manually modified.
 
+## 0.27.2
+Wed, 12 Feb 2020 02:13:44 GMT
+
+### Patches
+
+- Export PersonaCoin (acoates@microsoft.com)
 ## 0.27.1
 Wed, 05 Feb 2020 22:09:28 GMT
 
