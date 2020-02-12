@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 11:16:52 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.3",
+      "version": "0.61.0-beta.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Provide a Minimal PlatformConstants Implementation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cae1620822a386c4a52fb7351e922485d4f81ac1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2020 01:58:28 GMT",
       "tag": "react-native-windows_v0.61.0-beta.2",
       "version": "0.61.0-beta.2",
