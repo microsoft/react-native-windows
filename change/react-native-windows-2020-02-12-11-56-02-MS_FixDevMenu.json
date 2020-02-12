@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed Developer menu and Live Reaload",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "c6217cd2228493c884d0b61c45f1059f8010dd66",
+  "dependentChangeType": "patch",
+  "date": "2020-02-12T19:56:02.686Z"
+}
