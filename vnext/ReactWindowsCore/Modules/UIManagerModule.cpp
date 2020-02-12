@@ -3,6 +3,7 @@
 
 using namespace std;
 #include <cxxreact/JsArgumentHelpers.h>
+#include <cxxreact/MessageQueueThread.h>
 #include <folly/json.h>
 #include <glog/logging.h>
 #include <algorithm>
@@ -424,7 +425,17 @@ ShadowNode &UIManager::GetShadowNodeForTag(int64_t tag) {
   return m_nodeRegistry.getNode(tag);
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager> &&manager) : m_manager(std::move(manager)) {}
+UIManagerModule::UIManagerModule(
+    std::shared_ptr<IUIManager> &&manager,
+    std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept
+    : m_manager{std::move(manager)}, m_uiQueue{std::move(uiQueue)} {}
+
+UIManagerModule::~UIManagerModule() noexcept {
+  if (m_uiQueue) {
+    // To make sure that we destroy UI components in UI thread.
+    m_uiQueue->runOnQueue([manager = std::move(m_manager)]() {});
+  }
+}
 
 std::string UIManagerModule::getName() {
   return "UIManager";
@@ -538,8 +549,15 @@ shared_ptr<IUIManager> createIUIManager(
   return std::make_shared<UIManager>(std::move(viewManagers), nativeManager);
 }
 
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
+    std::shared_ptr<IUIManager> &&uimanager,
+    std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept {
+  return std::make_unique<UIManagerModule>(std::move(uimanager), std::move(uiQueue));
+}
+
+// Deprecated
 std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager) {
-  return std::make_unique<UIManagerModule>(std::move(uimanager));
+  return createUIManagerModule(std::move(uimanager), nullptr);
 }
 
 } // namespace react

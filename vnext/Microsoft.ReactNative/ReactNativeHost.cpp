@@ -74,9 +74,11 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
 
   Mso::React::ReactOptions reactOptions{};
+  reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
   reactOptions.DeveloperSettings.SourceBundlePath = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
   reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
+  reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
   reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;

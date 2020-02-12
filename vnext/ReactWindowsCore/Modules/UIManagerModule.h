@@ -14,6 +14,7 @@ namespace react {
 
 struct IReactRootView;
 struct ShadowNode;
+class MessageQueueThread;
 
 class UIManager : public IUIManager, INativeUIManagerHost {
  public:
@@ -91,7 +92,8 @@ class UIManager : public IUIManager, INativeUIManagerHost {
 
 class UIManagerModule : public facebook::xplat::module::CxxModule {
  public:
-  UIManagerModule(std::shared_ptr<IUIManager> &&manager);
+  UIManagerModule(std::shared_ptr<IUIManager> &&manager, std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept;
+  ~UIManagerModule() noexcept override;
 
   // CxxModule
   std::string getName() override;
@@ -100,6 +102,7 @@ class UIManagerModule : public facebook::xplat::module::CxxModule {
 
  private:
   std::shared_ptr<IUIManager> m_manager;
+  std::shared_ptr<MessageQueueThread> m_uiQueue;
 };
 
 } // namespace react

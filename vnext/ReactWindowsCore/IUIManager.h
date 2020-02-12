@@ -69,6 +69,13 @@ class IUIManager {
 std::shared_ptr<IUIManager> createIUIManager(
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers,
     INativeUIManager *nativeManager);
+
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
+    std::shared_ptr<IUIManager> &&uimanager,
+    std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept;
+
+// Deprecated: use the overloaded version with two parameters.
+// It is here because it is being exported
 std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager);
 
 std::shared_ptr<IUIManager> createBatchingUIManager(

@@ -194,7 +194,6 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
-    <ClInclude Include="..\ReactUWP\Modules\AppStateModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
@@ -268,6 +267,7 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
+    <ClInclude Include="Modules\AppStateData.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -356,7 +356,6 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\AppStateModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />
@@ -430,6 +429,7 @@
     <ClCompile Include="IReactModuleBuilder.cpp">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Modules\AppStateData.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
