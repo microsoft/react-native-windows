@@ -127,7 +127,10 @@
     <ClInclude Include="Modules\AppThemeModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\PlatformConstantsModule.h" />
+    <ClInclude Include="Modules\SourceCodeModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
+    <ClInclude Include="Modules\WebSocketModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
     <ClInclude Include="pch.h" />
@@ -139,7 +142,6 @@
     <ClInclude Include="Tracing.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
-    <ClInclude Include="WebSocketModule.h" />
     <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
@@ -158,6 +160,7 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="pch.cpp">

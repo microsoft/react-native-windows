@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <ReactWindowsCore/SourceCodeModule.h>
+#include "SourceCodeModule.h"
 
 using namespace folly;
 using namespace facebook::xplat;
@@ -9,12 +9,12 @@ using namespace facebook::xplat;
 namespace facebook {
 namespace react {
 
-const char *SourceCodeModule::name = "SourceCode";
+const char *SourceCodeModule::Name = "SourceCode";
 
 SourceCodeModule::SourceCodeModule(const std::string &bundleUrl) : m_bundleUrl(bundleUrl) {}
 
 std::string SourceCodeModule::getName() {
-  return name;
+  return Name;
 }
 
 auto SourceCodeModule::getConstants() -> std::map<std::string, dynamic> {

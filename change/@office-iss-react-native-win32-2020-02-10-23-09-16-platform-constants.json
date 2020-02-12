@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Provide a Minimal PlatformConstants Implementation",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "commit": "cae1620822a386c4a52fb7351e922485d4f81ac1",
+  "dependentChangeType": "patch",
+  "date": "2020-02-11T07:09:14.058Z"
+}
