@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix onFocus onBlur events",
-  "packageName": "react-native-windows",
-  "email": "kaigu@microsoft.com",
-  "commit": "38bc6cad5c3cdd7d1e00ac0e3a7185e12a2fa381",
-  "dependentChangeType": "patch",
-  "date": "2020-02-11T20:03:45.062Z"
-}
