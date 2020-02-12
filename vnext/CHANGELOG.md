@@ -1,7 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Feb 2020 00:46:46 GMT and should not be manually modified.
 
+## 0.61.0-beta.2
+Wed, 12 Feb 2020 00:46:46 GMT
+
+### Changes
+
+- Fix scroll indicators being shown when not required (jagorrin@microsoft.com)
+- Added async code to native module test methods (vmorozov@microsoft.com)
 ## 0.61.0-beta.1
 Tue, 11 Feb 2020 01:21:44 GMT
 

@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 00:46:46 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.2",
+      "version": "0.61.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix scroll indicators being shown when not required",
+            "author": "jagorrin@microsoft.com",
+            "commit": "ffaa1051f2f2f154630e710596bae3dea5ae4aa1"
+          },
+          {
+            "comment": "Added async code to native module test methods",
+            "author": "vmorozov@microsoft.com",
+            "commit": "67bea149d386d9429e95587745b6c2f972480636"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2020 00:02:28 GMT",
       "tag": "react-native-windows_v0.61.0-beta.1",
       "version": "0.61.0-beta.1",

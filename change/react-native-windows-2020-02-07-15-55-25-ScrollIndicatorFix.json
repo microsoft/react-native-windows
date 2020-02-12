@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix scroll indicators being shown when not required",
-  "packageName": "react-native-windows",
-  "email": "jagorrin@microsoft.com",
-  "commit": "ffaa1051f2f2f154630e710596bae3dea5ae4aa1",
-  "dependentChangeType": "patch",
-  "date": "2020-02-07T23:55:25.611Z"
-}
