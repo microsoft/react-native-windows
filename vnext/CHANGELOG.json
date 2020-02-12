@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 01:58:28 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.2",
+      "version": "0.61.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "RNTester - Fix Text and Alert pages",
+            "author": "mcota@microsoft.com",
+            "commit": "30e6688df4633cb258cdce680c37ddc8f700957b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2020 00:46:46 GMT",
       "tag": "react-native-windows_v0.61.0-beta.2",
       "version": "0.61.0-beta.2",

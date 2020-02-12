@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "RNTester - Fix Text and Alert pages",
-  "packageName": "react-native-windows",
-  "email": "mcota@microsoft.com",
-  "commit": "30e6688df4633cb258cdce680c37ddc8f700957b",
-  "dependentChangeType": "patch",
-  "date": "2020-01-30T02:32:52.834Z"
-}
