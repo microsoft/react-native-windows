@@ -111,6 +111,7 @@
     <ClInclude Include="DevServerHelper.h" />
     <ClInclude Include="DevSettings.h" />
     <ClInclude Include="etw\react_native_windows.h" />
+    <ClInclude Include="HermesRuntimeHolder.h" />
     <ClInclude Include="IDevSupportManager.h" />
     <ClInclude Include="INativeUIManager.h" />
     <ClInclude Include="InstanceManager.h" />
@@ -127,11 +128,13 @@
     <ClInclude Include="Modules\AppThemeModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\PlatformConstantsModule.h" />
+    <ClInclude Include="Modules\SourceCodeModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
+    <ClInclude Include="Modules\WebSocketModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PlatformConstantsModule.h" />
     <ClInclude Include="Sandbox\SandboxEndpoint.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
@@ -139,8 +142,8 @@
     <ClInclude Include="tracing\fbsystrace.h" />
     <ClInclude Include="Tracing.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="V8JSIRuntimeHolder.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
-    <ClInclude Include="WebSocketModule.h" />
     <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
@@ -151,6 +154,7 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="BaseScriptStoreImpl.cpp" Condition="'$(PATCH_RN)' == 'true'" />
     <ClCompile Include="CxxMessageQueue.cpp" />
+    <ClCompile Include="HermesRuntimeHolder.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
@@ -159,16 +163,17 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="tracing\tracing.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="V8JSIRuntimeHolder.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="ChakraRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />

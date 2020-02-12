@@ -72,6 +72,9 @@
     <ClCompile Include="Modules\I18nModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\SourceCodeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -96,9 +99,8 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\PlatformConstantsModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
+    <ClCompile Include="HermesRuntimeHolder.cpp" />
+    <ClCompile Include="V8JSIRuntimeHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
@@ -194,7 +196,13 @@
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\WebSocketModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleProvider.h">
@@ -230,12 +238,9 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WebSocketModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="PlatformConstantsModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
+    <ClInclude Include="Modules\SourceCodeModule.h" />
+    <ClInclude Include="HermesRuntimeHolder.h" />
+    <ClInclude Include="V8JSIRuntimeHolder.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">
