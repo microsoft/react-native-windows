@@ -61,7 +61,7 @@ void WriteProperties(IJSValueWriter const &writer, T const &value) noexcept;
 template <class... TArgs>
 void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexcept;
 
-IJSValueWriter MakeJSValueTreeWriter(JSValue &resultValue) noexcept;
+IJSValueWriter MakeJSValueTreeWriter() noexcept;
 
 //==============================================================================
 // IJSValueWriter extensions implementation
@@ -239,8 +239,9 @@ inline void WriteProperty(IJSValueWriter const &writer, std::wstring_view proper
 
 template <class T>
 inline void WriteProperties(IJSValueWriter const &writer, T const &value) noexcept {
-  JSValue jsValue;
-  WriteValue(MakeJSValueTreeWriter(/*ref*/ jsValue), value);
+  auto jsValueWriter = MakeJSValueTreeWriter();
+  WriteValue(jsValueWriter, value);
+  auto jsValue = TakeJSValue(jsValueWriter);
   for (auto &property : jsValue.Object()) {
     WriteProperty(writer, property.first, property.second);
   }
