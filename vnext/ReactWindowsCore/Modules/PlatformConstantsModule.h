@@ -10,7 +10,7 @@ class PlatformConstantsModule : public facebook::xplat::module::CxxModule {
  public:
   static const char *name;
 
-  std::string getName();
+  std::string getName() override;
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<Method> getMethods() override;
 };
