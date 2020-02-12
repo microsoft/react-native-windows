@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.27.2",
+  "version": "0.27.3",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",

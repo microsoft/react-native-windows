@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2020 05:53:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.3",
+      "version": "0.27.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Do not use default export to export PersonaCoin, and export PersonCoinTypes correctly",
+            "author": "acoates@microsoft.com",
+            "commit": "d9f3ee3072e2778ca9f0c2bd41943060bf831b31"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2020 02:13:44 GMT",
       "tag": "@office-iss/react-native-win32_v0.27.2",
       "version": "0.27.2",

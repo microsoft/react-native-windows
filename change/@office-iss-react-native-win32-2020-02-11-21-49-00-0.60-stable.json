@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Do not use default export to export PersonaCoin, and export PersonCoinTypes correctly",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "acoates@microsoft.com",
-  "commit": "d9f3ee3072e2778ca9f0c2bd41943060bf831b31",
-  "dependentChangeType": "patch",
-  "date": "2020-02-12T05:49:00.134Z"
-}
