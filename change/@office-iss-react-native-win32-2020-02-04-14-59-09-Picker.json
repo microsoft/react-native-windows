@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Implement Picker component for win32",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "kinhln@microsoft.com",
-  "commit": "48e484fb749f77422aec10e9c0e5a74fc2deb076",
-  "dependentChangeType": "patch",
-  "date": "2020-02-04T22:59:08.931Z"
-}

@@ -8,8 +8,7 @@ trigger:
   batch: true
   branches:
     include:
-    # Avoid publishing master builds until we're on 0.61 to avoid version collisions with 0.60-stable
-    # - master
+      - master
       - 0.59-vnext-stable
       - 0.60-stable
 

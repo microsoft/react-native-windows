@@ -10,6 +10,7 @@ import { NativeSyntheticEvent } from 'react-native';
 import * as React from 'react';
 import RN = require('react-native');
 import { StyleProp } from 'react-native';
+import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
 // @public (undocumented)
@@ -124,6 +125,34 @@ export interface INativeKeyboardEvent {
     metaKey: boolean;
     // (undocumented)
     shiftKey: boolean;
+}
+
+// @public (undocumented)
+export interface IPersonaCoinProps extends ViewProps {
+    // (undocumented)
+    brandIconSource?: string | IImageSourceProps;
+    // (undocumented)
+    color?: number;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    displayName?: string;
+    // (undocumented)
+    emailAddress?: string;
+    // (undocumented)
+    initials?: string;
+    // (undocumented)
+    onError?: () => void;
+    // (undocumented)
+    onLoad?: () => void;
+    // (undocumented)
+    presence: PersonaCoinPresence;
+    // (undocumented)
+    size: PersonaCoinSize;
+    // Warning: (ae-forgotten-export) The symbol "IImageSourceProps" needs to be exported by the entry point typings-main.d.ts
+    //
+    // (undocumented)
+    source?: string | IImageSourceProps;
 }
 
 // @public
@@ -333,6 +362,42 @@ export type OmittedAccessibilityPropsWin32 = {
     accessibilityRole?: RN.AccessibilityRole;
     accessibilityStates?: RN.AccessibilityState[];
 };
+
+// @public (undocumented)
+export enum PersonaCoinPresence {
+    // (undocumented)
+    away = 1,
+    // (undocumented)
+    blocked = 2,
+    // (undocumented)
+    busy = 3,
+    // (undocumented)
+    doNotDisturb = 4,
+    // (undocumented)
+    none = 0,
+    // (undocumented)
+    offline = 5,
+    // (undocumented)
+    online = 6,
+    // (undocumented)
+    oof = 7
+}
+
+// @public (undocumented)
+export enum PersonaCoinSize {
+    // (undocumented)
+    extraExtraLarge = 5,
+    // (undocumented)
+    extraLarge = 4,
+    // (undocumented)
+    extraSmall = 0,
+    // (undocumented)
+    large = 3,
+    // (undocumented)
+    normal = 2,
+    // (undocumented)
+    small = 1
+}
 
 // @public (undocumented)
 export type SharedAccessibilityPropsIOSandWin32 = {

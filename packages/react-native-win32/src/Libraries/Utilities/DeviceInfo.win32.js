@@ -12,4 +12,4 @@
 
 'use strict';
 
-module.exports = {isIPhoneX_deprecated: false};
+module.exports = {getConstants() { return {isIPhoneX_deprecated: false}}};

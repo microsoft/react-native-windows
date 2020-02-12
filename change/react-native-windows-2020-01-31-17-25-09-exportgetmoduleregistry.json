@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Export Instance->getModuleRegistry from react-native-win32.dll",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "c559fcfc31c1219f4873351f936d148a962c28ab",
-  "dependentChangeType": "patch",
-  "date": "2020-02-01T01:25:09.556Z"
-}

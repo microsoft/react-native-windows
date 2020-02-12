@@ -7,11 +7,11 @@
 
 import * as React from 'react';
 import {Button, AppRegistry, StyleSheet, Text, View} from 'react-native';
-const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
-const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
-const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
-const RNTesterList = require('./RNTesterList.win32');
-const RNTesterNavigationReducer = require('react-native/RNTester/js/RNTesterNavigationReducer');
+const RNTesterActions = require('react-native/RNTester/js/utils/RNTesterActions');
+const RNTesterExampleContainer = require('react-native/RNTester/js/components/RNTesterExampleContainer');
+const RNTesterExampleList = require('react-native/RNTester/js/components/RNTesterExampleList');
+const RNTesterList = require('./utils/RNTesterList.win32');
+const RNTesterNavigationReducer = require('react-native/RNTester/js/utils/RNTesterNavigationReducer');
 
 const styles = StyleSheet.create({
   headerContainer: {

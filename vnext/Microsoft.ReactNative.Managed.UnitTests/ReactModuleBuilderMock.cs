@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -68,36 +69,68 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void Call0<T1, T2, T3>(string methodName, T1 arg1, T2 arg2, T3 arg3) =>
         GetMethod0(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), null, null);
 
-    public void Call1<TResult>(string methodName, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<TResult>(string methodName, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call1<T1, TResult>(string methodName, T1 arg1, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(arg1), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<T1, TResult>(string methodName, T1 arg1, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(arg1), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call1<T1, T2, TResult>(string methodName, T1 arg1, T2 arg2, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<T1, T2, TResult>(string methodName, T1 arg1, T2 arg2, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call1<T1, T2, T3, TResult>(string methodName, T1 arg1, T2 arg2, T3 arg3, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<T1, T2, T3, TResult>(string methodName, T1 arg1, T2 arg2, T3 arg3, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call2<TResult, TError>(string methodName, Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<TResult, TError>(string methodName, Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
-    public void Call2<T1, TResult, TError>(string methodName, T1 arg1,
-        Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(arg1), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<T1, TResult, TError>(string methodName, T1 arg1,
+        Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(arg1), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
-    public void Call2<T1, T2, TResult, TError>(string methodName, T1 arg1, T2 arg2,
-        Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<T1, T2, TResult, TError>(string methodName, T1 arg1, T2 arg2,
+        Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
-    public void Call2<T1, T2, T3, TResult, TError>(string methodName, T1 arg1, T2 arg2, T3 arg3,
-        Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<T1, T2, T3, TResult, TError>(string methodName, T1 arg1, T2 arg2, T3 arg3,
+        Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
     public void CallSync<TResult>(string methodName, out TResult result)
     {
@@ -140,21 +173,23 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     private SyncMethodDelegate GetSyncMethod(string methodName) =>
         m_syncMethods.TryGetValue(methodName, out var syncMethod) ? syncMethod : null;
 
-    private MethodResultCallback ResolveCallback<T>(Action<T> resolve)
+    private MethodResultCallback ResolveCallback<T>(Action<T> resolve, TaskCompletionSource<bool> promise = null)
     {
       return (IJSValueWriter writer) =>
       {
         resolve(GetResult<T>(writer));
         IsResolveCallbackCalled = true;
+        promise?.SetResult(true);
       };
     }
 
-    private MethodResultCallback RejectCallback<T>(Action<T> reject)
+    private MethodResultCallback RejectCallback<T>(Action<T> reject, TaskCompletionSource<bool> promise = null)
     {
       return (IJSValueWriter writer) =>
       {
         reject(GetResult<T>(writer));
         IsRejectCallbackCalled = true;
+        promise?.SetResult(false);
       };
     }
 

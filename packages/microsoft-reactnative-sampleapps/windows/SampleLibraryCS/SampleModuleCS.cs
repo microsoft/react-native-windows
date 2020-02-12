@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
 using Windows.System.Threading;
-
-using Microsoft.ReactNative.Managed;
 
 namespace SampleLibraryCS
 {
@@ -15,6 +14,7 @@ namespace SampleLibraryCS
     [ReactModule]
     internal sealed class SampleModuleCS
     {
+        // It is only used by code in this class. Use ReactModuleAttribute to specify JavaScript name.
         public string Name => nameof(SampleModuleCS);
 
         #region Constants
@@ -64,7 +64,7 @@ namespace SampleLibraryCS
 
         #endregion
 
-        #region Methods using ReactCallBacks
+        #region Methods using ReactCallbacks
 
         [ReactMethod]
         public void ExplicitCallbackMethod(ReactCallback<double> callback)
@@ -107,6 +107,21 @@ namespace SampleLibraryCS
             catch (Exception ex)
             {
                 result.Reject(new ReactError { Message = ex.Message });
+            }
+        }
+
+        [ReactMethod]
+        public async void NegateAsyncPromise(int x, IReactPromise<int> result)
+        {
+            bool isPosititve = await Task.Run(() => x >= 0);
+            Debug.WriteLine($"{Name}.{nameof(NegateAsyncPromise)}({x})");
+            if (isPosititve)
+            {
+                result.Resolve(-x);
+            }
+            else
+            {
+                result.Reject(new ReactError { Message = "Already negative" });
             }
         }
 

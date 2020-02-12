@@ -11,13 +11,13 @@
 'use strict';
 
 const ElementBox = require('./ElementBox');
-const React = require('React');
+const React = require('react');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const UIManager = require('../ReactNative/UIManager');
 const View = require('../Components/View/View');
 
-import type {PressEvent} from 'CoreEventTypes';
-import type {ViewStyleProp} from 'StyleSheet';
+import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
+import type {PressEvent} from '../Types/CoreEventTypes';
 
 type Inspected = $ReadOnly<{|
   frame?: Object,
@@ -31,7 +31,7 @@ type Props = $ReadOnly<{|
 |}>;
 
 class InspectorOverlay extends React.Component<Props> {
-  findViewForTouchEvent = (e: PressEvent) => {
+  findViewForTouchEvent: (e: PressEvent) => void = (e: PressEvent) => {
     const {locationX, locationY} = e.nativeEvent.touches[0];
     UIManager.findSubviewIn(
       this.props.inspectedViewTag,
@@ -46,12 +46,12 @@ class InspectorOverlay extends React.Component<Props> {
     );
   };
 
-  shouldSetResponser = (e: PressEvent): boolean => {
+  shouldSetResponser: (e: PressEvent) => boolean = (e: PressEvent): boolean => {
     this.findViewForTouchEvent(e);
     return true;
   };
 
-  render() {
+  render(): React.Node {
     let content = null;
     if (this.props.inspected) {
       content = (
