@@ -379,6 +379,7 @@
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />
+    <ClCompile Include="..\ReactUWP\Utils\PropertyUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\UwpPreparedScriptStore.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\UwpScriptStore.cpp" />

@@ -155,6 +155,9 @@
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\PropertyUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Utils\ResourceBrushUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
