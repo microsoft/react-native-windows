@@ -44,4 +44,16 @@ Object.defineProperty(ReactNativeImplementation, 'PersonaCoin', {
   },
 });
 
+Object.defineProperty(ReactNativeImplementation, 'PersonaCoinSize', {
+  get: () => {
+    return require('../PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
+  },
+});
+
+Object.defineProperty(ReactNativeImplementation, 'PersonaCoinPresence', {
+  get: () => {
+    return require('../PersonaCoin/PersonaCoinTypes').PersonaCoinPresence;
+  },
+});
+
 export = ReactNativeImplementation;
