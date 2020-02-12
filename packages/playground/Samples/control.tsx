@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -14,15 +14,15 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {DatePicker, Picker} from 'react-native-windows';
+import { DatePicker, Picker } from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
-  {padding: number; margin: number}
-> {
+  { padding: number; margin: number }
+  > {
   constructor(props: {}) {
     super(props);
-    this.state = {padding: 15, margin: 5};
+    this.state = { padding: 15, margin: 5 };
   }
 
   render() {
@@ -35,7 +35,7 @@ export default class Bootstrap extends React.Component<
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <View style={{backgroundColor: 'orange', margin: 5, height: 100}}>
+        <View style={{ backgroundColor: 'orange', margin: 5, height: 100 }}>
           <ScrollView
             style={{
               backgroundColor: 'lime',
@@ -46,7 +46,7 @@ export default class Bootstrap extends React.Component<
             <Text>second</Text>
           </ScrollView>
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <View
             style={{
               height: 25,
@@ -57,7 +57,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <DatePicker
             style={{
               backgroundColor: 'lime',
@@ -66,7 +66,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <Picker
             style={{
               backgroundColor: 'lime',
@@ -75,7 +75,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <Switch
             style={{
               backgroundColor: 'lime',
@@ -84,7 +84,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <CheckBox
             style={{
               backgroundColor: 'lime',
@@ -93,7 +93,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <TextInput
             style={{
               backgroundColor: 'lime',
@@ -104,7 +104,7 @@ export default class Bootstrap extends React.Component<
             placeholderTextColor={'maroon'}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <Text
             style={{
               backgroundColor: 'lime',
@@ -128,7 +128,7 @@ export default class Bootstrap extends React.Component<
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <View
             style={{
               height: 25,
@@ -139,7 +139,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <DatePicker
             style={{
               backgroundColor: 'lime',
@@ -148,7 +148,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <Picker
             style={{
               backgroundColor: 'lime',
@@ -157,7 +157,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <Switch
             style={{
               backgroundColor: 'lime',
@@ -166,7 +166,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <CheckBox
             style={{
               backgroundColor: 'lime',
@@ -175,7 +175,7 @@ export default class Bootstrap extends React.Component<
             }}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <TextInput
             style={{
               backgroundColor: 'lime',
@@ -186,7 +186,7 @@ export default class Bootstrap extends React.Component<
             placeholderTextColor={'maroon'}
           />
         </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
+        <View style={{ backgroundColor: 'orange', margin: 5 }}>
           <Text
             style={{
               backgroundColor: 'lime',

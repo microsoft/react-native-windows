@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -26,13 +26,13 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {DatePicker, Popup, Picker} from 'react-native-windows';
+import { DatePicker, Popup, Picker } from 'react-native-windows';
 
-class TicTacButton extends React.Component<{}, {text: string}> {
+class TicTacButton extends React.Component<{}, { text: string }> {
   constructor(props: {}) {
     super(props);
     this._onPress = this._onPress.bind(this);
-    this.state = {text: '?'};
+    this.state = { text: '?' };
   }
 
   render() {
@@ -47,9 +47,9 @@ class TicTacButton extends React.Component<{}, {text: string}> {
 
   _onPress(_event: NativeSyntheticEvent<NativeTouchEvent>) {
     if (this.state.text === 'X') {
-      this.setState({text: 'o'});
+      this.setState({ text: 'o' });
     } else {
-      this.setState({text: 'X'});
+      this.setState({ text: 'X' });
     }
   }
 }
@@ -62,7 +62,7 @@ class PopupButton extends React.Component<
     popupCheckBoxState: boolean;
     isLightDismissEnabled: boolean;
   }
-> {
+  > {
   constructor(props: {}) {
     super(props);
     this._onPress = this._onPress.bind(this);
@@ -78,11 +78,11 @@ class PopupButton extends React.Component<
 
   render() {
     return (
-      <View style={{flexDirection: 'row', padding: 20}}>
-        <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
+      <View style={{ flexDirection: 'row', padding: 20 }}>
+        <Text style={{ padding: 5 }}>isLightDismissEnabled: </Text>
         <CheckBox
           value={this.state.isLightDismissEnabled}
-          onValueChange={value => this.setState({isLightDismissEnabled: value})}
+          onValueChange={value => this.setState({ isLightDismissEnabled: value })}
         />
         <Button
           onPress={this._onPress}
@@ -95,15 +95,15 @@ class PopupButton extends React.Component<
           verticalOffset={50}
           horizontalOffset={350}
           onDismiss={this._onPopupDismissed}>
-          <View style={{backgroundColor: 'lightgray', width: 200, height: 300}}>
-            <Text style={{justifyContent: 'center', paddingTop: 10}}>
+          <View style={{ backgroundColor: 'lightgray', width: 200, height: 300 }}>
+            <Text style={{ justifyContent: 'center', paddingTop: 10 }}>
               This is a flyout
             </Text>
             <CheckBox
-              style={{justifyContent: 'center', padding: 20}}
+              style={{ justifyContent: 'center', padding: 20 }}
               value={this.state.popupCheckBoxState}
               onValueChange={value =>
-                this.setState({popupCheckBoxState: value})
+                this.setState({ popupCheckBoxState: value })
               }
             />
             <Button onPress={this._onPopupButtonPressed} title="Close" />
@@ -114,11 +114,11 @@ class PopupButton extends React.Component<
   }
 
   openPopup() {
-    this.setState({buttonTitle: 'Close Flyout', isFlyoutVisible: true});
+    this.setState({ buttonTitle: 'Close Flyout', isFlyoutVisible: true });
   }
 
   closePopup() {
-    this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
+    this.setState({ buttonTitle: 'Open Flyout', isFlyoutVisible: false });
   }
 
   _onPress(_event: NativeSyntheticEvent<NativeTouchEvent>) {
@@ -149,7 +149,7 @@ export default class Bootstrap extends React.Component<
     highlightPressed: boolean;
     mouseEntered: boolean;
   }
-> {
+  > {
   constructor(props: {}) {
     super(props);
     this.inputRef = React.createRef();
@@ -176,15 +176,15 @@ export default class Bootstrap extends React.Component<
           </Text>
           <Text>
             Nested text
-            <Text style={{color: '#3333ff'}}>
+            <Text style={{ color: '#3333ff' }}>
               {' '}
               starts right here!{' '}
-              <Text style={{color: '#ff3333'}}>(But wait, here is more!)</Text>
+              <Text style={{ color: '#ff3333' }}>(But wait, here is more!)</Text>
             </Text>
           </Text>
           <Text>ScrollView:</Text>
           <ScrollView
-            style={{width: 200, height: 200}}
+            style={{ width: 200, height: 200 }}
             onScroll={() => {
               console.log('onScroll!');
             }}
@@ -204,15 +204,15 @@ export default class Bootstrap extends React.Component<
             <Text>Foo</Text>
             <Text>Foo</Text>
             <Text>Foo</Text>
-            <View style={{height: 500}}>
+            <View style={{ height: 500 }}>
               <Text>Foo</Text>
             </View>
           </ScrollView>
           <TicTacButton />
           <ActivityIndicator size="large" color="green" />
-          <Text style={{marginTop: 15}}>Big Border & Clipping Tests:</Text>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+          <Text style={{ marginTop: 15 }}>Big Border & Clipping Tests:</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>accessible</Text>
               <View
                 accessible={true}
@@ -231,7 +231,7 @@ export default class Bootstrap extends React.Component<
                 }}
               />
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>no border</Text>
               <View
                 style={{
@@ -243,7 +243,7 @@ export default class Bootstrap extends React.Component<
                 }}
               />
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>no back</Text>
               <View
                 style={{
@@ -255,7 +255,7 @@ export default class Bootstrap extends React.Component<
                 }}
               />
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>normal</Text>
               <View
                 style={{
@@ -268,7 +268,7 @@ export default class Bootstrap extends React.Component<
                 }}
               />
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>no clip</Text>
               <View
                 style={{
@@ -284,11 +284,11 @@ export default class Bootstrap extends React.Component<
                   margin: 10,
                 }}>
                 <View
-                  style={{backgroundColor: 'green', width: 52, height: 52}}
+                  style={{ backgroundColor: 'green', width: 52, height: 52 }}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>no clip</Text>
               <View
                 style={{
@@ -332,7 +332,7 @@ export default class Bootstrap extends React.Component<
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>no clip</Text>
               <View
                 style={{
@@ -377,7 +377,7 @@ export default class Bootstrap extends React.Component<
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>clipped</Text>
               <View
                 style={{
@@ -422,7 +422,7 @@ export default class Bootstrap extends React.Component<
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>circle</Text>
               <View
                 style={{
@@ -434,11 +434,11 @@ export default class Bootstrap extends React.Component<
                   overflow: 'hidden',
                 }}>
                 <View
-                  style={{backgroundColor: 'purple', width: 60, height: 60}}
+                  style={{ backgroundColor: 'purple', width: 60, height: 60 }}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
               <Text>circle</Text>
               <View
                 style={{
@@ -453,13 +453,13 @@ export default class Bootstrap extends React.Component<
                   acceptsKeyboardFocus: true,
                 }}>
                 <View
-                  style={{backgroundColor: 'magenta', width: 60, height: 60}}
+                  style={{ backgroundColor: 'magenta', width: 60, height: 60 }}
                 />
               </View>
             </View>
           </View>
-          <Text style={{marginTop: 5}}>Border Tests:</Text>
-          <View style={{flexDirection: 'row'}}>
+          <Text style={{ marginTop: 5 }}>Border Tests:</Text>
+          <View style={{ flexDirection: 'row' }}>
             <View
               style={{
                 borderColor: 'red',
@@ -555,8 +555,8 @@ export default class Bootstrap extends React.Component<
               }}
             />
           </View>
-          <Text style={{margin: 5, marginTop: 10}}>Position Tests:</Text>
-          <View style={{width: 500, height: 100, backgroundColor: 'lightblue'}}>
+          <Text style={{ margin: 5, marginTop: 10 }}>Position Tests:</Text>
+          <View style={{ width: 500, height: 100, backgroundColor: 'lightblue' }}>
             <View
               style={{
                 backgroundColor: 'blue',
@@ -616,9 +616,9 @@ export default class Bootstrap extends React.Component<
           </View>
 
           <View
-            style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
+            style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
             <Picker
-              style={{width: 100}}
+              style={{ width: 100 }}
               selectedValue={this.state.pickerSelectedValue}
               onValueChange={this.pickerValueChange}
               accessibilityLabel="test picker"
@@ -626,7 +626,7 @@ export default class Bootstrap extends React.Component<
               <Picker.Item label="item 1" color="blue" value="key0" />
               <Picker.Item label="item 2" value="key1" />
             </Picker>
-            <Text style={{margin: 6}}>
+            <Text style={{ margin: 6 }}>
               selectedIndex: {this.state.pickerSelectedIndex} selectedValue:{' '}
               {this.state.pickerSelectedValue}
             </Text>
@@ -636,14 +636,14 @@ export default class Bootstrap extends React.Component<
             />
           </View>
 
-          <View style={{alignItems: 'center', padding: 10}}>
+          <View style={{ alignItems: 'center', padding: 10 }}>
             <Text>Test Popup: </Text>
             <PopupButton />
           </View>
 
-          <View style={{backgroundColor: 'blue', marginTop: 15}}>
+          <View style={{ backgroundColor: 'blue', marginTop: 15 }}>
             <Image
-              style={{width: 50, height: 50}}
+              style={{ width: 50, height: 50 }}
               source={{
                 uri:
                   'http://facebook.github.io/react-native/img/header_logo.png',
@@ -662,9 +662,9 @@ export default class Bootstrap extends React.Component<
               }}
             />
           </View>
-          <View style={{backgroundColor: 'yellow', marginTop: 15}}>
+          <View style={{ backgroundColor: 'yellow', marginTop: 15 }}>
             <Image
-              style={{width: 66, height: 58}}
+              style={{ width: 66, height: 58 }}
               source={{
                 width: 66,
                 height: 58,
@@ -680,7 +680,7 @@ export default class Bootstrap extends React.Component<
               marginTop: 15,
             }}>
             <CheckBox
-              onValueChange={value => this.setState({checkBoxIsOn: value})}
+              onValueChange={value => this.setState({ checkBoxIsOn: value })}
               value={this.state.checkBoxIsOn}
             />
             <Text>Checkbox {this.state.checkBoxIsOn ? 'ON' : 'OFF'}</Text>
@@ -692,15 +692,15 @@ export default class Bootstrap extends React.Component<
               marginTop: 15,
             }}>
             <Switch
-              onValueChange={value => this.setState({switchIsOn: value})}
+              onValueChange={value => this.setState({ switchIsOn: value })}
               value={this.state.switchIsOn}
             />
             <Text>Switch {this.state.switchIsOn ? 'ON' : 'OFF'}</Text>
           </View>
-          <View style={{padding: 10}}>
+          <View style={{ padding: 10 }}>
             <View>
               <TouchableHighlight
-                style={{height: 30}}
+                style={{ height: 30 }}
                 onPress={this.focusTextInputPressed}
                 underlayColor={'transparent'}>
                 <View
@@ -711,7 +711,7 @@ export default class Bootstrap extends React.Component<
             </View>
             <View>
               <TouchableHighlight
-                style={{height: 30}}
+                style={{ height: 30 }}
                 onPress={this.blurTextInputPressed}
                 underlayColor={'transparent'}>
                 <View
@@ -722,7 +722,7 @@ export default class Bootstrap extends React.Component<
             </View>
             <View>
               <TouchableHighlight
-                style={{height: 30}}
+                style={{ height: 30 }}
                 onPress={this.clearTextInputPressed}
                 underlayColor={'transparent'}>
                 <View
@@ -744,7 +744,7 @@ export default class Bootstrap extends React.Component<
               selectionColor={'red'}
               clearTextOnFocus={false}
               selectTextOnFocus={true}
-              style={{height: 30}}
+              style={{ height: 30 }}
             />
           </View>
           {/* disabled because of #3517
@@ -753,7 +753,7 @@ export default class Bootstrap extends React.Component<
             source={{uri: 'https://login.live.com'}}
           />
           */}
-          <View style={{padding: 10}}>
+          <View style={{ padding: 10 }}>
             <Text>Test DatePicker</Text>
             <Text>
               Date selected: {this.state.datePickerSelectedValue.toString()}
@@ -762,7 +762,7 @@ export default class Bootstrap extends React.Component<
               placeholderText="select start date"
               dateFormat="longdate"
               dayOfWeekFormat="{dayofweek.abbreviated(3)}"
-              style={{width: 300}}
+              style={{ width: 300 }}
               onDateChange={this.datePickerValueChange}
             />
           </View>
@@ -776,22 +776,22 @@ export default class Bootstrap extends React.Component<
   };
 
   mouseEnter = () => {
-    this.setState({mouseEntered: true});
+    this.setState({ mouseEntered: true });
   };
 
   mouseLeave = () => {
-    this.setState({mouseEntered: false});
+    this.setState({ mouseEntered: false });
   };
 
   pickerValueChange = (value: any, index: number) => {
-    this.setState({pickerSelectedValue: value, pickerSelectedIndex: index});
+    this.setState({ pickerSelectedValue: value, pickerSelectedIndex: index });
   };
   pickerClearSelection = () => {
-    this.setState({pickerSelectedValue: undefined, pickerSelectedIndex: -1});
+    this.setState({ pickerSelectedValue: undefined, pickerSelectedIndex: -1 });
   };
 
   highlightTextPressed = () => {
-    this.setState({highlightPressed: !this.state.highlightPressed});
+    this.setState({ highlightPressed: !this.state.highlightPressed });
 
     Linking.canOpenURL('https://www.microsoft.com')
       .then(canOpen => {
@@ -833,9 +833,9 @@ export default class Bootstrap extends React.Component<
   ) => {
     console.log(
       'selection start: ' +
-        event.nativeEvent.selection.start +
-        ', end: ' +
-        event.nativeEvent.selection.end,
+      event.nativeEvent.selection.start +
+      ', end: ' +
+      event.nativeEvent.selection.end,
     );
   };
 
@@ -850,14 +850,14 @@ export default class Bootstrap extends React.Component<
   ) => {
     console.log(
       'new size width: ' +
-        event.nativeEvent.contentSize.width +
-        ', height: ' +
-        event.nativeEvent.contentSize.height,
+      event.nativeEvent.contentSize.width +
+      ', height: ' +
+      event.nativeEvent.contentSize.height,
     );
   };
 
   datePickerValueChange = (date: Date) => {
-    this.setState({datePickerSelectedValue: date});
+    this.setState({ datePickerSelectedValue: date });
   };
 }
 
@@ -878,7 +878,7 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  selected: {backgroundColor: 'green'},
+  selected: { backgroundColor: 'green' },
 });
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

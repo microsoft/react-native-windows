@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
@@ -17,7 +17,7 @@ interface TestPageListProps {
 function TestPageList(props: TestPageListProps) {
   const [filter, setFilter] = useState("");
 
-  const _renderItem = ({ item }: {item: ITestPage}) => (
+  const _renderItem = ({ item }: { item: ITestPage }) => (
     <TouchableOpacity onPress={() => { props.onNavigateTo(item.testId) }} testID={item.testId}>
       <View>
         <Text>{item.description}</Text>
@@ -30,7 +30,7 @@ function TestPageList(props: TestPageListProps) {
   return (
     <View>
       <TextInput placeholder='Search test page' onChangeText={(text) => setFilter(text)} value={filter} testID={SEARCH_BUTTON} />
-      <FlatList<ITestPage> data={data} renderItem={_renderItem} keyExtractor={(item) => item.testId}/>
+      <FlatList<ITestPage> data={data} renderItem={_renderItem} keyExtractor={(item) => item.testId} />
     </View>)
 }
 

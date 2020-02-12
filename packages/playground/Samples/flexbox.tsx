@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -24,7 +24,7 @@ type IState = {
 export default class FlexboxLayoutPlayground extends React.Component<
   {},
   IState
-> {
+  > {
   constructor(props: {}) {
     super(props);
 
@@ -38,7 +38,7 @@ export default class FlexboxLayoutPlayground extends React.Component<
 
   _onClick() {
     this.setState(s => {
-      let state = {...s};
+      let state = { ...s };
 
       if (state.currentAlignStyle === styles.endAlignStyle) {
         state.currentAlignStyle = styles.emptyStyle;
@@ -315,13 +315,13 @@ export default class FlexboxLayoutPlayground extends React.Component<
         </View>
         <View style={styles.mainContainer}>
           <View>
-            <Text style={{flexWrap: 'wrap'}}>
+            <Text style={{ flexWrap: 'wrap' }}>
               Native control under React view, make sure margin is not double
               counted. It is being double counted if the button's right and
               bottom edges touch the edge of the rect behind it.
             </Text>
 
-            <View style={{padding: 5}}>
+            <View style={{ padding: 5 }}>
               <Text>Click to switch styles</Text>
               <Button
                 title="Click"
@@ -331,11 +331,11 @@ export default class FlexboxLayoutPlayground extends React.Component<
               />
             </View>
 
-            <View style={{backgroundColor: '#EEEEFF', alignItems: 'flex-end'}}>
+            <View style={{ backgroundColor: '#EEEEFF', alignItems: 'flex-end' }}>
               <Button title="Text" onPress={this._onClick} />
             </View>
 
-            <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{ flex: 1, flexDirection: 'column' }}>
               <View style={this.state.currentAlignStyle}>
                 <View style={styles.box} />
               </View>

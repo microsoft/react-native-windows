@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import * as React from 'react';
-import {AppRegistry, Button, Text, View} from 'react-native';
+import { AppRegistry, Button, Text, View } from 'react-native';
 
 import {
   CustomFrameworkElement,
@@ -16,7 +16,7 @@ import {
 export default class Bootstrap extends React.Component<{}, any> {
   private _customElementRef: any;
 
-  public state = {countOfEvents: 0};
+  public state = { countOfEvents: 0 };
   public constructor(props: {}) {
     super(props);
     this._customElementRef = React.createRef<CustomFrameworkElement>();
@@ -39,7 +39,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   }
 
   private onCustomEvent = (_event: ICustomChangeEvent) => {
-    this.setState({countOfEvents: this.state.countOfEvents + 1});
+    this.setState({ countOfEvents: this.state.countOfEvents + 1 });
   };
 
   private onPress = () => {

@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import * as React from 'react';
-import {AppRegistry, StyleSheet, Text, View} from 'react-native';
+import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
 export default class Bootstrap extends React.Component {
   render() {

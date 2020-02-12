@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import * as React from 'react';
-import {AppRegistry, CheckBox, StyleSheet, Text, View} from 'react-native';
+import { AppRegistry, CheckBox, StyleSheet, Text, View } from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -18,7 +18,7 @@ export default class Bootstrap extends React.Component<
     largeBorder: boolean;
     largePadding: boolean;
   }
-> {
+  > {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -86,59 +86,59 @@ export default class Bootstrap extends React.Component<
           backgroundColor: 'azure',
           paddingHorizontal: 20,
         }}>
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
           <CheckBox
-            onValueChange={value => this.setState({focusable: value})}
+            onValueChange={value => this.setState({ focusable: value })}
             value={this.state.focusable}
           />
           <Text>acceptsKeyboardFocus</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
           <CheckBox
-            onValueChange={value => this.setState({hasStyle: value})}
+            onValueChange={value => this.setState({ hasStyle: value })}
             value={this.state.hasStyle}
           />
           <Text>hasStyle</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
           <CheckBox
-            onValueChange={value => this.setState({hasBorder: value})}
+            onValueChange={value => this.setState({ hasBorder: value })}
             value={this.state.hasBorder}
           />
           <Text>hasBorder</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
           <CheckBox
-            onValueChange={value => this.setState({radius: value})}
+            onValueChange={value => this.setState({ radius: value })}
             value={this.state.radius}
           />
           <Text>hasRadius</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
           <CheckBox
-            onValueChange={value => this.setState({largeBorder: value})}
+            onValueChange={value => this.setState({ largeBorder: value })}
             value={this.state.largeBorder}
           />
           <Text>largeBorder</Text>
         </View>
 
         <View
-          style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
+          style={{ flexDirection: 'row', alignSelf: 'flex-start', width: 100 }}>
           <CheckBox
-            onValueChange={value => this.setState({alignSelfCenter: value})}
+            onValueChange={value => this.setState({ alignSelfCenter: value })}
             value={this.state.alignSelfCenter}
           />
           <Text>alignCenter</Text>
         </View>
 
         <View
-          style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
+          style={{ flexDirection: 'row', alignSelf: 'flex-start', width: 100 }}>
           <CheckBox
-            onValueChange={value => this.setState({largePadding: value})}
+            onValueChange={value => this.setState({ largePadding: value })}
             value={this.state.largePadding}
           />
           <Text>largePadding</Text>

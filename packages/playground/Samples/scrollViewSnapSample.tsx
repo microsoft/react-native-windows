@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -36,40 +36,40 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   toggleSwitch1 = (value: boolean) => {
-    this.setState({horizontalValue: value});
+    this.setState({ horizontalValue: value });
   };
 
   toggleSwitch2 = (value: boolean) => {
-    this.setState({snapToStartValue: value});
+    this.setState({ snapToStartValue: value });
   };
 
   toggleSwitch3 = (value: boolean) => {
-    this.setState({snapToEndValue: value});
+    this.setState({ snapToEndValue: value });
   };
 
   toggleSwitch4 = (value: boolean) => {
-    this.setState({zoomValue: value});
+    this.setState({ zoomValue: value });
   };
 
   toggleSwitch5 = (value: boolean) => {
-    this.setState({alignToStartValue: value});
+    this.setState({ alignToStartValue: value });
   };
 
   toggleSwitch6 = (value: boolean) => {
-    this.setState({snapToOffsets: value});
+    this.setState({ snapToOffsets: value });
   };
 
   toggleSwitch7 = (value: boolean) => {
-    this.setState({pagingEnabled: value});
+    this.setState({ pagingEnabled: value });
   };
 
   toggleSwitch8 = (value: boolean) => {
-    this.setState({keyboardDismiss: value});
+    this.setState({ keyboardDismiss: value });
   };
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    wait(2000).then(() => this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    wait(2000).then(() => this.setState({ refreshing: false }));
   };
 
   makeItems = (nItems: number, styles: Object): Array<any> => {
@@ -93,7 +93,7 @@ export default class Bootstrap extends React.Component<{}, any> {
           flexDirection: 'column',
           justifyContent: 'flex-start',
         }}>
-        <View style={{flex: 0.2, alignSelf: 'center', flexDirection: 'row'}}>
+        <View style={{ flex: 0.2, alignSelf: 'center', flexDirection: 'row' }}>
           <View
             style={{
               flexDirection: 'column',
@@ -219,7 +219,7 @@ export default class Bootstrap extends React.Component<{}, any> {
             />
           </View>
         </View>
-        <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
+        <View style={{ flex: 0.8, alignSelf: 'center', flexDirection: 'column' }}>
           <ScrollView
             style={
               this.state.horizontalValue

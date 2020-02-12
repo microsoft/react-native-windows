@@ -139,10 +139,8 @@ function launchServer(port, reactNativePath)
    * in script. So we just replace the contents of the script with the fixed version. This should be
    * removed when PR #25517 on RN Repo gets approved and a new RN version is released.
    */
-  const launchPackagerScriptContent = `:: Copyright (c) Facebook, Inc. and its affiliates.
-  ::
-  :: This source code is licensed under the MIT license found in the
-  :: LICENSE file in the root directory of this source tree.
+  const launchPackagerScriptContent = `:: Copyright (c) Microsoft Corporation.
+  :: Licensed under the MIT License.
   @echo off
   title Metro Bundler
   call .packager.bat

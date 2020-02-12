@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import * as React from 'react';
-import {AppRegistry, Text, TouchableHighlight, View} from 'react-native';
+import { AppRegistry, Text, TouchableHighlight, View } from 'react-native';
 
 export default class Bootstrap extends React.Component {
   state = {
@@ -13,37 +13,37 @@ export default class Bootstrap extends React.Component {
   };
 
   onSmallIncrement = () => {
-    this.setState({ticker: this.state.ticker + 1});
+    this.setState({ ticker: this.state.ticker + 1 });
   };
 
   onMediumIncrement = () => {
-    this.setState({ticker: this.state.ticker + 10});
+    this.setState({ ticker: this.state.ticker + 10 });
   };
 
   onLargeIncrement = () => {
-    this.setState({ticker: this.state.ticker + 100});
+    this.setState({ ticker: this.state.ticker + 100 });
   };
 
   render() {
     return (
       <View
-        style={{backgroundColor: 'blue', margin: 10, width: 120}}
+        style={{ backgroundColor: 'blue', margin: 10, width: 120 }}
         {...{
           // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
           onClick: this.onLargeIncrement,
           acceptsKeyboardFocus: true,
         }}>
         <TouchableHighlight
-          style={{backgroundColor: 'orange', margin: 15}}
+          style={{ backgroundColor: 'orange', margin: 15 }}
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             onPress: this.onMediumIncrement,
             acceptsKeyboardFocus: true,
           }}>
           <TouchableHighlight
-            style={{backgroundColor: 'azure', margin: 15}}
+            style={{ backgroundColor: 'azure', margin: 15 }}
             onPress={this.onSmallIncrement}>
-            <View style={{margin: 5}}>
+            <View style={{ margin: 5 }}>
               <Text>{this.state.ticker.toString()}</Text>
             </View>
           </TouchableHighlight>

@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 import * as React from 'react';
-import {Picker} from 'react-native-windows';
-import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
+import { Picker } from 'react-native-windows';
+import { AppRegistry, Image, View, Text, Switch, StyleSheet } from 'react-native';
 
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
@@ -19,17 +19,17 @@ export default class Bootstrap extends React.Component<
   {},
   {
     selectedResizeMode:
-      | 'center'
-      | 'stretch'
-      | 'cover'
-      | 'contain'
-      | 'repeat'
-      | undefined;
+    | 'center'
+    | 'stretch'
+    | 'cover'
+    | 'contain'
+    | 'repeat'
+    | undefined;
     includeBorder: boolean;
     selectedSource: string;
     imageUri: string;
   }
-> {
+  > {
   state = {
     selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
@@ -38,7 +38,7 @@ export default class Bootstrap extends React.Component<
   };
 
   switchImageUri = (value: string) => {
-    this.setState({selectedSource: value});
+    this.setState({ selectedSource: value });
 
     let imageUri = '';
 
@@ -50,7 +50,7 @@ export default class Bootstrap extends React.Component<
       imageUri = dataImageUri;
     }
 
-    this.setState({imageUri});
+    this.setState({ imageUri });
   };
 
   render() {
@@ -59,9 +59,9 @@ export default class Bootstrap extends React.Component<
         <View style={styles.rowContainer}>
           <Text style={styles.title}>ResizeMode</Text>
           <Picker
-            style={{width: 125}}
+            style={{ width: 125 }}
             selectedValue={this.state.selectedResizeMode}
-            onValueChange={value => this.setState({selectedResizeMode: value})}>
+            onValueChange={value => this.setState({ selectedResizeMode: value })}>
             <Picker.Item label="cover" value="cover" />
             <Picker.Item label="contain" value="contain" />
             <Picker.Item label="stretch" value="stretch" />
@@ -72,7 +72,7 @@ export default class Bootstrap extends React.Component<
         <View style={styles.rowContainer}>
           <Text style={styles.title}>Image Source</Text>
           <Picker
-            style={{width: 125}}
+            style={{ width: 125 }}
             selectedValue={this.state.selectedSource}
             onValueChange={value => this.switchImageUri(value)}>
             <Picker.Item label="small" value="small" />
@@ -84,10 +84,10 @@ export default class Bootstrap extends React.Component<
         <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
-            style={{marginLeft: 10}}
+            style={{ marginLeft: 10 }}
             value={this.state.includeBorder}
             onValueChange={(value: boolean) =>
-              this.setState({includeBorder: value})
+              this.setState({ includeBorder: value })
             }
           />
           <Text>Round Border</Text>
@@ -100,7 +100,7 @@ export default class Bootstrap extends React.Component<
             source={
               this.state.selectedSource === 'svg'
                 ? require('../Samples/Microsoft-Logo.svg')
-                : {uri: this.state.imageUri}
+                : { uri: this.state.imageUri }
             }
             resizeMode={this.state.selectedResizeMode}
           />

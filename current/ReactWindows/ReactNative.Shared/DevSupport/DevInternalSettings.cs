@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // Portions derived from React Native:
 // Copyright (c) 2015-present, Facebook, Inc.

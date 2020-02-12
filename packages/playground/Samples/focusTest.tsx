@@ -1,16 +1,16 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import * as React from 'react';
-import {AppRegistry, StyleSheet, Text, TextInput, View} from 'react-native';
+import { AppRegistry, StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default class Bootstrap extends React.Component<{}, {text: string}> {
+export default class Bootstrap extends React.Component<{}, { text: string }> {
   constructor(props: {}) {
     super(props);
-    this.state = {text: 'Starting text.'};
+    this.state = { text: 'Starting text.' };
   }
 
   render() {
@@ -22,8 +22,8 @@ export default class Bootstrap extends React.Component<{}, {text: string}> {
           accessibilityLabel="THIRD ITEM"
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            onFocus: () => this.setState({text: 'FOCUSED'}),
-            onBlur: () => this.setState({text: 'BLURRED'}),
+            onFocus: () => this.setState({ text: 'FOCUSED' }),
+            onBlur: () => this.setState({ text: 'BLURRED' }),
           }}>
           <Text style={styles.text}>{this.state.text}</Text>
         </View>

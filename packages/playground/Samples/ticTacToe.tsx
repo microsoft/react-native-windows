@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -21,8 +21,8 @@ type SquareValue = null | 'X' | 'O';
 
 export default class Bootstrap extends React.Component<
   {},
-  {squares: SquareValue[]; xIsNext: boolean}
-> {
+  { squares: SquareValue[]; xIsNext: boolean }
+  > {
   constructor(props: {}) {
     super(props);
     this.state = newGameState;
@@ -73,9 +73,9 @@ const Board = (props: {
   squares: SquareValue[];
   onMove: (index: number) => void;
 }) => {
-  const {squares, onMove} = props;
+  const { squares, onMove } = props;
   return (
-    <View style={{flex: 1, justifyContent: 'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
       <Row squares={squares} startIndex={0} onMove={onMove} />
       <Row squares={squares} startIndex={3} onMove={onMove} />
       <Row squares={squares} startIndex={6} onMove={onMove} />
@@ -88,9 +88,9 @@ const Row = (props: {
   startIndex: number;
   onMove: (index: number) => void;
 }) => {
-  const {squares, startIndex, onMove} = props;
+  const { squares, startIndex, onMove } = props;
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <Square label={squares[startIndex]} onPress={() => onMove(startIndex)} />
       <Square
         label={squares[startIndex + 1]}
@@ -104,8 +104,8 @@ const Row = (props: {
   );
 };
 
-const Square = (props: {label: SquareValue; onPress: () => void}) => {
-  const {label, onPress} = props;
+const Square = (props: { label: SquareValue; onPress: () => void }) => {
+  const { label, onPress } = props;
   const style = {
     width: 50,
     height: 50,
@@ -132,7 +132,7 @@ const Status = (props: {
   winner: null | undefined | 'X' | 'O';
   onNewGame: () => void;
 }) => {
-  const {turn, winner, onNewGame} = props;
+  const { turn, winner, onNewGame } = props;
   const text =
     winner === null
       ? 'Tie game :-/'
@@ -141,8 +141,8 @@ const Status = (props: {
         : turn + "'s turn";
 
   return (
-    <View style={{flex: 1}}>
-      <Text style={{fontSize: 36, textAlign: 'center'}}>{text}</Text>
+    <View style={{ flex: 1 }}>
+      <Text style={{ fontSize: 36, textAlign: 'center' }}>{text}</Text>
       <Button title="Start new game" onPress={onNewGame} />
     </View>
   );

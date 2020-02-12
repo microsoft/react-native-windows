@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -21,7 +21,7 @@ export default class Bootstrap extends React.Component<
     mouseEntered1: boolean;
     mouseEntered2: boolean;
   }
-> {
+  > {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -79,29 +79,29 @@ export default class Bootstrap extends React.Component<
   }
 
   click = () => {
-    this.setState({clicked: this.state.clicked + 1});
+    this.setState({ clicked: this.state.clicked + 1 });
   };
   mouseEnter0 = () => {
-    this.setState({mouseEntered0: true});
+    this.setState({ mouseEntered0: true });
   };
 
   mouseLeave0 = () => {
-    this.setState({mouseEntered0: false});
+    this.setState({ mouseEntered0: false });
   };
 
   mouseEnter1 = () => {
-    this.setState({mouseEntered1: true});
+    this.setState({ mouseEntered1: true });
   };
 
   mouseLeave1 = () => {
-    this.setState({mouseEntered1: false});
+    this.setState({ mouseEntered1: false });
   };
   mouseEnter2 = () => {
-    this.setState({mouseEntered2: true});
+    this.setState({ mouseEntered2: true });
   };
 
   mouseLeave2 = () => {
-    this.setState({mouseEntered2: false});
+    this.setState({ mouseEntered2: false });
   };
   press = (event: GestureResponderEvent) => {
     console.log('press');

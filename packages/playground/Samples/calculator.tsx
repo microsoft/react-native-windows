@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -116,7 +116,7 @@ export default class Bootstrap extends React.Component {
             text = text.substring(0, text.length - 1);
           }
 
-          this.setState({displayText: text});
+          this.setState({ displayText: text });
         }
       }
     } else if (btn === operators.decimal) {
@@ -131,7 +131,7 @@ export default class Bootstrap extends React.Component {
       if (isFinite(Number(text))) {
         let num = Number(text);
         num *= -1.0;
-        this.setState({displayText: String(num)});
+        this.setState({ displayText: String(num) });
       }
     } else if (
       btn === operators.add ||
@@ -142,13 +142,13 @@ export default class Bootstrap extends React.Component {
       // Add, Subrtract, Multiply, or Divide
       if (isFinite(Number(text))) {
         this.computeAndUpdate(btn);
-        this.setState({displayText: calc.stackValue});
+        this.setState({ displayText: calc.stackValue });
       }
     } else if (btn === operators.equals) {
       // Equals
       if (isFinite(Number(text))) {
         this.computeAndUpdate(btn);
-        this.setState({displayText: calc.stackValue});
+        this.setState({ displayText: calc.stackValue });
         calc.stackValue = NaN;
       }
     } else if (!isNaN(Number(btn))) {
@@ -165,7 +165,7 @@ export default class Bootstrap extends React.Component {
         }
 
         text += btn;
-        this.setState({displayText: String(Number(text))});
+        this.setState({ displayText: String(Number(text)) });
       }
     } else {
       // Error
@@ -175,7 +175,7 @@ export default class Bootstrap extends React.Component {
   clearEntry() {
     calc.decimalPressed = false;
     calc.showingPreviousResult = false;
-    this.setState({displayText: '0'});
+    this.setState({ displayText: '0' });
   }
 
   computeAndUpdate(nextOperator: operators) {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -16,7 +16,7 @@ import {
 // navigator is a browser polyfill defined by react-native
 declare const navigator: any;
 type GeoPos = {
-  coords: {latitude: string; longitude: string};
+  coords: { latitude: string; longitude: string };
   timestamp: string;
 };
 
@@ -29,7 +29,7 @@ export default class Bootstrap extends React.Component<
     lastCmd: string;
     lastError: string;
   }
-> {
+  > {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -59,7 +59,7 @@ export default class Bootstrap extends React.Component<
     navigator.geolocation.requestAuthorization();
 
     this.ResetState();
-    this.setState({lastCmd: 'RequestAuth'});
+    this.setState({ lastCmd: 'RequestAuth' });
   }
 
   OnGetCurrentPos() {
@@ -69,12 +69,12 @@ export default class Bootstrap extends React.Component<
         this.OnPosChanged(result);
       },
       (error: any) => {
-        this.setState({lastError: error});
+        this.setState({ lastError: error });
       },
     );
 
     this.ResetState();
-    this.setState({lastCmd: 'GetCurrentPos'});
+    this.setState({ lastCmd: 'GetCurrentPos' });
   }
 
   OnStartWatching() {
@@ -82,7 +82,7 @@ export default class Bootstrap extends React.Component<
       this.OnPosChanged(pos);
     });
     this.ResetState();
-    this.setState({lastCmd: 'StartWatching'});
+    this.setState({ lastCmd: 'StartWatching' });
   }
 
   OnStopWatching() {
@@ -91,11 +91,11 @@ export default class Bootstrap extends React.Component<
     }
     this.watchID = -1;
     this.ResetState();
-    this.setState({lastCmd: 'StopWatching'});
+    this.setState({ lastCmd: 'StopWatching' });
   }
 
   OnPosChanged(pos: {
-    coords: {latitude: string; longitude: string};
+    coords: { latitude: string; longitude: string };
     timestamp: string;
   }) {
     this.setState({
@@ -110,22 +110,22 @@ export default class Bootstrap extends React.Component<
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={() => this.OnRequestAuth()}>
           <View style={styles.fauxbutton}>
-            <Text style={{textAlign: 'center'}}>Request Auth</Text>
+            <Text style={{ textAlign: 'center' }}>Request Auth</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => this.OnGetCurrentPos()}>
           <View style={styles.fauxbutton}>
-            <Text style={{textAlign: 'center'}}>GetCurrentPosition</Text>
+            <Text style={{ textAlign: 'center' }}>GetCurrentPosition</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => this.OnStartWatching()}>
           <View style={styles.fauxbutton}>
-            <Text style={{textAlign: 'center'}}>StartWatching</Text>
+            <Text style={{ textAlign: 'center' }}>StartWatching</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => this.OnStopWatching()}>
           <View style={styles.fauxbutton}>
-            <Text style={{textAlign: 'center'}}>StopWatching</Text>
+            <Text style={{ textAlign: 'center' }}>StopWatching</Text>
           </View>
         </TouchableWithoutFeedback>
         <Text style={styles.stuff}>Lat: {this.state.lat}</Text>

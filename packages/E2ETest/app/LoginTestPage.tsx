@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
@@ -36,9 +36,9 @@ export function LoginTestPage() {
   const [passwordHidden, setPasswordHidden] = useState(true);
 
   const onPressShowPassword = () => {
-      var previousState = passwordHidden;
-      setPasswordHidden(!previousState);
-   }
+    var previousState = passwordHidden;
+    setPasswordHidden(!previousState);
+  }
 
   const onPress = () => {
     if (userName === 'username' && password === 'password') {
@@ -59,12 +59,12 @@ export function LoginTestPage() {
         placeholder='Password'
         testID={PASSWORD_ON_LOGIN}
         placeholderTextColor='rgba(225,225,225,0.7)'
-        secureTextEntry = {passwordHidden}
+        secureTextEntry={passwordHidden}
         onChange={(text) => { setPassword(text.nativeEvent.text) }} />
 
-      <Button title= {passwordHidden?"Show Password":"Hide Password"} 
-        onPress={onPressShowPassword} 
-        testID={SHOWPASSWORD_ON_LOGIN}/>
+      <Button title={passwordHidden ? "Show Password" : "Hide Password"}
+        onPress={onPressShowPassword}
+        testID={SHOWPASSWORD_ON_LOGIN} />
 
       <TouchableOpacity style={styles.buttonContainer}
         testID={SUBMIT_ON_LOGIN}
