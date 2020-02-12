@@ -40,7 +40,7 @@ Object.defineProperty(ReactNativeImplementation, 'TouchableWin32', {
 
 Object.defineProperty(ReactNativeImplementation, 'PersonaCoin', {
   get: () => {
-    return require('../Components/PersonaCoin/PersonaCoin').PersonaCoin;
+    return require('../PersonaCoin/PersonaCoin').PersonaCoin;
   },
 });
 
