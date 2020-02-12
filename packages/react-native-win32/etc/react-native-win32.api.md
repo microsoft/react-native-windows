@@ -364,6 +364,9 @@ export type OmittedAccessibilityPropsWin32 = {
 };
 
 // @public (undocumented)
+export const PersonaCoin: React.FunctionComponent<IPersonaCoinProps>;
+
+// @public (undocumented)
 export enum PersonaCoinPresence {
     // (undocumented)
     away = 1,
