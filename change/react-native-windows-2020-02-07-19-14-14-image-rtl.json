@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Flip ImageView in rtl mode",
+  "packageName": "react-native-windows",
+  "email": "guokai.ok@gmail.com",
+  "commit": "426f7b1af8f0f5d019cdf6d4036df4e9c0edab68",
+  "dependentChangeType": "patch",
+  "date": "2020-02-08T03:14:14.206Z"
+}
