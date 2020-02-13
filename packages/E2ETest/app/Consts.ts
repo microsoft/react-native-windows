@@ -39,6 +39,7 @@ export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
 export const IMAGE_TESTPAGE = 'ImageTestPage';
 export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
 export const SHOW_IMAGE_BORDER = 'BorderButton';
+export const SET_RTL_MODE = 'RTLButton';
 export const IMAGE_CONTAINER = 'ImageContainer';
 
 // Control Style Test Page
