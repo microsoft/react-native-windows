@@ -20,6 +20,8 @@ This package provides Win32 specific components and provides JS implementations 
 |  Enumeration | Description |
 |  --- | --- |
 |  [EventPhase](./react-native-win32.eventphase.md) |  |
+|  [PersonaCoinPresence](./react-native-win32.personacoinpresence.md) |  |
+|  [PersonaCoinSize](./react-native-win32.personacoinsize.md) |  |
 
 ## Interfaces
 
@@ -29,6 +31,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  [IButtonWin32Style](./react-native-win32.ibuttonwin32style.md) |  |
 |  [IDimensions](./react-native-win32.idimensions.md) | Describes the height and width of a control |
 |  [INativeKeyboardEvent](./react-native-win32.inativekeyboardevent.md) |  |
+|  [IPersonaCoinProps](./react-native-win32.ipersonacoinprops.md) |  |
 |  [IPosition](./react-native-win32.iposition.md) | Describes the position at which an event occurred |
 |  [IPressInLocation](./react-native-win32.ipressinlocation.md) | Describes both the global and relative position of a press |
 |  [IResponderSyntheticEvent](./react-native-win32.irespondersyntheticevent.md) | More fully defines an event by augmenting touchHistory |
@@ -38,6 +41,12 @@ This package provides Win32 specific components and provides JS implementations 
 |  [ITouchInfo](./react-native-win32.itouchinfo.md) | Describes a touch |
 |  [IViewWin32](./react-native-win32.iviewwin32.md) |  |
 |  [IViewWin32Props](./react-native-win32.iviewwin32props.md) | Properties for ViewWin32 component |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [PersonaCoin](./react-native-win32.personacoin.md) |  |
 
 ## Type Aliases
 

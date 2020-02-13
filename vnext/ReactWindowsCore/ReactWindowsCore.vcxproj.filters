@@ -72,6 +72,9 @@
     <ClCompile Include="Modules\I18nModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\SourceCodeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -191,7 +194,13 @@
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\WebSocketModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleProvider.h">
@@ -227,9 +236,7 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WebSocketModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Modules\SourceCodeModule.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">

@@ -4,6 +4,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -100,6 +101,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [ReactMethod]
+    public async void NegateAsyncCallback(int x, Action<int> resolve)
+    {
+      bool isPositive = await Task.Run(() => x >= 0);
+      resolve(isPositive ? -x : x);
+    }
+
+    [ReactMethod]
     public void SayHelloCallback(Action<string> resolve)
     {
       resolve("Hello_2");
@@ -115,6 +123,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public static void StaticNegateCallback(int x, Action<int> resolve)
     {
       resolve(-x);
+    }
+
+    [ReactMethod]
+    public static async void StaticNegateAsyncCallback(int x, Action<int> resolve)
+    {
+      bool isPositive = await Task.Run(() => x >= 0);
+      resolve(isPositive ? -x : x);
     }
 
     [ReactMethod]
@@ -140,6 +155,21 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void NegateCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
       if (x >= 0)
+      {
+        resolve(-x);
+      }
+      else
+      {
+        reject("Already negative");
+      }
+    }
+
+
+    [ReactMethod]
+    public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
+    {
+      bool isPosititve = await Task.Run(() => x >= 0);
+      if (isPosititve)
       {
         resolve(-x);
       }
@@ -188,6 +218,21 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [ReactMethod]
+    public static async void StaticNegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
+    {
+      bool isPosititve = await Task.Run(() => x >= 0);
+      if (isPosititve)
+      {
+        resolve(-x);
+      }
+      else
+      {
+        reject("Already negative");
+      }
+    }
+
+
+    [ReactMethod]
     public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
     {
       resolve("Hello_3");
@@ -216,6 +261,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void NegatePromise(int x, IReactPromise<int> promise)
     {
       if (x >= 0)
+      {
+        promise.Resolve(-x);
+      }
+      else
+      {
+        promise.Reject(new ReactError { Message = "Already negative" });
+      }
+    }
+
+    [ReactMethod]
+    public async void NegateAsyncPromise(int x, IReactPromise<int> promise)
+    {
+      bool isPosititve = await Task.Run(() => x >= 0);
+      if (isPosititve)
       {
         promise.Resolve(-x);
       }
@@ -268,6 +327,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public static void StaticNegatePromise(int x, IReactPromise<int> promise)
     {
       if (x >= 0)
+      {
+        promise.Resolve(-x);
+      }
+      else
+      {
+        promise.Reject(new ReactError { Message = "Already negative" });
+      }
+    }
+
+    [ReactMethod]
+    public static async void StaticNegateAsyncPromise(int x, IReactPromise<int> promise)
+    {
+      bool isPosititve = await Task.Run(() => x >= 0);
+      if (isPosititve)
       {
         promise.Resolve(-x);
       }
@@ -499,6 +572,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
+    public void TestMethodCall_NegateAyncCallback()
+    {
+      m_moduleBuilder.Call1(nameof(SimpleNativeModule.NegateAsyncCallback), 3, (int result) => Assert.AreEqual(-3, result)).Wait();
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
     public void TestMethodCall_SayHelloCallback()
     {
       m_moduleBuilder.Call1(nameof(SimpleNativeModule.SayHelloCallback), (string result) => Assert.AreEqual("Hello_2", result));
@@ -516,6 +596,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestMethodCall_StaticNegateCallback()
     {
       m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticNegateCallback), 33, (int result) => Assert.AreEqual(-33, result));
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_StaticNegateAsyncCallback()
+    {
+      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticNegateAsyncCallback), 33, (int result) => Assert.AreEqual(-33, result)).Wait();
       Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
     }
 
@@ -559,6 +646,24 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_NegateAsyncCallbacks()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), 5,
+          (int result) => Assert.AreEqual(-5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_NegateAsyncCallbacksError()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), -5,
+          (int result) => Assert.AreEqual(5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
       Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
     }
 
@@ -617,6 +722,24 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
+    public void TestMethodCall_StaticNegateAsyncCallbacks()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), 5,
+          (int result) => Assert.AreEqual(-5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_StaticNegateAsyncCallbacksError()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), -5,
+          (int result) => Assert.AreEqual(5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloCallbacks()
     {
       m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloCallbacks),
@@ -667,6 +790,24 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_NegateAsyncPromise()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
+          (int result) => Assert.AreEqual(-5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_NegateAsyncPromiseError()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
+          (int result) => Assert.AreEqual(5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
       Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
     }
 
@@ -739,6 +880,24 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_StaticNegateAsyncPromise()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
+          (int result) => Assert.AreEqual(-5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_StaticNegateAsyncPromiseError()
+    {
+      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
+          (int result) => Assert.AreEqual(5, result),
+          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
       Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
     }
 

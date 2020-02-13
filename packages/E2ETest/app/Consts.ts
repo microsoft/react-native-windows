@@ -13,7 +13,9 @@ export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
 export const TEXTINPUT_TESTPAGE = 'TextInputTestPage';
 
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
+export const CURTEXT_ON_TEXTINPUT = 'CurTextInput';
 export const PREVTEXT_ON_TEXTINPUT = 'PrevTextInput';
+export const PREV2TEXT_ON_TEXTINPUT = 'Prev2TextInput';
 export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
 export const CAP_TEXTINPUT_ON_TEXTINPUT = 'TextInputAutoCap';
 
@@ -31,7 +33,8 @@ export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
 // Direct Manipulation Page
 export const DIRECT_MANIPULATION_TESTPAGE = 'DirectManipulationTestPage';
 export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
-export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
+export const MEASURE_LAYOUT_BUTTON = 'MeasureLayout';
+export const DIRECT_MANIPULATION_RESULT = 'DirectManipulationResult';
 
 // Image Test Page
 export const IMAGE_TESTPAGE = 'ImageTestPage';

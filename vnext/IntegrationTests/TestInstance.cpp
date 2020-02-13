@@ -98,6 +98,12 @@ void TestNativeUIManager::measureInWindow(
     facebook::react::ShadowNode &shadowNode,
     facebook::xplat::module::CxxModule::Callback callback) {}
 
+void TestNativeUIManager::measureLayout(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::react::ShadowNode &ancestorShadowNode,
+    facebook::xplat::module::CxxModule::Callback callbackFail,
+    facebook::xplat::module::CxxModule::Callback callbackSuccess){};
+
 void TestNativeUIManager::findSubviewIn(
     facebook::react::ShadowNode &shadowNode,
     float x,

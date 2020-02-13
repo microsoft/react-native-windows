@@ -11,6 +11,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
+#include "Unicode.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -975,6 +976,38 @@ void NativeUIManager::measureInWindow(
   }
 
   callback(args);
+}
+
+void NativeUIManager::measureLayout(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::react::ShadowNode &ancestorNode,
+    facebook::xplat::module::CxxModule::Callback errorCallback,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  std::vector<folly::dynamic> args;
+  try {
+    const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
+    const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
+    const auto targetElement = target.GetView().as<winrt::FrameworkElement>();
+    const auto ancenstorElement = ancestor.GetView().as<winrt::FrameworkElement>();
+
+    const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
+    const auto width = static_cast<float>(targetElement.ActualWidth());
+    const auto height = static_cast<float>(targetElement.ActualHeight());
+    const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
+
+    // x, y
+    args.push_back(transformedBounds.X);
+    args.push_back(transformedBounds.Y);
+
+    // Size
+    args.push_back(transformedBounds.Width);
+    args.push_back(transformedBounds.Height);
+    callback(args);
+  } catch (winrt::hresult_error const &e) {
+    const auto &msg = e.message();
+    args.push_back(Microsoft::Common::Unicode::Utf16ToUtf8(msg.c_str(), msg.size()));
+    errorCallback(args);
+  }
 }
 
 void NativeUIManager::findSubviewIn(

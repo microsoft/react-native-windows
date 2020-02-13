@@ -20,7 +20,7 @@ class SourceCodeModule : public facebook::xplat::module::CxxModule {
   virtual auto getConstants() -> std::map<std::string, folly::dynamic>;
   virtual auto getMethods() -> std::vector<Method>;
 
-  static const char *name;
+  static const char *Name;
 
  private:
   std::string m_bundleUrl;

@@ -1,7 +1,32 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Feb 2020 01:37:12 GMT and should not be manually modified.
 
+## 0.61.0-beta.5
+Thu, 13 Feb 2020 01:37:12 GMT
+
+### Changes
+
+- Set doc generation to output to new path. Update docs to include recent changes. (aschultz@microsoft.com)
+## 0.61.0-beta.4
+Wed, 12 Feb 2020 21:40:06 GMT
+
+### Changes
+
+- Fixed Developer menu and Live Reaload (vmorozov@microsoft.com)
+## 0.61.0-beta.3
+Wed, 12 Feb 2020 11:16:52 GMT
+
+### Changes
+
+- Provide a Minimal PlatformConstants Implementation (ngerlem@microsoft.com)
+## 0.61.0-beta.2
+Wed, 12 Feb 2020 00:46:46 GMT
+
+### Changes
+
+- Fix scroll indicators being shown when not required (jagorrin@microsoft.com)
+- Added async code to native module test methods (vmorozov@microsoft.com)
 ## 0.61.0-beta.1
 Tue, 11 Feb 2020 01:21:44 GMT
 

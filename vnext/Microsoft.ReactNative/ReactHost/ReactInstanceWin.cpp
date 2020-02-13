@@ -18,6 +18,7 @@
 #include "JSExceptionCallbackFactory.h"
 
 #include <dispatchQueue/dispatchQueue.h>
+#include "Modules/AppStateData.h"
 
 #ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
@@ -129,11 +130,10 @@ void ReactInstanceWin::Initialize() noexcept {
       [weakThis = Mso::WeakPtr{this}]() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
-          auto const &legacyFuture = strongThis->m_legacyReactInstance;
-          strongThis->m_deviceInfo = std::make_shared<react::uwp::DeviceInfo>(legacyFuture);
-          strongThis->m_appState = std::make_shared<react::uwp::AppState>(legacyFuture);
+          auto const &legacyInstance = strongThis->m_legacyReactInstance;
+          strongThis->m_deviceInfo = std::make_shared<react::uwp::DeviceInfo>(legacyInstance);
           strongThis->m_appTheme =
-              std::make_shared<react::uwp::AppTheme>(legacyFuture, strongThis->m_uiMessageThread.LoadWithLock());
+              std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           strongThis->m_i18nInfo = react::uwp::I18nModule::GetI18nInfo();
         }
       })
@@ -169,10 +169,13 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
+          m_appState = std::make_shared<react::uwp::AppState2>(*m_reactContext);
+
           // Acquire default modules and then populate with custom modules
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
               m_uiManager.Load(),
               m_batchingUIThread,
+              m_uiMessageThread.Load(),
               m_deviceInfo,
               devSettings,
               std::move(m_i18nInfo),
