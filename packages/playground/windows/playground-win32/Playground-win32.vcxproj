@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;windowsapp.lib;$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;%(AdditionalDependenices)</AdditionalDependencies>
+      <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;%(AdditionalDependenices)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>

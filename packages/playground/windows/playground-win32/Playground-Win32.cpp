@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "resource.h"
 
+#include <PathCch.h>
 #include <shobjidl.h>
+#include <shlobj.h>
 #include <windows.h>
 
-#include <ReactUWP/InstanceFactory.h>
 #include <ReactUWP/IXamlRootView.h>
+#include <ReactUWP/InstanceFactory.h>
 #include <ReactUWP/ReactUwp.h>
 #include <Unicode.h>
 
@@ -19,6 +21,40 @@
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 
 #pragma pop_macro("GetCurrentTime")
+
+namespace {
+
+struct LocalFreeDeleter {
+  void operator()(void* pv) const noexcept {
+      ::LocalFree(pv);
+  }
+};
+
+std::unique_ptr<WCHAR, LocalFreeDeleter> PathCombine(PCWSTR pathIn, PCWSTR more)
+{
+    PWSTR pathOut = nullptr;
+    winrt::check_hresult(PathAllocCombine(pathIn, more, 0, &pathOut));
+    return std::unique_ptr<WCHAR, LocalFreeDeleter>(pathOut);
+}
+
+std::string GetAsyncLocalStorageDBPath()
+{
+    winrt::com_array<WCHAR> localAppData;
+    winrt::check_hresult(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, put_abi(localAppData)));
+
+    auto asyncLocalStorageDBDir = PathCombine(localAppData.data(), LR"(Microsoft\React Native Playground (Win32))");
+    if (!CreateDirectoryW(asyncLocalStorageDBDir.get(), nullptr))
+    {
+        if (::GetLastError() != ERROR_ALREADY_EXISTS)
+            winrt::throw_last_error();
+    }
+
+    auto asyncLocalStoragePath = PathCombine(asyncLocalStorageDBDir.get(), L"AsyncStorage.sqlite3");
+    return Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view { asyncLocalStoragePath.get() });
+}
+
+
+}
 
 namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
@@ -51,27 +87,23 @@ class PlaygroundViewManagerProvider final : public react::uwp::ViewManagerProvid
   }
 };
 
-struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator
-{
-    HwndReactInstanceCreator(HWND hwnd)
-    {
-        m_hwnd = hwnd;
-    }
+struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
+  HwndReactInstanceCreator(HWND hwnd) {
+    m_hwnd = hwnd;
+  }
 
-    void detach()
-    {
-        m_hwnd = nullptr;
-    }
+  void detach() {
+    m_hwnd = nullptr;
+  }
 
-    std::shared_ptr<::react::uwp::IReactInstance> getInstance() override;
-    void markAsNeedsReload() override;
-    void persistUseWebDebugger(bool useWebDebugger) override;
-    void persistUseLiveReload(bool useLiveReload) override;
+  std::shared_ptr<::react::uwp::IReactInstance> getInstance() override;
+  void markAsNeedsReload() override;
+  void persistUseWebDebugger(bool useWebDebugger) override;
+  void persistUseLiveReload(bool useLiveReload) override;
 
-private:
-    HWND m_hwnd;
+ private:
+  HWND m_hwnd;
 };
-
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -114,7 +146,8 @@ struct WindowData {
           settings.UseWebDebugger = m_useWebDebugger;
           settings.UseLiveReload = m_liveReloadEnabled;
           settings.EnableDeveloperMenu = true;
-
+          settings.AsyncLocalStorageDBPath = GetAsyncLocalStorageDBPath();
+ 
           settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
             OutputDebugStringA("In LoggingCallback");
             OutputDebugStringA(message);
@@ -132,8 +165,10 @@ struct WindowData {
           // Retrieve ABI pointer from C++/CX pointer
           auto rootElement = m_desktopWindowXamlSource.Content().as<WUX::FrameworkElement>();
 
+          PCWSTR appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
+
           // Create the root view
-          m_rootView = react::uwp::CreateReactRootView(rootElement, m_bundleFile.c_str(), m_instanceCreator);
+          m_rootView = react::uwp::CreateReactRootView(rootElement, appName, m_instanceCreator);
 
           m_rootView->SetInitialProps(std::move(initialProps));
           m_rootView->SetInstanceCreator(m_instanceCreator);
@@ -168,13 +203,10 @@ struct WindowData {
 
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
 
-    try
-    {
-        m_instanceCreator = std::make_shared<HwndReactInstanceCreator>(hwnd);
-    }
-    catch (...)
-    {
-        return -1;
+    try {
+      m_instanceCreator = std::make_shared<HwndReactInstanceCreator>(hwnd);
+    } catch (...) {
+      return -1;
     }
 
     return 0;
@@ -289,40 +321,35 @@ struct WindowData {
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
-std::shared_ptr<::react::uwp::IReactInstance> HwndReactInstanceCreator::getInstance()
-{
-    if (!m_hwnd)
-        return nullptr;
+std::shared_ptr<::react::uwp::IReactInstance> HwndReactInstanceCreator::getInstance() {
+  if (!m_hwnd)
+    return nullptr;
 
-    return WindowData::GetFromWindow(m_hwnd)->m_instance;
+  return WindowData::GetFromWindow(m_hwnd)->m_instance;
 }
 
-void HwndReactInstanceCreator::markAsNeedsReload()
-{
-    if (!m_hwnd)
-        return;
+void HwndReactInstanceCreator::markAsNeedsReload() {
+  if (!m_hwnd)
+    return;
 
-    auto instance = WindowData::GetFromWindow(m_hwnd)->m_instance;
-    if (instance)
-        instance->SetAsNeedsReload();
+  auto instance = WindowData::GetFromWindow(m_hwnd)->m_instance;
+  if (instance)
+    instance->SetAsNeedsReload();
 }
 
-void HwndReactInstanceCreator::persistUseWebDebugger(bool useWebDebugger)
-{
-    if (!m_hwnd)
-        return;
+void HwndReactInstanceCreator::persistUseWebDebugger(bool useWebDebugger) {
+  if (!m_hwnd)
+    return;
 
-    WindowData::GetFromWindow(m_hwnd)->m_useWebDebugger = useWebDebugger;
+  WindowData::GetFromWindow(m_hwnd)->m_useWebDebugger = useWebDebugger;
 }
 
-void HwndReactInstanceCreator::persistUseLiveReload(bool useLiveReload)
-{
-    if (!m_hwnd)
-        return;
+void HwndReactInstanceCreator::persistUseLiveReload(bool useLiveReload) {
+  if (!m_hwnd)
+    return;
 
-    WindowData::GetFromWindow(m_hwnd)->m_liveReloadEnabled = useLiveReload;
+  WindowData::GetFromWindow(m_hwnd)->m_liveReloadEnabled = useLiveReload;
 }
-
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   switch (message) {
@@ -352,7 +379,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR commandLine, int showCmd) {
-  constexpr PCWSTR appName = L"ReactNative Playground (Win32)";
+  constexpr PCWSTR appName = L"React Native Playground (Win32)";
   constexpr PCWSTR windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
@@ -376,7 +403,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
 
-  desktopXamlSource.Content(WUXC::Grid());
+  auto xamlContent = WUXC::Grid();
+  desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
       windowClassName,

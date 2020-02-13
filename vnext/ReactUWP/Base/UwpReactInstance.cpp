@@ -171,7 +171,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         std::move(i18nInfo),
         std::move(appstate),
         std::move(appTheme),
-        std::weak_ptr<IReactInstance>(spThis));
+        spThis);
 
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =
@@ -306,8 +306,8 @@ const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::JS
   return m_jsThread;
 }
 
-const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread()
-    const noexcept {
+const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread() const
+    noexcept {
   return m_defaultNativeThread;
 }
 
