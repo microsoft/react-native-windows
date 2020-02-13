@@ -10,7 +10,6 @@
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.ApplicationModel.Resources.Core.h>
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
@@ -86,19 +85,6 @@ class ImageShadowNode : public ShadowNodeBase {
 
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), succeeded ? "topLoad" : "topError", source);
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), "topLoadEnd", source);
-
-
-      // ImageView gets flipped by yoga layout in RTL mode. Use ScaleTransfrom to flip it back.
-      const auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
-                             .GetForCurrentView()
-                             .QualifierValues()
-                             .Lookup(L"LayoutDirection");
-      if (layoutDirection != L"LTR") {
-        const winrt::ScaleTransform horizontalFlipTransform;
-        horizontalFlipTransform.ScaleX(-1);
-        reactImage->RenderTransformOrigin(winrt::Point(0.5, 0.5));
-        reactImage->RenderTransform(horizontalFlipTransform);
-      }
     });
   }
 
