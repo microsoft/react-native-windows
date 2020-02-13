@@ -5,7 +5,7 @@
 
 import { StyleSheet, View, Image, Button } from 'react-native'
 import React, { useState } from 'react';
-import { SHOW_IMAGE_BORDER, IMAGE_CONTAINER, TREE_DUMP_RESULT } from './Consts';
+import { SHOW_IMAGE_BORDER, SET_RTL_MODE, IMAGE_CONTAINER, TREE_DUMP_RESULT } from './Consts';
 import { TreeDumpControl } from './TreeDumpControl'
 
 const styles = StyleSheet.create({
@@ -36,7 +36,13 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'red',
-  },  
+  },
+  rtlImage: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'red',
+    direction: 'rtl'
+  },
   treeDumpControl: {
     height: 150,
     width: 500,
@@ -46,6 +52,7 @@ const styles = StyleSheet.create({
 
 export function ImageTestPage() {
   const [imageWithBorder, setImageBorder] = useState(false);
+  const [rltMode, setRtlMode] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const onPressBorder = () => {
     var previousImageBorderState = imageWithBorder;
@@ -53,11 +60,25 @@ export function ImageTestPage() {
     var previousClickCount = clickCount;
     setClickCount(previousClickCount+1);
  }
+
+  const imageStyle = () => {
+    if(rltMode) return styles.rtlImage;
+    if(imageWithBorder) return styles.imageWithBorder;
+    return styles.image;
+  }
+
+  const dumpId = () => {
+    if(rltMode) return 'ImageRTL';
+    if(imageWithBorder) return 'ImageWithBorder';
+    if(clickCount == 0) return 'ImageWithoutBorder';
+    return 'ImageWithoutBorder-Subsequent';
+  }
+
   return(
   <View>
     <View testID={IMAGE_CONTAINER} style={imageWithBorder?styles.containerWithBorder:styles.container}>
       <Image
-        style={imageWithBorder?styles.imageWithBorder:styles.image}
+        style={imageStyle()}
         resizeMode={'center'}
         source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=='}}        
       />      
@@ -65,6 +86,14 @@ export function ImageTestPage() {
     <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
           onPress={onPressBorder} 
           testID={SHOW_IMAGE_BORDER}/> 
-    <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':(clickCount == 0 ? 'ImageWithoutBorder':'ImageWithoutBorder-Subsequent')} uiaID={IMAGE_CONTAINER} testID={TREE_DUMP_RESULT} />
+    <Button title= {rltMode?"Set image to LTR":"Set image to RTL"} 
+          onPress={()=>setRtlMode(!rltMode)} 
+          testID={SET_RTL_MODE}/> 
+    <TreeDumpControl
+      style={styles.treeDumpControl}
+      dumpID={dumpId()}
+      uiaID={IMAGE_CONTAINER}
+      additionalProperties={rltMode ? ['FlowDirection'] : []}
+      testID={TREE_DUMP_RESULT} />
   </View>);
 }

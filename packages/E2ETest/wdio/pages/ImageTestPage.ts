@@ -4,7 +4,7 @@
  */
 
 import { BasePage, By } from './BasePage';
-import { SHOW_IMAGE_BORDER } from '../../app/Consts';
+import { SHOW_IMAGE_BORDER, SET_RTL_MODE } from '../../app/Consts';
 
 class ImageTestPage extends BasePage {
   backToHomePage() {
@@ -20,8 +20,16 @@ class ImageTestPage extends BasePage {
     this._imageBorder.click();
   }
 
+  toggleRTLMode() {
+    this._rtlButton.click();
+  }
+
   private get _imageBorder() {
     return By(SHOW_IMAGE_BORDER);
+  }
+
+  private get _rtlButton() {
+    return By(SET_RTL_MODE);
   }
 }
 
