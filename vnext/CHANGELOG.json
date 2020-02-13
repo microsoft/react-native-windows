@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Feb 2020 05:48:00 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.6",
+      "version": "0.61.0-beta.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed Microsoft.ReactNative compiler warnings and start treating warnings as errors",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5b4cbadba72f9d589a69489ba7589c4658e7793e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Feb 2020 01:37:12 GMT",
       "tag": "react-native-windows_v0.61.0-beta.5",
       "version": "0.61.0-beta.5",

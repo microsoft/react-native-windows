@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed Microsoft.ReactNative compiler warnings and start treating warnings as errors",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "5b4cbadba72f9d589a69489ba7589c4658e7793e",
-  "dependentChangeType": "patch",
-  "date": "2020-02-13T01:31:49.763Z"
-}
