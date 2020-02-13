@@ -233,7 +233,7 @@ inline winrt::Windows::UI::Xaml::Media::Brush JSValue::To() const noexcept {
 
 template <class T>
 static JSValue From(const T &value) noexcept {
-  auto const& writer = MakeJSValueTreeWriter();
+  auto const &writer = MakeJSValueTreeWriter();
   WriteValue(writer, value);
   return TakeJSValue(writer);
 }

@@ -7,7 +7,11 @@
 
 #include "TurboModuleBinding.h"
 
+//[Windows
+// Upstream PR: https://github.com/facebook/react-native/pull/28023
 #include <stdexcept>
+//Windows]
+
 #include <string>
 
 #include <ReactCommon/LongLivedObject.h>
