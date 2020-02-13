@@ -6,7 +6,6 @@
 #include <variant>
 #include "JSValueWriter.h"
 #include "JsonJSValueReader.h"
-#include "catch.hpp"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -164,9 +163,10 @@ void WriteValue(IJSValueWriter const &writer, RobotInfo const &value) noexcept {
   writer.WriteObjectEnd();
 }
 
-TEST_CASE("TestReadCustomType", "JSValueReaderTest") {
-  const wchar_t *json =
-      LR"JSON({
+TEST_CLASS (JSValueReaderTest) {
+  TEST_METHOD(TestReadCustomType) {
+    const wchar_t *json =
+        LR"JSON({
         "Model": 1,
         "Name": "Bob",
         "Age": 42,
@@ -183,101 +183,101 @@ TEST_CASE("TestReadCustomType", "JSValueReaderTest") {
         "Extra": {"Kind": 1, "MovieSeries" : "Episode 2"}
     })JSON";
 
-  IJSValueReader reader = make<JsonJSValueReader>(json);
+    IJSValueReader reader = make<JsonJSValueReader>(json);
 
-  RobotInfo robot = ReadValue<RobotInfo>(reader);
-  REQUIRE(robot.Model == RobotModel::R2D2);
-  REQUIRE(robot.Name == "Bob");
-  REQUIRE(robot.Age == 42);
-  REQUIRE(robot.Shape == RobotShape::Trashcan);
-  REQUIRE(*robot.Shape2 == RobotShape::Beercan);
-  REQUIRE(!robot.Shape3.has_value());
-  REQUIRE(robot.Steps.size() == 3);
-  REQUIRE(robot.Steps[0] == 1);
-  REQUIRE(robot.Steps[1] == 2);
-  REQUIRE(robot.Steps[2] == 3);
-  REQUIRE(robot.Dimensions.size() == 2);
-  REQUIRE(robot.Dimensions["Width"] == 24);
-  REQUIRE(robot.Dimensions["Height"] == 78);
-  REQUIRE(std::get<0>(robot.Badges) == 2);
-  REQUIRE(std::get<1>(robot.Badges) == "Maverick");
-  REQUIRE(std::get<2>(robot.Badges) == true);
-  REQUIRE(robot.Tools.size() == 2);
-  REQUIRE(robot.Tools[0].Name == "Screwdriver");
-  REQUIRE(robot.Tools[0].Weight == 2);
-  REQUIRE(robot.Tools[0].IsEnabled == true);
-  REQUIRE(robot.Tools[1].Name == "Electro-shocker");
-  REQUIRE(robot.Tools[1].Weight == 3);
-  REQUIRE(robot.Tools[1].IsEnabled == false);
-  REQUIRE(robot.Path.size() == 3);
-  REQUIRE(robot.Path[0].X == 5);
-  REQUIRE(robot.Path[0].Y == 6);
-  REQUIRE(robot.Path[1].X == 45);
-  REQUIRE(robot.Path[1].Y == 90);
-  REQUIRE(robot.Path[2].X == 15);
-  REQUIRE(robot.Path[2].Y == 16);
-  const R2D2Extra *r2d2Extra = std::get_if<R2D2Extra>(&robot.Extra);
-  REQUIRE(r2d2Extra != nullptr);
-  REQUIRE(r2d2Extra->MovieSeries == "Episode 2");
-}
+    RobotInfo robot = ReadValue<RobotInfo>(reader);
+    TestCheck(robot.Model == RobotModel::R2D2);
+    TestCheck(robot.Name == "Bob");
+    TestCheck(robot.Age == 42);
+    TestCheck(robot.Shape == RobotShape::Trashcan);
+    TestCheck(*robot.Shape2 == RobotShape::Beercan);
+    TestCheck(!robot.Shape3.has_value());
+    TestCheck(robot.Steps.size() == 3);
+    TestCheck(robot.Steps[0] == 1);
+    TestCheck(robot.Steps[1] == 2);
+    TestCheck(robot.Steps[2] == 3);
+    TestCheck(robot.Dimensions.size() == 2);
+    TestCheck(robot.Dimensions["Width"] == 24);
+    TestCheck(robot.Dimensions["Height"] == 78);
+    TestCheck(std::get<0>(robot.Badges) == 2);
+    TestCheck(std::get<1>(robot.Badges) == "Maverick");
+    TestCheck(std::get<2>(robot.Badges) == true);
+    TestCheck(robot.Tools.size() == 2);
+    TestCheck(robot.Tools[0].Name == "Screwdriver");
+    TestCheck(robot.Tools[0].Weight == 2);
+    TestCheck(robot.Tools[0].IsEnabled == true);
+    TestCheck(robot.Tools[1].Name == "Electro-shocker");
+    TestCheck(robot.Tools[1].Weight == 3);
+    TestCheck(robot.Tools[1].IsEnabled == false);
+    TestCheck(robot.Path.size() == 3);
+    TestCheck(robot.Path[0].X == 5);
+    TestCheck(robot.Path[0].Y == 6);
+    TestCheck(robot.Path[1].X == 45);
+    TestCheck(robot.Path[1].Y == 90);
+    TestCheck(robot.Path[2].X == 15);
+    TestCheck(robot.Path[2].Y == 16);
+    const R2D2Extra *r2d2Extra = std::get_if<R2D2Extra>(&robot.Extra);
+    TestCheck(r2d2Extra != nullptr);
+    TestCheck(r2d2Extra->MovieSeries == "Episode 2");
+  }
 
-TEST_CASE("TestWriteCustomType", "JSValueReaderTest") {
-  RobotInfo robot{};
-  robot.Model = RobotModel::R2D2;
-  robot.Name = "Bob";
-  robot.Age = 42;
-  robot.Shape = RobotShape::Trashcan;
-  robot.Shape2 = RobotShape::Beercan;
-  robot.Shape3 = std::nullopt;
-  robot.Steps = std::vector<int>{1, 2, 3};
-  robot.Dimensions = std::map<std::string, int>{{"Width", 24}, {"Height", 78}};
-  robot.Badges = std::tuple<int, std::string, bool>{2, "Maverick", true};
-  robot.Tools = std::vector<RobotTool>{RobotTool{/*Name =*/"Screwdriver", /*Weight =*/2, /*IsEnabled =*/true},
-                                       RobotTool{/*Name =*/"Electro-shocker", /*Weight =*/3, /*IsEnabled =*/false}};
-  robot.Path = std::vector<RobotPoint>{
-      RobotPoint{/*X =*/5, /*Y =*/6}, RobotPoint{/*X =*/45, /*Y =*/90}, RobotPoint{/*X =*/15, /*Y =*/16}};
-  robot.Extra = R2D2Extra{/*MovieSeries =*/"Episode 2"};
+  TEST_METHOD(TestWriteCustomType) {
+    RobotInfo robot{};
+    robot.Model = RobotModel::R2D2;
+    robot.Name = "Bob";
+    robot.Age = 42;
+    robot.Shape = RobotShape::Trashcan;
+    robot.Shape2 = RobotShape::Beercan;
+    robot.Shape3 = std::nullopt;
+    robot.Steps = std::vector<int>{1, 2, 3};
+    robot.Dimensions = std::map<std::string, int>{{"Width", 24}, {"Height", 78}};
+    robot.Badges = std::tuple<int, std::string, bool>{2, "Maverick", true};
+    robot.Tools = std::vector<RobotTool>{RobotTool{/*Name =*/"Screwdriver", /*Weight =*/2, /*IsEnabled =*/true},
+                                         RobotTool{/*Name =*/"Electro-shocker", /*Weight =*/3, /*IsEnabled =*/false}};
+    robot.Path = std::vector<RobotPoint>{
+        RobotPoint{/*X =*/5, /*Y =*/6}, RobotPoint{/*X =*/45, /*Y =*/90}, RobotPoint{/*X =*/15, /*Y =*/16}};
+    robot.Extra = R2D2Extra{/*MovieSeries =*/"Episode 2"};
 
-  JSValue jsValue;
-  auto writer = MakeJSValueTreeWriter(jsValue);
-  WriteValue(writer, robot);
+    auto writer = MakeJSValueTreeWriter();
+    WriteValue(writer, robot);
+    auto jsValue = TakeJSValue(writer);
 
-  REQUIRE(jsValue["Model"] == (int)RobotModel::R2D2);
-  REQUIRE(jsValue["Name"] == "Bob");
-  REQUIRE(jsValue["Age"] == 42);
-  REQUIRE(jsValue["Shape"] == (int)RobotShape::Trashcan);
-  REQUIRE(jsValue["Shape2"] == (int)RobotShape::Beercan);
-  REQUIRE(jsValue["Shape3"] == nullptr);
-  REQUIRE(jsValue["Steps"].ItemCount() == 3);
-  REQUIRE(jsValue["Steps"][0] == 1);
-  REQUIRE(jsValue["Steps"][1] == 2);
-  REQUIRE(jsValue["Steps"][2] == 3);
-  REQUIRE(jsValue["Dimensions"].PropertyCount() == 2);
-  REQUIRE(jsValue["Dimensions"]["Width"] == 24);
-  REQUIRE(jsValue["Dimensions"]["Height"] == 78);
-  REQUIRE(jsValue["Badges"][0] == 2);
-  REQUIRE(jsValue["Badges"][1] == "Maverick");
-  REQUIRE(jsValue["Badges"][2] == true);
-  REQUIRE(jsValue["Tools"].ItemCount() == 2);
-  REQUIRE(jsValue["Tools"][0]["Name"] == "Screwdriver");
-  REQUIRE(jsValue["Tools"][0]["Weight"] == 2);
-  REQUIRE(jsValue["Tools"][0]["IsEnabled"] == true);
-  REQUIRE(jsValue["Tools"][1]["Name"] == "Electro-shocker");
-  REQUIRE(jsValue["Tools"][1]["Weight"] == 3);
-  REQUIRE(jsValue["Tools"][1]["IsEnabled"] == false);
-  REQUIRE(jsValue["Path"].ItemCount() == 3);
-  REQUIRE(jsValue["Path"][0]["X"] == 5);
-  REQUIRE(jsValue["Path"][0]["Y"] == 6);
-  REQUIRE(jsValue["Path"][1]["X"] == 45);
-  REQUIRE(jsValue["Path"][1]["Y"] == 90);
-  REQUIRE(jsValue["Path"][2]["X"] == 15);
-  REQUIRE(jsValue["Path"][2]["Y"] == 16);
-  REQUIRE(jsValue["Extra"]["MovieSeries"] == "Episode 2");
-}
+    TestCheck(jsValue["Model"] == (int)RobotModel::R2D2);
+    TestCheck(jsValue["Name"] == "Bob");
+    TestCheck(jsValue["Age"] == 42);
+    TestCheck(jsValue["Shape"] == (int)RobotShape::Trashcan);
+    TestCheck(jsValue["Shape2"] == (int)RobotShape::Beercan);
+    TestCheck(jsValue["Shape3"] == nullptr);
+    TestCheck(jsValue["Steps"].ItemCount() == 3);
+    TestCheck(jsValue["Steps"][0] == 1);
+    TestCheck(jsValue["Steps"][1] == 2);
+    TestCheck(jsValue["Steps"][2] == 3);
+    TestCheck(jsValue["Dimensions"].PropertyCount() == 2);
+    TestCheck(jsValue["Dimensions"]["Width"] == 24);
+    TestCheck(jsValue["Dimensions"]["Height"] == 78);
+    TestCheck(jsValue["Badges"][0] == 2);
+    TestCheck(jsValue["Badges"][1] == "Maverick");
+    TestCheck(jsValue["Badges"][2] == true);
+    TestCheck(jsValue["Tools"].ItemCount() == 2);
+    TestCheck(jsValue["Tools"][0]["Name"] == "Screwdriver");
+    TestCheck(jsValue["Tools"][0]["Weight"] == 2);
+    TestCheck(jsValue["Tools"][0]["IsEnabled"] == true);
+    TestCheck(jsValue["Tools"][1]["Name"] == "Electro-shocker");
+    TestCheck(jsValue["Tools"][1]["Weight"] == 3);
+    TestCheck(jsValue["Tools"][1]["IsEnabled"] == false);
+    TestCheck(jsValue["Path"].ItemCount() == 3);
+    TestCheck(jsValue["Path"][0]["X"] == 5);
+    TestCheck(jsValue["Path"][0]["Y"] == 6);
+    TestCheck(jsValue["Path"][1]["X"] == 45);
+    TestCheck(jsValue["Path"][1]["Y"] == 90);
+    TestCheck(jsValue["Path"][2]["X"] == 15);
+    TestCheck(jsValue["Path"][2]["Y"] == 16);
+    TestCheck(jsValue["Extra"]["MovieSeries"] == "Episode 2");
+  }
 
-TEST_CASE("TestReadValueDefaultExtensions", "JSValueReaderTest") {
-  const wchar_t *json =
-      LR"JSON({
+  TEST_METHOD(TestReadValueDefaultExtensions) {
+    const wchar_t *json =
+        LR"JSON({
       "StringValue1": "",
       "StringValue2": "5",
       "StringValue3": "Hello",
@@ -289,178 +289,179 @@ TEST_CASE("TestReadValueDefaultExtensions", "JSValueReaderTest") {
       "NullValue": null
     })JSON";
 
-  IJSValueReader reader = make<JsonJSValueReader>(json);
+    IJSValueReader reader = make<JsonJSValueReader>(json);
 
-  REQUIRE(reader.ValueType() == JSValueType::Object);
-  int properyCount = 0;
-  hstring propertyName;
-  while (reader.GetNextObjectProperty(/*out*/ propertyName)) {
-    if (propertyName == L"StringValue1") {
-      REQUIRE(ReadValue<std::string>(reader) == "");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"");
-      REQUIRE(ReadValue<bool>(reader) == false);
-      REQUIRE(ReadValue<int8_t>(reader) == 0);
-      REQUIRE(ReadValue<int16_t>(reader) == 0);
-      REQUIRE(ReadValue<int32_t>(reader) == 0);
-      REQUIRE(ReadValue<int64_t>(reader) == 0);
-      REQUIRE(ReadValue<uint8_t>(reader) == 0);
-      REQUIRE(ReadValue<uint16_t>(reader) == 0);
-      REQUIRE(ReadValue<uint32_t>(reader) == 0);
-      REQUIRE(ReadValue<uint64_t>(reader) == 0);
-      REQUIRE(ReadValue<float>(reader) == 0);
-      REQUIRE(ReadValue<double>(reader) == 0);
-      ++properyCount;
-    } else if (propertyName == L"StringValue2") {
-      REQUIRE(ReadValue<std::string>(reader) == "5");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"5");
-      REQUIRE(ReadValue<bool>(reader) == true);
-      REQUIRE(ReadValue<int8_t>(reader) == 5);
-      REQUIRE(ReadValue<int16_t>(reader) == 5);
-      REQUIRE(ReadValue<int32_t>(reader) == 5);
-      REQUIRE(ReadValue<int64_t>(reader) == 5);
-      REQUIRE(ReadValue<uint8_t>(reader) == 5);
-      REQUIRE(ReadValue<uint16_t>(reader) == 5);
-      REQUIRE(ReadValue<uint32_t>(reader) == 5);
-      REQUIRE(ReadValue<uint64_t>(reader) == 5);
-      REQUIRE(ReadValue<float>(reader) == 5);
-      REQUIRE(ReadValue<double>(reader) == 5);
-      ++properyCount;
-    } else if (propertyName == L"StringValue3") {
-      REQUIRE(ReadValue<std::string>(reader) == "Hello");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"Hello");
-      REQUIRE(ReadValue<bool>(reader) == true);
-      REQUIRE(ReadValue<int8_t>(reader) == 0);
-      REQUIRE(ReadValue<int16_t>(reader) == 0);
-      REQUIRE(ReadValue<int32_t>(reader) == 0);
-      REQUIRE(ReadValue<int64_t>(reader) == 0);
-      REQUIRE(ReadValue<uint8_t>(reader) == 0);
-      REQUIRE(ReadValue<uint16_t>(reader) == 0);
-      REQUIRE(ReadValue<uint32_t>(reader) == 0);
-      REQUIRE(ReadValue<uint64_t>(reader) == 0);
-      REQUIRE(ReadValue<float>(reader) == 0);
-      REQUIRE(ReadValue<double>(reader) == 0);
-      ++properyCount;
-    } else if (propertyName == L"BoolValue1") {
-      REQUIRE(ReadValue<std::string>(reader) == "false");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"false");
-      REQUIRE(ReadValue<bool>(reader) == false);
-      REQUIRE(ReadValue<int8_t>(reader) == 0);
-      REQUIRE(ReadValue<int16_t>(reader) == 0);
-      REQUIRE(ReadValue<int32_t>(reader) == 0);
-      REQUIRE(ReadValue<int64_t>(reader) == 0);
-      REQUIRE(ReadValue<uint8_t>(reader) == 0);
-      REQUIRE(ReadValue<uint16_t>(reader) == 0);
-      REQUIRE(ReadValue<uint32_t>(reader) == 0);
-      REQUIRE(ReadValue<uint64_t>(reader) == 0);
-      REQUIRE(ReadValue<float>(reader) == 0);
-      REQUIRE(ReadValue<double>(reader) == 0);
-      ++properyCount;
-    } else if (propertyName == L"BoolValue2") {
-      REQUIRE(ReadValue<std::string>(reader) == "true");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"true");
-      REQUIRE(ReadValue<bool>(reader) == true);
-      REQUIRE(ReadValue<int8_t>(reader) == 1);
-      REQUIRE(ReadValue<int16_t>(reader) == 1);
-      REQUIRE(ReadValue<int32_t>(reader) == 1);
-      REQUIRE(ReadValue<int64_t>(reader) == 1);
-      REQUIRE(ReadValue<uint8_t>(reader) == 1);
-      REQUIRE(ReadValue<uint16_t>(reader) == 1);
-      REQUIRE(ReadValue<uint32_t>(reader) == 1);
-      REQUIRE(ReadValue<uint64_t>(reader) == 1);
-      REQUIRE(ReadValue<float>(reader) == 1);
-      REQUIRE(ReadValue<double>(reader) == 1);
-      ++properyCount;
-    } else if (propertyName == L"IntValue1") {
-      REQUIRE(ReadValue<std::string>(reader) == "0");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"0");
-      REQUIRE(ReadValue<bool>(reader) == false);
-      REQUIRE(ReadValue<int8_t>(reader) == 0);
-      REQUIRE(ReadValue<int16_t>(reader) == 0);
-      REQUIRE(ReadValue<int32_t>(reader) == 0);
-      REQUIRE(ReadValue<int64_t>(reader) == 0);
-      REQUIRE(ReadValue<uint8_t>(reader) == 0);
-      REQUIRE(ReadValue<uint16_t>(reader) == 0);
-      REQUIRE(ReadValue<uint32_t>(reader) == 0);
-      REQUIRE(ReadValue<uint64_t>(reader) == 0);
-      REQUIRE(ReadValue<float>(reader) == 0);
-      REQUIRE(ReadValue<double>(reader) == 0);
-      ++properyCount;
-    } else if (propertyName == L"IntValue2") {
-      REQUIRE(ReadValue<std::string>(reader) == "42");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"42");
-      REQUIRE(ReadValue<bool>(reader) == true);
-      REQUIRE(ReadValue<int8_t>(reader) == 42);
-      REQUIRE(ReadValue<int16_t>(reader) == 42);
-      REQUIRE(ReadValue<int32_t>(reader) == 42);
-      REQUIRE(ReadValue<int64_t>(reader) == 42);
-      REQUIRE(ReadValue<uint8_t>(reader) == 42);
-      REQUIRE(ReadValue<uint16_t>(reader) == 42);
-      REQUIRE(ReadValue<uint32_t>(reader) == 42);
-      REQUIRE(ReadValue<uint64_t>(reader) == 42);
-      REQUIRE(ReadValue<float>(reader) == 42);
-      REQUIRE(ReadValue<double>(reader) == 42);
-      ++properyCount;
-    } else if (propertyName == L"FloatValue") {
-      REQUIRE(ReadValue<std::string>(reader) == "3.14");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"3.14");
-      REQUIRE(ReadValue<bool>(reader) == true);
-      REQUIRE(ReadValue<int8_t>(reader) == 3);
-      REQUIRE(ReadValue<int16_t>(reader) == 3);
-      REQUIRE(ReadValue<int32_t>(reader) == 3);
-      REQUIRE(ReadValue<int64_t>(reader) == 3);
-      REQUIRE(ReadValue<uint8_t>(reader) == 3);
-      REQUIRE(ReadValue<uint16_t>(reader) == 3);
-      REQUIRE(ReadValue<uint32_t>(reader) == 3);
-      REQUIRE(ReadValue<uint64_t>(reader) == 3);
-      REQUIRE(ReadValue<float>(reader) == 3.14f);
-      REQUIRE(ReadValue<double>(reader) == 3.14);
-      ++properyCount;
-    } else if (propertyName == L"NullValue") {
-      REQUIRE(ReadValue<std::string>(reader) == "");
-      REQUIRE(ReadValue<std::wstring>(reader) == L"");
-      REQUIRE(ReadValue<bool>(reader) == false);
-      REQUIRE(ReadValue<int8_t>(reader) == 0);
-      REQUIRE(ReadValue<int16_t>(reader) == 0);
-      REQUIRE(ReadValue<int32_t>(reader) == 0);
-      REQUIRE(ReadValue<int64_t>(reader) == 0);
-      REQUIRE(ReadValue<uint8_t>(reader) == 0);
-      REQUIRE(ReadValue<uint16_t>(reader) == 0);
-      REQUIRE(ReadValue<uint32_t>(reader) == 0);
-      REQUIRE(ReadValue<uint64_t>(reader) == 0);
-      REQUIRE(ReadValue<float>(reader) == 0);
-      REQUIRE(ReadValue<double>(reader) == 0);
+    TestCheck(reader.ValueType() == JSValueType::Object);
+    int properyCount = 0;
+    hstring propertyName;
+    while (reader.GetNextObjectProperty(/*out*/ propertyName)) {
+      if (propertyName == L"StringValue1") {
+        TestCheck(ReadValue<std::string>(reader) == "");
+        TestCheck(ReadValue<std::wstring>(reader) == L"");
+        TestCheck(ReadValue<bool>(reader) == false);
+        TestCheck(ReadValue<int8_t>(reader) == 0);
+        TestCheck(ReadValue<int16_t>(reader) == 0);
+        TestCheck(ReadValue<int32_t>(reader) == 0);
+        TestCheck(ReadValue<int64_t>(reader) == 0);
+        TestCheck(ReadValue<uint8_t>(reader) == 0);
+        TestCheck(ReadValue<uint16_t>(reader) == 0);
+        TestCheck(ReadValue<uint32_t>(reader) == 0);
+        TestCheck(ReadValue<uint64_t>(reader) == 0);
+        TestCheck(ReadValue<float>(reader) == 0);
+        TestCheck(ReadValue<double>(reader) == 0);
+        ++properyCount;
+      } else if (propertyName == L"StringValue2") {
+        TestCheck(ReadValue<std::string>(reader) == "5");
+        TestCheck(ReadValue<std::wstring>(reader) == L"5");
+        TestCheck(ReadValue<bool>(reader) == true);
+        TestCheck(ReadValue<int8_t>(reader) == 5);
+        TestCheck(ReadValue<int16_t>(reader) == 5);
+        TestCheck(ReadValue<int32_t>(reader) == 5);
+        TestCheck(ReadValue<int64_t>(reader) == 5);
+        TestCheck(ReadValue<uint8_t>(reader) == 5);
+        TestCheck(ReadValue<uint16_t>(reader) == 5);
+        TestCheck(ReadValue<uint32_t>(reader) == 5);
+        TestCheck(ReadValue<uint64_t>(reader) == 5);
+        TestCheck(ReadValue<float>(reader) == 5);
+        TestCheck(ReadValue<double>(reader) == 5);
+        ++properyCount;
+      } else if (propertyName == L"StringValue3") {
+        TestCheck(ReadValue<std::string>(reader) == "Hello");
+        TestCheck(ReadValue<std::wstring>(reader) == L"Hello");
+        TestCheck(ReadValue<bool>(reader) == true);
+        TestCheck(ReadValue<int8_t>(reader) == 0);
+        TestCheck(ReadValue<int16_t>(reader) == 0);
+        TestCheck(ReadValue<int32_t>(reader) == 0);
+        TestCheck(ReadValue<int64_t>(reader) == 0);
+        TestCheck(ReadValue<uint8_t>(reader) == 0);
+        TestCheck(ReadValue<uint16_t>(reader) == 0);
+        TestCheck(ReadValue<uint32_t>(reader) == 0);
+        TestCheck(ReadValue<uint64_t>(reader) == 0);
+        TestCheck(ReadValue<float>(reader) == 0);
+        TestCheck(ReadValue<double>(reader) == 0);
+        ++properyCount;
+      } else if (propertyName == L"BoolValue1") {
+        TestCheck(ReadValue<std::string>(reader) == "false");
+        TestCheck(ReadValue<std::wstring>(reader) == L"false");
+        TestCheck(ReadValue<bool>(reader) == false);
+        TestCheck(ReadValue<int8_t>(reader) == 0);
+        TestCheck(ReadValue<int16_t>(reader) == 0);
+        TestCheck(ReadValue<int32_t>(reader) == 0);
+        TestCheck(ReadValue<int64_t>(reader) == 0);
+        TestCheck(ReadValue<uint8_t>(reader) == 0);
+        TestCheck(ReadValue<uint16_t>(reader) == 0);
+        TestCheck(ReadValue<uint32_t>(reader) == 0);
+        TestCheck(ReadValue<uint64_t>(reader) == 0);
+        TestCheck(ReadValue<float>(reader) == 0);
+        TestCheck(ReadValue<double>(reader) == 0);
+        ++properyCount;
+      } else if (propertyName == L"BoolValue2") {
+        TestCheck(ReadValue<std::string>(reader) == "true");
+        TestCheck(ReadValue<std::wstring>(reader) == L"true");
+        TestCheck(ReadValue<bool>(reader) == true);
+        TestCheck(ReadValue<int8_t>(reader) == 1);
+        TestCheck(ReadValue<int16_t>(reader) == 1);
+        TestCheck(ReadValue<int32_t>(reader) == 1);
+        TestCheck(ReadValue<int64_t>(reader) == 1);
+        TestCheck(ReadValue<uint8_t>(reader) == 1);
+        TestCheck(ReadValue<uint16_t>(reader) == 1);
+        TestCheck(ReadValue<uint32_t>(reader) == 1);
+        TestCheck(ReadValue<uint64_t>(reader) == 1);
+        TestCheck(ReadValue<float>(reader) == 1);
+        TestCheck(ReadValue<double>(reader) == 1);
+        ++properyCount;
+      } else if (propertyName == L"IntValue1") {
+        TestCheck(ReadValue<std::string>(reader) == "0");
+        TestCheck(ReadValue<std::wstring>(reader) == L"0");
+        TestCheck(ReadValue<bool>(reader) == false);
+        TestCheck(ReadValue<int8_t>(reader) == 0);
+        TestCheck(ReadValue<int16_t>(reader) == 0);
+        TestCheck(ReadValue<int32_t>(reader) == 0);
+        TestCheck(ReadValue<int64_t>(reader) == 0);
+        TestCheck(ReadValue<uint8_t>(reader) == 0);
+        TestCheck(ReadValue<uint16_t>(reader) == 0);
+        TestCheck(ReadValue<uint32_t>(reader) == 0);
+        TestCheck(ReadValue<uint64_t>(reader) == 0);
+        TestCheck(ReadValue<float>(reader) == 0);
+        TestCheck(ReadValue<double>(reader) == 0);
+        ++properyCount;
+      } else if (propertyName == L"IntValue2") {
+        TestCheck(ReadValue<std::string>(reader) == "42");
+        TestCheck(ReadValue<std::wstring>(reader) == L"42");
+        TestCheck(ReadValue<bool>(reader) == true);
+        TestCheck(ReadValue<int8_t>(reader) == 42);
+        TestCheck(ReadValue<int16_t>(reader) == 42);
+        TestCheck(ReadValue<int32_t>(reader) == 42);
+        TestCheck(ReadValue<int64_t>(reader) == 42);
+        TestCheck(ReadValue<uint8_t>(reader) == 42);
+        TestCheck(ReadValue<uint16_t>(reader) == 42);
+        TestCheck(ReadValue<uint32_t>(reader) == 42);
+        TestCheck(ReadValue<uint64_t>(reader) == 42);
+        TestCheck(ReadValue<float>(reader) == 42);
+        TestCheck(ReadValue<double>(reader) == 42);
+        ++properyCount;
+      } else if (propertyName == L"FloatValue") {
+        TestCheck(ReadValue<std::string>(reader) == "3.14");
+        TestCheck(ReadValue<std::wstring>(reader) == L"3.14");
+        TestCheck(ReadValue<bool>(reader) == true);
+        TestCheck(ReadValue<int8_t>(reader) == 3);
+        TestCheck(ReadValue<int16_t>(reader) == 3);
+        TestCheck(ReadValue<int32_t>(reader) == 3);
+        TestCheck(ReadValue<int64_t>(reader) == 3);
+        TestCheck(ReadValue<uint8_t>(reader) == 3);
+        TestCheck(ReadValue<uint16_t>(reader) == 3);
+        TestCheck(ReadValue<uint32_t>(reader) == 3);
+        TestCheck(ReadValue<uint64_t>(reader) == 3);
+        TestCheck(ReadValue<float>(reader) == 3.14f);
+        TestCheck(ReadValue<double>(reader) == 3.14);
+        ++properyCount;
+      } else if (propertyName == L"NullValue") {
+        TestCheck(ReadValue<std::string>(reader) == "");
+        TestCheck(ReadValue<std::wstring>(reader) == L"");
+        TestCheck(ReadValue<bool>(reader) == false);
+        TestCheck(ReadValue<int8_t>(reader) == 0);
+        TestCheck(ReadValue<int16_t>(reader) == 0);
+        TestCheck(ReadValue<int32_t>(reader) == 0);
+        TestCheck(ReadValue<int64_t>(reader) == 0);
+        TestCheck(ReadValue<uint8_t>(reader) == 0);
+        TestCheck(ReadValue<uint16_t>(reader) == 0);
+        TestCheck(ReadValue<uint32_t>(reader) == 0);
+        TestCheck(ReadValue<uint64_t>(reader) == 0);
+        TestCheck(ReadValue<float>(reader) == 0);
+        TestCheck(ReadValue<double>(reader) == 0);
 
-      ++properyCount;
+        ++properyCount;
+      }
     }
+    TestCheck(properyCount == 9);
   }
-  REQUIRE(properyCount == 9);
-}
 
-TEST_CASE("TestWriteValueDefaultExtensions", "JSValueReaderTest") {
-  JSValue jsValue;
-  auto writer = MakeJSValueTreeWriter(jsValue);
-  writer.WriteObjectBegin();
-  WriteProperty(writer, L"StringValue1", "");
-  WriteProperty(writer, L"StringValue2", "5");
-  WriteProperty(writer, L"StringValue3", "Hello");
-  WriteProperty(writer, L"BoolValue1", false);
-  WriteProperty(writer, L"BoolValue2", true);
-  WriteProperty(writer, L"IntValue1", 0);
-  WriteProperty(writer, L"IntValue2", 42);
-  WriteProperty(writer, L"FloatValue", 3.14);
-  WriteProperty(writer, L"NullValue", nullptr);
-  writer.WriteObjectEnd();
+  TEST_METHOD(TestWriteValueDefaultExtensions) {
+    auto writer = MakeJSValueTreeWriter();
+    writer.WriteObjectBegin();
+    WriteProperty(writer, L"StringValue1", "");
+    WriteProperty(writer, L"StringValue2", "5");
+    WriteProperty(writer, L"StringValue3", "Hello");
+    WriteProperty(writer, L"BoolValue1", false);
+    WriteProperty(writer, L"BoolValue2", true);
+    WriteProperty(writer, L"IntValue1", 0);
+    WriteProperty(writer, L"IntValue2", 42);
+    WriteProperty(writer, L"FloatValue", 3.14);
+    WriteProperty(writer, L"NullValue", nullptr);
+    writer.WriteObjectEnd();
 
-  REQUIRE(jsValue["StringValue1"] == "");
-  REQUIRE(jsValue["StringValue2"] == "5");
-  REQUIRE(jsValue["StringValue3"] == "Hello");
-  REQUIRE(jsValue["BoolValue1"] == false);
-  REQUIRE(jsValue["BoolValue2"] == true);
-  REQUIRE(jsValue["IntValue1"] == 0);
-  REQUIRE(jsValue["IntValue2"] == 42);
-  REQUIRE(jsValue["FloatValue"] == 3.14);
-  REQUIRE(jsValue["NullValue"] == nullptr);
-  REQUIRE(jsValue["NullValue"] == JSValue::Null);
-}
+    auto jsValue = TakeJSValue(writer);
+    TestCheck(jsValue["StringValue1"] == "");
+    TestCheck(jsValue["StringValue2"] == "5");
+    TestCheck(jsValue["StringValue3"] == "Hello");
+    TestCheck(jsValue["BoolValue1"] == false);
+    TestCheck(jsValue["BoolValue2"] == true);
+    TestCheck(jsValue["IntValue1"] == 0);
+    TestCheck(jsValue["IntValue2"] == 42);
+    TestCheck(jsValue["FloatValue"] == 3.14);
+    TestCheck(jsValue["NullValue"] == nullptr);
+    TestCheck(jsValue["NullValue"] == JSValue::Null);
+  }
+};
 
 } // namespace winrt::Microsoft::ReactNative

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 
 using namespace facebook::react;
 using namespace facebook::xplat::module;
@@ -10,7 +10,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(WebSocketModuleTest) {
+TEST_CLASS (WebSocketModuleTest) {
   enum class MethodId : size_t { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
   const char *MethodName[static_cast<size_t>(MethodId::SIZE)]{"connect", "close", "send", "sendBinary", "ping"};

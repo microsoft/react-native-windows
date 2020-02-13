@@ -24,3 +24,5 @@ export * from '../../Libraries/Components/Button/ButtonWin32';
 export * from '../../Libraries/Components/Touchable/TouchableWin32.Props';
 export * from '../../Libraries/Components/Touchable/TouchableWin32.Types';
 export * from '../../Libraries/Components/Touchable/TouchableWin32';
+export * from '../../Libraries/PersonaCoin/PersonaCoin';
+export * from '../../Libraries/PersonaCoin/PersonaCoinTypes';

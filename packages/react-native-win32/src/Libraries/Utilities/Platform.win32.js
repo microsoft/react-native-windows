@@ -8,23 +8,41 @@
 
 'use strict';
 
-const NativeModules = require('../BatchedBridge/NativeModules');
+import NativePlatformConstantsWin from './NativePlatformConstantsWin';
+
+export type PlatformSelectSpec<D, I> = {
+  default?: D,
+  win32?: I,
+};
 
 const Platform = {
+  __constants: null,
   OS: 'win32',
-  get Version() {
-    const constants = NativeModules.PlatformConstants;
-    return constants && constants.Version;
+  get constants(): {|
+    isTesting: boolean,
+    reactNativeVersion: {|
+      major: number,
+      minor: number,
+      patch: number,
+      prerelease: ?number,
+    |},
+  |} {
+    if (this.__constants == null) {
+      this.__constants = NativePlatformConstantsWin.getConstants();
+    }
+    return this.__constants;
   },
   get isTesting(): boolean {
-    const constants = NativeModules.PlatformConstants;
-    return constants && constants.isTesting;
+    if (__DEV__) {
+      return this.constants.isTesting;
+    }
+    return false;
   },
-  select: (obj: Object) => ('win32' in obj ? obj.win32 : obj.default),
   get isTV() {
-    const constants = NativeModules.PlatformConstants;
-    return constants ? constants.interfaceIdiom === 'tv' : false;
+    return false;
   },
+  select: <D, I>(spec: PlatformSelectSpec<D, I>): D | I =>
+    'win32' in spec ? spec.win32 : spec.default,
 };
 
 module.exports = Platform;

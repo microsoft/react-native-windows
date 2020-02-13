@@ -8,8 +8,8 @@
 'use strict';
 
 const Dimensions = require('../../Utilities/Dimensions');
-const React = require('react');
 const FlatList = require('../../Lists/FlatList');
+const React = require('react');
 const SafeAreaView = require('../../Components/SafeAreaView/SafeAreaView');
 const StyleSheet = require('../../StyleSheet/StyleSheet');
 const View = require('../../Components/View/View');
@@ -42,7 +42,7 @@ const MAX_ITEMS =
       ); // ]Win32
 
 class YellowBoxList extends React.Component<Props, State> {
-  state = {
+  state: State = {
     selectedCategory: null,
   };
 

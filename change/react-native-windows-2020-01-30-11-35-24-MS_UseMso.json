@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added Microsoft.ReactNative dependency on Mso",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "ba8164a8bbdf2aad160120cf8c04692774b03576",
-  "dependentChangeType": "patch",
-  "date": "2020-01-30T19:35:24.054Z"
-}

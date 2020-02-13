@@ -38,4 +38,22 @@ Object.defineProperty(ReactNativeImplementation, 'TouchableWin32', {
   },
 });
 
+Object.defineProperty(ReactNativeImplementation, 'PersonaCoin', {
+  get: () => {
+    return require('../PersonaCoin/PersonaCoin').PersonaCoin;
+  },
+});
+
+Object.defineProperty(ReactNativeImplementation, 'PersonaCoinSize', {
+  get: () => {
+    return require('../PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
+  },
+});
+
+Object.defineProperty(ReactNativeImplementation, 'PersonaCoinPresence', {
+  get: () => {
+    return require('../PersonaCoin/PersonaCoinTypes').PersonaCoinPresence;
+  },
+});
+
 export = ReactNativeImplementation;

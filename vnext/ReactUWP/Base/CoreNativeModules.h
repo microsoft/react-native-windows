@@ -25,6 +25,7 @@ struct ViewManagerProvider;
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     std::shared_ptr<facebook::react::IUIManager> uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
     std::shared_ptr<DeviceInfo> deviceInfo,
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     const I18nModule::I18nInfo &&i18nInfo,

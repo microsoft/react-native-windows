@@ -57,16 +57,18 @@ std::vector<CxxModule::Method> ABICxxModule::getMethods() {
 
 void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> const &eventHandlerSetters) noexcept {
   for (auto &eventHandler : eventHandlerSetters) {
-    eventHandler.EventHandlerSetter([ this, name = eventHandler.Name ](ReactArgWriter const &argWriter) noexcept {
-      DynamicWriter writer;
-      writer.WriteArrayBegin();
-      writer.WriteString(winrt::to_hstring(name));
-      argWriter(writer);
-      writer.WriteArrayEnd();
+    eventHandler.EventHandlerSetter(
+        [ name = eventHandler.Name, eventEmitterName = m_eventEmitterName, reactContext =
+          m_reactContext ](ReactArgWriter const &argWriter) noexcept {
+          auto writer = make<DynamicWriter>();
+          writer.WriteArrayBegin();
+          writer.WriteString(winrt::to_hstring(name));
+          argWriter(writer);
+          writer.WriteArrayEnd();
 
-      std::string emitterName = m_eventEmitterName.empty() ? DefaultEventEmitterName : m_eventEmitterName;
-      m_reactContext->CallJSFunction(std::move(emitterName), "emit", writer.TakeValue());
-    });
+          std::string emitterName = eventEmitterName.empty() ? DefaultEventEmitterName : eventEmitterName;
+          reactContext->CallJSFunction(std::move(emitterName), "emit", get_self<DynamicWriter>(writer)->TakeValue());
+        });
   }
 }
 

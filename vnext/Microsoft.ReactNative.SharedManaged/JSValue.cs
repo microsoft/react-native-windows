@@ -20,6 +20,8 @@ namespace Microsoft.ReactNative.Managed
   {
     public static readonly JSValue Null = new JSValue();
 
+    public struct Void { };
+
     private readonly SimpleValue m_simpleValue;
     private readonly object m_objValue;
 

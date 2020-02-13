@@ -3,7 +3,9 @@
 
 using namespace std;
 #include <cxxreact/JsArgumentHelpers.h>
+#include <cxxreact/MessageQueueThread.h>
 #include <folly/json.h>
+#include <glog/logging.h>
 #include <algorithm>
 #include <iostream>
 
@@ -344,6 +346,16 @@ void UIManager::measureInWindow(int64_t reactTag, facebook::xplat::module::CxxMo
   m_nativeUIManager->measureInWindow(node, callback);
 }
 
+void UIManager::measureLayout(
+    int64_t reactTag,
+    int64_t ancestorReactTag,
+    facebook::xplat::module::CxxModule::Callback errorCallback,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  auto &node = m_nodeRegistry.getNode(reactTag);
+  auto &ancestorNode = m_nodeRegistry.getNode(ancestorReactTag);
+  m_nativeUIManager->measureLayout(node, ancestorNode, errorCallback, callback);
+};
+
 void UIManager::findSubviewIn(
     int64_t reactTag,
     folly::dynamic &&coordinates,
@@ -413,7 +425,17 @@ ShadowNode &UIManager::GetShadowNodeForTag(int64_t tag) {
   return m_nodeRegistry.getNode(tag);
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager> &&manager) : m_manager(std::move(manager)) {}
+UIManagerModule::UIManagerModule(
+    std::shared_ptr<IUIManager> &&manager,
+    std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept
+    : m_manager{std::move(manager)}, m_uiQueue{std::move(uiQueue)} {}
+
+UIManagerModule::~UIManagerModule() noexcept {
+  if (m_uiQueue) {
+    // To make sure that we destroy UI components in UI thread.
+    m_uiQueue->runOnQueue([manager = std::move(m_manager)]() {});
+  }
+}
 
 std::string UIManagerModule::getName() {
   return "UIManager";
@@ -493,6 +515,12 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
           "measureInWindow",
           [manager](dynamic args, Callback cb) { manager->measureInWindow(jsArgAsInt(args, 0), cb); }),
       Method(
+          "measureLayout",
+          [manager](dynamic args, Callback cbError, Callback cbSuccess) {
+            manager->measureLayout(jsArgAsInt(args, 0), jsArgAsInt(args, 1), cbError, cbSuccess);
+          },
+          AsyncTag),
+      Method(
           "findSubviewIn",
           [manager](dynamic args, Callback cb) {
             manager->findSubviewIn(jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
@@ -521,8 +549,15 @@ shared_ptr<IUIManager> createIUIManager(
   return std::make_shared<UIManager>(std::move(viewManagers), nativeManager);
 }
 
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
+    std::shared_ptr<IUIManager> &&uimanager,
+    std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept {
+  return std::make_unique<UIManagerModule>(std::move(uimanager), std::move(uiQueue));
+}
+
+// Deprecated
 std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager) {
-  return std::make_unique<UIManagerModule>(std::move(uimanager));
+  return createUIManagerModule(std::move(uimanager), nullptr);
 }
 
 } // namespace react

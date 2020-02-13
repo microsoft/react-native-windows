@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "ReactModuleBuilderMock.h"
+
 #include <sstream>
 #include "NativeModules.h"
-#include "ReactModuleBuilderMock.h"
-#include "catch.hpp"
+#include "future/futureWait.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -98,6 +99,24 @@ struct SimpleNativeModule {
     resolve(-x);
   }
 
+  REACT_METHOD(NegateAsyncCallback)
+  fire_and_forget NegateAsyncCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    auto safeResolve = resolve; // make a copy for co-routine safe access
+    co_await winrt::resume_background();
+    safeResolve(-x);
+  }
+
+  REACT_METHOD(NegateDispatchQueueCallback)
+  void NegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
+  }
+
+  REACT_METHOD(NegateFutureCallback)
+  void NegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
+  }
+
   REACT_METHOD(SayHelloCallback)
   void SayHelloCallback(std::function<void(const std::string &)> const &resolve) noexcept {
     resolve("Hello_2");
@@ -111,6 +130,24 @@ struct SimpleNativeModule {
   REACT_METHOD(StaticNegateCallback)
   static void StaticNegateCallback(int x, std::function<void(int)> const &resolve) noexcept {
     resolve(-x);
+  }
+
+  REACT_METHOD(StaticNegateAsyncCallback)
+  static fire_and_forget StaticNegateAsyncCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    auto safeResolve = resolve; // make a copy for co-routine safe access
+    co_await winrt::resume_background();
+    safeResolve(-x);
+  }
+
+  REACT_METHOD(StaticNegateDispatchQueueCallback)
+  static void StaticNegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
+  }
+
+  REACT_METHOD(StaticNegateFutureCallback)
+  static void StaticNegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
   }
 
   REACT_METHOD(StaticSayHelloCallback)
@@ -141,6 +178,50 @@ struct SimpleNativeModule {
     } else {
       reject("Already negative");
     }
+  }
+
+  REACT_METHOD(NegateAsyncCallbacks)
+  fire_and_forget NegateAsyncCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(const std::string &)> const &reject) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    auto safeResolve = resolve; // make a copy for co-routine safe access
+    auto safeReject = reject;
+    co_await winrt::resume_background();
+    if (x >= 0) {
+      safeResolve(-x);
+    } else {
+      safeReject("Already negative");
+    }
+  }
+
+  REACT_METHOD(NegateDispatchQueueCallbacks)
+  void NegateDispatchQueueCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(const std::string &)> const &reject) noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve, reject ]() noexcept {
+      if (x >= 0) {
+        resolve(-x);
+      } else {
+        reject("Already negative");
+      }
+    });
+  }
+
+  REACT_METHOD(NegateFutureCallbacks)
+  void NegateFutureCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(const std::string &)> const &reject) noexcept {
+    Mso::PostFuture([ x, resolve, reject ]() noexcept {
+      if (x >= 0) {
+        resolve(-x);
+      } else {
+        reject("Already negative");
+      }
+    });
   }
 
   REACT_METHOD(ResolveSayHelloCallbacks)
@@ -182,6 +263,50 @@ struct SimpleNativeModule {
     }
   }
 
+  REACT_METHOD(StaticNegateAsyncCallbacks)
+  static fire_and_forget StaticNegateAsyncCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(const std::string &)> const &reject) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    auto safeResolve = resolve; // make a copy for co-routine safe access
+    auto safeReject = reject;
+    co_await winrt::resume_background();
+    if (x >= 0) {
+      safeResolve(-x);
+    } else {
+      safeReject("Already negative");
+    }
+  }
+
+  REACT_METHOD(StaticNegateDispatchQueueCallbacks)
+  static void StaticNegateDispatchQueueCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(const std::string &)> const &reject) noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve, reject ]() noexcept {
+      if (x >= 0) {
+        resolve(-x);
+      } else {
+        reject("Already negative");
+      }
+    });
+  }
+
+  REACT_METHOD(StaticNegateFutureCallbacks)
+  static void StaticNegateFutureCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(const std::string &)> const &reject) noexcept {
+    Mso::PostFuture([ x, resolve, reject ]() noexcept {
+      if (x >= 0) {
+        resolve(-x);
+      } else {
+        reject("Already negative");
+      }
+    });
+  }
+
   REACT_METHOD(StaticResolveSayHelloCallbacks)
   static void StaticResolveSayHelloCallbacks(
       std::function<void(const std::string &)> const &resolve,
@@ -197,7 +322,7 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(DividePromise)
-  void DividePromise(int x, int y, ReactPromise<int> &&result) noexcept {
+  void DividePromise(int x, int y, ReactPromise<int> const &result) noexcept {
     if (y != 0) {
       result.Resolve(x / y);
     } else {
@@ -208,7 +333,7 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(NegatePromise)
-  void NegatePromise(int x, ReactPromise<int> &&result) noexcept {
+  void NegatePromise(int x, ReactPromise<int> const &result) noexcept {
     if (x >= 0) {
       result.Resolve(-x);
     } else {
@@ -218,20 +343,70 @@ struct SimpleNativeModule {
     }
   }
 
+  REACT_METHOD(NegateAsyncPromise)
+  fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+    co_await winrt::resume_background();
+    if (x >= 0) {
+      safeResult.Resolve(-x);
+    } else {
+      ReactError error{};
+      error.Message = "Already negative";
+      safeResult.Reject(std::move(error));
+    }
+  }
+
+  REACT_METHOD(NegateDispatchQueuePromise)
+  void NegateDispatchQueuePromise(int x, ReactPromise<int> const &result) noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
+      if (x >= 0) {
+        result.Resolve(-x);
+      } else {
+        ReactError error{};
+        error.Message = "Already negative";
+        result.Reject(std::move(error));
+      }
+    });
+  }
+
+  REACT_METHOD(NegateFuturePromise)
+  void NegateFuturePromise(int x, ReactPromise<int> const &result) noexcept {
+    Mso::PostFuture([ x, result ]() noexcept {
+      if (x >= 0) {
+        result.Resolve(-x);
+      } else {
+        ReactError error{};
+        error.Message = "Already negative";
+        result.Reject(std::move(error));
+      }
+    });
+  }
+
+  // Each macro has second optional parameter: JS name.
+  REACT_METHOD(VoidPromise, L"voidPromise")
+  void VoidPromise(int x, ReactPromise<void> const &result) noexcept {
+    if (x % 2 == 0) {
+      result.Resolve();
+    } else {
+      result.Reject("Odd unexpected");
+    }
+  }
+
   REACT_METHOD(ResolveSayHelloPromise)
-  void ResolveSayHelloPromise(ReactPromise<std::string> &&result) noexcept {
+  void ResolveSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     result.Resolve("Hello_4");
   }
 
   REACT_METHOD(RejectSayHelloPromise)
-  void RejectSayHelloPromise(ReactPromise<std::string> &&result) noexcept {
+  void RejectSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     ReactError error{};
     error.Message = "Promise rejected";
     result.Reject(std::move(error));
   }
 
   REACT_METHOD(StaticDividePromise)
-  static void StaticDividePromise(int x, int y, ReactPromise<int> &&result) noexcept {
+  static void StaticDividePromise(int x, int y, ReactPromise<int> const &result) noexcept {
     if (y != 0) {
       result.Resolve(x / y);
     } else {
@@ -242,7 +417,7 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(StaticNegatePromise)
-  static void StaticNegatePromise(int x, ReactPromise<int> &&result) noexcept {
+  static void StaticNegatePromise(int x, ReactPromise<int> const &result) noexcept {
     if (x >= 0) {
       result.Resolve(-x);
     } else {
@@ -252,13 +427,63 @@ struct SimpleNativeModule {
     }
   }
 
+  REACT_METHOD(StaticNegateAsyncPromise)
+  static fire_and_forget StaticNegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
+    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
+    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+    co_await winrt::resume_background();
+    if (x >= 0) {
+      safeResult.Resolve(-x);
+    } else {
+      ReactError error{};
+      error.Message = "Already negative";
+      safeResult.Reject(std::move(error));
+    }
+  }
+
+  REACT_METHOD(StaticNegateDispatchQueuePromise)
+  static void StaticNegateDispatchQueuePromise(int x, ReactPromise<int> const &result) noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
+      if (x >= 0) {
+        result.Resolve(-x);
+      } else {
+        ReactError error{};
+        error.Message = "Already negative";
+        result.Reject(std::move(error));
+      }
+    });
+  }
+
+  REACT_METHOD(StaticNegateFuturePromise)
+  static void StaticNegateFuturePromise(int x, ReactPromise<int> const &result) noexcept {
+    Mso::PostFuture([ x, result ]() noexcept {
+      if (x >= 0) {
+        result.Resolve(-x);
+      } else {
+        ReactError error{};
+        error.Message = "Already negative";
+        result.Reject(std::move(error));
+      }
+    });
+  }
+
+  // Each macro has second optional parameter: JS name.
+  REACT_METHOD(StaticVoidPromise, L"staticVoidPromise")
+  void StaticVoidPromise(int x, ReactPromise<void> const &result) noexcept {
+    if (x % 2 == 0) {
+      result.Resolve();
+    } else {
+      result.Reject("Odd unexpected");
+    }
+  }
+
   REACT_METHOD(StaticResolveSayHelloPromise)
-  static void StaticResolveSayHelloPromise(ReactPromise<std::string> &&result) noexcept {
+  static void StaticResolveSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     result.Resolve("Hello_4");
   }
 
   REACT_METHOD(StaticRejectSayHelloPromise)
-  static void StaticRejectSayHelloPromise(ReactPromise<std::string> &&result) noexcept {
+  static void StaticRejectSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     ReactError error{};
     error.Message = "Promise rejected";
     result.Reject(std::move(error));
@@ -333,9 +558,13 @@ struct SimpleNativeModule {
 
 /*static*/ std::string SimpleNativeModule::StaticMessage;
 
-// Common base class used by all unit tests below.
-struct NativeModuleTestFixture {
-  NativeModuleTestFixture() {
+TEST_CLASS (NativeModuleTest) {
+  ReactModuleBuilderMock m_builderMock{};
+  IReactModuleBuilder m_moduleBuilder;
+  Windows::Foundation::IInspectable m_moduleObject{nullptr};
+  SimpleNativeModule *m_module;
+
+  NativeModuleTest() {
     m_moduleBuilder = make<ReactModuleBuilderImpl>(m_builderMock);
     auto provider = MakeModuleProvider<SimpleNativeModule>();
     m_moduleObject = provider(m_moduleBuilder);
@@ -343,456 +572,774 @@ struct NativeModuleTestFixture {
     m_module = &BoxedValue<SimpleNativeModule>::GetImpl(reactModule);
   }
 
- protected:
-  ReactModuleBuilderMock m_builderMock{};
-  IReactModuleBuilder m_moduleBuilder;
-  Windows::Foundation::IInspectable m_moduleObject{nullptr};
-  SimpleNativeModule *m_module;
+  TEST_METHOD(TestMethodCall_Add) {
+    m_builderMock.Call1(L"Add", std::function<void(int)>([](int result) noexcept { TestCheck(result == 8); }), 3, 5);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_Negate) {
+    m_builderMock.Call1(L"Negate", std::function<void(int)>([](int result) noexcept { TestCheck(result == -3); }), 3);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_SayHello) {
+    m_builderMock.Call1(L"SayHello", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+                          TestCheck(result == "Hello");
+                        }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticAdd) {
+    m_builderMock.Call1(
+        L"StaticAdd", std::function<void(int)>([](int result) noexcept { TestCheck(result == 25); }), 20, 5);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegate) {
+    m_builderMock.Call1(
+        L"StaticNegate", std::function<void(int)>([](int result) noexcept { TestCheck(result == -7); }), 7);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticSayHello) {
+    m_builderMock.Call1(L"StaticSayHello", std::function<void(const std::string &)>([
+                        ](const std::string &result) noexcept { TestCheck(result == "Hello"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_SayHello0) {
+    m_builderMock.Call0(L"SayHello0");
+    TestCheck(m_module->Message == "Hello_0");
+  }
+
+  TEST_METHOD(TestMethodCall_PrintPoint) {
+    m_builderMock.Call0(L"PrintPoint", Point{/*X =*/3, /*Y =*/5});
+    TestCheck(m_module->Message == "Point: (3, 5)");
+  }
+
+  TEST_METHOD(TestMethodCall_PrintLine) {
+    m_builderMock.Call0(L"PrintLine", Point{/*X =*/3, /*Y =*/5}, Point{/*X =*/6, /*Y =*/8});
+    TestCheck(m_module->Message == "Line: (3, 5)-(6, 8)");
+  }
+
+  TEST_METHOD(TestMethodCall_StaticSayHello1) {
+    m_builderMock.Call0(L"StaticSayHello1");
+    TestCheck(SimpleNativeModule::StaticMessage == "Hello_1");
+  }
+
+  TEST_METHOD(TestMethodCall_StaticPrintPoint) {
+    m_builderMock.Call0(L"StaticPrintPoint", Point{/*X =*/13, /*Y =*/15});
+    TestCheck(SimpleNativeModule::StaticMessage == "Static Point: (13, 15)");
+  }
+
+  TEST_METHOD(TestMethodCall_StaticPrintLine) {
+    m_builderMock.Call0(L"StaticPrintLine", Point{/*X =*/13, /*Y =*/15}, Point{/*X =*/16, /*Y =*/18});
+    TestCheck(SimpleNativeModule::StaticMessage == "Static Line: (13, 15)-(16, 18)");
+  }
+
+  TEST_METHOD(TestMethodCall_AddCallback) {
+    m_builderMock.Call1(
+        L"AddCallback", std::function<void(int)>([](int result) noexcept { TestCheck(result == -1); }), 7, -8);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateCallback) {
+    m_builderMock.Call1(
+        L"NegateCallback", std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }), 4);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateAsyncCallback) {
+    Mso::FutureWait(m_builderMock.Call1(
+        L"NegateAsyncCallback", std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }), 4));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateDispatchQueueCallback) {
+    Mso::FutureWait(m_builderMock.Call1(
+        L"NegateDispatchQueueCallback",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }),
+        4));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateFutureCallback) {
+    Mso::FutureWait(m_builderMock.Call1(
+        L"NegateFutureCallback", std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }), 4));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_SayHelloCallback) {
+    m_builderMock.Call1(L"SayHelloCallback", std::function<void(const std::string &)>([
+                        ](const std::string &result) noexcept { TestCheck(result == "Hello_2"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticAddCallback) {
+    m_builderMock.Call1(
+        L"StaticAddCallback", std::function<void(int)>([](int result) noexcept { TestCheck(result == 60); }), 4, 56);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateCallback) {
+    m_builderMock.Call1(
+        L"StaticNegateCallback", std::function<void(int)>([](int result) noexcept { TestCheck(result == -33); }), 33);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateAsyncCallback) {
+    Mso::FutureWait(m_builderMock.Call1(
+        L"StaticNegateAsyncCallback",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }),
+        4));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateDispatchQueueCallback) {
+    Mso::FutureWait(m_builderMock.Call1(
+        L"StaticNegateDispatchQueueCallback",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }),
+        4));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateFutureCallback) {
+    Mso::FutureWait(m_builderMock.Call1(
+        L"StaticNegateFutureCallback",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -4); }),
+        4));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticSayHelloCallback) {
+    m_builderMock.Call1(L"StaticSayHelloCallback", std::function<void(const std::string &)>([
+                        ](const std::string &result) noexcept { TestCheck(result == "Static Hello_2"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_DivideCallbacks) {
+    m_builderMock.Call2(
+        L"DivideCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_DivideCallbacksError) {
+    m_builderMock.Call2(
+        L"DivideCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        0);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateCallbacks) {
+    m_builderMock.Call2(
+        L"NegateCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateCallbacksError) {
+    m_builderMock.Call2(
+        L"NegateCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateAsyncCallbacks) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateAsyncCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateAsyncCallbacksError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateAsyncCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateDispatchQueueCallbacks) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateDispatchQueueCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateDispatchQueueCallbacksError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateDispatchQueueCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateFutureCallbacks) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateFutureCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateFutureCallbacksError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateFutureCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_ResolveSayHelloCallbacks) {
+    m_builderMock.Call2(
+        L"ResolveSayHelloCallbacks",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_3"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Goodbye"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_RejectSayHelloCallbacks) {
+    m_builderMock.Call2(
+        L"RejectSayHelloCallbacks",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_3"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Goodbye"); }));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticDivideCallbacks) {
+    m_builderMock.Call2(
+        L"StaticDivideCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticDivideCallbacksError) {
+    m_builderMock.Call2(
+        L"StaticDivideCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        0);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateCallbacks) {
+    m_builderMock.Call2(
+        L"StaticNegateCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateCallbacksError) {
+    m_builderMock.Call2(
+        L"StaticNegateCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateAsyncCallbacks) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateAsyncCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateAsyncCallbacksError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateAsyncCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateDispatchQueueCallbacks) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateDispatchQueueCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateDispatchQueueCallbacksError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateDispatchQueueCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateFutureCallbacks) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateFutureCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateFutureCallbacksError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateFutureCallbacks",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticResolveSayHelloCallbacks) {
+    m_builderMock.Call2(
+        L"StaticResolveSayHelloCallbacks",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_3"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Goodbye"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticRejectSayHelloCallbacks) {
+    m_builderMock.Call2(
+        L"StaticRejectSayHelloCallbacks",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_3"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Goodbye"); }));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_DividePromise) {
+    m_builderMock.Call2(
+        L"DividePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_DividePromiseError) {
+    m_builderMock.Call2(
+        L"DividePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        0);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegatePromise) {
+    m_builderMock.Call2(
+        L"NegatePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegatePromiseError) {
+    m_builderMock.Call2(
+        L"NegatePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateAsyncPromise) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateAsyncPromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateAsyncPromiseError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateAsyncPromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateDispatchQueuePromise) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateDispatchQueuePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateDispatchQueuePromiseError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateDispatchQueuePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateFuturePromise) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateFuturePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_NegateFuturePromiseError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"NegateFuturePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_VoidPromise) {
+    m_builderMock.Call2(
+        L"voidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_VoidError) {
+    m_builderMock.Call2(
+        L"voidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        3);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_ResolveSayHelloPromise) {
+    m_builderMock.Call2(
+        L"ResolveSayHelloPromise",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_RejectSayHelloPromise) {
+    m_builderMock.Call2(
+        L"RejectSayHelloPromise",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticDividePromise) {
+    m_builderMock.Call2(
+        L"StaticDividePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticDividePromiseError) {
+    m_builderMock.Call2(
+        L"StaticDividePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        6,
+        0);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegatePromise) {
+    m_builderMock.Call2(
+        L"StaticNegatePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegatePromiseError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateAsyncPromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateAsyncPromise) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateAsyncPromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateAsyncPromiseError) {
+    m_builderMock.Call2(
+        L"StaticNegatePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateDispatchQueuePromise) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateDispatchQueuePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateDispatchQueuePromiseError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateDispatchQueuePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateFuturePromise) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateFuturePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        5));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticNegateFuturePromiseError) {
+    Mso::FutureWait(m_builderMock.Call2(
+        L"StaticNegateFuturePromise",
+        std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        -5));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticVoidPromise) {
+    m_builderMock.Call2(
+        L"staticVoidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticVoidPromiseError) {
+    m_builderMock.Call2(
+        L"staticVoidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        3);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticResolveSayHelloPromise) {
+    m_builderMock.Call2(
+        L"StaticResolveSayHelloPromise",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticRejectSayHelloPromise) {
+    m_builderMock.Call2(
+        L"StaticRejectSayHelloPromise",
+        std::function<void(const std::string &)>(
+            [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodSyncCall_AddSync) {
+    int result;
+    m_builderMock.CallSync(L"AddSync", /*out*/ result, 3, 5);
+    TestCheck(result == 8);
+  }
+
+  TEST_METHOD(TestMethodSyncCall_NegateSync) {
+    int result;
+    m_builderMock.CallSync(L"NegateSync", /*out*/ result, 7);
+    TestCheck(result == -7);
+  }
+
+  TEST_METHOD(TestMethodSyncCall_SayHelloSync) {
+    std::string result;
+    m_builderMock.CallSync(L"SayHelloSync", /*out*/ result);
+    TestCheck(result == "Hello");
+  }
+
+  TEST_METHOD(TestMethodSyncCall_StaticAddSync) {
+    int result;
+    m_builderMock.CallSync(L"StaticAddSync", /*out*/ result, 3, 5);
+    TestCheck(result == 8);
+  }
+
+  TEST_METHOD(TestMethodSyncCall_StaticNegateSync) {
+    int result;
+    m_builderMock.CallSync(L"StaticNegateSync", /*out*/ result, 7);
+    TestCheck(result == -7);
+  }
+
+  TEST_METHOD(TestMethodSyncCall_StaticSayHelloSync) {
+    std::string result;
+    m_builderMock.CallSync(L"StaticSayHelloSync", /*out*/ result);
+    TestCheck(result == "Hello");
+  }
+
+  TEST_METHOD(TestConstants) {
+    auto constants = m_builderMock.GetConstants();
+    TestCheck(constants["Constant1"] == "MyConstant1");
+    TestCheck(constants["const2"] == "MyConstant2");
+    TestCheck(constants["const3"]["X"] == 2);
+    TestCheck(constants["const3"]["Y"] == 3);
+    TestCheck(constants["Constant4"]["X"] == 3);
+    TestCheck(constants["Constant4"]["Y"] == 4);
+    TestCheck(constants["const51"]["X"] == 12);
+    TestCheck(constants["const51"]["Y"] == 14);
+    TestCheck(constants["const52"] == "MyConstant52");
+    TestCheck(constants["const61"]["X"] == 15);
+    TestCheck(constants["const61"]["Y"] == 17);
+    TestCheck(constants["const62"] == "MyConstant62");
+  }
+
+  TEST_METHOD(TestEvent_EventField1) {
+    bool eventRaised = false;
+    m_builderMock.SetEventHandler(L"OnIntResult1", std::function<void(int)>([&eventRaised](int eventArg) noexcept {
+                                    TestCheck(eventArg == 42);
+                                    eventRaised = true;
+                                  }));
+
+    m_module->OnIntResult1(42);
+    TestCheck(eventRaised == true);
+  }
+
+  TEST_METHOD(TestEvent_EventField2) {
+    bool eventRaised = false;
+    m_builderMock.SetEventHandler(
+        L"onPointResult2", std::function<void(const Point &)>([&eventRaised](const Point &eventArg) noexcept {
+          TestCheck(eventArg.X == 4);
+          TestCheck(eventArg.Y == 2);
+          eventRaised = true;
+        }));
+
+    m_module->OnPointResult2(Point{/*X =*/4, /*Y =*/2});
+    TestCheck(eventRaised == true);
+  }
+
+  TEST_METHOD(TestEvent_EventField3) {
+    bool eventRaised = false;
+    m_builderMock.SetEventHandler(
+        L"OnObjectResult3", std::function<void(const JSValue &)>([&eventRaised](const JSValue &eventArg) noexcept {
+          TestCheck(eventArg.Object().at("X").Int64() == 4);
+          TestCheck(eventArg.Object().at("Y").Int64() == 2);
+          eventRaised = true;
+        }));
+
+    auto writer = MakeJSValueTreeWriter();
+    writer.WriteObjectBegin();
+    WriteProperty(writer, "X", 4);
+    WriteProperty(writer, "Y", 2);
+    writer.WriteObjectEnd();
+
+    m_module->OnObjectResult3(TakeJSValue(writer));
+    TestCheck(eventRaised == true);
+  }
 };
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_Add", "NativeModuleTest") {
-  m_builderMock.Call1(L"Add", std::function<void(int)>([](int result) noexcept { REQUIRE(result == 8); }), 3, 5);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_Negate", "NativeModuleTest") {
-  m_builderMock.Call1(L"Negate", std::function<void(int)>([](int result) noexcept { REQUIRE(result == -3); }), 3);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_SayHello", "NativeModuleTest") {
-  m_builderMock.Call1(L"SayHello", std::function<void(const std::string &)>([](const std::string &result) noexcept {
-                        REQUIRE(result == "Hello");
-                      }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticAdd", "NativeModuleTest") {
-  m_builderMock.Call1(
-      L"StaticAdd", std::function<void(int)>([](int result) noexcept { REQUIRE(result == 25); }), 20, 5);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticNegate", "NativeModuleTest") {
-  m_builderMock.Call1(L"StaticNegate", std::function<void(int)>([](int result) noexcept { REQUIRE(result == -7); }), 7);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticSayHello", "NativeModuleTest") {
-  m_builderMock.Call1(
-      L"StaticSayHello",
-      std::function<void(const std::string &)>([](const std::string &result) noexcept { REQUIRE(result == "Hello"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_SayHello0", "NativeModuleTest") {
-  m_builderMock.Call0(L"SayHello0");
-  REQUIRE(m_module->Message == "Hello_0");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_PrintPoint", "NativeModuleTest") {
-  m_builderMock.Call0(L"PrintPoint", Point{/*X =*/3, /*Y =*/5});
-  REQUIRE(m_module->Message == "Point: (3, 5)");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_PrintLine", "NativeModuleTest") {
-  m_builderMock.Call0(L"PrintLine", Point{/*X =*/3, /*Y =*/5}, Point{/*X =*/6, /*Y =*/8});
-  REQUIRE(m_module->Message == "Line: (3, 5)-(6, 8)");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticSayHello1", "NativeModuleTest") {
-  m_builderMock.Call0(L"StaticSayHello1");
-  REQUIRE(SimpleNativeModule::StaticMessage == "Hello_1");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticPrintPoint", "NativeModuleTest") {
-  m_builderMock.Call0(L"StaticPrintPoint", Point{/*X =*/13, /*Y =*/15});
-  REQUIRE(SimpleNativeModule::StaticMessage == "Static Point: (13, 15)");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticPrintLine", "NativeModuleTest") {
-  m_builderMock.Call0(L"StaticPrintLine", Point{/*X =*/13, /*Y =*/15}, Point{/*X =*/16, /*Y =*/18});
-  REQUIRE(SimpleNativeModule::StaticMessage == "Static Line: (13, 15)-(16, 18)");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_AddCallback", "NativeModuleTest") {
-  m_builderMock.Call1(
-      L"AddCallback", std::function<void(int)>([](int result) noexcept { REQUIRE(result == -1); }), 7, -8);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_NegateCallback", "NativeModuleTest") {
-  m_builderMock.Call1(
-      L"NegateCallback", std::function<void(int)>([](int result) noexcept { REQUIRE(result == -4); }), 4);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_SayHelloCallback", "NativeModuleTest") {
-  m_builderMock.Call1(L"SayHelloCallback", std::function<void(const std::string &)>([
-                      ](const std::string &result) noexcept { REQUIRE(result == "Hello_2"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticAddCallback", "NativeModuleTest") {
-  m_builderMock.Call1(
-      L"StaticAddCallback", std::function<void(int)>([](int result) noexcept { REQUIRE(result == 60); }), 4, 56);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticNegateCallback", "NativeModuleTest") {
-  m_builderMock.Call1(
-      L"StaticNegateCallback", std::function<void(int)>([](int result) noexcept { REQUIRE(result == -33); }), 33);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticSayHelloCallback", "NativeModuleTest") {
-  m_builderMock.Call1(L"StaticSayHelloCallback", std::function<void(const std::string &)>([
-                      ](const std::string &result) noexcept { REQUIRE(result == "Static Hello_2"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_DivideCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"DivideCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      2);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_DivideCallbacksError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"DivideCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      0);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_NegateCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"NegateCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      5);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_NegateCallbacksError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"NegateCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      -5);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_ResolveSayHelloCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"ResolveSayHelloCallbacks",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_3"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Goodbye"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_RejectSayHelloCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"RejectSayHelloCallbacks",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_3"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Goodbye"); }));
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticDivideCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticDivideCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      2);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticDivideCallbacksError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticDivideCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      0);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticNegateCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticNegateCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      5);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticNegateCallbacksError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticNegateCallbacks",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      -5);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticResolveSayHelloCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticResolveSayHelloCallbacks",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_3"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Goodbye"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticRejectSayHelloCallbacks", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticRejectSayHelloCallbacks",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_3"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Goodbye"); }));
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_DividePromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"DividePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      2);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_DividePromiseError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"DividePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      0);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_NegatePromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"NegatePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      5);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_NegatePromiseError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"NegatePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      -5);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_ResolveSayHelloPromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"ResolveSayHelloPromise",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_4"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Promise rejected"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_RejectSayHelloPromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"RejectSayHelloPromise",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_4"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Promise rejected"); }));
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticDividePromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticDividePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      2);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticDividePromiseError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticDividePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == 3); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Division by 0"); }),
-      6,
-      0);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticNegatePromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticNegatePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      5);
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticNegatePromiseError", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticNegatePromise",
-      std::function<void(int)>([](int result) noexcept { REQUIRE(result == -5); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Already negative"); }),
-      -5);
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticResolveSayHelloPromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticResolveSayHelloPromise",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_4"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Promise rejected"); }));
-  REQUIRE(m_builderMock.IsResolveCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodCall_StaticRejectSayHelloPromise", "NativeModuleTest") {
-  m_builderMock.Call2(
-      L"StaticRejectSayHelloPromise",
-      std::function<void(const std::string &)>(
-          [](const std::string &result) noexcept { REQUIRE(result == "Hello_4"); }),
-      std::function<void(JSValue const &)>(
-          [](JSValue const &error) noexcept { REQUIRE(error["message"] == "Promise rejected"); }));
-  REQUIRE(m_builderMock.IsRejectCallbackCalled());
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodSyncCall_AddSync", "NativeModuleTest") {
-  int result;
-  m_builderMock.CallSync(L"AddSync", /*out*/ result, 3, 5);
-  REQUIRE(result == 8);
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodSyncCall_NegateSync", "NativeModuleTest") {
-  int result;
-  m_builderMock.CallSync(L"NegateSync", /*out*/ result, 7);
-  REQUIRE(result == -7);
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodSyncCall_SayHelloSync", "NativeModuleTest") {
-  std::string result;
-  m_builderMock.CallSync(L"SayHelloSync", /*out*/ result);
-  REQUIRE(result == "Hello");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodSyncCall_StaticAddSync", "NativeModuleTest") {
-  int result;
-  m_builderMock.CallSync(L"StaticAddSync", /*out*/ result, 3, 5);
-  REQUIRE(result == 8);
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodSyncCall_StaticNegateSync", "NativeModuleTest") {
-  int result;
-  m_builderMock.CallSync(L"StaticNegateSync", /*out*/ result, 7);
-  REQUIRE(result == -7);
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestMethodSyncCall_StaticSayHelloSync", "NativeModuleTest") {
-  std::string result;
-  m_builderMock.CallSync(L"StaticSayHelloSync", /*out*/ result);
-  REQUIRE(result == "Hello");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestConstants", "NativeModuleTest") {
-  auto constants = m_builderMock.GetConstants();
-  REQUIRE(constants["Constant1"] == "MyConstant1");
-  REQUIRE(constants["const2"] == "MyConstant2");
-  REQUIRE(constants["const3"]["X"] == 2);
-  REQUIRE(constants["const3"]["Y"] == 3);
-  REQUIRE(constants["Constant4"]["X"] == 3);
-  REQUIRE(constants["Constant4"]["Y"] == 4);
-  REQUIRE(constants["const51"]["X"] == 12);
-  REQUIRE(constants["const51"]["Y"] == 14);
-  REQUIRE(constants["const52"] == "MyConstant52");
-  REQUIRE(constants["const61"]["X"] == 15);
-  REQUIRE(constants["const61"]["Y"] == 17);
-  REQUIRE(constants["const62"] == "MyConstant62");
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestEvent_EventField1", "NativeModuleTest") {
-  bool eventRaised = false;
-  m_builderMock.SetEventHandler(L"OnIntResult1", std::function<void(int)>([&eventRaised](int eventArg) noexcept {
-                                  REQUIRE(eventArg == 42);
-                                  eventRaised = true;
-                                }));
-
-  m_module->OnIntResult1(42);
-  REQUIRE(eventRaised == true);
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestEvent_EventField2", "NativeModuleTest") {
-  bool eventRaised = false;
-  m_builderMock.SetEventHandler(
-      L"onPointResult2", std::function<void(const Point &)>([&eventRaised](const Point &eventArg) noexcept {
-        REQUIRE(eventArg.X == 4);
-        REQUIRE(eventArg.Y == 2);
-        eventRaised = true;
-      }));
-
-  m_module->OnPointResult2(Point{/*X =*/4, /*Y =*/2});
-  REQUIRE(eventRaised == true);
-}
-
-TEST_CASE_METHOD(NativeModuleTestFixture, "TestEvent_EventField3", "NativeModuleTest") {
-  bool eventRaised = false;
-  m_builderMock.SetEventHandler(
-      L"OnObjectResult3", std::function<void(const JSValue &)>([&eventRaised](const JSValue &eventArg) noexcept {
-        REQUIRE(eventArg.Object().at("X").Int64() == 4);
-        REQUIRE(eventArg.Object().at("Y").Int64() == 2);
-        eventRaised = true;
-      }));
-
-  JSValue data = JSValue();
-  auto writer = MakeJSValueTreeWriter(data);
-  writer.WriteObjectBegin();
-  WriteProperty(writer, "X", 4);
-  WriteProperty(writer, "Y", 2);
-  writer.WriteObjectEnd();
-
-  m_module->OnObjectResult3(data);
-  REQUIRE(eventRaised == true);
-}
 
 } // namespace winrt::Microsoft::ReactNative

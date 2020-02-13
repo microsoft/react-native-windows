@@ -1,7 +1,6 @@
 'use strict';
 import * as React from 'react';
 import {
-  NativeModules,
   View,
   findNodeHandle,
   AccessibilityInfo,
@@ -366,7 +365,8 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> = props => {
   }, []);
   const ref = React.useRef();
   const onClickTag = React.useCallback(() => {
-    NativeModules.AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement from tag', findNodeHandle(ref.current));
+     // @ts-ignore (We changed the API for announceForAccessibility)
+    AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement from tag', findNodeHandle(ref.current));
   }, [ref.current]);
   return (
     <View style={styles.box}>

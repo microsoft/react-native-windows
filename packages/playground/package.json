@@ -12,11 +12,11 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "react": "16.8.6",
-    "react-native": "0.60.6",
-    "react-native-windows": "0.60.0-vnext.133",
-    "react-native-windows-extended": "0.60.69-11",
-    "rnpm-plugin-windows": "^0.4.0"
+    "react": "16.9.0",
+    "react-native": "0.61.5",
+    "react-native-windows": "0.61.0-beta.6",
+    "react-native-windows-extended": "0.61.0-beta.10",
+    "rnpm-plugin-windows": "^0.5.1-0"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

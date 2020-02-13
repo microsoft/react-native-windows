@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Tue, 17 Dec 2019 23:33:28 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
 
+## 0.5.1-0
+Tue, 11 Feb 2020 01:21:44 GMT
+
+### Changes
+
+- Fix CLI dependency (acoates@microsoft.com)
 ## 0.4.0
 Tue, 17 Dec 2019 23:33:28 GMT
 

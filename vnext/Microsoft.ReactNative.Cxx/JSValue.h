@@ -14,7 +14,8 @@ namespace winrt::Microsoft::ReactNative {
 struct JSValue;
 IJSValueReader MakeJSValueTreeReader(const JSValue &root) noexcept;
 IJSValueReader MakeJSValueTreeReader(JSValue &&root) noexcept;
-IJSValueWriter MakeJSValueTreeWriter(JSValue &resultValue) noexcept;
+IJSValueWriter MakeJSValueTreeWriter() noexcept;
+JSValue TakeJSValue(IJSValueWriter const &writer) noexcept;
 
 // Type alias for JSValue object type
 using JSValueObject = std::map<std::string, JSValue, std::less<>>;
@@ -232,10 +233,9 @@ inline winrt::Windows::UI::Xaml::Media::Brush JSValue::To() const noexcept {
 
 template <class T>
 static JSValue From(const T &value) noexcept {
-  JSValue result;
-  auto writer = MakeJSValueTreeWriter(result);
-  WriteValue(writer, value);
-  return result;
+  auto writer = MakeJSValueTreeWriter();
+  WriteValue(*writer, value);
+  return TakeJSValue(writer);
 }
 
 inline const JSValue &JSValue::operator[](std::string_view propertyName) const noexcept {

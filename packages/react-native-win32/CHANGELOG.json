@@ -2,6 +2,101 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 13 Feb 2020 01:37:12 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.5",
+      "version": "0.61.0-beta.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set doc generation to output to new path. Update docs to include recent changes.",
+            "author": "aschultz@microsoft.com",
+            "commit": "565fe29828b9eb9532697620367fd20eaf5db4cc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 11:16:52 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.4",
+      "version": "0.61.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Provide a Minimal PlatformConstants Implementation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cae1620822a386c4a52fb7351e922485d4f81ac1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 07:03:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.3",
+      "version": "0.61.0-beta.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Do not use default export to export PersonaCoin, and export PersonCoinTypes correctly",
+            "author": "acoates@microsoft.com",
+            "commit": "9d933b059ae0928f5d505b9b9a629f2058d67c0e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 02:40:30 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.2",
+      "version": "0.61.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Export PersonaCoin",
+            "author": "acoates@microsoft.com",
+            "commit": "1fdcd51932f2ec13b68003c5a168ac9c511195a3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Feb 2020 01:21:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Flow Check Suppressions",
+            "author": "nick@nickgerleman.com",
+            "commit": "6a4242355e9c8d96f4a95aedbdff53ba07224a9a"
+          },
+          {
+            "comment": "More Patches, IntegrationTests and RNTester Cleanup",
+            "author": "nick@nickgerleman.com",
+            "commit": "abf3a584449a7e33b280f094e7a62a39ce0a6832"
+          },
+          {
+            "comment": "Use unforked react-native 0.60.6",
+            "author": "nick@nickgerleman.com",
+            "commit": "da8b7814a8d32b35a7765d43a8f1b7fac6ac0a5e"
+          },
+          {
+            "comment": "Add AccessibilityInfo native module to react-native-win32",
+            "author": "adrum@microsoft.com",
+            "commit": "f3db1f409a128a83d68451bb921d95dec99c1837"
+          },
+          {
+            "comment": "Implement Picker component for win32",
+            "author": "kinhln@microsoft.com",
+            "commit": "48e484fb749f77422aec10e9c0e5a74fc2deb076"
+          },
+          {
+            "comment": "upgrade to 61",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ad2efd6b1785ce42b55f35742f81eb9cf0e7ec87"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 23:29:21 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.4",
       "version": "0.26.4",

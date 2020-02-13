@@ -74,9 +74,11 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
 
   Mso::React::ReactOptions reactOptions{};
+  reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
   reactOptions.DeveloperSettings.SourceBundlePath = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
   reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
+  reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
   reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
@@ -141,7 +143,7 @@ void ReactNativeHost::OnLeavingBackground() noexcept {
   //_lifecycleStateMachine.OnLeavingBackground();
 }
 
-void ReactNativeHost::OnResume(OnResumeAction const &action) noexcept {
+void ReactNativeHost::OnResume(OnResumeAction const & /*action*/) noexcept {
   OutputDebugStringW(L"TODO: ReactNativeHost::OnResume not implemented");
 
   // see the ReactInstanceManager.cs from the C# implementation

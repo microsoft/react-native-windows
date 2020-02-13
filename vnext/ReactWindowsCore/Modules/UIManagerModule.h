@@ -14,6 +14,7 @@ namespace react {
 
 struct IReactRootView;
 struct ShadowNode;
+class MessageQueueThread;
 
 class UIManager : public IUIManager, INativeUIManagerHost {
  public:
@@ -47,6 +48,11 @@ class UIManager : public IUIManager, INativeUIManagerHost {
   void onBatchComplete() override;
   void measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) override;
   void measureInWindow(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) override;
+  void measureLayout(
+      int64_t reactTag,
+      int64_t ancestorReactTag,
+      facebook::xplat::module::CxxModule::Callback errorCallback,
+      facebook::xplat::module::CxxModule::Callback callback) override;
   void findSubviewIn(
       int64_t reactTag,
       folly::dynamic &&coordinates,
@@ -86,7 +92,8 @@ class UIManager : public IUIManager, INativeUIManagerHost {
 
 class UIManagerModule : public facebook::xplat::module::CxxModule {
  public:
-  UIManagerModule(std::shared_ptr<IUIManager> &&manager);
+  UIManagerModule(std::shared_ptr<IUIManager> &&manager, std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept;
+  ~UIManagerModule() noexcept override;
 
   // CxxModule
   std::string getName() override;
@@ -95,6 +102,7 @@ class UIManagerModule : public facebook::xplat::module::CxxModule {
 
  private:
   std::shared_ptr<IUIManager> m_manager;
+  std::shared_ptr<MessageQueueThread> m_uiQueue;
 };
 
 } // namespace react

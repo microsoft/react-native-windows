@@ -105,7 +105,7 @@ void ScrollViewShadowNode::createView() {
       });
 
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(
-      winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto &args) {
+      winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto & /*args*/) {
         const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
         const auto zoomFactor = scrollViewerNotNull.ZoomFactor();
         if (m_zoomFactor != zoomFactor) {
@@ -446,11 +446,11 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
   return directEvents;
 }
 
-XamlView ScrollViewManager::CreateViewCore(int64_t tag) {
+XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
   const auto scrollViewer = winrt::ScrollViewer{};
 
-  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
-  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);
+  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);
   scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
   scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
   scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
@@ -461,7 +461,7 @@ XamlView ScrollViewManager::CreateViewCore(int64_t tag) {
   return scrollViewer;
 }
 
-void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void ScrollViewManager::AddView(XamlView parent, XamlView child, [[maybe_unused]] int64_t index) {
   assert(index == 0);
 
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
@@ -475,7 +475,7 @@ void ScrollViewManager::RemoveAllChildren(XamlView parent) {
   snapPointManager->Content(nullptr);
 }
 
-void ScrollViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void ScrollViewManager::RemoveChildAt(XamlView parent, [[maybe_unused]] int64_t index) {
   assert(index == 0);
   RemoveAllChildren(parent);
 }

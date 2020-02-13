@@ -47,6 +47,11 @@ class IUIManager {
   virtual void replaceExistingNonRootView(int64_t oldTag, int64_t newTag) = 0;
   virtual void measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual void measureInWindow(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) = 0;
+  virtual void measureLayout(
+      int64_t reactTag,
+      int64_t ancestorReactTag,
+      facebook::xplat::module::CxxModule::Callback errorCallback,
+      facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual INativeUIManager *getNativeUIManager() = 0;
 
   virtual void focus(int64_t tag) = 0;
@@ -64,6 +69,13 @@ class IUIManager {
 std::shared_ptr<IUIManager> createIUIManager(
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers,
     INativeUIManager *nativeManager);
+
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
+    std::shared_ptr<IUIManager> &&uimanager,
+    std::shared_ptr<MessageQueueThread> &&uiQueue) noexcept;
+
+// Deprecated: use the overloaded version with two parameters.
+// It is here because it is being exported
 std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager);
 
 std::shared_ptr<IUIManager> createBatchingUIManager(
