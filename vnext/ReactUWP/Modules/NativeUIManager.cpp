@@ -29,6 +29,7 @@ static YogaNodePtr make_yoga_node() {
   return result;
 }
 
+#if defined(_DEBUG)
 static int YogaLog(
     const YGConfigRef /*config*/,
     const YGNodeRef /*node*/,
@@ -55,6 +56,7 @@ static int YogaLog(
 
   return 0;
 }
+#endif
 
 YGNodeRef NativeUIManager::GetYogaNode(int64_t tag) const {
   auto iter = m_tagsToYogaNodes.find(tag);

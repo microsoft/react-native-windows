@@ -23,7 +23,7 @@ JsValueRef __stdcall nowHookJNF(
     JsValueRef /*function*/,
     bool /*isConstructCall*/,
     JsValueRef * /*arguments*/,
-    unsigned short argumentCount,
+    [[maybe_unused]] unsigned short argumentCount,
     void * /*callbackState*/) {
   assert(argumentCount == 1);
   double now = nowHook != nullptr ? nowHook() : 0;

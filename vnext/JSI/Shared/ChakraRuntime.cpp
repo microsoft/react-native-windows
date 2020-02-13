@@ -588,7 +588,7 @@ facebook::jsi::Runtime::ScopeState *ChakraRuntime::pushScope() {
   return nullptr;
 }
 
-void ChakraRuntime::popScope(Runtime::ScopeState *state) {
+void ChakraRuntime::popScope([[maybe_unused]] Runtime::ScopeState *state) {
   assert(state == nullptr);
   VerifyJsErrorElseThrow(JsCollectGarbage(m_runtime));
 }

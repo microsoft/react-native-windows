@@ -40,7 +40,8 @@
 namespace GlogStub {
 
 struct LogMessageFatal {
-  ~LogMessageFatal() {
+#pragma warning(suppress : 4722) // destructor does not return
+  [[noreturn]] ~LogMessageFatal() noexcept {
     std::abort();
   }
 
