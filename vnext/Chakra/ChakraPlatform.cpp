@@ -20,11 +20,11 @@ LoggingHook loggingHook = nullptr;
 NowHook nowHook = nullptr;
 
 JsValueRef __stdcall nowHookJNF(
-    JsValueRef function,
-    bool isConstructCall,
-    JsValueRef arguments[],
+    JsValueRef /*function*/,
+    bool /*isConstructCall*/,
+    JsValueRef * /*arguments*/,
     unsigned short argumentCount,
-    void *callbackState) {
+    void * /*callbackState*/) {
   assert(argumentCount == 1);
   double now = nowHook != nullptr ? nowHook() : 0;
   JsValueRef value;

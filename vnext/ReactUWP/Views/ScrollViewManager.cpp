@@ -105,7 +105,7 @@ void ScrollViewShadowNode::createView() {
       });
 
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(
-      winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto &args) {
+      winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto & /*args*/) {
         const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
         const auto zoomFactor = scrollViewerNotNull.ZoomFactor();
         if (m_zoomFactor != zoomFactor) {
@@ -446,7 +446,7 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
   return directEvents;
 }
 
-XamlView ScrollViewManager::CreateViewCore(int64_t tag) {
+XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
   const auto scrollViewer = winrt::ScrollViewer{};
 
   scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);

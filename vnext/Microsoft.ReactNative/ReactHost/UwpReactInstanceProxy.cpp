@@ -124,7 +124,7 @@ const std::string &UwpReactInstanceProxy::LastErrorMessage() const noexcept {
   VerifyElseCrashSz(false, "Deprecated. Use ReactHost.");
 }
 
-void UwpReactInstanceProxy::loadBundle(std::string &&jsBundleRelativePath) {
+void UwpReactInstanceProxy::loadBundle(std::string && /*jsBundleRelativePath*/) {
   VerifyElseCrashSz(false, "Deprecated. Use ReactHost.");
 }
 

@@ -151,7 +151,7 @@ namespace react {
 #ifdef PATCH_RN
 namespace {
 
-void runtimeInstaller(jsi::Runtime &runtime) {
+void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #ifdef ENABLE_JS_SYSTRACE_TO_ETW
   facebook::react::tracing::initializeJSHooks(runtime);
 #endif
@@ -169,7 +169,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
       };
     } else {
-      logger = [loggingHook = std::move(loggingHook_)](const std::string &message, unsigned int logLevel) { ; };
+      logger = [loggingHook = std::move(loggingHook_)](const std::string & /*message*/, unsigned int /*logLevel*/) {};
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 

@@ -68,12 +68,12 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       messageQueue);
 
   modules.emplace_back(
-      react::uwp::WebSocketModule::name,
+      react::uwp::WebSocketModule::Name,
       []() { return std::make_unique<react::uwp::WebSocketModule>(); },
       MakeSerialQueueThread());
 
   modules.emplace_back(
-      NetworkingModule::name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
+      NetworkingModule::Name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
 
   modules.emplace_back(
       "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);

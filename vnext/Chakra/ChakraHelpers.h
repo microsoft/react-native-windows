@@ -71,7 +71,7 @@ inline void throwJSExecutionException(const char *fmt, Args... args) {
 }
 
 template <typename... Args>
-inline void throwJSExecutionExceptionWithStack(const char *msg, const char *stack) {
+inline void throwJSExecutionExceptionWithStack(const char * /*msg*/, const char * /*stack*/) {
   // throw JSException(msg, stack);
 }
 

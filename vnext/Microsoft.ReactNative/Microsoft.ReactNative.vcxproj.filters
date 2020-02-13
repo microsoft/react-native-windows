@@ -591,6 +591,12 @@
     </ClInclude>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
+    <ClInclude Include="Base\CxxReactIncludes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\FollyIncludes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h">

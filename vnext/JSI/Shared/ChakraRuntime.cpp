@@ -296,7 +296,7 @@ std::shared_ptr<facebook::jsi::HostObject> ChakraRuntime::getHostObject(const fa
   return GetExternalData<facebook::jsi::HostObject>(GetChakraObjectRef(target));
 }
 
-facebook::jsi::HostFunctionType &ChakraRuntime::getHostFunction(const facebook::jsi::Function &obj) {
+facebook::jsi::HostFunctionType &ChakraRuntime::getHostFunction(const facebook::jsi::Function & /*obj*/) {
   throw facebook::jsi::JSINativeException("ChakraRuntime::getHostFunction is not implemented.");
 }
 
@@ -510,7 +510,7 @@ void ChakraRuntime::setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index,
 
 facebook::jsi::Function ChakraRuntime::createFunctionFromHostFunction(
     const facebook::jsi::PropNameID &name,
-    unsigned int paramCount,
+    unsigned int /*paramCount*/,
     facebook::jsi::HostFunctionType func) {
   std::unique_ptr<HostFunctionProxy> hostFuncProxyWrapper = std::make_unique<HostFunctionProxy>(std::move(func), *this);
 
@@ -524,7 +524,7 @@ facebook::jsi::Function ChakraRuntime::createFunctionFromHostFunction(
   // funcRef cannot out-live this Runtime, the reference stored in hostFuncProxy
   // stays valid during its lifetime.
   VerifyJsErrorElseThrow(JsSetObjectBeforeCollectCallback(
-      funcRef, hostFuncProxyWrapper.get(), [](JsRef ref, void *hostFuncProxyToDestroy) {
+      funcRef, hostFuncProxyWrapper.get(), [](JsRef /*ref*/, void *hostFuncProxyToDestroy) {
         // We wrap hostFuncProxyToDestroy in a unique_ptr to avoid calling
         // delete explicitly.
         std::unique_ptr<HostFunctionProxy> wrapper{static_cast<HostFunctionProxy *>(hostFuncProxyToDestroy)};
@@ -637,6 +637,7 @@ void ChakraRuntime::VerifyJsErrorElseThrow(JsErrorCode error) {
   std::terminate();
 }
 
+#pragma warning(suppress : 4702) // unreachable code
 facebook::jsi::Value ChakraRuntime::ToJsiValue(ChakraObjectRef &&ref) {
   JsValueType type = GetValueType(ref);
 
@@ -744,8 +745,8 @@ ChakraObjectRef ChakraRuntime::GetProperty(const ChakraObjectRef &obj, const Cha
 }
 
 JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
-    JsValueRef callee,
-    bool isConstructCall,
+    JsValueRef /*callee*/,
+    bool /*isConstructCall*/,
     JsValueRef *argumentsIncThis,
     unsigned short argumentCountIncThis,
     void *callbackState) {
@@ -796,6 +797,7 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
   return result;
 }
 
+#pragma warning(suppress : 4702) // unreachable code
 facebook::jsi::Value ChakraRuntime::HostObjectGetTrap(
     Runtime &runtime,
     const facebook::jsi::Value & /*thisVal*/,
@@ -834,6 +836,7 @@ facebook::jsi::Value ChakraRuntime::HostObjectGetTrap(
   std::terminate();
 }
 
+#pragma warning(suppress : 4702) // unreachable code
 facebook::jsi::Value ChakraRuntime::HostObjectSetTrap(
     Runtime &runtime,
     const facebook::jsi::Value & /*thisVal*/,

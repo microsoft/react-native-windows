@@ -53,7 +53,7 @@ const char *ButtonContentViewManager::GetName() const {
   return "PLYButtonContent";
 }
 
-XamlView ButtonContentViewManager::CreateViewCore(int64_t tag) {
+XamlView ButtonContentViewManager::CreateViewCore(int64_t /*tag*/) {
   auto stackPanel = StackPanel();
   stackPanel.Orientation(Orientation::Horizontal);
   return stackPanel;
