@@ -20,10 +20,14 @@ $Components | ForEach-Object {
 	$componentList += '--add', $_
 }
 
+$LayoutDir = "${env:System_DefaultWorkingDirectory}\vs"
+
+New-Item -ItemType directory -Path $LayoutDir
+
 Start-Process `
 	-FilePath "$VsInstaller" `
 	-ArgumentList ( `
-		'--layout', "${env:System_DefaultWorkingDirectory}\vs",
+		'--layout', "$LayoutDir",
 		'--wait',
 		'--norestart',
 		'--quiet' + `
@@ -33,7 +37,7 @@ Start-Process `
 	-PassThru
 
 Start-Process `
-	-FilePath "${env:System_DefaultWorkingDirectory}\vs\vs_Enterprise.exe" `
+	-FilePath "$LayoutDir\vs_Enterprise.exe" `
 	-ArgumentList (
 		'modify',
 		'--installPath', "`"$VsInstallPath`"" ,
