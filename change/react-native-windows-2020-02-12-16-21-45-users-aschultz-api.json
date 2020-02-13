@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Set doc generation to output to new path. Update docs to include recent changes.",
-  "packageName": "react-native-windows",
-  "email": "aschultz@microsoft.com",
-  "commit": "565fe29828b9eb9532697620367fd20eaf5db4cc",
-  "dependentChangeType": "patch",
-  "date": "2020-02-13T00:21:44.886Z"
-}
