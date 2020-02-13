@@ -73,6 +73,8 @@
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
+      <!-- Only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
+      <ForcedIncludeFiles>stdexcept</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>

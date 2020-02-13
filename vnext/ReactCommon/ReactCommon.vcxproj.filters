@@ -35,10 +35,13 @@
       <UniqueIdentifier>{c4d010df-7391-4171-8658-9048078a5523}</UniqueIdentifier>
     </Filter>
     <Filter Include="jscallinvoker">
-      <UniqueIdentifier>{d52a2ed0-f060-446c-a049-1dae4aca1194}</UniqueIdentifier>
+      <UniqueIdentifier>{d2eae11a-b021-4d0f-bf0f-cc5a164f2579}</UniqueIdentifier>
     </Filter>
-    <Filter Include="jscallinvoker\jsireact">
-      <UniqueIdentifier>{5bf47134-bd38-4ada-a2bb-9438240d70cf}</UniqueIdentifier>
+    <Filter Include="jscallinvoker\ReactCommon">
+      <UniqueIdentifier>{103aab63-7882-4777-85a5-8fdbbc8e54f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="yoga\event">
+      <UniqueIdentifier>{b81cc660-374c-4232-823b-6c76b48564b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +67,6 @@
       <Filter>cxxreact</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp">
-      <Filter>cxxreact</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp">
       <Filter>cxxreact</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp">
@@ -138,8 +138,11 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp">
-      <Filter>jscallinvoker\jsireact</Filter>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.cpp">
+      <Filter>jscallinvoker\ReactCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
+      <Filter>yoga\event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,11 +278,11 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h">
-      <Filter>jscallinvoker\jsireact</Filter>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.h">
+      <Filter>jscallinvoker\ReactCommon</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h">
-      <Filter>jscallinvoker\jsireact</Filter>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h">
+      <Filter>jscallinvoker\ReactCommon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
