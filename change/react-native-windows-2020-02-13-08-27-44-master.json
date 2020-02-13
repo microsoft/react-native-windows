@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Force Interpretation of Code as UTF-8 When no BOM Present",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "commit": "faf2a18a780ac71a81403452cac6972543b6426b",
-  "dependentChangeType": "patch",
-  "date": "2020-02-13T16:27:44.257Z"
-}
