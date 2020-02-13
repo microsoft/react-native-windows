@@ -56,7 +56,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> appstate,
     std::shared_ptr<react::windows::AppTheme> appTheme,
-    const std::shared_ptr<IReactInstance>& uwpInstance) noexcept {
+    const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
 
@@ -130,15 +130,15 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   // Windows.Storage.StorageFile), so check for package identity before adding it.
   modules.emplace_back(
       "AsyncLocalStorage",
-      [wpUwpInstance = std::weak_ptr(uwpInstance)]() -> std::unique_ptr<facebook::xplat::module::CxxModule>
-      {
+      [wpUwpInstance = std::weak_ptr(uwpInstance)]() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
         auto result = std::unique_ptr<facebook::xplat::module::CxxModule>();
         if (HasPackageIdentity()) {
           result = std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
         } else {
           auto spUwpInstance = wpUwpInstance.lock();
           if (spUwpInstance) {
-            result = std::make_unique<facebook::react::AsyncStorageModuleWin32>(spUwpInstance->GetReactInstanceSettings().AsyncLocalStorageDBPath.c_str());
+            result = std::make_unique<facebook::react::AsyncStorageModuleWin32>(
+                spUwpInstance->GetReactInstanceSettings().AsyncLocalStorageDBPath.c_str());
           }
         }
         return result;

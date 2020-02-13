@@ -2,8 +2,8 @@
 #include "resource.h"
 
 #include <PathCch.h>
-#include <shobjidl.h>
 #include <shlobj.h>
+#include <shobjidl.h>
 #include <windows.h>
 
 #include <ReactUWP/IXamlRootView.h>
@@ -25,36 +25,32 @@
 namespace {
 
 struct LocalFreeDeleter {
-  void operator()(void* pv) const noexcept {
-      ::LocalFree(pv);
+  void operator()(void *pv) const noexcept {
+    ::LocalFree(pv);
   }
 };
 
-std::unique_ptr<WCHAR, LocalFreeDeleter> PathCombine(PCWSTR pathIn, PCWSTR more)
-{
-    PWSTR pathOut = nullptr;
-    winrt::check_hresult(PathAllocCombine(pathIn, more, 0, &pathOut));
-    return std::unique_ptr<WCHAR, LocalFreeDeleter>(pathOut);
+std::unique_ptr<WCHAR, LocalFreeDeleter> PathCombine(PCWSTR pathIn, PCWSTR more) {
+  PWSTR pathOut = nullptr;
+  winrt::check_hresult(PathAllocCombine(pathIn, more, 0, &pathOut));
+  return std::unique_ptr<WCHAR, LocalFreeDeleter>(pathOut);
 }
 
-std::string GetAsyncLocalStorageDBPath()
-{
-    winrt::com_array<WCHAR> localAppData;
-    winrt::check_hresult(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, put_abi(localAppData)));
+std::string GetAsyncLocalStorageDBPath() {
+  winrt::com_array<WCHAR> localAppData;
+  winrt::check_hresult(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, put_abi(localAppData)));
 
-    auto asyncLocalStorageDBDir = PathCombine(localAppData.data(), LR"(Microsoft\React Native Playground (Win32))");
-    if (!CreateDirectoryW(asyncLocalStorageDBDir.get(), nullptr))
-    {
-        if (::GetLastError() != ERROR_ALREADY_EXISTS)
-            winrt::throw_last_error();
-    }
+  auto asyncLocalStorageDBDir = PathCombine(localAppData.data(), LR"(Microsoft\React Native Playground (Win32))");
+  if (!CreateDirectoryW(asyncLocalStorageDBDir.get(), nullptr)) {
+    if (::GetLastError() != ERROR_ALREADY_EXISTS)
+      winrt::throw_last_error();
+  }
 
-    auto asyncLocalStoragePath = PathCombine(asyncLocalStorageDBDir.get(), L"AsyncStorage.sqlite3");
-    return Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view { asyncLocalStoragePath.get() });
+  auto asyncLocalStoragePath = PathCombine(asyncLocalStorageDBDir.get(), L"AsyncStorage.sqlite3");
+  return Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view{asyncLocalStoragePath.get()});
 }
 
-
-}
+} // namespace
 
 namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
@@ -147,7 +143,7 @@ struct WindowData {
           settings.UseLiveReload = m_liveReloadEnabled;
           settings.EnableDeveloperMenu = true;
           settings.AsyncLocalStorageDBPath = GetAsyncLocalStorageDBPath();
- 
+
           settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
             OutputDebugStringA("In LoggingCallback");
             OutputDebugStringA(message);

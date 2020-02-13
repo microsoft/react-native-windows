@@ -10,8 +10,6 @@
 
 #include <winsqlite/winsqlite3.h>
 
-
-
 namespace facebook {
 namespace react {
 
@@ -22,16 +20,15 @@ class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
   std::string getName() override;
   std::map<std::string, dynamic> getConstants() override;
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
+
  private:
+  static void errorLogCallback(void *pv, int iErrCode, const char *msg) {
+    static_cast<AsyncStorageModuleWin32 *>(pv)->errorLogCallbackImpl(iErrCode, msg);
+  }
 
-   static void errorLogCallback(void* pv, int iErrCode, const char* msg)
-   {
-     static_cast<AsyncStorageModuleWin32*>(pv)->errorLogCallbackImpl(iErrCode, msg);
-   }
+  void errorLogCallbackImpl(int iErrCode, const char *msg);
 
-   void errorLogCallbackImpl(int iErrCode, const char* msg);
-
-  sqlite3* m_dbHandle;
+  sqlite3 *m_dbHandle;
 
   // params - array<std::string> Keys , Callback(error, returnValue)
   void multiGet(folly::dynamic args, Callback jsCallback);
