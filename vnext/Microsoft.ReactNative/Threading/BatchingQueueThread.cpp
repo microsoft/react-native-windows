@@ -56,7 +56,7 @@ void BatchingQueueThread::onBatchComplete() noexcept {
   }
 }
 
-void BatchingQueueThread::runOnQueueSync(std::function<void()> &&func) noexcept {
+void BatchingQueueThread::runOnQueueSync(std::function<void()> && /*func*/) noexcept {
   assert(false && "Not supported");
   std::terminate();
 }

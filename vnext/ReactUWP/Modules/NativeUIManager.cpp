@@ -29,7 +29,13 @@ static YogaNodePtr make_yoga_node() {
   return result;
 }
 
-static int YogaLog(const YGConfigRef config, const YGNodeRef node, YGLogLevel level, const char *format, va_list args) {
+#if defined(_DEBUG)
+static int YogaLog(
+    const YGConfigRef /*config*/,
+    const YGNodeRef /*node*/,
+    YGLogLevel /*level*/,
+    const char *format,
+    va_list args) {
   int len = _scprintf(format, args);
   std::string buffer(len + 1, '\0');
   vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
@@ -50,6 +56,7 @@ static int YogaLog(const YGConfigRef config, const YGNodeRef node, YGLogLevel le
 
   return 0;
 }
+#endif
 
 YGNodeRef NativeUIManager::GetYogaNode(int64_t tag) const {
   auto iter = m_tagsToYogaNodes.find(tag);

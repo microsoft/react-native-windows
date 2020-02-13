@@ -46,8 +46,8 @@ void ContentControlShadowNode::createView() {
     obj.RegisterPropertyChangedCallback(
         winrt::Windows::UI::Xaml::Controls::Control::PaddingProperty(),
         [this](
-            winrt::Windows::UI::Xaml::DependencyObject const &sender,
-            winrt::Windows::UI::Xaml::DependencyProperty const &dp) { m_paddingDirty = true; });
+            winrt::Windows::UI::Xaml::DependencyObject const & /*sender*/,
+            winrt::Windows::UI::Xaml::DependencyProperty const & /*dp*/) { m_paddingDirty = true; });
   }
 }
 

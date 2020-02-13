@@ -301,7 +301,7 @@ void ReactRootControl::ShowInstanceError(Mso::React::IReactInstance &reactInstan
   }
 }
 
-void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance &reactInstance) noexcept {
+void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
@@ -334,7 +334,7 @@ void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance &reactInst
   }
 }
 
-void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance &reactInstance) noexcept {
+void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
@@ -407,8 +407,9 @@ void ReactRootControl::EnsureFocusSafeHarbor() noexcept {
     panel.Children().InsertAt(0, m_focusSafeHarbor);
 
     m_focusSafeHarborLosingFocusRevoker = m_focusSafeHarbor.LosingFocus(
-        winrt::auto_revoke,
-        [this](const auto &sender, const winrt::LosingFocusEventArgs &args) { m_focusSafeHarbor.IsTabStop(false); });
+        winrt::auto_revoke, [this](const auto & /*sender*/, const winrt::LosingFocusEventArgs & /*args*/) {
+          m_focusSafeHarbor.IsTabStop(false);
+        });
   }
 }
 
@@ -418,7 +419,7 @@ void ReactRootControl::InitializeDeveloperMenu() noexcept {
 
   auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
-      winrt::auto_revoke, [this](const auto &sender, const winrt::AcceleratorKeyEventArgs &args) {
+      winrt::auto_revoke, [this](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
         if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
             KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Shift) &&
             KeyboardHelper::IsModifiedKeyPressed(
@@ -467,7 +468,7 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
     auto cancelButton = m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
 
     m_reloadJSRevoker = reloadJSButton.Click(
-        winrt::auto_revoke, [this](auto const &sender, winrt::RoutedEventArgs const &args) noexcept {
+        winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           ReloadHost();
         });
@@ -475,28 +476,29 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
     remoteDebugJSButton.Content(
         winrt::box_value(m_useWebDebugger ? L"Disable Remote JS Debugging" : L"Enable Remote JS Debugging"));
     m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
-        winrt::auto_revoke, [this](auto const &sender, winrt::RoutedEventArgs const &args) noexcept {
+        winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           m_useWebDebugger = !m_useWebDebugger;
           ReloadHost();
         });
 
     liveReloadButton.Content(winrt::box_value(m_useLiveReload ? L"Disable Live Reload" : L"Enable Live Reload"));
-    m_liveReloadRevoker =
-        liveReloadButton.Click(winrt::auto_revoke, [this](auto &sender, winrt::RoutedEventArgs const &args) noexcept {
+    m_liveReloadRevoker = liveReloadButton.Click(
+        winrt::auto_revoke, [this](auto & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           m_useLiveReload = !m_useLiveReload;
           ReloadHost();
         });
 
     m_toggleInspectorRevoker = toggleInspector.Click(
-        winrt::auto_revoke, [this](auto const &sender, winrt::RoutedEventArgs const &args) noexcept {
+        winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           ToggleInspector();
         });
 
     m_cancelRevoker = cancelButton.Click(
-        winrt::auto_revoke, [this](auto const &sender, winrt::RoutedEventArgs const &args) { DismissDeveloperMenu(); });
+        winrt::auto_revoke,
+        [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) { DismissDeveloperMenu(); });
 
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
     xamlRootGrid.Children().Append(m_developerMenuRoot);

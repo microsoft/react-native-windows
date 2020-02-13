@@ -27,7 +27,7 @@ std::tuple<float, double> DecayAnimationDriver::GetValueAndVelocityForTime(doubl
                          42.0f); // we don't need the velocity, so set it to a dummy value
 }
 
-bool DecayAnimationDriver::IsAnimationDone(double currentValue, double currentVelocity) {
+bool DecayAnimationDriver::IsAnimationDone(double currentValue, double /*currentVelocity*/) {
   return (std::abs(ToValue() - currentValue) < 0.1);
 }
 

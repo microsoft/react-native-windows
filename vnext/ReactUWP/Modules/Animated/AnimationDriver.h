@@ -24,7 +24,7 @@ class AnimationDriver {
   void StopAnimation(bool ignoreCompletedHandlers = false);
 
   virtual std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(
-      const folly::dynamic &config) {
+      const folly::dynamic & /*config*/) {
     return std::make_tuple(nullptr, nullptr);
   };
 

@@ -143,7 +143,7 @@ void ReactNativeHost::OnLeavingBackground() noexcept {
   //_lifecycleStateMachine.OnLeavingBackground();
 }
 
-void ReactNativeHost::OnResume(OnResumeAction const &action) noexcept {
+void ReactNativeHost::OnResume(OnResumeAction const & /*action*/) noexcept {
   OutputDebugStringW(L"TODO: ReactNativeHost::OnResume not implemented");
 
   // see the ReactInstanceManager.cs from the C# implementation

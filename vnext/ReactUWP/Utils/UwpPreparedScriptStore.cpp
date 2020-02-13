@@ -27,8 +27,8 @@ UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
 
 std::shared_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPreparedScript(
     const facebook::jsi::ScriptSignature &scriptSignature,
-    const facebook::jsi::JSRuntimeSignature &runtimeSignature,
-    const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+    const facebook::jsi::JSRuntimeSignature & /*runtimeSignature*/,
+    const char * /*prepareTag*/ // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept {
   try {
     // check if app bundle version is older than or equal to the prepared script

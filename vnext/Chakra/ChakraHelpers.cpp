@@ -245,11 +245,11 @@ MinimalChakraRuntime::MinimalChakraRuntime(bool multithreaded)
 
 JsValueRef functionCaller(
     JsContextRef ctx,
-    JsValueRef function,
+    JsValueRef /*function*/,
     JsValueRef thisObject,
     size_t argumentCount,
     const JsValueRef arguments[],
-    JsValueRef *exception) {
+    JsValueRef * /*exception*/) {
   // JsContextRef ctx;
   // JsGetCurrentContext(&ctx);
   void *voidPtr;
@@ -399,10 +399,10 @@ JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRe
 
 JsValueRef evaluateScriptWithBytecode(
     std::unique_ptr<const JSBigString> &&script,
-    uint64_t scriptVersion,
+    [[maybe_unused]] uint64_t scriptVersion,
     JsValueRef scriptFileName,
-    std::string &&bytecodeFileName,
-    bool asyncBytecodeGeneration) {
+    [[maybe_unused]] std::string &&bytecodeFileName,
+    [[maybe_unused]] bool asyncBytecodeGeneration) {
 #if defined(WINRT)
   // TODO: yicyao
   // ChakraRT does not support the JsRunSerialized() API.
