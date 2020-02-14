@@ -25,7 +25,15 @@ static void ExecImpl(sqlite3 *db, const char *statement, AsyncStorageModuleWin32
 class Sqlite3Transaction {
   sqlite3 *m_db{nullptr};
 
+  void clear() {
+    if (m_db) {
+      ExecImpl(m_db, u8"COMMIT", nullptr, nullptr);
+      m_db = nullptr;
+    }
+  }
+
  public:
+  Sqlite3Transaction() = default;
   explicit Sqlite3Transaction(sqlite3 *db) : m_db(db) {
     if (db) {
       ExecImpl(db, u8"BEGIN TRANSACTION", nullptr, nullptr);
@@ -37,10 +45,14 @@ class Sqlite3Transaction {
   }
   Sqlite3Transaction &operator=(const Sqlite3Transaction &) = delete;
   Sqlite3Transaction &operator=(Sqlite3Transaction &&rhs) {
-    std::swap(m_db, rhs.m_db);
+    if (this != &rhs) {
+      clear();
+      std::swap(m_db, rhs.m_db);
+    }
+    return *this;
   }
   ~Sqlite3Transaction() {
-    ExecImpl(m_db, u8"COMMIT", nullptr, nullptr);
+    clear();
   }
 };
 
@@ -159,7 +171,7 @@ void AsyncStorageModuleWin32::getAllKeys(folly::dynamic, Callback callback) {
   }
 }
 
-auto AsyncStorageModuleWin32::PrepareStatement(const char *stmt) -> Statement {
+AsyncStorageModuleWin32::Statement AsyncStorageModuleWin32::PrepareStatement(const char *stmt) {
   sqlite3_stmt *pStmt;
   checkSQLiteResult(sqlite3_prepare_v2(m_db, stmt, -1, &pStmt, nullptr));
   return {pStmt, &sqlite3_finalize};
