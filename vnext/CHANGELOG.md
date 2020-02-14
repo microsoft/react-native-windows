@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 13 Feb 2020 05:48:00 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Feb 2020 21:30:14 GMT and should not be manually modified.
 
+## 0.61.0-beta.7
+Thu, 13 Feb 2020 21:30:14 GMT
+
+### Changes
+
+- Force Interpretation of Code as UTF-8 When no BOM Present (ngerlem@microsoft.com)
 ## 0.61.0-beta.6
 Thu, 13 Feb 2020 05:48:00 GMT
 

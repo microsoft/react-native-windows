@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Feb 2020 22:20:11 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.7",
+      "version": "0.61.0-beta.7",
+      "comments": {
+        "none": [
+          {
+            "comment": "Flip ImageView in rtl mode",
+            "author": "guokai.ok@gmail.com",
+            "commit": "426f7b1af8f0f5d019cdf6d4036df4e9c0edab68"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Feb 2020 21:30:14 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.7",
+      "version": "0.61.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Force Interpretation of Code as UTF-8 When no BOM Present",
+            "author": "ngerlem@microsoft.com",
+            "commit": "faf2a18a780ac71a81403452cac6972543b6426b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Feb 2020 05:48:00 GMT",
       "tag": "react-native-windows_v0.61.0-beta.6",
       "version": "0.61.0-beta.6",
