@@ -134,17 +134,16 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   modules.emplace_back(
       "AsyncLocalStorage",
       [wpUwpInstance = std::weak_ptr(uwpInstance)]() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
-        auto result = std::unique_ptr<facebook::xplat::module::CxxModule>();
         if (HasPackageIdentity()) {
-          result = std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
+          return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
         } else {
           auto spUwpInstance = wpUwpInstance.lock();
-          if (spUwpInstance) {
-            result = std::make_unique<facebook::react::AsyncStorageModuleWin32>(
-                spUwpInstance->GetReactInstanceSettings().AsyncLocalStorageDBPath.c_str());
+          if (!spUwpInstance) {
+            return std::unique_ptr<facebook::xplat::module::CxxModule>();
           }
+          return std::make_unique<facebook::react::AsyncStorageModuleWin32>(
+              spUwpInstance->GetReactInstanceSettings().AsyncLocalStorageDBPath.c_str());
         }
-        return result;
       },
       MakeSerialQueueThread());
 
