@@ -60,9 +60,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 ## Getting Started
 
-Want to develop a React Native Windows app? Head over to our [Getting Started Guide - current](current/docs/GettingStarted.md).
-
-You can also begin to prototype or try out the **vnext** version under development by checking out the [Getting Started Guide - vnext](https://microsoft.github.io/react-native-windows/docs/getting-started)
+Want to develop a React Native Windows app? Head over to our [Getting Started Guide](https://microsoft.github.io/react-native-windows/docs/getting-started).
 
 ## Getting Help
 
@@ -96,9 +94,7 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 
 Make sure to install the [system requirements](#system-requirements). If you just want to get started with developing your own app, read [Getting Started with App Development](#getting-started). You only need to interact with `npm` to use for your app development.
 
-For more information about contributing PRs, see :
-- [Contribution Guidelines for current react-native-windows](current/docs/CONTRIBUTING.md)
-- [Contribution Guidelines for vnext react-native-windows](docs/contributing.md)
+For more information about contributing PRs, see [Contribution Guidelines for react-native-windows](docs/contributing.md)
 
 [Good First Task](https://github.com/microsoft/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
