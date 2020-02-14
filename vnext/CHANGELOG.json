@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 14 Feb 2020 21:40:52 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.8",
+      "version": "0.61.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Downngraded OpenSSL to 1.0.2-p.2.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3516d7ae0a41f18040ad2957621b1291b249a1f9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Feb 2020 22:20:11 GMT",
       "tag": "react-native-windows_v0.61.0-beta.7",
       "version": "0.61.0-beta.7",

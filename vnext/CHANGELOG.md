@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 13 Feb 2020 21:30:14 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Feb 2020 21:40:52 GMT and should not be manually modified.
 
+## 0.61.0-beta.8
+Fri, 14 Feb 2020 21:40:52 GMT
+
+### Changes
+
+- Downngraded OpenSSL to 1.0.2-p.2. (julio.rocha@microsoft.com)
 ## 0.61.0-beta.7
 Thu, 13 Feb 2020 21:30:14 GMT
 
