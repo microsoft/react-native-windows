@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "resource.h"
 
-#include <PathCch.h>
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <windows.h>
@@ -12,6 +11,8 @@
 #include <Unicode.h>
 
 #include <react-native-windows-extended.h>
+
+#include <filesystem>
 
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
@@ -24,30 +25,20 @@
 
 namespace {
 
-struct LocalFreeDeleter {
-  void operator()(void *pv) const noexcept {
-    ::LocalFree(pv);
-  }
-};
-
-std::unique_ptr<WCHAR, LocalFreeDeleter> PathCombine(PCWSTR pathIn, PCWSTR more) {
-  PWSTR pathOut = nullptr;
-  winrt::check_hresult(PathAllocCombine(pathIn, more, 0, &pathOut));
-  return std::unique_ptr<WCHAR, LocalFreeDeleter>(pathOut);
-}
-
 std::string GetAsyncLocalStorageDBPath() {
   winrt::com_array<WCHAR> localAppData;
   winrt::check_hresult(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, put_abi(localAppData)));
 
-  auto asyncLocalStorageDBDir = PathCombine(localAppData.data(), LR"(Microsoft\React Native Playground (Win32))");
-  if (!CreateDirectoryW(asyncLocalStorageDBDir.get(), nullptr)) {
+  std::filesystem::path asyncLocalStorageDBDir{localAppData.data()};
+  asyncLocalStorageDBDir /= LR"(Microsoft\React Native Playground (Win32))";
+
+  if (!CreateDirectoryW(asyncLocalStorageDBDir.wstring().data(), nullptr)) {
     if (::GetLastError() != ERROR_ALREADY_EXISTS)
       winrt::throw_last_error();
   }
 
-  auto asyncLocalStoragePath = PathCombine(asyncLocalStorageDBDir.get(), L"AsyncStorage.sqlite3");
-  return Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view{asyncLocalStoragePath.get()});
+  auto asyncLocalStoragePath = asyncLocalStorageDBDir / L"AsyncStorage.sqlite3";
+  return Microsoft::Common::Unicode::Utf16ToUtf8(asyncLocalStoragePath.wstring());
 }
 
 } // namespace
