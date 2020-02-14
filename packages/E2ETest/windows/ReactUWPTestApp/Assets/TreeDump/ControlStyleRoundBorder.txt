@@ -172,7 +172,7 @@
       RenderSize=120,50
       VerticalAlignment=Center
       Visibility=Visible
-      Width=40
+      Width=32
     [Windows.UI.Xaml.Controls.Grid]
         Background=#33000000
         BorderBrush=#5500FF00
