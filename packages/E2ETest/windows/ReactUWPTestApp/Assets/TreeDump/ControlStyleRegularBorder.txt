@@ -22,7 +22,7 @@
       HorizontalAlignment=Left
       Margin=0,0,0,0
       Padding=0,0,0,0
-      RenderSize=51.33333,50
+      RenderSize=51,50
       VerticalAlignment=Center
       Visibility=Visible
       Width=51
@@ -35,7 +35,7 @@
         HorizontalAlignment=Stretch
         Margin=0,0,0,0
         Padding=0,0,0,0
-        RenderSize=51.33333,50
+        RenderSize=51,50
         VerticalAlignment=Stretch
         Visibility=Visible
       [Windows.UI.Xaml.Controls.Grid]
@@ -656,7 +656,7 @@
           HorizontalAlignment=Left
           Margin=0,0,0,0
           Padding=12,0,0,2
-          RenderSize=90,20.66667
+          RenderSize=90,21
           VerticalAlignment=Center
           Visibility=Visible
       [Windows.UI.Xaml.Controls.FontIcon]
@@ -762,7 +762,7 @@
           HorizontalAlignment=Stretch
           Margin=12,5,0,7
           Padding=0,0,0,0
-          RenderSize=756,18.66667
+          RenderSize=756,19
           VerticalAlignment=Center
           Visibility=Visible
         [Windows.UI.Xaml.Controls.TextBlock]
@@ -771,7 +771,7 @@
             HorizontalAlignment=Stretch
             Margin=0,0,0,0
             Padding=0,0,0,0
-            RenderSize=756,18.66667
+            RenderSize=756,19
             VerticalAlignment=Stretch
             Visibility=Visible
       [Windows.UI.Xaml.Controls.TextBox]
