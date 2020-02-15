@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 15 Feb 2020 01:46:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.9",
+      "version": "0.61.0-beta.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update devDependencies to use latest TS types",
+            "author": "kmelmon@microsoft.com",
+            "commit": "abce136596b29a7bd5c52101f6342dbfb8ca8756"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Feb 2020 21:40:52 GMT",
       "tag": "react-native-windows_v0.61.0-beta.8",
       "version": "0.61.0-beta.8",

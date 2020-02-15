@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 15 Feb 2020 01:46:09 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.6",
+      "version": "0.61.0-beta.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update devDependencies to use latest TS types",
+            "author": "kmelmon@microsoft.com",
+            "commit": "abce136596b29a7bd5c52101f6342dbfb8ca8756"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Feb 2020 01:37:12 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.5",
       "version": "0.61.0-beta.5",

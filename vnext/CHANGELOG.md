@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 Feb 2020 21:40:52 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Feb 2020 01:46:09 GMT and should not be manually modified.
 
+## 0.61.0-beta.9
+Sat, 15 Feb 2020 01:46:09 GMT
+
+### Changes
+
+- update devDependencies to use latest TS types (kmelmon@microsoft.com)
 ## 0.61.0-beta.8
 Fri, 14 Feb 2020 21:40:52 GMT
 
