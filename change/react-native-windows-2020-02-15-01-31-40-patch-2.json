@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Fix Invalid Regular Expression (#3795)",
+  "packageName": "react-native-windows",
+  "email": "t-pesant@microsoft.com",
+  "commit": "5d51eb6cc6b9610b35ff76c8ce1d4270661b22cd",
+  "dependentChangeType": "patch",
+  "date": "2020-02-15T01:31:40.076Z"
+}

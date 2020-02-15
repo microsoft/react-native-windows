@@ -39,26 +39,24 @@ module.exports = {
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.61 when haste is removed
     blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '[/\\\\]')}.*`),
+      new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '/')}.*`),
       new RegExp(
         `${path
           .resolve(rnwPath, 'node_modules/react-native')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\\\]/g, '/')}.*`,
       ),
       new RegExp(
-        `${path
-          .resolve(rnwPath, 'RNTesterCopy')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+        `${path.resolve(rnwPath, 'RNTesterCopy').replace(/[/\\\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path
           .resolve(rnwPath, 'IntegrationTestsCopy')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path
           .resolve(rnwePath, 'node_modules/react-native')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path
@@ -66,14 +64,12 @@ module.exports = {
             require.resolve('@react-native-community/cli/package.json'),
             '../node_modules/react-native',
           )
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\\\]/g, '/')}.*`,
       ),
 
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
-        `${path
-          .resolve(__dirname, 'windows')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+        `${path.resolve(__dirname, 'windows').replace(/[/\\\\]/g, '/')}.*`,
       ),
     ]),
   },

@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Fix Invalid Regular Expression (#3795)",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "t-pesant@microsoft.com",
+  "commit": "5d51eb6cc6b9610b35ff76c8ce1d4270661b22cd",
+  "dependentChangeType": "patch",
+  "date": "2020-02-15T01:31:37.614Z"
+}
