@@ -31,8 +31,8 @@
   "devDependencies": {
     "@babel/core": "7.5.5",
     "@babel/runtime": "7.5.5",
-    "@types/react": "16.8.15",
-    "@types/react-native": "~0.60.5",
+    "@types/react-native": "~0.61.5",
+    "@types/react": "16.9.0",
     "@wdio/appium-service": "5.12.1",
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",
