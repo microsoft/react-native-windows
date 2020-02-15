@@ -43,7 +43,7 @@
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/ora": "^3.2.0",
-    "@types/react-native": "0.61.5",
+    "@types/react-native": "~0.61.5",
     "@types/react": "16.9.0",
     "eslint-plugin-prettier": "2.6.2",
     "eslint": "5.1.0",

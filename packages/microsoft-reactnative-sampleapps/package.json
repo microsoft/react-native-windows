@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/core": "7.5.5",
     "@babel/runtime": "7.5.5",
-    "@types/react-native": "0.61.5",
+    "@types/react-native": "~0.61.5",
     "@types/react": "16.9.0",
     "metro-react-native-babel-preset": "0.55.0",
     "react-test-renderer": "16.8.6"
