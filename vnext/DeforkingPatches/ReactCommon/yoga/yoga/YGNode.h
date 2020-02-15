@@ -68,7 +68,7 @@ private:
   void __cdecl setMeasureFunc(decltype(measure_));
   void __cdecl setBaselineFunc(decltype(baseline_));
 
-  void useWebDefaults() {
+  void __cdecl useWebDefaults() {
     flags_.at<useWebDefaults_>() = true;
     style_.flexDirection() = YGFlexDirectionRow;
     style_.alignContent() = YGAlignStretch;

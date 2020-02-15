@@ -520,7 +520,7 @@ float __cdecl YGNodeStyleGetFlexShrink(const YGNodeConstRef node) {
 namespace {
 
 template <typename T, typename NeedsUpdate, typename Update>
-void updateStyle(
+void __cdecl updateStyle(
     YGNode *node,
     T value,
     NeedsUpdate &&needsUpdate,
@@ -532,7 +532,7 @@ void updateStyle(
 }
 
 template <typename Ref, typename T>
-void updateStyle(YGNode *node, Ref (YGStyle::*prop)(), T value) {
+void __cdecl updateStyle(YGNode *node, Ref (YGStyle::*prop)(), T value) {
   updateStyle(
       node,
       value,
@@ -541,7 +541,7 @@ void updateStyle(YGNode *node, Ref (YGStyle::*prop)(), T value) {
 }
 
 template <typename Ref, typename Idx>
-void updateIndexedStyleProp(
+void __cdecl updateIndexedStyleProp(
     YGNode *node,
     Ref (YGStyle::*prop)(),
     Idx idx,
