@@ -50,8 +50,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UnmergedWinmdDirectory>$([MSBuild]::NormalizePath( $(IntDir)UnmergedWinMD) ))</UnmergedWinmdDirectory>
-    <UnmergedWinmdDirectory>$([System.IO.Path]::Combine( $(ProjectDir), $(UnmergedWinmdDirectory) ))</UnmergedWinmdDirectory>
+    <!-- For relative paths, make it relative to MSBuildProjectDirectory not CurrentWorkingDirectory -->
+    <UnmergedWinmdDirectory>$([MSBuild]::NormalizeDirectory( $([System.IO.Path]::Combine( $(MSBuildProjectDirectory), $(IntDir)UnmergedWinMD )) ))</UnmergedWinmdDirectory>
     <!-- MDMERGE.EXE fails if output dir has trailing slash. -->
     <MergedWinmdDirectory>$(OutDir.TrimEnd("/\"))</MergedWinmdDirectory>
     <IdlHeaderDirectory>$(MSBuildThisFileDirectory)GeneratedWinmdHeader</IdlHeaderDirectory>
