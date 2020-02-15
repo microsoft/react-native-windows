@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Jan 2020 01:28:16 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Feb 2020 01:47:51 GMT and should not be manually modified.
 
+## 0.59.0-vnext.207
+Sat, 15 Feb 2020 01:47:51 GMT
+
+### Changes
+
+- Downngraded OpenSSL to 1.0.2-p.2. (julio.rocha@microsoft.com)
 ## 0.59.0-vnext.206
 Thu, 30 Jan 2020 01:28:16 GMT
 

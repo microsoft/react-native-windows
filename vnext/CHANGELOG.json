@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 15 Feb 2020 01:47:51 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.207",
+      "version": "0.59.0-vnext.207",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Downngraded OpenSSL to 1.0.2-p.2.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3516d7ae0a41f18040ad2957621b1291b249a1f9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 01:28:16 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.206",
       "version": "0.59.0-vnext.206",
