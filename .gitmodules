@@ -4,3 +4,7 @@
 [submodule "Yoga"]
 	path = current/Yoga
 	url = https://github.com/ReactWindows/yoga
+[submodule "folly"]
+	path = GitModules/folly
+	url = https://github.com/jurocha-ms/folly.git
+	branch = cdecl
