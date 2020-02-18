@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.61.0-beta.1",
+  "version": "0.61.0-beta.6",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",
@@ -47,8 +47,8 @@
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
     "@types/prop-types": "15.5.1",
-    "@types/react-native": "~0.60.5",
-    "@types/react": "16.9.11",
+    "@types/react-native": "~0.61.5",
+    "@types/react": "16.9.0",
     "flow-bin": "^0.105.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.24.2",

@@ -24,7 +24,7 @@ class NetworkingModule : public facebook::xplat::module::CxxModule {
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char *name;
+  static constexpr char const *Name = "Networking";
 
   class NetworkingHelper;
 

@@ -50,6 +50,7 @@ bool HasPackageIdentity() noexcept {
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     std::shared_ptr<facebook::react::IUIManager> uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
     std::shared_ptr<DeviceInfo> deviceInfo,
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     const I18nModule::I18nInfo &&i18nInfo,
@@ -61,16 +62,18 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       "UIManager",
-      [uiManager = std::move(uiManager)]() { return facebook::react::createUIManagerModule(uiManager); },
+      [uiManager = std::move(uiManager), uiMessageQueue]() {
+        return facebook::react::createUIManagerModule(std::shared_ptr(uiManager), std::shared_ptr(uiMessageQueue));
+      },
       messageQueue);
 
   modules.emplace_back(
-      react::uwp::WebSocketModule::name,
+      react::uwp::WebSocketModule::Name,
       []() { return std::make_unique<react::uwp::WebSocketModule>(); },
       MakeSerialQueueThread());
 
   modules.emplace_back(
-      NetworkingModule::name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
+      NetworkingModule::Name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
 
   modules.emplace_back(
       "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);

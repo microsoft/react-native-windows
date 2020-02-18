@@ -195,12 +195,12 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   return view;
 }
 
-void ViewManagerBase::AddView(XamlView parent, XamlView child, int64_t index) {
+void ViewManagerBase::AddView(XamlView /*parent*/, XamlView /*child*/, int64_t /*index*/) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-void ViewManagerBase::RemoveChildAt(XamlView parent, int64_t index) {
+void ViewManagerBase::RemoveChildAt(XamlView /*parent*/, int64_t /*index*/) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
@@ -239,7 +239,10 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
 
 void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newView*/) {}
 
-void ViewManagerBase::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic &commandArgs) {
+void ViewManagerBase::DispatchCommand(
+    XamlView /*viewToUpdate*/,
+    int64_t /*commandId*/,
+    const folly::dynamic & /*commandArgs*/) {
   assert(false); // View did not handle its command
 }
 

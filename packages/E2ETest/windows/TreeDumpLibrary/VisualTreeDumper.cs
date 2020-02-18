@@ -65,10 +65,12 @@ namespace TreeDumpLibrary
             }
         }
 
-        public static string DumpTree(DependencyObject root, DependencyObject excludedNode)
+        public static string DumpTree(DependencyObject root, DependencyObject excludedNode, IList<string> additionalProperties)
         {
+            var propertyFilter = new DefaultFilter();
+            ((List<string>)propertyFilter.PropertyNameAllowList).AddRange(additionalProperties);
 
-            Visitor visitor = new Visitor(new DefaultFilter(),
+            Visitor visitor = new Visitor(propertyFilter,
                 new DefaultPropertyValueTranslator(),
                 new DefaultVisualTreeLogger());
             WalkThroughTree(root, excludedNode, visitor);
@@ -122,8 +124,13 @@ namespace TreeDumpLibrary
     }
     public sealed class DefaultFilter
     {
-        private List<string> _propertyNameAllowList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
+        public IList<string> PropertyNameAllowList { get; set; }
+
+        public DefaultFilter()
+        {
+            PropertyNameAllowList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
             "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip", /*"ActualOffset" 19h1*/};
+        }
 
         public bool ShouldVisitPropertyValue(string propertyValue)
         {
@@ -132,7 +139,7 @@ namespace TreeDumpLibrary
 
         public bool ShouldVisitProperty(string propertyName)
         {
-            return (_propertyNameAllowList.Contains(propertyName));
+            return (PropertyNameAllowList.Contains(propertyName));
         }
     }
     public sealed class DefaultPropertyValueTranslator

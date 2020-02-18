@@ -74,6 +74,6 @@ namespace SampleLibraryCS
         }
 
         [ViewManagerExportedDirectEventTypeConstant]
-        public ViewManagerEvent<CustomUserControlCS, string> LabelChanged;
+        public ViewManagerEvent<CustomUserControlCS, string> LabelChanged = null;
     }
 }

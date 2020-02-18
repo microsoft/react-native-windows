@@ -29,7 +29,7 @@ If you haven't already, install the react-native-cli  (One time only!)
 npm install -g react-native-cli
 ```
 
-Then 
+Then
 
 ```cmd
 cd packages\playground

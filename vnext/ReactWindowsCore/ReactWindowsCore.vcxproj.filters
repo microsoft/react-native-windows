@@ -13,6 +13,9 @@
     <Filter Include="Header Files\Modules">
       <UniqueIdentifier>{81319f88-192e-40cf-bc1c-76a84bf37ccd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Pch">
+      <UniqueIdentifier>{6e20d3aa-721b-4f62-a1aa-ec6af1a114fb}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Sandbox">
       <UniqueIdentifier>{485cc520-3fae-4b03-896a-bfd3e288aa42}</UniqueIdentifier>
     </Filter>
@@ -24,6 +27,9 @@
     </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{2b4f6cca-9c7e-4bf1-9711-829006f0be1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pch">
+      <UniqueIdentifier>{43770517-0df1-4cff-bd30-563b9d0f56e7}</UniqueIdentifier>
     </Filter>
     <Filter Include="tracing">
       <UniqueIdentifier>{4cc2fae5-bc38-4aff-aa49-33225485e2de}</UniqueIdentifier>
@@ -72,14 +78,17 @@
     <ClCompile Include="Modules\I18nModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\SourceCodeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\UIManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Pch\pch.cpp">
+      <Filter>Source Files\Pch</Filter>
     </ClCompile>
     <ClCompile Include="ShadowNode.cpp">
       <Filter>Source Files</Filter>
@@ -191,7 +200,16 @@
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\SourceCodeModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\WebSocketModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleProvider.h">
@@ -200,8 +218,8 @@
     <ClInclude Include="OInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Pch\pch.h">
+      <Filter>Header Files\Pch</Filter>
     </ClInclude>
     <ClInclude Include="Sandbox\SandboxEndpoint.h">
       <Filter>Header Files\Sandbox</Filter>
@@ -225,9 +243,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebSocketJSExecutorFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WebSocketModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

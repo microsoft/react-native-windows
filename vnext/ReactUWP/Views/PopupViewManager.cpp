@@ -217,12 +217,12 @@ facebook::react::ShadowNode *PopupViewManager::createShadow() const {
   return new PopupShadowNode();
 }
 
-XamlView PopupViewManager::CreateViewCore(int64_t tag) {
+XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/) {
   auto popup = winrt::Popup();
   return popup;
 }
 
-void PopupViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void PopupViewManager::AddView(XamlView parent, XamlView child, [[maybe_unused]] int64_t index) {
   assert(index == 0);
 
   auto popup = parent.as<winrt::Popup>();

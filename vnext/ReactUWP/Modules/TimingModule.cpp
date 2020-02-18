@@ -85,7 +85,7 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
   return m_parent->getInstance();
 }
 
-void Timing::OnRendering(const winrt::IInspectable &, const winrt::IInspectable &args) {
+void Timing::OnRendering(const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
   std::vector<int64_t> readyTimers;
   auto now = winrt::DateTime::clock::now();
 

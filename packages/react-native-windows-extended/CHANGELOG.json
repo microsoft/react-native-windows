@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Sat, 15 Feb 2020 01:46:09 GMT",
+      "tag": "react-native-windows-extended_v0.61.0-beta.14",
+      "version": "0.61.0-beta.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update devDependencies to use latest TS types",
+            "author": "kmelmon@microsoft.com",
+            "commit": "abce136596b29a7bd5c52101f6342dbfb8ca8756"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Feb 2020 01:21:44 GMT",
       "tag": "react-native-windows-extended_v0.61.0-beta.1",
       "version": "0.61.0-beta.1",

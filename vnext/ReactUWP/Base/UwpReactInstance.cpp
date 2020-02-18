@@ -166,6 +166,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     std::vector<facebook::react::NativeModuleDescription> cxxModules = GetCoreModules(
         m_uiManager,
         m_batchingNativeThread,
+        m_defaultNativeThread,
         deviceInfo,
         devSettings,
         std::move(i18nInfo),

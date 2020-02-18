@@ -5,6 +5,7 @@ function AllChangedFilesAreSkippable
 {
     Param($files)
 
+    $skipDirs = @("change")
     $skipExts = @(".md",".gif",".png",".jpeg")
     $allFilesAreSkippable = $true
 
@@ -12,7 +13,8 @@ function AllChangedFilesAreSkippable
     {
         Write-Host "Checking '$file'"
         $ext = [System.IO.Path]::GetExtension($file)
-        $fileIsSkippable = $ext -in $skipExts
+        $dir = [System.IO.Path]::GetDirectoryName($file)
+        $fileIsSkippable = ($ext -in $skipExts) -or ($dir -in $skipDirs)
         Write-Host "File '$file' is skippable: '$fileIsSkippable'"
 
         if(!$fileIsSkippable)
