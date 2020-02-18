@@ -68,7 +68,7 @@ facebook::react::ShadowNode *ButtonViewManager::createShadow() const {
   return new ButtonShadowNode();
 }
 
-XamlView ButtonViewManager::CreateViewCore(int64_t tag) {
+XamlView ButtonViewManager::CreateViewCore(int64_t /*tag*/) {
   winrt::Button button = winrt::Button();
   return button;
 }

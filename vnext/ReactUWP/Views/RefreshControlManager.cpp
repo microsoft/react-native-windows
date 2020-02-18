@@ -85,7 +85,7 @@ const char *RefreshControlViewManager::GetName() const {
   return "RCTRefreshControl";
 }
 
-XamlView RefreshControlViewManager::CreateViewCore(int64_t tag) {
+XamlView RefreshControlViewManager::CreateViewCore(int64_t /*tag*/) {
   if (IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();
@@ -95,7 +95,7 @@ XamlView RefreshControlViewManager::CreateViewCore(int64_t tag) {
   }
 }
 
-void RefreshControlViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void RefreshControlViewManager::AddView(XamlView parent, XamlView child, int64_t /*index*/) {
   if (auto refreshContainer = parent.try_as<winrt::RefreshContainer>()) {
     refreshContainer.Content(child.as<winrt::ScrollViewer>());
   } else if (auto grid = parent.try_as<winrt::Grid>()) {

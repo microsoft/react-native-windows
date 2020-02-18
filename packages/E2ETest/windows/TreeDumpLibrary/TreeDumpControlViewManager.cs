@@ -75,6 +75,10 @@ namespace TreeDumpLibrary
                 {
                     SetUIAID((TextBlock)view, kvp.Value.String);
                 }
+                else if(kvp.Key == "additionalProperties")
+                {
+                    SetAdditionalProperties(kvp.Value.Array);
+                }
             }
         }
 
@@ -85,7 +89,8 @@ namespace TreeDumpLibrary
                 return new Dictionary<string, ViewManagerPropertyType>
                 {
                     { "dumpID", ViewManagerPropertyType.String },
-                    { "uiaID", ViewManagerPropertyType.String }
+                    { "uiaID", ViewManagerPropertyType.String },
+                    { "additionalProperties", ViewManagerPropertyType.Array }
                 };
             }
         }
@@ -110,6 +115,14 @@ namespace TreeDumpLibrary
         public void SetUIAID(TextBlock view, string value)
         {
             m_uiaID = value;
+        }
+
+        public void SetAdditionalProperties(IReadOnlyList<JSValue> additionalProperties)
+        {
+            foreach(var property in additionalProperties)
+            {
+                m_additionalProperties.Add(property.String);
+            }
         }
 
         private async void dispatcherTimer_Tick(object sender, object e)
@@ -162,7 +175,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            String dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */);
+            String dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */, m_additionalProperties);
             if (dumpText != m_dumpExpectedText)
             {
                 await MatchDump(dumpText);
@@ -251,6 +264,7 @@ namespace TreeDumpLibrary
         private bool m_errStringShowing = false;
         private string m_errString = "";
         private string m_uiaID = null;
+        private List<string> m_additionalProperties = new List<string>();
 
         private DispatcherTimer m_timer = null;
 

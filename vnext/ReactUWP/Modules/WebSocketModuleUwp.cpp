@@ -68,7 +68,7 @@ class WebSocketModule::WebSocket {
   std::map<int64_t, winrt::MessageWebSocket::MessageReceived_revoker> m_msgReceiveds;
 };
 
-std::future<HRESULT> Connect(
+std::future<winrt::hresult> Connect(
     winrt::Windows::Networking::Sockets::MessageWebSocket &socket,
     winrt::Windows::Foundation::Uri &uri) {
   auto async = socket.ConnectAsync(uri);
@@ -77,7 +77,7 @@ std::future<HRESULT> Connect(
 #else
   co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
 #endif
-  return async.ErrorCode();
+  co_return async.ErrorCode();
 }
 
 void WebSocketModule::WebSocket::connect(
@@ -109,7 +109,7 @@ void WebSocketModule::WebSocket::connect(
     }
   }
 
-  m_msgReceiveds[id] = socket.MessageReceived(winrt::auto_revoke, [this, id](auto &&, auto &&args) {
+  m_msgReceiveds[id] = socket.MessageReceived(winrt::auto_revoke, [this, connectionId = id](auto &&, auto &&args) {
     try {
       std::string response;
       winrt::Windows::Storage::Streams::DataReader reader = args.GetDataReader();
@@ -128,21 +128,21 @@ void WebSocketModule::WebSocket::connect(
         response = Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view(data));
       }
 
-      folly::dynamic params = folly::dynamic::object("id", id)("data", response)(
+      folly::dynamic params = folly::dynamic::object("id", connectionId)("data", response)(
           "type", args.MessageType() == winrt::SocketMessageType::Utf8 ? "text" : "binary");
       sendEvent("websocketMessage", std::move(params));
     } catch (winrt::hresult_error const &e) {
       OutputDebugString("Read failed (0x%8X) %ls\n", e);
-      onError(id, e);
+      onError(connectionId, e);
     }
   });
 
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
-  HRESULT hr = S_OK;
+  winrt::hresult hr = S_OK;
   try {
     auto async = Connect(socket, uri);
-    winrt::hresult hr = async.get();
+    hr = async.get();
     if (SUCCEEDED(hr)) {
       folly::dynamic params = folly::dynamic::object("id", id);
       sendEvent("websocketOpen", std::move(params));
@@ -232,8 +232,6 @@ void WebSocketModule::WebSocket::sendEvent(std::string &&eventName, folly::dynam
 // WebSocketModule
 //
 
-const char *WebSocketModule::name = "WebSocketModule";
-
 WebSocketModule::WebSocketModule() : m_webSocket(std::make_shared<WebSocket>(this)) {}
 
 WebSocketModule::~WebSocketModule() {
@@ -241,7 +239,7 @@ WebSocketModule::~WebSocketModule() {
 }
 
 std::string WebSocketModule::getName() {
-  return name;
+  return Name;
 }
 
 std::map<std::string, folly::dynamic> WebSocketModule::getConstants() {

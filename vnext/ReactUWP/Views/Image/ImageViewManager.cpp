@@ -103,7 +103,7 @@ const char *ImageViewManager::GetName() const {
   return "RCTImageView";
 }
 
-XamlView ImageViewManager::CreateViewCore(int64_t tag) {
+XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/) {
   return ReactImage::Create().as<winrt::Grid>();
 }
 

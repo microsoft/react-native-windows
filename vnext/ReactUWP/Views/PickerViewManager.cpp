@@ -186,7 +186,7 @@ facebook::react::ShadowNode *PickerViewManager::createShadow() const {
   return new PickerShadowNode();
 }
 
-XamlView PickerViewManager::CreateViewCore(int64_t tag) {
+XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/) {
   auto combobox = winrt::ComboBox();
   return combobox;
 }

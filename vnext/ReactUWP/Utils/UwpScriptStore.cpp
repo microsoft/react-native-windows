@@ -29,7 +29,7 @@ UwpScriptStore::UwpScriptStore() {}
   return 0;
 }
 
-facebook::jsi::VersionedBuffer UwpScriptStore::getVersionedScript(const std::string &url) noexcept {
+facebook::jsi::VersionedBuffer UwpScriptStore::getVersionedScript(const std::string & /*url*/) noexcept {
   facebook::jsi::VersionedBuffer versionedBuffer_;
   versionedBuffer_.buffer = nullptr;
   versionedBuffer_.version = 0;

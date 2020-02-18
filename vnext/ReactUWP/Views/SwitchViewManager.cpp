@@ -128,7 +128,7 @@ facebook::react::ShadowNode *SwitchViewManager::createShadow() const {
   return new SwitchShadowNode();
 }
 
-XamlView SwitchViewManager::CreateViewCore(int64_t tag) {
+XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/) {
   auto toggleSwitch = winrt::ToggleSwitch();
   toggleSwitch.OnContent(nullptr);
   toggleSwitch.OffContent(nullptr);

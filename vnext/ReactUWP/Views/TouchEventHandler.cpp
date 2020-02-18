@@ -58,7 +58,9 @@ void TouchEventHandler::RemoveTouchHandlers() {
   m_releasedRevoker.revoke();
 }
 
-void TouchEventHandler::OnPointerPressed(const winrt::IInspectable &sender, const winrt::PointerRoutedEventArgs &args) {
+void TouchEventHandler::OnPointerPressed(
+    const winrt::IInspectable & /*sender*/,
+    const winrt::PointerRoutedEventArgs &args) {
   // Short circuit all of this if we are in an error state
   auto instance = m_wkReactInstance.lock();
   if (!instance || instance->IsInError())
@@ -86,28 +88,32 @@ void TouchEventHandler::OnPointerPressed(const winrt::IInspectable &sender, cons
 }
 
 void TouchEventHandler::OnPointerReleased(
-    const winrt::IInspectable &sender,
+    const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
   OnPointerConcluded(TouchEventType::End, args);
 }
 
 void TouchEventHandler::OnPointerCanceled(
-    const winrt::IInspectable &sender,
+    const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
   OnPointerConcluded(TouchEventType::Cancel, args);
 }
 
 void TouchEventHandler::OnPointerCaptureLost(
-    const winrt::IInspectable &sender,
+    const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
   OnPointerConcluded(TouchEventType::Cancel, args);
 }
 
-void TouchEventHandler::OnPointerExited(const winrt::IInspectable &sender, const winrt::PointerRoutedEventArgs &args) {
+void TouchEventHandler::OnPointerExited(
+    const winrt::IInspectable & /*sender*/,
+    const winrt::PointerRoutedEventArgs &args) {
   UpdatePointersInViews(args, -1, nullptr);
 }
 
-void TouchEventHandler::OnPointerMoved(const winrt::IInspectable &sender, const winrt::PointerRoutedEventArgs &args) {
+void TouchEventHandler::OnPointerMoved(
+    const winrt::IInspectable & /*sender*/,
+    const winrt::PointerRoutedEventArgs &args) {
   // Short circuit all of this if we are in an error state
   auto instance = m_wkReactInstance.lock();
   if (!instance || instance->IsInError())

@@ -33,7 +33,7 @@ const char *RawTextViewManager::GetName() const {
   return "RCTRawText";
 }
 
-XamlView RawTextViewManager::CreateViewCore(int64_t tag) {
+XamlView RawTextViewManager::CreateViewCore(int64_t /*tag*/) {
   winrt::Run run;
   return run;
 }
@@ -82,12 +82,12 @@ void RawTextViewManager::NotifyAncestorsTextChanged(IReactInstance *instance, Sh
 }
 
 void RawTextViewManager::SetLayoutProps(
-    ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
-    float left,
-    float top,
-    float width,
-    float height) {}
+    ShadowNodeBase & /*nodeToUpdate*/,
+    XamlView /*viewToUpdate*/,
+    float /*left*/,
+    float /*top*/,
+    float /*width*/,
+    float /*height*/) {}
 
 bool RawTextViewManager::RequiresYogaNode() const {
   return false;

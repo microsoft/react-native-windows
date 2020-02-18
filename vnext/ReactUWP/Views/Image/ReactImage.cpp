@@ -32,7 +32,11 @@ namespace react {
 namespace uwp {
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
-  return winrt::make_self<ReactImage>();
+  auto reactImage = winrt::make_self<ReactImage>();
+  // Grid inheirts the layout direction from parent and mirrors the background image in RTL mode.
+  // Forcing the container to LTR mode to avoid the unexpected mirroring behavior.
+  reactImage->FlowDirection(winrt::FlowDirection::LeftToRight);
+  return reactImage;
 }
 
 winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {

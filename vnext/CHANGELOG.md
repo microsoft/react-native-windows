@@ -1,7 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Feb 2020 21:40:06 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Feb 2020 01:46:09 GMT and should not be manually modified.
 
+## 0.61.0-beta.9
+Sat, 15 Feb 2020 01:46:09 GMT
+
+### Changes
+
+- update devDependencies to use latest TS types (kmelmon@microsoft.com)
+## 0.61.0-beta.8
+Fri, 14 Feb 2020 21:40:52 GMT
+
+### Changes
+
+- Downngraded OpenSSL to 1.0.2-p.2. (julio.rocha@microsoft.com)
+## 0.61.0-beta.7
+Thu, 13 Feb 2020 21:30:14 GMT
+
+### Changes
+
+- Force Interpretation of Code as UTF-8 When no BOM Present (ngerlem@microsoft.com)
+## 0.61.0-beta.6
+Thu, 13 Feb 2020 05:48:00 GMT
+
+### Changes
+
+- Fixed Microsoft.ReactNative compiler warnings and start treating warnings as errors (vmorozov@microsoft.com)
+## 0.61.0-beta.5
+Thu, 13 Feb 2020 01:37:12 GMT
+
+### Changes
+
+- Set doc generation to output to new path. Update docs to include recent changes. (aschultz@microsoft.com)
 ## 0.61.0-beta.4
 Wed, 12 Feb 2020 21:40:06 GMT
 
