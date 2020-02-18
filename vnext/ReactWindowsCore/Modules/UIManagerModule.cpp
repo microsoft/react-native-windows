@@ -556,7 +556,8 @@ std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
 }
 
 // Deprecated
-std::unique_ptr<facebook::xplat::module::CxxModule> __cdecl createUIManagerModule(std::shared_ptr<IUIManager> uimanager) {
+std::unique_ptr<facebook::xplat::module::CxxModule> __cdecl createUIManagerModule(
+    std::shared_ptr<IUIManager> uimanager) {
   return createUIManagerModule(std::move(uimanager), nullptr);
 }
 
