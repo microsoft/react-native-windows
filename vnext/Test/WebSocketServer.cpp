@@ -334,23 +334,23 @@ void WebSocketServer::OnAccept(error_code ec) {
   // Accept();
 }
 
-void WebSocketServer::SetOnConnection(function<void()> &&func) {
+void WebSocketServer::SetOnConnection(function<void __cdecl ()> &&func) {
   m_callbacks.OnConnection = std::move(func);
 }
 
-void WebSocketServer::SetOnHandshake(function<void(websocket::response_type &)> &&func) {
+void WebSocketServer::SetOnHandshake(function<void __cdecl (websocket::response_type &)> &&func) {
   m_callbacks.OnHandshake = std::move(func);
 }
 
-void WebSocketServer::SetOnMessage(function<void(string)> &&func) {
+void WebSocketServer::SetOnMessage(function<void __cdecl (string)> &&func) {
   m_callbacks.OnMessage = std::move(func);
 }
 
-void WebSocketServer::SetMessageFactory(function<string(string &&)> &&func) {
+void WebSocketServer::SetMessageFactory(function<string __cdecl (string &&)> &&func) {
   m_callbacks.MessageFactory = std::move(func);
 }
 
-void WebSocketServer::SetOnError(function<void(IWebSocket::Error &&)> &&func) {
+void WebSocketServer::SetOnError(function<void __cdecl (IWebSocket::Error &&)> &&func) {
   m_callbacks.OnError = std::move(func);
 }
 

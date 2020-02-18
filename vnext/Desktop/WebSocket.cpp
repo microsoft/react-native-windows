@@ -402,34 +402,34 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping() {
 #pragma region Handler setters
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void()> &&handler) {
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void __cdecl ()> &&handler) {
   m_connectHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void()> &&handler) {
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void __cdecl ()> &&handler) {
   m_pingHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(function<void(size_t)> &&handler) {
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(function<void __cdecl (size_t)> &&handler) {
   m_writeHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(
-    function<void(size_t, const string &)> &&handler) {
+    function<void __cdecl (size_t, const string &)> &&handler) {
   m_readHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(
-    function<void(CloseCode, const string &)> &&handler) {
+    function<void __cdecl (CloseCode, const string &)> &&handler) {
   m_closeHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function<void(Error &&)> &&handler) {
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function<void __cdecl (Error &&)> &&handler) {
   m_errorHandler = handler;
 }
 

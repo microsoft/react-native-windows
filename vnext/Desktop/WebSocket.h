@@ -18,11 +18,11 @@ template <
     typename Stream = boost::beast::websocket::stream<SocketLayer>,
     typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
 class BaseWebSocket : public IWebSocket {
-  std::function<void()> m_connectHandler;
-  std::function<void()> m_pingHandler;
-  std::function<void(std::size_t)> m_writeHandler;
-  std::function<void(std::size_t, const std::string &)> m_readHandler;
-  std::function<void(CloseCode, const std::string &)> m_closeHandler;
+  std::function<void __cdecl ()> m_connectHandler;
+  std::function<void __cdecl ()> m_pingHandler;
+  std::function<void __cdecl (std::size_t)> m_writeHandler;
+  std::function<void __cdecl (std::size_t, const std::string &)> m_readHandler;
+  std::function<void __cdecl (CloseCode, const std::string &)> m_closeHandler;
 
   Url m_url;
   ReadyState m_readyState{ReadyState::Connecting};
@@ -162,32 +162,32 @@ class BaseWebSocket : public IWebSocket {
   /// <summary>
   /// <see cref="IWebSocket::SetOnConnect" />
   /// </summary>
-  void SetOnConnect(std::function<void()> &&handler) override;
+  void SetOnConnect(std::function<void __cdecl ()> &&handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnPing" />
   /// </summary>
-  void SetOnPing(std::function<void()> &&handler) override;
+  void SetOnPing(std::function<void __cdecl ()> &&handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnSend" />
   /// </summary>
-  void SetOnSend(std::function<void(std::size_t)> &&handler) override;
+  void SetOnSend(std::function<void __cdecl (std::size_t)> &&handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnMessage" />
   /// </summary>
-  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) override;
+  void SetOnMessage(std::function<void __cdecl (std::size_t, const std::string &)> &&handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnClose" />
   /// </summary>
-  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) override;
+  void SetOnClose(std::function<void __cdecl (CloseCode, const std::string &)> &&handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnError" />
   /// </summary>
-  void SetOnError(std::function<void(Error &&)> &&handler) override;
+  void SetOnError(std::function<void __cdecl (Error &&)> &&handler) override;
 
 #pragma endregion IWebSocket
 };
