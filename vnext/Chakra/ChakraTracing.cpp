@@ -300,7 +300,7 @@ void addNativeTracingHooks() {
 
 #endif
 
-void InitializeTracing(INativeTraceHandler *handler) {
+void __cdecl InitializeTracing(INativeTraceHandler *handler) {
   g_nativeTracingHook = handler;
 }
 

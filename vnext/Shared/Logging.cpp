@@ -27,7 +27,7 @@ static double nativePerformanceNow() {
 void logMarker(const ReactMarker::ReactMarkerId /*id*/, const char * /*tag*/) {}
 } // end anonymous namespace
 
-void InitializeLogging(NativeLoggingHook &&hook) {
+void __cdecl InitializeLogging(NativeLoggingHook &&hook) {
   g_nativeLogHook = std::move(hook);
 
   JSNativeHooks::loggingHook = LogHook;
