@@ -474,7 +474,7 @@ void SecureWebSocket::Handshake(const IWebSocket::Options &options) {
 
 #pragma region IWebSocket static members
 
-/*static*/ unique_ptr<IWebSocket> IWebSocket::Make(const string &urlString) {
+/*static*/ unique_ptr<IWebSocket> __cdecl IWebSocket::Make(const string &urlString) {
   Url url(urlString);
 
   if (url.scheme == "ws") {
