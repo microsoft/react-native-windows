@@ -16,8 +16,8 @@ boost::beast::multi_buffer CreateStringResponseBody(std::string &&content);
 #pragma endregion Utility functions
 
 struct HttpCallbacks {
-  std::function<void __cdecl ()> OnResponseSent;
-  std::function<boost::beast::http::response<boost::beast::http::dynamic_body> __cdecl (
+  std::function<void __cdecl()> OnResponseSent;
+  std::function<boost::beast::http::response<boost::beast::http::dynamic_body> __cdecl(
       const boost::beast::http::request<boost::beast::http::string_body> &)>
       OnGet;
 };
@@ -80,13 +80,13 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
   ///
   // Callback to invoke after a successful response is sent.
   ///
-  void SetOnResponseSent(std::function<void __cdecl ()> &&handler) noexcept;
+  void SetOnResponseSent(std::function<void __cdecl()> &&handler) noexcept;
 
   ///
   // Function that creates an HTTP response to send to the client on GET
   // requests.
   ///
-  void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body> __cdecl (
+  void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body> __cdecl(
                     const boost::beast::http::request<boost::beast::http::string_body> &)> &&onGet) noexcept;
 };
 
