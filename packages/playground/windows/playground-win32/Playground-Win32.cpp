@@ -51,13 +51,6 @@ struct PlaygroundNativeModuleProvider final : facebook::react::NativeModuleProvi
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread) override {
     std::vector<facebook::react::NativeModuleDescription> modules;
-    std::shared_ptr<facebook::react::MessageQueueThread> queue = defaultQueueThread;
-
-    // modules.emplace_back(SampleCxxModule::Name, []()
-    //    {
-    //        return std::make_unique<SampleCxxModule>();
-    //    }, queue);
-
     return modules;
   }
 };
@@ -196,11 +189,6 @@ struct WindowData {
       return -1;
     }
 
-    return 0;
-  }
-
-  LRESULT OnDestroy() {
-    PostQuitMessage(0);
     return 0;
   }
 
@@ -348,7 +336,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
           hwnd, LOWORD(wparam), reinterpret_cast<HWND>(lparam), HIWORD(wparam));
     }
     case WM_DESTROY: {
-      return WindowData::GetFromWindow(hwnd)->OnDestroy();
+      delete WindowData::GetFromWindow(hwnd);
+      SetWindowLongPtr(hwnd, GWLP_USERDATA, 0);
+      PostQuitMessage(0);
+      return 0;
     }
     case WM_NCCREATE: {
       auto cs = reinterpret_cast<CREATESTRUCT *>(lparam);
@@ -408,6 +399,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   WINRT_VERIFY(hwnd);
   winrt::check_win32(!hwnd);
+  windowData.release();
 
   ShowWindow(hwnd, showCmd);
   UpdateWindow(hwnd);
@@ -429,8 +421,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       DispatchMessage(&msg);
     }
   }
-
-  windowData.reset();
 
   winrt::uninit_apartment();
 

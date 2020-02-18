@@ -59,7 +59,7 @@ class Sqlite3Transaction {
 } // namespace
 
 AsyncStorageModuleWin32::AsyncStorageModuleWin32(PCSTR dbPath) {
-  checkSQLiteResult(
+  CheckSQLiteResult(
       sqlite3_open_v2(dbPath, &m_db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nullptr));
 
   int userVersion = 0;
@@ -76,7 +76,7 @@ AsyncStorageModuleWin32::AsyncStorageModuleWin32(PCSTR dbPath) {
 }
 
 AsyncStorageModuleWin32::~AsyncStorageModuleWin32() {
-  checkSQLiteResult(sqlite3_close(m_db));
+  CheckSQLiteResult(sqlite3_close(m_db));
 }
 
 std::string AsyncStorageModuleWin32::getName() {
@@ -91,10 +91,6 @@ std::vector<facebook::xplat::module::CxxModule::Method> AsyncStorageModuleWin32:
   return {Method("multiGet", this, &AsyncStorageModuleWin32::multiGet),
           Method("multiSet", this, &AsyncStorageModuleWin32::multiSet),
           Method("multiRemove", this, &AsyncStorageModuleWin32::multiRemove),
-          // The 'multiMerge' method is currently not implemented. We assume that
-          // the ReactNative framework translates its absence into the AsyncStorage
-          // JS object (see Libraries\Storage\AsyncStorage.js around line 485) which
-          // in turn allows JS user code to test for support of merge methods.
           Method("clear", this, &AsyncStorageModuleWin32::clear),
           Method("getAllKeys", this, &AsyncStorageModuleWin32::getAllKeys)};
 }
@@ -107,15 +103,15 @@ void AsyncStorageModuleWin32::multiGet(folly::dynamic params, Callback callback)
     auto pStmt = PrepareStatement(u8"SELECT key, value FROM AsyncLocalStorage WHERE key = ?");
     for (auto &&arg : args) {
       BindString(pStmt, 1, arg.getString());
-      checkSQLiteResult(sqlite3_step(pStmt.get()));
+      CheckSQLiteResult(sqlite3_step(pStmt.get()));
       auto key = reinterpret_cast<const char *>(sqlite3_column_text(pStmt.get(), 0));
       if (!key)
-        checkSQLiteResult(sqlite3_errcode(m_db));
+        CheckSQLiteResult(sqlite3_errcode(m_db));
       auto value = reinterpret_cast<const char *>(sqlite3_column_text(pStmt.get(), 1));
       if (!value)
-        checkSQLiteResult(sqlite3_errcode(m_db));
+        CheckSQLiteResult(sqlite3_errcode(m_db));
       result.push_back(folly::dynamic::array(std::string(key), std::string(value)));
-      checkSQLiteResult(sqlite3_reset(pStmt.get()));
+      CheckSQLiteResult(sqlite3_reset(pStmt.get()));
     }
   }
   callback({folly::dynamic(), result});
@@ -129,8 +125,8 @@ void AsyncStorageModuleWin32::multiSet(folly::dynamic params, Callback callback)
     for (auto &&arg : args) {
       BindString(pStmt, 1, arg[0].getString());
       BindString(pStmt, 2, arg[1].getString());
-      checkSQLiteResult(sqlite3_step(pStmt.get()));
-      checkSQLiteResult(sqlite3_reset(pStmt.get()));
+      CheckSQLiteResult(sqlite3_step(pStmt.get()));
+      CheckSQLiteResult(sqlite3_reset(pStmt.get()));
     }
   }
   callback({});
@@ -142,9 +138,9 @@ void AsyncStorageModuleWin32::multiRemove(folly::dynamic params, Callback callba
     Sqlite3Transaction transaction(m_db);
     auto pStmt = PrepareStatement(u8"DELETE FROM AsyncLocalStorage WHERE key = ?");
     for (auto &&arg : args) {
-      checkSQLiteResult(sqlite3_bind_text(pStmt.get(), 1, arg.getString().c_str(), -1, SQLITE_TRANSIENT));
-      checkSQLiteResult(sqlite3_step(pStmt.get()));
-      checkSQLiteResult(sqlite3_reset(pStmt.get()));
+      CheckSQLiteResult(sqlite3_bind_text(pStmt.get(), 1, arg.getString().c_str(), -1, SQLITE_TRANSIENT));
+      CheckSQLiteResult(sqlite3_step(pStmt.get()));
+      CheckSQLiteResult(sqlite3_reset(pStmt.get()));
     }
   }
   callback({});
@@ -173,7 +169,7 @@ void AsyncStorageModuleWin32::getAllKeys(folly::dynamic, Callback callback) {
 
 AsyncStorageModuleWin32::Statement AsyncStorageModuleWin32::PrepareStatement(const char *stmt) {
   sqlite3_stmt *pStmt;
-  checkSQLiteResult(sqlite3_prepare_v2(m_db, stmt, -1, &pStmt, nullptr));
+  CheckSQLiteResult(sqlite3_prepare_v2(m_db, stmt, -1, &pStmt, nullptr));
   return {pStmt, &sqlite3_finalize};
 }
 
@@ -182,10 +178,10 @@ void AsyncStorageModuleWin32::Exec(const char *statement, ExecCallback callback,
 }
 
 void AsyncStorageModuleWin32::BindString(const Statement &stmt, int index, const std::string &str) {
-  checkSQLiteResult(sqlite3_bind_text(stmt.get(), index, str.c_str(), -1, SQLITE_TRANSIENT));
+  CheckSQLiteResult(sqlite3_bind_text(stmt.get(), index, str.c_str(), -1, SQLITE_TRANSIENT));
 }
 
-void AsyncStorageModuleWin32::checkSQLiteResult(int sqliteResult) {
+void AsyncStorageModuleWin32::CheckSQLiteResult(int sqliteResult) {
   switch (sqliteResult) {
     case SQLITE_OK:
     case SQLITE_ROW:

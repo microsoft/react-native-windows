@@ -51,7 +51,7 @@ class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
   void BindString(const Statement &stmt, int index, const std::string &str);
 
   // throws a std::runtime_error that includes sqlite3_errmsg if sqliteResult is an error
-  void checkSQLiteResult(int sqliteResult);
+  void CheckSQLiteResult(int sqliteResult);
 };
 } // namespace react
 } // namespace facebook
