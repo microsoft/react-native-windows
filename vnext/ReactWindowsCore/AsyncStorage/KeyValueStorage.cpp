@@ -20,6 +20,11 @@ KeyValueStorage::KeyValueStorage(const WCHAR *storageFileName)
   m_storageFileLoader = async(launch::async, &KeyValueStorage::load, this);
 }
 
+void KeyValueStorage::setStorageLoadedEvent() {
+  if (!SetEvent(m_storageFileLoaded))
+    StorageFileIO::throwLastErrorMessage();
+}
+
 void KeyValueStorage::load() {
   bool saveRequired = false; // this flag is used to indicate whether the file
                              // needs to be cleaned up.
@@ -55,7 +60,9 @@ void KeyValueStorage::load() {
           break;
 
         default:
-          throw std::exception("Corrupt storage file. Unexpected prefix on line.");
+          m_fileIOHelper->clear();
+          setStorageLoadedEvent();
+          throw std::exception("Corrupt storage file. Unexpected prefix on line. Storage file cleared.");
           break;
       }
     }
@@ -78,10 +85,10 @@ void KeyValueStorage::load() {
     }
 
     m_fileIOHelper->append(cleanedUpFile.str());
+    m_fileIOHelper->flush();
   }
 
-  if (!SetEvent(m_storageFileLoaded))
-    StorageFileIO::throwLastErrorMessage();
+  setStorageLoadedEvent();
 }
 
 void KeyValueStorage::waitForStorageLoadComplete() {
@@ -135,6 +142,7 @@ void KeyValueStorage::multiSet(const vector<tuple<string, string>> &keyValuePair
   if (fUpdateStorageFile) {
     // write the new keys to the file
     m_fileIOHelper->append(appendEntry.str());
+    m_fileIOHelper->flush();
   }
 }
 
@@ -148,6 +156,7 @@ void KeyValueStorage::multiRemove(const vector<string> &keys) {
   }
 
   m_fileIOHelper->append(ss.str());
+  m_fileIOHelper->flush();
 }
 
 void KeyValueStorage::multiMerge(const vector<tuple<string, string>> &keyValuePairs) {

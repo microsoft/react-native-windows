@@ -43,6 +43,7 @@ class KeyValueStorage {
  private:
   void load();
   void waitForStorageLoadComplete();
+  void setStorageLoadedEvent();
 };
 } // namespace react
 } // namespace facebook
