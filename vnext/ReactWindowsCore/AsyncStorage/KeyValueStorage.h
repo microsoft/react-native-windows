@@ -28,7 +28,7 @@ class KeyValueStorage {
   static const uint32_t EstimatedValueSize = 200;
   static const char KeyPrefix = '$';
   static const char ValuePrefix = '%';
-  static const char RemovePrefix = 'R'; //Keep RemovePrefix to be backward compatible for the storage file format
+  static const char RemovePrefix = 'R'; // Keep RemovePrefix to be backward compatible for the storage file format
 
  private:
   std::map<std::string, std::string> m_kvMap;

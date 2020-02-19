@@ -70,7 +70,7 @@ void KeyValueStorage::load() {
 
   if (saveRequired) // cleanup the AOF by dumping the in memory map
   {
-     saveTable();
+    saveTable();
   }
   setStorageLoadedEvent();
 }
