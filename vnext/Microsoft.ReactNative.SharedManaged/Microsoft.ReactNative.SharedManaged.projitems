@@ -27,10 +27,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactConstantInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactConstantProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactConstantProviderInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactContextGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactEnumerableExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ReactEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactEventInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactFunctionInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactInitializerInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactMethodInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactModuleInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactPackageProvider.cs" />

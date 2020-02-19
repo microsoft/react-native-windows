@@ -73,6 +73,7 @@ struct IReactInstance : IUnknown {
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
+  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
 };
 
 //! Settings per each IReactViewHost associated with an IReactHost instance.
@@ -137,13 +138,19 @@ struct NativeModuleProvider2 {
       std::shared_ptr<facebook::react::MessageQueueThread> const &defaultQueueThread) = 0;
 };
 
+struct ViewManagerProvider2 {
+  virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
+      Mso::CntPtr<IReactContext> const &reactContext,
+      std::shared_ptr<react::uwp::IReactInstance> const &instance) = 0;
+};
+
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
   react::uwp::ReactInstanceSettings LegacySettings;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
-  std::shared_ptr<react::uwp::ViewManagerProvider> ViewManagerProvider;
+  std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;

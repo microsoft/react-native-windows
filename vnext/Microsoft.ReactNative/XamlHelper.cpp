@@ -10,11 +10,11 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-Windows::UI::Xaml::Media::Brush XamlHelper::BrushFrom(Microsoft::ReactNative::ValueProvider const &valueProvider) {
-  IJSValueWriter writer = winrt::make<DynamicWriter>();
-  valueProvider(writer);
+Windows::UI::Xaml::Media::Brush XamlHelper::BrushFrom(JSValueArgWriter const &valueProvider) noexcept {
+  auto writer = winrt::make_self<DynamicWriter>();
+  valueProvider(*writer);
 
-  auto value = writer.as<DynamicWriter>()->TakeValue();
+  auto value = writer->TakeValue();
   return react::uwp::BrushFrom(value);
 }
 

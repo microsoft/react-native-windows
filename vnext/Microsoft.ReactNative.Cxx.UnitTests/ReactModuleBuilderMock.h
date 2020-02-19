@@ -9,9 +9,17 @@
 #include <functional>
 #include "JSValue.h"
 
+#undef GetCurrentTime
+#include "Windows.UI.Xaml.h"
+
+using namespace winrt;
+using namespace Windows::UI::Xaml;
+
 namespace winrt::Microsoft::ReactNative {
 
 struct ReactModuleBuilderMock {
+  ReactModuleBuilderMock() noexcept;
+
   template <class... TArgs>
   void Call0(std::wstring const &methodName, TArgs &&... args) noexcept;
 
@@ -42,20 +50,40 @@ struct ReactModuleBuilderMock {
 
   JSValueObject GetConstants() noexcept;
 
-  template <class T>
-  void SetEventHandler(std::wstring const &eventName, std::function<void(T)> const &eventHandler) noexcept;
-
   bool IsResolveCallbackCalled() const noexcept;
   void IsResolveCallbackCalled(bool value) noexcept;
   bool IsRejectCallbackCalled() const noexcept;
   void IsRejectCallbackCalled(bool value) noexcept;
 
+  void ExpectEvent(
+      std::wstring_view eventEmitterName,
+      std::wstring_view eventName,
+      Mso::Functor<void(JSValue const &)> &&checkValue) noexcept;
+
+  void ExpectFunction(
+      std::wstring_view moduleName,
+      std::wstring_view functionName,
+      Mso::Functor<void(JSValueArray const &)> &&checkValues) noexcept;
+
+  void CallJSFunction(
+      std::wstring_view moduleName,
+      std::wstring_view functionName,
+      JSValueArgWriter const &paramsArgWriter) noexcept;
+
+  void EmitJSEvent(
+      std::wstring_view eventEmitterName,
+      std::wstring_view eventName,
+      JSValueArgWriter const &paramsArgWriter) noexcept;
+
+  Windows::Foundation::IInspectable CreateModule(
+      ReactModuleProvider const &provider,
+      IReactModuleBuilder const &moduleBuilder) noexcept;
+
  public: // IReactModuleBuilder
-  void SetEventEmitterName(hstring const &name) noexcept;
+  void AddInitializer(InitializerDelegate const &initializer) noexcept;
+  void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
-  void AddConstantProvider(ConstantProvider const &constantProvider) noexcept;
-  void AddEventHandlerSetter(hstring const &name, ReactEventHandlerSetter const &eventHandlerSetter) noexcept;
 
  private:
   MethodDelegate GetMethod0(std::wstring const &methodName) const noexcept;
@@ -79,24 +107,47 @@ struct ReactModuleBuilderMock {
   MethodResultCallback RejectCallback(std::function<void(T)> const &reject, Mso::Promise<bool> const &promise) noexcept;
 
  private:
-  std::wstring m_eventEmitterName;
+  IReactContext m_reactContext{nullptr};
+  std::vector<InitializerDelegate> m_initializers;
+  std::vector<ConstantProviderDelegate> m_constantProviders;
   std::map<std::wstring, std::tuple<MethodReturnType, MethodDelegate>> m_methods;
   std::map<std::wstring, SyncMethodDelegate> m_syncMethods;
-  std::vector<ConstantProvider> m_constProviders;
-  std::map<std::wstring, std::function<void(IJSValueReader &)>> m_eventHandlers;
   bool m_isResolveCallbackCalled;
   bool m_isRejectCallbackCalled;
+  Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsFunctionHandler;
+  Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsEventHandler;
+};
+
+struct ReactContextMock : implements<ReactContextMock, IReactContext> {
+  ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
+
+  void DispatchEvent(
+      FrameworkElement const & /*view*/,
+      hstring const & /*eventName*/,
+      JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {}
+
+  void CallJSFunction(
+      hstring const &moduleName,
+      hstring const &functionName,
+      JSValueArgWriter const &paramsArgWriter) noexcept;
+
+  void EmitJSEvent(
+      hstring const &eventEmitterName,
+      hstring const &eventName,
+      JSValueArgWriter const &paramsArgWriter) noexcept;
+
+ private:
+  ReactModuleBuilderMock *m_builderMock;
 };
 
 struct ReactModuleBuilderImpl : implements<ReactModuleBuilderImpl, IReactModuleBuilder> {
   ReactModuleBuilderImpl(ReactModuleBuilderMock &mock) noexcept;
 
  public: // IReactModuleBuilder
-  void SetEventEmitterName(hstring const &name) noexcept;
+  void AddInitializer(InitializerDelegate const &initializer) noexcept;
+  void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
-  void AddConstantProvider(ConstantProvider const &constantProvider) noexcept;
-  void AddEventHandlerSetter(hstring const &name, ReactEventHandlerSetter const &eventHandlerSetter) noexcept;
 
  private:
   ReactModuleBuilderMock &m_mock;
@@ -181,17 +232,6 @@ ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result
   }
 }
 
-template <class T>
-inline void ReactModuleBuilderMock::SetEventHandler(
-    std::wstring const &eventName,
-    std::function<void(T)> const &eventHandler) noexcept {
-  m_eventHandlers.emplace(eventName, [eventHandler](IJSValueReader const &reader) noexcept {
-    std::remove_const_t<std::remove_reference_t<T>> arg;
-    ReadArgs(reader, /*out*/ arg);
-    eventHandler(arg);
-  });
-}
-
 template <class... TArgs>
 inline /*static*/ IJSValueReader ReactModuleBuilderMock::ArgReader(TArgs &&... args) noexcept {
   return CreateArgReader([&args...](IJSValueWriter const &writer) mutable noexcept {
@@ -257,8 +297,12 @@ inline void ReactModuleBuilderMock::IsRejectCallbackCalled(bool value) noexcept 
 
 inline ReactModuleBuilderImpl::ReactModuleBuilderImpl(ReactModuleBuilderMock &mock) noexcept : m_mock{mock} {}
 
-inline void ReactModuleBuilderImpl::SetEventEmitterName(hstring const &name) noexcept {
-  m_mock.SetEventEmitterName(name);
+inline void ReactModuleBuilderImpl::AddInitializer(InitializerDelegate const &initializer) noexcept {
+  m_mock.AddInitializer(initializer);
+}
+
+inline void ReactModuleBuilderImpl::AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
+  m_mock.AddConstantProvider(constantProvider);
 }
 
 inline void ReactModuleBuilderImpl::AddMethod(
@@ -270,16 +314,6 @@ inline void ReactModuleBuilderImpl::AddMethod(
 
 inline void ReactModuleBuilderImpl::AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
   m_mock.AddSyncMethod(name, method);
-}
-
-inline void ReactModuleBuilderImpl::AddConstantProvider(ConstantProvider const &constantProvider) noexcept {
-  m_mock.AddConstantProvider(constantProvider);
-}
-
-inline void ReactModuleBuilderImpl::AddEventHandlerSetter(
-    hstring const &name,
-    ReactEventHandlerSetter const &eventHandlerSetter) noexcept {
-  m_mock.AddEventHandlerSetter(name, eventHandlerSetter);
 }
 
 } // namespace winrt::Microsoft::ReactNative

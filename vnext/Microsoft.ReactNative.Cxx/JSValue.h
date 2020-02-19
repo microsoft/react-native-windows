@@ -12,16 +12,27 @@ namespace winrt::Microsoft::ReactNative {
 
 // Forward declarations
 struct JSValue;
+struct JSValueObjectKeyValue;
+struct JSValueArrayItem;
 IJSValueReader MakeJSValueTreeReader(const JSValue &root) noexcept;
 IJSValueReader MakeJSValueTreeReader(JSValue &&root) noexcept;
 IJSValueWriter MakeJSValueTreeWriter() noexcept;
 JSValue TakeJSValue(IJSValueWriter const &writer) noexcept;
 
-// Type alias for JSValue object type
-using JSValueObject = std::map<std::string, JSValue, std::less<>>;
+// JSValueObject is based on std::map and has a custom constructor with intializer_list.
+// It is possible to write: JSValueObject{{"X", 4}, {"Y", 5}} and pass it as JSValue.
+struct JSValueObject : std::map<std::string, JSValue, std::less<>> {
+  JSValueObject() = default;
+  JSValueObject(std::initializer_list<JSValueObjectKeyValue> initObject) noexcept;
+};
 
-// Type alias for JSValue array type
-using JSValueArray = std::vector<JSValue>;
+// JSValueArray is based on std::vector and has a custom constructor with intializer_list.
+// It is possible to write: JSValueArray{"X", 4, true} and pass it as JSValue.
+struct JSValueArray : std::vector<JSValue> {
+  JSValueArray() = default;
+  JSValueArray(size_t capacity) noexcept;
+  JSValueArray(std::initializer_list<JSValueArrayItem> initArray) noexcept;
+};
 
 // A view for JSValueObject
 struct JSValueObjectView {
@@ -94,7 +105,9 @@ struct JSValue {
   size_t PropertyCount() const noexcept;
   size_t ItemCount() const noexcept;
 
-  template <typename T>
+  template <typename T, std::enable_if_t<std::is_default_constructible_v<T>, int> = 0>
+  T To() const noexcept;
+  template <typename T, std::enable_if_t<std::is_constructible_v<T, std::nullptr_t>, int> = 0>
   T To() const noexcept;
   template <class T>
   static JSValue From(const T &value) noexcept;
@@ -136,8 +149,30 @@ bool operator==(const JSValue &left, const JSValue &right) noexcept;
 bool operator!=(const JSValue &left, const JSValue &right) noexcept;
 void swap(JSValue &left, JSValue &right) noexcept;
 
+// Helps initialize key-value pairs for JSValueObject
+struct JSValueObjectKeyValue {
+  template <class TKey, class TValue>
+  JSValueObjectKeyValue(TKey &&key, TValue &&value) noexcept
+      : Key(std::forward<TKey>(key)), Value(std::forward<TValue>(value)) {}
+
+  std::string_view Key;
+  JSValue Value;
+};
+
+// Helps initialize items for JSValueArray
+struct JSValueArrayItem {
+  template <class TItem>
+  JSValueArrayItem(TItem &&item) noexcept : Item(std::forward<TItem>(item)) {}
+
+  JSValue Item;
+};
+
 //===========================================================================
-// JSValueObjectView inline implementation
+// JSValueObjectKeyValue inline implementation
+//===========================================================================
+
+//===========================================================================
+// JSValueArrayItem inline implementation
 //===========================================================================
 
 inline JSValueObjectView::JSValueObjectView(const JSValueObject &object) noexcept : m_object{object} {}
@@ -216,20 +251,19 @@ inline double JSValue::Double() const noexcept {
   return (m_type == JSValueType::Double) ? m_double : 0;
 }
 
-template <typename T>
+template <typename T, std::enable_if_t<std::is_default_constructible_v<T>, int>>
 inline T JSValue::To() const noexcept {
   T result;
   ReadValue(MakeJSValueTreeReader(*this), /*out*/ result);
   return result;
 }
 
-#ifndef CXXUNITTESTS
-template <>
-inline winrt::Windows::UI::Xaml::Media::Brush JSValue::To() const noexcept {
-  return winrt::Microsoft::ReactNative::XamlHelper::BrushFrom([this](
-      winrt::Microsoft::ReactNative::IJSValueWriter writer) noexcept { this->WriteTo(writer); });
+template <typename T, std::enable_if_t<std::is_constructible_v<T, std::nullptr_t>, int>>
+inline T JSValue::To() const noexcept {
+  T result{nullptr};
+  ReadValue(MakeJSValueTreeReader(*this), /*out*/ result);
+  return result;
 }
-#endif
 
 template <class T>
 static JSValue From(const T &value) noexcept {

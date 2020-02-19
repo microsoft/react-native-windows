@@ -248,6 +248,28 @@ namespace Microsoft.ReactNative.Managed
           Enumerable.Repeat(this, 1).Concat(args).Select(v => v.AsExpression));
       }
 
+      public MethodCallExpression CallExt(MethodInfo method, params object[] arguments)
+      {
+        var args = new List<Expression>();
+        args.Add(AsExpression);
+
+        void ParseArgs(object[] argObjects)
+        {
+          foreach (var arg in argObjects)
+          {
+            switch (arg)
+            {
+              case object[] items: ParseArgs(items); break;
+              case VariableWrapper variable: args.Add(variable.AsExpression); break;
+              case Expression expr: args.Add(expr); break;
+            }
+          }
+        }
+
+        ParseArgs(arguments);
+        return Expression.Call(method, args);
+      }
+
       // It can be used only for delegate types
       public Expression Invoke(params Expression[] args)
       {
@@ -310,6 +332,11 @@ namespace Microsoft.ReactNative.Managed
     public static VariableWrapper Parameter(Type type, out VariableWrapper parameter)
     {
       return parameter = VariableWrapper.CreateParameter(type);
+    }
+
+    public static VariableWrapper[] Parameters(Type[] types, out VariableWrapper[] parameters)
+    {
+      return parameters = types.Select(t => VariableWrapper.CreateParameter(t)).ToArray();
     }
 
     public static BlockExpression AutoBlock(params object[] expressions)
