@@ -20,6 +20,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleMemberRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistry.h" />

@@ -198,6 +198,10 @@ namespace Microsoft.ReactNative.Managed
       {
         ((List<JSValue>)m_dynamic).Add(value);
       }
+      else
+      {
+        m_result = value;
+      }
     }
   }
 }
