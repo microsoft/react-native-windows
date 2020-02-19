@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
@@ -129,7 +129,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
         
       - template: templates/prepare-env.yml
         parameters:
@@ -252,7 +252,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
@@ -410,7 +410,7 @@ jobs:
         clean: true # whether to fetch clean each time
         fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
-        submodules: true # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2
