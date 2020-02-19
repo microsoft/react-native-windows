@@ -268,7 +268,7 @@ inline T JSValue::To() const noexcept {
 template <class T>
 static JSValue From(const T &value) noexcept {
   auto writer = MakeJSValueTreeWriter();
-  WriteValue(*writer, value);
+  WriteValue(writer, value);
   return TakeJSValue(writer);
 }
 
