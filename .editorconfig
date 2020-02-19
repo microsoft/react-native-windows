@@ -39,7 +39,3 @@ end_of_line = crlf
 # Shell scripts
 [*.{cmd,bat,ps1}]
 end_of_line = crlf
-
-# Git files
-[.gitmodules]
-insert_final_newline = false
