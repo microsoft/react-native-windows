@@ -16,7 +16,7 @@ namespace react {
 
 class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
  public:
-  explicit AsyncStorageModuleWin32(PCSTR dbPath);
+  AsyncStorageModuleWin32();
   ~AsyncStorageModuleWin32();
   std::string getName() override;
   std::map<std::string, dynamic> getConstants() override;
@@ -52,6 +52,8 @@ class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
 
   // throws a std::runtime_error that includes sqlite3_errmsg if sqliteResult is an error
   void CheckSQLiteResult(int sqliteResult);
+
+  static std::string m_dbPath;
 };
 } // namespace react
 } // namespace facebook

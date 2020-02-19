@@ -110,6 +110,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>

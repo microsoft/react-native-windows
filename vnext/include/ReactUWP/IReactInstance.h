@@ -37,7 +37,6 @@ struct ReactInstanceSettings {
   bool EnableByteCodeCaching{false};
   bool EnableDeveloperMenu{false};
 
-  std::string AsyncLocalStorageDBPath;
   std::string ByteCodeFileUri;
   std::string DebugHost;
   std::string DebugBundlePath;

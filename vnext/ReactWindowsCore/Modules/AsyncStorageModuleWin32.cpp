@@ -1,17 +1,24 @@
 #include "pch.h"
 
 #include "AsyncStorageModuleWin32.h"
+#include "AsyncStorageModuleWin32Config.h"
 
 #include <cstdio>
 
-/// Implements ASM using winsqlite3.dll (requires Windows version 10.0.10586)
-
-namespace facebook {
-namespace react {
+/// Implements AsyncStorageModule using winsqlite3.dll (requires Windows version 10.0.10586)
 
 namespace {
 
-static void ExecImpl(sqlite3 *db, const char *statement, AsyncStorageModuleWin32::ExecCallback callback, void *pv) {
+std::string &AsyncStorageDBPath() {
+  static std::string asyncStorageDBPath;
+  return asyncStorageDBPath;
+}
+
+static void ExecImpl(
+    sqlite3 *db,
+    const char *statement,
+    facebook::react::AsyncStorageModuleWin32::ExecCallback callback,
+    void *pv) {
   char *errMsg = nullptr;
   int rc = sqlite3_exec(db, statement, callback, pv, &errMsg);
   if (errMsg) {
@@ -58,9 +65,15 @@ class Sqlite3Transaction {
 
 } // namespace
 
-AsyncStorageModuleWin32::AsyncStorageModuleWin32(PCSTR dbPath) {
-  CheckSQLiteResult(
-      sqlite3_open_v2(dbPath, &m_db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nullptr));
+namespace facebook {
+namespace react {
+
+AsyncStorageModuleWin32::AsyncStorageModuleWin32() {
+  CheckSQLiteResult(sqlite3_open_v2(
+      AsyncStorageDBPath().c_str(),
+      &m_db,
+      SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX,
+      nullptr));
 
   int userVersion = 0;
   auto userVersionCallback = [&](int cCol, char **rgszColText, char **rgszColName) {
@@ -197,3 +210,16 @@ void AsyncStorageModuleWin32::CheckSQLiteResult(int sqliteResult) {
 
 } // namespace react
 } // namespace facebook
+
+namespace react {
+namespace windows {
+
+REACTWINDOWS_API_(void) SetAsyncStorageDBPath(std::string &&dbPath) {
+  if (!AsyncStorageDBPath().empty())
+    throw std::logic_error("AsyncStorageDBPath already set");
+
+  AsyncStorageDBPath() = std::move(dbPath);
+}
+
+} // namespace windows
+} // namespace react

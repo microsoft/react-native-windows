@@ -133,16 +133,11 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   // Windows.Storage.StorageFile), so check for package identity before adding it.
   modules.emplace_back(
       "AsyncLocalStorage",
-      [wpUwpInstance = std::weak_ptr(uwpInstance)]() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
+      []() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
         if (HasPackageIdentity()) {
           return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
         } else {
-          auto spUwpInstance = wpUwpInstance.lock();
-          if (!spUwpInstance) {
-            return std::unique_ptr<facebook::xplat::module::CxxModule>();
-          }
-          return std::make_unique<facebook::react::AsyncStorageModuleWin32>(
-              spUwpInstance->GetReactInstanceSettings().AsyncLocalStorageDBPath.c_str());
+          return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
         }
       },
       MakeSerialQueueThread());

@@ -8,6 +8,8 @@
 #include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/InstanceFactory.h>
 #include <ReactUWP/ReactUwp.h>
+#include <ReactWindowsCore/AsyncStorageModuleWin32Config.h>
+
 #include <Unicode.h>
 
 #include <react-native-windows-extended.h>
@@ -126,7 +128,6 @@ struct WindowData {
           settings.UseWebDebugger = m_useWebDebugger;
           settings.UseLiveReload = m_liveReloadEnabled;
           settings.EnableDeveloperMenu = true;
-          settings.AsyncLocalStorageDBPath = GetAsyncLocalStorageDBPath();
 
           settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
             OutputDebugStringA("In LoggingCallback");
@@ -361,6 +362,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   constexpr PCWSTR windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
+
+  react::windows::SetAsyncStorageDBPath(GetAsyncLocalStorageDBPath());
 
   WUXH::DesktopWindowXamlSource desktopXamlSource;
 
