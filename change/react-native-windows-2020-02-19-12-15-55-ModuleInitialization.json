@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implemented NativeModule initialization with IReactContext",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "b58cf8c7a6f2fe420601d6b971964a8aa28c8bf8",
-  "dependentChangeType": "patch",
-  "date": "2020-02-19T20:15:55.381Z"
-}

@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Feb 2020 23:34:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.14",
+      "version": "0.61.0-beta.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented NativeModule initialization with IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b58cf8c7a6f2fe420601d6b971964a8aa28c8bf8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Feb 2020 22:45:15 GMT",
       "tag": "react-native-windows_v0.61.0-beta.13",
       "version": "0.61.0-beta.13",

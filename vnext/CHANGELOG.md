@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Feb 2020 22:45:15 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Feb 2020 23:34:40 GMT and should not be manually modified.
 
+## 0.61.0-beta.14
+Wed, 19 Feb 2020 23:34:40 GMT
+
+### Changes
+
+- Implemented NativeModule initialization with IReactContext (vmorozov@microsoft.com)
 ## 0.61.0-beta.13
 Wed, 19 Feb 2020 22:45:15 GMT
 
