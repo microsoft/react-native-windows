@@ -106,6 +106,7 @@ steps:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
         /p:BaseIntDir=$(BaseIntDir)
+        /p:FollyDir=$(Build.SourcesDirectory)\GitModules\folly
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
