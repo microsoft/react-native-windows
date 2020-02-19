@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Feb 2020 02:24:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.11",
+      "version": "0.61.0-beta.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove useIncrementalUpdates assert from Networking module",
+            "author": "mcota@microsoft.com",
+            "commit": "845055fb8bac6a1df37fc863ea505220744432d1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Feb 2020 21:13:20 GMT",
       "tag": "react-native-windows_v0.61.0-beta.10",
       "version": "0.61.0-beta.10",

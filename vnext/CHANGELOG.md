@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 18 Feb 2020 21:13:20 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Feb 2020 02:24:03 GMT and should not be manually modified.
 
+## 0.61.0-beta.11
+Wed, 19 Feb 2020 02:24:03 GMT
+
+### Changes
+
+- Remove useIncrementalUpdates assert from Networking module (mcota@microsoft.com)
 ## 0.61.0-beta.10
 Tue, 18 Feb 2020 21:13:20 GMT
 
