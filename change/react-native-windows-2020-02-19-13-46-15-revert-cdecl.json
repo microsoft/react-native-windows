@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Revert \"Drop StdCall in favor of Cdecl for x86. (#4115)\"",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "commit": "8d4b9fee0e66327b5e25d996c4105c7adbf0d283",
-  "dependentChangeType": "patch",
-  "date": "2020-02-19T21:46:15.592Z"
-}

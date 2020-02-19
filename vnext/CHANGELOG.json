@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Feb 2020 22:45:15 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.13",
+      "version": "0.61.0-beta.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Revert \"Drop StdCall in favor of Cdecl for x86. (#4115)\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8d4b9fee0e66327b5e25d996c4105c7adbf0d283"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Feb 2020 07:10:21 GMT",
       "tag": "react-native-windows_v0.61.0-beta.12",
       "version": "0.61.0-beta.12",
