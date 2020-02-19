@@ -124,7 +124,7 @@ const uint8_t *MemoryMappedBuffer::data() const {
 
 namespace Microsoft::JSI {
 
-std::shared_ptr<facebook::jsi::Buffer> MakeMemoryMappedBuffer(const wchar_t *const filename, uint32_t offset) {
+std::shared_ptr<facebook::jsi::Buffer> __cdecl MakeMemoryMappedBuffer(const wchar_t *const filename, uint32_t offset) {
   return std::make_shared<MemoryMappedBuffer>(filename, offset);
 }
 

@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Feb 2020 07:10:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.12",
+      "version": "0.61.0-beta.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use Cdecl for x86.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c73b68e7c9d94530673178a81b2080948d8ba739"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Feb 2020 02:24:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.11",
+      "version": "0.61.0-beta.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove useIncrementalUpdates assert from Networking module",
+            "author": "mcota@microsoft.com",
+            "commit": "845055fb8bac6a1df37fc863ea505220744432d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Feb 2020 21:13:20 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.10",
+      "version": "0.61.0-beta.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix issues with relative IntDir breaking builds",
+            "author": "aschultz@microsoft.com",
+            "commit": "7ce4e87f02db6eb98f9d42214e8a770b64a07022"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Feb 2020 01:46:09 GMT",
       "tag": "react-native-windows_v0.61.0-beta.9",
       "version": "0.61.0-beta.9",

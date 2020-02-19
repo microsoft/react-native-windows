@@ -268,18 +268,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
   </Target>
-  <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
-    <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" />
-    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.09.30.00.zip" DestinationFileName="folly-2019.09.30.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
-  </Target>
-  <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
-    <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />
-    <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, https://github.com/microsoft/msbuild/pull/4935, We will still succeed, and this will be fixed in a newer version of MSBuild  -->
-    <Unzip Condition="!Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
-  </Target>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*"/>
-  </ItemGroup>
+  </ItemGroup> -->
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
   <!--
   <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">

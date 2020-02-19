@@ -35,7 +35,8 @@ class DevSupportManager : public facebook::react::IDevSupportManager {
       const std::string &debugHost,
       const std::string &jsBundleName,
       const std::string &platform) override;
-  virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) override;
+  virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void __cdecl()> onChangeCallback)
+      override;
   virtual void StopPollingLiveReload() override;
   virtual bool HasException() override {
     return m_exceptionCaught;

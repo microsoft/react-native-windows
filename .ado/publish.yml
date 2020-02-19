@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout: self
         clean: true
-        submodules: false
+        submodules: true
         persistCredentials: true
 
       - template: templates/configure-git.yml

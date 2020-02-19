@@ -14,13 +14,17 @@
     <file src="$vcpkgroot$\installed\x86-windows-static\include\openssl\**\*.*" target="include\x86\openssl" />
     <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libcrypto.lib" target="lib\x86\Debug" />
     <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libssl.lib" target="lib\x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\ossl_static.pdb" target="lib\x86\Debug" />
     <file src="$vcpkgroot$\installed\x86-windows-static\lib\libcrypto.lib" target="lib\x86\Release" />
     <file src="$vcpkgroot$\installed\x86-windows-static\lib\libssl.lib" target="lib\x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\ossl_static.pdb" target="lib\x86\Release" />
 
     <file src="$vcpkgroot$\installed\x64-windows-static\include\openssl\**\*.*" target="include\x64\openssl" />
     <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libcrypto.lib" target="lib\x64\Debug" />
     <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libssl.lib" target="lib\x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\ossl_static.pdb" target="lib\x64\Debug" />
     <file src="$vcpkgroot$\installed\x64-windows-static\lib\libcrypto.lib" target="lib\x64\Release" />
     <file src="$vcpkgroot$\installed\x64-windows-static\lib\libssl.lib" target="lib\x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\ossl_static.pdb" target="lib\x64\Release" />
   </files>
 </package>

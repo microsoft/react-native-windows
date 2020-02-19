@@ -64,7 +64,7 @@ Want to develop a React Native Windows app? Head over to our [Getting Started Gu
 
 ## Getting Help
 
-- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-platforms
+- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native
 - If it turns out that you may have found a bug, please [open an issue](#opening-issues)
 
 ## Documentation

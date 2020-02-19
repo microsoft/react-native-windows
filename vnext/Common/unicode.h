@@ -48,11 +48,11 @@ class UnicodeConversionException : public std::runtime_error {
 //
 // For (2), utf8 must be null terminated. The behavior is undefined otherwise.
 //
-/* (1) */ std::wstring Utf8ToUtf16(const char *utf8, size_t utf8Len);
-/* (2) */ std::wstring Utf8ToUtf16(const char *utf8);
-/* (3) */ std::wstring Utf8ToUtf16(const std::string &utf8);
+/* (1) */ std::wstring __cdecl Utf8ToUtf16(const char *utf8, size_t utf8Len);
+/* (2) */ std::wstring __cdecl Utf8ToUtf16(const char *utf8);
+/* (3) */ std::wstring __cdecl Utf8ToUtf16(const std::string &utf8);
 #if _HAS_CXX17
-/* (4) */ std::wstring Utf8ToUtf16(const std::string_view &utf8);
+/* (4) */ std::wstring __cdecl Utf8ToUtf16(const std::string_view &utf8);
 #endif
 
 // The following functions convert UTF-16BE strings to UTF-8 strings. Their
@@ -65,15 +65,15 @@ class UnicodeConversionException : public std::runtime_error {
 // For (3) and (4), utf16 must be null terminated. The behavior is undefined
 // otherwise.
 //
-/* (1) */ std::string Utf16ToUtf8(const wchar_t *utf16, size_t utf16Len);
-/* (2) */ std::string Utf16ToUtf8(const char16_t *utf16, size_t utf16Len);
-/* (3) */ std::string Utf16ToUtf8(const wchar_t *utf16);
-/* (4) */ std::string Utf16ToUtf8(const char16_t *utf16);
-/* (5) */ std::string Utf16ToUtf8(const std::wstring &utf16);
-/* (6) */ std::string Utf16ToUtf8(const std::u16string &utf16);
+/* (1) */ std::string __cdecl Utf16ToUtf8(const wchar_t *utf16, size_t utf16Len);
+/* (2) */ std::string __cdecl Utf16ToUtf8(const char16_t *utf16, size_t utf16Len);
+/* (3) */ std::string __cdecl Utf16ToUtf8(const wchar_t *utf16);
+/* (4) */ std::string __cdecl Utf16ToUtf8(const char16_t *utf16);
+/* (5) */ std::string __cdecl Utf16ToUtf8(const std::wstring &utf16);
+/* (6) */ std::string __cdecl Utf16ToUtf8(const std::u16string &utf16);
 #if _HAS_CXX17
-/* (7) */ std::string Utf16ToUtf8(const std::wstring_view &utf16);
-/* (8) */ std::string Utf16ToUtf8(const std::u16string_view &utf16);
+/* (7) */ std::string __cdecl Utf16ToUtf8(const std::wstring_view &utf16);
+/* (8) */ std::string __cdecl Utf16ToUtf8(const std::u16string_view &utf16);
 #endif
 
 } // namespace Microsoft::Common::Unicode
