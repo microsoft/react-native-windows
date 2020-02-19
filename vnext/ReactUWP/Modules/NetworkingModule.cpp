@@ -245,7 +245,6 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
-  assert(!useIncrementalUpdates);
 
   // Callback with the requestId
   cb({requestId});
