@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use Cdecl for x86.",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "c73b68e7c9d94530673178a81b2080948d8ba739",
-  "dependentChangeType": "patch",
-  "date": "2020-02-18T21:33:13.169Z"
-}

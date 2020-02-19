@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Feb 2020 02:24:03 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Feb 2020 07:10:21 GMT and should not be manually modified.
 
+## 0.61.0-beta.12
+Wed, 19 Feb 2020 07:10:21 GMT
+
+### Changes
+
+- Use Cdecl for x86. (julio.rocha@microsoft.com)
 ## 0.61.0-beta.11
 Wed, 19 Feb 2020 02:24:03 GMT
 
