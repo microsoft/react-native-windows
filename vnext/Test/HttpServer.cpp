@@ -237,12 +237,12 @@ void HttpServer::Stop() {
     m_acceptor.close();
 }
 
-void HttpServer::SetOnResponseSent(function<void __cdecl()> &&handler) noexcept {
+void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept {
   m_callbacks.OnResponseSent = std::move(handler);
 }
 
 void HttpServer::SetOnGet(
-    function<http::response<http::dynamic_body> __cdecl(const http::request<http::string_body> &)> &&handler) noexcept {
+    function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept {
   m_callbacks.OnGet = std::move(handler);
 }
 
