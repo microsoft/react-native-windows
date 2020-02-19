@@ -23,7 +23,7 @@ struct IDevSupportManager {
       const std::string &debugHost,
       const std::string &jsBundleName,
       const std::string &platform) = 0;
-  virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) = 0;
+  virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void __cdecl ()> onChangeCallback) = 0;
   virtual void StopPollingLiveReload() = 0;
   virtual bool HasException() = 0;
 };

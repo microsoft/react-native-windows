@@ -158,7 +158,7 @@ std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const s
   co_return responseMessage.StatusCode();
 }
 
-void DevSupportManager::StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) {
+void DevSupportManager::StartPollingLiveReload(const std::string &debugHost, std::function<void __cdecl ()> onChangeCallback) {
   m_cancellation_token = false;
 
   std::string refreshUrl = facebook::react::DevServerHelper::get_OnChangeEndpointUrl(debugHost);
