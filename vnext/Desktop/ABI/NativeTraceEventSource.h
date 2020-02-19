@@ -5,7 +5,7 @@ namespace winrt::facebook::react::implementation {
 struct NativeTraceEventSource {
   NativeTraceEventSource() = default;
 
-  static uint32_t InitializeTracing(facebook::react::INativeTraceHandler const &handler);
+  static uint32_t __cdecl InitializeTracing(facebook::react::INativeTraceHandler const &handler);
   static void UninitializeTracing(uint32_t cookie);
 };
 } // namespace winrt::facebook::react::implementation

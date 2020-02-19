@@ -134,7 +134,7 @@ class MemoryTracker {
  * must be set via MemoryTracker::SetCallbackMessageQueueThread before callbacks
  * are going to be invoked.
  */
-std::shared_ptr<MemoryTracker> CreateMemoryTracker(
+std::shared_ptr<MemoryTracker> __cdecl CreateMemoryTracker(
     std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread = nullptr) noexcept;
 
 } // namespace react

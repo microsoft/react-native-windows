@@ -84,7 +84,7 @@ struct IWebSocket {
   /// WebSocket URL address the instance will connect to.
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
-  static std::unique_ptr<IWebSocket> Make(const std::string &url);
+  static std::unique_ptr<IWebSocket> __cdecl Make(const std::string &url);
 
   virtual ~IWebSocket() {}
 
@@ -141,7 +141,7 @@ struct IWebSocket {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnConnect(std::function<void()> &&handler) = 0;
+  virtual void SetOnConnect(std::function<void __cdecl()> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a successful ping to the remote
@@ -149,14 +149,14 @@ struct IWebSocket {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnPing(std::function<void()> &&handler) = 0;
+  virtual void SetOnPing(std::function<void __cdecl()> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a message sending.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnSend(std::function<void(std::size_t)> &&handler) = 0;
+  virtual void SetOnSend(std::function<void __cdecl(std::size_t)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when there is an incoming
@@ -164,21 +164,21 @@ struct IWebSocket {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) = 0;
+  virtual void SetOnMessage(std::function<void __cdecl(std::size_t, const std::string &)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when this instance is closed.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) = 0;
+  virtual void SetOnClose(std::function<void __cdecl(CloseCode, const std::string &)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on an error condition.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnError(std::function<void(Error &&)> &&handler) = 0;
+  virtual void SetOnError(std::function<void __cdecl(Error &&)> &&handler) = 0;
 };
 
 } // namespace Microsoft::React
