@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Feb 2020 22:39:59 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Feb 2020 23:52:24 GMT and should not be manually modified.
 
+## 0.60.0-vnext.140
+Thu, 20 Feb 2020 23:52:24 GMT
+
+### Changes
+
+- Fix scroll indicators being shown when not required (jagorrin@microsoft.com)
 ## 0.60.0-vnext.139
 Thu, 20 Feb 2020 22:39:59 GMT
 

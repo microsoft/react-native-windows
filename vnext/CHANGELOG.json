@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Feb 2020 23:52:24 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.140",
+      "version": "0.60.0-vnext.140",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix scroll indicators being shown when not required",
+            "author": "jagorrin@microsoft.com",
+            "commit": "ffaa1051f2f2f154630e710596bae3dea5ae4aa1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Feb 2020 22:39:59 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.139",
       "version": "0.60.0-vnext.139",
