@@ -60,7 +60,7 @@
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
-        _WIN32_WINNT=$(WinVer);
+        WINVER=$(WinVer);
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
     </ClCompile>

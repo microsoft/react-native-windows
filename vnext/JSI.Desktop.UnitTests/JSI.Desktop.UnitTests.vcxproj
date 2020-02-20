@@ -48,7 +48,7 @@
         REACTWINDOWS_BUILD;
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
-        _WIN32_WINNT=$(WinVer);
+        WINVER=$(WinVer);
         WIN32;
         _WINDOWS;
         REACTNATIVEWIN32_EXPORTS;
