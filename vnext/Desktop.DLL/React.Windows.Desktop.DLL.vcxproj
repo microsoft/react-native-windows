@@ -58,7 +58,7 @@
         REACTWINDOWS_BUILD;
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
-        _WIN32_WINNT=_WIN32_WINNT_WIN8;
+        _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
         _USRDLL;
@@ -89,7 +89,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>
-      <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>	
+      <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">
