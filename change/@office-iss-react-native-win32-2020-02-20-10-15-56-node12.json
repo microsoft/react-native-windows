@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Update metro configs to support node 12 on windows",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates",
+  "commit": "f28962002817a02628687143e01638640dc849a6",
+  "dependentChangeType": "patch",
+  "date": "2020-02-20T18:15:53.775Z"
+}
