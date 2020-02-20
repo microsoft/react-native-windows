@@ -8,7 +8,7 @@
     "postinstall": "node postinstall.js",
     "start": "react-native start",
     "lint": "just-scripts lint",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "lint:fix": "just-scripts lint:fix",
     "watch": "tsc -w",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run test",
