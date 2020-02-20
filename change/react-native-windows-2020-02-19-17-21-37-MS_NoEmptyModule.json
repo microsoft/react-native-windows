@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Avoid having native modules without methods",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "31945e60d3c1820b27aa4a1c137e326ef53a34f5",
-  "dependentChangeType": "patch",
-  "date": "2020-02-20T01:21:37.282Z"
-}

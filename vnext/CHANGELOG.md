@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Feb 2020 01:52:30 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Feb 2020 16:09:49 GMT and should not be manually modified.
 
+## 0.61.0-beta.16
+Thu, 20 Feb 2020 16:09:49 GMT
+
+### Changes
+
+- Avoid having native modules without methods (vmorozov@microsoft.com)
 ## 0.61.0-beta.15
 Thu, 20 Feb 2020 01:52:30 GMT
 
