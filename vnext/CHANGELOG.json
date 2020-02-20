@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Feb 2020 01:52:30 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.15",
+      "version": "0.61.0-beta.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use verdaccio to validate react native init",
+            "author": "acoates@microsoft.com",
+            "commit": "b6459ca85c68b936920aab3a7d9dc231cb171621"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Feb 2020 23:34:40 GMT",
       "tag": "react-native-windows_v0.61.0-beta.14",
       "version": "0.61.0-beta.14",

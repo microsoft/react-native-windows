@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Feb 2020 23:34:40 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Feb 2020 01:52:30 GMT and should not be manually modified.
 
+## 0.61.0-beta.15
+Thu, 20 Feb 2020 01:52:30 GMT
+
+### Changes
+
+- Use verdaccio to validate react native init (acoates@microsoft.com)
 ## 0.61.0-beta.14
 Wed, 19 Feb 2020 23:34:40 GMT
 
