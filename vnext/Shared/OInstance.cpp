@@ -500,11 +500,10 @@ InstanceImpl::InstanceImpl(
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const &moduleName : m_moduleRegistry->moduleNames()) {
       auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-      if (moduleConfig) {
-        configArray.push_back(std::move(moduleConfig->config));
-      }
+      configArray.push_back(moduleConfig ? std::move(moduleConfig->config) : nullptr);
     }
-    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", std::move(configArray));
     m_innerInstance->setGlobalVariable(
         "__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
