@@ -393,7 +393,7 @@ jobs:
 
       - template: templates/react-native-init.yml
         parameters:
-          version: 0.60.6
+          version: 0.61.5
           platform: x64
           vsComponents: $(VsComponents)
 

@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Use verdaccio to validate react native init",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "b6459ca85c68b936920aab3a7d9dc231cb171621",
+  "dependentChangeType": "patch",
+  "date": "2020-02-20T00:14:22.749Z"
+}
