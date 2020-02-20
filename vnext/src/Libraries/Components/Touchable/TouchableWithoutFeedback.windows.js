@@ -286,8 +286,6 @@ const TouchableWithoutFeedback = ((createReactClass({
     return (React: any).cloneElement(child, {
       onKeyUp: this._onKeyUp,
       onKeyDown: this._onKeyDown,
-      onFocus: this.props.onFocus,
-      onBlur: this.props.onBlur,
       accessible: this.props.accessible !== false,
       accessibilityLabel: this.props.accessibilityLabel,
       accessibilityHint: this.props.accessibilityHint,
