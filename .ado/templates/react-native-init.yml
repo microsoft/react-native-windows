@@ -28,7 +28,7 @@ steps:
       workingDirectory: vnext
 
   - script: |
-      start npx verdaccio --config ./ado/verdaccio/config.yaml
+      start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
 
   - script: |
