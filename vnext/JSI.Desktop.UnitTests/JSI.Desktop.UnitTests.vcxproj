@@ -44,7 +44,23 @@
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        REACTWINDOWS_BUILD;
+        BOOST_ASIO_HAS_IOCP;
+        _WINSOCK_DEPRECATED_NO_WARNINGS;
+        _WIN32_WINNT=_WIN32_WINNT_WIN8;
+        WIN32;
+        _WINDOWS;
+        REACTNATIVEWIN32_EXPORTS;
+        FOLLY_NO_CONFIG;
+        NOMINMAX;
+        GLOG_NO_ABBREVIATED_SEVERITIES;
+        _HAS_AUTO_PTR_ETC;
+        CHAKRACORE;
+        RN_EXPORT=;
+        GTEST_LANG_CXX11;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
