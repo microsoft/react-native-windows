@@ -27,9 +27,12 @@ steps:
       script: yarn build
       workingDirectory: vnext
 
-  - script: |
-      start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
+  - task: PowerShell@2
     displayName: Launch test npm server (verdaccio)
+    inputs:
+      targetType: inline
+      script: |
+        start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
 
   - script: |
       npm set registry http://localhost:4873
