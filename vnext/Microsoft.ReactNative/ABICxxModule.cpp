@@ -45,6 +45,15 @@ std::map<std::string, folly::dynamic> ABICxxModule::getConstants() noexcept {
 
 std::vector<CxxModule::Method> ABICxxModule::getMethods() noexcept {
   auto result = std::move(m_methods);
+  if (result.empty()) {
+    // Module without methods will be not registered in JS configuration.
+    // It will cause index mismatch between JS and C++ code.
+    // As a result, JS code will code methods on a wrong native module.
+    // See for details ReactCommon\cxxreact\ModuleRegistry.cpp, line 133: that reads 'if (!methodNames.empty()) {'
+    // To work around this issue we add a Dummy method.
+    result.emplace_back("Dummy", []() {});
+  }
+
   return result;
 }
 
