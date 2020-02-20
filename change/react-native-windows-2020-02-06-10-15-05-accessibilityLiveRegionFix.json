@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable screen reader announcements for accessibilityLiveRegion",
-  "packageName": "react-native-windows",
-  "email": "jagorrin@microsoft.com",
-  "commit": "4571c3c9445b1e31fbb623393644aef9e9fe6c09",
-  "dependentChangeType": "patch",
-  "date": "2020-02-06T18:15:05.072Z"
-}

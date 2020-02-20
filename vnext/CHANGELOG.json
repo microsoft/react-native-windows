@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Feb 2020 22:39:59 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.139",
+      "version": "0.60.0-vnext.139",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable screen reader announcements for accessibilityLiveRegion",
+            "author": "jagorrin@microsoft.com",
+            "commit": "4571c3c9445b1e31fbb623393644aef9e9fe6c09"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Feb 2020 17:26:14 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.138",
       "version": "0.60.0-vnext.138",

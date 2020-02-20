@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Feb 2020 17:26:14 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Feb 2020 22:39:59 GMT and should not be manually modified.
 
+## 0.60.0-vnext.139
+Thu, 20 Feb 2020 22:39:59 GMT
+
+### Changes
+
+- Enable screen reader announcements for accessibilityLiveRegion (jagorrin@microsoft.com)
 ## 0.60.0-vnext.138
 Thu, 20 Feb 2020 17:26:14 GMT
 
