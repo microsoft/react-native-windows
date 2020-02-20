@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Feb 2020 19:20:15 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.17",
+      "version": "0.61.0-beta.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump min. Windows Desktop supported version to 8.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b4f1c8adc630233d79d8360125ac8bf8b6b3613f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Feb 2020 16:09:49 GMT",
       "tag": "react-native-windows_v0.61.0-beta.16",
       "version": "0.61.0-beta.16",

@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Feb 2020 16:09:49 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Feb 2020 19:20:15 GMT and should not be manually modified.
 
+## 0.61.0-beta.17
+Thu, 20 Feb 2020 19:20:15 GMT
+
+### Changes
+
+- Bump min. Windows Desktop supported version to 8. (julio.rocha@microsoft.com)
 ## 0.61.0-beta.16
 Thu, 20 Feb 2020 16:09:49 GMT
 

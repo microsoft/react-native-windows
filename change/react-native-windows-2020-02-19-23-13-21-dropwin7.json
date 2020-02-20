@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump min. Windows Desktop supported version to 8.",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "b4f1c8adc630233d79d8360125ac8bf8b6b3613f",
-  "dependentChangeType": "patch",
-  "date": "2020-02-20T07:13:21.720Z"
-}
