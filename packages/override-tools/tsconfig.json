@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "out",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "preserveConstEnums": true,
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "skipLibCheck": true,
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}
