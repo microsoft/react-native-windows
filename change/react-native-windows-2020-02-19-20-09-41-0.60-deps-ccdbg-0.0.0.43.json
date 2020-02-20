@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade ChakraCore Debugger to 0.0.0.43",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "4358f40e608f9e249a0caaa3e7cf865aa225772c",
-  "date": "2020-02-20T04:09:41.064Z"
-}

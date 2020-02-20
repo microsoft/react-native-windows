@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 Feb 2020 22:31:29 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Feb 2020 17:26:14 GMT and should not be manually modified.
 
+## 0.60.0-vnext.138
+Thu, 20 Feb 2020 17:26:14 GMT
+
+### Changes
+
+- Upgrade ChakraCore Debugger to 0.0.0.43 (julio.rocha@microsoft.com)
 ## 0.60.0-vnext.137
 Fri, 14 Feb 2020 22:31:29 GMT
 
