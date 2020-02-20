@@ -43,7 +43,7 @@ steps:
     displayName: Wait for verdaccio server to boot
 
   - script: |
-      node scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
+      node .ado/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
   - script: |
