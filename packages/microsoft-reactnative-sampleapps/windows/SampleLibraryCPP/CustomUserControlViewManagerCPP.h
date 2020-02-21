@@ -46,9 +46,9 @@ struct CustomUserControlViewManagerCpp
       winrt::Microsoft::ReactNative::IJSValueReader const &commandArgsReader) noexcept;
 
   // IViewManagerWithExportedEventTypeConstants
-  winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomBubblingEventTypeConstants() noexcept;
+  winrt::Microsoft::ReactNative::ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants() noexcept;
 
-  winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomDirectEventTypeConstants() noexcept;
+  winrt::Microsoft::ReactNative::ConstantProviderDelegate ExportedCustomDirectEventTypeConstants() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::IReactContext m_reactContext{nullptr};

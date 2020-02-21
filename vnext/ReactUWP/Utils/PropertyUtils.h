@@ -244,7 +244,7 @@ bool TryUpdatePadding(
 template <class T>
 bool TryUpdateCornerRadiusOnNode(
     ShadowNodeBase *node,
-    const T &element,
+    const T & /*element*/,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "borderTopLeftRadius") {

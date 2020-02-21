@@ -95,7 +95,7 @@ class ChakraString {
   }
 
   // This assumes ascii is nul-terminated.
-  static ChakraString createExpectingAscii(const char *ascii, size_t len) {
+  static ChakraString createExpectingAscii(const char *ascii, size_t /*len*/) {
     return ChakraString(ascii);
   }
 

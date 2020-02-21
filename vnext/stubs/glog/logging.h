@@ -9,9 +9,9 @@
 #pragma once
 #include <iostream>
 
-#define CHECK(b) !(b) && (std::abort(), true) && std::cerr
-#define CHECK_GE(a, b) !(a >= b) && (std::abort(), true) && std::cerr
-#define DCHECK(b) !(b) && (std::abort(), true) && std::cerr
+#define CHECK(b) !(b) && GlogStub::LogMessageFatal{}.stream()
+#define CHECK_GE(a, b) !(a >= b) && GlogStub::LogMessageFatal{}.stream()
+#define DCHECK(b) !(b) && GlogStub::LogMessageFatal{}.stream()
 
 #ifdef DEBUG
 #define DCHECK_GT(v1, v2) CHECK((v1) > (v2))
@@ -37,9 +37,20 @@
 #define DCHECK_EQ(v1, v2)
 #endif
 
-#ifndef LOG
-
 namespace GlogStub {
+
+struct LogMessageFatal {
+#pragma warning(suppress : 4722) // destructor does not return
+  [[noreturn]] ~LogMessageFatal() noexcept {
+    std::abort();
+  }
+
+  std::ostream &stream() {
+    return std::cerr;
+  }
+};
+
+#ifndef LOG
 
 struct NullBuffer : public std::streambuf {
   // Put character on overflow.
@@ -57,7 +68,7 @@ inline std::ostream &GetNullLog() noexcept {
   return nullStream;
 }
 
-} // namespace GlogStub
-
 #define LOG(b) GlogStub::GetNullLog()
 #endif
+
+} // namespace GlogStub

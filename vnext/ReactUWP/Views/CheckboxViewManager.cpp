@@ -80,7 +80,7 @@ facebook::react::ShadowNode *CheckBoxViewManager::createShadow() const {
   return new CheckBoxShadowNode();
 }
 
-XamlView CheckBoxViewManager::CreateViewCore(int64_t tag) {
+XamlView CheckBoxViewManager::CreateViewCore(int64_t /*tag*/) {
   auto checkbox = winrt::CheckBox();
   return checkbox;
 }

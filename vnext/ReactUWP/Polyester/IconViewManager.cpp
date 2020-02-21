@@ -154,7 +154,7 @@ folly::dynamic IconViewManager::GetNativeProps() const {
   return props;
 }
 
-XamlView IconViewManager::CreateViewCore(int64_t tag) {
+XamlView IconViewManager::CreateViewCore(int64_t /*tag*/) {
   winrt::Glyphs glyphs = winrt::Glyphs();
   return glyphs;
 }

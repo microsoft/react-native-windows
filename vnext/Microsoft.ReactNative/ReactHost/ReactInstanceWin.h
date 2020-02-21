@@ -42,6 +42,7 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
 
  public: // IReactContext
   void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
+  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
 
  private:
   Mso::WeakPtr<ReactInstanceWin> m_reactInstance;

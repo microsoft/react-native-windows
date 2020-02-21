@@ -34,7 +34,7 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithExportedViewConstants
   {
-    ConstantProvider ExportedViewConstants { get; };
+    ConstantProviderDelegate ExportedViewConstants { get; };
   }
 
   [webhosthidden]
@@ -56,9 +56,9 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithExportedEventTypeConstants
   {
-    ConstantProvider ExportedCustomBubblingEventTypeConstants { get; };
+    ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants { get; };
 
-    ConstantProvider ExportedCustomDirectEventTypeConstants { get; };
+    ConstantProviderDelegate ExportedCustomDirectEventTypeConstants { get; };
   }
 
   [webhosthidden]

@@ -215,11 +215,11 @@ void NativeAnimatedModule::RemoveAnimatedEventFromView(
   m_nodesManager->RemoveAnimatedEventFromView(tag, eventName, animatedValueTag);
 }
 
-void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t tag) {
+void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t /*tag*/) {
   // NotImplemented
 }
 
-void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t tag) {
+void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t /*tag*/) {
   // NotImplemented
 }
 } // namespace uwp

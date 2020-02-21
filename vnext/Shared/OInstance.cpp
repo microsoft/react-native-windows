@@ -27,10 +27,11 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 #endif
 #include <Modules/ExceptionsManagerModule.h>
-#include <SourceCodeModule.h>
+#include <Modules/PlatformConstantsModule.h>
+#include <Modules/SourceCodeModule.h>
 
 #if (defined(_MSC_VER) && (defined(WINRT)))
 #include <Utils/LocalBundleReader.h>
@@ -150,7 +151,7 @@ namespace react {
 #ifdef PATCH_RN
 namespace {
 
-void runtimeInstaller(jsi::Runtime &runtime) {
+void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #ifdef ENABLE_JS_SYSTRACE_TO_ETW
   facebook::react::tracing::initializeJSHooks(runtime);
 #endif
@@ -168,7 +169,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
       };
     } else {
-      logger = [loggingHook = std::move(loggingHook_)](const std::string &message, unsigned int logLevel) { ; };
+      logger = [loggingHook = std::move(loggingHook_)](const std::string & /*message*/, unsigned int /*logLevel*/) {};
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
@@ -499,11 +500,10 @@ InstanceImpl::InstanceImpl(
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const &moduleName : m_moduleRegistry->moduleNames()) {
       auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-      if (moduleConfig) {
-        configArray.push_back(std::move(moduleConfig->config));
-      }
+      configArray.push_back(moduleConfig ? std::move(moduleConfig->config) : nullptr);
     }
-    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", std::move(configArray));
     m_innerInstance->setGlobalVariable(
         "__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
@@ -738,7 +738,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      facebook::react::SourceCodeModule::name,
+      facebook::react::SourceCodeModule::Name,
       [bundleUrl]() -> std::unique_ptr<xplat::module::CxxModule> {
         return std::make_unique<SourceCodeModule>(bundleUrl);
       },
@@ -747,10 +747,15 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "ExceptionsManager",
-      [&]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return std::make_unique<facebook::react::ExceptionsManagerModule>(
-            std::move(m_devSettings->jsExceptionCallback));
+      [callback{std::move(m_devSettings->jsExceptionCallback)}]() mutable {
+        return std::make_unique<ExceptionsManagerModule>(std::move(callback));
       },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      PlatformConstantsModule::Name,
+      []() { return std::make_unique<PlatformConstantsModule>(); },
       nativeQueue));
 
   return modules;

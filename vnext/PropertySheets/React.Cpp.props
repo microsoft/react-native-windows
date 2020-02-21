@@ -10,10 +10,14 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset Condition="'$(ReactNativeWindows_PlatformToolset)' != ''">$(ReactNativeWindows_PlatformToolset)</PlatformToolset>
-    <PlatformToolset Condition="'$(ReactNativeWindows_PlatformToolset)' == ''">v141</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Desktop">
+    <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
+    <WinVer>_WIN32_WINNT_WIN8</WinVer>
   </PropertyGroup>
 
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
@@ -88,7 +92,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <ControlFlowGuard Condition="'$(Configuration)' != 'Debug'">Guard</ControlFlowGuard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
 

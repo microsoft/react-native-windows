@@ -79,7 +79,23 @@
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(ReactNativeWindowsDir);
+        $(ReactNativeWindowsDir)Common;
+        $(ReactNativeWindowsDir)Shared;
+        $(ReactNativeWindowsDir)include;
+        $(ReactNativeWindowsDir)include\ReactWindowsCore;
+        $(ReactNativeDir)\ReactCommon;
+        $(JSI_Source);
+        $(ReactNativeWindowsDir)stubs;
+        $(FollyDir);
+        $(ReactNativeWindowsDir)\ReactWindowsCore\pch;
+        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
+        $(ProjectDir);
+        $(GeneratedFilesDir);
+        $(IntDir);
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_V8)'=='true'">$(V8_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
@@ -127,10 +143,13 @@
     <ClInclude Include="Modules\AppThemeModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\PlatformConstantsModule.h" />
+    <ClInclude Include="Modules\SourceCodeModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
+    <ClInclude Include="Modules\WebSocketModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="Sandbox\SandboxEndpoint.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
@@ -139,7 +158,6 @@
     <ClInclude Include="Tracing.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
-    <ClInclude Include="WebSocketModule.h" />
     <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
@@ -158,9 +176,10 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ShadowNode.cpp" />

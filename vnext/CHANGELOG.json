@@ -2,6 +2,343 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 16:46:52 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.20",
+      "version": "0.61.0-beta.20",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReactNativeHost without package providers",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a428fb05a4a9c52aa523a1dccefdb7c8e6adcd85"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Feb 2020 01:27:13 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.19",
+      "version": "0.61.0-beta.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix some reliability isssues for current AsyncStorage implementation",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e4be03a2d921fe401028cda19684e79899ec1b26"
+          },
+          {
+            "comment": "Upgrade ChakraCore Debugger to 0.0.0.43",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "6dd134ff6d8e43f8445187cb869973c8a758d100"
+          },
+          {
+            "comment": "Update metro configs to support node 12 on windows",
+            "author": "acoates",
+            "commit": "f28962002817a02628687143e01638640dc849a6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Feb 2020 19:20:15 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.17",
+      "version": "0.61.0-beta.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump min. Windows Desktop supported version to 8.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b4f1c8adc630233d79d8360125ac8bf8b6b3613f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Feb 2020 16:09:49 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.16",
+      "version": "0.61.0-beta.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid having native modules without methods",
+            "author": "vmorozov@microsoft.com",
+            "commit": "31945e60d3c1820b27aa4a1c137e326ef53a34f5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Feb 2020 01:52:30 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.15",
+      "version": "0.61.0-beta.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use verdaccio to validate react native init",
+            "author": "acoates@microsoft.com",
+            "commit": "b6459ca85c68b936920aab3a7d9dc231cb171621"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Feb 2020 23:34:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.14",
+      "version": "0.61.0-beta.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented NativeModule initialization with IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b58cf8c7a6f2fe420601d6b971964a8aa28c8bf8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Feb 2020 22:45:15 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.13",
+      "version": "0.61.0-beta.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Revert \"Drop StdCall in favor of Cdecl for x86. (#4115)\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8d4b9fee0e66327b5e25d996c4105c7adbf0d283"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Feb 2020 07:10:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.12",
+      "version": "0.61.0-beta.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use Cdecl for x86.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c73b68e7c9d94530673178a81b2080948d8ba739"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Feb 2020 02:24:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.11",
+      "version": "0.61.0-beta.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove useIncrementalUpdates assert from Networking module",
+            "author": "mcota@microsoft.com",
+            "commit": "845055fb8bac6a1df37fc863ea505220744432d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Feb 2020 21:13:20 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.10",
+      "version": "0.61.0-beta.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix issues with relative IntDir breaking builds",
+            "author": "aschultz@microsoft.com",
+            "commit": "7ce4e87f02db6eb98f9d42214e8a770b64a07022"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 Feb 2020 01:46:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.9",
+      "version": "0.61.0-beta.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update devDependencies to use latest TS types",
+            "author": "kmelmon@microsoft.com",
+            "commit": "abce136596b29a7bd5c52101f6342dbfb8ca8756"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 14 Feb 2020 21:40:52 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.8",
+      "version": "0.61.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Downngraded OpenSSL to 1.0.2-p.2.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3516d7ae0a41f18040ad2957621b1291b249a1f9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Feb 2020 22:20:11 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.7",
+      "version": "0.61.0-beta.7",
+      "comments": {
+        "none": [
+          {
+            "comment": "Flip ImageView in rtl mode",
+            "author": "guokai.ok@gmail.com",
+            "commit": "426f7b1af8f0f5d019cdf6d4036df4e9c0edab68"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Feb 2020 21:30:14 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.7",
+      "version": "0.61.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Force Interpretation of Code as UTF-8 When no BOM Present",
+            "author": "ngerlem@microsoft.com",
+            "commit": "faf2a18a780ac71a81403452cac6972543b6426b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Feb 2020 05:48:00 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.6",
+      "version": "0.61.0-beta.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed Microsoft.ReactNative compiler warnings and start treating warnings as errors",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5b4cbadba72f9d589a69489ba7589c4658e7793e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Feb 2020 01:37:12 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.5",
+      "version": "0.61.0-beta.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set doc generation to output to new path. Update docs to include recent changes.",
+            "author": "aschultz@microsoft.com",
+            "commit": "565fe29828b9eb9532697620367fd20eaf5db4cc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 21:40:06 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.4",
+      "version": "0.61.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed Developer menu and Live Reaload",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c6217cd2228493c884d0b61c45f1059f8010dd66"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 18:07:36 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.3",
+      "version": "0.61.0-beta.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add measureLayout",
+            "author": "kaigu@microsoft.com",
+            "commit": "840e9237298fa514ece7e63e18cf2456e72bd4fa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 11:16:52 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.3",
+      "version": "0.61.0-beta.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Provide a Minimal PlatformConstants Implementation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cae1620822a386c4a52fb7351e922485d4f81ac1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 01:58:28 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.2",
+      "version": "0.61.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "RNTester - Fix Text and Alert pages",
+            "author": "mcota@microsoft.com",
+            "commit": "30e6688df4633cb258cdce680c37ddc8f700957b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 00:46:46 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.2",
+      "version": "0.61.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix scroll indicators being shown when not required",
+            "author": "jagorrin@microsoft.com",
+            "commit": "ffaa1051f2f2f154630e710596bae3dea5ae4aa1"
+          },
+          {
+            "comment": "Added async code to native module test methods",
+            "author": "vmorozov@microsoft.com",
+            "commit": "67bea149d386d9429e95587745b6c2f972480636"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Feb 2020 00:02:28 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix onFocus onBlur events",
+            "author": "kaigu@microsoft.com",
+            "commit": "38bc6cad5c3cdd7d1e00ac0e3a7185e12a2fa381"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Feb 2020 04:04:11 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update docs with 0.61 info",
+            "author": "mcota@microsoft.com",
+            "commit": "cd8655a3a57b8d7a1ceacd9c38a95a60ebc8353a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Feb 2020 01:21:44 GMT",
       "tag": "react-native-windows_v0.61.0-beta.1",
       "version": "0.61.0-beta.1",

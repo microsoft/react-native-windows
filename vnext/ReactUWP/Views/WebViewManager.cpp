@@ -34,7 +34,7 @@ const char *WebViewManager::GetName() const {
   return "RCTWebView";
 }
 
-XamlView WebViewManager::CreateViewCore(int64_t tag) {
+XamlView WebViewManager::CreateViewCore(int64_t /*tag*/) {
 #ifdef CHAKRACORE_UWP
   return winrt::WebView(winrt::WebViewExecutionMode::SeparateProcess);
 #else

@@ -306,7 +306,7 @@ facebook::react::ShadowNode *ViewViewManager::createShadow() const {
   return new ViewShadowNode();
 }
 
-XamlView ViewViewManager::CreateViewCore(int64_t tag) {
+XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/) {
   auto panel = winrt::make<winrt::react::uwp::implementation::ViewPanel>();
   panel.VerticalAlignment(winrt::VerticalAlignment::Stretch);
   panel.HorizontalAlignment(winrt::HorizontalAlignment::Stretch);

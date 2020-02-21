@@ -3,25 +3,30 @@
 
 #pragma once
 
-#include <ReactUWP/IReactInstance.h>
-#include "DynamicWriter.h"
-
+#include "ReactHost/React.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
 
 struct ReactContext : winrt::implements<ReactContext, IReactContext> {
-  ReactContext(std::weak_ptr<react::uwp::IReactInstance> instance) noexcept : m_instance(instance) {}
+  ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 
  public: // IReactContext
   void DispatchEvent(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
       hstring const &eventName,
-      ReactArgWriter const &eventDataArgWriter) noexcept;
-  void CallJsFunction(hstring const &moduleName, hstring const &method, ReactArgWriter const &paramsArgWriter) noexcept;
+      JSValueArgWriter const &eventDataArgWriter) noexcept;
+  void CallJSFunction(
+      hstring const &moduleName,
+      hstring const &methodName,
+      JSValueArgWriter const &paramsArgWriter) noexcept;
+  void EmitJSEvent(
+      hstring const &eventEmitterName,
+      hstring const &eventName,
+      JSValueArgWriter const &paramsArgWriter) noexcept;
 
  private:
-  std::weak_ptr<react::uwp::IReactInstance> m_instance;
+  Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
 
 } // namespace winrt::Microsoft::ReactNative

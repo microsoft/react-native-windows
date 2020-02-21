@@ -8,7 +8,7 @@
     "postinstall": "node postinstall.js",
     "start": "react-native start",
     "lint": "just-scripts lint",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "lint:fix": "just-scripts lint:fix",
     "watch": "tsc -w",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run test",
@@ -24,15 +24,15 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-windows": "0.61.0-beta.1",
-    "react-native-windows-extended": "0.61.0-beta.1",
+    "react-native-windows": "0.61.0-beta.20",
+    "react-native-windows-extended": "0.61.0-beta.25",
     "rnpm-plugin-windows": "^0.5.1-0"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
     "@babel/runtime": "7.5.5",
-    "@types/react": "16.8.15",
-    "@types/react-native": "~0.60.5",
+    "@types/react-native": "~0.61.5",
+    "@types/react": "16.9.0",
     "@wdio/appium-service": "5.12.1",
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",

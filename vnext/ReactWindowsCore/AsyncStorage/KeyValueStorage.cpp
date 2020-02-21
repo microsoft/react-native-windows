@@ -20,6 +20,11 @@ KeyValueStorage::KeyValueStorage(const WCHAR *storageFileName)
   m_storageFileLoader = async(launch::async, &KeyValueStorage::load, this);
 }
 
+void KeyValueStorage::setStorageLoadedEvent() {
+  if (!SetEvent(m_storageFileLoaded))
+    StorageFileIO::throwLastErrorMessage();
+}
+
 void KeyValueStorage::load() {
   bool saveRequired = false; // this flag is used to indicate whether the file
                              // needs to be cleaned up.
@@ -55,7 +60,9 @@ void KeyValueStorage::load() {
           break;
 
         default:
-          throw std::exception("Corrupt storage file. Unexpected prefix on line.");
+          m_fileIOHelper->clear();
+          setStorageLoadedEvent();
+          throw std::exception("Corrupt storage file. Unexpected prefix on line. Storage file cleared.");
           break;
       }
     }
@@ -63,25 +70,28 @@ void KeyValueStorage::load() {
 
   if (saveRequired) // cleanup the AOF by dumping the in memory map
   {
-    m_fileIOHelper->clear();
-    stringstream cleanedUpFile;
+    saveTable();
+  }
+  setStorageLoadedEvent();
+}
 
-    for (auto const &entry : m_kvMap) // convert in memory map to a string
-    {
-      string key = entry.first;
-      string value = entry.second;
+void KeyValueStorage::saveTable() {
+  m_fileIOHelper->clear();
+  stringstream cleanedUpFile;
 
-      escapeString(key);
-      escapeString(value);
+  for (auto const &entry : m_kvMap) // convert in memory map to a string
+  {
+    string key = entry.first;
+    string value = entry.second;
 
-      cleanedUpFile << KeyPrefix << key << '\n' << ValuePrefix << value << '\n';
-    }
+    escapeString(key);
+    escapeString(value);
 
-    m_fileIOHelper->append(cleanedUpFile.str());
+    cleanedUpFile << KeyPrefix << key << '\n' << ValuePrefix << value << '\n';
   }
 
-  if (!SetEvent(m_storageFileLoaded))
-    StorageFileIO::throwLastErrorMessage();
+  m_fileIOHelper->append(cleanedUpFile.str());
+  m_fileIOHelper->flush();
 }
 
 void KeyValueStorage::waitForStorageLoadComplete() {
@@ -134,20 +144,18 @@ void KeyValueStorage::multiSet(const vector<tuple<string, string>> &keyValuePair
 
   if (fUpdateStorageFile) {
     // write the new keys to the file
-    m_fileIOHelper->append(appendEntry.str());
+    saveTable();
   }
 }
 
 void KeyValueStorage::multiRemove(const vector<string> &keys) {
   waitForStorageLoadComplete();
-  stringstream ss;
 
   for (auto const &k : keys) {
-    ss << KeyPrefix << k << '\n' << RemovePrefix << '\n';
     m_kvMap.erase(k);
   }
 
-  m_fileIOHelper->append(ss.str());
+  saveTable();
 }
 
 void KeyValueStorage::multiMerge(const vector<tuple<string, string>> &keyValuePairs) {

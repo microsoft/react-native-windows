@@ -1,28 +1,48 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
   class ReactModuleBuilderMock : IReactModuleBuilder
   {
-    private string m_eventEmitterName;
+    private List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
     private Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
         new Dictionary<string, Tuple<MethodReturnType, MethodDelegate>>();
     private Dictionary<string, SyncMethodDelegate> m_syncMethods =
         new Dictionary<string, SyncMethodDelegate>();
-    private List<ConstantProvider> m_constProviders = new List<ConstantProvider>();
-    private Dictionary<string, Action<IJSValueReader>> m_eventHandlers =
-        new Dictionary<string, Action<IJSValueReader>>();
+    private List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
+    private Action<string, string, JSValue> m_jsEventHandler;
+    private Action<string, string, JSValue> m_jsFunctionHandler;
 
     public bool IsResolveCallbackCalled { get; private set; }
     public bool IsRejectCallbackCalled { get; private set; }
 
-    public void SetEventEmitterName(string name)
+    public T CreateModule<T>(ReactModuleInfo moduleInfo) where T : class
     {
-      m_eventEmitterName = name;
+      var reactContext = new ReactContextMock(this);
+      var module = (T)moduleInfo.ModuleProvider(this);
+      foreach (var initializer in m_initializers)
+      {
+        initializer(reactContext);
+      }
+
+      return module;
+    }
+
+    public void AddInitializer(InitializerDelegate initializer)
+    {
+      m_initializers.Add(initializer);
+    }
+
+    public void AddConstantProvider(ConstantProviderDelegate constantProvider)
+    {
+      m_constantProviders.Add(constantProvider);
     }
 
     public void AddMethod(string name, MethodReturnType returnType, MethodDelegate method)
@@ -33,27 +53,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void AddSyncMethod(string name, SyncMethodDelegate method)
     {
       m_syncMethods.Add(name, method);
-    }
-
-    public void AddConstantProvider(ConstantProvider constantProvider)
-    {
-      m_constProviders.Add(constantProvider);
-    }
-
-    public void AddEventHandlerSetter(string name, ReactEventHandlerSetter eventHandlerSetter)
-    {
-      eventHandlerSetter((ReactArgWriter argWriter) =>
-      {
-        if (m_eventHandlers.TryGetValue(name, out var eventHandler))
-        {
-          var writer = new JSValueTreeWriter();
-          writer.WriteArrayBegin();
-          argWriter(writer);
-          writer.WriteArrayEnd();
-
-          eventHandler(new JSValueTreeReader(writer.TakeValue()));
-        }
-      });
     }
 
     public void Call0(string methodName) =>
@@ -68,36 +67,68 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void Call0<T1, T2, T3>(string methodName, T1 arg1, T2 arg2, T3 arg3) =>
         GetMethod0(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), null, null);
 
-    public void Call1<TResult>(string methodName, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<TResult>(string methodName, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call1<T1, TResult>(string methodName, T1 arg1, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(arg1), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<T1, TResult>(string methodName, T1 arg1, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(arg1), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call1<T1, T2, TResult>(string methodName, T1 arg1, T2 arg2, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<T1, T2, TResult>(string methodName, T1 arg1, T2 arg2, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call1<T1, T2, T3, TResult>(string methodName, T1 arg1, T2 arg2, T3 arg3, Action<TResult> resolve) =>
-        GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), ResolveCallback(resolve), null);
+    public Task<bool> Call1<T1, T2, T3, TResult>(string methodName, T1 arg1, T2 arg2, T3 arg3, Action<TResult> resolve)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), ResolveCallback(resolve, promise), null);
+      return promise.Task;
+    }
 
-    public void Call2<TResult, TError>(string methodName, Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<TResult, TError>(string methodName, Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
-    public void Call2<T1, TResult, TError>(string methodName, T1 arg1,
-        Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(arg1), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<T1, TResult, TError>(string methodName, T1 arg1,
+        Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(arg1), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
-    public void Call2<T1, T2, TResult, TError>(string methodName, T1 arg1, T2 arg2,
-        Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<T1, T2, TResult, TError>(string methodName, T1 arg1, T2 arg2,
+        Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
-    public void Call2<T1, T2, T3, TResult, TError>(string methodName, T1 arg1, T2 arg2, T3 arg3,
-        Action<TResult> resolve, Action<TError> reject) =>
-        GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
-            ResolveCallback(resolve), RejectCallback(reject));
+    public Task<bool> Call2<T1, T2, T3, TResult, TError>(string methodName, T1 arg1, T2 arg2, T3 arg3,
+        Action<TResult> resolve, Action<TError> reject)
+    {
+      var promise = new TaskCompletionSource<bool>();
+      GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
+          ResolveCallback(resolve, promise), RejectCallback(reject, promise));
+      return promise.Task;
+    }
 
     public void CallSync<TResult>(string methodName, out TResult result)
     {
@@ -140,21 +171,23 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     private SyncMethodDelegate GetSyncMethod(string methodName) =>
         m_syncMethods.TryGetValue(methodName, out var syncMethod) ? syncMethod : null;
 
-    private MethodResultCallback ResolveCallback<T>(Action<T> resolve)
+    private MethodResultCallback ResolveCallback<T>(Action<T> resolve, TaskCompletionSource<bool> promise = null)
     {
       return (IJSValueWriter writer) =>
       {
         resolve(GetResult<T>(writer));
         IsResolveCallbackCalled = true;
+        promise?.SetResult(true);
       };
     }
 
-    private MethodResultCallback RejectCallback<T>(Action<T> reject)
+    private MethodResultCallback RejectCallback<T>(Action<T> reject, TaskCompletionSource<bool> promise = null)
     {
       return (IJSValueWriter writer) =>
       {
         reject(GetResult<T>(writer));
         IsRejectCallbackCalled = true;
+        promise?.SetResult(false);
       };
     }
 
@@ -184,7 +217,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       var constantWriter = new JSValueTreeWriter();
       constantWriter.WriteObjectBegin();
-      foreach (var constantProvider in m_constProviders)
+      foreach (var constantProvider in m_constantProviders)
       {
         constantProvider(constantWriter);
       }
@@ -193,13 +226,64 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       return constantWriter.TakeValue().Object;
     }
 
-    public void SetEventHandler<T>(string eventName, Action<T> eventHandler)
+    public void ExpectEvent(string eventEmitterName, string eventName, Action<JSValue> checkValue)
     {
-      m_eventHandlers.Add(eventName, (IJSValueReader reader) =>
+      m_jsEventHandler = (string actualEventEmitterName, string actualEventName, JSValue value) =>
       {
-        reader.ReadArgs(out T arg);
-        eventHandler(arg);
-      });
+        Assert.AreEqual(eventEmitterName, actualEventEmitterName);
+        Assert.AreEqual(eventName, actualEventName);
+        checkValue(value);
+      };
+    }
+
+    public void ExpectFunction(string moduleName, string functionName, Action<IReadOnlyList<JSValue>> checkValues)
+    {
+      m_jsFunctionHandler = (string actualModuleName, string actualFunctionName, JSValue value) =>
+      {
+        Assert.AreEqual(moduleName, actualModuleName);
+        Assert.AreEqual(functionName, actualFunctionName);
+        Assert.AreEqual(JSValueType.Array, value.Type);
+        checkValues(value.Array);
+      };
+    }
+
+    public void CallJSFunction(string moduleName, string functionName, JSValueArgWriter paramsArgWriter)
+    {
+      var writer = new JSValueTreeWriter();
+      paramsArgWriter(writer);
+      m_jsFunctionHandler(moduleName, functionName, writer.TakeValue());
+    }
+
+    public void EmitJSEvent(string eventEmitterName, string eventName, JSValueArgWriter paramsArgWriter)
+    {
+      var writer = new JSValueTreeWriter();
+      paramsArgWriter(writer);
+      m_jsEventHandler(eventEmitterName, eventName, writer.TakeValue());
+    }
+  }
+
+  class ReactContextMock : IReactContext
+  {
+    private ReactModuleBuilderMock m_builder;
+
+    public ReactContextMock(ReactModuleBuilderMock builder)
+    {
+      m_builder = builder;
+    }
+
+    public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void CallJSFunction(string moduleName, string functionName, JSValueArgWriter paramsArgWriter)
+    {
+      m_builder.CallJSFunction(moduleName, functionName, paramsArgWriter);
+    }
+
+    public void EmitJSEvent(string eventEmitterName, string eventName, JSValueArgWriter paramsArgWriter)
+    {
+      m_builder.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
     }
   }
 }

@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "IReactModuleBuilder.h"
-#include "ABICxxModule.h"
 #include "DynamicWriter.h"
 #include "ReactHost/MsoUtils.h"
 
@@ -15,11 +14,14 @@ namespace winrt::Microsoft::ReactNative {
 // ReactModuleBuilder implementation
 //===========================================================================
 
-ReactModuleBuilder::ReactModuleBuilder(Mso::CntPtr<Mso::React::IReactContext> &&reactContext) noexcept
-    : m_reactContext{std::move(reactContext)} {}
+ReactModuleBuilder::ReactModuleBuilder(IReactContext const &reactContext) noexcept : m_reactContext{reactContext} {}
 
-void ReactModuleBuilder::SetEventEmitterName(hstring const &name) noexcept {
-  m_eventEmitterName = to_string(name);
+void ReactModuleBuilder::AddInitializer(InitializerDelegate const &initializer) noexcept {
+  m_initializers.push_back(initializer);
+}
+
+void ReactModuleBuilder::AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
+  m_constantProviders.push_back(constantProvider);
 }
 
 void ReactModuleBuilder::AddMethod(
@@ -27,9 +29,7 @@ void ReactModuleBuilder::AddMethod(
     MethodReturnType returnType,
     MethodDelegate const &method) noexcept {
   CxxModule::Method cxxMethod(
-      to_string(name),
-      [method = std::move(method)](
-          folly::dynamic args, CxxModule::Callback resolve, CxxModule::Callback reject) mutable noexcept {
+      to_string(name), [method](folly::dynamic args, CxxModule::Callback resolve, CxxModule::Callback reject) noexcept {
         auto argReader = make<DynamicReader>(args);
         auto resultWriter = make<DynamicWriter>();
         auto resolveCallback = MakeMethodResultCallback(std::move(resolve));
@@ -61,7 +61,7 @@ void ReactModuleBuilder::AddMethod(
 void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
   CxxModule::Method cxxMethod(
       to_string(name),
-      [method = std::move(method)](folly::dynamic args) mutable noexcept {
+      [method](folly::dynamic args) noexcept {
         auto argReader = make<DynamicReader>(args);
         auto resultWriter = make<DynamicWriter>();
         method(argReader, resultWriter);
@@ -72,19 +72,9 @@ void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate c
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void ReactModuleBuilder::AddConstantProvider(ConstantProvider const &constantProvider) noexcept {
-  m_constants.push_back(constantProvider);
-}
-
-void ReactModuleBuilder::AddEventHandlerSetter(
-    hstring const &name,
-    ReactEventHandlerSetter const &eventHandlerSetter) noexcept {
-  m_eventHandlerSetters.push_back(ABICxxModuleEventHandlerSetter{winrt::to_string(name), eventHandlerSetter});
-}
-
-/*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(CxxModule::Callback callback) noexcept {
+/*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(CxxModule::Callback &&callback) noexcept {
   if (callback) {
-    return [callback = std::move(callback)](const IJSValueWriter &outputWriter) mutable noexcept {
+    return [callback = std::move(callback)](const IJSValueWriter &outputWriter) noexcept {
       if (outputWriter) {
         folly::dynamic argArray = outputWriter.as<DynamicWriter>()->TakeValue();
         callback(std::vector<folly::dynamic>(argArray.begin(), argArray.end()));
@@ -99,15 +89,12 @@ void ReactModuleBuilder::AddEventHandlerSetter(
 
 std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
     std::string const &name,
-    IInspectable &nativeModule) noexcept {
+    IInspectable const &nativeModule) noexcept {
+  for (auto &initializer : m_initializers) {
+    initializer(m_reactContext);
+  }
   return std::make_unique<ABICxxModule>(
-      nativeModule,
-      Mso::Copy(name),
-      Mso::Copy(m_eventEmitterName),
-      Mso::Copy(m_methods),
-      Mso::Copy(m_constants),
-      Mso::Copy(m_eventHandlerSetters),
-      Mso::Copy(m_reactContext));
+      nativeModule, Mso::Copy(name), Mso::Copy(m_constantProviders), Mso::Copy(m_methods));
 }
 
 } // namespace winrt::Microsoft::ReactNative

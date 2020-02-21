@@ -1,7 +1,118 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Feb 2020 01:21:44 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Feb 2020 16:46:52 GMT and should not be manually modified.
 
+## 0.61.0-beta.20
+Fri, 21 Feb 2020 16:46:52 GMT
+
+### Changes
+
+- Fix ReactNativeHost without package providers (vmorozov@microsoft.com)
+## 0.61.0-beta.19
+Fri, 21 Feb 2020 01:27:13 GMT
+
+### Changes
+
+- Fix some reliability isssues for current AsyncStorage implementation (dida@ntdev.microsoft.com)
+- Upgrade ChakraCore Debugger to 0.0.0.43 (julio.rocha@microsoft.com)
+- Update metro configs to support node 12 on windows (acoates)
+## 0.61.0-beta.17
+Thu, 20 Feb 2020 19:20:15 GMT
+
+### Changes
+
+- Bump min. Windows Desktop supported version to 8. (julio.rocha@microsoft.com)
+## 0.61.0-beta.16
+Thu, 20 Feb 2020 16:09:49 GMT
+
+### Changes
+
+- Avoid having native modules without methods (vmorozov@microsoft.com)
+## 0.61.0-beta.15
+Thu, 20 Feb 2020 01:52:30 GMT
+
+### Changes
+
+- Use verdaccio to validate react native init (acoates@microsoft.com)
+## 0.61.0-beta.14
+Wed, 19 Feb 2020 23:34:40 GMT
+
+### Changes
+
+- Implemented NativeModule initialization with IReactContext (vmorozov@microsoft.com)
+## 0.61.0-beta.13
+Wed, 19 Feb 2020 22:45:15 GMT
+
+### Changes
+
+- Revert "Drop StdCall in favor of Cdecl for x86. (#4115)" (ngerlem@microsoft.com)
+## 0.61.0-beta.12
+Wed, 19 Feb 2020 07:10:21 GMT
+
+### Changes
+
+- Use Cdecl for x86. (julio.rocha@microsoft.com)
+## 0.61.0-beta.11
+Wed, 19 Feb 2020 02:24:03 GMT
+
+### Changes
+
+- Remove useIncrementalUpdates assert from Networking module (mcota@microsoft.com)
+## 0.61.0-beta.10
+Tue, 18 Feb 2020 21:13:20 GMT
+
+### Changes
+
+- Fix issues with relative IntDir breaking builds (aschultz@microsoft.com)
+## 0.61.0-beta.9
+Sat, 15 Feb 2020 01:46:09 GMT
+
+### Changes
+
+- update devDependencies to use latest TS types (kmelmon@microsoft.com)
+## 0.61.0-beta.8
+Fri, 14 Feb 2020 21:40:52 GMT
+
+### Changes
+
+- Downngraded OpenSSL to 1.0.2-p.2. (julio.rocha@microsoft.com)
+## 0.61.0-beta.7
+Thu, 13 Feb 2020 21:30:14 GMT
+
+### Changes
+
+- Force Interpretation of Code as UTF-8 When no BOM Present (ngerlem@microsoft.com)
+## 0.61.0-beta.6
+Thu, 13 Feb 2020 05:48:00 GMT
+
+### Changes
+
+- Fixed Microsoft.ReactNative compiler warnings and start treating warnings as errors (vmorozov@microsoft.com)
+## 0.61.0-beta.5
+Thu, 13 Feb 2020 01:37:12 GMT
+
+### Changes
+
+- Set doc generation to output to new path. Update docs to include recent changes. (aschultz@microsoft.com)
+## 0.61.0-beta.4
+Wed, 12 Feb 2020 21:40:06 GMT
+
+### Changes
+
+- Fixed Developer menu and Live Reaload (vmorozov@microsoft.com)
+## 0.61.0-beta.3
+Wed, 12 Feb 2020 11:16:52 GMT
+
+### Changes
+
+- Provide a Minimal PlatformConstants Implementation (ngerlem@microsoft.com)
+## 0.61.0-beta.2
+Wed, 12 Feb 2020 00:46:46 GMT
+
+### Changes
+
+- Fix scroll indicators being shown when not required (jagorrin@microsoft.com)
+- Added async code to native module test methods (vmorozov@microsoft.com)
 ## 0.61.0-beta.1
 Tue, 11 Feb 2020 01:21:44 GMT
 

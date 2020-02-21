@@ -44,6 +44,16 @@ var getErrorCallback = function(prefix) {
   };
 };
 
+// To demo JS function calls we define a class and then register it as a callable module
+class SampleModuleCpp {
+  calcDistance(point1, point2) {
+    log('SampleApp.calcDistance()');
+    const distance = Math.hypot(point1.x - point2.x, point1.y - point2.y);
+    log(`Distance between (${point1.x}, ${point1.y}) and (${point2.x}, ${point2.y}) is ${distance}`);
+  }
+}
+global.__fbBatchedBridge.registerLazyCallableModule('SampleModuleCpp', () => new SampleModuleCpp());
+
 class SampleApp extends Component {
   componentDidMount() {
     this._TimedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
@@ -88,6 +98,14 @@ class SampleApp extends Component {
     var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
 
+    var promise3 = NativeModules.SampleModuleCS.NegateAsyncPromise(5);
+    promise3.then(getCallback('SampleModuleCS.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCS.NegateAsyncPromise catch => '));
+
+    var promise4 = NativeModules.SampleModuleCS.NegateAsyncPromise(-5);
+    promise4.then(getCallback('SampleModuleCS.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCS.NegateAsyncPromise catch => '));
+
+    NativeModules.SampleModuleCS.callDistanceFunction({x: 22, y: 23}, {x: 55, y: 65});
+
     log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
 
     log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
@@ -125,6 +143,14 @@ class SampleApp extends Component {
 
     var promise2 = NativeModules.SampleModuleCpp.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCpp.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCpp.ExplicitPromiseMethodWithArgs catch => '));
+
+    var promise3 = NativeModules.SampleModuleCpp.NegateAsyncPromise(5);
+    promise3.then(getCallback('SampleModuleCpp.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCpp.NegateAsyncPromise catch => '));
+
+    var promise4 = NativeModules.SampleModuleCpp.NegateAsyncPromise(-5);
+    promise4.then(getCallback('SampleModuleCpp.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCpp.NegateAsyncPromise catch => '));
+
+    NativeModules.SampleModuleCpp.callDistanceFunction({x: 2, y: 3}, {x: 5, y: 6});
 
     log('SampleModuleCpp.SyncReturnMethod => ' + NativeModules.SampleModuleCpp.SyncReturnMethod());
 

@@ -110,7 +110,7 @@ void ImageViewManagerModule::ImageViewManagerModuleImpl::prefetchImage(
 }
 
 void ImageViewManagerModule::ImageViewManagerModuleImpl::queryCache(
-    const folly::dynamic &requests,
+    const folly::dynamic & /*requests*/,
     Callback successCallback,
     Callback /*errorCallback*/) {
   // NotYetImplemented

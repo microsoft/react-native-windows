@@ -156,7 +156,7 @@ facebook::react::ShadowNode *DatePickerViewManager::createShadow() const {
   return new DatePickerShadowNode();
 }
 
-XamlView DatePickerViewManager::CreateViewCore(int64_t tag) {
+XamlView DatePickerViewManager::CreateViewCore(int64_t /*tag*/) {
   auto datePicker = winrt::CalendarDatePicker();
   return datePicker;
 }

@@ -10,6 +10,7 @@
     <Message Text="=> PlatformTarget          [$(PlatformTarget)]" />
     <Message Text="=> PlatformName            [$(PlatformName)]" />
     <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
+    <Message Text="=> PlatformToolset         [$(PlatformToolset)]" />
     <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
     <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
     <Message Text="=> IntDir                  [$(IntDir)]" />
@@ -55,7 +56,7 @@
       </_PCHFileToCleanWithTimestamp>
     </ItemGroup>
   </Target>
-  <!-- 
+  <!--
     As a cppwinrt project, .pch is very big, and delete it in pipeline after build
     Instead of outright deleting the PCHs, we want to trick the "project freshness detector" by
     emitting empty files that look suspiciously like the PCHs it's expecting.

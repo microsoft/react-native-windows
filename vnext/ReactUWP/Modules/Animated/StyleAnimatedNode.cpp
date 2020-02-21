@@ -18,7 +18,7 @@ StyleAnimatedNode::StyleAnimatedNode(
   }
 }
 
-void StyleAnimatedNode::CollectViewUpdates(const folly::dynamic &propsMap) {}
+void StyleAnimatedNode::CollectViewUpdates(const folly::dynamic & /*propsMap*/) {}
 
 std::unordered_map<FacadeType, int64_t> StyleAnimatedNode::GetMapping() {
   std::unordered_map<FacadeType, int64_t> mapping;

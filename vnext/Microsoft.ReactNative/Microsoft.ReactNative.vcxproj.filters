@@ -86,9 +86,6 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AppStateModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -280,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
+    <ClCompile Include="Modules\AppStateData.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp">
@@ -411,9 +411,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AppStateModuleUwp.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
@@ -600,8 +597,17 @@
     </ClInclude>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
+    <ClInclude Include="Base\CxxReactIncludes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\FollyIncludes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
+    <ClInclude Include="Modules\AppStateData.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactHost\AsyncActionQueue.h">

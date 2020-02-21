@@ -11,47 +11,90 @@
 #include "ModuleRegistration.h"
 #include "ReactPromise.h"
 
-// The macro to annotate a C++ class as a ReactNative module.
+// REACT_MODULE annotates a C++ struct as a ReactNative module.
+// It can be any struct which can be instantiated using a default constructor.
+// Note that it must be a 'struct', not 'class' because macro does a forward declaration using the 'struct' keyword.
 //
 // Arguments:
-// - moduleClass (required) - the class name the macro is attached to.
-// - moduleName (optional) - the module name visible to JavaScript. Default is
-//     the moduleClass name.
-// - eventEmitterName (optional) - the event emitter name used in JavaScript.
-//     Default is the RCTDeviceEventEmitter.
-#define REACT_MODULE(/* moduleClass, [opt] moduleName, [opt] eventEmitterName */...) \
+// - moduleStruct (required) - the struct name the macro is attached to.
+// - moduleName (optional) - the module name visible to JavaScript. Default is the moduleStruct name.
+// - eventEmitterName (optional) - the default event emitter name used by REACT_EVENT.
+//   Default is the RCTDeviceEventEmitter.
+#define REACT_MODULE(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
-// REACT_METHOD annotates a method to export to JavaScript.
-// It declares an asynchronous method. To return a value:
-// - Return void and have a Callback as a last parameter. The Callback type can
-// be any std::function like type. I.e. Func<void(Args...)>.
-// - Return void and have two callbacks as last parameters. One is used to return
-// value and another an error.
-// - Return void and have a ReactPromise as a last parameter. In JavaScript the
-// method returns Promise.
-// - Return non-void value. In JavaScript it is treated as a method with one
-// Callback. Return std::pair<Error, Value> to be able to communicate error
-// condition.
+// REACT_INIT annotates a method that is called when a native module is initialized.
+// It must have 'IReactContext const &' parameter.
+// It must be an instance method.
 //
 // Arguments:
 // - method (required) - the method name the macro is attached to.
-// - methodName (optional) - the method name visible to JavaScript. Default is
-//     the method name.
+#define REACT_INIT(method) INTERNAL_REACT_METHOD_3_ARGS(Init, method, L"")
+
+// REACT_METHOD annotates a method to export to JavaScript.
+// It declares an asynchronous method. To return a value:
+// - Return void and have a Callback as a last parameter. The Callback type can be any std::function like type. E.g.
+//   Func<void(Args...)>.
+// - Return void and have two callbacks as last parameters. One is used to return value and another an error.
+// - Return void and have a ReactPromise as a last parameter. In JavaScript the method returns Promise.
+// - Return non-void value. In JavaScript it is treated as a method with one Callback. Return std::pair<Error, Value> to
+//   be able to communicate error condition.
+// It can be an instance or static method.
+//
+// Arguments:
+// - method (required) - the method name the macro is attached to.
+// - methodName (optional) - the method name visible to JavaScript. Default is the method name.
 #define REACT_METHOD(/* method, [opt] methodName */...) INTERNAL_REACT_METHOD(__VA_ARGS__)(, __VA_ARGS__)
 
-// A method that is called synchronously. It must be used rarely because it may
-// cause out-of-order execution when used along with asynchronous methods.
+// REACT_SYNC_METHOD annotates a method that is called synchronously.
+// It must be used rarely because it may cause out-of-order execution when used along with asynchronous methods.
+// The method must return non-void value type.
+// It can be an instance or static method.
+//
+// Arguments:
+// - method (required) - the method name the macro is attached to.
+// - methodName (optional) - the method name visible to JavaScript. Default is the method name.
 #define REACT_SYNC_METHOD(/* method, [opt] methodName */...) INTERNAL_REACT_METHOD(__VA_ARGS__)(Sync, __VA_ARGS__)
 
-// A method where we can define constants.
+// REACT_CONSTANT_PROVIDER annotates a method that defines constants.
+// It must have 'ReactConstantProvider &' parameter.
+// It can be an instance or static method.
+//
+// Arguments:
+// - method (required) - the method name the macro is attached to.
 #define REACT_CONSTANT_PROVIDER(method) INTERNAL_REACT_METHOD_3_ARGS(Const, method, L"")
 
-// Use with a field to provide a constant
+// REACT_CONSTANT annotates a field that defines a constant.
+// It can be an instance or static field.
+//
+// Arguments:
+// - field (required) - the field name the macro is attached to.
+// - constantName (optional) - the constant name visible to JavaScript. Default is the field name.
 #define REACT_CONSTANT(/* field, [opt] constantName */...) INTERNAL_REACT_CONSTANT(__VA_ARGS__)(__VA_ARGS__)
 
-// Use with a field for events
-#define REACT_EVENT(/* field, [opt] eventName */...) INTERNAL_REACT_EVENT(__VA_ARGS__)(__VA_ARGS__)
+// REACT_EVENT annotates a field that helps raise a JavaScript event.
+// The field type can be any std::function like type. E.g. Func<void(Args...)>.
+// It must be an instance field.
+//
+// Arguments:
+// - field (required) - the field name the macro is attached to.
+// - eventName (optional) - the JavaScript event name. Default is the field name.
+// - eventEmitterName (optional) - the JavaScript module event emitter name. Default is module's eventEmitterName which
+//   is by default 'RCTDeviceEventEmitter'.
+#define REACT_EVENT(/* field, [opt] eventName, [opt] eventEmitterName */...) \
+  INTERNAL_REACT_EVENT(__VA_ARGS__)(__VA_ARGS__)
+
+// REACT_FUNCTION annotates a field that helps calling a JavaScript function.
+// The field type can be any std::function like type. E.g. Func<void(Args...)>.
+// It must be an instance field.
+//
+// Arguments:
+// - field (required) - the field name the macro is attached to.
+// - functionName (optional) - the JavaScript function name. Default is the field name.
+// - moduleName (optional) - the JavaScript module name. Default is module's moduleName which is by default the class
+//   name.
+#define REACT_FUNCTION(/* field, [opt] functionName, [opt] moduleName */...) \
+  INTERNAL_REACT_FUNCTION(__VA_ARGS__)(__VA_ARGS__)
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -105,11 +148,27 @@ struct IsPromise<ReactPromise<T>> : std::true_type {};
 // Module registration helpers
 //==============================================================================
 
+template <class TMethod>
+struct ModuleInitMethodInfo;
+
+template <class TModule>
+struct ModuleInitMethodInfo<void (TModule::*)(IReactContext const &) noexcept> {
+  using ModuleType = TModule;
+  using MethodType = void (TModule::*)(IReactContext const &) noexcept;
+
+  static InitializerDelegate GetInitializer(void *module, MethodType method) noexcept {
+    return [ module = static_cast<ModuleType *>(module), method ](IReactContext const &reactContext) noexcept {
+      (module->*method)(reactContext);
+    };
+  }
+};
+
 template <class TFunc>
 struct ModuleMethodInfo;
 
-template <class TModule, class... TArgs>
-struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
+// Instance asynchronous method
+template <class TModule, class TResult, class... TArgs>
+struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   constexpr static bool HasPromise() noexcept {
     if constexpr (sizeof...(TArgs) > 0) {
       return Internal::IsPromise<std::remove_const_t<std::remove_reference_t<
@@ -121,7 +180,7 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
   constexpr static size_t CallbackCount =
       Internal::GetCallbackCount<std::tuple<std::remove_reference_t<TArgs>...>>::Value;
   using ModuleType = TModule;
-  using MethodType = void (TModule::*)(TArgs...) noexcept;
+  using MethodType = TResult (TModule::*)(TArgs...) noexcept;
   using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - (HasPromise() ? 1 : CallbackCount)>;
 
   template <class>
@@ -253,41 +312,12 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
         ArgsTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
         auto promise = PromiseCreator<PromiseArg>::Create(argWriter, resolve, reject);
-        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
+        (module->*method)(std::get<I>(std::move(typedArgs))..., promise);
       };
     }
-  };
 
-  static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
-    if constexpr (HasPromise()) {
-      returnType = MethodReturnType::Promise;
-    } else if constexpr (CallbackCount == 2) {
-      returnType = MethodReturnType::TwoCallbacks;
-    } else if constexpr (CallbackCount == 1) {
-      returnType = MethodReturnType::Callback;
-    } else {
-      returnType = MethodReturnType::Void;
-    }
-
-    constexpr int selector = HasPromise() ? 3 : CallbackCount;
-    return Invoker<IndexSequence>::GetFunc(
-        static_cast<ModuleType *>(module), method, std::integral_constant<size_t, selector>{});
-  }
-};
-
-template <class TModule, class TResult, class... TArgs>
-struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
-  using ModuleType = TModule;
-  using MethodType = TResult (TModule::*)(TArgs...) noexcept;
-  using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
-
-  template <class>
-  struct Invoker;
-
-  template <size_t... I>
-  struct Invoker<std::index_sequence<I...>> {
     // Async method with return value
-    static MethodDelegate GetFunc(ModuleType *module, MethodType method) noexcept {
+    static MethodDelegate GetFunc(ModuleType *module, MethodType method, std::integral_constant<size_t, 4>) noexcept {
       return [ module, method ](
           IJSValueReader const &argReader,
           IJSValueWriter const &argWriter,
@@ -304,13 +334,28 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   };
 
   static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
-    returnType = MethodReturnType::Callback;
-    return Invoker<IndexSequence>::GetFunc(static_cast<ModuleType *>(module), method);
+    constexpr bool isVoidResult = std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
+    if constexpr (!isVoidResult) {
+      returnType = MethodReturnType::Callback;
+    } else if constexpr (HasPromise()) {
+      returnType = MethodReturnType::Promise;
+    } else if constexpr (CallbackCount == 2) {
+      returnType = MethodReturnType::TwoCallbacks;
+    } else if constexpr (CallbackCount == 1) {
+      returnType = MethodReturnType::Callback;
+    } else {
+      returnType = MethodReturnType::Void;
+    }
+
+    constexpr int selector = !isVoidResult ? 4 : HasPromise() ? 3 : CallbackCount;
+    return Invoker<IndexSequence>::GetFunc(
+        static_cast<ModuleType *>(module), method, std::integral_constant<size_t, selector>{});
   }
 };
 
-template <class... TArgs>
-struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
+// Static asynchronous method
+template <class TResult, class... TArgs>
+struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
   constexpr static bool HasPromise() noexcept {
     if constexpr (sizeof...(TArgs) > 0) {
       return Internal::IsPromise<std::remove_const_t<std::remove_reference_t<
@@ -321,7 +366,7 @@ struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
 
   constexpr static size_t CallbackCount =
       Internal::GetCallbackCount<std::tuple<std::remove_reference_t<TArgs>...>>::Value;
-  using MethodType = void (*)(TArgs...) noexcept;
+  using MethodType = TResult (*)(TArgs...) noexcept;
   using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - (HasPromise() ? 1 : CallbackCount)>;
 
   template <class>
@@ -456,36 +501,9 @@ struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
         (*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
       };
     }
-  };
 
-  static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
-    if constexpr (HasPromise()) {
-      returnType = MethodReturnType::Promise;
-    } else if constexpr (CallbackCount == 2) {
-      returnType = MethodReturnType::TwoCallbacks;
-    } else if constexpr (CallbackCount == 1) {
-      returnType = MethodReturnType::Callback;
-    } else {
-      returnType = MethodReturnType::Void;
-    }
-
-    constexpr int selector = HasPromise() ? 3 : CallbackCount;
-    return Invoker<IndexSequence>::GetFunc(method, std::integral_constant<size_t, selector>{});
-  }
-};
-
-template <class TResult, class... TArgs>
-struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
-  using MethodType = TResult (*)(TArgs...) noexcept;
-  using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
-
-  template <class>
-  struct Invoker;
-
-  template <size_t... I>
-  struct Invoker<std::index_sequence<I...>> {
     // Async method with return value
-    static MethodDelegate GetFunc(MethodType method) noexcept {
+    static MethodDelegate GetFunc(MethodType method, std::integral_constant<size_t, 4>) noexcept {
       return [method](
           IJSValueReader const &argReader,
           IJSValueWriter const &argWriter,
@@ -502,14 +520,28 @@ struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
   };
 
   static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
-    returnType = MethodReturnType::Callback;
-    return Invoker<IndexSequence>::GetFunc(method);
+    constexpr bool isVoidResult = std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
+    if constexpr (!isVoidResult) {
+      returnType = MethodReturnType::Callback;
+    } else if constexpr (HasPromise()) {
+      returnType = MethodReturnType::Promise;
+    } else if constexpr (CallbackCount == 2) {
+      returnType = MethodReturnType::TwoCallbacks;
+    } else if constexpr (CallbackCount == 1) {
+      returnType = MethodReturnType::Callback;
+    } else {
+      returnType = MethodReturnType::Void;
+    }
+
+    constexpr int selector = !isVoidResult ? 4 : HasPromise() ? 3 : CallbackCount;
+    return Invoker<IndexSequence>::GetFunc(method, std::integral_constant<size_t, selector>{});
   }
 };
 
 template <class TFunc>
 struct ModuleSyncMethodInfo;
 
+// Instance synchronous method
 template <class TModule, class TResult, class... TArgs>
 struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   using ModuleType = TModule;
@@ -537,6 +569,7 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   }
 };
 
+// Static synchronous method
 template <class TResult, class... TArgs>
 struct ModuleSyncMethodInfo<TResult (*)(TArgs...) noexcept> {
   using MethodType = TResult (*)(TArgs...) noexcept;
@@ -571,7 +604,7 @@ struct ModuleConstFieldInfo<TValue TModule::*> {
   using ModuleType = TModule;
   using FieldType = TValue TModule::*;
 
-  static ConstantProvider GetConstantProvider(void *module, wchar_t const *name, FieldType field) noexcept {
+  static ConstantProviderDelegate GetConstantProvider(void *module, wchar_t const *name, FieldType field) noexcept {
     return [ module = static_cast<ModuleType *>(module), name = std::wstring{name}, field ](
         IJSValueWriter const &argWriter) mutable noexcept {
       WriteProperty(argWriter, name, module->*field);
@@ -583,7 +616,8 @@ template <class TValue>
 struct ModuleConstFieldInfo<TValue *> {
   using FieldType = TValue *;
 
-  static ConstantProvider GetConstantProvider(void * /*module*/, wchar_t const *name, FieldType field) noexcept {
+  static ConstantProviderDelegate
+  GetConstantProvider(void * /*module*/, wchar_t const *name, FieldType field) noexcept {
     return [ name = std::wstring{name}, field ](IJSValueWriter const &argWriter) mutable noexcept {
       WriteProperty(argWriter, name, *field);
     };
@@ -610,7 +644,7 @@ struct ModuleConstantInfo<void (TModule::*)(ReactConstantProvider &) noexcept> {
   using ModuleType = TModule;
   using MethodType = void (TModule::*)(ReactConstantProvider &) noexcept;
 
-  static ConstantProvider GetConstantProvider(void *module, MethodType method) noexcept {
+  static ConstantProviderDelegate GetConstantProvider(void *module, MethodType method) noexcept {
     return [ module = static_cast<ModuleType *>(module), method ](IJSValueWriter const &argWriter) mutable noexcept {
       ReactConstantProvider constantProvider{argWriter};
       (module->*method)(constantProvider);
@@ -622,7 +656,7 @@ template <>
 struct ModuleConstantInfo<void (*)(ReactConstantProvider &) noexcept> {
   using MethodType = void (*)(ReactConstantProvider &) noexcept;
 
-  static ConstantProvider GetConstantProvider(void * /*module*/, MethodType method) noexcept {
+  static ConstantProviderDelegate GetConstantProvider(void * /*module*/, MethodType method) noexcept {
     return [method](IJSValueWriter const &argWriter) mutable noexcept {
       ReactConstantProvider constantProvider{argWriter};
       (*method)(constantProvider);
@@ -639,10 +673,42 @@ struct ModuleEventFieldInfo<TFunc<void(TArg)> TModule::*> {
   using EventType = TFunc<void(TArg)>;
   using FieldType = EventType TModule::*;
 
-  static ReactEventHandlerSetter GetEventHandlerSetter(void *module, FieldType field) noexcept {
-    return [ module = static_cast<ModuleType *>(module), field ](const ReactEventHandler &eventHandler) noexcept {
-      module->*field = [eventHandler](TArg arg) noexcept {
-        eventHandler([&](const IJSValueWriter &argWriter) noexcept { WriteValue(argWriter, arg); });
+  static InitializerDelegate GetEventHandlerInitializer(
+      void *module,
+      FieldType field,
+      wchar_t const *eventName,
+      wchar_t const *eventEmitterName) noexcept {
+    return [ module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName ](
+        IReactContext const &reactContext) noexcept {
+      module->*field = [ reactContext, eventEmitterName, eventName ](TArg arg) noexcept {
+        reactContext.EmitJSEvent(eventEmitterName, eventName, [&arg](IJSValueWriter const &argWriter) noexcept {
+          WriteValue(argWriter, arg);
+        });
+      };
+    };
+  }
+};
+
+template <class TField>
+struct ModuleFunctionFieldInfo;
+
+template <class TModule, template <class> class TFunc, class... TArgs>
+struct ModuleFunctionFieldInfo<TFunc<void(TArgs...)> TModule::*> {
+  using ModuleType = TModule;
+  using FunctionType = TFunc<void(TArgs...)>;
+  using FieldType = FunctionType TModule::*;
+
+  static InitializerDelegate GetFunctionInitializer(
+      void *module,
+      FieldType field,
+      wchar_t const *functionName,
+      wchar_t const *moduleName) noexcept {
+    return [ module = static_cast<ModuleType *>(module), field, functionName, moduleName ](
+        IReactContext const &reactContext) noexcept {
+      module->*field = [ reactContext, functionName, moduleName ](TArgs... args) noexcept {
+        reactContext.CallJSFunction(moduleName, functionName, [&args...](IJSValueWriter const &argWriter) noexcept {
+          WriteArgs(argWriter, args...);
+        });
       };
     };
   }
@@ -653,9 +719,16 @@ struct ReactModuleBuilder {
       : m_module{module}, m_moduleBuilder{moduleBuilder} {}
 
   template <class TModule, int I>
-  void RegisterModule(const wchar_t * /*moduleName*/, const wchar_t *eventEmitterName, ReactMemberId<I>) noexcept {
-    m_moduleBuilder.SetEventEmitterName(eventEmitterName);
+  void RegisterModule(wchar_t const *moduleName, wchar_t const *eventEmitterName, ReactMemberId<I>) noexcept {
+    m_moduleName = moduleName;
+    m_eventEmitterName = eventEmitterName ? eventEmitterName : L"RCTDeviceEventEmitter";
     RegisterMembers<TModule, I>();
+
+    // Add REACT_INIT initializers after REACT_EVENT and REACT_FUNCTION initializers.
+    // This way REACT_INIT method is invoked after event and function fields are initialized.
+    for (auto &initializer : m_initializers) {
+      m_moduleBuilder.AddInitializer(initializer);
+    }
   }
 
   template <class TClass, int I>
@@ -670,6 +743,12 @@ struct ReactModuleBuilder {
       TModule::template RegisterMember<TModule>(*this, ReactMemberId<I + 1>{});
       RegisterMembers<TModule, I + 1>();
     }
+  }
+
+  template <class TClass, class TMethod>
+  void RegisterInitMethod(TMethod method, wchar_t const * /*name*/) noexcept {
+    auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
+    m_initializers.push_back(std::move(initializer));
   }
 
   template <class TClass, class TMethod>
@@ -698,14 +777,25 @@ struct ReactModuleBuilder {
   }
 
   template <class TClass, class TField>
-  void RegisterEvent(TField field, wchar_t const *name) noexcept {
-    auto eventHandlerSetter = ModuleEventFieldInfo<TField>::GetEventHandlerSetter(m_module, field);
-    m_moduleBuilder.AddEventHandlerSetter(name, eventHandlerSetter);
+  void RegisterEvent(TField field, wchar_t const *eventName, wchar_t const *eventEmitterName) noexcept {
+    auto eventHandlerInitializer = ModuleEventFieldInfo<TField>::GetEventHandlerInitializer(
+        m_module, field, eventName, eventEmitterName ? eventEmitterName : m_eventEmitterName);
+    m_moduleBuilder.AddInitializer(eventHandlerInitializer);
+  }
+
+  template <class TClass, class TField>
+  void RegisterFunction(TField field, wchar_t const *functionName, wchar_t const *moduleName) noexcept {
+    auto functionInitializer = ModuleFunctionFieldInfo<TField>::GetFunctionInitializer(
+        m_module, field, functionName, moduleName ? moduleName : m_moduleName);
+    m_moduleBuilder.AddInitializer(functionInitializer);
   }
 
  private:
   void *m_module;
   IReactModuleBuilder m_moduleBuilder;
+  wchar_t const *m_moduleName{nullptr};
+  wchar_t const *m_eventEmitterName{nullptr};
+  std::vector<InitializerDelegate> m_initializers;
 };
 
 template <class T>

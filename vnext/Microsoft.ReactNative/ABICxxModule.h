@@ -16,36 +16,23 @@
 
 namespace winrt::Microsoft::ReactNative {
 
-struct ABICxxModuleEventHandlerSetter {
-  std::string Name;
-  ReactEventHandlerSetter EventHandlerSetter;
-};
-
 struct ABICxxModule : facebook::xplat::module::CxxModule {
   ABICxxModule(
-      winrt::Windows::Foundation::IInspectable &nativeModule,
+      winrt::Windows::Foundation::IInspectable const &nativeModule,
       std::string &&name,
-      std::string &&eventEmitterName,
-      std::vector<facebook::xplat::module::CxxModule::Method> &&methods,
-      std::vector<ConstantProvider> constants,
-      std::vector<ABICxxModuleEventHandlerSetter> &&eventHandlerSetters,
-      Mso::CntPtr<Mso::React::IReactContext> &&reactContext) noexcept;
+      std::vector<ConstantProviderDelegate> &&constantProviders,
+      std::vector<facebook::xplat::module::CxxModule::Method> &&methods) noexcept;
 
  public: // CxxModule implementation
-  std::string getName() override;
-  std::map<std::string, folly::dynamic> getConstants() override;
-  std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
+  std::string getName() noexcept override;
+  std::map<std::string, folly::dynamic> getConstants() noexcept override;
+  std::vector<facebook::xplat::module::CxxModule::Method> getMethods() noexcept override;
 
  private:
-  void InitEvents(std::vector<ABICxxModuleEventHandlerSetter> const &eventHandlerSetters) noexcept;
-
- private:
-  winrt::Windows::Foundation::IInspectable m_nativeModule;
+  winrt::Windows::Foundation::IInspectable m_nativeModule; // just to keep native module alive
   std::string m_name;
-  std::string m_eventEmitterName;
+  std::vector<ConstantProviderDelegate> m_constantProviders;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
-  std::vector<ConstantProvider> m_constants;
-  Mso::CntPtr<Mso::React::IReactContext> m_reactContext;
 };
 
 } // namespace winrt::Microsoft::ReactNative

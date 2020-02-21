@@ -18,8 +18,8 @@ class AnimatedNode {
   void RemoveChild(int64_t animatedNode);
 
   virtual void Update(){};
-  virtual void OnDetachedFromNode(int64_t animatedNodeTag){};
-  virtual void OnAttachToNode(int64_t animatedNodeTag){};
+  virtual void OnDetachedFromNode(int64_t /*animatedNodeTag*/){};
+  virtual void OnAttachToNode(int64_t /*animatedNodeTag*/){};
 
  protected:
   AnimatedNode *GetChildNode(int64_t tag);

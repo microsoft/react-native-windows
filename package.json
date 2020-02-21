@@ -5,6 +5,7 @@
   "scripts": {
     "build": "lerna run build --stream -- --color",
     "lint": "lerna run lint --stream -- --color",
+    "lint:fix": "lerna run lint:fix --stream -- --color",
     "api": "lerna run api --stream -- --color",
     "buildci": "lerna run build --stream -- --ci",
     "change": "beachball change",
