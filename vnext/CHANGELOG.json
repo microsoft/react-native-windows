@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 23:40:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.21",
+      "version": "0.61.0-beta.21",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a Win32 playground app to RNW",
+            "author": "hpratt@microsoft.com",
+            "commit": "cf228f4157e52a3a93799a68e06145487d6147dc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Feb 2020 16:46:52 GMT",
       "tag": "react-native-windows_v0.61.0-beta.20",
       "version": "0.61.0-beta.20",

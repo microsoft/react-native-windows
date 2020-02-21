@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 Feb 2020 16:46:52 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Feb 2020 23:40:21 GMT and should not be manually modified.
 
+## 0.61.0-beta.21
+Fri, 21 Feb 2020 23:40:21 GMT
+
+### Changes
+
+- Add a Win32 playground app to RNW (hpratt@microsoft.com)
 ## 0.61.0-beta.20
 Fri, 21 Feb 2020 16:46:52 GMT
 
