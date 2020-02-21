@@ -131,14 +131,12 @@ struct SampleModuleCppImpl {
   }
 
   REACT_METHOD(NegateAsyncPromise)
-  winrt::fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+  winrt::fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
-      safeResult.Resolve(-x);
+      result.Resolve(-x);
     } else {
-      safeResult.Reject("Already negative");
+      result.Reject("Already negative");
     }
   }
 

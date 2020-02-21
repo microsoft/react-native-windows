@@ -110,11 +110,9 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(NegateAsyncCallback)
-  fire_and_forget NegateAsyncCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    auto safeResolve = resolve; // make a copy for co-routine safe access
+  fire_and_forget NegateAsyncCallback(int x, std::function<void(int)> resolve) noexcept {
     co_await winrt::resume_background();
-    safeResolve(-x);
+    resolve(-x);
   }
 
   REACT_METHOD(NegateDispatchQueueCallback)
@@ -143,11 +141,9 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(StaticNegateAsyncCallback)
-  static fire_and_forget StaticNegateAsyncCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    auto safeResolve = resolve; // make a copy for co-routine safe access
+  static fire_and_forget StaticNegateAsyncCallback(int x, std::function<void(int)> resolve) noexcept {
     co_await winrt::resume_background();
-    safeResolve(-x);
+    resolve(-x);
   }
 
   REACT_METHOD(StaticNegateDispatchQueueCallback)
@@ -193,16 +189,13 @@ struct SimpleNativeModule {
   REACT_METHOD(NegateAsyncCallbacks)
   fire_and_forget NegateAsyncCallbacks(
       int x,
-      std::function<void(int)> const &resolve,
-      std::function<void(const std::string &)> const &reject) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    auto safeResolve = resolve; // make a copy for co-routine safe access
-    auto safeReject = reject;
+      std::function<void(int)> resolve,
+      std::function<void(const std::string &)> reject) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
-      safeResolve(-x);
+      resolve(-x);
     } else {
-      safeReject("Already negative");
+      reject("Already negative");
     }
   }
 
@@ -276,16 +269,13 @@ struct SimpleNativeModule {
   REACT_METHOD(StaticNegateAsyncCallbacks)
   static fire_and_forget StaticNegateAsyncCallbacks(
       int x,
-      std::function<void(int)> const &resolve,
-      std::function<void(const std::string &)> const &reject) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    auto safeResolve = resolve; // make a copy for co-routine safe access
-    auto safeReject = reject;
+      std::function<void(int)> resolve,
+      std::function<void(const std::string &)> reject) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
-      safeResolve(-x);
+      resolve(-x);
     } else {
-      safeReject("Already negative");
+      reject("Already negative");
     }
   }
 
@@ -354,16 +344,14 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(NegateAsyncPromise)
-  fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+  fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
-      safeResult.Resolve(-x);
+      result.Resolve(-x);
     } else {
       ReactError error{};
       error.Message = "Already negative";
-      safeResult.Reject(std::move(error));
+      result.Reject(std::move(error));
     }
   }
 
@@ -438,16 +426,14 @@ struct SimpleNativeModule {
   }
 
   REACT_METHOD(StaticNegateAsyncPromise)
-  static fire_and_forget StaticNegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+  static fire_and_forget StaticNegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
-      safeResult.Resolve(-x);
+      result.Resolve(-x);
     } else {
       ReactError error{};
       error.Message = "Already negative";
-      safeResult.Reject(std::move(error));
+      result.Reject(std::move(error));
     }
   }
 

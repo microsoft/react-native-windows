@@ -142,6 +142,15 @@ struct IsPromise : std::false_type {};
 template <class T>
 struct IsPromise<ReactPromise<T>> : std::true_type {};
 
+template <class TResult, class TArg>
+constexpr void ValidateCoroutineArg() noexcept {
+  if constexpr (std::is_same_v<TResult, fire_and_forget>) {
+    static_assert(
+        !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
+        "Coroutine parameter must be passed by value: " __FUNCSIG__);
+  }
+}
+
 } // namespace Internal
 
 //==============================================================================
@@ -312,7 +321,7 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
         ArgsTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
         auto promise = PromiseCreator<PromiseArg>::Create(argWriter, resolve, reject);
-        (module->*method)(std::get<I>(std::move(typedArgs))..., promise);
+        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
       };
     }
 
@@ -334,6 +343,7 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   };
 
   static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
+    (Internal::ValidateCoroutineArg<TResult, TArgs>(), ...);
     constexpr bool isVoidResult = std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
     if constexpr (!isVoidResult) {
       returnType = MethodReturnType::Callback;
@@ -520,6 +530,7 @@ struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
   };
 
   static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
+    (Internal::ValidateCoroutineArg<TResult, TArgs>(), ...);
     constexpr bool isVoidResult = std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
     if constexpr (!isVoidResult) {
       returnType = MethodReturnType::Callback;
@@ -722,7 +733,7 @@ struct ReactModuleBuilder {
   void RegisterModule(wchar_t const *moduleName, wchar_t const *eventEmitterName, ReactMemberId<I>) noexcept {
     m_moduleName = moduleName;
     m_eventEmitterName = eventEmitterName ? eventEmitterName : L"RCTDeviceEventEmitter";
-    RegisterMembers<TModule, I>();
+    RegisterMembers<TModule, I + 1>(static_cast<std::make_index_sequence<10> *>(nullptr));
 
     // Add REACT_INIT initializers after REACT_EVENT and REACT_FUNCTION initializers.
     // This way REACT_INIT method is invoked after event and function fields are initialized.
@@ -738,10 +749,18 @@ struct ReactModuleBuilder {
   auto HasRegisterMember(...) -> std::false_type;
 
   template <class TModule, int I>
-  void RegisterMembers() noexcept {
-    if constexpr (decltype(HasRegisterMember<TModule>(*this, ReactMemberId<I + 1>{}))::value) {
-      TModule::template RegisterMember<TModule>(*this, ReactMemberId<I + 1>{});
-      RegisterMembers<TModule, I + 1>();
+  void RegisterMember() noexcept {
+    if constexpr (decltype(HasRegisterMember<TModule>(*this, ReactMemberId<I>{}))::value) {
+      TModule::template RegisterMember<TModule>(*this, ReactMemberId<I>{});
+    }
+  }
+
+  // Register members in groups of 10 to avoid deep recursion.
+  template <class TModule, int StartIndex, int... I>
+  void RegisterMembers(std::index_sequence<I...> *) noexcept {
+    if constexpr (decltype(HasRegisterMember<TModule>(*this, ReactMemberId<StartIndex>{}))::value) {
+      (RegisterMember<TModule, StartIndex + I>(), ...);
+      RegisterMembers<TModule, StartIndex + sizeof...(I)>(static_cast<std::make_index_sequence<10> *>(nullptr));
     }
   }
 
