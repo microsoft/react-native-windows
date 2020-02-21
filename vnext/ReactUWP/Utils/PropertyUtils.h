@@ -358,10 +358,11 @@ void UpdateFontProperties(const T &element, const folly::dynamic &reactDiffMap) 
     const folly::dynamic &propertyValue = pair.second;
 
     if (propertyName == "fontSize") {
-      if (propertyValue.isNumber())
+      if (propertyValue.isNumber()) {
         element.FontSize(propertyValue.asDouble());
-      else if (propertyValue.isNull())
+      } else if (propertyValue.isNull()) {
         element.ClearValue(T::FontSizeProperty());
+      }
     } else if (propertyName == "fontFamily") {
       fontFamilyProp = &propertyValue;
     } else if (propertyName == "fontWeight") {
@@ -402,10 +403,13 @@ void UpdateFontProperties(const T &element, const folly::dynamic &reactDiffMap) 
       }
     } else {
       // FontFamily didn't change, but may have been set previously
-      winrt::hstring fontFamily = element.FontFamily().Source();
-      if (fontFamily.size() > 0) {
-        std::wstring f{fontFamily};
-        element.FontFamily(FontFamilyFrom(f, fontWeight, fontStyle));
+      auto fontFamily = element.FontFamily();
+      if (nullptr != fontFamily) {
+        winrt::hstring fontFamilySource = fontFamily.Source();
+        if (fontFamilySource.size() > 0) {
+          std::wstring f{fontFamilySource};
+          element.FontFamily(FontFamilyFrom(f, fontWeight, fontStyle));
+        }
       }
     }
   }
