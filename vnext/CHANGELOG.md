@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Feb 2020 23:52:24 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Feb 2020 22:23:55 GMT and should not be manually modified.
 
+## 0.60.0-vnext.141
+Fri, 21 Feb 2020 22:23:55 GMT
+
+### Changes
+
+- Fix issues with relative IntDir breaking builds (aschultz@microsoft.com)
 ## 0.60.0-vnext.140
 Thu, 20 Feb 2020 23:52:24 GMT
 

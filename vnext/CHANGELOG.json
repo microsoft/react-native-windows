@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 22:23:55 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.141",
+      "version": "0.60.0-vnext.141",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix issues with relative IntDir breaking builds",
+            "author": "aschultz@microsoft.com",
+            "commit": "7ce4e87f02db6eb98f9d42214e8a770b64a07022"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Feb 2020 01:28:44 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.140",
       "version": "0.60.0-vnext.140",
