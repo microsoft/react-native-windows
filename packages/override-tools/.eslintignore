@@ -1,2 +1,3 @@
-out/
+lib/
+lib-commonjs/
 node_modules/

@@ -8,19 +8,19 @@
 import * as fs from './fs-promise';
 import * as path from 'path';
 
-import {IOverrideFileRepository} from './FileRepositoryInterface';
+import {OverrideFileRepository} from './FileRepository';
 
 /**
  * Allows reading phsyical override files based on a passed in directory
  */
-export class OverrideFileRepository implements IOverrideFileRepository {
+export class OverrideFileRepositoryImpl implements OverrideFileRepository {
   private baseDir: string;
 
   constructor(baseDir: string) {
     this.baseDir = baseDir;
   }
 
-  async listFiles(): Promise<string[]> {
+  async listFiles(): Promise<Array<string>> {
     return this.listFilesRec(this.baseDir);
   }
 

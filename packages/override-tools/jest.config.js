@@ -1,7 +1,7 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
- * 
+ *
  * @format
  * @ts-check
  */
@@ -14,7 +14,7 @@ module.exports = {
   roots: ['<rootDir>/src/'],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: 'node',
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ['/node_modules/(?!io-ts/*|fp-ts/*)'],

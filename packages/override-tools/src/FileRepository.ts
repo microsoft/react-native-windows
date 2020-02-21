@@ -8,7 +8,7 @@
 /**
  * Provides access to patch files
  */
-export interface IOverrideFileRepository {
+export interface OverrideFileRepository {
   /**
    * Return the repository-relative path to all patch files
    */
@@ -23,14 +23,14 @@ export interface IOverrideFileRepository {
 /**
  * Provides access to React Native source files
  */
-export interface IReactFileRepository {
+export interface ReactFileRepository {
   getFileContents(filename: string): Promise<string | null>;
 }
 
 /**
  * Provides access to React Native source files of arbitrary version
  */
-export interface IVersionedReactFileRepository {
+export interface VersionedReactFileRepository {
   getFileContents(
     filename: string,
     reactNativeVersion: string,
@@ -41,9 +41,9 @@ export interface IVersionedReactFileRepository {
  * Convert from a VersionedReactFileRepository to ReactFileRepository
  */
 export function bindVersion(
-  repository: IVersionedReactFileRepository,
+  repository: VersionedReactFileRepository,
   version: string,
-): IReactFileRepository {
+): ReactFileRepository {
   return {
     getFileContents: (filename: string) =>
       repository.getFileContents(filename, version),

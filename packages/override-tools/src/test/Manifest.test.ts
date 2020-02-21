@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as Manifest from './Manifest';
+import * as Manifest from '../Manifest';
 
 import {
   MockFile,

@@ -10,10 +10,7 @@ import * as crypto from 'crypto';
 import * as fs from './fs-promise';
 import * as t from 'io-ts';
 
-import {
-  IOverrideFileRepository,
-  IReactFileRepository,
-} from './FileRepositoryInterface';
+import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
 
 import {ThrowReporter} from 'io-ts/es6/ThrowReporter';
 
@@ -37,7 +34,7 @@ const NonPlatformEntryType = t.type({
   baseVersion: t.string,
   baseHash: t.string,
 
-  // Alloq LEGACY_FIXME for existing overrides that don't have issues yet
+  // Allow LEGACY_FIXME for existing overrides that don't have issues yet
   issue: t.union([t.number, t.literal('LEGACY_FIXME')]),
 });
 
@@ -87,8 +84,8 @@ export interface ValidationError {
  */
 export async function validate(
   manifest: Manifest,
-  overrideRepo: IOverrideFileRepository,
-  reactRepo: IReactFileRepository,
+  overrideRepo: OverrideFileRepository,
+  reactRepo: ReactFileRepository,
 ): Promise<Array<ValidationError>> {
   const errors: Array<ValidationError> = [];
 
@@ -104,7 +101,6 @@ export async function validate(
     errors.push({type: 'overrideFileNotFound', file: file}),
   );
 
-  manifest = sortIntoVersionBatches(manifest);
   await Promise.all(
     manifest.overrides.map(async override => {
       if (override.type === 'platform') {
@@ -136,26 +132,4 @@ export function hashContent(str: string) {
   const hasher = crypto.createHash('sha1');
   hasher.update(str);
   return hasher.digest('hex');
-}
-
-/**
- * GitReactFileRepository takes time to switch between versions. Batch versions
- * together to reduce the number of checkouts that happen.
- */
-function sortIntoVersionBatches(manifest: Manifest): Manifest {
-  const ret = _.cloneDeep(manifest);
-
-  ret.overrides.sort((a: Entry, b: Entry) => {
-    if (a.type === 'platform' && b.type === 'platform') {
-      return 0;
-    } else if (a.type === 'platform') {
-      return -1;
-    } else if (b.type === 'platform') {
-      return 1;
-    } else {
-      return a.baseVersion.localeCompare(b.baseVersion);
-    }
-  });
-
-  return ret;
 }

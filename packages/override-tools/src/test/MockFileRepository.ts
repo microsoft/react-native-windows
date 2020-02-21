@@ -7,17 +7,14 @@
 
 import * as _ from 'lodash';
 
-import {
-  IOverrideFileRepository,
-  IReactFileRepository,
-} from 'src/FileRepositoryInterface';
+import {OverrideFileRepository, ReactFileRepository} from '../FileRepository';
 
 export interface MockFile {
   filename: string;
   content: string;
 }
 
-export class MockReactFileRepository implements IReactFileRepository {
+export class MockReactFileRepository implements ReactFileRepository {
   private files: Array<MockFile>;
 
   constructor(files: Array<MockFile>) {
@@ -34,7 +31,7 @@ export class MockReactFileRepository implements IReactFileRepository {
   }
 }
 
-export class MockOverrideFileRepository implements IOverrideFileRepository {
+export class MockOverrideFileRepository implements OverrideFileRepository {
   private files: Array<MockFile>;
 
   constructor(files: Array<MockFile>) {

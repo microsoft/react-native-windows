@@ -14,7 +14,7 @@
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
     "lint:fix": "eslint ./**/*.ts --fix",
-    "test": "jest",
+    "test": "just-scripts test",
     "watch": "tsc -w"
   },
   "dependencies": {
