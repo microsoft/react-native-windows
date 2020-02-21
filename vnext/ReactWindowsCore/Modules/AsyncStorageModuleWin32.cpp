@@ -134,7 +134,7 @@ std::string MakeSQLiteParameterizedStatement(const char *prefix, int argCount) {
   std::string result(prefix);
   result.reserve(result.size() + (argCount * 2) + 1);
   result += '(';
-  for (size_t x = 0; x < argCount - 1; x++) {
+  for (int x = 0; x < argCount - 1; x++) {
     result += "?,";
   }
   result += "?)";
