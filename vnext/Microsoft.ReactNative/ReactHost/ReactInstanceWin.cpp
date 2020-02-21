@@ -205,7 +205,7 @@ void ReactInstanceWin::Initialize() noexcept {
               std::move(m_i18nInfo),
               std::move(m_appState),
               std::move(m_appTheme),
-              std::weak_ptr{m_legacyReactInstance});
+              m_legacyReactInstance);
 
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
