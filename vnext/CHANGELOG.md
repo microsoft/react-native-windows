@@ -1,7 +1,15 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Feb 2020 19:20:15 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Feb 2020 01:27:13 GMT and should not be manually modified.
 
+## 0.61.0-beta.19
+Fri, 21 Feb 2020 01:27:13 GMT
+
+### Changes
+
+- Fix some reliability isssues for current AsyncStorage implementation (dida@ntdev.microsoft.com)
+- Upgrade ChakraCore Debugger to 0.0.0.43 (julio.rocha@microsoft.com)
+- Update metro configs to support node 12 on windows (acoates)
 ## 0.61.0-beta.17
 Thu, 20 Feb 2020 19:20:15 GMT
 

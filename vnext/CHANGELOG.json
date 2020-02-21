@@ -2,6 +2,30 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 01:27:13 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.19",
+      "version": "0.61.0-beta.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix some reliability isssues for current AsyncStorage implementation",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e4be03a2d921fe401028cda19684e79899ec1b26"
+          },
+          {
+            "comment": "Upgrade ChakraCore Debugger to 0.0.0.43",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "6dd134ff6d8e43f8445187cb869973c8a758d100"
+          },
+          {
+            "comment": "Update metro configs to support node 12 on windows",
+            "author": "acoates",
+            "commit": "f28962002817a02628687143e01638640dc849a6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Feb 2020 19:20:15 GMT",
       "tag": "react-native-windows_v0.61.0-beta.17",
       "version": "0.61.0-beta.17",
