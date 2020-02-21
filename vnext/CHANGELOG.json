@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 01:28:44 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.140",
+      "version": "0.60.0-vnext.140",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix onFocus onBlur events",
+            "author": "kaigu@microsoft.com",
+            "commit": "38bc6cad5c3cdd7d1e00ac0e3a7185e12a2fa381"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Feb 2020 23:52:24 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.140",
       "version": "0.60.0-vnext.140",
