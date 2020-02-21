@@ -159,6 +159,28 @@ jobs:
           clean: true # Optional
         condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground Win32
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground-Win32.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - Playground Win32
+        inputs:
+          solution: packages/playground/windows/Playground-Win32.sln
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+          clean: true # Optional
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
+
       - task: CmdLine@2
         displayName: Create Playground bundle
         inputs:

@@ -39,19 +39,27 @@ class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
   void getAllKeys(folly::dynamic, Callback jsCallback);
 
   using Statement = std::unique_ptr<sqlite3_stmt, decltype(&sqlite3_finalize)>;
-  Statement PrepareStatement(const char *stmt);
+  Statement PrepareStatement(const char *stmt, Callback &callback);
 
-  void Exec(const char *statement, ExecCallback callback = nullptr, void *pv = nullptr);
-
-  template <class Fn>
-  void Exec(const char *statement, Fn &fn) {
-    Exec(statement, [](void *pv, int i, char **x, char **y) { return (*static_cast<Fn *>(pv))(i, x, y); }, &fn);
+  bool Exec(const char *statement, ExecCallback execCallback, void *pv, Callback &callback);
+  inline bool Exec(const char *statement, Callback &callback) {
+    return Exec(statement, nullptr, nullptr, callback);
   }
 
-  void BindString(const Statement &stmt, int index, const std::string &str);
+  template <class Fn>
+  bool Exec(const char *statement, Callback &callback, Fn &fn) {
+    return Exec(
+        statement,
+        [](void *pv, int i, char **x, char **y) { return (*static_cast<Fn *>(pv))(i, x, y); },
+        &fn,
+        callback);
+  }
 
-  // throws a std::runtime_error that includes sqlite3_errmsg if sqliteResult is an error
-  void CheckSQLiteResult(int sqliteResult);
+  bool BindString(const Statement &stmt, int index, const std::string &str, Callback &callback);
+
+  // On success, returns true
+  // On failure, invokes callback with an appropriate object & returns false.
+  bool CheckSQLiteResult(int sqliteResult, Callback &callback);
 
   static std::string m_dbPath;
 };
