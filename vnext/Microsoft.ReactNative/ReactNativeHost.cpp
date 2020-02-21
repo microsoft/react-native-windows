@@ -55,8 +55,10 @@ void ReactNativeHost::ReloadInstance() noexcept {
   if (!m_packageBuilder) {
     m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
 
-    for (auto const &packageProvider : m_packageProviders) {
-      packageProvider.CreatePackage(m_packageBuilder);
+    if (m_packageProviders) {
+      for (auto const &packageProvider : m_packageProviders) {
+        packageProvider.CreatePackage(m_packageBuilder);
+      }
     }
   }
 
