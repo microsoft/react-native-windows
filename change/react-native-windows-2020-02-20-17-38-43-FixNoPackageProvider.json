@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix ReactNativeHost without package providers",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "a428fb05a4a9c52aa523a1dccefdb7c8e6adcd85",
-  "dependentChangeType": "patch",
-  "date": "2020-02-21T01:38:42.760Z"
-}

@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 Feb 2020 01:27:13 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Feb 2020 16:46:52 GMT and should not be manually modified.
 
+## 0.61.0-beta.20
+Fri, 21 Feb 2020 16:46:52 GMT
+
+### Changes
+
+- Fix ReactNativeHost without package providers (vmorozov@microsoft.com)
 ## 0.61.0-beta.19
 Fri, 21 Feb 2020 01:27:13 GMT
 
