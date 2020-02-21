@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Getting Started · React Native for Windows &amp; Mac</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="There are two different options available when installing a React Native project with the intention of building for Windows: you can choose between our **Beta** or **Stable** releases,  the instructions will call out which steps need to change for either."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Getting Started · React Native for Windows &amp; Mac"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="There are two different options available when installing a React Native project with the intention of building for Windows: you can choose between our **Beta** or **Stable** releases,  the instructions will call out which steps need to change for either."/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows &amp; Mac Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows &amp; Mac Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Getting Started · React Native for Windows &amp; Mac</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;!DOCTYPE html&gt;"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Getting Started · React Native for Windows &amp; Mac"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="&lt;!DOCTYPE html&gt;"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows &amp; Mac Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows &amp; Mac Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
         document.addEventListener('DOMContentLoaded', function() {
           addBackToTop(
             {"zIndex":100}
@@ -60,48 +60,121 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/getting-started.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Getting Started</h1></header><article><div><span><p>There are two different options available when installing a React Native project with the intention of building for Windows: you can choose between our <strong>Beta</strong> or <strong>Stable</strong> releases,  the instructions will call out which steps need to change for either.</p>
-<table>
-<thead>
-<tr><th style="text-align:left">BETA</th><th style="text-align:left">STABLE</th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align:left">The newest release guaranteed to get the features and content first; however, not all bugs or framework quirks have been fixed.</td><td style="text-align:left">The latest stable and recommended release to use.</td></tr>
-</tbody>
-</table>
-<p>Once Beta has been completely vetted for bugs and has been out long enough to be considered fit for mass consumption, it will become the new Stable.</p>
-<h3><a class="anchor" aria-hidden="true" id="initialize-your-react-native-project"></a><a href="#initialize-your-react-native-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Initialize your React Native project</h3>
-<p>Make sure you do this in the directory you would like your React Native Windows project to live.</p>
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/getting-started.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Getting Started</h1></header><article><div><span><!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.invisible {
+  visibility: hidden;
+  display: none;
+}
+.visible {
+  visibility: visible;
+}
+.toggler {
+    margin-bottom: 1em;
+}
+.toggler ul {
+    width: 100%;
+    display: inline-block;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #6d6d6d;
+    cursor: default;
+}
+.toggleActive{
+  font-weight: 700;
+}
+.toggleInactive{
+  font-weight: 400;
+}
+</style>
+</head>
+<body>
+<script>
+function displayTab(tabType) {
+  if (tabType === 'stable') {
+    document.getElementById("stableTab").className = "toggleActive";
+    document.getElementById("betaTab").className = "toggleInactive";
+    document.getElementById("beta").className = "invisible";
+    document.getElementById("stable").className = "visible";
+  }
+  else {
+    document.getElementById("stableTab").className = "toggleInactive";
+    document.getElementById("betaTab").className = "toggleActive";
+    document.getElementById("beta").className = "visible";
+    document.getElementById("stable").className = "invisible";
+  }
+}
+</script>
+<p>This guide will help you get started on setting up your very first React Native for Windows app.</p>
+<p>If you're looking to build directly from the repo or you want to make contributions to the react-native-windows, check out the guide for <a href="/react-native-windows/docs/building-rnw">building the react-native-windows repo</a>.</p>
+<p>For information around how to set up React Native, see the <a href="http://facebook.github.io/react-native/docs/getting-started.html">React Native Getting Started Guide</a>.</p>
+<div>
+  <div class="toggler">
+    <ul role="tablist">
+      <li aria-selected="true" role="tab" tabindex="0" id="stableTab" class="toggleActive" onclick="displayTab('stable')"> Stable </li>
+      <li aria-selected="false" role="tab" tabindex="0" id="betaTab" onclick="displayTab('beta')"> Beta </li>
+    </ul>    
+  </div>
+  <div id="stable">
+The latest and recommended release to use.
 <h2><a class="anchor" aria-hidden="true" id="install-react-native"></a><a href="#install-react-native" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install React native</h2>
 <pre><code class="hljs"><span class="hljs-built_in">npm</span> install -g react-<span class="hljs-keyword">native</span>-cli
 </code></pre>
-<p>For information around how to set up React Native, see the <a href="http://facebook.github.io/react-native/docs/getting-started.html">React Native Getting Started Guide</a>.</p>
-<p>Alternately, if you're looking to build directly from the repo or you want to make contributions to the react-native-windows, check out the guide for <a href="/react-native-windows/docs/building-rnw">building react-native-windows repo</a>.</p>
 <h2><a class="anchor" aria-hidden="true" id="install-react-native-for-windows"></a><a href="#install-react-native-for-windows" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install React Native for Windows</h2>
-<p><strong>Stable</strong></p>
+<p>Remember to call this <code>react-native init</code> in the directory you want your project to live.</p>
 <pre><code class="hljs">react-native init &lt;project name&gt; --version ^<span class="hljs-number">0.60</span><span class="hljs-number">.0</span>
 </code></pre>
-<p><strong>Beta</strong></p>
-<pre><code class="hljs">react-native init &lt;project name&gt; --version ^<span class="hljs-number">0.61</span><span class="hljs-number">.5</span>
-</code></pre>
 <h3><a class="anchor" aria-hidden="true" id="navigate-into-this-newly-created-directory"></a><a href="#navigate-into-this-newly-created-directory" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Navigate into this newly created directory</h3>
+<p>Once your project has been initialized, React Native will have created a new sub directory where all your generated files live.</p>
 <pre><code class="hljs">cd &lt;project <span class="hljs-built_in">name</span>&gt;
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="install-the-react-native-windows-command-line-interfacehttpswwwnpmjscompackagernpm-plugin-windows"></a><a href="#install-the-react-native-windows-command-line-interfacehttpswwwnpmjscompackagernpm-plugin-windows" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the React Native Windows <a href="https://www.npmjs.com/package/rnpm-plugin-windows">command line interface</a></h3>
-<p>If using yarn:</p>
+<h3><a class="anchor" aria-hidden="true" id="install-the-react-native-windows-cli"></a><a href="#install-the-react-native-windows-cli" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the React Native Windows CLI</h3>
+<p>Now you'll want to install all the Windows React Native <a href="https://www.npmjs.com/package/rnpm-plugin-windows">command line instructions</a>.</p>
 <pre><code class="hljs">yarn <span class="hljs-keyword">add</span><span class="bash"> rnpm-plugin-windows</span>
 </code></pre>
 <blockquote>
-<p>Alternatively, if you're using NPM:</p>
+<p><strong>If using NPM</strong></p>
 <p><code>npm install --save rnpm-plugin-windows</code></p>
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="install-the-windows-extension"></a><a href="#install-the-windows-extension" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the Windows extension</h3>
-<p><strong>Stable</strong></p>
+<p>Lastly, install the React Native for Windows packages.</p>
 <pre><code class="hljs">react-<span class="hljs-keyword">native</span> windows
 </code></pre>
-<p><strong>Beta</strong></p>
+  </div>
+  <div id="beta" class="invisible">
+<blockquote>
+<p>The newest release guaranteed to get the features and content first; however, not all bugs or framework quirks have been fixed.</p>
+<p>Once Beta has been completely vetted for bugs and has been out long enough to be considered fit for mass consumption, it will become the new Stable.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="install-react-native-1"></a><a href="#install-react-native-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install React native</h2>
+<pre><code class="hljs"><span class="hljs-built_in">npm</span> install -g react-<span class="hljs-keyword">native</span>-cli
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="install-react-native-for-windows-beta"></a><a href="#install-react-native-for-windows-beta" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install React Native for Windows (beta)</h2>
+<p>Remember to call this <code>react-native init</code> in the directory you want your project to live.</p>
+<pre><code class="hljs">react-native init &lt;project name&gt; --version ^<span class="hljs-number">0.61</span><span class="hljs-number">.5</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="navigate-into-this-newly-created-directory-1"></a><a href="#navigate-into-this-newly-created-directory-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Navigate into this newly created directory</h3>
+<p>Once your project has been initialized, React Native will have created a new sub directory where all your generated files live.</p>
+<pre><code class="hljs">cd &lt;project <span class="hljs-built_in">name</span>&gt;
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="install-the-react-native-windows-cli-1"></a><a href="#install-the-react-native-windows-cli-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the React Native Windows CLI</h3>
+<p>Now you'll want to install all the Windows React Native <a href="https://www.npmjs.com/package/rnpm-plugin-windows">command line instructions</a>.</p>
+<pre><code class="hljs">yarn <span class="hljs-keyword">add</span><span class="bash"> rnpm-plugin-windows</span>
+</code></pre>
+<blockquote>
+<p><strong>If using NPM</strong></p>
+<p><code>npm install --save rnpm-plugin-windows</code></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="install-the-windows-extension-1"></a><a href="#install-the-windows-extension-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the Windows extension</h3>
+<p>Lastly, install the React Native for Windows packages.</p>
 <pre><code class="hljs">react-<span class="hljs-keyword">native</span> windows --template beta
 </code></pre>
+  </div>  
+</div>
 <h2><a class="anchor" aria-hidden="true" id="running-a-react-native-windows-app"></a><a href="#running-a-react-native-windows-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running a React Native Windows App</h2>
 <p><em>Note: Make sure a browser is launched and running before running a React Native Windows app.</em></p>
 <ul>
@@ -153,4 +226,6 @@
 <li>Build the solution. You can now launch without first launching Metro.</li>
 <li>If you want to build an appx package to share or publish, use the Project =&gt; Publish =&gt; Create App Packages... option.</li>
 </ul>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/react-native-windows/docs/rnw-dependencies"><span>System Requirements</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#install-react-native">Install React native</a></li><li><a href="#install-react-native-for-windows">Install React Native for Windows</a><ul class="toc-headings"><li><a href="#navigate-into-this-newly-created-directory">Navigate into this newly created directory</a></li><li><a href="#install-the-react-native-windows-command-line-interfacehttpswwwnpmjscompackagernpm-plugin-windows">Install the React Native Windows <a href="https://www.npmjs.com/package/rnpm-plugin-windows">command line interface</a></a></li><li><a href="#install-the-windows-extension">Install the Windows extension</a></li></ul></li><li><a href="#running-a-react-native-windows-app">Running a React Native Windows App</a></li><li><a href="#authoring-native-modules">Authoring Native Modules</a></li><li><a href="#building-a-standalone-react-native-windows-app">Building a standalone React Native Windows App</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
+</body>
+</html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/react-native-windows/docs/rnw-dependencies"><span>System Requirements</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#install-react-native">Install React native</a></li><li><a href="#install-react-native-for-windows">Install React Native for Windows</a><ul class="toc-headings"><li><a href="#navigate-into-this-newly-created-directory">Navigate into this newly created directory</a></li><li><a href="#install-the-react-native-windows-cli">Install the React Native Windows CLI</a></li><li><a href="#install-the-windows-extension">Install the Windows extension</a></li></ul></li><li><a href="#install-react-native-1">Install React native</a></li><li><a href="#install-react-native-for-windows-beta">Install React Native for Windows (beta)</a><ul class="toc-headings"><li><a href="#navigate-into-this-newly-created-directory-1">Navigate into this newly created directory</a></li><li><a href="#install-the-react-native-windows-cli-1">Install the React Native Windows CLI</a></li><li><a href="#install-the-windows-extension-1">Install the Windows extension</a></li></ul></li><li><a href="#running-a-react-native-windows-app">Running a React Native Windows App</a></li><li><a href="#authoring-native-modules">Authoring Native Modules</a></li><li><a href="#building-a-standalone-react-native-windows-app">Building a standalone React Native Windows App</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
