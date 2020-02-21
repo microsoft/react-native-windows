@@ -7,6 +7,28 @@
 namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
+// JSValueObject implementation
+//===========================================================================
+
+JSValueObject::JSValueObject(std::initializer_list<JSValueObjectKeyValue> initObject) noexcept {
+  for (auto const &item : initObject) {
+    this->try_emplace(std::string(item.Key), std::move(*const_cast<JSValue *>(&item.Value)));
+  }
+}
+
+//===========================================================================
+// JSValueArray implementation
+//===========================================================================
+
+JSValueArray::JSValueArray(std::initializer_list<JSValueArrayItem> initArray) noexcept {
+  for (auto const &item : initArray) {
+    this->push_back(std::move(*const_cast<JSValue *>(&item.Item)));
+  }
+}
+
+JSValueArray::JSValueArray(size_t capacity) noexcept : std::vector<JSValue>(capacity) {}
+
+//===========================================================================
 // JSValue implementation
 //===========================================================================
 
@@ -56,10 +78,10 @@ JSValue &JSValue::operator=(JSValue &&other) noexcept {
 JSValue::~JSValue() noexcept {
   switch (m_type) {
     case JSValueType::Object:
-      m_object.~map();
+      m_object.~JSValueObject();
       break;
     case JSValueType::Array:
-      m_array.~vector();
+      m_array.~JSValueArray();
       break;
     case JSValueType::String:
       m_string.~basic_string();
@@ -315,7 +337,7 @@ bool JSValue::ArrayEquals(const JSValueArray &other) const noexcept {
 }
 
 //===========================================================================
-// Standalone inline functions implementation
+// Standalone functions implementation
 //===========================================================================
 
 void swap(JSValue &left, JSValue &right) noexcept {

@@ -40,7 +40,7 @@ struct InstanceWrapper {
 
 // Things that used to be exported from InstanceManager, but probably belong
 // elsewhere
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
+std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::string &&jsBundleRelativePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
@@ -50,7 +50,7 @@ std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
+std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::vector<
@@ -62,7 +62,7 @@ std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
 #ifdef PATCH_RN
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstanceForSandbox(
+std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::string &&jsString,
     std::string &&configsString,
     std::string &&sourceUrl,
@@ -71,7 +71,7 @@ std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstanceForSandbox(
     std::shared_ptr<DevSettings> devSettings,
     std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept;
 
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstanceForSandbox(
+std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::string &&configsString,

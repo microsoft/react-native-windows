@@ -28,9 +28,8 @@
     <ClInclude Include="$(FollyDir)\folly\portability\SysMman.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
+    <Keyword>StaticLibrary</Keyword>
     <RootNamespace>FollyWin32</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
@@ -53,7 +52,13 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC=1;FOLLY_NO_CONFIG;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        _HAS_AUTO_PTR_ETC=1;
+        FOLLY_NO_CONFIG;
+        NOMINMAX;
+        WIN32;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(FollyDir)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4293;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>

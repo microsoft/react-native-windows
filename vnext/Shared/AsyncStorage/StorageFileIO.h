@@ -21,6 +21,7 @@ class StorageFileIO {
   void append(const std::string &fileContent);
   void resetLine();
   bool getLine(std::string &line);
+  void flush();
 
   static void throwLastErrorMessage();
 

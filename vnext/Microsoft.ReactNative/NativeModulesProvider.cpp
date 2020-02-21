@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "NativeModulesProvider.h"
 #include "ABICxxModule.h"
+#include "IReactContext.h"
 #include "IReactModuleBuilder.h"
 #include "Threading/MessageQueueThreadFactory.h"
 
@@ -33,11 +34,13 @@ std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::Get
     m_modulesWorkerQueue = react::uwp::MakeSerialQueueThread();
   }
 
+  auto winrtReactContext = winrt::make<ReactContext>(Mso::Copy(reactContext));
+
   for (auto &entry : m_moduleProviders) {
     modules.emplace_back(
         entry.first,
-        [ moduleName = entry.first, moduleProvider = entry.second, reactContext = Mso::Copy(reactContext) ]() noexcept {
-          IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>(Mso::Copy(reactContext));
+        [ moduleName = entry.first, moduleProvider = entry.second, winrtReactContext ]() noexcept {
+          IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>(winrtReactContext);
           auto providedModule = moduleProvider(moduleBuilder);
           return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(moduleName, providedModule);
         },

@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Text;
+using Windows.UI.Notifications;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -67,6 +70,19 @@ namespace Microsoft.ReactNative.Managed
       m_objValue = null;
     }
 
+    public static implicit operator JSValue(string value) => new JSValue(value);
+    public static implicit operator JSValue(bool value) => new JSValue(value);
+    public static implicit operator JSValue(sbyte value) => new JSValue(value);
+    public static implicit operator JSValue(short value) => new JSValue(value);
+    public static implicit operator JSValue(int value) => new JSValue(value);
+    public static implicit operator JSValue(long value) => new JSValue(value);
+    public static implicit operator JSValue(byte value) => new JSValue(value);
+    public static implicit operator JSValue(ushort value) => new JSValue(value);
+    public static implicit operator JSValue(uint value) => new JSValue(value);
+    public static implicit operator JSValue(ulong value) => new JSValue((long)value);
+    public static implicit operator JSValue(float value) => new JSValue(value);
+    public static implicit operator JSValue(double value) => new JSValue(value);
+
     public JSValueType Type { get; }
 
     public bool IsNull => Type == JSValueType.Null;
@@ -78,6 +94,96 @@ namespace Microsoft.ReactNative.Managed
     public long Int64 => m_simpleValue.Int64Value;
     public double Double => m_simpleValue.DoubleValue;
 
+    public static explicit operator string(JSValue value)
+    {
+      switch (value.Type)
+      {
+        case JSValueType.String: return value.String;
+        case JSValueType.Boolean: return value.Boolean ? "true" : "false"; 
+        case JSValueType.Int64: return value.Int64.ToString(); 
+        case JSValueType.Double: return value.Double.ToString();
+        default: return "";
+      }
+    }
+
+    public static explicit operator bool(JSValue value)
+    {
+      switch (value.Type)
+      {
+        case JSValueType.Object: return true;
+        case JSValueType.Array: return true;
+        case JSValueType.String: return !string.IsNullOrEmpty(value.String);
+        case JSValueType.Boolean: return value.Boolean;
+        case JSValueType.Int64: return value.Int64 != 0;
+        case JSValueType.Double: return value.Double != 0;
+        default: return false;
+      }
+    }
+
+    public static explicit operator sbyte(JSValue value)
+    {
+      return (sbyte)(long)value;
+    }
+
+    public static explicit operator short(JSValue value)
+    {
+      return (short)(long)value;
+    }
+
+    public static explicit operator int(JSValue value)
+    {
+      return (int)(long)value;
+    }
+
+    public static explicit operator long(JSValue value)
+    {
+      switch (value.Type)
+      {
+        case JSValueType.String: return long.TryParse(value.String, out long result) ? result : 0;
+        case JSValueType.Boolean: return value.Boolean ? 1 : 0;
+        case JSValueType.Int64: return value.Int64;
+        case JSValueType.Double: return (long)value.Double;
+        default: return 0;
+      }
+    }
+
+    public static explicit operator byte(JSValue value)
+    {
+      return (byte)(long)value;
+    }
+
+    public static explicit operator ushort(JSValue value)
+    {
+      return (ushort)(long)value;
+    }
+
+    public static explicit operator uint(JSValue value)
+    {
+      return (uint)(long)value;
+    }
+
+    public static explicit operator ulong(JSValue value)
+    {
+      return (ulong)(long)value;
+    }
+
+    public static explicit operator float(JSValue value)
+    {
+      return (float)(double)value;
+    }
+
+    public static explicit operator double(JSValue value)
+    {
+      switch (value.Type)
+      {
+        case JSValueType.String: return double.TryParse(value.String, out double result) ? result : 0;
+        case JSValueType.Boolean: return value.Boolean ? 1 : 0;
+        case JSValueType.Int64: return value.Int64;
+        case JSValueType.Double: return value.Double;
+        default: return 0;
+      }
+    }
+
     public T To<T>() => (new JSValueTreeReader(this)).ReadValue<T>();
 
     public JSValue From<T>(T value)
@@ -85,6 +191,47 @@ namespace Microsoft.ReactNative.Managed
       var writer = new JSValueTreeWriter();
       writer.WriteValue(value);
       return writer.TakeValue();
+    }
+
+    public override string ToString()
+    {
+      switch (Type)
+      {
+        case JSValueType.Null: return "null";
+        case JSValueType.Object:
+          {
+            var sb = new StringBuilder();
+            sb.Append("{");
+            foreach (var prop in Object)
+            {
+              sb.Append(prop.Key);
+              sb.Append(": ");
+              sb.Append(prop.Value.ToString());
+              sb.Append(", ");
+            }
+            sb.Length -= 2;
+            sb.Append("}");
+            return sb.ToString();
+          }
+        case JSValueType.Array:
+          {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            foreach (var item in Array)
+            {
+              sb.Append(item.ToString());
+              sb.Append(", ");
+            }
+            sb.Length -= 2;
+            sb.Append("]");
+            return sb.ToString();
+          }
+        case JSValueType.String: return "\"" + String + "\"";
+        case JSValueType.Boolean: return Boolean ? "true": "false";
+        case JSValueType.Int64: return Int64.ToString();
+        case JSValueType.Double: return Double.ToString();
+        default: return "<Unexpected>";
+      }
     }
 
     public bool TryGetObjectProperty(string propertyName, out JSValue value)
@@ -96,6 +243,26 @@ namespace Microsoft.ReactNative.Managed
 
       value = Null;
       return false;
+    }
+
+    public JSValue GetObjectProperty(string propertyName)
+    {
+      return (Type == JSValueType.Object && Object.TryGetValue(propertyName, out JSValue value)) ? value : Null;
+    }
+
+    public JSValue GetArrayItem(int index)
+    {
+      return (Type == JSValueType.Array && index < Array.Count) ? Array[index] : Null; 
+    }
+
+    public JSValue this[string propertyName]
+    {
+      get { return GetObjectProperty(propertyName); }
+    }
+
+    public JSValue this[int index]
+    {
+      get { return GetArrayItem(index); }
     }
 
     public static bool operator ==(JSValue lhs, JSValue rhs)
@@ -313,6 +480,22 @@ namespace Microsoft.ReactNative.Managed
       [FieldOffset(0)] public bool BooleanValue;
       [FieldOffset(0)] public long Int64Value;
       [FieldOffset(0)] public double DoubleValue;
+    }
+  }
+
+  class JSValueObject : Dictionary<string, JSValue>
+  {
+    public static implicit operator JSValue(JSValueObject properties)
+    {
+      return new JSValue(new ReadOnlyDictionary<string, JSValue>(properties));
+    }
+  }
+
+  class JSValueArray : List<JSValue>
+  {
+    public static implicit operator JSValue(JSValueArray items)
+    {
+      return new JSValue(new ReadOnlyCollection<JSValue>(items));
     }
   }
 }

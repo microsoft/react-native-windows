@@ -15,13 +15,21 @@
     return fieldMap;                                                                 \
   }
 
-#define REACT_FIELD(field)                                                 \
+#define INTERNAL_REACT_FIELD_2_ARGS(field, fieldName)                      \
   template <class TClass>                                                  \
   static void RegisterField(                                               \
       winrt::Microsoft::ReactNative::FieldMap &fieldMap,                   \
       winrt::Microsoft::ReactNative::ReactFieldId<__COUNTER__>) noexcept { \
-    fieldMap.emplace(L## #field, &TClass::field);                          \
+    fieldMap.emplace(fieldName, &TClass::field);                           \
   }
+
+#define INTERNAL_REACT_FIELD_1_ARGS(field) INTERNAL_REACT_FIELD_2_ARGS(field, L## #field)
+#define INTERNAL_REACT_FIELD_3RD_ARG(arg1, arg2, arg3, ...) arg3
+#define INTERNAL_REACT_FIELD_RECOMPOSER2(argsWithParentheses) INTERNAL_REACT_FIELD_3RD_ARG argsWithParentheses
+#define INTERNAL_REACT_FIELD(...) \
+  INTERNAL_REACT_FIELD_RECOMPOSER2((__VA_ARGS__, INTERNAL_REACT_FIELD_2_ARGS, INTERNAL_REACT_FIELD_1_ARGS, ))
+
+#define REACT_FIELD(/* field, [opt] fieldName */...) INTERNAL_REACT_FIELD(__VA_ARGS__)(__VA_ARGS__)
 
 namespace winrt::Microsoft::ReactNative {
 

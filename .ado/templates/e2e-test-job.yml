@@ -28,7 +28,7 @@ jobs:
       - checkout: self
         clean: true
         fetchDepth: 1 # the depth of commits to ask Git to fetch
-        submodules: true
+        submodules: false
 
       - task: PowerShell@2
         displayName: List disksize after checkout

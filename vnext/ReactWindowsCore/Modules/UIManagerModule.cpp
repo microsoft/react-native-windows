@@ -543,7 +543,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
   };
 }
 
-shared_ptr<IUIManager> __cdecl createIUIManager(
+shared_ptr<IUIManager> createIUIManager(
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers,
     INativeUIManager *nativeManager) {
   return std::make_shared<UIManager>(std::move(viewManagers), nativeManager);
@@ -556,8 +556,7 @@ std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
 }
 
 // Deprecated
-std::unique_ptr<facebook::xplat::module::CxxModule> __cdecl createUIManagerModule(
-    std::shared_ptr<IUIManager> uimanager) {
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager) {
   return createUIManagerModule(std::move(uimanager), nullptr);
 }
 

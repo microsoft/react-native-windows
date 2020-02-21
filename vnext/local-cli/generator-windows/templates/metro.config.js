@@ -28,14 +28,12 @@ module.exports = {
     // This should go in RN 0.61 when haste is removed
     blacklistRE: blacklist([
       new RegExp(
-        `${(path.resolve(rnPath) + path.sep).replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+        `${(path.resolve(rnPath) + path.sep).replace(/[/\\]/g, '/')}.*`,
       ),
 
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
-        `${path
-          .resolve(__dirname, 'windows')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+        `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
   },

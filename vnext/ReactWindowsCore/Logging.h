@@ -18,7 +18,7 @@ enum class RCTLogLevel {
 };
 
 using NativeLoggingHook = std::function<void(RCTLogLevel logLevel, const char *message)>;
-void __cdecl InitializeLogging(NativeLoggingHook &&hook);
+void InitializeLogging(NativeLoggingHook &&hook);
 
 } // namespace react
 } // namespace facebook

@@ -11,9 +11,9 @@
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
 
-#include <ReactUWP/ReactUwp.h>
 #include <ReactUWP/Views/FrameworkElementViewManager.h>
 #include <ReactUWP/Views/ShadowNodeBase.h>
+#include "ReactHost/React.h"
 
 #include "winrt/Microsoft.ReactNative.h"
 
@@ -24,8 +24,9 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
  public:
   ABIViewManager(
-      const std::shared_ptr<react::uwp::IReactInstance> &reactInstance,
-      const ReactNative::IViewManager &viewManager);
+      std::shared_ptr<react::uwp::IReactInstance> const &reactInstance,
+      Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
+      ReactNative::IViewManager const &viewManager);
 
   const char *GetName() const override;
 

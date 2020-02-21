@@ -9,11 +9,11 @@
 namespace Microsoft::React::Test {
 
 struct WebSocketServiceCallbacks {
-  std::function<void __cdecl()> OnConnection;
-  std::function<void __cdecl(boost::beast::websocket::response_type &)> OnHandshake;
-  std::function<void __cdecl(std::string)> OnMessage;
-  std::function<std::string __cdecl(std::string &&)> MessageFactory;
-  std::function<void __cdecl(IWebSocket::Error &&)> OnError;
+  std::function<void()> OnConnection;
+  std::function<void(boost::beast::websocket::response_type &)> OnHandshake;
+  std::function<void(std::string)> OnMessage;
+  std::function<std::string(std::string &&)> MessageFactory;
+  std::function<void(IWebSocket::Error &&)> OnError;
 };
 
 struct IWebSocketSession {
@@ -31,7 +31,7 @@ class BaseWebSocketSession : public IWebSocketSession {
   WebSocketServiceCallbacks &m_callbacks;
   State m_state;
 
-  std::function<void __cdecl(IWebSocket::Error &&)> m_errorHandler;
+  std::function<void(IWebSocket::Error &&)> m_errorHandler;
 
   void Read();
 
@@ -102,11 +102,11 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer> {
   void Start();
   void Stop();
 
-  void SetOnConnection(std::function<void __cdecl()> &&func);
-  void SetOnHandshake(std::function<void __cdecl(boost::beast::websocket::response_type &)> &&func);
-  void SetOnMessage(std::function<void __cdecl(std::string)> &&func);
-  void SetMessageFactory(std::function<std::string __cdecl(std::string &&)> &&func);
-  void SetOnError(std::function<void __cdecl(IWebSocket::Error &&)> &&func);
+  void SetOnConnection(std::function<void()> &&func);
+  void SetOnHandshake(std::function<void(boost::beast::websocket::response_type &)> &&func);
+  void SetOnMessage(std::function<void(std::string)> &&func);
+  void SetMessageFactory(std::function<std::string(std::string &&)> &&func);
+  void SetOnError(std::function<void(IWebSocket::Error &&)> &&func);
 };
 
 } // namespace Microsoft::React::Test
