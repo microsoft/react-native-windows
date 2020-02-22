@@ -35,6 +35,10 @@
     "lerna": "^3.16.1"
   },
   "resolutions": {
-    "**/eslint-plugin-react": "^7.14.1"
+    "**/eslint-plugin-react": "^7.14.1",
+    "e2etest/@wdio/config": "5.13.2",
+    "e2etest/@wdio/protocols": "5.13.2",
+    "e2etest/@wdio/repl": "5.13.2",
+    "e2etest/@wdio/utils": "5.13.2"
   }
 }
