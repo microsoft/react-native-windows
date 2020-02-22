@@ -85,4 +85,4 @@
 | ToastAndroid | n/a | Android-only. |
 | Vibration | Ready | See [Source](../ReactWindows/ReactNative/Modules/Vibration/VibrationModule.cs). |
 | VibrationIOS | n/a | iOS-only. |
-| Timers | Partial | `set[Interval|Timeout]` complete, missing `requestIdleCallback` ([#917](https://github.com/ReactWindows/react-native-windows/issues/917)) |
+| Timers | Partial | `set[Interval\|Timeout]` complete, missing `requestIdleCallback` ([#917](https://github.com/ReactWindows/react-native-windows/issues/917)) |
