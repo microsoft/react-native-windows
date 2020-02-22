@@ -11,6 +11,7 @@ import {
   DIRECT_MANIPULATION_TESTPAGE,
   IMAGE_TESTPAGE,
   CONTROL_STYLE_TESTPAGE,
+  TRANSFORM_TESTPAGE,
 } from '../../app/Consts';
 import LoginPage from './LoginPage';
 import DirectManipulationPage from './DirectManipulationPage';
@@ -52,6 +53,11 @@ class HomePage extends BasePage {
     ControlStyleTestPage.waitForPageLoaded();
   }
 
+  clickAndGotoTransformTestPage() {
+    this.TransformTestPageButton.click();
+    ControlStyleTestPage.waitForPageLoaded();
+  }
+
   private get testInputTestPageButton() {
     return By(TEXTINPUT_TESTPAGE);
   }
@@ -70,6 +76,10 @@ class HomePage extends BasePage {
 
   private get ControlStylePageButton() {
     return By(CONTROL_STYLE_TESTPAGE);
+  }
+
+  private get TransformTestPageButton() {
+    return By(TRANSFORM_TESTPAGE);
   }
 }
 

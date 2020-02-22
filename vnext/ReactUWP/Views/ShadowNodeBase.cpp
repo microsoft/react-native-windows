@@ -12,6 +12,7 @@
 #include <Views/ViewManagerBase.h>
 #include <WindowsNumerics.h>
 #include "Views/KeyboardEventHandler.h"
+#include "XamlFeatures.h"
 
 using namespace std::placeholders;
 
@@ -99,12 +100,18 @@ winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTr
 // "center":  This is the center of the UIElement
 // "transform": This will hold the un-centered TransformMatrix we want to apply
 void ShadowNodeBase::UpdateTransformPS() {
+  auto uielement = m_view.try_as<winrt::UIElement>();
+  assert(uielement != nullptr);
+
+  if (g_HasActualSizeProperty == TriBit::Undefined) {
+    // ActualSize works on 19H1+ only
+    g_HasActualSizeProperty = (uielement.try_as<winrt::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
+  }
+
   if (m_transformPS != nullptr) {
     // First build up an ExpressionAnimation to compute the "center" property,
     // like so: The input to the expression is UIElement.ActualSize/2, output is
     // a vector3 with [cx, cy, 0].
-    auto uielement = m_view.try_as<winrt::UIElement>();
-    assert(uielement != nullptr);
     m_transformPS = EnsureTransformPS();
     m_transformPS.InsertVector3(L"center", {0, 0, 0});
     auto instance = GetViewManager()->GetReactInstance().lock();
