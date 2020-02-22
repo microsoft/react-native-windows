@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Force coroutine method parameters pass by value",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "8a3ffdebac72b7719fd0309ade2ee6e106d94040",
-  "dependentChangeType": "patch",
-  "date": "2020-02-21T22:55:06.208Z"
-}

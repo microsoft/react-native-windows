@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 Feb 2020 23:40:21 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Feb 2020 00:21:17 GMT and should not be manually modified.
 
+## 0.61.0-beta.22
+Sat, 22 Feb 2020 00:21:17 GMT
+
+### Changes
+
+- Force coroutine method parameters pass by value (vmorozov@microsoft.com)
 ## 0.61.0-beta.21
 Fri, 21 Feb 2020 23:40:21 GMT
 
