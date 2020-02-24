@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Plumb directdebugging options through debug menu and instance loading",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "3954e65cce92f36092ea468abd85923d80b77364",
+  "dependentChangeType": "patch",
+  "date": "2020-02-24T23:20:10.936Z"
+}
