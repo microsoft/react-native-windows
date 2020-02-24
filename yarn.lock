@@ -6770,9 +6770,9 @@ forwarded@~0.1.2:
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
 fp-ts@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.5.0.tgz#adca3b90452196274f7b074f12f9c02741624c1a"
-  integrity sha512-xkC9ZKl/i2cU+8FAsdyLcTvPRXphp42FcK5WmZpB47VXb4gggC3DHlVDKNLdbC+U8zz6yp1b0bj0mZg0axmZYQ==
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.5.1.tgz#2edf15779ae60701ff2a45d6f31322d9413b4548"
+  integrity sha512-IjePHUJwegS9h7+cRCywoL/Nfha3UnMd3VHVg4gycv69nAQPOJ3b/XnjtF5ggTBF4gjLZcNaHjZEYOsRcDeGaA==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
