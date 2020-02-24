@@ -6,8 +6,7 @@
 namespace facebook {
 namespace react {
 
-TurboModuleManager::TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker) : m_jsInvoker(jsInvoker) {
-}
+TurboModuleManager::TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker) : m_jsInvoker(jsInvoker) {}
 
 /**
  * Return the TurboModule instance that has that name `moduleName`. If the `moduleName`
@@ -15,14 +14,13 @@ TurboModuleManager::TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker)
  * `moduleName`, return null.
  */
 std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &moduleName) {
-
   if (!hasModule(moduleName)) {
     if (moduleName.compare("SampleTurboModule") == 0) {
       m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_jsInvoker));
     }
   }
 
-  const auto& it = m_modules.find(moduleName);
+  const auto &it = m_modules.find(moduleName);
   return it == m_modules.end() ? nullptr : it->second;
 }
 

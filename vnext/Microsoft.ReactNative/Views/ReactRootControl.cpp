@@ -494,7 +494,7 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
           m_directDebugging = !m_directDebugging;
           ReloadHost();
         });
-        
+
     breakOnNextLineButton.Content(
         winrt::box_value(m_breakOnNextLine ? L"Disable Break on First Line" : L"Enable Break on First Line"));
     m_breakOnNextLineRevoker = directDebugButton.Click(

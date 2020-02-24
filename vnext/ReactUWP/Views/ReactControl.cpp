@@ -457,18 +457,18 @@ void ReactControl::ShowDeveloperMenu() {
       winrt::box_value(directDebugging ? L"Disable Direct Debugging" : L"Enable Direct Debugging"));
   m_directDebuggingRevoker = directDebugButton.Click(
       winrt::auto_revoke,
-      [this, directDebugging](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
+      [ this, directDebugging ](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
         DismissDeveloperMenu();
         m_instanceCreator->persistUseDirectDebugger(!directDebugging);
         Reload(true);
       });
-      
+
   bool breakOnNextLine = m_reactInstance->GetReactInstanceSettings().DebuggerBreakOnNextLine;
   breakOnNextLineButton.Content(
       winrt::box_value(breakOnNextLine ? L"Disable Break on First Line" : L"Enable Break on First Line"));
   m_breakOnNextLineRevoker = breakOnNextLineButton.Click(
       winrt::auto_revoke,
-      [this, breakOnNextLine](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
+      [ this, breakOnNextLine ](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
         DismissDeveloperMenu();
         m_instanceCreator->persistBreakOnNextLine(!breakOnNextLine);
         Reload(true);

@@ -57,6 +57,7 @@ struct InstanceReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     m_wrInstance.As(&spInstance);
     reinterpret_cast<Instance *>(spInstance.Get())->persistBreakOnNextLine(breakOnNextLine);
   }
+
  private:
   Microsoft::WRL::WeakRef m_wrInstance;
   Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> m_instance;
