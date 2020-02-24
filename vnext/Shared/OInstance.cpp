@@ -403,8 +403,7 @@ InstanceImpl::InstanceImpl(
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
-      jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -440,8 +439,7 @@ InstanceImpl::InstanceImpl(
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
       }
-      jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     } else
 #endif
     {
