@@ -7590,9 +7590,9 @@ invert-kv@^2.0.0:
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
 io-ts@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.1.1.tgz#d8230ed5a30f43ceaeeeb1094bb6b4937d9c604a"
-  integrity sha512-6mDCiTc/0uNtC8M1u/kcNiw5JUTlREFCGV7pjcbrQrUDguLkOpuzb4wbJcU78G74QvkhQdvT3F3dAupycXN95g==
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.1.2.tgz#8ea4439c902c3d15cda343900bed7ee5a9977f42"
+  integrity sha512-whVRGaNBZSrkPrg1y+sSy/kv/fDjweQPP1UCLhKwJUHWGD6rFgbZ44FBF98JlY/FFzTA0MkhGeHWZ/aFhF42eA==
 
 io.appium.settings@^2.10.0:
   version "2.14.1"
