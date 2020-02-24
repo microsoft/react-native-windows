@@ -105,6 +105,9 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TurboModuleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
@@ -243,6 +246,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebSocketJSExecutorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TurboModuleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

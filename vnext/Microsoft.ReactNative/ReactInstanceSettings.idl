@@ -17,6 +17,7 @@ namespace Microsoft.ReactNative {
     [noexcept2] Boolean UseWebDebugger { get; set; };
     [noexcept2] Boolean UseLiveReload { get; set; };
     [noexcept2] Boolean UseDirectDebugger { get; set; };
+    [noexcept2] Boolean DebuggerBreakOnNextLine { get; set; }
     [noexcept2] Boolean UseJsi { get; set; };
     [noexcept2] Boolean EnableJITCompilation { get; set; };
     [noexcept2] Boolean EnableByteCodeCaching { get; set; };

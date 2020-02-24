@@ -13,6 +13,7 @@
 #include "InstanceManager.h"
 #include "Sandbox/SandboxEndpoint.h"
 #include "ViewManager.h"
+#include <TurboModuleManager.h>
 
 namespace facebook {
 namespace react {
@@ -139,6 +140,7 @@ class InstanceImpl : public InstanceWrapper, private ::std::enable_shared_from_t
   std::string m_jsBundleBasePath;
   std::shared_ptr<IUIManager> m_uimanager;
   std::shared_ptr<facebook::react::ModuleRegistry> m_moduleRegistry;
+  std::shared_ptr<TurboModuleManager> m_turboModuleManager;
   std::shared_ptr<MessageQueueThread> m_jsThread;
   std::shared_ptr<MessageQueueThread> m_nativeQueue;
 

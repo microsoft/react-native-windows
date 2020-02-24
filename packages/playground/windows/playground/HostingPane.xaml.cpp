@@ -211,6 +211,8 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     react::uwp::ReactInstanceSettings settings;
     settings.UseWebDebugger = x_UseWebDebuggerCheckBox->IsChecked->Value;
     settings.UseLiveReload = x_UseLiveReloadCheckBox->IsChecked->Value;
+    settings.UseDirectDebugger = x_UseDirectDebuggerCheckBox->IsChecked->Value;
+    settings.DebuggerBreakOnNextLine = x_BreakOnFirstLineCheckBox->IsChecked->Value;
     settings.EnableDeveloperMenu = true;
     if (params.find("debughost") != params.end()) {
       settings.DebugHost = params["debughost"];

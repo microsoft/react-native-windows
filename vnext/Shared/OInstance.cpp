@@ -55,6 +55,8 @@
 #include "V8JSIRuntimeHolder.h"
 #endif
 #include "ChakraRuntimeHolder.h"
+#include <ReactCommon/TurboModuleBinding.h>
+#include <ReactCommon/JSCallInvoker.h>
 #endif
 
 // forward declaration.
@@ -150,12 +152,25 @@ namespace react {
 
 #ifdef PATCH_RN
 namespace {
-
 void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #ifdef ENABLE_JS_SYSTRACE_TO_ETW
   facebook::react::tracing::initializeJSHooks(runtime);
 #endif
 }
+
+class BridgeJSCallInvoker : public JSCallInvoker {
+ public:
+  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread) : messageQueueThread_(messageQueueThread) {}
+
+  void invokeAsync(std::function<void()> &&func) override {
+    if (auto queue = messageQueueThread_.lock()) {
+      queue->runOnQueue(std::move(func));
+    }
+  }
+
+ private:
+  std::weak_ptr<MessageQueueThread> messageQueueThread_;
+};
 
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
@@ -173,15 +188,29 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
+    const auto tmm = turboModuleManager_;
+    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    auto binding = [tmm](const std::string &name) -> std::shared_ptr<TurboModule> {
+      return tmm->getModule(name);
+    };
+
+    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+
+    // init TurboModule
+    for (const auto &moduleName : turboModuleManager_->getEagerInitModuleNames()) {
+      turboModuleManager_->getModule(moduleName);
+    }
+
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook) noexcept
-      : runtimeHolder_{std::move(runtimeHolder)}, loggingHook_{std::move(loggingHook)} {}
+  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook, std::shared_ptr<TurboModuleManager> turboModuleManager) noexcept
+      : runtimeHolder_{std::move(runtimeHolder)}, loggingHook_{std::move(loggingHook)}, turboModuleManager_{std::move(turboModuleManager)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  std::shared_ptr<TurboModuleManager> turboModuleManager_;
   NativeLoggingHook loggingHook_;
 };
 
@@ -400,10 +429,14 @@ InstanceImpl::InstanceImpl(
     }
   } else {
 #ifdef PATCH_RN
+
+    m_turboModuleManager = std::make_shared<TurboModuleManager>(std::make_shared<BridgeJSCallInvoker>(jsQueue));
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleManager);
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -439,7 +472,8 @@ InstanceImpl::InstanceImpl(
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
       }
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleManager);
     } else
 #endif
     {

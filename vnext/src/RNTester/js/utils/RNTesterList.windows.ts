@@ -227,6 +227,10 @@ const APIExamples: Array<IRNTesterExample> = [
     key: 'WebSocketExample',
     module: require('react-native/RNTester/js/examples/WebSocket/WebSocketExample'),
   },
+  {
+    key: 'TurboModuleExample',
+    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
+  },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
@@ -234,7 +238,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },*/
 ];
 
-const Modules: {[key: string]: IRNTesterModule} = {};
+const Modules: { [key: string]: IRNTesterModule } = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
