@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Fix transform center",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "commit": "b5f62bb28ce8a8f4277dcf380fcba1631580a299",
+  "dependentChangeType": "patch",
+  "date": "2020-02-24T19:56:08.924Z"
+}
