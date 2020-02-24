@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix some reliability isssues for current AsyncStorage implementation",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "e4be03a2d921fe401028cda19684e79899ec1b26",
-  "dependentChangeType": "patch",
-  "date": "2020-02-19T18:20:40.391Z"
-}

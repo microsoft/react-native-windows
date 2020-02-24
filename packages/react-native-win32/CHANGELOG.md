@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 15 Feb 2020 01:46:09 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Feb 2020 01:27:13 GMT and should not be manually modified.
 
+## 0.61.0-beta.8
+Fri, 21 Feb 2020 01:27:13 GMT
+
+### Changes
+
+- Update metro configs to support node 12 on windows (acoates)
 ## 0.61.0-beta.6
 Sat, 15 Feb 2020 01:46:09 GMT
 

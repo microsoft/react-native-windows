@@ -72,6 +72,9 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -110,6 +113,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -195,6 +201,9 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\AppThemeModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AsyncStorageModuleWin32.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\ExceptionsManagerModule.h">
