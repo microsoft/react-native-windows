@@ -46,6 +46,17 @@ struct InstanceReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     reinterpret_cast<Instance *>(spInstance.Get())->persistUseLiveReload(useLiveReload);
   }
 
+  void persistUseDirectDebugger(bool useDirectDebugger) {
+    Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
+    m_wrInstance.As(&spInstance);
+    reinterpret_cast<Instance *>(spInstance.Get())->persistUseDirectDebugger(useDirectDebugger);
+  }
+
+  void persistBreakOnNextLine(bool breakOnNextLine) {
+    Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
+    m_wrInstance.As(&spInstance);
+    reinterpret_cast<Instance *>(spInstance.Get())->persistBreakOnNextLine(breakOnNextLine);
+  }
  private:
   Microsoft::WRL::WeakRef m_wrInstance;
   Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> m_instance;
@@ -91,6 +102,14 @@ void Instance::persistUseWebDebugger(bool useWebDebugger) {
 
 void Instance::persistUseLiveReload(bool useLiveReload) {
   m_settings.UseLiveReload = useLiveReload;
+}
+
+void Instance::persistUseDirectDebugger(bool useDirectDebugger) {
+  m_settings.UseDirectDebugger = useDirectDebugger;
+}
+
+void Instance::persistBreakOnNextLine(bool breakOnNextLine) {
+  m_settings.DebuggerBreakOnNextLine = breakOnNextLine;
 }
 
 HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings) {

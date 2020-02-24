@@ -108,12 +108,12 @@
      <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
         Margin="5,2"
         VerticalAlignment="Center"
-        IsChecked="true"
+        IsChecked="false"
         Content="Direct Debugging"/>
       <CheckBox x:Name="x_BreakOnFirstLineCheckBox"
         Margin="5,2"
         VerticalAlignment="Center"
-        IsChecked="true"
+        IsChecked="false"
         Content="Break on First Line"/>
       <CheckBox x:Name="x_UseLiveReloadCheckBox"
         Margin="5,2"

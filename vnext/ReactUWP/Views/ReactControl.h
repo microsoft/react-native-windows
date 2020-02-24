@@ -112,6 +112,8 @@ class ReactControl final : public std::enable_shared_from_this<ReactControl>, pu
   winrt::Button::Click_revoker m_toggleInspectorRevoker{};
   winrt::Button::Click_revoker m_reloadJSRevoker{};
   winrt::Button::Click_revoker m_liveReloadRevoker{};
+  winrt::Button::Click_revoker m_directDebuggingRevoker{};
+  winrt::Button::Click_revoker m_breakOnNextLineRevoker{};
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher;
   winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
 };
