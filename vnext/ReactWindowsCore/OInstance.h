@@ -9,11 +9,11 @@
 #include <string>
 #include <vector>
 
+#include <TurboModuleManager.h>
 #include <cxxreact/Instance.h>
 #include "InstanceManager.h"
 #include "Sandbox/SandboxEndpoint.h"
 #include "ViewManager.h"
-#include <TurboModuleManager.h>
 
 namespace facebook {
 namespace react {

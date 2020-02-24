@@ -54,9 +54,9 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
-#include "ChakraRuntimeHolder.h"
-#include <ReactCommon/TurboModuleBinding.h>
 #include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/TurboModuleBinding.h>
+#include "ChakraRuntimeHolder.h"
 #endif
 
 // forward declaration.
@@ -190,9 +190,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
 
     const auto tmm = turboModuleManager_;
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    auto binding = [tmm](const std::string &name) -> std::shared_ptr<TurboModule> {
-      return tmm->getModule(name);
-    };
+    auto binding = [tmm](const std::string &name) -> std::shared_ptr<TurboModule> { return tmm->getModule(name); };
 
     TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
 
@@ -205,8 +203,13 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook, std::shared_ptr<TurboModuleManager> turboModuleManager) noexcept
-      : runtimeHolder_{std::move(runtimeHolder)}, loggingHook_{std::move(loggingHook)}, turboModuleManager_{std::move(turboModuleManager)} {}
+  OJSIExecutorFactory(
+      std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
+      NativeLoggingHook loggingHook,
+      std::shared_ptr<TurboModuleManager> turboModuleManager) noexcept
+      : runtimeHolder_{std::move(runtimeHolder)},
+        loggingHook_{std::move(loggingHook)},
+        turboModuleManager_{std::move(turboModuleManager)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
