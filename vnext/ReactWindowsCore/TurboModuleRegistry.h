@@ -1,0 +1,33 @@
+#pragma once
+
+#include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/TurboModule.h>
+
+namespace facebook {
+namespace react {
+
+class TurboModuleRegistry {
+public:
+  /**
+   * Return the TurboModule instance that has that name `moduleName`. If the `moduleName`
+   * TurboModule hasn't been instantiated, instantiate it. If no TurboModule is registered under
+   * `moduleName`, return null.
+   */
+  virtual std::shared_ptr<TurboModule> getModule(const std::string &moduleName) = 0;
+
+  /** Get all instantiated TurboModules. */
+  // std::vector<std::shared_ptr<TurboModule>>& getModules() = 0;
+
+  /** Has the TurboModule with name `moduleName` been instantiated? */
+  virtual bool hasModule(const std::string &moduleName) = 0;
+
+  /**
+   * Return the names of all the NativeModules that are supposed to be eagerly initialized. By
+   * calling getModule on each name, this allows the application to eagerly initialize its
+   * NativeModules.
+   */
+  virtual std::vector<std::string> getEagerInitModuleNames() = 0;
+};
+
+} // namespace react
+} // namespace facebook

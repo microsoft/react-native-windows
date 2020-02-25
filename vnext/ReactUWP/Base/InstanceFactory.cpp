@@ -33,14 +33,22 @@ REACTWINDOWS_API_(std::shared_ptr<IReactInstance>)
 CreateReactInstance(
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
-  return std::make_shared<UwpReactInstance>(moduleProvider, viewManagerProvider);
+  return std::make_shared<UwpReactInstance>(nullptr, moduleProvider, viewManagerProvider);
 }
 
 REACTWINDOWS_API_(IReactInstance *)
 UnSafeCreateReactInstance(
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
-  return new UwpReactInstance(moduleProvider, viewManagerProvider);
+  return new UwpReactInstance(nullptr, moduleProvider, viewManagerProvider);
+}
+
+REACTWINDOWS_API_(std::shared_ptr<IReactInstance>)
+CreateReactInstance(
+    const std::shared_ptr<facebook::react::TurboModuleRegistry> &turboModuleRegistry,
+    const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
+    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
+  return std::make_shared<UwpReactInstance>(turboModuleRegistry, moduleProvider, viewManagerProvider);
 }
 
 REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>)

@@ -188,15 +188,17 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    const auto tmm = turboModuleManager_;
-    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    auto binding = [tmm](const std::string &name) -> std::shared_ptr<TurboModule> { return tmm->getModule(name); };
+    if (turboModuleRegistry_) {
+      const auto tmr = turboModuleRegistry_;
+      // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+      auto binding = [tmr](const std::string &name) -> std::shared_ptr<TurboModule> { return tmr->getModule(name); };
 
-    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+      TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
 
-    // init TurboModule
-    for (const auto &moduleName : turboModuleManager_->getEagerInitModuleNames()) {
-      turboModuleManager_->getModule(moduleName);
+      // init TurboModule
+      for (const auto &moduleName : turboModuleRegistry_->getEagerInitModuleNames()) {
+        turboModuleRegistry_->getModule(moduleName);
+      }
     }
 
     return std::make_unique<JSIExecutor>(
@@ -206,14 +208,14 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
-      std::shared_ptr<TurboModuleManager> turboModuleManager) noexcept
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
-        turboModuleManager_{std::move(turboModuleManager)} {}
+        turboModuleRegistry_{std::move(turboModuleRegistry)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
-  std::shared_ptr<TurboModuleManager> turboModuleManager_;
+  std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   NativeLoggingHook loggingHook_;
 };
 
@@ -269,6 +271,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -277,6 +280,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
+      std::move(turboModuleRegistry),
       std::move(uimanager),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -294,6 +298,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -302,6 +307,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
+      std::move(turboModuleRegistry),
       std::move(uimanager),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -374,12 +380,14 @@ InstanceImpl::InstanceImpl(
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
     : m_uimanager(std::move(uimanager)),
+      m_turboModuleRegistry(std::move(turboModuleRegistry)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
@@ -433,13 +441,13 @@ InstanceImpl::InstanceImpl(
   } else {
 #ifdef PATCH_RN
 
-    m_turboModuleManager = std::make_shared<TurboModuleManager>(std::make_shared<BridgeJSCallInvoker>(jsQueue));
+    // m_turboModuleRegistry = std::make_shared<TurboModuleManager>(std::make_shared<BridgeJSCallInvoker>(jsQueue));
 
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleManager);
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -476,7 +484,7 @@ InstanceImpl::InstanceImpl(
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleManager);
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
     } else
 #endif
     {
