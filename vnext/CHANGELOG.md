@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 Feb 2020 03:42:21 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Feb 2020 21:50:32 GMT and should not be manually modified.
 
+## 0.61.0-beta.24
+Tue, 25 Feb 2020 21:50:32 GMT
+
+### Changes
+
+- Plumb directdebugging options through debug menu and instance loading (acoates@microsoft.com)
 ## 0.61.0-beta.23
 Tue, 25 Feb 2020 03:42:21 GMT
 
