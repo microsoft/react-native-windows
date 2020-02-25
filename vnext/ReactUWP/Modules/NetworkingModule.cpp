@@ -339,11 +339,17 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 }
 
 void NetworkingModule::NetworkingHelper::AbortRequest(int64_t requestId) noexcept {
-  auto iter = m_requests.find(requestId);
-  if (iter == end(m_requests))
-    return;
+  winrt::Windows::Foundation::IAsyncOperationWithProgress<
+    winrt::Windows::Web::Http::HttpResponseMessage, 
+    winrt::Windows::Web::Http::HttpProgress> httpRequest(nullptr);
+  {
+    std::scoped_lock(m_mutex);
+    auto iter = m_requests.find(requestId);
+    if (iter == end(m_requests))
+      return;
+    httpRequest = iter->second;
+  }
 
-  auto httpRequest = iter->second;
   try {
     httpRequest.Cancel();
   } catch (...) {
