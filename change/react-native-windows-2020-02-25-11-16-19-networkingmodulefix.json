@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Fix concurrency issue in NetworkingModule",
+  "packageName": "react-native-windows",
+  "email": "lamdoan@microsoft.com",
+  "commit": "9a4348df3b8177f0bf4bc451bbc1d93df5215dc4",
+  "dependentChangeType": "patch",
+  "date": "2020-02-25T19:16:19.779Z"
+}
