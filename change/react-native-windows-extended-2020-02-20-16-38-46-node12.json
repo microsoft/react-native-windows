@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "bump package versions to unblock publish",
-  "packageName": "react-native-windows-extended",
-  "email": "acoates",
-  "commit": "36be20742ba4172b1870b551f56928768396b573",
-  "dependentChangeType": "patch",
-  "date": "2020-02-21T00:38:45.870Z"
-}
