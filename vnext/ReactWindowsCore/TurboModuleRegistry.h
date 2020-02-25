@@ -7,7 +7,7 @@ namespace facebook {
 namespace react {
 
 class TurboModuleRegistry {
-public:
+ public:
   /**
    * Return the TurboModule instance that has that name `moduleName`. If the `moduleName`
    * TurboModule hasn't been instantiated, instantiate it. If no TurboModule is registered under

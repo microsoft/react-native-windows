@@ -558,8 +558,8 @@ void ReactRootControl::ReloadHost() noexcept {
     auto options = reactViewHost->ReactHost().Options();
     options.DeveloperSettings.UseLiveReload = m_useLiveReload;
     options.DeveloperSettings.UseWebDebugger = m_useWebDebugger;
-    options.DeveloperSettings.DirectDebugging = m_directDebugging;
-    options.DeveloperSettings.BreakOnNextLine = m_breakOnNextLine;
+    options.DeveloperSettings.UseDirectDebugger = m_directDebugging;
+    options.DeveloperSettings.DebuggerBreakOnNextLine = m_breakOnNextLine;
     reactViewHost->ReactHost().ReloadInstanceWithOptions(std::move(options));
   }
 }

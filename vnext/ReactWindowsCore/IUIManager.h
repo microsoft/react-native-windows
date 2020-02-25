@@ -16,6 +16,7 @@ struct INativeUIManager;
 struct IReactRootView;
 class IViewManager;
 struct ShadowNode;
+class MessageQueueThread;
 
 class IUIManager {
  public:
