@@ -7,7 +7,7 @@
 namespace facebook {
 namespace react {
 
-class TurboModuleManager: public TurboModuleRegistry {
+class TurboModuleManager : public TurboModuleRegistry {
  public:
   TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker);
 
