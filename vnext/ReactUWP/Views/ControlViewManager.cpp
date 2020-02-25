@@ -69,7 +69,7 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
               control.IsTabStop(false);
             } else {
               control.IsTabStop(true);
-              control.TabIndex(static_cast<int32_t>(tabIndex));
+              control.TabIndex(tabIndex);
             }
           }
         } else if (propertyValue.isNull()) {
