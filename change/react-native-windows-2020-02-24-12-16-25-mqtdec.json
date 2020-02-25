@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Declare MessageQueueThread in header that uses it",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "2a3b2b301b4b6a972af50eba3cea72bc65dca6fc",
-  "dependentChangeType": "patch",
-  "date": "2020-02-24T20:16:25.637Z"
-}

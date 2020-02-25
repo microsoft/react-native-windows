@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 22 Feb 2020 00:21:17 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Feb 2020 03:42:21 GMT and should not be manually modified.
 
+## 0.61.0-beta.23
+Tue, 25 Feb 2020 03:42:21 GMT
+
+### Changes
+
+- Declare MessageQueueThread in header that uses it (acoates@microsoft.com)
 ## 0.61.0-beta.22
 Sat, 22 Feb 2020 00:21:17 GMT
 

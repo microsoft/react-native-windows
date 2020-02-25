@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 Feb 2020 03:42:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.23",
+      "version": "0.61.0-beta.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Declare MessageQueueThread in header that uses it",
+            "author": "acoates@microsoft.com",
+            "commit": "2a3b2b301b4b6a972af50eba3cea72bc65dca6fc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Feb 2020 23:59:13 GMT",
       "tag": "react-native-windows_v0.61.0-beta.22",
       "version": "0.61.0-beta.22",
