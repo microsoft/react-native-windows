@@ -14,10 +14,44 @@
 
 namespace SampleLibraryCpp {
 
+// Point struct can be automatically serialized/deserialized thanks to the custom attributes.
+// Alternatively, we can provide WriteValue and ReadValue functions.
+// See Microsoft.ReactNaitve.Cxx.UnitTests for examples.
+REACT_STRUCT(Point)
+struct Point {
+  REACT_FIELD(X, L"x")
+  int X;
+
+  REACT_FIELD(Y, L"y")
+  int Y;
+};
+
 // Sample REACT_MODULE
 
 REACT_MODULE(SampleModuleCppImpl, L"SampleModuleCpp");
 struct SampleModuleCppImpl {
+#pragma region Initialization
+
+  REACT_INIT(Initialize)
+  void Initialize(IReactContext const & /*reactContext*/) noexcept {
+    m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
+        [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+          TimedEvent(++m_timerCount);
+          if (m_timer && m_timerCount == 5) {
+            m_timer.Cancel();
+          }
+        },
+        TimedEventInterval);
+  }
+
+  ~SampleModuleCppImpl() {
+    if (m_timer) {
+      m_timer.Cancel();
+    }
+  }
+
+#pragma endregion
+
 #pragma region Constants
 
   REACT_CONSTANT(NumberConstant);
@@ -97,14 +131,12 @@ struct SampleModuleCppImpl {
   }
 
   REACT_METHOD(NegateAsyncPromise)
-  winrt::fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> const &result) noexcept {
-    // In co-routine we can safely use parameters passed by value and local variables kept on stack by value.
-    ReactPromise<int> safeResult{result}; // make a copy for co-routine safe access
+  winrt::fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
-      safeResult.Resolve(-x);
+      result.Resolve(-x);
     } else {
-      safeResult.Reject("Already negative");
+      result.Reject("Already negative");
     }
   }
 
@@ -133,22 +165,17 @@ struct SampleModuleCppImpl {
 
 #pragma endregion
 
- public:
-  SampleModuleCppImpl() {
-    m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
-        [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
-          if (TimedEvent) {
-            TimedEvent(++m_timerCount);
-          }
-        },
-        TimedEventInterval);
+#pragma region JS Functions
+
+  REACT_FUNCTION(CalcDistance, L"calcDistance");
+  std::function<void(Point const &, Point const &)> CalcDistance;
+
+  REACT_METHOD(CallDistanceFunction, L"callDistanceFunction");
+  void CallDistanceFunction(Point &&point1, Point &&point2) noexcept {
+    CalcDistance(point1, point2);
   }
 
-  ~SampleModuleCppImpl() {
-    if (m_timer) {
-      m_timer.Cancel();
-    }
-  }
+#pragma endregion
 
  private:
   winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};

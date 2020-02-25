@@ -16,6 +16,7 @@ struct INativeUIManager;
 struct IReactRootView;
 class IViewManager;
 struct ShadowNode;
+class MessageQueueThread;
 
 class IUIManager {
  public:
@@ -66,7 +67,7 @@ class IUIManager {
       facebook::xplat::module::CxxModule::Callback callback) = 0;
 };
 
-std::shared_ptr<IUIManager> __cdecl createIUIManager(
+std::shared_ptr<IUIManager> createIUIManager(
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers,
     INativeUIManager *nativeManager);
 
@@ -76,8 +77,7 @@ std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
 
 // Deprecated: use the overloaded version with two parameters.
 // It is here because it is being exported
-std::unique_ptr<facebook::xplat::module::CxxModule> __cdecl createUIManagerModule(
-    std::shared_ptr<IUIManager> uimanager);
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager);
 
 std::shared_ptr<IUIManager> createBatchingUIManager(
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers,

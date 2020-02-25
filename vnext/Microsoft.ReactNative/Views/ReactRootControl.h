@@ -101,6 +101,8 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
 
   bool m_useLiveReload{false};
   bool m_useWebDebugger{false};
+  bool m_directDebugging{false};
+  bool m_breakOnNextLine{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
 
@@ -124,6 +126,8 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   winrt::Button::Click_revoker m_toggleInspectorRevoker{};
   winrt::Button::Click_revoker m_reloadJSRevoker{};
   winrt::Button::Click_revoker m_liveReloadRevoker{};
+  winrt::Button::Click_revoker m_directDebuggingRevoker{};
+  winrt::Button::Click_revoker m_breakOnNextLineRevoker{};
   winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
 };
 

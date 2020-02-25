@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.61.0-beta.6",
+  "version": "0.61.0-beta.8",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",
@@ -10,7 +10,7 @@
     "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
     "api": "just-scripts api",
     "run-win32-dev-web": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useWebDebugger",

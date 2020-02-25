@@ -148,7 +148,7 @@ MemoryTrackerImpl::ThresholdCallbackRecord::ThresholdCallbackRecord(
     MemoryThresholdCallback &&callback) noexcept
     : Threshold{threshold}, MinCallbackInterval{minCallbackInterval}, Callback{std::move(callback)} {}
 
-std::shared_ptr<MemoryTracker> __cdecl CreateMemoryTracker(
+std::shared_ptr<MemoryTracker> CreateMemoryTracker(
     std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread) noexcept {
   return std::make_shared<MemoryTrackerImpl>(std::move(callbackMessageQueueThread));
 }

@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 01:27:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.8",
+      "version": "0.61.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update metro configs to support node 12 on windows",
+            "author": "acoates",
+            "commit": "f28962002817a02628687143e01638640dc849a6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Feb 2020 01:46:09 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.6",
       "version": "0.61.0-beta.6",

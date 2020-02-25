@@ -43,6 +43,8 @@ class Instance : public Microsoft::WRL::RuntimeClass<ABI::react::uwp::IInstance>
   void markAsNeedsReload();
   void persistUseWebDebugger(bool useWebDebugger);
   void persistUseLiveReload(bool useLiveReload);
+  void persistUseDirectDebugger(bool useDirectDebugger);
+  void persistBreakOnNextLine(bool breakOnNextLine);
 
  private:
   std::string m_jsBundleName;

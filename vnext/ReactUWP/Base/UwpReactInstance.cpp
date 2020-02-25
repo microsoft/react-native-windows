@@ -105,6 +105,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     devSettings->debugBundlePath = settings.DebugBundlePath;
     devSettings->useWebDebugger = settings.UseWebDebugger;
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
+    devSettings->debuggerBreakOnNextLine = settings.DebuggerBreakOnNextLine;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
     devSettings->useJITCompilation = settings.EnableJITCompilation;
@@ -172,7 +173,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         std::move(i18nInfo),
         std::move(appstate),
         std::move(appTheme),
-        std::weak_ptr<IReactInstance>(spThis));
+        spThis);
 
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =

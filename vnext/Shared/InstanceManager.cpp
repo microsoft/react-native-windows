@@ -24,7 +24,7 @@ const std::shared_ptr<IDevSupportManager> &GetSharedDevManager() noexcept {
 
 } // namespace
 
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
+std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::string &&jsBundleBasePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
@@ -46,7 +46,7 @@ std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
   return instance;
 }
 
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
+std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::vector<
@@ -72,7 +72,7 @@ std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstance(
 
 #if (defined(_MSC_VER) && !defined(WINRT))
 #ifdef PATCH_RN
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstanceForSandbox(
+std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::string &&jsString,
     std::string &&configsString,
     std::string &&sourceUrl,
@@ -91,7 +91,7 @@ std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstanceForSandbox(
       std::move(sendNativeModuleCall));
 };
 
-std::shared_ptr<InstanceWrapper> __cdecl CreateReactInstanceForSandbox(
+std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::string &&configsString,

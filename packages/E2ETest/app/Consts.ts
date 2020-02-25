@@ -46,3 +46,8 @@ export const IMAGE_CONTAINER = 'ImageContainer';
 // Control Style Test Page
 export const CONTROL_STYLE_TESTPAGE = 'ControlStyleTestPage';
 export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';
+
+// TransformTestPage
+export const TRANSFORM_TESTPAGE = 'TransformTestPage';
+export const TRANSFORM_TEST_RESULT = 'TransfromTestResult';
+export const APPLY_SCALE_TRANSFORM_BUTTON = 'ApplyScaleTransformButton';

@@ -21,7 +21,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> I18nModule::getMethods()
   return {};
 }
 
-std::unique_ptr<facebook::xplat::module::CxxModule> __cdecl createI18nModule(std::unique_ptr<II18nModule> module) {
+std::unique_ptr<facebook::xplat::module::CxxModule> createI18nModule(std::unique_ptr<II18nModule> module) {
   return std::make_unique<I18nModule>(std::move(module));
 }
 

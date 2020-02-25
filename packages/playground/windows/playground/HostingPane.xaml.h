@@ -56,6 +56,8 @@ namespace Playground {
   void markAsNeedsReload();
   void persistUseWebDebugger(bool useWebDebugger);
   void persistUseLiveReload(bool useLiveReload);
+  void persistUseDirectDebugger(bool useDirectDebugger);
+  void persistBreakOnNextLine(bool breakOnNextLine);
 
   void InitComboBoxes();
   void LoadKnownApps();

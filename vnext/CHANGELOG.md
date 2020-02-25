@@ -1,7 +1,69 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Feb 2020 07:10:21 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Feb 2020 03:42:21 GMT and should not be manually modified.
 
+## 0.61.0-beta.23
+Tue, 25 Feb 2020 03:42:21 GMT
+
+### Changes
+
+- Declare MessageQueueThread in header that uses it (acoates@microsoft.com)
+## 0.61.0-beta.22
+Sat, 22 Feb 2020 00:21:17 GMT
+
+### Changes
+
+- Force coroutine method parameters pass by value (vmorozov@microsoft.com)
+## 0.61.0-beta.21
+Fri, 21 Feb 2020 23:40:21 GMT
+
+### Changes
+
+- Add a Win32 playground app to RNW (hpratt@microsoft.com)
+## 0.61.0-beta.20
+Fri, 21 Feb 2020 16:46:52 GMT
+
+### Changes
+
+- Fix ReactNativeHost without package providers (vmorozov@microsoft.com)
+## 0.61.0-beta.19
+Fri, 21 Feb 2020 01:27:13 GMT
+
+### Changes
+
+- Fix some reliability isssues for current AsyncStorage implementation (dida@ntdev.microsoft.com)
+- Upgrade ChakraCore Debugger to 0.0.0.43 (julio.rocha@microsoft.com)
+- Update metro configs to support node 12 on windows (acoates)
+## 0.61.0-beta.17
+Thu, 20 Feb 2020 19:20:15 GMT
+
+### Changes
+
+- Bump min. Windows Desktop supported version to 8. (julio.rocha@microsoft.com)
+## 0.61.0-beta.16
+Thu, 20 Feb 2020 16:09:49 GMT
+
+### Changes
+
+- Avoid having native modules without methods (vmorozov@microsoft.com)
+## 0.61.0-beta.15
+Thu, 20 Feb 2020 01:52:30 GMT
+
+### Changes
+
+- Use verdaccio to validate react native init (acoates@microsoft.com)
+## 0.61.0-beta.14
+Wed, 19 Feb 2020 23:34:40 GMT
+
+### Changes
+
+- Implemented NativeModule initialization with IReactContext (vmorozov@microsoft.com)
+## 0.61.0-beta.13
+Wed, 19 Feb 2020 22:45:15 GMT
+
+### Changes
+
+- Revert "Drop StdCall in favor of Cdecl for x86. (#4115)" (ngerlem@microsoft.com)
 ## 0.61.0-beta.12
 Wed, 19 Feb 2020 07:10:21 GMT
 

@@ -21,6 +21,6 @@ namespace Microsoft.ReactNative {
   }
 
   // Use this delegate to pass arbitrary value to ABI API.
-  // In a function that implements the deleage use the provided writer to stream custom values.
+  // In a function that implements the delegate use the provided writer to stream custom values.
   delegate void JSValueArgWriter(IJSValueWriter writer);
 } // namespace Microsoft.ReactNative

@@ -30,16 +30,14 @@ module.exports = {
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.61 when haste is removed
     blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '[/\\\\]')}.*`),
+      new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
       new RegExp(
-        `${path
-          .resolve(rnwPath, 'RNTesterCopy')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+        `${path.resolve(rnwPath, 'RNTesterCopy').replace(/[/\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path
           .resolve(rnwPath, 'IntegrationTestsCopy')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path
@@ -47,7 +45,7 @@ module.exports = {
             require.resolve('@react-native-community/cli/package.json'),
             '../node_modules/react-native',
           )
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
     hasteImplModulePath: path.resolve(__dirname, 'jest/hasteImpl.js'),

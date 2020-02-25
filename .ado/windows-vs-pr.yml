@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
@@ -129,7 +129,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
         
       - template: templates/prepare-env.yml
         parameters:
@@ -148,6 +148,28 @@ jobs:
         displayName: MSBuild - Playground
         inputs:
           solution: packages/playground/windows/Playground.sln
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+          clean: true # Optional
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground Win32
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground-Win32.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - Playground Win32
+        inputs:
+          solution: packages/playground/windows/Playground-Win32.sln
           msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
@@ -252,7 +274,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
@@ -393,7 +415,7 @@ jobs:
 
       - template: templates/react-native-init.yml
         parameters:
-          version: 0.60.6
+          version: 0.61.5
           platform: x64
           vsComponents: $(VsComponents)
 
@@ -410,7 +432,7 @@ jobs:
         clean: true # whether to fetch clean each time
         fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
-        submodules: true # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2

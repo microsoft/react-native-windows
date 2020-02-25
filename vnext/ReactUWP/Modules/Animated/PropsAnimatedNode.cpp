@@ -122,11 +122,6 @@ void PropsAnimatedNode::StartAnimations() {
         if (!m_centerPointAnimation) {
           m_centerPointAnimation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
           m_centerPointAnimation.Target(L"CenterPoint");
-
-          if (g_HasActualSizeProperty == TriBit::Undefined) {
-            // ActualSize works on 19H1+ only
-            g_HasActualSizeProperty = (uiElement.try_as<winrt::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
-          }
           m_centerPointAnimation.SetReferenceParameter(
               L"centerPointPropertySet", GetShadowNodeBase()->EnsureTransformPS());
           m_centerPointAnimation.Expression(L"centerPointPropertySet.center");

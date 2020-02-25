@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 21 Feb 2020 01:27:13 GMT",
+      "tag": "react-native-windows-extended_v0.61.0-beta.24",
+      "version": "0.61.0-beta.24",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "bump package versions to unblock publish",
+            "author": "acoates",
+            "commit": "36be20742ba4172b1870b551f56928768396b573"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Feb 2020 01:46:09 GMT",
       "tag": "react-native-windows-extended_v0.61.0-beta.14",
       "version": "0.61.0-beta.14",

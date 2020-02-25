@@ -17,6 +17,7 @@
 
 #include "JSExceptionCallbackFactory.h"
 
+#include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "Modules/AppStateData.h"
 
@@ -44,6 +45,21 @@
 
 #include <tuple>
 
+namespace react::uwp {
+
+void AddStandardViewManagers(
+    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
+    std::shared_ptr<IReactInstance> const &instance) noexcept;
+
+void AddPolyesterViewManagers(
+    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
+    std::shared_ptr<IReactInstance> const &instance) noexcept;
+
+std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
+    std::vector<react::uwp::NativeViewManager> &&viewManagers) noexcept;
+
+} // namespace react::uwp
+
 namespace Mso::React {
 
 //=============================================================================================
@@ -59,6 +75,14 @@ void ReactContext::CallJSFunction(std::string &&module, std::string &&method, fo
       if (auto fbInstance = instance->GetInnerInstance()) {
         fbInstance->callJSFunction(std::move(module), std::move(method), std::move(params));
       }
+    }
+  }
+}
+
+void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    if (instance->State() == ReactInstanceState::Loaded) {
+      instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
     }
   }
 }
@@ -181,7 +205,7 @@ void ReactInstanceWin::Initialize() noexcept {
               std::move(m_i18nInfo),
               std::move(m_appState),
               std::move(m_appTheme),
-              std::weak_ptr{m_legacyReactInstance});
+              m_legacyReactInstance);
 
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
@@ -404,7 +428,17 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
 }
 
 void ReactInstanceWin::InitUIManager() noexcept {
-  auto uiManager = CreateUIManager(m_legacyReactInstance, m_options.ViewManagerProvider);
+  std::vector<std::unique_ptr<facebook::react::IViewManager>> viewManagers;
+
+  // Custom view managers
+  if (m_options.ViewManagerProvider) {
+    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext, m_legacyReactInstance);
+  }
+
+  react::uwp::AddStandardViewManagers(viewManagers, m_legacyReactInstance);
+  react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyReactInstance);
+
+  auto uiManager = react::uwp::CreateUIManager2(std::move(viewManagers));
   m_uiManager.Exchange(std::move(uiManager));
 }
 

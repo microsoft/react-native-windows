@@ -150,7 +150,6 @@ namespace react {
 
 #ifdef PATCH_RN
 namespace {
-
 void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #ifdef ENABLE_JS_SYSTRACE_TO_ETW
   facebook::react::tracing::initializeJSHooks(runtime);
@@ -400,6 +399,7 @@ InstanceImpl::InstanceImpl(
     }
   } else {
 #ifdef PATCH_RN
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
@@ -500,11 +500,10 @@ InstanceImpl::InstanceImpl(
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const &moduleName : m_moduleRegistry->moduleNames()) {
       auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-      if (moduleConfig) {
-        configArray.push_back(std::move(moduleConfig->config));
-      }
+      configArray.push_back(moduleConfig ? std::move(moduleConfig->config) : nullptr);
     }
-    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", std::move(configArray));
     m_innerInstance->setGlobalVariable(
         "__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
