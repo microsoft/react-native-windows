@@ -23,6 +23,8 @@ struct IReactInstanceCreator {
   virtual void markAsNeedsReload() = 0;
   virtual void persistUseWebDebugger(bool useWebDebugger) = 0;
   virtual void persistUseLiveReload(bool useLiveReload) = 0;
+  virtual void persistUseDirectDebugger(bool useDirectDebugger) = 0;
+  virtual void persistBreakOnNextLine(bool breakOnNextLine) = 0;
 };
 
 using ReactInstanceCreator = std::shared_ptr<IReactInstanceCreator>;

@@ -82,6 +82,8 @@ struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   void markAsNeedsReload() override;
   void persistUseWebDebugger(bool useWebDebugger) override;
   void persistUseLiveReload(bool useLiveReload) override;
+  void persistUseDirectDebugger(bool useDirectDebugger) override;
+  void persistBreakOnNextLine(bool breakOnNextLine) override;
 
  private:
   HWND m_hwnd;
@@ -99,6 +101,8 @@ struct WindowData {
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
   bool m_reuseInstance{true};
+  bool m_useDirectDebugger{false};
+  bool m_breakOnNextLine{false};
 
   WindowData(const WUXH::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
@@ -127,6 +131,9 @@ struct WindowData {
           react::uwp::ReactInstanceSettings settings;
           settings.UseWebDebugger = m_useWebDebugger;
           settings.UseLiveReload = m_liveReloadEnabled;
+          settings.DebuggerBreakOnNextLine = m_breakOnNextLine;
+          settings.UseDirectDebugger = m_useDirectDebugger;
+
           settings.EnableDeveloperMenu = true;
 
           settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
@@ -271,6 +278,8 @@ struct WindowData {
         CheckDlgButton(hwnd, IDC_WEBDEBUGGER, boolToCheck(self->m_useWebDebugger));
         CheckDlgButton(hwnd, IDC_LIVERELOAD, boolToCheck(self->m_liveReloadEnabled));
         CheckDlgButton(hwnd, IDC_REUSEINSTANCE, boolToCheck(self->m_reuseInstance));
+        CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->m_useDirectDebugger));
+        CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->m_breakOnNextLine));
         return TRUE;
       }
       case WM_COMMAND: {
@@ -280,6 +289,8 @@ struct WindowData {
             self->m_useWebDebugger = IsDlgButtonChecked(hwnd, IDC_WEBDEBUGGER) == BST_CHECKED;
             self->m_liveReloadEnabled = IsDlgButtonChecked(hwnd, IDC_LIVERELOAD) == BST_CHECKED;
             self->m_reuseInstance = IsDlgButtonChecked(hwnd, IDC_REUSEINSTANCE) == BST_CHECKED;
+            self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
+            self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
           }
             [[fallthrough]];
           case IDCANCEL:
@@ -325,6 +336,20 @@ void HwndReactInstanceCreator::persistUseLiveReload(bool useLiveReload) {
     return;
 
   WindowData::GetFromWindow(m_hwnd)->m_liveReloadEnabled = useLiveReload;
+}
+
+void HwndReactInstanceCreator::persistUseDirectDebugger(bool useDirectDebugger) {
+  if (!m_hwnd)
+    return;
+
+  WindowData::GetFromWindow(m_hwnd)->m_useDirectDebugger = useDirectDebugger;
+}
+
+void HwndReactInstanceCreator::persistBreakOnNextLine(bool breakOnNextLine) {
+  if (!m_hwnd)
+    return;
+
+  WindowData::GetFromWindow(m_hwnd)->m_breakOnNextLine = breakOnNextLine;
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {

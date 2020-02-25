@@ -43,6 +43,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool UseDirectDebugger() noexcept;
   void UseDirectDebugger(bool value) noexcept;
 
+  bool DebuggerBreakOnNextLine() noexcept;
+  void DebuggerBreakOnNextLine(bool value) noexcept;
+
   bool UseJsi() noexcept;
   void UseJsi(bool value) noexcept;
 
@@ -75,6 +78,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool m_useWebDebugger{REACT_DEFAULT_USE_WEB_DEBUGGER};
   bool m_useLiveReload{REACT_DEFAULT_USE_LIVE_RELOAD};
   bool m_useDirectDebugger{false};
+  bool m_debuggerBreakOnNextLine{false};
   bool m_useJsi{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
@@ -153,6 +157,14 @@ inline bool ReactInstanceSettings::UseDirectDebugger() noexcept {
 
 inline void ReactInstanceSettings::UseDirectDebugger(bool value) noexcept {
   m_useDirectDebugger = value;
+}
+
+inline bool ReactInstanceSettings::DebuggerBreakOnNextLine() noexcept {
+  return m_debuggerBreakOnNextLine;
+}
+
+inline void ReactInstanceSettings::DebuggerBreakOnNextLine(bool value) noexcept {
+  m_debuggerBreakOnNextLine = value;
 }
 
 inline bool ReactInstanceSettings::UseJsi() noexcept {

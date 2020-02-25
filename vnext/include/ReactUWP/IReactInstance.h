@@ -31,6 +31,7 @@ typedef unsigned int DebuggerAttachCallbackCookie;
 struct ReactInstanceSettings {
   bool UseWebDebugger{false};
   bool UseLiveReload{false};
+  bool DebuggerBreakOnNextLine{false};
   bool UseDirectDebugger{false};
   bool UseJsi{true};
   bool EnableJITCompilation{true};

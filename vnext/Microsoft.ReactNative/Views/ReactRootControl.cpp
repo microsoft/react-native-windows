@@ -455,6 +455,8 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
         L"    <TextBlock Margin='0,0,0,10' FontSize='40'>Developer Menu</TextBlock>"
         L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript</Button>"
         L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
+        L"    <Button HorizontalAlignment='Stretch' x:Name='DirectDebug' ToolTipService.ToolTip='If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.'></Button>"
+        L"    <Button HorizontalAlignment='Stretch' x:Name='BreakOnNextLine' ToolTipService.ToolTip='If using V8/Hermes, the JS engine will break on the first statement, until you attach a debugger to it, and hit continue. (Requires Direct Debugging to be enabled)'></Button>"
         L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'></Button>"
         L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Toggle Inspector</Button>"
         L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
@@ -463,6 +465,8 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
     m_developerMenuRoot = winrt::unbox_value<winrt::Grid>(winrt::Markup::XamlReader::Load(xamlString));
     auto reloadJSButton = m_developerMenuRoot.FindName(L"Reload").as<winrt::Button>();
     auto remoteDebugJSButton = m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
+    auto directDebugButton = m_developerMenuRoot.FindName(L"DirectDebug").as<winrt::Button>();
+    auto breakOnNextLineButton = m_developerMenuRoot.FindName(L"BreakOnNextLine").as<winrt::Button>();
     auto liveReloadButton = m_developerMenuRoot.FindName(L"LiveReload").as<winrt::Button>();
     auto toggleInspector = m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
     auto cancelButton = m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
@@ -479,6 +483,24 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
         winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           m_useWebDebugger = !m_useWebDebugger;
+          ReloadHost();
+        });
+
+    directDebugButton.Content(
+        winrt::box_value(m_directDebugging ? L"Disable Direct Debugging" : L"Enable Direct Debugging"));
+    m_directDebuggingRevoker = directDebugButton.Click(
+        winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
+          DismissDeveloperMenu();
+          m_directDebugging = !m_directDebugging;
+          ReloadHost();
+        });
+
+    breakOnNextLineButton.Content(
+        winrt::box_value(m_breakOnNextLine ? L"Disable Break on First Line" : L"Enable Break on First Line"));
+    m_breakOnNextLineRevoker = directDebugButton.Click(
+        winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
+          DismissDeveloperMenu();
+          m_breakOnNextLine = !m_breakOnNextLine;
           ReloadHost();
         });
 
@@ -536,6 +558,8 @@ void ReactRootControl::ReloadHost() noexcept {
     auto options = reactViewHost->ReactHost().Options();
     options.DeveloperSettings.UseLiveReload = m_useLiveReload;
     options.DeveloperSettings.UseWebDebugger = m_useWebDebugger;
+    options.DeveloperSettings.UseDirectDebugger = m_directDebugging;
+    options.DeveloperSettings.DebuggerBreakOnNextLine = m_breakOnNextLine;
     reactViewHost->ReactHost().ReloadInstanceWithOptions(std::move(options));
   }
 }

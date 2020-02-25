@@ -11,6 +11,8 @@ namespace react{
   {
       boolean	UseWebDebugger;
       boolean	UseLiveReload;
+      boolean UseDirectDebugger;
+      boolean DebuggerBreakOnNextLine;
       boolean EnableDeveloperMenu;
   };
 
