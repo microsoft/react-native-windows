@@ -87,8 +87,14 @@ class ViewShadowNode : public ShadowNodeBase {
   void TabIndex(int32_t tabIndex) {
     m_tabIndex = tabIndex;
 
-    if (IsControl())
-      GetControl().TabIndex(m_tabIndex);
+    if (IsControl()) {
+      if (tabIndex < 0) {
+        GetControl().IsTabStop(false);
+      } else {
+        GetControl().IsTabStop(true);
+        GetControl().TabIndex(tabIndex);
+      }
+    }
   }
 
   bool OnClick() {
