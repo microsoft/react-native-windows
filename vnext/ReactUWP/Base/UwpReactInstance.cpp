@@ -72,7 +72,9 @@ UwpReactInstance::UwpReactInstance(
     const std::shared_ptr<facebook::react::TurboModuleRegistry> &turboModuleRegistry,
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider)
-    : UwpReactInstance(moduleProvider, viewManagerProvider), m_turboModuleRegistry(turboModuleRegistry) {}
+    : m_moduleProvider(moduleProvider),
+      m_viewManagerProvider(viewManagerProvider),
+      m_turboModuleRegistry(turboModuleRegistry) {}
 
 void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) {
   if (m_started)

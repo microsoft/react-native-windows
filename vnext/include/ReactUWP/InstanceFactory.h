@@ -9,6 +9,12 @@
 #include "ViewManagerProvider.h"
 #include "XamlView.h"
 
+namespace facebook {
+namespace react {
+class TurboModuleRegistry;
+}
+} // namespace facebook
+
 namespace react {
 struct ReactViewHost;
 } // namespace react

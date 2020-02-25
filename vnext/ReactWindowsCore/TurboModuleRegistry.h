@@ -13,13 +13,9 @@ class TurboModuleRegistry {
    * TurboModule hasn't been instantiated, instantiate it. If no TurboModule is registered under
    * `moduleName`, return null.
    */
-  virtual std::shared_ptr<TurboModule> getModule(const std::string &moduleName) = 0;
-
-  /** Get all instantiated TurboModules. */
-  // std::vector<std::shared_ptr<TurboModule>>& getModules() = 0;
-
-  /** Has the TurboModule with name `moduleName` been instantiated? */
-  virtual bool hasModule(const std::string &moduleName) = 0;
+  virtual std::shared_ptr<TurboModule> getModule(
+      const std::string &moduleName,
+      const std::shared_ptr<JSCallInvoker> &jsInvoker) = 0;
 
   /**
    * Return the names of all the NativeModules that are supposed to be eagerly initialized. By

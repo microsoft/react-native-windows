@@ -260,6 +260,9 @@
     <ClInclude Include="TurboModuleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TurboModuleRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">

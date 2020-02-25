@@ -188,17 +188,19 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    if (turboModuleRegistry_) {
-      const auto tmr = turboModuleRegistry_;
-      // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-      auto binding = [tmr](const std::string &name) -> std::shared_ptr<TurboModule> { return tmr->getModule(name); };
+    auto turboModuleManager =
+        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeJSCallInvoker>(jsQueue));
 
-      TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+      return turboModuleManager->getModule(name);
+    };
 
-      // init TurboModule
-      for (const auto &moduleName : turboModuleRegistry_->getEagerInitModuleNames()) {
-        turboModuleRegistry_->getModule(moduleName);
-      }
+    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+
+    // init TurboModule
+    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+      turboModuleManager->getModule(moduleName);
     }
 
     return std::make_unique<JSIExecutor>(
@@ -440,8 +442,6 @@ InstanceImpl::InstanceImpl(
     }
   } else {
 #ifdef PATCH_RN
-
-    // m_turboModuleRegistry = std::make_shared<TurboModuleManager>(std::make_shared<BridgeJSCallInvoker>(jsQueue));
 
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {

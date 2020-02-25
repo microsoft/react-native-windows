@@ -158,7 +158,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="tracing\fbsystrace.h" />
     <ClInclude Include="Tracing.h" />
-    <ClInclude Include="TurboModuleManager.h" />
+    <ClInclude Include="TurboModuleManager.h" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClInclude Include="TurboModuleRegistry.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
     <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />

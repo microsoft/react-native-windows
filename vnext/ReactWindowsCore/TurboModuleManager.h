@@ -7,18 +7,21 @@
 namespace facebook {
 namespace react {
 
-class TurboModuleManager : public TurboModuleRegistry {
+class TurboModuleManager {
  public:
-  TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker);
+  TurboModuleManager(
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<JSCallInvoker> jsInvoker);
 
-  std::shared_ptr<TurboModule> getModule(const std::string &moduleName) override;
-  bool hasModule(const std::string &moduleName) override;
-  std::vector<std::string> getEagerInitModuleNames() override;
+  std::shared_ptr<TurboModule> getModule(const std::string &moduleName);
+  bool hasModule(const std::string &moduleName);
+  std::vector<std::string> getEagerInitModuleNames();
   void onInstanceDestroy();
 
  private:
   std::unordered_map<std::string, std::shared_ptr<TurboModule>> m_modules;
   std::shared_ptr<JSCallInvoker> m_jsInvoker;
+  std::shared_ptr<TurboModuleRegistry> m_turboModuleRegistry;
 };
 } // namespace react
 } // namespace facebook

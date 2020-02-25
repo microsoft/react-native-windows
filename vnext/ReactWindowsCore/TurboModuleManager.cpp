@@ -6,7 +6,10 @@
 namespace facebook {
 namespace react {
 
-TurboModuleManager::TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker) : m_jsInvoker(jsInvoker) {}
+TurboModuleManager::TurboModuleManager(
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<JSCallInvoker> jsInvoker)
+    : m_turboModuleRegistry(turboModuleRegistry), m_jsInvoker(jsInvoker) {}
 
 /**
  * Return the TurboModule instance that has that name `moduleName`. If the `moduleName`
@@ -15,7 +18,15 @@ TurboModuleManager::TurboModuleManager(std::shared_ptr<JSCallInvoker> jsInvoker)
  */
 std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &moduleName) {
   if (!hasModule(moduleName)) {
-    if (moduleName.compare("SampleTurboModule") == 0) {
+    std::shared_ptr<TurboModule> module;
+
+    if (m_turboModuleRegistry) {
+      module = m_turboModuleRegistry->getModule(moduleName, m_jsInvoker);
+    }
+
+    if (module) {
+      m_modules.emplace(moduleName, module);
+    } else if (moduleName.compare("SampleTurboModule") == 0) {
       m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_jsInvoker));
     }
   }
@@ -42,7 +53,7 @@ bool TurboModuleManager::hasModule(const std::string &moduleName) {
  * NativeModules.
  */
 std::vector<std::string> TurboModuleManager::getEagerInitModuleNames() {
-  return {};
+  return m_turboModuleRegistry ? m_turboModuleRegistry->getEagerInitModuleNames() : std::vector<std::string>{};
 }
 
 void TurboModuleManager::onInstanceDestroy() {
