@@ -350,7 +350,6 @@ void HwndReactInstanceCreator::persistBreakOnNextLine(bool breakOnNextLine) {
   WindowData::GetFromWindow(m_hwnd)->m_breakOnNextLine = breakOnNextLine;
 }
 
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   switch (message) {
     case WM_CREATE: {
