@@ -82,6 +82,8 @@ struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   void markAsNeedsReload() override;
   void persistUseWebDebugger(bool useWebDebugger) override;
   void persistUseLiveReload(bool useLiveReload) override;
+  void persistUseDirectDebugger(bool useDirectDebugger) override;
+  void persistBreakOnNextLine(bool breakOnNextLine) override;
 
  private:
   HWND m_hwnd;
