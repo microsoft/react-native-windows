@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Minor fix for #4196",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "commit": "51579bd33c8f96668459e10a5183cc2af3888af7",
+  "dependentChangeType": "patch",
+  "date": "2020-02-26T01:28:33.359Z"
+}
