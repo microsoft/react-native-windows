@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "fix lint:fix command",
+  "packageName": "react-native-windows-extended",
+  "email": "acoates@microsoft.com",
+  "commit": "a69838df0a72896c0bae5619d0ac4a52fb9aefef",
+  "dependentChangeType": "patch",
+  "date": "2020-02-26T06:16:29.024Z"
+}
