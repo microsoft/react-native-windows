@@ -13,7 +13,7 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
-    "lint:fix": "eslint ./**/*.ts --fix",
+    "lint:fix": "just-scripts lint:fix",
     "test": "just-scripts test",
     "watch": "tsc -w"
   },

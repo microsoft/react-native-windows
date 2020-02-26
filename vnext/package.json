@@ -11,14 +11,14 @@
   "main": "Libraries/react-native/react-native-implementation.windows.js",
   "typings": "Libraries/react-native/typings-index.d.ts",
   "scripts": {
+    "api": "just-scripts api",
     "build": "just-scripts build",
     "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
-    "start": "react-native start",
+    "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
-    "api": "just-scripts api",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "start": "react-native start",
     "watch": "tsc -w"
   },
   "dependencies": {
