@@ -6,6 +6,7 @@
  */
 
 import * as Manifest from '../Manifest';
+import * as path from 'path';
 
 import {
   MockFile,
@@ -83,6 +84,26 @@ test('FixmeAllowedAsIssue', () => {
   };
 
   expect(Manifest.parse(JSON.stringify(manifest))).toEqual(manifest);
+});
+
+test('PathShouldUsePlatformSlashes', () => {
+  const manifest = {
+    overrides: [
+      {
+        type: 'patch',
+        file: 'foo/foo.win32.js',
+        baseFile: 'bar\\foo.js',
+        baseVersion: '0.61.5',
+        baseHash: 'AAAABBBB',
+        issue: 2345,
+      },
+    ],
+  };
+
+  const parsed = Manifest.parse(JSON.stringify(manifest));
+  const override = parsed.overrides[0] as Manifest.NonPlatformEntry;
+  expect(override.file).toBe(`foo${path.sep}foo.win32.js`);
+  expect(override.baseFile).toBe(`bar${path.sep}foo.js`);
 });
 
 test('IssueMustBePresentForPatch', () => {

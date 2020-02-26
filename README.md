@@ -21,7 +21,7 @@
 
 ![Hero Image with Logo](./.github/hero2.png)
 
-[React Native](http://facebook.github.io/react-native) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
+[React Native](https://reactnative.dev) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
 
 This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc.
 
@@ -45,7 +45,7 @@ Please see the [July 2019 Updates Blog](https://microsoft.github.io/react-native
 
 ## Introduction
 
-See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native.
+See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
 ## System Requirements
 
@@ -69,7 +69,7 @@ Want to develop a React Native Windows app? Head over to our [Getting Started Gu
 
 ## Documentation
 
-[React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](https://reactjs.org/docs/getting-started.html) for further details about the React API in general.
+[React Native already has great documentation](https://reactnative.dev/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](https://reactjs.org/docs/getting-started.html) for further details about the React API in general.
 
 For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation and [here](https://microsoft.github.io/react-native-windows/docs/parity-status) for `vnext`.
 

@@ -32,8 +32,8 @@ void ShadowNodeBase::updateProperties(const folly::dynamic &&props) {
 void ShadowNodeBase::createView() {
   m_view = GetViewManager()->CreateView(this->m_tag);
 
-  if (auto uielement = m_view.try_as<winrt::UIElement>()) {
-    if (g_HasActualSizeProperty == TriBit::Undefined) {
+  if (g_HasActualSizeProperty == TriBit::Undefined) {
+    if (auto uielement = m_view.try_as<winrt::UIElement>()) {
       // ActualSize works on 19H1+ only
       g_HasActualSizeProperty = (uielement.try_as<winrt::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
     }
