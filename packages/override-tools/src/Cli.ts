@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
@@ -16,14 +18,14 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 
 import CrossProcessLock from './CrossProcessLock';
-import {GitReactFileRepository} from './GitReactFileRepository';
-import {OverrideFileRepositoryImpl} from './OverrideFileRepository';
+import GitReactFileRepository from './GitReactFileRepository';
+import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 
 doMain(() => {
   yargs
     .command(
       'validate <manifest> [version]',
-      'Verify that overrides are accurate and up-to-date',
+      'Verify that overrides are recorded and up-to-date',
       cmdYargs =>
         cmdYargs.options({
           manifest: {type: 'string', describe: 'Path to an override manifest'},
@@ -32,14 +34,16 @@ doMain(() => {
       cmdArgv => validateManifest(cmdArgv.manifest, cmdArgv.version),
     )
     .epilogue(
-      'This tool allows maging JavaScript overrides for React Native Windows',
+      'This tool allows managing JavaScript overrides for React Native Windows',
     )
     .demandCommand()
     .recommendCommands()
     .strict()
     .showHelpOnFail(false)
     .wrap(yargs.terminalWidth())
-    .version(false).argv;
+    .version(false)
+    .scriptName('override')
+    .argv;
 });
 
 /**
@@ -48,11 +52,11 @@ doMain(() => {
 async function validateManifest(manifestPath: string, version?: string) {
   try {
     await fs.promises.access(manifestPath);
-  } catch {
+  } catch (ex) {
     console.error(
       chalk.red(`Could not find manifest file at path '${manifestPath}'`),
     );
-    return;
+    throw ex;
   }
 
   const spinner = ora();
@@ -100,7 +104,7 @@ async function validateManifest(manifestPath: string, version?: string) {
 async function getFileRepos(
   manifestPath: string,
 ): Promise<[GitReactFileRepository, OverrideFileRepositoryImpl]> {
-  const gitDir = os.tmpdir() + path.sep + 'react-native-windows-override-git';
+  const gitDir = path.join(os.tmpdir(), 'react-native-windows-override-git');
   const reactRepo = await GitReactFileRepository.createAndInit(gitDir);
 
   const ovrPath = path.dirname(manifestPath);
@@ -124,13 +128,17 @@ async function getInstalledRNVersion(manifestPath: string): Promise<string> {
       const packageJson = (await fs.promises.readFile(rnPackage)).toString();
       const version = JSON.parse(packageJson).version;
 
-      if (!version) {
-        throw new Error();
+      if (typeof version !== 'string') {
+        throw new Error('Unexpected formt of React Native package.json');
       }
 
       return version;
-    } catch {
-      searchPath = path.resolve(searchPath, '..');
+    } catch (ex) {
+      if (ex.code === 'ENOENT') {
+        searchPath = path.resolve(searchPath, '..');
+      } else {
+        throw ex;
+      }
     }
   }
 

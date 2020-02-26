@@ -13,7 +13,8 @@ import {OverrideFileRepository} from './FileRepository';
 /**
  * Allows reading phsyical override files based on a passed in directory
  */
-export class OverrideFileRepositoryImpl implements OverrideFileRepository {
+export default class OverrideFileRepositoryImpl
+  implements OverrideFileRepository {
   private baseDir: string;
   private filter: RegExp;
 

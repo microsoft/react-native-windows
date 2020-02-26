@@ -2911,7 +2911,7 @@
     yargs "^13.2.4"
     yarn-install "^1.0.0"
 
-"@wdio/config@5.13.2":
+"@wdio/config@5.13.2", "@wdio/config@^5.12.1", "@wdio/config@^5.9.4":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/config/-/config-5.13.2.tgz#f1581fcbf45983dc11aeea933e8890231bccf8bf"
   integrity sha512-TbkcAcVlEZ5l08jFO6QGKQNB/Lo8SYmQyNYhnA4MxFnhEboOgZamR+kpSN7H0oOt9Q6/pGoFP2Q1NOCxoYrlsQ==
@@ -2920,7 +2920,7 @@
     deepmerge "^4.0.0"
     glob "^7.1.2"
 
-"@wdio/config@5.14.0", "@wdio/config@^5.12.1", "@wdio/config@^5.9.4":
+"@wdio/config@5.14.0":
   version "5.14.0"
   resolved "https://registry.yarnpkg.com/@wdio/config/-/config-5.14.0.tgz#6fa3077c49b3661aea2a9f3f8c4e68ffe3b51cb3"
   integrity sha512-JUvk4yNGlNmHMtqvmOGSVhr+4a/AOUwr/OFkBYss1nUApIp3871j1GoT+JsVNP6WN9vZRV3a6pNMsAuLbuRZfQ==
@@ -2987,14 +2987,14 @@
   resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-5.14.0.tgz#9007b67d14f4bcebd2b9097f611d4a558024c308"
   integrity sha512-7jRxGkreibkqHKQV5jlQmAyqzIIU43lg9KSNGy0ThrUz8kLsOzClaTdL2qDlFUkLcplqMvRFcnmwFPjvCptmVg==
 
-"@wdio/repl@5.13.2":
+"@wdio/repl@5.13.2", "@wdio/repl@^5.9.4":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.13.2.tgz#6a7a56ff231c4dd926c26c4bfc1cddc0e90b74ce"
   integrity sha512-mNGj+UcodJTQa4Ecb30iItdcRHrB7GhC+DT0+/J/cO2MQPIf3ZlcpsBGTXZL8ZHcpOUYm0nLt2vKchdRPGVRtw==
   dependencies:
     "@wdio/config" "5.13.2"
 
-"@wdio/repl@5.14.4", "@wdio/repl@^5.9.4":
+"@wdio/repl@5.14.4":
   version "5.14.4"
   resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.14.4.tgz#0d17f1f768f7a51c3e650453b4342f05e82ef993"
   integrity sha512-AF24ExIyd1lvqo/K1wHxzTzJi4005kLDJePMDYoQi0lyprA6SbmzKiWJ2W6sf0CO9QNzRKdsBxBgkuGC2wiCwQ==
@@ -3029,7 +3029,7 @@
     "@wdio/logger" "^5.9.3"
     fibers "^4.0.0"
 
-"@wdio/utils@5.13.2":
+"@wdio/utils@5.13.2", "@wdio/utils@^5.9.3":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.13.2.tgz#2e56b5488521e394bce02de9b4236f21d1d582eb"
   integrity sha512-DGwoZZKpGo6BkLOIXnBHu+9mg0RABq0Sh9cb1GLOAeBeIEW7efCDYqT9+rczEJSgHKnKJra1+T8I4IfoxyUX/w==
@@ -3037,7 +3037,7 @@
     "@wdio/logger" "5.13.2"
     deepmerge "^4.0.0"
 
-"@wdio/utils@5.14.4", "@wdio/utils@^5.9.3":
+"@wdio/utils@5.14.4":
   version "5.14.4"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.14.4.tgz#3ee571fefcba547d132b2b120403a7fd793b84b9"
   integrity sha512-sRBCR20VpDxcB0bvU6Sg4dco7PehPVul7JOK+abn5Tk/Azau0C/JypAh7abRnTil5udiz+NTWQyE9A/vrcXs0Q==

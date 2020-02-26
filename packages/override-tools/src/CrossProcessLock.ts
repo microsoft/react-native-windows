@@ -17,7 +17,6 @@ import * as net from 'net';
  *
  * - Once the pipe dies, any subscribers will race to acquire the lock (create
  *   the pipe server)
- *
  */
 export default class CrossProcessLock {
   private pipeName: string;
@@ -45,7 +44,6 @@ export default class CrossProcessLock {
    * Try to acquire the shared resource. Returns false if it is already in use
    * without acquiring the resource. Subsequent tryLock calls after obtaining a
    * lock will return false.
-
    */
   tryLock(): Promise<boolean> {
     if (this.server.listening) {

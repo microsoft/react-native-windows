@@ -4,7 +4,6 @@
   "description": "Tooling to manage Javascript file overrides in React Native Windows",
   "private": true,
   "license": "MIT",
-  "main": "lib-commonjs/Cli.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
@@ -17,6 +16,9 @@
     "lint:fix": "eslint ./**/*.ts --fix",
     "test": "just-scripts test",
     "watch": "tsc -w"
+  },
+  "bin": {
+    "override": "./lib-commonjs/Cli.js"
   },
   "dependencies": {
     "chalk": "^3.0.0",
@@ -39,5 +41,8 @@
     "babel-jest": "^24.9.0",
     "fp-ts": "^2.5.0",
     "jest": "^24.9.0"
+  },
+  "engines": {
+    "node": ">=10"
   }
 }
