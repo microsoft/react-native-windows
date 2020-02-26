@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Feb 2020 04:45:35 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.24",
+      "version": "0.61.0-beta.24",
+      "comments": {
+        "none": [
+          {
+            "comment": "Minor fix for #4196",
+            "author": "kaigu@microsoft.com",
+            "commit": "51579bd33c8f96668459e10a5183cc2af3888af7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Feb 2020 01:34:08 GMT",
       "tag": "react-native-windows_v0.61.0-beta.24",
       "version": "0.61.0-beta.24",
