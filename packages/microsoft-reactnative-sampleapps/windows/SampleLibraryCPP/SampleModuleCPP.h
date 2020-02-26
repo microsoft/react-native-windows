@@ -108,6 +108,64 @@ struct SampleModuleCppImpl {
     callback(M_PI);
   }
 
+  // Use callback order as with ReactPromise
+  REACT_METHOD(TwoCallbacksMethod);
+  void TwoCallbacksMethod(
+      bool shouldSucceed,
+      std::function<void(std::string)> &&onSuccess,
+      std::function<void(std::string)> &&onFailure) noexcept {
+    DEBUG_OUTPUT("TwoCallbacksMethod", shouldSucceed);
+    if (shouldSucceed) {
+      onSuccess("TwoCallbacksMethod succeeded");
+    } else {
+      onFailure("TwoCallbacksMethod failed");
+    }
+  }
+
+  // Use callback order as with ReactPromise
+  REACT_METHOD(TwoCallbacksAsyncMethod);
+  winrt::fire_and_forget TwoCallbacksAsyncMethod(
+      bool shouldSucceed,
+      std::function<void(std::string)> onSuccess,
+      std::function<void(std::string)> onFailure) noexcept {
+    DEBUG_OUTPUT("TwoCallbacksAsyncMethod", shouldSucceed);
+    co_await winrt::resume_background();
+    if (shouldSucceed) {
+      onSuccess("TwoCallbacksMethod succeeded");
+    } else {
+      onFailure("TwoCallbacksMethod failed");
+    }
+  }
+
+  // Use callback order as in "classic" ReactNative.
+  REACT_METHOD(ReverseTwoCallbacksMethod);
+  void ReverseTwoCallbacksMethod(
+      bool shouldSucceed,
+      std::function<void(std::string)> &&onFailure,
+      std::function<void(std::string)> &&onSuccess) noexcept {
+    DEBUG_OUTPUT("ReverseTwoCallbacksMethod", shouldSucceed);
+    if (shouldSucceed) {
+      onSuccess("ReverseTwoCallbacksMethod succeeded");
+    } else {
+      onFailure("ReverseTwoCallbacksMethod failed");
+    }
+  }
+
+  // Use callback order as in "classic" ReactNative.
+  REACT_METHOD(ReverseTwoCallbacksAsyncMethod);
+  winrt::fire_and_forget ReverseTwoCallbacksAsyncMethod(
+      bool shouldSucceed,
+      std::function<void(std::string)> onFailure,
+      std::function<void(std::string)> onSuccess) noexcept {
+    DEBUG_OUTPUT("ReverseTwoCallbacksAsyncMethod", shouldSucceed);
+    co_await winrt::resume_background();
+    if (shouldSucceed) {
+      onSuccess("ReverseTwoCallbacksAsyncMethod succeeded");
+    } else {
+      onFailure("ReverseTwoCallbacksAsyncMethod failed");
+    }
+  }
+
   REACT_METHOD(ExplicitPromiseMethod);
   void ExplicitPromiseMethod(winrt::Microsoft::ReactNative::ReactPromise<double> const &result) noexcept {
     DEBUG_OUTPUT("ExplicitPromiseMethod");

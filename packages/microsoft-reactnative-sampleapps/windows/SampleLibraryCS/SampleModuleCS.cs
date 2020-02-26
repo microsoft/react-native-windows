@@ -108,6 +108,68 @@ namespace SampleLibraryCS
             callback(Math.PI);
         }
 
+        // Use callback order as with ReactPromise
+        [ReactMethod]
+        public void TwoCallbacksMethod(bool shouldSucceed, ReactCallback<string> onSuccess, ReactCallback<string> onFailure)
+        {
+            Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(TwoCallbacksMethod)}({shouldSucceed})");
+            if (shouldSucceed)
+            {
+                onSuccess("TwoCallbacksMethod succeeded");
+            }
+            else
+            {
+                onFailure("TwoCallbacksMethod failed");
+            }
+        }
+
+        // Use callback order as with ReactPromise
+        [ReactMethod]
+        public async void TwoCallbacksAsyncMethod(bool shouldSucceed, ReactCallback<string> onSuccess, ReactCallback<string> onFailure)
+        {
+            Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(TwoCallbacksAsyncMethod)}({shouldSucceed})");
+            await Task.Run(() => { });
+            if (shouldSucceed)
+            {
+                onSuccess("TwoCallbacksMethod succeeded");
+            }
+            else
+            {
+                onFailure("TwoCallbacksMethod failed");
+            }
+        }
+
+        // Use callback order as in "classic" ReactNative.
+        [ReactMethod]
+        public void ReverseTwoCallbacksMethod(bool shouldSucceed, ReactCallback<string> onFailure, ReactCallback<string> onSuccess)
+        {
+            Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(ReverseTwoCallbacksMethod)}({shouldSucceed})");
+            if (shouldSucceed)
+            {
+                onSuccess("ReverseTwoCallbacksMethod succeeded");
+            }
+            else
+            {
+                onFailure("ReverseTwoCallbacksMethod failed");
+            }
+        }
+
+        // Use callback order as in "classic" ReactNative.
+        [ReactMethod]
+        public async void ReverseTwoCallbacksAsyncMethod(bool shouldSucceed, ReactCallback<string> onFailure, ReactCallback<string> onSuccess)
+        {
+            Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(ReverseTwoCallbacksMethod)}({shouldSucceed})");
+            await Task.Run(() => { });
+            if (shouldSucceed)
+            {
+                onSuccess("ReverseTwoCallbacksMethod succeeded");
+            }
+            else
+            {
+                onFailure("ReverseTwoCallbacksMethod failed");
+            }
+        }
+
         [ReactMethod]
         public void ExplicitPromiseMethod(IReactPromise<double> result)
         {
