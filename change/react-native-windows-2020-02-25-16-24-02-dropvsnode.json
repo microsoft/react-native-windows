@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Removed unused MSBuild/Node project.",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "847e23566b977c9da03758eebdf9382d50801064",
-  "dependentChangeType": "patch",
-  "date": "2020-02-26T00:24:02.522Z"
-}
