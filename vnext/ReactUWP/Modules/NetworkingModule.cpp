@@ -344,7 +344,7 @@ void NetworkingModule::NetworkingHelper::AbortRequest(int64_t requestId) noexcep
       winrt::Windows::Web::Http::HttpProgress>
       httpRequest(nullptr);
   {
-    std::scoped_lock(m_mutex);
+    std::scoped_lock lock(m_mutex);
     auto iter = m_requests.find(requestId);
     if (iter == end(m_requests))
       return;
