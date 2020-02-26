@@ -147,7 +147,7 @@ constexpr void ValidateCoroutineArg() noexcept {
   if constexpr (std::is_same_v<TResult, fire_and_forget>) {
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
-        "Coroutine parameter must be passed by value: " __FUNCSIG__);
+        "Coroutine parameter must be passed by value for safe access: " __FUNCSIG__);
   }
 }
 
@@ -299,12 +299,13 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
         using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
         ArgTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
-        auto resolveCallback = CallbackCreator<std::remove_const_t<
+        // Some native modules use first callback as failure, others use second. We make them both to
+        // behave the same way and let developers to assign meaning to the first and second callbacks.
+        auto firstCallback = CallbackCreator<std::remove_const_t<
             std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 2, ArgTuple>>>>::Create(argWriter, resolve);
-        auto rejectCallback = RejectCallbackCreator<
-            std::remove_const_t<std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>,
-            void>::Create(argWriter, reject);
-        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(resolveCallback), std::move(rejectCallback));
+        auto secondCallback = CallbackCreator<std::remove_const_t<
+            std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>>::Create(argWriter, reject);
+        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(firstCallback), std::move(secondCallback));
       };
     }
 
@@ -486,12 +487,13 @@ struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
         using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
         ArgTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
-        auto resolveCallback = CallbackCreator<std::remove_const_t<
+        // Some native modules use first callback as failure, others use second. We make them both to
+        // behave the same way and let developers to assign meaning to the first and second callbacks.
+        auto firstCallback = CallbackCreator<std::remove_const_t<
             std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 2, ArgTuple>>>>::Create(argWriter, resolve);
-        auto rejectCallback = RejectCallbackCreator<
-            std::remove_const_t<std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>,
-            void>::Create(argWriter, reject);
-        (*method)(std::get<I>(std::move(typedArgs))..., std::move(resolveCallback), std::move(rejectCallback));
+        auto secondCallback = CallbackCreator<std::remove_const_t<
+            std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>>::Create(argWriter, reject);
+        (*method)(std::get<I>(std::move(typedArgs))..., std::move(firstCallback), std::move(secondCallback));
       };
     }
 

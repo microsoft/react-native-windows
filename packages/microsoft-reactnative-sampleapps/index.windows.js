@@ -92,6 +92,38 @@ class SampleApp extends Component {
 
     NativeModules.SampleModuleCS.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCS.ExplicitCallbackMethodWithArgs => '));
 
+    NativeModules.SampleModuleCS.TwoCallbacksMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCS.TwoCallbacksMethod success => '),
+      getCallback('SampleModuleCS.TwoCallbacksMethod fail => '));
+
+    NativeModules.SampleModuleCS.TwoCallbacksMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCS.TwoCallbacksMethod success => '),
+      getCallback('SampleModuleCS.TwoCallbacksMethod fail => '));
+
+    NativeModules.SampleModuleCS.TwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCS.TwoCallbacksAsyncMethod success => '),
+      getCallback('SampleModuleCS.TwoCallbacksAsyncMethod fail => '));
+
+    NativeModules.SampleModuleCS.TwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCS.TwoCallbacksAsyncMethod success => '),
+      getCallback('SampleModuleCS.TwoCallbacksAsyncMethod fail => '));
+
+    NativeModules.SampleModuleCS.ReverseTwoCallbacksMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCS.ReverseTwoCallbacksMethod fail => '),
+      getCallback('SampleModuleCS.ReverseTwoCallbacksMethod success => '));
+
+    NativeModules.SampleModuleCS.ReverseTwoCallbacksMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCS.ReverseTwoCallbacksMethod fail => '),
+      getCallback('SampleModuleCS.ReverseTwoCallbacksMethod success => '));
+
+    NativeModules.SampleModuleCS.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod fail => '),
+      getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod success => '));
+
+    NativeModules.SampleModuleCS.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod fail => '),
+      getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod success => '));
+
     var promise1 = NativeModules.SampleModuleCS.ExplicitPromiseMethod();
     promise1.then(getCallback('SampleModuleCS.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCS.ExplicitPromiseMethod catch => '));
 
@@ -137,6 +169,38 @@ class SampleApp extends Component {
     NativeModules.SampleModuleCpp.ExplicitCallbackMethod(getCallback('SampleModuleCpp.ExplicitCallbackMethod => '));
 
     NativeModules.SampleModuleCpp.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ExplicitCallbackMethodWithArgs => '));
+
+    NativeModules.SampleModuleCpp.TwoCallbacksMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCpp.TwoCallbacksMethod success => '),
+      getCallback('SampleModuleCpp.TwoCallbacksMethod fail => '));
+
+    NativeModules.SampleModuleCpp.TwoCallbacksMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCpp.TwoCallbacksMethod success => '),
+      getCallback('SampleModuleCpp.TwoCallbacksMethod fail => '));
+
+    NativeModules.SampleModuleCpp.TwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod success => '),
+      getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod fail => '));
+
+    NativeModules.SampleModuleCpp.TwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod success => '),
+      getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod fail => '));
+
+    NativeModules.SampleModuleCpp.ReverseTwoCallbacksMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod fail => '),
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod success => '));
+
+    NativeModules.SampleModuleCpp.ReverseTwoCallbacksMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod fail => '),
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod success => '));
+
+    NativeModules.SampleModuleCpp.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod fail => '),
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod success => '));
+
+    NativeModules.SampleModuleCpp.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod fail => '),
+      getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod success => '));
 
     var promise1 = NativeModules.SampleModuleCpp.ExplicitPromiseMethod();
     promise1.then(getCallback('SampleModuleCpp.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCpp.ExplicitPromiseMethod catch => '));
