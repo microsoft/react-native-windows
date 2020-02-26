@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Feb 2020 17:21:19 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Feb 2020 18:33:35 GMT and should not be manually modified.
 
+## 0.61.0-beta.27
+Wed, 26 Feb 2020 18:33:35 GMT
+
+### Changes
+
+- Fixed call of methods with two callbacks (vmorozov@microsoft.com)
 ## 0.61.0-beta.26
 Wed, 26 Feb 2020 17:21:19 GMT
 

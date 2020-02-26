@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Feb 2020 18:33:35 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.27",
+      "version": "0.61.0-beta.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed call of methods with two callbacks",
+            "author": "vmorozov@microsoft.com",
+            "commit": "9014612938e5913c6472871912096a1cfeb99a39"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Feb 2020 17:21:19 GMT",
       "tag": "react-native-windows_v0.61.0-beta.26",
       "version": "0.61.0-beta.26",

@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed call of methods with two callbacks",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "9014612938e5913c6472871912096a1cfeb99a39",
-  "dependentChangeType": "patch",
-  "date": "2020-02-26T13:09:31.723Z"
-}
