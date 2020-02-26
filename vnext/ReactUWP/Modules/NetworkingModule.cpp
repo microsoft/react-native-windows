@@ -66,9 +66,11 @@ class NetworkingModule::NetworkingHelper : public std::enable_shared_from_this<N
       winrt::Windows::Foundation::IAsyncOperationWithProgress<
           winrt::Windows::Web::Http::HttpResponseMessage,
           winrt::Windows::Web::Http::HttpProgress> completion) {
+    std::scoped_lock lock(m_mutex);
     m_requests[requestId] = completion;
   }
   void RemoveRequest(int64_t requestId) {
+    std::scoped_lock lock(m_mutex);
     m_requests.erase(requestId);
   }
 
@@ -87,6 +89,7 @@ class NetworkingModule::NetworkingHelper : public std::enable_shared_from_this<N
           winrt::Windows::Web::Http::HttpResponseMessage,
           winrt::Windows::Web::Http::HttpProgress>>
       m_requests;
+  std::mutex m_mutex;
   static std::int64_t s_lastRequestId;
 };
 
@@ -337,11 +340,18 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 }
 
 void NetworkingModule::NetworkingHelper::AbortRequest(int64_t requestId) noexcept {
-  auto iter = m_requests.find(requestId);
-  if (iter == end(m_requests))
-    return;
+  winrt::Windows::Foundation::IAsyncOperationWithProgress<
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>
+      httpRequest(nullptr);
+  {
+    std::scoped_lock lock(m_mutex);
+    auto iter = m_requests.find(requestId);
+    if (iter == end(m_requests))
+      return;
+    httpRequest = iter->second;
+  }
 
-  auto httpRequest = iter->second;
   try {
     httpRequest.Cancel();
   } catch (...) {
