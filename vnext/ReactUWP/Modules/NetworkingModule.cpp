@@ -340,8 +340,9 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 
 void NetworkingModule::NetworkingHelper::AbortRequest(int64_t requestId) noexcept {
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
-    winrt::Windows::Web::Http::HttpResponseMessage, 
-    winrt::Windows::Web::Http::HttpProgress> httpRequest(nullptr);
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>
+      httpRequest(nullptr);
   {
     std::scoped_lock(m_mutex);
     auto iter = m_requests.find(requestId);
