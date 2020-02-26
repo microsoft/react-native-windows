@@ -7,12 +7,13 @@
 
 import * as _ from 'lodash';
 import * as crypto from 'crypto';
-import * as fs from './fs-promise';
+import * as fs from 'fs';
+import * as path from 'path';
 import * as t from 'io-ts';
 
 import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
 
-import {ThrowReporter} from 'io-ts/es6/ThrowReporter';
+import {ThrowReporter} from 'io-ts/lib/ThrowReporter';
 
 /**
  * Manifest entry type class for "platform" overrides. I.e. overrides not
@@ -52,7 +53,7 @@ export type Manifest = t.TypeOf<typeof ManifestType>;
  * @throws if the file is invalid or cannot be found
  */
 export async function readFromFile(filePath: string): Promise<Manifest> {
-  const json = (await fs.readFile(filePath)).toString();
+  const json = (await fs.promises.readFile(filePath)).toString();
   return this.parse(json);
 }
 
@@ -63,8 +64,16 @@ export async function readFromFile(filePath: string): Promise<Manifest> {
  */
 export function parse(json: string): Manifest {
   const parsed = JSON.parse(json);
-
   ThrowReporter.report(ManifestType.decode(parsed));
+
+  // Make sure directory separators go the right direction
+  (parsed as Manifest).overrides.forEach(override => {
+    override.file = path.normalize(override.file);
+    if (override.type !== 'platform') {
+      override.baseFile = path.normalize(override.baseFile);
+    }
+  });
+
   return parsed;
 }
 
