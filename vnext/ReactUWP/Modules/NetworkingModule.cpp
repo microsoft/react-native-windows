@@ -238,7 +238,7 @@ void NetworkingModule::NetworkingHelper::SendRequest(
     const folly::dynamic &headers,
     folly::dynamic bodyData,
     const std::string &responseType,
-    bool useIncrementalUpdates,
+    [[maybe_unused]] bool useIncrementalUpdates,
     int64_t timeout,
     Callback cb) noexcept {
   int64_t requestId = ++s_lastRequestId;
