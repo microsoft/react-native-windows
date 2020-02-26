@@ -182,10 +182,3 @@ struct IWebSocket {
 };
 
 } // namespace Microsoft::React
-
-// Deprecated. Keeping for compatibility with dependent code.
-namespace facebook::react {
-
-using IWebSocket = Microsoft::React::IWebSocket;
-
-} // namespace facebook::react
