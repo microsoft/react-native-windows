@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 Feb 2020 21:50:32 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Feb 2020 10:17:18 GMT and should not be manually modified.
 
+## 0.61.0-beta.25
+Wed, 26 Feb 2020 10:17:18 GMT
+
+### Changes
+
+- Fix concurrency issue in NetworkingModule (lamdoan@microsoft.com)
 ## 0.61.0-beta.24
 Tue, 25 Feb 2020 21:50:32 GMT
 
