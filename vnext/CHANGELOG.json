@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Feb 2020 07:50:56 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.142",
+      "version": "0.60.0-vnext.142",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove useIncrementalUpdates assert from Networking module",
+            "author": "mcota@microsoft.com",
+            "commit": "845055fb8bac6a1df37fc863ea505220744432d1"
+          },
+          {
+            "comment": "Fix concurrency issue in NetworkingModule",
+            "author": "lamdoan@microsoft.com",
+            "commit": "9a4348df3b8177f0bf4bc451bbc1d93df5215dc4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Feb 2020 22:23:55 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.141",
       "version": "0.60.0-vnext.141",

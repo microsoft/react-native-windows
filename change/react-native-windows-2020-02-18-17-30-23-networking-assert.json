@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove useIncrementalUpdates assert from Networking module",
-  "packageName": "react-native-windows",
-  "email": "mcota@microsoft.com",
-  "commit": "845055fb8bac6a1df37fc863ea505220744432d1",
-  "dependentChangeType": "patch",
-  "date": "2020-02-19T01:30:22.945Z"
-}

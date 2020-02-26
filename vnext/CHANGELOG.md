@@ -1,7 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 Feb 2020 22:23:55 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Feb 2020 07:50:56 GMT and should not be manually modified.
 
+## 0.60.0-vnext.142
+Wed, 26 Feb 2020 07:50:56 GMT
+
+### Changes
+
+- Remove useIncrementalUpdates assert from Networking module (mcota@microsoft.com)
+- Fix concurrency issue in NetworkingModule (lamdoan@microsoft.com)
 ## 0.60.0-vnext.141
 Fri, 21 Feb 2020 22:23:55 GMT
 
