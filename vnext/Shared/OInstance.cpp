@@ -160,7 +160,8 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 
 class BridgeJSCallInvoker : public JSCallInvoker {
  public:
-  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread) : messageQueueThread_(messageQueueThread) {}
+  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
+      : messageQueueThread_(std::move(messageQueueThread)) {}
 
   void invokeAsync(std::function<void()> &&func) override {
     if (auto queue = messageQueueThread_.lock()) {

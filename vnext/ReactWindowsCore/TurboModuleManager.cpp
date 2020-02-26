@@ -9,30 +9,30 @@ namespace react {
 TurboModuleManager::TurboModuleManager(
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<JSCallInvoker> jsInvoker)
-    : m_turboModuleRegistry(turboModuleRegistry), m_jsInvoker(jsInvoker) {}
+    : m_turboModuleRegistry(std::move(turboModuleRegistry)), m_jsInvoker(std::move(jsInvoker)) {}
 
 /**
  * Return the TurboModule instance that has that name `moduleName`. If the `moduleName`
  * TurboModule hasn't been instantiated, instantiate it. If no TurboModule is registered under
  * `moduleName`, return null.
  */
-std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &moduleName) {
-  if (!hasModule(moduleName)) {
-    std::shared_ptr<TurboModule> module;
+std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &moduleName) noexcept {
+  const auto it = m_modules.find(moduleName);
 
-    if (m_turboModuleRegistry) {
-      module = m_turboModuleRegistry->getModule(moduleName, m_jsInvoker);
-    }
+  if (it != m_modules.end())
+    return it->second;
 
-    if (module) {
+  if (m_turboModuleRegistry) {
+    if (auto module = m_turboModuleRegistry->getModule(moduleName, m_jsInvoker)) {
       m_modules.emplace(moduleName, module);
-    } else if (moduleName.compare("SampleTurboModule") == 0) {
-      m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_jsInvoker));
+      return module;
     }
   }
 
-  const auto &it = m_modules.find(moduleName);
-  return it == m_modules.end() ? nullptr : it->second;
+  if (moduleName.compare("SampleTurboModule") == 0) {
+    return m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_jsInvoker)).first->second;
+  }
+  return nullptr;
 }
 
 /** Get all instantiated TurboModules. */
@@ -43,7 +43,7 @@ std::vector<std::shared_ptr<TurboModule>> &TurboModuleManager::getModules() {
 */
 
 /** Has the TurboModule with name `moduleName` been instantiated? */
-bool TurboModuleManager::hasModule(const std::string &moduleName) {
+bool TurboModuleManager::hasModule(const std::string &moduleName) noexcept {
   return m_modules.find(moduleName) != m_modules.end();
 }
 
@@ -52,11 +52,11 @@ bool TurboModuleManager::hasModule(const std::string &moduleName) {
  * calling getModule on each name, this allows the application to eagerly initialize its
  * NativeModules.
  */
-std::vector<std::string> TurboModuleManager::getEagerInitModuleNames() {
+std::vector<std::string> TurboModuleManager::getEagerInitModuleNames() noexcept {
   return m_turboModuleRegistry ? m_turboModuleRegistry->getEagerInitModuleNames() : std::vector<std::string>{};
 }
 
-void TurboModuleManager::onInstanceDestroy() {
+void TurboModuleManager::onInstanceDestroy() noexcept {
   // TODO - Provide a story to notify TurboModules of instance destory
   /*
   for (const auto &it : m_modules) {

@@ -243,6 +243,7 @@ void ReactInstanceWin::Initialize() noexcept {
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
+                nullptr,
                 m_uiManager.Load(),
                 m_jsMessageThread.Load(),
                 Mso::Copy(m_batchingUIThread),
