@@ -90,6 +90,7 @@ class ViewShadowNode : public ShadowNodeBase {
     if (IsControl()) {
       if (tabIndex < 0) {
         GetControl().IsTabStop(false);
+        GetControl().ClearValue(winrt::Control::TabIndexProperty());
       } else {
         GetControl().IsTabStop(true);
         GetControl().TabIndex(tabIndex);
@@ -212,7 +213,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   bool m_enableFocusRing = true;
   bool m_onClick = false;
-  int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
+  int32_t m_tabIndex = -1;
 
   winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};

@@ -67,6 +67,7 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
           if (tabIndex == static_cast<int32_t>(tabIndex)) {
             if (tabIndex < 0) {
               control.IsTabStop(false);
+              control.ClearValue(winrt::Control::TabIndexProperty());
             } else {
               control.IsTabStop(true);
               control.TabIndex(static_cast<int32_t>(tabIndex));
