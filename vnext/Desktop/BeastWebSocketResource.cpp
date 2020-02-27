@@ -38,7 +38,8 @@ namespace Beast {
 #pragma region BaseWebSocketResource members
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::BaseWebSocketResource(Url &&url) : m_url{std::move(url)} {}
+BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::BaseWebSocketResource(Url &&url)
+    : m_url{std::move(url)} {}
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocketResource() {
@@ -51,7 +52,8 @@ BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocketRe
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWebSocketResource::Options &options) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Handshake(
+    const IWebSocketResource::Options &options) {
   m_stream->async_handshake_ex(
       m_url.host,
       m_url.Target(),
@@ -478,7 +480,6 @@ void SecureWebSocket::Handshake(const IWebSocketResource::Options &options) {
 
 #pragma endregion SecureWebSocket members
 
-
 namespace Test {
 
 #pragma region MockStream
@@ -604,7 +605,7 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 #pragma region IWebSocketResource static members
 
-/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string& urlString) {
+/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
   Url url(urlString);
 
   if (url.scheme == "ws") {
@@ -612,14 +613,12 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
       url.port = "80";
 
     return unique_ptr<IWebSocketResource>(new Beast::WebSocketResource(std::move(url)));
-  }
-  else if (url.scheme == "wss") {
+  } else if (url.scheme == "wss") {
     if (url.port.empty())
       url.port = "443";
 
     return unique_ptr<IWebSocketResource>(new Beast::SecureWebSocket(std::move(url)));
-  }
-  else
+  } else
     throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
 }
 
