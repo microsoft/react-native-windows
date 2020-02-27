@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <IWebSocket.h>
+#include <IWebSocketResource.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/JSModulesUnbundle.h>
 

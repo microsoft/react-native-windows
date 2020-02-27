@@ -7,7 +7,7 @@
 #include <boost/beast/websocket/ssl.hpp>
 #include <queue>
 #include <thread>
-#include "IWebSocket.h"
+#include "IWebSocketResource.h"
 #include "Utils.h"
 
 namespace Microsoft::React {

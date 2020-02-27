@@ -1,6 +1,6 @@
 #pragma once
 
-#include <IWebSocket.h>
+#include <IWebSocketResource.h>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/beast/websocket/ssl.hpp>

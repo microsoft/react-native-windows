@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IWebSocket.h>
+#include <IWebSocketResource.h>
 
 #include <Windows.h>
 

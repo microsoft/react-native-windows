@@ -179,7 +179,7 @@
     <ClInclude Include="IUIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IWebSocket.h">
+    <ClInclude Include="IWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigAbiString.h">

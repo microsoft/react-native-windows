@@ -4,7 +4,7 @@
 #pragma once
 
 #include <cxxreact/CxxModule.h>
-#include "IWebSocket.h"
+#include "IWebSocketResource.h"
 
 namespace Microsoft::React {
 
