@@ -19,7 +19,7 @@ namespace Microsoft::React::Test {
 
 TEST_CLASS(WebSocketTest) {
   TEST_METHOD(WebSocketTest_CreateAndSetHandlers) {
-    auto ws = std::make_shared<WebSocket>(Url("ws://validurl:0/"));
+    auto ws = std::make_shared<Beast::WebSocketResource>(Url("ws://validurl:0/"));
     Assert::IsFalse(nullptr == ws);
     ws->SetOnConnect([]() {});
     ws->SetOnPing([]() {});
@@ -33,7 +33,7 @@ TEST_CLASS(WebSocketTest) {
   void ConnectAndClose()
   // TEST_METHOD(WebSocketTest_ConnectAndClose)
   {
-    auto ws = std::make_shared<WebSocket>(Url("ws://localhost:5555/"));
+    auto ws = std::make_shared<Beast::WebSocketResource>(Url("ws://localhost:5555/"));
     bool connected = false;
     ws->SetOnConnect([&connected]() { connected = true; });
 
@@ -47,7 +47,7 @@ TEST_CLASS(WebSocketTest) {
   void SendAndReceive()
   // TEST_METHOD(WebSocketTest_SendAndReceive)
   {
-    auto ws = std::make_shared<WebSocket>(Url("ws://localhost:5555/"));
+    auto ws = std::make_shared<Beast::WebSocketResource>(Url("ws://localhost:5555/"));
     ws->SetOnMessage([](size_t size, const string &message) {
       // EXPECT_EQ("uppercaseme_response", ss.str());//TODO: Check test server.
       // Sending back "hello".

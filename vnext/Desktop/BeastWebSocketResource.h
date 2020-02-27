@@ -10,14 +10,14 @@
 #include "IWebSocketResource.h"
 #include "Utils.h"
 
-namespace Microsoft::React {
+namespace Microsoft::React::Beast {
 
 template <
     typename Protocol = boost::asio::ip::tcp,
     typename SocketLayer = boost::asio::basic_stream_socket<Protocol>,
     typename Stream = boost::beast::websocket::stream<SocketLayer>,
     typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
-class BaseWebSocket : public IWebSocketResource {
+class BaseWebSocketResource : public IWebSocketResource {
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
@@ -110,9 +110,9 @@ class BaseWebSocket : public IWebSocketResource {
   std::unique_ptr<Stream> m_stream;
   std::function<void(Error &&)> m_errorHandler;
 
-  BaseWebSocket(Url &&url);
+  BaseWebSocketResource(Url &&url);
 
-  ~BaseWebSocket() override;
+  ~BaseWebSocketResource() override;
 
   /// <summary>
   /// Finalizes the connection setup to the remote endpoint.
@@ -192,14 +192,14 @@ class BaseWebSocket : public IWebSocketResource {
 #pragma endregion IWebSocketResource
 };
 
-class WebSocket : public BaseWebSocket<> {
+class WebSocketResource : public BaseWebSocketResource<> {
  public:
-  WebSocket(Url &&url);
+  WebSocketResource(Url &&url);
 };
 
 class SecureWebSocket
-    : public BaseWebSocket<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
-#pragma region BaseWebSocket overrides
+    : public BaseWebSocketResource<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
+#pragma region BaseWebSocketResource overrides
 
   void Handshake(const IWebSocketResource::Options &options) override;
 
@@ -276,7 +276,7 @@ class MockStream {
   std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocket : public BaseWebSocket<
+class TestWebSocket : public BaseWebSocketResource<
                           boost::asio::ip::tcp, // TODO: Mock this and Resolver.
                           std::nullptr_t, // Unused. MockStream works as its own
                                           // next/lowest layer.
@@ -291,4 +291,4 @@ class TestWebSocket : public BaseWebSocket<
 
 } // namespace Test
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Beast
