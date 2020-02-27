@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Thu, 27 Feb 2020 18:38:20 GMT",
+      "tag": "rnpm-plugin-windows_v0.5.1-0",
+      "version": "0.5.1-0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Move rnpm-plugin-windows package out of current",
+            "author": "acoates@microsoft.com",
+            "commit": "2a2bf8556317d97b52c8339b038943b484864f77"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Feb 2020 01:21:44 GMT",
       "tag": "rnpm-plugin-windows_v0.5.1-0",
       "version": "0.5.1-0",

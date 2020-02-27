@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Move rnpm-plugin-windows package out of current",
-  "packageName": "rnpm-plugin-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "2a2bf8556317d97b52c8339b038943b484864f77",
-  "dependentChangeType": "patch",
-  "date": "2020-02-27T14:38:24.111Z"
-}
