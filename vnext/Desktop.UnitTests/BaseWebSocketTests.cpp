@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <CppUnitTest.h>
 #include <BeastWebSocketResource.h>
+#include <CppUnitTest.h>
 #include <future>
 
 using namespace boost::beast;
