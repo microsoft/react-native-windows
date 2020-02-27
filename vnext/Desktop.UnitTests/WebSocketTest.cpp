@@ -25,8 +25,8 @@ TEST_CLASS(WebSocketTest) {
     ws->SetOnPing([]() {});
     ws->SetOnSend([](size_t length) {});
     ws->SetOnMessage([](std::size_t length, const string &buffer) {});
-    ws->SetOnClose([](IWebSocket::CloseCode, const string &) {});
-    ws->SetOnError([](const IWebSocket::Error &error) {});
+    ws->SetOnClose([](IWebSocketResource::CloseCode, const string &) {});
+    ws->SetOnError([](const IWebSocketResource::Error &error) {});
   }
 
   // TODO: Implement Protocol and Socket mocks.
@@ -38,7 +38,7 @@ TEST_CLASS(WebSocketTest) {
     ws->SetOnConnect([&connected]() { connected = true; });
 
     ws->Connect({}, {});
-    ws->Close(IWebSocket::CloseCode::Normal, "BECAUSE!");
+    ws->Close(IWebSocketResource::CloseCode::Normal, "BECAUSE!");
 
     Assert::IsTrue(connected);
   }
@@ -58,7 +58,7 @@ TEST_CLASS(WebSocketTest) {
 
     ws->Connect({}, {});
     ws->Send("uppercaseme");
-    ws->Close(IWebSocket::CloseCode::Normal, "");
+    ws->Close(IWebSocketResource::CloseCode::Normal, "");
   }
 };
 

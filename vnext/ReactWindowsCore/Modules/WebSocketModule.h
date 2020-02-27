@@ -41,15 +41,15 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   void SendEvent(std::string &&eventName, folly::dynamic &&parameters);
 
   /// <summary>
-  /// Creates or retrieves a raw <c>IWebSocket</c> pointer.
+  /// Creates or retrieves a raw <c>IWebSocketResource</c> pointer.
   /// </summary>
-  IWebSocket *GetOrCreateWebSocket(int64_t id, std::string &&url = std::string());
+  IWebSocketResource *GetOrCreateWebSocket(int64_t id, std::string &&url = std::string());
 
   /// <summary>
-  /// Keeps <c>IWebSocket</c> instances identified by <c>id</c>.
+  /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
   /// As defined in WebSocket.js.
   /// </summary>
-  std::map<int64_t, std::unique_ptr<IWebSocket>> m_webSockets;
+  std::map<int64_t, std::unique_ptr<IWebSocketResource>> m_webSockets;
 };
 
 } // namespace Microsoft::React

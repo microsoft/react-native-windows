@@ -13,7 +13,7 @@ struct WebSocketServiceCallbacks {
   std::function<void(boost::beast::websocket::response_type &)> OnHandshake;
   std::function<void(std::string)> OnMessage;
   std::function<std::string(std::string &&)> MessageFactory;
-  std::function<void(IWebSocket::Error &&)> OnError;
+  std::function<void(IWebSocketResource::Error &&)> OnError;
 };
 
 struct IWebSocketSession {
@@ -31,7 +31,7 @@ class BaseWebSocketSession : public IWebSocketSession {
   WebSocketServiceCallbacks &m_callbacks;
   State m_state;
 
-  std::function<void(IWebSocket::Error &&)> m_errorHandler;
+  std::function<void(IWebSocketResource::Error &&)> m_errorHandler;
 
   void Read();
 
@@ -106,7 +106,7 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer> {
   void SetOnHandshake(std::function<void(boost::beast::websocket::response_type &)> &&func);
   void SetOnMessage(std::function<void(std::string)> &&func);
   void SetMessageFactory(std::function<std::string(std::string &&)> &&func);
-  void SetOnError(std::function<void(IWebSocket::Error &&)> &&func);
+  void SetOnError(std::function<void(IWebSocketResource::Error &&)> &&func);
 };
 
 } // namespace Microsoft::React::Test

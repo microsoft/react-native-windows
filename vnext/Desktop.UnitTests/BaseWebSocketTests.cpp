@@ -18,8 +18,8 @@ using std::string;
 
 namespace Microsoft::React::Test {
 
-using CloseCode = IWebSocket::CloseCode;
-using Error = IWebSocket::Error;
+using CloseCode = IWebSocketResource::CloseCode;
+using Error = IWebSocketResource::Error;
 
 // We turn clang format off here because it does not work with some of the
 // test macros.

@@ -49,7 +49,7 @@ BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocket() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWebSocket::Options &options) {
+void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWebSocketResource::Options &options) {
   m_stream->async_handshake_ex(
       m_url.host,
       m_url.Target(),
@@ -227,75 +227,75 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::EnqueueWrite(const 
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 websocket::close_code BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::ToBeastCloseCode(
-    IWebSocket::CloseCode closeCode) {
+    IWebSocketResource::CloseCode closeCode) {
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::BadPayload) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::BadPayload) ==
           static_cast<uint16_t>(websocket::close_code::bad_payload),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::GoingAway) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::GoingAway) ==
           static_cast<uint16_t>(websocket::close_code::going_away),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::InternalError) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::InternalError) ==
           static_cast<uint16_t>(websocket::close_code::internal_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::NeedsExtension) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::NeedsExtension) ==
           static_cast<uint16_t>(websocket::close_code::needs_extension),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Normal) == static_cast<uint16_t>(websocket::close_code::normal),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Normal) == static_cast<uint16_t>(websocket::close_code::normal),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::NoStatus) == static_cast<uint16_t>(websocket::close_code::no_status),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::NoStatus) == static_cast<uint16_t>(websocket::close_code::no_status),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::PolicyError) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::PolicyError) ==
           static_cast<uint16_t>(websocket::close_code::policy_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::ProtocolError) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::ProtocolError) ==
           static_cast<uint16_t>(websocket::close_code::protocol_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved1) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Reserved1) ==
           static_cast<uint16_t>(websocket::close_code::reserved1),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved2) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Reserved2) ==
           static_cast<uint16_t>(websocket::close_code::reserved2),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved3) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Reserved3) ==
           static_cast<uint16_t>(websocket::close_code::reserved3),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::ServiceRestart) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::ServiceRestart) ==
           static_cast<uint16_t>(websocket::close_code::service_restart),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::TooBig) == static_cast<uint16_t>(websocket::close_code::too_big),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::TooBig) == static_cast<uint16_t>(websocket::close_code::too_big),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::TryAgainLater) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::TryAgainLater) ==
           static_cast<uint16_t>(websocket::close_code::try_again_later),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::UnknownData) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::UnknownData) ==
           static_cast<uint16_t>(websocket::close_code::unknown_data),
       "Exception type enums don't match");
 
   return static_cast<websocket::close_code>(closeCode);
 }
 
-#pragma region IWebSocket members
+#pragma region IWebSocketResource members
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Connect(
@@ -397,7 +397,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping() {
     PerformPing();
 }
 
-#pragma endregion IWebSocket members
+#pragma endregion IWebSocketResource members
 
 #pragma region Handler setters
 
@@ -434,7 +434,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-IWebSocket::ReadyState BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const {
+IWebSocketResource::ReadyState BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const {
   return m_readyState;
 }
 
@@ -459,11 +459,11 @@ SecureWebSocket::SecureWebSocket(Url &&url) : BaseWebSocket(std::move(url)) {
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
-void SecureWebSocket::Handshake(const IWebSocket::Options &options) {
+void SecureWebSocket::Handshake(const IWebSocketResource::Options &options) {
   this->m_stream->next_layer().async_handshake(
       ssl::stream_base::client, [this, options = std::move(options)](boostecr ec) {
         if (ec && this->m_errorHandler) {
-          this->m_errorHandler({ec.message(), IWebSocket::ErrorType::Connection});
+          this->m_errorHandler({ec.message(), IWebSocketResource::ErrorType::Connection});
         } else {
           BaseWebSocket::Handshake(std::move(options));
         }
@@ -472,26 +472,26 @@ void SecureWebSocket::Handshake(const IWebSocket::Options &options) {
 
 #pragma endregion SecureWebSocket members
 
-#pragma region IWebSocket static members
+#pragma region IWebSocketResource static members
 
-/*static*/ unique_ptr<IWebSocket> IWebSocket::Make(const string &urlString) {
+/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
   Url url(urlString);
 
   if (url.scheme == "ws") {
     if (url.port.empty())
       url.port = "80";
 
-    return unique_ptr<IWebSocket>(new WebSocket(std::move(url)));
+    return unique_ptr<IWebSocketResource>(new WebSocket(std::move(url)));
   } else if (url.scheme == "wss") {
     if (url.port.empty())
       url.port = "443";
 
-    return unique_ptr<IWebSocket>(new SecureWebSocket(std::move(url)));
+    return unique_ptr<IWebSocketResource>(new SecureWebSocket(std::move(url)));
   } else
     throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
 }
 
-#pragma endregion IWebSocket static members
+#pragma endregion IWebSocketResource static members
 
 namespace Test {
 

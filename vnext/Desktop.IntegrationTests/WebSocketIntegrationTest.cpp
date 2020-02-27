@@ -20,12 +20,12 @@ using std::string;
 using std::unique_lock;
 using std::chrono::milliseconds;
 
-using CloseCode = IWebSocket::CloseCode;
+using CloseCode = IWebSocketResource::CloseCode;
 
 TEST_CLASS (WebSocketIntegrationTest) {
   TEST_METHOD(ConnectClose) {
     auto server = make_shared<Test::WebSocketServer>(5556);
-    auto ws = IWebSocket::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
     string message;
@@ -44,9 +44,9 @@ TEST_CLASS (WebSocketIntegrationTest) {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->Start();
 
-    // IWebSocket scope. Ensures object is closed implicitly by destructor.
+    // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
     {
-      auto ws = IWebSocket::Make("ws://localhost:5556/");
+      auto ws = IWebSocketResource::Make("ws://localhost:5556/");
       ws->SetOnConnect([&connected]() { connected = true; });
 
       ws->Connect();
@@ -61,11 +61,11 @@ TEST_CLASS (WebSocketIntegrationTest) {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->Start();
 
-    auto ws = IWebSocket::Make("ws://localhost:5556");
+    auto ws = IWebSocketResource::Make("ws://localhost:5556");
     promise<bool> pingPromise;
     ws->SetOnPing([&pingPromise]() { pingPromise.set_value(true); });
     string errorString;
-    ws->SetOnError([&errorString](IWebSocket::Error err) { errorString = err.Message; });
+    ws->SetOnError([&errorString](IWebSocketResource::Error err) { errorString = err.Message; });
 
     ws->Connect();
     ws->Ping();
@@ -88,7 +88,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
   TEST_METHOD(WaitForBundlerResponseNoClose) {
     string url = "ws://localhost:8081/debugger-proxy?role=client";
     // string url = "ws://localhost:5555/";
-    auto ws = IWebSocket::Make(url);
+    auto ws = IWebSocketResource::Make(url);
     string json =
         "{\"inject\":{},\"id\":1,\"method\":\"executeApplicationScript\",\"url\":\"http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true\"}";
     // string json = "{}";
@@ -119,13 +119,13 @@ TEST_CLASS (WebSocketIntegrationTest) {
   TEST_METHOD(SendReceiveClose) {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocket::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size) { sentSizePromise.set_value(size); });
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string &message) { receivedPromise.set_value(message); });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocket::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
 
     server->Start();
     string sent = "prefix";
@@ -152,11 +152,11 @@ TEST_CLASS (WebSocketIntegrationTest) {
   TEST_METHOD(SendReceiveLargeMessage) {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocket::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocket::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
 
     server->Start();
     ws->Connect();
@@ -210,7 +210,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
       auto cookie = response[boost::beast::http::field::cookie].to_string();
       server->SetMessageFactory([cookie](string &&) { return cookie; });
     });
-    auto ws = IWebSocket::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
 
@@ -231,7 +231,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
   TEST_METHOD(SendReceiveSsl) {
     auto server = make_shared<Test::WebSocketServer>(5556, /*isSecure*/ true);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocket::Make("wss://localhost:5556");
+    auto ws = IWebSocketResource::Make("wss://localhost:5556");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &messageIn) { response.set_value(messageIn); });
 
@@ -253,7 +253,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
   TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendBinary) {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto ws = IWebSocketResource::Make("ws://localhost:5555/");
 
     std::vector<string> messages{
         // Empty
@@ -281,7 +281,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
 
       responsePromise.set_value(messageIn);
     });
-    ws->SetOnError([&errorMessage](IWebSocket::Error error) { errorMessage = error.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error error) { errorMessage = error.Message; });
 
     ws->Connect();
 
@@ -304,7 +304,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
   TEST_METHOD(SendConsecutive) {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocket::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
     const int writes = 10;
     int count = 0;
@@ -315,7 +315,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
       response.set_value(message);
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocket::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
 
     server->Start();
     ws->Connect();
