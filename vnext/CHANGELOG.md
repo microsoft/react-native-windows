@@ -1,7 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Feb 2020 18:33:35 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Feb 2020 23:11:13 GMT and should not be manually modified.
 
+## 0.61.0-beta.28
+Thu, 27 Feb 2020 23:11:13 GMT
+
+### Changes
+
+- Set IsTabStop to false when tabIndex is negative (lamdoan@microsoft.com)
+- TextBox should have a default tabIndex of 0 (lamdoan@microsoft.com)
 ## 0.61.0-beta.27
 Wed, 26 Feb 2020 18:33:35 GMT
 
