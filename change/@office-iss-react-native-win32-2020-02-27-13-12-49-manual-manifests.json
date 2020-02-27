@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Complete Override Manifest for react-native-win32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "commit": "e550f154588bb5f265df722fc96d99466a094bb3",
+  "dependentChangeType": "patch",
+  "date": "2020-02-27T21:12:48.928Z"
+}
