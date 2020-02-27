@@ -9,7 +9,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
+  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in yarn-test-job which is forced to use windows-2019 image.
 
 jobs:
   - job: Setup
@@ -627,9 +627,9 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-  - template: templates/e2e-test-job.yml # Template reference
+  - template: templates/yarn-test-job.yml # Template reference
     parameters:
-      name: E2ETest
+      name: YarnTest
       BuildPlatform: x64
       applyRnPatches: true
 
