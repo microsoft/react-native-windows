@@ -122,7 +122,7 @@
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
     <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
-    <ClCompile Include="WebSocket.cpp" />
+    <ClCompile Include="BeastWebSocketResource.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
