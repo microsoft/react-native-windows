@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Add partial generated override manifests",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "380d6b1fe5dc69a1b6c6aa55c3aa42d5462c2d58",
+  "dependentChangeType": "patch",
+  "date": "2020-02-27T18:11:57.821Z"
+}
