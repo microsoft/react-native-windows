@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "TextBox should have a default tabIndex of 0",
+  "packageName": "react-native-windows",
+  "email": "lamdoan@microsoft.com",
+  "commit": "4fa31c345c0d2e29af34a9357272d26d7b0a8603",
+  "dependentChangeType": "patch",
+  "date": "2020-02-27T19:28:17.048Z"
+}
