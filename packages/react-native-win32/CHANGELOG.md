@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 21 Feb 2020 01:27:13 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Feb 2020 17:47:49 GMT and should not be manually modified.
 
+## 0.61.0-beta.10
+Thu, 27 Feb 2020 17:47:49 GMT
+
+### Changes
+
+- Add missing license to react-native-win32 (ngerlem@microsoft.com)
 ## 0.61.0-beta.8
 Fri, 21 Feb 2020 01:27:13 GMT
 

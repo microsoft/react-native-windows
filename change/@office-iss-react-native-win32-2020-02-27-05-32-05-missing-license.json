@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add missing license to react-native-win32",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "commit": "56b9c03fba7c40dddad1e9b063f5fb26229dd8f0",
-  "dependentChangeType": "patch",
-  "date": "2020-02-27T13:32:05.222Z"
-}
