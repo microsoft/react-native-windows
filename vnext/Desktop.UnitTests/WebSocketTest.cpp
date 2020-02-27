@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 
-#include <WebSocket.h>
+#include <BeastWebSocketResource.h>
 
 using namespace boost::beast;
 using namespace Microsoft::React;

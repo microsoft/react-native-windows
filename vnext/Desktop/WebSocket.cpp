@@ -6,7 +6,7 @@
 #pragma warning(push)
 #pragma warning(disable : 4996) // std::copy::_Unchecked_iterators::_Deprecate
 
-#include "WebSocket.h"
+#include "BeastWebSocketResource.h"
 
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/binary_from_base64.hpp>

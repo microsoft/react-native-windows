@@ -150,7 +150,7 @@
     <ClInclude Include="Sandbox\NamedPipeEndpoint.h" />
     <ClInclude Include="Sandbox\SandboxJSExecutor.h" />
     <ClInclude Include="HttpResource.h" />
-    <ClInclude Include="WebSocket.h" />
+    <ClInclude Include="BeastWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

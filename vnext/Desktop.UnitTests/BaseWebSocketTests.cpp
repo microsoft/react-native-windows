@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <WebSocket.h>
+#include <BeastWebSocketResource.h>
 #include <future>
 
 using namespace boost::beast;
