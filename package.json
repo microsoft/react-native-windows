@@ -12,7 +12,7 @@
     "clean": "lerna run clean --stream -- --color",
     "format": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
     "format:verify": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
-    "test": "lerna run test --stream -- --ci"
+    "test": "lerna run test --stream -- --color"
   },
   "husky": {
     "hooks": {
