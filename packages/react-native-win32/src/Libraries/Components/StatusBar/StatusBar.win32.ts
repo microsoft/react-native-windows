@@ -1,11 +1,15 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT license.
  *
  * @format
  */
 'use strict';
 
-export = null;
+// @ts-ignore This file is present after the JS build
+import * as UnimplementedView from '../UnimplementedViews/UnimplementedView';
+import {StatusBarProps} from 'react-native';
+
+class StatusBar extends UnimplementedView<StatusBarProps> {}
+
+export = StatusBar;

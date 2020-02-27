@@ -189,12 +189,9 @@
       "file": "Libraries\\Components\\TextInput\\Tests\\TextInputTest.tsx"
     },
     {
-      "type": "derived",
+      "type": "platform",
       "file": "Libraries\\Components\\TextInput\\TextInput.Types.win32.ts",
-      "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "53a59e839404c2f565cb47b00fee6b4541045d6c",
-      "issue": "LEGACY_FIXME"
+      "baseFile": "Libraries\\Components\\TextInput\\TextInput.js"
     },
     {
       "type": "derived",
