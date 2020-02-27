@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
+    "diff-match-patch": "^1.0.4",
     "io-ts": "^2.1.1",
     "lodash": "^4.17.15",
     "ora": "^4.0.3",
@@ -33,6 +34,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@types/chalk": "^2.2.0",
+    "@types/diff-match-patch": "^1.0.32",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.7.4",

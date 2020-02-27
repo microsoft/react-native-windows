@@ -3,7 +3,8 @@
  */
 
 'use strict';
-import UnimplementedView from '../UnimplementedStubs/UnimplementedViews';
+// @ts-ignore This file is present after the JS build
+import * as UnimplementedView from '../UnimplementedViews/UnimplementedView';
 import { PickerPropsIOS } from 'react-native';
 
 class PickerIOS extends UnimplementedView<PickerPropsIOS> {}

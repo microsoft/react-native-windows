@@ -24,8 +24,8 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-windows": "0.61.0-beta.27",
-    "react-native-windows-extended": "0.61.0-beta.36",
+    "react-native-windows": "0.61.0-beta.28",
+    "react-native-windows-extended": "0.61.0-beta.38",
     "rnpm-plugin-windows": "^0.5.1-0"
   },
   "devDependencies": {
@@ -36,12 +36,12 @@
     "@types/react": "16.9.0",
     "@types/react-native": "~0.61.5",
     "@wdio/appium-service": "5.12.1",
-    "@wdio/cli": "5.10.1",
-    "@wdio/dot-reporter": "5.11.7",
+    "@wdio/cli": "5.12.1",
+    "@wdio/dot-reporter": "5.12.1",
     "@wdio/jasmine-framework": "5.12.1",
     "@wdio/junit-reporter": "5.12.1",
-    "@wdio/local-runner": "5.10.1",
-    "@wdio/sync": "5.10.1",
+    "@wdio/local-runner": "5.12.1",
+    "@wdio/sync": "5.12.1",
     "appium": "1.14.1",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "0.55.0",
@@ -52,6 +52,6 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^3.5.1",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
-    "webdriverio": "5.10.1"
+    "webdriverio": "5.12.1"
   }
 }

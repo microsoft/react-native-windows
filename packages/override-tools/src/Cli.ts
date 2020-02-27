@@ -13,13 +13,14 @@ import * as Manifest from './Manifest';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as ora from 'ora';
-import * as os from 'os';
 import * as path from 'path';
 import * as yargs from 'yargs';
 
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
+
+import {getInstalledRNVersion} from './PackageUtils';
 
 doMain(() => {
   yargs
@@ -104,45 +105,13 @@ async function validateManifest(manifestPath: string, version?: string) {
 async function getFileRepos(
   manifestPath: string,
 ): Promise<[GitReactFileRepository, OverrideFileRepositoryImpl]> {
-  const gitDir = path.join(os.tmpdir(), 'react-native-windows-override-git');
-  const reactRepo = await GitReactFileRepository.createAndInit(gitDir);
+  const reactRepo = await GitReactFileRepository.createAndInit();
 
   const ovrPath = path.dirname(manifestPath);
   const ovrFilter = /^.*\.(js|ts|jsx|tsx)$/;
   const ovrRepo = new OverrideFileRepositoryImpl(ovrPath, ovrFilter);
 
   return [reactRepo, ovrRepo];
-}
-
-/**
- * Try to find the currently installed version of React Native by seaching for
- * it's package.json.
- */
-async function getInstalledRNVersion(manifestPath: string): Promise<string> {
-  const relativeRnPackage = 'node_modules\\react-native\\package.json';
-
-  let searchPath = path.resolve(manifestPath);
-  while (path.resolve(searchPath, '..') !== searchPath) {
-    try {
-      const rnPackage = path.join(searchPath, relativeRnPackage);
-      const packageJson = (await fs.promises.readFile(rnPackage)).toString();
-      const version = JSON.parse(packageJson).version;
-
-      if (typeof version !== 'string') {
-        throw new Error('Unexpected formt of React Native package.json');
-      }
-
-      return version;
-    } catch (ex) {
-      if (ex.code === 'ENOENT') {
-        searchPath = path.resolve(searchPath, '..');
-      } else {
-        throw ex;
-      }
-    }
-  }
-
-  throw new Error('Could not find a valid package.json for React Native');
 }
 
 /**

@@ -6,6 +6,7 @@
  */
 
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import * as simplegit from 'simple-git/promise';
 
@@ -13,6 +14,7 @@ import ActionQueue from './ActionQueue';
 import {VersionedReactFileRepository} from './FileRepository';
 
 const REACT_NATIVE_GITHUB_URL = 'https://github.com/facebook/react-native.git';
+const DEFAULT_DIR = path.join(os.tmpdir(), 'react-native-windows-override-git');
 
 /**
  * Retrives React Native files using the React Native Github repo. Switching
@@ -28,15 +30,15 @@ export default class GitReactFileRepository
   private constructor() {}
 
   static async createAndInit(
-    gitDirectory: string,
+    gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
     let repo = new GitReactFileRepository();
-    repo.gitDirectory = gitDirectory;
     repo.actionQueue = new ActionQueue();
 
-    await fs.promises.mkdir(gitDirectory, {recursive: true});
+    repo.gitDirectory = gitDirectory || DEFAULT_DIR;
+    await fs.promises.mkdir(repo.gitDirectory, {recursive: true});
 
-    repo.gitClient = simplegit(gitDirectory);
+    repo.gitClient = simplegit(repo.gitDirectory);
     if (!(await repo.gitClient.checkIsRepo())) {
       await repo.gitClient.init();
       await repo.gitClient.addRemote('origin', REACT_NATIVE_GITHUB_URL);

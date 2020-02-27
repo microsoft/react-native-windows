@@ -77,6 +77,18 @@ export function parse(json: string): Manifest {
   return parsed;
 }
 
+/**
+ * Writes the manifest to a JSON file. Does not validate correctness of the
+ * manifest.
+ */
+export async function writeToFile(manifest: Manifest, filePath: string) {
+  manifest.overrides.sort((a, b) => a.file.localeCompare(b.file));
+
+  const json = JSON.stringify(manifest, null /*replacer*/, 2 /*space*/);
+  await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
+  await fs.promises.writeFile(filePath, json);
+}
+
 export interface ValidationError {
   type:
     | 'fileMissingFromManifest' // An override file is present with no manifest entry

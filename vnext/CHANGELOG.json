@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Feb 2020 23:11:13 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.28",
+      "version": "0.61.0-beta.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set IsTabStop to false when tabIndex is negative",
+            "author": "lamdoan@microsoft.com",
+            "commit": "27a16dc9783aefa04c5035c4c2a4b39e8d11f6f8"
+          },
+          {
+            "comment": "TextBox should have a default tabIndex of 0",
+            "author": "lamdoan@microsoft.com",
+            "commit": "4fa31c345c0d2e29af34a9357272d26d7b0a8603"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Feb 2020 20:18:57 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.27",
+      "version": "0.61.0-beta.27",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add partial generated override manifests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "380d6b1fe5dc69a1b6c6aa55c3aa42d5462c2d58"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2020 04:32:20 GMT",
       "tag": "react-native-windows_v0.61.0-beta.27",
       "version": "0.61.0-beta.27",
