@@ -6,11 +6,11 @@ parameters:
 
 jobs:
   - job: ${{ parameters.name }}
-    displayName: Yarn Test
+    displayName: E2E Test
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
-    # YarnTest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
+    # E2ETest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
     # E2ETest can only be executed on windows-2019 or above, so force to use windows-2019 image and override vs2017.yml variables
     # so pool and variables are hard coded here.
     pool:
@@ -108,9 +108,10 @@ jobs:
           script: 'if ((Get-Process React*) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
-        displayName: run test
+        displayName: run e2etest
         inputs:
-          script: yarn test
+          script: yarn run e2etest
+          workingDirectory: packages/E2ETest
 
       - task: CopyFiles@2
         displayName: Copy tree dump output files
@@ -118,14 +119,14 @@ jobs:
           sourceFolder: $(LocalAppData)\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
           contents: TreeDump\**
-        condition: succeededOrFailed()   
+        condition: succeededOrFailed()
         
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
           artifactName: ReactUWPTestAppTreeDump
           pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
-        condition: succeededOrFailed()       
+        condition: succeededOrFailed()
 
       - task: PublishTestResults@2
         inputs:

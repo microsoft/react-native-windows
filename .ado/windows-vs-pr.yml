@@ -9,7 +9,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in yarn-test-job which is forced to use windows-2019 image.
+  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
 
 jobs:
   - job: Setup
@@ -420,7 +420,7 @@ jobs:
           vsComponents: $(VsComponents)
 
   - job: RNWFormatting
-    displayName: Verify change files + lint
+    displayName: Verify change files, lint, and test
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
@@ -459,6 +459,11 @@ jobs:
         displayName: yarn lint
         inputs:
           script: yarn lint
+
+      - task: CmdLine@2
+        displayName: yarn test
+        inputs:
+          script: yarn test
 
       - task: CmdLine@2
         displayName: yarn api
@@ -627,9 +632,9 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-  - template: templates/yarn-test-job.yml # Template reference
+  - template: templates/e2e-test-job.yml # Template reference
     parameters:
-      name: YarnTest
+      name: E2ETest
       BuildPlatform: x64
       applyRnPatches: true
 
