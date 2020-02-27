@@ -594,6 +594,7 @@ facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
 
 XamlView TextInputViewManager::CreateViewCore(int64_t tag) {
   winrt::TextBox textBox;
+  textBox.TabIndex(0);
   return textBox;
 }
 
