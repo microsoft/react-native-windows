@@ -11824,20 +11824,6 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rnpm-plugin-windows@^0.5.1-0:
-  version "0.5.1-0"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.5.1-0.tgz#9ffdd38653c6024c538a98a1046a37625d56eddb"
-  integrity sha512-0EX2shP1OI18MylpVHmZRhDX5GSdvHDgSQoFDZx/Ir73dt3dPVtz7iNviiz3vPa8/8HgTOog3Xzn/gXxfPRrnw==
-  dependencies:
-    chalk "^1.1.3"
-    extract-zip "^1.6.7"
-    fs-extra "^7.0.1"
-    npm-registry "^0.1.13"
-    prompts "^2.3.0"
-    request "^2.88.0"
-    semver "^6.1.1"
-    valid-url "^1.0.9"
-
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
