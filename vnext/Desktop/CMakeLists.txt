@@ -13,7 +13,7 @@ set(SOURCES
 	Sandbox/SandboxBridge.cpp
 	Sandbox/NamedPipeEndpoint.cpp
 	Sandbox/SandboxJSExecutor.cpp
-	WebSocket.cpp)
+	BeastWebSocketResource.cpp)
 
 add_library(ReactWindowsStatic ${SOURCES})
 

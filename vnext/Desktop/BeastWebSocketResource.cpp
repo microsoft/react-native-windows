@@ -6,7 +6,7 @@
 #pragma warning(push)
 #pragma warning(disable : 4996) // std::copy::_Unchecked_iterators::_Deprecate
 
-#include "WebSocket.h"
+#include "BeastWebSocketResource.h"
 
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/binary_from_base64.hpp>
@@ -33,13 +33,16 @@ using boostecr = boost::system::error_code const &;
 
 namespace Microsoft::React {
 
-#pragma region BaseWebSocket members
+namespace Beast {
+
+#pragma region BaseWebSocketResource members
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::BaseWebSocket(Url &&url) : m_url{std::move(url)} {}
+BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::BaseWebSocketResource(Url &&url)
+    : m_url{std::move(url)} {}
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocket() {
+BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocketResource() {
   if (!m_context.stopped()) {
     if (!m_closeRequested)
       Close(CloseCode::GoingAway, "Terminating instance");
@@ -49,7 +52,8 @@ BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocket() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWebSocket::Options &options) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Handshake(
+    const IWebSocketResource::Options &options) {
   m_stream->async_handshake_ex(
       m_url.host,
       m_url.Target(),
@@ -91,7 +95,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(const IWe
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformRead() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::PerformRead() {
   if (ReadyState::Closing == m_readyState || ReadyState::Closed == m_readyState) {
     return;
   }
@@ -132,7 +136,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformRead() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformWrite() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::PerformWrite() {
   assert(!m_writeRequests.empty());
   assert(!m_writeInProgress);
   m_writeInProgress = true;
@@ -164,7 +168,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformWrite() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformPing() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::PerformPing() {
   assert(m_pingRequests > 0);
   assert(!m_pingInProgress);
   m_pingInProgress = true;
@@ -186,7 +190,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformPing() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformClose() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::PerformClose() {
   m_closeInProgress = true;
   m_readyState = ReadyState::Closing;
 
@@ -207,7 +211,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformClose() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Stop() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Stop() {
   if (m_workGuard)
     m_workGuard->reset();
 
@@ -216,7 +220,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Stop() {
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::EnqueueWrite(const string &message, bool binary) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::EnqueueWrite(const string &message, bool binary) {
   post(m_context, [this, message = std::move(message), binary]() {
     m_writeRequests.emplace(std::move(message), binary);
 
@@ -226,79 +230,83 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::EnqueueWrite(const 
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-websocket::close_code BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::ToBeastCloseCode(
-    IWebSocket::CloseCode closeCode) {
+websocket::close_code BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::ToBeastCloseCode(
+    IWebSocketResource::CloseCode closeCode) {
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Abnormal) ==
+          static_cast<uint16_t>(websocket::close_code::abnormal),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::BadPayload) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::BadPayload) ==
           static_cast<uint16_t>(websocket::close_code::bad_payload),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::GoingAway) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::GoingAway) ==
           static_cast<uint16_t>(websocket::close_code::going_away),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::InternalError) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::InternalError) ==
           static_cast<uint16_t>(websocket::close_code::internal_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::NeedsExtension) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::NeedsExtension) ==
           static_cast<uint16_t>(websocket::close_code::needs_extension),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Normal) == static_cast<uint16_t>(websocket::close_code::normal),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Normal) ==
+          static_cast<uint16_t>(websocket::close_code::normal),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::NoStatus) == static_cast<uint16_t>(websocket::close_code::no_status),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::NoStatus) ==
+          static_cast<uint16_t>(websocket::close_code::no_status),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::PolicyError) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::PolicyError) ==
           static_cast<uint16_t>(websocket::close_code::policy_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::ProtocolError) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::ProtocolError) ==
           static_cast<uint16_t>(websocket::close_code::protocol_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved1) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Reserved1) ==
           static_cast<uint16_t>(websocket::close_code::reserved1),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved2) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Reserved2) ==
           static_cast<uint16_t>(websocket::close_code::reserved2),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved3) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::Reserved3) ==
           static_cast<uint16_t>(websocket::close_code::reserved3),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::ServiceRestart) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::ServiceRestart) ==
           static_cast<uint16_t>(websocket::close_code::service_restart),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::TooBig) == static_cast<uint16_t>(websocket::close_code::too_big),
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::TooBig) ==
+          static_cast<uint16_t>(websocket::close_code::too_big),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::TryAgainLater) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::TryAgainLater) ==
           static_cast<uint16_t>(websocket::close_code::try_again_later),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::UnknownData) ==
+      static_cast<uint16_t>(IWebSocketResource::CloseCode::UnknownData) ==
           static_cast<uint16_t>(websocket::close_code::unknown_data),
       "Exception type enums don't match");
 
   return static_cast<websocket::close_code>(closeCode);
 }
 
-#pragma region IWebSocket members
+#pragma region IWebSocketResource members
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Connect(
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Connect(
     const Protocols &protocols,
     const Options &options) {
   // "Cannot call Connect more than once");
@@ -344,7 +352,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Connect(
 } // void Connect
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Close(CloseCode code, const string &reason) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Close(CloseCode code, const string &reason) {
   if (m_closeRequested)
     return;
 
@@ -361,12 +369,12 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Close(CloseCode cod
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Send(const string &message) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Send(const string &message) {
   EnqueueWrite(std::move(message), false);
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SendBinary(const string &base64String) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SendBinary(const string &base64String) {
   m_stream->binary(true);
 
   string message;
@@ -388,7 +396,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SendBinary(const st
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Ping() {
   if (ReadyState::Closed == m_readyState)
     return;
 
@@ -397,54 +405,54 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping() {
     PerformPing();
 }
 
-#pragma endregion IWebSocket members
+#pragma endregion IWebSocketResource members
 
 #pragma region Handler setters
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void()> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void()> &&handler) {
   m_connectHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void()> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void()> &&handler) {
   m_pingHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(function<void(size_t)> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(function<void(size_t)> &&handler) {
   m_writeHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(
     function<void(size_t, const string &)> &&handler) {
   m_readHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(
     function<void(CloseCode, const string &)> &&handler) {
   m_closeHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function<void(Error &&)> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function<void(Error &&)> &&handler) {
   m_errorHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-IWebSocket::ReadyState BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const {
+IWebSocketResource::ReadyState BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const {
   return m_readyState;
 }
 
 #pragma endregion Handler setters
 
-#pragma endregion BaseWebSocket members
+#pragma endregion BaseWebSocketResource members
 
-#pragma region WebSocket members
+#pragma region WebSocketResource members
 
-WebSocket::WebSocket(Url &&url) : BaseWebSocket(std::move(url)) {
+WebSocketResource::WebSocketResource(Url &&url) : BaseWebSocketResource(std::move(url)) {
   this->m_stream = make_unique<websocket::stream<basic_stream_socket<tcp>>>(this->m_context);
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
@@ -453,45 +461,24 @@ WebSocket::WebSocket(Url &&url) : BaseWebSocket(std::move(url)) {
 
 #pragma region SecureWebSocket members
 
-SecureWebSocket::SecureWebSocket(Url &&url) : BaseWebSocket(std::move(url)) {
+SecureWebSocket::SecureWebSocket(Url &&url) : BaseWebSocketResource(std::move(url)) {
   auto ssl = ssl::context(ssl::context::sslv23_client);
   this->m_stream = make_unique<websocket::stream<ssl::stream<tcp::socket>>>(this->m_context, ssl);
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
-void SecureWebSocket::Handshake(const IWebSocket::Options &options) {
+void SecureWebSocket::Handshake(const IWebSocketResource::Options &options) {
   this->m_stream->next_layer().async_handshake(
       ssl::stream_base::client, [this, options = std::move(options)](boostecr ec) {
         if (ec && this->m_errorHandler) {
-          this->m_errorHandler({ec.message(), IWebSocket::ErrorType::Connection});
+          this->m_errorHandler({ec.message(), IWebSocketResource::ErrorType::Connection});
         } else {
-          BaseWebSocket::Handshake(std::move(options));
+          BaseWebSocketResource::Handshake(std::move(options));
         }
       });
 }
 
 #pragma endregion SecureWebSocket members
-
-#pragma region IWebSocket static members
-
-/*static*/ unique_ptr<IWebSocket> IWebSocket::Make(const string &urlString) {
-  Url url(urlString);
-
-  if (url.scheme == "ws") {
-    if (url.port.empty())
-      url.port = "80";
-
-    return unique_ptr<IWebSocket>(new WebSocket(std::move(url)));
-  } else if (url.scheme == "wss") {
-    if (url.port.empty())
-      url.port = "443";
-
-    return unique_ptr<IWebSocket>(new SecureWebSocket(std::move(url)));
-  } else
-    throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
-}
-
-#pragma endregion IWebSocket static members
 
 namespace Test {
 
@@ -595,7 +582,7 @@ MockStream::async_close(websocket::close_reason const &cr, CloseHandler &&handle
 
 #pragma region TestWebSocket
 
-TestWebSocket::TestWebSocket(Url &&url) : BaseWebSocket(std::move(url)) {
+TestWebSocket::TestWebSocket(Url &&url) : BaseWebSocketResource(std::move(url)) {
   m_stream = make_unique<MockStream>(m_context);
 }
 
@@ -614,6 +601,28 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 #pragma endregion TestWebSocket
 } // namespace Test
 
+} // namespace Beast
+
+#pragma region IWebSocketResource static members
+
+/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
+  Url url(urlString);
+
+  if (url.scheme == "ws") {
+    if (url.port.empty())
+      url.port = "80";
+
+    return unique_ptr<IWebSocketResource>(new Beast::WebSocketResource(std::move(url)));
+  } else if (url.scheme == "wss") {
+    if (url.port.empty())
+      url.port = "443";
+
+    return unique_ptr<IWebSocketResource>(new Beast::SecureWebSocket(std::move(url)));
+  } else
+    throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
+}
+
+#pragma endregion IWebSocketResource static members
 } // namespace Microsoft::React
 
 namespace boost::asio {
@@ -622,7 +631,7 @@ namespace boost::asio {
 template <typename Iterator, typename IteratorConnectHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(error_code, Iterator))
 async_connect(
-    Microsoft::React::Test::MockStream &s,
+    Microsoft::React::Beast::Test::MockStream &s,
     Iterator begin,
     Iterator end,
     BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler) {

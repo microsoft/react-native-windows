@@ -133,7 +133,7 @@
     <ClInclude Include="InstanceManager.h" />
     <ClInclude Include="IReactRootView.h" />
     <ClInclude Include="IUIManager.h" />
-    <ClInclude Include="IWebSocket.h" />
+    <ClInclude Include="IWebSocketResource.h" />
     <ClInclude Include="IHttpResource.h" />
     <ClInclude Include="JSBigAbiString.h" />
     <ClInclude Include="LayoutAnimation.h" />

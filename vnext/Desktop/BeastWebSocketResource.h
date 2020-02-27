@@ -7,17 +7,17 @@
 #include <boost/beast/websocket/ssl.hpp>
 #include <queue>
 #include <thread>
-#include "IWebSocket.h"
+#include "IWebSocketResource.h"
 #include "Utils.h"
 
-namespace Microsoft::React {
+namespace Microsoft::React::Beast {
 
 template <
     typename Protocol = boost::asio::ip::tcp,
     typename SocketLayer = boost::asio::basic_stream_socket<Protocol>,
     typename Stream = boost::beast::websocket::stream<SocketLayer>,
     typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
-class BaseWebSocket : public IWebSocket {
+class BaseWebSocketResource : public IWebSocketResource {
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
@@ -90,7 +90,7 @@ class BaseWebSocket : public IWebSocket {
   /// </summary>
   void Stop();
 
-  boost::beast::websocket::close_code ToBeastCloseCode(IWebSocket::CloseCode closeCode);
+  boost::beast::websocket::close_code ToBeastCloseCode(IWebSocketResource::CloseCode closeCode);
 
  protected:
   /// <summary>
@@ -110,9 +110,9 @@ class BaseWebSocket : public IWebSocket {
   std::unique_ptr<Stream> m_stream;
   std::function<void(Error &&)> m_errorHandler;
 
-  BaseWebSocket(Url &&url);
+  BaseWebSocketResource(Url &&url);
 
-  ~BaseWebSocket() override;
+  ~BaseWebSocketResource() override;
 
   /// <summary>
   /// Finalizes the connection setup to the remote endpoint.
@@ -127,81 +127,81 @@ class BaseWebSocket : public IWebSocket {
   /// <param name="options">
   /// Map of HTTP header fields sent by the remote endpoint.
   /// </param>
-  virtual void Handshake(const IWebSocket::Options &options);
+  virtual void Handshake(const IWebSocketResource::Options &options);
 
  public:
-#pragma region IWebSocket
+#pragma region IWebSocketResource
 
   /// <summary>
-  /// <see cref="IWebSocket::Connect" />
+  /// <see cref="IWebSocketResource::Connect" />
   /// </summary>
   void Connect(const Protocols &protocols, const Options &options) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::Ping" />
+  /// <see cref="IWebSocketResource::Ping" />
   /// </summary>
   void Ping() override;
 
   /// <summary>
-  /// <see cref="IWebSocket::Send" />
+  /// <see cref="IWebSocketResource::Send" />
   /// </summary>
   void Send(const std::string &message) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SendBinary" />
+  /// <see cref="IWebSocketResource::SendBinary" />
   /// </summary>
   void SendBinary(const std::string &base64String) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::Close" />
+  /// <see cref="IWebSocketResource::Close" />
   /// </summary>
   void Close(CloseCode code, const std::string &reason) override;
 
   ReadyState GetReadyState() const override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SetOnConnect" />
+  /// <see cref="IWebSocketResource::SetOnConnect" />
   /// </summary>
   void SetOnConnect(std::function<void()> &&handler) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SetOnPing" />
+  /// <see cref="IWebSocketResource::SetOnPing" />
   /// </summary>
   void SetOnPing(std::function<void()> &&handler) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SetOnSend" />
+  /// <see cref="IWebSocketResource::SetOnSend" />
   /// </summary>
   void SetOnSend(std::function<void(std::size_t)> &&handler) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SetOnMessage" />
+  /// <see cref="IWebSocketResource::SetOnMessage" />
   /// </summary>
   void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SetOnClose" />
+  /// <see cref="IWebSocketResource::SetOnClose" />
   /// </summary>
   void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) override;
 
   /// <summary>
-  /// <see cref="IWebSocket::SetOnError" />
+  /// <see cref="IWebSocketResource::SetOnError" />
   /// </summary>
   void SetOnError(std::function<void(Error &&)> &&handler) override;
 
-#pragma endregion IWebSocket
+#pragma endregion IWebSocketResource
 };
 
-class WebSocket : public BaseWebSocket<> {
+class WebSocketResource : public BaseWebSocketResource<> {
  public:
-  WebSocket(Url &&url);
+  WebSocketResource(Url &&url);
 };
 
 class SecureWebSocket
-    : public BaseWebSocket<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
-#pragma region BaseWebSocket overrides
+    : public BaseWebSocketResource<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
+#pragma region BaseWebSocketResource overrides
 
-  void Handshake(const IWebSocket::Options &options) override;
+  void Handshake(const IWebSocketResource::Options &options) override;
 
 #pragma endregion
 
@@ -276,7 +276,7 @@ class MockStream {
   std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocket : public BaseWebSocket<
+class TestWebSocket : public BaseWebSocketResource<
                           boost::asio::ip::tcp, // TODO: Mock this and Resolver.
                           std::nullptr_t, // Unused. MockStream works as its own
                                           // next/lowest layer.
@@ -291,4 +291,4 @@ class TestWebSocket : public BaseWebSocket<
 
 } // namespace Test
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Beast

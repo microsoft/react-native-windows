@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Renamed IWebSocket.h to IWebSocketResource.h.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "4bb365a7fb6dbad1e6dbc9862cb93fd30e064903",
+  "dependentChangeType": "patch",
+  "date": "2020-02-27T02:19:48.359Z"
+}
