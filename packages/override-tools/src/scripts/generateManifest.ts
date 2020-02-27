@@ -176,7 +176,7 @@ function computeSimilarity(
   return {similar, editDistance};
 }
 
-function stripCopyrightHeaders(str: string) : string {
+function stripCopyrightHeaders(str: string): string {
   if (!str.startsWith('/*')) {
     return str;
   }
