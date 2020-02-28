@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 28 Feb 2020 00:14:15 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.143",
+      "version": "0.60.0-vnext.143",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set IsTabStop to false when tabIndex is negative",
+            "author": "lamdoan@microsoft.com",
+            "commit": "27a16dc9783aefa04c5035c4c2a4b39e8d11f6f8"
+          },
+          {
+            "comment": "TextBox should have a default tabIndex of 0",
+            "author": "lamdoan@microsoft.com",
+            "commit": "4fa31c345c0d2e29af34a9357272d26d7b0a8603"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Feb 2020 07:50:56 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.142",
       "version": "0.60.0-vnext.142",

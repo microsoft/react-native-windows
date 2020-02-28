@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Set IsTabStop to false when tabIndex is negative",
-  "packageName": "react-native-windows",
-  "email": "lamdoan@microsoft.com",
-  "commit": "27a16dc9783aefa04c5035c4c2a4b39e8d11f6f8",
-  "dependentChangeType": "patch",
-  "date": "2020-02-25T19:32:43.976Z"
-}
