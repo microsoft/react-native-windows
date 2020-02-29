@@ -32,8 +32,7 @@ namespace Microsoft::React
       return nullptr;
 
     //TODO: Check scheme
-    auto res = unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, false));
-    return nullptr;
+    return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, false));
   }
   else
   {
