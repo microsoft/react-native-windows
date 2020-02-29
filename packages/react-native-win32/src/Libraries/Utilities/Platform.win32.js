@@ -28,7 +28,22 @@ const Platform = {
     |},
   |} {
     if (this.__constants == null) {
-      this.__constants = NativePlatformConstantsWin.getConstants();
+      // Hack: We shouldn't need to null-check NativePlatformContants, but
+      // needed to remove the invariant it is non-null since react-native-win32
+      // hasn't picked up the changes we've made in 0.61 to add the module yet.
+      // This can be removed when we fix win32 NativePlatformConstantsWin.
+      if (NativePlatformConstantsWin) {
+        this.__constants = NativePlatformConstantsWin.getConstants();
+      } else {
+        this.__constants = {
+          isTesting: false,
+          reactNativeVersion: {
+            major: 0,
+            minor: 61,
+            patch: 5,
+          },
+        };
+      }
     }
     return this.__constants;
   },
