@@ -5,17 +5,25 @@
 #pragma once
 
 #include <IWebSocketResource.h>
+#include <Utils.h>
 
 // Windows API
 #include <winhttp.h>
 
 namespace Microsoft::React
 {
-class WinHTTPWebSocketResource : IWebSocketResource
+class WinHTTPWebSocketResource : public IWebSocketResource
 {
-#pragma region IWebSocketResource
+  URL_COMPONENTS m_url;
+  DWORD m_openFlags;
+  HINTERNET m_sessionHandle;
+  HINTERNET m_connectionHandle;
 
 public:
+  WinHTTPWebSocketResource(URL_COMPONENTS url, bool isSecure);
+
+#pragma region IWebSocketResource
+
   /// <summary>
   /// <see cref="IWebSocketResource::Connect" />
   /// </summary>

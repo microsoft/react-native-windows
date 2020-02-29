@@ -124,6 +124,7 @@
     <ClCompile Include="HttpResource.cpp" />
     <ClCompile Include="BeastWebSocketResource.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="WebSocketResourceFactory.cpp" />
     <ClCompile Include="WinHTTPWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>

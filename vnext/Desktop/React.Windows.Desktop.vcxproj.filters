@@ -114,6 +114,9 @@
     <ClCompile Include="WinHTTPWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WebSocketResourceFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">

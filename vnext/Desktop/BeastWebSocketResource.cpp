@@ -603,26 +603,6 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 } // namespace Beast
 
-#pragma region IWebSocketResource static members
-
-/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
-  Url url(urlString);
-
-  if (url.scheme == "ws") {
-    if (url.port.empty())
-      url.port = "80";
-
-    return unique_ptr<IWebSocketResource>(new Beast::WebSocketResource(std::move(url)));
-  } else if (url.scheme == "wss") {
-    if (url.port.empty())
-      url.port = "443";
-
-    return unique_ptr<IWebSocketResource>(new Beast::SecureWebSocket(std::move(url)));
-  } else
-    throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
-}
-
-#pragma endregion IWebSocketResource static members
 } // namespace Microsoft::React
 
 namespace boost::asio {

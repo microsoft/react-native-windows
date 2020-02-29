@@ -12,6 +12,14 @@ using std::string;
 
 namespace Microsoft::React
 {
+WinHTTPWebSocketResource::WinHTTPWebSocketResource(URL_COMPONENTS url, bool isSecure)
+  : m_url{ url }
+  , m_openFlags{ 0 }
+{
+  if (isSecure)
+    m_openFlags |= WINHTTP_FLAG_SECURE;
+}
+
 #pragma region IWebSocketResource
 
 void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options& options)
