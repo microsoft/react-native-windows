@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 01 Mar 2020 16:21:49 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.28",
+      "version": "0.61.0-beta.28",
+      "comments": {
+        "none": [
+          {
+            "comment": "This change correctly handles a failed WebSocket connection",
+            "author": "acampbell2@officeworks.com.au",
+            "commit": "cba52ff91293ce401c7b5db64addca9e8f859d3d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2020 23:11:13 GMT",
       "tag": "react-native-windows_v0.61.0-beta.28",
       "version": "0.61.0-beta.28",
