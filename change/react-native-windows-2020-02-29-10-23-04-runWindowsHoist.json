@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix a couple of places in run-windows that has incorrect assumptions on install layout",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "159db47fe3b904bd36189e2710c24b53a294a6d0",
-  "dependentChangeType": "patch",
-  "date": "2020-02-29T18:23:04.409Z"
-}
