@@ -18,7 +18,7 @@
     "watch": "tsc -w"
   },
   "bin": {
-    "override": "./lib-commonjs/Cli.js"
+    "override": "./bin.js"
   },
   "dependencies": {
     "chalk": "^3.0.0",
@@ -26,6 +26,7 @@
     "io-ts": "^2.1.1",
     "lodash": "^4.17.15",
     "ora": "^4.0.3",
+    "prompts": "^2.3.1",
     "simple-git": "^1.131.0",
     "yargs": "^15.1.0"
   },
@@ -39,6 +40,7 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.7.4",
     "@types/ora": "^3.2.0",
+    "@types/prompts": "^2.0.3",
     "@types/yargs": "^15.0.3",
     "babel-jest": "^24.9.0",
     "fp-ts": "^2.5.0",

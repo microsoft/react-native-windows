@@ -5,89 +5,13 @@
  * @format
  */
 
+import * as ManifestData from './ManifestData';
+
 import * as _ from 'lodash';
 import * as crypto from 'crypto';
-import * as fs from 'fs';
 import * as path from 'path';
-import * as t from 'io-ts';
 
 import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
-
-import {ThrowReporter} from 'io-ts/lib/ThrowReporter';
-
-/**
- * Manifest entry type class for "platform" overrides. I.e. overrides not
- * patching shared code, or derived from existing code.
- */
-const PlatformEntryType = t.type({
-  type: t.literal('platform'),
-  file: t.string,
-});
-
-/**
- * Manifest entry type class for overrides that derive or patch from upstream
- * code.
- */
-const NonPlatformEntryType = t.type({
-  type: t.union([t.literal('patch'), t.literal('derived')]),
-  file: t.string,
-  baseFile: t.string,
-  baseVersion: t.string,
-  baseHash: t.string,
-
-  // Allow LEGACY_FIXME for existing overrides that don't have issues yet
-  issue: t.union([t.number, t.literal('LEGACY_FIXME')]),
-});
-
-const EntryType = t.union([PlatformEntryType, NonPlatformEntryType]);
-const ManifestType = t.type({overrides: t.array(EntryType)});
-
-export type PlatformEntry = t.TypeOf<typeof PlatformEntryType>;
-export type NonPlatformEntry = t.TypeOf<typeof NonPlatformEntryType>;
-export type Entry = t.TypeOf<typeof EntryType>;
-export type Manifest = t.TypeOf<typeof ManifestType>;
-
-/**
- * Read an override manifest from a file.
- *
- * @throws if the file is invalid or cannot be found
- */
-export async function readFromFile(filePath: string): Promise<Manifest> {
-  const json = (await fs.promises.readFile(filePath)).toString();
-  return this.parse(json);
-}
-
-/**
- * Parse a string with JSON for the override manifest into one.
- *
- * @throws if the JSON doesn't describe a valid manifest
- */
-export function parse(json: string): Manifest {
-  const parsed = JSON.parse(json);
-  ThrowReporter.report(ManifestType.decode(parsed));
-
-  // Make sure directory separators go the right direction
-  (parsed as Manifest).overrides.forEach(override => {
-    override.file = path.normalize(override.file);
-    if (override.type !== 'platform') {
-      override.baseFile = path.normalize(override.baseFile);
-    }
-  });
-
-  return parsed;
-}
-
-/**
- * Writes the manifest to a JSON file. Does not validate correctness of the
- * manifest.
- */
-export async function writeToFile(manifest: Manifest, filePath: string) {
-  manifest.overrides.sort((a, b) => a.file.localeCompare(b.file));
-
-  const json = JSON.stringify(manifest, null /*replacer*/, 2 /*space*/);
-  await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
-  await fs.promises.writeFile(filePath, json);
-}
 
 export interface ValidationError {
   type:
@@ -98,59 +22,186 @@ export interface ValidationError {
   file: string;
 }
 
-/**
- * Check that overrides are accurately accounted for in the manifest. I.e. we
- * should have a 1:1 mapping between files and manifest entries, and base files
- * should be present and unchanged since entry creation.
- */
-export async function validate(
-  manifest: Manifest,
-  overrideRepo: OverrideFileRepository,
-  reactRepo: ReactFileRepository,
-): Promise<Array<ValidationError>> {
-  const errors: Array<ValidationError> = [];
+export type OverrideType = 'platform' | 'patch' | 'derived';
 
-  const manifestedFiles = manifest.overrides.map(override => override.file);
-  const overrideFiles = await overrideRepo.listFiles();
-
-  const fileMissingFromManifest = _.difference(overrideFiles, manifestedFiles);
-  fileMissingFromManifest.forEach(file =>
-    errors.push({type: 'fileMissingFromManifest', file: file}),
-  );
-  const overridesNotFound = _.difference(manifestedFiles, overrideFiles);
-  overridesNotFound.forEach(file =>
-    errors.push({type: 'overrideFileNotFound', file: file}),
-  );
-
-  await Promise.all(
-    manifest.overrides.map(async override => {
-      if (override.type === 'platform') {
-        return;
-      }
-
-      const baseContent = await reactRepo.getFileContents(override.baseFile);
-      if (baseContent === null) {
-        errors.push({type: 'baseFileNotFound', file: override.baseFile});
-        return;
-      }
-
-      const baseHash = hashContent(baseContent);
-      if (baseHash.toLowerCase() !== override.baseHash.toLowerCase()) {
-        errors.push({type: 'outOfDate', file: override.file});
-        return;
-      }
-    }),
-  );
-
-  return errors;
+interface OverrideBaseInfo {
+  baseFile: string;
+  baseVersion: string;
+  baseHash: string;
 }
 
-/**
- * Hash content into the form expected in a manifest entry. Exposed for
- * testing.
- */
-export function hashContent(str: string) {
-  const hasher = crypto.createHash('sha1');
-  hasher.update(str);
-  return hasher.digest('hex');
+export default class Manifest {
+  private overrides: Array<ManifestData.Entry>;
+  private overrideRepo: OverrideFileRepository;
+  private reactRepo: ReactFileRepository;
+
+  constructor(
+    data: ManifestData.Manifest,
+    overrideRepo: OverrideFileRepository,
+    reactRepo: ReactFileRepository,
+  ) {
+    this.overrides = data.overrides;
+    this.overrideRepo = overrideRepo;
+    this.reactRepo = reactRepo;
+  }
+
+  /**
+   * Check that overrides are accurately accounted for in the manifest. I.e. we
+   * should have a 1:1 mapping between files and manifest entries, and base files
+   * should be present and unchanged since entry creation.
+   */
+  async validate(): Promise<Array<ValidationError>> {
+    const errors: Array<ValidationError> = [];
+
+    const manifestFiles = this.overrides.map(override => override.file);
+    const overrideFiles = await this.overrideRepo.listFiles();
+
+    const fileMissingFromManifest = _.difference(overrideFiles, manifestFiles);
+    fileMissingFromManifest.forEach(file =>
+      errors.push({type: 'fileMissingFromManifest', file: file}),
+    );
+    const overridesNotFound = _.difference(manifestFiles, overrideFiles);
+    overridesNotFound.forEach(file =>
+      errors.push({type: 'overrideFileNotFound', file: file}),
+    );
+
+    await Promise.all(
+      this.overrides.map(async override => {
+        if (override.type === 'platform') {
+          return;
+        }
+
+        const baseFile = override.baseFile;
+        const baseContent = await this.reactRepo.getFileContents(baseFile);
+        if (baseContent === null) {
+          errors.push({type: 'baseFileNotFound', file: override.baseFile});
+          return;
+        }
+
+        const baseHash = Manifest.hashContent(baseContent);
+        if (baseHash.toLowerCase() !== override.baseHash.toLowerCase()) {
+          errors.push({type: 'outOfDate', file: override.file});
+          return;
+        }
+      }),
+    );
+
+    return errors;
+  }
+
+  /**
+   * Add an override to the manifest, throwing if any part is invalid.
+   */
+  async addOverride(
+    type: OverrideType,
+    file: string,
+    baseFile?: string,
+    issue?: number,
+  ) {
+    switch (type) {
+      case 'platform':
+        return this.addPlatformOverride(file);
+
+      case 'derived':
+        if (!baseFile) {
+          throw new Error('baseFile is required for dervied overrides');
+        }
+        return this.addDerviedOverride(file, baseFile, issue);
+
+      case 'patch':
+        if (!baseFile) {
+          throw new Error('baseFile is required for patch overrides');
+        }
+        if (!issue) {
+          throw new Error('issue is required for patch overrides');
+        }
+        return this.addPatchOverride(file, baseFile, issue);
+    }
+  }
+
+  /**
+   * Platform override specific version of {@see addOverride}
+   */
+  async addPlatformOverride(file: string) {
+    await this.checkOverrideFile(file);
+    this.overrides.push({type: 'platform', file});
+  }
+
+  /**
+   * Dervied override specific version of {@see addOverride}
+   */
+  async addDerviedOverride(file: string, baseFile: string, issue?: number) {
+    await this.checkOverrideFile(file);
+
+    const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
+    this.overrides.push({type: 'derived', file, ...overrideBaseInfo, issue});
+  }
+
+  /**
+   * Patch override specific version of {@see addOverride}
+   */
+  async addPatchOverride(file: string, baseFile: string, issue: number) {
+    await this.checkOverrideFile(file);
+
+    const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
+    this.overrides.push({type: 'derived', file, ...overrideBaseInfo, issue});
+  }
+
+  /**
+   * Whether the manifest contains a given override
+   */
+  hasOverride(overridePath: string): boolean {
+    return this.overrides.findIndex(ovr => ovr.file === overridePath) !== -1;
+  }
+
+  /**
+   * Try to remove an override.
+   * @returns false if none is found with the given name
+   */
+  removeOverride(overridePath: string): boolean {
+    const idx = this.overrides.findIndex(ovr => ovr.file === overridePath);
+    if (idx === -1) {
+      return false;
+    }
+
+    this.overrides.splice(idx, 1);
+    return true;
+  }
+
+  /**
+   * Return a copy of the manifest as raw data
+   */
+  getAsData(): ManifestData.Manifest {
+    return {overrides: _.cloneDeep(this.overrides)};
+  }
+
+  /**
+   * Hash content into the form expected in a manifest entry. Exposed for
+   * testing.
+   */
+  static hashContent(str: string) {
+    const hasher = crypto.createHash('sha1');
+    hasher.update(str);
+    return hasher.digest('hex');
+  }
+
+  private async checkOverrideFile(file: string) {
+    const overrideContents = await this.overrideRepo.getFileContents(file);
+    if (overrideContents === null) {
+      throw new Error(`Could not find override '${file}'`);
+    }
+  }
+
+  private async getOverrideBaseInfo(file: string): Promise<OverrideBaseInfo> {
+    const baseFile = path.normalize(file);
+    const baseContent = await this.reactRepo.getFileContents(baseFile);
+    if (baseContent === null) {
+      throw new Error(`Could not find base file '${file}'`);
+    }
+
+    const baseVersion = this.reactRepo.getVersion();
+    const baseHash = Manifest.hashContent(baseContent);
+
+    return {baseFile, baseVersion, baseHash};
+  }
 }

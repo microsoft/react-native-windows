@@ -5,9 +5,8 @@
  * @format
  */
 
-import * as Manifest from '../Manifest';
-
 import * as fs from 'fs';
+import Manifest from '../Manifest';
 
 (async function() {
   const content = await fs.promises.readFile(process.argv[2]);
