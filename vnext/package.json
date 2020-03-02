@@ -19,7 +19,8 @@
     "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
     "start": "react-native start",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "validate-overrides": "override validate ./src/overrides.json"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
@@ -52,6 +53,7 @@
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
     "react": "16.9.0",
+    "react-native-windows-override-tools": "^0.0.1",
     "react-native": "0.61.5",
     "typescript": "3.5.3"
   },

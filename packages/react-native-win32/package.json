@@ -18,6 +18,7 @@
     "run-win32-devmain": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
     "run-win32": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev",
     "start": "react-native start",
+    "validate-overrides": "override validate ./src/overrides.json",
     "watch": "tsc -w"
   },
   "dependencies": {
@@ -53,6 +54,7 @@
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "react": "16.9.0",
+    "react-native-windows-override-tools": "^0.0.1",
     "react-native": "0.61.5",
     "rimraf": "^3.0.0"
   },

@@ -29,6 +29,10 @@ export class MockReactFileRepository implements ReactFileRepository {
       return matches[0].content;
     }
   }
+
+  getVersion(): string {
+    return '0.61.5';
+  }
 }
 
 export class MockOverrideFileRepository implements OverrideFileRepository {
