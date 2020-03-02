@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 27 Feb 2020 23:11:13 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Mar 2020 20:59:31 GMT and should not be manually modified.
 
+## 0.61.0-beta.29
+Mon, 02 Mar 2020 20:59:31 GMT
+
+### Changes
+
+- Fix a couple of places in run-windows that has incorrect assumptions on install layout (acoates@microsoft.com)
 ## 0.61.0-beta.28
 Thu, 27 Feb 2020 23:11:13 GMT
 

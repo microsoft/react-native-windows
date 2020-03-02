@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 27 Feb 2020 23:45:30 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Mar 2020 20:19:34 GMT and should not be manually modified.
 
+## 0.61.0-beta.12
+Mon, 02 Mar 2020 20:19:34 GMT
+
+### Changes
+
+- Prevent react-native-win32 From Blowing Up on Startup (ngerlem@microsoft.com)
 ## 0.61.0-beta.11
 Thu, 27 Feb 2020 23:45:30 GMT
 

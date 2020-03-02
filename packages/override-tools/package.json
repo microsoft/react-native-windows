@@ -44,7 +44,8 @@
     "@types/yargs": "^15.0.3",
     "babel-jest": "^24.9.0",
     "fp-ts": "^2.5.0",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "just-scripts": "^0.36.1"
   },
   "engines": {
     "node": ">=10"

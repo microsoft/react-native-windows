@@ -267,14 +267,6 @@
     },
     {
       "type": "patch",
-      "file": "Libraries\\core\\ReactNativeVersionCheck.win32.js",
-      "baseFile": "Libraries\\core\\ReactNativeVersionCheck.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "b9e2bca9fae696f7b62b8a44305a97c7b537a960",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.win32.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
       "baseVersion": "0.61.5",
