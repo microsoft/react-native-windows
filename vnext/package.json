@@ -25,6 +25,7 @@
     "@babel/runtime": "^7.4.0",
     "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
+    "envinfo": "^7.5.0",
     "fbjs": "^1.0.0",
     "glob": "^7.1.1",
     "ora": "^3.4.0",
@@ -33,8 +34,7 @@
     "shelljs": "^0.7.8",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
-    "xml-parser": "^1.2.1",
-    "envinfo": "^7.5.0"
+    "xml-parser": "^1.2.1"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.3.8",
@@ -43,16 +43,16 @@
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/ora": "^3.2.0",
-    "@types/react-native": "~0.61.5",
     "@types/react": "16.9.0",
-    "eslint-plugin-prettier": "2.6.2",
+    "@types/react-native": "~0.61.5",
     "eslint": "5.1.0",
+    "eslint-plugin-prettier": "2.6.2",
     "flow-bin": "^0.105.0",
     "jscodeshift": "^0.6.2",
-    "just-scripts": "^0.24.2",
+    "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
-    "react-native": "0.61.5",
     "react": "16.9.0",
+    "react-native": "0.61.5",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
