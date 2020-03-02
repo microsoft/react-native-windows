@@ -4,6 +4,7 @@
 // clang-format off
 #include "pch.h"
 
+#include <Unicode.h>
 #include "BeastWebSocketResource.h"
 #include "WinHTTPWebSocketResource.h"
 
@@ -31,8 +32,14 @@ namespace Microsoft::React
     if (!parseResult)
       return nullptr;
 
-    //TODO: Check scheme
-    return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, false));
+    if (wcscmp(url->lpszScheme, L"ws") == 0)
+      return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, false));
+    else if (wcscmp(url->lpszScheme, L"wss") == 0)
+      return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, true));
+
+    throw std::exception(Common::Unicode::Utf16ToUtf8(
+      std::wstring(L"Incorrect URL scheme: ") + std::wstring(url->lpszScheme)
+    ).c_str());
   }
   else
   {
@@ -51,7 +58,7 @@ namespace Microsoft::React
       return unique_ptr<IWebSocketResource>(new Beast::SecureWebSocket(std::move(url)));
     }
     else
-      throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
+      throw std::exception((string("Incorrect URL scheme: ") + url.scheme).c_str());
   }
 }
 
