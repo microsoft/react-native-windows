@@ -21,7 +21,6 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
-<PROJECT_ROOT>/Libraries/Core/ReactNativeVersionCheck.js
 <PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js

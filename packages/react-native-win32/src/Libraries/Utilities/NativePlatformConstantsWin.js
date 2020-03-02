@@ -25,4 +25,4 @@ export interface Spec extends TurboModule {
 
 // Hack: This should be getEnforcing, but devmain won't pick up the native
 // module until they use the DLL for React Native Windows 0.61
-export default (TurboModuleRegistry.get<Spec>('PlatformConstants'): Spec);
+export default (TurboModuleRegistry.get<Spec>('PlatformConstants'): ?Spec);
