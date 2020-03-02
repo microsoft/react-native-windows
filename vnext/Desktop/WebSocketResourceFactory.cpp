@@ -19,7 +19,7 @@ namespace Microsoft::React
 #pragma region IWebSocketResource static members
 
 /*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
-  if (true)
+  if (true) //TODO: Feature-gate this.
   {
     BSTR bstr = _com_util::ConvertStringToBSTR(urlString.c_str());
     LPWSTR lpwstr = bstr;
@@ -30,7 +30,7 @@ namespace Microsoft::React
     auto parseResult = WinHttpCrackUrl(lpwstr, static_cast<DWORD>(urlString.length()), urlFlags, url);
 
     if (!parseResult)
-      return nullptr;
+      throw std::exception("Could not parse URL.");
 
     if (wcscmp(url->lpszScheme, L"ws") == 0)
       return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, false));
