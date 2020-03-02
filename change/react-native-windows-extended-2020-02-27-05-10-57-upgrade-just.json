@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade just-scripts and add root test script",
-  "packageName": "react-native-windows-extended",
-  "email": "ngerlem@microsoft.com",
-  "commit": "4f3da80b0a74e45d349e86aa2b790288a29b7a56",
-  "dependentChangeType": "patch",
-  "date": "2020-02-27T13:10:55.582Z"
-}

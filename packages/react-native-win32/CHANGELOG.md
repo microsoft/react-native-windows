@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 02 Mar 2020 20:19:34 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Mar 2020 21:53:02 GMT and should not be manually modified.
 
+## 0.61.0-beta.13
+Mon, 02 Mar 2020 21:53:02 GMT
+
+### Changes
+
+- Upgrade just-scripts and add root test script (ngerlem@microsoft.com)
 ## 0.61.0-beta.12
 Mon, 02 Mar 2020 20:19:34 GMT
 

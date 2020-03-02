@@ -1,7 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 Mar 2020 20:59:31 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Mar 2020 21:53:02 GMT and should not be manually modified.
 
+## 0.61.0-beta.30
+Mon, 02 Mar 2020 21:53:02 GMT
+
+### Changes
+
+- Upgrade just-scripts and add root test script (ngerlem@microsoft.com)
+- Add descriptions to dev menu items (acoates@microsoft.com)
 ## 0.61.0-beta.29
 Mon, 02 Mar 2020 20:59:31 GMT
 

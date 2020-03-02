@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 02 Mar 2020 21:53:02 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.13",
+      "version": "0.61.0-beta.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade just-scripts and add root test script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f3da80b0a74e45d349e86aa2b790288a29b7a56"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Mar 2020 20:19:34 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.12",
       "version": "0.61.0-beta.12",

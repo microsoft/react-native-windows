@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Mar 2020 21:53:02 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.30",
+      "version": "0.61.0-beta.30",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade just-scripts and add root test script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f3da80b0a74e45d349e86aa2b790288a29b7a56"
+          },
+          {
+            "comment": "Add descriptions to dev menu items",
+            "author": "acoates@microsoft.com",
+            "commit": "180a91ab0603a7e7faf29186c265efd7483cf850"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Mar 2020 20:59:31 GMT",
       "tag": "react-native-windows_v0.61.0-beta.29",
       "version": "0.61.0-beta.29",
