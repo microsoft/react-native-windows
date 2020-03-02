@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Prevent react-native-win32 From Blowing Up on Startup",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "commit": "abca031fbd24d1424e780bca303936c83a7ead21",
-  "dependentChangeType": "patch",
-  "date": "2020-02-29T01:13:23.291Z"
-}

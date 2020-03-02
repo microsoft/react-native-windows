@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 02 Mar 2020 20:19:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.12",
+      "version": "0.61.0-beta.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Prevent react-native-win32 From Blowing Up on Startup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "abca031fbd24d1424e780bca303936c83a7ead21"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2020 23:45:30 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.11",
       "version": "0.61.0-beta.11",
