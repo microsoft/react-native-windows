@@ -4,17 +4,17 @@
 #include "Utils.h"
 #include <regex>
 
-using namespace std;
+using std::string;
 
 namespace Microsoft::React {
 
 Url::Url(const string &source) {
   //      ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
-  regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
+  std::regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
   //     protocol             host       port     path        query
-  cmatch match;
+  std::cmatch match;
   int index = 0;
-  if (regex_match(source.c_str(), match, expression)) {
+  if (std::regex_match(source.c_str(), match, expression)) {
     ++index;
     this->scheme = string(match[index].first, match[index].second);
 
