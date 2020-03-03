@@ -191,7 +191,7 @@ void WinRTWebSocketResource::SendBinary(const string& base64String)
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
-
+  m_socket.Close();
 }
 
 IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
