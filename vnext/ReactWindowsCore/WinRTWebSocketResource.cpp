@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #pragma region CPP_WINRTLESS_EXCEPTIONS_H
 #include "winrt/base.h"
 
