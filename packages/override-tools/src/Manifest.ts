@@ -40,9 +40,16 @@ export default class Manifest {
     overrideRepo: OverrideFileRepository,
     reactRepo: ReactFileRepository,
   ) {
-    this.overrides = data.overrides;
+    this.overrides = _.cloneDeep(data.overrides);
     this.overrideRepo = overrideRepo;
     this.reactRepo = reactRepo;
+
+    this.overrides.forEach(override => {
+      override.file = path.normalize(override.file);
+      if (override.type !== 'platform') {
+        override.baseFile = path.normalize(override.baseFile);
+      }
+    });
   }
 
   /**
@@ -106,7 +113,7 @@ export default class Manifest {
         if (!baseFile) {
           throw new Error('baseFile is required for dervied overrides');
         }
-        return this.addDerviedOverride(file, baseFile, issue);
+        return this.addDerivedOverride(file, baseFile, issue);
 
       case 'patch':
         if (!baseFile) {
@@ -130,7 +137,7 @@ export default class Manifest {
   /**
    * Dervied override specific version of {@see addOverride}
    */
-  async addDerviedOverride(file: string, baseFile: string, issue?: number) {
+  async addDerivedOverride(file: string, baseFile: string, issue?: number) {
     await this.checkOverrideFile(file);
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
@@ -144,7 +151,7 @@ export default class Manifest {
     await this.checkOverrideFile(file);
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
-    this.overrides.push({type: 'derived', file, ...overrideBaseInfo, issue});
+    this.overrides.push({type: 'patch', file, ...overrideBaseInfo, issue});
   }
 
   /**
