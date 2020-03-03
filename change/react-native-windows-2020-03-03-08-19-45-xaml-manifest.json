@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "CI Enforce that Overrides are Recorded Up to Date",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "3eaa715c936e8da29e163dfa555080c5a821c005",
+  "dependentChangeType": "patch",
+  "date": "2020-03-03T16:19:44.988Z"
+}
