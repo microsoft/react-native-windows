@@ -73,24 +73,21 @@
       "file": "Libraries\\Components\\DatePicker\\DatePickerIOS.win32.js",
       "baseFile": "Libraries\\Components\\DatePicker\\DatePickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.win32.js",
       "baseFile": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.tsx",
       "baseFile": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "platform",
@@ -101,8 +98,7 @@
       "file": "Libraries\\Components\\MaskedView\\MaskedViewIOS.win32.js",
       "baseFile": "Libraries\\Components\\MaskedView\\MaskedViewIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "2b46c2ecc8e3cfe8f40f119b628cee2f8fd2d441",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "2b46c2ecc8e3cfe8f40f119b628cee2f8fd2d441"
     },
     {
       "type": "platform",
@@ -113,32 +109,28 @@
       "file": "Libraries\\Components\\Picker\\PickerAndroid.tsx",
       "baseFile": "Libraries\\Components\\Picker\\PickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\PickerIOS.tsx",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "1fe21e833da3c9e426a6d3abb453e37c3671b0be",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "1fe21e833da3c9e426a6d3abb453e37c3671b0be"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.tsx",
       "baseFile": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\ProgressViewIOS\\ProgressViewIOS.win32.js",
       "baseFile": "Libraries\\Components\\ProgressViewIOS\\ProgressViewIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
     },
     {
       "type": "patch",
@@ -157,24 +149,21 @@
       "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.tsx",
       "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\StatusBar\\StatusBar.win32.ts",
       "baseFile": "Libraries\\Components\\StatusBar\\StatusBar.js",
       "baseVersion": "0.61.5",
-      "baseHash": "7f069b8283af9c265adc9978a0d52b5a2e4a0f57",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "7f069b8283af9c265adc9978a0d52b5a2e4a0f57"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\StatusBar\\StatusBarIOS.win32.ts",
       "baseFile": "Libraries\\Components\\StatusBar\\StatusBarIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3"
     },
     {
       "type": "platform",
@@ -214,8 +203,7 @@
       "file": "Libraries\\Components\\ToastAndroid\\ToastAndroid.win32.ts",
       "baseFile": "Libraries\\Components\\ToastAndroid\\ToastAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0"
     },
     {
       "type": "platform",
@@ -276,14 +264,6 @@
     {
       "type": "platform",
       "file": "Libraries\\Components\\View\\ViewWin32.tsx"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\core\\ReactNativeVersionCheck.win32.js",
-      "baseFile": "Libraries\\core\\ReactNativeVersionCheck.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "b9e2bca9fae696f7b62b8a44305a97c7b537a960",
-      "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",

@@ -6,16 +6,17 @@
  */
 
 import * as FileRepository from '../FileRepository';
-import * as Manifest from '../Manifest';
+import * as ManifestData from '../ManifestData';
 
 import * as ora from 'ora';
 import * as path from 'path';
 
 import GitReactFileRepository from '../GitReactFileRepository';
+import Manifest from '../Manifest';
 import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';
 
 import {diff_match_patch} from 'diff-match-patch';
-import {getInstalledRNVersion} from '../PackageUtils';
+import {getInstalledRNVersion} from '../ReactVersion';
 
 const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
 
@@ -30,7 +31,7 @@ const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
 
   const version = await getInstalledRNVersion(ovrPath);
   const [overrides, reactSources] = await getFileRepos(ovrPath, version);
-  const manifest: Manifest.Manifest = {overrides: []};
+  const manifest: ManifestData.Manifest = {overrides: []};
   const overrideFiles = await overrides.listFiles();
 
   let i = 0;
@@ -44,7 +45,7 @@ const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
   }
 
   const ovrFile = path.join(ovrPath, 'overrides.json');
-  await Manifest.writeToFile(manifest as Manifest.Manifest, ovrFile);
+  await ManifestData.writeToFile(manifest, ovrFile);
 
   spinner.succeed();
 })();
@@ -54,7 +55,7 @@ async function tryAddPatch(
   rnVersion: string,
   override: string,
   reactSources: FileRepository.ReactFileRepository,
-  manifest: Manifest.Manifest,
+  manifest: ManifestData.Manifest,
 ): Promise<boolean> {
   const baseFile = filename.replace(WIN_PLATFORM_EXT, '');
   const baseContents = await reactSources.getFileContents(baseFile);
@@ -85,7 +86,7 @@ async function tryAddDerived(
   rnVersion: string,
   override: string,
   reactSources: FileRepository.ReactFileRepository,
-  manifest: Manifest.Manifest,
+  manifest: ManifestData.Manifest,
 ): Promise<boolean> {
   const matches: Array<{file: string; contents: string; dist: number}> = [];
 
@@ -131,7 +132,7 @@ async function tryAddDerived(
 function addUnknown(
   filename: string,
   rnVersion: string,
-  manifest: Manifest.Manifest,
+  manifest: ManifestData.Manifest,
 ) {
   (manifest.overrides as Array<any>).push({
     type: '???',

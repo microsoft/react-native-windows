@@ -2,6 +2,67 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Mar 2020 22:47:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.31",
+      "version": "0.61.0-beta.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "More Override Manifest Functionality (Unit Tests Coming Next Iteration)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1bc608862d16ed5c4992a17db3ca5da4438b5c1a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Mar 2020 21:53:02 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.30",
+      "version": "0.61.0-beta.30",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade just-scripts and add root test script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f3da80b0a74e45d349e86aa2b790288a29b7a56"
+          },
+          {
+            "comment": "Add descriptions to dev menu items",
+            "author": "acoates@microsoft.com",
+            "commit": "180a91ab0603a7e7faf29186c265efd7483cf850"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Mar 2020 20:59:31 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.29",
+      "version": "0.61.0-beta.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix a couple of places in run-windows that has incorrect assumptions on install layout",
+            "author": "acoates@microsoft.com",
+            "commit": "159db47fe3b904bd36189e2710c24b53a294a6d0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 01 Mar 2020 16:21:49 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.28",
+      "version": "0.61.0-beta.28",
+      "comments": {
+        "none": [
+          {
+            "comment": "This change correctly handles a failed WebSocket connection",
+            "author": "acampbell2@officeworks.com.au",
+            "commit": "cba52ff91293ce401c7b5db64addca9e8f859d3d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2020 23:11:13 GMT",
       "tag": "react-native-windows_v0.61.0-beta.28",
       "version": "0.61.0-beta.28",

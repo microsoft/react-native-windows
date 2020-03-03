@@ -5,6 +5,7 @@
 #include "pch.h"
 
 #include <Unicode.h>
+#include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
 #include "WinHTTPWebSocketResource.h"
 

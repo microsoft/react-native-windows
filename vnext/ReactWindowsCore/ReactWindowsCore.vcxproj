@@ -76,7 +76,15 @@
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        REACTWINDOWS_BUILD;
+        NOMINMAX;
+        FOLLY_NO_CONFIG;
+        WIN32=0;
+        RN_EXPORT=;
+        CHAKRACORE;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
@@ -98,6 +106,7 @@
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_V8)'=='true'">$(V8_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -165,6 +174,7 @@
     <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
+    <ClInclude Include="WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
@@ -198,6 +208,7 @@
     <ClCompile Include="ChakraRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man" />

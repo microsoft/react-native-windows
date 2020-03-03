@@ -5,165 +5,14 @@
  * @format
  */
 
-import * as Manifest from '../Manifest';
-import * as path from 'path';
+import * as ManifestData from '../ManifestData';
+import Manifest, {ValidationError} from '../Manifest';
 
 import {
   MockFile,
   MockOverrideFileRepository,
   MockReactFileRepository,
 } from './MockFileRepository';
-
-test('EmptyManifestInvalid', () => {
-  expect(() => Manifest.parse('{}')).toThrow();
-});
-
-test('WellFormedNoOverrides', () => {
-  expect(Manifest.parse('{"overrides": []}')).toEqual({overrides: []});
-});
-
-test('WellFormedPlatform', () => {
-  const manifest: Manifest.Manifest = {
-    overrides: [
-      {
-        type: 'platform',
-        file: 'foo.win32.js',
-      },
-    ],
-  };
-
-  expect(Manifest.parse(JSON.stringify(manifest))).toEqual(manifest);
-});
-
-test('WellFormedPatch', () => {
-  const manifest: Manifest.Manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 4567,
-      },
-    ],
-  };
-
-  expect(Manifest.parse(JSON.stringify(manifest))).toEqual(manifest);
-});
-
-test('WellFormedDerived', () => {
-  const manifest: Manifest.Manifest = {
-    overrides: [
-      {
-        type: 'derived',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 4567,
-      },
-    ],
-  };
-
-  expect(Manifest.parse(JSON.stringify(manifest))).toEqual(manifest);
-});
-
-test('FixmeAllowedAsIssue', () => {
-  const manifest: Manifest.Manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 'LEGACY_FIXME',
-      },
-    ],
-  };
-
-  expect(Manifest.parse(JSON.stringify(manifest))).toEqual(manifest);
-});
-
-test('PathShouldUsePlatformSlashes', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo/foo.win32.js',
-        baseFile: 'bar\\foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 2345,
-      },
-    ],
-  };
-
-  const parsed = Manifest.parse(JSON.stringify(manifest));
-  const override = parsed.overrides[0] as Manifest.NonPlatformEntry;
-  expect(override.file).toBe(`foo${path.sep}foo.win32.js`);
-  expect(override.baseFile).toBe(`bar${path.sep}foo.js`);
-});
-
-test('IssueMustBePresentForPatch', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-      },
-    ],
-  };
-
-  expect(() => Manifest.parse(JSON.stringify(manifest))).toThrow();
-});
-
-test('IssueCannotBeArbitraryString', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 'bad',
-      },
-    ],
-  };
-
-  expect(() => Manifest.parse(JSON.stringify(manifest))).toThrow();
-});
-
-test('WellFormedPatchMustHaveMetadata', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-      },
-    ],
-  };
-
-  expect(() => Manifest.parse(JSON.stringify(manifest))).toThrow();
-});
-
-test('WellFormedDerivedMustHaveMetadata', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'derived',
-        file: 'foo.win32.js',
-      },
-    ],
-  };
-
-  expect(() => Manifest.parse(JSON.stringify(manifest))).toThrow();
-});
 
 const reactFiles: Array<MockFile> = [
   {
@@ -205,7 +54,7 @@ const reactRepo = new MockReactFileRepository(reactFiles);
 const ovrRepo = new MockOverrideFileRepository(overrideFiles);
 
 test('AllListedInManifest', async () => {
-  const manifest: Manifest.Manifest = {
+  const manifest: ManifestData.Manifest = {
     overrides: [
       {type: 'platform', file: 'aaa/aaa.windows.js'},
       {type: 'platform', file: 'aaa/bbb.windows.js'},
@@ -213,29 +62,29 @@ test('AllListedInManifest', async () => {
     ],
   };
 
-  const errors = await Manifest.validate(manifest, ovrRepo, reactRepo);
+  const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
   expect(errors).toEqual([]);
 });
 
 test('ManifestMissingFile', async () => {
-  const manifest: Manifest.Manifest = {
+  const manifest: ManifestData.Manifest = {
     overrides: [
       {type: 'platform', file: 'aaa/aaa.windows.js'},
       {type: 'platform', file: 'aaa/bbb.windows.js'},
     ],
   };
 
-  const expectedError: Manifest.ValidationError = {
+  const expectedError: ValidationError = {
     type: 'fileMissingFromManifest',
     file: 'bbb/ccc.win32.js',
   };
 
-  const errors = await Manifest.validate(manifest, ovrRepo, reactRepo);
+  const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
   expect(errors).toEqual([expectedError]);
 });
 
 test('ManifestExtraFile', async () => {
-  const manifest: Manifest.Manifest = {
+  const manifest: ManifestData.Manifest = {
     overrides: [
       {type: 'platform', file: 'aaa/aaa.windows.js'},
       {type: 'platform', file: 'aaa/bbb.windows.js'},
@@ -244,16 +93,16 @@ test('ManifestExtraFile', async () => {
     ],
   };
 
-  const expectedError: Manifest.ValidationError = {
+  const expectedError: ValidationError = {
     type: 'overrideFileNotFound',
     file: 'bbb/ddd.win32.js',
   };
 
-  const errors = await Manifest.validate(manifest, ovrRepo, reactRepo);
+  const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
   expect(errors).toEqual([expectedError]);
 });
 
-const testManifest: Manifest.Manifest = {
+const testManifestData: ManifestData.Manifest = {
   overrides: [
     {
       type: 'patch',
@@ -279,7 +128,8 @@ const testManifest: Manifest.Manifest = {
 };
 
 test('FullManifestValid', async () => {
-  const errors = await Manifest.validate(testManifest, ovrRepo, reactRepo);
+  const testManifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+  const errors = await testManifest.validate();
   expect(errors).toEqual([]);
 });
 
@@ -288,25 +138,27 @@ test('OutOfDateFile', async () => {
   ourBaseFiles[0].content = 'Different than before';
   const ourReactRepo = new MockReactFileRepository(ourBaseFiles);
 
-  const expectedError: Manifest.ValidationError = {
+  const expectedError: ValidationError = {
     type: 'outOfDate',
     file: overrideFiles[0].filename,
   };
 
-  const errors = await Manifest.validate(testManifest, ovrRepo, ourReactRepo);
+  const testManifest = new Manifest(testManifestData, ovrRepo, ourReactRepo);
+  const errors = await testManifest.validate();
   expect(errors).toEqual([expectedError]);
 });
 
 test('BaseFileNotFound', async () => {
-  const ourManifest = testManifest;
-  const ovr = ourManifest.overrides[0] as Manifest.NonPlatformEntry;
+  const ourManifestData = testManifestData;
+  const ovr = ourManifestData.overrides[0] as ManifestData.PatchEntry;
   ovr.baseFile = 'foo/bar.js';
 
-  const expectedError: Manifest.ValidationError = {
+  const expectedError: ValidationError = {
     type: 'baseFileNotFound',
     file: 'foo/bar.js',
   };
 
-  const errors = await Manifest.validate(ourManifest, ovrRepo, reactRepo);
+  const testManifest = new Manifest(ourManifestData, ovrRepo, reactRepo);
+  const errors = await testManifest.validate();
   expect(errors).toEqual([expectedError]);
 });

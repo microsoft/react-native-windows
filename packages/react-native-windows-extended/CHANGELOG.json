@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Mon, 02 Mar 2020 21:53:02 GMT",
+      "tag": "react-native-windows-extended_v0.61.0-beta.41",
+      "version": "0.61.0-beta.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade just-scripts and add root test script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f3da80b0a74e45d349e86aa2b790288a29b7a56"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Feb 2020 17:21:19 GMT",
       "tag": "react-native-windows-extended_v0.61.0-beta.34",
       "version": "0.61.0-beta.34",
