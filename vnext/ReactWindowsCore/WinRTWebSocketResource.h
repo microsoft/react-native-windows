@@ -23,8 +23,10 @@ class WinRTWebSocketResource : public IWebSocketResource
   std::function<void(std::size_t, const std::string&)> m_readHandler;
   std::function<void(Error&&)> m_errorHandler;
 
-public:
   WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
+
+public:
+  WinRTWebSocketResource(const std::string& urlString);
 
 #pragma region IWebSocketResource
 

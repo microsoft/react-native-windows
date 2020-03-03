@@ -95,6 +95,11 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri)
 {
 }
 
+WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
+  : WinRTWebSocketResource(Uri{ Utf8ToUtf16(urlString) })
+{
+}
+
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
