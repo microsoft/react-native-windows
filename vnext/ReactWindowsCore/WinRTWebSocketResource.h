@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <winrt/Windows.Networking.Sockets.h>
+#include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>
 
 namespace Microsoft::React
@@ -12,6 +14,18 @@ namespace Microsoft::React
 
 class WinRTWebSocketResource : public IWebSocketResource
 {
+  winrt::Windows::Foundation::Uri m_uri;
+  winrt::Windows::Networking::Sockets::MessageWebSocket m_socket;
+  winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
+  winrt::Windows::Storage::Streams::DataWriter m_writer;
+
+  std::function<void()> m_connectHandler;
+  std::function<void(std::size_t, const std::string&)> m_readHandler;
+  std::function<void(Error&&)> m_errorHandler;
+
+public:
+  WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
+
 #pragma region IWebSocketResource
 
   /// <summary>

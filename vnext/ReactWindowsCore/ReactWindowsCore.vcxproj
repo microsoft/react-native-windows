@@ -106,6 +106,7 @@
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_V8)'=='true'">$(V8_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
