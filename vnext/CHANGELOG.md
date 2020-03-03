@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 Mar 2020 22:47:03 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Mar 2020 19:02:31 GMT and should not be manually modified.
 
+## 0.61.0-beta.32
+Tue, 03 Mar 2020 19:02:31 GMT
+
+### Changes
+
+- Remove CMakeLists (ngerlem@microsoft.com)
 ## 0.61.0-beta.31
 Mon, 02 Mar 2020 22:47:03 GMT
 
