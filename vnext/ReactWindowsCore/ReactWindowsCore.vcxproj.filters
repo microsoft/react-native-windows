@@ -111,6 +111,11 @@
     <ClCompile Include="TurboModuleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" />
+    <ClCompile Include="WinRTWebSocketResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">
@@ -261,6 +266,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TurboModuleRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WinRTWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
