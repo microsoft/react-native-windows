@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Remove CMakeLists",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "9acffa5e90966437ed0a4540395258c2ed7ca89b",
+  "dependentChangeType": "patch",
+  "date": "2020-03-03T16:46:15.095Z"
+}
