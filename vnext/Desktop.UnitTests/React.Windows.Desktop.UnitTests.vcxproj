@@ -65,7 +65,16 @@
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!--
+        comsuppw.lib  - _com_util::ConvertStringToBSTR
+        Winhttp.lib   - WebSocket resource implementation
+      -->
+      <AdditionalDependencies>
+        comsuppw.lib;
+        Shlwapi.lib;
+        Winhttp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />

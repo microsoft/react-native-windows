@@ -71,7 +71,17 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!--
+        comsuppw.lib  - _com_util::ConvertStringToBSTR
+        Winhttp.lib   - WebSocket resource implementation
+      -->
+      <AdditionalDependencies>
+        comsuppw.lib;
+        Shlwapi.lib;
+        Version.lib;
+        Winhttp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>

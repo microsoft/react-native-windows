@@ -20,7 +20,7 @@ class WinHTTPWebSocketResource : public IWebSocketResource
   HINTERNET m_connectionHandle;
 
 public:
-  WinHTTPWebSocketResource(URL_COMPONENTS url, bool isSecure);
+  WinHTTPWebSocketResource(const std::string& urlString);
 
 #pragma region IWebSocketResource
 

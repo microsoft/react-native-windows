@@ -4,7 +4,11 @@
 // clang-format off
 #include "pch.h"
 
+#include <Unicode.h>
 #include "WinHTTPWebSocketResource.h"
+
+// Windows API
+#include <comutil.h>
 
 using std::function;
 using std::size_t;
@@ -12,12 +16,31 @@ using std::string;
 
 namespace Microsoft::React
 {
-WinHTTPWebSocketResource::WinHTTPWebSocketResource(URL_COMPONENTS url, bool isSecure)
-  : m_url{ url }
-  , m_openFlags{ 0 }
+
+WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
+  : m_openFlags{ 0 }
 {
-  if (isSecure)
+  BSTR bstr = _com_util::ConvertStringToBSTR(urlString.c_str());
+  LPWSTR lpwstr = bstr;
+  SysFreeString(bstr);
+
+  LPURL_COMPONENTS url{};
+  auto parseResult = WinHttpCrackUrl(lpwstr, static_cast<DWORD>(urlString.length()), m_openFlags, url);
+  if (!parseResult)
+    throw std::exception("Could not parse URL.");
+
+  if (wcscmp(L"wss", url->lpszScheme) == 0)
+  {
     m_openFlags |= WINHTTP_FLAG_SECURE;
+  }
+  else if (wcscmp(L"ws", url->lpszScheme) != 0)
+  {
+    throw std::exception(Common::Unicode::Utf16ToUtf8(
+      std::wstring(L"Incorrect URL scheme: ") + std::wstring(url->lpszScheme)
+    ).c_str());
+  }
+
+  m_url = *url;
 }
 
 #pragma region IWebSocketResource

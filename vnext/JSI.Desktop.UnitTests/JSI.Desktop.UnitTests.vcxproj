@@ -71,7 +71,16 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!--
+        comsuppw.lib  - _com_util::ConvertStringToBSTR
+        Winhttp.lib   - WebSocket resource implementation
+      -->
+      <AdditionalDependencies>
+        comsuppw.lib;
+        Shlwapi.lib;
+        Winhttp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>

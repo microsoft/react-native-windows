@@ -78,7 +78,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!--
+        comsuppw.lib  - _com_util::ConvertStringToBSTR
+        Winhttp.lib   - WebSocket resource implementation
+      -->
+      <AdditionalDependencies>
+        comsuppw.lib;
+        Shlwapi.lib;
+        Version.lib;
+        Winhttp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <!--
       Replaces the WindowsApp.lib link reference in Microsoft.Windows.CppWinRT.props until
       we have a better solution for handling the absence of WinRT string and error DLLs on Win7.

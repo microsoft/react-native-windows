@@ -4,13 +4,9 @@
 // clang-format off
 #include "pch.h"
 
-#include <Unicode.h>
 #include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
 #include "WinHTTPWebSocketResource.h"
-
-// Windows API
-#include <comutil.h>
 
 using std::string;
 using std::unique_ptr;
@@ -22,25 +18,7 @@ namespace Microsoft::React
 /*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
   if (true) //TODO: Feature-gate this.
   {
-    BSTR bstr = _com_util::ConvertStringToBSTR(urlString.c_str());
-    LPWSTR lpwstr = bstr;
-    SysFreeString(bstr);
-
-    LPURL_COMPONENTS url{};
-    DWORD urlFlags{ 0 };
-    auto parseResult = WinHttpCrackUrl(lpwstr, static_cast<DWORD>(urlString.length()), urlFlags, url);
-
-    if (!parseResult)
-      throw std::exception("Could not parse URL.");
-
-    if (wcscmp(url->lpszScheme, L"ws") == 0)
-      return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, false));
-    else if (wcscmp(url->lpszScheme, L"wss") == 0)
-      return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(*url, true));
-
-    throw std::exception(Common::Unicode::Utf16ToUtf8(
-      std::wstring(L"Incorrect URL scheme: ") + std::wstring(url->lpszScheme)
-    ).c_str());
+    return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(urlString));
   }
   else
   {
