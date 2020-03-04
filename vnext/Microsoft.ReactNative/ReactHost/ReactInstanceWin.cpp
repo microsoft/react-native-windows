@@ -30,9 +30,9 @@
 #endif // USE_HERMES
 
 #if defined(USE_V8)
+#include <winrt/Windows.Storage.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
-#include <winrt/Windows.Storage.h>
 #endif // USE_V8
 
 #include "ChakraRuntimeHolder.h"
