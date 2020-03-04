@@ -77,6 +77,7 @@ doMain(() => {
  */
 async function validateManifest(manifestPath: string, version?: string) {
   const spinner = ora('Verifying overrides are recorded and up to date');
+  spinner.start();
 
   try {
     const manifest = await readManifest(manifestPath, version);
@@ -120,7 +121,7 @@ async function addOverride(overridePath: string) {
 
   const overrideDetails = await OverridePrompt.askForDetails(relOverride);
 
-  const spinner = ora('Adding override');
+  const spinner = ora('Adding override').start();
   try {
     await manifest.addOverride(
       overrideDetails.type,

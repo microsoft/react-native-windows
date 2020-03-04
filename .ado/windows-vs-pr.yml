@@ -466,6 +466,11 @@ jobs:
           script: yarn test
 
       - task: CmdLine@2
+        displayName: yarn validate-overrides
+        inputs:
+          script: yarn validate-overrides
+
+      - task: CmdLine@2
         displayName: yarn api
         inputs:
           script: yarn api

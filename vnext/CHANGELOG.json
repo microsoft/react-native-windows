@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 04 Mar 2020 08:47:08 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.34",
+      "version": "0.61.0-beta.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "CI Enforce that Overrides are Recorded Up to Date",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3eaa715c936e8da29e163dfa555080c5a821c005"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Mar 2020 08:11:46 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.33",
+      "version": "0.61.0-beta.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Moved header files from ReactUWP\\Utils to include\\ReactUWP\\Utils. Updated project references.",
+            "author": "lamdoan@microsoft.com",
+            "commit": "2067c346e36d3e32032563fece5383356345010b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Mar 2020 19:02:31 GMT",
       "tag": "react-native-windows_v0.61.0-beta.32",
       "version": "0.61.0-beta.32",
