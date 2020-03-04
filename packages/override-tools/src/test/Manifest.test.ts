@@ -217,6 +217,10 @@ test('addOverrideBadArgs', async () => {
   // @ts-ignore Typings don't know about rejects
   expect(manifest.addOverride('patch', patch)).rejects.toThrow();
 
+  // Bad type
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.addOverride('potato', patch)).rejects.toThrow();
+
   // Missing base
   const derived = overrideFiles[1].filename;
   // @ts-ignore Typings don't know about rejects
