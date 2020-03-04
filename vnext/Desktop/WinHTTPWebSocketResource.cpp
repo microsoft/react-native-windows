@@ -93,4 +93,14 @@ void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
 }
 
 #pragma endregion IWebSocketResource
+
+#pragma region Private members
+
+/*static*/ void CALLBACK WinHTTPWebSocketResource::Callback(HINTERNET handle, DWORD_PTR context, DWORD code, void* info, DWORD length)
+{
+}
+
+#pragma endregion Private members
+
+
 } // namespace Microsoft::React

@@ -5,10 +5,12 @@
 #pragma once
 
 #include <IWebSocketResource.h>
-#include <Utils.h>
 
 // Windows API
 #include <winhttp.h>
+
+// Standard Library
+#include <functional>
 
 namespace Microsoft::React
 {
@@ -18,6 +20,11 @@ class WinHTTPWebSocketResource : public IWebSocketResource
   DWORD m_openFlags;
   HINTERNET m_sessionHandle;
   HINTERNET m_connectionHandle;
+
+  std::function<void()> m_openHandler;
+  std::function<void(CloseCode, const std::string&)> m_closeHandler;
+
+  static void CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD code, void* info, DWORD length);
 
 public:
   WinHTTPWebSocketResource(const std::string& urlString);
