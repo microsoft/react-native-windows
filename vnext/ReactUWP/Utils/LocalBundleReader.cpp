@@ -3,9 +3,9 @@
 
 #include "pch.h"
 
+#include <Utils/LocalBundleReader.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Storage.h>
-#include <Utils/LocalBundleReader.h>
 #include "Unicode.h"
 
 #if _MSC_VER <= 1913
