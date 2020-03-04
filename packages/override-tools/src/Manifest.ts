@@ -130,7 +130,7 @@ export default class Manifest {
    * Platform override specific version of {@see addOverride}
    */
   async addPlatformOverride(file: string) {
-    await this.checkOverrideFile(file);
+    file = await this.checkAndNormalizeOverrideFile(file);
     this.overrides.push({type: 'platform', file});
   }
 
@@ -138,7 +138,7 @@ export default class Manifest {
    * Dervied override specific version of {@see addOverride}
    */
   async addDerivedOverride(file: string, baseFile: string, issue?: number) {
-    await this.checkOverrideFile(file);
+    file = await this.checkAndNormalizeOverrideFile(file);
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
     this.overrides.push({type: 'derived', file, ...overrideBaseInfo, issue});
@@ -148,7 +148,7 @@ export default class Manifest {
    * Patch override specific version of {@see addOverride}
    */
   async addPatchOverride(file: string, baseFile: string, issue: number) {
-    await this.checkOverrideFile(file);
+    file = await this.checkAndNormalizeOverrideFile(file);
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
     this.overrides.push({type: 'patch', file, ...overrideBaseInfo, issue});
@@ -192,11 +192,19 @@ export default class Manifest {
     return hasher.digest('hex');
   }
 
-  private async checkOverrideFile(file: string) {
-    const overrideContents = await this.overrideRepo.getFileContents(file);
-    if (overrideContents === null) {
+  private async checkAndNormalizeOverrideFile(file: string): Promise<string> {
+    const normalizedFile = path.normalize(file);
+
+    if (this.hasOverride(normalizedFile)) {
+      throw new Error(`Override '${file}' already exists in manifest`);
+    }
+
+    const contents = await this.overrideRepo.getFileContents(normalizedFile);
+    if (contents === null) {
       throw new Error(`Could not find override '${file}'`);
     }
+
+    return normalizedFile;
   }
 
   private async getOverrideBaseInfo(file: string): Promise<OverrideBaseInfo> {
