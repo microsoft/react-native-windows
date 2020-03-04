@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 04 Mar 2020 20:16:19 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.144",
+      "version": "0.60.0-vnext.144",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Moved header files from ReactUWP\\Utils to include\\ReactUWP\\Utils. Updated project references.",
+            "author": "lamdoan@microsoft.com",
+            "commit": "2067c346e36d3e32032563fece5383356345010b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Feb 2020 00:14:15 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.143",
       "version": "0.60.0-vnext.143",

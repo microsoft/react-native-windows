@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 28 Feb 2020 00:14:15 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Mar 2020 20:16:19 GMT and should not be manually modified.
 
+## 0.60.0-vnext.144
+Wed, 04 Mar 2020 20:16:19 GMT
+
+### Changes
+
+- Moved header files from ReactUWP\Utils to include\ReactUWP\Utils. Updated project references. (lamdoan@microsoft.com)
 ## 0.60.0-vnext.143
 Fri, 28 Feb 2020 00:14:15 GMT
 

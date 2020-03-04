@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Moved header files from ReactUWP\\Utils to include\\ReactUWP\\Utils. Updated project references.",
-  "packageName": "react-native-windows",
-  "email": "lamdoan@microsoft.com",
-  "commit": "2067c346e36d3e32032563fece5383356345010b",
-  "dependentChangeType": "patch",
-  "date": "2020-03-04T05:47:48.464Z"
-}
