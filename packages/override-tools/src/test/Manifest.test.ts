@@ -16,17 +16,17 @@ import {
 
 const reactFiles: Array<MockFile> = [
   {
-    filename: 'aaa/aaa.js',
+    filename: 'aaa\\aaa.js',
     content:
       'I want your love, and I want your revenge;You and me could write a bad romance',
   },
   {
-    filename: 'aaa/bbb.android.js',
+    filename: 'aaa\\bbb.android.js',
     content:
       "Gimme, gimme, gimme a man after midnight. Won't somebody help me chase the shadows away",
   },
   {
-    filename: 'bbb/ccc.ios.js',
+    filename: 'bbb\\ccc.ios.js',
     content:
       "Cause honey I'll come get my things, but I can't let go I'm waiting for it, that green light, I want it",
   },
@@ -34,17 +34,17 @@ const reactFiles: Array<MockFile> = [
 
 const overrideFiles: Array<MockFile> = [
   {
-    filename: 'aaa/aaa.windows.js',
+    filename: 'aaa\\aaa.windows.js',
     content:
       'I want your love, and I want your mashed potatoes;You and me could make more mashed potatoes I guess',
   },
   {
-    filename: 'aaa/bbb.windows.js',
+    filename: 'aaa\\bbb.windows.js',
     content:
       "Gimme, gimme, gimme 500 live bees after midnight. Won't somebody help me chase the bees out of my house, this is actually quite frightening",
   },
   {
-    filename: 'bbb/ccc.win32.js',
+    filename: 'bbb\\ccc.win32.js',
     content:
       "Cause honey I'll come get my things, but I can't let go I'm waiting for it, the fall of civilization as we know it",
   },
@@ -56,9 +56,9 @@ const ovrRepo = new MockOverrideFileRepository(overrideFiles);
 test('AllListedInManifest', async () => {
   const manifest: ManifestData.Manifest = {
     overrides: [
-      {type: 'platform', file: 'aaa/aaa.windows.js'},
-      {type: 'platform', file: 'aaa/bbb.windows.js'},
-      {type: 'platform', file: 'bbb/ccc.win32.js'},
+      {type: 'platform', file: 'aaa\\aaa.windows.js'},
+      {type: 'platform', file: 'aaa\\bbb.windows.js'},
+      {type: 'platform', file: 'bbb\\ccc.win32.js'},
     ],
   };
 
@@ -69,8 +69,8 @@ test('AllListedInManifest', async () => {
 test('ManifestMissingFile', async () => {
   const manifest: ManifestData.Manifest = {
     overrides: [
-      {type: 'platform', file: 'aaa/aaa.windows.js'},
-      {type: 'platform', file: 'aaa/bbb.windows.js'},
+      {type: 'platform', file: 'aaa\\aaa.windows.js'},
+      {type: 'platform', file: 'aaa\\bbb.windows.js'},
     ],
   };
 
@@ -86,10 +86,10 @@ test('ManifestMissingFile', async () => {
 test('ManifestExtraFile', async () => {
   const manifest: ManifestData.Manifest = {
     overrides: [
-      {type: 'platform', file: 'aaa/aaa.windows.js'},
-      {type: 'platform', file: 'aaa/bbb.windows.js'},
-      {type: 'platform', file: 'bbb/ccc.win32.js'},
-      {type: 'platform', file: 'bbb/ddd.win32.js'},
+      {type: 'platform', file: 'aaa\\aaa.windows.js'},
+      {type: 'platform', file: 'aaa\\bbb.windows.js'},
+      {type: 'platform', file: 'bbb\\ccc.win32.js'},
+      {type: 'platform', file: 'bbb\\ddd.win32.js'},
     ],
   };
 
@@ -187,7 +187,7 @@ test('CannotRemoveOverride', async () => {
 });
 
 test('addOverrideSimple', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
 
   const patch = overrideFiles[0].filename;
   const patchOrig = reactFiles[0].filename;
@@ -205,7 +205,7 @@ test('addOverrideSimple', async () => {
 });
 
 test('addOverrideBadArgs', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
 
   // Missing issue number
   const patch = overrideFiles[0].filename;
@@ -224,7 +224,7 @@ test('addOverrideBadArgs', async () => {
 });
 
 test('addOverrideTypeSimple', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
 
   const patch = overrideFiles[0].filename;
   const patchOrig = reactFiles[0].filename;
@@ -241,8 +241,24 @@ test('addOverrideTypeSimple', async () => {
   expect(manifest.hasOverride(derived)).toBe(true);
 });
 
-test('addOverrideNoBase', async () => {
+test('addOverrideDuplicate', async () => {
   const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+
+  const ovr = overrideFiles[0].filename;
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.addOverride('platform', ovr)).rejects.toThrow();
+});
+
+test('addOverrideDuplicateNonNormalized', async () => {
+  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+
+  const ovr = overrideFiles[0].filename.replace('\\', '/');
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.addOverride('platform', ovr)).rejects.toThrow();
+});
+
+test('addOverrideNoBase', async () => {
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
 
   const patch = overrideFiles[0].filename;
   const patchOrig = 'Never gonna make you cry';
@@ -256,7 +272,7 @@ test('addOverrideNoBase', async () => {
 });
 
 test('addOverrideNoOverride', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
 
   const patch = 'Never gonna tell a lie and hurt you';
   const patchOrig = reactFiles[0].filename;
