@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "add cursor prop to viewwin32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "lehon@microsoft.com",
+  "commit": "5761369cf39399187c96eaec3b912cb416899ac0",
+  "dependentChangeType": "patch",
+  "date": "2020-03-04T19:31:02.081Z"
+}
