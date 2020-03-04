@@ -5,7 +5,7 @@
 #include <winrt/Windows.Storage.h>
 #include <future>
 #include "Unicode.h"
-#include "Utils/UwpScriptStore.h"
+#include <Utils/UwpScriptStore.h>
 
 namespace winrt {
 using namespace winrt::Windows::Foundation;

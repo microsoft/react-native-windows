@@ -6,7 +6,7 @@
 #include <Modules/NativeUIManager.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
-#include "Helpers.h"
+#include <Utils/Helpers.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml::Controls::Primitives;

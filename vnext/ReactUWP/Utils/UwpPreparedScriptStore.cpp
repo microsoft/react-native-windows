@@ -3,8 +3,8 @@
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
-#include "Utils/UwpPreparedScriptStore.h"
-#include "Utils/UwpScriptStore.h"
+#include <Utils/UwpPreparedScriptStore.h>
+#include <Utils/UwpScriptStore.h>
 #include "jsi/jsi.h"
 
 #if _MSC_VER <= 1913
