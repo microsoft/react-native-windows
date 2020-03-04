@@ -197,7 +197,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
-      switch(settings.jsiEngine) {
+      switch (settings.jsiEngine) {
         case JSIEngine::Hermes:
 #if defined(USE_HERMES)
           devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
@@ -205,7 +205,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 #endif
         case JSIEngine::V8:
 #if defined(USE_V8)
-          preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+          preparedScriptStore =
+              std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
 
           devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
               devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <jsi/jsi.h>
 #include <ScriptStore.h>
+#include <jsi/jsi.h>
 
 namespace facebook::react {
 class MemoryTracker;

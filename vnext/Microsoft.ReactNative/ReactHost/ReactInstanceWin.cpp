@@ -219,7 +219,7 @@ void ReactInstanceWin::Initialize() noexcept {
             std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
             switch (m_options.LegacySettings.jsiEngine) {
-              case react::uwp::JSIEngine::Hermes :
+              case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
                 break;
@@ -234,7 +234,8 @@ void ReactInstanceWin::Initialize() noexcept {
                 break;
 #endif
               case react::uwp::JSIEngine::Chakra:
-                if (m_options.LegacySettings.EnableByteCodeCaching || !m_options.LegacySettings.ByteCodeFileUri.empty()) {
+                if (m_options.LegacySettings.EnableByteCodeCaching ||
+                    !m_options.LegacySettings.ByteCodeFileUri.empty()) {
                   scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
                   preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
                       winrt::to_hstring(m_options.LegacySettings.ByteCodeFileUri));
