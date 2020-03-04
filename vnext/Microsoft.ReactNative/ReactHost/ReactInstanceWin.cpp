@@ -687,12 +687,14 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
 }
 
+#ifdef PATCH_RN
 #if defined(USE_V8)
 std::string ReactInstanceWin::getApplicationLocalFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
   return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(std::wstring(local.c_str(), local.size())) + "\\";
 }
+#endif
 #endif
 
 } // namespace Mso::React
