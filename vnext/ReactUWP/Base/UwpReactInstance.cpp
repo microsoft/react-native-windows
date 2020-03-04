@@ -39,25 +39,20 @@
 #ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#endif
 
-#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif // USE_HERMES
+
 #if defined(USE_V8)
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
-
 #include <winrt/Windows.Storage.h>
-
-#include <codecvt>
-#include <locale>
-#endif
+#endif // USE_V8
 
 #include "ChakraRuntimeHolder.h"
 
-#endif
+#endif // PATCH_RN
 
 #include <tuple>
 
@@ -419,7 +414,7 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
 std::string UwpReactInstance::getApplicationLocalFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
-  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(std::wstring(local.c_str(), local.size())) + "\\";
+  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
 #endif
 #endif
