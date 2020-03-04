@@ -5,7 +5,6 @@
 #include "Unicode.h"
 #include "Utils/UwpPreparedScriptStore.h"
 #include "Utils/UwpScriptStore.h"
-#include "jsi/jsi.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage

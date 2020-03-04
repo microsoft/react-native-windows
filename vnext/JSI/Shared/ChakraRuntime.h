@@ -6,7 +6,7 @@
 #include "ChakraObjectRef.h"
 #include "ChakraRuntimeArgs.h"
 
-#include "jsi/jsi.h"
+#include <jsi/jsi.h>
 
 #ifdef CHAKRACORE
 #include "ChakraCore.h"
