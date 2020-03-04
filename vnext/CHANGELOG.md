@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 04 Mar 2020 08:11:46 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Mar 2020 08:47:08 GMT and should not be manually modified.
 
+## 0.61.0-beta.34
+Wed, 04 Mar 2020 08:47:08 GMT
+
+### Changes
+
+- CI Enforce that Overrides are Recorded Up to Date (ngerlem@microsoft.com)
 ## 0.61.0-beta.33
 Wed, 04 Mar 2020 08:11:46 GMT
 
