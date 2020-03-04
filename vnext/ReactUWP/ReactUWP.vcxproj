@@ -143,8 +143,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
-    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
@@ -160,12 +169,8 @@
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h" />
-    <ClInclude Include="Utils\ResourceBrushUtils.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimatedNode.h" />
@@ -189,7 +194,6 @@
     <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\ValueAnimatedNode.h" />
-    <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="Modules\AlertModuleUwp.h" />
@@ -216,9 +220,6 @@
     <ClInclude Include="Threading\JSQueueThread.h" />
     <ClInclude Include="Threading\UIMessageQueueThread.h" />
     <ClInclude Include="Threading\WorkerMessageQueueThread.h" />
-    <ClInclude Include="Utils\LocalBundleReader.h" />
-    <ClInclude Include="Utils\PropertyHandlerUtils.h" />
-    <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
