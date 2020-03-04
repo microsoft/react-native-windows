@@ -327,9 +327,6 @@
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\LocalBundleReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\LocationObserverModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -347,9 +344,6 @@
     </ClInclude>
     <ClInclude Include="Threading\JSQueueThread.h">
       <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\PropertyUtils.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
@@ -516,9 +510,6 @@
     <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\PropertyHandlerUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -530,12 +521,6 @@
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
       <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
       <Filter>Views</Filter>
@@ -573,17 +558,8 @@
     <ClInclude Include="Modules\ImageViewManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
       <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\UwpScriptStore.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h">
       <Filter>Modules\Animated</Filter>
@@ -615,9 +591,6 @@
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Views\SliderViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -626,9 +599,6 @@
     </ClInclude>
     <ClInclude Include="Views\RefreshControlManager.h">
       <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\ResourceBrushUtils.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h">
@@ -642,6 +612,39 @@
     </ClInclude>
     <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h">
       <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
