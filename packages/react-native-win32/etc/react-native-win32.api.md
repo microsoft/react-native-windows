@@ -332,6 +332,8 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
     // (undocumented)
     children?: React.ReactNode;
     // (undocumented)
+    cursor?: string;
+    // (undocumented)
     keyDownEvents?: IHandledKeyboardEvent[];
     // (undocumented)
     keyUpEvents?: IHandledKeyboardEvent[];
