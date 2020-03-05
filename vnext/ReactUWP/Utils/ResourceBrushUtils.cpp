@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include "ResourceBrushUtils.h"
-#include "StandardControlResourceKeyNames.h"
+#include <Utils/ResourceBrushUtils.h>
+#include <Utils/StandardControlResourceKeyNames.h>
 
 #include <winrt/Windows.UI.Xaml.h>
 

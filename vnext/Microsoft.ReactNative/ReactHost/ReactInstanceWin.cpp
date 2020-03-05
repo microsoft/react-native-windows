@@ -24,24 +24,19 @@
 #ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#endif
 
-#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif // USE_HERMES
+
 #if defined(USE_V8)
+#include <winrt/Windows.Storage.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
+#endif // USE_V8
 
-#include <winrt/Windows.Storage.h>
-
-#include <codecvt>
-#include <locale>
-#else
 #include "ChakraRuntimeHolder.h"
-#endif
-#endif
+#endif // PATCH_RN
 
 #include <tuple>
 
@@ -218,23 +213,32 @@ void ReactInstanceWin::Initialize() noexcept {
             std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
             std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
+            switch (m_options.LegacySettings.jsiEngine) {
+              case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
-            devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
-#elif defined(USE_V8)
-            preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
-
-            devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
-#else
-            if (m_options.LegacySettings.EnableByteCodeCaching || !m_options.LegacySettings.ByteCodeFileUri.empty()) {
-              scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
-              preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
-                  winrt::to_hstring(m_options.LegacySettings.ByteCodeFileUri));
-            }
-            devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-                devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+                break;
 #endif
+              case react::uwp::JSIEngine::V8:
+#if defined(USE_V8)
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+                break;
+#endif
+              case react::uwp::JSIEngine::Chakra:
+                if (m_options.LegacySettings.EnableByteCodeCaching ||
+                    !m_options.LegacySettings.ByteCodeFileUri.empty()) {
+                  scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
+                  preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
+                      winrt::to_hstring(m_options.LegacySettings.ByteCodeFileUri));
+                }
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+                break;
+            }
           }
 #endif
 
@@ -243,6 +247,7 @@ void ReactInstanceWin::Initialize() noexcept {
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
+                nullptr,
                 m_uiManager.Load(),
                 m_jsMessageThread.Load(),
                 Mso::Copy(m_batchingUIThread),
@@ -676,5 +681,15 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
   return Mso::Make<ReactInstanceWin, IReactInstanceInternal>(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
 }
+
+#ifdef PATCH_RN
+#if defined(USE_V8)
+std::string ReactInstanceWin::getApplicationLocalFolder() {
+  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+
+  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
+}
+#endif
+#endif
 
 } // namespace Mso::React

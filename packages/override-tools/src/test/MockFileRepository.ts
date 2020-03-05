@@ -6,6 +6,7 @@
  */
 
 import * as _ from 'lodash';
+import * as path from 'path';
 
 import {OverrideFileRepository, ReactFileRepository} from '../FileRepository';
 
@@ -19,6 +20,7 @@ export class MockReactFileRepository implements ReactFileRepository {
 
   constructor(files: Array<MockFile>) {
     this.files = files;
+    this.files.forEach(file => (file.filename = path.normalize(file.filename)));
   }
 
   async getFileContents(filename: string): Promise<string | null> {
@@ -29,6 +31,10 @@ export class MockReactFileRepository implements ReactFileRepository {
       return matches[0].content;
     }
   }
+
+  getVersion(): string {
+    return '0.61.5';
+  }
 }
 
 export class MockOverrideFileRepository implements OverrideFileRepository {
@@ -36,6 +42,7 @@ export class MockOverrideFileRepository implements OverrideFileRepository {
 
   constructor(files: Array<MockFile>) {
     this.files = files;
+    this.files.forEach(file => (file.filename = path.normalize(file.filename)));
   }
 
   async listFiles(): Promise<string[]> {

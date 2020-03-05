@@ -43,6 +43,14 @@ UnSafeCreateReactInstance(
   return new UwpReactInstance(moduleProvider, viewManagerProvider);
 }
 
+REACTWINDOWS_API_(std::shared_ptr<IReactInstance>)
+CreateReactInstance(
+    const std::shared_ptr<facebook::react::TurboModuleRegistry> &turboModuleRegistry,
+    const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
+    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
+  return std::make_shared<UwpReactInstance>(turboModuleRegistry, moduleProvider, viewManagerProvider);
+}
+
 REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>)
 CreateReactRootView(XamlView parentView, const wchar_t *pJsComponentName, const ReactInstanceCreator &instanceCreator) {
   // Convert input strings to std::string

@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Fri, 21 Feb 2020 01:27:13 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Mar 2020 21:53:02 GMT and should not be manually modified.
 
+## 0.61.0-beta.41
+Mon, 02 Mar 2020 21:53:02 GMT
+
+### Changes
+
+- Upgrade just-scripts and add root test script (ngerlem@microsoft.com)
 ## 0.61.0-beta.24
 Fri, 21 Feb 2020 01:27:13 GMT
 

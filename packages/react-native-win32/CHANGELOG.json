@@ -2,6 +2,90 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 02 Mar 2020 22:47:03 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.14",
+      "version": "0.61.0-beta.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "More Override Manifest Functionality (Unit Tests Coming Next Iteration)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1bc608862d16ed5c4992a17db3ca5da4438b5c1a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Mar 2020 21:53:02 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.13",
+      "version": "0.61.0-beta.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade just-scripts and add root test script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f3da80b0a74e45d349e86aa2b790288a29b7a56"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Mar 2020 20:19:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.12",
+      "version": "0.61.0-beta.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Prevent react-native-win32 From Blowing Up on Startup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "abca031fbd24d1424e780bca303936c83a7ead21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Feb 2020 23:45:30 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.11",
+      "version": "0.61.0-beta.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Complete Override Manifest for react-native-win32",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e550f154588bb5f265df722fc96d99466a094bb3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Feb 2020 20:18:57 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.10",
+      "version": "0.61.0-beta.10",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add partial generated override manifests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "380d6b1fe5dc69a1b6c6aa55c3aa42d5462c2d58"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Feb 2020 17:47:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.10",
+      "version": "0.61.0-beta.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add missing license to react-native-win32",
+            "author": "ngerlem@microsoft.com",
+            "commit": "56b9c03fba7c40dddad1e9b063f5fb26229dd8f0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Feb 2020 01:27:13 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.8",
       "version": "0.61.0-beta.8",

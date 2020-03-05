@@ -1,7 +1,93 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 Feb 2020 03:42:21 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2020 05:33:57 GMT and should not be manually modified.
 
+## 0.61.0-beta.37
+Thu, 05 Mar 2020 05:33:57 GMT
+
+### Changes
+
+- Move ViewPanel import from PropertyUtils to FrameworkElementViewManager (jagorrin@microsoft.com)
+## 0.61.0-beta.36
+Thu, 05 Mar 2020 03:41:34 GMT
+
+### Changes
+
+- Enable V8 support for win32 (no defaults changed) (tudorm@microsoft.com)
+## 0.61.0-beta.35
+Thu, 05 Mar 2020 00:11:30 GMT
+
+### Changes
+
+- Support RNW project config (dida@ntdev.microsoft.com)
+## 0.61.0-beta.34
+Wed, 04 Mar 2020 08:47:08 GMT
+
+### Changes
+
+- CI Enforce that Overrides are Recorded Up to Date (ngerlem@microsoft.com)
+## 0.61.0-beta.33
+Wed, 04 Mar 2020 08:11:46 GMT
+
+### Changes
+
+- Moved header files from ReactUWP\Utils to include\ReactUWP\Utils. Updated project references. (lamdoan@microsoft.com)
+## 0.61.0-beta.32
+Tue, 03 Mar 2020 19:02:31 GMT
+
+### Changes
+
+- Remove CMakeLists (ngerlem@microsoft.com)
+## 0.61.0-beta.31
+Mon, 02 Mar 2020 22:47:03 GMT
+
+### Changes
+
+- More Override Manifest Functionality (Unit Tests Coming Next Iteration) (ngerlem@microsoft.com)
+## 0.61.0-beta.30
+Mon, 02 Mar 2020 21:53:02 GMT
+
+### Changes
+
+- Upgrade just-scripts and add root test script (ngerlem@microsoft.com)
+- Add descriptions to dev menu items (acoates@microsoft.com)
+## 0.61.0-beta.29
+Mon, 02 Mar 2020 20:59:31 GMT
+
+### Changes
+
+- Fix a couple of places in run-windows that has incorrect assumptions on install layout (acoates@microsoft.com)
+## 0.61.0-beta.28
+Thu, 27 Feb 2020 23:11:13 GMT
+
+### Changes
+
+- Set IsTabStop to false when tabIndex is negative (lamdoan@microsoft.com)
+- TextBox should have a default tabIndex of 0 (lamdoan@microsoft.com)
+## 0.61.0-beta.27
+Wed, 26 Feb 2020 18:33:35 GMT
+
+### Changes
+
+- Fixed call of methods with two callbacks (vmorozov@microsoft.com)
+## 0.61.0-beta.26
+Wed, 26 Feb 2020 17:21:19 GMT
+
+### Changes
+
+- Standup first TurboModule (acoates@microsoft.com)
+## 0.61.0-beta.25
+Wed, 26 Feb 2020 10:17:18 GMT
+
+### Changes
+
+- Fix concurrency issue in NetworkingModule (lamdoan@microsoft.com)
+## 0.61.0-beta.24
+Tue, 25 Feb 2020 21:50:32 GMT
+
+### Changes
+
+- Plumb directdebugging options through debug menu and instance loading (acoates@microsoft.com)
 ## 0.61.0-beta.23
 Tue, 25 Feb 2020 03:42:21 GMT
 

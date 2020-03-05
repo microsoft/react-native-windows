@@ -25,6 +25,9 @@ option('clean');
 task('eslint', () => {
   return eslintTask();
 });
+task('eslint:fix', () => {
+  return eslintTask({fix: true});
+});
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -43,3 +46,4 @@ task('clean', () => {
 task('build', series(condition('clean', () => true || argv().clean), 'ts'));
 
 task('lint', series('eslint'));
+task('lint:fix', series('eslint:fix'));

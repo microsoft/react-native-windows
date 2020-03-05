@@ -54,6 +54,8 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
+#include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 #endif
 
@@ -156,6 +158,21 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #endif
 }
 
+class BridgeJSCallInvoker : public JSCallInvoker {
+ public:
+  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
+      : messageQueueThread_(std::move(messageQueueThread)) {}
+
+  void invokeAsync(std::function<void()> &&func) override {
+    if (auto queue = messageQueueThread_.lock()) {
+      queue->runOnQueue(std::move(func));
+    }
+  }
+
+ private:
+  std::weak_ptr<MessageQueueThread> messageQueueThread_;
+};
+
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -172,15 +189,36 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
+    auto turboModuleManager =
+        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeJSCallInvoker>(jsQueue));
+
+    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+      return turboModuleManager->getModule(name);
+    };
+
+    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+
+    // init TurboModule
+    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+      turboModuleManager->getModule(moduleName);
+    }
+
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook) noexcept
-      : runtimeHolder_{std::move(runtimeHolder)}, loggingHook_{std::move(loggingHook)} {}
+  OJSIExecutorFactory(
+      std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
+      NativeLoggingHook loggingHook,
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry) noexcept
+      : runtimeHolder_{std::move(runtimeHolder)},
+        loggingHook_{std::move(loggingHook)},
+        turboModuleRegistry_{std::move(turboModuleRegistry)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   NativeLoggingHook loggingHook_;
 };
 
@@ -236,6 +274,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -244,6 +283,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
+      std::move(turboModuleRegistry),
       std::move(uimanager),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -261,6 +301,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -269,6 +310,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
+      std::move(turboModuleRegistry),
       std::move(uimanager),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -341,12 +383,14 @@ InstanceImpl::InstanceImpl(
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
     : m_uimanager(std::move(uimanager)),
+      m_turboModuleRegistry(std::move(turboModuleRegistry)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
@@ -403,7 +447,8 @@ InstanceImpl::InstanceImpl(
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -417,14 +462,12 @@ InstanceImpl::InstanceImpl(
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
-          if (!m_devSettings->bytecodeFileName.empty()) {
-            // Take the root path of the bytecode location if provided
-            auto lastSepPosition = m_devSettings->bytecodeFileName.find_last_of("/\\");
-            if (lastSepPosition != std::string::npos) {
-              preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(
-                  m_devSettings->bytecodeFileName.substr(0, lastSepPosition + 1));
-            }
+
+          char tempPath[MAX_PATH];
+          if (GetTempPathA(MAX_PATH, tempPath)) {
+            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
           }
+
           m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
               m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
           break;
@@ -439,7 +482,8 @@ InstanceImpl::InstanceImpl(
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
       }
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
     } else
 #endif
     {

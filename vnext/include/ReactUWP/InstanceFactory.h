@@ -9,6 +9,12 @@
 #include "ViewManagerProvider.h"
 #include "XamlView.h"
 
+namespace facebook {
+namespace react {
+class TurboModuleRegistry;
+}
+} // namespace facebook
+
 namespace react {
 struct ReactViewHost;
 } // namespace react
@@ -31,6 +37,12 @@ using ReactInstanceCreator = std::shared_ptr<IReactInstanceCreator>;
 
 REACTWINDOWS_API_(std::shared_ptr<IReactInstance>)
 CreateReactInstance(
+    const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
+    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
+
+REACTWINDOWS_API_(std::shared_ptr<IReactInstance>)
+CreateReactInstance(
+    const std::shared_ptr<facebook::react::TurboModuleRegistry> &turboModuleRegistry,
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
 

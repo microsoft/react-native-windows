@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include <BeastWebSocketResource.h>
 #include <CppUnitTest.h>
-#include <WebSocket.h>
 #include <future>
 
 using namespace boost::beast;
-using namespace facebook::react;
-using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using boost::system::error_code;
+using Microsoft::React::Beast::Test::TestWebSocket;
 using std::future;
 using std::make_unique;
 using std::promise;
@@ -18,8 +17,8 @@ using std::string;
 
 namespace Microsoft::React::Test {
 
-using CloseCode = IWebSocket::CloseCode;
-using Error = IWebSocket::Error;
+using CloseCode = IWebSocketResource::CloseCode;
+using Error = IWebSocketResource::Error;
 
 // We turn clang format off here because it does not work with some of the
 // test macros.
