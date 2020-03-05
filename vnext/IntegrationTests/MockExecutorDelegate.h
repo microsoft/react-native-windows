@@ -22,10 +22,6 @@ class MockDelegate : public facebook::react::ExecutorDelegate {
       folly::dynamic &&args) override {
     return facebook::react::MethodCallResult();
   }
-
-  bool isBatchActive() override {
-    return false;
-  }
 };
 
 } // namespace Microsoft::React::Test

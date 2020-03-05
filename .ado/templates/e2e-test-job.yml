@@ -2,7 +2,6 @@
 parameters:
   name: ''
   BuildPlatform: x86 # ARM, x86, x64
-  applyRnPatches: true
 
 jobs:
   - job: ${{ parameters.name }}

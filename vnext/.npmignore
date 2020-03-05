@@ -18,7 +18,6 @@ NuGet.Config
 package-deps.json
 packages
 react-native-windows.build.log
-ReactWin32SandboxSample
 ReactWindows-Universal.sln
 ReactWindows-Desktop.sln
 RNTester.*

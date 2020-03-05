@@ -16,9 +16,6 @@
     <Filter Include="Header Files\Pch">
       <UniqueIdentifier>{6e20d3aa-721b-4f62-a1aa-ec6af1a114fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Sandbox">
-      <UniqueIdentifier>{485cc520-3fae-4b03-896a-bfd3e288aa42}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{b8d1b3de-1573-4d49-a26f-99892413a797}</UniqueIdentifier>
     </Filter>
@@ -232,9 +229,6 @@
     </ClInclude>
     <ClInclude Include="Pch\pch.h">
       <Filter>Header Files\Pch</Filter>
-    </ClInclude>
-    <ClInclude Include="Sandbox\SandboxEndpoint.h">
-      <Filter>Header Files\Sandbox</Filter>
     </ClInclude>
     <ClInclude Include="ShadowNode.h">
       <Filter>Header Files</Filter>

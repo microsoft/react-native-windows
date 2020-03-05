@@ -21,10 +21,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ScriptStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
   </ItemGroup>
 </Project>

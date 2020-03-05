@@ -78,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ControllableMessageQueueThread.h" />
-    <ClInclude Include="MockExecutorDelegate.h" />
     <ClInclude Include="TestInstance.h" />
     <ClInclude Include="TestModule.h" />
     <ClInclude Include="TestMessageQueueThread.h" />

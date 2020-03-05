@@ -64,26 +64,5 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
-#ifdef PATCH_RN
-std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
-    std::string &&jsString,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept;
-
-std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
-    std::string &&jsBundleBasePath,
-    std::string &&jsBundleRelativePath,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept;
-#endif // PATCH_RN
-
 } // namespace react
 } // namespace facebook

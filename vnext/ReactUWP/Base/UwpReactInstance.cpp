@@ -36,7 +36,6 @@
 
 #include <winrt/Windows.ApplicationModel.h>
 
-#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
 
@@ -51,8 +50,6 @@
 #endif // USE_V8
 
 #include "ChakraRuntimeHolder.h"
-
-#endif // PATCH_RN
 
 #include <tuple>
 
@@ -187,7 +184,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = CreateAndStartJSQueueThread();
 
-#ifdef PATCH_RN
     if (settings.UseJsi) {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
@@ -206,7 +202,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
           devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
               devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
           break;
-#endif
+
         case JSIEngine::Chakra:
           if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
             scriptStore = std::make_unique<UwpScriptStore>();
@@ -409,14 +405,12 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
   }
 }
 
-#ifdef PATCH_RN
 #if defined(USE_V8)
 std::string UwpReactInstance::getApplicationLocalFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
-#endif
 #endif
 
 } // namespace uwp
