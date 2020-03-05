@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Configure vnext validate-overrides to check both override manifests",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "commit": "f9b9271570c9269d9e43f4178892ded384fb8769",
-  "dependentChangeType": "patch",
-  "date": "2020-03-05T15:33:21.787Z"
-}
