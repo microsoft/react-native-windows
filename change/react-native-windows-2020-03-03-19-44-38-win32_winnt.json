@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Define _WIN32_WINNT instead of WINVER.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "b6b6b4498465f73dcbb549abd3f09216cf266a04",
+  "dependentChangeType": "patch",
+  "date": "2020-03-04T03:44:38.629Z"
+}

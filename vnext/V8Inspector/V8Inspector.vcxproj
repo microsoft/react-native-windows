@@ -80,7 +80,7 @@
         BOOST_ASIO_DISABLE_BOOST_REGEX;
         BOOST_ERROR_CODE_HEADER_ONLY;
         BOOST_ASIO_HAS_IOCP;
-        WINVER=$(WinVer);
+        _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
         _WIN32;

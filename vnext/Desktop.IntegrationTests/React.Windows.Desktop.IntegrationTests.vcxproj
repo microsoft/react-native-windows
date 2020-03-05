@@ -49,7 +49,7 @@
       <!-- See https://stackoverflow.com/questions/42847103/stdtr1-with-visual-studio-2017. -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
-        WINVER=$(WinVer);
+        _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
         REACTNATIVEWIN32_EXPORTS;
