@@ -25,6 +25,8 @@
 
 #include "DynamicAutomationProperties.h"
 
+#include <Views/ViewPanel.h>
+
 namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
