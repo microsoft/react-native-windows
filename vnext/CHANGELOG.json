@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Mar 2020 05:33:57 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.37",
+      "version": "0.61.0-beta.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move ViewPanel import from PropertyUtils to FrameworkElementViewManager",
+            "author": "jagorrin@microsoft.com",
+            "commit": "9dfc7b5bce7de1508eb2dc31fbdf597929f839f3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Mar 2020 03:41:34 GMT",
       "tag": "react-native-windows_v0.61.0-beta.36",
       "version": "0.61.0-beta.36",
