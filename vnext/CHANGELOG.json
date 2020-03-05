@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Mar 2020 18:50:19 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.145",
+      "version": "0.60.0-vnext.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move ViewPanel import from PropertyUtils to FrameworkElementViewManager",
+            "author": "jagorrin@microsoft.com",
+            "commit": "9dfc7b5bce7de1508eb2dc31fbdf597929f839f3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Mar 2020 20:16:19 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.144",
       "version": "0.60.0-vnext.144",

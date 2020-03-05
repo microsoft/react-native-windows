@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 04 Mar 2020 20:16:19 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2020 18:50:19 GMT and should not be manually modified.
 
+## 0.60.0-vnext.145
+Thu, 05 Mar 2020 18:50:19 GMT
+
+### Changes
+
+- Move ViewPanel import from PropertyUtils to FrameworkElementViewManager (jagorrin@microsoft.com)
 ## 0.60.0-vnext.144
 Wed, 04 Mar 2020 20:16:19 GMT
 

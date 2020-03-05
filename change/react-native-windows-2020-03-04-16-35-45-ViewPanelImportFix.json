@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move ViewPanel import from PropertyUtils to FrameworkElementViewManager",
-  "packageName": "react-native-windows",
-  "email": "jagorrin@microsoft.com",
-  "commit": "9dfc7b5bce7de1508eb2dc31fbdf597929f839f3",
-  "dependentChangeType": "patch",
-  "date": "2020-03-05T00:35:45.422Z"
-}
