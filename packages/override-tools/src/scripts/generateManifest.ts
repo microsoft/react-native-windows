@@ -19,7 +19,7 @@ import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../ReactVersion';
 
 const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
-const WS_CHARS = /\s/g;
+const WHITESPACE_PATTERN = /\s/g;
 
 (async () => {
   const ovrPath = process.argv[2];
@@ -61,10 +61,9 @@ async function tryAddCopy(
 ): Promise<boolean> {
   const baseContents = await reactSources.getFileContents(filename);
 
-  if (
-    !baseContents ||
-    baseContents.replace(WS_CHARS, '') !== override.replace(WS_CHARS, '')
-  ) {
+  const baseSignificantChars = baseContents.replace(WHITESPACE_PATTERN, '');
+  const ovrSignificantChars = override.replace(WHITESPACE_PATTERN, '');
+  if (baseSignificantChars !== ovrSignificantChars) {
     return false;
   }
 
