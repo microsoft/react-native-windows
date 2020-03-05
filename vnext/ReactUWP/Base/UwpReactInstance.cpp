@@ -39,24 +39,20 @@
 #ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#endif
 
-#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif // USE_HERMES
+
 #if defined(USE_V8)
+#include <winrt/Windows.Storage.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
+#endif // USE_V8
 
-#include <winrt/Windows.Storage.h>
-
-#include <codecvt>
-#include <locale>
-#else
 #include "ChakraRuntimeHolder.h"
-#endif
-#endif
+
+#endif // PATCH_RN
 
 #include <tuple>
 
@@ -196,21 +192,30 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
+      switch (settings.jsiEngine) {
+        case JSIEngine::Hermes:
 #if defined(USE_HERMES)
-      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
-#elif defined(USE_V8)
-      preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
-
-      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-          devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
-#else
-      if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
-        scriptStore = std::make_unique<UwpScriptStore>();
-        preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(winrt::to_hstring(settings.ByteCodeFileUri));
-      }
-      devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-          devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
+          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+          break;
 #endif
+        case JSIEngine::V8:
+#if defined(USE_V8)
+          preparedScriptStore =
+              std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+
+          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
+          break;
+#endif
+        case JSIEngine::Chakra:
+          if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
+            scriptStore = std::make_unique<UwpScriptStore>();
+            preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(winrt::to_hstring(settings.ByteCodeFileUri));
+          }
+          devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+              devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
+          break;
+      }
     }
 #endif
 
@@ -404,12 +409,14 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
   }
 }
 
+#ifdef PATCH_RN
 #if defined(USE_V8)
 std::string UwpReactInstance::getApplicationLocalFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
-  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(std::wstring(local.c_str(), local.size())) + "\\";
+  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
+#endif
 #endif
 
 } // namespace uwp

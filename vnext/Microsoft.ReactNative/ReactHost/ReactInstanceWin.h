@@ -110,6 +110,10 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   friend struct LoadedCallbackGuard;
   void OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) noexcept;
 
+#if defined(USE_V8)
+  static std::string getApplicationLocalFolder();
+#endif
+
  private: // immutable fields
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
   const ReactOptions m_options;

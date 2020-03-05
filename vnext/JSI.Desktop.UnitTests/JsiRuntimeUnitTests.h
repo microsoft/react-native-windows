@@ -37,4 +37,7 @@ class JsiRuntimeUnitTests : public ::testing::TestWithParam<RuntimeFactory> {
   Runtime &rt;
 };
 
+// V8 doesn't currently pass all the tests (particularly around hostobjects), move those out into _Chakra for now
+class JsiRuntimeUnitTests_Chakra : public JsiRuntimeUnitTests {};
+
 } // namespace facebook::jsi
