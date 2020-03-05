@@ -98,7 +98,7 @@
         _HAS_AUTO_PTR_ETC;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)\JSI\Shared;$(JSI_Source);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <ShowIncludes>false</ShowIncludes>
@@ -109,7 +109,7 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
       <AdditionalDependencies Condition="'$(CHAKRACOREUWP)'=='true'">ChakraCore.Debugger.Protocol.lib;ChakraCore.Debugger.ProtocolHandler.lib;ChakraCore.Debugger.Service.lib;ChakraCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreLibDir);$(ChakraCoreDebugLibDir)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxguid.lib;dloadhelper.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl;$(ProjectDir)Views\cppwinrt</AdditionalIncludeDirectories>
@@ -415,6 +415,7 @@
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -424,6 +425,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

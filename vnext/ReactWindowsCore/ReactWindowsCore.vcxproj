@@ -78,10 +78,8 @@
       -->
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ReactNativeWindowsDir)\JSI\Shared;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(USE_V8)'=='true'">$(V8_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -90,9 +88,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(USE_V8)'=='true'">$(V8_Package)\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="'$(USE_HERMES)'=='true'">hermes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalDependencies Condition="'$(USE_V8)'=='true'">v8jsi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
@@ -191,7 +187,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(PATCH_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
-    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(PATCH_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

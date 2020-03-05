@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(ReactNativeWindowsDir)JSI\Shared;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -54,7 +54,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Shlwapi.lib;Version.lib;delayimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -109,6 +109,7 @@
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -118,6 +119,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />

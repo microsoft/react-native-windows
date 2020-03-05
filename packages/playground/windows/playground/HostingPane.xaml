@@ -115,6 +115,16 @@
         VerticalAlignment="Center"
         IsChecked="true"
         Content="Reuse Instance"/>
+      <TextBlock
+        Margin="5,2"
+        VerticalAlignment="Center"
+        Text="JS Engine:"/>
+      <ComboBox
+        x:Name="x_JsEngine"
+        Margin="5,2"
+        MinWidth="150"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"/>
     </StackPanel>
 
     <Grid x:Name="RootElement"

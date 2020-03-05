@@ -71,6 +71,7 @@ namespace Playground {
 
   Platform::Collections::Vector<Platform::String ^> ^ m_jsFileNames;
   Platform::Collections::Vector<Platform::String ^> ^ m_ReactAppNames;
+  Platform::Collections::Vector<Platform::String ^> ^ m_jsEngineNames;
 };
 
 } // namespace Playground

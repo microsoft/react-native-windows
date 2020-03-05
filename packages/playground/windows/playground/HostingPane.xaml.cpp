@@ -212,6 +212,8 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     settings.UseWebDebugger = x_UseWebDebuggerCheckBox->IsChecked->Value;
     settings.UseLiveReload = x_UseLiveReloadCheckBox->IsChecked->Value;
     settings.EnableDeveloperMenu = true;
+    settings.jsiEngine = static_cast<react::uwp::JSIEngine>(x_JsEngine->SelectedIndex);
+
     if (params.find("debughost") != params.end()) {
       settings.DebugHost = params["debughost"];
     }
@@ -435,6 +437,23 @@ void HostingPane::InitComboBoxes() {
     x_ReactAppName->IsEditable = true;
     x_JavaScriptFilename->IsEditable = true;
   }
+
+  m_jsEngineNames = ref new Platform::Collections::Vector<String ^>();
+  m_jsEngineNames->Append(L"Chakra");
+#if defined(USE_HERMES)
+  m_jsEngineNames->Append(L"Hermes");
+#else
+  m_jsEngineNames->Append(L"NOT AVAILABLE - Hermes");
+#endif
+
+#if defined(USE_V8)
+  m_jsEngineNames->Append(L"V8");
+#else
+  m_jsEngineNames->Append(L"NOT AVAILABLE - V8");
+#endif
+
+  x_JsEngine->ItemsSource = m_jsEngineNames;
+  x_JsEngine->SelectedIndex = 0;
 }
 
 void HostingPane::LoadKnownApps() {
