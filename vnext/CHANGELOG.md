@@ -1,7 +1,50 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Mar 2020 19:02:31 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2020 23:13:07 GMT and should not be manually modified.
 
+## 0.61.0-beta.39
+Thu, 05 Mar 2020 23:13:07 GMT
+
+### Changes
+
+- undefined (ngerlem@microsoft.com)
+- Configure vnext validate-overrides to check both override manifests (ngerlem@microsoft.com)
+## 0.61.0-beta.38
+Thu, 05 Mar 2020 18:30:29 GMT
+
+### Changes
+
+- Added TryAddAttributedModule in addition to AddAttributedModules (vmorozov@microsoft.com)
+## 0.61.0-beta.37
+Thu, 05 Mar 2020 05:33:57 GMT
+
+### Changes
+
+- Move ViewPanel import from PropertyUtils to FrameworkElementViewManager (jagorrin@microsoft.com)
+## 0.61.0-beta.36
+Thu, 05 Mar 2020 03:41:34 GMT
+
+### Changes
+
+- Enable V8 support for win32 (no defaults changed) (tudorm@microsoft.com)
+## 0.61.0-beta.35
+Thu, 05 Mar 2020 00:11:30 GMT
+
+### Changes
+
+- Support RNW project config (dida@ntdev.microsoft.com)
+## 0.61.0-beta.34
+Wed, 04 Mar 2020 08:47:08 GMT
+
+### Changes
+
+- CI Enforce that Overrides are Recorded Up to Date (ngerlem@microsoft.com)
+## 0.61.0-beta.33
+Wed, 04 Mar 2020 08:11:46 GMT
+
+### Changes
+
+- Moved header files from ReactUWP\Utils to include\ReactUWP\Utils. Updated project references. (lamdoan@microsoft.com)
 ## 0.61.0-beta.32
 Tue, 03 Mar 2020 19:02:31 GMT
 

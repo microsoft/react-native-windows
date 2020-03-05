@@ -49,7 +49,7 @@
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
         GTEST_LANG_CXX11=1;
-        WINVER=$(WinVer);
+        _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
         REACTNATIVEWIN32_EXPORTS;

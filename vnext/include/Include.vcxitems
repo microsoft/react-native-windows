@@ -21,6 +21,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IXamlRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactUwp.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\Helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\LocalBundleReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ResourceBrushUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpPreparedScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ViewManagerProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\XamlView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\AccessibilityUtils.h" />

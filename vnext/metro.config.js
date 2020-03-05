@@ -32,12 +32,7 @@ module.exports = {
     blacklistRE: blacklist([
       new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
       new RegExp(
-        `${path.resolve(rnwPath, 'RNTesterCopy').replace(/[/\\]/g, '/')}.*`,
-      ),
-      new RegExp(
-        `${path
-          .resolve(rnwPath, 'IntegrationTestsCopy')
-          .replace(/[/\\]/g, '/')}.*`,
+        `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path
@@ -48,7 +43,6 @@ module.exports = {
           .replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
-    hasteImplModulePath: path.resolve(__dirname, 'jest/hasteImpl.js'),
   },
   transformer: {
     getTransformOptions: async () => ({

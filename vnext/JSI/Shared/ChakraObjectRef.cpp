@@ -6,8 +6,6 @@
 #include "Unicode.h"
 #include "Utilities.h"
 
-#include "jsi//jsi.h"
-
 #include <memory>
 #include <sstream>
 #include <utility>

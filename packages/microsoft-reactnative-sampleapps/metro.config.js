@@ -45,12 +45,7 @@ module.exports = {
       ), // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
       new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
       new RegExp(
-        `${path.resolve(rnwPath, 'RNTesterCopy').replace(/[/\\]/g, '/')}.*`,
-      ),
-      new RegExp(
-        `${path
-          .resolve(rnwPath, 'IntegrationTestsCopy')
-          .replace(/[/\\]/g, '/')}.*`,
+        `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
       ),
       new RegExp(
         `${path

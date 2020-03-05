@@ -27,17 +27,20 @@ doMain(() => {
   return new Promise((resolve, _) => {
     yargs
       .command(
-        'validate <manifest> [version]',
+        'validate <manifests...>',
         'Verify that overrides are recorded and up-to-date',
         cmdYargs =>
           cmdYargs.options({
-            manifest: {
-              type: 'string',
-              describe: 'Path to an override manifest',
+            manifests: {
+              type: 'array',
+              describe: 'Paths to the override manifests to validate',
             },
-            version: {type: 'string', describe: 'React Native Version'},
+            version: {
+              type: 'string',
+              describe: 'Optional React Native version to check against',
+            },
           }),
-        cmdArgv => validateManifest(cmdArgv.manifest, cmdArgv.version),
+        cmdArgv => validateManifests(cmdArgv.manifests, cmdArgv.version),
       )
       .command(
         'add <override>',
@@ -73,10 +76,24 @@ doMain(() => {
 });
 
 /**
- * Check that the manifest correctly describes files and is up to date
+ * Check that the given manifests correctly describe overrides and that all
+ * overrides are up to date
  */
+async function validateManifests(
+  manifestPaths: Array<string | number>,
+  version?: string,
+) {
+  for (const manifestPath of manifestPaths) {
+    if (typeof manifestPath !== 'string') {
+      throw new Error('manifest arguments must be strings');
+    }
+    await validateManifest(manifestPath, version);
+  }
+}
+
 async function validateManifest(manifestPath: string, version?: string) {
-  const spinner = ora('Verifying overrides are recorded and up to date');
+  const fullPath = path.resolve(manifestPath);
+  const spinner = ora(`Verifying overrides in ${fullPath}`).start();
 
   try {
     const manifest = await readManifest(manifestPath, version);
@@ -120,7 +137,7 @@ async function addOverride(overridePath: string) {
 
   const overrideDetails = await OverridePrompt.askForDetails(relOverride);
 
-  const spinner = ora('Adding override');
+  const spinner = ora('Adding override').start();
   try {
     await manifest.addOverride(
       overrideDetails.type,
@@ -190,14 +207,14 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (overridesMissing.length > 0) {
     const errorMessage =
-      "\nFound overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>:";
+      "\nFound overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>':";
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
   }
 
   if (baseFilesNotFound.length > 0) {
     const errorMessage =
-      "\nFound overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>:";
+      "\nFound overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>':";
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
   }

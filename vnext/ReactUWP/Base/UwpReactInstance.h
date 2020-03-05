@@ -100,8 +100,10 @@ class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from
   void OnDebuggerAttach() noexcept;
 
  private:
+#ifdef PATCH_RN
 #if defined(USE_V8)
   static std::string getApplicationLocalFolder();
+#endif
 #endif
   std::shared_ptr<WorkerMessageQueueThread> m_initThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsThread;

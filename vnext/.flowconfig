@@ -30,7 +30,6 @@
 <PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
-<PROJECT_ROOT>/Libraries/Components/TimePickerAndroid/TimePickerAndroid.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
@@ -103,8 +102,7 @@
 .*/vnext/src/.*
 
 ; Ignore RN copies, which cause duplicate violations to be shown
-.*/vnext/IntegrationTestsCopy/.*
-.*/vnext/RNTesterCopy/.*
+.*/vnext/ReactCopies/.*
 
 [untyped]
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*

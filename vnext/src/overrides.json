@@ -9,12 +9,8 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "IntegrationTests\\DummyTest.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "IntegrationTests\\DummyTest.js"
     },
     {
       "type": "patch",
@@ -25,36 +21,19 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "IntegrationTests\\LoggingTest.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "IntegrationTests\\LoggingTest.js"
     },
     {
-      "type": "???",
-      "file": "IntegrationTests\\XHRTest.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "IntegrationTests\\XHRTest.js"
     },
     {
-      "type": "???",
-      "file": "jest\\hasteImpl.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Alert\\Alert.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Alert\\Alert.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "dd77ba5b6da36da0aea70e638bf6bc2f88e4d073"
     },
     {
       "type": "patch",
@@ -73,36 +52,20 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\AppTheme\\AppTheme.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\AppTheme\\AppTheme.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\AppTheme\\AppTheme.windows.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\AppTheme\\AppTheme.windows.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\AppTheme\\AppThemeTypes.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\AppTheme\\AppThemeTypes.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Color\\NativeOrDynamicColorType.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Color\\NativeOrDynamicColorType.windows.js"
     },
     {
       "type": "patch",
@@ -113,20 +76,12 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Color\\normalizeColorObject.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Color\\normalizeColorObject.windesktop.js"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Color\\normalizeColorObject.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Color\\normalizeColorObject.windows.js"
     },
     {
       "type": "derived",
@@ -137,19 +92,19 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windows.ts",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "d095ab7eaf3fd9fab83187d226905ae90742bccc",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\Button.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\Button.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "34851284106cfe8352b46caa77289367c336c756",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -169,219 +124,127 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\CheckBox\\CheckBox.windows.tsx",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "ad31417ed1bf4852f450eab6c2bdbd1f4f0285d9",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\CheckBox\\CheckBoxProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\CheckBox\\CheckBoxProps.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\DatePicker\\DatePickerIOS.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\DatePicker\\DatePickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\DatePicker\\DatePickerIOS.windows.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\DatePicker\\DatePickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\DatePicker\\DatePickerProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\DatePicker\\DatePickerProps.ts"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.windows.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\DatePickerMacOS\\DatePickerMacOS.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\DatePickerMacOS\\DatePickerMacOS.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.windesktop.js",
       "baseFile": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.windows.js",
       "baseFile": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Flyout\\Flyout.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Flyout\\FlyoutProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Flyout\\FlyoutProps.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Glyph\\Glyph.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Glyph\\Glyph.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Glyph\\Glyph.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Glyph\\Glyph.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Glyph\\GlyphProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Glyph\\GlyphProps.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Keyboard\\KeyboardExt.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Keyboard\\KeyboardExt.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Keyboard\\KeyboardExt.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Keyboard\\KeyboardExt.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Keyboard\\KeyboardExtProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Keyboard\\KeyboardExtProps.ts"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\MaskedView\\MaskedViewIOS.windesktop.js",
       "baseFile": "Libraries\\Components\\MaskedView\\MaskedViewIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "2b46c2ecc8e3cfe8f40f119b628cee2f8fd2d441",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "2b46c2ecc8e3cfe8f40f119b628cee2f8fd2d441"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\MaskedView\\MaskedViewIOS.windows.js",
       "baseFile": "Libraries\\Components\\MaskedView\\MaskedViewIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "2b46c2ecc8e3cfe8f40f119b628cee2f8fd2d441",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "2b46c2ecc8e3cfe8f40f119b628cee2f8fd2d441"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Navigation\\NavigatorIOS.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\Navigation\\NavigatorIOS.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\Picker\\Picker.windows.tsx",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\Picker\\Picker.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "3e770adc32723c933082c9377f6c436c4c4e784d",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -389,56 +252,40 @@
       "file": "Libraries\\Components\\Picker\\PickerAndroid.windesktop.js",
       "baseFile": "Libraries\\Components\\Picker\\PickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\PickerAndroid.windows.js",
       "baseFile": "Libraries\\Components\\Picker\\PickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\PickerIOS.windesktop.js",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "1fe21e833da3c9e426a6d3abb453e37c3671b0be",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "1fe21e833da3c9e426a6d3abb453e37c3671b0be"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\PickerIOS.windows.js",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "1fe21e833da3c9e426a6d3abb453e37c3671b0be",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "1fe21e833da3c9e426a6d3abb453e37c3671b0be"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Picker\\PickerProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Picker\\PickerProps.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Picker\\PickerWindows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Picker\\PickerWindows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Picker\\PickerWindows.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Picker\\PickerWindows.windows.tsx"
     },
     {
       "type": "patch",
@@ -449,60 +296,44 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Popup\\Popup.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Popup\\Popup.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Popup\\Popup.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Popup\\Popup.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Popup\\PopupProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Popup\\PopupProps.ts"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.windesktop.js",
       "baseFile": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.windows.js",
       "baseFile": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\ProgressViewIOS\\ProgressViewIOS.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\ProgressViewIOS\\ProgressViewIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\ProgressViewIOS\\ProgressViewIOS.windows.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\ProgressViewIOS\\ProgressViewIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
     },
     {
       "type": "patch",
@@ -513,15 +344,15 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\SafeAreaView\\SafeAreaView.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\SafeAreaView\\SafeAreaView.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "800022db8bf078f907dcd5ce8de2460e2d54d02f",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "patch",
+      "type": "derived",
       "file": "Libraries\\Components\\SafeAreaView\\SafeAreaView.windows.js",
       "baseFile": "Libraries\\Components\\SafeAreaView\\SafeAreaView.js",
       "baseVersion": "0.61.5",
@@ -529,11 +360,11 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\ScrollView\\ScrollView.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "3946a93af82bb49e4a438b8b7d61536181ebdb9d",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -545,19 +376,19 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.windows.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -565,23 +396,21 @@
       "file": "Libraries\\Components\\StatusBar\\StatusBarIOS.windesktop.js",
       "baseFile": "Libraries\\Components\\StatusBar\\StatusBarIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\StatusBar\\StatusBarIOS.windows.js",
       "baseFile": "Libraries\\Components\\StatusBar\\StatusBarIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\Switch\\Switch.windows.tsx",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\Switch\\Switch.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "1ac8983143200c9a96503c3b0888b2174c78772c",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -593,51 +422,15 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\Switch\\SwitchProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\Switch\\SwitchProps.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\TabBarIOS\\TabBarIOS.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\TabBarIOS\\TabBarIOS.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\TabBarIOS\\TabBarItemIOS.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\TabBarIOS\\TabBarItemIOS.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\TextInput\\TextInput.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "53a59e839404c2f565cb47b00fee6b4541045d6c",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -657,52 +450,18 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\TimePickerAndroid\\TimePickerAndroid.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\TimePickerAndroid\\TimePickerAndroid.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\ToastAndroid\\ToastAndroid.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\ToastAndroid\\ToastAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\ToastAndroid\\ToastAndroid.windows.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\ToastAndroid\\ToastAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\ToolbarAndroid\\ToolbarAndroid.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\ToolbarAndroid\\ToolbarAndroid.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0"
     },
     {
       "type": "patch",
@@ -713,20 +472,18 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "addd4b3af3666654d8df02b13650bc65c0f2a360"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.windows.tsx",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "addd4b3af3666654d8df02b13650bc65c0f2a360"
     },
     {
       "type": "patch",
@@ -785,52 +542,20 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\View\\ViewWindows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\View\\ViewWindows.tsx"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\View\\ViewWindowsProps.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\View\\ViewWindowsProps.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\ViewPager\\ViewPagerAndroid.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\WebView\\WebView.windesktop.js"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Components\\ViewPager\\ViewPagerAndroid.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\WebView\\WebView.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Components\\WebView\\WebView.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Components\\WebView\\WebView.windows.js"
     },
     {
       "type": "patch",
@@ -857,12 +582,11 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Image\\Image.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Image\\Image.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "96c015ca1381817447cc98f72319ac89b30651b1"
     },
     {
       "type": "derived",
@@ -897,27 +621,19 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Network\\RCTNetworking.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Network\\RCTNetworking.windesktop.js"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Network\\RCTNetworking.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Network\\RCTNetworking.windows.js"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Network\\RCTNetworkingWinShared.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Network\\RCTNetworking.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "fa5d7d307e25d22d699a1d2d1eec9c0ac79ba928",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -937,36 +653,12 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\RCTTest\\SnapshotViewIOS.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\react-native\\react-native-implementation.windows.ts"
     },
     {
-      "type": "???",
-      "file": "Libraries\\RCTTest\\SnapshotViewIOS.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\react-native\\react-native-implementation.windows.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\react-native\\typings-index.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\react-native\\typings-index.ts"
     },
     {
       "type": "derived",
@@ -1001,20 +693,12 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\StyleSheet\\processColorObject.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\processColorObject.windesktop.js"
     },
     {
-      "type": "???",
-      "file": "Libraries\\StyleSheet\\processColorObject.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\processColorObject.windows.js"
     },
     {
       "type": "patch",
@@ -1049,92 +733,50 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Utilities\\HMRLoadingView.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Utilities\\HMRLoadingView.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\Utilities\\NativePlatformConstantsWin.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\Utilities\\NativePlatformConstantsIOS.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "168fe4a9608c0b151237122eea94d78f7b0093e5"
     },
     {
       "type": "derived",
       "file": "Libraries\\Utilities\\Platform.windesktop.js",
       "baseFile": "Libraries\\Utilities\\Platform.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "725d90afef2dc0acc032f9c9f9b9dfc18a40d71d",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "725d90afef2dc0acc032f9c9f9b9dfc18a40d71d"
     },
     {
       "type": "derived",
       "file": "Libraries\\Utilities\\Platform.windows.js",
       "baseFile": "Libraries\\Utilities\\Platform.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "725d90afef2dc0acc032f9c9f9b9dfc18a40d71d",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "725d90afef2dc0acc032f9c9f9b9dfc18a40d71d"
     },
     {
-      "type": "???",
-      "file": "Libraries\\Vibration\\VibrationIOS.windesktop.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
-      "file": "Libraries\\Vibration\\VibrationIOS.windows.js",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "087bbae032d390578e2afd2e86474fbd4ad2a219"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "1223d64f8f4189f7b359178eaca98d3f2b590664"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "Libraries\\YellowBox\\UI\\YellowBoxList.windesktop.js",
-      "baseFile": "???",
+      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxList.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "8093d13818e1c1e0dec5b6fb46b89d9152053d3c"
     },
     {
-      "type": "???",
-      "file": "RNTester.ts",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester.ts"
     },
     {
       "type": "patch",
@@ -1148,137 +790,77 @@
       "type": "patch",
       "file": "RNTester\\js\\components\\RNTesterExampleList.windows.js",
       "baseFile": "RNTester\\js\\components\\RNTesterExampleList.js",
-      "baseVersion": "0.61.5",
+    "baseVersion": "0.61.5",
       "baseHash": "d9b4912cb42b5709362ea8d4e3974641b56e60a8",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Accessibility\\AccessibilityExampleWindows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Accessibility\\AccessibilityExampleWindows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\CustomView\\CustomViewExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\CustomView\\CustomViewExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\DatePicker\\DatePickerExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\DatePicker\\DatePickerExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\FastText\\FastTextExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\FastText\\FastTextExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Flyout\\FlyoutExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Flyout\\FlyoutExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Glyph\\GlyphExample.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Glyph\\GlyphExample.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Keyboard\\KeyboardExample.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Keyboard\\KeyboardExample.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Keyboard\\KeyboardExtensionExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Keyboard\\KeyboardExtensionExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Keyboard\\KeyboardFocusExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Keyboard\\KeyboardFocusExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Picker\\PickerWindowsExample.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Picker\\PickerWindowsExample.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Popup\\PopupExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Popup\\PopupExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Text\\TextExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Text\\TextExample.windows.tsx"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "RNTester\\js\\examples-win\\TextInput\\TextInputExample.windows.tsx",
-      "baseFile": "???",
+      "baseFile": "RNTester\\js\\examples\\TextInput\\TextInputExample.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "c34cd04118d651315b4ad9a27474a6806ea08edf",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\Theming\\ThemingExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Theming\\ThemingExample.windows.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\TransferProperties\\TransferPropertiesExample.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\TransferProperties\\TransferPropertiesExample.tsx"
     },
     {
-      "type": "???",
-      "file": "RNTester\\js\\examples-win\\WindowsBrush\\WindowsBrushExample.windows.tsx",
-      "baseFile": "???",
-      "baseVersion": "0.61.5",
-      "baseHash": "???",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\WindowsBrush\\WindowsBrushExample.windows.tsx"
     },
     {
       "type": "patch",
@@ -1297,19 +879,19 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "RNTester\\js\\RNTesterApp.windows.tsx",
-      "baseFile": "???",
+      "baseFile": "RNTester\\js\\RNTesterApp.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "9cc102294d7ed366aff473f17e1caedfcc8ddb4c",
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "???",
+      "type": "derived",
       "file": "RNTester\\js\\utils\\RNTesterList.windows.ts",
-      "baseFile": "???",
+      "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "???",
+      "baseHash": "e1a725929fbf9b90245e9eddeb797f90b53b8ee9",
       "issue": "LEGACY_FIXME"
     }
   ]
