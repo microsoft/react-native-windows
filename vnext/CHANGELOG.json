@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Mar 2020 20:16:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.146",
+      "version": "0.60.0-vnext.146",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable V8 JSI support",
+            "author": "tudorm@microsoft.com",
+            "commit": "cd2d2668ded93c00d91c8393c169e8b732958a63"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Mar 2020 18:50:19 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.145",
       "version": "0.60.0-vnext.145",
