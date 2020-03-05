@@ -3,7 +3,7 @@
 
 #pragma once
 #include <jsi/jsi.h>
-#include "ScriptStore.h"
+#include <ScriptStore.h>
 
 namespace facebook::react {
 class MemoryTracker;
