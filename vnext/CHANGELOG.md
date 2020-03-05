@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 04 Mar 2020 08:47:08 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2020 00:11:30 GMT and should not be manually modified.
 
+## 0.61.0-beta.35
+Thu, 05 Mar 2020 00:11:30 GMT
+
+### Changes
+
+- Support RNW project config (dida@ntdev.microsoft.com)
 ## 0.61.0-beta.34
 Wed, 04 Mar 2020 08:47:08 GMT
 

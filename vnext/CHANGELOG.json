@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Mar 2020 00:11:30 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.35",
+      "version": "0.61.0-beta.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support RNW project config",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "58098b2a16189d720eb55e26d77ace64eb3d411b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Mar 2020 08:47:08 GMT",
       "tag": "react-native-windows_v0.61.0-beta.34",
       "version": "0.61.0-beta.34",

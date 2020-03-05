@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support RNW project config",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "58098b2a16189d720eb55e26d77ace64eb3d411b",
-  "dependentChangeType": "patch",
-  "date": "2020-03-04T19:59:23.284Z"
-}
