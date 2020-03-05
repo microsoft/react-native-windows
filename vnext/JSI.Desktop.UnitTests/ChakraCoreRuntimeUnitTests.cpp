@@ -29,8 +29,7 @@ using Microsoft::React::Test::TestMessageQueueThread;
 // behaviors such as ScriptStore. This may require us to bring back JSITestBase.
 
 std::vector<RuntimeFactory> runtimeGenerators() {
-  return {
-    []() -> std::unique_ptr<Runtime> {
+  return {[]() -> std::unique_ptr<Runtime> {
     ChakraRuntimeArgs args{};
 
     args.jsQueue = std::make_shared<TestMessageQueueThread>();
@@ -40,8 +39,7 @@ std::vector<RuntimeFactory> runtimeGenerators() {
     args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
 
     return makeChakraRuntime(std::move(args));
-    }
-  };
+  }};
 }
 
 INSTANTIATE_TEST_CASE_P(ChakraRuntimeTest_Base, JsiRuntimeUnitTests, ::testing::ValuesIn(runtimeGenerators()));
@@ -49,8 +47,7 @@ INSTANTIATE_TEST_CASE_P(ChakraRuntimeTest, JsiRuntimeUnitTests_Chakra, ::testing
 
 #if defined(USE_V8)
 
-RuntimeFactory getV8Runtime()
-{
+RuntimeFactory getV8Runtime() {
   return []() -> std::unique_ptr<Runtime> {
     v8runtime::V8RuntimeArgs args;
 

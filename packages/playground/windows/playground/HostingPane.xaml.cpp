@@ -115,8 +115,7 @@ class SampleNativeModuleProvider final : public facebook::react::NativeModulePro
     std::vector<facebook::react::NativeModuleDescription> modules;
     std::shared_ptr<facebook::react::MessageQueueThread> queue = defaultQueueThread;
 
-    modules.emplace_back(
-        SampleCxxModule::Name, []() { return std::make_unique<SampleCxxModule>(); }, queue);
+    modules.emplace_back(SampleCxxModule::Name, []() { return std::make_unique<SampleCxxModule>(); }, queue);
 
     return modules;
   }
