@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added TryAddAttributedModule in addition to AddAttributedModules",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "4e5d620dd2d200f39de9202b77020051e839d67f",
-  "dependentChangeType": "patch",
-  "date": "2020-03-05T17:29:39.521Z"
-}
