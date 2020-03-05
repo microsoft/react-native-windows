@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Mar 2020 00:11:30 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2020 03:41:34 GMT and should not be manually modified.
 
+## 0.61.0-beta.36
+Thu, 05 Mar 2020 03:41:34 GMT
+
+### Changes
+
+- Enable V8 support for win32 (no defaults changed) (tudorm@microsoft.com)
 ## 0.61.0-beta.35
 Thu, 05 Mar 2020 00:11:30 GMT
 

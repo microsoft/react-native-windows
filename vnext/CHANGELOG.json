@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Mar 2020 03:41:34 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.36",
+      "version": "0.61.0-beta.36",
+      "comments": {
+        "none": [
+          {
+            "comment": "Define _WIN32_WINNT instead of WINVER.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b6b6b4498465f73dcbb549abd3f09216cf266a04"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enable V8 support for win32 (no defaults changed)",
+            "author": "tudorm@microsoft.com",
+            "commit": "e482db2be729528490caedcd7026a3ad05d27671"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Mar 2020 00:11:30 GMT",
       "tag": "react-native-windows_v0.61.0-beta.35",
       "version": "0.61.0-beta.35",
