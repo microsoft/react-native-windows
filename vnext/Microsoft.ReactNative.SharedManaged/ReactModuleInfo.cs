@@ -28,7 +28,7 @@ namespace Microsoft.ReactNative.Managed
     public ReactModuleInfo(Type moduleType, ReactModuleAttribute moduleAttribute)
     {
       ModuleType = moduleType;
-      ModuleName = moduleAttribute.ModuleName ?? moduleType.Name;
+      ModuleName = GetModuleName(moduleType, moduleAttribute);
       EventEmitterName = moduleAttribute.EventEmitterName ?? "RCTDeviceEventEmitter";
       ModuleProvider = (IReactModuleBuilder moduleBuilder) =>
       {
@@ -44,6 +44,11 @@ namespace Microsoft.ReactNative.Managed
       m_syncMethodInfos = new Lazy<List<ReactSyncMethodInfo>>(InitSyncMethodInfos, LazyThreadSafetyMode.PublicationOnly);
       m_functionInfos = new Lazy<List<ReactFunctionInfo>>(InitFunctionInfos, LazyThreadSafetyMode.PublicationOnly);
       m_eventInfos = new Lazy<List<ReactEventInfo>>(InitEventInfos, LazyThreadSafetyMode.PublicationOnly);
+    }
+
+    public static string GetModuleName(Type moduleType, ReactModuleAttribute moduleAttribute)
+    {
+      return moduleAttribute.ModuleName ?? moduleType.Name;
     }
 
     internal static ReactModuleInfo GetOrAddModuleInfo(Type moduleType, ReactModuleAttribute moduleAttribute)
