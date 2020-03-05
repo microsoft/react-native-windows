@@ -22,7 +22,7 @@ export interface ValidationError {
   file: string;
 }
 
-export type OverrideType = 'platform' | 'patch' | 'derived';
+export type OverrideType = 'platform' | 'patch' | 'derived' | 'copy';
 
 interface OverrideBaseInfo {
   baseFile: string;
@@ -105,24 +105,29 @@ export default class Manifest {
     baseFile?: string,
     issue?: number,
   ) {
+    if (['derived', 'patch', 'copy'].includes(type) && !baseFile) {
+      throw new Error(`baseFile is required for ${type} overrides`);
+    }
+
+    if (['patch', 'copy'].includes(type) && !issue) {
+      throw new Error(`issue is required for ${type} overrides`);
+    }
+
     switch (type) {
       case 'platform':
         return this.addPlatformOverride(file);
 
       case 'derived':
-        if (!baseFile) {
-          throw new Error('baseFile is required for dervied overrides');
-        }
         return this.addDerivedOverride(file, baseFile, issue);
 
       case 'patch':
-        if (!baseFile) {
-          throw new Error('baseFile is required for patch overrides');
-        }
-        if (!issue) {
-          throw new Error('issue is required for patch overrides');
-        }
         return this.addPatchOverride(file, baseFile, issue);
+
+      case 'copy':
+        return this.addCopyOverride(file, baseFile, issue);
+
+      default:
+        throw new Error(`Unknown override type '${type}'`);
     }
   }
 
@@ -152,6 +157,16 @@ export default class Manifest {
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
     this.overrides.push({type: 'patch', file, ...overrideBaseInfo, issue});
+  }
+
+  /**
+   * Copy override specific version of {@see addOverride}
+   */
+  async addCopyOverride(file: string, baseFile: string, issue: number) {
+    file = await this.checkAndNormalizeOverrideFile(file);
+
+    const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
+    this.overrides.push({type: 'copy', file, ...overrideBaseInfo, issue});
   }
 
   /**
