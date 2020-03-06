@@ -352,7 +352,7 @@ InstanceImpl::InstanceImpl(
   }
   m_moduleRegistry = std::make_shared<facebook::react::ModuleRegistry>(std::move(modules));
 
-  // choose ExecutorDelegate and JSExecutor
+  // Choose JSExecutor
   std::shared_ptr<JSExecutorFactory> jsef;
   if (m_devSettings->useWebDebugger) {
     try {
