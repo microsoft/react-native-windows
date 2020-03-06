@@ -10,8 +10,10 @@ function projectConfigWindows(folder, userConfig = {}) {
   }
 
   const projectSolution = findSolution(sourceDir);
-  var extension = path.extname(projectSolution);
-  var projectName = path.basename(projectSolution, extension);
+  if (projectSolution){
+    var extension = path.extname(projectSolution);
+    var projectName = path.basename(projectSolution, extension);
+  }
   const cppProjFile = findCppProject(sourceDir, projectName);
   const csProjectFile = findCSProject(sourceDir,projectName);
 

@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2020 22:46:28 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.41",
+      "version": "0.61.0-beta.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support dependency config for RNW",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "d763dfbf19b4e7830a8a51ba63aee9db941f54f8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 19:29:08 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.40",
+      "version": "0.61.0-beta.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix include filters",
+            "author": "jthysell@microsoft.com",
+            "commit": "726b3727ea1f8230ad1bdec1c8b75af1a351acf3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Mar 2020 23:13:07 GMT",
       "tag": "react-native-windows_v0.61.0-beta.39",
       "version": "0.61.0-beta.39",
