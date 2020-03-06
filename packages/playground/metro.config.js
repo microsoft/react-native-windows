@@ -47,13 +47,7 @@ module.exports = {
         ),
       ),
       new RegExp(
-        `${path.resolve(rnwPath, 'RNTesterCopy')}.*`.replace(/[/\\]/g, '/'),
-      ),
-      new RegExp(
-        `${path.resolve(rnwPath, 'IntegrationTestsCopy')}.*`.replace(
-          /[/\\]/g,
-          '/',
-        ),
+        `${path.resolve(rnwPath, 'ReactCopies')}.*`.replace(/[/\\]/g, '/'),
       ),
       new RegExp(
         `${path.resolve(rnwePath, 'node_modules/react-native')}.*`.replace(

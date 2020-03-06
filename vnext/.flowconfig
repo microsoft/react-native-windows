@@ -102,8 +102,7 @@
 .*/vnext/src/.*
 
 ; Ignore RN copies, which cause duplicate violations to be shown
-.*/vnext/IntegrationTestsCopy/.*
-.*/vnext/RNTesterCopy/.*
+.*/vnext/ReactCopies/.*
 
 [untyped]
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*

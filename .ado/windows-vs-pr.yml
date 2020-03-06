@@ -398,8 +398,8 @@ jobs:
           platform: x64
           vsComponents: $(VsComponents)
 
-  - job: RNWFormatting
-    displayName: Verify change files, lint, and test
+  - job: RNWExtraChecks
+    displayName: Extra Checks
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:

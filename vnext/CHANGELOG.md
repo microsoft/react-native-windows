@@ -1,7 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Mar 2020 05:33:57 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2020 23:13:07 GMT and should not be manually modified.
 
+## 0.61.0-beta.39
+Thu, 05 Mar 2020 23:13:07 GMT
+
+### Changes
+
+- undefined (ngerlem@microsoft.com)
+- Configure vnext validate-overrides to check both override manifests (ngerlem@microsoft.com)
+## 0.61.0-beta.38
+Thu, 05 Mar 2020 18:30:29 GMT
+
+### Changes
+
+- Added TryAddAttributedModule in addition to AddAttributedModules (vmorozov@microsoft.com)
 ## 0.61.0-beta.37
 Thu, 05 Mar 2020 05:33:57 GMT
 
