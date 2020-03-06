@@ -243,6 +243,80 @@ jobs:
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
+  - job: RNWSampleAppsPR
+    displayName: Sample Apps PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+          applyRnPatches: true
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          applyRnPatches: true
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          applyRnPatches: true
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+          applyRnPatches: true
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
+          applyRnPatches: true
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+          applyRnPatches: true
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+        parameters:
+          applyRnPatches: $(applyRnPatches)
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
+          yarnBuildCmd: build
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - SampleApps
+        inputs:
+          command: restore
+          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
+
+      - task: MSBuild@1
+        displayName: MSBuild - SampleApps
+        inputs:
+          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+          clean: true # Optional
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+          workingDirectory: packages\microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
   - job: RNWDesktopPR
     displayName: Desktop PR
