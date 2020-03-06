@@ -21,14 +21,22 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ScriptStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
