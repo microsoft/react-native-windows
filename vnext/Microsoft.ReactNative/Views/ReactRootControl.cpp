@@ -160,6 +160,7 @@ void ReactRootControl::InitRootView(
   const auto &devSettings = m_reactOptions->DeveloperSettings;
   m_useLiveReload = devSettings.UseLiveReload;
   m_useWebDebugger = devSettings.UseWebDebugger;
+  m_isDevModeEnabled = devSettings.IsDevModeEnabled;
   if (devSettings.IsDevModeEnabled) {
     InitializeDeveloperMenu();
   }
@@ -269,6 +270,9 @@ void ReactRootControl::ShowInstanceLoaded(Mso::React::IReactInstance &reactInsta
 }
 
 void ReactRootControl::ShowInstanceError(Mso::React::IReactInstance &reactInstance) noexcept {
+  if (!m_isDevModeEnabled)
+    return;
+
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
@@ -335,6 +339,9 @@ void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactI
 }
 
 void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
+  if (!m_isDevModeEnabled)
+    return;
+
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
@@ -610,6 +617,7 @@ void ReactRootControl::ToggleInspector() noexcept {
 void ReactRootControl::ReloadHost() noexcept {
   if (auto reactViewHost = m_reactViewHost.Get()) {
     auto options = reactViewHost->ReactHost().Options();
+    options.DeveloperSettings.IsDevModeEnabled = m_isDevModeEnabled;
     options.DeveloperSettings.UseLiveReload = m_useLiveReload;
     options.DeveloperSettings.UseWebDebugger = m_useWebDebugger;
     options.DeveloperSettings.UseDirectDebugger = m_directDebugging;
