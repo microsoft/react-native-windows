@@ -104,6 +104,8 @@ struct WindowData {
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
 
+  react::uwp::JSIEngine m_jsEngine{react::uwp::JSIEngine::Chakra};
+
   WindowData(const WUXH::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
@@ -133,6 +135,7 @@ struct WindowData {
           settings.UseLiveReload = m_liveReloadEnabled;
           settings.DebuggerBreakOnNextLine = m_breakOnNextLine;
           settings.UseDirectDebugger = m_useDirectDebugger;
+          settings.jsiEngine = m_jsEngine;
 
           settings.EnableDeveloperMenu = true;
 
@@ -280,6 +283,13 @@ struct WindowData {
         CheckDlgButton(hwnd, IDC_REUSEINSTANCE, boolToCheck(self->m_reuseInstance));
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->m_useDirectDebugger));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->m_breakOnNextLine));
+
+        auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
+        SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Chakra"));
+        SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Hermes"));
+        SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("V8"));
+        SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM)static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
+
         return TRUE;
       }
       case WM_COMMAND: {
@@ -291,6 +301,10 @@ struct WindowData {
             self->m_reuseInstance = IsDlgButtonChecked(hwnd, IDC_REUSEINSTANCE) == BST_CHECKED;
             self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
+
+            auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
+            int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+            self->m_jsEngine = static_cast<react::uwp::JSIEngine>(itemIndex);
           }
             [[fallthrough]];
           case IDCANCEL:

@@ -226,6 +226,7 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     settings.UseDirectDebugger = x_UseDirectDebuggerCheckBox->IsChecked->Value;
     settings.DebuggerBreakOnNextLine = x_BreakOnFirstLineCheckBox->IsChecked->Value;
     settings.EnableDeveloperMenu = true;
+    settings.jsiEngine = static_cast<react::uwp::JSIEngine>(x_JsEngine->SelectedIndex);
     if (params.find("debughost") != params.end()) {
       settings.DebugHost = params["debughost"];
     }
@@ -457,6 +458,16 @@ void HostingPane::InitComboBoxes() {
     x_ReactAppName->IsEditable = true;
     x_JavaScriptFilename->IsEditable = true;
   }
+
+#if !defined(USE_HERMES)
+  x_engineHermes->IsEnabled = false;
+#endif
+
+ #if !defined(USE_V8)
+  x_engineV8->IsEnabled = false;
+#endif
+
+  x_JsEngine->SelectedIndex = 0;
 }
 
 void HostingPane::LoadKnownApps() {
