@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add JS engine selection to Playground",
-  "packageName": "react-native-windows",
-  "email": "tudorm@microsoft.com",
-  "commit": "574c3de79594b6dac7e57d67d1338f881e9f9257",
-  "dependentChangeType": "patch",
-  "date": "2020-03-06T23:06:40.440Z"
-}

@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Mar 2020 22:46:28 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2020 23:55:14 GMT and should not be manually modified.
 
+## 0.61.0-beta.42
+Fri, 06 Mar 2020 23:55:14 GMT
+
+### Changes
+
+- Add JS engine selection to Playground (tudorm@microsoft.com)
 ## 0.61.0-beta.41
 Fri, 06 Mar 2020 22:46:28 GMT
 
