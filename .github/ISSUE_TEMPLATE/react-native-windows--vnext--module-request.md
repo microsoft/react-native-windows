@@ -17,13 +17,14 @@ assignees: ''
 - Target version: 
 - [ ] Issue exists on module repo (if so, [link]())
 <!-- If the community module repo already has an issue tracking adding React Native Support, please check this box and link to it. -->
+- [ ] Module has a vCurrent/C# implementation (if so, [link]())
+<!-- If the community module has an existing RNW vCurrent implementation, please check this box and provide a link to the implementation -->
 
-## Customer Information
+## Which app/customer is requesting this module?
+<!-- Please describe which app/customer needs this module. -->
 
-### Which app/customer is requesting this module?
-
-### In what scenarios will this module be used?
+## In what scenarios will this module be used?
 <!-- Please detail how the app/customer will use the module. Please include screenshots/mockups/wireframes if possible. -->
 
-### Essential Features
+## Essential Features
 <!-- Please enumerate which features of the module are required. For example, you may be using a map module and you only need the 'pinning' functionality and NOT the turn-by-turn direction functionality.  -->
