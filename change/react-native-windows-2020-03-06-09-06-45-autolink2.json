@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support dependency config for RNW",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "d763dfbf19b4e7830a8a51ba63aee9db941f54f8",
-  "dependentChangeType": "patch",
-  "date": "2020-03-06T17:06:45.060Z"
-}
