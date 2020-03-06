@@ -248,6 +248,7 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
+      matrix:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
