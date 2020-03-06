@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Mar 2020 23:13:07 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2020 19:29:08 GMT and should not be manually modified.
 
+## 0.61.0-beta.40
+Fri, 06 Mar 2020 19:29:08 GMT
+
+### Changes
+
+- Fix include filters (jthysell@microsoft.com)
 ## 0.61.0-beta.39
 Thu, 05 Mar 2020 23:13:07 GMT
 
