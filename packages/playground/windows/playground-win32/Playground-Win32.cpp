@@ -288,7 +288,7 @@ struct WindowData {
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Chakra"));
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Hermes"));
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("V8"));
-        SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM)static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
+        SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM) static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
 
         return TRUE;
       }

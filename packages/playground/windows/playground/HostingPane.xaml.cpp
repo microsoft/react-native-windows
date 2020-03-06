@@ -463,7 +463,7 @@ void HostingPane::InitComboBoxes() {
   x_engineHermes->IsEnabled = false;
 #endif
 
- #if !defined(USE_V8)
+#if !defined(USE_V8)
   x_engineV8->IsEnabled = false;
 #endif
 
