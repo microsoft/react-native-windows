@@ -202,7 +202,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
           devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
               devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
           break;
-
+#endif
         case JSIEngine::Chakra:
           if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
             scriptStore = std::make_unique<UwpScriptStore>();
@@ -213,7 +213,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
           break;
       }
     }
-#endif
 
     try {
       // Create the react instance
