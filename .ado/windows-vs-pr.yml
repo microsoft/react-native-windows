@@ -273,10 +273,18 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM
           applyRnPatches: true
-    pool:
-      vmImage: $(VmImage)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
+    #pool:
+    #  vmImage: $(VmImage)
+    # Temporary override until we move to VS 2019 v142
+    pool:
+      vmImage: windows-2019
+    variables: 
+      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
+      BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
+      runCodesignValidationInjection: false
+      VmImage: windows-2019
 
     steps:
       - checkout: self
