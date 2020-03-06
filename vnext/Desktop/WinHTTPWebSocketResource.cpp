@@ -5,6 +5,7 @@
 #include "pch.h"
 
 #include <Unicode.h>
+#include <Utils.h>
 #include "WinHTTPWebSocketResource.h"
 
 // Windows API
@@ -13,6 +14,7 @@
 using std::function;
 using std::size_t;
 using std::string;
+using std::wstring;
 
 namespace Microsoft::React
 {
@@ -24,6 +26,7 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   , m_requestHandle{ NULL }
   , m_errorStatus{ ERROR_SUCCESS }
 {
+#if 0 // WinHttpCrackUrl does not accept non-HTTP schemes 🙄
   BSTR bstr = _com_util::ConvertStringToBSTR(urlString.c_str());
   LPWSTR lpwstr = bstr;
   SysFreeString(bstr);
@@ -45,6 +48,17 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   }
 
   m_url = *url;
+#else
+  Url url{ urlString };
+  m_url.lpszScheme = _wcsdup(wstring(url.scheme.begin(), url.scheme.end()).c_str());
+  m_url.dwSchemeLength = static_cast<DWORD>(url.scheme.length());
+  m_url.lpszHostName = _wcsdup(wstring(url.host.begin(), url.host.end()).c_str());
+  m_url.dwHostNameLength = static_cast<DWORD>(url.host.length());
+  m_url.nPort = static_cast<INTERNET_PORT>(std::atoi(url.port.c_str()));
+  m_url.lpszUrlPath = _wcsdup(wstring(url.path.begin(), url.path.end()).c_str());
+  m_url.dwUrlPathLength = static_cast<DWORD>(url.path.length());
+#endif // 0
+
 
   // Set WinHTTP callbacks
   if (WinHttpSetStatusCallback(
@@ -55,7 +69,7 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   ) == WINHTTP_INVALID_STATUS_CALLBACK)
   {
     throw std::exception("Can not create instance. Invalid callback.");
-}
+  }
 }
 
 #pragma region IWebSocketResource
