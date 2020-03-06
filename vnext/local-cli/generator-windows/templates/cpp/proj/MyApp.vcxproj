@@ -160,7 +160,7 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      react-native bundle --platform windows --entry-file index.js --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file index.js --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="..\..\node_modules\react-native-windows\PropertySheets\Bundle.Cpp.targets"/>
