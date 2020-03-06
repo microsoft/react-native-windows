@@ -17,14 +17,19 @@ namespace Microsoft::React
 class WinHTTPWebSocketResource : public IWebSocketResource
 {
   URL_COMPONENTS m_url;
-  DWORD m_openFlags;
+  DWORD m_openSessionFlags;
   HINTERNET m_sessionHandle;
   HINTERNET m_connectionHandle;
+  HINTERNET m_requestHandle;
+  HINTERNET m_webSocketHandle;
+
+  DWORD m_errorStatus;
 
   std::function<void()> m_openHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
+  std::function<void(Error&&)> m_errorHandler;
 
-  static void CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD code, void* info, DWORD length);
+  static VOID CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD status, void* info, DWORD infoLength);
 
 public:
   WinHTTPWebSocketResource(const std::string& urlString);
