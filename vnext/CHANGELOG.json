@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2020 01:43:31 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.45",
+      "version": "0.61.0-beta.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Most cxxreact Patches and Executor Sandboxing Code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c072a151b47563e20c58f018b66d6bdfbeda637e"
+          },
+          {
+            "comment": "Deprecated JSValue typed value access functions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "de23cd40fadddb7fe878b3dbd7d32c05fcae55a7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2020 01:08:09 GMT",
       "tag": "react-native-windows_v0.61.0-beta.44",
       "version": "0.61.0-beta.44",
