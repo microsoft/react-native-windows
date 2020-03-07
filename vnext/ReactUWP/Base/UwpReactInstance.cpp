@@ -36,7 +36,6 @@
 
 #include <winrt/Windows.ApplicationModel.h>
 
-#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
 
@@ -51,8 +50,6 @@
 #endif // USE_V8
 
 #include "ChakraRuntimeHolder.h"
-
-#endif // PATCH_RN
 
 #include <tuple>
 
@@ -187,7 +184,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = CreateAndStartJSQueueThread();
 
-#ifdef PATCH_RN
     if (settings.UseJsi) {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
@@ -217,7 +213,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
           break;
       }
     }
-#endif
 
     try {
       // Create the react instance
@@ -409,7 +404,6 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
   }
 }
 
-#ifdef PATCH_RN
 #if defined(USE_V8)
 std::string UwpReactInstance::getApplicationLocalFolder() {
   try {
@@ -429,7 +423,6 @@ std::string UwpReactInstance::getApplicationLocalFolder() {
     throw ex;
   }
 }
-#endif
 #endif
 
 } // namespace uwp

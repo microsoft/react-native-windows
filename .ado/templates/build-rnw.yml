@@ -1,7 +1,6 @@
 # Steps template for building any React Native Windows variant.
 
 parameters:
-  applyRnPatches: true
   debug: false
 
   # NuGet & MSBuild
@@ -49,7 +48,6 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
-        /p:PATCH_RN=${{parameters.applyRnPatches}}
         ${{parameters.msbuildArguments}}
 
   - task: PublishBuildArtifacts@1

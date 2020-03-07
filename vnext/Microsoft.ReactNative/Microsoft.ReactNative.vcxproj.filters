@@ -140,9 +140,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp">
-      <Filter>Sandbox</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -731,9 +728,6 @@
     </Filter>
     <Filter Include="ReactHost">
       <UniqueIdentifier>{323742e5-5542-43fd-9b79-7914b708b9a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sandbox">
-      <UniqueIdentifier>{a78b93f6-3e91-4fac-a33c-ba1d1a6662c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{72fbc00f-4a01-4363-8807-378641b7a17c}</UniqueIdentifier>

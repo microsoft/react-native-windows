@@ -21,7 +21,6 @@
 #include <dispatchQueue/dispatchQueue.h>
 #include "Modules/AppStateData.h"
 
-#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
 
@@ -35,10 +34,8 @@
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
-#include "ChakraRuntimeHolder.h"
-#endif // PATCH_RN
-
 #include <tuple>
+#include "ChakraRuntimeHolder.h"
 
 namespace react::uwp {
 
@@ -208,7 +205,6 @@ void ReactInstanceWin::Initialize() noexcept {
             cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
           }
 
-#ifdef PATCH_RN
           if (m_options.LegacySettings.UseJsi) {
             std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
             std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
@@ -240,7 +236,6 @@ void ReactInstanceWin::Initialize() noexcept {
                 break;
             }
           }
-#endif
 
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
@@ -682,14 +677,12 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
 }
 
-#ifdef PATCH_RN
 #if defined(USE_V8)
 std::string ReactInstanceWin::getApplicationLocalFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
-#endif
 #endif
 
 } // namespace Mso::React
