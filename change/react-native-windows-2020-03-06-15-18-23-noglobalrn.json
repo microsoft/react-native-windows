@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bundle commands should work if you dont have react-native installed globally",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "c8cf0fbea6665137497b3cb8eee5bdf3e985cbb4",
-  "dependentChangeType": "patch",
-  "date": "2020-03-06T23:18:22.987Z"
-}

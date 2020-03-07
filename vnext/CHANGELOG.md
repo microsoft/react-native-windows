@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Mar 2020 23:55:14 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Mar 2020 00:30:45 GMT and should not be manually modified.
 
+## 0.61.0-beta.43
+Sat, 07 Mar 2020 00:30:45 GMT
+
+### Changes
+
+- Bundle commands should work if you dont have react-native installed globally (acoates@microsoft.com)
 ## 0.61.0-beta.42
 Fri, 06 Mar 2020 23:55:14 GMT
 
