@@ -9,9 +9,8 @@ namespace Microsoft.ReactNative {
   [default_interface]
   runtimeclass XamlHelper {
     XamlHelper();
-    static Windows.UI.Xaml.Media.Brush BrushFrom(JSValueArgWriter valueProvider);
-    static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
-    static Boolean IsValidColorValue(JSValueArgWriter valueProvider);
+    [noexcept2] static Windows.UI.Xaml.Media.Brush BrushFrom(JSValueArgWriter valueProvider);
+    [noexcept2] static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
   };
 
 } // namespace Microsoft.ReactNative

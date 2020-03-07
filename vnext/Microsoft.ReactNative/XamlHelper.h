@@ -11,7 +11,6 @@ struct XamlHelper : XamlHelperT<XamlHelper> {
 
   static Windows::UI::Xaml::Media::Brush BrushFrom(JSValueArgWriter const &valueProvider) noexcept;
   static Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
-  static bool IsValidColorValue(JSValueArgWriter const &valueProvider) noexcept;
 
   static folly::dynamic GetFollyDynamicFromValueProvider(JSValueArgWriter const &valueProvider) noexcept;
 };
