@@ -154,7 +154,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     if (m_errorHandler)
     {
       return m_errorHandler({ "Error upgrading protocol", ErrorType::Connection });
-}
+    }
   }
 
   // Perform handshake
@@ -174,7 +174,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     if (m_errorHandler)
     {
       return m_errorHandler({ "Error sending handshake", ErrorType::Handshake });
-}
+    }
   }
   fStatus = WinHttpReceiveResponse(m_requestHandle, /*lpReserved*/ 0);
   if (!fStatus)
@@ -224,6 +224,7 @@ IWebSocketResource::ReadyState WinHTTPWebSocketResource::GetReadyState() const
 
 void WinHTTPWebSocketResource::SetOnConnect(function<void()>&& handler)
 {
+  m_connectHandler = std::move(handler);
 }
 
 void WinHTTPWebSocketResource::SetOnPing(function<void()>&& handler)
@@ -240,17 +241,19 @@ void WinHTTPWebSocketResource::SetOnMessage(function<void(size_t, const string&)
 
 void WinHTTPWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler)
 {
+  m_closeHandler = std::move(handler);
 }
 
 void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
 {
+  m_errorHandler = std::move(handler);
 }
 
 #pragma endregion IWebSocketResource
 
 #pragma region Private members
 
-/*static*/ VOID CALLBACK WinHTTPWebSocketResource::Callback(HINTERNET handle, DWORD_PTR context, DWORD status, void* info, DWORD infoLength)
+/*static*/ VOID CALLBACK WinHTTPWebSocketResource::Callback(HINTERNET handle, DWORD_PTR context, DWORD status, LPVOID info, DWORD infoLength)
 {
   switch (status)
 {
@@ -295,7 +298,13 @@ void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
   case WINHTTP_CALLBACK_STATUS_WRITE_COMPLETE:
     break;
   case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
-    break;
+    //m_errorStatus = GetLastError();
+    //if (s_errorHandler)
+    //{
+    //  s_errorHandler({ "REQUEST_ERROR", ErrorType::None });
+    //}
+
+    return;
   case WINHTTP_CALLBACK_STATUS_SENDREQUEST_COMPLETE:
     break;
   case WINHTTP_CALLBACK_STATUS_GETPROXYFORURL_COMPLETE:

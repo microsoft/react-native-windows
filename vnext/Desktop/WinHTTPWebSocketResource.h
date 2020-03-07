@@ -25,11 +25,11 @@ class WinHTTPWebSocketResource : public IWebSocketResource
 
   DWORD m_errorStatus;
 
-  std::function<void()> m_openHandler;
+  std::function<void()> m_connectHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;
 
-  static VOID CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD status, void* info, DWORD infoLength);
+  static VOID CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD status, LPVOID info, DWORD infoLength);
 
 public:
   WinHTTPWebSocketResource(const std::string& urlString);
