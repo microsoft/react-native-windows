@@ -651,12 +651,6 @@ void *ChakraExecutor::getJavaScriptContext() {
   return m_context;
 }
 
-#ifdef PATCH_RN
-int64_t ChakraExecutor::getPeakJsMemoryUsage() const noexcept {
-  return tls_runtimeTracker.MemoryTracker->GetPeakMemoryUsage();
-}
-#endif
-
 void ChakraExecutor::flushQueueImmediate(ChakraValue &&queue) {
   auto queueStr = queue.toJSONString();
   m_delegate->callNativeModules(*this, folly::parseJson(queueStr), false);

@@ -1,7 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Mar 2020 23:13:07 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Mar 2020 01:08:09 GMT and should not be manually modified.
 
+## 0.61.0-beta.44
+Sat, 07 Mar 2020 01:08:09 GMT
+
+### Changes
+
+- Dont show loading/redbox in ship mode (acoates@microsoft.com)
+## 0.61.0-beta.43
+Sat, 07 Mar 2020 00:30:45 GMT
+
+### Changes
+
+- Bundle commands should work if you dont have react-native installed globally (acoates@microsoft.com)
+## 0.61.0-beta.42
+Fri, 06 Mar 2020 23:55:14 GMT
+
+### Changes
+
+- Add JS engine selection to Playground (tudorm@microsoft.com)
+## 0.61.0-beta.41
+Fri, 06 Mar 2020 22:46:28 GMT
+
+### Changes
+
+- Support dependency config for RNW (dida@ntdev.microsoft.com)
+## 0.61.0-beta.40
+Fri, 06 Mar 2020 19:29:08 GMT
+
+### Changes
+
+- Fix include filters (jthysell@microsoft.com)
 ## 0.61.0-beta.39
 Thu, 05 Mar 2020 23:13:07 GMT
 

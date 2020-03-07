@@ -54,9 +54,7 @@ struct ChakraBundleMetadata {
 using ChakraBundleUrlMetadataMap = std::map<std::string, ChakraBundleMetadata>;
 
 struct DevSettings {
-  bool useSandbox{false};
   bool useJITCompilation{true};
-  std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;
   std::string platformName{STRING(RN_PLATFORM)};

@@ -12,7 +12,6 @@
 #include <TurboModuleManager.h>
 #include <cxxreact/Instance.h>
 #include "InstanceManager.h"
-#include "Sandbox/SandboxEndpoint.h"
 #include "ViewManager.h"
 
 namespace facebook {
@@ -47,31 +46,6 @@ class InstanceImpl : public InstanceWrapper, private ::std::enable_shared_from_t
       std::shared_ptr<MessageQueueThread> nativeQueue,
       std::shared_ptr<DevSettings> devSettings,
       std::shared_ptr<IDevSupportManager> devManager) noexcept;
-
-#if (defined(_MSC_VER) && !defined(WINRT))
-#ifdef PATCH_RN
-  static std::shared_ptr<InstanceImpl> MakeSandbox(
-      std::string &&jsString,
-      std::string &&configsString,
-      std::string &&sourceUrl,
-      std::shared_ptr<MessageQueueThread> jsQueue,
-      std::shared_ptr<MessageQueueThread> nativeQueue,
-      std::shared_ptr<DevSettings> devSettings,
-      std::shared_ptr<IDevSupportManager> devManager,
-      SendNativeModuleCall &&sendNativeModuleCal) noexcept;
-
-  static std::shared_ptr<InstanceImpl> MakeSandbox(
-      std::string &&jsBundleBasePath,
-      std::string &&jsBundleRelativePath,
-      std::string &&configsString,
-      std::string &&sourceUrl,
-      std::shared_ptr<MessageQueueThread> jsQueue,
-      std::shared_ptr<MessageQueueThread> nativeQueue,
-      std::shared_ptr<DevSettings> devSettings,
-      std::shared_ptr<IDevSupportManager> devManager,
-      SendNativeModuleCall &&sendNativeModuleCal) noexcept;
-#endif
-#endif
 
   // Instance methods
   void loadBundle(std::string &&jsBundleRelativePath) override;
@@ -111,27 +85,6 @@ class InstanceImpl : public InstanceWrapper, private ::std::enable_shared_from_t
       std::shared_ptr<MessageQueueThread> nativeQueue,
       std::shared_ptr<DevSettings> devSettings,
       std::shared_ptr<IDevSupportManager> devManager);
-
-  InstanceImpl(
-      std::string &&jsString,
-      std::string &&configsString,
-      std::string &&sourceUrl,
-      std::shared_ptr<MessageQueueThread> jsQueue,
-      std::shared_ptr<MessageQueueThread> nativeQueue,
-      std::shared_ptr<DevSettings> devSettings,
-      std::shared_ptr<IDevSupportManager> devManager,
-      SendNativeModuleCall &&sendNativeModuleCall);
-
-  InstanceImpl(
-      std::string &&jsBundleBasePath,
-      std::string &&jsBundleRelativePath,
-      std::string &&configsString,
-      std::string &&sourceUrl,
-      std::shared_ptr<MessageQueueThread> jsQueue,
-      std::shared_ptr<MessageQueueThread> nativeQueue,
-      std::shared_ptr<DevSettings> devSettings,
-      std::shared_ptr<IDevSupportManager> devManager,
-      SendNativeModuleCall &&sendNativeModuleCall);
 
   std::vector<std::unique_ptr<NativeModule>> GetDefaultNativeModules(std::shared_ptr<MessageQueueThread> nativeQueue);
   void RegisterForReloadIfNecessary() noexcept;

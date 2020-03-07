@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Remove Most cxxreact Patches and Executor Sandboxing Code",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "c072a151b47563e20c58f018b66d6bdfbeda637e",
+  "dependentChangeType": "patch",
+  "date": "2020-03-06T00:30:27.105Z"
+}

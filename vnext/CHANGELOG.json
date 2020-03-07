@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2020 01:08:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.44",
+      "version": "0.61.0-beta.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Dont show loading/redbox in ship mode",
+            "author": "acoates@microsoft.com",
+            "commit": "93ccc4bca669131515a78f315acc59bd7cee204e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 00:30:45 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.43",
+      "version": "0.61.0-beta.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bundle commands should work if you dont have react-native installed globally",
+            "author": "acoates@microsoft.com",
+            "commit": "c8cf0fbea6665137497b3cb8eee5bdf3e985cbb4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 23:55:14 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.42",
+      "version": "0.61.0-beta.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add JS engine selection to Playground",
+            "author": "tudorm@microsoft.com",
+            "commit": "574c3de79594b6dac7e57d67d1338f881e9f9257"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 22:46:28 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.41",
+      "version": "0.61.0-beta.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support dependency config for RNW",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "d763dfbf19b4e7830a8a51ba63aee9db941f54f8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 19:29:08 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.40",
+      "version": "0.61.0-beta.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix include filters",
+            "author": "jthysell@microsoft.com",
+            "commit": "726b3727ea1f8230ad1bdec1c8b75af1a351acf3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Mar 2020 23:13:07 GMT",
       "tag": "react-native-windows_v0.61.0-beta.39",
       "version": "0.61.0-beta.39",

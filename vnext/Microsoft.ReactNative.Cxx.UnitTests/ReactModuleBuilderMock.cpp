@@ -41,7 +41,7 @@ void ReactModuleBuilderMock::ExpectFunction(
     TestCheck(expectedModuleName == moduleName);
     TestCheck(expectedFuncName == funcName);
     TestCheck(value.Type() == JSValueType::Array);
-    checkValues(value.Array());
+    checkValues(value.AsArray());
   };
 }
 
@@ -90,7 +90,7 @@ JSValueObject ReactModuleBuilderMock::GetConstants() noexcept {
   }
 
   constantWriter.WriteObjectEnd();
-  return TakeJSValue(constantWriter).TakeObject();
+  return TakeJSValue(constantWriter).MoveObject();
 }
 
 MethodDelegate ReactModuleBuilderMock::GetMethod0(std::wstring const &methodName) const noexcept {

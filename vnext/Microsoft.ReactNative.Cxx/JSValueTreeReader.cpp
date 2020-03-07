@@ -27,8 +27,8 @@ JSValueType JSValueTreeReader::ValueType() noexcept {
 
 bool JSValueTreeReader::GetNextObjectProperty(hstring &propertyName) noexcept {
   if (!m_isInContainer) {
-    if (m_current->Type() == JSValueType::Object) {
-      const auto &properties = m_current->Object();
+    if (auto obj = m_current->TryGetObject()) {
+      const auto &properties = *obj;
       const auto &property = properties.begin();
       if (property != properties.end()) {
         m_stack.emplace_back(*m_current, property);
@@ -41,9 +41,9 @@ bool JSValueTreeReader::GetNextObjectProperty(hstring &propertyName) noexcept {
     }
   } else if (!m_stack.empty()) {
     auto &entry = m_stack.back();
-    if (entry.Value.Type() == JSValueType::Object) {
+    if (auto obj = entry.Value.TryGetObject()) {
       auto &property = entry.Property;
-      if (++property != entry.Value.Object().end()) {
+      if (++property != obj->end()) {
         SetCurrentValue(property->second);
         propertyName = to_hstring(property->first);
         return true;
@@ -61,9 +61,9 @@ bool JSValueTreeReader::GetNextObjectProperty(hstring &propertyName) noexcept {
 
 bool JSValueTreeReader::GetNextArrayItem() noexcept {
   if (!m_isInContainer) {
-    if (m_current->Type() == JSValueType::Array) {
-      const auto &item = m_current->Array().begin();
-      if (item != m_current->Array().end()) {
+    if (auto arr = m_current->TryGetArray()) {
+      const auto &item = arr->begin();
+      if (item != arr->end()) {
         m_stack.emplace_back(*m_current, item);
         SetCurrentValue(*item);
         return true;
@@ -73,8 +73,8 @@ bool JSValueTreeReader::GetNextArrayItem() noexcept {
     }
   } else if (!m_stack.empty()) {
     auto &entry = m_stack.back();
-    if (entry.Value.Type() == JSValueType::Array) {
-      if (++entry.Item != entry.Value.Array().end()) {
+    if (auto arr = entry.Value.TryGetArray()) {
+      if (++entry.Item != arr->end()) {
         SetCurrentValue(*entry.Item);
         return true;
       } else {
@@ -102,19 +102,23 @@ void JSValueTreeReader::SetCurrentValue(const JSValue &value) noexcept {
 }
 
 hstring JSValueTreeReader::GetString() noexcept {
-  return to_hstring((ValueType() == JSValueType::String) ? m_current->String() : "");
+  auto s = m_current->TryGetString();
+  return to_hstring(s ? *s : "");
 }
 
 bool JSValueTreeReader::GetBoolean() noexcept {
-  return (ValueType() == JSValueType::Boolean) ? m_current->Boolean() : false;
+  auto b = m_current->TryGetBoolean();
+  return b ? *b : false;
 }
 
 int64_t JSValueTreeReader::GetInt64() noexcept {
-  return (ValueType() == JSValueType::Int64) ? m_current->Int64() : 0;
+  auto i = m_current->TryGetInt64();
+  return i ? *i : 0;
 }
 
 double JSValueTreeReader::GetDouble() noexcept {
-  return (ValueType() == JSValueType::Double) ? m_current->Double() : 0;
+  auto d = m_current->TryGetDouble();
+  return d ? *d : 0;
 }
 
 IJSValueReader MakeJSValueTreeReader(const JSValue &root) noexcept {

@@ -166,9 +166,7 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp">
-      <Filter>Sandbox</Filter>
-    </ClCompile>
+
     <ClCompile Include="Threading\AsyncWorkQueue.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -713,9 +711,6 @@
     </Filter>
     <Filter Include="Polyester">
       <UniqueIdentifier>{4e47b86c-5481-40a7-98ae-6e4658677fb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sandbox">
-      <UniqueIdentifier>{b4b85434-3409-4179-bff4-b56db8c27ba3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{542ec69d-6533-415a-8031-9b33341bd9c3}</UniqueIdentifier>

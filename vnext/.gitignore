@@ -63,7 +63,6 @@ Generated Files/
 /build/
 /ipch/
 /packages/
-/ReactWin32SandboxSample/x64/
 /WindowsSampleCSharpApp/obj/
 /target/
 /x64/
@@ -85,4 +84,3 @@ temp
 /coverage
 /third-party
 /packages/
-/WorkingHeaders/

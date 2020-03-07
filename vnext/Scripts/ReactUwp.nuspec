@@ -32,7 +32,6 @@
     <file src="$nugetroot$\inc\ReactWindowsCore\MemoryTracker.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\NativeModuleProvider.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWindowsCore\Sandbox\SandboxEndpoint.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\Tracing.h" target="inc"/>
 

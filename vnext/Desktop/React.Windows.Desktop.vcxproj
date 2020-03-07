@@ -117,10 +117,6 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Sandbox\DevSupportManagerSandbox.cpp" />
-    <ClCompile Include="Sandbox\SandboxBridge.cpp" />
-    <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
-    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
     <ClCompile Include="BeastWebSocketResource.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
@@ -148,9 +144,6 @@
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="NativeModuleFactories.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Sandbox\SandboxBridge.h" />
-    <ClInclude Include="Sandbox\NamedPipeEndpoint.h" />
-    <ClInclude Include="Sandbox\SandboxJSExecutor.h" />
     <ClInclude Include="HttpResource.h" />
     <ClInclude Include="BeastWebSocketResource.h" />
     <ClInclude Include="WinHTTPWebSocketResource.h" />

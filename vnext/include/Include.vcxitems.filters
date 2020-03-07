@@ -59,15 +59,33 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\XamlView.h">
       <Filter>ReactUWP</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\CppWinrtLessExceptions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\Helpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\LocalBundleReader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyHandlerUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ResourceBrushUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpPreparedScriptStore.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\CppWinrtLessExceptions.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\Helpers.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\LocalBundleReader.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyHandlerUtils.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyUtils.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ResourceBrushUtils.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\StandardControlResourceKeyNames.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpPreparedScriptStore.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h">
+      <Filter>ReactUWP\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ReactUWP">
