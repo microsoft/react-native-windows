@@ -10,6 +10,8 @@ namespace Microsoft.ReactNative {
   runtimeclass XamlHelper {
     XamlHelper();
     static Windows.UI.Xaml.Media.Brush BrushFrom(JSValueArgWriter valueProvider);
+    static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
+    static Boolean IsValidColorValue(JSValueArgWriter valueProvider);
   };
 
 } // namespace Microsoft.ReactNative
