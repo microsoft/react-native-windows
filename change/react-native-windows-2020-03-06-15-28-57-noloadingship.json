@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Dont show loading/redbox in ship mode",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "93ccc4bca669131515a78f315acc59bd7cee204e",
+  "dependentChangeType": "patch",
+  "date": "2020-03-06T23:28:57.062Z"
+}
