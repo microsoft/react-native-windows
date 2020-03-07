@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2020 01:08:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.44",
+      "version": "0.61.0-beta.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Dont show loading/redbox in ship mode",
+            "author": "acoates@microsoft.com",
+            "commit": "93ccc4bca669131515a78f315acc59bd7cee204e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2020 00:30:45 GMT",
       "tag": "react-native-windows_v0.61.0-beta.43",
       "version": "0.61.0-beta.43",
