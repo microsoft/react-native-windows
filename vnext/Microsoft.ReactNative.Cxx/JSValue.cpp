@@ -54,7 +54,7 @@ struct StringConverter {
         case '\t':
           return stream << "\\t";
         default:
-          if ('\x00' <= ch && ch <= '\x1f') {
+          if ('\x00' <= ch && ch <= '\x1f') { // Non-printable ASCII characters.
             return stream << "\\u" << std::hex << std::setw(4) << std::setfill('0') << (int)ch;
           } else {
             return stream << ch;
@@ -66,6 +66,7 @@ struct StringConverter {
     for (auto ch : value) {
       writeChar(stream, ch);
     }
+
     return stream << '"';
   }
 };
@@ -80,7 +81,7 @@ struct BooleanConverter {
   }
 
   static double ToDouble(bool value) noexcept {
-    return value ? 1.0 : +0.0;
+    return value ? 1.0 : 0.0;
   }
 
   static int64_t ToInt64(bool value) noexcept {
@@ -183,6 +184,7 @@ struct DoubleConverter {
     if (trimmedStr.empty()) {
       return 0;
     }
+
     char *end;
     double result = strtod(trimmedStr.data(), &end);
     return (end == trimmedStr.data() + trimmedStr.size()) ? result : std::numeric_limits<double>::quiet_NaN();
@@ -234,6 +236,7 @@ struct JSValueAsStringWriter {
       m_stream << (start ? (start = false, "") : ",");
       WriteValue(item);
     }
+
     return m_stream;
   }
 
@@ -290,11 +293,13 @@ struct JSValueLogWriter {
       WriteIndent() << prop.first << ": ";
       WriteValue(prop.second);
     }
+
     --m_indent;
     if (!start) {
       m_stream << "\n";
       WriteIndent();
     }
+
     return m_stream << "}";
   }
 
@@ -306,11 +311,13 @@ struct JSValueLogWriter {
       m_stream << start ? (start = false, "") : ",\n";
       WriteValue(item);
     }
+
     --m_indent;
     if (!start) {
       m_stream << "\n";
       WriteIndent();
     }
+
     return m_stream << "]";
   }
 
@@ -405,6 +412,7 @@ void JSValueObject::WriteTo(IJSValueWriter const &writer) const noexcept {
     writer.WritePropertyName(to_hstring(property.first));
     property.second.WriteTo(writer);
   }
+
   writer.WriteObjectEnd();
 }
 
@@ -476,6 +484,7 @@ void JSValueArray::WriteTo(IJSValueWriter const &writer) const noexcept {
   for (const JSValue &item : *this) {
     item.WriteTo(writer);
   }
+
   writer.WriteArrayEnd();
 }
 
@@ -569,6 +578,7 @@ JSValueObject JSValue::MoveObject() noexcept {
     m_type = JSValueType::Null;
     m_int64 = 0;
   }
+
   return result;
 }
 
@@ -579,6 +589,7 @@ JSValueArray JSValue::MoveArray() noexcept {
     m_type = JSValueType::Null;
     m_int64 = 0;
   }
+
   return result;
 }
 
