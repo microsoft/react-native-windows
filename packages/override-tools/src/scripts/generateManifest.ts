@@ -179,7 +179,7 @@ async function getFileRepos(
 ): Promise<
   [FileRepository.OverrideFileRepository, FileRepository.ReactFileRepository]
 > {
-  const ovrPattern = /^.*\.(js|ts|jsx|tsx)$/;
+  const ovrPattern = /^.*\.(js|ts|jsx|tsx|cpp|h)$/;
   const overrides = new OverrideFileRepositoryImpl(overrideovrPath, ovrPattern);
 
   const versionedReactSources = await GitReactFileRepository.createAndInit();
