@@ -68,32 +68,21 @@ class FbSystraceSection {
 
  private:
   template <typename T>
-  using ConsructsToString =
-      std::bool_constant<std::is_convertible<T, std::string>::value || std::is_constructible<std::string, T>::value>;
-
-  template <typename Arg, typename std::enable_if_t<ConsructsToString<Arg>::value> * = nullptr>
-  inline void push_arg(Arg &&arg) {
-    args_[index_++] = std::forward<Arg>(arg);
-  }
-
-  template <typename Arg, typename std::enable_if_t<!ConsructsToString<Arg>::value> * = nullptr>
-  inline void push_arg(Arg &&arg) {
-    args_[index_++] = std::to_string(std::forward<Arg>(arg));
-  }
+  static constexpr bool constructs_to_string_v =
+      std::is_convertible_v<T, std::string> || std::is_constructible_v<std::string, T>;
 
   void init() {
     begin_section();
   }
 
-  template <typename Arg>
-  void init(Arg &&arg) {
-    push_arg(std::forward<Arg>(arg));
-    begin_section();
-  }
-
   template <typename Arg, typename... RestArg>
   void init(Arg &&arg, RestArg &&... rest) {
-    push_arg(std::forward<Arg>(arg));
+    if constexpr (constructs_to_string_v<Arg>) {
+      args_[index_++] = std::forward<Arg>(arg);
+    } else {
+      args_[index_++] = std::to_string(std::forward<Arg>(arg));
+    }
+
     init(std::forward<RestArg>(rest)...);
   }
 
