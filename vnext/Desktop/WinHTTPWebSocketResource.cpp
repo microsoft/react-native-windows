@@ -127,6 +127,16 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     }
   }
 
+  if (!WinHttpSetOption(m_requestHandle, WINHTTP_OPTION_CONTEXT_VALUE, this, sizeof(this)))
+  {
+    m_errorStatus = GetLastError();
+
+    if (m_errorHandler)
+    {
+      return m_errorHandler({ "Error configuring request", ErrorType::Connection });
+    }
+  }
+
   // Set WinHTTP callbacks
   if (WinHttpSetStatusCallback(
     m_requestHandle,                          // hInternet
@@ -255,8 +265,10 @@ void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
 
 /*static*/ VOID CALLBACK WinHTTPWebSocketResource::Callback(HINTERNET handle, DWORD_PTR context, DWORD status, LPVOID info, DWORD infoLength)
 {
+  auto pThis = (WinHTTPWebSocketResource*)context;//TODO: Handle/cast correctly.
+
   switch (status)
-{
+  {
   case WINHTTP_CALLBACK_STATUS_RESOLVING_NAME:
     break;
   case WINHTTP_CALLBACK_STATUS_NAME_RESOLVED:
@@ -303,6 +315,7 @@ void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
     //{
     //  s_errorHandler({ "REQUEST_ERROR", ErrorType::None });
     //}
+    GetLastError();
 
     return;
   case WINHTTP_CALLBACK_STATUS_SENDREQUEST_COMPLETE:

@@ -47,7 +47,10 @@ TEST_CLASS (WebSocketIntegrationTest) {
     // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
     {
       auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-      ws->SetOnConnect([&connected]() { connected = true; });
+      ws->SetOnConnect([&connected]()
+      {
+        connected = true;
+      });
 
       ws->Connect();
     }
