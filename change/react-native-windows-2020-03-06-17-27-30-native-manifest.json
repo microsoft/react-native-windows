@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Override Manifest for Native Code",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "commit": "cb6fa7e7fc278b054a94b27a8b3b3991aa10f79e",
-  "dependentChangeType": "patch",
-  "date": "2020-03-07T01:27:30.373Z"
-}

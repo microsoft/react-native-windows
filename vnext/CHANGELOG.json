@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2020 02:35:07 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.46",
+      "version": "0.61.0-beta.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Override Manifest for Native Code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cb6fa7e7fc278b054a94b27a8b3b3991aa10f79e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2020 01:43:31 GMT",
       "tag": "react-native-windows_v0.61.0-beta.45",
       "version": "0.61.0-beta.45",

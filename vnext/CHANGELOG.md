@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 07 Mar 2020 01:43:31 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Mar 2020 02:35:07 GMT and should not be manually modified.
 
+## 0.61.0-beta.46
+Sat, 07 Mar 2020 02:35:07 GMT
+
+### Changes
+
+- Add Override Manifest for Native Code (ngerlem@microsoft.com)
 ## 0.61.0-beta.45
 Sat, 07 Mar 2020 01:43:31 GMT
 
