@@ -50,6 +50,8 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   m_url = *url;
 #else
   Url url{ urlString };
+  ZeroMemory(&m_url, sizeof(m_url));
+  m_url.dwStructSize = sizeof(m_url);
   m_url.lpszScheme = _wcsdup(wstring(url.scheme.begin(), url.scheme.end()).c_str());
   m_url.dwSchemeLength = static_cast<DWORD>(url.scheme.length());
   m_url.lpszHostName = _wcsdup(wstring(url.host.begin(), url.host.end()).c_str());
@@ -57,19 +59,13 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   m_url.nPort = static_cast<INTERNET_PORT>(std::atoi(url.port.c_str()));
   m_url.lpszUrlPath = _wcsdup(wstring(url.path.begin(), url.path.end()).c_str());
   m_url.dwUrlPathLength = static_cast<DWORD>(url.path.length());
+  m_url.lpszUserName = NULL;
+  m_url.dwUserNameLength = 0;
+  m_url.lpszPassword = NULL;
+  m_url.dwPasswordLength = 0;
+  m_url.lpszExtraInfo = NULL;
+  m_url.dwExtraInfoLength = 0;
 #endif // 0
-
-
-  // Set WinHTTP callbacks
-  if (WinHttpSetStatusCallback(
-    m_sessionHandle,                          // hInternet
-    Callback,                                 // lpfnInternetCallback
-    WINHTTP_CALLBACK_FLAG_ALL_NOTIFICATIONS,  // dwNotificationFlags
-    0                                         // dwReserved
-  ) == WINHTTP_INVALID_STATUS_CALLBACK)
-  {
-    throw std::exception("Can not create instance. Invalid callback.");
-  }
 }
 
 #pragma region IWebSocketResource
@@ -129,6 +125,18 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     {
       return m_errorHandler({ "Error starting request", ErrorType::Connection });
     }
+  }
+
+  // Set WinHTTP callbacks
+  if (WinHttpSetStatusCallback(
+    m_requestHandle,                          // hInternet
+    Callback,                                 // lpfnInternetCallback
+    WINHTTP_CALLBACK_FLAG_ALL_NOTIFICATIONS,  // dwNotificationFlags
+    0                                         // dwReserved
+  ) == WINHTTP_INVALID_STATUS_CALLBACK)
+  {
+    m_errorStatus = GetLastError();
+    throw std::exception("Can not create instance. Invalid callback.");
   }
 
   BOOL fStatus = FALSE; //TODO: Make member?
