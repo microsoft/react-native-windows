@@ -15,6 +15,10 @@ inline void ReadValue(JSValue const &jsValue, Windows::UI::Xaml::Media::Brush &v
   value = XamlHelper::BrushFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
 
+inline void ReadValue(JSValue const &jsValue, Windows::UI::Color &value) noexcept {
+  value = XamlHelper::ColorFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
+}
+
 #endif
 
 } // namespace winrt::Microsoft::ReactNative
