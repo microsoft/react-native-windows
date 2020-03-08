@@ -67,17 +67,13 @@ class FbSystraceSection {
   }
 
  private:
-  template <typename T>
-  static constexpr bool constructs_to_string_v =
-      std::is_convertible_v<T, std::string> || std::is_constructible_v<std::string, T>;
-
   void init() {
     begin_section();
   }
 
   template <typename Arg, typename... RestArg>
   void init(Arg &&arg, RestArg &&... rest) {
-    if constexpr (constructs_to_string_v<Arg>) {
+    if constexpr (std::is_convertible_v<Arg, std::string>) {
       args_[index_++] = std::forward<Arg>(arg);
     } else {
       args_[index_++] = std::to_string(std::forward<Arg>(arg));
