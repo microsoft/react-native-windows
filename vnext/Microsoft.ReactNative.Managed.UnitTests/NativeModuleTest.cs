@@ -194,13 +194,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [ReactMethod]
-    public void ResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public void ResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
     {
       resolve("Hello_3");
     }
 
     [ReactMethod]
-    public void RejectSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public void RejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
     }
@@ -247,13 +247,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
 
     [ReactMethod]
-    public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
     {
       resolve("Hello_3");
     }
 
     [ReactMethod]
-    public static void StaticRejectSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public static void StaticRejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
     }

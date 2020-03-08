@@ -378,7 +378,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\ContentControlViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp" />
-    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />

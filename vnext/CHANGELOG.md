@@ -1,7 +1,44 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Mar 2020 22:46:28 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Mar 2020 19:35:40 GMT and should not be manually modified.
 
+## 0.61.0-beta.47
+Sat, 07 Mar 2020 19:35:40 GMT
+
+### Changes
+
+- Add XamlHelpers (kaigu@microsoft.com)
+## 0.61.0-beta.46
+Sat, 07 Mar 2020 02:35:07 GMT
+
+### Changes
+
+- Add Override Manifest for Native Code (ngerlem@microsoft.com)
+## 0.61.0-beta.45
+Sat, 07 Mar 2020 01:43:31 GMT
+
+### Changes
+
+- Remove Most cxxreact Patches and Executor Sandboxing Code (ngerlem@microsoft.com)
+- Deprecated JSValue typed value access functions (vmorozov@microsoft.com)
+## 0.61.0-beta.44
+Sat, 07 Mar 2020 01:08:09 GMT
+
+### Changes
+
+- Dont show loading/redbox in ship mode (acoates@microsoft.com)
+## 0.61.0-beta.43
+Sat, 07 Mar 2020 00:30:45 GMT
+
+### Changes
+
+- Bundle commands should work if you dont have react-native installed globally (acoates@microsoft.com)
+## 0.61.0-beta.42
+Fri, 06 Mar 2020 23:55:14 GMT
+
+### Changes
+
+- Add JS engine selection to Playground (tudorm@microsoft.com)
 ## 0.61.0-beta.41
 Fri, 06 Mar 2020 22:46:28 GMT
 

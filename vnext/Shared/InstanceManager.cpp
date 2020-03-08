@@ -74,52 +74,5 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
   return instance;
 }
 
-#if (defined(_MSC_VER) && !defined(WINRT))
-#ifdef PATCH_RN
-std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
-    std::string &&jsString,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept {
-  return CreateReactInstanceForSandbox(
-      std::string(),
-      std::move(jsString),
-      std::move(configsString),
-      std::move(sourceUrl),
-      std::move(jsQueue),
-      std::move(nativeQueue),
-      std::move(devSettings),
-      std::move(sendNativeModuleCall));
-};
-
-std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
-    std::string &&jsBundleBasePath,
-    std::string &&jsBundleRelativePath,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept {
-  // Now create the instance
-  std::shared_ptr<InstanceWrapper> instance = InstanceImpl::MakeSandbox(
-      std::move(jsBundleBasePath),
-      std::move(jsBundleRelativePath),
-      std::move(configsString),
-      std::move(sourceUrl),
-      std::move(jsQueue),
-      std::move(nativeQueue),
-      std::move(devSettings),
-      GetSharedDevManager(),
-      std::move(sendNativeModuleCall));
-
-  return instance;
-}
-#endif
-#endif
-
 } // namespace react
 } // namespace facebook
