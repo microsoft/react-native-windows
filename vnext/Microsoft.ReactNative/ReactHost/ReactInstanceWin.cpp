@@ -38,6 +38,8 @@
 #include "ChakraRuntimeHolder.h"
 #endif // PATCH_RN
 
+#include "RedBox.h"
+
 #include <tuple>
 
 namespace react::uwp {
@@ -487,9 +489,16 @@ facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexce
 std::function<void(facebook::react::JSExceptionInfo &&)> ReactInstanceWin::GetJSExceptionCallback() noexcept {
   if (m_options.OnJSException) {
     return CreateExceptionCallback(Mso::Copy(m_options.OnJSException));
+  } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
+    auto localWkReactHost = m_weakReactHost;
+    return CreateRedBoxExceptionCallback(m_uiMessageThread.LoadWithLock(), [localWkReactHost]() {
+      if (auto reactHost = localWkReactHost.GetStrongPtr()) {
+        reactHost->ReloadInstance();
+      }
+    });
+  } else {
+    return {};
   }
-
-  return {};
 }
 
 std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
