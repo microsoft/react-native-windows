@@ -38,12 +38,9 @@ module.exports = {
     // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
       new RegExp(
-        `${'.*microsoft-reactnative-sampleapps/msbuild.*'.replace(
-          /[/\\]/g,
-          '/',
-        )}.*`,
+        '.*microsoft-reactnative-sampleapps/msbuild.*'.replace(/[/\\]/g, '\\/'),
       ), // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
+      new RegExp(`${path.resolve(rnPath)}.*`.replace(/[/\\]/g, '/')),
       new RegExp(
         `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
       ),
@@ -65,6 +62,7 @@ module.exports = {
           )
           .replace(/[/\\]/g, '/')}.*`,
       ),
+
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
