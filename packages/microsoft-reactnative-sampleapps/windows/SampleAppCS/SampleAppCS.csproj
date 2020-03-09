@@ -175,7 +175,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <BundleCommand>
-      cd $(SolutionDir)..
+      echo WorkingDir %CD%
       npx --no-install yarn run bundle-cs
     </BundleCommand>
   </PropertyGroup>

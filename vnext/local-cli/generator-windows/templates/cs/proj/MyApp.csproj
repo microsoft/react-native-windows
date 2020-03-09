@@ -169,7 +169,7 @@
 
   <PropertyGroup>
     <BundleCommand>
-      cd $(SolutionDir)..
+      echo WorkingDir %CD%
       npx --no-install react-native bundle --platform windows --entry-file index.js --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
     </BundleCommand>
   </PropertyGroup>
