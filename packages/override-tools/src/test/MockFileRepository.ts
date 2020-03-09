@@ -50,11 +50,16 @@ export class MockOverrideFileRepository implements OverrideFileRepository {
   }
 
   async getFileContents(filename: string): Promise<string | null> {
-    const matches = _.filter(this.files, file => file.filename === filename);
+    const matches = this.files.filter(file => file.filename === filename);
     if (matches.length === 0) {
       return null;
     } else {
       return matches[0].content;
     }
+  }
+
+  async setFileContents(filename: string, content: string) {
+    const matchFile = this.files.find(file => file.filename === filename);
+    matchFile.content = content;
   }
 }

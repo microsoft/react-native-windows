@@ -296,8 +296,7 @@ test('addPatchExportedAsData', async () => {
   const base = reactFiles[0].filename;
   await manifest.addPatchOverride(override, base, 1234);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const patchEntryData = entryData as ManifestData.DerivedEntry;
   expect(patchEntryData.type).toBe('patch');
@@ -315,8 +314,7 @@ test('addDerivedExportedAsData', async () => {
   const base = reactFiles[0].filename;
   await manifest.addDerivedOverride(override, base, 1234);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const derivedEntryData = entryData as ManifestData.DerivedEntry;
   expect(derivedEntryData.type).toBe('derived');
@@ -334,8 +332,7 @@ test('addDerivedNoIssueExportedAsData', async () => {
   const base = reactFiles[0].filename;
   await manifest.addDerivedOverride(override, base);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const derivedEntryData = entryData as ManifestData.DerivedEntry;
   expect(derivedEntryData.type).toBe('derived');
@@ -352,8 +349,7 @@ test('addPlatformExportedAsData', async () => {
   const override = overrideFiles[0].filename;
   await manifest.addPlatformOverride(override);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const platformEntryData = entryData as ManifestData.PlatformEntry;
   expect(platformEntryData.type).toBe('platform');

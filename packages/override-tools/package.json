@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "diff-match-patch": "^1.0.4",
     "io-ts": "^2.1.1",
     "lodash": "^4.17.15",
     "ora": "^4.0.3",
@@ -43,6 +42,7 @@
     "@types/prompts": "^2.0.3",
     "@types/yargs": "^15.0.3",
     "babel-jest": "^24.9.0",
+    "diff-match-patch": "^1.0.4",
     "fp-ts": "^2.5.0",
     "jest": "^24.9.0",
     "just-scripts": "^0.36.1"
