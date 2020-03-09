@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Strip out color markers from redbox error messages",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "ad04ab83c14306bd625344617df8376c294349e6",
+  "dependentChangeType": "patch",
+  "date": "2020-03-09T23:23:48.958Z"
+}
