@@ -58,6 +58,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule:
   };
 }
 
+namespace {
 std::string RetrieveStringFromMap(const folly::dynamic &map, const std::string &key) noexcept {
   assert(map.type() == folly::dynamic::OBJECT);
   auto iterator = map.find(key);
@@ -82,6 +83,7 @@ int RetrieveIntFromMap(const folly::dynamic &map, const std::string &key) noexce
   assert(false);
   return -1;
 }
+} // namespace
 
 JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
     const folly::dynamic &args,
