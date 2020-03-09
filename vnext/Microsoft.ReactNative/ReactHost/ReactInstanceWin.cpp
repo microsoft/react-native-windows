@@ -21,29 +21,23 @@
 #include <dispatchQueue/dispatchQueue.h>
 #include "Modules/AppStateData.h"
 
-#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#endif
 
-#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif // USE_HERMES
+
 #if defined(USE_V8)
+#include <winrt/Windows.Storage.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
+#endif // USE_V8
 
-#include <winrt/Windows.Storage.h>
-
-#include <codecvt>
-#include <locale>
-#else
-#include "ChakraRuntimeHolder.h"
-#endif
-#endif
+#include "RedBox.h"
 
 #include <tuple>
+#include "ChakraRuntimeHolder.h"
 
 namespace react::uwp {
 
@@ -213,30 +207,37 @@ void ReactInstanceWin::Initialize() noexcept {
             cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
           }
 
-#ifdef PATCH_RN
           if (m_options.LegacySettings.UseJsi) {
             std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
             std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
+            switch (m_options.LegacySettings.jsiEngine) {
+              case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
-            devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
-#elif defined(USE_V8)
-            preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+                break;
+#endif
+              case react::uwp::JSIEngine::V8:
+#if defined(USE_V8)
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
 
-            devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
-#else
-            if (m_options.LegacySettings.EnableByteCodeCaching || !m_options.LegacySettings.ByteCodeFileUri.empty()) {
-              scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
-              preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
-                  winrt::to_hstring(m_options.LegacySettings.ByteCodeFileUri));
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+                break;
+#endif
+              case react::uwp::JSIEngine::Chakra:
+                if (m_options.LegacySettings.EnableByteCodeCaching ||
+                    !m_options.LegacySettings.ByteCodeFileUri.empty()) {
+                  scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
+                  preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
+                      winrt::to_hstring(m_options.LegacySettings.ByteCodeFileUri));
+                }
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+                break;
             }
-            devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-                devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-#endif
           }
-#endif
 
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
@@ -483,9 +484,17 @@ facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexce
 std::function<void(facebook::react::JSExceptionInfo &&)> ReactInstanceWin::GetJSExceptionCallback() noexcept {
   if (m_options.OnJSException) {
     return CreateExceptionCallback(Mso::Copy(m_options.OnJSException));
+  } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
+    auto localWkReactHost = m_weakReactHost;
+    return CreateRedBoxExceptionCallback(
+        m_uiMessageThread.LoadWithLock(), [capturedWkReactHost = std::move(localWkReactHost)]() {
+          if (auto reactHost = capturedWkReactHost.GetStrongPtr()) {
+            reactHost->ReloadInstance();
+          }
+        });
+  } else {
+    return {};
   }
-
-  return {};
 }
 
 std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
@@ -677,5 +686,13 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
   return Mso::Make<ReactInstanceWin, IReactInstanceInternal>(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
 }
+
+#if defined(USE_V8)
+std::string ReactInstanceWin::getApplicationLocalFolder() {
+  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+
+  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
+}
+#endif
 
 } // namespace Mso::React

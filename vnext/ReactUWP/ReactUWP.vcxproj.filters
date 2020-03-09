@@ -166,9 +166,7 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp">
-      <Filter>Sandbox</Filter>
-    </ClCompile>
+
     <ClCompile Include="Threading\AsyncWorkQueue.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -335,12 +333,6 @@
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h">
       <Filter>TurboModule</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
       <Filter>Views</Filter>
@@ -540,32 +532,8 @@
     <ClInclude Include="Threading\WorkerMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\LocalBundleReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\PropertyHandlerUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\PropertyUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\ResourceBrushUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Views\ActivityIndicatorViewManager.h">
@@ -661,6 +629,39 @@
     <ClInclude Include="Views\WebViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -710,9 +711,6 @@
     </Filter>
     <Filter Include="Polyester">
       <UniqueIdentifier>{4e47b86c-5481-40a7-98ae-6e4658677fb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sandbox">
-      <UniqueIdentifier>{b4b85434-3409-4179-bff4-b56db8c27ba3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{542ec69d-6533-415a-8031-9b33341bd9c3}</UniqueIdentifier>

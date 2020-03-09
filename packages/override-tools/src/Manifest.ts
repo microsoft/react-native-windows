@@ -22,7 +22,7 @@ export interface ValidationError {
   file: string;
 }
 
-export type OverrideType = 'platform' | 'patch' | 'derived';
+export type OverrideType = 'platform' | 'patch' | 'derived' | 'copy';
 
 interface OverrideBaseInfo {
   baseFile: string;
@@ -40,9 +40,16 @@ export default class Manifest {
     overrideRepo: OverrideFileRepository,
     reactRepo: ReactFileRepository,
   ) {
-    this.overrides = data.overrides;
+    this.overrides = _.cloneDeep(data.overrides);
     this.overrideRepo = overrideRepo;
     this.reactRepo = reactRepo;
+
+    this.overrides.forEach(override => {
+      override.file = path.normalize(override.file);
+      if (override.type !== 'platform') {
+        override.baseFile = path.normalize(override.baseFile);
+      }
+    });
   }
 
   /**
@@ -98,24 +105,29 @@ export default class Manifest {
     baseFile?: string,
     issue?: number,
   ) {
+    if (['derived', 'patch', 'copy'].includes(type) && !baseFile) {
+      throw new Error(`baseFile is required for ${type} overrides`);
+    }
+
+    if (['patch', 'copy'].includes(type) && !issue) {
+      throw new Error(`issue is required for ${type} overrides`);
+    }
+
     switch (type) {
       case 'platform':
         return this.addPlatformOverride(file);
 
       case 'derived':
-        if (!baseFile) {
-          throw new Error('baseFile is required for dervied overrides');
-        }
-        return this.addDerviedOverride(file, baseFile, issue);
+        return this.addDerivedOverride(file, baseFile, issue);
 
       case 'patch':
-        if (!baseFile) {
-          throw new Error('baseFile is required for patch overrides');
-        }
-        if (!issue) {
-          throw new Error('issue is required for patch overrides');
-        }
         return this.addPatchOverride(file, baseFile, issue);
+
+      case 'copy':
+        return this.addCopyOverride(file, baseFile, issue);
+
+      default:
+        throw new Error(`Unknown override type '${type}'`);
     }
   }
 
@@ -123,15 +135,15 @@ export default class Manifest {
    * Platform override specific version of {@see addOverride}
    */
   async addPlatformOverride(file: string) {
-    await this.checkOverrideFile(file);
+    file = await this.checkAndNormalizeOverrideFile(file);
     this.overrides.push({type: 'platform', file});
   }
 
   /**
    * Dervied override specific version of {@see addOverride}
    */
-  async addDerviedOverride(file: string, baseFile: string, issue?: number) {
-    await this.checkOverrideFile(file);
+  async addDerivedOverride(file: string, baseFile: string, issue?: number) {
+    file = await this.checkAndNormalizeOverrideFile(file);
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
     this.overrides.push({type: 'derived', file, ...overrideBaseInfo, issue});
@@ -141,10 +153,20 @@ export default class Manifest {
    * Patch override specific version of {@see addOverride}
    */
   async addPatchOverride(file: string, baseFile: string, issue: number) {
-    await this.checkOverrideFile(file);
+    file = await this.checkAndNormalizeOverrideFile(file);
 
     const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
-    this.overrides.push({type: 'derived', file, ...overrideBaseInfo, issue});
+    this.overrides.push({type: 'patch', file, ...overrideBaseInfo, issue});
+  }
+
+  /**
+   * Copy override specific version of {@see addOverride}
+   */
+  async addCopyOverride(file: string, baseFile: string, issue: number) {
+    file = await this.checkAndNormalizeOverrideFile(file);
+
+    const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
+    this.overrides.push({type: 'copy', file, ...overrideBaseInfo, issue});
   }
 
   /**
@@ -185,11 +207,19 @@ export default class Manifest {
     return hasher.digest('hex');
   }
 
-  private async checkOverrideFile(file: string) {
-    const overrideContents = await this.overrideRepo.getFileContents(file);
-    if (overrideContents === null) {
+  private async checkAndNormalizeOverrideFile(file: string): Promise<string> {
+    const normalizedFile = path.normalize(file);
+
+    if (this.hasOverride(normalizedFile)) {
+      throw new Error(`Override '${file}' already exists in manifest`);
+    }
+
+    const contents = await this.overrideRepo.getFileContents(normalizedFile);
+    if (contents === null) {
       throw new Error(`Could not find override '${file}'`);
     }
+
+    return normalizedFile;
   }
 
   private async getOverrideBaseInfo(file: string): Promise<OverrideBaseInfo> {

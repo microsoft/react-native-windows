@@ -98,7 +98,7 @@
         _HAS_AUTO_PTR_ETC;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jscallinvoker;$(JSI_Source);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jscallinvoker;$(JSI_Source);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\JSI\Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <ShowIncludes>false</ShowIncludes>
@@ -109,7 +109,7 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
       <AdditionalDependencies Condition="'$(CHAKRACOREUWP)'=='true'">ChakraCore.Debugger.Protocol.lib;ChakraCore.Debugger.ProtocolHandler.lib;ChakraCore.Debugger.Service.lib;ChakraCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreLibDir);$(ChakraCoreDebugLibDir)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>winsqlite3.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;dxguid.lib;dloadhelper.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Midl>
@@ -117,24 +117,14 @@
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x64.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x86.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">
@@ -144,8 +134,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
-    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
@@ -164,11 +163,7 @@
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
-    <ClInclude Include="Utils\ResourceBrushUtils.h" />
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimatedNode.h" />
@@ -192,7 +187,6 @@
     <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\ValueAnimatedNode.h" />
-    <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="Modules\AlertModuleUwp.h" />
@@ -219,9 +213,6 @@
     <ClInclude Include="Threading\JSQueueThread.h" />
     <ClInclude Include="Threading\UIMessageQueueThread.h" />
     <ClInclude Include="Threading\WorkerMessageQueueThread.h" />
-    <ClInclude Include="Utils\LocalBundleReader.h" />
-    <ClInclude Include="Utils\PropertyHandlerUtils.h" />
-    <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
@@ -270,8 +261,8 @@
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
-    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
+    <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
@@ -319,7 +310,6 @@
     <ClCompile Include="Polyester\ContentControlViewManager.cpp" />
     <ClCompile Include="Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="Polyester\IconViewManager.cpp" />
-    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp" />
     <ClCompile Include="Threading\AsyncWorkQueue.cpp" />
     <ClCompile Include="Threading\JSQueueThread.cpp" />
     <ClCompile Include="Threading\UIMessageQueueThread.cpp" />
@@ -382,10 +372,10 @@
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(PATCH_RN)' == 'true' AND '$(CHAKRACOREUWP)'!='true'">
+    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(CHAKRACOREUWP)'!='true'">
       <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(PATCH_RN)' == 'true' AND '$(CHAKRACOREUWP)'=='true'">
+    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(CHAKRACOREUWP)'=='true'">
       <Project>{17DD1B17-3094-40DD-9373-AC2497932ECA}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
@@ -421,6 +411,7 @@
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -430,6 +421,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

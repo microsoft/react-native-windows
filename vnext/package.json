@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.61.0-beta.31",
+  "version": "0.61.0-beta.49",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "lint": "just-scripts lint",
     "start": "react-native start",
     "watch": "tsc -w",
-    "validate-overrides": "override validate ./src/overrides.json"
+    "validate-overrides": "override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",

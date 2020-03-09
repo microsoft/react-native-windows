@@ -2,6 +2,274 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 09 Mar 2020 20:08:13 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.49",
+      "version": "0.61.0-beta.49",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Support For SysTraceSection",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6745910fa922e880c314c9581419a6a2cc3f2e2a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Mar 2020 18:53:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.48",
+      "version": "0.61.0-beta.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add initial redbox implementation",
+            "author": "acoates@microsoft.com",
+            "commit": "0fdf86e78522d607bff4a8c320cba3a9efb66210"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 19:35:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.47",
+      "version": "0.61.0-beta.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add XamlHelpers",
+            "author": "kaigu@microsoft.com",
+            "commit": "178e2aa46c72711747d8d1eac10f798bb8ef668d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 02:35:07 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.46",
+      "version": "0.61.0-beta.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Override Manifest for Native Code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cb6fa7e7fc278b054a94b27a8b3b3991aa10f79e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 01:43:31 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.45",
+      "version": "0.61.0-beta.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Most cxxreact Patches and Executor Sandboxing Code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c072a151b47563e20c58f018b66d6bdfbeda637e"
+          },
+          {
+            "comment": "Deprecated JSValue typed value access functions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "de23cd40fadddb7fe878b3dbd7d32c05fcae55a7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 01:08:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.44",
+      "version": "0.61.0-beta.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Dont show loading/redbox in ship mode",
+            "author": "acoates@microsoft.com",
+            "commit": "93ccc4bca669131515a78f315acc59bd7cee204e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 00:30:45 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.43",
+      "version": "0.61.0-beta.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bundle commands should work if you dont have react-native installed globally",
+            "author": "acoates@microsoft.com",
+            "commit": "c8cf0fbea6665137497b3cb8eee5bdf3e985cbb4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 23:55:14 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.42",
+      "version": "0.61.0-beta.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add JS engine selection to Playground",
+            "author": "tudorm@microsoft.com",
+            "commit": "574c3de79594b6dac7e57d67d1338f881e9f9257"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 22:46:28 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.41",
+      "version": "0.61.0-beta.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support dependency config for RNW",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "d763dfbf19b4e7830a8a51ba63aee9db941f54f8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Mar 2020 19:29:08 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.40",
+      "version": "0.61.0-beta.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix include filters",
+            "author": "jthysell@microsoft.com",
+            "commit": "726b3727ea1f8230ad1bdec1c8b75af1a351acf3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Mar 2020 23:13:07 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.39",
+      "version": "0.61.0-beta.39",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "commit": "f9b9271570c9269d9e43f4178892ded384fb8769"
+          },
+          {
+            "comment": "Configure vnext validate-overrides to check both override manifests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f9b9271570c9269d9e43f4178892ded384fb8769"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Mar 2020 18:30:29 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.38",
+      "version": "0.61.0-beta.38",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added TryAddAttributedModule in addition to AddAttributedModules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4e5d620dd2d200f39de9202b77020051e839d67f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Mar 2020 05:33:57 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.37",
+      "version": "0.61.0-beta.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move ViewPanel import from PropertyUtils to FrameworkElementViewManager",
+            "author": "jagorrin@microsoft.com",
+            "commit": "9dfc7b5bce7de1508eb2dc31fbdf597929f839f3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Mar 2020 03:41:34 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.36",
+      "version": "0.61.0-beta.36",
+      "comments": {
+        "none": [
+          {
+            "comment": "Define _WIN32_WINNT instead of WINVER.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b6b6b4498465f73dcbb549abd3f09216cf266a04"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enable V8 support for win32 (no defaults changed)",
+            "author": "tudorm@microsoft.com",
+            "commit": "e482db2be729528490caedcd7026a3ad05d27671"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Mar 2020 00:11:30 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.35",
+      "version": "0.61.0-beta.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support RNW project config",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "58098b2a16189d720eb55e26d77ace64eb3d411b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Mar 2020 08:47:08 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.34",
+      "version": "0.61.0-beta.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "CI Enforce that Overrides are Recorded Up to Date",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3eaa715c936e8da29e163dfa555080c5a821c005"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Mar 2020 08:11:46 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.33",
+      "version": "0.61.0-beta.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Moved header files from ReactUWP\\Utils to include\\ReactUWP\\Utils. Updated project references.",
+            "author": "lamdoan@microsoft.com",
+            "commit": "2067c346e36d3e32032563fece5383356345010b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Mar 2020 19:02:31 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.32",
+      "version": "0.61.0-beta.32",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove CMakeLists",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9acffa5e90966437ed0a4540395258c2ed7ca89b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Mar 2020 22:47:03 GMT",
       "tag": "react-native-windows_v0.61.0-beta.31",
       "version": "0.61.0-beta.31",

@@ -81,6 +81,7 @@ export default class GitReactFileRepository
           `refs/tags/v${reactNativeVersion}`,
         );
         await this.gitClient.checkout('FETCH_HEAD');
+        await this.gitClient.reset('hard');
         this.checkedOutVersion = reactNativeVersion;
       } catch (ex) {
         throw new Error(
