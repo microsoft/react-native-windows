@@ -183,6 +183,13 @@ async function removeOverride(overridePath: string) {
  * Prints validation errors in a user-readable form to stderr
  */
 function printValidationErrors(errors: Array<ValidationError>) {
+  if (errors.length === 0) {
+    return;
+  }
+
+  // Add an initial line of separation
+  console.error();
+
   errors.sort((a, b) => a.file.localeCompare(b.file));
 
   const filesMissing = errors.filter(err => {
@@ -200,31 +207,35 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (filesMissing.length > 0) {
     const errorMessage =
-      "\nFound override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'yarn override add <override>':";
+      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'yarn override add <override>':";
     console.error(chalk.red(errorMessage));
     filesMissing.forEach(err => console.error(` - ${err.file}`));
+    console.error();
   }
 
   if (overridesMissing.length > 0) {
     const errorMessage =
-      "\nFound overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>':";
+      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>':";
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
+    console.error();
   }
 
   if (baseFilesNotFound.length > 0) {
     const errorMessage =
-      "\nFound overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>':";
+      "Found overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>':";
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
+    console.error();
   }
 
   if (outOfDateFiles.length > 0) {
     // TODO: Instruct users to use 'yarn override upgrade' once that exists
     console.error(
-      chalk.red('\nFound overrides whose original files have changed:'),
+      chalk.red('Found overrides whose original files have changed:'),
     );
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
+    console.error();
   }
 }
 
@@ -260,7 +271,7 @@ async function readManifest(file: string, version?: string): Promise<Manifest> {
   const gitReactRepo = await GitReactFileRepository.createAndInit();
 
   const ovrPath = path.dirname(file);
-  const ovrFilter = /^.*\.(js|ts|jsx|tsx)$/;
+  const ovrFilter = /^.*\.(js|ts|jsx|tsx|cpp|h)$/;
   const ovrRepo = new OverrideFileRepositoryImpl(ovrPath, ovrFilter);
 
   const rnVersion = version || (await getInstalledRNVersion(file));

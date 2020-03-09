@@ -176,7 +176,7 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      yarn bundle-cs
+      npx --no-install yarn run bundle-cs
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />

@@ -32,9 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MockExecutorDelegate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControllableMessageQueueThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MockExecutorDelegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

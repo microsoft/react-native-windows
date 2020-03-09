@@ -1,7 +1,68 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Mar 2020 23:13:07 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Mar 2020 20:08:13 GMT and should not be manually modified.
 
+## 0.61.0-beta.49
+Mon, 09 Mar 2020 20:08:13 GMT
+
+### Changes
+
+- Fix Support For SysTraceSection (ngerlem@microsoft.com)
+## 0.61.0-beta.48
+Mon, 09 Mar 2020 18:53:03 GMT
+
+### Changes
+
+- Add initial redbox implementation (acoates@microsoft.com)
+## 0.61.0-beta.47
+Sat, 07 Mar 2020 19:35:40 GMT
+
+### Changes
+
+- Add XamlHelpers (kaigu@microsoft.com)
+## 0.61.0-beta.46
+Sat, 07 Mar 2020 02:35:07 GMT
+
+### Changes
+
+- Add Override Manifest for Native Code (ngerlem@microsoft.com)
+## 0.61.0-beta.45
+Sat, 07 Mar 2020 01:43:31 GMT
+
+### Changes
+
+- Remove Most cxxreact Patches and Executor Sandboxing Code (ngerlem@microsoft.com)
+- Deprecated JSValue typed value access functions (vmorozov@microsoft.com)
+## 0.61.0-beta.44
+Sat, 07 Mar 2020 01:08:09 GMT
+
+### Changes
+
+- Dont show loading/redbox in ship mode (acoates@microsoft.com)
+## 0.61.0-beta.43
+Sat, 07 Mar 2020 00:30:45 GMT
+
+### Changes
+
+- Bundle commands should work if you dont have react-native installed globally (acoates@microsoft.com)
+## 0.61.0-beta.42
+Fri, 06 Mar 2020 23:55:14 GMT
+
+### Changes
+
+- Add JS engine selection to Playground (tudorm@microsoft.com)
+## 0.61.0-beta.41
+Fri, 06 Mar 2020 22:46:28 GMT
+
+### Changes
+
+- Support dependency config for RNW (dida@ntdev.microsoft.com)
+## 0.61.0-beta.40
+Fri, 06 Mar 2020 19:29:08 GMT
+
+### Changes
+
+- Fix include filters (jthysell@microsoft.com)
 ## 0.61.0-beta.39
 Thu, 05 Mar 2020 23:13:07 GMT
 

@@ -74,7 +74,7 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
     FrameworkElement const &view,
     IJSValueReader const &propertyMapReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-    JSValueObject propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
+    JSValueObject propertyMap = JSValueObject::ReadFrom(propertyMapReader);
 
     for (auto const &pair : propertyMap) {
       auto const &propertyName = pair.first;
@@ -82,7 +82,7 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
 
       if (propertyName == "label") {
         if (!propertyValue.IsNull()) {
-          auto value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
+          auto value = winrt::box_value(winrt::to_hstring(propertyValue.AsString()));
           control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), value);
         } else {
           control.ClearValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty());
