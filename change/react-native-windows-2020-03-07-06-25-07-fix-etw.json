@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Support For SysTraceSection",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "6745910fa922e880c314c9581419a6a2cc3f2e2a",
+  "dependentChangeType": "patch",
+  "date": "2020-03-07T14:25:07.210Z"
+}

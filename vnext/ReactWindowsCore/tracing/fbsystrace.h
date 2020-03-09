@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <stdint.h>
@@ -6,6 +9,7 @@
 #include <chrono>
 #include <mutex>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 
 #define TRACE_TAG_REACT_CXX_BRIDGE 1 << 10
@@ -51,37 +55,11 @@ class FbSystraceSection {
             .count());
   }
 
-  void init(std::string &&v) {
-    args_[index_++] = std::move(v);
-    begin_section();
-  }
-
-  void init(const std::string &v) {
-    args_[index_++] = v; // copy
-    begin_section();
-  }
-
-  void init() {
-    begin_section();
-  }
-
-  template <typename... ConvertsToStringPiece>
-  void init(std::string &&v, ConvertsToStringPiece &&... rest) {
-    args_[index_++] = std::move(v);
-    init(std::forward<ConvertsToStringPiece>(rest)...);
-  }
-
-  template <typename... ConvertsToStringPiece>
-  void init(const std::string &v, ConvertsToStringPiece &&... rest) {
-    args_[index_++] = v; // copy
-    init(std::forward<ConvertsToStringPiece>(rest)...);
-  }
-
-  template <typename... ConvertsToStringPiece>
-  FbSystraceSection(uint64_t tag, std::string &&v, ConvertsToStringPiece &&... rest)
-      : tag_(tag), profile_name_(std::move(v)) {
+  template <typename... RestArg>
+  FbSystraceSection(uint64_t tag, std::string &&profileName, RestArg &&... rest)
+      : tag_(tag), profile_name_(std::move(profileName)) {
     id_ = s_id_counter++;
-    init(std::forward<ConvertsToStringPiece>(rest)...);
+    init(std::forward<RestArg>(rest)...);
   }
 
   ~FbSystraceSection() {
@@ -89,6 +67,21 @@ class FbSystraceSection {
   }
 
  private:
+  void init() {
+    begin_section();
+  }
+
+  template <typename Arg, typename... RestArg>
+  void init(Arg &&arg, RestArg &&... rest) {
+    if constexpr (std::is_convertible_v<Arg, std::string>) {
+      args_[index_++] = std::forward<Arg>(arg);
+    } else {
+      args_[index_++] = std::to_string(std::forward<Arg>(arg));
+    }
+
+    init(std::forward<RestArg>(rest)...);
+  }
+
   std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> args_;
   uint64_t tag_{0};
 
