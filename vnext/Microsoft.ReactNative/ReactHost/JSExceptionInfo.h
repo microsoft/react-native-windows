@@ -6,6 +6,7 @@
 #include <functional/functor.h>
 #include <string>
 #include <vector>
+#include "DevSettings.h"
 
 namespace Mso::React {
 
@@ -14,11 +15,13 @@ enum class JSExceptionType : int32_t {
   Soft = 1,
 };
 
+using JSStackFrameInfo = facebook::react::JSStackFrameInfo;
+
 struct JSExceptionInfo {
   JSExceptionType ExceptionType{};
   std::string ExceptionMessage;
   uint32_t ExceptionId{};
-  std::vector<std::string> Callstack;
+  std::vector<JSStackFrameInfo> Callstack;
 
   std::string ToString() const noexcept;
 };
