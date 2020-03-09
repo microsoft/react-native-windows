@@ -486,11 +486,12 @@ std::function<void(facebook::react::JSExceptionInfo &&)> ReactInstanceWin::GetJS
     return CreateExceptionCallback(Mso::Copy(m_options.OnJSException));
   } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
     auto localWkReactHost = m_weakReactHost;
-    return CreateRedBoxExceptionCallback(m_uiMessageThread.LoadWithLock(), [localWkReactHost]() {
-      if (auto reactHost = localWkReactHost.GetStrongPtr()) {
-        reactHost->ReloadInstance();
-      }
-    });
+    return CreateRedBoxExceptionCallback(
+        m_uiMessageThread.LoadWithLock(), [capturedWkReactHost = std::move(localWkReactHost)]() {
+          if (auto reactHost = capturedWkReactHost.GetStrongPtr()) {
+            reactHost->ReloadInstance();
+          }
+        });
   } else {
     return {};
   }

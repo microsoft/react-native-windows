@@ -12,9 +12,9 @@ namespace Mso::React {
 
 std::function<void(facebook::react::JSExceptionInfo &&)> CreateRedBoxExceptionCallback(
     std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue,
-    std::function<void()>&& reloadCallback) noexcept {
-  return [uiMessageQueue,
-          reloadCallback2 = std::move(reloadCallback)](facebook::react::JSExceptionInfo &&jsExceptionInfo) noexcept {
+    std::function<void()> &&reloadCallback) noexcept {
+  return [ uiMessageQueue, reloadCallback2 = std::move(reloadCallback) ](
+      facebook::react::JSExceptionInfo && jsExceptionInfo) noexcept {
     uiMessageQueue->runOnQueue([jsExceptionInfo, reloadCallback3 = std::move(reloadCallback2)]() {
       auto popup = winrt::Windows::UI::Xaml::Controls::Primitives::Popup{};
 
@@ -51,18 +51,17 @@ std::function<void(facebook::react::JSExceptionInfo &&)> CreateRedBoxExceptionCa
       auto reloadButton = redboxContent.FindName(L"ReloadButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
 
       winrt::event_token tokenDismiss;
-      tokenDismiss = dismissButton.Click(
-          [popup](auto const & /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept {
-            popup.IsOpen(false);
-          });
+      tokenDismiss = dismissButton.Click([popup](
+          auto const & /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept {
+        popup.IsOpen(false);
+      });
 
       winrt::event_token tokenReload;
-      tokenReload = reloadButton.Click(
-          [popup, capturedReloadCallback = std::move(reloadCallback3)](
-              auto const & /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept {
-            popup.IsOpen(false);
-            capturedReloadCallback();
-          });
+      tokenReload = reloadButton.Click([ popup, capturedReloadCallback = std::move(reloadCallback3) ](
+          auto const & /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept {
+        popup.IsOpen(false);
+        capturedReloadCallback();
+      });
 
       for (const auto frame : jsExceptionInfo.callstack) {
         const winrt::hstring xamlFrameString =
@@ -104,8 +103,8 @@ std::function<void(facebook::react::JSExceptionInfo &&)> CreateRedBoxExceptionCa
       // The closed token needs to be allocated so that it can be captured, otherwise we just capture the token before
       // its set to anything useful
       winrt::event_token *tokenClosed = new winrt::event_token;
-      *tokenClosed = popup.Closed(
-          [tokenDismiss, dismissButton, tokenClosed, popup, tokenSizeChanged, tokenReload, reloadButton](
+      *tokenClosed =
+          popup.Closed([ tokenDismiss, dismissButton, tokenClosed, popup, tokenSizeChanged, tokenReload, reloadButton ](
               auto const & /*sender*/, winrt::Windows::Foundation::IInspectable const & /*args*/) noexcept {
             dismissButton.Click(tokenDismiss);
             reloadButton.Click(tokenReload);
