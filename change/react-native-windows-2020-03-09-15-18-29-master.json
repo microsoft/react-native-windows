@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Release is Bundle by default, thus BundleCommand should do Release type things.",
+  "packageName": "react-native-windows",
+  "email": "adamgor@microsoft.com",
+  "commit": "c871348bce18eaa180b5223a3fb4343d0c923cd6",
+  "dependentChangeType": "patch",
+  "date": "2020-03-09T22:18:28.823Z"
+}
