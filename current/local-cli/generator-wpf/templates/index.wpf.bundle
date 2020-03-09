@@ -1,9 +1,0 @@
-/**
- * 
- * Be sure to generate this file using the CLI:
- *
- * react-native bundle --platform wpf --entry-file index.wpf.js 
- *   --bundle-output wpf\<%=name%>\ReactAssets\index.wpf.bundle
- *   --assets-dest wpf\<%=name%>\ReactAssets
- *
- */
