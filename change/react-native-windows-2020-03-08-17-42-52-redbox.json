@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add initial redbox implementation",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "0fdf86e78522d607bff4a8c320cba3a9efb66210",
-  "dependentChangeType": "patch",
-  "date": "2020-03-09T00:42:51.985Z"
-}

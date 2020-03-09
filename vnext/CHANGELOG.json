@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 09 Mar 2020 18:53:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.48",
+      "version": "0.61.0-beta.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add initial redbox implementation",
+            "author": "acoates@microsoft.com",
+            "commit": "0fdf86e78522d607bff4a8c320cba3a9efb66210"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2020 19:35:40 GMT",
       "tag": "react-native-windows_v0.61.0-beta.47",
       "version": "0.61.0-beta.47",

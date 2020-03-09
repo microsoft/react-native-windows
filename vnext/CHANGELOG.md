@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 07 Mar 2020 19:35:40 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Mar 2020 18:53:03 GMT and should not be manually modified.
 
+## 0.61.0-beta.48
+Mon, 09 Mar 2020 18:53:03 GMT
+
+### Changes
+
+- Add initial redbox implementation (acoates@microsoft.com)
 ## 0.61.0-beta.47
 Sat, 07 Mar 2020 19:35:40 GMT
 
