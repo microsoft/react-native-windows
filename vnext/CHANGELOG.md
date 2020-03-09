@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 09 Mar 2020 18:53:03 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Mar 2020 20:08:13 GMT and should not be manually modified.
 
+## 0.61.0-beta.49
+Mon, 09 Mar 2020 20:08:13 GMT
+
+### Changes
+
+- Fix Support For SysTraceSection (ngerlem@microsoft.com)
 ## 0.61.0-beta.48
 Mon, 09 Mar 2020 18:53:03 GMT
 
