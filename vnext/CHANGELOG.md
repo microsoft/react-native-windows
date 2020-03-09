@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Mar 2020 20:16:39 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Mar 2020 22:26:17 GMT and should not be manually modified.
 
+## 0.60.0-vnext.147
+Mon, 09 Mar 2020 22:26:17 GMT
+
+### Changes
+
+- Fix Support For SysTraceSection (ngerlem@microsoft.com)
 ## 0.60.0-vnext.146
 Thu, 05 Mar 2020 20:16:39 GMT
 
