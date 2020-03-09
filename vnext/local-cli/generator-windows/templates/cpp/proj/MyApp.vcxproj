@@ -54,6 +54,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <PropertyGroup>
+    <devEnabled>true</devEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <devEnabled>false</devEnabled>
+  </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
@@ -160,7 +166,7 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      npx --no-install react-native bundle --platform windows --entry-file index.js --dev false --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file index.js --dev $(devEnabled) --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="..\..\node_modules\react-native-windows\PropertySheets\Bundle.Cpp.targets"/>

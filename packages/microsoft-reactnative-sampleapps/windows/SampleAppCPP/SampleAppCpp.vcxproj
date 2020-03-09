@@ -63,6 +63,12 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup>
+    <devEnabled>true</devEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <devEnabled>false</devEnabled>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -176,7 +182,7 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      npx --no-install react-native bundle --platform windows --entry-file index.windows.js --dev false --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file index.windows.js --dev $(devEnabled) --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
