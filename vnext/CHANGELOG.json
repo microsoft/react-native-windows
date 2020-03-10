@@ -2,6 +2,109 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Mar 2020 21:51:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.51",
+      "version": "0.61.0-beta.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bundle command clean-up",
+            "author": "jthysell@microsoft.com",
+            "commit": "abb0c1276154e951edff863a867a726605d02d32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Mar 2020 00:33:15 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.50",
+      "version": "0.61.0-beta.50",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Strip out color markers from redbox error messages",
+            "author": "acoates@microsoft.com",
+            "commit": "ad04ab83c14306bd625344617df8376c294349e6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Mar 2020 20:08:13 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.49",
+      "version": "0.61.0-beta.49",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Support For SysTraceSection",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6745910fa922e880c314c9581419a6a2cc3f2e2a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Mar 2020 18:53:03 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.48",
+      "version": "0.61.0-beta.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add initial redbox implementation",
+            "author": "acoates@microsoft.com",
+            "commit": "0fdf86e78522d607bff4a8c320cba3a9efb66210"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 19:35:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.47",
+      "version": "0.61.0-beta.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add XamlHelpers",
+            "author": "kaigu@microsoft.com",
+            "commit": "178e2aa46c72711747d8d1eac10f798bb8ef668d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 02:35:07 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.46",
+      "version": "0.61.0-beta.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Override Manifest for Native Code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cb6fa7e7fc278b054a94b27a8b3b3991aa10f79e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Mar 2020 01:43:31 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.45",
+      "version": "0.61.0-beta.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Most cxxreact Patches and Executor Sandboxing Code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c072a151b47563e20c58f018b66d6bdfbeda637e"
+          },
+          {
+            "comment": "Deprecated JSValue typed value access functions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "de23cd40fadddb7fe878b3dbd7d32c05fcae55a7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2020 01:08:09 GMT",
       "tag": "react-native-windows_v0.61.0-beta.44",
       "version": "0.61.0-beta.44",

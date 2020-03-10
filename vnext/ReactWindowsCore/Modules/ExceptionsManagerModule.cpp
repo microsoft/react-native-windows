@@ -58,6 +58,33 @@ std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule:
   };
 }
 
+namespace {
+std::string RetrieveStringFromMap(const folly::dynamic &map, const std::string &key) noexcept {
+  assert(map.type() == folly::dynamic::OBJECT);
+  auto iterator = map.find(key);
+  if (iterator != map.items().end()) {
+    return iterator->second.asString();
+  }
+  assert(false);
+  return {};
+}
+
+int RetrieveIntFromMap(const folly::dynamic &map, const std::string &key) noexcept {
+  assert(map.type() == folly::dynamic::OBJECT);
+
+  auto iterator = map.find(key);
+  if (iterator != map.items().end()) {
+    if (iterator->second.isNull()) {
+      return -1;
+    }
+    assert(iterator->second.isNumber());
+    return static_cast<int>(iterator->second.asDouble());
+  }
+  assert(false);
+  return -1;
+}
+} // namespace
+
 JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
     const folly::dynamic &args,
     JSExceptionType jsExceptionType) const noexcept {
@@ -88,45 +115,13 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
     assert(stackFrame.isObject());
     assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
-    std::stringstream stackFrameInfo;
-
-    stackFrameInfo << RetrieveValueFromMap(stackFrame, "methodName", folly::dynamic::STRING) << ' ';
-    stackFrameInfo << "Line: " << RetrieveValueFromMap(stackFrame, "lineNumber", folly::dynamic::INT64) << ' ';
-    stackFrameInfo << "Column: " << RetrieveValueFromMap(stackFrame, "column", folly::dynamic::INT64) << ' ';
-    stackFrameInfo << RetrieveValueFromMap(stackFrame, "file", folly::dynamic::STRING);
-
-    jsExceptionInfo.callstack.push_back(stackFrameInfo.str());
+    jsExceptionInfo.callstack.push_back(JSStackFrameInfo{RetrieveStringFromMap(stackFrame, "file"),
+                                                         RetrieveStringFromMap(stackFrame, "methodName"),
+                                                         RetrieveIntFromMap(stackFrame, "lineNumber"),
+                                                         RetrieveIntFromMap(stackFrame, "column")});
   }
 
   return jsExceptionInfo;
-}
-
-std::string ExceptionsManagerModule::RetrieveValueFromMap(
-    const folly::dynamic &map,
-    const std::string &key,
-    folly::dynamic::Type type) const noexcept {
-  assert(type == folly::dynamic::INT64 || type == folly::dynamic::STRING);
-  assert(map.type() == folly::dynamic::OBJECT);
-
-  std::string value;
-  auto iterator = map.find(key);
-  if (iterator != map.items().end()) {
-    if (type == folly::dynamic::STRING) {
-      value = iterator->second.asString();
-    } else {
-      if (iterator->second.isNull()) {
-        return "<Unknown>";
-      }
-      assert(iterator->second.isNumber());
-      std::stringstream stream;
-      stream << static_cast<int64_t>(iterator->second.asDouble());
-      value = stream.str();
-    }
-  } else {
-    assert(false);
-  }
-
-  return value;
 }
 
 } // namespace react

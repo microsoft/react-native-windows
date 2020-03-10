@@ -320,6 +320,7 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="RedBox.h"/>
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
@@ -477,6 +478,7 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="RedBox.cpp"/>
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />

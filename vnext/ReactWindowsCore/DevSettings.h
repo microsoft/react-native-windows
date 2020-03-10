@@ -28,11 +28,18 @@ enum class JSExceptionType : int32_t {
   Soft = 1,
 };
 
+struct JSStackFrameInfo {
+  std::string File;
+  std::string Method;
+  int Line;
+  int Column;
+};
+
 struct JSExceptionInfo {
   JSExceptionType exceptionType;
   std::string exceptionMessage;
   uint32_t exceptionId;
-  std::vector<std::string> callstack;
+  std::vector<JSStackFrameInfo> callstack;
 };
 
 enum class JSIEngineOverride : int32_t {

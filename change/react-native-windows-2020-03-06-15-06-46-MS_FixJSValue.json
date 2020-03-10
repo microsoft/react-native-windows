@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Deprecated JSValue typed value access functions",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "de23cd40fadddb7fe878b3dbd7d32c05fcae55a7",
-  "dependentChangeType": "patch",
-  "date": "2020-03-06T23:06:45.796Z"
-}
