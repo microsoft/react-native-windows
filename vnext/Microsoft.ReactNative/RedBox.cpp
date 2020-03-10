@@ -6,6 +6,7 @@
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
+#include <regex>
 #include "Unicode.h"
 
 namespace Mso::React {
@@ -112,7 +113,10 @@ std::function<void(facebook::react::JSExceptionInfo &&)> CreateRedBoxExceptionCa
             popup.Closed(*tokenClosed);
             delete tokenClosed;
           });
-      errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(jsExceptionInfo.exceptionMessage));
+
+      std::regex colorsreg("\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
+      errorMessageText.Text(
+          Microsoft::Common::Unicode::Utf8ToUtf16(std::regex_replace(jsExceptionInfo.exceptionMessage, colorsreg, "")));
 
       popup.Child(redboxContent);
       popup.IsOpen(true);
