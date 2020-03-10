@@ -406,54 +406,9 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
-        DebugCppX86:
-          language: cpp
-          configuration: Debug
-          platform: x86
-        DebugCsX86:
-          language: cs
-          configuration: Debug
-          platform: x86
-        ReleaseCppX86:
-          language: cpp
-          configuration: Release
-          platform: x86
-        ReleaseCsX86:
-          language: cs
-          configuration: Release
-          platform: x86
-        DebugCppX64:
-          language: cpp
-          configuration: Debug
-          platform: x64
-        DebugCsX64:
-          language: cs
-          configuration: Debug
-          platform: x64
-        ReleaseCppX64:
-          language: cpp
-          configuration: Release
-          platform: x64
-        ReleaseCsX64:
-          language: cs
-          configuration: Release
-          platform: x64
-        DebugCppARM:
-          language: cpp
-          configuration: Debug
-          platform: arm
-        DebugCsARM:
-          language: cs
-          configuration: Debug
-          platform: arm
-        ReleaseCppARM:
-          language: cpp
-          configuration: Release
-          platform: arm
-        ReleaseCsARM:
-          language: cs
-          configuration: Release
-          platform: arm
+        language: [cpp, cs]
+        configuration: [Debug, Release]
+        platform: [x86, x64, arm]
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
