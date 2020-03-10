@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Mar 2020 00:33:15 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Mar 2020 21:51:40 GMT and should not be manually modified.
 
+## 0.61.0-beta.51
+Tue, 10 Mar 2020 21:51:40 GMT
+
+### Changes
+
+- Bundle command clean-up (jthysell@microsoft.com)
 ## 0.61.0-beta.50
 Tue, 10 Mar 2020 00:33:15 GMT
 
