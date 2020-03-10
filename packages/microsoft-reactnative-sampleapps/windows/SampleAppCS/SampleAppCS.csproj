@@ -114,10 +114,10 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup>
-    <devEnabled>true</devEnabled>
+    <ReactNativeBundleDevMode>true</ReactNativeBundleDevMode>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <devEnabled>false</devEnabled>
+    <ReactNativeBundleDevMode>false</ReactNativeBundleDevMode>
   </PropertyGroup>
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
@@ -182,7 +182,7 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      npx --no-install react-native bundle --platform windows --entry-file index.windows.js --dev $(devEnabled) --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file index.windows.js --dev $(ReactNativeBundleDevMode) --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />

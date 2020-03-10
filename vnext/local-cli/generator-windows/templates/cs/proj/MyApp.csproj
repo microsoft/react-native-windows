@@ -117,10 +117,10 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup>
-    <devEnabled>true</devEnabled>
+    <ReactNativeBundleDevMode>true</ReactNativeBundleDevMode>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <devEnabled>false</devEnabled>
+    <ReactNativeBundleDevMode>false</ReactNativeBundleDevMode>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -176,7 +176,7 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      npx --no-install react-native bundle --platform windows --entry-file index.js --dev $(devEnabled) --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file index.js --dev $(ReactNativeBundleDevMode) --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="..\..\node_modules\react-native-windows\PropertySheets\Bundle.targets"/>
