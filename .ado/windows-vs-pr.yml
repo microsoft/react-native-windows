@@ -64,7 +64,7 @@ jobs:
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
           testPlatformVersion: 15.9.2
-        condition: and(ne(variables.BuildPlatform, 'ARM'), nq(variables.BuildPlatform, 'ARM64'))
+        condition: and(ne(variables.BuildPlatform, 'ARM'), ne(variables.BuildPlatform, 'ARM64'))
 
       - template: templates/build-rnw.yml
         parameters:
@@ -87,7 +87,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: 15.0
-        condition: and(ne(variables.BuildPlatform, 'ARM'), nq(variables.BuildPlatform, 'ARM64'))
+        condition: and(ne(variables.BuildPlatform, 'ARM'), ne(variables.BuildPlatform, 'ARM64'))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
