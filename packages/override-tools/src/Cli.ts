@@ -294,7 +294,7 @@ async function stageBaseFiles(
 
   for (const ovr of overrides) {
     const base = await reactRepo.getFileContents(ovr.baseFile, ovr.baseVersion);
-    const ovrPath = path.join(manifestPath, ovr.file);
+    const ovrPath = path.join(manifestDir, ovr.file);
     await fs.promises.writeFile(ovrPath, base);
     await localGit.add(ovr.file);
   }
