@@ -9,6 +9,7 @@ import * as FileSearch from './FileSearch';
 import * as ManifestData from './ManifestData';
 import * as OverridePrompt from './OverridePrompt';
 
+import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as ora from 'ora';
@@ -25,6 +26,7 @@ import {
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
+import OverrideUprgader from './OverrideUpgrader';
 import {getInstalledRNVersion} from './ReactVersion';
 
 doMain(() => {
@@ -209,6 +211,7 @@ async function autoUpgrade(manifestPath: string, version?: string) {
   try {
     const reactRepo = await GitReactFileRepository.createAndInit();
     const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(manifestPath));
+    const upgrader = new OverrideUprgader(reactRepo, ovrRepo);
     const manifest = await readManifestUsingRepos(
       manifestPath,
       ovrRepo,
@@ -216,121 +219,30 @@ async function autoUpgrade(manifestPath: string, version?: string) {
       version,
     );
 
-    const validationErrors = await manifest.validate();
-    const outOfDateFiles = validationErrors
+    const upgradeReqs = (await manifest.validate())
       .filter(err => err.type === 'outOfDate')
-      .map(err => err.file);
+      .map(err => err.file)
+      .map(file => manifest.findOverride(file))
+      .map((entry: ManifestData.NonPlatformEntry) => ({
+        overrideEntry: entry,
+        newVersion: manifest.currentVersion(),
+      }));
 
-    const numFiles = outOfDateFiles.length;
-    const cachedFiles = await cacheFiles(outOfDateFiles, reactRepo, manifest);
-
-    let mergedFiles = 0;
-    for (const file of outOfDateFiles) {
-      const overrideEntry = manifest.findOverride(file);
-      const upgraded = await upgradeOverride(
-        overrideEntry,
-        ovrRepo,
-        cachedFiles,
-        manifest.currentVersion(),
-      );
-      if (!upgraded.includes('=========')) {
-        await manifest.markUpToDate(file);
-        await ovrRepo.setFileContents(file, upgraded);
-        await ManifestData.writeToFile(manifest.getAsData(), manifestPath);
-        mergedFiles++;
+    for (const upgraded of await upgrader.perform(upgradeReqs)) {
+      if (!upgraded.hasConflicts) {
+        await ovrRepo.setFileContents(upgraded.overrideFile, upgraded.content);
+        manifest.markUpToDate(upgraded.overrideFile);
       }
     }
 
-    spinner.succeed(`${mergedFiles}/${numFiles} out-of-date overrides merged`);
+    //`${mergedFiles}/${numFiles} out-of-date overrides merged`
+    spinner.succeed();
   } catch (ex) {
     if (spinner.isSpinning) {
       spinner.fail();
     }
     throw ex;
   }
-}
-
-async function upgradeOverride(
-  override: ManifestData.Entry,
-  ovrRepo: OverrideFileRepository,
-  cachedFiles: Array<ReactSource>,
-  currentVersion: string,
-): Promise<MergeResult> {
-  if (override.type === 'platform') {
-    throw new Error('Unexpected out of date platform override');
-  }
-
-  const origBaseContent = cachedFiles.find(
-    cachedFile =>
-      cachedFile.file === override.baseFile &&
-      cachedFile.version === override.baseVersion,
-  ).content;
-  const newBaseContent = cachedFiles.find(
-    cachedFile =>
-      cachedFile.file === override.baseFile &&
-      cachedFile.version === currentVersion,
-  ).content;
-  const origOverrideContent = await ovrRepo.getFileContents(override.file);
-
-  return diff3.mergeDigIn(origBaseContent, origOverrideContent, newBaseContent);
-}
-
-interface ReactSource {
-  file: string;
-  version: string;
-  content: string;
-}
-
-/**
- * Efficiently fetches old and new source files for out-of-date overrides
- */
-async function cacheFiles(
-  outOfDateFiles: Array<string>,
-  reactRepo: VersionedReactFileRepository,
-  manifest: Manifest,
-): Promise<Array<ReactSource>> {
-  let sourceRequests: Array<ReactSourceRequest> = [];
-  outOfDateFiles.forEach(file => {
-    const overrideEntry = manifest.findOverride(file);
-    if (overrideEntry.type === 'platform') {
-      throw new Error('Unexected out of date platform entry');
-    }
-
-    const baseFile = overrideEntry.baseFile;
-    const baseVersion = overrideEntry.baseVersion;
-
-    sourceRequests.push({file: baseFile, version: baseVersion});
-    sourceRequests.push({file: baseFile, version: manifest.currentVersion()});
-  });
-
-  return fetchReactSources(sourceRequests, reactRepo);
-}
-
-interface ReactSourceRequest {
-  file: string;
-  version: string;
-}
-
-/**
- * Fetches source files in batches, attempting to avoid GitReactFileRepositoy
- * checkout overhead when switching between versions.
- */
-async function fetchReactSources(
-  sourcesToCache: Array<ReactSourceRequest>,
-  reactRepo: VersionedReactFileRepository,
-): Promise<Array<ReactSource>> {
-  sourcesToCache.sort((a, b) => a.version.localeCompare(b.version));
-
-  const sources: Array<ReactSource> = [];
-  for (const req of sourcesToCache) {
-    sources.push({
-      file: req.file,
-      version: req.version,
-      content: await reactRepo.getFileContents(req.file, req.version),
-    });
-  }
-
-  return sources;
 }
 
 /**

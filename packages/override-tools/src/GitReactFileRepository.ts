@@ -25,7 +25,11 @@ export default class GitReactFileRepository
   private gitClient: simplegit.SimpleGit;
   private gitDirectory: string;
   private checkedOutVersion: string;
-  private actionQueue: ActionQueue<string | null>;
+
+  // We have a potential race condition where one call to getFileContents
+  // could checkout out a new tag while an existing call is rading a file.
+  // Queue items to ensure the read operation is performed atomically
+  private actionQueue: ActionQueue;
 
   private constructor() {}
 
@@ -51,26 +55,55 @@ export default class GitReactFileRepository
     filename: string,
     reactNativeVersion: string,
   ): Promise<string | null> {
-    // We have a potential race condition where one call to getFileContents
-    // could checkout out a new tag while an existing call is rading a file.
-    // Queue items to ensure the read operation is performed atomically
-    return this.actionQueue.enqueue(() => {
-      return this.getFileContentsNonAtomic(filename, reactNativeVersion);
+    return this.actionQueue.enqueue(async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      const filePath = path.join(this.gitDirectory, filename);
+
+      try {
+        return (await fs.promises.readFile(filePath)).toString();
+      } catch {
+        return null;
+      }
     });
   }
 
-  private async getFileContentsNonAtomic(
+  async generatePatch(
     filename: string,
     reactNativeVersion: string,
-  ): Promise<string | null> {
-    await this.checkoutVersion(reactNativeVersion);
-    const filePath = path.join(this.gitDirectory, filename);
+    newContent: string,
+  ): Promise<string> {
+    return this.actionQueue.enqueue(async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      const filePath = path.join(this.gitDirectory, filename);
 
-    try {
-      return (await fs.promises.readFile(filePath)).toString();
-    } catch {
-      return null;
-    }
+      await fs.promises.writeFile(filePath, newContent);
+      const patch = await this.gitClient.diff([
+        '--patch',
+        '--ignore-space-at-eol',
+      ]);
+
+      await this.gitClient.reset('hard');
+      return patch;
+    });
+  }
+
+  async applyPatchToFile(
+    filename: string,
+    reactNativeVersion: string,
+    patchContent: string,
+  ): Promise<string> {
+    return this.actionQueue.enqueue(async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      const filePath = path.join(this.gitDirectory, filename);
+
+      const patchPath = path.join(this.gitDirectory, 'rnwgit.patch');
+      await fs.promises.writeFile(patchPath, patchContent);
+      await this.gitClient.raw(['apply', '--3way', patchPath]);
+      const patchedFile = await fs.promises.readFile(filePath);
+
+      await this.gitClient.reset('hard');
+      return patchedFile.toString();
+    });
   }
 
   private async checkoutVersion(reactNativeVersion: string) {
