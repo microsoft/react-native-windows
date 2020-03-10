@@ -5,7 +5,6 @@
  * @ts-check
  */
 
-const path = require('path');
 const {
   task,
   series,
@@ -14,8 +13,8 @@ const {
   tscTask,
   eslintTask,
 } = require('just-scripts');
-const libPath = path.resolve(process.cwd(), 'lib');
-const srcPath = path.resolve(process.cwd(), 'src');
+const fs = require('fs');
+const path = require('path');
 
 option('production');
 option('clean');
@@ -29,14 +28,25 @@ task('eslint:fix', () => {
 task('ts', () => {
   return tscTask({
     pretty: true,
-    noEmit: true,
     ...(argv().production && {
       inlineSources: true,
-      sourceRoot: path.relative(libPath, srcPath),
     }),
-    target: 'es5',
+    target: 'es6',
     module: 'commonjs',
   });
+});
+
+function ensureDirectoryExists(filePath) {
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) {
+    ensureDirectoryExists(dir);
+    fs.mkdirSync(dir);
+  }
+}
+
+task('prepareBundle', () => {
+  ensureDirectoryExists('windows/SampleAppCS/Bundle');
+  ensureDirectoryExists('windows/SampleAppCPP/Bundle');
 });
 
 task('build', series('ts'));

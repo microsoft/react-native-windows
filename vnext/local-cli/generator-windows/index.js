@@ -13,7 +13,7 @@ const {
 } = require('../generator-common');
 
 const windowsDir = 'windows';
-const reactAssetsDir = 'ReactAssets';
+const bundleDir = 'Bundle';
 const projDir = 'proj';
 
 function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
@@ -69,7 +69,7 @@ function copyProjectTemplateAndReplace(
 
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
-  createDir(path.join(destPath, windowsDir, newProjectName, reactAssetsDir));
+  createDir(path.join(destPath, windowsDir, newProjectName, bundleDir));
   createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
 
   const language = options.language;
@@ -96,8 +96,8 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcRootPath, 'react-native.config.js'), to: 'react-native.config.js' },
     { from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js' },
     { from: path.join(srcRootPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
-    { from: path.join(srcRootPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
-    { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
+    { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, bundleDir, '.gitignore') },
+    { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
