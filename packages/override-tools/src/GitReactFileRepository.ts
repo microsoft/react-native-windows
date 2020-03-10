@@ -43,6 +43,8 @@ export default class GitReactFileRepository
     await fs.promises.mkdir(repo.gitDirectory, {recursive: true});
 
     repo.gitClient = simplegit(repo.gitDirectory);
+    repo.gitClient.silent(true);
+
     if (!(await repo.gitClient.checkIsRepo())) {
       await repo.gitClient.init();
       await repo.gitClient.addRemote('origin', REACT_NATIVE_GITHUB_URL);
@@ -76,14 +78,16 @@ export default class GitReactFileRepository
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
 
-      await fs.promises.writeFile(filePath, newContent);
-      const patch = await this.gitClient.diff([
-        '--patch',
-        '--ignore-space-at-eol',
-      ]);
-
-      await this.gitClient.reset('hard');
-      return patch;
+      try {
+        await fs.promises.writeFile(filePath, newContent);
+        const patch = await this.gitClient.diff([
+          '--patch',
+          '--ignore-space-at-eol',
+        ]);
+        return patch;
+      } finally {
+        await this.gitClient.reset('hard');
+      }
     });
   }
 
@@ -95,14 +99,30 @@ export default class GitReactFileRepository
     return this.actionQueue.enqueue(async () => {
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
-
       const patchPath = path.join(this.gitDirectory, 'rnwgit.patch');
-      await fs.promises.writeFile(patchPath, patchContent);
-      await this.gitClient.raw(['apply', '--3way', patchPath]);
-      const patchedFile = await fs.promises.readFile(filePath);
-
-      await this.gitClient.reset('hard');
-      return patchedFile.toString();
+      try {
+        await fs.promises.writeFile(patchPath, patchContent);
+        try {
+          await this.gitClient.raw([
+            'apply',
+            '--3way',
+            '--whitespace=nowarn',
+            patchPath,
+          ]);
+        } catch (ex) {
+          // Hack alert: simple-git doesn't populate exception information from
+          // conflicts when we're using raw commands (which we need to since it
+          // doesn't support apply). Try to detect if Git gave us a bad exit code
+          // because of merge conflicts, which we explicitly want to allow.
+          if (!ex.message.includes('with conflicts')) {
+            throw ex;
+          }
+        }
+        const patchedFile = await fs.promises.readFile(filePath);
+        return patchedFile.toString();
+      } finally {
+        await this.gitClient.reset('hard');
+      }
     });
   }
 

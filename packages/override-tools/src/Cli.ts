@@ -9,11 +9,11 @@ import * as FileSearch from './FileSearch';
 import * as ManifestData from './ManifestData';
 import * as OverridePrompt from './OverridePrompt';
 
-import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as ora from 'ora';
 import * as path from 'path';
+import * as simplegit from 'simple-git/promise';
 import * as yargs from 'yargs';
 
 import Manifest, {ValidationError} from './Manifest';
@@ -82,6 +82,22 @@ doMain(() => {
           }),
         cmdArgv => autoUpgrade(cmdArgv.manifest, cmdArgv.version),
       )
+      .command(
+        'stage-upgrade <manifest>',
+        'Stages the base versions of all overrides before writing conflict-marker style merged files. This allows manual three-way merges using standard tooling.',
+        cmdYargs =>
+          cmdYargs.options({
+            manifest: {
+              type: 'string',
+              describe: 'Path to an override manifest',
+            },
+            version: {
+              type: 'string',
+              describe: 'Optional React Native version to check against',
+            },
+          }),
+        cmdArgv => stageUpgrade(cmdArgv.manifest, cmdArgv.version),
+      )
       .epilogue(
         'This tool allows managing JavaScript overrides for React Native Windows',
       )
@@ -117,7 +133,7 @@ async function validateManifest(manifestPath: string, version?: string) {
   const fullPath = path.resolve(manifestPath);
   const spinner = ora(`Verifying overrides in ${fullPath}`).start();
 
-  try {
+  return spinnerGuard(spinner, async () => {
     const manifest = await readManifest(manifestPath, version);
     const validationErrors = await manifest.validate();
 
@@ -128,12 +144,7 @@ async function validateManifest(manifestPath: string, version?: string) {
       printValidationErrors(validationErrors);
       process.exitCode = 1;
     }
-  } catch (ex) {
-    if (spinner.isSpinning) {
-      spinner.fail();
-    }
-    throw ex;
-  }
+  });
 }
 
 /**
@@ -160,7 +171,7 @@ async function addOverride(overridePath: string) {
   const overrideDetails = await OverridePrompt.askForDetails(relOverride);
 
   const spinner = ora('Adding override').start();
-  try {
+  return spinnerGuard(spinner, async () => {
     await manifest.addOverride(
       overrideDetails.type,
       relOverride,
@@ -171,11 +182,7 @@ async function addOverride(overridePath: string) {
     const manifestData = manifest.getAsData();
     await ManifestData.writeToFile(manifestData, manifestPath);
     spinner.succeed();
-  } catch (ex) {
-    spinner.fail();
-    console.error(chalk.red('Could not add override'));
-    throw ex;
-  }
+  });
 }
 
 /**
@@ -206,9 +213,28 @@ async function removeOverride(overridePath: string) {
  * out-of-date overrides.
  */
 async function autoUpgrade(manifestPath: string, version?: string) {
-  const spinner = ora('Merging overrides').start();
+  return doUpgrade(manifestPath, false /*stageUpgrade*/, version);
+}
 
-  try {
+/**
+ * Stages the base versions of all overrides before writing conflict-marker
+ * style merged files. This allows manual three-way merges using standard
+ * tooling.
+ */
+async function stageUpgrade(manifestPath: string, version?: string) {
+  return doUpgrade(manifestPath, true /*stageUpgrade*/, version);
+}
+
+/**
+ * Helper for autoUpgrade and stageUpgrade
+ */
+async function doUpgrade(
+  manifestPath: string,
+  stageUpgrade: boolean,
+  version?: string,
+) {
+  const spinner = ora('Merging overrides').start();
+  return spinnerGuard(spinner, async () => {
     const reactRepo = await GitReactFileRepository.createAndInit();
     const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(manifestPath));
     const upgrader = new OverrideUprgader(reactRepo, ovrRepo);
@@ -219,29 +245,75 @@ async function autoUpgrade(manifestPath: string, version?: string) {
       version,
     );
 
-    const upgradeReqs = (await manifest.validate())
+    const outOfDateOverrides = (await manifest.validate())
       .filter(err => err.type === 'outOfDate')
       .map(err => err.file)
-      .map(file => manifest.findOverride(file))
-      .map((entry: ManifestData.NonPlatformEntry) => ({
-        overrideEntry: entry,
-        newVersion: manifest.currentVersion(),
-      }));
+      .map(file => manifest.findOverride(file)) as Array<
+      ManifestData.NonPlatformEntry
+    >;
 
-    for (const upgraded of await upgrader.perform(upgradeReqs)) {
-      if (!upgraded.hasConflicts) {
+    if (stageUpgrade) {
+      await stageBaseFiles(outOfDateOverrides, manifestPath, reactRepo);
+    }
+
+    let i = 0;
+    let numConflicts = 0;
+    for (const override of outOfDateOverrides) {
+      spinner.text = `Merging overrides (${++i}/${outOfDateOverrides.length})`;
+
+      const upgraded = await upgrader.performUpgrade(
+        override,
+        manifest.currentVersion(),
+      );
+
+      if (stageUpgrade || !upgraded.hasConflicts) {
         await ovrRepo.setFileContents(upgraded.overrideFile, upgraded.content);
         manifest.markUpToDate(upgraded.overrideFile);
       }
+
+      numConflicts += upgraded.hasConflicts ? 1 : 0;
     }
 
-    //`${mergedFiles}/${numFiles} out-of-date overrides merged`
+    await ManifestData.writeToFile(manifest.getAsData(), manifestPath);
+
     spinner.succeed();
-  } catch (ex) {
-    if (spinner.isSpinning) {
-      spinner.fail();
-    }
-    throw ex;
+    printUpdateStats(outOfDateOverrides.length, numConflicts, stageUpgrade);
+  });
+}
+
+/**
+ * Attempts to stage the contents of the base files for the given overrides.
+ */
+async function stageBaseFiles(
+  overrides: Array<ManifestData.NonPlatformEntry>,
+  manifestPath: string,
+  reactRepo: VersionedReactFileRepository,
+) {
+  const manifestDir = path.dirname(manifestPath);
+  const localGit = simplegit(manifestDir);
+
+  for (const ovr of overrides) {
+    const base = await reactRepo.getFileContents(ovr.baseFile, ovr.baseVersion);
+    const ovrPath = path.join(manifestPath, ovr.file);
+    await fs.promises.writeFile(ovrPath, base);
+    await localGit.add(ovr.file);
+  }
+}
+
+/**
+ * Print statistics about an attempt to upgrade out-of-date-overrides.
+ */
+function printUpdateStats(total: number, conflicts: number, staged: boolean) {
+  const autoPatched = total - conflicts;
+  console.log(
+    chalk.greenBright(
+      `${autoPatched}/${total} out-of-date overrides automatically merged`,
+    ),
+  );
+  if (staged) {
+    console.log(
+      chalk.yellow(`${conflicts} overrides require manual resolution`),
+    );
   }
 }
 
@@ -296,10 +368,9 @@ function printValidationErrors(errors: Array<ValidationError>) {
   }
 
   if (outOfDateFiles.length > 0) {
-    // TODO: Instruct users to use 'yarn override upgrade' once that exists
-    console.error(
-      chalk.red('Found overrides whose original files have changed:'),
-    );
+    const errorMessage =
+      "Found overrides whose original files have changed. Upgrade oveerrides using 'yarn override auto-updgrade <override>' and 'yarn override stage-updgrade <override>':";
+    console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
@@ -353,6 +424,24 @@ async function readManifestUsingRepos(
   const reactRepo = bindVersion(versionedReactRepo, rnVersion);
 
   return new Manifest(data, ovrRepo, reactRepo);
+}
+
+/**
+ * Wraps the function in a try/catch, failing the spinner if an exception is
+ * thrown to allow unmangled output
+ */
+async function spinnerGuard<T>(
+  spinner: ora.Ora,
+  fn: () => Promise<T>,
+): Promise<T> {
+  try {
+    return await fn();
+  } catch (ex) {
+    if (spinner.isSpinning) {
+      spinner.fail();
+    }
+    throw ex;
+  }
 }
 
 /**
