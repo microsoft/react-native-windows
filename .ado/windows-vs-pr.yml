@@ -409,6 +409,54 @@ jobs:
         language: [cpp, cs]
         configuration: [Debug, Release]
         platform: [x86, x64, arm]
+        X86DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x86
+        X86DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x86
+        X86ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: x86
+        X86ReleaseCs:
+          language: cs
+          configuration: Release
+          platform: x86
+        X64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x64
+        X64DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x64
+        X64ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: x64
+        X64ReleaseCs:
+          language: cs
+          configuration: Release
+          platform: x64
+        ARMDebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: arm
+        ARMDebugCs:
+          language: cs
+          configuration: Debug
+          platform: arm
+        ARMReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: arm
+        ARMReleaseCs:
+          language: cs
+          configuration: Release
+          platform: arm
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
