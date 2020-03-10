@@ -467,7 +467,7 @@ jobs:
       - template: templates/react-native-init.yml
         parameters:
           language: $(language)
-          language: $(configuration)
+          configuration: $(configuration)
           platform: $(platform)
           version: 0.61.5
           vsComponents: $(VsComponents)
