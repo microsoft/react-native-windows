@@ -406,9 +406,6 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
-        language: [cpp, cs]
-        configuration: [Debug, Release]
-        platform: [x86, x64, arm]
         X86DebugCpp:
           language: cpp
           configuration: Debug
