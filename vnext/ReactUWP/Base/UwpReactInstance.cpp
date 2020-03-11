@@ -49,8 +49,8 @@
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
-#include <winrt/Windows.UI.Popups.h>
 #include <ReactWindowsCore/RedBoxHandler.h>
+#include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
 
 #include <tuple>
@@ -81,7 +81,8 @@ struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
     for (auto frame : info.Callstack) {
       ss << frame.Method << "\n" << frame.File << ":" << frame.Line << ":" << frame.Column << "\n";
     }
-    auto dlg = winrt::Windows::UI::Popups::MessageDialog(Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
+    auto dlg = winrt::Windows::UI::Popups::MessageDialog(
+        Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
     dlg.ShowAsync();
   }
   virtual bool isDevSupportEnabled() override {
