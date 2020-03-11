@@ -97,7 +97,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;
   facebook::react::NativeLoggingHook GetLoggingCallback() noexcept;
-  std::function<void(facebook::react::JSExceptionInfo &&)> GetJSExceptionCallback() noexcept;
+  std::shared_ptr<Mso::React::IRedBoxHandler> GetRedBoxHandler() noexcept;
   std::function<void()> GetWaitingForDebuggerCallback() noexcept;
   std::function<void()> GetDebuggerAttachCallback() noexcept;
 
