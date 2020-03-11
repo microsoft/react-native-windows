@@ -33,10 +33,10 @@ std::mutex g_pages_mutex;
 }
 
 /*static */ void FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
+  double duration = -1;
   {
     std::scoped_lock lock{s_tracker_mutex_};
     auto search = s_tracker_.find(cookie);
-    double duration = -1;
 
     if (search != s_tracker_.end()) {
       duration = std::chrono::duration_cast<std::chrono::duration<double>>(
