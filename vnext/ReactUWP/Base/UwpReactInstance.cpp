@@ -73,11 +73,11 @@ UwpReactInstance::UwpReactInstance(
 
 struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
   // Inherited via IRedBoxHandler
-  virtual void showNewJSError(Mso::React::JSExceptionInfo &&info, Mso::React::JSExceptionType) override {
+  virtual void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType) override {
     std::stringstream ss;
 
     ss << "A better redbox experience is provided by Microsoft.ReactNative - Consider moving off ReactUwp to Microsoft.ReactNative today!\n\n";
-    ss << info.ExceptionMessage << "\n\n";
+    ss << info.Message << "\n\n";
     for (auto frame : info.Callstack) {
       ss << frame.Method << "\n" << frame.File << ":" << frame.Line << ":" << frame.Column << "\n";
     }
@@ -88,7 +88,7 @@ struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
   virtual bool isDevSupportEnabled() override {
     return true;
   }
-  virtual void updateJSError(Mso::React::JSExceptionInfo &&) override {}
+  virtual void updateError(Mso::React::ErrorInfo &&) override {}
   virtual void dismissRedbox() override {}
 };
 

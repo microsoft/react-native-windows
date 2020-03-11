@@ -7,28 +7,29 @@
 namespace Mso {
 namespace React {
 
-enum class JSExceptionType : int32_t {
-  Fatal = 0,
-  Soft = 1,
+enum class ErrorType : int32_t {
+  JSFatal = 0, // A JS Exception was thrown or otherwise fatal error
+  JSSoft = 1, // An error coming from JS that isn't fatal, such as console.error
+  Native = 2,
 };
 
-struct JSStackFrameInfo {
+struct ErrorFrameInfo {
   std::string File;
   std::string Method;
   int Line;
   int Column;
 };
 
-struct JSExceptionInfo {
-  std::string ExceptionMessage;
-  uint32_t ExceptionId;
-  std::vector<JSStackFrameInfo> Callstack;
+struct ErrorInfo {
+  std::string Message;
+  uint32_t Id;
+  std::vector<ErrorFrameInfo> Callstack;
 };
 
 struct IRedBoxHandler {
-  virtual void showNewJSError(JSExceptionInfo &&, JSExceptionType) = 0;
+  virtual void showNewError(ErrorInfo &&, ErrorType) = 0;
   virtual bool isDevSupportEnabled() = 0;
-  virtual void updateJSError(JSExceptionInfo &&) = 0;
+  virtual void updateError(ErrorInfo &&) = 0;
   virtual void dismissRedbox() = 0;
 };
 

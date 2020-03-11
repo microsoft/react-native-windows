@@ -164,7 +164,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
-          devSettings->redboxHandler = std::move(GetRedBoxHandler());
+          m_redboxHandler = devSettings->redboxHandler = std::move(GetRedBoxHandler());
           devSettings->useDirectDebugger = m_options.DeveloperSettings.UseDirectDebugger;
           devSettings->debuggerBreakOnNextLine = m_options.DeveloperSettings.DebuggerBreakOnNextLine;
           devSettings->debuggerPort = m_options.DeveloperSettings.DebuggerPort;
@@ -390,11 +390,6 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
   return m_state;
 }
 
-std::string ReactInstanceWin::LastErrorMessage() const noexcept {
-  std::lock_guard lock{m_mutex};
-  return m_errorMessage;
-}
-
 void ReactInstanceWin::InitJSMessageThread() noexcept {
   // Use the explicit JSQueue if it is provided.
   const auto &properties = m_options.Properties;
@@ -524,56 +519,15 @@ std::function<void(std::string)> ReactInstanceWin::GetErrorCallback() noexcept {
   return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnErrorWithMessage);
 }
 
-static std::string PrettyError(const std::string &error) noexcept {
-  std::string prettyError = error;
-  if (prettyError.length() > 0 && prettyError[0] == '{') {
-    // if starting with {, assume JSONy
-
-    // Replace escape characters with actuals
-    size_t pos = prettyError.find('\\');
-    while (pos != std::wstring::npos && pos + 2 <= prettyError.length()) {
-      if (prettyError[pos + 1] == 'n') {
-        prettyError.replace(pos, 2, "\r\n", 2);
-      } else if (prettyError[pos + 1] == 'b') {
-        prettyError.replace(pos, 2, "\b", 2);
-      } else if (prettyError[pos + 1] == 't') {
-        prettyError.replace(pos, 2, "\t", 2);
-      } else if (prettyError[pos + 1] == 'u' && pos + 6 <= prettyError.length()) {
-        // Convert 4 hex digits
-        auto hexVal = [&](int c) -> uint16_t {
-          return uint16_t(
-              c >= '0' && c <= '9' ? c - '0'
-                                   : c >= 'a' && c <= 'f' ? c - 'a' + 10 : c >= 'A' && c <= 'F' ? c - 'A' + 10 : 0);
-        };
-        wchar_t replWide = 0;
-        replWide += hexVal(prettyError[pos + 2]) << 12;
-        replWide += hexVal(prettyError[pos + 3]) << 8;
-        replWide += hexVal(prettyError[pos + 4]) << 4;
-        replWide += hexVal(prettyError[pos + 5]);
-        std::string repl = Microsoft::Common::Unicode::Utf16ToUtf8(&replWide, 1);
-
-        prettyError.replace(pos, 6, repl);
-      }
-
-      pos = prettyError.find('\\', pos + 2);
-    }
-  }
-
-  return prettyError;
-}
-
 void ReactInstanceWin::OnErrorWithMessage(const std::string &errorMessage) noexcept {
   m_state = ReactInstanceState::HasError;
 
-  // Append new error message onto others
-  if (!m_errorMessage.empty())
-    m_errorMessage += "\n";
-  m_errorMessage += " -- ";
-  m_errorMessage += PrettyError(errorMessage);
-
-  OutputDebugStringA("ReactInstance Error Hit ...\n");
-  OutputDebugStringA(m_errorMessage.c_str());
-  OutputDebugStringA("\n");
+  if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+    ErrorInfo errorInfo;
+    errorInfo.Message = errorMessage;
+    errorInfo.Id = 0;
+    m_redboxHandler->showNewError(std::move(errorInfo), ErrorType::Native);
+  }
 
   OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
   m_updateUI();

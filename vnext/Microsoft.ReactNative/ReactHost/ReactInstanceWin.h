@@ -55,7 +55,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
  public: // IReactInstance
   const ReactOptions &Options() const noexcept override;
   ReactInstanceState State() const noexcept override;
-  std::string LastErrorMessage() const noexcept override;
 
  public: // IReactInstanceInternal
   Mso::Future<void> Destroy() noexcept override;
@@ -145,13 +144,13 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::InstanceWrapper>> m_instanceWrapper{Queue(), m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::Instance>> m_instance{Queue(), m_mutex};
   std::atomic<ReactInstanceState> m_state{ReactInstanceState::Loading};
-  std::string m_errorMessage;
 
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIThread;
 
   std::shared_ptr<react::uwp::IReactInstance> m_legacyReactInstance;
   std::shared_ptr<react::uwp::DeviceInfo> m_deviceInfo;
   std::shared_ptr<facebook::react::AppState> m_appState;
+  std::shared_ptr<IRedBoxHandler> m_redboxHandler;
   std::shared_ptr<react::windows::AppTheme> m_appTheme;
   std::pair<std::string, bool> m_i18nInfo{};
   std::string m_bundleRootPath;
