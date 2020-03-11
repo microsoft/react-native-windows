@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Use redbox for native errors",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "490beecb0255a8805f986b674ddb3d479df67b69",
+  "dependentChangeType": "patch",
+  "date": "2020-03-11T23:28:41.846Z"
+}
