@@ -175,7 +175,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     NULL,                           // lpOptional
     0,                              // dwOptionalLength
     0,                              // dwTotalLength
-    0                               // dwContext
+    (DWORD_PTR)this                               // dwContext
   );
   if (!fStatus)
   {
@@ -270,67 +270,92 @@ void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
   switch (status)
   {
   case WINHTTP_CALLBACK_STATUS_RESOLVING_NAME:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_NAME_RESOLVED:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CONNECTING_TO_SERVER:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CONNECTED_TO_SERVER:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SENDING_REQUEST:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_REQUEST_SENT:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_RECEIVING_RESPONSE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_RESPONSE_RECEIVED:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CLOSING_CONNECTION:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CONNECTION_CLOSED:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_HANDLE_CREATED:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_HANDLE_CLOSING:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_DETECTING_PROXY:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_REDIRECT:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_INTERMEDIATE_RESPONSE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SECURE_FAILURE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_HEADERS_AVAILABLE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_DATA_AVAILABLE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_READ_COMPLETE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_WRITE_COMPLETE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
-    //m_errorStatus = GetLastError();
-    //if (s_errorHandler)
-    //{
-    //  s_errorHandler({ "REQUEST_ERROR", ErrorType::None });
-    //}
-    GetLastError();
+    pThis->m_errorStatus = GetLastError();
+    if (pThis->m_errorHandler)
+      pThis->m_errorHandler({ "REQUEST_ERROR", ErrorType::None });
 
     return;
   case WINHTTP_CALLBACK_STATUS_SENDREQUEST_COMPLETE:
+    GetLastError();
+
     break;
   case WINHTTP_CALLBACK_STATUS_GETPROXYFORURL_COMPLETE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CLOSE_COMPLETE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SHUTDOWN_COMPLETE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SETTINGS_WRITE_COMPLETE:
+    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SETTINGS_READ_COMPLETE:
+    GetLastError();
     break;
   default:
+    GetLastError();
     break;
   }
 }
