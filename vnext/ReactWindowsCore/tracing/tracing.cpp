@@ -25,7 +25,7 @@ namespace fbsystrace {
 std::mutex g_pages_mutex;
 /*static*/ void FbSystraceAsyncFlow::begin(uint64_t tag, const char *name, int cookie) {
   {
-    std::lock_guard<std::mutex> guard(s_tracker_mutex_);
+    std::scoped_lock lock{s_tracker_mutex_};
     s_tracker_[cookie] = std::chrono::high_resolution_clock::now();
   }
 
@@ -33,17 +33,19 @@ std::mutex g_pages_mutex;
 }
 
 /*static */ void FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
-  std::lock_guard<std::mutex> guard(s_tracker_mutex_);
-  auto search = s_tracker_.find(cookie);
   double duration = -1;
+  {
+    std::scoped_lock lock{s_tracker_mutex_};
+    auto search = s_tracker_.find(cookie);
 
-  if (search != s_tracker_.end()) {
-    duration = std::chrono::duration_cast<std::chrono::duration<double>>(
-                   std::chrono::high_resolution_clock::now() - search->second)
-                   .count();
+    if (search != s_tracker_.end()) {
+      duration = std::chrono::duration_cast<std::chrono::duration<double>>(
+                     std::chrono::high_resolution_clock::now() - search->second)
+                     .count();
 
-    // Flow has ended. Clear the cookie tracker.
-    s_tracker_.erase(cookie);
+      // Flow has ended. Clear the cookie tracker.
+      s_tracker_.erase(cookie);
+    }
   }
 
   EventWriteNATIVE_ASYNC_END_FLOW(tag, name, cookie, duration);
