@@ -18,7 +18,8 @@ namespace Microsoft::React
 /*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
   if (true) //TODO: Feature-gate this.
   {
-    return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(urlString));
+    //return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(urlString));
+    return unique_ptr<IWebSocketResource>(new WinRTWebSocketResource(urlString));
   }
   else
   {

@@ -2,48 +2,6 @@
 // Licensed under the MIT License.
 
 // clang-format off
-#pragma region CPP_WINRTLESS_EXCEPTIONS_H
-#include "winrt/base.h"
-
-// #define DEFAULT_CPPWINRT_EXCEPTIONS
-#ifndef DEFAULT_CPPWINRT_EXCEPTIONS
-
-// Adapted from winrt/base.h await_adapter
-template <typename Async>
-struct lessthrow_await_adapter {
-  Async const& async;
-
-  bool await_ready() const {
-    return async.Status() == winrt::Windows::Foundation::AsyncStatus::Completed;
-  }
-
-  void await_suspend(std::experimental::coroutine_handle<> handle) const {
-    auto context = winrt::capture<winrt::impl::IContextCallback>(WINRT_CoGetObjectContext);
-
-    async.Completed([handle, context = std::move(context)](auto const&, winrt::Windows::Foundation::AsyncStatus) {
-      winrt::impl::com_callback_args args{};
-      args.data = handle.address();
-
-      auto callback = [](winrt::impl::com_callback_args* args) noexcept->int32_t {
-        std::experimental::coroutine_handle<>::from_address(args->data)();
-        return S_OK;
-      };
-
-      winrt::check_hresult(context->ContextCallback(
-        callback, &args, winrt::guid_of<winrt::impl::ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
-    });
-  }
-
-  void await_resume() const {
-    // Don't check for a failure result here
-    return;
-  }
-};
-#endif
-#pragma endregion CPP_WINRTLESS_EXCEPTIONS_H
-
-
-// clang-format off
 #include "WinRTWebSocketResource.h"
 
 #include <winrt/Windows.Security.Cryptography.h>
@@ -71,20 +29,6 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Storage::Streams::DataReader;
 using winrt::Windows::Storage::Streams::DataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
-
-//TODO: Relocate
-static std::future<hresult> ConnectAsync(
-  MessageWebSocket& socket,
-  Uri& uri)
-{
-  auto async = socket.ConnectAsync(uri);
-#ifdef DEFAULT_CPPWINRT_EXCEPTIONS
-  co_await async;
-#else
-  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
-#endif
-  co_return async.ErrorCode();
-}
 
 namespace Microsoft::React
 {
@@ -154,12 +98,13 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   winrt::hresult hr = S_OK;
   try
   {
-    auto async = ConnectAsync(m_socket, m_uri);
-    hr = async.get();
-    if (SUCCEEDED(hr))
+    //TODO: Can we use co_await targetting Windows 8?
+    //TODO: Determine args types. Move to a separate function? (i.e. OnConnected).
+    m_socket.ConnectAsync(m_uri).Completed([this](auto&&, auto&&)
     {
-      m_connectHandler();
-    }
+      this->m_connectHandler();
+    });
+    m_connectHandler();
   }
   catch (hresult_error const& e)
   {
