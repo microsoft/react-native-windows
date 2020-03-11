@@ -16,10 +16,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
       Mso::WeakPtr<IReactHost> weakReactHost,
       Mso::Functor<void(uint32_t)> &&onClosedCallback,
-      JSExceptionInfo &&exceptionInfo)
+      JSExceptionInfo &&exceptionInfo) noexcept
       : m_weakReactHost(std::move(weakReactHost)),
         m_onClosedCallback(std::move(onClosedCallback)),
-        m_exceptionInfo(std::move(exceptionInfo)) noexcept {}
+        m_exceptionInfo(std::move(exceptionInfo)) {}
 
   void Dismiss() noexcept {
     if (m_popup) {
@@ -186,8 +186,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedBoxHandler {
   RedBoxHandler(
       Mso::WeakPtr<Mso::React::IReactHost> weakReactHost,
-      std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue) // Should uiMessageQueue be a weakRef too?
-      : m_weakReactHost(std::move(weakReactHost)), m_wkUIMessageQueue(std::move(uiMessageQueue)) noexcept {}
+      std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue) noexcept
+      : m_weakReactHost(std::move(weakReactHost)), m_wkUIMessageQueue(std::move(uiMessageQueue)) {}
 
   ~RedBoxHandler() {
     // Hide any currently showing redboxes

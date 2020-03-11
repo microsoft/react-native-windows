@@ -484,7 +484,7 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
     return m_options.RedBoxHandler;
   } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
     auto localWkReactHost = m_weakReactHost;
-    return CreateRedBoxHandler(m_weakReactHost, m_uiMessageThread.LoadWithLock());
+    return CreateRedBoxHandler(std::move(localWkReactHost), m_uiMessageThread.LoadWithLock());
   } else {
     return {};
   }
