@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2020 16:18:00 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.52",
+      "version": "0.61.0-beta.52",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash in timers during instance shutdown, and in systrace",
+            "author": "acoates@microsoft.com",
+            "commit": "d8cf799a2df255fd3c590ba9df5319368cc6f682"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Mar 2020 21:51:40 GMT",
       "tag": "react-native-windows_v0.61.0-beta.51",
       "version": "0.61.0-beta.51",
