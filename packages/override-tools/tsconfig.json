@@ -4,12 +4,12 @@
         "target": "es6",
         "sourceMap": true,
         "noImplicitAny": true,
-        "preserveConstEnums": true, 
+        "preserveConstEnums": true,
         "moduleResolution": "node",
         "noUnusedLocals": true,
         "skipLibCheck": true,
         "rootDirs": ["src"],
     },
     "include": ["src"],
-    "exclude": ["node_modules", "../../node_modules"]
+    "exclude": ["node_modules"]
 }

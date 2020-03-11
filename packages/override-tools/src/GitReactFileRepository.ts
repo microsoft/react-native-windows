@@ -69,6 +69,10 @@ export default class GitReactFileRepository
     });
   }
 
+  /**
+   * Generate a Git-style patch to transform the given file into the given
+   * content.
+   */
   async generatePatch(
     filename: string,
     reactNativeVersion: string,
@@ -91,7 +95,11 @@ export default class GitReactFileRepository
     });
   }
 
-  async applyPatchToFile(
+  /**
+   * Apply a patch to the given file, returning the merged result, which may
+   * include conflict markers. The underlying file is not mutated.
+   */
+  async getPatchedFile(
     filename: string,
     reactNativeVersion: string,
     patchContent: string,

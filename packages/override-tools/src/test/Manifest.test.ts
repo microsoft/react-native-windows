@@ -6,6 +6,7 @@
  */
 
 import * as ManifestData from '../ManifestData';
+import * as _ from 'lodash';
 import Manifest, {ValidationError} from '../Manifest';
 
 import {
@@ -134,7 +135,7 @@ test('FullManifestValid', async () => {
 });
 
 test('OutOfDateFile', async () => {
-  const ourBaseFiles = reactFiles;
+  const ourBaseFiles = _.cloneDeep(reactFiles);
   ourBaseFiles[0].content = 'Different than before';
   const ourReactRepo = new MockReactFileRepository(ourBaseFiles);
 
@@ -149,7 +150,7 @@ test('OutOfDateFile', async () => {
 });
 
 test('BaseFileNotFound', async () => {
-  const ourManifestData = testManifestData;
+  const ourManifestData = _.cloneDeep(testManifestData);
   const ovr = ourManifestData.overrides[0] as ManifestData.PatchEntry;
   ovr.baseFile = 'foo/bar.js';
 
@@ -375,4 +376,69 @@ test('DataMutateDoesntAffectManifest', async () => {
   });
 
   expect(manifest.getAsData().overrides.length).toBe(0);
+});
+
+test('FindOverrideNoneExists', async () => {
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
+  expect(manifest.findOverride('foo')).toBe(null);
+});
+
+test('FindOverrideDoesExist', async () => {
+  const manifest = new Manifest(
+    {
+      overrides: [
+        {
+          type: 'platform',
+          file: 'Foo.js',
+        },
+      ],
+    },
+    ovrRepo,
+    reactRepo,
+  );
+  // @ts-ignore no typings for toStrictEqual
+  expect(manifest.findOverride('Foo.js')).toStrictEqual({
+    type: 'platform',
+    file: 'Foo.js',
+  });
+});
+
+test('MarkUpToDatePlatform', async () => {
+  const manifest = new Manifest(
+    {
+      overrides: [
+        {
+          type: 'platform',
+          file: 'Foo.js',
+        },
+      ],
+    },
+    ovrRepo,
+    reactRepo,
+  );
+
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.markUpToDate('Foo.js')).rejects.toThrow();
+});
+
+test('MarkUpToDateNotFound', async () => {
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.markUpToDate('Foo.js')).rejects.toThrow();
+});
+
+test('MarkUpToDateOutdated', async () => {
+  const ourTestData = _.cloneDeep(testManifestData);
+  const ovr = ourTestData.overrides[0] as ManifestData.NonPlatformEntry;
+  ovr.baseHash = '1234';
+  ovr.baseVersion = '0.0.1';
+
+  const manifest = new Manifest(ourTestData, ovrRepo, reactRepo);
+  await manifest.markUpToDate(ovr.file);
+
+  const updated = manifest.findOverride(
+    ovr.file,
+  ) as ManifestData.NonPlatformEntry;
+  expect(updated.baseVersion).toBe(reactRepo.getVersion());
+  expect(updated.baseHash).toBe(Manifest.hashContent(reactFiles[0].content));
 });

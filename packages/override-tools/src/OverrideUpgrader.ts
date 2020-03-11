@@ -27,7 +27,7 @@ export default class OverrideUpgrader {
     this.ovrRepo = ovrRepo;
   }
 
-  async performUpgrade(
+  async getUpgraded(
     override: NonPlatformEntry,
     newVersion: string,
   ): Promise<UpgradeResult> {
@@ -49,7 +49,7 @@ export default class OverrideUpgrader {
       ovrContent,
     );
 
-    const patched = (await this.reactRepo.applyPatchToFile(
+    const patched = (await this.reactRepo.getPatchedFile(
       override.baseFile,
       newVersion,
       ovrAsPatch,
