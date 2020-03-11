@@ -85,7 +85,7 @@ jobs:
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
-          otherConsoleOptions: /Framework:.NETFramework,Version=v5.0
+          otherConsoleOptions: /Framework:.NETCore,Version=v5.0
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
