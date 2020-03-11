@@ -215,8 +215,9 @@ void ReactInstanceWin::Initialize() noexcept {
               case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
-                break;
 #endif
+                break;
+
               case react::uwp::JSIEngine::V8:
 #if defined(USE_V8)
                 preparedScriptStore =
@@ -224,8 +225,9 @@ void ReactInstanceWin::Initialize() noexcept {
 
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                     devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-                break;
 #endif
+                break;
+
               case react::uwp::JSIEngine::Chakra:
                 if (m_options.LegacySettings.EnableByteCodeCaching ||
                     !m_options.LegacySettings.ByteCodeFileUri.empty()) {

@@ -50,7 +50,14 @@ struct ReactInstanceSettings {
   std::string BundleRootPath;
   facebook::react::NativeLoggingHook LoggingCallback;
   std::function<void(facebook::react::JSExceptionInfo &&)> JsExceptionCallback;
+
+#if defined(USE_HERMES)
+  JSIEngine jsiEngine{JSIEngine::Hermes};
+#elif defined(USE_V8)
+  JSIEngine jsiEngine{JSIEngine::V8};
+#else
   JSIEngine jsiEngine{JSIEngine::Chakra};
+#endif
 };
 
 struct IReactInstance {
