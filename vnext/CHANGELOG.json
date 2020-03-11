@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2020 18:14:12 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.53",
+      "version": "0.61.0-beta.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Code review feedback",
+            "author": "acoates@microsoft.com",
+            "commit": "717f3150913ebde8781bc08b948b5aa2daa1c965"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2020 16:18:00 GMT",
       "tag": "react-native-windows_v0.61.0-beta.52",
       "version": "0.61.0-beta.52",

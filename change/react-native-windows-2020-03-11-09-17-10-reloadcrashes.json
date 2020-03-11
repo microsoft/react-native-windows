@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Code review feedback",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "717f3150913ebde8781bc08b948b5aa2daa1c965",
-  "dependentChangeType": "patch",
-  "date": "2020-03-11T16:17:10.458Z"
-}
