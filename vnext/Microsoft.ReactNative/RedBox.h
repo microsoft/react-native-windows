@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 #pragma once
 #include <DevSettings.h>
-#include "RedBoxHandler.h"
 #include "ReactHost/React.h"
+#include "RedBoxHandler.h"
 
 namespace Mso::React {
 

@@ -37,8 +37,7 @@ int RetrieveIntFromMap(const folly::dynamic &map, const std::string &key) noexce
   return -1;
 }
 
-Mso::React::JSExceptionInfo CreateExceptionInfo(
-    const folly::dynamic &args) noexcept {
+Mso::React::JSExceptionInfo CreateExceptionInfo(const folly::dynamic &args) noexcept {
   // Parameter args is a dynamic array containing 3 objects:
   // 1. an exception message string.
   // 2. an array containing stack information.
@@ -66,9 +65,9 @@ Mso::React::JSExceptionInfo CreateExceptionInfo(
     assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
     jsExceptionInfo.Callstack.push_back(Mso::React::JSStackFrameInfo{RetrieveStringFromMap(stackFrame, "file"),
-                                                         RetrieveStringFromMap(stackFrame, "methodName"),
-                                                         RetrieveIntFromMap(stackFrame, "lineNumber"),
-                                                         RetrieveIntFromMap(stackFrame, "column")});
+                                                                     RetrieveStringFromMap(stackFrame, "methodName"),
+                                                                     RetrieveIntFromMap(stackFrame, "lineNumber"),
+                                                                     RetrieveIntFromMap(stackFrame, "column")});
   }
 
   return jsExceptionInfo;
@@ -88,39 +87,40 @@ std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants() {
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods() {
-  return {Method(
-              "reportFatalException",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+  return {
+      Method(
+          "reportFatalException",
+          [this](folly::dynamic args) noexcept {
+            if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
               m_redboxHandler->showNewJSError(std::move(CreateExceptionInfo(args)), Mso::React::JSExceptionType::Fatal);
-                }
-                /*
-                // TODO - fatal errors should throw if there is no redbox handler
-                else {
-                  throw Exception();
-                } */
-              }),
+            }
+            /*
+            // TODO - fatal errors should throw if there is no redbox handler
+            else {
+              throw Exception();
+            } */
+          }),
 
-          Method(
-              "reportSoftException",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+      Method(
+          "reportSoftException",
+          [this](folly::dynamic args) noexcept {
+            if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
               m_redboxHandler->showNewJSError(std::move(CreateExceptionInfo(args)), Mso::React::JSExceptionType::Soft);
-                }
-              }),
+            }
+          }),
 
-          Method(
-              "updateExceptionMessage",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+      Method(
+          "updateExceptionMessage",
+          [this](folly::dynamic args) noexcept {
+            if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
               m_redboxHandler->updateJSError(std::move(CreateExceptionInfo(args)));
-                }
-              }),
+            }
+          }),
 
-          Method("dismissRedbox", [this](folly::dynamic /*args*/) noexcept {
-            if (m_redboxHandler)
-              m_redboxHandler->dismissRedbox();
-          })};
+      Method("dismissRedbox", [this](folly::dynamic /*args*/) noexcept {
+        if (m_redboxHandler)
+          m_redboxHandler->dismissRedbox();
+      })};
 }
 
 } // namespace react

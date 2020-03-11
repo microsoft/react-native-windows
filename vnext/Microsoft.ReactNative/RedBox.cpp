@@ -68,15 +68,15 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_dismissButton = m_redboxContent.FindName(L"DismissButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
     m_reloadButton = m_redboxContent.FindName(L"ReloadButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
 
-    m_tokenDismiss =
-        m_dismissButton.Click([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
-                                  winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept { Dismiss(); });
+    m_tokenDismiss = m_dismissButton.Click([&](
+        winrt::Windows::Foundation::IInspectable const & /*sender*/,
+        winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept { Dismiss(); });
 
-    m_tokenReload = m_reloadButton.Click(
-        [&](auto const & /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept {
-          Dismiss();
-          Reload();
-        });
+    m_tokenReload = m_reloadButton.Click([&](
+        auto const & /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const & /*args*/) noexcept {
+      Dismiss();
+      Reload();
+    });
 
     PopulateFrameStackUI();
     UpdateErorrMessageUI();
@@ -93,9 +93,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           WindowSizeChanged(args);
         });
 
-    m_tokenClosed =
-        m_popup.Closed([&](auto const & /*sender*/,
-                           winrt::Windows::Foundation::IInspectable const & /*args*/) noexcept { OnPopupClosed(); });
+    m_tokenClosed = m_popup.Closed([&](
+        auto const & /*sender*/, winrt::Windows::Foundation::IInspectable const & /*args*/) noexcept {
+      OnPopupClosed();
+    });
 
     m_popup.Child(m_redboxContent);
     m_popup.IsOpen(true);
@@ -169,7 +170,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
 /*
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
-*/
+ */
 struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedBoxHandler {
   RedBoxHandler(
       Mso::WeakPtr<Mso::React::IReactHost> weakReactHost,
@@ -226,7 +227,7 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
     }
   }
 
-private:
+ private:
   // When notified by a redbox that its been dismisssed
   void onDismissedCallback(uint32_t id) {
     // Save a local ref, so if we are removing the last redbox which could hold the last ref to the RedBoxHandler

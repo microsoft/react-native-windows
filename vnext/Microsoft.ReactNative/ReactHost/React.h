@@ -8,9 +8,9 @@
 #include <unordered_set>
 #include <vector>
 
-#include "RedBoxHandler.h"
 #include "JSBundle.h"
 #include "PropertyBag.h"
+#include "RedBoxHandler.h"
 #include "dispatchQueue/dispatchQueue.h"
 #include "errorCode/errorCode.h"
 #include "future/future.h"
