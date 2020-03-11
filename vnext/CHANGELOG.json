@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2020 19:32:20 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.54",
+      "version": "0.61.0-beta.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fully implement ExceptionsManagerModule",
+            "author": "acoates@microsoft.com",
+            "commit": "aed7213868d69d2fb09a4746308a32d62a274cd6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2020 18:14:12 GMT",
       "tag": "react-native-windows_v0.61.0-beta.53",
       "version": "0.61.0-beta.53",

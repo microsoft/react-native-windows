@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fully implement ExceptionsManagerModule",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "aed7213868d69d2fb09a4746308a32d62a274cd6",
-  "dependentChangeType": "patch",
-  "date": "2020-03-11T03:58:42.435Z"
-}
