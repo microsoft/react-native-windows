@@ -129,6 +129,57 @@ TEST_CLASS (JSValueTest) {
     TestCheck(nestedArr[6] == 4.5);
   }
 
+  TEST_METHOD(TestJSValueObject1) {
+    JSValue value = JSValueObject{{"prop1", 1}, {"prop2", "Two"}};
+    TestCheck(value.Type() == JSValueType::Object);
+    TestCheck(value.PropertyCount() == 2);
+    TestCheck(value["prop1"] == 1);
+    TestCheck(value["prop2"] == "Two");
+    TestCheck(value.AsObject()["prop1"] == 1);
+    TestCheck(value.AsObject()["prop2"] == "Two");
+  }
+
+  TEST_METHOD(TestJSValueObject2) {
+    JSValueObject obj;
+    obj["prop1"] = 1;
+    obj["prop2"] = "Two";
+    JSValue value = std::move(obj);
+    TestCheck(value.Type() == JSValueType::Object);
+    TestCheck(value.PropertyCount() == 2);
+    TestCheck(value["prop1"] == 1);
+    TestCheck(value["prop2"] == "Two");
+    TestCheck(value.AsObject()["prop1"] == 1);
+    TestCheck(value.AsObject()["prop2"] == "Two");
+  }
+
+  TEST_METHOD(TestJSValueArray1) {
+    JSValue value = JSValueArray{1, "Two", 3.3, true, nullptr};
+    TestCheck(value.Type() == JSValueType::Array);
+    TestCheck(value.ItemCount() == 5);
+    TestCheck(value[0] == 1);
+    TestCheck(value[1] == "Two");
+    TestCheck(value[2] == 3.3);
+    TestCheck(value[3] == true);
+    TestCheck(value[4] == nullptr);
+  }
+
+  TEST_METHOD(TestJSValueArray2) {
+    JSValueArray arr(5);
+    arr[0] = 1;
+    arr[1] = "Two";
+    arr[2] = 3.3;
+    arr[3] = true;
+    arr[4] = nullptr;
+    JSValue value = std::move(arr);
+    TestCheck(value.Type() == JSValueType::Array);
+    TestCheck(value.ItemCount() == 5);
+    TestCheck(value[0] == 1);
+    TestCheck(value[1] == "Two");
+    TestCheck(value[2] == 3.3);
+    TestCheck(value[3] == true);
+    TestCheck(value[4] == nullptr);
+  }
+
   void CheckConversion(
       JSValue const &value, char const *strVal, bool boolVal, int64_t intVal, double doubleVal) noexcept {
     TestCheckEqual(strVal, value.AsString());
