@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Fix JSValueObject operator[]",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "7cd87be7f031f025b87eb757388fab7adfffe49f",
+  "dependentChangeType": "patch",
+  "date": "2020-03-11T19:43:38.816Z"
+}
