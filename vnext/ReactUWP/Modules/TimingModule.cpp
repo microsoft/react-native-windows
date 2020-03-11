@@ -76,6 +76,7 @@ Timing::Timing(TimingModule *parent) : m_parent(parent) {}
 
 void Timing::Disconnect() {
   m_parent = nullptr;
+  m_rendering.revoke();
 }
 
 std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
@@ -85,7 +86,7 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
   return m_parent->getInstance();
 }
 
-void Timing::OnRendering(const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+void Timing::OnRendering() {
   std::vector<int64_t> readyTimers;
   auto now = winrt::DateTime::clock::now();
 
@@ -132,8 +133,14 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
 
   if (m_timerQueue.IsEmpty()) {
     m_rendering.revoke();
-    m_rendering =
-        winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering(winrt::auto_revoke, {this, &Timing::OnRendering});
+    m_rendering = winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering(
+        winrt::auto_revoke,
+        [wkThis = std::weak_ptr(this->shared_from_this())](
+            const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+          if (auto pThis = wkThis.lock()) {
+            pThis->OnRendering();
+          }
+        });
   }
 
   // Convert double duration in ms to TimeSpan
