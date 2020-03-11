@@ -12,11 +12,18 @@
 namespace Mso::React {
 
 struct RedBox : public std::enable_shared_from_this<RedBox> {
-  RedBox(Mso::WeakPtr<IReactHost> weakReactHost, std::function<void(uint32_t)> &&onClosedCallback)
-      : m_weakReactHost(std::move(weakReactHost)), m_onClosedCallback(onClosedCallback) {}
+  RedBox(
+      Mso::WeakPtr<IReactHost> weakReactHost,
+      std::function<void(uint32_t)> &&onClosedCallback,
+      const JSExceptionInfo &&exceptionInfo)
+      : m_weakReactHost(std::move(weakReactHost)),
+        m_onClosedCallback(onClosedCallback),
+        m_exceptionInfo(exceptionInfo) {}
 
   void Dismiss() noexcept {
-    m_popup.IsOpen(false);
+    if (m_popup) {
+      m_popup.IsOpen(false);
+    }
   }
 
   void Reload() noexcept {
@@ -93,9 +100,11 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           WindowSizeChanged(args);
         });
 
-    m_tokenClosed = m_popup.Closed([&](
+    m_tokenClosed = m_popup.Closed([wkThis = std::weak_ptr(shared_from_this())](
         auto const & /*sender*/, winrt::Windows::Foundation::IInspectable const & /*args*/) noexcept {
-      OnPopupClosed();
+      if (auto pthis = wkThis.lock()) {
+        pthis->OnPopupClosed();
+      }
     });
 
     m_popup.Child(m_redboxContent);
@@ -103,7 +112,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   }
 
   void UpdateJSError(const JSExceptionInfo &&info) {
-    ExceptionInfo = std::move(info);
+    m_exceptionInfo = std::move(info);
     if (m_showing) {
       PopulateFrameStackUI();
     }
@@ -115,22 +124,23 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_reloadButton.Click(m_tokenReload);
     winrt::Windows::UI::Xaml::Window::Current().SizeChanged(m_tokenSizeChanged);
     m_popup.Closed(m_tokenClosed);
-    m_onClosedCallback(ExceptionInfo.ExceptionId);
+    m_onClosedCallback(GetId());
   }
 
-  JSExceptionInfo ExceptionInfo;
-  JSExceptionType ExceptionType;
+  uint32_t GetId() const noexcept {
+    return m_exceptionInfo.ExceptionId;
+  }
 
  private:
   void UpdateErorrMessageUI() {
     std::regex colorsreg("\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     m_errorMessageText.Text(
-        Microsoft::Common::Unicode::Utf8ToUtf16(std::regex_replace(ExceptionInfo.ExceptionMessage, colorsreg, "")));
+        Microsoft::Common::Unicode::Utf8ToUtf16(std::regex_replace(m_exceptionInfo.ExceptionMessage, colorsreg, "")));
   }
 
   void PopulateFrameStackUI() {
     m_stackPanel.Children().Clear();
-    for (const auto frame : ExceptionInfo.Callstack) {
+    for (const auto frame : m_exceptionInfo.Callstack) {
       const winrt::hstring xamlFrameString =
           L"<StackPanel Margin='0,5,0,5'"
           L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
@@ -165,6 +175,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   winrt::event_token m_tokenDismiss;
   winrt::event_token m_tokenReload;
   winrt::event_token m_tokenSizeChanged;
+  JSExceptionInfo m_exceptionInfo;
   Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
 
@@ -177,11 +188,31 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
       std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue) // Should uiMessageQueue be a weakRef too?
       : m_weakReactHost(std::move(weakReactHost)), m_wkUIMessageQueue(uiMessageQueue) {}
 
-  virtual void showNewJSError(JSExceptionInfo &&info, JSExceptionType exceptionType) override {
+  ~RedBoxHandler() {
+    // Hide any currently showing redboxes
+    std::vector<std::shared_ptr<RedBox>> redboxes;
+    {
+      std::lock_guard<std::mutex> lock(m_lockRedBox);
+      std::swap(m_redboxes, redboxes);
+    }
+    if (auto uiQueue = m_wkUIMessageQueue.lock()) {
+      uiQueue->runOnQueue([redboxes = std::move(redboxes)]() {
+        for (const auto redbox : redboxes) {
+          redbox->Dismiss();
+        }
+      });
+    }
+  }
+
+  virtual void showNewJSError(JSExceptionInfo &&info, JSExceptionType /*exceptionType*/) override {
     std::shared_ptr<RedBox> redbox(std::make_shared<RedBox>(
-        m_weakReactHost, [pthis = shared_from_this()](uint32_t id) { pthis->onDismissedCallback(id); }));
-    redbox->ExceptionInfo = std::move(info);
-    redbox->ExceptionType = exceptionType;
+        m_weakReactHost,
+        [wkthis = std::weak_ptr(shared_from_this())](uint32_t id) {
+          if (auto pthis = wkthis.lock()) {
+            pthis->onDismissedCallback(id);
+          }
+        },
+        std::move(info)));
     {
       std::lock_guard<std::mutex> lock(m_lockRedBox);
       m_redboxes.push_back(std::move(redbox));
@@ -202,7 +233,7 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
     {
       std::lock_guard<std::mutex> lock(m_lockRedBox);
       for (auto it = m_redboxes.begin(); it != m_redboxes.end(); ++it) {
-        if ((*it)->ExceptionInfo.ExceptionId == info.ExceptionId) {
+        if ((*it)->GetId() == info.ExceptionId) {
           redbox = *it;
           break;
         }
@@ -237,7 +268,7 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
       {
         std::lock_guard<std::mutex> lock(m_lockRedBox);
         for (auto it = m_redboxes.begin(); it != m_redboxes.end(); ++it) {
-          if ((*it)->ExceptionInfo.ExceptionId == id) {
+          if ((*it)->GetId() == id) {
             redbox = *it;
             it = m_redboxes.erase(it);
             break;
