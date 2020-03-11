@@ -41,6 +41,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
 
   TEST_METHOD(ConnectNoClose) {
     bool connected = false;
+    bool error = false;
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->Start();
 
@@ -51,12 +52,17 @@ TEST_CLASS (WebSocketIntegrationTest) {
       {
         connected = true;
       });
+      ws->SetOnError([&error](IWebSocketResource::Error&&)
+      {
+        error = true;
+      });
 
       ws->Connect();
     }
 
     server->Stop();
 
+    Assert::IsFalse(error);
     Assert::IsTrue(connected);
   }
 
