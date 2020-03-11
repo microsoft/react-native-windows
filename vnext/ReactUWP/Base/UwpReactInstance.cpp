@@ -49,6 +49,8 @@
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
+#include <winrt/Windows.UI.Popups.h>
+#include <ReactWindowsCore/RedBoxHandler.h>
 #include "ChakraRuntimeHolder.h"
 
 #include <tuple>
@@ -68,6 +70,26 @@ UwpReactInstance::UwpReactInstance(
     : m_moduleProvider(moduleProvider),
       m_viewManagerProvider(viewManagerProvider),
       m_turboModuleRegistry(turboModuleRegistry) {}
+
+struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
+  // Inherited via IRedBoxHandler
+  virtual void showNewJSError(Mso::React::JSExceptionInfo &&info, Mso::React::JSExceptionType) override {
+    std::stringstream ss;
+
+    ss << "A better redbox experience is provided by Microsoft.ReactNative - Consider moving off ReactUwp to Microsoft.ReactNative today!\n\n";
+    ss << info.ExceptionMessage << "\n\n";
+    for (auto frame : info.Callstack) {
+      ss << frame.Method << "\n" << frame.File << ":" << frame.Line << ":" << frame.Column << "\n";
+    }
+    auto dlg = winrt::Windows::UI::Popups::MessageDialog(Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
+    dlg.ShowAsync();
+  }
+  virtual bool isDevSupportEnabled() override {
+    return true;
+  }
+  virtual void updateJSError(Mso::React::JSExceptionInfo &&) override {}
+  virtual void dismissRedbox() override {}
+};
 
 void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) {
   if (m_started)
@@ -108,9 +130,14 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->debuggerBreakOnNextLine = settings.DebuggerBreakOnNextLine;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
-    devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->redboxHandler = std::move(settings.RedBoxHandler);
     devSettings->useJITCompilation = settings.EnableJITCompilation;
     devSettings->debugHost = settings.DebugHost;
+
+    if (!devSettings->redboxHandler &&
+        (devSettings->useWebDebugger || devSettings->useDirectDebugger || settings.UseLiveReload)) {
+      devSettings->redboxHandler = std::move(std::make_shared<UwpReactRedBoxHandler>());
+    }
 
     // In most cases, using the hardcoded ms-appx URI works fine, but there are
     // certain scenarios, such as in optional packaging, where the developer
