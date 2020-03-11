@@ -350,8 +350,13 @@ JSValueObject JSValueObject::Copy() const noexcept {
 }
 
 JSValue &JSValueObject::operator[](std::string_view propertyName) noexcept {
-  auto result = try_emplace(propertyName.data(), nullptr);
-  return result.first->second;
+  // When we search for a node we do no want to convert string_view to a string.
+  auto it = lower_bound(propertyName);
+  if (it != end() && !key_comp()(propertyName, it->first)) {
+    return it->second;
+  } else {
+    return emplace_hint(it, propertyName, nullptr)->second;
+  }
 }
 
 JSValue const &JSValueObject::operator[](std::string_view propertyName) const noexcept {

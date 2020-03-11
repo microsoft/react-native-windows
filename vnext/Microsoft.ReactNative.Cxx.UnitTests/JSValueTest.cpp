@@ -135,6 +135,7 @@ TEST_CLASS (JSValueTest) {
     TestCheck(value.PropertyCount() == 2);
     TestCheck(value["prop1"] == 1);
     TestCheck(value["prop2"] == "Two");
+    TestCheck(value.AsObject().size() == 2);
     TestCheck(value.AsObject()["prop1"] == 1);
     TestCheck(value.AsObject()["prop2"] == "Two");
   }
@@ -148,8 +149,40 @@ TEST_CLASS (JSValueTest) {
     TestCheck(value.PropertyCount() == 2);
     TestCheck(value["prop1"] == 1);
     TestCheck(value["prop2"] == "Two");
+    TestCheck(value.AsObject().size() == 2);
     TestCheck(value.AsObject()["prop1"] == 1);
     TestCheck(value.AsObject()["prop2"] == "Two");
+  }
+
+  TEST_METHOD(TestJSValueObjectInsertion) {
+    // See if our JSValueObject operator[] works correctly.
+    // We use a random order of keys to insert.
+    JSValueObject obj;
+    obj["prop03"] = 3;
+    obj["prop02"] = 2;
+    obj["prop08"] = 8;
+    obj["prop06"] = 6;
+    obj["prop10"] = 10;
+    obj["prop09"] = 9;
+    obj["prop04"] = 4;
+    obj["prop01"] = 1;
+    obj["prop05"] = 5;
+    obj["prop07"] = 7;
+    // Modify
+    obj["prop02"] = 22;
+    JSValue value = std::move(obj);
+    TestCheck(value.Type() == JSValueType::Object);
+    TestCheck(value.PropertyCount() == 10);
+    TestCheck(value["prop01"] == 1);
+    TestCheck(value["prop02"] == 22);
+    TestCheck(value["prop03"] == 3);
+    TestCheck(value["prop04"] == 4);
+    TestCheck(value["prop05"] == 5);
+    TestCheck(value["prop06"] == 6);
+    TestCheck(value["prop07"] == 7);
+    TestCheck(value["prop08"] == 8);
+    TestCheck(value["prop09"] == 9);
+    TestCheck(value["prop10"] == 10);
   }
 
   TEST_METHOD(TestJSValueArray1) {
