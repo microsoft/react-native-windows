@@ -9,18 +9,23 @@ const execSync = require('child_process').execSync;
 const path = require('path');
 const fs = require('fs');
 
-async function autoLinkConfig() {
+function updateAutoLink(verbose) {
   const execString =
     'react-native config';
   let output;
   try {
     console.log('Running react-natice config...');
     output = execSync(execString).toString();
-    const config = JSON.parse(output);
+    if (verbose)
+    {
+      console.log(output);
+    }
 
-    const cppProjFile= config['project']['windows'].cppProjFile;
+    const config = JSON.parse(output);
+    const windowsPlatformConfig = config['project']['windows'];
+    const cppProjFile= windowsPlatformConfig?windowsPlatformConfig.cppProjFile:null;
     if (cppProjFile == null){
-      console.log('AutoLink currently only supports cpp/winrt main project.');
+      console.log('AutoLink currently is only supported on cpp/winrt main project.');
       return;
     }
     console.log('cppProjFile:' + cppProjFile);
@@ -44,27 +49,32 @@ async function autoLinkConfig() {
     var packageRegistrations = '#define RegisterNativeModulePackages';
     for(const dependency in dependencies) {
       const windowDependency = dependencies[dependency]['platforms']['windows'];
-      const cppProjFile = windowDependency.cppProjFile;
+      const cppProjFile = windowDependency?windowDependency.cppProjFile:null;
       if (cppProjFile == null)
       {
         console.log('No cpp/winrt project found for ' + dependency);
         continue;  
       }
+      console.log('Adding include and package provider statement for ' + dependency);
       const trimmedPackageName = windowDependency.packageName.trim();
-      
       const includeStatement = '\r\n#include ' + '<winrt/' + trimmedPackageName + '.h>';
       generatedIncludes += includeStatement;
-
       const packageRegistration = ' \\\r\n' + '    PackageProviders().Append(winrt::' + trimmedPackageName + '::ReactPackageProvider());';
       packageRegistrations += packageRegistration;
-   }
-   const contents = generatedIncludes + '\r\n' + packageRegistrations;
-   fs.writeFileSync(generatedHeader,contents,{encoding:'utf8',flag:'w'})
+    }
+
+    console.log('Updating nativeModules.g.h...');
+    const contents = generatedIncludes + '\r\n' + packageRegistrations;
+    fs.writeFileSync(generatedHeader,contents,{encoding:'utf8',flag:'w'})
+
+    //TODO:
     //#2. Update project file to add references to native module packages
 
+    //TODO:
     //#3. Update solution file to include native module project files
 
     return;
+  
   } catch (e) {
     console.log("Parsing react-native config failed!");
     return;
@@ -72,5 +82,5 @@ async function autoLinkConfig() {
 }
 
 module.exports = {
-  autoLinkConfig,
+  updateAutoLink,
 };
