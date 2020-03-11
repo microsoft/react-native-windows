@@ -11,6 +11,7 @@ const deploy = require('./utils/deploy');
 const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
+const autolink = require('./utils/autolink');
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
@@ -37,6 +38,9 @@ async function runWindows(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
 
+  if (options.autolink){
+    autolink.autoLinkConfig();
+   }
   if (options.build) {
     const slnFile = build.getSolutionFile(options);
     if (!slnFile) {
@@ -181,6 +185,11 @@ module.exports = {
     {
       command: '--info',
       description: 'Dump enviroment information',
+      default: false,
+    },
+    {
+      command: '--autolink',
+      description: 'Auto link native modules',
       default: false,
     },
   ],

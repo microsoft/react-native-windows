@@ -34,7 +34,7 @@ App::App() noexcept
 #endif
 
     PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
-
+    RegisterNativeModulePackages;
     InitializeComponent();
 
     // This works around a cpp/winrt bug with composable/aggregable types tracked
