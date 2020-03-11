@@ -13,7 +13,6 @@ import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as ora from 'ora';
 import * as path from 'path';
-import * as simplegit from 'simple-git/promise';
 import * as yargs from 'yargs';
 
 import Manifest, {ValidationError} from './Manifest';
@@ -22,11 +21,11 @@ import {
   VersionedReactFileRepository,
   bindVersion,
 } from './FileRepository';
+import OverrideUprgader, {UpgradeResult} from './OverrideUpgrader';
 
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
-import OverrideUprgader from './OverrideUpgrader';
 import {getInstalledRNVersion} from './ReactVersion';
 
 doMain(() => {
@@ -83,8 +82,8 @@ doMain(() => {
         cmdArgv => autoUpgrade(cmdArgv.manifest, cmdArgv.version),
       )
       .command(
-        'stage-upgrade <manifest>',
-        'Stages the base versions of all overrides before writing conflict-marker style merged files. This allows manual three-way merges using standard tooling.',
+        'manual-upgrade <manifest>',
+        'Similar to auto-upgrade, but places conflict markers in files that cannot be automatically merged',
         cmdYargs =>
           cmdYargs.options({
             manifest: {
@@ -96,7 +95,7 @@ doMain(() => {
               describe: 'Optional React Native version to check against',
             },
           }),
-        cmdArgv => stageUpgrade(cmdArgv.manifest, cmdArgv.version),
+        cmdArgv => manualUpgrade(cmdArgv.manifest, cmdArgv.version),
       )
       .epilogue(
         'This tool allows managing JavaScript overrides for React Native Windows',
@@ -213,7 +212,7 @@ async function removeOverride(overridePath: string) {
  * out-of-date overrides.
  */
 async function autoUpgrade(manifestPath: string, version?: string) {
-  return doUpgrade(manifestPath, false /*stageUpgrade*/, version);
+  return doUpgrade(manifestPath, false /*isManual*/, version);
 }
 
 /**
@@ -221,16 +220,16 @@ async function autoUpgrade(manifestPath: string, version?: string) {
  * style merged files. This allows manual three-way merges using standard
  * tooling.
  */
-async function stageUpgrade(manifestPath: string, version?: string) {
-  return doUpgrade(manifestPath, true /*stageUpgrade*/, version);
+async function manualUpgrade(manifestPath: string, version?: string) {
+  return doUpgrade(manifestPath, true /*isManual*/, version);
 }
 
 /**
- * Helper for autoUpgrade and stageUpgrade
+ * Helper for autoUpgrade and manualUpgrade
  */
 async function doUpgrade(
   manifestPath: string,
-  stageUpgrade: boolean,
+  isManual: boolean,
   version?: string,
 ) {
   const spinner = ora('Merging overrides').start();
@@ -252,12 +251,9 @@ async function doUpgrade(
       ManifestData.NonPlatformEntry
     >;
 
-    if (stageUpgrade) {
-      await stageBaseFiles(outOfDateOverrides, manifestPath, reactRepo);
-    }
+    const upgradedOverrides: Array<UpgradeResult> = [];
 
     let i = 0;
-    let numConflicts = 0;
     for (const override of outOfDateOverrides) {
       spinner.text = `Merging overrides (${++i}/${outOfDateOverrides.length})`;
 
@@ -266,53 +262,37 @@ async function doUpgrade(
         manifest.currentVersion(),
       );
 
-      if (stageUpgrade || !upgraded.hasConflicts) {
+      if (isManual || !upgraded.hasConflicts) {
         await ovrRepo.setFileContents(upgraded.overrideFile, upgraded.content);
         manifest.markUpToDate(upgraded.overrideFile);
       }
 
-      numConflicts += upgraded.hasConflicts ? 1 : 0;
+      upgradedOverrides.push(upgraded);
     }
 
     await ManifestData.writeToFile(manifest.getAsData(), manifestPath);
 
     spinner.succeed();
-    printUpdateStats(outOfDateOverrides.length, numConflicts, stageUpgrade);
+    printUpgradeStats(upgradedOverrides, isManual);
   });
-}
-
-/**
- * Attempts to stage the contents of the base files for the given overrides.
- */
-async function stageBaseFiles(
-  overrides: Array<ManifestData.NonPlatformEntry>,
-  manifestPath: string,
-  reactRepo: VersionedReactFileRepository,
-) {
-  const manifestDir = path.dirname(manifestPath);
-  const localGit = simplegit(manifestDir);
-
-  for (const ovr of overrides) {
-    const base = await reactRepo.getFileContents(ovr.baseFile, ovr.baseVersion);
-    const ovrPath = path.join(manifestDir, ovr.file);
-    await fs.promises.writeFile(ovrPath, base);
-    await localGit.add(ovr.file);
-  }
 }
 
 /**
  * Print statistics about an attempt to upgrade out-of-date-overrides.
  */
-function printUpdateStats(total: number, conflicts: number, staged: boolean) {
-  const autoPatched = total - conflicts;
+function printUpgradeStats(results: Array<UpgradeResult>, isManual: boolean) {
+  const numTotal = results.length;
+  const numConflicts = results.filter(res => res.hasConflicts).length;
+  const numAutoPatched = numTotal - numConflicts;
+
   console.log(
     chalk.greenBright(
-      `${autoPatched}/${total} out-of-date overrides automatically merged`,
+      `${numAutoPatched}/${numTotal} out-of-date overrides automatically merged`,
     ),
   );
-  if (staged) {
+  if (isManual) {
     console.log(
-      chalk.yellow(`${conflicts} overrides require manual resolution`),
+      chalk.yellow(`${numConflicts} overrides require manual resolution`),
     );
   }
 }
@@ -369,7 +349,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (outOfDateFiles.length > 0) {
     const errorMessage =
-      "Found overrides whose original files have changed. Upgrade oveerrides using 'yarn override auto-updgrade <override>' and 'yarn override stage-updgrade <override>':";
+      "Found overrides whose original files have changed. Upgrade oveerrides using 'yarn override auto-upgrade <override>' and 'yarn override manual-upgrade <override>':";
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();

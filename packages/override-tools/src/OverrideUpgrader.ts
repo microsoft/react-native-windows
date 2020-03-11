@@ -54,8 +54,8 @@ export default class OverrideUpgrader {
       newVersion,
       ovrAsPatch,
     ))
-      .replace('<<<<<<< ours', '<<<<<<< Upstream')
-      .replace('>>>>>>> theirs', '>>>>>>> Override');
+      .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
+      .replace(/>>>>>>> theirs/g, '>>>>>>> Override');
 
     return {
       overrideFile: override.file,
