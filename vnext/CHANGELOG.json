@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Mar 2020 21:51:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.51",
+      "version": "0.61.0-beta.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bundle command clean-up",
+            "author": "jthysell@microsoft.com",
+            "commit": "abb0c1276154e951edff863a867a726605d02d32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Mar 2020 00:33:15 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.50",
+      "version": "0.61.0-beta.50",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Strip out color markers from redbox error messages",
+            "author": "acoates@microsoft.com",
+            "commit": "ad04ab83c14306bd625344617df8376c294349e6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Mar 2020 20:08:13 GMT",
       "tag": "react-native-windows_v0.61.0-beta.49",
       "version": "0.61.0-beta.49",
