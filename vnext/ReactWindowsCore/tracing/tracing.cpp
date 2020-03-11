@@ -33,6 +33,7 @@ std::mutex g_pages_mutex;
 }
 
 /*static */ void FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
+  std::lock_guard<std::mutex> guard(s_tracker_mutex_);
   auto search = s_tracker_.find(cookie);
   double duration = -1;
 
@@ -42,7 +43,6 @@ std::mutex g_pages_mutex;
                    .count();
 
     // Flow has ended. Clear the cookie tracker.
-    std::lock_guard<std::mutex> guard(s_tracker_mutex_);
     s_tracker_.erase(cookie);
   }
 
