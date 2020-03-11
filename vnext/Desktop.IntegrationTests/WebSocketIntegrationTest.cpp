@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #include <CppUnitTest.h>
 #include <IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
@@ -48,14 +49,8 @@ TEST_CLASS (WebSocketIntegrationTest) {
     // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
     {
       auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-      ws->SetOnConnect([&connected]()
-      {
-        connected = true;
-      });
-      ws->SetOnError([&error](IWebSocketResource::Error&&)
-      {
-        error = true;
-      });
+      ws->SetOnConnect([&connected]() { connected = true; });
+      ws->SetOnError([&error](IWebSocketResource::Error &&) { error = true; });
 
       ws->Connect();
     }
