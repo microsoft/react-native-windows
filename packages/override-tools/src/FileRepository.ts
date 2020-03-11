@@ -19,6 +19,12 @@ export interface OverrideFileRepository {
    * @param filename is expected to be relative to the React Native source root.
    */
   getFileContents(filename: string): Promise<string | null>;
+
+  /**
+   * Sets the contents of an override file. Rejects the promise if the override
+   * doesn't exist.
+   */
+  setFileContents(filename: string, content: string): Promise<void>;
 }
 
 /**

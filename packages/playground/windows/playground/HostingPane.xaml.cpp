@@ -234,9 +234,6 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
       OutputDebugStringA("In LoggingCallback");
       OutputDebugStringA(message);
     };
-    settings.JsExceptionCallback = [](facebook::react::JSExceptionInfo &&exceptionInfo) {
-      OutputDebugStringA("in JsExceptionCallback");
-    };
     m_instance->Start(m_instance, settings);
     m_instance->loadBundle(Microsoft::Common::Unicode::Utf16ToUtf8(m_loadedBundleFileName));
   }

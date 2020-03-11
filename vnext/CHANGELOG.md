@@ -1,7 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Mar 2020 21:51:40 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Mar 2020 19:32:20 GMT and should not be manually modified.
 
+## 0.61.0-beta.54
+Wed, 11 Mar 2020 19:32:20 GMT
+
+### Changes
+
+- Fully implement ExceptionsManagerModule (acoates@microsoft.com)
+## 0.61.0-beta.53
+Wed, 11 Mar 2020 18:14:12 GMT
+
+### Changes
+
+- Code review feedback (acoates@microsoft.com)
+## 0.61.0-beta.52
+Wed, 11 Mar 2020 16:18:00 GMT
+
+### Changes
+
+- Fix crash in timers during instance shutdown, and in systrace (acoates@microsoft.com)
 ## 0.61.0-beta.51
 Tue, 10 Mar 2020 21:51:40 GMT
 

@@ -9,8 +9,8 @@
 #include <vector>
 
 #include "JSBundle.h"
-#include "JSExceptionInfo.h"
 #include "PropertyBag.h"
+#include "RedBoxHandler.h"
 #include "dispatchQueue/dispatchQueue.h"
 #include "errorCode/errorCode.h"
 #include "future/future.h"
@@ -198,11 +198,9 @@ struct ReactOptions {
   //! Note: this is currently only used in Win32 (Chakra Executor)
   OnLoggingCallback OnLogging;
 
-  //! Javascript Function Exception
-  //! Callback called when an Exception is thrown inside JavaScript function,
-  //! except the ones that happen during initialization.
-  //! Javascript Exceptions which happen during initialization go through OnError callback.
-  OnJSExceptionCallback OnJSException;
+  //! Ability to override the default redbox handling, which is used
+  //! during development to report JavaScript errors to uses
+  std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
 
   //! Flag to suggest sdx owner's preference on enabling Bytecode caching in Javascript Engine for corresponding SDX.
   bool EnableBytecode{true};

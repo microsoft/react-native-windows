@@ -8,10 +8,10 @@
 /**
  * Executes actions sequentially, fullfilling the returned promise once complete.
  */
-export default class ActionQueue<T> {
+export default class ActionQueue {
   private actions: Array<() => Promise<void>> = [];
 
-  enqueue(action: () => Promise<T>): Promise<T> {
+  enqueue<T>(action: () => Promise<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       this.actions.push(async () => {
         try {
