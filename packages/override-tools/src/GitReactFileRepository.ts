@@ -25,7 +25,11 @@ export default class GitReactFileRepository
   private gitClient: simplegit.SimpleGit;
   private gitDirectory: string;
   private checkedOutVersion: string;
-  private actionQueue: ActionQueue<string | null>;
+
+  // We have a potential race condition where one call to getFileContents
+  // could checkout out a new tag while an existing call is rading a file.
+  // Queue items to ensure the read operation is performed atomically
+  private actionQueue: ActionQueue;
 
   private constructor() {}
 
@@ -39,6 +43,8 @@ export default class GitReactFileRepository
     await fs.promises.mkdir(repo.gitDirectory, {recursive: true});
 
     repo.gitClient = simplegit(repo.gitDirectory);
+    repo.gitClient.silent(true);
+
     if (!(await repo.gitClient.checkIsRepo())) {
       await repo.gitClient.init();
       await repo.gitClient.addRemote('origin', REACT_NATIVE_GITHUB_URL);
@@ -51,26 +57,81 @@ export default class GitReactFileRepository
     filename: string,
     reactNativeVersion: string,
   ): Promise<string | null> {
-    // We have a potential race condition where one call to getFileContents
-    // could checkout out a new tag while an existing call is rading a file.
-    // Queue items to ensure the read operation is performed atomically
-    return this.actionQueue.enqueue(() => {
-      return this.getFileContentsNonAtomic(filename, reactNativeVersion);
+    return this.actionQueue.enqueue(async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      const filePath = path.join(this.gitDirectory, filename);
+
+      try {
+        return (await fs.promises.readFile(filePath)).toString();
+      } catch {
+        return null;
+      }
     });
   }
 
-  private async getFileContentsNonAtomic(
+  /**
+   * Generate a Git-style patch to transform the given file into the given
+   * content.
+   */
+  async generatePatch(
     filename: string,
     reactNativeVersion: string,
-  ): Promise<string | null> {
-    await this.checkoutVersion(reactNativeVersion);
-    const filePath = path.join(this.gitDirectory, filename);
+    newContent: string,
+  ): Promise<string> {
+    return this.actionQueue.enqueue(async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      const filePath = path.join(this.gitDirectory, filename);
 
-    try {
-      return (await fs.promises.readFile(filePath)).toString();
-    } catch {
-      return null;
-    }
+      try {
+        await fs.promises.writeFile(filePath, newContent);
+        const patch = await this.gitClient.diff([
+          '--patch',
+          '--ignore-space-at-eol',
+        ]);
+        return patch;
+      } finally {
+        await this.gitClient.reset('hard');
+      }
+    });
+  }
+
+  /**
+   * Apply a patch to the given file, returning the merged result, which may
+   * include conflict markers. The underlying file is not mutated.
+   */
+  async getPatchedFile(
+    filename: string,
+    reactNativeVersion: string,
+    patchContent: string,
+  ): Promise<string> {
+    return this.actionQueue.enqueue(async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      const filePath = path.join(this.gitDirectory, filename);
+      const patchPath = path.join(this.gitDirectory, 'rnwgit.patch');
+      try {
+        await fs.promises.writeFile(patchPath, patchContent);
+        try {
+          await this.gitClient.raw([
+            'apply',
+            '--3way',
+            '--whitespace=nowarn',
+            patchPath,
+          ]);
+        } catch (ex) {
+          // Hack alert: simple-git doesn't populate exception information from
+          // conflicts when we're using raw commands (which we need to since it
+          // doesn't support apply). Try to detect if Git gave us a bad exit code
+          // because of merge conflicts, which we explicitly want to allow.
+          if (!ex.message.includes('with conflicts')) {
+            throw ex;
+          }
+        }
+        const patchedFile = await fs.promises.readFile(filePath);
+        return patchedFile.toString();
+      } finally {
+        await this.gitClient.reset('hard');
+      }
+    });
   }
 
   private async checkoutVersion(reactNativeVersion: string) {
