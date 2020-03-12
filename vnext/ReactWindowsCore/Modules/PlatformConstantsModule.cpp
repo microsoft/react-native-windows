@@ -26,7 +26,7 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
       // Since we're out-of-tree, we don't know the exact version of React Native
       // we're paired with. Provide something sane for now, and try to provide a
       // better source of truth later. Tracked by Issue #4073
-      {"reactNativeVersion", folly::dynamic::object("major", 0)("minor", 61)("patch", 0)}
+      {"reactNativeVersion", folly::dynamic::object("major", 0)("minor", 62)("patch", 0)}
 
       // We don't provide the typical OS version here. Windows make it hard to
       // get an exact version by-design. In the future we should consider
