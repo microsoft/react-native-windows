@@ -26,6 +26,7 @@ class WinRTWebSocketResource : public IWebSocketResource
 
   WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
 
+  void OnMessageReceived(winrt::Windows::Networking::Sockets::IWebSocket const& sender, winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs const& args);
   void OnClosed(winrt::Windows::Networking::Sockets::IWebSocket const& sender, winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
 
 public:

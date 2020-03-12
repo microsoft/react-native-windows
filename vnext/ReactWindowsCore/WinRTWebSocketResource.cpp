@@ -25,6 +25,7 @@ using winrt::hresult_error;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::Sockets::IWebSocket;
 using winrt::Windows::Networking::Sockets::MessageWebSocket;
+using winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs;
 using winrt::Windows::Networking::Sockets::SocketMessageType;
 using winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
@@ -39,6 +40,8 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri)
   , m_socket{}
   , m_writer{ m_socket.OutputStream() }
 {
+  m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
+  m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
 }
 
 WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
@@ -47,6 +50,40 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
 }
 
 #pragma region Private members
+
+void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
+{
+  try
+  {
+    string response;
+    DataReader reader = args.GetDataReader();
+    auto len = reader.UnconsumedBufferLength();
+    if (args.MessageType() == SocketMessageType::Utf8)
+    {
+      reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+      vector<uint8_t> data(len);
+      reader.ReadBytes(data);
+
+      response = string(CheckedReinterpretCast<char*>(data.data()), data.size());
+    }
+    else
+    {
+      auto buffer = reader.ReadBuffer(len);
+      winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+      response = Utf16ToUtf8(std::wstring_view(data));
+    }
+
+    if (m_readHandler)
+      m_readHandler(response.length(), response);//TODO: move?
+  }
+  catch (hresult_error const& e)
+  {
+    //TODO: Re-enable (fix "OutputDebugStringW': function does not take 2 arguments")
+    //OutputDebugString("Read failed (0x%8X) %ls\n", e);
+    m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
+  }
+}
 
 void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedEventArgs const& args)
 {
@@ -74,43 +111,6 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   {
     supportedProtocols.Append(Utf8ToUtf16(protocol));
   }
-
-  // Set message received callback
-  m_socket.MessageReceived(winrt::auto_revoke, [this](auto&&, auto&& args)
-  {
-    try
-    {
-      string response;
-      DataReader reader = args.GetDataReader();
-      auto len = reader.UnconsumedBufferLength();
-      if (args.MessageType() == SocketMessageType::Utf8)
-      {
-        reader.UnicodeEncoding(UnicodeEncoding::Utf8);
-        vector<uint8_t> data(len);
-        reader.ReadBytes(data);
-
-        response = string(CheckedReinterpretCast<char*>(data.data()), data.size());
-      }
-      else
-      {
-        auto buffer = reader.ReadBuffer(len);
-        winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
-
-        response = Utf16ToUtf8(std::wstring_view(data));
-      }
-
-      if (m_readHandler)
-        m_readHandler(response.length(), response);//TODO: move?
-    }
-    catch (hresult_error const& e)
-    {
-      //TODO: Re-enable (fix "OutputDebugStringW': function does not take 2 arguments")
-      //OutputDebugString("Read failed (0x%8X) %ls\n", e);
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
-    }
-  }); // Message received callback
-
-  m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
 
   winrt::hresult hr = S_OK;
   try
