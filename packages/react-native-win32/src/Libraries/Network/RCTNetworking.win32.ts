@@ -12,10 +12,9 @@
 // It will add the necessary requestId, so that you don't have to generate it yourself.
 const NativeEventEmitter = require('../EventEmitter/NativeEventEmitter');
 
-const convertRequestBody = require('./convertRequestBody');
+const NativeModules = require('../BatchedBridge/NativeModules');
 
-import NativeNetworkingAndroid from './NativeNetworkingAndroid';
-import type {RequestBody} from './convertRequestBody';
+const RCTNetworkingNative = NativeModules.Networking;
 
 type Header = [string, string];
 
@@ -82,4 +81,11 @@ class RCTNetworking extends NativeEventEmitter {
   }
 }
 
-module.exports = (new RCTNetworking(): RCTNetworking);
+function getParts(data) {
+  return data.getParts().map(part => {
+    part.headers = convertHeadersMapToArray(part.headers);
+    return part;
+  });
+}
+
+module.exports = new RCTNetworking();
