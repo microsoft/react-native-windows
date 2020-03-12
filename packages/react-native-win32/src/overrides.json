@@ -2,7 +2,7 @@
   "overrides": [
     {
       "type": "platform",
-      "file": "index.ts"
+      "file": "index.win32.ts"
     },
     {
       "type": "patch",
@@ -159,13 +159,6 @@
       "baseHash": "d1a6da2015247857a5d47cc9777ff65bcf4554fa"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\StatusBar\\StatusBarIOS.win32.ts",
-      "baseFile": "Libraries\\Components\\StatusBar\\StatusBarIOS.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3"
-    },
-    {
       "type": "platform",
       "file": "Libraries\\Components\\Text\\TextWin32.Props.ts"
     },
@@ -228,14 +221,6 @@
     {
       "type": "platform",
       "file": "Libraries\\Components\\Touchable\\TouchableWin32.Types.tsx"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\Components\\View\\PlatformViewPropTypes.win32.ts",
-      "baseFile": "Libraries\\Components\\View\\PlatformViewPropTypes.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "215c4c06a2850cc475e4803e521f7394a48fb86f",
-      "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
@@ -332,14 +317,6 @@
     {
       "type": "platform",
       "file": "Libraries\\PersonaCoin\\PersonaCoinTypes.ts"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\react-native\\react-native-implementation.win32.ts"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\react-native\\typings-main.ts"
     },
     {
       "type": "patch",
@@ -500,6 +477,10 @@
       "baseVersion": "0.61.5",
       "baseHash": "e1a725929fbf9b90245e9eddeb797f90b53b8ee9",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "typings-index.ts"
     }
   ]
 }
