@@ -118,7 +118,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_popup.IsOpen(true);
   }
 
-  void UpdateError(ErrorInfo &&info) noexcept {
+  void UpdateError(const ErrorInfo &&info) noexcept {
     m_errorInfo = std::move(info);
     if (m_showing) {
       PopulateFrameStackUI();
