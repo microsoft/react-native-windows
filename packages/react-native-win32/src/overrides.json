@@ -8,16 +8,16 @@
       "type": "patch",
       "file": "Libraries\\Alert\\Alert.win32.js",
       "baseFile": "Libraries\\Alert\\Alert.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "dd77ba5b6da36da0aea70e638bf6bc2f88e4d073",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "bf73c8c30ecdada945c2af1f3146db028950c060",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.win32.js",
       "baseFile": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "833b32ae88fecb57858d3dc025fcabaa8f3cbb54",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "e5e0e4e6c1b20844ec1deecc34ffa9452360ba03",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -40,16 +40,16 @@
       "type": "derived",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.win32.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "d095ab7eaf3fd9fab83187d226905ae90742bccc",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\AccessibilityInfo\\NativeAccessibilityInfo.win32.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\NativeAccessibilityInfo.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "92c59d658858c52fb82d708a9cc94e9597f5c36c",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "b3e2c37d96de6f00066495267f7c32d6e9d3f840",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -241,16 +241,16 @@
       "type": "patch",
       "file": "Libraries\\Components\\View\\ReactNativeViewAttributes.win32.js",
       "baseFile": "Libraries\\Components\\View\\ReactNativeViewAttributes.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "2d767736cb8411f3a7f55624e4407cb428e6ee27",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "0825b0257e19cfef2d626f19d219256a01c54b67",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\View\\ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries\\Components\\View\\ReactNativeViewViewConfig.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "37075ba2b670098da40a2a6450c4f7e0b436428d",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "79f89796dab244dad97186438375669479316913",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -301,8 +301,8 @@
       "type": "patch",
       "file": "Libraries\\Inspector\\Inspector.win32.js",
       "baseFile": "Libraries\\Inspector\\Inspector.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "9b1e79a244568f46c9dd54c50ef607c94957e364",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "4d8dd865cf9dc902cc415dbf7146df9dc198d2bb",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -381,8 +381,8 @@
       "type": "patch",
       "file": "Libraries\\StyleSheet\\StyleSheet.win32.js",
       "baseFile": "Libraries\\StyleSheet\\StyleSheet.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "cd76d00373696522aa0088b2ce57bbd686e09e3d",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "87b211c7221c858271123d6d306ffb51f881e512",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -473,8 +473,8 @@
       "type": "patch",
       "file": "RNTester\\js\\components\\ListExampleShared.win32.js",
       "baseFile": "RNTester\\js\\components\\ListExampleShared.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "200941a9f13b28f395f5a7569759278d4b41ac3c",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865",
       "issue": "LEGACY_FIXME"
     },
     {
