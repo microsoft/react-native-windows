@@ -34,7 +34,9 @@ App::App() noexcept
 #endif
 
     PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
-    RegisterNativeModulePackages;
+
+    REACT_REGISTER_NATIVE_MODULE_PACKAGES(); //code-gen macro from autolink
+
     InitializeComponent();
 
     // This works around a cpp/winrt bug with composable/aggregable types tracked
@@ -43,4 +45,4 @@ App::App() noexcept
     m_inner.as<::IUnknown>()->Release();
 }
 
-// clang-format on
+
