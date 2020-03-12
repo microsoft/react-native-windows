@@ -169,7 +169,9 @@ AsyncStorageModuleWin32::AsyncStorageModuleWin32() {
   ExecImplThrows(m_db, u8"PRAGMA user_version", getUserVersionCallback, &userVersion);
 
   if (userVersion == 0) {
-    ExecImplThrows(m_db, u8"CREATE TABLE IF NOT EXISTS AsyncLocalStorage(key TEXT PRIMARY KEY, value TEXT NOT NULL); PRAGMA user_version=1");
+    ExecImplThrows(
+        m_db,
+        u8"CREATE TABLE IF NOT EXISTS AsyncLocalStorage(key TEXT PRIMARY KEY, value TEXT NOT NULL); PRAGMA user_version=1");
   }
 }
 
@@ -257,7 +259,7 @@ void AsyncStorageModuleWin32::multiSet(folly::dynamic params, Callback callback)
     if (rc != SQLITE_DONE && !CheckSQLiteResult(rc, callback)) {
       return;
     }
-    if (!CheckSQLiteResult(sqlite3_reset(pStmt.get()), callback)) { 
+    if (!CheckSQLiteResult(sqlite3_reset(pStmt.get()), callback)) {
       return;
     }
   }
