@@ -4372,19 +4372,11 @@ bool YGConfigGetUseWebDefaults(const YGConfigRef config) {
   return config->useWebDefaults;
 }
 
-<<<<<<< Upstream
 YOGA_EXPORT void YGConfigSetContext(const YGConfigRef config, void* context) {
   config->context = context;
 }
 
 YOGA_EXPORT void* YGConfigGetContext(const YGConfigRef config) {
-=======
-void YGConfigSetContext(const YGConfigRef config, void *context) {
-  config->context = context;
-}
-
-void *YGConfigGetContext(const YGConfigRef config) {
->>>>>>> Override
   return config->context;
 }
 
