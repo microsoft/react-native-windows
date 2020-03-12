@@ -121,7 +121,6 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
     {
       this->m_connectHandler();
     });
-    m_connectHandler();
   }
   catch (hresult_error const& e)
   {
