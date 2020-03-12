@@ -21,22 +21,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Color\\NativeOrDynamicColorType.win32.js"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Color\\normalizeColor.win32.js",
-      "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "4bc82a7b34323bd68fe74e78effb762267d784d1",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Color\\normalizeColorObject.win32.js"
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.win32.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
@@ -333,6 +317,22 @@
       "baseVersion": "0.61.5",
       "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.win32.js"
+    },
+    {
+      "type": "derived",
+      "file": "Libraries\\StyleSheet\\normalizeColor.win32.js",
+      "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "48265ddff91efb254176c02f8d40bc71acce3252",
+      "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\normalizeColorObject.win32.js"
     },
     {
       "type": "patch",

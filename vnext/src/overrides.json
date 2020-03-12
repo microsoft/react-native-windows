@@ -65,23 +65,23 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Color\\NativeOrDynamicColorType.windows.js"
+      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.windows.js"
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Color\\normalizeColor.windows.js",
-      "baseFile": "Libraries\\Color\\normalizeColor.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "4bc82a7b34323bd68fe74e78effb762267d784d1",
+      "type": "derived",
+      "file": "Libraries\\StyleSheet\\normalizeColor.windows.js",
+      "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "48265ddff91efb254176c02f8d40bc71acce3252",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Color\\normalizeColorObject.windesktop.js"
+      "file": "Libraries\\StyleSheet\\normalizeColorObject.windesktop.js"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Color\\normalizeColorObject.windows.js"
+      "file": "Libraries\\StyleSheet\\normalizeColorObject.windows.js"
     },
     {
       "type": "derived",
