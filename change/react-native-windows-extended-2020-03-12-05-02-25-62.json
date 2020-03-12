@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Update pacakges and references to version",
+  "packageName": "react-native-windows-extended",
+  "email": "ngerlem@microsoft.com",
+  "commit": "bf1781126d52dc3e659613640d9044c807f53dcc",
+  "dependentChangeType": "patch",
+  "date": "2020-03-12T12:02:21.263Z"
+}
