@@ -34,11 +34,11 @@ async function runWindows(config, args, options) {
       process.exit(1);
     }
   }
-  
+
   // Fix up options
   options.root = options.root || process.cwd();
 
-  if (options.autolink){
+  if (options.autolink) {
     autolink.updateAutoLink(verbose);
   }
   if (options.build) {
