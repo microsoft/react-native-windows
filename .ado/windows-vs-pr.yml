@@ -242,14 +242,14 @@ jobs:
         displayName: run-windows (Debug)
         inputs:
           script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging
-          workingDirectory: packages/E2ETest
+          workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
           script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release
-          workingDirectory: packages/E2ETest
+          workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'), eq(variables['BuildConfiguration'], 'Release'))
 
       - task: CmdLine@2
