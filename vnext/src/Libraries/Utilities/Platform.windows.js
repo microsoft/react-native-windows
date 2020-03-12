@@ -11,7 +11,7 @@
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
 export type PlatformSelectSpec<A, N, D> = {
-  android?: A,
+  windows?: A,
   native?: N,
   default?: D,
   ...
@@ -61,7 +61,7 @@ const Platform = {
   },
   select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
   'windows' in spec
-    ? spec.android
+    ? spec.windows
     : 'native' in spec
     ? spec.native
     : spec.default,
