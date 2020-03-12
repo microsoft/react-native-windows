@@ -454,7 +454,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       continue;
     }
 
-    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
+    if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }

@@ -137,11 +137,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
     },
     {
       "type": "derived",
@@ -191,11 +191,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
+      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
+      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
     },
     {
       "type": "platform",
@@ -800,7 +800,7 @@
     },
     {
       "type": "platform",
-      "file": "RNTester\\js\\examples-win\\Accessibility\\AsyncStorageExampleWindows.tsx"
+      "file": "RNTester\\js\\examples-win\\AsyncStorage\\AsyncStorageExampleWindows.tsx"
     },
     {
       "type": "platform",

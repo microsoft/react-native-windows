@@ -8,54 +8,51 @@ import React = require('react');
 import {
   AsyncStorage,
   Button,
-  StyleSheet,
   FlatList,
-  TextInput,
+  StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 
 interface AsyncStorageExampleState {
   asyncStorageData: [string, string][];
-  newName: string;
-  newValue: string;
+  name: string;
+  value: string;
 }
 
 class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> {
   state = {
     asyncStorageData: [],
-    newName: "",
-    newValue: ""
+    name: "",
+    value: ""
   }
 
-  componentDidMount() {
-    AsyncStorage.getAllKeys().then(allKeys => {
-      AsyncStorage.multiGet(allKeys).then(values => {
-        this.setState({ asyncStorageData: values });
-      });
-    });
+  async componentDidMount() {
+    let allKeys = await AsyncStorage.getAllKeys();
+    let values = await AsyncStorage.multiGet(allKeys);
+    this.setState({ asyncStorageData: values });
   }
 
-  updateAsyncStorageData(key: string, value: string) {
+  private updateAsyncStorageData(key: string, value: string) {
     this.setState((prevState, props) => {
       let asyncStorageData = [...prevState.asyncStorageData];
-      for (var kvp of asyncStorageData) {
-        if (kvp[0] == key) {
+      let foundVal = false;
+      for (let kvp of asyncStorageData) {
+        if (kvp[0] === key) {
           kvp[1] = value;
+          foundVal = true;
+          break;
         }
+      }
+      if (!foundVal) {
+        asyncStorageData.push([key, value]);
       }
       return { asyncStorageData: asyncStorageData };
     });
   }
 
-  makeOnUpdateKey(key: string) {
-    return (value: string) => {
-      AsyncStorage.setItem(key, value);
-      this.updateAsyncStorageData(key, value);
-    };
-  }
-
-  makeOnRemoveEntryPress(key: string) {
+  private makeOnRemoveEntryPress(key: string) {
     return () => {
       AsyncStorage.removeItem(key);
       this.setState((prevState, props) => {
@@ -65,20 +62,20 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
     };
   }
 
-  setNewName = (name: string) => {
-    this.setState({ newName: name });
+  private setName = (name: string) => {
+    this.setState({ name: name });
   }
 
-  setNewValue = (value: string) => {
-    this.setState({ newValue: value });
+  private setValue = (value: string) => {
+    this.setState({ value: value });
   }
 
-  onAddEntryPress = () => {
-    AsyncStorage.setItem(this.state.newName, this.state.newValue);
-    this.updateAsyncStorageData(this.state.newName, this.state.newValue);
+  private onAddEntryPress = () => {
+    AsyncStorage.setItem(this.state.name, this.state.value);
+    this.updateAsyncStorageData(this.state.name, this.state.value);
   }
 
-  onClearAllKeysPress = () => {
+  private onClearAllKeysPress = () => {
     AsyncStorage.clear();
     this.setState({ asyncStorageData: [] });
   }
@@ -91,31 +88,25 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
           data={this.state.asyncStorageData}
           renderItem={({ item }) => (
             <View style={styles.keyValue} >
-              <Text>{item[0]}:</Text>
-              <TextInput
-                autoCapitalize="none"
-                onChangeText={this.makeOnUpdateKey(item[0])}
-                style={styles.textInput}
-                value={item[1] as string}
-              />
+              <Text>"{item[0]}": "{item[1]}"</Text>
               <Button title="Remove" onPress={this.makeOnRemoveEntryPress(item[0])} />
             </View>
           )}
         />
-        <Text>Add a new entry:</Text>
+        <Text>Add/Update an entry:</Text>
         <View style={styles.keyValue}>
           <Text>Name:</Text>
           <TextInput
             autoCapitalize="none"
-            onChangeText={this.setNewName}
-            placeholder="<New Key>"
+            onChangeText={this.setName}
+            placeholder="<Key>"
             style={styles.textInput} />
         </View>
         <View style={styles.keyValue}>
           <Text>Value:</Text>
           <TextInput
             autoCapitalize="none"
-            onChangeText={this.setNewValue}
+            onChangeText={this.setValue}
             placeholder="<New Value>"
             style={styles.textInput} />
         </View>
@@ -128,7 +119,7 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "#CCCCCC",
-    padding: 10
+    margin: 10
   },
   container: {
     flex: 1,
@@ -141,7 +132,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     margin: 5,
-    height: 36,
+    height: 32,
     borderWidth: 1,
     width: 100,
   },
