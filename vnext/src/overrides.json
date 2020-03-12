@@ -4,8 +4,8 @@
       "type": "patch",
       "file": "IntegrationTests\\AsyncStorageTest.windesktop.js",
       "baseFile": "IntegrationTests\\AsyncStorageTest.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "d37101fcfa67d62a95b2c66a32bb3e820d983ebe",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "363ad4689a7058e7ab525d1b3243390377c33c17",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -16,8 +16,8 @@
       "type": "patch",
       "file": "IntegrationTests\\IntegrationTestsApp.windesktop.js",
       "baseFile": "IntegrationTests\\IntegrationTestsApp.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "5c059df1be2af6446556a3ed9afc558b9b85eadc",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "8a02205cad7a8966b1f1ecb66575d8263af56c16",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -47,8 +47,8 @@
       "type": "patch",
       "file": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.windows.js",
       "baseFile": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "833b32ae88fecb57858d3dc025fcabaa8f3cbb54",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "e5e0e4e6c1b20844ec1deecc34ffa9452360ba03",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -111,16 +111,16 @@
       "type": "patch",
       "file": "Libraries\\Components\\Button.windows.js",
       "baseFile": "Libraries\\Components\\Button.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "34851284106cfe8352b46caa77289367c336c756",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "664721f888487db3fd31c831db79bed5e683ce58",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\CheckBox\\CheckBox.windesktop.js",
       "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "e14e6a445ff26f0fb16b9f44c230bda53c440def",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "4b84d656391d454ba3409df56c05b6bfca64ad55",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -137,11 +137,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
     },
     {
       "type": "derived",
@@ -191,11 +191,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
+      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
+      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
     },
     {
       "type": "platform",
@@ -339,8 +339,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\RefreshControl\\RefreshControl.windows.js",
       "baseFile": "Libraries\\Components\\RefreshControl\\RefreshControl.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "35842dac1d284850cad925585d202f70bcfeb1fc",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "90fa2ab5e119957459158cbbf2effe07cff1b2ae",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -521,8 +521,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\View\\ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries\\Components\\View\\ReactNativeViewViewConfig.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "37075ba2b670098da40a2a6450c4f7e0b436428d",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "79f89796dab244dad97186438375669479316913",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -600,8 +600,8 @@
       "type": "patch",
       "file": "Libraries\\Inspector\\Inspector.windesktop.js",
       "baseFile": "Libraries\\Inspector\\Inspector.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "9b1e79a244568f46c9dd54c50ef607c94957e364",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "4d8dd865cf9dc902cc415dbf7146df9dc198d2bb",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -616,8 +616,8 @@
       "type": "patch",
       "file": "Libraries\\Lists\\VirtualizedList.windows.js",
       "baseFile": "Libraries\\Lists\\VirtualizedList.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "15e28aa49e648fe89de850316201eb77b92b0200",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "7b2c7473ce02f51dc5d1e625622df5b62dc9b71c",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -790,7 +790,7 @@
       "type": "patch",
       "file": "RNTester\\js\\components\\RNTesterExampleList.windows.js",
       "baseFile": "RNTester\\js\\components\\RNTesterExampleList.js",
-    "baseVersion": "0.61.5",
+      "baseVersion": "0.61.5",
       "baseHash": "d9b4912cb42b5709362ea8d4e3974641b56e60a8",
       "issue": "LEGACY_FIXME"
     },
@@ -866,8 +866,8 @@
       "type": "patch",
       "file": "RNTester\\js\\examples\\ScrollView\\ScrollViewExample.windows.js",
       "baseFile": "RNTester\\js\\examples\\ScrollView\\ScrollViewExample.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "fcf88b82e07ee3eea31011f713dba9760ea16ed7",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "1840fda2dd4591883df92d28c1e1aeabff190f7f",
       "issue": "LEGACY_FIXME"
     },
     {
