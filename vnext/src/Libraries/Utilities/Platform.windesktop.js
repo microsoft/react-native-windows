@@ -10,9 +10,11 @@
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
-export type PlatformSelectSpec<D, I> = {
+export type PlatformSelectSpec<A, N, D> = {
+  android?: A,
+  native?: N,
   default?: D,
-  windesktop?: I,
+  ...
 };
 
 const Platform = {
@@ -28,7 +30,23 @@ const Platform = {
     |},
   |} {
     if (this.__constants == null) {
-      this.__constants = NativePlatformConstantsWin.getConstants();
+      // Hack: We shouldn't need to null-check NativePlatformContants, but
+      // needed to remove the invariant it is non-null since react-native-windesktop
+      // hasn't picked up the changes we've made in 0.61 to add the module yet.
+      // This can be removed when we fix windesktop NativePlatformConstantsWin.
+      if (NativePlatformConstantsWin) {
+        this.__constants = NativePlatformConstantsWin.getConstants();
+      } else {
+        this.__constants = {
+          isTesting: false,
+          reactNativeVersion: {
+            major: 0,
+            minor: 61,
+            patch: 5,
+            prerelease: undefined,
+          },
+        };
+      }
     }
     return this.__constants;
   },
@@ -41,8 +59,12 @@ const Platform = {
   get isTV() {
     return false;
   },
-  select: <D, I>(spec: PlatformSelectSpec<D, I>): D | I =>
-    'windesktop' in spec ? spec.windesktop : spec.default,
+  select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
+  'windesktop' in spec
+    ? spec.android
+    : 'native' in spec
+    ? spec.native
+    : spec.default,
 };
 
 module.exports = Platform;

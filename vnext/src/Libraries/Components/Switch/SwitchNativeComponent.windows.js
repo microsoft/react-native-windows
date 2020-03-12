@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
@@ -15,7 +15,11 @@ const requireNativeComponent = require('../../ReactNative/requireNativeComponent
 
 import type {ColorValue} from '../../StyleSheet/StyleSheetTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
+import * as React from 'react';
 
+import codegenNativeComponent from '../../Utilities/codegenNativeComponent';
+import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import type {NativeOrDynamicColorType} from '../../Color/NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
 
 type SwitchChangeEvent = $ReadOnly<{|
@@ -51,18 +55,17 @@ export type NativeIOSProps = $ReadOnly<{|
   tintColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
 |}>;
 
-type SwitchNativeComponentType = Class<
-  ReactNative.NativeComponent<
-    $ReadOnly<{|
-      ...NativeAndroidProps,
-      ...NativeIOSProps,
-    |}>,
-  >,
->;
+type ComponentType = HostComponent<NativeProps>;
 
-const SwitchNativeComponent: SwitchNativeComponentType =
-  Platform.OS === 'android'
-    ? (requireNativeComponent('AndroidSwitch'): any)
-    : (requireNativeComponent('RCTSwitch'): any);
+interface NativeCommands {
+  +setValue: (viewRef: React.ElementRef<ComponentType>, value: boolean) => void;
+}
 
-module.exports = SwitchNativeComponent;
+export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
+  supportedCommands: ['setValue'],
+});
+
+export default (codegenNativeComponent<NativeProps>('Switch', {
+  paperComponentName: 'RCTSwitch',
+  excludedPlatform: 'android',
+}): ComponentType);

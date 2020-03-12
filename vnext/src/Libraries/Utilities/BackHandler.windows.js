@@ -1,9 +1,15 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @format
  * @flow
  */
+
+// On Apple TV, this implements back navigation using the TV remote's menu button.
+// On iOS, this just implements a stub.
 
 'use strict';
 
