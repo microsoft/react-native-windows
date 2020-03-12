@@ -239,14 +239,14 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows (Debug)
         inputs:
-          script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging
+          script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
-          script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release
+          script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
