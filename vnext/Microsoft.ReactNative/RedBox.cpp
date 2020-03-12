@@ -3,10 +3,15 @@
 #include "pch.h"
 #include "RedBox.h"
 #include <functional/functor.h>
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
+#include <winrt/Windows.Web.Http.h>
+
 #include <regex>
 #include "Unicode.h"
 
@@ -156,6 +161,46 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       auto methodText = frameContent.FindName(L"MethodText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
       auto frameText = frameContent.FindName(L"FrameText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
       methodText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(frame.Method));
+
+      // When the user taps on a stack frame, tell the bundler to load that source in the users editor of choice
+      frameContent.Tapped([weakReactHost = m_weakReactHost, f = frame](
+                              winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                              winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const & /*e*/) {
+        if (auto reactHost = weakReactHost.GetStrongPtr()) {
+          auto devSettings = reactHost->Options().DeveloperSettings;
+          std::string stackFrameUri = "http://";
+          stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
+          stackFrameUri.append(":");
+          stackFrameUri.append(devSettings.SourceBundlePath.empty() ? "8081" : devSettings.SourceBundlePort);
+          stackFrameUri.append("/open-stack-frame");
+
+          winrt::Windows::Foundation::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};
+          winrt::Windows::Web::Http::HttpClient httpClient{};
+          winrt::Windows::Data::Json::JsonObject payload{};
+
+          auto fileSanitized = f.File;
+          // Bundler will not launch filenames containing :'s, so strip off the <drive letter>:
+          if (fileSanitized[1] == ':') {
+            fileSanitized.erase(fileSanitized.begin());
+            fileSanitized.erase(fileSanitized.begin());
+          }
+          payload.SetNamedValue(
+              L"file",
+              winrt::Windows::Data::Json::JsonValue::CreateStringValue(
+                  Microsoft::Common::Unicode::Utf8ToUtf16(fileSanitized)));
+          payload.SetNamedValue(
+              L"methodName",
+              winrt::Windows::Data::Json::JsonValue::CreateStringValue(
+                  Microsoft::Common::Unicode::Utf8ToUtf16(f.Method)));
+          payload.SetNamedValue(L"lineNumber", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(f.Line));
+          payload.SetNamedValue(L"column", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(f.Column));
+          winrt::Windows::Web::Http::HttpStringContent content(
+              payload.ToString(),
+              winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8,
+              L"application/json; charset=utf-8");
+          httpClient.TryPostAsync(uri, content);
+        }
+      });
 
       std::stringstream stackFrameInfo;
       stackFrameInfo << frame.File << ":" << frame.Line << ":" << frame.Column;
