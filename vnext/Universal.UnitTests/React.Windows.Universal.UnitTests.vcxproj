@@ -39,15 +39,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup>
-    <PackageCertificateKeyFile>React.Windows.Universal.UnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>63B3B5D575C3DE72218E4A75BFE5661B129042E8</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>React.Windows.Universal.UnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

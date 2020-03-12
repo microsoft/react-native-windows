@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 11 Mar 2020 19:32:20 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Mar 2020 00:01:14 GMT and should not be manually modified.
 
+## 0.61.0-beta.55
+Thu, 12 Mar 2020 00:01:14 GMT
+
+### Changes
+
+- Fix JSValueObject operator[] (vmorozov@microsoft.com)
 ## 0.61.0-beta.54
 Wed, 11 Mar 2020 19:32:20 GMT
 

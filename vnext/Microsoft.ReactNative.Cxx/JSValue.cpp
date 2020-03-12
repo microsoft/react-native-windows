@@ -349,6 +349,16 @@ JSValueObject JSValueObject::Copy() const noexcept {
   return object;
 }
 
+JSValue &JSValueObject::operator[](std::string_view propertyName) noexcept {
+  // When we search for a node we do no want to convert string_view to a string.
+  auto it = lower_bound(propertyName);
+  if (it != end() && !key_comp()(propertyName, it->first)) {
+    return it->second;
+  } else {
+    return emplace_hint(it, propertyName, nullptr)->second;
+  }
+}
+
 JSValue const &JSValueObject::operator[](std::string_view propertyName) const noexcept {
   auto it = find(propertyName);
   if (it != end()) {
@@ -419,6 +429,20 @@ void JSValueObject::WriteTo(IJSValueWriter const &writer) const noexcept {
 //===========================================================================
 // JSValueArray implementation
 //===========================================================================
+
+JSValueArray::JSValueArray(size_type size) noexcept {
+  reserve(size);
+  for (size_type i = 0; i < size; ++i) {
+    emplace_back(nullptr);
+  }
+}
+
+JSValueArray::JSValueArray(size_type size, JSValue const &defaultValue) noexcept {
+  reserve(size);
+  for (size_type i = 0; i < size; ++i) {
+    push_back(defaultValue.Copy());
+  }
+}
 
 JSValueArray::JSValueArray(std::initializer_list<JSValueArrayItem> initArray) noexcept {
   for (auto const &item : initArray) {
