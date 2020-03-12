@@ -49,7 +49,7 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
-#include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 
@@ -151,9 +151,9 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #endif
 }
 
-class BridgeJSCallInvoker : public JSCallInvoker {
+class BridgeCallInvoker : public CallInvoker {
  public:
-  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
+  BridgeCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
       : messageQueueThread_(std::move(messageQueueThread)) {}
 
   void invokeAsync(std::function<void()> &&func) override {
@@ -183,7 +183,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
     auto turboModuleManager =
-        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeJSCallInvoker>(jsQueue));
+        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeCallInvoker>(jsQueue));
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
