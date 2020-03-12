@@ -10,21 +10,12 @@
 
 // Do not require the native RCTNetworking module directly! Use this wrapper module instead.
 // It will add the necessary requestId, so that you don't have to generate it yourself.
+const NativeEventEmitter = require('../EventEmitter/NativeEventEmitter');
 
-declare module 'react-native' {
-  /* tslint:disable-next-line interface-name */
-  interface NativeModulesStatic {
-    /* tslint:disable-next-line no-any */
-    Networking: any;
-  }
-}
+const convertRequestBody = require('./convertRequestBody');
 
-import { NativeEventEmitter as NativeEventEmitter_TypeCarrier } from 'react-native';
-export const NativeEventEmitter: typeof NativeEventEmitter_TypeCarrier = require('../EventEmitter/NativeEventEmitter');
-
-const NativeModules = require('../BatchedBridge/NativeModules');
-
-const RCTNetworkingNative = NativeModules.Networking;
+import NativeNetworkingAndroid from './NativeNetworkingAndroid';
+import type {RequestBody} from './convertRequestBody';
 
 type Header = [string, string];
 
@@ -91,11 +82,4 @@ class RCTNetworking extends NativeEventEmitter {
   }
 }
 
-function getParts(data) {
-  return data.getParts().map(part => {
-    part.headers = convertHeadersMapToArray(part.headers);
-    return part;
-  });
-}
-
-module.exports = new RCTNetworking();
+module.exports = (new RCTNetworking(): RCTNetworking);

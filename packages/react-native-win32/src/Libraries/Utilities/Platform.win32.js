@@ -10,9 +10,11 @@
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
-export type PlatformSelectSpec<D, I> = {
+export type PlatformSelectSpec<A, N, D> = {
+  android?: A,
+  native?: N,
   default?: D,
-  win32?: I,
+  ...
 };
 
 const Platform = {
@@ -57,8 +59,12 @@ const Platform = {
   get isTV() {
     return false;
   },
-  select: <D, I>(spec: PlatformSelectSpec<D, I>): D | I =>
-    'win32' in spec ? spec.win32 : spec.default,
+  select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
+  'win32' in spec
+    ? spec.android
+    : 'native' in spec
+    ? spec.native
+    : spec.default,
 };
 
 module.exports = Platform;
