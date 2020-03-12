@@ -13,6 +13,13 @@ class Dimensions {
       'Having a global Dimensions object is too simplistic for Win32, so this API does not work',
     );
   }
+
+  public static set(dims: any): void {
+    throw new Error(
+      'Having a global Dimensions object is too simplistic for Win32, so this API does not work',
+    );
+  }
+
   public static addEventListener(type: string, handler: Function) {
     throw new Error(
       'Having a global Dimensions object is too simplistic for Win32, so this API does not work',

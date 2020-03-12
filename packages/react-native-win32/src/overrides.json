@@ -163,8 +163,8 @@
       "type": "derived",
       "file": "Libraries\\Components\\TextInput\\TextInput.win32.tsx",
       "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "53a59e839404c2f565cb47b00fee6b4541045d6c",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "ddc98a5d277a630f3ac95c5d416a1028ba27382d",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -246,8 +246,8 @@
       "type": "derived",
       "file": "Libraries\\Image\\Image.win32.js",
       "baseFile": "Libraries\\Image\\Image.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "96c015ca1381817447cc98f72319ac89b30651b1",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -382,8 +382,8 @@
       "type": "derived",
       "file": "Libraries\\Utilities\\Dimensions.win32.ts",
       "baseFile": "Libraries\\Utilities\\Dimensions.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "2c7524091064411ed37220671aee34c86a7f6398",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "c8752f2624a836e0b4eb7ef1b24be76ef1ba8731",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -466,16 +466,16 @@
       "type": "derived",
       "file": "RNTester\\js\\RNTesterApp.win32.tsx",
       "baseFile": "RNTester\\js\\RNTesterApp.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "9cc102294d7ed366aff473f17e1caedfcc8ddb4c",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "53ddf0736fa7aba54191961066d2e934ba22dfa2",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "derived",
       "file": "RNTester\\js\\utils\\RNTesterList.win32.ts",
       "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "e1a725929fbf9b90245e9eddeb797f90b53b8ee9",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "f1e77952c292fe2898645f81f280b64f8ea17b90",
       "issue": "LEGACY_FIXME"
     },
     {
