@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-windows": "0.61.0-beta.55",
-    "react-native-windows-extended": "0.61.0-beta.66",
+    "react-native": "0.62.0-rc.3",
+    "react-native-windows": "0.0.0-master.1",
+    "react-native-windows-extended": "0.0.0-master.1",
     "rnpm-plugin-windows": "^0.5.1-0"
   },
   "devDependencies": {
@@ -34,7 +34,7 @@
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
-    "@types/react-native": "~0.61.5",
+    "@types/react-native": "~0.62.0-0 || ~0.61.5",
     "@wdio/appium-service": "5.12.1",
     "@wdio/cli": "5.12.1",
     "@wdio/dot-reporter": "5.12.1",

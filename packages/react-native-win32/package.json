@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.61.0-beta.14",
+  "version": "0.0.0-master.1",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
@@ -49,19 +49,19 @@
     "@types/node": "^12.11.2",
     "@types/prop-types": "15.5.1",
     "@types/react": "16.9.0",
-    "@types/react-native": "~0.61.5",
+    "@types/react-native": "~0.62.0-0 || ~0.61.5",
     "flow-bin": "^0.105.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "react": "16.9.0",
     "react-native-windows-override-tools": "^0.0.1",
-    "react-native": "0.61.5",
+    "react-native": "0.62.0-rc.3",
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
     "react": "16.9.0",
     "react-dom": "16.8.6",
-    "react-native": "0.61.5"
+    "react-native": "0.62.0-rc.3"
   },
   "beachball": {
     "defaultNpmTag": "beta",
