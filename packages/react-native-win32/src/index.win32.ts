@@ -12,47 +12,47 @@
          which will provide proper type information for these exports.
 */
 
-const ReactNativeImplementation = require('./react-native-implementation.js');
+const ReactNativeImplementation = require('./index.js');
 
 Object.defineProperty(ReactNativeImplementation, 'ViewWin32', {
   get: () => {
-    return require('../Components/View/ViewWin32').ViewWin32;
+    return require('./Libraries/Components/View/ViewWin32').ViewWin32;
   },
 });
 
 Object.defineProperty(ReactNativeImplementation, 'TextWin32', {
   get: () => {
-    return require('../Components/Text/TextWin32').TextWin32;
+    return require('./Libraries/Components/Text/TextWin32').TextWin32;
   },
 });
 
 Object.defineProperty(ReactNativeImplementation, 'ButtonWin32', {
   get: () => {
-    return require('../Components/Button/ButtonWin32').ButtonWin32;
+    return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
   },
 });
 
 Object.defineProperty(ReactNativeImplementation, 'TouchableWin32', {
   get: () => {
-    return require('../Components/Touchable/TouchableWin32').TouchableWin32;
+    return require('./Libraries/Components/Touchable/TouchableWin32').TouchableWin32;
   },
 });
 
 Object.defineProperty(ReactNativeImplementation, 'PersonaCoin', {
   get: () => {
-    return require('../PersonaCoin/PersonaCoin').PersonaCoin;
+    return require('./Libraries/PersonaCoin/PersonaCoin').PersonaCoin;
   },
 });
 
 Object.defineProperty(ReactNativeImplementation, 'PersonaCoinSize', {
   get: () => {
-    return require('../PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
+    return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
   },
 });
 
 Object.defineProperty(ReactNativeImplementation, 'PersonaCoinPresence', {
   get: () => {
-    return require('../PersonaCoin/PersonaCoinTypes').PersonaCoinPresence;
+    return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinPresence;
   },
 });
 

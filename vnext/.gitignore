@@ -53,6 +53,7 @@ node_modules
 /RNTester
 /RNTester.*
 /index.*
+/typings-index.*
 
 # Visual Studio
 .vs/
