@@ -21,9 +21,12 @@ class WinRTWebSocketResource : public IWebSocketResource
 
   std::function<void()> m_connectHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;
+  std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;
 
   WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
+
+  void OnClosed(winrt::Windows::Networking::Sockets::IWebSocket const& sender, winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
 
 public:
   WinRTWebSocketResource(const std::string& urlString);

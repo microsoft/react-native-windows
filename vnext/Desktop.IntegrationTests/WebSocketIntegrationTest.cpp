@@ -22,22 +22,48 @@ using std::unique_lock;
 using std::chrono::milliseconds;
 
 using CloseCode = IWebSocketResource::CloseCode;
+using Error = IWebSocketResource::Error;
 
-TEST_CLASS (WebSocketIntegrationTest) {
-  TEST_METHOD(ConnectClose) {
+TEST_CLASS (WebSocketIntegrationTest)
+{
+  //TODO: Cleanup before merging.
+  TEST_METHOD(ConnectClose)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556);
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
+    bool closed = false;
+    promise<bool> closedPromise;
+    bool error = false;
     string message;
-    ws->SetOnConnect([&connected]() { connected = true; });
+    ws->SetOnConnect([&connected]()
+    {
+      connected = true;
+    });
+    ws->SetOnClose([&closed, &closedPromise](CloseCode code, const string& reason)
+    {
+      closed = true;
+      closedPromise.set_value(true);
+    });
+    ws->SetOnError([&error](Error&& e)
+    {
+      error = true;
+    });
 
     server->Start();
     ws->Connect();
     ws->Close(CloseCode::Normal, "Closing");
+
+    auto future = closedPromise.get_future();
+    future.wait_for(std::chrono::seconds(2));
+    //bool closed1 = future.get();
+
     server->Stop();
 
+    Assert::IsFalse(error);
     Assert::IsTrue(connected);
+    Assert::IsTrue(closed);
   }
 
   TEST_METHOD(ConnectNoClose) {

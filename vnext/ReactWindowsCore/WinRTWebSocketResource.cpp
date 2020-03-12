@@ -23,8 +23,10 @@ using std::vector;
 using winrt::hresult;
 using winrt::hresult_error;
 using winrt::Windows::Foundation::Uri;
+using winrt::Windows::Networking::Sockets::IWebSocket;
 using winrt::Windows::Networking::Sockets::MessageWebSocket;
 using winrt::Windows::Networking::Sockets::SocketMessageType;
+using winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Storage::Streams::DataReader;
 using winrt::Windows::Storage::Streams::DataWriter;
@@ -44,6 +46,19 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
 {
 }
 
+#pragma region Private members
+
+void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedEventArgs const& args)
+{
+  if (m_closeHandler)
+  {
+    //TODO: Parameterize (pass via member variables?)
+    m_closeHandler(CloseCode::Normal, "Closing");
+  }
+}
+
+#pragma endregion Private members
+
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
@@ -60,7 +75,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
     supportedProtocols.Append(Utf8ToUtf16(protocol));
   }
 
-  // Set message received callback.
+  // Set message received callback
   m_socket.MessageReceived(winrt::auto_revoke, [this](auto&&, auto&& args)
   {
     try
@@ -94,6 +109,8 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
       m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
     }
   }); // Message received callback
+
+  m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
 
   winrt::hresult hr = S_OK;
   try
@@ -136,7 +153,7 @@ void WinRTWebSocketResource::SendBinary(const string& base64String)
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
-  m_socket.Close();
+  m_socket.Close(static_cast<uint16_t>(code), Utf8ToUtf16(reason) );
 }
 
 IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
@@ -166,7 +183,7 @@ void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&
 
 void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler)
 {
-
+  m_closeHandler = handler;
 }
 
 void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
