@@ -139,7 +139,7 @@ The latest and recommended release to use.
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="install-the-windows-extension"></a><a href="#install-the-windows-extension" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the Windows extension</h3>
 <p>Lastly, install the React Native for Windows packages.</p>
-<pre><code class="hljs">react-<span class="hljs-keyword">native</span> windows
+<pre><code class="hljs">npx react-<span class="hljs-keyword">native</span> windows
 </code></pre>
   </div>
   <div id="beta" class="invisible">
@@ -165,17 +165,19 @@ The latest and recommended release to use.
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="install-the-windows-extension-1"></a><a href="#install-the-windows-extension-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the Windows extension</h3>
 <p>Lastly, install the React Native for Windows packages.</p>
-<pre><code class="hljs">react-<span class="hljs-keyword">native</span> windows --template beta
+<pre><code class="hljs">npx react-<span class="hljs-keyword">native</span> windows --template beta
 </code></pre>
   </div>  
 </div>
 <h2><a class="anchor" aria-hidden="true" id="running-a-react-native-windows-app"></a><a href="#running-a-react-native-windows-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running a React Native Windows App</h2>
-<p><em>Note: Make sure a browser is launched and running before running a React Native Windows app.</em></p>
+<blockquote>
+<p>Make sure a browser is launched and running before running a React Native Windows app.
+Also ensure your system meets all the <a href="https://microsoft.github.io/react-native-windows/docs/rnw-dependencies">requirements</a> to build a Windows app as well.</p>
+</blockquote>
 <ul>
 <li><p>Without Visual Studio</p>
-<p>:exclamation: <strong>We are seeing issues with msbuild with the below command. This is being investigated in <a href="https://github.com/microsoft/react-native-windows/issues/3263">Issue 3263</a>. Until this is fixed, please use the With Visual Studio option below.</strong></p>
 <p>In your React Native Windows project directory, run:</p>
-<pre><code class="hljs">react-native <span class="hljs-keyword">run</span><span class="bash">-windows</span>
+<pre><code class="hljs">npx react-native <span class="hljs-keyword">run</span><span class="bash">-windows</span>
 </code></pre>
 <p>A new Command Prompt window will open with the React packager as well as a <code>react-native-windows</code> app. This step may take a while during first run since it involves building the entire project and all dependencies. You can now start developing! :tada:</p></li>
 <li><p>With Visual Studio</p>
