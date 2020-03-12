@@ -67,7 +67,6 @@ struct IReactInstance : IUnknown {
   virtual const ReactOptions &Options() const noexcept = 0;
 
   virtual ReactInstanceState State() const noexcept = 0;
-  virtual std::string LastErrorMessage() const noexcept = 0;
 };
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")

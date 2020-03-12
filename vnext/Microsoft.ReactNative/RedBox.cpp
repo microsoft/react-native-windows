@@ -3,10 +3,15 @@
 #include "pch.h"
 #include "RedBox.h"
 #include <functional/functor.h>
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
+#include <winrt/Windows.Web.Http.h>
+
 #include <regex>
 #include "Unicode.h"
 
@@ -16,10 +21,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
       Mso::WeakPtr<IReactHost> weakReactHost,
       Mso::Functor<void(uint32_t)> &&onClosedCallback,
-      JSExceptionInfo &&exceptionInfo) noexcept
+      ErrorInfo &&errorInfo) noexcept
       : m_weakReactHost(std::move(weakReactHost)),
         m_onClosedCallback(std::move(onClosedCallback)),
-        m_exceptionInfo(std::move(exceptionInfo)) {}
+        m_errorInfo(std::move(errorInfo)) {}
 
   void Dismiss() noexcept {
     if (m_popup) {
@@ -54,18 +59,19 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         L"    <ColumnDefinition Width='*'/>"
         L"  </Grid.ColumnDefinitions>"
         L"  <Grid.RowDefinitions>"
-        L"    <RowDefinition Height='Auto'/>"
         L"    <RowDefinition Height='*'/>"
         L"    <RowDefinition Height='Auto'/>"
         L"  </Grid.RowDefinitions>"
-        L"  <Grid Background='#EECC0000' Grid.Row='0' Grid.ColumnSpan='2' Padding='15,35,15,15'>"
-        L"    <TextBlock x:Name='ErrorMessageText' FontSize='20' Foreground='White'/>"
-        L"  </Grid>"
-        L"  <ScrollViewer Grid.Row='1' Grid.ColumnSpan='2'>"
-        L"    <StackPanel x:Name='StackPanel' Margin='15' />"
+        L"  <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>"
+        L"    <StackPanel HorizontalAlignment='Stretch'>"
+        L"      <Grid Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15'>"
+        L"        <TextBlock x:Name='ErrorMessageText' FontSize='20' Foreground='White' TextWrapping='Wrap'/>"
+        L"      </Grid>"
+        L"      <StackPanel HorizontalAlignment='Stretch' x:Name='StackPanel' Margin='15' />"
+        L"    </StackPanel>"
         L"  </ScrollViewer>"
-        L"  <Button x:Name='DismissButton' Grid.Row='2' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>"
-        L"  <Button x:Name='ReloadButton' Grid.Row='2' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload (NYI)</Button>"
+        L"  <Button x:Name='DismissButton' Grid.Row='1' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>"
+        L"  <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload (NYI)</Button>"
         L"</Grid>";
 
     m_redboxContent = winrt::unbox_value<winrt::Windows::UI::Xaml::Controls::Grid>(
@@ -112,8 +118,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_popup.IsOpen(true);
   }
 
-  void UpdateJSError(const JSExceptionInfo &&info) noexcept {
-    m_exceptionInfo = std::move(info);
+  void UpdateError(const ErrorInfo &&info) noexcept {
+    m_errorInfo = std::move(info);
     if (m_showing) {
       PopulateFrameStackUI();
     }
@@ -129,19 +135,19 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   }
 
   uint32_t GetId() const noexcept {
-    return m_exceptionInfo.ExceptionId;
+    return m_errorInfo.Id;
   }
 
  private:
   void UpdateErorrMessageUI() noexcept {
     std::regex colorsreg("\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     m_errorMessageText.Text(
-        Microsoft::Common::Unicode::Utf8ToUtf16(std::regex_replace(m_exceptionInfo.ExceptionMessage, colorsreg, "")));
+        Microsoft::Common::Unicode::Utf8ToUtf16(std::regex_replace(m_errorInfo.Message, colorsreg, "")));
   }
 
   void PopulateFrameStackUI() noexcept {
     m_stackPanel.Children().Clear();
-    for (const auto frame : m_exceptionInfo.Callstack) {
+    for (const auto frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
           L"<StackPanel Margin='0,5,0,5'"
           L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
@@ -155,6 +161,46 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       auto methodText = frameContent.FindName(L"MethodText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
       auto frameText = frameContent.FindName(L"FrameText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
       methodText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(frame.Method));
+
+      // When the user taps on a stack frame, tell the bundler to load that source in the users editor of choice
+      frameContent.Tapped([weakReactHost = m_weakReactHost, f = frame](
+                              winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                              winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const & /*e*/) {
+        if (auto reactHost = weakReactHost.GetStrongPtr()) {
+          auto devSettings = reactHost->Options().DeveloperSettings;
+          std::string stackFrameUri = "http://";
+          stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
+          stackFrameUri.append(":");
+          stackFrameUri.append(devSettings.SourceBundlePath.empty() ? "8081" : devSettings.SourceBundlePort);
+          stackFrameUri.append("/open-stack-frame");
+
+          winrt::Windows::Foundation::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};
+          winrt::Windows::Web::Http::HttpClient httpClient{};
+          winrt::Windows::Data::Json::JsonObject payload{};
+
+          auto fileSanitized = f.File;
+          // Bundler will not launch filenames containing :'s, so strip off the <drive letter>:
+          if (fileSanitized[1] == ':') {
+            fileSanitized.erase(fileSanitized.begin());
+            fileSanitized.erase(fileSanitized.begin());
+          }
+          payload.SetNamedValue(
+              L"file",
+              winrt::Windows::Data::Json::JsonValue::CreateStringValue(
+                  Microsoft::Common::Unicode::Utf8ToUtf16(fileSanitized)));
+          payload.SetNamedValue(
+              L"methodName",
+              winrt::Windows::Data::Json::JsonValue::CreateStringValue(
+                  Microsoft::Common::Unicode::Utf8ToUtf16(f.Method)));
+          payload.SetNamedValue(L"lineNumber", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(f.Line));
+          payload.SetNamedValue(L"column", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(f.Column));
+          winrt::Windows::Web::Http::HttpStringContent content(
+              payload.ToString(),
+              winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8,
+              L"application/json; charset=utf-8");
+          httpClient.TryPostAsync(uri, content);
+        }
+      });
 
       std::stringstream stackFrameInfo;
       stackFrameInfo << frame.File << ":" << frame.Line << ":" << frame.Column;
@@ -176,7 +222,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   winrt::event_token m_tokenDismiss;
   winrt::event_token m_tokenReload;
   winrt::event_token m_tokenSizeChanged;
-  JSExceptionInfo m_exceptionInfo;
+  ErrorInfo m_errorInfo;
   Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
 
@@ -205,7 +251,7 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
     }
   }
 
-  virtual void showNewJSError(JSExceptionInfo &&info, JSExceptionType /*exceptionType*/) override {
+  virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
     std::shared_ptr<RedBox> redbox(std::make_shared<RedBox>(
         m_weakReactHost,
         [wkthis = std::weak_ptr(shared_from_this())](uint32_t id) {
@@ -229,12 +275,12 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
     return false;
   }
 
-  virtual void updateJSError(JSExceptionInfo &&info) override {
+  virtual void updateError(ErrorInfo &&info) override {
     std::shared_ptr<RedBox> redbox;
     {
       std::scoped_lock lock{m_lockRedBox};
       for (auto it = m_redboxes.begin(); it != m_redboxes.end(); ++it) {
-        if ((*it)->GetId() == info.ExceptionId) {
+        if ((*it)->GetId() == info.Id) {
           redbox = *it;
           break;
         }
@@ -242,8 +288,8 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
     }
     if (redbox) {
       if (auto uiQueue = m_wkUIMessageQueue.lock()) {
-        uiQueue->runOnQueue([redboxCaptured = std::move(redbox), exceptionInfo = std::move(info)]() {
-          redboxCaptured->UpdateJSError(std::move(exceptionInfo)); // This shouldn't be in the lock
+        uiQueue->runOnQueue([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
+          redboxCaptured->UpdateError(std::move(errorInfo));
         });
       }
     }
