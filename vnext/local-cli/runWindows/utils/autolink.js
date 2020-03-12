@@ -26,7 +26,7 @@ function updateAutoLink(verbose) {
       : null;
     if (cppProjFile == null) {
       console.log(
-        'AutoLink currently is only supported on  C++/WinRT main project.',
+        'AutoLink currently is only supported on C++/WinRT main project.',
       );
       return;
     }
