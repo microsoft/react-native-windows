@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Add cli.js",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "commit": "f7055a29a718f358921db2f658acbe5fb187b15d",
+  "dependentChangeType": "patch",
+  "date": "2020-03-12T17:45:38.430Z"
+}
