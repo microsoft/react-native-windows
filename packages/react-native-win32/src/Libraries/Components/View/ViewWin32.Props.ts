@@ -107,6 +107,21 @@ export type AccessibilityActionName =
   | 'Expand'
   | 'Collapse';
 
+  export type Cursor =
+  | 'auto'
+  | 'pointer'
+
+  export type Layout =
+  | 'vertical'
+  | 'horizontal'
+  | 'table'
+  | 'flow'
+  | 'verticalFlow'
+  | 'overlap'
+  | 'ribbonLayout'
+  | 'flexboxLayout'
+  | 'gridLayout'
+
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
   label?: string;
@@ -223,5 +238,5 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
    * Provides a screentip to be used on hover of the view
    */
   tooltip?: string;
-  cursor?: string;
+  cursor?: Cursor;
 }
