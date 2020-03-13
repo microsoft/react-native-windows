@@ -288,8 +288,6 @@
     <ClInclude Include="ReactHost\InstanceFactory.h" />
     <ClInclude Include="ReactHost\IReactInstanceInternal.h" />
     <ClInclude Include="ReactHost\JSBundle.h" />
-    <ClInclude Include="ReactHost\JSExceptionCallbackFactory.h" />
-    <ClInclude Include="ReactHost\JSExceptionInfo.h" />
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
     <ClInclude Include="ReactHost\PropertyBag.h" />
@@ -452,7 +450,6 @@
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="ReactHost\JSExceptionCallbackFactory.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
     <ClCompile Include="ReactHost\PropertyBag.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />

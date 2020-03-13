@@ -62,6 +62,13 @@ struct JSValueObject : std::map<std::string, JSValue, std::less<>> {
 
 #pragma endregion
 
+#pragma region Change JSValueObject
+  //! Get a reference to object property value if the property is found,
+  //! or a reference to a new property created with JSValue::Null value otherwise.
+  JSValue &operator[](std::string_view propertyName) noexcept;
+
+#pragma endregion
+
 #pragma region Inspect JSValueObject
 
   //! Get a reference to object property value if the property is found,
@@ -105,6 +112,13 @@ struct JSValueArray : std::vector<JSValue> {
 
   //! Default constructor.
   JSValueArray() = default;
+
+  //! Constructs JSValueArray with size JSValue::Null elements.
+  explicit JSValueArray(size_type size) noexcept;
+
+  //! Constructs JSValueArray with size elements.
+  //! Each element is a copy of defaultValue.
+  JSValueArray(size_type size, JSValue const &defaultValue) noexcept;
 
   //! Construct JSValueArray from the move iterator.
   template <class TMoveInputIterator>

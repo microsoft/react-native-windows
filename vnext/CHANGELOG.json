@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Mar 2020 17:37:53 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.57",
+      "version": "0.61.0-beta.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build unit tests in ReactWindows-Universal solution",
+            "author": "jthysell@microsoft.com",
+            "commit": "d2cf35e0871a0f3b07ceacfbcff6fbc2942731f5"
+          },
+          {
+            "comment": "Address PR comments",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "223a5819ce10881427a0b28d176ac51bf06b5318"
+          },
+          {
+            "comment": "Code-Gen nativeModules.g.h for auto-linking",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "223a5819ce10881427a0b28d176ac51bf06b5318"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Mar 2020 19:18:01 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.56",
+      "version": "0.61.0-beta.56",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use redbox for native errors",
+            "author": "acoates@microsoft.com",
+            "commit": "490beecb0255a8805f986b674ddb3d479df67b69"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Mar 2020 17:02:41 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.55",
+      "version": "0.61.0-beta.55",
+      "comments": {
+        "none": [
+          {
+            "comment": "Stop requiring signing certs for test apps",
+            "author": "acoates@microsoft.com",
+            "commit": "966064ea9e1049dbe84878185d6cbbfa85159e2e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Mar 2020 00:01:14 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.55",
+      "version": "0.61.0-beta.55",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix JSValueObject operator[]",
+            "author": "vmorozov@microsoft.com",
+            "commit": "7cd87be7f031f025b87eb757388fab7adfffe49f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Mar 2020 19:32:20 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.54",
+      "version": "0.61.0-beta.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fully implement ExceptionsManagerModule",
+            "author": "acoates@microsoft.com",
+            "commit": "aed7213868d69d2fb09a4746308a32d62a274cd6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Mar 2020 18:14:12 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.53",
+      "version": "0.61.0-beta.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Code review feedback",
+            "author": "acoates@microsoft.com",
+            "commit": "717f3150913ebde8781bc08b948b5aa2daa1c965"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Mar 2020 16:18:00 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.52",
+      "version": "0.61.0-beta.52",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash in timers during instance shutdown, and in systrace",
+            "author": "acoates@microsoft.com",
+            "commit": "d8cf799a2df255fd3c590ba9df5319368cc6f682"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Mar 2020 21:51:40 GMT",
       "tag": "react-native-windows_v0.61.0-beta.51",
       "version": "0.61.0-beta.51",

@@ -181,13 +181,45 @@ export default class Manifest {
    * @returns false if none is found with the given name
    */
   removeOverride(overridePath: string): boolean {
-    const idx = this.overrides.findIndex(ovr => ovr.file === overridePath);
+    const idx = this.findOverrideIndex(overridePath);
     if (idx === -1) {
       return false;
     }
 
     this.overrides.splice(idx, 1);
     return true;
+  }
+
+  /**
+   * Returns the entry corresponding to the given override path, or null if none
+   * exists.
+   */
+  findOverride(overridePath: string): ManifestData.Entry | null {
+    const idx = this.findOverrideIndex(overridePath);
+    if (idx === -1) {
+      return null;
+    }
+
+    return _.cloneDeep(this.overrides[idx]);
+  }
+
+  /**
+   * Updates an override entry to mark it as up-to-date in regards to its
+   * current base file.
+   */
+  async markUpToDate(overridePath: string) {
+    const entryIdx = this.findOverrideIndex(overridePath);
+    if (entryIdx === -1) {
+      throw new Error(`Override at '${overridePath}' does not exist`);
+    }
+
+    const internalEntry = this.overrides[entryIdx];
+    if (internalEntry.type === 'platform') {
+      throw new Error('Cannot mark a platform override as up-to-date');
+    }
+
+    const newBaseInfo = await this.getOverrideBaseInfo(internalEntry.baseFile);
+    Object.assign(internalEntry, internalEntry, newBaseInfo);
   }
 
   /**
@@ -198,6 +230,13 @@ export default class Manifest {
   }
 
   /**
+   * Returns the version of React Native the manifest considers as current
+   */
+  currentVersion(): string {
+    return this.reactRepo.getVersion();
+  }
+
+  /**
    * Hash content into the form expected in a manifest entry. Exposed for
    * testing.
    */
@@ -205,6 +244,15 @@ export default class Manifest {
     const hasher = crypto.createHash('sha1');
     hasher.update(str);
     return hasher.digest('hex');
+  }
+
+  /**
+   * Find the index to a given override.
+   * @returns -1 if it cannot be found
+   */
+  private findOverrideIndex(overridePath: string): number {
+    const noramlizedPath = path.normalize(overridePath);
+    return this.overrides.findIndex(ovr => ovr.file === noramlizedPath);
   }
 
   private async checkAndNormalizeOverrideFile(file: string): Promise<string> {
@@ -229,7 +277,7 @@ export default class Manifest {
       throw new Error(`Could not find base file '${file}'`);
     }
 
-    const baseVersion = this.reactRepo.getVersion();
+    const baseVersion = this.currentVersion();
     const baseHash = Manifest.hashContent(baseContent);
 
     return {baseFile, baseVersion, baseHash};

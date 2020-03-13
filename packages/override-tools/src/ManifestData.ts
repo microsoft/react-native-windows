@@ -60,18 +60,20 @@ const CopyEntryType = t.type({
   issue: t.number,
 });
 
-const EntryType = t.union([
-  PlatformEntryType,
+const NonPlatformEntryType = t.union([
   PatchEntryType,
   DerivedEntryType,
   CopyEntryType,
 ]);
+const EntryType = t.union([PlatformEntryType, NonPlatformEntryType]);
+
 const ManifestType = t.type({overrides: t.array(EntryType)});
 
 export type PlatformEntry = t.TypeOf<typeof PlatformEntryType>;
 export type PatchEntry = t.TypeOf<typeof PatchEntryType>;
 export type DerivedEntry = t.TypeOf<typeof DerivedEntryType>;
 export type CopyEntry = t.TypeOf<typeof CopyEntryType>;
+export type NonPlatformEntry = t.TypeOf<typeof NonPlatformEntryType>;
 export type Entry = t.TypeOf<typeof EntryType>;
 export type Manifest = t.TypeOf<typeof ManifestType>;
 

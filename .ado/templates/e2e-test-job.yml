@@ -15,7 +15,7 @@ jobs:
     pool:
       vmImage: windows-2019
     variables: 
-      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
+      VsComponents: Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64,Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141,Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
       BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
       runCodesignValidationInjection: false
       VmImage: windows-2019
@@ -66,7 +66,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
       - task: PublishBuildArtifacts@1
