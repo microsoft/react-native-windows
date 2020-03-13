@@ -10,6 +10,8 @@ import * as path from 'path';
 
 import {OverrideFileRepository} from './FileRepository';
 
+const DEFAULT_FILTER = /^.*\.(js|ts|jsx|tsx|cpp|h)$/;
+
 /**
  * Allows reading phsyical override files based on a passed in directory
  */
@@ -18,9 +20,9 @@ export default class OverrideFileRepositoryImpl
   private baseDir: string;
   private filter: RegExp;
 
-  constructor(baseDir: string, filter: RegExp) {
+  constructor(baseDir: string, filter?: RegExp) {
     this.baseDir = baseDir;
-    this.filter = filter;
+    this.filter = filter || DEFAULT_FILTER;
   }
 
   async listFiles(): Promise<Array<string>> {
@@ -36,6 +38,11 @@ export default class OverrideFileRepositoryImpl
     } catch {
       return null;
     }
+  }
+
+  async setFileContents(filename: string, content: string) {
+    const filePath = path.join(this.baseDir, filename);
+    return fs.promises.writeFile(filePath, content);
   }
 
   private async listFilesRec(file: string): Promise<Array<string>> {

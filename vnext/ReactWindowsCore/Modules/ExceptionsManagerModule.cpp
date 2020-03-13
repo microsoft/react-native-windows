@@ -11,53 +11,6 @@
 namespace facebook {
 namespace react {
 
-ExceptionsManagerModule::ExceptionsManagerModule(std::function<void(JSExceptionInfo)> &&jsExceptionCallback)
-    : m_jsExceptionCallback(std::move(jsExceptionCallback)) {}
-
-std::string ExceptionsManagerModule::getName() {
-  return name;
-}
-
-std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants() {
-  return std::map<std::string, folly::dynamic>();
-}
-
-std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods() {
-  return {
-      Method(
-          "reportFatalException",
-          [this](folly::dynamic args) noexcept {
-            if (m_jsExceptionCallback) {
-              m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Fatal)));
-            }
-          }),
-
-      Method(
-          "reportSoftException",
-          [this](folly::dynamic args) noexcept {
-            if (m_jsExceptionCallback) {
-              m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Soft)));
-            }
-          }),
-
-      Method(
-          "updateExceptionMessage",
-          [](folly::dynamic /*args*/) noexcept {
-              // For every JS exception, react native first calls
-              // reportFatalException or reportSoftException.
-              // Then it attempts to Symbolicate the stack trace and if it
-              // succeeds, calls this method (updateExceptionMessage),
-              // As a result every JS exception is propagated across the bridge
-              // to this native module twice.
-              // We only need to expose the exception info to the exception
-              // callback once, and in the case of Win32, stacks coming through
-              // reportFatalException and reportSoftException already have
-              // symbol information, so there is nothing we need to do here.
-          }),
-
-  };
-}
-
 namespace {
 std::string RetrieveStringFromMap(const folly::dynamic &map, const std::string &key) noexcept {
   assert(map.type() == folly::dynamic::OBJECT);
@@ -83,11 +36,8 @@ int RetrieveIntFromMap(const folly::dynamic &map, const std::string &key) noexce
   assert(false);
   return -1;
 }
-} // namespace
 
-JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
-    const folly::dynamic &args,
-    JSExceptionType jsExceptionType) const noexcept {
+Mso::React::ErrorInfo CreateErrorInfo(const folly::dynamic &args) noexcept {
   // Parameter args is a dynamic array containing 3 objects:
   // 1. an exception message string.
   // 2. an array containing stack information.
@@ -99,10 +49,9 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
   assert(args[2].isNumber());
   assert(facebook::xplat::jsArgAsInt(args, 2) <= std::numeric_limits<uint32_t>::max());
 
-  JSExceptionInfo jsExceptionInfo;
-  jsExceptionInfo.exceptionMessage = facebook::xplat::jsArgAsString(args, 0);
-  jsExceptionInfo.exceptionId = static_cast<uint32_t>(facebook::xplat::jsArgAsInt(args, 2));
-  jsExceptionInfo.exceptionType = jsExceptionType;
+  Mso::React::ErrorInfo errorInfo;
+  errorInfo.Message = facebook::xplat::jsArgAsString(args, 0);
+  errorInfo.Id = static_cast<uint32_t>(facebook::xplat::jsArgAsInt(args, 2));
 
   folly::dynamic stackAsFolly = facebook::xplat::jsArgAsArray(args, 1);
 
@@ -115,13 +64,62 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
     assert(stackFrame.isObject());
     assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
-    jsExceptionInfo.callstack.push_back(JSStackFrameInfo{RetrieveStringFromMap(stackFrame, "file"),
-                                                         RetrieveStringFromMap(stackFrame, "methodName"),
-                                                         RetrieveIntFromMap(stackFrame, "lineNumber"),
-                                                         RetrieveIntFromMap(stackFrame, "column")});
+    errorInfo.Callstack.push_back(Mso::React::ErrorFrameInfo{RetrieveStringFromMap(stackFrame, "file"),
+                                                             RetrieveStringFromMap(stackFrame, "methodName"),
+                                                             RetrieveIntFromMap(stackFrame, "lineNumber"),
+                                                             RetrieveIntFromMap(stackFrame, "column")});
   }
 
-  return jsExceptionInfo;
+  return errorInfo;
+}
+
+} // namespace
+
+ExceptionsManagerModule::ExceptionsManagerModule(std::shared_ptr<Mso::React::IRedBoxHandler> redboxHandler)
+    : m_redboxHandler(std::move(redboxHandler)) {}
+
+std::string ExceptionsManagerModule::getName() {
+  return name;
+}
+
+std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants() {
+  return std::map<std::string, folly::dynamic>();
+}
+
+std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods() {
+  return {Method(
+              "reportFatalException",
+              [this](folly::dynamic args) noexcept {
+                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+                  m_redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSFatal);
+                }
+                /*
+                // TODO - fatal errors should throw if there is no redbox handler
+                else {
+                  throw Exception();
+                } */
+              }),
+
+          Method(
+              "reportSoftException",
+              [this](folly::dynamic args) noexcept {
+                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+                  m_redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSSoft);
+                }
+              }),
+
+          Method(
+              "updateExceptionMessage",
+              [this](folly::dynamic args) noexcept {
+                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+                  m_redboxHandler->updateError(std::move(CreateErrorInfo(args)));
+                }
+              }),
+
+          Method("dismissRedbox", [this](folly::dynamic /*args*/) noexcept {
+            if (m_redboxHandler)
+              m_redboxHandler->dismissRedbox();
+          })};
 }
 
 } // namespace react

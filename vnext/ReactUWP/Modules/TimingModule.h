@@ -58,7 +58,7 @@ class TimerQueue {
   std::vector<Timer> m_timerVector;
 };
 
-class Timing {
+class Timing : public std::enable_shared_from_this<Timing> {
  public:
   Timing(TimingModule *parent);
   void Disconnect();
@@ -69,9 +69,7 @@ class Timing {
 
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
-  void OnRendering(
-      const winrt::Windows::Foundation::IInspectable &,
-      const winrt::Windows::Foundation::IInspectable &args);
+  void OnRendering();
 
  private:
   TimingModule *m_parent;

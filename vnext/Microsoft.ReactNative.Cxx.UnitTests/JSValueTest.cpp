@@ -129,6 +129,90 @@ TEST_CLASS (JSValueTest) {
     TestCheck(nestedArr[6] == 4.5);
   }
 
+  TEST_METHOD(TestJSValueObject1) {
+    JSValue value = JSValueObject{{"prop1", 1}, {"prop2", "Two"}};
+    TestCheck(value.Type() == JSValueType::Object);
+    TestCheck(value.PropertyCount() == 2);
+    TestCheck(value["prop1"] == 1);
+    TestCheck(value["prop2"] == "Two");
+    TestCheck(value.AsObject().size() == 2);
+    TestCheck(value.AsObject()["prop1"] == 1);
+    TestCheck(value.AsObject()["prop2"] == "Two");
+  }
+
+  TEST_METHOD(TestJSValueObject2) {
+    JSValueObject obj;
+    obj["prop1"] = 1;
+    obj["prop2"] = "Two";
+    JSValue value = std::move(obj);
+    TestCheck(value.Type() == JSValueType::Object);
+    TestCheck(value.PropertyCount() == 2);
+    TestCheck(value["prop1"] == 1);
+    TestCheck(value["prop2"] == "Two");
+    TestCheck(value.AsObject().size() == 2);
+    TestCheck(value.AsObject()["prop1"] == 1);
+    TestCheck(value.AsObject()["prop2"] == "Two");
+  }
+
+  TEST_METHOD(TestJSValueObjectInsertion) {
+    // See if our JSValueObject operator[] works correctly.
+    // We use a random order of keys to insert.
+    JSValueObject obj;
+    obj["prop03"] = 3;
+    obj["prop02"] = 2;
+    obj["prop08"] = 8;
+    obj["prop06"] = 6;
+    obj["prop10"] = 10;
+    obj["prop09"] = 9;
+    obj["prop04"] = 4;
+    obj["prop01"] = 1;
+    obj["prop05"] = 5;
+    obj["prop07"] = 7;
+    // Modify
+    obj["prop02"] = 22;
+    JSValue value = std::move(obj);
+    TestCheck(value.Type() == JSValueType::Object);
+    TestCheck(value.PropertyCount() == 10);
+    TestCheck(value["prop01"] == 1);
+    TestCheck(value["prop02"] == 22);
+    TestCheck(value["prop03"] == 3);
+    TestCheck(value["prop04"] == 4);
+    TestCheck(value["prop05"] == 5);
+    TestCheck(value["prop06"] == 6);
+    TestCheck(value["prop07"] == 7);
+    TestCheck(value["prop08"] == 8);
+    TestCheck(value["prop09"] == 9);
+    TestCheck(value["prop10"] == 10);
+  }
+
+  TEST_METHOD(TestJSValueArray1) {
+    JSValue value = JSValueArray{1, "Two", 3.3, true, nullptr};
+    TestCheck(value.Type() == JSValueType::Array);
+    TestCheck(value.ItemCount() == 5);
+    TestCheck(value[0] == 1);
+    TestCheck(value[1] == "Two");
+    TestCheck(value[2] == 3.3);
+    TestCheck(value[3] == true);
+    TestCheck(value[4] == nullptr);
+  }
+
+  TEST_METHOD(TestJSValueArray2) {
+    JSValueArray arr(5);
+    arr[0] = 1;
+    arr[1] = "Two";
+    arr[2] = 3.3;
+    arr[3] = true;
+    arr[4] = nullptr;
+    JSValue value = std::move(arr);
+    TestCheck(value.Type() == JSValueType::Array);
+    TestCheck(value.ItemCount() == 5);
+    TestCheck(value[0] == 1);
+    TestCheck(value[1] == "Two");
+    TestCheck(value[2] == 3.3);
+    TestCheck(value[3] == true);
+    TestCheck(value[4] == nullptr);
+  }
+
   void CheckConversion(
       JSValue const &value, char const *strVal, bool boolVal, int64_t intVal, double doubleVal) noexcept {
     TestCheckEqual(strVal, value.AsString());
