@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Code-Gen nativeModules.g.h for auto-linking",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "223a5819ce10881427a0b28d176ac51bf06b5318",
+  "dependentChangeType": "patch",
+  "date": "2020-03-12T17:24:41.846Z"
+}
