@@ -48,7 +48,7 @@
     "@types/react-native": "~0.62.0-0 || ~0.61.5",
     "eslint": "5.1.0",
     "eslint-plugin-prettier": "2.6.2",
-    "flow-bin": "^0.105.0",
+    "flow-bin": "^0.113.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",

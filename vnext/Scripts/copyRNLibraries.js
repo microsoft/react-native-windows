@@ -101,10 +101,6 @@ exports.copyRNLibraries = baseDir => {
       dest: 'flow',
     },
     {
-      src: 'flow-typed',
-      dest: 'flow-typed',
-    },
-    {
       src: 'jest',
       dest: 'jest',
     },

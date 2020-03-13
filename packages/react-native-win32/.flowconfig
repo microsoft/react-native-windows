@@ -72,11 +72,6 @@
 ; Ignore unexpected extra "@providesModule"
 .*/node_modules/.*/node_modules/fbjs/.*
 
-; Ignore duplicate module providers
-; For RN Apps installed via npm, "Libraries" folder is inside
-; "node_modules/react-native" but in the source repo it is in the root
-.*/Libraries/react-native/React.js
-
 ; These should not be required directly
 ; require from fbjs/lib instead: require('fbjs/lib/warning')
 .*/node_modules/warning/.*
@@ -102,7 +97,7 @@
 ../../node_modules/
 
 [libs]
-Libraries/react-native/react-native-interface.js
+index.js
 flow/
 
 [options]
@@ -115,34 +110,10 @@ module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.win32.js
 
-module.system=haste
-module.system.haste.use_name_reducers=true
-# keep the following in sync with server/haste/hasteImpl.js
-# get basename
-module.system.haste.name_reducers='^.*/\([a-zA-Z0-9$_.-]+\.js\(\.flow\)?\)$' -> '\1'
-# strip .js or .js.flow suffix
-module.system.haste.name_reducers='^\(.*\)\.js\(\.flow\)?$' -> '\1'
-# strip .ios suffix
-module.system.haste.name_reducers='^\(.*\)\.ios$' -> '\1'
-module.system.haste.name_reducers='^\(.*\)\.macos$' -> '\1'
-module.system.haste.name_reducers='^\(.*\)\.android$' -> '\1'
-module.system.haste.name_reducers='^\(.*\)\.win32$' -> '\1'
-module.system.haste.name_reducers='^\(.*\)\.windesktop$' -> '\1'
-module.system.haste.name_reducers='^\(.*\)\.native$' -> '\1'
-module.system.haste.paths.blacklist=<PROJECT_ROOT>/src/.*
-module.system.haste.paths.blacklist=.*/__tests__/.*
-module.system.haste.paths.blacklist=.*/__mocks__/.*
-module.system.haste.paths.whitelist=<PROJECT_ROOT>/Libraries/.*
-module.system.haste.paths.whitelist=<PROJECT_ROOT>/RNTester/.*
-module.system.haste.paths.whitelist=<PROJECT_ROOT>/IntegrationTests/.*
-module.system.haste.paths.blacklist=<PROJECT_ROOT>/Libraries/react-native/react-native-implementation.js
-module.system.haste.paths.blacklist=<PROJECT_ROOT>/Libraries/Animated/src/polyfills/.*
-module.system.haste.paths.blacklist=<PROJECT_ROOT>/Libraries/Image/resolveAssetSource.js
-
 munge_underscores=true
 
 module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
-module.name_mapper='react-native$' -> '<PROJECT_ROOT>/Libraries/react-native/react-native-implementation.js'
+module.name_mapper='react-native$' -> '<PROJECT_ROOT>/index.js'
 module.name_mapper='react-native/\(.*\)' -> '<PROJECT_ROOT>/\1'
 
 suppress_type=$FlowIssue
@@ -154,6 +125,10 @@ suppress_type=$FlowFixMeEmpty
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
+
+experimental.well_formed_exports=true
+experimental.types_first=true
+experimental.abstract_locations=true
 
 [lints]
 sketchy-null-number=warn
@@ -178,4 +153,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.105.0
+^0.113.0
