@@ -2,6 +2,30 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Mar 2020 17:37:53 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.57",
+      "version": "0.61.0-beta.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build unit tests in ReactWindows-Universal solution",
+            "author": "jthysell@microsoft.com",
+            "commit": "d2cf35e0871a0f3b07ceacfbcff6fbc2942731f5"
+          },
+          {
+            "comment": "Address PR comments",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "223a5819ce10881427a0b28d176ac51bf06b5318"
+          },
+          {
+            "comment": "Code-Gen nativeModules.g.h for auto-linking",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "223a5819ce10881427a0b28d176ac51bf06b5318"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Mar 2020 19:18:01 GMT",
       "tag": "react-native-windows_v0.61.0-beta.56",
       "version": "0.61.0-beta.56",

@@ -1,7 +1,15 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 12 Mar 2020 19:18:01 GMT and should not be manually modified.
+This log was last generated on Fri, 13 Mar 2020 17:37:53 GMT and should not be manually modified.
 
+## 0.61.0-beta.57
+Fri, 13 Mar 2020 17:37:53 GMT
+
+### Changes
+
+- Build unit tests in ReactWindows-Universal solution (jthysell@microsoft.com)
+- Address PR comments (dida@ntdev.microsoft.com)
+- Code-Gen nativeModules.g.h for auto-linking (dida@ntdev.microsoft.com)
 ## 0.61.0-beta.56
 Thu, 12 Mar 2020 19:18:01 GMT
 

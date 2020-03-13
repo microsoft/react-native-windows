@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Build unit tests in ReactWindows-Universal solution",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "d2cf35e0871a0f3b07ceacfbcff6fbc2942731f5",
-  "dependentChangeType": "patch",
-  "date": "2020-03-10T23:15:44.995Z"
-}
