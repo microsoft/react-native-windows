@@ -11,6 +11,8 @@
 // Windows API
 #include <comutil.h>
 
+using Microsoft::Common::Unicode::Utf8ToUtf16;
+
 using std::function;
 using std::size_t;
 using std::string;
@@ -66,6 +68,33 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   m_url.lpszExtraInfo = NULL;
   m_url.dwExtraInfoLength = 0;
 #endif // 0
+}
+
+WinHTTPWebSocketResource::~WinHTTPWebSocketResource() /*override*/
+{
+  if (m_webSocketHandle != NULL)
+  {
+    WinHttpCloseHandle(m_webSocketHandle);
+    m_webSocketHandle = NULL;
+  }
+
+  if (m_requestHandle != NULL)
+  {
+    WinHttpCloseHandle(m_requestHandle);
+    m_requestHandle = NULL;
+  }
+
+  if (m_connectionHandle != NULL)
+  {
+    WinHttpCloseHandle(m_connectionHandle);
+    m_connectionHandle = NULL;
+  }
+
+  if (m_sessionHandle != NULL)
+  {
+    WinHttpCloseHandle(m_sessionHandle);
+    m_sessionHandle = NULL;
+  }
 }
 
 #pragma region IWebSocketResource
@@ -209,8 +238,11 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     }
   }
 
-  WinHttpCloseHandle(m_requestHandle);
-  m_requestHandle = NULL;
+  // Connection succeeded.
+  if (m_connectHandler)
+  {
+    m_connectHandler();
+  }
 }
 
 void WinHTTPWebSocketResource::Ping() {}
@@ -225,6 +257,56 @@ void WinHTTPWebSocketResource::SendBinary(const string& base64String)
 
 void WinHTTPWebSocketResource::Close(CloseCode code, const string& reason)
 {
+  auto result = WinHttpWebSocketShutdown(
+    m_webSocketHandle,                                         // hWebSocket
+    static_cast<USHORT>(code),                                 // usStatus
+    static_cast<LPWSTR>(_wcsdup(Utf8ToUtf16(reason).c_str())), // pvReason
+    static_cast<DWORD>(reason.length())                        // dwReasonLength
+  );
+  switch (result)
+  {
+  case ERROR_IO_PENDING:
+    GetLastError();
+    if (m_errorHandler)
+    {
+      m_errorHandler({ "Failed shutting donw WebSocket", ErrorType::Close });
+    }
+
+    break;
+  default:
+    // Success
+    GetLastError();//TODO:Remove
+    break;
+  }
+
+  result = WinHttpWebSocketClose(
+    m_webSocketHandle,                                        // hWebSocket
+    static_cast<USHORT>(code),                                // usStatus
+    static_cast<PVOID>(_wcsdup(Utf8ToUtf16(reason).c_str())), // pvReason
+    static_cast<DWORD>(reason.length())                       // dwReasonLength
+  );
+  switch (result)
+  {
+  case ERROR_INVALID_OPERATION:
+  case ERROR_INVALID_PARAMETER:
+    //case ERROR_INVALID_SERVER_RESPONSE: // 12152
+    //  GetLastError();
+    //  break;
+    GetLastError();
+    if (m_errorHandler)
+    {
+      m_errorHandler({ "Failed closing WebSocket", ErrorType::Close });
+    }
+
+  default:
+    // Success
+    GetLastError();//TODO:Remove
+    if (m_closeHandler)
+    {
+      m_closeHandler(CloseCode::Normal, "Closing");
+    }
+    break;
+  }
 }
 
 IWebSocketResource::ReadyState WinHTTPWebSocketResource::GetReadyState() const

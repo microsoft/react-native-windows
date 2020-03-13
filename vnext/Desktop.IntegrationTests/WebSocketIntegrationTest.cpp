@@ -34,17 +34,15 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
     bool closed = false;
-    promise<bool> closedPromise;
     bool error = false;
     string message;
     ws->SetOnConnect([&connected]()
     {
       connected = true;
     });
-    ws->SetOnClose([&closed, &closedPromise](CloseCode code, const string& reason)
+    ws->SetOnClose([&closed](CloseCode code, const string& reason)
     {
       closed = true;
-      closedPromise.set_value(true);
     });
     ws->SetOnError([&error](Error&& e)
     {
@@ -54,11 +52,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->Start();
     ws->Connect();
     ws->Close(CloseCode::Normal, "Closing");
-
-    auto future = closedPromise.get_future();
-    future.wait_for(std::chrono::seconds(2));
-    //bool closed1 = future.get();
-
     server->Stop();
 
     Assert::IsFalse(error);
@@ -66,7 +59,8 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::IsTrue(closed);
   }
 
-  TEST_METHOD(ConnectNoClose) {
+  TEST_METHOD(ConnectNoClose)
+  {
     bool connected = false;
     bool error = false;
     auto server = make_shared<Test::WebSocketServer>(5556);

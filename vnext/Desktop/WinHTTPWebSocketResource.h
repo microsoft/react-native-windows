@@ -16,6 +16,8 @@ namespace Microsoft::React
 {
 class WinHTTPWebSocketResource : public IWebSocketResource
 {
+  static VOID CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD status, LPVOID info, DWORD infoLength);
+
   URL_COMPONENTS m_url;
   DWORD m_openSessionFlags;
   HINTERNET m_sessionHandle;
@@ -29,7 +31,7 @@ class WinHTTPWebSocketResource : public IWebSocketResource
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;
 
-  static VOID CALLBACK Callback(HINTERNET handle, DWORD_PTR context, DWORD status, LPVOID info, DWORD infoLength);
+  ~WinHTTPWebSocketResource() override;
 
 public:
   WinHTTPWebSocketResource(const std::string& urlString);
