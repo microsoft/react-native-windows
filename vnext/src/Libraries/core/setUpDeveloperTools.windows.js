@@ -29,6 +29,22 @@ if (__DEV__) {
       JSInspector.registerAgent(require('../JSInspector/NetworkAgent'));
     }
 
+    // Note we can't check if console is "native" because it would appear "native" in JSC and Hermes.
+    // We also can't check any properties that don't exist in the Chrome worker environment.
+    // So we check a navigator property that's set to a particular value ("Netscape") in all real browsers.
+    const isLikelyARealBrowser =
+      global.navigator != null &&
+      /*              _
+       *             | |
+       *   _ __   ___| |_ ___  ___ __ _ _ __   ___
+       *  | '_ \ / _ \ __/ __|/ __/ _` | '_ \ / _ \
+       *  | | | |  __/ |_\__ \ (_| (_| | |_) |  __/
+       *  |_| |_|\___|\__|___/\___\__,_| .__/ \___|
+       *                               | |
+       *                               |_|
+       */
+      global.navigator.appName === 'Netscape'; // Any real browser
+
     if (!Platform.isTesting) {
       const HMRClient = require('../Utilities/HMRClient');
 

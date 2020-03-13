@@ -11,7 +11,6 @@
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
-<PROJECT_ROOT>/Libraries/Color/normalizeColor.js
 <PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
 <PROJECT_ROOT>/Libraries/Components/ActivityIndicator/RCTActivityIndicatorViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
@@ -42,6 +41,7 @@
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<PROJECT_ROOT>/Libraries/StyleSheet/normalizeColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
@@ -126,7 +126,7 @@ module.file_ext=.windows.js
 
 munge_underscores=true
 
-module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 module.name_mapper='react-native$' -> '<PROJECT_ROOT>/index.js'
 module.name_mapper='react-native/\(.*\)' -> '<PROJECT_ROOT>/\1'
 

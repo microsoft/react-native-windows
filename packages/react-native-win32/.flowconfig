@@ -10,8 +10,6 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
-<PROJECT_ROOT>/Libraries/Color/normalizeColor.js
-<PROJECT_ROOT>/Libraries/Color/normalizeColorObject.js
 <PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
@@ -27,6 +25,8 @@
 <PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/ReactNative/getNativeComponentAttributes.js
+<PROJECT_ROOT>/Libraries/StyleSheet/normalizeColor.js
+<PROJECT_ROOT>/Libraries/StyleSheet/normalizeColorObject.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
@@ -38,10 +38,6 @@
 <PROJECT_ROOT>/RNTester/js/components/FlatListExample.js
 <PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
 <PROJECT_ROOT>/RNTester/js/components/RNTesterExampleFilter.js
-
-; These examples currently uses mac dynamic colors
-<PROJECT_ROOT>/RNTester/js/ActivityIndicatorExample.js
-<PROJECT_ROOT>/RNTester/js/DarkModeExample.js
 
 ; Schema files are used for turbo-module code generation, but are not bundled.
 ; We don't yet have the react-native-codegen package they rely on, so supress
@@ -112,7 +108,7 @@ module.file_ext=.win32.js
 
 munge_underscores=true
 
-module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 module.name_mapper='react-native$' -> '<PROJECT_ROOT>/index.js'
 module.name_mapper='react-native/\(.*\)' -> '<PROJECT_ROOT>/\1'
 

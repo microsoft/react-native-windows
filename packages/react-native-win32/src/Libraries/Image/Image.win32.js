@@ -11,11 +11,13 @@
 'use strict';
 
 const DeprecatedImagePropType = require('../DeprecatedPropTypes/DeprecatedImagePropType');
+const NativeModules = require('../BatchedBridge/NativeModules');	
 const React = require('react');
 const ReactNative = require('../Renderer/shims/ReactNative'); // eslint-disable-line no-unused-vars
 const StyleSheet = require('../StyleSheet/StyleSheet');
 
 const flattenStyle = require('../StyleSheet/flattenStyle');
+const requireNativeComponent = require('../ReactNative/requireNativeComponent');	
 const resolveAssetSource = require('./resolveAssetSource');
 
 const ImageViewManager = NativeModules.ImageViewManager;
