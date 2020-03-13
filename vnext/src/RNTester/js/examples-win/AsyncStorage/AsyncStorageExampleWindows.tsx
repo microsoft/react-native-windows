@@ -21,21 +21,24 @@ interface AsyncStorageExampleState {
   value: string;
 }
 
-class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> {
+class AsyncStorageExample extends React.Component<
+  {},
+  AsyncStorageExampleState
+> {
   state = {
     asyncStorageData: [],
-    name: "",
-    value: ""
-  }
+    name: '',
+    value: '',
+  };
 
   async componentDidMount() {
-    let allKeys = await AsyncStorage.getAllKeys();
-    let values = await AsyncStorage.multiGet(allKeys);
-    this.setState({ asyncStorageData: values });
+    const allKeys = await AsyncStorage.getAllKeys();
+    const values = await AsyncStorage.multiGet(allKeys);
+    this.setState({asyncStorageData: values});
   }
 
   private updateAsyncStorageData(key: string, value: string) {
-    this.setState((prevState, props) => {
+    this.setState(prevState => {
       let asyncStorageData = [...prevState.asyncStorageData];
       let foundVal = false;
       for (let kvp of asyncStorageData) {
@@ -48,37 +51,39 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
       if (!foundVal) {
         asyncStorageData.push([key, value]);
       }
-      return { asyncStorageData: asyncStorageData };
+      return {asyncStorageData: asyncStorageData};
     });
   }
 
   private makeOnRemoveEntryPress(key: string) {
     return () => {
       AsyncStorage.removeItem(key);
-      this.setState((prevState, props) => {
-        let asyncStorageData = prevState.asyncStorageData.filter(kvp => kvp[0] != key);
-        return { asyncStorageData: asyncStorageData };
+      this.setState(prevState => {
+        let asyncStorageData = prevState.asyncStorageData.filter(
+          kvp => kvp[0] !== key,
+        );
+        return {asyncStorageData: asyncStorageData};
       });
     };
   }
 
   private setName = (name: string) => {
-    this.setState({ name: name });
-  }
+    this.setState({name: name});
+  };
 
   private setValue = (value: string) => {
-    this.setState({ value: value });
-  }
+    this.setState({value: value});
+  };
 
   private onAddEntryPress = () => {
     AsyncStorage.setItem(this.state.name, this.state.value);
     this.updateAsyncStorageData(this.state.name, this.state.value);
-  }
+  };
 
   private onClearAllKeysPress = () => {
     AsyncStorage.clear();
-    this.setState({ asyncStorageData: [] });
-  }
+    this.setState({asyncStorageData: []});
+  };
 
   render() {
     return (
@@ -86,10 +91,15 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
         <Button title="Clear All Keys" onPress={this.onClearAllKeysPress} />
         <FlatList
           data={this.state.asyncStorageData}
-          renderItem={({ item }) => (
-            <View style={styles.keyValue} >
-              <Text>"{item[0]}": "{item[1]}"</Text>
-              <Button title="Remove" onPress={this.makeOnRemoveEntryPress(item[0])} />
+          renderItem={({item}) => (
+            <View style={styles.keyValue}>
+              <Text>
+                "{item[0]}": "{item[1]}"
+              </Text>
+              <Button
+                title="Remove"
+                onPress={this.makeOnRemoveEntryPress(item[0])}
+              />
             </View>
           )}
         />
@@ -100,7 +110,8 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
             autoCapitalize="none"
             onChangeText={this.setName}
             placeholder="<Key>"
-            style={styles.textInput} />
+            style={styles.textInput}
+          />
         </View>
         <View style={styles.keyValue}>
           <Text>Value:</Text>
@@ -108,7 +119,8 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
             autoCapitalize="none"
             onChangeText={this.setValue}
             placeholder="<New Value>"
-            style={styles.textInput} />
+            style={styles.textInput}
+          />
         </View>
         <Button title="Add Entry" onPress={this.onAddEntryPress} />
       </View>
@@ -118,8 +130,8 @@ class AsyncStorageExample extends React.Component<{}, AsyncStorageExampleState> 
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#CCCCCC",
-    margin: 10
+    backgroundColor: '#CCCCCC',
+    margin: 10,
   },
   container: {
     flex: 1,
@@ -138,13 +150,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const displayName = (_undefined?: string) => { };
+export const displayName = (_undefined?: string) => {};
 export const title = 'AsyncStorage Windows';
 export const description = 'Usage of AsyncStorage';
 export const examples = [
   {
     title: 'AsyncStorage',
-    render: function (): JSX.Element {
+    render: function(): JSX.Element {
       return <AsyncStorageExample />;
     },
   },
