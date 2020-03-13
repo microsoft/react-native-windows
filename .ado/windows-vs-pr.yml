@@ -26,31 +26,31 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        #X64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
+        #X86Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x86
+        #ArmDebug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        Arm64Release:
-          BuildConfiguration: Release
-          BuildPlatform: ARM64
+        #Arm64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM64
+        #Arm64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -105,7 +105,7 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
@@ -186,22 +186,22 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        #X64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
+        #X86Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x86
+        #X86Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x86
+        #ArmDebug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
@@ -403,7 +403,7 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCpp:
           language: cpp
           configuration: Debug
@@ -412,22 +412,22 @@ jobs:
           language: cs
           configuration: Debug
           platform: x86
-        X86ReleaseCpp:
-          language: cpp
-          configuration: Release
-          platform: x86
-        X86ReleaseCs:
-          language: cs
-          configuration: Release
-          platform: x86
-        X64DebugCpp:
-          language: cpp
-          configuration: Debug
-          platform: x64
-        X64DebugCs:
-          language: cs
-          configuration: Debug
-          platform: x64
+        #X86ReleaseCpp:
+        #  language: cpp
+        #  configuration: Release
+        #  platform: x86
+        #X86ReleaseCs:
+        #  language: cs
+        #  configuration: Release
+        #  platform: x86
+        #X64DebugCpp:
+        #  language: cpp
+        #  configuration: Debug
+        #  platform: x64
+        #X64DebugCs:
+        #  language: cs
+        #  configuration: Debug
+        #  platform: x64
         X64ReleaseCpp:
           language: cpp
           configuration: Release
@@ -436,14 +436,14 @@ jobs:
           language: cs
           configuration: Release
           platform: x64
-        ArmDebugCpp:
-          language: cpp
-          configuration: Debug
-          platform: arm
-        ArmDebugCs:
-          language: cs
-          configuration: Debug
-          platform: arm
+        #ArmDebugCpp:
+        #  language: cpp
+        #  configuration: Debug
+        #  platform: arm
+        #ArmDebugCs:
+        #  language: cs
+        #  configuration: Debug
+        #  platform: arm
         ArmReleaseCpp:
           language: cpp
           configuration: Release
