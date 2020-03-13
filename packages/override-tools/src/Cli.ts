@@ -330,7 +330,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (filesMissing.length > 0) {
     const errorMessage =
-      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'yarn override add <override>':";
+      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx override add <override>':";
     console.error(chalk.red(errorMessage));
     filesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -338,7 +338,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (overridesMissing.length > 0) {
     const errorMessage =
-      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>':";
+      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx override remove <override>':";
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -346,7 +346,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (baseFilesNotFound.length > 0) {
     const errorMessage =
-      "Found overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>':";
+      "Found overrides whose original files do not exist. Remove existing overrides using 'npx override remove <override>':";
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -354,7 +354,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (outOfDateFiles.length > 0) {
     const errorMessage =
-      "Found overrides whose original files have changed. Upgrade overrides using 'yarn override auto-upgrade <override>' and 'yarn override manual-upgrade <override>':";
+      "Found overrides whose original files have changed. Upgrade overrides using 'npx override auto-upgrade <override>' and 'npx override manual-upgrade <override>':";
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();

@@ -1,6 +1,10 @@
 {
   "overrides": [
     {
+      "type": "platform",
+      "file": "index.windows.ts"
+    },
+    {
       "type": "patch",
       "file": "IntegrationTests\\AsyncStorageTest.windesktop.js",
       "baseFile": "IntegrationTests\\AsyncStorageTest.js",
@@ -62,26 +66,6 @@
     {
       "type": "platform",
       "file": "Libraries\\AppTheme\\AppThemeTypes.ts"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.windows.js"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\StyleSheet\\normalizeColor.windows.js",
-      "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "48265ddff91efb254176c02f8d40bc71acce3252",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\StyleSheet\\normalizeColorObject.windesktop.js"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\StyleSheet\\normalizeColorObject.windows.js"
     },
     {
       "type": "derived",
@@ -392,20 +376,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\StatusBar\\StatusBarIOS.windesktop.js",
-      "baseFile": "Libraries\\Components\\StatusBar\\StatusBarIOS.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\Components\\StatusBar\\StatusBarIOS.windows.js",
-      "baseFile": "Libraries\\Components\\StatusBar\\StatusBarIOS.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "aeeb1cb69ea1ea151ad037995cd9bf12fe4b93e3"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\Components\\Switch\\SwitchNativeComponent.windows.js",
       "baseFile": "Libraries\\Components\\Switch\\SwitchNativeComponent.js",
@@ -460,20 +430,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.windesktop.js",
-      "baseFile": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "addd4b3af3666654d8df02b13650bc65c0f2a360"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.windows.tsx",
-      "baseFile": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "addd4b3af3666654d8df02b13650bc65c0f2a360"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableOpacity.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableOpacity.js",
@@ -487,22 +443,6 @@
       "baseFile": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.js",
       "baseVersion": "0.61.5",
       "baseHash": "869bbbbdae6aade61594671504096d90a1ed303c",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\Components\\View\\PlatformViewPropTypes.windesktop.js",
-      "baseFile": "Libraries\\Components\\View\\PlatformViewPropTypes.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "215c4c06a2850cc475e4803e521f7394a48fb86f",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\Components\\View\\PlatformViewPropTypes.windows.js",
-      "baseFile": "Libraries\\Components\\View\\PlatformViewPropTypes.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "215c4c06a2850cc475e4803e521f7394a48fb86f",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -641,14 +581,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\react-native\\react-native-implementation.windows.ts"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\react-native\\typings-index.ts"
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Settings\\Settings.windesktop.js",
       "baseFile": "Libraries\\Settings\\Settings.android.js",
@@ -663,6 +595,26 @@
       "baseVersion": "0.61.5",
       "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "Libraries\\StyleSheet\\normalizeColor.windows.js",
+      "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "48265ddff91efb254176c02f8d40bc71acce3252",
+      "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\normalizeColorObject.windesktop.js"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\normalizeColorObject.windows.js"
     },
     {
       "type": "patch",
@@ -881,6 +833,10 @@
       "baseVersion": "0.61.5",
       "baseHash": "e1a725929fbf9b90245e9eddeb797f90b53b8ee9",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "typings-index.ts"
     }
   ]
 }
