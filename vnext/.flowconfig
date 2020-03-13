@@ -111,7 +111,7 @@
 ../node_modules/
 
 [libs]
-index.js
+interface.js
 flow/
 
 [options]

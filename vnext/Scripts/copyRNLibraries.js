@@ -124,4 +124,5 @@ exports.copyRNLibraries = baseDir => {
 
   copyFile(reactNativePath, baseDir, 'rn-get-polyfills.js');
   copyFile(reactNativePath, baseDir, 'index.js');
+  copyFile(reactNativePath, baseDir, 'interface.js');
 };

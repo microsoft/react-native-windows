@@ -1,6 +1,7 @@
 /dist
 /flow
 /index.*
+/interface.*
 /IntegrationTests
 /jest
 /lib
