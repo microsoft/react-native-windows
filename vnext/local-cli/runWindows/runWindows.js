@@ -55,8 +55,16 @@ async function runWindows(config, args, options) {
 
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
+    const msBuildProps = build.parseMsBuildProps(options);
+
     try {
-      await build.buildSolution(slnFile, buildType, options.arch, verbose);
+      await build.buildSolution(
+        slnFile,
+        buildType,
+        options.arch,
+        msBuildProps,
+        verbose,
+      );
     } catch (e) {
       newError(
         `Build failed with message ${e}. Check your build configuration.`,
@@ -111,6 +119,7 @@ runWindows({
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
+ *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  */
 module.exports = {
   name: 'run-windows',
@@ -177,6 +186,11 @@ module.exports = {
       command: '--no-deploy',
       description: 'Do not deploy the app',
       default: false,
+    },
+    {
+      command: '--msbuildprops [string]',
+      description:
+        'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
     },
     {
       command: '--info',
