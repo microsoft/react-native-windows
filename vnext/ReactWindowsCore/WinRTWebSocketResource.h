@@ -10,6 +10,8 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>
 
+#include <future>
+
 namespace Microsoft::React
 {
 
@@ -24,6 +26,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   std::atomic_bool m_sendRequested;
   // Mso::ManualResetEvent m_connectPerformed;
   // Mso::ManualResetEvent m_sendPerformed;
+  std::promise<void> m_connectPerformed;
 
   std::function<void()> m_connectHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;

@@ -55,6 +55,7 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
   if (m_connectRequested)
   {
     // m_connectPerformed.Wait();//TODO: Set timeout?
+    m_connectPerformed.get_future().wait();
   }
 }
 
@@ -84,6 +85,7 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
   }
 
   // m_connectPerformed.Set();
+  m_connectPerformed.set_value();
   m_connectRequested = false;
 }
 
