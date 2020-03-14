@@ -5,6 +5,7 @@
 
 #pragma once
 
+//#include <Mso/eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>
@@ -19,15 +20,24 @@ class WinRTWebSocketResource : public IWebSocketResource
   winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::DataWriter m_writer;
 
+  //Mso::ManualResetEvent m_connectEvent;
+
   std::function<void()> m_connectHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;
 
   WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
+  ~WinRTWebSocketResource() override;
 
-  void OnMessageReceived(winrt::Windows::Networking::Sockets::IWebSocket const& sender, winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs const& args);
-  void OnClosed(winrt::Windows::Networking::Sockets::IWebSocket const& sender, winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
+  winrt::fire_and_forget PerformConnect();
+
+  void OnMessageReceived(
+    winrt::Windows::Networking::Sockets::IWebSocket const& sender,
+    winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs const& args);
+  void OnClosed(
+    winrt::Windows::Networking::Sockets::IWebSocket const& sender,
+    winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
 
 public:
   WinRTWebSocketResource(const std::string& urlString);

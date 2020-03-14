@@ -20,6 +20,7 @@ using std::size_t;
 using std::string;
 using std::vector;
 
+using winrt::fire_and_forget;
 using winrt::hresult;
 using winrt::hresult_error;
 using winrt::Windows::Foundation::Uri;
@@ -49,7 +50,36 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
 {
 }
 
+WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
+{
+  //TODO: Clean up
+}
+
 #pragma region Private members
+
+fire_and_forget WinRTWebSocketResource::PerformConnect()
+{
+  hresult hr = S_OK;
+  try
+  {
+    co_await winrt::resume_background();
+
+    co_await m_socket.ConnectAsync(m_uri);
+
+    m_connectHandler();
+  }
+  catch (hresult_error const& e)
+  {
+    hr = e.code();
+  }
+
+  if (!SUCCEEDED(hr))
+  {
+    hresult_error e{ hr };
+    //OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
+    m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+  }
+}
 
 void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
 {
@@ -112,27 +142,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
     supportedProtocols.Append(Utf8ToUtf16(protocol));
   }
 
-  winrt::hresult hr = S_OK;
-  try
-  {
-    //TODO: Can we use co_await targetting Windows 8?
-    //TODO: Determine args types. Move to a separate function? (i.e. OnConnected).
-    m_socket.ConnectAsync(m_uri).Completed([this](auto&&, auto&&)
-    {
-      this->m_connectHandler();
-    });
-  }
-  catch (hresult_error const& e)
-  {
-    hr = e.code();
-  }
-
-  if (!SUCCEEDED(hr))
-  {
-    hresult_error e{ hr };
-    //OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
-    m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
-  }
+  PerformConnect();
 }
 
 void WinRTWebSocketResource::Ping()
