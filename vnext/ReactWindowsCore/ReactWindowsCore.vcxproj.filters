@@ -113,6 +113,7 @@
     <ClCompile Include="WinRTWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="V8JSIRuntimeHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">
@@ -268,6 +269,7 @@
     <ClInclude Include="WinRTWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="V8JSIRuntimeHolder.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">

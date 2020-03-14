@@ -52,7 +52,10 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
 
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
-  //TODO: Clean up
+  if (m_connectRequested)
+  {
+    // m_connectPerformed.Wait();//TODO: Set timeout?
+  }
 }
 
 #pragma region Private members
@@ -79,6 +82,9 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
     //OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
     m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
   }
+
+  // m_connectPerformed.Set();
+  m_connectRequested = false;
 }
 
 void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
@@ -142,6 +148,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
     supportedProtocols.Append(Utf8ToUtf16(protocol));
   }
 
+  m_connectRequested = true;
   PerformConnect();
 }
 

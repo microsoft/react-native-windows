@@ -20,7 +20,10 @@ class WinRTWebSocketResource : public IWebSocketResource
   winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::DataWriter m_writer;
 
-  //Mso::ManualResetEvent m_connectEvent;
+  std::atomic_bool m_connectRequested;
+  std::atomic_bool m_sendRequested;
+  // Mso::ManualResetEvent m_connectPerformed;
+  // Mso::ManualResetEvent m_sendPerformed;
 
   std::function<void()> m_connectHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;
