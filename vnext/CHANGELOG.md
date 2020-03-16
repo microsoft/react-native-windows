@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 14 Mar 2020 03:04:21 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Mar 2020 19:54:21 GMT and should not be manually modified.
 
+## 0.61.0-beta.59
+Mon, 16 Mar 2020 19:54:21 GMT
+
+### Changes
+
+- Remove cli.js (kaigu@microsoft.com)
 ## 0.61.0-beta.58
 Sat, 14 Mar 2020 03:04:21 GMT
 

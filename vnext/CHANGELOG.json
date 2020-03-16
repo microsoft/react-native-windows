@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Mar 2020 19:54:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.59",
+      "version": "0.61.0-beta.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove cli.js",
+            "author": "kaigu@microsoft.com",
+            "commit": "e78cd3a0fe01bbe6a929fc2d9c2ee8a057c0f36c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Mar 2020 17:13:09 GMT",
       "tag": "react-native-windows_v0.61.0-beta.58",
       "version": "0.61.0-beta.58",
