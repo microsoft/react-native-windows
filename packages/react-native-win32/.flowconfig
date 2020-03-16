@@ -26,6 +26,7 @@
 <PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
 <PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
+<PROJECT_ROOT>/Libraries/Image/ImageViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js

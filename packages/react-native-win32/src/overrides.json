@@ -288,11 +288,27 @@
       "baseFile": "Libraries\\Image\\Image.ios.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0",
-      "issue": "LEGACY_FIXME"
+      "issue": 4320
     },
     {
       "type": "platform",
       "file": "Libraries\\Image\\ImageTypes.ts"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Image\\ImageViewNativeComponent.win32.js",
+      "baseFile": "Libraries\\Image\\ImageViewNativeComponent.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "8cf992c3c45f77ff2049111bb6ef6972ae4e4c2a",
+      "issue": 4321
+    },
+    {
+      "type": "derived",
+      "file": "Libraries\\Image\\NativeImageLoaderWin32.js",
+      "baseFile": "Libraries\\Image\\NativeImageLoaderIOS.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "6161ce89a0b45b24e8df69aa108af22a7b591483",
+      "issue": 4320
     },
     {
       "type": "platform",
@@ -324,7 +340,7 @@
       "baseFile": "Libraries\\Network\\RCTNetworking.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "9ba4db01878648ef181dfd51debd821a837f56b3",
-      "issue": "LEGACY_FIXME"
+      "issue": 4318
     },
     {
       "type": "platform",

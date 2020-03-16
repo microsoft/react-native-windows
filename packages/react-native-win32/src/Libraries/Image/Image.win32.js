@@ -11,25 +11,19 @@
 'use strict';
 
 const DeprecatedImagePropType = require('../DeprecatedPropTypes/DeprecatedImagePropType');
-const NativeModules = require('../BatchedBridge/NativeModules');	
 const React = require('react');
 const ReactNative = require('../Renderer/shims/ReactNative'); // eslint-disable-line no-unused-vars
 const StyleSheet = require('../StyleSheet/StyleSheet');
 
 const flattenStyle = require('../StyleSheet/flattenStyle');
-const requireNativeComponent = require('../ReactNative/requireNativeComponent');	
 const resolveAssetSource = require('./resolveAssetSource');
-
-const ImageViewManager = NativeModules.ImageViewManager;
-
-// [Windows
-const ImageLoader = NativeModules.ImageLoader; // [Win32 uses ImageLoader for getSize]
-const RCTImageView = requireNativeComponent('RCTImage'); // [Win32] Uses RCTImage instead of RCTImageView
-// Windows]
 
 import type {ImageProps as ImagePropsType} from './ImageProps';
 
 import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
+import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
+
+const RCTImageView = require('./ImageViewNativeComponent');
 
 function getSize(
   uri: string,
@@ -38,7 +32,7 @@ function getSize(
 ) {
   //[Win32
   /*
-  NativeImageLoaderIOS.getSize(uri)
+  NativeNativeImageLoaderWin32IOS.getSize(uri)
     .then(([width, height]) => success(width, height))
     .catch(
       failure ||
@@ -48,7 +42,7 @@ function getSize(
     );
   */
 
-  ImageLoader.getSize(uri, (width: number, height: number, err?: string) => {
+  NativeImageLoaderWin32.getSize(uri, (width: number, height: number, err?: string) => {
     if (!err) {
       success(width, height);
     } else {
@@ -68,7 +62,7 @@ function getSizeWithHeaders(
   success: (width: number, height: number) => void,
   failure?: (error: any) => void,
 ): any {
-  return ImageViewManager.getSizeWithHeaders(uri, headers)
+  return NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)
     .then(function(sizes) {
       success(sizes.width, sizes.height);
     })
@@ -81,13 +75,13 @@ function getSizeWithHeaders(
 }
 
 function prefetch(url: string): any {
-  return ImageViewManager.prefetchImage(url);
+  return NativeImageLoaderWin32.prefetchImage(url);
 }
 
 async function queryCache(
   urls: Array<string>,
 ): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
-  return await ImageViewManager.queryCache(urls);
+  return await NativeImageLoaderWin32.queryCache(urls);
 }
 
 type ImageComponentStatics = $ReadOnly<{|
