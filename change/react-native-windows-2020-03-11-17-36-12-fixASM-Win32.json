@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "1. Fix call to TranslateAccelerator() to use the correct HWND so that accelerators work, even when the focus window is the child XamlIsland's HWND. 2. Use CW_DEFAULT for the window height & width in Playground-Win32 so that Windows remembers the window size for us. 3. Run `yarn override add` to add a Windows-specific AsyncStorageModule test page. This also re-alphabetized the file. 4. Fix a braindead bug in AsyncStorageModuleWin32. The schema didn't specify that the `key` column was a primary key, so instead of `multiSet()` updating the `value` column in-place, it created new rows every time. Strictly we should check the `userVersion` to do the schema bump, but since I think no one but me has used this, I'm saying \"remember to delete the SQLite DB in %localappdata% when you merge this in.\"",
-  "packageName": "react-native-windows",
-  "email": "hpratt@microsoft.com",
-  "commit": "3e675c014929e5e0066686d2bd073e379ecbfb4d",
-  "dependentChangeType": "patch",
-  "date": "2020-03-12T00:36:12.413Z"
-}
