@@ -34,7 +34,7 @@ const renderers = findRenderers();
 // Required for React DevTools to view/edit React Native styles in Flipper.
 // Flipper doesn't inject these values when initializing DevTools.
 hook.resolveRNStyle = require('../StyleSheet/flattenStyle');
-const viewConfig = require('../Components/View/ReactNativeViewViewConfig'); // [Win32] Remove ".js"
+const viewConfig = require('../Components/View/ReactNativeViewViewConfig'); // [Windows] Remove ".js"
 hook.nativeStyleEditorValidAttributes = Object.keys(
   viewConfig.validAttributes.style,
 );
@@ -210,21 +210,17 @@ class Inspector extends React.Component<
       this.state.devtoolsAgent.selectNode(touchedViewTag);
     }
 
-    // [Win32 Avoid Dimensions call
-    const node = ReactNative.findNodeHandle(this);
-    UIManager.measure(node, (x, y, width, height, left, top) => {
-      this.setState({
-        panelPos: pointerY > height / 2 ? 'top' : 'bottom',
-        selection,
-        hierarchy,
-        inspected: {
-          style: props.style,
-          frame,
-          source,
-        },
-      });
+    this.setState({
+      panelPos:
+        pointerY > Dimensions.get('window').height / 2 ? 'top' : 'bottom',
+      selection,
+      hierarchy,
+      inspected: {
+        style: props.style,
+        frame,
+        source,
+      },
     });
-    // ]Win32
   }
 
   setPerfing(val: boolean) {

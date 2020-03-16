@@ -12,6 +12,7 @@
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
 <PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
+<PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
 <PROJECT_ROOT>/Libraries/Components/ActivityIndicator/RCTActivityIndicatorViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
@@ -28,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableBounce.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
@@ -37,10 +39,12 @@
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
+<PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Lists/VirtualizedList.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<PROJECT_ROOT>/Libraries/Pressability/PressabilityDebug.js
 <PROJECT_ROOT>/Libraries/StyleSheet/normalizeColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js

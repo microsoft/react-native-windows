@@ -33,7 +33,7 @@ const renderers = findRenderers();
 // Required for React DevTools to view/edit React Native styles in Flipper.
 // Flipper doesn't inject these values when initializing DevTools.
 hook.resolveRNStyle = require('../StyleSheet/flattenStyle');
-const viewConfig = require('../Components/View/ReactNativeViewViewConfig.js');
+const viewConfig = require('../Components/View/ReactNativeViewViewConfig'); // [Windows] Remove ".js"
 hook.nativeStyleEditorValidAttributes = Object.keys(
   viewConfig.validAttributes.style,
 );

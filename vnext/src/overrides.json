@@ -423,6 +423,14 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\Components\\Touchable\\TouchableBounce.windows.js",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableBounce.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "d2bb715bb7b4fe8a324252409273747c96a4e687",
+      "issue": 4310
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableHighlight.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableHighlight.js",
       "baseVersion": "0.61.5",
@@ -503,6 +511,22 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\core\\setUpReactDevTools.windesktop.js",
+      "baseFile": "Libraries\\core\\setUpReactDevTools.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "90b15d4c0940af7c72077d1eaef45d3256012aed",
+      "issue": 4310
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\core\\setUpReactDevTools.windows.js",
+      "baseFile": "Libraries\\core\\setUpReactDevTools.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "90b15d4c0940af7c72077d1eaef45d3256012aed",
+      "issue": 4310
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\DeprecatedPropTypes\\DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries\\DeprecatedPropTypes\\DeprecatedViewAccessibility.js",
       "baseVersion": "0.61.5",
@@ -531,6 +555,14 @@
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "4d8dd865cf9dc902cc415dbf7146df9dc198d2bb",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Inspector\\Inspector.windows.js",
+      "baseFile": "Libraries\\Inspector\\Inspector.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "4d8dd865cf9dc902cc415dbf7146df9dc198d2bb",
+      "issue": 4310
     },
     {
       "type": "patch",
@@ -579,6 +611,14 @@
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "39326801da6c9ce8c350aa8ba971be4a386499bc",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Pressability\\PressabilityDebug.windows.js",
+      "baseFile": "Libraries\\Pressability\\PressabilityDebug.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "4b94cc9c0fd201000db1a5c2fb874253e5e37606",
+      "issue": 4310
     },
     {
       "type": "derived",

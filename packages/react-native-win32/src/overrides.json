@@ -187,12 +187,36 @@
       "file": "Libraries\\Components\\Touchable\\Tests\\TouchableWin32Test.tsx"
     },
     {
+      "type": "patch",
+      "file": "Libraries\\Components\\Touchable\\TouchableBounce.win32.js",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableBounce.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "d2bb715bb7b4fe8a324252409273747c96a4e687",
+      "issue": 4310
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Components\\Touchable\\TouchableHighlight.win32.js",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableHighlight.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "b930d8995dab7c9aad3e14c3a78b73431c791a56",
+      "issue": 4310
+    },
+    {
       "type": "platform",
       "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.Props.ts"
     },
     {
       "type": "platform",
       "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.win32.tsx"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Components\\Touchable\\TouchableOpacity.win32.js",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableOpacity.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "356d5eb7b824b35b79fb4108b3dffcd8c3cfa4f7",
+      "issue": 4310
     },
     {
       "type": "platform",
@@ -205,6 +229,14 @@
     {
       "type": "platform",
       "file": "Libraries\\Components\\Touchable\\TouchableWin32.Types.tsx"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.win32.js",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "78e0bcf18020ec967f7d96767d7b555af5b9b3b6",
+      "issue": 4310
     },
     {
       "type": "patch",
@@ -241,6 +273,14 @@
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "d09be2d9fc8c621538c2262947580a03ff47177f",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\core\\setUpReactDevTools.win32.js",
+      "baseFile": "Libraries\\core\\setUpReactDevTools.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "90b15d4c0940af7c72077d1eaef45d3256012aed",
+      "issue": 4310
     },
     {
       "type": "derived",
@@ -297,6 +337,14 @@
     {
       "type": "platform",
       "file": "Libraries\\PersonaCoin\\PersonaCoinTypes.ts"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Pressability\\PressabilityDebug.win32.js",
+      "baseFile": "Libraries\\Pressability\\PressabilityDebug.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "4b94cc9c0fd201000db1a5c2fb874253e5e37606",
+      "issue": 4310
     },
     {
       "type": "patch",
