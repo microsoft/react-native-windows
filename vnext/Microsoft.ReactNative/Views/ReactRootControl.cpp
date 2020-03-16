@@ -207,7 +207,7 @@ void ReactRootControl::UpdateRootViewInternal() noexcept {
         ShowInstanceLoaded(*reactInstance);
         break;
       case Mso::React::ReactInstanceState::HasError:
-        ShowInstanceError(*reactInstance);
+        ShowInstanceError();
         break;
       default:
         VerifyElseCrashSz(false, "Unexpected value");
@@ -269,39 +269,12 @@ void ReactRootControl::ShowInstanceLoaded(Mso::React::IReactInstance &reactInsta
   }
 }
 
-void ReactRootControl::ShowInstanceError(Mso::React::IReactInstance &reactInstance) noexcept {
-  if (!m_isDevModeEnabled)
-    return;
-
+void ReactRootControl::ShowInstanceError() noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
     // Remove existing children from root view (from the hosted app)
     xamlRootGrid.Children().Clear();
-
-    // Create Grid & TextBlock to hold error text
-    if (!m_errorTextBlock) {
-      m_errorTextBlock = winrt::TextBlock{};
-      m_redBoxGrid = winrt::Grid{};
-      m_redBoxGrid.Background(winrt::SolidColorBrush{winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)});
-      m_redBoxGrid.Children().Append(m_errorTextBlock);
-    }
-
-    // Add red box grid to root view
-    xamlRootGrid.Children().Append(m_redBoxGrid);
-
-    // Place error message into TextBlock
-    std::wstring wstrErrorMessage{L"ERROR: Instance failed to start.\n\n"};
-    wstrErrorMessage += Microsoft::Common::Unicode::Utf8ToUtf16(reactInstance.LastErrorMessage()).c_str();
-    m_errorTextBlock.Text(wstrErrorMessage);
-
-    // Format TextBlock
-    m_errorTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_errorTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
-    m_errorTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_errorTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
-    winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
-    m_errorTextBlock.Margin(margin);
   }
 }
 

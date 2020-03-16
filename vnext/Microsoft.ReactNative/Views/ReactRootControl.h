@@ -72,7 +72,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void ShowInstanceLoading(Mso::React::IReactInstance &reactInstance) noexcept;
   void ShowInstanceWaiting(Mso::React::IReactInstance &reactInstance) noexcept;
   void ShowInstanceLoaded(Mso::React::IReactInstance &reactInstance) noexcept;
-  void ShowInstanceError(Mso::React::IReactInstance &reactInstance) noexcept;
+  void ShowInstanceError() noexcept;
 
   void InitializeDeveloperMenu() noexcept;
   void ShowDeveloperMenu() noexcept;

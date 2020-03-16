@@ -1,7 +1,63 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 09 Mar 2020 20:08:13 GMT and should not be manually modified.
+This log was last generated on Sat, 14 Mar 2020 03:04:21 GMT and should not be manually modified.
 
+## 0.61.0-beta.58
+Sat, 14 Mar 2020 03:04:21 GMT
+
+### Changes
+
+- Add cli.js (kaigu@microsoft.com)
+## 0.61.0-beta.57
+Fri, 13 Mar 2020 17:37:53 GMT
+
+### Changes
+
+- Build unit tests in ReactWindows-Universal solution (jthysell@microsoft.com)
+- Address PR comments (dida@ntdev.microsoft.com)
+- Code-Gen nativeModules.g.h for auto-linking (dida@ntdev.microsoft.com)
+## 0.61.0-beta.56
+Thu, 12 Mar 2020 19:18:01 GMT
+
+### Changes
+
+- Use redbox for native errors (acoates@microsoft.com)
+## 0.61.0-beta.55
+Thu, 12 Mar 2020 00:01:14 GMT
+
+### Changes
+
+- Fix JSValueObject operator[] (vmorozov@microsoft.com)
+## 0.61.0-beta.54
+Wed, 11 Mar 2020 19:32:20 GMT
+
+### Changes
+
+- Fully implement ExceptionsManagerModule (acoates@microsoft.com)
+## 0.61.0-beta.53
+Wed, 11 Mar 2020 18:14:12 GMT
+
+### Changes
+
+- Code review feedback (acoates@microsoft.com)
+## 0.61.0-beta.52
+Wed, 11 Mar 2020 16:18:00 GMT
+
+### Changes
+
+- Fix crash in timers during instance shutdown, and in systrace (acoates@microsoft.com)
+## 0.61.0-beta.51
+Tue, 10 Mar 2020 21:51:40 GMT
+
+### Changes
+
+- Bundle command clean-up (jthysell@microsoft.com)
+## 0.61.0-beta.50
+Tue, 10 Mar 2020 00:33:15 GMT
+
+### Changes
+
+- Strip out color markers from redbox error messages (acoates@microsoft.com)
 ## 0.61.0-beta.49
 Mon, 09 Mar 2020 20:08:13 GMT
 

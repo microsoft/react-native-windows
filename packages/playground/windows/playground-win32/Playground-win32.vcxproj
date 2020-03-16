@@ -63,6 +63,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>867D41FE5091AED426000143497EA4DFC29A8097</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>Playground_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>

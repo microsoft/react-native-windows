@@ -42,6 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(ReactNativeWindowsDir)ReactUWP;$(IncludePath)</IncludePath>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <PackageCertificateKeyFile>React.Windows.Universal.IntegrationTests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>3178F848DBCD8815543899DE47FD75569C39F355</PackageCertificateThumbprint>
   </PropertyGroup>

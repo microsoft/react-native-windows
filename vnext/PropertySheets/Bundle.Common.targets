@@ -10,6 +10,6 @@
       Condition="'$(UseBundle)' == 'true'">
         <MakeDir Directories="$(BundleContentRoot)" Condition=" !Exists('$(BundleContentRoot') and '$(BundleContentRoot)' != '' " />
         <Warning Text="BundleCommand is not defined, and you should execute 'react-native bundle' by yourself" Condition="'$(BundleCommand)' == ''" />
-        <Exec Condition="'$(BundleCommand)' != ''" Command="$(BundleCommand)" ConsoleToMSBuild="true" WorkingDirectory="$([System.IO.Path]::GetDirectoryName($(SolutionDir)))" />
+        <Exec Condition="'$(BundleCommand)' != ''" Command="$(BundleCommand)" ConsoleToMSBuild="true" WorkingDirectory="$([System.IO.Path]::GetDirectoryName($(ProjectDir)))" />
   </Target>
 </Project>

@@ -49,7 +49,7 @@ struct ReactInstanceSettings {
   std::string DebugBundlePath;
   std::string BundleRootPath;
   facebook::react::NativeLoggingHook LoggingCallback;
-  std::function<void(facebook::react::JSExceptionInfo &&)> JsExceptionCallback;
+  std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
   JSIEngine jsiEngine{JSIEngine::Chakra};
 };
 

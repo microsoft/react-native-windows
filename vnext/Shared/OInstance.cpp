@@ -633,8 +633,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "ExceptionsManager",
-      [callback{std::move(m_devSettings->jsExceptionCallback)}]() mutable {
-        return std::make_unique<ExceptionsManagerModule>(std::move(callback));
+      [redboxHandler = m_devSettings->redboxHandler]() mutable {
+        return std::make_unique<ExceptionsManagerModule>(redboxHandler);
       },
       nativeQueue));
 

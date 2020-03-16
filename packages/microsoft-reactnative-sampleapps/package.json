@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "just-scripts build",
+    "bundle-cpp": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
+    "bundle-cs": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
     "clean": "just-scripts clean",
     "postinstall": "node postinstall.js",
     "start": "react-native start",
@@ -14,8 +16,8 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-windows": "0.61.0-beta.49",
-    "react-native-windows-extended": "0.61.0-beta.60",
+    "react-native-windows": "0.61.0-beta.58",
+    "react-native-windows-extended": "0.61.0-beta.70",
     "rnpm-plugin-windows": "^0.5.1-0"
   },
   "devDependencies": {

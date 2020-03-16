@@ -285,9 +285,6 @@
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
-    <ClCompile Include="ReactHost\JSExceptionCallbackFactory.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
     <ClCompile Include="ReactHost\MsoUtils.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
@@ -611,12 +608,6 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\JSBundle.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\JSExceptionCallbackFactory.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\JSExceptionInfo.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\MoveOnCopy.h">
