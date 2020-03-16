@@ -347,7 +347,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_EmplaceValue_NoArgs) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 1, 2, 3, MSO_LINE_STR);
+      ValidateEmplacedType(value, 1, 2, 3);
     });
 
     p1.EmplaceValue();
@@ -357,7 +357,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_EmplaceValue_OneArg) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 5, 2, 3, MSO_LINE_STR);
+      ValidateEmplacedType(value, 5, 2, 3);
     });
 
     p1.EmplaceValue(5);
@@ -367,7 +367,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_EmplaceValue_TwoArgs) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 5, 6, 3, MSO_LINE_STR);
+      ValidateEmplacedType(value, 5, 6, 3);
     });
 
     p1.EmplaceValue(5, 6);
@@ -377,7 +377,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_EmplaceValue_ThreeArgs) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 5, 6, 7, MSO_LINE_STR);
+      ValidateEmplacedType(value, 5, 6, 7);
     });
 
     p1.EmplaceValue(5, 6, 7);
@@ -438,7 +438,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_TryEmplaceValue_NoArgs) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 1, 2, 3, MSO_LINE_STR);
+      ValidateEmplacedType(value, 1, 2, 3);
     });
 
     TestCheck(p1.TryEmplaceValue());
@@ -448,7 +448,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_TryEmplaceValue_OneArg) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 5, 2, 3, MSO_LINE_STR);
+      ValidateEmplacedType(value, 5, 2, 3);
     });
 
     TestCheck(p1.TryEmplaceValue(5));
@@ -458,7 +458,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_TryEmplaceValue_TwoArgs) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 5, 6, 3, MSO_LINE_STR);
+      ValidateEmplacedType(value, 5, 6, 3);
     });
 
     TestCheck(p1.TryEmplaceValue(5, 6));
@@ -468,7 +468,7 @@ TEST_CLASS_EX (PromiseTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(Promise_TryEmplaceValue_ThreeArgs) {
     Mso::Promise<EmplacedType> p1;
     auto future = p1.AsFuture().Then([&](const EmplacedType &value) noexcept {
-      ValidateEmplacedType(value, 5, 6, 7, MSO_LINE_STR);
+      ValidateEmplacedType(value, 5, 6, 7);
     });
 
     TestCheck(p1.TryEmplaceValue(5, 6, 7));
