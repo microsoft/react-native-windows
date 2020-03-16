@@ -362,9 +362,6 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 }
 
 // @public (undocumented)
-export type Layout = 'vertical' | 'horizontal' | 'table' | 'flow' | 'verticalFlow' | 'overlap' | 'ribbonLayout' | 'flexboxLayout' | 'gridLayout';
-
-// @public (undocumented)
 export type OmittedAccessibilityPropsWin32 = {
     accessibilityActions?: ReadonlyArray<RN.AccessibilityActionInfo>;
     accessibilityRole?: RN.AccessibilityRole;
