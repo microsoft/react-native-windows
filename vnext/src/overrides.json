@@ -71,16 +71,16 @@
       "type": "derived",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windesktop.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "d095ab7eaf3fd9fab83187d226905ae90742bccc",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "derived",
-      "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windows.ts",
+      "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windows.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "d095ab7eaf3fd9fab83187d226905ae90742bccc",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -111,8 +111,8 @@
       "type": "derived",
       "file": "Libraries\\Components\\CheckBox\\CheckBox.windows.tsx",
       "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "ad31417ed1bf4852f450eab6c2bdbd1f4f0285d9",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "7006aba4ecdfd27a213172ca92d1877b55729292",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -227,8 +227,8 @@
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\Picker.windows.tsx",
       "baseFile": "Libraries\\Components\\Picker\\Picker.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "3e770adc32723c933082c9377f6c436c4c4e784d",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "67a10fef33208d21006d7bd51b4e6fd8d4c9ca5d",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -403,8 +403,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\TextInput\\TextInputState.windows.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInputState.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "f55224fb7c1402127cdce024d02b62377988b4f6",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "b6abcc197d20eb192444f85e0a1e447a3019658f",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -465,8 +465,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\View\\ViewAccessibility.windows.js",
       "baseFile": "Libraries\\Components\\View\\ViewAccessibility.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "40af15708bbf06eceba820ff7fbf1141f8d9a86b",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "2d01902a9edd76f728e9044e2ed8a35d44f34424",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -529,8 +529,8 @@
       "type": "patch",
       "file": "Libraries\\DeprecatedPropTypes\\DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries\\DeprecatedPropTypes\\DeprecatedViewAccessibility.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "352313596826cb18d54719c8bad7f71a28336bfc",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -870,8 +870,8 @@
       "type": "derived",
       "file": "RNTester\\js\\utils\\RNTesterList.windows.ts",
       "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "e1a725929fbf9b90245e9eddeb797f90b53b8ee9",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "f1e77952c292fe2898645f81f280b64f8ea17b90",
       "issue": "LEGACY_FIXME"
     },
     {

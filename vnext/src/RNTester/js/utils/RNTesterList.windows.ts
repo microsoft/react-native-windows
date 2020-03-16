@@ -152,6 +152,14 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/Animated/AnimatedExample'),
   },
   {
+    key: 'Animation - GratuitousAnimation',
+    module: require('react-native/RNTester/js/examples/Animated/AnimatedGratuitousApp/AnExApp'),
+  },
+  {
+    key: 'AppearanceExample',
+    module: require('react-native/RNTester/js/examples/Appearance/AppearanceExample'),
+  },
+  {
     key: 'AppStateExample',
     module: require('react-native/RNTester/js/examples/AppState/AppStateExample'),
   },
@@ -170,6 +178,10 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'CrashExample',
     module: require('react-native/RNTester/js/examples/Crash/CrashExample'),
+  },
+  {
+    key: 'DevSettings',
+    module: require('react-native/RNTester/examples/DevSettings/DevSettingsExample'),
   },
   {
     key: 'Dimensions',
@@ -206,6 +218,14 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'RTLExample',
     module: require('react-native/RNTester/js/examples/RTL/RTLExample'),
+  },
+  {
+    key: 'ShareExample',
+    module: require('react-native/RNTester/js/examples/Share/ShareExample'),
+  },
+  {
+    key: 'TimerExample',
+    module: require('react-native/RNTester/js/examples/Timer/TimerExample'),
   },
   {
     key: 'ThemingExample',
