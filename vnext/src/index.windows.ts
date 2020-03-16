@@ -15,76 +15,76 @@
 */
 import * as ReactNativeWindows from './typings-index';
 
-const ReactNativeImplementation = require('./index.js');
+const Index = require('./index.js');
 
-Object.defineProperty(ReactNativeImplementation, 'DatePicker', {
+Object.defineProperty(Index, 'DatePicker', {
   get: () => {
     return require('./Libraries/Components/DatePicker/DatePicker')
       .DatePicker as ReactNativeWindows.DatePicker;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'Flyout', {
+Object.defineProperty(Index, 'Flyout', {
   get: () => {
     return require('./Libraries/Components/Flyout/Flyout')
       .Flyout as ReactNativeWindows.Flyout;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'Glyph', {
+Object.defineProperty(Index, 'Glyph', {
   get: () => {
     return require('./Libraries/Components/Glyph/Glyph')
       .Glyph as ReactNativeWindows.Glyph;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'PickerWindows', {
+Object.defineProperty(Index, 'PickerWindows', {
   get: () => {
     return require('./Libraries/Components/Picker/PickerWindows')
       .Picker as ReactNativeWindows.Picker;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'Popup', {
+Object.defineProperty(Index, 'Popup', {
   get: () => {
     return require('./Libraries/Components/Popup/Popup')
       .Popup as ReactNativeWindows.Popup;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'supportKeyboard', {
+Object.defineProperty(Index, 'supportKeyboard', {
   get: () => {
     return require('./Libraries/Components/Keyboard/KeyboardExt')
       .supportKeyboard;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'EventPhase', {
+Object.defineProperty(Index, 'EventPhase', {
   get: () => {
     return require('./Libraries/Components/Keyboard/KeyboardExtProps')
       .HandledEventPhase as ReactNativeWindows.EventPhase;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'HandledEventPhase', {
+Object.defineProperty(Index, 'HandledEventPhase', {
   get: () => {
     return require('./Libraries/Components/Keyboard/KeyboardExtProps')
       .HandledEventPhase as ReactNativeWindows.HandledEventPhase;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'ViewWindows', {
+Object.defineProperty(Index, 'ViewWindows', {
   get: () => {
     return require('./Libraries/Components/View/ViewWindows')
       .ViewWindows as ReactNativeWindows.ViewWindows;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'AppTheme', {
+Object.defineProperty(Index, 'AppTheme', {
   get: () => {
     return require('./Libraries/AppTheme/AppTheme')
       .AppTheme as ReactNativeWindows.AppTheme;
   },
 });
 
-export = ReactNativeImplementation;
+export = Index;

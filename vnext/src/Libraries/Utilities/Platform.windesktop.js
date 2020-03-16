@@ -30,23 +30,7 @@ const Platform = {
     |},
   |} {
     if (this.__constants == null) {
-      // Hack: We shouldn't need to null-check NativePlatformContants, but
-      // needed to remove the invariant it is non-null since react-native-windesktop
-      // hasn't picked up the changes we've made in 0.61 to add the module yet.
-      // This can be removed when we fix windesktop NativePlatformConstantsWin.
-      if (NativePlatformConstantsWin) {
-        this.__constants = NativePlatformConstantsWin.getConstants();
-      } else {
-        this.__constants = {
-          isTesting: false,
-          reactNativeVersion: {
-            major: 0,
-            minor: 62,
-            patch: 0,
-            prerelease: undefined,
-          },
-        };
-      }
+      this.__constants = NativePlatformConstantsWin.getConstants();
     }
     return this.__constants;
   },

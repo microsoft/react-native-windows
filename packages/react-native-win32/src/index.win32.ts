@@ -12,48 +12,48 @@
          which will provide proper type information for these exports.
 */
 
-const ReactNativeImplementation = require('./index.js');
+const Index = require('./index.js');
 
-Object.defineProperty(ReactNativeImplementation, 'ViewWin32', {
+Object.defineProperty(Index, 'ViewWin32', {
   get: () => {
     return require('./Libraries/Components/View/ViewWin32').ViewWin32;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'TextWin32', {
+Object.defineProperty(Index, 'TextWin32', {
   get: () => {
     return require('./Libraries/Components/Text/TextWin32').TextWin32;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'ButtonWin32', {
+Object.defineProperty(Index, 'ButtonWin32', {
   get: () => {
     return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'TouchableWin32', {
+Object.defineProperty(Index, 'TouchableWin32', {
   get: () => {
     return require('./Libraries/Components/Touchable/TouchableWin32').TouchableWin32;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'PersonaCoin', {
+Object.defineProperty(Index, 'PersonaCoin', {
   get: () => {
     return require('./Libraries/PersonaCoin/PersonaCoin').PersonaCoin;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'PersonaCoinSize', {
+Object.defineProperty(Index, 'PersonaCoinSize', {
   get: () => {
     return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
   },
 });
 
-Object.defineProperty(ReactNativeImplementation, 'PersonaCoinPresence', {
+Object.defineProperty(Index, 'PersonaCoinPresence', {
   get: () => {
     return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinPresence;
   },
 });
 
-export = ReactNativeImplementation;
+export = Index;

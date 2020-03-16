@@ -255,12 +255,8 @@
       "file": "Libraries\\Image\\ImageTypes.ts"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Image\\resolveAssetSource.win32.js",
-      "baseFile": "Libraries\\Image\\resolveAssetSource.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "e9b203afa94faec1b9b222a5b724c9dd20f6fde2",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\Image\\resolveAssetSource.win32.js"
     },
     {
       "type": "platform",

@@ -1,13 +1,10 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
+ * @flow strict-local
  * @format
  */
-
-// Resolves an asset into a `source` for `Image`.
 
 'use strict';
 
