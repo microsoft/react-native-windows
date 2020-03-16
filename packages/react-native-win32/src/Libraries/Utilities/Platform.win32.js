@@ -56,7 +56,7 @@ const Platform = {
     }
     return false;
   },
-  get isTV() {
+  get isTV(): boolean {
     return false;
   },
   select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>

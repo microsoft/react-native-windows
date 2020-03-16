@@ -441,7 +441,7 @@
     },
     {
       "type": "derived",
-      "file": "Libraries\\Utilities\\Dimensions.win32.ts",
+      "file": "Libraries\\Utilities\\Dimensions.win32.js",
       "baseFile": "Libraries\\Utilities\\Dimensions.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "c8752f2624a836e0b4eb7ef1b24be76ef1ba8731",

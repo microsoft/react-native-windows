@@ -19,4 +19,7 @@ type Props = $ReadOnly<{|
   status: 'COMPLETE' | 'FAILED' | 'NONE' | 'PENDING',
 |}>;
 
-module.exports = (props: Props) => <Text>{props.status}</Text>;
+const YellowBoxInspectorSourceMapStaus = (props: Props): React.Node => {
+  return <Text>{props.status}</Text>;
+};
+module.exports = YellowBoxInspectorSourceMapStaus;

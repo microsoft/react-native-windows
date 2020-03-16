@@ -44,6 +44,7 @@ export function PressabilityDebugView({color, hitSlop}: Props): React.Node {
   if (__DEV__) {
     if (isEnabled()) {
       const baseColor =
+        // $FlowFixMe [Win32] no toString() for NativeOrDynamicColor
         '#' + (normalizeColor(color) ?? 0).toString(16).padStart(8, '0');
 
       return (

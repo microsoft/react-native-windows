@@ -14,7 +14,9 @@ import type {
   NativeOrDynamicColorType,
 } from './NativeOrDynamicColorType';
 
-function processColorObject(color?: NativeOrDynamicColorType) {
+function processColorObject(
+  color?: NativeOrDynamicColorType,
+): ?NativeOrDynamicColorType {
   if (color && typeof color === 'object') {
     if (
       color.hasOwnProperty('colorStops') &&
