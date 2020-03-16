@@ -28,6 +28,9 @@ class WinRTWebSocketResource : public IWebSocketResource
   // Mso::ManualResetEvent m_sendPerformed;
   std::promise<void> m_connectPerformed;
 
+  CloseCode m_closeCode;
+  std::string m_closeReason;
+
   std::function<void()> m_connectHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
@@ -37,6 +40,8 @@ class WinRTWebSocketResource : public IWebSocketResource
   ~WinRTWebSocketResource() override;
 
   winrt::fire_and_forget PerformConnect();
+  winrt::fire_and_forget PerformPing();
+  winrt::fire_and_forget PerformClose();
 
   void OnMessageReceived(
     winrt::Windows::Networking::Sockets::IWebSocket const& sender,
@@ -44,6 +49,8 @@ class WinRTWebSocketResource : public IWebSocketResource
   void OnClosed(
     winrt::Windows::Networking::Sockets::IWebSocket const& sender,
     winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
+
+  void Stop();
 
 public:
   WinRTWebSocketResource(const std::string& urlString);

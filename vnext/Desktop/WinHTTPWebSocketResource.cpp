@@ -204,7 +204,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     NULL,                           // lpOptional
     0,                              // dwOptionalLength
     0,                              // dwTotalLength
-    (DWORD_PTR)this                               // dwContext
+    (DWORD_PTR)this                 // dwContext
   );
   if (!fStatus)
   {

@@ -35,7 +35,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     bool connected = false;
     bool closed = false;
     bool error = false;
-    string message;
     ws->SetOnConnect([&connected]()
     {
       connected = true;
@@ -87,15 +86,22 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::IsTrue(connected);
   }
 
-  TEST_METHOD(PingClose) {
+  TEST_METHOD(PingClose)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->Start();
 
     auto ws = IWebSocketResource::Make("ws://localhost:5556");
     promise<bool> pingPromise;
-    ws->SetOnPing([&pingPromise]() { pingPromise.set_value(true); });
+    ws->SetOnPing([&pingPromise]()
+    {
+      pingPromise.set_value(true);
+    });
     string errorString;
-    ws->SetOnError([&errorString](IWebSocketResource::Error err) { errorString = err.Message; });
+    ws->SetOnError([&errorString](IWebSocketResource::Error err)
+    {
+      errorString = err.Message;
+    });
 
     ws->Connect();
     ws->Ping();

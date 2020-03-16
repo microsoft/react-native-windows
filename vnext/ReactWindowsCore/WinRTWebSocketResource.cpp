@@ -40,6 +40,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri)
   : m_uri{ std::move(uri) }
   , m_socket{}
   , m_writer{ m_socket.OutputStream() }
+  , m_closeCode{ CloseCode::None }
 {
   m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
   m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
@@ -52,11 +53,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)
 
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
-  if (m_connectRequested)
-  {
-    // m_connectPerformed.Wait();//TODO: Set timeout?
-    m_connectPerformed.get_future().wait();
-  }
+  Stop();
 }
 
 #pragma region Private members
@@ -87,6 +84,37 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
   // m_connectPerformed.Set();
   m_connectPerformed.set_value();
   m_connectRequested = false;
+}
+
+fire_and_forget WinRTWebSocketResource::PerformPing()
+{
+  try
+  {
+    m_socket.Control().MessageType(SocketMessageType::Utf8);
+
+    string s{};
+    winrt::array_view<const uint8_t> arr(
+      CheckedReinterpretCast<const uint8_t*>(s.c_str()),
+      CheckedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
+    m_writer.WriteBytes(arr);
+    m_writer.StoreAsync();
+  }
+  catch (hresult_error const& e)
+  {
+    if (m_errorHandler)
+    {
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+    }
+  }
+}
+
+fire_and_forget WinRTWebSocketResource::PerformClose()
+{
+  co_await winrt::resume_background();
+
+  m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+
+  co_return;
 }
 
 void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
@@ -132,6 +160,16 @@ void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedE
   }
 }
 
+void WinRTWebSocketResource::Stop()
+{
+  // Ensure sequence of other operations
+  if (m_connectRequested)
+  {
+    // m_connectPerformed.Wait();//TODO: Set timeout?
+    m_connectPerformed.get_future().wait();
+  }
+}
+
 #pragma endregion Private members
 
 #pragma region IWebSocketResource
@@ -156,7 +194,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
 
 void WinRTWebSocketResource::Ping()
 {
-
+  PerformPing();
 }
 
 void WinRTWebSocketResource::Send(const string& message)
@@ -171,7 +209,12 @@ void WinRTWebSocketResource::SendBinary(const string& base64String)
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
-  m_socket.Close(static_cast<uint16_t>(code), Utf8ToUtf16(reason) );
+  Stop();
+
+  m_closeCode = code;
+  m_closeReason = std::move(reason);
+
+  PerformClose();
 }
 
 IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
