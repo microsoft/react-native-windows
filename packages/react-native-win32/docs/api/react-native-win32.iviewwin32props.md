@@ -24,7 +24,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 |  [accessibilitySetSize](./react-native-win32.iviewwin32props.accessibilitysetsize.md) | <code>number</code> |  |
 |  [animationClass](./react-native-win32.iviewwin32props.animationclass.md) | <code>string</code> |  |
 |  [children](./react-native-win32.iviewwin32props.children.md) | <code>React.ReactNode</code> |  |
-|  [cursor](./react-native-win32.iviewwin32props.cursor.md) | <code>string</code> |  |
+|  [cursor](./react-native-win32.iviewwin32props.cursor.md) | <code>Cursor</code> |  |
 |  [keyDownEvents](./react-native-win32.iviewwin32props.keydownevents.md) | <code>IHandledKeyboardEvent[]</code> |  |
 |  [keyUpEvents](./react-native-win32.iviewwin32props.keyupevents.md) | <code>IHandledKeyboardEvent[]</code> |  |
 |  [onBlur](./react-native-win32.iviewwin32props.onblur.md) | <code>(ev: RN.NativeSyntheticEvent&lt;{}&gt;) =&gt; void</code> | The onBlur event occurs when an element loses focus. The opposite of onBlur is onFocus. Note that in React Native, unlike in the web, the onBlur event bubbles (similar to onFocusOut in the web).<code>ev.target === ev.currentTarget</code> when the focus is being lost from this component. <code>ev.target !== ev.currentTarget</code> when the focus is being lost from a descendant. |

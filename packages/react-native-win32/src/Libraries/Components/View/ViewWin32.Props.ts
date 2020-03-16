@@ -110,18 +110,7 @@ export type AccessibilityActionName =
   export type Cursor =
   | 'auto'
   | 'pointer'
-
-  export type Layout =
-  | 'vertical'
-  | 'horizontal'
-  | 'table'
-  | 'flow'
-  | 'verticalFlow'
-  | 'overlap'
-  | 'ribbonLayout'
-  | 'flexboxLayout'
-  | 'gridLayout'
-
+  
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
   label?: string;
