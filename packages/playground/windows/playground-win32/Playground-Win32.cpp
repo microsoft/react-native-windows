@@ -428,8 +428,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
-      800,
-      600,
+      CW_USEDEFAULT,
+      CW_USEDEFAULT,
       nullptr,
       nullptr,
       instance,
@@ -454,7 +454,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       continue;
     }
 
-    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
+    if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }
