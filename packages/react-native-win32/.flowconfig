@@ -13,7 +13,7 @@
 <PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/StatusBar/StatusBar.js
+<PROJECT_ROOT>/Libraries/Components/StatusBar/NativeStatusBarManagerAndroid.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableBounce.js

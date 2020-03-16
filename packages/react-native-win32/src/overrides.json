@@ -136,11 +136,12 @@
       "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\StatusBar\\StatusBar.win32.ts",
-      "baseFile": "Libraries\\Components\\StatusBar\\StatusBar.js",
+      "type": "patch",
+      "file": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.win32.js",
+      "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.js",
       "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d1a6da2015247857a5d47cc9777ff65bcf4554fa"
+      "baseHash": "2c312e39ea468283e73be4319370d4f29ea5c932",
+      "issue": 3990
     },
     {
       "type": "platform",
