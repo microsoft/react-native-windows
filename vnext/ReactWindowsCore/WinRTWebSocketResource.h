@@ -32,6 +32,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   std::string m_closeReason;
 
   std::function<void()> m_connectHandler;
+  std::function<void()> m_pingHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;

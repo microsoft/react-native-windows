@@ -67,7 +67,10 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
 
     co_await m_socket.ConnectAsync(m_uri);
 
-    m_connectHandler();
+    if (m_connectHandler)
+    {
+      m_connectHandler();
+    }
   }
   catch (hresult_error const& e)
   {
@@ -78,7 +81,11 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
   {
     hresult_error e{ hr };
     //OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
-    m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+
+    if (m_errorHandler)
+    {
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+    }
   }
 
   // m_connectPerformed.Set();
@@ -88,8 +95,11 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
 
 fire_and_forget WinRTWebSocketResource::PerformPing()
 {
+  hresult hr = S_OK;
   try
   {
+    co_await winrt::resume_background();
+
     m_socket.Control().MessageType(SocketMessageType::Utf8);
 
     string s{};
@@ -97,13 +107,24 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
       CheckedReinterpretCast<const uint8_t*>(s.c_str()),
       CheckedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
     m_writer.WriteBytes(arr);
-    m_writer.StoreAsync();
+
+    co_await m_writer.StoreAsync();
+
+    if (m_pingHandler)
+    {
+      m_pingHandler();
+    }
   }
   catch (hresult_error const& e)
   {
+    hr = e.code();
+  }
+
+  if (!SUCCEEDED(hr))
+  {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+      m_errorHandler({ Utf16ToUtf8(hresult_error(hr).message()), ErrorType::Ping });
     }
   }
 }
@@ -229,7 +250,7 @@ void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler)
 
 void WinRTWebSocketResource::SetOnPing(function<void()>&& handler)
 {
-
+  m_pingHandler = handler;
 }
 
 void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler)
