@@ -320,7 +320,7 @@
     },
     {
       "type": "derived",
-      "file": "Libraries\\Network\\RCTNetworking.win32.ts",
+      "file": "Libraries\\Network\\RCTNetworking.win32.js",
       "baseFile": "Libraries\\Network\\RCTNetworking.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "9ba4db01878648ef181dfd51debd821a837f56b3",
