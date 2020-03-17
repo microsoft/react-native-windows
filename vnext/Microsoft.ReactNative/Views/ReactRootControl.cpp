@@ -158,7 +158,7 @@ void ReactRootControl::InitRootView(
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
   const auto &devSettings = m_reactOptions->DeveloperSettings;
-  m_useLiveReload = devSettings.UseLiveReload;
+  m_useFastRefresh = devSettings.UseFastRefresh;
   m_useWebDebugger = devSettings.UseWebDebugger;
   m_isDevModeEnabled = devSettings.IsDevModeEnabled;
   if (devSettings.IsDevModeEnabled) {
@@ -477,10 +477,10 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
         L"        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>If using V8/Hermes, the JS engine will break on the first statement, until you attach a debugger to it, and hit continue. (Requires Direct Debugging to be enabled)</TextBlock>"
         L"      </Grid>"
         L"    </Button>"
-        L"    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='LiveReload' Style='{StaticResource ButtonRevealStyle}'>"
+        L"    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='FastRefresh' Style='{StaticResource ButtonRevealStyle}'>"
         L"      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>"
         L"        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xEC58;'/>"
-        L"        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='LiveReloadText'/>"
+        L"        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='FastRefreshText'/>"
         L"        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>When loading a bundle from a bundler server that is watching files, this will cause the instance to be reloaded with new bundles when a file changes.</TextBlock>"
         L"      </Grid>"
         L"    </Button>"
@@ -503,8 +503,8 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
     auto directDebugButton = m_developerMenuRoot.FindName(L"DirectDebug").as<winrt::Button>();
     auto breakOnNextLineText = m_developerMenuRoot.FindName(L"BreakOnNextLineText").as<winrt::TextBlock>();
     auto breakOnNextLineButton = m_developerMenuRoot.FindName(L"BreakOnNextLine").as<winrt::Button>();
-    auto liveReloadText = m_developerMenuRoot.FindName(L"LiveReloadText").as<winrt::TextBlock>();
-    auto liveReloadButton = m_developerMenuRoot.FindName(L"LiveReload").as<winrt::Button>();
+    auto fastRefreshText = m_developerMenuRoot.FindName(L"FastRefreshText").as<winrt::TextBlock>();
+    auto fastRefreshButton = m_developerMenuRoot.FindName(L"FastRefresh").as<winrt::Button>();
     auto toggleInspector = m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
     auto cancelButton = m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
 
@@ -538,11 +538,11 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
           ReloadHost();
         });
 
-    liveReloadText.Text(m_useLiveReload ? L"Disable Live Reload" : L"Enable Live Reload");
-    m_liveReloadRevoker = liveReloadButton.Click(
+    fastRefreshText.Text(m_useFastRefresh ? L"Disable Fast Refresh" : L"Enable Fast Refresh");
+    m_fastRefreshRevoker = fastRefreshButton.Click(
         winrt::auto_revoke, [this](auto & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
-          m_useLiveReload = !m_useLiveReload;
+          m_useFastRefresh = !m_useFastRefresh;
           ReloadHost();
         });
 
@@ -591,7 +591,7 @@ void ReactRootControl::ReloadHost() noexcept {
   if (auto reactViewHost = m_reactViewHost.Get()) {
     auto options = reactViewHost->ReactHost().Options();
     options.DeveloperSettings.IsDevModeEnabled = m_isDevModeEnabled;
-    options.DeveloperSettings.UseLiveReload = m_useLiveReload;
+    options.DeveloperSettings.UseFastRefresh = m_useFastRefresh;
     options.DeveloperSettings.UseWebDebugger = m_useWebDebugger;
     options.DeveloperSettings.UseDirectDebugger = m_directDebugging;
     options.DeveloperSettings.DebuggerBreakOnNextLine = m_breakOnNextLine;

@@ -271,6 +271,7 @@
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h" />
+    <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -431,6 +432,7 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="Modules\AppStateData.cpp" />
+    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

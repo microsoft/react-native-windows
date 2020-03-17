@@ -36,6 +36,7 @@ enum class JSIEngine : int32_t {
 
 struct ReactInstanceSettings {
   bool UseWebDebugger{false};
+  bool UseFastRefresh{false};
   bool UseLiveReload{false};
   bool DebuggerBreakOnNextLine{false};
   bool UseDirectDebugger{false};

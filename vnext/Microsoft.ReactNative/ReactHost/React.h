@@ -105,6 +105,11 @@ struct ReactDevOptions {
   //! When the file is saved, the packager will trigger reloading.
   bool UseLiveReload{false};
 
+  //! Enable fast refresh
+  //! With Fast Refresh enabled, most edits should be visible within a second or two.
+  //! Non-compatible changes still cause full reloads
+  bool UseFastRefresh{false};
+
   //! Enables debugging using the web debugger. By default, this is Chrome using http://localhost:8081/debugger-ui from
   //! Metro/Haul. Debugging will start as soon as the react native instance is loaded.
   bool UseWebDebugger{false};

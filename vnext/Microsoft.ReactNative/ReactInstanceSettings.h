@@ -8,11 +8,13 @@
 #if _DEBUG
 #define REACT_DEFAULT_USE_DEVELOPER_SUPPORT true
 #define REACT_DEFAULT_USE_WEB_DEBUGGER true
-#define REACT_DEFAULT_USE_LIVE_RELOAD true
+#define REACT_DEFAULT_USE_FAST_REFRESH true
+#define REACT_DEFAULT_USE_LIVE_RELOAD false
 #define REACT_DEFAULT_ENABLE_DEVELOPER_MENU true
 #else
 #define REACT_DEFAULT_USE_DEVELOPER_SUPPORT false
 #define REACT_DEFAULT_USE_WEB_DEBUGGER false
+#define REACT_DEFAULT_USE_FAST_REFRESH false
 #define REACT_DEFAULT_USE_LIVE_RELOAD false
 #define REACT_DEFAULT_ENABLE_DEVELOPER_MENU false
 #endif // _DEBUG
@@ -36,6 +38,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   bool UseWebDebugger() noexcept;
   void UseWebDebugger(bool value) noexcept;
+
+  bool UseFastRefresh() noexcept;
+  void UseFastRefresh(bool value) noexcept;
 
   bool UseLiveReload() noexcept;
   void UseLiveReload(bool value) noexcept;
@@ -76,6 +81,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_javaScriptMainModuleName{};
   hstring m_javaScriptBundleFile{};
   bool m_useWebDebugger{REACT_DEFAULT_USE_WEB_DEBUGGER};
+  bool m_useFastRefresh{REACT_DEFAULT_USE_FAST_REFRESH};
   bool m_useLiveReload{REACT_DEFAULT_USE_LIVE_RELOAD};
   bool m_useDirectDebugger{false};
   bool m_debuggerBreakOnNextLine{false};
@@ -141,6 +147,14 @@ inline bool ReactInstanceSettings::UseWebDebugger() noexcept {
 
 inline void ReactInstanceSettings::UseWebDebugger(bool value) noexcept {
   m_useWebDebugger = value;
+}
+
+inline bool ReactInstanceSettings::UseFastRefresh() noexcept {
+  return m_useFastRefresh;
+}
+
+inline void ReactInstanceSettings::UseFastRefresh(bool value) noexcept {
+  m_useFastRefresh = value;
 }
 
 inline bool ReactInstanceSettings::UseLiveReload() noexcept {

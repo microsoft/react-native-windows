@@ -30,11 +30,11 @@ namespace ReactUWPTestApp
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
-            InstanceSettings.UseLiveReload = false;
+            InstanceSettings.UseFastRefresh = false;
 #else
             JavaScriptMainModuleName = "app/index";
             InstanceSettings.UseWebDebugger = true;
-            InstanceSettings.UseLiveReload = true;
+            InstanceSettings.UseFastRefresh = true;
 #endif
 
 #if DEBUG
