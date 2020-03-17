@@ -5,7 +5,7 @@
 
 #include <Modules/WebSocketModule.h>
 
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace folly;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
