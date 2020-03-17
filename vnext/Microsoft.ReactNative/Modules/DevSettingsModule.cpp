@@ -20,14 +20,26 @@ DevSettingsModule::DevSettingsModule(Mso::VoidFunctor &&reload) : m_reload(std::
 void DevSettingsModule::reload() {
   m_reload();
 }
-void DevSettingsModule::setHotLoadingEnabled(bool /*isHotLoadingEnabled*/) {}
-void DevSettingsModule::setIsDebuggingRemotely(bool /*isDebuggingRemotelyEnabled*/) {}
-void DevSettingsModule::setLiveReloadEnabled(bool /*setLiveReloadEnabled*/) {}
-void DevSettingsModule::setProfilingEnabled(bool /*setProfilingEnabled*/) {}
-void DevSettingsModule::toggleElementInspector() {}
+void DevSettingsModule::setHotLoadingEnabled(bool /*isHotLoadingEnabled*/) {
+  assert(false);
+}
+void DevSettingsModule::setIsDebuggingRemotely(bool /*isDebuggingRemotelyEnabled*/) {
+  assert(false);
+}
+void DevSettingsModule::setLiveReloadEnabled(bool /*setLiveReloadEnabled*/) {
+  assert(false);
+}
+void DevSettingsModule::setProfilingEnabled(bool /*setProfilingEnabled*/) {
+  assert(false);
+}
+void DevSettingsModule::toggleElementInspector() {
+  assert(false);
+}
 
 // iOS only.
-void DevSettingsModule::setIsShakeToShowDevMenuEnabled(bool /*enabled*/) {}
+void DevSettingsModule::setIsShakeToShowDevMenuEnabled(bool /*enabled*/) {
+  assert(false);
+}
 
 auto DevSettingsModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method> {
   return {
