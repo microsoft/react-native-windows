@@ -19,6 +19,9 @@
     <Filter Include="guid">
       <UniqueIdentifier>{c57e3756-1c62-4042-8169-f1463f0def19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="motifCpp">
+      <UniqueIdentifier>{bad95dc3-5f79-48dc-b144-0662fd73ff08}</UniqueIdentifier>
+    </Filter>
     <Filter Include="object">
       <UniqueIdentifier>{23127842-a753-4d07-b1c9-7f593a105091}</UniqueIdentifier>
     </Filter>
@@ -85,6 +88,9 @@
       <Filter>guid</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="motifCpp\motifCppTest.cpp">
+      <Filter>motifCpp</Filter>
+    </ClCompile>
     <ClCompile Include="object\objectRefCountTest.cpp">
       <Filter>object</Filter>
     </ClCompile>

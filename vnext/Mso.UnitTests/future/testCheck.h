@@ -5,10 +5,10 @@
 
 #include "motifCpp/testCheck.h"
 
-#define ValidateEmplacedType(obj, v1, v2, v3, line) \
-  TestCheckEqualL(v1, obj.Value1, line);            \
-  TestCheckEqualL(v2, obj.Value2, line);            \
-  TestCheckEqualL(v3, obj.Value3, line);
+#define ValidateEmplacedType(obj, v1, v2, v3)           \
+  TestCheckEqualAt(__FILE__, __LINE__, v1, obj.Value1); \
+  TestCheckEqualAt(__FILE__, __LINE__, v2, obj.Value2); \
+  TestCheckEqualAt(__FILE__, __LINE__, v3, obj.Value3);
 
 struct EmplacedType {
   EmplacedType() noexcept {}
