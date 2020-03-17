@@ -26,6 +26,55 @@ using Error = IWebSocketResource::Error;
 
 TEST_CLASS (WebSocketIntegrationTest)
 {
+  void SendReceiveCloseBase(bool isSecure)
+  {
+    auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
+    string scheme = "ws";
+    if (isSecure)
+      scheme += "s";
+    auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/");
+    promise<size_t> sentSizePromise;
+    ws->SetOnSend([&sentSizePromise](size_t size)
+    {
+      sentSizePromise.set_value(size);
+    });
+    promise<string> receivedPromise;
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
+    {
+      receivedPromise.set_value(message);
+    });
+    string errorMessage;
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    {
+      errorMessage = err.Message;
+    });
+
+    server->Start();
+    string sent = "prefix";
+    ws->Connect();
+    ws->Send(sent);
+
+    // Block until response is received. Fail in case of a remote endpoint failure.
+    auto sentSizeFuture = sentSizePromise.get_future();
+    sentSizeFuture.wait();
+    auto sentSize = sentSizeFuture.get();
+    auto receivedFuture = receivedPromise.get_future();
+    receivedFuture.wait();
+    string received = receivedFuture.get();
+    Assert::AreEqual({}, errorMessage);
+
+    ws->Close(CloseCode::Normal, "Closing after reading");
+    server->Stop();
+
+    Assert::AreEqual({}, errorMessage);
+    Assert::AreEqual(sent.length(), sentSize);
+    Assert::AreEqual({"prefix_response"}, received);
+  }
+
   //TODO: Cleanup before merging.
   TEST_METHOD(ConnectClose)
   {
@@ -154,48 +203,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   TEST_METHOD(SendReceiveClose)
   {
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message + "_response";
-    });
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-    promise<size_t> sentSizePromise;
-    ws->SetOnSend([&sentSizePromise](size_t size)
-    {
-      sentSizePromise.set_value(size);
-    });
-    promise<string> receivedPromise;
-    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
-    {
-      receivedPromise.set_value(message);
-    });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
-    {
-      errorMessage = err.Message;
-    });
-
-    server->Start();
-    string sent = "prefix";
-    ws->Connect();
-    ws->Send(sent);
-
-    // Block until response is received. Fail in case of a remote endpoint failure.
-    auto sentSizeFuture = sentSizePromise.get_future();
-    sentSizeFuture.wait();
-    auto sentSize = sentSizeFuture.get();
-    auto receivedFuture = receivedPromise.get_future();
-    receivedFuture.wait();
-    string received = receivedFuture.get();
-    Assert::AreEqual({}, errorMessage);
-
-    ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
-
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(sent.length(), sentSize);
-    Assert::AreEqual({"prefix_response"}, received);
+    SendReceiveCloseBase(/*isSecure*/ false);
   }
 
   TEST_METHOD(SendReceiveLargeMessage) {
@@ -279,48 +287,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   TEST_METHOD(SendReceiveSsl)
   {
-    auto server = make_shared<Test::WebSocketServer>(5556, /*isSecure*/ true);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message + "_response";
-    });
-    auto ws = IWebSocketResource::Make("wss://localhost:5556/");
-    promise<size_t> sentSizePromise;
-    ws->SetOnSend([&sentSizePromise](size_t size)
-    {
-      sentSizePromise.set_value(size);
-    });
-    promise<string> receivedPromise;
-    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
-    {
-      receivedPromise.set_value(message);
-    });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
-    {
-      errorMessage = err.Message;
-    });
-
-    server->Start();
-    string sent = "prefix";
-    ws->Connect();
-    ws->Send(sent);
-
-    // Block until response is received. Fail in case of a remote endpoint failure.
-    auto sentSizeFuture = sentSizePromise.get_future();
-    sentSizeFuture.wait();
-    auto sentSize = sentSizeFuture.get();
-    auto receivedFuture = receivedPromise.get_future();
-    receivedFuture.wait();
-    string received = receivedFuture.get();
-    Assert::AreEqual({}, errorMessage);
-
-    ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
-
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(sent.length(), sentSize);
-    Assert::AreEqual({ "prefix_response" }, received);
+    SendReceiveCloseBase(/*isSecure*/ true);
   }
 
   // TODO: Use Test::WebSocketServer!!!
