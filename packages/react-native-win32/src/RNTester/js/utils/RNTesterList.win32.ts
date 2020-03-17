@@ -87,7 +87,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
 ];
 
-const Modules: { [key: string]: IRNTesterModule } = {};
+const Modules: {[key: string]: IRNTesterModule} = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
