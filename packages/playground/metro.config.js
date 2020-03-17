@@ -14,7 +14,6 @@ const rnPath = fs.realpathSync(
   ),
 );
 const rnwPath = path.resolve(__dirname, '../../vnext');
-const rnwePath = path.resolve(__dirname, '../react-native-windows-extended');
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -23,8 +22,6 @@ module.exports = {
     path.resolve(__dirname, '../..', 'node_modules'),
     // Include react-native-windows
     rnwPath,
-    // Include react-native-windows-extended
-    rnwePath,
   ],
 
   resolver: {
@@ -32,7 +29,6 @@ module.exports = {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
       'react-native': rnwPath,
       'react-native-windows': rnwPath,
-      'react-native-windows-extended': rnwePath,
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
     platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],

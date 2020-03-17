@@ -50,7 +50,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
-    <ReactNativeWindowsExtendedDir Condition="'$(ReactNativeWindowsExtendedDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows-extended\package.json'))\node_modules\react-native-windows-extended\</ReactNativeWindowsExtendedDir>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPackageDirectories.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
@@ -69,7 +68,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsExtendedDir)windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CallingConvention>StdCall</CallingConvention>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -123,9 +121,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ReactNativeWindowsDir)\ReactUWP\ReactUWP.vcxproj">
       <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="$(ReactNativeWindowsExtendedDir)windows\react-native-windows-extended.vcxproj">
-      <Project>{e9851bd0-9751-4de7-9ccb-0d2e7493658c}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
