@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Mar 2020 19:40:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.147",
+      "version": "0.60.0-vnext.147",
+      "comments": {
+        "none": [
+          {
+            "comment": "Stop requiring signing certs for test apps",
+            "author": "acoates@microsoft.com",
+            "commit": "966064ea9e1049dbe84878185d6cbbfa85159e2e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Mar 2020 22:26:17 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.147",
       "version": "0.60.0-vnext.147",
