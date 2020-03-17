@@ -264,7 +264,7 @@ class SampleApp extends Component {
           SampleApp
         </Text>
         <Text style={styles.instructions}>
-          This app2123 consumes custom Native Modules and View Managers.
+          This app consumes custom Native Modules and View Managers.
         </Text>
 
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
@@ -278,17 +278,17 @@ class SampleApp extends Component {
 
         <CircleCS style={styles.circle}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>asd!</Text>
+            <Text style={styles.boxText}>CircleCS!</Text>
           </View>
         </CircleCS>
 
         <CircleCpp style={styles.circle}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>BooHoo!!!!</Text>
+            <Text style={styles.boxText}>CircleCpp!</Text>
           </View>
         </CircleCpp>
         <Text style={styles.instructions}>
-          Hello from Microsoft!!!!
+          Hello from Microsoft!
         </Text>
       </View>
     );
