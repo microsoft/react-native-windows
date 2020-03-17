@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Stop requiring signing certs for test apps",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "966064ea9e1049dbe84878185d6cbbfa85159e2e",
+  "dependentChangeType": "patch",
+  "date": "2020-03-12T14:33:24.996Z"
+}
