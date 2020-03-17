@@ -181,7 +181,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Connect();
     ws->Send(sent);
 
-    // Block until respone is received. Fail in case of a remote endpoint failure.
+    // Block until response is received. Fail in case of a remote endpoint failure.
     auto sentSizeFuture = sentSizePromise.get_future();
     sentSizeFuture.wait();
     auto sentSize = sentSizeFuture.get();
@@ -220,7 +220,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     string large(chars);
     ws->Send(large);
 
-    // Block until respone is received. Fail in case of a remote endpoint failure.
+    // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
     future.wait();
     string result = future.get();
@@ -284,24 +284,43 @@ TEST_CLASS (WebSocketIntegrationTest)
     {
       return message + "_response";
     });
-    auto ws = IWebSocketResource::Make("wss://localhost:5556");
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string& messageIn)
+    auto ws = IWebSocketResource::Make("wss://localhost:5556/");
+    promise<size_t> sentSizePromise;
+    ws->SetOnSend([&sentSizePromise](size_t size)
     {
-      response.set_value(messageIn);
+      sentSizePromise.set_value(size);
+    });
+    promise<string> receivedPromise;
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
+    {
+      receivedPromise.set_value(message);
+    });
+    string errorMessage;
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    {
+      errorMessage = err.Message;
     });
 
     server->Start();
+    string sent = "prefix";
     ws->Connect();
-    ws->Send("suffixme");
+    ws->Send(sent);
 
-    auto result = response.get_future();
-    result.wait();
+    // Block until response is received. Fail in case of a remote endpoint failure.
+    auto sentSizeFuture = sentSizePromise.get_future();
+    sentSizeFuture.wait();
+    auto sentSize = sentSizeFuture.get();
+    auto receivedFuture = receivedPromise.get_future();
+    receivedFuture.wait();
+    string received = receivedFuture.get();
+    Assert::AreEqual({}, errorMessage);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
-    Assert::AreEqual({"suffixme_response"}, result.get());
+    Assert::AreEqual({}, errorMessage);
+    Assert::AreEqual(sent.length(), sentSize);
+    Assert::AreEqual({ "prefix_response" }, received);
   }
 
   // TODO: Use Test::WebSocketServer!!!
@@ -390,7 +409,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     for (int i = 0; i < writes; i++)
       ws->Send("suffixme");
 
-    // Block until respone is received. Fail in case of a remote endpoint failure.
+    // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
     future.wait();
     string result = future.get();
