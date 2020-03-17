@@ -15,8 +15,6 @@ import {
   View,
 } from 'react-native';
 
-import SimpleTest from './simple';
-
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 // Creating event emitters
@@ -265,8 +263,6 @@ class SampleApp extends Component {
         <Text style={styles.welcome}>
           SampleApp
         </Text>
-        <SimpleTest/>
-        <SimpleTest/>
         <Text style={styles.instructions}>
           This app2123 consumes custom Native Modules and View Managers.
         </Text>
