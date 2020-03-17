@@ -274,6 +274,9 @@
     <ClCompile Include="Modules\AppStateData.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\DevSettingsModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp">
@@ -594,6 +597,9 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />

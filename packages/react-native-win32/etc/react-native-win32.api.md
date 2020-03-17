@@ -64,6 +64,9 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
 export type ButtonWin32OmitStyles = RN.TextStyleIOS & RN.TextStyleAndroid;
 
 // @public (undocumented)
+export type Cursor = 'auto' | 'pointer';
+
+// @public (undocumented)
 export enum EventPhase {
     // (undocumented)
     AtTarget = 2,
@@ -331,6 +334,8 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
     animationClass?: string;
     // (undocumented)
     children?: React.ReactNode;
+    // (undocumented)
+    cursor?: Cursor;
     // (undocumented)
     keyDownEvents?: IHandledKeyboardEvent[];
     // (undocumented)

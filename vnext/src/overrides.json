@@ -137,11 +137,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
+      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
     },
     {
       "type": "derived",
@@ -191,11 +191,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
+      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
+      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
     },
     {
       "type": "platform",
@@ -790,13 +790,17 @@
       "type": "patch",
       "file": "RNTester\\js\\components\\RNTesterExampleList.windows.js",
       "baseFile": "RNTester\\js\\components\\RNTesterExampleList.js",
-    "baseVersion": "0.61.5",
+      "baseVersion": "0.61.5",
       "baseHash": "d9b4912cb42b5709362ea8d4e3974641b56e60a8",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "platform",
       "file": "RNTester\\js\\examples-win\\Accessibility\\AccessibilityExampleWindows.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\AsyncStorage\\AsyncStorageExampleWindows.tsx"
     },
     {
       "type": "platform",

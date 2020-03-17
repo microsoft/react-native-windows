@@ -73,6 +73,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
   legacySettings.DebuggerBreakOnNextLine = m_instanceSettings.DebuggerBreakOnNextLine();
   legacySettings.UseJsi = m_instanceSettings.UseJsi();
+  legacySettings.UseFastRefresh = m_instanceSettings.UseFastRefresh();
   legacySettings.UseLiveReload = m_instanceSettings.UseLiveReload();
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
 
@@ -82,6 +83,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
   reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
   reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;
+  reactOptions.DeveloperSettings.UseFastRefresh = legacySettings.UseFastRefresh;
   reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
   reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
