@@ -35,6 +35,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/ScrollView/ScrollViewSimpleExample'),
   },
   {
+    key: 'ScrollViewWin32Test',
+    module: require('../../../Libraries/Components/ScrollView/Tests/ScrollViewWin32Test'),
+  },
+  {
     key: 'TouchableExample',
     module: require('react-native/RNTester/js/examples/Touchable/TouchableExample'),
   },
@@ -87,7 +91,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
 ];
 
-const Modules: {[key: string]: IRNTesterModule} = {};
+const Modules: { [key: string]: IRNTesterModule } = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
