@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8b88ffae-4dbc-49a2-afa5-d2477d4ad189}</ProjectGuid>
+    <ProjectGuid>{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}</ProjectGuid>
     <RootNamespace>Playground</RootNamespace>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <Keyword>Win32Proj</Keyword>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -23,25 +26,26 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup>
@@ -65,72 +69,53 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/await /bigobj /Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;4800;28204;4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsExtendedDir)windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CallingConvention>StdCall</CallingConvention>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <SDLCheck>true</SDLCheck>
+      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;%(AdditionalDependenices)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>Full</Optimization>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="HostingPane.xaml.h">
-      <DependentUpon>HostingPane.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="App.xaml.h">
-      <DependentUpon>App.xaml</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="MainPage.xaml.h">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="Utilities\RelayCommand.h" />
-    <ClInclude Include="ViewLifetimeControl.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="HostingPane.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
+    <Manifest Include="Application.manifest" />
     <None Include="packages.config" />
     <None Include="Playground_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\LockScreenLogo.scale-200.png" />
-    <Image Include="Assets\SplashScreen.scale-200.png" />
-    <Image Include="Assets\Square150x150Logo.scale-200.png" />
-    <Image Include="Assets\Square44x44Logo.scale-200.png" />
-    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Image Include="Assets\StoreLogo.png" />
-    <Image Include="Assets\Wide310x150Logo.scale-200.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="App.xaml.cpp">
-      <DependentUpon>App.xaml</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="HostingPane.xaml.cpp">
-      <DependentUpon>HostingPane.xaml</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="MainPage.xaml.cpp">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Utilities\RelayCommand.cpp" />
-    <ClCompile Include="ViewLifetimeControl.cpp" />
+    <ClCompile Include="Playground-Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
@@ -143,24 +128,26 @@
       <Project>{e9851bd0-9751-4de7-9ccb-0d2e7493658c}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsExtendedDir)windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemGroup>
-    <Font Include="Assets\seguiemj.ttf" />
+    <ResourceCompile Include="Playground-Win32.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup>
+    <MsAppxPackageTargets Condition="'$(MsAppxPackageTargets)'==''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\AppxPackage\Microsoft.AppXPackage.Targets</MsAppxPackageTargets>
+    <ProjectPriFileName>resources.pri</ProjectPriFileName>
+  </PropertyGroup>
+  <Import Project="$(MsAppxPackageTargets)" Condition="Exists('$(MsAppxPackageTargets)')" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets" Condition="Exists('..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets')" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
 </Project>
