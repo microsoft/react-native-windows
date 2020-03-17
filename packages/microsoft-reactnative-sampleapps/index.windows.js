@@ -15,6 +15,8 @@ import {
   View,
 } from 'react-native';
 
+import SimpleTest from './simple';
+
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 // Creating event emitters
@@ -263,8 +265,10 @@ class SampleApp extends Component {
         <Text style={styles.welcome}>
           SampleApp
         </Text>
+        <SimpleTest/>
+        <SimpleTest/>
         <Text style={styles.instructions}>
-          This app consumes custom Native Modules and View Managers.
+          This app2123 consumes custom Native Modules and View Managers.
         </Text>
 
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
@@ -278,17 +282,17 @@ class SampleApp extends Component {
 
         <CircleCS style={styles.circle}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>CircleCS!</Text>
+            <Text style={styles.boxText}>asd!</Text>
           </View>
         </CircleCS>
 
         <CircleCpp style={styles.circle}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>CircleCpp!</Text>
+            <Text style={styles.boxText}>BooHoo!!!!</Text>
           </View>
         </CircleCpp>
         <Text style={styles.instructions}>
-          Hello from Microsoft!
+          Hello from Microsoft!!!!
         </Text>
       </View>
     );
