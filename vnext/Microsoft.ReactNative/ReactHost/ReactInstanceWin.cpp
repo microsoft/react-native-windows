@@ -203,12 +203,12 @@ void ReactInstanceWin::Initialize() noexcept {
           cxxModules.emplace_back(
               Microsoft::ReactNative::DevSettingsModule::name,
               [weakReactHost = strongThis->m_weakReactHost]() {
-                return std::make_unique<Microsoft::ReactNative::DevSettingsModule>(
-                    [weakReactHost]() {
-                if (auto reactHost = weakReactHost.GetStrongPtr()) {
-                  reactHost->ReloadInstance();
-                }
-              }); },
+                return std::make_unique<Microsoft::ReactNative::DevSettingsModule>([weakReactHost]() {
+                  if (auto reactHost = weakReactHost.GetStrongPtr()) {
+                    reactHost->ReloadInstance();
+                  }
+                });
+              },
               m_batchingUIThread);
 
           if (m_options.ModuleProvider != nullptr) {

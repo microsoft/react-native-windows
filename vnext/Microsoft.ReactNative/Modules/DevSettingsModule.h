@@ -9,7 +9,7 @@ namespace Microsoft::ReactNative {
 
 class DevSettingsModule : public facebook::xplat::module::CxxModule {
  public:
-  DevSettingsModule(Mso::VoidFunctor&& reload);
+  DevSettingsModule(Mso::VoidFunctor &&reload);
 
   static const char *name;
 
@@ -26,7 +26,8 @@ class DevSettingsModule : public facebook::xplat::module::CxxModule {
 
   // iOS only.
   void setIsShakeToShowDevMenuEnabled(bool enabled);
-private: 
+
+ private:
   Mso::VoidFunctor m_reload;
 };
 

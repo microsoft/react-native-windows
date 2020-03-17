@@ -19,7 +19,7 @@ DevSettingsModule::DevSettingsModule(Mso::VoidFunctor &&reload) : m_reload(std::
 
 void DevSettingsModule::reload() {
   m_reload();
- }
+}
 void DevSettingsModule::setHotLoadingEnabled(bool /*isHotLoadingEnabled*/) {}
 void DevSettingsModule::setIsDebuggingRemotely(bool /*isDebuggingRemotelyEnabled*/) {}
 void DevSettingsModule::setLiveReloadEnabled(bool /*setLiveReloadEnabled*/) {}
