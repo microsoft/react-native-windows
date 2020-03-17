@@ -23,6 +23,7 @@ using std::vector;
 using winrt::fire_and_forget;
 using winrt::hresult;
 using winrt::hresult_error;
+using winrt::resume_background;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::Sockets::IWebSocket;
 using winrt::Windows::Networking::Sockets::MessageWebSocket;
@@ -63,7 +64,7 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
   hresult hr = S_OK;
   try
   {
-    co_await winrt::resume_background();
+    co_await resume_background();
 
     co_await m_socket.ConnectAsync(m_uri);
 
@@ -98,7 +99,12 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   hresult hr = S_OK;
   try
   {
-    co_await winrt::resume_background();
+    co_await resume_background();
+
+    if (m_connectRequested)
+    {
+      m_connectPerformed.get_future().wait();
+    }
 
     m_socket.Control().MessageType(SocketMessageType::Utf8);
 
@@ -129,9 +135,77 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   }
 }
 
+fire_and_forget WinRTWebSocketResource::PerformWrite()
+{
+  if (m_writeQueue.empty())
+  {
+    co_return;
+  }
+
+  hresult hr = S_OK;
+  try
+  {
+    co_await resume_background();
+
+    if (m_connectRequested)
+    {
+      m_connectPerformed.get_future().wait();
+    }
+
+    string message;
+    bool isBinary;
+    size_t length;
+    std::tie(message, isBinary) = m_writeQueue.front();
+    m_writeQueue.pop();
+
+    if (isBinary)
+    {
+      m_socket.Control().MessageType(SocketMessageType::Binary);
+
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(std::move(message)));
+      length = buffer.Length();
+      m_writer.WriteBuffer(buffer);
+    }
+    else
+    {
+      m_socket.Control().MessageType(SocketMessageType::Utf8);
+
+      length = message.size();
+      winrt::array_view<const uint8_t> arr(
+        CheckedReinterpretCast<const uint8_t*>(message.c_str()),
+        CheckedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
+      m_writer.WriteBytes(arr);
+    }
+
+    co_await m_writer.StoreAsync();
+
+    if (m_writeHandler)
+    {
+      m_writeHandler(length);
+    }
+
+    if (!m_writeQueue.empty())
+    {
+      PerformWrite();
+    }
+  }
+  catch (hresult_error const& e)
+  {
+    hr = e.code();
+  }
+
+  if (!SUCCEEDED(hr))
+  {
+    if (m_errorHandler)
+    {
+      m_errorHandler({ Utf16ToUtf8(hresult_error(hr).message()), ErrorType::Ping });
+    }
+  }
+}
+
 fire_and_forget WinRTWebSocketResource::PerformClose()
 {
-  co_await winrt::resume_background();
+  co_await resume_background();
 
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
 
@@ -220,12 +294,17 @@ void WinRTWebSocketResource::Ping()
 
 void WinRTWebSocketResource::Send(const string& message)
 {
+  m_writeQueue.emplace(std::move(message), false);
 
+  PerformWrite();
+  //PerformWrite(std::move(message));
 }
 
 void WinRTWebSocketResource::SendBinary(const string& base64String)
 {
+  m_writeQueue.emplace(std::move(base64String), true);
 
+  PerformWrite();
 }
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
@@ -255,7 +334,7 @@ void WinRTWebSocketResource::SetOnPing(function<void()>&& handler)
 
 void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler)
 {
-
+  m_writeHandler = handler;
 }
 
 void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler)

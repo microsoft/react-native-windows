@@ -11,6 +11,7 @@
 #include <IWebSocketResource.h>
 
 #include <future>
+#include <queue>
 
 namespace Microsoft::React
 {
@@ -30,9 +31,11 @@ class WinRTWebSocketResource : public IWebSocketResource
 
   CloseCode m_closeCode;
   std::string m_closeReason;
+  std::queue<std::pair<std::string, bool>> m_writeQueue;
 
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
+  std::function<void(std::size_t)> m_writeHandler;
   std::function<void(std::size_t, const std::string&)> m_readHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;
@@ -42,6 +45,7 @@ class WinRTWebSocketResource : public IWebSocketResource
 
   winrt::fire_and_forget PerformConnect();
   winrt::fire_and_forget PerformPing();
+  winrt::fire_and_forget PerformWrite();
   winrt::fire_and_forget PerformClose();
 
   void OnMessageReceived(

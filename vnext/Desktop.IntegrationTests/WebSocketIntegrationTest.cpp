@@ -152,16 +152,29 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::IsTrue(read);
   }
 
-  TEST_METHOD(SendReceiveClose) {
+  TEST_METHOD(SendReceiveClose)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<size_t> sentSizePromise;
-    ws->SetOnSend([&sentSizePromise](size_t size) { sentSizePromise.set_value(size); });
+    ws->SetOnSend([&sentSizePromise](size_t size)
+    {
+      sentSizePromise.set_value(size);
+    });
     promise<string> receivedPromise;
-    ws->SetOnMessage([&receivedPromise](size_t size, const string &message) { receivedPromise.set_value(message); });
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
+    {
+      receivedPromise.set_value(message);
+    });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    {
+      errorMessage = err.Message;
+    });
 
     server->Start();
     string sent = "prefix";
@@ -264,12 +277,19 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->Stop();
   }
 
-  TEST_METHOD(SendReceiveSsl) {
+  TEST_METHOD(SendReceiveSsl)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556, /*isSecure*/ true);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
     auto ws = IWebSocketResource::Make("wss://localhost:5556");
     promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &messageIn) { response.set_value(messageIn); });
+    ws->SetOnMessage([&response](size_t size, const string& messageIn)
+    {
+      response.set_value(messageIn);
+    });
 
     server->Start();
     ws->Connect();
@@ -337,21 +357,29 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual({}, errorMessage);
   }
 
-  TEST_METHOD(SendConsecutive) {
+  TEST_METHOD(SendConsecutive)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
     const int writes = 10;
     int count = 0;
-    ws->SetOnMessage([&response, &count, writes](size_t size, const string &message) {
+    ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
+    {
       if (++count < writes)
         return;
 
       response.set_value(message);
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    {
+      errorMessage = err.Message;
+    });
 
     server->Start();
     ws->Connect();
