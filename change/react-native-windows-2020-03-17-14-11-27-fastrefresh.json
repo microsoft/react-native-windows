@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable fast refresh",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "197c4536be0a69b9d7749bc4fd0a7c4e768fd604",
-  "dependentChangeType": "patch",
-  "date": "2020-03-17T21:11:27.205Z"
-}
