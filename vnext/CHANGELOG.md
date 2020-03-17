@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 Mar 2020 19:54:21 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Mar 2020 01:55:59 GMT and should not be manually modified.
 
+## 0.61.0-beta.60
+Tue, 17 Mar 2020 01:55:59 GMT
+
+### Changes
+
+- Set TabIndex to 0 for ScrollViewers (jagorrin@microsoft.com)
 ## 0.61.0-beta.59
 Mon, 16 Mar 2020 19:54:21 GMT
 

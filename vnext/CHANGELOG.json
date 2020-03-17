@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Mar 2020 01:55:59 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.60",
+      "version": "0.61.0-beta.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set TabIndex to 0 for ScrollViewers",
+            "author": "jagorrin@microsoft.com",
+            "commit": "43332258ca84856eff48e593e140e1ab91d7f7fa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Mar 2020 19:54:21 GMT",
       "tag": "react-native-windows_v0.61.0-beta.59",
       "version": "0.61.0-beta.59",
