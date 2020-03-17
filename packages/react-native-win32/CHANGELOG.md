@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 02 Mar 2020 22:47:03 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Mar 2020 22:20:57 GMT and should not be manually modified.
 
+## 0.61.0-beta.15
+Tue, 17 Mar 2020 22:20:57 GMT
+
+### Changes
+
+- Add Cursor to ViewWin32Props (lehon@microsoft.com)
 ## 0.61.0-beta.14
 Mon, 02 Mar 2020 22:47:03 GMT
 

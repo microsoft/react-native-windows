@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Cursor to ViewWin32Props",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "lehon@microsoft.com",
-  "commit": "99c95ae317bd667c8e55fbabb0739fcfe1bf627c",
-  "dependentChangeType": "patch",
-  "date": "2020-03-17T00:01:08.793Z"
-}
