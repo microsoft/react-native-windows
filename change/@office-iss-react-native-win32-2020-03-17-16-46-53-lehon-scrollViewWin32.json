@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "add ScrollViewWin32 with biDirectional prop",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "lehon@microsoft.com",
+  "commit": "c78a3759d220b44bf2c74097d93e39754e456377",
+  "dependentChangeType": "patch",
+  "date": "2020-03-17T23:46:53.338Z"
+}
