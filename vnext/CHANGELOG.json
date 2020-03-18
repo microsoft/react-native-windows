@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Mar 2020 11:43:45 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.63",
+      "version": "0.61.0-beta.63",
+      "comments": {
+        "none": [
+          {
+            "comment": "[typings] RCTDeviceEventEmitter is an instance of NativeEventEmitter",
+            "author": "eloy.de.enige@gmail.com",
+            "commit": "b70ae33c7db2a331276ace801fcdcabfbfbdcb63"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2020 04:50:36 GMT",
       "tag": "react-native-windows_v0.61.0-beta.63",
       "version": "0.61.0-beta.63",

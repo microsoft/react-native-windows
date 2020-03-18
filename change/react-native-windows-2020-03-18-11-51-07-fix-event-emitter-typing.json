@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "[typings] RCTDeviceEventEmitter is an instance of NativeEventEmitter",
-  "packageName": "react-native-windows",
-  "email": "eloy.de.enige@gmail.com",
-  "commit": "b70ae33c7db2a331276ace801fcdcabfbfbdcb63",
-  "dependentChangeType": "patch",
-  "date": "2020-03-18T10:51:07.022Z"
-}
