@@ -20,7 +20,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   winrt::Windows::Foundation::Uri m_uri;
   winrt::Windows::Networking::Sockets::MessageWebSocket m_socket;
   winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
-  winrt::Windows::Storage::Streams::DataWriter m_writer;
+  winrt::Windows::Storage::Streams::DataWriter m_writer{ m_socket.OutputStream() };
 
   std::atomic_bool m_connectRequested;
   std::atomic_bool m_sendRequested;
@@ -28,7 +28,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   std::promise<void> m_closePerformed;
   winrt::Windows::Foundation::IAsyncAction m_connectAction;
 
-  CloseCode m_closeCode;
+  CloseCode m_closeCode{ CloseCode::None };
   std::string m_closeReason;
   std::queue<std::pair<std::string, bool>> m_writeQueue;
 

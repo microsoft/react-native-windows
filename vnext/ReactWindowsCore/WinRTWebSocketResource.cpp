@@ -40,9 +40,6 @@ namespace Microsoft::React
 {
 WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri)
   : m_uri{ std::move(uri) }
-  , m_socket{}
-  , m_writer{ m_socket.OutputStream() }
-  , m_closeCode{ CloseCode::None }
 {
   m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
   m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
