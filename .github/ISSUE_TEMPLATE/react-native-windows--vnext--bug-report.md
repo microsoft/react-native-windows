@@ -1,8 +1,8 @@
 ---
-name: React Native Windows (vNext) Bug Report
-about: File a bug report on vNext
+name: React Native Windows Bug Report
+about: File a bug report
 title: Describe the problem
-labels: bug, vnext
+labels: bug
 assignees: ''
 
 ---
