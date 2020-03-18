@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Mar 2020 22:00:44 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.65",
+      "version": "0.61.0-beta.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Changed C# JSValue API to match C++ version",
+            "author": "vmorozov@microsoft.com",
+            "commit": "6c072821b73dc13e8c7d461fd59b413bdafeb306"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 20:19:18 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.64",
+      "version": "0.61.0-beta.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReactInstanceWin::GetBundleRootPath",
+            "author": "jthysell@microsoft.com",
+            "commit": "c2d0019489a858be74dd55be161e3b77e6c55c4a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2020 11:43:45 GMT",
       "tag": "react-native-windows_v0.61.0-beta.63",
       "version": "0.61.0-beta.63",

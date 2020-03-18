@@ -103,22 +103,6 @@ namespace Microsoft.ReactNative.Managed
       return writeArgsMethod.First();
     }
 
-    public static MethodInfo WriteErrorOf(Type typeArg)
-    {
-      var writeErrorMethod =
-        from member in typeof(JSValueWriter).GetMember(
-          nameof(JSValueWriter.WriteError), BindingFlags.Static | BindingFlags.Public)
-        let method = member as MethodInfo
-        let isGeneric = method.IsGenericMethod
-        where method != null
-          && method.IsDefined(typeof(ExtensionAttribute), inherit: false)
-        let parameters = method.GetParameters()
-        where parameters.Length == 2
-          && parameters[0].ParameterType == typeof(IJSValueWriter)
-        select method.MakeGenericMethod(typeArg);
-      return writeErrorMethod.First();
-    }
-
     private static MethodInfo MethodOf(string methodName, params Type[] typeArgs) =>
       typeof(JSValueWriterGenerator).GetMethod(methodName).MakeGenericMethod(typeArgs);
 

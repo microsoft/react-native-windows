@@ -636,7 +636,7 @@ std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() 
 }
 
 std::string ReactInstanceWin::GetBundleRootPath() noexcept {
-  return m_options.LegacySettings.BundleRootPath;
+  return m_bundleRootPath.empty() ? m_options.LegacySettings.BundleRootPath : m_bundleRootPath;
 }
 
 std::shared_ptr<react::uwp::IReactInstance> ReactInstanceWin::UwpReactInstance() noexcept {

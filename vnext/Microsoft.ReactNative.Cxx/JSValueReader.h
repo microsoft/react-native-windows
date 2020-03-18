@@ -100,7 +100,7 @@ inline T ReadValue(IJSValueReader const &reader) noexcept {
 
 // This is a convenience method to call ReadValue for JSValue.
 template <class T>
-inline T ReadValue(const JSValue &jsValue) noexcept {
+inline T ReadValue(JSValue const &jsValue) noexcept {
   T result;
   ReadValue(jsValue, /*out*/ result);
   return result;
