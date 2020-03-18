@@ -5,7 +5,6 @@
 
 #pragma once
 
-//#include <Mso/eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>

@@ -322,32 +322,32 @@ IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
 
 void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler)
 {
-  m_connectHandler = handler;
+  m_connectHandler = std::move(handler);
 }
 
 void WinRTWebSocketResource::SetOnPing(function<void()>&& handler)
 {
-  m_pingHandler = handler;
+  m_pingHandler = std::move(handler);
 }
 
 void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler)
 {
-  m_writeHandler = handler;
+  m_writeHandler = std::move(handler);
 }
 
 void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler)
 {
-  m_readHandler = handler;
+  m_readHandler = std::move(handler);
 }
 
 void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler)
 {
-  m_closeHandler = handler;
+  m_closeHandler = std::move(handler);
 }
 
 void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
 {
-  m_errorHandler = handler;
+  m_errorHandler = std::move(handler);
 }
 
 #pragma endregion IWebSocketResource
