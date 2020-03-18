@@ -2426,14 +2426,14 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.7.12"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.7.12.tgz#e355cd24caefbf831686b684c09918906894ff5c"
-  integrity sha512-FVd0c+DEz+HntBmtRsTTslVvBagx0FqGC+rzF8jnVDJbiW6xkwjwfTj/VKqNNdz821sEPp+eAJgGh7s0Nyx3Iw==
+  version "7.7.13"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.7.13.tgz#b9fa6fb1ff21a8bb2b7f0f6b00b21e08900446f4"
+  integrity sha512-uZZcsWmychXTWe4qLqQ7CSM/oROLKn+Er2BCo//QAXEZTBAE8G/pX+qUlI3OWKLU9egxDkfRcx+zAButCOQGzw==
   dependencies:
-    "@microsoft/api-extractor-model" "7.7.7"
-    "@microsoft/node-core-library" "3.19.3"
-    "@microsoft/ts-command-line" "4.3.10"
+    "@microsoft/api-extractor-model" "7.7.8"
     "@microsoft/tsdoc" "0.12.14"
+    "@rushstack/node-core-library" "3.19.4"
+    "@rushstack/ts-command-line" "4.3.11"
     colors "~1.2.1"
     js-yaml "~3.13.1"
     resolve "1.8.1"
@@ -2445,6 +2445,14 @@
   dependencies:
     "@microsoft/node-core-library" "3.19.3"
     "@microsoft/tsdoc" "0.12.14"
+
+"@microsoft/api-extractor-model@7.7.8":
+  version "7.7.8"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.7.8.tgz#fe2bb3a9ec90c1181ad0447fcf5ed912c54a7f5c"
+  integrity sha512-OWiIC3+Rnv6WzmwuOZkbpHGw9kSKTlzFZBrBwDVEkXp0SP1LsWOy7BALIR1RdTmaM9tRMzKZsjRWz4MWqXJdCQ==
+  dependencies:
+    "@microsoft/tsdoc" "0.12.14"
+    "@rushstack/node-core-library" "3.19.4"
 
 "@microsoft/api-extractor@^7.3.8":
   version "7.7.8"
@@ -2674,6 +2682,28 @@
     eslint-plugin-react-hooks "^1.5.1"
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
+
+"@rushstack/node-core-library@3.19.4":
+  version "3.19.4"
+  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.19.4.tgz#1ad4d18f00a746beaa2e3403cf805a9518d54149"
+  integrity sha512-xH/eXMZycx9t69lHXZifnzuXADOqLp23lOkP6K4avgvdPoZcVIQHeL80/jdzARp5cm+HaHsNxNycqkvH7b7mxQ==
+  dependencies:
+    "@types/node" "10.17.13"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    semver "~5.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
+"@rushstack/ts-command-line@4.3.11":
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.3.11.tgz#79e4ee20c42ad849e0d257790bcb3f2865c7f15a"
+  integrity sha512-Jzu52EzzHmIuc4dCrK+jLKwFCrrCtVBPCxeMFtHlODXkZ61IlVW+a+rRATkNNlSykv3G0dmedOFxQsVpVgoUpA==
+  dependencies:
+    "@types/argparse" "1.0.33"
+    argparse "~1.0.9"
+    colors "~1.2.1"
 
 "@types/argparse@1.0.33":
   version "1.0.33"
