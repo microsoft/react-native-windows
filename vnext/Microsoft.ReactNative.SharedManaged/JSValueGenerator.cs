@@ -250,8 +250,7 @@ namespace Microsoft.ReactNative.Managed
 
       public MethodCallExpression CallExt(MethodInfo method, params object[] arguments)
       {
-        var args = new List<Expression>();
-        args.Add(AsExpression);
+        var args = new List<Expression> { AsExpression };
 
         void ParseArgs(object[] argObjects)
         {

@@ -839,7 +839,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -848,7 +848,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -857,7 +857,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -866,7 +866,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -875,7 +875,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -884,7 +884,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -893,7 +893,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("voidPromise", 2,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -902,7 +902,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("voidPromise", 3,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -911,7 +911,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.ResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -920,7 +920,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.RejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -929,7 +929,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -938,7 +938,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -947,7 +947,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -956,7 +956,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -965,7 +965,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -974,7 +974,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -983,7 +983,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("staticVoidPromise", 2,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -992,7 +992,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("staticVoidPromise", 3,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -1002,7 +1002,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -1011,7 +1011,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -1061,14 +1061,14 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestConstants()
     {
       var constants = m_moduleBuilderMock.GetConstants();
-      Assert.AreEqual("MyConstant1", constants[nameof(SimpleNativeModule.Constant1)].String);
-      Assert.AreEqual("MyConstant2", constants["const2"].String);
+      Assert.AreEqual("MyConstant1", constants[nameof(SimpleNativeModule.Constant1)]);
+      Assert.AreEqual("MyConstant2", constants["const2"]);
       Assert.AreEqual(new Point { X = 2, Y = 3 }, constants["const3"].To<Point>());
       Assert.AreEqual(new Point { X = 3, Y = 4 }, constants[nameof(SimpleNativeModule.Constant4)].To<Point>());
       Assert.AreEqual(new Point { X = 12, Y = 14 }, constants["const51"].To<Point>());
-      Assert.AreEqual("MyConstant52", constants["const52"].String);
+      Assert.AreEqual("MyConstant52", constants["const52"]);
       Assert.AreEqual(new Point { X = 15, Y = 17 }, constants["const61"].To<Point>());
-      Assert.AreEqual("MyConstant62", constants["const62"].String);
+      Assert.AreEqual("MyConstant62", constants["const62"]);
     }
 
     [TestMethod]

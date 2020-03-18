@@ -79,7 +79,7 @@ namespace Microsoft.ReactNative.Managed
       value.WriteTo(writer);
     }
 
-    public static void WriteValue(this IJSValueWriter writer, JSValue.Void value)
+    public static void WriteValue(this IJSValueWriter writer, JSValue.Void _)
     {
       writer.WriteNull();
     }
@@ -393,14 +393,14 @@ namespace Microsoft.ReactNative.Managed
     public static void WriteObjectProperty<T>(this IJSValueWriter writer, string name, T value)
     {
       writer.WritePropertyName(name);
-      writer.WriteValue<T>(value);
+      writer.WriteValue(value);
     }
 
     public static void WriteObjectProperties<T>(this IJSValueWriter writer, T value)
     {
       var treeWriter = new JSValueTreeWriter();
       treeWriter.WriteValue(value);
-      foreach (var property in treeWriter.TakeValue().Object)
+      foreach (var property in treeWriter.TakeValue().AsObject())
       {
         writer.WriteObjectProperty(property.Key, property.Value);
       }
@@ -494,15 +494,6 @@ namespace Microsoft.ReactNative.Managed
       return writer;
     }
 
-    public static IJSValueWriter WriteError<T>(this IJSValueWriter writer, T error)
-    {
-      //TODO: Combine with error writing used for IReactPromise
-      var errorMessage = error as string;
-      return (errorMessage != null)
-       ? writer.WriteArgs(new Dictionary<string, string> { ["message"] = errorMessage })
-       : writer.WriteArgs(error);
-    }
-
     public static WriteValueDelegate<T> GetWriteValueDelegate<T>()
     {
       return (WriteValueDelegate<T>)GetWriteValueDelegate(typeof(T));
@@ -534,8 +525,10 @@ namespace Microsoft.ReactNative.Managed
         if (writerDelegates != s_writerDelegates) continue;
 
         // Clone the dictionary, update the clone, and try to replace the s_writerDelegates.
-        var updatedWriterDelegates = new Dictionary<Type, Delegate>(writerDelegates as IDictionary<Type, Delegate>);
-        updatedWriterDelegates.Add(valueType, newDelegate);
+        var updatedWriterDelegates = new Dictionary<Type, Delegate>(writerDelegates as IDictionary<Type, Delegate>)
+        {
+          [valueType] = newDelegate
+        };
         Interlocked.CompareExchange(ref s_writerDelegates, updatedWriterDelegates, writerDelegates);
       }
     }
