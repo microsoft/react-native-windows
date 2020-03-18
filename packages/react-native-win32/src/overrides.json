@@ -145,6 +145,18 @@
       "file": "Libraries\\Components\\ScrollView\\RecyclerViewBackedScrollView.win32.tsx"
     },
     {
+      "type": "platform",
+      "file": "Libraries\\Components\\ScrollView\\Tests\\ScrollViewWin32Test.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Components\\ScrollView\\ScrollViewWin32.Props.ts"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Components\\ScrollView\\ScrollViewWin32.tsx"
+    },
+    {
       "type": "derived",
       "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.tsx",
       "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
