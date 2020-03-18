@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Mar 2020 23:28:32 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Mar 2020 04:50:36 GMT and should not be manually modified.
 
+## 0.61.0-beta.63
+Wed, 18 Mar 2020 04:50:36 GMT
+
+### Changes
+
+- remove react-native-windows-extended (kmelmon@microsoft.com)
 ## 0.61.0-beta.62
 Tue, 17 Mar 2020 23:28:32 GMT
 

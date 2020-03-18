@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "remove react-native-windows-extended",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "e1af719ae1c82000ba77ec0b748a819d2bd24907",
-  "dependentChangeType": "patch",
-  "date": "2020-03-18T01:30:23.716Z"
-}
