@@ -567,14 +567,6 @@
     },
     {
       "type": "patch",
-      "file": "Libraries\\core\\setUpDeveloperTools.windows.js",
-      "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "8a250151f5616ab454d9799f6d3e747916f31520",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "Libraries\\DeprecatedPropTypes\\DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries\\DeprecatedPropTypes\\DeprecatedViewAccessibility.js",
       "baseVersion": "0.61.5",
