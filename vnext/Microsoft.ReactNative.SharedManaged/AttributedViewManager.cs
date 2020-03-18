@@ -119,10 +119,12 @@ namespace Microsoft.ReactNative.Managed
             var propertyAttribute = methodInfo.GetCustomAttribute<ViewManagerPropertyAttribute>();
             if (null != propertyAttribute)
             {
-              var setter = new ViewManagerProperty<TFrameworkElement>();
-              setter.Name = propertyAttribute.PropertyName ?? methodInfo.Name;
-              setter.Type = propertyAttribute.PropertyType ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
-              setter.Setter = MakeJSValueMethod(methodInfo);
+              var setter = new ViewManagerProperty<TFrameworkElement>
+              {
+                Name = propertyAttribute.PropertyName ?? methodInfo.Name,
+                Type = propertyAttribute.PropertyType ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType),
+                Setter = MakeJSValueMethod(methodInfo)
+              };
 
               properties.Add(setter.Name, setter);
             }
@@ -183,7 +185,7 @@ namespace Microsoft.ReactNative.Managed
 
     private static bool IsEnum(Type t)
     {
-      return IsNullableEnum(t, out Type underlyingType) || t.GetTypeInfo().IsEnum;
+      return IsNullableEnum(t, out _) || t.GetTypeInfo().IsEnum;
     }
 
     #endregion
@@ -238,10 +240,12 @@ namespace Microsoft.ReactNative.Managed
             var commandAttribute = methodInfo.GetCustomAttribute<ViewManagerCommandAttribute>();
             if (null != commandAttribute)
             {
-              var command = new ViewManagerCommand<TFrameworkElement>();
-              command.CommandName = commandAttribute.CommandName ?? methodInfo.Name;
-              command.CommandId = viewManagerCommands.Count;
-              command.CommandMethod = MakeReaderMethod(methodInfo);
+              var command = new ViewManagerCommand<TFrameworkElement>
+              {
+                CommandName = commandAttribute.CommandName ?? methodInfo.Name,
+                CommandId = viewManagerCommands.Count,
+                CommandMethod = MakeReaderMethod(methodInfo)
+              };
               viewManagerCommands.Add(command.CommandId, command);
             }
           }
