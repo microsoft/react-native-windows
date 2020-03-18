@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Mar 2020 04:50:36 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Mar 2020 20:19:18 GMT and should not be manually modified.
 
+## 0.61.0-beta.64
+Wed, 18 Mar 2020 20:19:18 GMT
+
+### Changes
+
+- Fix ReactInstanceWin::GetBundleRootPath (jthysell@microsoft.com)
 ## 0.61.0-beta.63
 Wed, 18 Mar 2020 04:50:36 GMT
 

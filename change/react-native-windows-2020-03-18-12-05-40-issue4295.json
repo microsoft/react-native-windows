@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix ReactInstanceWin::GetBundleRootPath",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "c2d0019489a858be74dd55be161e3b77e6c55c4a",
-  "dependentChangeType": "patch",
-  "date": "2020-03-18T19:05:40.850Z"
-}
