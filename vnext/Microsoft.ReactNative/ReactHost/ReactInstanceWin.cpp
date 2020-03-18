@@ -18,6 +18,7 @@
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "Modules/AppStateData.h"
+#include "Modules/DevSettingsModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -199,6 +200,17 @@ void ReactInstanceWin::Initialize() noexcept {
               std::move(m_appTheme),
               m_legacyReactInstance);
 
+          cxxModules.emplace_back(
+              Microsoft::ReactNative::DevSettingsModule::name,
+              [weakReactHost = strongThis->m_weakReactHost]() {
+                return std::make_unique<Microsoft::ReactNative::DevSettingsModule>([weakReactHost]() noexcept {
+                  if (auto reactHost = weakReactHost.GetStrongPtr()) {
+                    reactHost->ReloadInstance();
+                  }
+                });
+              },
+              m_batchingUIThread);
+
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
                 m_options.ModuleProvider->GetModules(m_reactContext, m_batchingUIThread);
@@ -256,6 +268,17 @@ void ReactInstanceWin::Initialize() noexcept {
             }
 
             LoadJSBundles();
+
+            if (m_options.DeveloperSettings.IsDevModeEnabled) {
+              folly::dynamic params = folly::dynamic::array(
+                  STRING(RN_PLATFORM),
+                  m_options.DeveloperSettings.SourceBundlePath.empty() ? m_options.Identity
+                                                                       : m_options.DeveloperSettings.SourceBundlePath,
+                  GetSourceBundleHost(),
+                  GetSourceBundlePort(),
+                  m_options.DeveloperSettings.UseFastRefresh);
+              m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
+            }
 
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
@@ -493,15 +516,25 @@ std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
   return std::function<void()>{};
 }
 
+std::string ReactInstanceWin::GetSourceBundleHost() noexcept {
+  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
+  return !devOptions.SourceBundleHost.empty() ? devOptions.SourceBundleHost : "localhost";
+}
+
+std::string ReactInstanceWin::GetSourceBundlePort() noexcept {
+  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
+  return !devOptions.SourceBundlePort.empty() ? devOptions.SourceBundlePort : "8081";
+}
+
 std::string ReactInstanceWin::GetDebugHost() noexcept {
   std::string debugHost;
   const ReactDevOptions &devOptions = m_options.DeveloperSettings;
   if (!devOptions.DebugHost.empty()) {
     debugHost = devOptions.DebugHost;
   } else {
-    debugHost = !devOptions.SourceBundleHost.empty() ? devOptions.SourceBundleHost : "localhost";
+    debugHost = GetSourceBundleHost();
     debugHost.append(":");
-    debugHost.append(!devOptions.SourceBundlePort.empty() ? devOptions.SourceBundlePort : "8081");
+    debugHost.append(GetSourceBundlePort());
   }
   return debugHost;
 }

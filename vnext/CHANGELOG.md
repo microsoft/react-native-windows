@@ -1,7 +1,51 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 12 Mar 2020 19:18:01 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Mar 2020 04:50:36 GMT and should not be manually modified.
 
+## 0.61.0-beta.63
+Wed, 18 Mar 2020 04:50:36 GMT
+
+### Changes
+
+- remove react-native-windows-extended (kmelmon@microsoft.com)
+## 0.61.0-beta.62
+Tue, 17 Mar 2020 23:28:32 GMT
+
+### Changes
+
+- Set TabIndex to 0 for Pickers (jagorrin@microsoft.com)
+## 0.61.0-beta.61
+Tue, 17 Mar 2020 22:54:20 GMT
+
+### Changes
+
+- Enable fast refresh (acoates@microsoft.com)
+## 0.61.0-beta.60
+Tue, 17 Mar 2020 01:55:59 GMT
+
+### Changes
+
+- Set TabIndex to 0 for ScrollViewers (jagorrin@microsoft.com)
+## 0.61.0-beta.59
+Mon, 16 Mar 2020 19:54:21 GMT
+
+### Changes
+
+- Remove cli.js (kaigu@microsoft.com)
+## 0.61.0-beta.58
+Sat, 14 Mar 2020 03:04:21 GMT
+
+### Changes
+
+- Add cli.js (kaigu@microsoft.com)
+## 0.61.0-beta.57
+Fri, 13 Mar 2020 17:37:53 GMT
+
+### Changes
+
+- Build unit tests in ReactWindows-Universal solution (jthysell@microsoft.com)
+- Address PR comments (dida@ntdev.microsoft.com)
+- Code-Gen nativeModules.g.h for auto-linking (dida@ntdev.microsoft.com)
 ## 0.61.0-beta.56
 Thu, 12 Mar 2020 19:18:01 GMT
 

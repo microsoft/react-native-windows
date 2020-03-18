@@ -2,6 +2,156 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Mar 2020 11:43:45 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.63",
+      "version": "0.61.0-beta.63",
+      "comments": {
+        "none": [
+          {
+            "comment": "[typings] RCTDeviceEventEmitter is an instance of NativeEventEmitter",
+            "author": "eloy.de.enige@gmail.com",
+            "commit": "b70ae33c7db2a331276ace801fcdcabfbfbdcb63"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 04:50:36 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.63",
+      "version": "0.61.0-beta.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "remove react-native-windows-extended",
+            "author": "kmelmon@microsoft.com",
+            "commit": "e1af719ae1c82000ba77ec0b748a819d2bd24907"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 23:28:32 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.62",
+      "version": "0.61.0-beta.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set TabIndex to 0 for Pickers",
+            "author": "jagorrin@microsoft.com",
+            "commit": "43332258ca84856eff48e593e140e1ab91d7f7fa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 22:54:20 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.61",
+      "version": "0.61.0-beta.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable fast refresh",
+            "author": "acoates@microsoft.com",
+            "commit": "197c4536be0a69b9d7749bc4fd0a7c4e768fd604"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 16:13:26 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.60",
+      "version": "0.61.0-beta.60",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improve unit test error message in testCheck.h macros",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a8785d78a7c8d83a6656af0fdbd64ca3b79879e8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 01:55:59 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.60",
+      "version": "0.61.0-beta.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set TabIndex to 0 for ScrollViewers",
+            "author": "jagorrin@microsoft.com",
+            "commit": "43332258ca84856eff48e593e140e1ab91d7f7fa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Mar 2020 19:54:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.59",
+      "version": "0.61.0-beta.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove cli.js",
+            "author": "kaigu@microsoft.com",
+            "commit": "e78cd3a0fe01bbe6a929fc2d9c2ee8a057c0f36c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Mar 2020 17:13:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.58",
+      "version": "0.61.0-beta.58",
+      "comments": {
+        "none": [
+          {
+            "comment": "1. Fix call to TranslateAccelerator() to use the correct HWND so that accelerators work, even when the focus window is the child XamlIsland's HWND. 2. Use CW_DEFAULT for the window height & width in Playground-Win32 so that Windows remembers the window size for us. 3. Run `yarn override add` to add a Windows-specific AsyncStorageModule test page. This also re-alphabetized the file. 4. Fix a braindead bug in AsyncStorageModuleWin32. The schema didn't specify that the `key` column was a primary key, so instead of `multiSet()` updating the `value` column in-place, it created new rows every time. Strictly we should check the `userVersion` to do the schema bump, but since I think no one but me has used this, I'm saying \"remember to delete the SQLite DB in %localappdata% when you merge this in.\"",
+            "author": "hpratt@microsoft.com",
+            "commit": "3e675c014929e5e0066686d2bd073e379ecbfb4d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Mar 2020 03:04:21 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.58",
+      "version": "0.61.0-beta.58",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add cli.js",
+            "author": "kaigu@microsoft.com",
+            "commit": "f7055a29a718f358921db2f658acbe5fb187b15d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Mar 2020 17:37:53 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.57",
+      "version": "0.61.0-beta.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build unit tests in ReactWindows-Universal solution",
+            "author": "jthysell@microsoft.com",
+            "commit": "d2cf35e0871a0f3b07ceacfbcff6fbc2942731f5"
+          },
+          {
+            "comment": "Address PR comments",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "223a5819ce10881427a0b28d176ac51bf06b5318"
+          },
+          {
+            "comment": "Code-Gen nativeModules.g.h for auto-linking",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "223a5819ce10881427a0b28d176ac51bf06b5318"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Mar 2020 19:18:01 GMT",
       "tag": "react-native-windows_v0.61.0-beta.56",
       "version": "0.61.0-beta.56",

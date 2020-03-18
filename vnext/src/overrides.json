@@ -788,6 +788,10 @@
     },
     {
       "type": "platform",
+      "file": "RNTester\\js\\examples-win\\AsyncStorage\\AsyncStorageExampleWindows.tsx"
+    },
+    {
+      "type": "platform",
       "file": "RNTester\\js\\examples-win\\CustomView\\CustomViewExample.windows.tsx"
     },
     {

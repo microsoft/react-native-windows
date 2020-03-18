@@ -100,7 +100,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   std::weak_ptr<facebook::react::InstanceWrapper> m_fbReactInstance;
 
   bool m_isDevModeEnabled{false};
-  bool m_useLiveReload{false};
+  bool m_useFastRefresh{false};
   bool m_useWebDebugger{false};
   bool m_directDebugging{false};
   bool m_breakOnNextLine{false};
@@ -126,7 +126,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   winrt::Button::Click_revoker m_cancelRevoker{};
   winrt::Button::Click_revoker m_toggleInspectorRevoker{};
   winrt::Button::Click_revoker m_reloadJSRevoker{};
-  winrt::Button::Click_revoker m_liveReloadRevoker{};
+  winrt::Button::Click_revoker m_fastRefreshRevoker{};
   winrt::Button::Click_revoker m_directDebuggingRevoker{};
   winrt::Button::Click_revoker m_breakOnNextLineRevoker{};
   winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};

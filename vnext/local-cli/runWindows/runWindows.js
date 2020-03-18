@@ -11,6 +11,7 @@ const deploy = require('./utils/deploy');
 const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
+const autolink = require('./utils/autolink');
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
@@ -37,6 +38,9 @@ async function runWindows(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
 
+  if (options.autolink) {
+    autolink.updateAutoLink(verbose);
+  }
   if (options.build) {
     const slnFile = build.getSolutionFile(options);
     if (!slnFile) {
@@ -55,8 +59,16 @@ async function runWindows(config, args, options) {
 
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
+    const msBuildProps = build.parseMsBuildProps(options);
+
     try {
-      await build.buildSolution(slnFile, buildType, options.arch, verbose);
+      await build.buildSolution(
+        slnFile,
+        buildType,
+        options.arch,
+        msBuildProps,
+        verbose,
+      );
     } catch (e) {
       newError(
         `Build failed with message ${e}. Check your build configuration.`,
@@ -111,6 +123,7 @@ runWindows({
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
+ *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  */
 module.exports = {
   name: 'run-windows',
@@ -179,8 +192,18 @@ module.exports = {
       default: false,
     },
     {
+      command: '--msbuildprops [string]',
+      description:
+        'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
+    },
+    {
       command: '--info',
       description: 'Dump enviroment information',
+      default: false,
+    },
+    {
+      command: '--autolink',
+      description: 'Auto link native modules',
       default: false,
     },
   ],

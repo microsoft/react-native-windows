@@ -12,7 +12,9 @@
 
 #include <Unicode.h>
 
-#include <react-native-windows-extended.h>
+#include <IReactInstance.h>
+#include <ViewManager.h>
+#include <memory>
 
 #include <filesystem>
 
@@ -62,8 +64,6 @@ class PlaygroundViewManagerProvider final : public react::uwp::ViewManagerProvid
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
-
-    viewManagers.emplace_back(react_native_windows_extended::CreateCustomViewManager(instance));
 
     return viewManagers;
   }
@@ -428,8 +428,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
-      800,
-      600,
+      CW_USEDEFAULT,
+      CW_USEDEFAULT,
       nullptr,
       nullptr,
       instance,
@@ -454,7 +454,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       continue;
     }
 
-    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
+    if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }

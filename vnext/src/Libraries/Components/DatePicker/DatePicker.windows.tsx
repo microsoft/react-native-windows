@@ -51,8 +51,8 @@ export class DatePicker extends React.Component<IDatePickerProps> {
     const timeZoneOffsetInSeconds = this.props.timeZoneOffsetInSeconds
       ? this.props.timeZoneOffsetInSeconds
       : this.props.selectedDate
-        ? -1 * this.props.selectedDate.getTimezoneOffset() * 60
-        : undefined;
+      ? -1 * this.props.selectedDate.getTimezoneOffset() * 60
+      : undefined;
 
     return (
       <RCTDatePicker

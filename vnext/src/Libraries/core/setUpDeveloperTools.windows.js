@@ -78,8 +78,6 @@ if (__DEV__) {
       }
     }
 
-    // [Windows
-    // require('./setUpReactRefresh');
-    // Windows]
+    require('./setUpReactRefresh');
   }
 }
