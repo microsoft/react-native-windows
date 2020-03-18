@@ -26,6 +26,7 @@
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
+<PROJECT_ROOT>/Libraries/Components/StatusBar/NativeStatusBarManagerAndroid.js
 <PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
@@ -107,7 +108,6 @@
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
 <PROJECT_ROOT>/Libraries/ActionSheetIOS/ActionSheetIOS.js
-<PROJECT_ROOT>/Libraries/Components/StatusBar/StatusBar.js
 <PROJECT_ROOT>/Libraries/Share/Share.js
 
 [include]

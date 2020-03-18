@@ -15,8 +15,6 @@
 
 // TODO Hx: Implement.
 
-function emptyFunction() {}
-
 /**
  * Detect hardware button presses for back navigation.
  *
@@ -48,14 +46,32 @@ function emptyFunction() {}
  * ```
  */
 
-var BackHandler = {
-  exitApp: emptyFunction,
-  addEventListener() {
-    return {
-      remove: emptyFunction,
-    };
+type BackPressEventName = 'backPress' | 'hardwareBackPress';
+
+type TBackHandler = {|
+  +exitApp: () => void,
+  +addEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => {remove: () => void, ...},
+  +removeEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => void,
+|};
+
+const BackHandler: TBackHandler = {
+  exitApp: () => {},
+  addEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => {
+    return {remove: () => {}};
   },
-  removeEventListener: emptyFunction,
+  removeEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => {},
 };
 
 module.exports = BackHandler;

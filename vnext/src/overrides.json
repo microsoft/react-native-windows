@@ -377,11 +377,19 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.windows.js",
+      "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "2c312e39ea468283e73be4319370d4f29ea5c932",
+      "issue": 3990
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\Components\\Switch\\SwitchNativeComponent.windows.js",
       "baseFile": "Libraries\\Components\\Switch\\SwitchNativeComponent.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "38aae656c9d51aac5034cddd257ed3748b991b2d",
-      "issue": "LEGACY_FIXME"
+      "issue": 3990
     },
     {
       "type": "derived",
@@ -439,6 +447,14 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.windows.js",
+      "baseFile": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "68dd135de8d10534754b7abe409bf0a7fb038578",
+      "issue": 4310
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableOpacity.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableOpacity.js",
       "baseVersion": "0.61.5",
@@ -484,14 +500,6 @@
     {
       "type": "platform",
       "file": "Libraries\\Components\\View\\ViewWindowsProps.ts"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\WebView\\WebView.windesktop.js"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\WebView\\WebView.windows.js"
     },
     {
       "type": "patch",

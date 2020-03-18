@@ -8,8 +8,9 @@
  * @format
  */
 
-import React from 'react';
+import type {Node} from 'react';
 import {StyleSheet, Text} from 'react-native';
+import React from 'react';
 
 const styles = StyleSheet.create({
   highlight: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReloadInstructions = () => (
+const ReloadInstructions = (): Node => (
   <Text>
     Press <Text style={styles.highlight}>Ctrl+Shift+D</Text> and select{' '}
     <Text style={styles.highlight}>Reload javascript</Text> to reload your app's
