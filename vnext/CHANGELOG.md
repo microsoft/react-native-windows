@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Mar 2020 23:17:50 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Mar 2020 00:24:13 GMT and should not be manually modified.
 
+## 0.60.0-vnext.149
+Wed, 18 Mar 2020 00:24:13 GMT
+
+### Changes
+
+- Set TabIndex to 0 for Pickers (jagorrin@microsoft.com)
 ## 0.60.0-vnext.148
 Tue, 17 Mar 2020 23:17:50 GMT
 
