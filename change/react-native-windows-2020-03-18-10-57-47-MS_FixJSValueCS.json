@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Changed C# JSValue API to match C++ version",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "6c072821b73dc13e8c7d461fd59b413bdafeb306",
+  "dependentChangeType": "patch",
+  "date": "2020-03-18T17:57:47.382Z"
+}
