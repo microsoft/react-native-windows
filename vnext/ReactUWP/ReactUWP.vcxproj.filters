@@ -118,6 +118,9 @@
     <ClCompile Include="Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\DevSettingsModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -461,6 +464,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DeviceInfoModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSupportManagerUwp.h">
