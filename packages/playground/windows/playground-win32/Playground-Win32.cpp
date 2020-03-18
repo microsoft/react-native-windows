@@ -12,6 +12,10 @@
 
 #include <Unicode.h>
 
+#include <IReactInstance.h>
+#include <ViewManager.h>
+#include <memory>
+
 #include <filesystem>
 
 #pragma push_macro("GetCurrentTime")
