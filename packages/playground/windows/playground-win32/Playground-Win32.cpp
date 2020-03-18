@@ -67,7 +67,7 @@ class PlaygroundViewManagerProvider final : public react::uwp::ViewManagerProvid
 
 struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   HwndReactInstanceCreator(HWND hwnd) {
-    % m_hwnd = hwnd;
+    m_hwnd = hwnd;
   }
 
   void detach() {
