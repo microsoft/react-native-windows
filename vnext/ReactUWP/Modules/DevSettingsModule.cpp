@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "DevSettingsModule.h"
 
-namespace react::uwp{
+namespace react::uwp {
 
 auto DevSettingsModule::getConstants() -> std::map<std::string, folly::dynamic> {
   return {};
