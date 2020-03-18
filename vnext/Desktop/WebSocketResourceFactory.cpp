@@ -15,10 +15,10 @@ namespace Microsoft::React
 {
 #pragma region IWebSocketResource static members
 
-/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
+/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString)
+{
   if (true) //TODO: Feature-gate this.
   {
-    //return unique_ptr<IWebSocketResource>(new WinHTTPWebSocketResource(urlString));
     return unique_ptr<IWebSocketResource>(new WinRTWebSocketResource(urlString));
   }
   else

@@ -46,11 +46,11 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri)
   m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
   m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
 
+  // Allow self-signed certificates
   m_socket.Control().IgnorableServerCertificateErrors()
     .Append(winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::Untrusted);
   m_socket.Control().IgnorableServerCertificateErrors()
     .Append(winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
-
 }
 
 WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString)

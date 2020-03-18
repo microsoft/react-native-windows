@@ -62,7 +62,7 @@ if (! $NoServers) {
 
 	if (!$packager) {
 		Write-Warning 'Packager not found. Attempting to start...'
-		Start-Packager -ReactNativeLocation ($PSScriptRoot | Split-Path) -NpmPath $NpmPath
+		Start-Packager -ReactNativeLocation $ReactNativeLocation -NpmPath $NpmPath
 		$notFound = $true
 	} else {
 		Write-Host 'Found Packager.'
@@ -70,7 +70,7 @@ if (! $NoServers) {
 
 	if (!$wsServer) {
 		Write-Warning 'WebSocket server not found. Attempting to start...'
-		Start-WebSocketServer -ReactNativeLocation $ReactNativeLocation -NodePath $NodePath
+		Start-WebSocketServer -ReactNativeLocation "$($PSSCriptRoot | Split-Path)\ReactCopies" -NodePath $NodePath
 		$notFound = $true
 	} else {
 		Write-Host 'Found WebSocket server.'
