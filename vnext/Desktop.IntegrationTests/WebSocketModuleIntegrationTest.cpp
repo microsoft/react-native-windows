@@ -1,20 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #include <CppUnitTest.h>
 
 #include <Modules/WebSocketModule.h>
 
-using namespace Microsoft::React;
 using namespace folly;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::make_unique;
 using std::unique_ptr;
 using std::vector;
 
-TEST_CLASS (WebSocketModuleIntegrationTest) {
-  TEST_METHOD(WebSocketModule_Ping) {
+TEST_CLASS (WebSocketModuleIntegrationTest)
+{
+  TEST_METHOD(WebSocketModule_Ping)
+  {
     auto module = make_unique<WebSocketModule>();
 
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
@@ -30,7 +33,8 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
     close.func(dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
   }
 
-  TEST_METHOD(WebSocketModule_SendMultiple) {
+  TEST_METHOD(WebSocketModule_SendMultiple)
+  {
     auto module = make_unique<WebSocketModule>();
 
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
