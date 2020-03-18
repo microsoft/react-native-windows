@@ -353,9 +353,7 @@ type VRProps = $ReadOnly<{|
   scrollBarThumbImage?: ?($ReadOnly<{||}> | number), // Opaque type returned by import IMAGE from './image.jpg'
 |}>;
 
-type StickyHeaderComponentType = React.ComponentType<
-  ScrollViewStickyHeaderProps,
-> & {
+type StickyHeaderComponentType = React.ComponentType<ScrollViewStickyHeaderProps> & {
   setNextHeaderY: number => void,
 };
 

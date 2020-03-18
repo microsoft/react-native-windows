@@ -20,7 +20,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
-    <ReactNativeWindowsExtendedDir Condition="'$(ReactNativeWindowsExtendedDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows-extended\package.json'))\node_modules\react-native-windows-extended\</ReactNativeWindowsExtendedDir>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <ItemGroup Label="ProjectConfigurations">
