@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Add stub devStettingModule to react.uwp",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "cf27ed00e0f4b17e7e65616f871d21eedc1d27de",
+  "dependentChangeType": "patch",
+  "date": "2020-03-18T20:54:49.018Z"
+}
