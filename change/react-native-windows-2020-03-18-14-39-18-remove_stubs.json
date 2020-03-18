@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "remove unused stubs",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "21dc1675db1e5f0cfeafe53b9c2440b5e0e84eac",
+  "dependentChangeType": "patch",
+  "date": "2020-03-18T21:39:18.813Z"
+}

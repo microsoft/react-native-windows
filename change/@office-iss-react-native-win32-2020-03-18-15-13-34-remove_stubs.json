@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "update API docs",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "kmelmon@microsoft.com",
+  "commit": "c9e9f76f09b1d1bf7f248c2e630f66cd2e53ecba",
+  "dependentChangeType": "patch",
+  "date": "2020-03-18T22:13:34.442Z"
+}
