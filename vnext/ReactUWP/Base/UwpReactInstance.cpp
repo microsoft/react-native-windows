@@ -30,8 +30,8 @@
 
 #include "Unicode.h"
 
-#include <Modules/DeviceInfoModule.h>
 #include <Modules/DevSettingsModule.h>
+#include <Modules/DeviceInfoModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
