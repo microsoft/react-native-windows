@@ -12,7 +12,9 @@
 
 #include <Unicode.h>
 
-#include <react-native-windows-extended.h>
+#include <IReactInstance.h>
+#include <ViewManager.h>
+#include <memory>
 
 #include <filesystem>
 
@@ -62,8 +64,6 @@ class PlaygroundViewManagerProvider final : public react::uwp::ViewManagerProvid
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
-
-    viewManagers.emplace_back(react_native_windows_extended::CreateCustomViewManager(instance));
 
     return viewManagers;
   }

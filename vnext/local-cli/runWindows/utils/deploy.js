@@ -108,8 +108,8 @@ async function deployToDevice(options, verbose) {
   const deployTarget = options.target
     ? options.target
     : options.emulator
-      ? 'emulator'
-      : 'device';
+    ? 'emulator'
+    : 'device';
   const deployTool = new WinAppDeployTool();
   const appxManifest = getAppxManifest(options);
   const shouldLaunch = shouldLaunchApp(options);

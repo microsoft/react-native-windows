@@ -24,8 +24,6 @@
 #include <folly/dynamic.h>
 #include <codecvt>
 
-#include <react-native-windows-extended.h>
-
 using namespace Playground;
 
 using namespace Microsoft::WRL;
@@ -126,8 +124,6 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
-
-    viewManagers.emplace_back(react_native_windows_extended::CreateCustomViewManager(instance));
 
     return viewManagers;
   }

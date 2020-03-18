@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Mar 2020 11:43:45 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.63",
+      "version": "0.61.0-beta.63",
+      "comments": {
+        "none": [
+          {
+            "comment": "[typings] RCTDeviceEventEmitter is an instance of NativeEventEmitter",
+            "author": "eloy.de.enige@gmail.com",
+            "commit": "b70ae33c7db2a331276ace801fcdcabfbfbdcb63"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 04:50:36 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.63",
+      "version": "0.61.0-beta.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "remove react-native-windows-extended",
+            "author": "kmelmon@microsoft.com",
+            "commit": "e1af719ae1c82000ba77ec0b748a819d2bd24907"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 23:28:32 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.62",
+      "version": "0.61.0-beta.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set TabIndex to 0 for Pickers",
+            "author": "jagorrin@microsoft.com",
+            "commit": "43332258ca84856eff48e593e140e1ab91d7f7fa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Mar 2020 22:54:20 GMT",
       "tag": "react-native-windows_v0.61.0-beta.61",
       "version": "0.61.0-beta.61",

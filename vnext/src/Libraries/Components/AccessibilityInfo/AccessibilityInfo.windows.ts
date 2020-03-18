@@ -9,7 +9,7 @@ import {
   NativeEventEmitter as NativeEventEmitter_TypeCarrier,
   EmitterSubscription,
 } from 'react-native';
-const RCTDeviceEventEmitter: typeof NativeEventEmitter_TypeCarrier = require('../../EventEmitter/RCTDeviceEventEmitter');
+const RCTDeviceEventEmitter: NativeEventEmitter_TypeCarrier = require('../../EventEmitter/RCTDeviceEventEmitter');
 
 const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
 
@@ -33,7 +33,7 @@ const AccessibilityInfo = {
 
   addEventListener: (
     eventName: ChangeEventName,
-    handler: ((enabled: boolean) => void),
+    handler: (enabled: boolean) => void,
   ) => {
     // TODO Hx: Implement this module.
     const listener = RCTDeviceEventEmitter.addListener(
