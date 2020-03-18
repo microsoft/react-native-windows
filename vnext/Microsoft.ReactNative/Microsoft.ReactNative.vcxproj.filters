@@ -263,9 +263,6 @@
     <ClCompile Include="..\ReactUWP\Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\WebViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -578,9 +575,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\VirtualTextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\WebViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\XamlFeatures.h">

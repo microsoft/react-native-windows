@@ -554,10 +554,6 @@
       "file": "Libraries\\Components\\WebView\\WebView.windesktop.js"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Components\\WebView\\WebView.windows.js"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.windesktop.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
