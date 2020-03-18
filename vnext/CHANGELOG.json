@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Mar 2020 23:28:32 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.62",
+      "version": "0.61.0-beta.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set TabIndex to 0 for Pickers",
+            "author": "jagorrin@microsoft.com",
+            "commit": "43332258ca84856eff48e593e140e1ab91d7f7fa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 22:54:20 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.61",
+      "version": "0.61.0-beta.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable fast refresh",
+            "author": "acoates@microsoft.com",
+            "commit": "197c4536be0a69b9d7749bc4fd0a7c4e768fd604"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Mar 2020 16:13:26 GMT",
       "tag": "react-native-windows_v0.61.0-beta.60",
       "version": "0.61.0-beta.60",

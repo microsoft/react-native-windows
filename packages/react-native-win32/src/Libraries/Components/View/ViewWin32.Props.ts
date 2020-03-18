@@ -107,6 +107,10 @@ export type AccessibilityActionName =
   | 'Expand'
   | 'Collapse';
 
+  export type Cursor =
+  | 'auto'
+  | 'pointer'
+  
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
   label?: string;
@@ -116,7 +120,7 @@ export type AccessibilityActionEvent = RN.NativeSyntheticEvent<
   Readonly<{
     actionName: string;
   }>
->;
+  >;
 
 export type AccessibilityStates = RN.AccessibilityStates | 'multiselectable' | 'required';
 
@@ -223,4 +227,5 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
    * Provides a screentip to be used on hover of the view
    */
   tooltip?: string;
+  cursor?: Cursor;
 }

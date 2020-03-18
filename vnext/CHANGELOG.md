@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Mar 2020 01:55:59 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Mar 2020 23:28:32 GMT and should not be manually modified.
 
+## 0.61.0-beta.62
+Tue, 17 Mar 2020 23:28:32 GMT
+
+### Changes
+
+- Set TabIndex to 0 for Pickers (jagorrin@microsoft.com)
+## 0.61.0-beta.61
+Tue, 17 Mar 2020 22:54:20 GMT
+
+### Changes
+
+- Enable fast refresh (acoates@microsoft.com)
 ## 0.61.0-beta.60
 Tue, 17 Mar 2020 01:55:59 GMT
 

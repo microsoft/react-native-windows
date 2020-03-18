@@ -202,6 +202,7 @@ const ToolTipExample: React.FunctionComponent<{}> = () => {
         width: 100,
       }}
       tooltip="Example tooltip"
+      cursor="pointer"
     />
   );
 };
@@ -210,38 +211,38 @@ export const title = '<ViewWin32>';
 export const displayName = 'ViewWin32 Example';
 export const description = 'All the stock View props plus Win32 specific ones';
 export const examples = [
-    {
-      title: 'focus() method example',
-      description: 'Each of these black boxes moves focus to the ViewWin32 on the right',
-      render(): JSX.Element {
-        return (
-          <ViewWin32>
-            <FocusMoverTestComponent />
-            <FocusMoverTestComponent />
-            <FocusMoverTestComponent />
-          </ViewWin32>
-        );
-      },
+  {
+    title: 'focus() method example',
+    description: 'Each of these black boxes moves focus to the ViewWin32 on the right',
+    render(): JSX.Element {
+      return (
+        <ViewWin32>
+          <FocusMoverTestComponent />
+          <FocusMoverTestComponent />
+          <FocusMoverTestComponent />
+        </ViewWin32>
+      );
     },
-    {
-      title: 'KeyboardEvents example',
-      description: 'Native keyboarding has been prevented',
-      render(): JSX.Element {
-        return <KeyboardTestComponent />;
-      },
+  },
+  {
+    title: 'KeyboardEvents example',
+    description: 'Native keyboarding has been prevented',
+    render(): JSX.Element {
+      return <KeyboardTestComponent />;
     },
-    {
-      title: 'Hover example',
-      description: 'Hover a rainbow',
-      render(): JSX.Element {
-        return <HoverExample />;
-      },
+  },
+  {
+    title: 'Hover example',
+    description: 'Hover a rainbow',
+    render(): JSX.Element {
+      return <HoverExample />;
     },
-    {
-      title: 'Tooltip example',
-      description: 'Displays a tooltip on hover',
-      render(): JSX.Element {
-        return <ToolTipExample />;
-      },
+  },
+  {
+    title: 'Tooltip example',
+    description: 'Displays a tooltip on hover',
+    render(): JSX.Element {
+      return <ToolTipExample />;
     },
-  ];
+  },
+];
