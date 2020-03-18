@@ -137,8 +137,8 @@ const Status = (props: {
     winner === null
       ? 'Tie game :-/'
       : winner !== undefined
-        ? winner + ' wins!'
-        : turn + "'s turn";
+      ? winner + ' wins!'
+      : turn + "'s turn";
 
   return (
     <View style={{flex: 1}}>

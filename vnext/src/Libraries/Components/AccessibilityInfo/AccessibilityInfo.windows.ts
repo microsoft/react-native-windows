@@ -33,7 +33,7 @@ const AccessibilityInfo = {
 
   addEventListener: (
     eventName: ChangeEventName,
-    handler: ((enabled: boolean) => void),
+    handler: (enabled: boolean) => void,
   ) => {
     // TODO Hx: Implement this module.
     const listener = RCTDeviceEventEmitter.addListener(
