@@ -24,6 +24,7 @@ using winrt::fire_and_forget;
 using winrt::hresult;
 using winrt::hresult_error;
 using winrt::resume_background;
+using winrt::Windows::Foundation::IAsyncAction;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::Sockets::IWebSocket;
 using winrt::Windows::Networking::Sockets::MessageWebSocket;
@@ -65,7 +66,7 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 
 #pragma region Private members
 
-fire_and_forget WinRTWebSocketResource::PerformConnect()
+IAsyncAction WinRTWebSocketResource::PerformConnect()
 {
   hresult hr = S_OK;
   try
@@ -86,16 +87,12 @@ fire_and_forget WinRTWebSocketResource::PerformConnect()
 
   if (!SUCCEEDED(hr))
   {
-    hresult_error e{ hr };
-    //OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
-
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+      m_errorHandler({ Utf16ToUtf8(hresult_error(hr).message()), ErrorType::Connection });
     }
   }
 
-  // m_connectPerformed.Set();
   m_connectPerformed.set_value();
   m_connectRequested = false;
 }
@@ -107,10 +104,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   {
     co_await resume_background();
 
-    if (m_connectRequested)
-    {
-      m_connectPerformed.get_future().wait();
-    }
+    co_await m_connectAction;
 
     m_socket.Control().MessageType(SocketMessageType::Utf8);
 
@@ -153,10 +147,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    if (m_connectRequested)
-    {
-      m_connectPerformed.get_future().wait();
-    }
+    co_await m_connectAction; //TODO: EnqueueWrite()
 
     string message;
     bool isBinary;
@@ -213,7 +204,10 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
 {
   co_await resume_background();
 
+  co_await m_connectAction;
+
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+  m_closePerformed.set_value();
 
   co_return;
 }
@@ -246,8 +240,6 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, Message
   }
   catch (hresult_error const& e)
   {
-    //TODO: Re-enable (fix "OutputDebugStringW': function does not take 2 arguments")
-    //OutputDebugString("Read failed (0x%8X) %ls\n", e);
     m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
   }
 }
@@ -259,6 +251,8 @@ void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedE
     //TODO: Parameterize (pass via member variables?)
     m_closeHandler(CloseCode::Normal, "Closing");
   }
+
+  m_closePerformed.set_value();
 }
 
 void WinRTWebSocketResource::Stop()
@@ -266,7 +260,6 @@ void WinRTWebSocketResource::Stop()
   // Ensure sequence of other operations
   if (m_connectRequested)
   {
-    // m_connectPerformed.Wait();//TODO: Set timeout?
     m_connectPerformed.get_future().wait();
   }
 }
@@ -290,7 +283,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   }
 
   m_connectRequested = true;
-  PerformConnect();
+  m_connectAction = PerformConnect();
 }
 
 void WinRTWebSocketResource::Ping()
@@ -303,7 +296,6 @@ void WinRTWebSocketResource::Send(const string& message)
   m_writeQueue.emplace(std::move(message), false);
 
   PerformWrite();
-  //PerformWrite(std::move(message));
 }
 
 void WinRTWebSocketResource::SendBinary(const string& base64String)

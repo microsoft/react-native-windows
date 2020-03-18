@@ -25,9 +25,9 @@ class WinRTWebSocketResource : public IWebSocketResource
 
   std::atomic_bool m_connectRequested;
   std::atomic_bool m_sendRequested;
-  // Mso::ManualResetEvent m_connectPerformed;
-  // Mso::ManualResetEvent m_sendPerformed;
   std::promise<void> m_connectPerformed;
+  std::promise<void> m_closePerformed;
+  winrt::Windows::Foundation::IAsyncAction m_connectAction;
 
   CloseCode m_closeCode;
   std::string m_closeReason;
@@ -43,7 +43,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
   ~WinRTWebSocketResource() override;
 
-  winrt::fire_and_forget PerformConnect();
+  winrt::Windows::Foundation::IAsyncAction PerformConnect();
   winrt::fire_and_forget PerformPing();
   winrt::fire_and_forget PerformWrite();
   winrt::fire_and_forget PerformClose();
