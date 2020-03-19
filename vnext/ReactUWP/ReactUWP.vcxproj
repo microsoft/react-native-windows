@@ -192,6 +192,7 @@
     <ClInclude Include="Modules\AlertModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
+    <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\ImageViewManagerModule.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="Modules\AlertModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
