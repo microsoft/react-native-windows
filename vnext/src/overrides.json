@@ -140,10 +140,6 @@
       "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Components\\DatePicker\\DatePickerIOS.windesktop.js",
       "baseFile": "Libraries\\Components\\DatePicker\\DatePickerIOS.android.js",
@@ -195,10 +191,6 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
-    },
-    {
-      "type": "platform",
       "file": "Libraries\\Components\\Flyout\\FlyoutProps.ts"
     },
     {
@@ -207,19 +199,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Glyph\\Glyph.windows.tsx"
-    },
-    {
-      "type": "platform",
       "file": "Libraries\\Components\\Glyph\\GlyphProps.ts"
     },
     {
       "type": "platform",
       "file": "Libraries\\Components\\Keyboard\\KeyboardExt.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\Keyboard\\KeyboardExt.windows.tsx"
     },
     {
       "type": "platform",
@@ -284,10 +268,6 @@
       "file": "Libraries\\Components\\Picker\\PickerWindows.tsx"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Components\\Picker\\PickerWindows.windows.tsx"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\Components\\Picker\\RCTPickerNativeComponent.windows.js",
       "baseFile": "Libraries\\Components\\Picker\\RCTPickerNativeComponent.js",
@@ -298,10 +278,6 @@
     {
       "type": "platform",
       "file": "Libraries\\Components\\Popup\\Popup.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\Popup\\Popup.windows.tsx"
     },
     {
       "type": "platform",
@@ -560,14 +536,6 @@
     {
       "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.windesktop.js",
-      "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "8a250151f5616ab454d9799f6d3e747916f31520",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\core\\setUpDeveloperTools.windows.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
       "baseVersion": "0.61.5",
       "baseHash": "8a250151f5616ab454d9799f6d3e747916f31520",
