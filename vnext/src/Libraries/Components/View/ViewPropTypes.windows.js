@@ -399,12 +399,6 @@ type HandledKeyboardEvent = $ReadOnly<{|
   handledEventPhase?: number,
 |}>;
 
-type FocusEvent = SyntheticEvent<
-  $ReadOnly<{|
-    target: number,
-  |}>,
->;
-
 type WindowsViewProps = $ReadOnly<{|
   /**
    * Key up event
