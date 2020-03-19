@@ -65,7 +65,6 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 
 IAsyncAction WinRTWebSocketResource::PerformConnect()
 {
-  hresult hr = S_OK;
   try
   {
     co_await resume_background();
@@ -79,14 +78,9 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   }
   catch (hresult_error const& e)
   {
-    hr = e.code();
-  }
-
-  if (!SUCCEEDED(hr))
-  {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(hresult_error(hr).message()), ErrorType::Connection });
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
     }
   }
 
@@ -96,7 +90,6 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
 
 fire_and_forget WinRTWebSocketResource::PerformPing()
 {
-  hresult hr = S_OK;
   try
   {
     co_await resume_background();
@@ -120,14 +113,9 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   }
   catch (hresult_error const& e)
   {
-    hr = e.code();
-  }
-
-  if (!SUCCEEDED(hr))
-  {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(hresult_error(hr).message()), ErrorType::Ping });
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
     }
   }
 }
@@ -139,7 +127,6 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     co_return;
   }
 
-  hresult hr = S_OK;
   try
   {
     co_await resume_background();
@@ -186,14 +173,9 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   }
   catch (hresult_error const& e)
   {
-    hr = e.code();
-  }
-
-  if (!SUCCEEDED(hr))
-  {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(hresult_error(hr).message()), ErrorType::Ping });
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
     }
   }
 }
@@ -238,7 +220,10 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, Message
   }
   catch (hresult_error const& e)
   {
-    m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
+    if (m_errorHandler)
+    {
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
+    }
   }
 }
 
