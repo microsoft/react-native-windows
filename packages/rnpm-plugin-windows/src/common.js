@@ -45,6 +45,11 @@ function isTagMatch(packageVersion, requestTag) {
 }
 
 function isVersionMatch(packageVersion, requestVersion, requestTag) {
+  // Master RNW can map to versions outside of its major and minor
+  if (requestTag === 'master') {
+    return true;
+  }
+
   const { major, minor } = semver.parse(packageVersion);
   const minVersion = semver.minVersion(requestVersion);
   return major === minVersion.major &&
@@ -52,14 +57,25 @@ function isVersionMatch(packageVersion, requestVersion, requestTag) {
     isTagMatch(packageVersion, requestTag);
 }
 
+function queryPackages(rnVersionRange, tag, callback) {
+  // Ignore the version range of React Native if asking for master, since our
+  // RNW version may not align.
+  if (tag === 'master') {
+    return npm.packages.release('react-native-windows', 'master', callback);
+  } else {
+    return npm.packages.range('react-native-windows', rnVersionRange, callback);
+  }
+}
+
 function getMatchingVersion(version, tag, ignoreStable) {
-  console.log(`Checking for react-native-windows version matching ${version}...`);
+  const versionStr = tag === 'master' ? 'master' : version;
+  console.log(`Checking for react-native-windows version matching ${versionStr}...`);
   return new Promise(function (resolve, reject) {
-    npm.packages.range('react-native-windows', version, (err, release) => {
+    queryPackages(version, tag, (err, release) => {
       if (err || !release) {
         return getLatestVersion()
           .then(latestVersion => {
-            reject(new Error(`Could not find react-native-windows@${version}. ` +
+            reject(new Error(`Could not find react-native-windows@${versionStr}. ` +
               `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
               `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
             }).catch(error => reject(new Error(`Could not find react-native-windows@${version}.`)));
@@ -90,12 +106,23 @@ function getMatchingVersion(version, tag, ignoreStable) {
   });
 }
 
+const isSupportedVersion = function(validVersion, validRange) {
+  // Allow 0.0.0-x master builds
+  if (validVersion) {
+    return semver.lt(validVersion, '0.0.0') || semver.gte(validVersion, '0.27.0');
+  } else if (validRange) {
+    return semver.gtr('0.0.0', validRange) || semver.ltr('0.27.0', validRange);
+  } else {
+    return false;
+  }
+};
+
 const getInstallPackage = function (version, tag, useStable) {
   const packageToInstall = 'react-native-windows';
   const validVersion = semver.valid(version);
   const validRange = semver.validRange(version);
-  if ((validVersion && !semver.gtr(validVersion, '0.26.*')) ||
-      (!validVersion && validRange && semver.gtr('0.27.0', validRange))) {
+
+  if (!isSupportedVersion(validVersion, validRange)) {
     console.error(
       'Please upgrade react-native to ^0.27 or specify a --windowsVersion that is >=0.27.0'
     );
@@ -108,7 +135,8 @@ const getInstallPackage = function (version, tag, useStable) {
     return getMatchingVersion(version, tag, useStable)
       .then(resultVersion => `${packageToInstall}@${resultVersion}`);
   } else {
-    return Promise.resolve(version);
+    console.error('Invalid version specified for --windowsVersion');
+    process.exit(1);
   }
 };
 

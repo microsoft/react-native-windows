@@ -32,7 +32,7 @@ module.exports = async function (config, args, options) {
       const validVersion = semver.valid(version);
       const validRange = semver.validRange(version);
       // If the RN version is >= 0.60 we know they have to use vnext
-      if ((validVersion && semver.gte(validVersion, '0.60')) ||
+      if ((validVersion && semver.gte(validVersion, '0.60.0')) ||
           (!validVersion && validRange && semver.ltr('0.59.1000', validRange))) {
             template = 'vnext';
           }
@@ -66,5 +66,6 @@ module.exports = async function (config, args, options) {
   } catch (error) {
     console.error(chalk.red(error.message));
     console.error(error);
+    process.exit(1);
   }
 };
