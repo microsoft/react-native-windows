@@ -28,7 +28,7 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   , m_requestHandle{ NULL }
   , m_errorStatus{ ERROR_SUCCESS }
 {
-#if 0 // WinHttpCrackUrl does not accept non-HTTP schemes 🙄
+#if 0 // WinHttpCrackUrl does not accept non-HTTP
   BSTR bstr = _com_util::ConvertStringToBSTR(urlString.c_str());
   LPWSTR lpwstr = bstr;
   SysFreeString(bstr);
