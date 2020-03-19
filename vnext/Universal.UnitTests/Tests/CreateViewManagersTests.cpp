@@ -57,5 +57,4 @@ TEST_CLASS (CreateViewManagers) {
 
     Assert::IsFalse(viewManager == nullptr);
   }
-
 };
