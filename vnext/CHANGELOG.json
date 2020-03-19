@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Mar 2020 04:03:12 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.67",
+      "version": "0.61.0-beta.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add stub devStettingModule to react.uwp",
+            "author": "acoates@microsoft.com",
+            "commit": "cf27ed00e0f4b17e7e65616f871d21eedc1d27de"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2020 23:06:37 GMT",
       "tag": "react-native-windows_v0.61.0-beta.66",
       "version": "0.61.0-beta.66",

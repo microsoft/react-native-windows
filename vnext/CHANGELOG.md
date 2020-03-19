@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Mar 2020 23:06:37 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Mar 2020 04:03:12 GMT and should not be manually modified.
 
+## 0.61.0-beta.67
+Thu, 19 Mar 2020 04:03:12 GMT
+
+### Changes
+
+- Add stub devStettingModule to react.uwp (acoates@microsoft.com)
 ## 0.61.0-beta.66
 Wed, 18 Mar 2020 23:06:37 GMT
 
