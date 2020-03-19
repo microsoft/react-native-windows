@@ -35,7 +35,7 @@ param (
 	[System.IO.FileInfo] $VsTest =	"${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\" +
 						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
-	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
+	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)",
 
 	[System.IO.FileInfo] $NodePath = (Get-Command node.exe).Definition,
 
@@ -70,7 +70,7 @@ if (! $NoServers) {
 
 	if (!$wsServer) {
 		Write-Warning 'WebSocket server not found. Attempting to start...'
-		Start-WebSocketServer -ReactNativeLocation "$($PSSCriptRoot | Split-Path)\ReactCopies" -NodePath $NodePath
+		Start-WebSocketServer -ReactNativeLocation $ReactNativeLocation -NodePath $NodePath
 		$notFound = $true
 	} else {
 		Write-Host 'Found WebSocket server.'
