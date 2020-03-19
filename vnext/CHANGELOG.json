@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Mar 2020 22:00:09 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.150",
+      "version": "0.60.0-vnext.150",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Flip ImageView in rtl mode",
+            "author": "guokai.ok@gmail.com",
+            "commit": "426f7b1af8f0f5d019cdf6d4036df4e9c0edab68"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2020 00:24:13 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.149",
       "version": "0.60.0-vnext.149",

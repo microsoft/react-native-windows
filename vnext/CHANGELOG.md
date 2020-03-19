@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Mar 2020 00:24:13 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Mar 2020 22:00:09 GMT and should not be manually modified.
 
+## 0.60.0-vnext.150
+Thu, 19 Mar 2020 22:00:09 GMT
+
+### Changes
+
+- Flip ImageView in rtl mode (guokai.ok@gmail.com)
 ## 0.60.0-vnext.149
 Wed, 18 Mar 2020 00:24:13 GMT
 
