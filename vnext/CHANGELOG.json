@@ -2,6 +2,62 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Mar 2020 04:03:12 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.67",
+      "version": "0.61.0-beta.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add stub devStettingModule to react.uwp",
+            "author": "acoates@microsoft.com",
+            "commit": "cf27ed00e0f4b17e7e65616f871d21eedc1d27de"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 23:06:37 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.66",
+      "version": "0.61.0-beta.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "remove unused stubs",
+            "author": "kmelmon@microsoft.com",
+            "commit": "21dc1675db1e5f0cfeafe53b9c2440b5e0e84eac"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 22:00:44 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.65",
+      "version": "0.61.0-beta.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Changed C# JSValue API to match C++ version",
+            "author": "vmorozov@microsoft.com",
+            "commit": "6c072821b73dc13e8c7d461fd59b413bdafeb306"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 20:19:18 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.64",
+      "version": "0.61.0-beta.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReactInstanceWin::GetBundleRootPath",
+            "author": "jthysell@microsoft.com",
+            "commit": "c2d0019489a858be74dd55be161e3b77e6c55c4a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2020 11:43:45 GMT",
       "tag": "react-native-windows_v0.61.0-beta.63",
       "version": "0.61.0-beta.63",

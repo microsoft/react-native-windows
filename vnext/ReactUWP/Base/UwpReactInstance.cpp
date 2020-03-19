@@ -30,6 +30,7 @@
 
 #include "Unicode.h"
 
+#include <Modules/DevSettingsModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
@@ -203,6 +204,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         std::move(appstate),
         std::move(appTheme),
         spThis);
+
+    cxxModules.emplace_back(
+        DevSettingsModule::name, []() { return std::make_unique<DevSettingsModule>(); }, m_batchingNativeThread);
 
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =

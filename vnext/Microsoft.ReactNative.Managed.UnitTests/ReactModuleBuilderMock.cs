@@ -11,12 +11,12 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 {
   class ReactModuleBuilderMock : IReactModuleBuilder
   {
-    private List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
-    private Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
+    private readonly List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
+    private readonly Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
         new Dictionary<string, Tuple<MethodReturnType, MethodDelegate>>();
-    private Dictionary<string, SyncMethodDelegate> m_syncMethods =
+    private readonly Dictionary<string, SyncMethodDelegate> m_syncMethods =
         new Dictionary<string, SyncMethodDelegate>();
-    private List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
+    private readonly List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
     private Action<string, string, JSValue> m_jsEventHandler;
     private Action<string, string, JSValue> m_jsFunctionHandler;
 
@@ -223,7 +223,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
 
       constantWriter.WriteObjectEnd();
-      return constantWriter.TakeValue().Object;
+      return constantWriter.TakeValue().AsObject();
     }
 
     public void ExpectEvent(string eventEmitterName, string eventName, Action<JSValue> checkValue)
@@ -243,7 +243,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         Assert.AreEqual(moduleName, actualModuleName);
         Assert.AreEqual(functionName, actualFunctionName);
         Assert.AreEqual(JSValueType.Array, value.Type);
-        checkValues(value.Array);
+        checkValues(value.AsArray());
       };
     }
 
@@ -264,7 +264,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
   class ReactContextMock : IReactContext
   {
-    private ReactModuleBuilderMock m_builder;
+    private readonly ReactModuleBuilderMock m_builder;
 
     public ReactContextMock(ReactModuleBuilderMock builder)
     {

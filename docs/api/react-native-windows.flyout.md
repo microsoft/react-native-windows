@@ -4,15 +4,28 @@
 
 ## Flyout class
 
+Renders a flyout component.
+
+This is a controlled component that requires an `onDismiss` callback that updates the `isOpen` prop in order for the component to reflect user actions.
+
+ flyout
+
 <b>Signature:</b>
 
 ```typescript
-export declare class Flyout extends React.Component<IFlyoutProps> 
+export declare class Flyout extends React.Component<IFlyoutProps, IFlyoutTargetState> 
 ```
+
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)(props)](./react-native-windows.flyout._constructor_.md) |  | Constructs a new instance of the <code>Flyout</code> class |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [getDerivedStateFromProps(nextProps, prevState)](./react-native-windows.flyout.getderivedstatefromprops.md) | <code>static</code> |  |
 |  [render()](./react-native-windows.flyout.render.md) |  |  |
 
