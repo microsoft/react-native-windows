@@ -135,72 +135,72 @@ namespace Microsoft.ReactNative.Managed
 
     public static void ReadValue(this IJSValueReader reader, out Dictionary<string, JSValue> value)
     {
-      value = JSValue.ReadObjectPropertiesFrom(reader);
+      value = JSValue.ReadObjectFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out IDictionary<string, JSValue> value)
     {
-      value = JSValue.ReadObjectPropertiesFrom(reader);
+      value = JSValue.ReadObjectFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out ICollection<KeyValuePair<string, JSValue>> value)
     {
-      value = JSValue.ReadObjectPropertiesFrom(reader);
+      value = JSValue.ReadObjectFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out IEnumerable<KeyValuePair<string, JSValue>> value)
     {
-      value = JSValue.ReadObjectPropertiesFrom(reader);
+      value = JSValue.ReadObjectFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out ReadOnlyDictionary<string, JSValue> value)
     {
-      value = new ReadOnlyDictionary<string, JSValue>(JSValue.ReadObjectPropertiesFrom(reader));
+      value = new ReadOnlyDictionary<string, JSValue>(JSValue.ReadObjectFrom(reader));
     }
 
     public static void ReadValue(this IJSValueReader reader, out IReadOnlyDictionary<string, JSValue> value)
     {
-      value = new ReadOnlyDictionary<string, JSValue>(JSValue.ReadObjectPropertiesFrom(reader));
+      value = new ReadOnlyDictionary<string, JSValue>(JSValue.ReadObjectFrom(reader));
     }
 
     public static void ReadValue(this IJSValueReader reader, out IReadOnlyCollection<KeyValuePair<string, JSValue>> value)
     {
-      value = new ReadOnlyDictionary<string, JSValue>(JSValue.ReadObjectPropertiesFrom(reader));
+      value = new ReadOnlyDictionary<string, JSValue>(JSValue.ReadObjectFrom(reader));
     }
 
     public static void ReadValue(this IJSValueReader reader, out List<JSValue> value)
     {
-      value = JSValue.ReadArrayItemsFrom(reader);
+      value = JSValue.ReadArrayFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out IList<JSValue> value)
     {
-      value = JSValue.ReadArrayItemsFrom(reader);
+      value = JSValue.ReadArrayFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out ICollection<JSValue> value)
     {
-      value = JSValue.ReadArrayItemsFrom(reader);
+      value = JSValue.ReadArrayFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out IEnumerable<JSValue> value)
     {
-      value = JSValue.ReadArrayItemsFrom(reader);
+      value = JSValue.ReadArrayFrom(reader);
     }
 
     public static void ReadValue(this IJSValueReader reader, out ReadOnlyCollection<JSValue> value)
     {
-      value = new ReadOnlyCollection<JSValue>(JSValue.ReadArrayItemsFrom(reader));
+      value = new ReadOnlyCollection<JSValue>(JSValue.ReadArrayFrom(reader));
     }
 
     public static void ReadValue(this IJSValueReader reader, out IReadOnlyList<JSValue> value)
     {
-      value = new ReadOnlyCollection<JSValue>(JSValue.ReadArrayItemsFrom(reader));
+      value = new ReadOnlyCollection<JSValue>(JSValue.ReadArrayFrom(reader));
     }
 
     public static void ReadValue(this IJSValueReader reader, out IReadOnlyCollection<JSValue> value)
     {
-      value = new ReadOnlyCollection<JSValue>(JSValue.ReadArrayItemsFrom(reader));
+      value = new ReadOnlyCollection<JSValue>(JSValue.ReadArrayFrom(reader));
     }
 
     public static void ReadValue<T>(this IJSValueReader reader, out T? value) where T : struct
@@ -510,8 +510,10 @@ namespace Microsoft.ReactNative.Managed
         if (readerDelegates != s_readerDelegates) continue;
 
         // Clone the dictionary, update the clone, and try to replace the s_readerDelegates.
-        var updatedReaderDelegates = new Dictionary<Type, Delegate>(readerDelegates as IDictionary<Type, Delegate>);
-        updatedReaderDelegates.Add(valueType, newDelegate);
+        var updatedReaderDelegates = new Dictionary<Type, Delegate>(readerDelegates as IDictionary<Type, Delegate>)
+        {
+          [valueType] = newDelegate
+        };
         Interlocked.CompareExchange(ref s_readerDelegates, updatedReaderDelegates, readerDelegates);
       }
     }

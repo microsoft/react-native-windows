@@ -4,6 +4,10 @@
 
 ## Glyph class
 
+Glyph is a wrapper for the Xaml Glyph control
+
+This control is used to render Glyphs from a Font file, which might be used similar to SVG to have vector based images that also have the ability to be rendered with a specific color
+
 <b>Signature:</b>
 
 ```typescript
