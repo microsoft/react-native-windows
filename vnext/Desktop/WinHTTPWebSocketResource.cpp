@@ -26,17 +26,13 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   , m_sessionHandle{ NULL }
   , m_connectionHandle{ NULL }
   , m_requestHandle{ NULL }
-  , m_errorStatus{ ERROR_SUCCESS }
+  , m_lastError{ ERROR_SUCCESS }
 {
 #if 0 // WinHttpCrackUrl does not accept non-HTTP
-  BSTR bstr = _com_util::ConvertStringToBSTR(urlString.c_str());
-  LPWSTR lpwstr = bstr;
-  SysFreeString(bstr);
-
   LPURL_COMPONENTS url{};
-  auto parseResult = WinHttpCrackUrl(lpwstr, static_cast<DWORD>(urlString.length()), /*flags*/ 0, url);
+  auto parseResult = WinHttpCrackUrl(Utf8ToUtf16(urlString).c_str(), static_cast<DWORD>(urlString.length()), /*flags*/ 0, url);
   if (!parseResult)
-    throw std::exception("Could not parse URL.");
+    throw std::invalid_argument("Could not parse URL.");
 
   if (wcscmp(L"wss", url->lpszScheme) == 0)
   {
@@ -44,7 +40,7 @@ WinHTTPWebSocketResource::WinHTTPWebSocketResource(const string& urlString)
   }
   else if (wcscmp(L"ws", url->lpszScheme) != 0)
   {
-    throw std::exception(Common::Unicode::Utf16ToUtf8(
+    throw std::invalid_argument(Common::Unicode::Utf16ToUtf8(
       std::wstring(L"Incorrect URL scheme: ") + std::wstring(url->lpszScheme)
     ).c_str());
   }
@@ -111,7 +107,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
 
   if (m_sessionHandle == NULL)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -128,7 +124,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
 
   if (m_connectionHandle == NULL)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -148,7 +144,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
 
   if (m_requestHandle == NULL)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -158,7 +154,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
 
   if (!WinHttpSetOption(m_requestHandle, WINHTTP_OPTION_CONTEXT_VALUE, this, sizeof(this)))
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -174,8 +170,8 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
     0                                         // dwReserved
   ) == WINHTTP_INVALID_STATUS_CALLBACK)
   {
-    m_errorStatus = GetLastError();
-    throw std::exception("Can not create instance. Invalid callback.");
+    m_lastError = GetLastError();
+    throw std::exception("Cannot create instance. Invalid callback.");
   }
 
   BOOL fStatus = FALSE; //TODO: Make member?
@@ -188,7 +184,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
 
   if (!fStatus)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -208,7 +204,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
   );
   if (!fStatus)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -218,7 +214,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
   fStatus = WinHttpReceiveResponse(m_requestHandle, /*lpReserved*/ 0);
   if (!fStatus)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -230,7 +226,7 @@ void WinHTTPWebSocketResource::Connect(const Protocols& protocols, const Options
   m_webSocketHandle = WinHttpWebSocketCompleteUpgrade(m_requestHandle, /*pContext*/ NULL);
   if (m_webSocketHandle == NULL)
   {
-    m_errorStatus = GetLastError();
+    m_lastError = GetLastError();
 
     if (m_errorHandler)
     {
@@ -266,16 +262,9 @@ void WinHTTPWebSocketResource::Close(CloseCode code, const string& reason)
   switch (result)
   {
   case ERROR_IO_PENDING:
-    GetLastError();
-    if (m_errorHandler)
-    {
-      m_errorHandler({ "Failed shutting donw WebSocket", ErrorType::Close });
-    }
-
-    break;
+    // Success (finishing asynchronously)
   default:
     // Success
-    GetLastError();//TODO:Remove
     break;
   }
 
@@ -289,18 +278,15 @@ void WinHTTPWebSocketResource::Close(CloseCode code, const string& reason)
   {
   case ERROR_INVALID_OPERATION:
   case ERROR_INVALID_PARAMETER:
-    //case ERROR_INVALID_SERVER_RESPONSE: // 12152
-    //  GetLastError();
-    //  break;
-    GetLastError();
+  case 12152:// ERROR_INVALID_SERVER_RESPONSE
     if (m_errorHandler)
     {
       m_errorHandler({ "Failed closing WebSocket", ErrorType::Close });
     }
+    break;
 
   default:
     // Success
-    GetLastError();//TODO:Remove
     if (m_closeHandler)
     {
       m_closeHandler(CloseCode::Normal, "Closing");
@@ -352,92 +338,64 @@ void WinHTTPWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
   switch (status)
   {
   case WINHTTP_CALLBACK_STATUS_RESOLVING_NAME:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_NAME_RESOLVED:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CONNECTING_TO_SERVER:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CONNECTED_TO_SERVER:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SENDING_REQUEST:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_REQUEST_SENT:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_RECEIVING_RESPONSE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_RESPONSE_RECEIVED:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CLOSING_CONNECTION:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CONNECTION_CLOSED:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_HANDLE_CREATED:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_HANDLE_CLOSING:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_DETECTING_PROXY:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_REDIRECT:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_INTERMEDIATE_RESPONSE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SECURE_FAILURE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_HEADERS_AVAILABLE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_DATA_AVAILABLE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_READ_COMPLETE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_WRITE_COMPLETE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
-    pThis->m_errorStatus = GetLastError();
+    pThis->m_lastError = GetLastError();
     if (pThis->m_errorHandler)
       pThis->m_errorHandler({ "REQUEST_ERROR", ErrorType::None });
 
     return;
   case WINHTTP_CALLBACK_STATUS_SENDREQUEST_COMPLETE:
-    GetLastError();
-
     break;
   case WINHTTP_CALLBACK_STATUS_GETPROXYFORURL_COMPLETE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_CLOSE_COMPLETE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SHUTDOWN_COMPLETE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SETTINGS_WRITE_COMPLETE:
-    GetLastError();
     break;
   case WINHTTP_CALLBACK_STATUS_SETTINGS_READ_COMPLETE:
-    GetLastError();
     break;
   default:
-    GetLastError();
     break;
   }
 }

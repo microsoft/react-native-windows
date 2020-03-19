@@ -133,10 +133,8 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
 
     co_await m_connectAction; //TODO: EnqueueWrite()
 
-    string message;
-    bool isBinary;
     size_t length;
-    std::tie(message, isBinary) = m_writeQueue.front();
+    auto [message, isBinary] = m_writeQueue.front();
     m_writeQueue.pop();
 
     if (isBinary)

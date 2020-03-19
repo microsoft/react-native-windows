@@ -25,7 +25,7 @@ class WinHTTPWebSocketResource : public IWebSocketResource
   HINTERNET m_requestHandle;
   HINTERNET m_webSocketHandle;
 
-  DWORD m_errorStatus;
+  DWORD m_lastError;
 
   std::function<void()> m_connectHandler;
   std::function<void(CloseCode, const std::string&)> m_closeHandler;

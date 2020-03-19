@@ -38,7 +38,7 @@ namespace Microsoft::React
       return unique_ptr<IWebSocketResource>(new Beast::SecureWebSocket(std::move(url)));
     }
     else
-      throw std::exception((string("Incorrect URL scheme: ") + url.scheme).c_str());
+      throw std::invalid_argument((string("Incorrect URL scheme: ") + url.scheme).c_str());
   }
 }
 

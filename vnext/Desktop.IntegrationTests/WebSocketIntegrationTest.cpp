@@ -75,7 +75,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual({"prefix_response"}, received);
   }
 
-  //TODO: Cleanup before merging.
   TEST_METHOD(ConnectClose)
   {
     auto server = make_shared<Test::WebSocketServer>(5556);
