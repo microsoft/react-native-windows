@@ -24,7 +24,6 @@ EXPORTS
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0ViewViewManager@uwp@react@@QAE@ABV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0WebSocketModule@uwp@react@@QAE@XZ
-??0WebViewManager@uwp@react@@QAE@ABV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??1DevSupportManager@uwp@react@@QAE@XZ
 ??1TypeError@folly@@UAE@XZ
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
