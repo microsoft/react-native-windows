@@ -19,7 +19,6 @@
     <PackageCertificateKeyFile>Playground_TemporaryKey.pfx</PackageCertificateKeyFile>
     <DependencyConfiguration>Debug</DependencyConfiguration>
     <PackageCertificateThumbprint>218F5339D3F55118F3F99818E3D252192FEA960C</PackageCertificateThumbprint>
-    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'DebugBundle'">
     <DependencyConfiguration>Debug</DependencyConfiguration>
