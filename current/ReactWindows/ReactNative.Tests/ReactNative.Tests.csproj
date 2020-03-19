@@ -20,6 +20,7 @@
     <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">14.0</UnitTestPlatformVersion>
     <DependencyConfiguration>Debug</DependencyConfiguration>
     <PackageCertificateThumbprint>F983A63678123AECBF104DEBC8E7B2B3080F1C01</PackageCertificateThumbprint>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'DebugBundle'">
     <DependencyConfiguration>Debug</DependencyConfiguration>
