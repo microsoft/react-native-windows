@@ -164,6 +164,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     {
       m_socket.Control().MessageType(SocketMessageType::Utf8);
 
+      //TODO: Use char_t instead of uint8_t?
       length = message.size();
       winrt::array_view<const uint8_t> arr(
         CheckedReinterpretCast<const uint8_t*>(message.c_str()),
@@ -267,14 +268,14 @@ void WinRTWebSocketResource::Stop()
 
 void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
 {
-  for (auto& header : options)
+  for (const auto& header : options)
   {
     m_socket.SetRequestHeader(header.first, Utf8ToUtf16(header.second));
   }
 
   winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
     m_socket.Control().SupportedProtocols();
-  for (auto& protocol : protocols)
+  for (const auto& protocol : protocols)
   {
     supportedProtocols.Append(Utf8ToUtf16(protocol));
   }
@@ -290,14 +291,14 @@ void WinRTWebSocketResource::Ping()
 
 void WinRTWebSocketResource::Send(const string& message)
 {
-  m_writeQueue.emplace(std::move(message), false);
+  m_writeQueue.emplace(message, false);
 
   PerformWrite();
 }
 
 void WinRTWebSocketResource::SendBinary(const string& base64String)
 {
-  m_writeQueue.emplace(std::move(base64String), true);
+  m_writeQueue.emplace(base64String, true);
 
   PerformWrite();
 }
@@ -307,7 +308,7 @@ void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
   Stop();
 
   m_closeCode = code;
-  m_closeReason = std::move(reason);
+  m_closeReason = reason;
 
   PerformClose();
 }
