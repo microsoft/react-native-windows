@@ -9,9 +9,9 @@ using std::string;
 namespace Microsoft::React {
 
 Url::Url(const string &source) {
-  //      ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
+  //                           ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
   std::regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
-  //     protocol             host       port     path        query
+  //                          scheme              host       port      path      query
   std::cmatch match;
   int index = 0;
   if (std::regex_match(source.c_str(), match, expression)) {
