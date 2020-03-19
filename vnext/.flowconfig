@@ -10,18 +10,11 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
-<PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
-<PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
-<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/RCTActivityIndicatorViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
-<PROJECT_ROOT>/Libraries/Components/Flyout/Flyout.js
-<PROJECT_ROOT>/Libraries/Components/Glyph/Glyph.js
 <PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
-<PROJECT_ROOT>/Libraries/Components/Picker/PickerWindows.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
-<PROJECT_ROOT>/Libraries/Components/Popup/Popup.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
@@ -37,6 +30,7 @@
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
+<PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js
