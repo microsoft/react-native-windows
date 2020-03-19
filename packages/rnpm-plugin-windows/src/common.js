@@ -61,7 +61,7 @@ function queryPackages(rnVersionRange, tag, callback) {
   // Ignore the version range of React Native if asking for master, since our
   // RNW version may not align.
   if (tag === 'master') {
-    return npm.packages.release('react-native-windows', 'master', callback);
+    return npm.packages.release('react-native-windows', 'master', (err, rel) => callback(err, rel[0]));
   } else {
     return npm.packages.range('react-native-windows', rnVersionRange, callback);
   }
