@@ -105,7 +105,7 @@ class XHRTest extends React.Component<{}, Object> {
     TestModule.markTestPassed(true);
   }
 
-  render() : React.Node {
+  render(): React.Node {
     return <View />;
   }
 }

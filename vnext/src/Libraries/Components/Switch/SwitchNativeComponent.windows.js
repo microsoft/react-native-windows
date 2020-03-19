@@ -30,14 +30,14 @@ type NativeProps = $ReadOnly<{|
   // Props
   disabled?: WithDefault<boolean, false>,
   value?: WithDefault<boolean, false>,
-  tintColor?: (?ColorValue | NativeOrDynamicColorType), // [Windows]
-  onTintColor?: (?ColorValue | NativeOrDynamicColorType), // [Windows]
-  thumbTintColor?: (?ColorValue | NativeOrDynamicColorType), // [Windows]
+  tintColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  onTintColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  thumbTintColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
 
   // Deprecated props
-  thumbColor?: (?ColorValue | NativeOrDynamicColorType), // [Windows]
-  trackColorForFalse?: (?ColorValue | NativeOrDynamicColorType), // [Windows]
-  trackColorForTrue?: (?ColorValue | NativeOrDynamicColorType), // [Windows]
+  thumbColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  trackColorForFalse?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  trackColorForTrue?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
 
   // Events
   onChange?: ?BubblingEventHandler<SwitchChangeEvent>,

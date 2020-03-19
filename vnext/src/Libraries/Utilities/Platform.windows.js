@@ -44,11 +44,11 @@ const Platform = {
     return false;
   },
   select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
-  'windows' in spec
-    ? spec.windows
-    : 'native' in spec
-    ? spec.native
-    : spec.default,
+    'windows' in spec
+      ? spec.windows
+      : 'native' in spec
+      ? spec.native
+      : spec.default,
 };
 
 module.exports = Platform;

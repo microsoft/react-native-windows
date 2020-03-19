@@ -62,16 +62,10 @@ type TBackHandler = {|
 
 const BackHandler: TBackHandler = {
   exitApp: () => {},
-  addEventListener: (
-    eventName: BackPressEventName,
-    handler: Function,
-  ) => {
+  addEventListener: (eventName: BackPressEventName, handler: Function) => {
     return {remove: () => {}};
   },
-  removeEventListener: (
-    eventName: BackPressEventName,
-    handler: Function,
-  ) => {},
+  removeEventListener: (eventName: BackPressEventName, handler: Function) => {},
 };
 
 module.exports = BackHandler;

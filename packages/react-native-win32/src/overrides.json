@@ -129,6 +129,14 @@
       "file": "Libraries\\Components\\ScrollView\\RecyclerViewBackedScrollView.win32.tsx"
     },
     {
+      "type": "patch",
+      "file": "Libraries\\Components\\ScrollView\\ScrollView.win32.js",
+      "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "ad1f9e693d11926daf324f992de3741def01e35e",
+      "issue": 4362
+    },
+    {
       "type": "derived",
       "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.tsx",
       "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
@@ -141,7 +149,15 @@
       "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "2c312e39ea468283e73be4319370d4f29ea5c932",
-      "issue": 3990
+      "issue": 4363
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerIOS.win32.js",
+      "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerIOS.js",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "f9f3d19210ade74181dbd291ffd97d8905d61035",
+      "issue": 4363
     },
     {
       "type": "platform",

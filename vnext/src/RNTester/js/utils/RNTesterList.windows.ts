@@ -185,7 +185,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'DevSettings',
-    module: require('react-native/RNTester/examples/DevSettings/DevSettingsExample'),
+    module: require('react-native/RNTester/js/examples/DevSettings/DevSettingsExample'),
   },
   {
     key: 'Dimensions',
@@ -242,10 +242,6 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'TransformExample',
     module: require('react-native/RNTester/js/examples/Transform/TransformExample'),
-  },
-  {
-    key: 'TimerExample',
-    module: require('react-native/RNTester/js/examples/Timer/TimerExample'),
   },
   {
     key: 'WebSocketExample',

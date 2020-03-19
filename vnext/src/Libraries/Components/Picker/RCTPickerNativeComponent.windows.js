@@ -53,8 +53,8 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
   supportedCommands: ['setNativeSelectedIndex'],
 });
 
-const RCTPickerNativeComponent: ComponentType = requireNativeComponent<
-  NativeProps,
->('RCTPicker');
+const RCTPickerNativeComponent: ComponentType = requireNativeComponent<NativeProps>(
+  'RCTPicker',
+);
 
 export default RCTPickerNativeComponent;

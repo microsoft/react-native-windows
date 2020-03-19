@@ -12,31 +12,33 @@
 
 import type {TurboModule} from '../../TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../../TurboModule/TurboModuleRegistry';
-import type {NativeOrDynamicColorType} from '../../StyleSheet/NativeOrDynamicColorType'; // [Win32]
 
 export interface Spec extends TurboModule {
   +getConstants: () => {|
     +HEIGHT: number,
-    +DEFAULT_BACKGROUND_COLOR: number,
+    +DEFAULT_BACKGROUND_COLOR?: number,
   |};
-  // [Win32 Allow NativeOrDynamicColorType to make Flow happy (this will never be called)
-  +setColor: (
-    color: number | NativeOrDynamicColorType,
-    animated: boolean,
-  ) => void;
-  // Win32]
-  +setTranslucent: (translucent: boolean) => void;
+
+  // TODO(T47754272) Can we remove this method?
+  +getHeight: (callback: (result: {|height: number|}) => void) => void;
+  +setNetworkActivityIndicatorVisible: (visible: boolean) => void;
+  +addListener: (eventType: string) => void;
+  +removeListeners: (count: number) => void;
 
   /**
    *  - statusBarStyles can be:
    *    - 'default'
    *    - 'dark-content'
+   *    - 'light-content'
    */
-  +setStyle: (statusBarStyle?: ?string) => void;
-  +setHidden: (hidden: boolean) => void;
+  +setStyle: (statusBarStyle?: ?string, animated: boolean) => void;
+  /**
+   *  - withAnimation can be: 'none' | 'fade' | 'slide'
+   */
+  +setHidden: (hidden: boolean, withAnimation: string) => void;
 }
 
-// [Win32 Change from getEnforcing to get
+// [Win32 Do not enforce native module is present
 export default (TurboModuleRegistry.get<Spec>(
   'StatusBarManager',
 ): ?Spec);

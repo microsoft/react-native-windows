@@ -57,8 +57,7 @@ if (Platform.OS === 'android') {
   AndroidScrollView = ScrollViewNativeComponent;
   AndroidHorizontalScrollView = AndroidHorizontalScrollViewNativeComponent;
   AndroidHorizontalScrollContentView = AndroidHorizontalScrollContentViewNativeComponent;
-} else {
-  // [Windows] Remove iOS check
+} else { // [Windows] Remove iOS check
   RCTScrollView = ScrollViewNativeComponent;
   RCTScrollContentView = ScrollContentViewNativeComponent;
 }
