@@ -27,7 +27,6 @@
 #include <Views/TextViewManager.h>
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
-#include <Views/WebViewManager.h>
 
 // Polyester View Managers // TODO: Move Polyester implementations out of this
 // library and depot
@@ -58,7 +57,6 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<TextInputViewManager>(instance));
   viewManagers.push_back(std::make_unique<ViewViewManager>(instance));
   viewManagers.push_back(std::make_unique<VirtualTextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<WebViewManager>(instance));
   viewManagers.push_back(std::make_unique<RefreshControlViewManager>(instance));
 }
 

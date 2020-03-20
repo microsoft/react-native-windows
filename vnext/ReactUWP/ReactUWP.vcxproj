@@ -244,7 +244,6 @@
     <ClInclude Include="Views\DynamicAutomationProperties.h" />
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
-    <ClInclude Include="Views\WebViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\ABIModuleLoader.cpp" />
@@ -354,7 +353,6 @@
     <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\ViewViewManager.cpp" />
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
-    <ClCompile Include="Views\WebViewManager.cpp" />
     <ClCompile Include="Views\module.g.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
     <ClCompile Include="Views\XamlFeatures.cpp" />

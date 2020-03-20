@@ -323,9 +323,6 @@
     <ClCompile Include="Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\WebViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\XamlFeatures.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -630,9 +627,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\VirtualTextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\WebViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
