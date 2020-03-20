@@ -17,8 +17,8 @@ assignees: ''
 - Target version: 
 - [ ] Issue exists on module repo (if so, [link]())
 <!-- If the community module repo already has an issue tracking adding React Native Support, please check this box and link to it. -->
-- [ ] Module has a vCurrent/C# implementation (if so, [link]())
-<!-- If the community module has an existing RNW vCurrent implementation, please check this box and provide a link to the implementation -->
+- [ ] Module has a Legacy/C# implementation (if so, [link]())
+<!-- If the community module has an existing RNW Legacy/C# implementation, please check this box and provide a link to the implementation -->
 
 ## Which app/customer is requesting this module?
 <!-- Please describe which app/customer needs this module. -->
