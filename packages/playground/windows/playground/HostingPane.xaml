@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="auto"/>
@@ -141,6 +140,15 @@
         VerticalAlignment="Center"
         IsChecked="true"
         Content="Live Reload"/>
+      <TextBox x:Name="x_DebuggerPort"
+        Text="{x:Bind DebuggerPort, Mode=TwoWay}"
+        VerticalAlignment="Center"
+        InputScope="Number"
+        MaxLength="5"/>
+      <TextBlock
+        VerticalAlignment="Center"
+        Margin="5,0,5,3"
+        Text="Debugger Port"/>
       <CheckBox x:Name="x_ReuseInstanceCheckBox"
         Margin="5,2"
         VerticalAlignment="Center"

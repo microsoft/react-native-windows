@@ -32,11 +32,16 @@ namespace Playground {
         Windows::UI::Xaml::Input::ICommand ^ get();
       }
 
-      private : void OnSelectionChanged_JavaScriptFilename(
-                    Platform::Object ^ sender,
-                    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
+      property uint32_t DebuggerPort {
+    uint32_t get();
+    void set(uint32_t value);
+  };
 
  private:
+  void OnSelectionChanged_JavaScriptFilename(
+      Platform::Object ^ sender,
+      Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
+
   void OnSelectionChanged_ReactAppName(
       Platform::Object ^ sender,
       Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
@@ -65,6 +70,8 @@ namespace Playground {
  private:
   std::wstring m_loadedJSComponentName;
   std::wstring m_loadedBundleFileName;
+  static constexpr uint16_t defaultDebuggerPort = 9229;
+  uint16_t m_debuggerPort{defaultDebuggerPort};
 
   react::uwp::ReactInstanceCreator m_instanceCreator;
 
