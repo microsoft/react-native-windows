@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Remove WebView",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "commit": "bec414bbb2533eb7e3c7e9644dd6d60a40c79e3b",
+  "dependentChangeType": "patch",
+  "date": "2020-03-18T23:09:14.403Z"
+}
