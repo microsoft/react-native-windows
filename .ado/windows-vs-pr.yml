@@ -5,7 +5,7 @@ trigger: none # will disable CI builds entirely
 
 pr:
   - master
-  - 0.60-stable
+  - "*-stable"
 
 variables:
   - template: variables/msbuild.yml
