@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Mar 2020 17:48:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.67",
+      "version": "0.61.0-beta.67",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove WebView",
+            "author": "kaigu@microsoft.com",
+            "commit": "bec414bbb2533eb7e3c7e9644dd6d60a40c79e3b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Mar 2020 04:03:12 GMT",
       "tag": "react-native-windows_v0.61.0-beta.67",
       "version": "0.61.0-beta.67",
