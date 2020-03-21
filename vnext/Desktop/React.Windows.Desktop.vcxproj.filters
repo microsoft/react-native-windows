@@ -93,9 +93,6 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinHTTPWebSocketResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,9 +109,6 @@
     </ClInclude>
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="WinHTTPWebSocketResource.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

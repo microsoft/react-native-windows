@@ -6,7 +6,6 @@
 
 #include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
-#include "WinHTTPWebSocketResource.h"
 
 using std::make_unique;
 using std::string;
