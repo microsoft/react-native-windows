@@ -112,8 +112,6 @@ class BaseWebSocketResource : public IWebSocketResource {
 
   BaseWebSocketResource(Url &&url);
 
-  ~BaseWebSocketResource() override;
-
   /// <summary>
   /// Finalizes the connection setup to the remote endpoint.
   /// Sets the ready state to <c>Open</c>.
@@ -130,6 +128,8 @@ class BaseWebSocketResource : public IWebSocketResource {
   virtual void Handshake(const IWebSocketResource::Options &options);
 
  public:
+   ~BaseWebSocketResource() override;
+
 #pragma region IWebSocketResource
 
   /// <summary>

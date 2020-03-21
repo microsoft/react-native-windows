@@ -39,8 +39,9 @@ class WinRTWebSocketResource : public IWebSocketResource
   std::function<void(CloseCode, const std::string&)> m_closeHandler;
   std::function<void(Error&&)> m_errorHandler;
 
-  WinRTWebSocketResource(winrt::Windows::Foundation::Uri&& uri);
-  ~WinRTWebSocketResource() override;
+  WinRTWebSocketResource(
+    winrt::Windows::Foundation::Uri&& uri,
+    std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
 
   winrt::Windows::Foundation::IAsyncAction PerformConnect();
   winrt::fire_and_forget PerformPing();
@@ -57,7 +58,10 @@ class WinRTWebSocketResource : public IWebSocketResource
   void Stop();
 
 public:
-  WinRTWebSocketResource(const std::string& urlString);
+  WinRTWebSocketResource(
+    const std::string& urlString,
+    std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
+  ~WinRTWebSocketResource() override;
 
 #pragma region IWebSocketResource
 
