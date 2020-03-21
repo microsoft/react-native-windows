@@ -128,7 +128,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   virtual void Handshake(const IWebSocketResource::Options &options);
 
  public:
-   ~BaseWebSocketResource() override;
+  ~BaseWebSocketResource() override;
 
 #pragma region IWebSocketResource
 
