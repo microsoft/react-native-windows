@@ -85,8 +85,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop", "De
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.IntegrationTests", "Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.vcxproj", "{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IntegrationTests", "IntegrationTestScripts\IntegrationTests.njsproj", "{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.IntegrationTests", "IntegrationTests\React.Windows.IntegrationTests.vcxproj", "{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
@@ -113,6 +111,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Desktop", "JSI\Desktop\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mso", "Mso", "{4DE630AE-EC50-4F21-942E-7B811A1C5FA3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
@@ -120,6 +122,7 @@ Global
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
@@ -196,10 +199,6 @@ Global
 		{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}.Release|x64.Build.0 = Release|x64
 		{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}.Release|x86.ActiveCfg = Release|Win32
 		{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}.Release|x86.Build.0 = Release|Win32
-		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Release|x64.ActiveCfg = Release|Any CPU
-		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Release|x86.ActiveCfg = Release|Any CPU
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Debug|x64.ActiveCfg = Debug|x64
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Debug|x64.Build.0 = Debug|x64
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Debug|x86.ActiveCfg = Debug|Win32
@@ -265,9 +264,10 @@ Global
 		{43A78B84-278B-4B99-8887-4029D551173E} = {6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}
 		{102E37B8-4BE5-4DC1-A650-16706EFB3306} = {6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}
 		{2EB5E646-7EB4-4FED-B1A8-0AEEF2D32268} = {6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}
-		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32} = {F90FDFD1-2C76-4DCD-B248-F6FB2BB15BDF}
 		{F90FDFD1-2C76-4DCD-B248-F6FB2BB15BDF} = {978A75A5-B8D2-4306-9AEF-D00793F33F5F}
 		{41F31595-2F20-4D6B-A6CF-60444415012A} = {978A75A5-B8D2-4306-9AEF-D00793F33F5F}
+		{4DE630AE-EC50-4F21-942E-7B811A1C5FA3} = {978A75A5-B8D2-4306-9AEF-D00793F33F5F}
+		{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E} = {4DE630AE-EC50-4F21-942E-7B811A1C5FA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1055EEE-3785-4C0E-8934-FBAA21BFF90C}

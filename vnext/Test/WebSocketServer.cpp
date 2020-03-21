@@ -350,7 +350,7 @@ void WebSocketServer::SetMessageFactory(function<string(string &&)> &&func) {
   m_callbacks.MessageFactory = std::move(func);
 }
 
-void WebSocketServer::SetOnError(function<void(IWebSocket::Error &&)> &&func) {
+void WebSocketServer::SetOnError(function<void(IWebSocketResource::Error &&)> &&func) {
   m_callbacks.OnError = std::move(func);
 }
 
