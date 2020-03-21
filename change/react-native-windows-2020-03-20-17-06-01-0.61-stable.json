@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "comment": "Make package changes",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "1f68f4ecd7b7abcd882ba104b376acf5b94ce9db",
+  "dependentChangeType": "patch",
+  "date": "2020-03-21T00:06:01.702Z"
+}

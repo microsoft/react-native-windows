@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "comment": "Make package changes",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "commit": "1f68f4ecd7b7abcd882ba104b376acf5b94ce9db",
+  "dependentChangeType": "patch",
+  "date": "2020-03-21T00:05:51.381Z"
+}
