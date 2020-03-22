@@ -9,6 +9,10 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>
 
+// PPL
+#include <concurrent_queue.h>
+
+// Standard Library
 #include <future>
 #include <queue>
 
@@ -32,6 +36,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   CloseCode m_closeCode{ CloseCode::None };
   std::string m_closeReason;
   std::queue<std::pair<std::string, bool>> m_writeQueue;
+  concurrency::concurrent_queue<std::pair<std::string, bool>> m_writeQueue2;//TODO: Replace m_writeQueue or remove.
 
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
