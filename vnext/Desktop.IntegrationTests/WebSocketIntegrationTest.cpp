@@ -351,7 +351,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
-    const int writes = 10;
+    const int writes = 2;
     int count = 0;
     ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
     {
@@ -373,7 +373,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     // The WebSocket implementation can't handle multiple write operations
     // concurrently.
     for (int i = 0; i < writes; i++)
+    {
       ws->Send("suffixme");
+    }
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();

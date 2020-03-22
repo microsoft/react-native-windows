@@ -124,7 +124,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
 
 fire_and_forget WinRTWebSocketResource::PerformWrite()
 {
-  if (m_writeQueue.empty())
+  if (m_writeQueue2.empty())
   {
     co_return;
   }
@@ -136,8 +136,16 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     m_connectPerformed.get_future().wait();
 
     size_t length;
-    auto [message, isBinary] = std::move(m_writeQueue.front());
-    m_writeQueue.pop();
+    //auto [message, isBinary] = std::move(m_writeQueue.front());
+    //m_writeQueue.pop();
+    std::pair<string, bool> front;
+    bool popped = m_writeQueue2.try_pop(front);
+    if (!popped)
+    {
+      throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
+    }
+
+    auto [message, isBinary] = std::move(front);
 
     if (isBinary)
     {
@@ -166,7 +174,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
       m_writeHandler(length);
     }
 
-    if (!m_writeQueue.empty())
+    if (!m_writeQueue2.empty())
     {
       PerformWrite();
     }
@@ -280,7 +288,8 @@ void WinRTWebSocketResource::Ping()
 
 void WinRTWebSocketResource::Send(const string& message)
 {
-  m_writeQueue.emplace(message, false);
+  //m_writeQueue.emplace(message, false);
+  m_writeQueue2.push({ message, false });
 
   PerformWrite();
 }
