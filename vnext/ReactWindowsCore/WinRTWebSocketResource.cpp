@@ -133,7 +133,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    co_await m_connectAction; //TODO: EnqueueWrite()
+    m_connectPerformed.get_future().wait();
 
     size_t length;
     auto [message, isBinary] = std::move(m_writeQueue.front());
