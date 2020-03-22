@@ -27,6 +27,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   std::promise<void> m_connectPerformed;
   std::promise<void> m_closePerformed;
   winrt::Windows::Foundation::IAsyncAction m_connectAction;
+  ReadyState m_readyState{ ReadyState::Closed };
 
   CloseCode m_closeCode{ CloseCode::None };
   std::string m_closeReason;

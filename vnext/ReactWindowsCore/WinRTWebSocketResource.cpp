@@ -71,6 +71,7 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
 
     co_await m_socket.ConnectAsync(m_uri);
 
+    m_readyState = ReadyState::Open;
     if (m_connectHandler)
     {
       m_connectHandler();
@@ -78,6 +79,7 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   }
   catch (hresult_error const& e)
   {
+    m_readyState = ReadyState::Closed;
     if (m_errorHandler)
     {
       m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
@@ -187,6 +189,8 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
   m_closePerformed.set_value();
 
+  m_readyState = ReadyState::Closed;
+
   co_return;
 }
 
@@ -251,6 +255,8 @@ void WinRTWebSocketResource::Stop()
 
 void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
 {
+  m_readyState = ReadyState::Connecting;
+
   for (const auto& header : options)
   {
     m_socket.SetRequestHeader(header.first, Utf8ToUtf16(header.second));
@@ -298,7 +304,7 @@ void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 
 IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
 {
-  return ReadyState::Closed;
+  return m_readyState;
 }
 
 void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler)
