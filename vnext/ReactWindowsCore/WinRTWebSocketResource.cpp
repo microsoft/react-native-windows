@@ -96,7 +96,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   {
     co_await resume_background();
 
-    co_await m_connectAction;
+    m_connectPerformed.get_future().wait();
 
     m_socket.Control().MessageType(SocketMessageType::Utf8);
 
@@ -192,7 +192,7 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
 {
   co_await resume_background();
 
-  co_await m_connectAction;
+  m_connectPerformed.get_future().wait();
 
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
   m_closePerformed.set_value();
