@@ -104,12 +104,15 @@
     <ClCompile Include="LazyDevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocket.cpp">
+    <ClCompile Include="BeastWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketResourceFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +164,7 @@
     <ClInclude Include="NativeModuleFactories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WebSocket.h">
+    <ClInclude Include="BeastWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

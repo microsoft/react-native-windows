@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IWebSocket.h>
+#include <IWebSocketResource.h>
 
 #include <Windows.h>
 
@@ -13,7 +13,7 @@
 #include <atomic>
 #include <future>
 
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::string;
@@ -55,9 +55,9 @@ TEST_METHOD(ProcessThreadsPerResource) {
 
   // WebSocket resources scope.
   {
-    vector<unique_ptr<IWebSocket>> resources;
+    vector<unique_ptr<IWebSocketResource>> resources;
     for (int i = 0; i < resourceTotal; i++) {
-      auto ws = IWebSocket::Make("ws://localhost:5555/");
+      auto ws = IWebSocketResource::Make("ws://localhost:5556/");
       ws->SetOnMessage([this, &threadCount](size_t size, const string &message) {
         auto count = this->GetCurrentThreadCount();
         if (count > threadCount.load())
@@ -68,7 +68,7 @@ TEST_METHOD(ProcessThreadsPerResource) {
         if (count > threadCount.load())
           threadCount.store(count);
       });
-      ws->SetOnClose([this, &threadCount](IWebSocket::CloseCode, const string & /*reason*/) {
+      ws->SetOnClose([this, &threadCount](IWebSocketResource::CloseCode, const string & /*reason*/) {
         auto count = this->GetCurrentThreadCount();
         if (count > threadCount.load())
           threadCount.store(count);

@@ -35,7 +35,7 @@
     <file src="$nugetroot$\inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\IUIManager.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWindowsCore\IWebSocket.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IWebSocketResource.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\LayoutAnimation.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\Logging.h" target="inc"/>

@@ -55,7 +55,7 @@
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
       -->
-      <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_PLATFORM=win32;RN_EXPORT=;JSI_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN8;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_PLATFORM=win32;RN_EXPORT=;JSI_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -106,8 +106,9 @@
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
     <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
-    <ClCompile Include="WebSocket.cpp" />
+    <ClCompile Include="BeastWebSocketResource.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -134,7 +135,7 @@
     <ClInclude Include="Sandbox\NamedPipeEndpoint.h" />
     <ClInclude Include="Sandbox\SandboxJSExecutor.h" />
     <ClInclude Include="HttpResource.h" />
-    <ClInclude Include="WebSocket.h" />
+    <ClInclude Include="BeastWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

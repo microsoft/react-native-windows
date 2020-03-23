@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <map>
+#include <string>
 #include <vector>
 
 namespace Microsoft::React {
@@ -12,7 +13,7 @@ namespace Microsoft::React {
 /// <summary>
 /// Defines the core functionality for a native WebSocket client resource.
 /// </summary>
-struct IWebSocket {
+struct IWebSocketResource {
 #pragma region Aliases
 
   using Protocols = std::vector<std::string>;
@@ -78,15 +79,15 @@ struct IWebSocket {
 #pragma endregion Inner types
 
   /// <summary>
-  /// Creates an <c>IWebSocket</c> instance.
+  /// Creates an <c>IWebSocketResource</c> instance.
   /// </summary>
   /// <param name="url">
   /// WebSocket URL address the instance will connect to.
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
-  static std::unique_ptr<IWebSocket> Make(const std::string &url);
+  static std::unique_ptr<IWebSocketResource> Make(const std::string &url, bool acceptSelfSigned = false);
 
-  virtual ~IWebSocket() {}
+  virtual ~IWebSocketResource() {}
 
   /// <summary>
   /// Establishes a continuous connection with the remote endpoint.
@@ -186,6 +187,6 @@ struct IWebSocket {
 // Deprecated. Keeping for compatibility with dependent code.
 namespace facebook::react {
 
-using IWebSocket = Microsoft::React::IWebSocket;
+using IWebSocket = Microsoft::React::IWebSocketResource;
 
 } // namespace facebook::react

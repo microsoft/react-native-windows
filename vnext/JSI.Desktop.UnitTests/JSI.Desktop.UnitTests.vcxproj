@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -44,7 +45,7 @@
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN8;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
@@ -55,7 +56,17 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>Shlwapi.lib;delayimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!--
+        comsuppw.lib  - _com_util::ConvertStringToBSTR
+        delayimp.lib  -
+        Winhttp.lib   - WebSocket resource implementation
+      -->
+      <AdditionalDependencies>
+        comsuppw.lib;
+        delayimp.lib;
+        Shlwapi.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -121,6 +132,7 @@
     <Import Project="$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
+    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -132,5 +144,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

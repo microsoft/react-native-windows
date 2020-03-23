@@ -39,7 +39,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
               [this](dynamic args) // const string& url, folly::dynamic protocols,
                                    // folly::dynamic options, int64_t id
               {
-                IWebSocket::Protocols protocols;
+                IWebSocketResource::Protocols protocols;
                 dynamic protocolsDynamic = jsArgAsDynamic(args, 1);
                 if (!protocolsDynamic.empty()) {
                   for (const auto &protocol : protocolsDynamic.items()) {
@@ -47,7 +47,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
                   }
                 }
 
-                IWebSocket::Options options;
+                IWebSocketResource::Options options;
                 dynamic optionsDynamic = jsArgAsDynamic(args, 2);
                 if (!optionsDynamic.empty() && !optionsDynamic["headers"].empty()) {
                   dynamic headersDynamic = optionsDynamic["headers"];
@@ -67,9 +67,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
                 if (args.size() == 3) // WebSocketModule.close(statusCode,
                                       // closeReason, this._socketId);
                   this->GetOrCreateWebSocket(jsArgAsInt(args, 2))
-                      ->Close(static_cast<IWebSocket::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
+                      ->Close(static_cast<IWebSocketResource::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
                 else if (args.size() == 1) // WebSocketModule.close(this._socketId);
-                  this->GetOrCreateWebSocket(jsArgAsInt(args, 0))->Close(IWebSocket::CloseCode::Normal, {});
+                  this->GetOrCreateWebSocket(jsArgAsInt(args, 0))->Close(IWebSocketResource::CloseCode::Normal, {});
                 else {
                   auto errorObj = dynamic::object("id", -1)("message", "Incorrect number of parameters");
                   this->SendEvent("websocketFailed", std::move(errorObj));
@@ -97,11 +97,11 @@ void WebSocketModule::SendEvent(string &&eventName, dynamic &&args) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
 }
 
-IWebSocket *WebSocketModule::GetOrCreateWebSocket(int64_t id, string &&url) {
-  IWebSocket *ptr = nullptr;
+IWebSocketResource *WebSocketModule::GetOrCreateWebSocket(int64_t id, string &&url) {
+  IWebSocketResource *ptr = nullptr;
   if (m_webSockets.find(id) == m_webSockets.end()) {
-    auto ws = IWebSocket::Make(std::move(url));
-    ws->SetOnError([this, id](const IWebSocket::Error &err) {
+    auto ws = IWebSocketResource::Make(std::move(url));
+    ws->SetOnError([this, id](const IWebSocketResource::Error &err) {
       auto errorObj = dynamic::object("id", id)("message", err.Message);
       this->SendEvent("websocketFailed", std::move(errorObj));
     });
@@ -113,7 +113,7 @@ IWebSocket *WebSocketModule::GetOrCreateWebSocket(int64_t id, string &&url) {
       dynamic args = dynamic::object("id", id)("data", message)("type", "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
-    ws->SetOnClose([this, id](IWebSocket::CloseCode code, const string &reason) {
+    ws->SetOnClose([this, id](IWebSocketResource::CloseCode code, const string &reason) {
       dynamic args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
       this->SendEvent("websocketClosed", std::move(args));
     });
