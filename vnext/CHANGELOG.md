@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 19 Mar 2020 22:00:09 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Mar 2020 19:01:49 GMT and should not be manually modified.
 
+## 0.60.0-vnext.151
+Mon, 23 Mar 2020 19:01:49 GMT
+
+### Changes
+
+- Merge from branch winapi_ws (julio.rocha@microsoft.com)
 ## 0.60.0-vnext.150
 Thu, 19 Mar 2020 22:00:09 GMT
 
