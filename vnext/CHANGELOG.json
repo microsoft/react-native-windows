@@ -2,6 +2,62 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Mar 2020 21:05:53 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.70",
+      "version": "0.61.0-beta.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed crash when trying to load invalid image uri",
+            "author": "jthysell@microsoft.com",
+            "commit": "d99cb1ea2ffb7b29b36f4a47539fa038c7b76e83"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 23 Mar 2020 14:55:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.69",
+      "version": "0.61.0-beta.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented Linking module protocol activation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f880a99a915a334670ded6125096ca2868f271f6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Mar 2020 00:52:27 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.68",
+      "version": "0.61.0-beta.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 package",
+            "author": "tudorm@microsoft.com",
+            "commit": "03a3ac16a12b1a10b91e95af7ac5a2a0060fb328"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Mar 2020 17:48:09 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.67",
+      "version": "0.61.0-beta.67",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove WebView",
+            "author": "kaigu@microsoft.com",
+            "commit": "bec414bbb2533eb7e3c7e9644dd6d60a40c79e3b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Mar 2020 04:03:12 GMT",
       "tag": "react-native-windows_v0.61.0-beta.67",
       "version": "0.61.0-beta.67",

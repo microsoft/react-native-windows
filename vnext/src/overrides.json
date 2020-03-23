@@ -61,10 +61,6 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\AppTheme\\AppTheme.windows.ts"
-    },
-    {
-      "type": "platform",
       "file": "Libraries\\AppTheme\\AppThemeTypes.ts"
     },
     {

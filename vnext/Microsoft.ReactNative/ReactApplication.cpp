@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
+#include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
@@ -102,8 +103,16 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
   InstanceSettings().JavaScriptBundleFile(value);
 }
 
+void ReactApplication::OnActivated(IActivatedEventArgs const &e) {
+  if (e.Kind() == ActivationKind::Protocol) {
+    auto protocolActivatedEventArgs{e.as<ProtocolActivatedEventArgs>()};
+    react::uwp::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
+    this->OnCreate(e);
+  }
+}
+
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
-  __super::OnLaunched(e);
+  Super::OnLaunched(e);
   // auto args = std::wstring(e.Arguments().c_str());
   this->OnCreate(e);
 }
@@ -114,7 +123,7 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
 /// specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void ReactApplication::OnCreate(LaunchActivatedEventArgs const &e) {
+void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
   if (!m_delegate) {
     m_delegate = CreateReactApplicationDelegate();
   }
@@ -126,6 +135,16 @@ void ReactApplication::OnCreate(LaunchActivatedEventArgs const &e) {
     SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(AppViewBackButtonVisibility::Visible);
   }
 #endif
+
+  bool isPrelaunchActivated = false;
+  if (auto prelauchActivatedArgs = e.try_as<IPrelaunchActivatedEventArgs>()) {
+    isPrelaunchActivated = prelauchActivatedArgs.PrelaunchActivated();
+  }
+
+  hstring args;
+  if (auto lauchActivatedArgs = e.try_as<ILaunchActivatedEventArgs>()) {
+    args = lauchActivatedArgs.Arguments();
+  }
 
   Frame rootFrame{nullptr};
   auto content = Window::Current().Content();
@@ -147,12 +166,11 @@ void ReactApplication::OnCreate(LaunchActivatedEventArgs const &e) {
       // final launch steps after the restore is complete
     }
 
-    if (e.PrelaunchActivated() == false) {
+    if (!isPrelaunchActivated) {
       if (rootFrame.Content() == nullptr) {
         // When the navigation stack isn't restored navigate to the first page,
         // configuring the new page by passing required information as a
         // navigation parameter
-        auto args = e.Arguments();
         content = m_delegate.OnCreate(args);
         rootFrame.Content(content);
       }
@@ -163,12 +181,11 @@ void ReactApplication::OnCreate(LaunchActivatedEventArgs const &e) {
       Window::Current().Activate();
     }
   } else {
-    if (e.PrelaunchActivated() == false) {
+    if (!isPrelaunchActivated) {
       if (rootFrame.Content() == nullptr) {
         // When the navigation stack isn't restored navigate to the first page,
         // configuring the new page by passing required information as a
         // navigation parameter
-        auto args = e.Arguments();
         content = m_delegate.OnCreate(args);
         rootFrame.Content(content);
       }
