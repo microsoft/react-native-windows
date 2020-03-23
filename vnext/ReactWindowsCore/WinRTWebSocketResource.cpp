@@ -131,7 +131,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
 
 fire_and_forget WinRTWebSocketResource::PerformWrite()
 {
-  if (m_writeQueue2.empty())
+  if (m_writeQueue.empty())
   {
     co_return;
   }
@@ -140,7 +140,6 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    //m_connectPerformedPromise.get_future().wait();
     co_await resume_on_signal(m_connectPerformed.get());
 
     if (m_readyState != ReadyState::Open)
@@ -149,10 +148,8 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     }
 
     size_t length;
-    //auto [message, isBinary] = std::move(m_writeQueue.front());
-    //m_writeQueue.pop();
     std::pair<string, bool> front;
-    bool popped = m_writeQueue2.try_pop(front);
+    bool popped = m_writeQueue.try_pop(front);
     if (!popped)
     {
       throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
@@ -187,7 +184,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
       m_writeHandler(length);
     }
 
-    if (!m_writeQueue2.empty())
+    if (!m_writeQueue.empty())
     {
       PerformWrite();
     }
@@ -239,7 +236,9 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, Message
     }
 
     if (m_readHandler)
-      m_readHandler(response.length(), response);//TODO: move?
+    {
+      m_readHandler(response.length(), response);
+    }
   }
   catch (hresult_error const& e)
   {
@@ -301,15 +300,14 @@ void WinRTWebSocketResource::Ping()
 
 void WinRTWebSocketResource::Send(const string& message)
 {
-  //m_writeQueue.emplace(message, false);
-  m_writeQueue2.push({ message, false });
+  m_writeQueue.push({ message, false });
 
   PerformWrite();
 }
 
 void WinRTWebSocketResource::SendBinary(const string& base64String)
 {
-  m_writeQueue.emplace(base64String, true);
+  m_writeQueue.push({ base64String, false });
 
   PerformWrite();
 }
