@@ -64,7 +64,7 @@
     "react-native": "0.61.5"
   },
   "beachball": {
-    "defaultNpmTag": "beta",
+    "defaultNpmTag": "master",
     "disallowedChangeTypes": [
       "major",
       "minor",
