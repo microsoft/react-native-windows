@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Mar 2020 21:05:53 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.70",
+      "version": "0.61.0-beta.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed crash when trying to load invalid image uri",
+            "author": "jthysell@microsoft.com",
+            "commit": "d99cb1ea2ffb7b29b36f4a47539fa038c7b76e83"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Mar 2020 14:55:40 GMT",
       "tag": "react-native-windows_v0.61.0-beta.69",
       "version": "0.61.0-beta.69",
