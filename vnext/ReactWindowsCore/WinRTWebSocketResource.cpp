@@ -24,6 +24,7 @@ using winrt::fire_and_forget;
 using winrt::hresult;
 using winrt::hresult_error;
 using winrt::resume_background;
+using winrt::resume_on_signal;
 using winrt::Windows::Foundation::IAsyncAction;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::Sockets::IWebSocket;
@@ -86,7 +87,8 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
     }
   }
 
-  m_connectPerformed.set_value();
+  SetEvent(m_connectPerformed.get());
+  m_connectPerformedPromise.set_value();
   m_connectRequested = false;
 }
 
@@ -96,7 +98,12 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   {
     co_await resume_background();
 
-    m_connectPerformed.get_future().wait();
+    co_await resume_on_signal(m_connectPerformed.get());
+
+    if (m_readyState != ReadyState::Open)
+    {
+      co_return;
+    }
 
     m_socket.Control().MessageType(SocketMessageType::Utf8);
 
@@ -133,7 +140,13 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    m_connectPerformed.get_future().wait();
+    //m_connectPerformedPromise.get_future().wait();
+    co_await resume_on_signal(m_connectPerformed.get());
+
+    if (m_readyState != ReadyState::Open)
+    {
+      co_return;
+    }
 
     size_t length;
     //auto [message, isBinary] = std::move(m_writeQueue.front());
@@ -192,7 +205,7 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
 {
   co_await resume_background();
 
-  co_await m_connectAction;
+  co_await resume_on_signal(m_connectPerformed.get());
 
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
   m_closePerformed.set_value();
@@ -253,7 +266,7 @@ void WinRTWebSocketResource::Stop()
   // Ensure sequence of other operations
   if (m_connectRequested)
   {
-    m_connectPerformed.get_future().wait();
+    m_connectPerformedPromise.get_future().wait();
   }
 }
 
@@ -278,7 +291,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   }
 
   m_connectRequested = true;
-  m_connectAction = PerformConnect();
+  PerformConnect();
 }
 
 void WinRTWebSocketResource::Ping()

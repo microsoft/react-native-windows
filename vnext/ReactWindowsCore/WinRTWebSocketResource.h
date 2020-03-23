@@ -28,10 +28,10 @@ class WinRTWebSocketResource : public IWebSocketResource
 
   std::atomic_bool m_connectRequested;
   std::atomic_bool m_sendRequested;
-  std::promise<void> m_connectPerformed;
+  std::promise<void> m_connectPerformedPromise;
   std::promise<void> m_closePerformed;
-  winrt::Windows::Foundation::IAsyncAction m_connectAction;
-  ReadyState m_readyState{ ReadyState::Closed };
+  winrt::handle m_connectPerformed{ CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr) };
+  ReadyState m_readyState{ ReadyState::Connecting };
 
   CloseCode m_closeCode{ CloseCode::None };
   std::string m_closeReason;
