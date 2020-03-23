@@ -205,7 +205,6 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
   co_await resume_on_signal(m_connectPerformed.get());
 
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
-  m_closePerformed.set_value();
 
   m_readyState = ReadyState::Closed;
 
@@ -256,8 +255,6 @@ void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedE
     //TODO: Parameterize (pass via member variables?)
     m_closeHandler(CloseCode::Normal, "Closing");
   }
-
-  m_closePerformed.set_value();
 }
 
 void WinRTWebSocketResource::Synchronize()

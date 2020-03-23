@@ -27,9 +27,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   winrt::Windows::Storage::Streams::DataWriter m_writer{ m_socket.OutputStream() };
 
   std::atomic_bool m_connectRequested;
-  std::atomic_bool m_sendRequested;
   std::promise<void> m_connectPerformedPromise;
-  std::promise<void> m_closePerformed;
   winrt::handle m_connectPerformed{ CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr) };
   ReadyState m_readyState{ ReadyState::Connecting };
 
