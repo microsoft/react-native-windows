@@ -9,6 +9,8 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactApplication : ReactApplicationT<ReactApplication> {
+  using Super = ReactApplicationT<ReactApplication>;
+
  public: // ReactApplication ABI API
   ReactApplication() noexcept;
 
@@ -33,11 +35,10 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
  public:
-  virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &);
-  virtual void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
-  virtual void OnNavigationFailed(
-      IInspectable const &,
-      Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const &);
+  void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
+  void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &e);
+  void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
+  void OnNavigationFailed(IInspectable const &, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const &);
 
  protected:
   virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();
@@ -49,7 +50,7 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
 
   ReactApplicationDelegate m_delegate{nullptr};
 
-  void OnCreate(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &e);
+  void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

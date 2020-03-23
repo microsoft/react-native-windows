@@ -813,8 +813,9 @@ TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
   try {
     sometimesThrows.call(rt, false, callback);
   } catch (JSError &error) {
-    EXPECT_EQ(error.getMessage(), "Omg, what a nasty exception");
-    EXPECT_EQ(countOccurences("sometimesThrows", error.getStack()), 6);
+    // V8 will include the previous exception messages upon rethrow from native to JS
+    EXPECT_PRED_FORMAT2(::testing::IsSubstring, "Omg, what a nasty exception", error.getMessage());
+    EXPECT_GE(countOccurences("sometimesThrows", error.getStack()), 6);
 
     // system JSC JSI does not implement host function names
     // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);
