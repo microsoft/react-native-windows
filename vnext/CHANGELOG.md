@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 21 Mar 2020 00:52:27 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Mar 2020 14:55:40 GMT and should not be manually modified.
 
+## 0.61.0-beta.69
+Mon, 23 Mar 2020 14:55:40 GMT
+
+### Changes
+
+- Implemented Linking module protocol activation (vmorozov@microsoft.com)
 ## 0.61.0-beta.68
 Sat, 21 Mar 2020 00:52:27 GMT
 
