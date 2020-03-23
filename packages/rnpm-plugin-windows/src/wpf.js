@@ -26,9 +26,8 @@ module.exports = function (config, args, options) {
 
   // If the template is not set, look for a stable or 'rc' version
   const template = options.template ? options.template : 'rc';
-  const ignoreStable = !!options.template;
 
-  return Common.getInstallPackage(version, template, ignoreStable)
+  return Common.getInstallPackage(version, template)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
       const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
