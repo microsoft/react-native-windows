@@ -24,6 +24,7 @@ using winrt::fire_and_forget;
 using winrt::hresult;
 using winrt::hresult_error;
 using winrt::resume_background;
+using winrt::resume_on_signal;
 using winrt::Windows::Foundation::IAsyncAction;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::Sockets::IWebSocket;
@@ -58,7 +59,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<C
 
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
-  Stop();
+  Synchronize();
 }
 
 #pragma region Private members
@@ -71,6 +72,7 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
 
     co_await m_socket.ConnectAsync(m_uri);
 
+    m_readyState = ReadyState::Open;
     if (m_connectHandler)
     {
       m_connectHandler();
@@ -78,13 +80,15 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   }
   catch (hresult_error const& e)
   {
+    m_readyState = ReadyState::Closed;
     if (m_errorHandler)
     {
       m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
     }
   }
 
-  m_connectPerformed.set_value();
+  SetEvent(m_connectPerformed.get());
+  m_connectPerformedPromise.set_value();
   m_connectRequested = false;
 }
 
@@ -94,7 +98,12 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   {
     co_await resume_background();
 
-    co_await m_connectAction;
+    co_await resume_on_signal(m_connectPerformed.get());
+
+    if (m_readyState != ReadyState::Open)
+    {
+      co_return;
+    }
 
     m_socket.Control().MessageType(SocketMessageType::Utf8);
 
@@ -131,11 +140,22 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    co_await m_connectAction; //TODO: EnqueueWrite()
+    co_await resume_on_signal(m_connectPerformed.get());
+
+    if (m_readyState != ReadyState::Open)
+    {
+      co_return;
+    }
 
     size_t length;
-    auto [message, isBinary] = std::move(m_writeQueue.front());
-    m_writeQueue.pop();
+    std::pair<string, bool> front;
+    bool popped = m_writeQueue.try_pop(front);
+    if (!popped)
+    {
+      throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
+    }
+
+    auto [message, isBinary] = std::move(front);
 
     if (isBinary)
     {
@@ -182,10 +202,11 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
 {
   co_await resume_background();
 
-  co_await m_connectAction;
+  co_await resume_on_signal(m_connectPerformed.get());
 
   m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
-  m_closePerformed.set_value();
+
+  m_readyState = ReadyState::Closed;
 
   co_return;
 }
@@ -214,7 +235,9 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, Message
     }
 
     if (m_readHandler)
-      m_readHandler(response.length(), response);//TODO: move?
+    {
+      m_readHandler(response.length(), response);
+    }
   }
   catch (hresult_error const& e)
   {
@@ -232,16 +255,14 @@ void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedE
     //TODO: Parameterize (pass via member variables?)
     m_closeHandler(CloseCode::Normal, "Closing");
   }
-
-  m_closePerformed.set_value();
 }
 
-void WinRTWebSocketResource::Stop()
+void WinRTWebSocketResource::Synchronize()
 {
   // Ensure sequence of other operations
   if (m_connectRequested)
   {
-    m_connectPerformed.get_future().wait();
+    m_connectPerformedPromise.get_future().wait();
   }
 }
 
@@ -251,6 +272,8 @@ void WinRTWebSocketResource::Stop()
 
 void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
 {
+  m_readyState = ReadyState::Connecting;
+
   for (const auto& header : options)
   {
     m_socket.SetRequestHeader(header.first, Utf8ToUtf16(header.second));
@@ -264,7 +287,7 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   }
 
   m_connectRequested = true;
-  m_connectAction = PerformConnect();
+  PerformConnect();
 }
 
 void WinRTWebSocketResource::Ping()
@@ -274,21 +297,21 @@ void WinRTWebSocketResource::Ping()
 
 void WinRTWebSocketResource::Send(const string& message)
 {
-  m_writeQueue.emplace(message, false);
+  m_writeQueue.push({ message, false });
 
   PerformWrite();
 }
 
 void WinRTWebSocketResource::SendBinary(const string& base64String)
 {
-  m_writeQueue.emplace(base64String, true);
+  m_writeQueue.push({ base64String, false });
 
   PerformWrite();
 }
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
-  Stop();
+  Synchronize();
 
   m_closeCode = code;
   m_closeReason = reason;
@@ -298,7 +321,7 @@ void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 
 IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
 {
-  return ReadyState::Closed;
+  return m_readyState;
 }
 
 void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler)

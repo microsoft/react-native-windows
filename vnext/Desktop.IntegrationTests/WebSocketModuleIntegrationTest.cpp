@@ -22,7 +22,7 @@ TEST_CLASS (WebSocketModuleIntegrationTest)
 
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
     connect.func(
-        dynamic::array("ws://localhost:5555/", dynamic(), dynamic(), /*id*/ 0),
+        dynamic::array("ws://localhost:5556/", dynamic(), dynamic(), /*id*/ 0),
         [](vector<dynamic>) {},
         [](vector<dynamic>) {});
 
@@ -39,11 +39,11 @@ TEST_CLASS (WebSocketModuleIntegrationTest)
 
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
     connect.func(
-        dynamic::array("ws://localhost:5555/", dynamic(), dynamic(), /*id*/ 0),
+        dynamic::array("ws://localhost:5556/", dynamic(), dynamic(), /*id*/ 0),
         [](vector<dynamic>) {},
         [](vector<dynamic>) {});
     connect.func(
-        dynamic::array("ws://localhost:5555/", dynamic(), dynamic(), /*id*/ 1),
+        dynamic::array("ws://localhost:5556/", dynamic(), dynamic(), /*id*/ 1),
         [](vector<dynamic>) {},
         [](vector<dynamic>) {});
 

@@ -373,7 +373,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     // The WebSocket implementation can't handle multiple write operations
     // concurrently.
     for (int i = 0; i < writes; i++)
+    {
       ws->Send("suffixme");
+    }
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();

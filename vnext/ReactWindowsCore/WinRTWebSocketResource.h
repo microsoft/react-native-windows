@@ -9,6 +9,10 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>
 
+// PPL
+#include <concurrent_queue.h>
+
+// Standard Library
 #include <future>
 #include <queue>
 
@@ -23,14 +27,13 @@ class WinRTWebSocketResource : public IWebSocketResource
   winrt::Windows::Storage::Streams::DataWriter m_writer{ m_socket.OutputStream() };
 
   std::atomic_bool m_connectRequested;
-  std::atomic_bool m_sendRequested;
-  std::promise<void> m_connectPerformed;
-  std::promise<void> m_closePerformed;
-  winrt::Windows::Foundation::IAsyncAction m_connectAction;
+  std::promise<void> m_connectPerformedPromise;
+  winrt::handle m_connectPerformed{ CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr) };
+  ReadyState m_readyState{ ReadyState::Connecting };
 
   CloseCode m_closeCode{ CloseCode::None };
   std::string m_closeReason;
-  std::queue<std::pair<std::string, bool>> m_writeQueue;
+  concurrency::concurrent_queue<std::pair<std::string, bool>> m_writeQueue;
 
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
@@ -55,7 +58,7 @@ class WinRTWebSocketResource : public IWebSocketResource
     winrt::Windows::Networking::Sockets::IWebSocket const& sender,
     winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
 
-  void Stop();
+  void Synchronize();
 
 public:
   WinRTWebSocketResource(
