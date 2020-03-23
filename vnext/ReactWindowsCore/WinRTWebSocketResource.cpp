@@ -59,7 +59,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<C
 
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
-  Stop();
+  Synchronize();
 }
 
 #pragma region Private members
@@ -260,7 +260,7 @@ void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedE
   m_closePerformed.set_value();
 }
 
-void WinRTWebSocketResource::Stop()
+void WinRTWebSocketResource::Synchronize()
 {
   // Ensure sequence of other operations
   if (m_connectRequested)
@@ -314,7 +314,7 @@ void WinRTWebSocketResource::SendBinary(const string& base64String)
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
-  Stop();
+  Synchronize();
 
   m_closeCode = code;
   m_closeReason = reason;

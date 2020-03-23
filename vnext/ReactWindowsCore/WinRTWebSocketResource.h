@@ -60,7 +60,7 @@ class WinRTWebSocketResource : public IWebSocketResource
     winrt::Windows::Networking::Sockets::IWebSocket const& sender,
     winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const& args);
 
-  void Stop();
+  void Synchronize();
 
 public:
   WinRTWebSocketResource(
