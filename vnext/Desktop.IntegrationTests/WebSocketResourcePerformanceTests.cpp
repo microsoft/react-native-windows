@@ -58,7 +58,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) { // See http://msdn.microsoft.com
     {
       vector<unique_ptr<IWebSocketResource>> resources;
       for (int i = 0; i < resourceTotal; i++) {
-        auto ws = IWebSocketResource::Make("ws://localhost:5555/");
+        auto ws = IWebSocketResource::Make("ws://localhost:5556/");
         ws->SetOnMessage([this, &threadCount](size_t size, const string &message) {
           auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
