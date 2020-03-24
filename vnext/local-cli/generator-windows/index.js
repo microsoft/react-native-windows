@@ -116,8 +116,8 @@ function copyProjectTemplateAndReplace(
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars, options.overwrite);
   copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars, options.overwrite);
 
-  console.log(chalk.white.bold('To run your app on UWP:'));
-  console.log(chalk.white('   react-native run-windows'));
+  console.log(chalk.white.bold('To run your app on Windows:'));
+  console.log(chalk.white('   npx react-native run-windows'));
 }
 
 function installDependencies(options) {

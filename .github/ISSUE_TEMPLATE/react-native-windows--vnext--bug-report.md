@@ -73,10 +73,10 @@ Then, specify:
 
 (Write what happened. Add screenshots!)
 
-### react-native run-windows --logging
+### npx react-native run-windows --logging
 
 <!--
-  If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
+  If you see build failure on `npx react-native run-windows`, please try again with 'npx react-native run-windows --logging' and provide the output.
 -->
 
 ### Reproducible Demo
