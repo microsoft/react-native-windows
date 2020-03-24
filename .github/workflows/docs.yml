@@ -6,9 +6,7 @@ name: docsCI
 # events but only for the master branch
 on:
   push:
-    branches: [ master, user/asklar/docMD ]
-  pull_request:
-    branches: [ master, user/asklar/docMD ]
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
