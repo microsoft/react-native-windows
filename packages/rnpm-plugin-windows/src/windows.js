@@ -31,8 +31,8 @@ async function getDefaultVersionTag(version) {
 
   // 0.57 and below had stable untagged releases
   if ((validVersion && semver.lt(validVersion, '0.58.0'))
-  || (validRange && semver.gtr('0.58.0', validRange))) {
-  return null;
+    || (validRange && semver.gtr('0.58.0', validRange))) {
+    return null;
   }
 
   // 0.58 went to RC (See #2559)
