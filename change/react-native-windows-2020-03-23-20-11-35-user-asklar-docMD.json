@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "docs CI and fix some links",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "commit": "22e18bfd3b9865bcd48ab34eaa71cee7abf7b21f",
+  "dependentChangeType": "patch",
+  "date": "2020-03-24T03:11:34.979Z"
+}
