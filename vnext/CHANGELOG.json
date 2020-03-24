@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Mar 2020 06:38:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.152",
+      "version": "0.60.0-vnext.152",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Merge from winapi_ws",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "85fc67bcb9494dbc0f62e759c051a8ea023d8dd5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Mar 2020 19:01:49 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.151",
       "version": "0.60.0-vnext.151",

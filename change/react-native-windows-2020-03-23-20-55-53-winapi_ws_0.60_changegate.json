@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Merge from winapi_ws",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "85fc67bcb9494dbc0f62e759c051a8ea023d8dd5",
-  "dependentChangeType": "patch",
-  "date": "2020-03-24T03:55:53.564Z"
-}
