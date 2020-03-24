@@ -99,7 +99,7 @@ export default class Bootstrap extends React.Component<
             }
             source={
               this.state.selectedSource === 'svg'
-                ? require('../Samples/Microsoft-Logo.svg')
+                ? require('../Samples/images/Microsoft-Logo.svg')
                 : {uri: this.state.imageUri}
             }
             resizeMode={this.state.selectedResizeMode}
