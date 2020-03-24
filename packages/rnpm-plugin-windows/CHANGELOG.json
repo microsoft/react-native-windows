@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Tue, 24 Mar 2020 22:51:22 GMT",
+      "tag": "rnpm-plugin-windows_v0.6.0",
+      "version": "0.6.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Teach React Native CLI about master and 0.61 versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2020 18:38:20 GMT",
       "tag": "rnpm-plugin-windows_v0.5.1-0",
       "version": "0.5.1-0",
