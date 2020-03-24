@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "none",
   "comment": "Teach React Native CLI about master and 0.61 versions",
   "packageName": "rnpm-plugin-windows",
   "email": "ngerlem@microsoft.com",
