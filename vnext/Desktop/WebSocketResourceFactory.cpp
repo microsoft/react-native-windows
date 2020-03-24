@@ -15,9 +15,9 @@ namespace Microsoft::React
 {
 #pragma region IWebSocketResource static members
 
-/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString, bool acceptSelfSigned)
+/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString, bool legacyImplementation, bool acceptSelfSigned)
 {
-  if (true) //TODO: Feature-gate this.
+  if (!legacyImplementation)
   {
     std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
     if (acceptSelfSigned)
