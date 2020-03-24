@@ -269,7 +269,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
             LoadJSBundles();
 
-            if (m_options.DeveloperSettings.IsDevModeEnabled) {
+            if (m_options.DeveloperSettings.IsDevModeEnabled && State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
                   STRING(RN_PLATFORM),
                   m_options.DeveloperSettings.SourceBundlePath.empty() ? m_options.Identity
@@ -349,8 +349,9 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
       loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})
     ]() noexcept {
       if (auto strongThis = weakThis.GetStrongPtr()) {
-        // All JS bundles successfully loaded.
-        strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+        if (strongThis->State() != ReactInstanceState::HasError) {
+          strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+        }
       }
     });
   }
