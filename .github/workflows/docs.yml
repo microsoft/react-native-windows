@@ -26,6 +26,4 @@ jobs:
     - name: run unbroken
       run: |
         npm install unbroken
-        echo Exclusions:
-        type .unbroken_exclusions
         node node_modules/unbroken -q -l
