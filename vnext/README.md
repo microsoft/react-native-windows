@@ -30,4 +30,4 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed our main README's the [Getting Help](https://github.com/microsoft/react-native-windows#getting-help) section.
 
 ## Contributing
-See [Contributing guidelines](./docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows vNext.
+See [Contributing guidelines](../docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows vNext.
