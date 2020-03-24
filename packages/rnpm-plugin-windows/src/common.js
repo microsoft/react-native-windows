@@ -92,6 +92,23 @@ function getLatestMatchingVersion(versionRange, tag) {
   });
 }
 
+/**
+ * Matches a version range to a version of react-native-windows to install. This is a hairy process
+ * with a few different cases. Note that we will not run this at all if an exact version was given
+ * for --windowsVersion.
+ *
+ * - If no version was specified we are passed a range based on React Native version. E.g. "0.61.*".
+ *   We will try to match this against available packages, but need special rules for prerelease
+ *   tags since we use them for even stable releases for several versions. Because of that we cannot
+ *   use the semver range directly.
+ *
+ * - If our tag is "master", we grab the latest master label builds, since our RN version may not
+ *   correspond to our RNW version. This will change once we're aligned to Facebook's master builds.
+ *
+ * - Users can pass in a range to --windowsVersion and we will try to respect it according to above
+ *   matching logic. We likely do not do the right thing here in many cases sine we do not query the
+ *   registry for the range directly, instead using custom logic to also ensure tag matches.
+ */
 async function getMatchingVersion(versionRange, tag) {
   const versionStr = tag === 'master' ? 'master' : versionRange;
   console.log(`Checking for react-native-windows version matching ${versionStr}...`);
