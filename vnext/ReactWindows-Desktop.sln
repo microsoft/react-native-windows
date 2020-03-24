@@ -127,6 +127,7 @@ Global
 		Shared\Shared.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
 		include\Include.vcxitems*{ef074ba1-2d54-4d49-a28e-5e040b47cd2e}*SharedItemsImports = 9

@@ -351,7 +351,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
-    const int writes = 2;
+    const int writes = 10;
     int count = 0;
     ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
     {
