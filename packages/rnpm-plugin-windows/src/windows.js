@@ -29,13 +29,19 @@ async function getDefaultVersionTag(version) {
     process.exit(1);
   }
 
-  // Prefer rc builds before 0.59 (See #2559)
+  // 0.57 and below had stable untagged releases
+  if ((validVersion && semver.lt(validVersion, '0.58.0'))
+  || (validRange && semver.gtr('0.58.0', validRange))) {
+  return null;
+  }
+
+  // 0.58 went to RC (See #2559)
   if ((validVersion && semver.lt(validVersion, '0.59.0'))
     || (validRange && semver.gtr('0.59.0', validRange))) {
     return 'rc';
   }
 
-  // Ask for vnext or legacy for 0.59
+  // 0.59 tags releases as "legacy" or "vnext"
   if ((validVersion && semver.lt(validVersion, '0.60.0'))
     || (validRange && semver.gtr('0.60.0', validRange))) {
     return  (await prompts({
@@ -49,7 +55,7 @@ async function getDefaultVersionTag(version) {
     })).template;
   }
 
-  // 0.60 releases use the vnext tag
+  // 0.60 releases all use the vnext tag
   if ((validVersion && semver.lt(validVersion, '0.61.0'))
     || (validRange && semver.gtr('0.61.0', validRange))) {
     return 'vnext';
