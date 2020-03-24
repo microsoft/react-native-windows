@@ -419,19 +419,20 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
-  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\accessible");
-  m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\animation");
   m_jsFileNames->Append(L"Samples\\calculator");
+  m_jsFileNames->Append(L"Samples\\callbackTest");
   m_jsFileNames->Append(L"Samples\\click");
-  m_jsFileNames->Append(L"Samples\\customViewManager");
   m_jsFileNames->Append(L"Samples\\control");
   m_jsFileNames->Append(L"Samples\\flexbox");
   m_jsFileNames->Append(L"Samples\\focusTest");
   m_jsFileNames->Append(L"Samples\\geosample");
   m_jsFileNames->Append(L"Samples\\image");
   m_jsFileNames->Append(L"Samples\\index");
+  m_jsFileNames->Append(L"Samples\\messages");
   m_jsFileNames->Append(L"Samples\\mouse");
+  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\scrollViewSnapSample");
   m_jsFileNames->Append(L"Samples\\simple");
   m_jsFileNames->Append(L"Samples\\text");

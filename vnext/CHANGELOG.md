@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 23 Mar 2020 21:05:53 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Mar 2020 07:05:57 GMT and should not be manually modified.
 
+## 0.61.0-beta.71
+Tue, 24 Mar 2020 07:05:57 GMT
+
+### Changes
+
+- Do not enter loaded state when an error occurs during web bundle loadJSBundles (acoates@microsoft.com)
 ## 0.61.0-beta.70
 Mon, 23 Mar 2020 21:05:53 GMT
 
