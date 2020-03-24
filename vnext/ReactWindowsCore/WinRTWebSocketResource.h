@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <IWebSocketResource.h>
@@ -26,6 +27,7 @@ class WinRTWebSocketResource : public IWebSocketResource
   winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::DataWriter m_writer{ m_socket.OutputStream() };
 
+  Mso::DispatchQueue m_dispatchQueue;
   std::atomic_bool m_connectRequested;
   std::promise<void> m_connectPerformedPromise;
   winrt::handle m_connectPerformed{ CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr) };

@@ -38,6 +38,43 @@ using winrt::Windows::Storage::Streams::DataReader;
 using winrt::Windows::Storage::Streams::DataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
 
+namespace
+{
+  ///
+  /// Implements an awaiter for Mso::DispatchQueue
+  ///
+  auto resume_in_queue(const Mso::DispatchQueue& queue)
+  {
+    struct awaitable
+    {
+      awaitable(const Mso::DispatchQueue& queue)
+        : m_queue{ queue }
+      {
+      }
+
+      bool await_ready() const noexcept
+      {
+        return false;
+      }
+
+      void await_resume() const noexcept {}
+
+      void await_suspend(std::experimental::coroutine_handle<> resume)
+      {
+        m_queue.Post([context = resume.address()]() noexcept
+        {
+          std::experimental::coroutine_handle<>::from_address(context)();
+        });
+      }
+
+    private:
+      Mso::DispatchQueue m_queue;
+    };
+
+    return awaitable{ queue };
+  }
+}
+
 namespace Microsoft::React
 {
 WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri, vector<ChainValidationResult> certExeptions)
@@ -140,7 +177,9 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    co_await resume_on_signal(m_connectPerformed.get());
+    co_await resume_on_signal(m_connectPerformed.get());  // Ensure connection attempt has finished
+
+    co_await resume_in_queue(m_dispatchQueue);            // Ensure writes happen sequentially
 
     if (m_readyState != ReadyState::Open)
     {
@@ -182,11 +221,6 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     if (m_writeHandler)
     {
       m_writeHandler(length);
-    }
-
-    if (!m_writeQueue.empty())
-    {
-      PerformWrite();
     }
   }
   catch (hresult_error const& e)
