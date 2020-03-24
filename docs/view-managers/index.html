@@ -314,111 +314,111 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 <h4><a class="anchor" aria-hidden="true" id="1-authoring-your-view-manager-1"></a><a href="#1-authoring-your-view-manager-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. Authoring your View Manager</h4>
 <p>Here is a sample view manager written in C++ called <code>CustomUserControlViewManager</code>.</p>
 <p><em>CustomUserControlViewManager.h</em></p>
-<pre><code class="hljs css language-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> once</span>
+<pre><code class="hljs css language-c++">#pragma once
 
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"winrt/Microsoft.ReactNative.h"</span></span>
+#include "winrt/Microsoft.ReactNative.h"
 
-<span class="hljs-keyword">namespace</span> winrt::ViewManagerSample::implementation {
+namespace winrt::ViewManagerSample::implementation {
 
-<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">CustomUserControlViewManager</span> :</span> winrt::implements&lt;
+struct CustomUserControlViewManager : winrt::implements&lt;
                                              CustomUserControlViewManager,
                                              winrt::Microsoft::ReactNative::IViewManager,
                                              winrt::Microsoft::ReactNative::IViewManagerWithNativeProperties,
                                              winrt::Microsoft::ReactNative::IViewManagerWithCommands&gt; {
- <span class="hljs-keyword">public</span>:
-  CustomUserControlViewManager() = <span class="hljs-keyword">default</span>;
+ public:
+  CustomUserControlViewManager() = default;
 
-  <span class="hljs-comment">// IViewManager</span>
-  winrt::<span class="hljs-function">hstring <span class="hljs-title">Name</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span>;
+  // IViewManager
+  winrt::hstring Name() noexcept;
 
-  winrt::Windows::UI::Xaml::<span class="hljs-function">FrameworkElement <span class="hljs-title">CreateView</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span>;
+  winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
 
-  <span class="hljs-comment">// IViewManagerWithNativeProperties</span>
+  // IViewManagerWithNativeProperties
   winrt::Windows::Foundation::Collections::
       IMapView&lt;winrt::hstring, winrt::Microsoft::ReactNative::ViewManagerPropertyType&gt;
-      NativeProps() <span class="hljs-keyword">noexcept</span>;
+      NativeProps() noexcept;
 
-  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UpdateProperties</span><span class="hljs-params">(
-      winrt::Windows::UI::Xaml::FrameworkElement <span class="hljs-keyword">const</span> &amp;view,
-      winrt::Microsoft::ReactNative::IJSValueReader <span class="hljs-keyword">const</span> &amp;propertyMapReader)</span> <span class="hljs-keyword">noexcept</span></span>;
+  void UpdateProperties(
+      winrt::Windows::UI::Xaml::FrameworkElement const &amp;view,
+      winrt::Microsoft::ReactNative::IJSValueReader const &amp;propertyMapReader) noexcept;
 
-   <span class="hljs-comment">// IViewManagerWithCommands</span>
-  winrt::Windows::Foundation::Collections::IMapView&lt;winrt::hstring, <span class="hljs-keyword">int64_t</span>&gt; Commands() <span class="hljs-keyword">noexcept</span>;
+   // IViewManagerWithCommands
+  winrt::Windows::Foundation::Collections::IMapView&lt;winrt::hstring, int64_t&gt; Commands() noexcept;
 
-  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DispatchCommand</span><span class="hljs-params">(
-      winrt::Windows::UI::Xaml::FrameworkElement <span class="hljs-keyword">const</span> &amp;view,
-      <span class="hljs-keyword">int64_t</span> commandId,
-      winrt::Microsoft::ReactNative::IJSValueReader <span class="hljs-keyword">const</span> &amp;commandArgsReader)</span> <span class="hljs-keyword">noexcept</span></span>;
+  void DispatchCommand(
+      winrt::Windows::UI::Xaml::FrameworkElement const &amp;view,
+      int64_t commandId,
+      winrt::Microsoft::ReactNative::IJSValueReader const &amp;commandArgsReader) noexcept;
 };
 
 }
 </code></pre>
 <p><em>CustomUserControlViewManager.cpp</em></p>
-<pre><code class="hljs css language-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"pch.h"</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"CustomUserControlViewManager.h"</span></span>
+<pre><code class="hljs css language-c++">#include "pch.h"
+#include "CustomUserControlViewManager.h"
 
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"JSValueReader.h"</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"NativeModules.h"</span></span>
+#include "JSValueReader.h"
+#include "NativeModules.h"
 
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> winrt;
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Microsoft::ReactNative;
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Windows::Foundation;
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Windows::Foundation::Collections;
+using namespace winrt;
+using namespace Microsoft::ReactNative;
+using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
 
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Windows::UI::Xaml;
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Windows::UI::Xaml::Media;
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
+using namespace Windows::UI::Xaml::Controls;
 
-<span class="hljs-keyword">namespace</span> winrt::ViewManagerSample::implementation {
+namespace winrt::ViewManagerSample::implementation {
 
-<span class="hljs-comment">// IViewManager</span>
-hstring CustomUserControlViewManager::Name() <span class="hljs-keyword">noexcept</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-string">L"CustomUserControl"</span>;
+// IViewManager
+hstring CustomUserControlViewManager::Name() noexcept {
+  return L"CustomUserControl";
 }
 
-FrameworkElement CustomUserControlViewManager::CreateView() <span class="hljs-keyword">noexcept</span> {
-  <span class="hljs-keyword">return</span> winrt::ViewManagerSample::CustomUserControl();
+FrameworkElement CustomUserControlViewManager::CreateView() noexcept {
+  return winrt::ViewManagerSample::CustomUserControl();
 }
 
-<span class="hljs-comment">// IViewManagerWithNativeProperties</span>
-IMapView&lt;hstring, ViewManagerPropertyType&gt; CustomUserControlViewManager::NativeProps() <span class="hljs-keyword">noexcept</span> {
-  <span class="hljs-keyword">auto</span> nativeProps = winrt::single_threaded_map&lt;hstring, ViewManagerPropertyType&gt;();
+// IViewManagerWithNativeProperties
+IMapView&lt;hstring, ViewManagerPropertyType&gt; CustomUserControlViewManager::NativeProps() noexcept {
+  auto nativeProps = winrt::single_threaded_map&lt;hstring, ViewManagerPropertyType&gt;();
 
-  nativeProps.Insert(<span class="hljs-string">L"label"</span>, ViewManagerPropertyType::<span class="hljs-keyword">String</span>);
-  nativeProps.Insert(<span class="hljs-string">L"color"</span>, ViewManagerPropertyType::Color);
-  nativeProps.Insert(<span class="hljs-string">L"backgroundColor"</span>, ViewManagerPropertyType::Color);
+  nativeProps.Insert(L"label", ViewManagerPropertyType::String);
+  nativeProps.Insert(L"color", ViewManagerPropertyType::Color);
+  nativeProps.Insert(L"backgroundColor", ViewManagerPropertyType::Color);
 
-  <span class="hljs-keyword">return</span> nativeProps.GetView();
+  return nativeProps.GetView();
 }
 
-<span class="hljs-keyword">void</span> CustomUserControlViewManager::UpdateProperties(
-    FrameworkElement <span class="hljs-keyword">const</span> &amp;view,
-    IJSValueReader <span class="hljs-keyword">const</span> &amp;propertyMapReader) <span class="hljs-keyword">noexcept</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">auto</span> control = view.try_as&lt;winrt::ViewManagerSample::CustomUserControl&gt;()) {
+void CustomUserControlViewManager::UpdateProperties(
+    FrameworkElement const &amp;view,
+    IJSValueReader const &amp;propertyMapReader) noexcept {
+  if (auto control = view.try_as&lt;winrt::ViewManagerSample::CustomUserControl&gt;()) {
 
-    <span class="hljs-keyword">const</span> JSValueObject &amp;propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
+    const JSValueObject &amp;propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
 
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> <span class="hljs-keyword">const</span> &amp;pair : propertyMap) {
-      <span class="hljs-keyword">auto</span> <span class="hljs-keyword">const</span> &amp;propertyName = pair.first;
-      <span class="hljs-keyword">auto</span> <span class="hljs-keyword">const</span> &amp;propertyValue = pair.second;
+    for (auto const &amp;pair : propertyMap) {
+      auto const &amp;propertyName = pair.first;
+      auto const &amp;propertyValue = pair.second;
 
-      <span class="hljs-keyword">if</span> (propertyName == <span class="hljs-string">"label"</span>) {
-        <span class="hljs-keyword">if</span> (propertyValue != <span class="hljs-literal">nullptr</span>) {
-          <span class="hljs-keyword">auto</span> <span class="hljs-keyword">const</span> &amp;value = winrt::box_value(winrt::to_hstring(propertyValue.<span class="hljs-keyword">String</span>()));
+      if (propertyName == "label") {
+        if (propertyValue != nullptr) {
+          auto const &amp;value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
           control.SetValue(winrt::ViewManagerSample::CustomUserControl::LabelProperty(), propertyValue);
-        } <span class="hljs-keyword">else</span> {
+        } else {
           control.ClearValue(winrt::ViewManagerSample::CustomUserControl::LabelProperty());
         }
-      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (propertyName == <span class="hljs-string">"color"</span>) {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">auto</span> value = propertyValue.To&lt;Brush&gt;()) {
+      } else if (propertyName == "color") {
+        if (auto value = propertyValue.To&lt;Brush&gt;()) {
           control.SetValue(Control::ForegroundProperty(), value);
-        } <span class="hljs-keyword">else</span> {
+        } else {
           control.ClearValue(Control::ForegroundProperty());
         }
-      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (propertyName == <span class="hljs-string">"backgroundColor"</span>) {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">auto</span> value = propertyValue.To&lt;Brush&gt;()) {
+      } else if (propertyName == "backgroundColor") {
+        if (auto value = propertyValue.To&lt;Brush&gt;()) {
           control.SetValue(Control::BackgroundProperty(), value);
-        } <span class="hljs-keyword">else</span> {
+        } else {
           control.ClearValue(Control::BackgroundProperty());
         }
       }
@@ -426,21 +426,21 @@ IMapView&lt;hstring, ViewManagerPropertyType&gt; CustomUserControlViewManager::N
   }
 }
 
-<span class="hljs-comment">// IViewManagerWithCommands</span>
-IMapView&lt;hstring, <span class="hljs-keyword">int64_t</span>&gt; CustomUserControlViewManager::Commands() <span class="hljs-keyword">noexcept</span> {
-    <span class="hljs-keyword">auto</span> commands = winrt::single_threaded_map&lt;hstring, <span class="hljs-keyword">int64_t</span>&gt;();
-    commands.Insert(<span class="hljs-string">L"CustomCommand"</span>, <span class="hljs-number">0</span>);
-    <span class="hljs-keyword">return</span> commands.GetView();
+// IViewManagerWithCommands
+IMapView&lt;hstring, int64_t&gt; CustomUserControlViewManager::Commands() noexcept {
+    auto commands = winrt::single_threaded_map&lt;hstring, int64_t&gt;();
+    commands.Insert(L"CustomCommand", 0);
+    return commands.GetView();
 }
 
-<span class="hljs-keyword">void</span> CustomUserControlViewManager::DispatchCommand(
-    FrameworkElement <span class="hljs-keyword">const</span> &amp;view,
-    <span class="hljs-keyword">int64_t</span> commandId,
-    winrt::Microsoft::ReactNative::IJSValueReader <span class="hljs-keyword">const</span> &amp;commandArgsReader) <span class="hljs-keyword">noexcept</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">auto</span> control = view.try_as&lt;winrt::SampleLibraryCPP::CustomUserControlCPP&gt;()) {
-    <span class="hljs-keyword">if</span> (commandId == <span class="hljs-number">0</span>) {
-      <span class="hljs-keyword">const</span> JSValueArray &amp;commandArgs = JSValue::ReadArrayFrom(commandArgsReader);
-      <span class="hljs-comment">// Execute command</span>
+void CustomUserControlViewManager::DispatchCommand(
+    FrameworkElement const &amp;view,
+    int64_t commandId,
+    winrt::Microsoft::ReactNative::IJSValueReader const &amp;commandArgsReader) noexcept {
+  if (auto control = view.try_as&lt;winrt::SampleLibraryCPP::CustomUserControlCPP&gt;()) {
+    if (commandId == 0) {
+      const JSValueArray &amp;commandArgs = JSValue::ReadArrayFrom(commandArgsReader);
+      // Execute command
     }
   }
 }

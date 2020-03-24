@@ -48,7 +48,17 @@ yarn add react-native-windows@vnext --peer
 <li>Set the <code>Minimum version</code> to <code>Windows 10 Creators Update (10.0; Build 15063)</code>.</li>
 </ol>
 <p>You should now have a new <code>MyLibrary</code> solution file at <code>.\MyLibrary\MyLibrary.sln</code> and a <code>MyLibrary</code> project at <code>.\MyLibrary\MyLibrary\MyLibrary.csproj</code> for C# or <code>.\MyLibrary\MyLibrary\MyLibrary.vcxproj</code> for C++.</p>
-<p>For C++/WinRT project, right click on the project and choose <code>Manage Nuget Packages...</code>, select version 2.0.190730.2 for Microsoft.Windows.CppWinRT pacakge.</p>
+<p>For C++/WinRT project:</p>
+<ol>
+<li>Right click on the project and choose <code>Manage Nuget Packages...</code>
+<ol>
+<li>Select version 2.0.190730.2 for Microsoft.Windows.CppWinRT package.</li>
+</ol></li>
+<li>Right-click on the project and choose <code>Properties</code>
+<ol>
+<li>Under <code>Linker &gt; Windows Metadata</code> set <code>Generate Windows Metadata</code> to <code>Yes</code>.</li>
+</ol></li>
+</ol>
 <p>Now, we want to rename the root directory of the Windows native code to <code>windows</code> to match the peer <code>android</code> and <code>ios</code> directories:</p>
 <ol>
 <li>Close the solution with <code>File</code> &gt; <code>Close Solution</code>.</li>
@@ -81,9 +91,10 @@ yarn add react-native-windows@vnext --peer
 <tr><td style="text-align:left">Microsoft.ReactNative</td><td style="text-align:left"><code>Microsoft.ReactNative\Microsoft.ReactNative.vcxproj</code></td></tr>
 <tr><td style="text-align:left">Microsoft.ReactNative.Cxx</td><td style="text-align:left"><code>Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems</code></td></tr>
 <tr><td style="text-align:left">Microsoft.ReactNative.SharedManaged</td><td style="text-align:left"><code>Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj</code></td></tr>
+<tr><td style="text-align:left">Mso</td><td style="text-align:left"><code>Mso\Mso.vcxitems</code></td></tr>
 <tr><td style="text-align:left">ReactCommon</td><td style="text-align:left"><code>ReactCommon\ReactCommon.vcxproj</code></td></tr>
-<tr><td style="text-align:left">ReactUWP</td><td style="text-align:left"><code>ReactUWP\ReactUWP.vcxproj</code></td></tr>
 <tr><td style="text-align:left">ReactWindowsCore</td><td style="text-align:left"><code>ReactWindowsCore\ReactWindowsCore.vcxproj</code></td></tr>
+<tr><td style="text-align:left">Shared</td><td style="text-align:left"><code>Shared\Shared.vcxitems</code></td></tr>
 </tbody>
 </table>
 <p>For each project, you'll do the following:</p>
