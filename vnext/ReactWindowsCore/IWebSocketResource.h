@@ -85,7 +85,8 @@ struct IWebSocketResource {
   /// WebSocket URL address the instance will connect to.
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
-  static std::unique_ptr<IWebSocketResource> Make(const std::string& url, bool legacyImplementation = false, bool acceptSelfSigned = false);
+  static std::unique_ptr<IWebSocketResource>
+  Make(const std::string &url, bool legacyImplementation = false, bool acceptSelfSigned = false);
 
   virtual ~IWebSocketResource() {}
 
