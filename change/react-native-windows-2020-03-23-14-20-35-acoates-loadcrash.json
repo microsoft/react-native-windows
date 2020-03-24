@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Do not enter loaded state when an error occurs during web bundle loadJSBundles",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "25f261101a22ff2fa8ac2f17b6f4d4115a6e67a6",
-  "dependentChangeType": "patch",
-  "date": "2020-03-23T21:20:35.420Z"
-}
