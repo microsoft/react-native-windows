@@ -53,7 +53,9 @@
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 
+#if (defined(_MSC_VER) && !defined(WINRT))
 using Microsoft::React::WebSocketModule;
+#endif
 
 // forward declaration.
 namespace facebook::react::tracing {
