@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "comment": "allow CLI to install from file:",
+  "packageName": "rnpm-plugin-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "6919a19f4678028678be0ae4f41dfcf2a60218c2",
+  "dependentChangeType": "patch",
+  "date": "2020-03-25T06:34:24.942Z"
+}
