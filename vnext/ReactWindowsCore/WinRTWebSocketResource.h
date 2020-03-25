@@ -15,6 +15,7 @@
 
 // Standard Library
 #include <future>
+#include <memory>
 #include <queue>
 
 namespace Microsoft::React
