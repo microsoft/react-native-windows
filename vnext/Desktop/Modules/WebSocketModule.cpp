@@ -151,25 +151,21 @@ std::weak_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t 
     auto ws = IWebSocketResource::Make(std::move(url));
     ws->SetOnError([this, id, ws](const IWebSocketResource::Error& err)
     {
-      auto wsRef = ws;
       auto errorObj = dynamic::object("id", id)("message", err.Message);
       this->SendEvent("websocketFailed", std::move(errorObj));
     });
     ws->SetOnConnect([this, id, ws]()
     {
-      auto wsRef = ws;
       auto args = dynamic::object("id", id);
       this->SendEvent("websocketOpen", std::move(args));
     });
     ws->SetOnMessage([this, id, ws](size_t length, const string& message)
     {
-      auto wsRef = ws;
       auto args = dynamic::object("id", id)("data", message)("type", "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
     ws->SetOnClose([this, id, ws](IWebSocketResource::CloseCode code, const string& reason)
     {
-      auto wsRef = ws;
       auto args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
       this->SendEvent("websocketClosed", std::move(args));
     });
