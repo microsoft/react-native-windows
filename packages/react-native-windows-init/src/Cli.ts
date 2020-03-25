@@ -146,7 +146,7 @@ function getLatestMatchingVersion(
             const versions = Object.keys(details);
             if (versions.length > 0) {
               const candidates = versions
-                .filter(_ => semver.satisfies(_, versionSemVer))
+                .filter(v => semver.satisfies(v, versionSemVer))
                 .sort(semver.rcompare);
               if (candidates && candidates.length > 0) {
                 resolve(candidates[0]);
