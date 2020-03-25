@@ -7,15 +7,17 @@
 #include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
 
-using std::make_unique;
+using std::make_shared;
 using std::string;
-using std::unique_ptr;
+using std::shared_ptr;
 
 namespace Microsoft::React
 {
 #pragma region IWebSocketResource static members
 
-/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString, bool legacyImplementation, bool acceptSelfSigned)
+/*static*/
+shared_ptr<IWebSocketResource>
+IWebSocketResource::Make(const string &urlString, bool legacyImplementation, bool acceptSelfSigned)
 {
   if (!legacyImplementation)
   {
@@ -25,26 +27,30 @@ namespace Microsoft::React
       certExceptions.emplace_back(winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::Untrusted);
       certExceptions.emplace_back(winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
     }
-    return make_unique<WinRTWebSocketResource>(urlString, certExceptions);
+    return make_shared<WinRTWebSocketResource>(urlString, certExceptions);
   }
   else
   {
     Url url(urlString);
 
-    if (url.scheme == "ws") {
+    if (url.scheme == "ws")
+    {
       if (url.port.empty())
         url.port = "80";
 
-      return make_unique<Beast::WebSocketResource>(std::move(url));
+      return make_shared<Beast::WebSocketResource>(std::move(url));
     }
-    else if (url.scheme == "wss") {
+    else if (url.scheme == "wss")
+    {
       if (url.port.empty())
         url.port = "443";
 
-      return make_unique<Beast::SecureWebSocket>(std::move(url));
+      return make_shared<Beast::SecureWebSocket>(std::move(url));
     }
     else
+    {
       throw std::invalid_argument((string("Incorrect URL scheme: ") + url.scheme).c_str());
+    }
   }
 }
 

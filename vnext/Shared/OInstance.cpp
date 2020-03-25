@@ -56,6 +56,8 @@
 #include "ChakraRuntimeHolder.h"
 #endif
 
+using Microsoft::React::WebSocketModule;
+
 // forward declaration.
 namespace facebook::react::tracing {
 void initializeETW();
