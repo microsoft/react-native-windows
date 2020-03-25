@@ -71,6 +71,7 @@ module.exports = async function (config, args, options) {
     const ns = options.namespace || name;
     const version = options.windowsVersion || Common.getReactNativeVersion();
     let rnwPackage = version;
+    // If the version is a file: link, there's no need to compute what package to install.
     if (!version.startsWith("file:")) {
       const versionTag = options.template || await getDefaultVersionTag(version);
 
