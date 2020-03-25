@@ -70,9 +70,12 @@ module.exports = async function (config, args, options) {
     const name = args[0] || Common.getReactNativeAppName();
     const ns = options.namespace || name;
     const version = options.windowsVersion || Common.getReactNativeVersion();
-    const versionTag = options.template || await getDefaultVersionTag(version);
+    let rnwPackage = version;
+    if (!version.startsWith("file:")) {
+      const versionTag = options.template || await getDefaultVersionTag(version);
 
-    const rnwPackage = await Common.getInstallPackage(version, versionTag);
+      rnwPackage = await Common.getInstallPackage(version, versionTag);
+    }
 
     console.log(`Installing ${rnwPackage}...`);
     const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
