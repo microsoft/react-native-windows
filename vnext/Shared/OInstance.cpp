@@ -28,6 +28,7 @@
 
 #if (defined(_MSC_VER) && !defined(WINRT))
 #include <WebSocketModule.h>
+using Microsoft::React::WebSocketModule;
 #endif
 #include <Modules/ExceptionsManagerModule.h>
 #include <SourceCodeModule.h>
@@ -55,8 +56,6 @@
 #endif
 #include "ChakraRuntimeHolder.h"
 #endif
-
-using Microsoft::React::WebSocketModule;
 
 // forward declaration.
 namespace facebook::react::tracing {
