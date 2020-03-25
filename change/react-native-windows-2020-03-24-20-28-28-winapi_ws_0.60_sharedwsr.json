@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Merge from winapi_ws: Make IWebSocketResource shared_ptr",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "ffaf762782a0bcd0ca02f41f5602cef27d9b710f",
+  "dependentChangeType": "patch",
+  "date": "2020-03-25T03:28:28.784Z"
+}
