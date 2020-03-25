@@ -124,40 +124,39 @@ void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
 
 shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
-  shared_ptr<IWebSocketResource> ptr;
   if (m_webSockets.find(id) == m_webSockets.end())
   {
     auto ws = IWebSocketResource::Make(std::move(url));
-    ws->SetOnError([this, id](const IWebSocketResource::Error& err)
+    ws->SetOnError([this, id, ws](const IWebSocketResource::Error& err)
     {
+      auto wsRef = ws;
       auto errorObj = dynamic::object("id", id)("message", err.Message);
       this->SendEvent("websocketFailed", std::move(errorObj));
     });
-    ws->SetOnConnect([this, id]()
+    ws->SetOnConnect([this, id, ws]()
     {
+      auto wsRef = ws;
       auto args = dynamic::object("id", id);
       this->SendEvent("websocketOpen", std::move(args));
     });
-    ws->SetOnMessage([this, id](size_t length, const string& message)
+    ws->SetOnMessage([this, id, ws](size_t length, const string& message)
     {
+      auto wsRef = ws;
       auto args = dynamic::object("id", id)("data", message)("type", "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
-    ws->SetOnClose([this, id](IWebSocketResource::CloseCode code, const string& reason)
+    ws->SetOnClose([this, id, ws](IWebSocketResource::CloseCode code, const string& reason)
     {
+      auto wsRef = ws;
       auto args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
       this->SendEvent("websocketClosed", std::move(args));
     });
 
-    ptr = ws;
     m_webSockets.emplace(id, ws);
-  }
-  else
-  {
-    ptr = m_webSockets.at(id);
+    return ws;
   }
 
-  return ptr;
+  return m_webSockets.at(id);
 }
 
 #pragma endregion private members
