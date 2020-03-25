@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 Mar 2020 08:50:16 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.153",
+      "version": "0.60.0-vnext.153",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Merge from winapi_ws: Make IWebSocketResource shared_ptr",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ffaf762782a0bcd0ca02f41f5602cef27d9b710f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Mar 2020 06:38:18 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.152",
       "version": "0.60.0-vnext.152",

@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 24 Mar 2020 06:38:18 GMT and should not be manually modified.
+This log was last generated on Wed, 25 Mar 2020 08:50:16 GMT and should not be manually modified.
 
+## 0.60.0-vnext.153
+Wed, 25 Mar 2020 08:50:16 GMT
+
+### Changes
+
+- Merge from winapi_ws: Make IWebSocketResource shared_ptr (julio.rocha@microsoft.com)
 ## 0.60.0-vnext.152
 Tue, 24 Mar 2020 06:38:18 GMT
 
