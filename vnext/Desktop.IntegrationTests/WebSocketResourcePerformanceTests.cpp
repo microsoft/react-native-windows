@@ -16,8 +16,8 @@
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using std::shared_ptr;
 using std::string;
-using std::unique_ptr;
 using std::vector;
 
 TEST_CLASS(WebSocketResourcePerformanceTest){// See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
@@ -55,7 +55,7 @@ TEST_METHOD(ProcessThreadsPerResource) {
 
   // WebSocket resources scope.
   {
-    vector<unique_ptr<IWebSocketResource>> resources;
+    vector<shared_ptr<IWebSocketResource>> resources;
     for (int i = 0; i < resourceTotal; i++) {
       auto ws = IWebSocketResource::Make("ws://localhost:5556/");
       ws->SetOnMessage([this, &threadCount](size_t size, const string &message) {
