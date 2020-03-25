@@ -164,9 +164,9 @@ std::shared_ptr<facebook::jsi::Runtime> V8JSIRuntimeHolder::getRuntime() noexcep
 void V8JSIRuntimeHolder::initRuntime() noexcept {
   v8runtime::V8RuntimeArgs args{};
 
-  if (debuggerPort_ > 0) {
+  if (debuggerPort_ > 0)
     args.inspectorPort = debuggerPort_;
-  }
+
   args.enableInspector = useDirectDebugger_;
 
   args.foreground_task_runner =
