@@ -137,6 +137,9 @@ function getLatestMatchingVersion(
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     if (semver.validRange(versionSemVer)) {
+      // Ideally we'd be able to just use npm.packages.range(pkg, versionSemVer) here,
+      // but alas it fails to give us the right result for react-native-windows@^0.60.0-0
+      // as it fails to return pre-release versions
       npm.packages.releases(
         pkg,
         (err: any, details: {[key: string]: object}) => {
@@ -204,7 +207,7 @@ function isProjectUsingYarn(cwd: string) {
   return findUp.sync('yarn.lock', {cwd});
 }
 
-async function doMain() {
+(async () => {
   try {
     const name = getReactNativeAppName();
     const ns = argv.namespace || name;
@@ -292,6 +295,4 @@ You can either downgrade your version of ${chalk.green(
     console.error(error);
     process.exit(EXITCODE_UNKNOWN_ERROR);
   }
-}
-
-doMain();
+})();
