@@ -17,6 +17,7 @@ using namespace folly;
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 using std::string;
+using std::weak_ptr;
 
 namespace
 {
@@ -67,7 +68,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           }
         }
 
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->Connect(protocols, options);
@@ -80,7 +81,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         // See react-native\Libraries\WebSocket\WebSocket.js:_close
         if (args.size() == 3) // WebSocketModule.close(statusCode, closeReason, this._socketId);
         {
-          auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 2));
+          weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 2));
           if (auto sharedWs = weakWs.lock())
           {
             sharedWs->Close(static_cast<IWebSocketResource::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
@@ -88,7 +89,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         }
         else if (args.size() == 1) // WebSocketModule.close(this._socketId);
         {
-          auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
+          weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
           if (auto sharedWs = weakWs.lock())
           {
             sharedWs->Close(IWebSocketResource::CloseCode::Normal, {});
@@ -104,7 +105,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       "send",
       [this](dynamic args) // const string& message, int64_t id
       {
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->Send(jsArgAsString(args, 0));
@@ -114,7 +115,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       "sendBinary",
       [this](dynamic args) // const string& base64String, int64_t id
       {
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->SendBinary(jsArgAsString(args, 0));
@@ -124,7 +125,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       "ping",
       [this](dynamic args) // int64_t id
       {
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->Ping();
@@ -144,9 +145,10 @@ void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
   }
 }
 
-std::weak_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
+std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
-  if (m_webSockets.find(id) == m_webSockets.end())
+  auto itr = m_webSockets.find(id);
+  if (itr == m_webSockets.end())
   {
     auto ws = IWebSocketResource::Make(std::move(url));
     ws->SetOnError([this, id, ws](const IWebSocketResource::Error& err)
@@ -174,7 +176,7 @@ std::weak_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t 
     return ws;
   }
 
-  return m_webSockets.at(id);
+  return itr->second;
 }
 
 #pragma endregion private members
