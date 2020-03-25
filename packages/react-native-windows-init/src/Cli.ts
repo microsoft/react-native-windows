@@ -13,13 +13,13 @@ import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
+// @ts-ignore
+import * as Registry from 'npm-registry';
 
-const Registry = require('npm-registry');
-
-let npmConfReg = execSync('npm config get registry')
+const npmConfReg = execSync('npm config get registry')
   .toString()
   .trim();
-let NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
+const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
@@ -46,8 +46,11 @@ const argv = yargs.options({
 const EXITCODE_NO_MATCHING_RNW = 2;
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;
+const EXITCODE_NO_REACTNATIVE_FOUND = 5;
+const EXITCODE_UNKNOWN_ERROR = 6;
+const EXITCODE_NO_PACKAGE_JSON = 7;
 
-function REACT_NATIVE_WINDOWS_GENERATE_PATH() {
+function reactNativeWindowsGeneratePath() {
   return require.resolve('react-native-windows/local-cli/generate-windows.js', {
     paths: [process.cwd()],
   });
@@ -55,11 +58,20 @@ function REACT_NATIVE_WINDOWS_GENERATE_PATH() {
 
 function getReactNativeAppName() {
   console.log('Reading application name from package.json...');
-  let name = JSON.parse(fs.readFileSync('package.json', 'utf8')).name;
+  const cwd = process.cwd();
+  const pkgJsonPath = findUp.sync('package.json', {cwd});
+  if (!pkgJsonPath) {
+    console.error(
+      'Unable to find package.json.  This should be run from within an existing react-native app.',
+    );
+    process.exit(EXITCODE_NO_PACKAGE_JSON);
+  }
+  let name = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')).name;
   if (!name) {
-    if (fs.existsSync('app.json')) {
+    const appJsonPath = findUp.sync('app.json', {cwd});
+    if (appJsonPath) {
       console.log('Reading application name from app.json...');
-      name = JSON.parse(fs.readFileSync('app.json', 'utf8')).name;
+      name = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
     }
   }
   if (!name) {
@@ -80,10 +92,10 @@ function getReactNativeVersion() {
   console.error(
     'Error: Must be run from a project that already depends on react-native, and has react-native installed.',
   );
-  process.exit(1);
+  process.exit(EXITCODE_NO_REACTNATIVE_FOUND);
 }
 
-function ErrorOutOnUnsupportedVersionOfReactNative(rnVersion: string) {
+function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string) {
   console.error(`Error: Unsupported version of react-native: ${chalk.cyan(
     rnVersion,
   )}
@@ -98,11 +110,11 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
   if (validVersion) {
     const major = semver.major(validVersion);
     const minor = semver.minor(validVersion);
-    if (major === 0 && minor >= 60) {
+    if (major === 0 && minor >= 59) {
       return `^${major}.${minor}.0-0`;
     }
   }
-  ErrorOutOnUnsupportedVersionOfReactNative(rnVersion);
+  errorOutOnUnsupportedVersionOfReactNative(rnVersion);
 }
 
 function getMatchingReactNativeSemVerForReactNativeWindowsVersion(
@@ -176,12 +188,6 @@ async function getLatestMatchingRNWVersion(
       'react-native-windows',
       versionSemVer,
     );
-    if (!version) {
-      console.error(
-        `Error: No version of react-native-windows@${versionSemVer} found`,
-      );
-      process.exit(EXITCODE_NO_MATCHING_RNW);
-    }
     return version;
   } catch (err) {
     console.error(
@@ -211,7 +217,7 @@ async function doMain() {
       );
     }
 
-    let rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
+    const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
 
     if (!argv.version) {
       console.log(
@@ -225,7 +231,7 @@ async function doMain() {
       );
 
       if (semver.prerelease(rnwResolvedVersion)) {
-        let rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
+        const rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
         console.warn(
           `
 ${chalk.green('react-native-windows')}@${chalk.cyan(
@@ -275,7 +281,7 @@ You can either downgrade your version of ${chalk.green(
       chalk.green(`react-native-windows@${version} successfully installed.`),
     );
 
-    const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
+    const generateWindows = require(reactNativeWindowsGeneratePath());
     generateWindows(process.cwd(), name, ns, {
       language: argv.language,
       overwrite: argv.overwrite,
@@ -284,7 +290,7 @@ You can either downgrade your version of ${chalk.green(
   } catch (error) {
     console.error(chalk.red(error.message));
     console.error(error);
-    process.exit(1);
+    process.exit(EXITCODE_UNKNOWN_ERROR);
   }
 }
 
