@@ -53,6 +53,8 @@
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 
+using Microsoft::React::WebSocketModule;
+
 // forward declaration.
 namespace facebook::react::tracing {
 void initializeETW();

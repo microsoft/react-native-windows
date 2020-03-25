@@ -20,7 +20,7 @@
 namespace Microsoft::React
 {
 
-class WinRTWebSocketResource : public IWebSocketResource
+class WinRTWebSocketResource : public IWebSocketResource, std::enable_shared_from_this<WinRTWebSocketResource>
 {
   winrt::Windows::Foundation::Uri m_uri;
   winrt::Windows::Networking::Sockets::MessageWebSocket m_socket;
