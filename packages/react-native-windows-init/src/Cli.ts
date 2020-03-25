@@ -84,7 +84,10 @@ function getReactNativeVersion() {
 }
 
 function ErrorOutOnUnsupportedVersionOfReactNative(rnVersion: string) {
-  console.error(`Error: Unsupported version of react-native: ${rnVersion}`);
+  console.error(`Error: Unsupported version of react-native: ${chalk.cyan(
+    rnVersion,
+  )}
+react-native-windows supports react-native versions ${chalk.cyan('>=0.60')}`);
   process.exit(EXITCODE_UNSUPPORTED_VERION_RN);
 }
 
