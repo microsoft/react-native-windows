@@ -124,7 +124,7 @@ void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
 
 shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
-  shared_ptr<IWebSocketResource> ptr;// = nullptr;
+  shared_ptr<IWebSocketResource> ptr;
   if (m_webSockets.find(id) == m_webSockets.end())
   {
     auto ws = IWebSocketResource::Make(std::move(url));
@@ -149,8 +149,6 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
       this->SendEvent("websocketClosed", std::move(args));
     });
 
-    //ptr = ws.get();
-    //m_webSockets.emplace(id, std::move(ws));
     ptr = ws;
     m_webSockets.emplace(id, ws);
   }

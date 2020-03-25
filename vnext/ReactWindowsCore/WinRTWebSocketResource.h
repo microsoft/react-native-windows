@@ -15,13 +15,12 @@
 
 // Standard Library
 #include <future>
-#include <memory>
 #include <queue>
 
 namespace Microsoft::React
 {
 
-class WinRTWebSocketResource : public IWebSocketResource, std::enable_shared_from_this<WinRTWebSocketResource>
+class WinRTWebSocketResource : public IWebSocketResource
 {
   winrt::Windows::Foundation::Uri m_uri;
   winrt::Windows::Networking::Sockets::MessageWebSocket m_socket;
