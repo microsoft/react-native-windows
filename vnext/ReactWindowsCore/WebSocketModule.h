@@ -43,7 +43,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// <summary>
   /// Creates or retrieves a raw <c>IWebSocketResource</c> pointer.
   /// </summary>
-  std::shared_ptr<IWebSocketResource> GetOrCreateWebSocket(std::int64_t id, std::string &&url = {});
+  std::weak_ptr<IWebSocketResource> GetOrCreateWebSocket(std::int64_t id, std::string &&url = {});
 
   /// <summary>
   /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
