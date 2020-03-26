@@ -205,7 +205,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Check for change files
-        run: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
+        run: node ./node_modules/beachball/bin/beachball.js check --branch origin/$(Build.SourceBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - run: yarn format:verify
 
