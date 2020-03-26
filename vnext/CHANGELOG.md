@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 22:33:20 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2020 23:11:17 GMT and should not be manually modified.
 
+## 0.0.0-master.2
+Thu, 26 Mar 2020 23:11:17 GMT
+
+### Changes
+
+- Tests for NativeModule registration without attributes (vmorozov@microsoft.com)
 ## 0.0.0-master.1
 Thu, 26 Mar 2020 22:33:20 GMT
 
