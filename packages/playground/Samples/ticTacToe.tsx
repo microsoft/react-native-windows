@@ -5,6 +5,7 @@
  */
 import * as React from 'react';
 import {
+  AppRegistry,
   Button,
   SafeAreaView,
   Text,
@@ -171,3 +172,5 @@ const winner = (squares: SquareValue[]) => {
   } // tie game
   return undefined;
 };
+
+AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

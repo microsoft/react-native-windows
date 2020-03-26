@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Mar 2020 19:05:36 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.71",
+      "version": "0.61.0-beta.71",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do not enter loaded state when an error occurs during web bundle loadJSBundles",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Mar 2020 07:05:57 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.71",
+      "version": "0.61.0-beta.71",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Do not enter loaded state when an error occurs during web bundle loadJSBundles",
+            "author": "acoates@microsoft.com",
+            "commit": "25f261101a22ff2fa8ac2f17b6f4d4115a6e67a6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 23 Mar 2020 21:05:53 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.70",
+      "version": "0.61.0-beta.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed crash when trying to load invalid image uri",
+            "author": "jthysell@microsoft.com",
+            "commit": "d99cb1ea2ffb7b29b36f4a47539fa038c7b76e83"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 23 Mar 2020 14:55:40 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.69",
+      "version": "0.61.0-beta.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented Linking module protocol activation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f880a99a915a334670ded6125096ca2868f271f6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Mar 2020 00:52:27 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.68",
+      "version": "0.61.0-beta.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 package",
+            "author": "tudorm@microsoft.com",
+            "commit": "03a3ac16a12b1a10b91e95af7ac5a2a0060fb328"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Mar 2020 17:48:09 GMT",
       "tag": "react-native-windows_v0.61.0-beta.67",
       "version": "0.61.0-beta.67",

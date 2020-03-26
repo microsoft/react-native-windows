@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Give Beachball check the right branch version",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "4f488d21f7425c8c7fe613323512be8a9f2a6a58",
+  "dependentChangeType": "patch",
+  "date": "2020-03-25T00:49:08.503Z"
+}

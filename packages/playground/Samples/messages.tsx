@@ -1,7 +1,7 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+/// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import React, { Component } from 'react';
+import * as React from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -56,51 +56,58 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 12,
-  }
+  },
 });
 
 var TextValues = [
-  "What time did the man go to the dentist?",
+  'What time did the man go to the dentist?',
   "I don't know.",
-  "Tooth hurt-y.",
-  "Did you hear about the guy who invented Lifesavers?",
-  "No.",
-  "They say he made a mint.",
+  'Tooth hurt-y.',
+  'Did you hear about the guy who invented Lifesavers?',
+  'No.',
+  'They say he made a mint.',
   "A ham sandwich walks into a bar and orders a beer. Bartender says, 'Sorry we don't serve food here.'",
   "Whenever the cashier at the grocery store asks my dad if he would like the milk in a bag he replies, 'No, just leave it in the carton!'",
-  "Why do chicken coops only have two doors?",
+  'Why do chicken coops only have two doors?',
   "I don't know, why?",
-  "Because if they had four, they would be chicken sedans!",
+  'Because if they had four, they would be chicken sedans!',
 ];
 
 var UserNameValues = [
-  "Parent",
-  "Child",
+  'Parent',
+  'Child',
 ];
 
 var AvatarValues = [
-  require("./images/blueuser.png"),
-  require("./images/reduser.png"),
+  require('./images/blueuser.png'),
+  require('./images/reduser.png'),
 ];
 
 class Message {
+  MessageId: string;
+  Text: string;
+  UserName: string;
+  Avatar: any;
+  Timestamp: Date | null;
+  Time: string;
+
   constructor() {
-    this.Index = -1;
-    this.Text = "";
-    this.UserName = "";
+    this.MessageId = '';
+    this.Text = '';
+    this.UserName = '';
     this.Avatar = null;
     this.Timestamp = null;
-    this.Time = "";
+    this.Time = '';
   }
 }
 
-function GetValue(index, values) {
+function GetValue(index: number, values: Array<any>) {
   return values[index % values.length];
 }
 
-function CreateMessage(id) {
+function CreateMessage(id: number) {
   let m = new Message();
-  m.messageId = "m" + (id + 1);
+  m.MessageId = 'm' + (id + 1);
   m.Text = GetValue(id, TextValues);
   m.UserName = GetValue(id, UserNameValues);
   m.Avatar = GetValue(id, AvatarValues);
@@ -109,7 +116,7 @@ function CreateMessage(id) {
   return m;
 }
 
-function LoadMessages(count) {
+function LoadMessages(count: number) {
   let messages = [];
   for (var i = 0; i < count; i++) {
     messages[i] = CreateMessage(i);
@@ -117,11 +124,15 @@ function LoadMessages(count) {
   return messages;
 }
 
-class MessageView extends Component {
+interface MessageViewProps {
+  message: Message;
+}
+
+class MessageView extends React.Component<MessageViewProps> {
   render() {
     return (
       <View style={styles.message}>
-        <Image style={styles.messageAvatar} source={this.props.message.Avatar} testID={this.props.message.messageId} />
+        <Image style={styles.messageAvatar} source={this.props.message.Avatar} testID={this.props.message.MessageId} />
         <View style={styles.messageContents}>
           <View style={styles.messageHeader}>
             <Text style={styles.messageUserName}>{this.props.message.UserName}</Text>
@@ -132,15 +143,19 @@ class MessageView extends Component {
       </View>
     );
   }
-};
+}
 
-class App extends Component {
+interface BootstrapProps {
+  messageCount?: number;
+}
+
+export default class Bootstrap extends React.Component<BootstrapProps> {
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
           <FlatList
-            data={LoadMessages(this.props.messageCount)}
+            data={LoadMessages(this.props.messageCount || 100)}
             renderItem={({item}) => <MessageView message={item} />}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -148,6 +163,6 @@ class App extends Component {
       </View>
     );
   }
-};
+}
 
-AppRegistry.registerComponent('PerfCompareRN', () => App);
+AppRegistry.registerComponent('Bootstrap', () => Bootstrap);
