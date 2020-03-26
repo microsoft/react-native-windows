@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2020 02:02:51 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.154",
+      "version": "0.60.0-vnext.154",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable basic V8 direct debugging",
+            "author": "tudorm@microsoft.com",
+            "commit": "0b6e5cd38488a9e5f5214a66c822d62c6dc066df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Mar 2020 08:50:16 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.153",
       "version": "0.60.0-vnext.153",
