@@ -64,7 +64,7 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: npx react-native-windows-init --version beta --overwrite --language ${{ parameters.language }}
+      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: NuGetCommand@2
