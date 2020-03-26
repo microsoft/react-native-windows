@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Wed, 25 Mar 2020 20:04:59 GMT",
+      "tag": "rnpm-plugin-windows_v0.6.1",
+      "version": "0.6.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "allow CLI to install from file:",
+            "author": "kmelmon@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Mar 2020 22:51:22 GMT",
       "tag": "rnpm-plugin-windows_v0.6.0",
       "version": "0.6.0",

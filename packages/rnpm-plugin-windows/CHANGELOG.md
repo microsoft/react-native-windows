@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Tue, 24 Mar 2020 22:51:22 GMT and should not be manually modified.
+This log was last generated on Wed, 25 Mar 2020 20:04:59 GMT and should not be manually modified.
 
+## 0.6.1
+Wed, 25 Mar 2020 20:04:59 GMT
+
+### Patches
+
+- allow CLI to install from file: (kmelmon@microsoft.com)
 ## 0.6.0
 Tue, 24 Mar 2020 22:51:22 GMT
 
