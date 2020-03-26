@@ -125,6 +125,7 @@
     <ClCompile Include="JSValueTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NativeModuleTest.cpp" />
+    <ClCompile Include="NoAttributeNativeModuleTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

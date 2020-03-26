@@ -124,6 +124,7 @@
     <Compile Include="JTokenJSValueReader.cs" />
     <Compile Include="JTokenJSValueWriter.cs" />
     <Compile Include="NativeModuleTest.cs" />
+    <Compile Include="NoAttributeNativeModuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactModuleBuilderMock.cs" />
     <Compile Include="UnitTestApp.xaml.cs">

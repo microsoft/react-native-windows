@@ -729,16 +729,23 @@ struct ModuleFunctionFieldInfo<TFunc<void(TArgs...)> TModule::*> {
   }
 };
 
+template <class TModule>
 struct ReactModuleBuilder {
-  ReactModuleBuilder(void *module, IReactModuleBuilder const &moduleBuilder) noexcept
+  ReactModuleBuilder(TModule *module, IReactModuleBuilder const &moduleBuilder) noexcept
       : m_module{module}, m_moduleBuilder{moduleBuilder} {}
 
-  template <class TModule, int I>
+  template <int I>
   void RegisterModule(wchar_t const *moduleName, wchar_t const *eventEmitterName, ReactMemberId<I>) noexcept {
+    RegisterModuleName(moduleName, eventEmitterName);
+    RegisterMembers<I + 1>(static_cast<std::make_index_sequence<10> *>(nullptr));
+  }
+
+  void RegisterModuleName(wchar_t const *moduleName, wchar_t const *eventEmitterName = nullptr) noexcept {
     m_moduleName = moduleName;
     m_eventEmitterName = eventEmitterName ? eventEmitterName : L"RCTDeviceEventEmitter";
-    RegisterMembers<TModule, I + 1>(static_cast<std::make_index_sequence<10> *>(nullptr));
+  }
 
+  void CompleteRegistration() noexcept {
     // Add REACT_INIT initializers after REACT_EVENT and REACT_FUNCTION initializers.
     // This way REACT_INIT method is invoked after event and function fields are initialized.
     for (auto &initializer : m_initializers) {
@@ -746,68 +753,67 @@ struct ReactModuleBuilder {
     }
   }
 
-  template <class TClass, int I>
+  template <int I>
   auto HasRegisterMember(ReactModuleBuilder &builder, ReactMemberId<I> id)
-      -> decltype(TClass::template RegisterMember<TClass>(builder, id), std::true_type{});
-  template <class TClass>
+      -> decltype(TModule::template RegisterMember<TModule>(builder, id), std::true_type{});
   auto HasRegisterMember(...) -> std::false_type;
 
-  template <class TModule, int I>
+  template <int I>
   void RegisterMember() noexcept {
-    if constexpr (decltype(HasRegisterMember<TModule>(*this, ReactMemberId<I>{}))::value) {
+    if constexpr (decltype(HasRegisterMember(*this, ReactMemberId<I>{}))::value) {
       TModule::template RegisterMember<TModule>(*this, ReactMemberId<I>{});
     }
   }
 
   // Register members in groups of 10 to avoid deep recursion.
-  template <class TModule, int StartIndex, int... I>
+  template <int StartIndex, int... I>
   void RegisterMembers(std::index_sequence<I...> *) noexcept {
-    if constexpr (decltype(HasRegisterMember<TModule>(*this, ReactMemberId<StartIndex>{}))::value) {
-      (RegisterMember<TModule, StartIndex + I>(), ...);
-      RegisterMembers<TModule, StartIndex + sizeof...(I)>(static_cast<std::make_index_sequence<10> *>(nullptr));
+    if constexpr (decltype(HasRegisterMember(*this, ReactMemberId<StartIndex>{}))::value) {
+      (RegisterMember<StartIndex + I>(), ...);
+      RegisterMembers<StartIndex + sizeof...(I)>(static_cast<std::make_index_sequence<10> *>(nullptr));
     }
   }
 
-  template <class TClass, class TMethod>
-  void RegisterInitMethod(TMethod method, wchar_t const * /*name*/) noexcept {
+  template <class TMethod>
+  void RegisterInitMethod(TMethod method, wchar_t const * /*name*/ = nullptr) noexcept {
     auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
     m_initializers.push_back(std::move(initializer));
   }
 
-  template <class TClass, class TMethod>
+  template <class TMethod>
   void RegisterMethod(TMethod method, wchar_t const *name) noexcept {
     MethodReturnType returnType;
     auto methodDelegate = ModuleMethodInfo<TMethod>::GetMethodDelegate(m_module, method, /*out*/ returnType);
     m_moduleBuilder.AddMethod(name, returnType, methodDelegate);
   }
 
-  template <class TClass, class TMethod>
+  template <class TMethod>
   void RegisterSyncMethod(TMethod method, wchar_t const *name) noexcept {
     auto syncMethodDelegate = ModuleSyncMethodInfo<TMethod>::GetMethodDelegate(m_module, method);
     m_moduleBuilder.AddSyncMethod(name, syncMethodDelegate);
   }
 
-  template <class TClass, class TMethod>
-  void RegisterConstMethod(TMethod method, wchar_t const * /*name*/) noexcept {
+  template <class TMethod>
+  void RegisterConstMethod(TMethod method, wchar_t const * /*name*/ = nullptr) noexcept {
     auto constantProvider = ModuleConstantInfo<TMethod>::GetConstantProvider(m_module, method);
     m_moduleBuilder.AddConstantProvider(constantProvider);
   }
 
-  template <class TClass, class TField>
+  template <class TField>
   void RegisterConstant(TField field, wchar_t const *name) noexcept {
     auto constantProvider = ModuleConstFieldInfo<TField>::GetConstantProvider(m_module, name, field);
     m_moduleBuilder.AddConstantProvider(constantProvider);
   }
 
-  template <class TClass, class TField>
-  void RegisterEvent(TField field, wchar_t const *eventName, wchar_t const *eventEmitterName) noexcept {
+  template <class TField>
+  void RegisterEvent(TField field, wchar_t const *eventName, wchar_t const *eventEmitterName = nullptr) noexcept {
     auto eventHandlerInitializer = ModuleEventFieldInfo<TField>::GetEventHandlerInitializer(
         m_module, field, eventName, eventEmitterName ? eventEmitterName : m_eventEmitterName);
     m_moduleBuilder.AddInitializer(eventHandlerInitializer);
   }
 
-  template <class TClass, class TField>
-  void RegisterFunction(TField field, wchar_t const *functionName, wchar_t const *moduleName) noexcept {
+  template <class TField>
+  void RegisterFunction(TField field, wchar_t const *functionName, wchar_t const *moduleName = nullptr) noexcept {
     auto functionInitializer = ModuleFunctionFieldInfo<TField>::GetFunctionInitializer(
         m_module, field, functionName, moduleName ? moduleName : m_moduleName);
     m_moduleBuilder.AddInitializer(functionInitializer);
@@ -846,7 +852,8 @@ inline ReactModuleProvider MakeModuleProvider() noexcept {
     auto moduleObject = make<BoxedValue<TModule>>();
     auto module = &BoxedValue<TModule>::GetImpl(moduleObject);
     ReactModuleBuilder builder{module, moduleBuilder};
-    RegisterModule(builder, module);
+    RegisterModule(builder);
+    builder.CompleteRegistration();
     return moduleObject;
   };
 }
