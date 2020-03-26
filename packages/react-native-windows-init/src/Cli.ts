@@ -231,7 +231,12 @@ function isProjectUsingYarn(cwd: string) {
     const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
 
     if (!rnwResolvedVersion) {
-      if (!argv.version) {
+      if (argv.version) {
+        console.error(
+          `Error: No version of react-native-windows@${argv.version} found`,
+        );
+        process.exit(EXITCODE_NO_MATCHING_RNW);
+      } else {
         const rnwLatestVersion = await getLatestRNWVersion();
         console.error(
           `
@@ -251,11 +256,6 @@ Please modify your application to use ${chalk.green(
 `,
         );
         process.exit(EXITCODE_NO_AUTO_MATCHING_RNW);
-      } else {
-        console.error(
-          `Error: No version of react-native-windows@${argv.version} found`,
-        );
-        process.exit(EXITCODE_NO_MATCHING_RNW);
       }
     }
 
