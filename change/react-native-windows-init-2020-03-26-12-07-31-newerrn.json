@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Provide better feedback when RN version has no matching RNW version",
+  "packageName": "react-native-windows-init",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-26T19:07:31.483Z"
+}
