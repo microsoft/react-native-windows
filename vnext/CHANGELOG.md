@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 05:34:25 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2020 14:54:10 GMT and should not be manually modified.
 
+## 0.61.0-beta.73
+Thu, 26 Mar 2020 14:54:10 GMT
+
+### Changes
+
+- Enable basic V8 direct debugging (tudorm@microsoft.com)
 ## 0.61.0-beta.72
 Thu, 26 Mar 2020 05:34:25 GMT
 
