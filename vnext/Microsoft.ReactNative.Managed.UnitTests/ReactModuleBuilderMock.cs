@@ -35,6 +35,15 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       return module;
     }
 
+    public void Initialize()
+    {
+      var reactContext = new ReactContextMock(this);
+      foreach (var initializer in m_initializers)
+      {
+        initializer(reactContext);
+      }
+    }
+
     public void AddInitializer(InitializerDelegate initializer)
     {
       m_initializers.Add(initializer);
