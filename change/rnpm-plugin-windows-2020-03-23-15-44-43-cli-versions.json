@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Teach React Native CLI about master and 0.61 versions",
+  "packageName": "rnpm-plugin-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "89e1071abb6ec12023ae422bda3e948f5cc5c2ea",
+  "dependentChangeType": "patch",
+  "date": "2020-03-23T22:44:43.124Z"
+}
