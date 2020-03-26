@@ -18,7 +18,7 @@
 
 ![Hero Image with Logo](https://raw.githubusercontent.com/microsoft/react-native-windows/master/.github/hero2.png)
 
-> See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native.
+> See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
 [React Native](https://reactnative.dev) is a framework developed by Facebook that enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere.
 
