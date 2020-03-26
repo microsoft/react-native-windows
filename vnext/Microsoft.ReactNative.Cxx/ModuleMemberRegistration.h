@@ -16,7 +16,7 @@
   template <class TClass, class TRegistry>                                                       \
   static void RegisterMember(                                                                    \
       TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.Register##methodType##Method<TClass>(&TClass::method, methodName);                  \
+    registry.Register##methodType##Method(&TClass::method, methodName);                          \
   }
 
 #define INTERNAL_REACT_METHOD_2_ARGS(methodType, method) INTERNAL_REACT_METHOD_3_ARGS(methodType, method, L## #method)
@@ -34,7 +34,7 @@
   template <class TClass, class TRegistry>                                                       \
   static void RegisterMember(                                                                    \
       TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.RegisterConstant<TClass>(&TClass::field, constantName);                             \
+    registry.RegisterConstant(&TClass::field, constantName);                                     \
   }
 
 #define INTERNAL_REACT_CONSTANT_1_ARGS(field) INTERNAL_REACT_CONSTANT_2_ARGS(field, L## #field)
@@ -46,7 +46,7 @@
   template <class TClass, class TRegistry>                                                       \
   static void RegisterMember(                                                                    \
       TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.RegisterEvent<TClass>(&TClass::field, eventName, eventEmitterName);                 \
+    registry.RegisterEvent(&TClass::field, eventName, eventEmitterName);                         \
   }
 
 #define INTERNAL_REACT_EVENT_2_ARGS(field, eventName) \
@@ -62,7 +62,7 @@
   template <class TClass, class TRegistry>                                                       \
   static void RegisterMember(                                                                    \
       TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.RegisterFunction<TClass>(&TClass::field, functionName, moduleName);                 \
+    registry.RegisterFunction(&TClass::field, functionName, moduleName);                         \
   }
 
 #define INTERNAL_REACT_FUNCTION_2_ARGS(field, functionName) \
