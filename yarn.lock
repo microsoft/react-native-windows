@@ -4460,14 +4460,15 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.22.0.tgz#8eb249d20baac6342d5bb1c32086c49a695372ff"
-  integrity sha512-42a8CTCPUtFhbxDByDMTNbw29DrA7nPyKgrsMBQ2SPJ0AimqX81O4/NpXdYvSyKbkCV/RIITRK4m/gIKQi4rUQ==
+  version "1.23.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.23.1.tgz#d69a12a3af1cd6d5aad02a9ab4d136f439265949"
+  integrity sha512-6fwEzAX/oYzZHT+wk0oIsYgQx3ZI9FtxAXFR4dB+LEi8Z1j6GOrb7aYqCW6YL/xAp647PWLefsKzF/+7PoWdmA==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
     glob "^7.1.4"
+    lodash "^4.17.15"
     minimatch "^3.0.4"
     prompts "~2.1.0"
     semver "^6.1.1"
