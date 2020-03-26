@@ -424,14 +424,7 @@ template <class... TArgs>
 inline void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &... args) noexcept {
   // Read as many arguments as we can or return default values.
   bool success = reader.ValueType() == JSValueType::Array;
-
-  if constexpr (sizeof...(args) != 0) {
-    // To read variadic template arguments in natural order we must use them in an initializer list.
-    // TODO: can we fold expression instead?
-    [[maybe_unused]] int dummy[] = {
-        (success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}, 0)...};
-  }
-
+  ((success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}), ...);
   success = success && SkipArrayToEnd(reader);
 }
 

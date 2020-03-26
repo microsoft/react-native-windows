@@ -680,10 +680,10 @@ struct ModuleConstantInfo<void (*)(ReactConstantProvider &) noexcept> {
 template <class TField>
 struct ModuleEventFieldInfo;
 
-template <class TModule, template <class> class TFunc, class TArg>
-struct ModuleEventFieldInfo<TFunc<void(TArg)> TModule::*> {
+template <class TModule, template <class> class TFunc, class... TArgs>
+struct ModuleEventFieldInfo<TFunc<void(TArgs...)> TModule::*> {
   using ModuleType = TModule;
-  using EventType = TFunc<void(TArg)>;
+  using EventType = TFunc<void(TArgs...)>;
   using FieldType = EventType TModule::*;
 
   static InitializerDelegate GetEventHandlerInitializer(
@@ -693,10 +693,12 @@ struct ModuleEventFieldInfo<TFunc<void(TArg)> TModule::*> {
       wchar_t const *eventEmitterName) noexcept {
     return [ module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName ](
         IReactContext const &reactContext) noexcept {
-      module->*field = [ reactContext, eventEmitterName, eventName ](TArg arg) noexcept {
-        reactContext.EmitJSEvent(eventEmitterName, eventName, [&arg](IJSValueWriter const &argWriter) noexcept {
-          WriteValue(argWriter, arg);
-        });
+      module->*field = [ reactContext, eventEmitterName, eventName ](TArgs... args) noexcept {
+        reactContext.EmitJSEvent(
+            eventEmitterName, eventName, [&args...]([[maybe_unused]] IJSValueWriter const &argWriter) noexcept {
+              (void)argWriter; // [[maybe_unused]] above does not work
+              (WriteValue(argWriter, args), ...);
+            });
       };
     };
   }

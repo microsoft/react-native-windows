@@ -58,7 +58,7 @@ struct ReactModuleBuilderMock {
   void ExpectEvent(
       std::wstring_view eventEmitterName,
       std::wstring_view eventName,
-      Mso::Functor<void(JSValue const &)> &&checkValue) noexcept;
+      Mso::Functor<void(JSValueArray const &)> &&checkValues) noexcept;
 
   void ExpectFunction(
       std::wstring_view moduleName,
