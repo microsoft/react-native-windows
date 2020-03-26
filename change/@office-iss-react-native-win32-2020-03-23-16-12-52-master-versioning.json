@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "0.0.0 Master Versioning Scheme",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "commit": "92fed98e0286502c8c4eaf5871f42dff1160b0a1",
+  "dependentChangeType": "patch",
+  "date": "2020-03-23T23:12:50.384Z"
+}
