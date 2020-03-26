@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable basic V8 direct debugging",
-  "packageName": "react-native-windows",
-  "email": "tudorm@microsoft.com",
-  "commit": "0b6e5cd38488a9e5f5214a66c822d62c6dc066df",
-  "dependentChangeType": "patch",
-  "date": "2020-03-25T23:16:54.732Z"
-}

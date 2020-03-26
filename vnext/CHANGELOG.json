@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2020 18:28:07 GMT",
+      "tag": "react-native-windows_v0.61.0",
+      "version": "0.61.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Make package changes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Give Beachball check the right branch version",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enable basic V8 direct debugging",
+            "author": "tudorm@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Mar 2020 19:05:36 GMT",
       "tag": "react-native-windows_v0.61.0-beta.71",
       "version": "0.61.0-beta.71",
