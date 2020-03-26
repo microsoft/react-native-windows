@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// clang-format off
 #include "pch.h"
 
 #include <Modules/WebSocketModule.h>
@@ -19,26 +18,23 @@ using Microsoft::Common::Unicode::Utf8ToUtf16;
 using std::string;
 using std::weak_ptr;
 
-namespace
-{
+namespace {
 constexpr char moduleName[] = "WebSocketModule";
 } // anonymous namespace
 
-namespace Microsoft::React
-{
+namespace Microsoft::React {
 
-  WebSocketModule::WebSocketModule() {}
+WebSocketModule::WebSocketModule() {}
 
-string WebSocketModule::getName()
-{
+string WebSocketModule::getName() {
   return moduleName;
 }
 
-std::map<string, dynamic> WebSocketModule::getConstants()
-{
+std::map<string, dynamic> WebSocketModule::getConstants() {
   return {};
 }
 
+// clang-format off
 std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
 {
   return
@@ -59,9 +55,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 
         IWebSocketResource::Options options;
         dynamic optionsDynamic = jsArgAsDynamic(args, 2);
-        if (!optionsDynamic.empty() && !optionsDynamic["headers"].empty())
+        if (!optionsDynamic.empty() && optionsDynamic.count("headers") != 0)
         {
-          dynamic headersDynamic = optionsDynamic["headers"];
+          const auto& headersDynamic = optionsDynamic["headers"];
           for (const auto& header : headersDynamic.items())
           {
             options.emplace(Utf8ToUtf16(header.first.getString()), header.second.getString());
@@ -133,18 +129,18 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       })
   };
 } // getMethods
+// clang-format on
 
 #pragma region private members
 
-void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
-{
+void WebSocketModule::SendEvent(string &&eventName, dynamic &&args) {
   auto instance = this->getInstance().lock();
-  if (instance)
-  {
+  if (instance) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
   }
 }
 
+// clang-format off
 std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
   auto itr = m_webSockets.find(id);
@@ -178,11 +174,11 @@ std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_
 
   return itr->second;
 }
+// clang-format on
 
 #pragma endregion private members
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept
-{
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
   return std::make_unique<WebSocketModule>();
 }
 

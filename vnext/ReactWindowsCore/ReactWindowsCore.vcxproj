@@ -65,7 +65,6 @@
     <VcpkgTriplet Condition="'$(Platform)'=='ARM64'">arm64-windows</VcpkgTriplet>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- <IncludePath>$(IncludePath);$(ReactNativeWindowsDir)\Mso</IncludePath> -->
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup>

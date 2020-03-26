@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// clang-format off
 #pragma once
 
 #include <functional>
@@ -9,23 +8,22 @@
 #include <string>
 #include <vector>
 
-namespace Microsoft::React
-{
+namespace Microsoft::React {
 
 /// <summary>
 /// Defines the core functionality for a native WebSocket client resource.
 /// </summary>
-struct IWebSocketResource
-{
+struct IWebSocketResource {
 #pragma region Aliases
 
   using Protocols = std::vector<std::string>;
-  using Options   = std::map<std::wstring, std::string>;
+  using Options = std::map<std::wstring, std::string>;
 
 #pragma endregion Aliases
 
 #pragma region Inner types
 
+  // clang-format off
   /// <summary>
   /// As defined in RFC6455.
   /// </summary>
@@ -76,9 +74,9 @@ struct IWebSocketResource
     Reserved3       = 1015,
     Size            = 17 // Metavalue representing the number of entries in this enum.
   };
+  // clang-format on
 
-  struct Error
-  {
+  struct Error {
     std::string Message;
     const ErrorType Type;
   };
@@ -93,7 +91,7 @@ struct IWebSocketResource
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
   static std::shared_ptr<IWebSocketResource>
-  Make(const std::string& url, bool legacyImplementation = false, bool acceptSelfSigned = false);
+  Make(const std::string &url, bool legacyImplementation = false, bool acceptSelfSigned = false);
 
   virtual ~IWebSocketResource() {}
 
@@ -107,7 +105,7 @@ struct IWebSocketResource
   /// HTTP header fields passed by the remote endpoint, to be used in the
   /// handshake process.
   /// </param>
-  virtual void Connect(const Protocols& protocols = {}, const Options& options = {}) = 0;
+  virtual void Connect(const Protocols &protocols = {}, const Options &options = {}) = 0;
 
   /// <summary>
   /// Sends a ping frame to the remote endpoint.
@@ -120,7 +118,7 @@ struct IWebSocketResource
   /// <param name="message">
   /// UTF8-encoded string of arbitrary length.
   /// </param>
-  virtual void Send(const std::string& message) = 0;
+  virtual void Send(const std::string &message) = 0;
 
   /// <summary>
   /// Sends a non-plain-text message to the remote endpoint.
@@ -128,7 +126,7 @@ struct IWebSocketResource
   /// <param name="base64String">
   /// Binary message encoded in Base64 format.
   /// </param>
-  virtual void SendBinary(const std::string& base64String) = 0;
+  virtual void SendBinary(const std::string &base64String) = 0;
 
   /// <summary>
   /// Terminates this resource's connection to the remote endpoint.
@@ -138,7 +136,7 @@ struct IWebSocketResource
   /// </param>
   /// <param name="reason">
   /// </param>
-  virtual void Close(CloseCode code, const std::string& reason) = 0;
+  virtual void Close(CloseCode code, const std::string &reason) = 0;
 
   /// <returns>
   /// Current public state as defined in the <c>ReadyState</c> enum.
@@ -150,7 +148,7 @@ struct IWebSocketResource
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnConnect(std::function<void()>&& handler) = 0;
+  virtual void SetOnConnect(std::function<void()> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a successful ping to the remote
@@ -158,14 +156,14 @@ struct IWebSocketResource
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnPing(std::function<void()>&& handler) = 0;
+  virtual void SetOnPing(std::function<void()> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a message sending.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnSend(std::function<void(std::size_t)>&& handler) = 0;
+  virtual void SetOnSend(std::function<void(std::size_t)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when there is an incoming
@@ -173,21 +171,21 @@ struct IWebSocketResource
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnMessage(std::function<void(std::size_t, const std::string&)>&& handler) = 0;
+  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when this instance is closed.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler) = 0;
+  virtual void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on an error condition.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnError(std::function<void(Error&&)>&& handler) = 0;
+  virtual void SetOnError(std::function<void(Error &&)> &&handler) = 0;
 };
 
 } // namespace Microsoft::React
