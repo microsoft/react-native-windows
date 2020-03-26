@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add a timeout to catch hangs during cert generation",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-26T16:13:40.983Z"
+}
