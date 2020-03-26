@@ -49,6 +49,8 @@ const EXITCODE_USER_CANCEL = 4;
 const EXITCODE_NO_REACTNATIVE_FOUND = 5;
 const EXITCODE_UNKNOWN_ERROR = 6;
 const EXITCODE_NO_PACKAGE_JSON = 7;
+const EXITCODE_NO_LATEST_RNW = 8;
+const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
 
 function reactNativeWindowsGeneratePath() {
   return require.resolve('react-native-windows/local-cli/generate-windows.js', {
@@ -183,9 +185,18 @@ function getLatestMatchingVersion(
   });
 }
 
+async function getLatestRNWVersion() {
+  const rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
+  if (!rnwLatestVersion) {
+    console.error('Error: No version of react-native-windows@latest found');
+    process.exit(EXITCODE_NO_LATEST_RNW);
+  }
+  return rnwLatestVersion;
+}
+
 async function getLatestMatchingRNWVersion(
   versionSemVer: string,
-): Promise<string> {
+): Promise<string | null> {
   try {
     const version = await getLatestMatchingVersion(
       'react-native-windows',
@@ -193,10 +204,7 @@ async function getLatestMatchingRNWVersion(
     );
     return version;
   } catch (err) {
-    console.error(
-      `Error: No version of react-native-windows@${versionSemVer} found`,
-    );
-    process.exit(EXITCODE_NO_MATCHING_RNW);
+    return null;
   }
 }
 
@@ -222,6 +230,35 @@ function isProjectUsingYarn(cwd: string) {
 
     const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
 
+    if (!rnwResolvedVersion) {
+      if (!argv.version) {
+        const rnwLatestVersion = await getLatestRNWVersion();
+        console.error(
+          `
+No compatible version of ${chalk.green('react-native-windows')} found.
+The latest supported version is ${chalk.green(
+            'react-native-windows',
+          )}@${chalk.cyan(rnwLatestVersion)}.
+Please modify your application to use ${chalk.green(
+            'react-native',
+          )}@${chalk.cyan(
+            getMatchingReactNativeSemVerForReactNativeWindowsVersion(
+              rnwLatestVersion,
+            ),
+          )} or another supported version of ${chalk.green(
+            'react-native',
+          )} and try again.
+`,
+        );
+        process.exit(EXITCODE_NO_AUTO_MATCHING_RNW);
+      } else {
+        console.error(
+          `Error: No version of react-native-windows@${argv.version} found`,
+        );
+        process.exit(EXITCODE_NO_MATCHING_RNW);
+      }
+    }
+
     if (!argv.version) {
       console.log(
         `Latest matching version of ${chalk.bold(
@@ -234,7 +271,7 @@ function isProjectUsingYarn(cwd: string) {
       );
 
       if (semver.prerelease(rnwResolvedVersion)) {
-        const rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
+        const rnwLatestVersion = await getLatestRNWVersion();
         console.warn(
           `
 ${chalk.green('react-native-windows')}@${chalk.cyan(
