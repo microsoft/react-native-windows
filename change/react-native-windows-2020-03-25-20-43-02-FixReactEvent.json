@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow NativeModules events to have 0..n arguments",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-03-26T03:43:02.397Z"
-}

@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 14:54:10 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2020 16:02:57 GMT and should not be manually modified.
 
+## 0.61.0-beta.74
+Thu, 26 Mar 2020 16:02:57 GMT
+
+### Changes
+
+- Allow NativeModules events to have 0..n arguments (vmorozov@microsoft.com)
 ## 0.61.0-beta.73
 Thu, 26 Mar 2020 14:54:10 GMT
 

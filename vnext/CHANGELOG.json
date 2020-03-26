@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2020 16:02:57 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.74",
+      "version": "0.61.0-beta.74",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow NativeModules events to have 0..n arguments",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2020 14:54:10 GMT",
       "tag": "react-native-windows_v0.61.0-beta.73",
       "version": "0.61.0-beta.73",
