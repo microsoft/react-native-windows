@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Tests for NativeModule registration without attributes",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-26T17:10:33.527Z"
+}
