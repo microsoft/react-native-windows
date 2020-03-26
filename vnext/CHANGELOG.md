@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 16:02:57 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2020 19:54:26 GMT and should not be manually modified.
 
+## 0.61.0-beta.75
+Thu, 26 Mar 2020 19:54:26 GMT
+
+### Changes
+
+- Add a timeout to catch hangs during cert generation (acoates@microsoft.com)
 ## 0.61.0-beta.74
 Thu, 26 Mar 2020 16:02:57 GMT
 

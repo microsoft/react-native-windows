@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2020 19:54:26 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.75",
+      "version": "0.61.0-beta.75",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a timeout to catch hangs during cert generation",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2020 16:02:57 GMT",
       "tag": "react-native-windows_v0.61.0-beta.74",
       "version": "0.61.0-beta.74",
