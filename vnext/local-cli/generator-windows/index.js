@@ -20,24 +20,19 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
   console.log('Generating self-signed certificate...');
   let toCopyTempKey = false;
   if (os.platform() === 'win32') {
-    const certGenCommand = [
-      `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
-      '$pwd = ConvertTo-SecureString -String password -Force -AsPlainText',
-      `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join(windowsDir, newProjectName)}`,
-      `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd`,
-      '$cert.Thumbprint',
-    ];
-    const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
-
-    if (certGenProcess.status === 0) {
-      const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
+    try {
+      const thumbprint = childProcess.execSync(`powershell -command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`).toString().trim();
+      if (!fs.existsSync(path.join(windowsDir, newProjectName))) {
+        fs.createDir(path.join(windowsDir, newProjectName));
+      }
+      childProcess.execSync(`powershell -command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd"`);
       console.log(chalk.green('Self-signed certificate generated successfully.'));
-      return certGenProcessOutput[certGenProcessOutput.length - 1];
+      return thumbprint;
+      } catch (err) {
+        console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
+        toCopyTempKey = true;
+      }
     } else {
-      console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
-      toCopyTempKey = true;
-    }
-  } else {
     console.log(chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'));
     toCopyTempKey = true;
   }
