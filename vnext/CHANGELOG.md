@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 24 Mar 2020 07:05:57 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2020 05:34:25 GMT and should not be manually modified.
 
+## 0.61.0-beta.72
+Thu, 26 Mar 2020 05:34:25 GMT
+
+### Changes
+
+- Fix hang on react-native-init when run from a non-elevated prompt (acoates@microsoft.com)
 ## 0.61.0-beta.71
 Tue, 24 Mar 2020 07:05:57 GMT
 
