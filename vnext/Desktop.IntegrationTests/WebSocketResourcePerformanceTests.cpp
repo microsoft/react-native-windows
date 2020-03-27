@@ -91,7 +91,9 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
       }
     }
 
-    int64_t threadsPerResource = (threadCount.load() - startThreadCount) / resourceTotal;
+    int32_t finalThreadCount = threadCount.load();
+    int64_t threadsPerResource = (finalThreadCount - startThreadCount) / resourceTotal;
+    Assert::AreNotEqual(finalThreadCount, 0);
     Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
   }
 };
