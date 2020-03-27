@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2020 23:11:17 GMT",
+      "tag": "react-native-windows_v0.0.0-master.2",
+      "version": "0.0.0-master.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Tests for NativeModule registration without attributes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Mar 2020 22:33:20 GMT",
+      "tag": "react-native-windows_v0.0.0-master.1",
+      "version": "0.0.0-master.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "0.0.0 Master Versioning Scheme",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Mar 2020 19:54:26 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.75",
+      "version": "0.61.0-beta.75",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a timeout to catch hangs during cert generation",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Mar 2020 16:02:57 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.74",
+      "version": "0.61.0-beta.74",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow NativeModules events to have 0..n arguments",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Mar 2020 14:54:10 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.73",
+      "version": "0.61.0-beta.73",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable basic V8 direct debugging",
+            "author": "tudorm@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Mar 2020 05:34:25 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.72",
+      "version": "0.61.0-beta.72",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix hang on react-native-init when run from a non-elevated prompt",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Mar 2020 19:05:36 GMT",
       "tag": "react-native-windows_v0.61.0-beta.71",
       "version": "0.61.0-beta.71",

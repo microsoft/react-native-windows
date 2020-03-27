@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.61.0-beta.16",
+  "version": "0.0.0-master.1",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
@@ -64,7 +64,7 @@
     "react-native": "0.61.5"
   },
   "beachball": {
-    "defaultNpmTag": "beta",
+    "defaultNpmTag": "master",
     "disallowedChangeTypes": [
       "major",
       "minor",

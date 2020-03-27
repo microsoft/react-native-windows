@@ -1,7 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 24 Mar 2020 07:05:57 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2020 23:11:17 GMT and should not be manually modified.
 
+## 0.0.0-master.2
+Thu, 26 Mar 2020 23:11:17 GMT
+
+### Changes
+
+- Tests for NativeModule registration without attributes (vmorozov@microsoft.com)
+## 0.0.0-master.1
+Thu, 26 Mar 2020 22:33:20 GMT
+
+### Changes
+
+- 0.0.0 Master Versioning Scheme (ngerlem@microsoft.com)
+## 0.61.0-beta.75
+Thu, 26 Mar 2020 19:54:26 GMT
+
+### Changes
+
+- Add a timeout to catch hangs during cert generation (acoates@microsoft.com)
+## 0.61.0-beta.74
+Thu, 26 Mar 2020 16:02:57 GMT
+
+### Changes
+
+- Allow NativeModules events to have 0..n arguments (vmorozov@microsoft.com)
+## 0.61.0-beta.73
+Thu, 26 Mar 2020 14:54:10 GMT
+
+### Changes
+
+- Enable basic V8 direct debugging (tudorm@microsoft.com)
+## 0.61.0-beta.72
+Thu, 26 Mar 2020 05:34:25 GMT
+
+### Changes
+
+- Fix hang on react-native-init when run from a non-elevated prompt (acoates@microsoft.com)
 ## 0.61.0-beta.71
 Tue, 24 Mar 2020 07:05:57 GMT
 

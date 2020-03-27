@@ -10,18 +10,16 @@
 
 namespace winrt::Microsoft::ReactNative {
 
-REACT_STRUCT(Point)
-struct Point {
-  REACT_FIELD(X)
+struct Point2 {
   int X;
-
-  REACT_FIELD(Y)
   int Y;
 };
 
-REACT_MODULE(SimpleNativeModule)
-struct SimpleNativeModule {
-  REACT_INIT(Initialize)
+FieldMap GetStructInfo(Point2 *) noexcept {
+  return {{L"X", &Point2::X}, {L"Y", &Point2::Y}};
+}
+
+struct SimpleNativeModule2 {
   void Initialize(IReactContext const &context) noexcept {
     IsInitialized = true;
     TestCheck(context != nullptr);
@@ -31,137 +29,112 @@ struct SimpleNativeModule {
     TestCheck(this->JSIntFunction != nullptr);
   }
 
-  REACT_METHOD(Add)
   int Add(int x, int y) noexcept {
     return x + y;
   }
 
-  REACT_METHOD(Negate)
   int Negate(int x) noexcept {
     return -x;
   }
 
-  REACT_METHOD(SayHello)
   std::string SayHello() noexcept {
     return "Hello";
   }
 
-  REACT_METHOD(StaticAdd)
   static int StaticAdd(int x, int y) noexcept {
     return x + y;
   }
 
-  REACT_METHOD(StaticNegate)
   static int StaticNegate(int x) noexcept {
     return -x;
   }
 
-  REACT_METHOD(StaticSayHello)
   static std::string StaticSayHello() noexcept {
     return "Hello";
   }
 
-  REACT_METHOD(SayHello0)
   void SayHello0() noexcept {
     Message = "Hello_0";
   }
 
-  REACT_METHOD(PrintPoint)
-  void PrintPoint(Point pt) noexcept {
+  void PrintPoint(Point2 pt) noexcept {
     std::stringstream ss;
-    ss << "Point: (" << pt.X << ", " << pt.Y << ")";
+    ss << "Point2: (" << pt.X << ", " << pt.Y << ")";
     Message = ss.str();
   }
 
-  REACT_METHOD(PrintLine)
-  void PrintLine(Point start, Point end) noexcept {
+  void PrintLine(Point2 start, Point2 end) noexcept {
     std::stringstream ss;
     ss << "Line: (" << start.X << ", " << start.Y << ")-(" << end.X << ", " << end.Y << ")";
     Message = ss.str();
   }
 
-  REACT_METHOD(StaticSayHello1)
   static void StaticSayHello1() noexcept {
     StaticMessage = "Hello_1";
   }
 
-  REACT_METHOD(StaticPrintPoint)
-  static void StaticPrintPoint(Point pt) noexcept {
+  static void StaticPrintPoint(Point2 pt) noexcept {
     std::stringstream ss;
-    ss << "Static Point: (" << pt.X << ", " << pt.Y << ")";
+    ss << "Static Point2: (" << pt.X << ", " << pt.Y << ")";
     StaticMessage = ss.str();
   }
 
-  REACT_METHOD(StaticPrintLine)
-  static void StaticPrintLine(Point start, Point end) noexcept {
+  static void StaticPrintLine(Point2 start, Point2 end) noexcept {
     std::stringstream ss;
     ss << "Static Line: (" << start.X << ", " << start.Y << ")-(" << end.X << ", " << end.Y << ")";
     StaticMessage = ss.str();
   }
 
-  REACT_METHOD(AddCallback)
   void AddCallback(int x, int y, std::function<void(int)> const &resolve) noexcept {
     resolve(x + y);
   }
 
-  REACT_METHOD(NegateCallback)
   void NegateCallback(int x, std::function<void(int)> const &resolve) noexcept {
     resolve(-x);
   }
 
-  REACT_METHOD(NegateAsyncCallback)
   fire_and_forget NegateAsyncCallback(int x, std::function<void(int)> resolve) noexcept {
     co_await winrt::resume_background();
     resolve(-x);
   }
 
-  REACT_METHOD(NegateDispatchQueueCallback)
   void NegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
     Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
   }
 
-  REACT_METHOD(NegateFutureCallback)
   void NegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
     Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
   }
 
-  REACT_METHOD(SayHelloCallback)
   void SayHelloCallback(std::function<void(const std::string &)> const &resolve) noexcept {
     resolve("Hello_2");
   }
 
-  REACT_METHOD(StaticAddCallback)
   static void StaticAddCallback(int x, int y, std::function<void(int)> const &resolve) noexcept {
     resolve(x + y);
   }
 
-  REACT_METHOD(StaticNegateCallback)
   static void StaticNegateCallback(int x, std::function<void(int)> const &resolve) noexcept {
     resolve(-x);
   }
 
-  REACT_METHOD(StaticNegateAsyncCallback)
   static fire_and_forget StaticNegateAsyncCallback(int x, std::function<void(int)> resolve) noexcept {
     co_await winrt::resume_background();
     resolve(-x);
   }
 
-  REACT_METHOD(StaticNegateDispatchQueueCallback)
   static void StaticNegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
     Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
   }
 
-  REACT_METHOD(StaticNegateFutureCallback)
   static void StaticNegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
     Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
   }
 
-  REACT_METHOD(StaticSayHelloCallback)
   static void StaticSayHelloCallback(std::function<void(const std::string &)> const &resolve) noexcept {
     resolve("Static Hello_2");
   }
 
-  REACT_METHOD(DivideCallbacks)
   void DivideCallbacks(
       int x,
       int y,
@@ -174,7 +147,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(NegateCallbacks)
   void NegateCallbacks(
       int x,
       std::function<void(int)> const &resolve,
@@ -186,7 +158,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(NegateAsyncCallbacks)
   fire_and_forget NegateAsyncCallbacks(
       int x,
       std::function<void(int)> resolve,
@@ -199,7 +170,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(NegateDispatchQueueCallbacks)
   void NegateDispatchQueueCallbacks(
       int x,
       std::function<void(int)> const &resolve,
@@ -213,7 +183,6 @@ struct SimpleNativeModule {
     });
   }
 
-  REACT_METHOD(NegateFutureCallbacks)
   void NegateFutureCallbacks(
       int x,
       std::function<void(int)> const &resolve,
@@ -227,21 +196,18 @@ struct SimpleNativeModule {
     });
   }
 
-  REACT_METHOD(ResolveSayHelloCallbacks)
   void ResolveSayHelloCallbacks(
       std::function<void(std::string const &)> const &resolve,
       std::function<void(std::string const &)> const & /*reject*/) noexcept {
     resolve("Hello_3");
   }
 
-  REACT_METHOD(RejectSayHelloCallbacks)
   void RejectSayHelloCallbacks(
       std::function<void(std::string const &)> const & /*resolve*/,
       std::function<void(std::string const &)> const &reject) noexcept {
     reject("Goodbye");
   }
 
-  REACT_METHOD(StaticDivideCallbacks)
   static void StaticDivideCallbacks(
       int x,
       int y,
@@ -254,7 +220,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticNegateCallbacks)
   static void StaticNegateCallbacks(
       int x,
       std::function<void(int)> const &resolve,
@@ -266,7 +231,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticNegateAsyncCallbacks)
   static fire_and_forget StaticNegateAsyncCallbacks(
       int x,
       std::function<void(int)> resolve,
@@ -279,7 +243,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticNegateDispatchQueueCallbacks)
   static void StaticNegateDispatchQueueCallbacks(
       int x,
       std::function<void(int)> const &resolve,
@@ -293,7 +256,6 @@ struct SimpleNativeModule {
     });
   }
 
-  REACT_METHOD(StaticNegateFutureCallbacks)
   static void StaticNegateFutureCallbacks(
       int x,
       std::function<void(int)> const &resolve,
@@ -307,21 +269,18 @@ struct SimpleNativeModule {
     });
   }
 
-  REACT_METHOD(StaticResolveSayHelloCallbacks)
   static void StaticResolveSayHelloCallbacks(
       std::function<void(std::string const &)> const &resolve,
       std::function<void(std::string const &)> const & /*reject*/) noexcept {
     resolve("Hello_3");
   }
 
-  REACT_METHOD(StaticRejectSayHelloCallbacks)
   static void StaticRejectSayHelloCallbacks(
       std::function<void(std::string const &)> const & /*resolve*/,
       std::function<void(std::string const &)> const &reject) noexcept {
     reject("Goodbye");
   }
 
-  REACT_METHOD(DividePromise)
   void DividePromise(int x, int y, ReactPromise<int> const &result) noexcept {
     if (y != 0) {
       result.Resolve(x / y);
@@ -332,7 +291,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(NegatePromise)
   void NegatePromise(int x, ReactPromise<int> const &result) noexcept {
     if (x >= 0) {
       result.Resolve(-x);
@@ -343,7 +301,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(NegateAsyncPromise)
   fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
@@ -355,7 +312,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(NegateDispatchQueuePromise)
   void NegateDispatchQueuePromise(int x, ReactPromise<int> const &result) noexcept {
     Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
       if (x >= 0) {
@@ -368,7 +324,6 @@ struct SimpleNativeModule {
     });
   }
 
-  REACT_METHOD(NegateFuturePromise)
   void NegateFuturePromise(int x, ReactPromise<int> const &result) noexcept {
     Mso::PostFuture([ x, result ]() noexcept {
       if (x >= 0) {
@@ -381,8 +336,6 @@ struct SimpleNativeModule {
     });
   }
 
-  // Each macro has second optional parameter: JS name.
-  REACT_METHOD(VoidPromise, L"voidPromise")
   void VoidPromise(int x, ReactPromise<void> const &result) noexcept {
     if (x % 2 == 0) {
       result.Resolve();
@@ -391,19 +344,16 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(ResolveSayHelloPromise)
   void ResolveSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     result.Resolve("Hello_4");
   }
 
-  REACT_METHOD(RejectSayHelloPromise)
   void RejectSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     ReactError error{};
     error.Message = "Promise rejected";
     result.Reject(std::move(error));
   }
 
-  REACT_METHOD(StaticDividePromise)
   static void StaticDividePromise(int x, int y, ReactPromise<int> const &result) noexcept {
     if (y != 0) {
       result.Resolve(x / y);
@@ -414,7 +364,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticNegatePromise)
   static void StaticNegatePromise(int x, ReactPromise<int> const &result) noexcept {
     if (x >= 0) {
       result.Resolve(-x);
@@ -425,7 +374,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticNegateAsyncPromise)
   static fire_and_forget StaticNegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
@@ -437,7 +385,6 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticNegateDispatchQueuePromise)
   static void StaticNegateDispatchQueuePromise(int x, ReactPromise<int> const &result) noexcept {
     Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
       if (x >= 0) {
@@ -450,7 +397,6 @@ struct SimpleNativeModule {
     });
   }
 
-  REACT_METHOD(StaticNegateFuturePromise)
   static void StaticNegateFuturePromise(int x, ReactPromise<int> const &result) noexcept {
     Mso::PostFuture([ x, result ]() noexcept {
       if (x >= 0) {
@@ -463,8 +409,6 @@ struct SimpleNativeModule {
     });
   }
 
-  // Each macro has second optional parameter: JS name.
-  REACT_METHOD(StaticVoidPromise, L"staticVoidPromise")
   void StaticVoidPromise(int x, ReactPromise<void> const &result) noexcept {
     if (x % 2 == 0) {
       result.Resolve();
@@ -473,120 +417,86 @@ struct SimpleNativeModule {
     }
   }
 
-  REACT_METHOD(StaticResolveSayHelloPromise)
   static void StaticResolveSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     result.Resolve("Hello_4");
   }
 
-  REACT_METHOD(StaticRejectSayHelloPromise)
   static void StaticRejectSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
     ReactError error{};
     error.Message = "Promise rejected";
     result.Reject(std::move(error));
   }
 
-  REACT_SYNC_METHOD(AddSync)
   int AddSync(int x, int y) noexcept {
     return x + y;
   }
 
-  REACT_SYNC_METHOD(NegateSync)
   int NegateSync(int x) noexcept {
     return -x;
   }
 
-  REACT_SYNC_METHOD(SayHelloSync)
   std::string SayHelloSync() noexcept {
     return "Hello";
   }
 
-  REACT_SYNC_METHOD(StaticAddSync)
   static int StaticAddSync(int x, int y) noexcept {
     return x + y;
   }
 
-  REACT_SYNC_METHOD(StaticNegateSync)
   static int StaticNegateSync(int x) noexcept {
     return -x;
   }
 
-  REACT_SYNC_METHOD(StaticSayHelloSync)
   static std::string StaticSayHelloSync() noexcept {
     return "Hello";
   }
 
-  REACT_CONSTANT(Constant1)
   const std::string Constant1{"MyConstant1"};
 
-  REACT_CONSTANT(Constant2, L"const2")
   const std::string Constant2{"MyConstant2"};
 
-  REACT_CONSTANT(Constant3, L"const3")
-  static constexpr Point Constant3{/*X =*/2, /*Y =*/3};
+  static constexpr Point2 Constant3{/*X =*/2, /*Y =*/3};
 
-  REACT_CONSTANT(Constant4)
-  static constexpr Point Constant4{/*X =*/3, /*Y =*/4};
+  static constexpr Point2 Constant4{/*X =*/3, /*Y =*/4};
 
-  REACT_CONSTANT_PROVIDER(Constant5)
   void Constant5(ReactConstantProvider &provider) noexcept {
-    provider.Add(L"const51", Point{/*X =*/12, /*Y =*/14});
+    provider.Add(L"const51", Point2{/*X =*/12, /*Y =*/14});
     provider.Add(L"const52", "MyConstant52");
   }
 
-  REACT_CONSTANT_PROVIDER(Constant6)
   static void Constant6(ReactConstantProvider &provider) noexcept {
-    provider.Add(L"const61", Point{/*X =*/15, /*Y =*/17});
+    provider.Add(L"const61", Point2{/*X =*/15, /*Y =*/17});
     provider.Add(L"const62", "MyConstant62");
   }
 
   // Allows to emit native module events
-  REACT_EVENT(OnIntEvent)
   std::function<void(int)> OnIntEvent;
 
   // An event without arguments
-  REACT_EVENT(OnNoArgEvent)
   std::function<void()> OnNoArgEvent;
 
   // An event with two arguments
-  REACT_EVENT(OnTwoArgsEvent)
-  std::function<void(Point const &, Point const &)> OnTwoArgsEvent;
+  std::function<void(Point2 const &, Point2 const &)> OnTwoArgsEvent;
 
-  // Specify event name different from the field name.
-  REACT_EVENT(OnPointEvent, L"onPointEvent")
-  std::function<void(Point const &)> OnPointEvent;
+  std::function<void(Point2 const &)> OnPointEvent;
 
-  // By default we use the event emitter name from REACT_MODULE which is by default 'RCTDeviceEventEmitter'.
-  // Here we specify event emitter name local for this event.
-  REACT_EVENT(OnStringEvent, L"onStringEvent", L"MyEventEmitter")
   std::function<void(char const *)> OnStringEvent;
 
-  // Use JSValue which is an immutable JSON-like data representation.
-  REACT_EVENT(OnJSValueEvent)
   std::function<void(const JSValue &)> OnJSValueEvent;
 
   // Allows to call JS functions.
-  REACT_FUNCTION(JSIntFunction)
   std::function<void(int)> JSIntFunction;
 
-  // Specify JS function name different from the field name.
-  REACT_FUNCTION(JSPointFunction, L"pointFunc")
-  std::function<void(Point const &)> JSPointFunction;
+  std::function<void(Point2 const &)> JSPointFunction;
 
-  // Use two arguments. Specify JS function name different from the field name.
-  REACT_FUNCTION(JSLineFunction, L"lineFunc")
-  std::function<void(Point const &, Point const &)> JSLineFunction;
+  std::function<void(Point2 const &, Point2 const &)> JSLineFunction;
 
   // Use no arguments.
-  REACT_FUNCTION(JSNoArgFunction)
   std::function<void()> JSNoArgFunction;
 
-  // By default we use the module name from REACT_MODULE which is by default the struct name.
-  // Here we specify module name local for this function.
-  REACT_FUNCTION(JSStringFunction, L"stringFunc", L"MyModule")
   std::function<void(char const *)> JSStringFunction;
 
   // Use JSValue which is an immutable JSON-like data representation.
-  REACT_FUNCTION(JSValueFunction)
   std::function<void(const JSValue &)> JSValueFunction;
 
  public: // Used to report some test messages
@@ -595,20 +505,106 @@ struct SimpleNativeModule {
   static std::string StaticMessage;
 };
 
-/*static*/ std::string SimpleNativeModule::StaticMessage;
+/*static*/ std::string SimpleNativeModule2::StaticMessage;
 
-TEST_CLASS (NativeModuleTest) {
+void RegisterModule(ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noexcept {
+  moduleBuilder.RegisterModuleName(L"SimpleNativeModule2");
+  moduleBuilder.RegisterInitMethod(&SimpleNativeModule2::Initialize);
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::Add, L"Add");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::Negate, L"Negate");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::SayHello, L"SayHello");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticAdd, L"StaticAdd");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegate, L"StaticNegate");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticSayHello, L"StaticSayHello");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::SayHello0, L"SayHello0");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::PrintPoint, L"PrintPoint");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::PrintLine, L"PrintLine");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticSayHello1, L"StaticSayHello1");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticPrintPoint, L"StaticPrintPoint");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticPrintLine, L"StaticPrintLine");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::AddCallback, L"AddCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateCallback, L"NegateCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateAsyncCallback, L"NegateAsyncCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateDispatchQueueCallback, L"NegateDispatchQueueCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateFutureCallback, L"NegateFutureCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::SayHelloCallback, L"SayHelloCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticAddCallback, L"StaticAddCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateCallback, L"StaticNegateCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateAsyncCallback, L"StaticNegateAsyncCallback");
+  moduleBuilder.RegisterMethod(
+      &SimpleNativeModule2::StaticNegateDispatchQueueCallback, L"StaticNegateDispatchQueueCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateFutureCallback, L"StaticNegateFutureCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticSayHelloCallback, L"StaticSayHelloCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::DivideCallbacks, L"DivideCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateCallbacks, L"NegateCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateAsyncCallbacks, L"NegateAsyncCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateDispatchQueueCallbacks, L"NegateDispatchQueueCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateFutureCallbacks, L"NegateFutureCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::ResolveSayHelloCallbacks, L"ResolveSayHelloCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::RejectSayHelloCallbacks, L"RejectSayHelloCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticDivideCallbacks, L"StaticDivideCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateCallbacks, L"StaticNegateCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateAsyncCallbacks, L"StaticNegateAsyncCallbacks");
+  moduleBuilder.RegisterMethod(
+      &SimpleNativeModule2::StaticNegateDispatchQueueCallbacks, L"StaticNegateDispatchQueueCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateFutureCallbacks, L"StaticNegateFutureCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticResolveSayHelloCallbacks, L"StaticResolveSayHelloCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticRejectSayHelloCallbacks, L"StaticRejectSayHelloCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::DividePromise, L"DividePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegatePromise, L"NegatePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateAsyncPromise, L"NegateAsyncPromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateDispatchQueuePromise, L"NegateDispatchQueuePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateFuturePromise, L"NegateFuturePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::VoidPromise, L"voidPromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::ResolveSayHelloPromise, L"ResolveSayHelloPromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::RejectSayHelloPromise, L"RejectSayHelloPromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticDividePromise, L"StaticDividePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegatePromise, L"StaticNegatePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateAsyncPromise, L"StaticNegateAsyncPromise");
+  moduleBuilder.RegisterMethod(
+      &SimpleNativeModule2::StaticNegateDispatchQueuePromise, L"StaticNegateDispatchQueuePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateFuturePromise, L"StaticNegateFuturePromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticVoidPromise, L"staticVoidPromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticResolveSayHelloPromise, L"StaticResolveSayHelloPromise");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticRejectSayHelloPromise, L"StaticRejectSayHelloPromise");
+  moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::AddSync, L"AddSync");
+  moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::NegateSync, L"NegateSync");
+  moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::SayHelloSync, L"SayHelloSync");
+  moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::StaticAddSync, L"StaticAddSync");
+  moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::StaticNegateSync, L"StaticNegateSync");
+  moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::StaticSayHelloSync, L"StaticSayHelloSync");
+  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant1, L"Constant1");
+  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant2, L"const2");
+  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant3, L"const3");
+  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant4, L"Constant4");
+  moduleBuilder.RegisterConstMethod(&SimpleNativeModule2::Constant5, L"Constant5");
+  moduleBuilder.RegisterConstMethod(&SimpleNativeModule2::Constant6, L"Constant6");
+  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnIntEvent, L"OnIntEvent");
+  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnNoArgEvent, L"OnNoArgEvent");
+  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnTwoArgsEvent, L"OnTwoArgsEvent");
+  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnPointEvent, L"onPointEvent");
+  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnStringEvent, L"onStringEvent", L"MyEventEmitter");
+  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnJSValueEvent, L"OnJSValueEvent");
+  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSIntFunction, L"JSIntFunction");
+  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSPointFunction, L"pointFunc");
+  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSLineFunction, L"lineFunc");
+  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSNoArgFunction, L"JSNoArgFunction");
+  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSStringFunction, L"stringFunc", L"MyModule");
+  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSValueFunction, L"JSValueFunction");
+}
+
+TEST_CLASS (NoAttributeNativeModuleTest) {
   ReactModuleBuilderMock m_builderMock{};
   IReactModuleBuilder m_moduleBuilder;
   Windows::Foundation::IInspectable m_moduleObject{nullptr};
-  SimpleNativeModule *m_module;
+  SimpleNativeModule2 *m_module;
 
-  NativeModuleTest() {
+  NoAttributeNativeModuleTest() {
     m_moduleBuilder = make<ReactModuleBuilderImpl>(m_builderMock);
-    auto provider = MakeModuleProvider<SimpleNativeModule>();
+    auto provider = MakeModuleProvider<SimpleNativeModule2>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
     auto reactModule = m_moduleObject.as<IBoxedValue>();
-    m_module = &BoxedValue<SimpleNativeModule>::GetImpl(reactModule);
+    m_module = &BoxedValue<SimpleNativeModule2>::GetImpl(reactModule);
   }
 
   TEST_METHOD(TestMethodCall_Add) {
@@ -653,28 +649,28 @@ TEST_CLASS (NativeModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_PrintPoint) {
-    m_builderMock.Call0(L"PrintPoint", Point{/*X =*/3, /*Y =*/5});
-    TestCheck(m_module->Message == "Point: (3, 5)");
+    m_builderMock.Call0(L"PrintPoint", Point2{/*X =*/3, /*Y =*/5});
+    TestCheck(m_module->Message == "Point2: (3, 5)");
   }
 
   TEST_METHOD(TestMethodCall_PrintLine) {
-    m_builderMock.Call0(L"PrintLine", Point{/*X =*/3, /*Y =*/5}, Point{/*X =*/6, /*Y =*/8});
+    m_builderMock.Call0(L"PrintLine", Point2{/*X =*/3, /*Y =*/5}, Point2{/*X =*/6, /*Y =*/8});
     TestCheck(m_module->Message == "Line: (3, 5)-(6, 8)");
   }
 
   TEST_METHOD(TestMethodCall_StaticSayHello1) {
     m_builderMock.Call0(L"StaticSayHello1");
-    TestCheck(SimpleNativeModule::StaticMessage == "Hello_1");
+    TestCheck(SimpleNativeModule2::StaticMessage == "Hello_1");
   }
 
   TEST_METHOD(TestMethodCall_StaticPrintPoint) {
-    m_builderMock.Call0(L"StaticPrintPoint", Point{/*X =*/13, /*Y =*/15});
-    TestCheck(SimpleNativeModule::StaticMessage == "Static Point: (13, 15)");
+    m_builderMock.Call0(L"StaticPrintPoint", Point2{/*X =*/13, /*Y =*/15});
+    TestCheck(SimpleNativeModule2::StaticMessage == "Static Point2: (13, 15)");
   }
 
   TEST_METHOD(TestMethodCall_StaticPrintLine) {
-    m_builderMock.Call0(L"StaticPrintLine", Point{/*X =*/13, /*Y =*/15}, Point{/*X =*/16, /*Y =*/18});
-    TestCheck(SimpleNativeModule::StaticMessage == "Static Line: (13, 15)-(16, 18)");
+    m_builderMock.Call0(L"StaticPrintLine", Point2{/*X =*/13, /*Y =*/15}, Point2{/*X =*/16, /*Y =*/18});
+    TestCheck(SimpleNativeModule2::StaticMessage == "Static Line: (13, 15)-(16, 18)");
   }
 
   TEST_METHOD(TestMethodCall_AddCallback) {
@@ -1372,7 +1368,7 @@ TEST_CLASS (NativeModuleTest) {
           eventRaised = true;
         });
 
-    m_module->OnTwoArgsEvent(Point{/*X =*/4, /*Y =*/2}, Point{/*X =*/12, /*Y =*/18});
+    m_module->OnTwoArgsEvent(Point2{/*X =*/4, /*Y =*/2}, Point2{/*X =*/12, /*Y =*/18});
     TestCheck(eventRaised);
   }
 
@@ -1385,7 +1381,7 @@ TEST_CLASS (NativeModuleTest) {
           eventRaised = true;
         });
 
-    m_module->OnPointEvent(Point{/*X =*/4, /*Y =*/2});
+    m_module->OnPointEvent(Point2{/*X =*/4, /*Y =*/2});
     TestCheck(eventRaised == true);
   }
 
@@ -1443,7 +1439,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSIntFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSIntFunction", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSIntFunction", [&functionCalled](JSValueArray const &args) noexcept {
           TestCheck(args[0] == 42);
           functionCalled = true;
         });
@@ -1455,20 +1451,20 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSNameFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"pointFunc", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"pointFunc", [&functionCalled](JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           functionCalled = true;
         });
 
-    m_module->JSPointFunction(Point{/*X =*/4, /*Y =*/2});
+    m_module->JSPointFunction(Point2{/*X =*/4, /*Y =*/2});
     TestCheck(functionCalled == true);
   }
 
-  TEST_METHOD(TestFunction_TwoArgFunctionField) {
+  TEST_METHOD(TestFunction_JSTwoArgFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"lineFunc", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"lineFunc", [&functionCalled](JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           TestCheck(args[1]["X"] == 12);
@@ -1476,14 +1472,14 @@ TEST_CLASS (NativeModuleTest) {
           functionCalled = true;
         });
 
-    m_module->JSLineFunction(Point{/*X =*/4, /*Y =*/2}, Point{/*X =*/12, /*Y =*/18});
+    m_module->JSLineFunction(Point2{/*X =*/4, /*Y =*/2}, Point2{/*X =*/12, /*Y =*/18});
     TestCheck(functionCalled == true);
   }
 
-  TEST_METHOD(TestFunction_NoArgFunctionField) {
+  TEST_METHOD(TestFunction_JSNoArgFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSNoArgFunction", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSNoArgFunction", [&functionCalled](JSValueArray const &args) noexcept {
           TestCheckEqual(0, args.size());
           functionCalled = true;
         });
@@ -1506,7 +1502,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSValueObjectFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSValueFunction", ([&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSValueFunction", ([&functionCalled](JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           functionCalled = true;
@@ -1519,7 +1515,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSValueArrayFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSValueFunction", ([&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSValueFunction", ([&functionCalled](JSValueArray const &args) noexcept {
           TestCheck(args[0][0] == "X");
           TestCheck(args[0][1] == 4);
           TestCheck(args[0][2] == true);

@@ -250,10 +250,7 @@ inline void WriteProperties(IJSValueWriter const &writer, T const &value) noexce
 template <class... TArgs>
 inline void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexcept {
   writer.WriteArrayBegin();
-  if constexpr (sizeof...(args) > 0) {
-    // To write variadic template arguments in natural order we must use them in an initializer list.
-    [[maybe_unused]] int dummy[] = {(WriteValue(writer, args), 0)...};
-  }
+  (WriteValue(writer, args), ...);
   writer.WriteArrayEnd();
 }
 
