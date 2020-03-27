@@ -46,9 +46,13 @@ steps:
       node .ado/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
-  - script: |
-      npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) --no-push --registry http://localhost:4873 --yes --access public
+  - task: PowerShell@2
     displayName: Publish packages to verdaccio
+    inputs:
+      targetType: inline
+      script: |
+        $env:SYSTEM_PULLREQUEST_TARGETBRANCH -match 'refs/heads/(.*)'
+        npx --no-install beachball publish --branch $Matches[1] --no-push --registry http://localhost:4873 --yes --access public
 
   - task: CmdLine@2
     displayName: Install react-native cli
