@@ -136,7 +136,7 @@ struct IWebSocketResource {
   /// </param>
   /// <param name="reason">
   /// </param>
-  virtual void Close(CloseCode code, const std::string &reason) = 0;
+  virtual void Close(CloseCode code = CloseCode::None, const std::string &reason = {}) = 0;
 
   /// <returns>
   /// Current public state as defined in the <c>ReadyState</c> enum.
