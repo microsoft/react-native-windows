@@ -445,6 +445,7 @@ jobs:
         inputs:
           targetType: inline
           script: |
+            echo $env:SYSTEM_PULLREQUEST_TARGETBRANCH
             $env:SYSTEM_PULLREQUEST_TARGETBRANCH -match 'refs/heads/(.*)'
             node ./node_modules/beachball/bin/beachball.js check --branch $Matches[1] --changehint "Run `yarn change` from root of repo to generate a change file."
 
