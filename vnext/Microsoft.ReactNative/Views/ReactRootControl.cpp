@@ -519,6 +519,7 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
         winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           m_useWebDebugger = !m_useWebDebugger;
+          m_directDebugging = false; // Remote debugging is incompatible with direct debugging
           ReloadHost();
         });
 
@@ -527,11 +528,12 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
         winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           m_directDebugging = !m_directDebugging;
+          m_useWebDebugger = false; // Remote debugging is incompatible with direct debugging
           ReloadHost();
         });
 
     breakOnNextLineText.Text(m_breakOnNextLine ? L"Disable Break on First Line" : L"Enable Break on First Line");
-    m_breakOnNextLineRevoker = directDebugButton.Click(
+    m_breakOnNextLineRevoker = breakOnNextLineButton.Click(
         winrt::auto_revoke, [this](auto const & /*sender*/, winrt::RoutedEventArgs const & /*args*/) noexcept {
           DismissDeveloperMenu();
           m_breakOnNextLine = !m_breakOnNextLine;
