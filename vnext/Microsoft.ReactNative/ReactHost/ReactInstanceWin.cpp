@@ -171,6 +171,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerPort = m_options.DeveloperSettings.DebuggerPort;
           devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
           devSettings->useWebDebugger = m_options.DeveloperSettings.UseWebDebugger;
+          devSettings->useFastRefresh = m_options.DeveloperSettings.UseFastRefresh;
           // devSettings->memoryTracker = GetMemoryTracker();
           devSettings->bundleRootPath =
               m_options.BundleRootPath.empty() ? "ms-appx:///Bundle/" : m_options.BundleRootPath;
@@ -313,7 +314,21 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
   // The OnReactInstanceLoaded internally only accepts the first call and ignores others.
   //
 
-  if (!m_options.DeveloperSettings.UseWebDebugger) {
+  if (m_options.DeveloperSettings.UseWebDebugger || m_options.DeveloperSettings.UseFastRefresh) {
+    // Getting bundle from the packager, so do everything async.
+    auto instanceWrapper = m_instanceWrapper.LoadWithLock();
+    instanceWrapper->loadBundle(Mso::Copy(m_options.Identity));
+
+    m_jsMessageThread.Load()->runOnQueue(
+        [weakThis = Mso::WeakPtr{this},
+         loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
+          if (auto strongThis = weakThis.GetStrongPtr()) {
+            if (strongThis->State() != ReactInstanceState::HasError) {
+              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+            }
+          }
+        });
+  } else {
     m_jsMessageThread.Load()->runOnQueue([
       weakThis = Mso::WeakPtr{this},
       loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})
@@ -337,21 +352,6 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
 
         // All JS bundles successfully loaded.
         strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
-      }
-    });
-  } else {
-    // Web Debugging
-    auto instanceWrapper = m_instanceWrapper.LoadWithLock();
-    instanceWrapper->loadBundle(Mso::Copy(m_options.Identity));
-
-    m_jsMessageThread.Load()->runOnQueue([
-      weakThis = Mso::WeakPtr{this},
-      loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})
-    ]() noexcept {
-      if (auto strongThis = weakThis.GetStrongPtr()) {
-        if (strongThis->State() != ReactInstanceState::HasError) {
-          strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
-        }
       }
     });
   }
