@@ -58,5 +58,13 @@
   "peerDependencies": {
     "react-native": "^0.60.0-0 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz",
     "react": "16.8.6"
+  },
+  "beachball": {
+    "defaultNpmTag": "v0.60-stable",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
   }
 }
