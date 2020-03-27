@@ -206,16 +206,8 @@ jobs:
           BuildPlatform: ARM
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
-    #pool:
-    #  vmImage: $(VmImage)
-    # Temporary override until we move to VS 2019 v142
     pool:
-      vmImage: windows-2019
-    variables: 
-      VsComponents: Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64,Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141,Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
-      BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
-      runCodesignValidationInjection: false
-      VmImage: windows-2019
+      vmImage: $(VmImage)
 
     steps:
       - checkout: self
