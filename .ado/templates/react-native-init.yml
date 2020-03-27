@@ -62,15 +62,9 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
-    displayName: Install rnpm-plugin-windows
-    inputs:
-      script: yarn add rnpm-plugin-windows
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-
-  - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: react-native windows --template master --overwrite --language ${{ parameters.language }}
+      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: NuGetCommand@2
