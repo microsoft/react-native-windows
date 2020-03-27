@@ -440,14 +440,10 @@ jobs:
         inputs:
           script: yarn install --frozen-lockfile
 
-      - task: PowerShell@2
+      - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          targetType: inline
-          script: |
-            echo $env:SYSTEM_PULLREQUEST_TARGETBRANCH
-            $env:SYSTEM_PULLREQUEST_TARGETBRANCH -match 'refs/heads/(.*)'
-            node ./node_modules/beachball/bin/beachball.js check --branch $Matches[1] --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: node ./node_modules/beachball/bin/beachball.js check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn format:verify
