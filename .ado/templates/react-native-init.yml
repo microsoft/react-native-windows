@@ -47,7 +47,7 @@ steps:
     displayName: Add npm user to verdaccio
 
   - script: |
-      npx --no-install beachball publish --no-push --registry http://localhost:4873 --yes --access public
+      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public
     displayName: Publish packages to verdaccio
 
   - task: CmdLine@2
