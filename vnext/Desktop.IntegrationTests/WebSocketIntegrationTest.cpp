@@ -126,6 +126,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       });
 
       ws->Connect();
+      ws->Close();
     }
 
     server->Stop();

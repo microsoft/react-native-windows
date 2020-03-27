@@ -96,7 +96,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<C
 
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
-  Synchronize();
+  Close(CloseCode::GoingAway, "Disposed");
 }
 
 #pragma region Private members
@@ -345,11 +345,14 @@ void WinRTWebSocketResource::SendBinary(const string& base64String)
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
+  if (m_readyState == ReadyState::Closing)
+    return;
+
+  m_readyState = ReadyState::Closing;
   Synchronize();
 
   m_closeCode = code;
   m_closeReason = reason;
-
   PerformClose();
 }
 

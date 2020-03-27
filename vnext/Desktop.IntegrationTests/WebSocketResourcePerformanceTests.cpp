@@ -20,7 +20,8 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-TEST_CLASS (WebSocketResourcePerformanceTest) { // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
+TEST_CLASS (WebSocketResourcePerformanceTest) {
+  // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
   int32_t GetCurrentThreadCount() {
     DWORD procId = GetCurrentProcessId();
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, 0 /*th32ProcessID*/);
@@ -82,6 +83,11 @@ TEST_CLASS (WebSocketResourcePerformanceTest) { // See http://msdn.microsoft.com
       // Send messages.
       for (auto &ws : resources) {
         ws->Send("some message");
+      }
+
+      // Close resources.
+      for (auto &ws : resources) {
+        ws->Close();
       }
     }
 
