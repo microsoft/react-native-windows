@@ -17,15 +17,16 @@ ReactModuleBuilderMock::ReactModuleBuilderMock() noexcept : m_reactContext{make<
 void ReactModuleBuilderMock::ExpectEvent(
     std::wstring_view eventEmitterName,
     std::wstring_view eventName,
-    Mso::Functor<void(JSValue const &)> &&checkValue) noexcept {
+    Mso::Functor<void(JSValueArray const &)> &&checkValues) noexcept {
   m_jsEventHandler = [
     expectedEventEmitterName = std::wstring{eventEmitterName},
     expectedEventName = std::wstring{eventName},
-    checkValue = std::move(checkValue)
+    checkValues = std::move(checkValues)
   ](std::wstring_view eventEmitterName, std::wstring_view eventName, JSValue const &value) noexcept {
     TestCheck(expectedEventEmitterName == eventEmitterName);
     TestCheck(expectedEventName == eventName);
-    checkValue(value);
+    TestCheck(value.Type() == JSValueType::Array);
+    checkValues(value.AsArray());
   };
 }
 
@@ -41,7 +42,7 @@ void ReactModuleBuilderMock::ExpectFunction(
     TestCheck(expectedModuleName == moduleName);
     TestCheck(expectedFuncName == funcName);
     TestCheck(value.Type() == JSValueType::Array);
-    checkValues(value.Array());
+    checkValues(value.AsArray());
   };
 }
 
@@ -59,7 +60,9 @@ void ReactModuleBuilderMock::EmitJSEvent(
     std::wstring_view eventName,
     JSValueArgWriter const &paramsArgWriter) noexcept {
   auto writer = MakeJSValueTreeWriter();
+  writer.WriteArrayBegin();
   paramsArgWriter(writer);
+  writer.WriteArrayEnd();
   m_jsEventHandler(eventEmitterName, eventName, TakeJSValue(writer));
 }
 
@@ -90,7 +93,7 @@ JSValueObject ReactModuleBuilderMock::GetConstants() noexcept {
   }
 
   constantWriter.WriteObjectEnd();
-  return TakeJSValue(constantWriter).TakeObject();
+  return TakeJSValue(constantWriter).MoveObject();
 }
 
 MethodDelegate ReactModuleBuilderMock::GetMethod0(std::wstring const &methodName) const noexcept {

@@ -118,6 +118,9 @@
     <ClCompile Include="Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\DevSettingsModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -166,9 +169,7 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp">
-      <Filter>Sandbox</Filter>
-    </ClCompile>
+
     <ClCompile Include="Threading\AsyncWorkQueue.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -322,9 +323,6 @@
     <ClCompile Include="Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\WebViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\XamlFeatures.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -463,6 +461,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DeviceInfoModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSupportManagerUwp.h">
@@ -628,9 +629,6 @@
     <ClInclude Include="Views\VirtualTextViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\WebViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -713,9 +711,6 @@
     </Filter>
     <Filter Include="Polyester">
       <UniqueIdentifier>{4e47b86c-5481-40a7-98ae-6e4658677fb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sandbox">
-      <UniqueIdentifier>{b4b85434-3409-4179-bff4-b56db8c27ba3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{542ec69d-6533-415a-8031-9b33341bd9c3}</UniqueIdentifier>

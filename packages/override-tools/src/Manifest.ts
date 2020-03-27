@@ -22,7 +22,7 @@ export interface ValidationError {
   file: string;
 }
 
-export type OverrideType = 'platform' | 'patch' | 'derived';
+export type OverrideType = 'platform' | 'patch' | 'derived' | 'copy';
 
 interface OverrideBaseInfo {
   baseFile: string;
@@ -105,24 +105,29 @@ export default class Manifest {
     baseFile?: string,
     issue?: number,
   ) {
+    if (['derived', 'patch', 'copy'].includes(type) && !baseFile) {
+      throw new Error(`baseFile is required for ${type} overrides`);
+    }
+
+    if (['patch', 'copy'].includes(type) && !issue) {
+      throw new Error(`issue is required for ${type} overrides`);
+    }
+
     switch (type) {
       case 'platform':
         return this.addPlatformOverride(file);
 
       case 'derived':
-        if (!baseFile) {
-          throw new Error('baseFile is required for dervied overrides');
-        }
         return this.addDerivedOverride(file, baseFile, issue);
 
       case 'patch':
-        if (!baseFile) {
-          throw new Error('baseFile is required for patch overrides');
-        }
-        if (!issue) {
-          throw new Error('issue is required for patch overrides');
-        }
         return this.addPatchOverride(file, baseFile, issue);
+
+      case 'copy':
+        return this.addCopyOverride(file, baseFile, issue);
+
+      default:
+        throw new Error(`Unknown override type '${type}'`);
     }
   }
 
@@ -155,6 +160,16 @@ export default class Manifest {
   }
 
   /**
+   * Copy override specific version of {@see addOverride}
+   */
+  async addCopyOverride(file: string, baseFile: string, issue: number) {
+    file = await this.checkAndNormalizeOverrideFile(file);
+
+    const overrideBaseInfo = await this.getOverrideBaseInfo(baseFile);
+    this.overrides.push({type: 'copy', file, ...overrideBaseInfo, issue});
+  }
+
+  /**
    * Whether the manifest contains a given override
    */
   hasOverride(overridePath: string): boolean {
@@ -166,13 +181,45 @@ export default class Manifest {
    * @returns false if none is found with the given name
    */
   removeOverride(overridePath: string): boolean {
-    const idx = this.overrides.findIndex(ovr => ovr.file === overridePath);
+    const idx = this.findOverrideIndex(overridePath);
     if (idx === -1) {
       return false;
     }
 
     this.overrides.splice(idx, 1);
     return true;
+  }
+
+  /**
+   * Returns the entry corresponding to the given override path, or null if none
+   * exists.
+   */
+  findOverride(overridePath: string): ManifestData.Entry | null {
+    const idx = this.findOverrideIndex(overridePath);
+    if (idx === -1) {
+      return null;
+    }
+
+    return _.cloneDeep(this.overrides[idx]);
+  }
+
+  /**
+   * Updates an override entry to mark it as up-to-date in regards to its
+   * current base file.
+   */
+  async markUpToDate(overridePath: string) {
+    const entryIdx = this.findOverrideIndex(overridePath);
+    if (entryIdx === -1) {
+      throw new Error(`Override at '${overridePath}' does not exist`);
+    }
+
+    const internalEntry = this.overrides[entryIdx];
+    if (internalEntry.type === 'platform') {
+      throw new Error('Cannot mark a platform override as up-to-date');
+    }
+
+    const newBaseInfo = await this.getOverrideBaseInfo(internalEntry.baseFile);
+    Object.assign(internalEntry, internalEntry, newBaseInfo);
   }
 
   /**
@@ -183,6 +230,13 @@ export default class Manifest {
   }
 
   /**
+   * Returns the version of React Native the manifest considers as current
+   */
+  currentVersion(): string {
+    return this.reactRepo.getVersion();
+  }
+
+  /**
    * Hash content into the form expected in a manifest entry. Exposed for
    * testing.
    */
@@ -190,6 +244,15 @@ export default class Manifest {
     const hasher = crypto.createHash('sha1');
     hasher.update(str);
     return hasher.digest('hex');
+  }
+
+  /**
+   * Find the index to a given override.
+   * @returns -1 if it cannot be found
+   */
+  private findOverrideIndex(overridePath: string): number {
+    const noramlizedPath = path.normalize(overridePath);
+    return this.overrides.findIndex(ovr => ovr.file === noramlizedPath);
   }
 
   private async checkAndNormalizeOverrideFile(file: string): Promise<string> {
@@ -214,7 +277,7 @@ export default class Manifest {
       throw new Error(`Could not find base file '${file}'`);
     }
 
-    const baseVersion = this.reactRepo.getVersion();
+    const baseVersion = this.currentVersion();
     const baseHash = Manifest.hashContent(baseContent);
 
     return {baseFile, baseVersion, baseHash};

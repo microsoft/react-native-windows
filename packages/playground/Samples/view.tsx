@@ -162,8 +162,8 @@ export default class Bootstrap extends React.Component<
                     ? styles.outerBorder
                     : styles.innerBorder
                   : this.state.radius
-                    ? styles.radial
-                    : styles.noBorder
+                  ? styles.radial
+                  : styles.noBorder
                 : null
             }
             {...{

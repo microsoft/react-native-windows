@@ -118,7 +118,7 @@
     <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
-    <ClInclude Include="BaseScriptStoreImpl.h" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClInclude Include="BaseScriptStoreImpl.h" />
     <ClInclude Include="BatchingMessageQueueThread.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
@@ -135,7 +135,7 @@
     <ClInclude Include="JSBigAbiString.h" />
     <ClInclude Include="LayoutAnimation.h" />
     <ClInclude Include="Logging.h" />
-    <ClInclude Include="MemoryMappedBuffer.h" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClInclude Include="MemoryMappedBuffer.h" />
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\AppThemeModule.h" />
@@ -149,25 +149,25 @@
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
     <ClInclude Include="Pch\pch.h" />
-    <ClInclude Include="Sandbox\SandboxEndpoint.h" />
+    <ClInclude Include="RedBoxHandler.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="tracing\fbsystrace.h" />
     <ClInclude Include="Tracing.h" />
-    <ClInclude Include="TurboModuleManager.h" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClInclude Include="TurboModuleRegistry.h" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClInclude Include="TurboModuleManager.h" />
+    <ClInclude Include="TurboModuleRegistry.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
-    <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
-    <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
+    <ClInclude Include="ChakraRuntimeHolder.h" />
+    <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(USE_HERMES)' == 'true'" />
+    <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
     <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
-    <ClCompile Include="BaseScriptStoreImpl.cpp" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClCompile Include="BaseScriptStoreImpl.cpp" />
     <ClCompile Include="CxxMessageQueue.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
@@ -189,12 +189,12 @@
     <ClCompile Include="tracing\tracing.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="ViewManager.cpp" />
-    <ClCompile Include="TurboModuleManager.cpp" Condition="'$(PATCH_RN)' == 'true'" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" Condition="'$(PATCH_RN)' == 'true'" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClCompile Include="ChakraRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" />
-    <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="TurboModuleManager.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" />
+    <ClCompile Include="ChakraRuntimeHolder.cpp" />
+    <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(USE_HERMES)' == 'true'" />
+    <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man" />
@@ -214,16 +214,16 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(PATCH_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
-    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" />
+    <Import Project="$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(USE_HERMES)' == 'true'" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(PATCH_RN)' == 'true' AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets'))" />
-    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(PATCH_RN)' == 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
+    <Error Condition="!Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
   <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'" Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.&#xD;&#xA;     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />

@@ -137,10 +137,6 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\DatePicker\\DatePicker.windows.tsx"
-    },
-    {
-      "type": "platform",
       "file": "Libraries\\Components\\DatePicker\\DatePicker.tsx"
     },
     {
@@ -191,10 +187,6 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Flyout\\Flyout.windows.tsx"
-    },
-    {
-      "type": "platform",
       "file": "Libraries\\Components\\Flyout\\Flyout.tsx"
     },
     {
@@ -207,19 +199,11 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\Glyph\\Glyph.windows.tsx"
-    },
-    {
-      "type": "platform",
       "file": "Libraries\\Components\\Glyph\\GlyphProps.ts"
     },
     {
       "type": "platform",
       "file": "Libraries\\Components\\Keyboard\\KeyboardExt.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\Keyboard\\KeyboardExt.windows.tsx"
     },
     {
       "type": "platform",
@@ -284,10 +268,6 @@
       "file": "Libraries\\Components\\Picker\\PickerWindows.tsx"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Components\\Picker\\PickerWindows.windows.tsx"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\Components\\Picker\\RCTPickerNativeComponent.windows.js",
       "baseFile": "Libraries\\Components\\Picker\\RCTPickerNativeComponent.js",
@@ -298,10 +278,6 @@
     {
       "type": "platform",
       "file": "Libraries\\Components\\Popup\\Popup.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\Popup\\Popup.windows.tsx"
     },
     {
       "type": "platform",
@@ -550,24 +526,8 @@
       "file": "Libraries\\Components\\View\\ViewWindowsProps.ts"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Components\\WebView\\WebView.windesktop.js"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\Components\\WebView\\WebView.windows.js"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.windesktop.js",
-      "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "8a250151f5616ab454d9799f6d3e747916f31520",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\core\\setUpDeveloperTools.windows.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
       "baseVersion": "0.61.5",
       "baseHash": "8a250151f5616ab454d9799f6d3e747916f31520",
@@ -790,13 +750,17 @@
       "type": "patch",
       "file": "RNTester\\js\\components\\RNTesterExampleList.windows.js",
       "baseFile": "RNTester\\js\\components\\RNTesterExampleList.js",
-    "baseVersion": "0.61.5",
+      "baseVersion": "0.61.5",
       "baseHash": "d9b4912cb42b5709362ea8d4e3974641b56e60a8",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "platform",
       "file": "RNTester\\js\\examples-win\\Accessibility\\AccessibilityExampleWindows.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "RNTester\\js\\examples-win\\AsyncStorage\\AsyncStorageExampleWindows.tsx"
     },
     {
       "type": "platform",

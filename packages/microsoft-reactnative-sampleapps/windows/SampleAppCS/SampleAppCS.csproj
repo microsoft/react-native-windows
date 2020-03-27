@@ -175,8 +175,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <BundleCommand>
-      cd $(SolutionDir)..
-      react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle
+      npx --no-install yarn run bundle-cs
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />

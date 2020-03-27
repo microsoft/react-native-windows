@@ -11,10 +11,10 @@ This package provides Windows specific components and provides JS implementation
 |  Class | Description |
 |  --- | --- |
 |  [DatePicker](./react-native-windows.datepicker.md) |  |
-|  [Flyout](./react-native-windows.flyout.md) |  |
-|  [Glyph](./react-native-windows.glyph.md) |  |
-|  [Picker](./react-native-windows.picker.md) |  |
-|  [Popup](./react-native-windows.popup.md) |  |
+|  [Flyout](./react-native-windows.flyout.md) | Renders a flyout component.<!-- -->This is a controlled component that requires an <code>onDismiss</code> callback that updates the <code>isOpen</code> prop in order for the component to reflect user actions. flyout |
+|  [Glyph](./react-native-windows.glyph.md) | Glyph is a wrapper for the Xaml Glyph control<!-- -->This control is used to render Glyphs from a Font file, which might be used similar to SVG to have vector based images that also have the ability to be rendered with a specific color |
+|  [Picker](./react-native-windows.picker.md) | Picker is a controlled component, which expects the selectedValue prop to be updated whenever selection changes, or selection will revert to the prop selectedValue<!-- -->when using editable=true, onValueChange can be called with a selectedValue of null &amp; Index of -1, and text will be provided. To maintain the text in the controlled component, props should reflect that state by specifying selectedValue of null and specify the text property. |
+|  [Popup](./react-native-windows.popup.md) | Renders a popup component.<!-- -->This is a controlled component that requires an <code>onDismiss</code> callback that updates the <code>isOpen</code> prop in order for the component to reflect user actions. popup |
 
 ## Enumerations
 
@@ -32,12 +32,15 @@ This package provides Windows specific components and provides JS implementation
 |  [IDatePickerChangeEvent](./react-native-windows.idatepickerchangeevent.md) |  |
 |  [IDatePickerProps](./react-native-windows.idatepickerprops.md) |  |
 |  [IFlyoutProps](./react-native-windows.iflyoutprops.md) |  |
+|  [IFlyoutTargetState](./react-native-windows.iflyouttargetstate.md) |  |
 |  [IHandledKeyboardEvent](./react-native-windows.ihandledkeyboardevent.md) |  |
 |  [IHighContrastChangedEvent](./react-native-windows.ihighcontrastchangedevent.md) |  |
 |  [IHighContrastColors](./react-native-windows.ihighcontrastcolors.md) | Color information for high contrast |
 |  [IKeyboardProps](./react-native-windows.ikeyboardprops.md) |  |
 |  [INativeKeyboardEvent](./react-native-windows.inativekeyboardevent.md) |  |
+|  [IPickerItemData](./react-native-windows.ipickeritemdata.md) |  |
 |  [IPopupProps](./react-native-windows.ipopupprops.md) |  |
+|  [IPopupTargetState](./react-native-windows.ipopuptargetstate.md) |  |
 |  [IViewWindowsProps](./react-native-windows.iviewwindowsprops.md) |  |
 
 ## Variables

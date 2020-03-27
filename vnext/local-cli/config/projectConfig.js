@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
@@ -10,8 +10,10 @@ function projectConfigWindows(folder, userConfig = {}) {
   }
 
   const projectSolution = findSolution(sourceDir);
-  var extension = path.extname(projectSolution);
-  var projectName = path.basename(projectSolution, extension);
+  if (projectSolution){
+    var extension = path.extname(projectSolution);
+    var projectName = path.basename(projectSolution, extension);
+  }
   const cppProjFile = findCppProject(sourceDir, projectName);
   const csProjectFile = findCSProject(sourceDir,projectName);
 
@@ -21,7 +23,7 @@ function projectConfigWindows(folder, userConfig = {}) {
     projectName,
     cppProjFile,
     csProjectFile,
-  }
+  };
 }
 
 function findWindowsAppFolder(folder) {
@@ -37,7 +39,7 @@ function findWindowsAppFolder(folder) {
 function findSolution(folder) {
   const solutionPath = glob.sync(path.join('**', '*.sln'), {
     cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', 'Generated Files']
+    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', 'Generated Files'],
   })[0];
 
   return solutionPath ? path.join(folder, solutionPath) : null;
@@ -46,7 +48,7 @@ function findSolution(folder) {
 function findCppProject(folder, projectName) {
   const cppProj = glob.sync(path.join('**', projectName + '.vcxproj'), {
     cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**']
+    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**'],
   })[0];
 
   return cppProj ? path.join(folder, cppProj) : null;
@@ -55,12 +57,12 @@ function findCppProject(folder, projectName) {
 function findCSProject(folder, projectName) {
   const cppProj = glob.sync(path.join('**', projectName + '.csproj'), {
     cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**']
+    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**'],
   })[0];
 
   return cppProj ? path.join(folder, cppProj) : null;
 }
 
 module.exports = {
-  projectConfigWindows: projectConfigWindows
-}
+  projectConfigWindows: projectConfigWindows,
+};

@@ -30,13 +30,13 @@
 
 #include "Unicode.h"
 
+#include <Modules/DevSettingsModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
 #include <winrt/Windows.ApplicationModel.h>
 
-#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
 
@@ -50,9 +50,9 @@
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
+#include <ReactWindowsCore/RedBoxHandler.h>
+#include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
-
-#endif // PATCH_RN
 
 #include <tuple>
 
@@ -71,6 +71,27 @@ UwpReactInstance::UwpReactInstance(
     : m_moduleProvider(moduleProvider),
       m_viewManagerProvider(viewManagerProvider),
       m_turboModuleRegistry(turboModuleRegistry) {}
+
+struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
+  // Inherited via IRedBoxHandler
+  virtual void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType) override {
+    std::stringstream ss;
+
+    ss << "A better redbox experience is provided by Microsoft.ReactNative - Consider moving off ReactUwp to Microsoft.ReactNative today!\n\n";
+    ss << info.Message << "\n\n";
+    for (auto frame : info.Callstack) {
+      ss << frame.Method << "\n" << frame.File << ":" << frame.Line << ":" << frame.Column << "\n";
+    }
+    auto dlg = winrt::Windows::UI::Popups::MessageDialog(
+        Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
+    dlg.ShowAsync();
+  }
+  virtual bool isDevSupportEnabled() override {
+    return true;
+  }
+  virtual void updateError(Mso::React::ErrorInfo &&) override {}
+  virtual void dismissRedbox() override {}
+};
 
 void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) {
   if (m_started)
@@ -111,9 +132,14 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->debuggerBreakOnNextLine = settings.DebuggerBreakOnNextLine;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
-    devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->redboxHandler = std::move(settings.RedBoxHandler);
     devSettings->useJITCompilation = settings.EnableJITCompilation;
     devSettings->debugHost = settings.DebugHost;
+
+    if (!devSettings->redboxHandler &&
+        (devSettings->useWebDebugger || devSettings->useDirectDebugger || settings.UseLiveReload)) {
+      devSettings->redboxHandler = std::move(std::make_shared<UwpReactRedBoxHandler>());
+    }
 
     // In most cases, using the hardcoded ms-appx URI works fine, but there are
     // certain scenarios, such as in optional packaging, where the developer
@@ -179,6 +205,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         std::move(appTheme),
         spThis);
 
+    cxxModules.emplace_back(
+        DevSettingsModule::name, []() { return std::make_unique<DevSettingsModule>(); }, m_batchingNativeThread);
+
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =
           m_moduleProvider->GetModules(m_batchingNativeThread);
@@ -187,7 +216,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = CreateAndStartJSQueueThread();
 
-#ifdef PATCH_RN
     if (settings.UseJsi) {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
@@ -217,7 +245,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
           break;
       }
     }
-#endif
 
     try {
       // Create the react instance
@@ -409,14 +436,25 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
   }
 }
 
-#ifdef PATCH_RN
 #if defined(USE_V8)
 std::string UwpReactInstance::getApplicationLocalFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+  try {
+    auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
-  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
+    return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
+  } catch (winrt::hresult_error const &ex) {
+    winrt::hresult hr = ex.to_abi();
+    if (hr == HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE)) {
+      // This is a win32 application using UWP APIs, pick a reasonable location for caching bytecode
+      char tempPath[MAX_PATH];
+      if (GetTempPathA(MAX_PATH, tempPath)) {
+        return std::string(tempPath);
+      }
+    }
+
+    throw ex;
+  }
 }
-#endif
 #endif
 
 } // namespace uwp

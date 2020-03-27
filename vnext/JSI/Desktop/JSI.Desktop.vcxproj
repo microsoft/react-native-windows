@@ -68,7 +68,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

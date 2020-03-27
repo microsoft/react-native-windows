@@ -11,15 +11,15 @@ namespace Microsoft.ReactNative.Managed
 {
   class ReactModuleInfo
   {
-    private static object s_moduleInfoMutex = new object();
+    private static readonly object s_moduleInfoMutex = new object();
     private static Dictionary<Type, ReactModuleInfo> s_moduleInfos;
-    private Lazy<List<ReactInitializerInfo>> m_initializerInfos;
-    private Lazy<List<ReactConstantInfo>> m_constantInfos;
-    private Lazy<List<ReactConstantProviderInfo>> m_constantProviderInfos;
-    private Lazy<List<ReactMethodInfo>> m_methodInfos;
-    private Lazy<List<ReactSyncMethodInfo>> m_syncMethodInfos;
-    private Lazy<List<ReactFunctionInfo>> m_functionInfos;
-    private Lazy<List<ReactEventInfo>> m_eventInfos;
+    private readonly Lazy<List<ReactInitializerInfo>> m_initializerInfos;
+    private readonly Lazy<List<ReactConstantInfo>> m_constantInfos;
+    private readonly Lazy<List<ReactConstantProviderInfo>> m_constantProviderInfos;
+    private readonly Lazy<List<ReactMethodInfo>> m_methodInfos;
+    private readonly Lazy<List<ReactSyncMethodInfo>> m_syncMethodInfos;
+    private readonly Lazy<List<ReactFunctionInfo>> m_functionInfos;
+    private readonly Lazy<List<ReactEventInfo>> m_eventInfos;
 
     public ReactModuleInfo(Type moduleType) : this(moduleType, moduleType.GetTypeInfo().GetCustomAttribute<ReactModuleAttribute>())
     {
@@ -28,7 +28,7 @@ namespace Microsoft.ReactNative.Managed
     public ReactModuleInfo(Type moduleType, ReactModuleAttribute moduleAttribute)
     {
       ModuleType = moduleType;
-      ModuleName = moduleAttribute.ModuleName ?? moduleType.Name;
+      ModuleName = GetModuleName(moduleType, moduleAttribute);
       EventEmitterName = moduleAttribute.EventEmitterName ?? "RCTDeviceEventEmitter";
       ModuleProvider = (IReactModuleBuilder moduleBuilder) =>
       {
@@ -46,6 +46,11 @@ namespace Microsoft.ReactNative.Managed
       m_eventInfos = new Lazy<List<ReactEventInfo>>(InitEventInfos, LazyThreadSafetyMode.PublicationOnly);
     }
 
+    public static string GetModuleName(Type moduleType, ReactModuleAttribute moduleAttribute)
+    {
+      return moduleAttribute.ModuleName ?? moduleType.Name;
+    }
+
     internal static ReactModuleInfo GetOrAddModuleInfo(Type moduleType, ReactModuleAttribute moduleAttribute)
     {
       lock (s_moduleInfoMutex)
@@ -55,8 +60,7 @@ namespace Microsoft.ReactNative.Managed
           s_moduleInfos = new Dictionary<Type, ReactModuleInfo>();
         }
 
-        ReactModuleInfo moduleInfo;
-        if (s_moduleInfos.TryGetValue(moduleType, out moduleInfo))
+        if (s_moduleInfos.TryGetValue(moduleType, out ReactModuleInfo moduleInfo))
         {
           return moduleInfo;
         }

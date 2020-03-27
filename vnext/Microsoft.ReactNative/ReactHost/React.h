@@ -9,8 +9,8 @@
 #include <vector>
 
 #include "JSBundle.h"
-#include "JSExceptionInfo.h"
 #include "PropertyBag.h"
+#include "RedBoxHandler.h"
 #include "dispatchQueue/dispatchQueue.h"
 #include "errorCode/errorCode.h"
 #include "future/future.h"
@@ -67,7 +67,6 @@ struct IReactInstance : IUnknown {
   virtual const ReactOptions &Options() const noexcept = 0;
 
   virtual ReactInstanceState State() const noexcept = 0;
-  virtual std::string LastErrorMessage() const noexcept = 0;
 };
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
@@ -105,6 +104,11 @@ struct ReactDevOptions {
   //! Enable live reload to load the source bundle from the React Native packager.
   //! When the file is saved, the packager will trigger reloading.
   bool UseLiveReload{false};
+
+  //! Enable fast refresh
+  //! With Fast Refresh enabled, most edits should be visible within a second or two.
+  //! Non-compatible changes still cause full reloads
+  bool UseFastRefresh{false};
 
   //! Enables debugging using the web debugger. By default, this is Chrome using http://localhost:8081/debugger-ui from
   //! Metro/Haul. Debugging will start as soon as the react native instance is loaded.
@@ -198,11 +202,9 @@ struct ReactOptions {
   //! Note: this is currently only used in Win32 (Chakra Executor)
   OnLoggingCallback OnLogging;
 
-  //! Javascript Function Exception
-  //! Callback called when an Exception is thrown inside JavaScript function,
-  //! except the ones that happen during initialization.
-  //! Javascript Exceptions which happen during initialization go through OnError callback.
-  OnJSExceptionCallback OnJSException;
+  //! Ability to override the default redbox handling, which is used
+  //! during development to report JavaScript errors to uses
+  std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
 
   //! Flag to suggest sdx owner's preference on enabling Bytecode caching in Javascript Engine for corresponding SDX.
   bool EnableBytecode{true};

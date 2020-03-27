@@ -48,16 +48,32 @@ const DerivedEntryType = t.type({
   issue: t.union([t.undefined, t.number, t.literal('LEGACY_FIXME')]),
 });
 
-const EntryType = t.union([
-  PlatformEntryType,
+/**
+ * Manifest entry type class for direct copies of upstream code
+ */
+const CopyEntryType = t.type({
+  type: t.literal('copy'),
+  file: t.string,
+  baseFile: t.string,
+  baseVersion: t.string,
+  baseHash: t.string,
+  issue: t.number,
+});
+
+const NonPlatformEntryType = t.union([
   PatchEntryType,
   DerivedEntryType,
+  CopyEntryType,
 ]);
+const EntryType = t.union([PlatformEntryType, NonPlatformEntryType]);
+
 const ManifestType = t.type({overrides: t.array(EntryType)});
 
 export type PlatformEntry = t.TypeOf<typeof PlatformEntryType>;
 export type PatchEntry = t.TypeOf<typeof PatchEntryType>;
 export type DerivedEntry = t.TypeOf<typeof DerivedEntryType>;
+export type CopyEntry = t.TypeOf<typeof CopyEntryType>;
+export type NonPlatformEntry = t.TypeOf<typeof NonPlatformEntryType>;
 export type Entry = t.TypeOf<typeof EntryType>;
 export type Manifest = t.TypeOf<typeof ManifestType>;
 

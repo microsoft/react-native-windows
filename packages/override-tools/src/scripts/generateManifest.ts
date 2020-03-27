@@ -19,6 +19,7 @@ import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../ReactVersion';
 
 const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
+const WHITESPACE_PATTERN = /\s/g;
 
 (async () => {
   const ovrPath = process.argv[2];
@@ -39,7 +40,8 @@ const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
     spinner.text = `Creating manifest (${++i}/${overrideFiles.length})`;
 
     const contents = await overrides.getFileContents(file);
-    (await tryAddPatch(file, version, contents, reactSources, manifest)) ||
+    (await tryAddCopy(file, version, contents, reactSources, manifest)) ||
+      (await tryAddPatch(file, version, contents, reactSources, manifest)) ||
       (await tryAddDerived(file, version, contents, reactSources, manifest)) ||
       addUnknown(file, version, manifest);
   }
@@ -49,6 +51,33 @@ const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
 
   spinner.succeed();
 })();
+
+async function tryAddCopy(
+  filename: string,
+  rnVersion: string,
+  override: string,
+  reactSources: FileRepository.ReactFileRepository,
+  manifest: ManifestData.Manifest,
+): Promise<boolean> {
+  const baseContents = await reactSources.getFileContents(filename);
+
+  const baseSignificantChars = baseContents.replace(WHITESPACE_PATTERN, '');
+  const ovrSignificantChars = override.replace(WHITESPACE_PATTERN, '');
+  if (baseSignificantChars !== ovrSignificantChars) {
+    return false;
+  }
+
+  manifest.overrides.push({
+    type: 'copy',
+    file: filename,
+    baseFile: filename,
+    baseVersion: rnVersion,
+    baseHash: Manifest.hashContent(baseContents),
+    issue: 0,
+  });
+
+  return true;
+}
 
 async function tryAddPatch(
   filename: string,
@@ -150,8 +179,7 @@ async function getFileRepos(
 ): Promise<
   [FileRepository.OverrideFileRepository, FileRepository.ReactFileRepository]
 > {
-  const ovrPattern = /^.*\.(js|ts|jsx|tsx)$/;
-  const overrides = new OverrideFileRepositoryImpl(overrideovrPath, ovrPattern);
+  const overrides = new OverrideFileRepositoryImpl(overrideovrPath);
 
   const versionedReactSources = await GitReactFileRepository.createAndInit();
   const reactSources = FileRepository.bindVersion(

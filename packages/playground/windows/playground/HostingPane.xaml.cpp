@@ -24,8 +24,6 @@
 #include <folly/dynamic.h>
 #include <codecvt>
 
-#include <react-native-windows-extended.h>
-
 using namespace Playground;
 
 using namespace Microsoft::WRL;
@@ -127,8 +125,6 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
 
-    viewManagers.emplace_back(react_native_windows_extended::CreateCustomViewManager(instance));
-
     return viewManagers;
   }
 };
@@ -226,15 +222,13 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     settings.UseDirectDebugger = x_UseDirectDebuggerCheckBox->IsChecked->Value;
     settings.DebuggerBreakOnNextLine = x_BreakOnFirstLineCheckBox->IsChecked->Value;
     settings.EnableDeveloperMenu = true;
+    settings.jsiEngine = static_cast<react::uwp::JSIEngine>(x_JsEngine->SelectedIndex);
     if (params.find("debughost") != params.end()) {
       settings.DebugHost = params["debughost"];
     }
     settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
       OutputDebugStringA("In LoggingCallback");
       OutputDebugStringA(message);
-    };
-    settings.JsExceptionCallback = [](facebook::react::JSExceptionInfo &&exceptionInfo) {
-      OutputDebugStringA("in JsExceptionCallback");
     };
     m_instance->Start(m_instance, settings);
     m_instance->loadBundle(Microsoft::Common::Unicode::Utf16ToUtf8(m_loadedBundleFileName));
@@ -425,19 +419,20 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
-  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\accessible");
-  m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\animation");
   m_jsFileNames->Append(L"Samples\\calculator");
+  m_jsFileNames->Append(L"Samples\\callbackTest");
   m_jsFileNames->Append(L"Samples\\click");
-  m_jsFileNames->Append(L"Samples\\customViewManager");
   m_jsFileNames->Append(L"Samples\\control");
   m_jsFileNames->Append(L"Samples\\flexbox");
   m_jsFileNames->Append(L"Samples\\focusTest");
   m_jsFileNames->Append(L"Samples\\geosample");
   m_jsFileNames->Append(L"Samples\\image");
   m_jsFileNames->Append(L"Samples\\index");
+  m_jsFileNames->Append(L"Samples\\messages");
   m_jsFileNames->Append(L"Samples\\mouse");
+  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\scrollViewSnapSample");
   m_jsFileNames->Append(L"Samples\\simple");
   m_jsFileNames->Append(L"Samples\\text");
@@ -457,6 +452,16 @@ void HostingPane::InitComboBoxes() {
     x_ReactAppName->IsEditable = true;
     x_JavaScriptFilename->IsEditable = true;
   }
+
+#if !defined(USE_HERMES)
+  x_engineHermes->IsEnabled = false;
+#endif
+
+#if !defined(USE_V8)
+  x_engineV8->IsEnabled = false;
+#endif
+
+  x_JsEngine->SelectedIndex = 0;
 }
 
 void HostingPane::LoadKnownApps() {

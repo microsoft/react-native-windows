@@ -6,6 +6,7 @@
  */
 
 import * as ManifestData from '../ManifestData';
+import * as _ from 'lodash';
 import Manifest, {ValidationError} from '../Manifest';
 
 import {
@@ -134,7 +135,7 @@ test('FullManifestValid', async () => {
 });
 
 test('OutOfDateFile', async () => {
-  const ourBaseFiles = reactFiles;
+  const ourBaseFiles = _.cloneDeep(reactFiles);
   ourBaseFiles[0].content = 'Different than before';
   const ourReactRepo = new MockReactFileRepository(ourBaseFiles);
 
@@ -149,7 +150,7 @@ test('OutOfDateFile', async () => {
 });
 
 test('BaseFileNotFound', async () => {
-  const ourManifestData = testManifestData;
+  const ourManifestData = _.cloneDeep(testManifestData);
   const ovr = ourManifestData.overrides[0] as ManifestData.PatchEntry;
   ovr.baseFile = 'foo/bar.js';
 
@@ -216,6 +217,10 @@ test('addOverrideBadArgs', async () => {
   // Missing issue number and base
   // @ts-ignore Typings don't know about rejects
   expect(manifest.addOverride('patch', patch)).rejects.toThrow();
+
+  // Bad type
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.addOverride('potato', patch)).rejects.toThrow();
 
   // Missing base
   const derived = overrideFiles[1].filename;
@@ -292,8 +297,7 @@ test('addPatchExportedAsData', async () => {
   const base = reactFiles[0].filename;
   await manifest.addPatchOverride(override, base, 1234);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const patchEntryData = entryData as ManifestData.DerivedEntry;
   expect(patchEntryData.type).toBe('patch');
@@ -311,8 +315,7 @@ test('addDerivedExportedAsData', async () => {
   const base = reactFiles[0].filename;
   await manifest.addDerivedOverride(override, base, 1234);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const derivedEntryData = entryData as ManifestData.DerivedEntry;
   expect(derivedEntryData.type).toBe('derived');
@@ -330,8 +333,7 @@ test('addDerivedNoIssueExportedAsData', async () => {
   const base = reactFiles[0].filename;
   await manifest.addDerivedOverride(override, base);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const derivedEntryData = entryData as ManifestData.DerivedEntry;
   expect(derivedEntryData.type).toBe('derived');
@@ -348,8 +350,7 @@ test('addPlatformExportedAsData', async () => {
   const override = overrideFiles[0].filename;
   await manifest.addPlatformOverride(override);
 
-  const manifestData = manifest.getAsData();
-  const entryData = manifestData.overrides.find(ovr => ovr.file === override);
+  const entryData = manifest.findOverride(override);
 
   const platformEntryData = entryData as ManifestData.PlatformEntry;
   expect(platformEntryData.type).toBe('platform');
@@ -375,4 +376,69 @@ test('DataMutateDoesntAffectManifest', async () => {
   });
 
   expect(manifest.getAsData().overrides.length).toBe(0);
+});
+
+test('FindOverrideNoneExists', async () => {
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
+  expect(manifest.findOverride('foo')).toBe(null);
+});
+
+test('FindOverrideDoesExist', async () => {
+  const manifest = new Manifest(
+    {
+      overrides: [
+        {
+          type: 'platform',
+          file: 'Foo.js',
+        },
+      ],
+    },
+    ovrRepo,
+    reactRepo,
+  );
+  // @ts-ignore no typings for toStrictEqual
+  expect(manifest.findOverride('Foo.js')).toStrictEqual({
+    type: 'platform',
+    file: 'Foo.js',
+  });
+});
+
+test('MarkUpToDatePlatform', async () => {
+  const manifest = new Manifest(
+    {
+      overrides: [
+        {
+          type: 'platform',
+          file: 'Foo.js',
+        },
+      ],
+    },
+    ovrRepo,
+    reactRepo,
+  );
+
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.markUpToDate('Foo.js')).rejects.toThrow();
+});
+
+test('MarkUpToDateNotFound', async () => {
+  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
+  // @ts-ignore Typings don't know about rejects
+  expect(manifest.markUpToDate('Foo.js')).rejects.toThrow();
+});
+
+test('MarkUpToDateOutdated', async () => {
+  const ourTestData = _.cloneDeep(testManifestData);
+  const ovr = ourTestData.overrides[0] as ManifestData.NonPlatformEntry;
+  ovr.baseHash = '1234';
+  ovr.baseVersion = '0.0.1';
+
+  const manifest = new Manifest(ourTestData, ovrRepo, reactRepo);
+  await manifest.markUpToDate(ovr.file);
+
+  const updated = manifest.findOverride(
+    ovr.file,
+  ) as ManifestData.NonPlatformEntry;
+  expect(updated.baseVersion).toBe(reactRepo.getVersion());
+  expect(updated.baseHash).toBe(Manifest.hashContent(reactFiles[0].content));
 });

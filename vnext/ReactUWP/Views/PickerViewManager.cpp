@@ -53,6 +53,7 @@ PickerShadowNode::PickerShadowNode() : Super() {
 void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<winrt::ComboBox>();
+  combobox.TabIndex(0);
   auto wkinstance = GetViewManager()->GetReactInstance();
 
   combobox.AllowFocusOnInteraction(true);

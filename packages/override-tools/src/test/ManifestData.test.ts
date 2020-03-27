@@ -63,6 +63,23 @@ test('WellFormedDerived', () => {
   expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
 });
 
+test('WellFormedCopy', () => {
+  const manifest: ManifestData.Manifest = {
+    overrides: [
+      {
+        type: 'copy',
+        file: 'foo.win32.js',
+        baseFile: 'foo.js',
+        baseVersion: '0.61.5',
+        baseHash: 'AAAABBBB',
+        issue: 4567,
+      },
+    ],
+  };
+
+  expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
+});
+
 test('FixmeAllowedAsIssue', () => {
   const manifest: ManifestData.Manifest = {
     overrides: [
@@ -116,6 +133,22 @@ test('IssueMustBePresentForPatch', () => {
   expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
 });
 
+test('IssueMustBePresentForCopy', () => {
+  const manifest = {
+    overrides: [
+      {
+        type: 'copy',
+        file: 'foo.win32.js',
+        baseFile: 'foo.js',
+        baseVersion: '0.61.5',
+        baseHash: 'AAAABBBB',
+      },
+    ],
+  };
+
+  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+});
+
 test('IssueCannotBeArbitraryString', () => {
   const manifest = {
     overrides: [
@@ -151,6 +184,19 @@ test('WellFormedDerivedMustHaveMetadata', () => {
     overrides: [
       {
         type: 'derived',
+        file: 'foo.win32.js',
+      },
+    ],
+  };
+
+  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+});
+
+test('WellFormedCopyMustHaveMetadata', () => {
+  const manifest = {
+    overrides: [
+      {
+        type: 'copy',
         file: 'foo.win32.js',
       },
     ],

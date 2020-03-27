@@ -15,6 +15,7 @@ namespace Microsoft.ReactNative {
     [noexcept2] String JavaScriptMainModuleName { get; set; };
     [noexcept2] String JavaScriptBundleFile { get; set; };
     [noexcept2] Boolean UseWebDebugger { get; set; };
+    [noexcept2] Boolean UseFastRefresh { get; set; };
     [noexcept2] Boolean UseLiveReload { get; set; };
     [noexcept2] Boolean UseDirectDebugger { get; set; };
     [noexcept2] Boolean DebuggerBreakOnNextLine { get; set; };

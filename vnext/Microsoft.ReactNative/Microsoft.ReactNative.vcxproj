@@ -252,7 +252,6 @@
     <ClInclude Include="..\ReactUWP\Views\ViewPanel.h" />
     <ClInclude Include="..\ReactUWP\Views\ViewViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\VirtualTextViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Views\WebViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\XamlFeatures.h" />
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
@@ -270,6 +269,7 @@
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h" />
+    <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -287,8 +287,6 @@
     <ClInclude Include="ReactHost\InstanceFactory.h" />
     <ClInclude Include="ReactHost\IReactInstanceInternal.h" />
     <ClInclude Include="ReactHost\JSBundle.h" />
-    <ClInclude Include="ReactHost\JSExceptionCallbackFactory.h" />
-    <ClInclude Include="ReactHost\JSExceptionInfo.h" />
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
     <ClInclude Include="ReactHost\PropertyBag.h" />
@@ -319,6 +317,7 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="RedBox.h"/>
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
@@ -376,7 +375,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\ContentControlViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp" />
-    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />
@@ -418,7 +416,6 @@
     <ClCompile Include="..\ReactUWP\Views\ViewPanel.cpp" />
     <ClCompile Include="..\ReactUWP\Views\ViewViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\VirtualTextViewManager.cpp" />
-    <ClCompile Include="..\ReactUWP\Views\WebViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp" />
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
@@ -432,6 +429,7 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="Modules\AppStateData.cpp" />
+    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -451,7 +449,6 @@
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="ReactHost\JSExceptionCallbackFactory.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
     <ClCompile Include="ReactHost\PropertyBag.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
@@ -477,6 +474,7 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="RedBox.cpp"/>
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />

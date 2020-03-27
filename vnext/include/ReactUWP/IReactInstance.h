@@ -36,6 +36,7 @@ enum class JSIEngine : int32_t {
 
 struct ReactInstanceSettings {
   bool UseWebDebugger{false};
+  bool UseFastRefresh{false};
   bool UseLiveReload{false};
   bool DebuggerBreakOnNextLine{false};
   bool UseDirectDebugger{false};
@@ -49,7 +50,7 @@ struct ReactInstanceSettings {
   std::string DebugBundlePath;
   std::string BundleRootPath;
   facebook::react::NativeLoggingHook LoggingCallback;
-  std::function<void(facebook::react::JSExceptionInfo &&)> JsExceptionCallback;
+  std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
   JSIEngine jsiEngine{JSIEngine::Chakra};
 };
 

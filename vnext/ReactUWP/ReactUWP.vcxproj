@@ -117,24 +117,14 @@
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x64.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x86.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">
@@ -202,6 +192,7 @@
     <ClInclude Include="Modules\AlertModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
+    <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\ImageViewManagerModule.h" />
@@ -253,7 +244,6 @@
     <ClInclude Include="Views\DynamicAutomationProperties.h" />
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
-    <ClInclude Include="Views\WebViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\ABIModuleLoader.cpp" />
@@ -271,8 +261,8 @@
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
-    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(PATCH_RN)' == 'true'" />
-    <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
+    <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
@@ -302,6 +292,7 @@
     <ClCompile Include="Modules\AlertModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
@@ -320,7 +311,6 @@
     <ClCompile Include="Polyester\ContentControlViewManager.cpp" />
     <ClCompile Include="Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="Polyester\IconViewManager.cpp" />
-    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp" />
     <ClCompile Include="Threading\AsyncWorkQueue.cpp" />
     <ClCompile Include="Threading\JSQueueThread.cpp" />
     <ClCompile Include="Threading\UIMessageQueueThread.cpp" />
@@ -363,7 +353,6 @@
     <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\ViewViewManager.cpp" />
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
-    <ClCompile Include="Views\WebViewManager.cpp" />
     <ClCompile Include="Views\module.g.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
     <ClCompile Include="Views\XamlFeatures.cpp" />
@@ -383,10 +372,10 @@
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(PATCH_RN)' == 'true' AND '$(CHAKRACOREUWP)'!='true'">
+    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(CHAKRACOREUWP)'!='true'">
       <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(PATCH_RN)' == 'true' AND '$(CHAKRACOREUWP)'=='true'">
+    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(CHAKRACOREUWP)'=='true'">
       <Project>{17DD1B17-3094-40DD-9373-AC2497932ECA}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">

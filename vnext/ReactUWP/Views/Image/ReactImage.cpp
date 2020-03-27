@@ -100,21 +100,25 @@ void ReactImage::Source(ReactImageSource source) {
     return;
   }
 
-  m_imageSource = source;
+  try {
+    winrt::Uri uri{Utf8ToUtf16(source.uri)};
+    winrt::hstring scheme{uri.SchemeName()};
+    winrt::hstring ext{uri.Extension()};
 
-  winrt::Uri uri{Utf8ToUtf16(m_imageSource.uri)};
-  winrt::hstring scheme{uri.SchemeName()};
-  winrt::hstring ext{uri.Extension()};
+    if (((scheme == L"http") || (scheme == L"https")) && !source.headers.empty()) {
+      source.sourceType = ImageSourceType::Download;
+    } else if (scheme == L"data") {
+      source.sourceType = ImageSourceType::InlineData;
+    } else if (ext == L".svg" || ext == L".svgz") {
+      source.sourceType = ImageSourceType::Svg;
+    }
 
-  if (((scheme == L"http") || (scheme == L"https")) && !m_imageSource.headers.empty()) {
-    m_imageSource.sourceType = ImageSourceType::Download;
-  } else if (scheme == L"data") {
-    m_imageSource.sourceType = ImageSourceType::InlineData;
-  } else if (ext == L".svg" || ext == L".svgz") {
-    m_imageSource.sourceType = ImageSourceType::Svg;
+    m_imageSource = source;
+
+    SetBackground(true);
+  } catch (winrt::hresult_error const &) {
+    m_onLoadEndEvent(*this, false);
   }
-
-  SetBackground(true);
 }
 
 winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(
@@ -316,7 +320,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
     winrt::HttpClient httpClient;
     winrt::HttpResponseMessage response{co_await httpClient.SendRequestAsync(request)};
 
-    if (response.StatusCode() == winrt::HttpStatusCode::Ok) {
+    if (response && response.StatusCode() == winrt::HttpStatusCode::Ok) {
       winrt::IInputStream inputStream{co_await response.Content().ReadAsInputStreamAsync()};
       winrt::InMemoryRandomAccessStream memoryStream;
       co_await winrt::RandomAccessStream::CopyAsync(inputStream, memoryStream);

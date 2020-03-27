@@ -5,6 +5,7 @@
 #include "Logging.h"
 #include "MemoryTracker.h"
 
+#include <RedBoxHandler.h>
 #include <functional>
 #include <map>
 #include <memory>
@@ -22,18 +23,6 @@ struct RuntimeHolderLazyInit;
 
 namespace facebook {
 namespace react {
-
-enum class JSExceptionType : int32_t {
-  Fatal = 0,
-  Soft = 1,
-};
-
-struct JSExceptionInfo {
-  JSExceptionType exceptionType;
-  std::string exceptionMessage;
-  uint32_t exceptionId;
-  std::vector<std::string> callstack;
-};
 
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
@@ -54,9 +43,7 @@ struct ChakraBundleMetadata {
 using ChakraBundleUrlMetadataMap = std::map<std::string, ChakraBundleMetadata>;
 
 struct DevSettings {
-  bool useSandbox{false};
   bool useJITCompilation{true};
-  std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;
   std::string platformName{STRING(RN_PLATFORM)};
@@ -65,7 +52,7 @@ struct DevSettings {
   std::function<void()> waitingForDebuggerCallback;
   std::function<void()> debuggerAttachCallback;
   NativeLoggingHook loggingCallback;
-  std::function<void(JSExceptionInfo &&)> jsExceptionCallback;
+  std::shared_ptr<Mso::React::IRedBoxHandler> redboxHandler;
 
   /// Enables the user to set a custom root path for bundle resolution
   std::string bundleRootPath;

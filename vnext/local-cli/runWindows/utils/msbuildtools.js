@@ -46,7 +46,7 @@ class MSBuildTools {
     results.forEach(result => console.log(chalk.white(result)));
   }
 
-  async buildProject(slnFile, buildType, buildArch, config, verbose) {
+  async buildProject(slnFile, buildType, buildArch, msBuildProps, verbose) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
@@ -63,9 +63,9 @@ class MSBuildTools {
 
     args.push('/bl');
 
-    if (config) {
-      Object.keys(config).forEach(function(key) {
-        args.push(`/p:${key}=${config[key]}`);
+    if (msBuildProps) {
+      Object.keys(msBuildProps).forEach(function(key) {
+        args.push(`/p:${key}=${msBuildProps[key]}`);
       });
     }
 

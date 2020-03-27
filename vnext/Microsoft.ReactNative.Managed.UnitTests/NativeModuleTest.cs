@@ -194,13 +194,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [ReactMethod]
-    public void ResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public void ResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
     {
       resolve("Hello_3");
     }
 
     [ReactMethod]
-    public void RejectSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public void RejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
     }
@@ -247,13 +247,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
 
     [ReactMethod]
-    public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
     {
       resolve("Hello_3");
     }
 
     [ReactMethod]
-    public static void StaticRejectSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public static void StaticRejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
     }
@@ -456,6 +456,14 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactEvent]
     public Action<int> OnIntEvent = null;
 
+    // An event without arguments
+    [ReactEvent]
+    public Action OnNoArgEvent = null;
+
+    // An event with two arguments
+    [ReactEvent]
+    public Action<Point, Point> OnTwoArgsEvent = null;
+
     // Specify event name different from the field name.
     [ReactEvent("onPointEvent")]
     public Action<Point> OnPointEvent = null;
@@ -472,6 +480,14 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     // Property that allows to emit native module events.
     [ReactEvent]
     public Action<int> OnIntEventProp { get; set; }
+
+    // An event without arguments
+    [ReactEvent]
+    public Action OnNoArgEventProp { get; set; }
+
+    // An event with two arguments
+    [ReactEvent]
+    public Action<Point, Point> OnTwoArgsEventProp { get; set; }
 
     // Specify event name different from the property name.
     [ReactEvent("onPointEventProp")]
@@ -498,6 +514,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactFunction("lineFunc")]
     public Action<Point, Point> JSLineFunction = null;
 
+    // Use no arguments.
+    [ReactFunction]
+    public Action NoArgFunction = null;
+
     // By default we use the module name from ReactModuleAttribute which is by default the class name.
     // Here we specify module name local for this function.
     [ReactFunction("stringFunc", ModuleName = "MyModule")]
@@ -519,6 +539,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactFunction("lineFuncProp")]
     public Action<Point, Point> JSLineFunctionProp { get; set; }
 
+    // Use no arguments.
+    [ReactFunction]
+    public Action NoArgFunctionProp { get; set; }
+
     // By default we use the module name from ReactModuleAttribute which is by default the class name.
     // Here we specify module name local for this function.
     [ReactFunction("stringFuncProp", ModuleName = "MyModule")]
@@ -528,7 +552,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactFunction]
     public Action<JSValue> JSValueFunctionProp { get; set; }
 
-
+    // Properties below are not exposed to JS and only used by tests to observe results.
     public bool IsInitialized { get; set; }
     public string Message { get; set; }
     public static string StaticMessage { get; set; }
@@ -839,7 +863,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -848,7 +872,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -857,7 +881,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -866,7 +890,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -875,7 +899,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -884,7 +908,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -893,7 +917,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("voidPromise", 2,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -902,7 +926,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("voidPromise", 3,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -911,7 +935,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.ResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -920,7 +944,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.RejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -929,7 +953,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -938,7 +962,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -947,7 +971,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -956,7 +980,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -965,7 +989,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -974,7 +998,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -983,7 +1007,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("staticVoidPromise", 2,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -992,7 +1016,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2("staticVoidPromise", 3,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -1002,7 +1026,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -1011,7 +1035,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
@@ -1061,23 +1085,23 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestConstants()
     {
       var constants = m_moduleBuilderMock.GetConstants();
-      Assert.AreEqual("MyConstant1", constants[nameof(SimpleNativeModule.Constant1)].String);
-      Assert.AreEqual("MyConstant2", constants["const2"].String);
+      Assert.AreEqual("MyConstant1", constants[nameof(SimpleNativeModule.Constant1)]);
+      Assert.AreEqual("MyConstant2", constants["const2"]);
       Assert.AreEqual(new Point { X = 2, Y = 3 }, constants["const3"].To<Point>());
       Assert.AreEqual(new Point { X = 3, Y = 4 }, constants[nameof(SimpleNativeModule.Constant4)].To<Point>());
       Assert.AreEqual(new Point { X = 12, Y = 14 }, constants["const51"].To<Point>());
-      Assert.AreEqual("MyConstant52", constants["const52"].String);
+      Assert.AreEqual("MyConstant52", constants["const52"]);
       Assert.AreEqual(new Point { X = 15, Y = 17 }, constants["const61"].To<Point>());
-      Assert.AreEqual("MyConstant62", constants["const62"].String);
+      Assert.AreEqual("MyConstant62", constants["const62"]);
     }
 
     [TestMethod]
     public void TestEvent_IntEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg);
+        Assert.AreEqual(42, args[0]);
         eventRaised = true;
       });
 
@@ -1086,13 +1110,44 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
+    public void TestEvent_NoArgEventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnNoArgEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        eventRaised = true;
+      });
+
+      m_module.OnNoArgEvent();
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_TwoArgsEventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnTwoArgsEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnTwoArgsEvent(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
     public void TestEvent_JSNameEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1104,9 +1159,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSEventEmitterEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("Hello World!", arg);
+        Assert.AreEqual("Hello World!", args[0]);
         eventRaised = true;
       });
 
@@ -1118,10 +1173,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueObjectEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1133,12 +1188,12 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArrayEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("X", arg[0]);
-        Assert.AreEqual(4, arg[1]);
-        Assert.AreEqual(true, arg[2]);
-        Assert.AreEqual(42, arg[3]["Id"]);
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
         eventRaised = true;
       });
 
@@ -1150,9 +1205,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArray1EventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg[0]);
+        Assert.AreEqual(42, args[0][0]);
         eventRaised = true;
       });
 
@@ -1164,9 +1219,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_IntEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg);
+        Assert.AreEqual(42, args[0]);
         eventRaised = true;
       });
 
@@ -1174,14 +1229,46 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       Assert.IsTrue(eventRaised);
     }
 
+
+    [TestMethod]
+    public void TestEvent_NoArgEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnNoArgEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        eventRaised = true;
+      });
+
+      m_module.OnNoArgEventProp();
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_TwoArgsEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnTwoArgsEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnTwoArgsEventProp(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(eventRaised);
+    }
+
     [TestMethod]
     public void TestEvent_JSNameEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1193,9 +1280,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSEventEmitterEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("Hello World!", arg);
+        Assert.AreEqual("Hello World!", args[0]);
         eventRaised = true;
       });
 
@@ -1207,10 +1294,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueObjectEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1222,12 +1309,12 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArrayEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("X", arg[0]);
-        Assert.AreEqual(4, arg[1]);
-        Assert.AreEqual(true, arg[2]);
-        Assert.AreEqual(42, arg[3]["Id"]);
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
         eventRaised = true;
       });
 
@@ -1239,9 +1326,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArray1EventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg[0]);
+        Assert.AreEqual(42, args[0][0]);
         eventRaised = true;
       });
 
@@ -1279,7 +1366,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
-    public void TestFunction_TwoArgFunctionField()
+    public void TestFunction_TwoArgsFunctionField()
     {
       bool functionCalled = false;
       m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "lineFunc", (IReadOnlyList<JSValue> args) =>
@@ -1292,6 +1379,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       });
 
       m_module.JSLineFunction(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_NoArgFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "NoArgFunction", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        functionCalled = true;
+      });
+
+      m_module.NoArgFunction();
       Assert.IsTrue(functionCalled);
     }
 
@@ -1371,7 +1472,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
-    public void TestFunction_TwoArgFunctionProperty()
+    public void TestFunction_TwoArgsFunctionProperty()
     {
       bool functionCalled = false;
       m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "lineFuncProp", (IReadOnlyList<JSValue> args) =>
@@ -1384,6 +1485,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       });
 
       m_module.JSLineFunctionProp(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_NoArgFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "NoArgFunctionProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        functionCalled = true;
+      });
+
+      m_module.NoArgFunctionProp();
       Assert.IsTrue(functionCalled);
     }
 

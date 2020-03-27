@@ -61,6 +61,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  [ARIARole](./react-native-win32.ariarole.md) |  |
 |  [BasePropsWin32](./react-native-win32.basepropswin32.md) |  |
 |  [ButtonWin32OmitStyles](./react-native-win32.buttonwin32omitstyles.md) |  |
+|  [Cursor](./react-native-win32.cursor.md) |  |
 |  [IChildAsFunction](./react-native-win32.ichildasfunction.md) | Used by IRenderChild, it simply describes a function that takes some generic state type T and returns a ReactNode |
 |  [IHandledKeyboardEvent](./react-native-win32.ihandledkeyboardevent.md) |  |
 |  [IKeyboardEvent](./react-native-win32.ikeyboardevent.md) |  |

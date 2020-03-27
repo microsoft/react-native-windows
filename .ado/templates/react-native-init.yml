@@ -47,7 +47,7 @@ steps:
     displayName: Add npm user to verdaccio
 
   - script: |
-      npx --no-install beachball publish --no-push --registry http://localhost:4873 --yes --access public
+      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public
     displayName: Publish packages to verdaccio
 
   - task: CmdLine@2
@@ -62,15 +62,9 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
-    displayName: Install rnpm-plugin-windows
-    inputs:
-      script: yarn add rnpm-plugin-windows
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-
-  - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: react-native windows --template beta --overwrite --language ${{ parameters.language }}
+      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: NuGetCommand@2
@@ -98,7 +92,7 @@ steps:
     inputs:
       solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
       msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-      msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+      msbuildArchitecture: x86 # $(MSBuildArchitecture) # Optional. Options: x86, x64
       platform: ${{ parameters.platform }} # Optional
       configuration: ${{ parameters.configuration }} # Optional
       createLogFile: true

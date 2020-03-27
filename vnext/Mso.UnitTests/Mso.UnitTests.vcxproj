@@ -123,6 +123,7 @@
     <ClCompile Include="future\whenAllTest.cpp" />
     <ClCompile Include="future\whenAnyTest.cpp" />
     <ClCompile Include="guid\guidTest.cpp" />
+    <ClCompile Include="motifCpp\motifCppTest.cpp" />
     <ClCompile Include="object\objectRefCountTest.cpp" />
     <ClCompile Include="object\objectWithWeakRefTest.cpp" />
     <ClCompile Include="object\queryCastTest.cpp" />

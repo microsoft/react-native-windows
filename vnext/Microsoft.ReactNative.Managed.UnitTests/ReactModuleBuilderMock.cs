@@ -11,12 +11,12 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 {
   class ReactModuleBuilderMock : IReactModuleBuilder
   {
-    private List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
-    private Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
+    private readonly List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
+    private readonly Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
         new Dictionary<string, Tuple<MethodReturnType, MethodDelegate>>();
-    private Dictionary<string, SyncMethodDelegate> m_syncMethods =
+    private readonly Dictionary<string, SyncMethodDelegate> m_syncMethods =
         new Dictionary<string, SyncMethodDelegate>();
-    private List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
+    private readonly List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
     private Action<string, string, JSValue> m_jsEventHandler;
     private Action<string, string, JSValue> m_jsFunctionHandler;
 
@@ -33,6 +33,15 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
 
       return module;
+    }
+
+    public void Initialize()
+    {
+      var reactContext = new ReactContextMock(this);
+      foreach (var initializer in m_initializers)
+      {
+        initializer(reactContext);
+      }
     }
 
     public void AddInitializer(InitializerDelegate initializer)
@@ -223,16 +232,17 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
 
       constantWriter.WriteObjectEnd();
-      return constantWriter.TakeValue().Object;
+      return constantWriter.TakeValue().AsObject();
     }
 
-    public void ExpectEvent(string eventEmitterName, string eventName, Action<JSValue> checkValue)
+    public void ExpectEvent(string eventEmitterName, string eventName, Action<IReadOnlyList<JSValue>> checkValues)
     {
       m_jsEventHandler = (string actualEventEmitterName, string actualEventName, JSValue value) =>
       {
         Assert.AreEqual(eventEmitterName, actualEventEmitterName);
         Assert.AreEqual(eventName, actualEventName);
-        checkValue(value);
+        Assert.AreEqual(JSValueType.Array, value.Type);
+        checkValues(value.AsArray());
       };
     }
 
@@ -243,7 +253,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         Assert.AreEqual(moduleName, actualModuleName);
         Assert.AreEqual(functionName, actualFunctionName);
         Assert.AreEqual(JSValueType.Array, value.Type);
-        checkValues(value.Array);
+        checkValues(value.AsArray());
       };
     }
 
@@ -257,14 +267,16 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void EmitJSEvent(string eventEmitterName, string eventName, JSValueArgWriter paramsArgWriter)
     {
       var writer = new JSValueTreeWriter();
+      writer.WriteArrayBegin();
       paramsArgWriter(writer);
+      writer.WriteArrayEnd();
       m_jsEventHandler(eventEmitterName, eventName, writer.TakeValue());
     }
   }
 
   class ReactContextMock : IReactContext
   {
-    private ReactModuleBuilderMock m_builder;
+    private readonly ReactModuleBuilderMock m_builder;
 
     public ReactContextMock(ReactModuleBuilderMock builder)
     {

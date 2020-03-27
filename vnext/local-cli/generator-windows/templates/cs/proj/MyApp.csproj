@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{<%=projectGuid%>}</ProjectGuid>
+    <ProjectGuid>{<%=projectGuidUpper%>}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace><%=ns%></RootNamespace>
@@ -166,15 +166,12 @@
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-
   <PropertyGroup>
     <BundleCommand>
-      cd $(SolutionDir)..
-      react-native bundle --platform windows --entry-file index.js --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file index.js --bundle-output $(MSBuildThisFileDirectory)/Bundle/index.windows.bundle --assets-dest $(MSBuildThisFileDirectory)/Bundle
     </BundleCommand>
   </PropertyGroup>
-  <Import Project="..\..\node_modules\react-native-windows\PropertySheets\Bundle.targets"/>
-
+  <Import Project="..\..\node_modules\react-native-windows\PropertySheets\Bundle.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>

@@ -28,7 +28,7 @@
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
 
     <USE_V8 Condition="'$(USE_V8)' == '' AND '$(Platform)' != 'ARM' AND '$(Platform)' != 'ARM64'">true</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.2.3</V8_Version>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.2.4</V8_Version>
     <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
 
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
@@ -45,7 +45,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true' AND '$PATCH_RN'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 

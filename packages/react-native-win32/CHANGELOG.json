@@ -2,6 +2,49 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2020 22:33:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.1",
+      "version": "0.0.0-master.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "0.0.0 Master Versioning Scheme",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Mar 2020 23:06:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.16",
+      "version": "0.61.0-beta.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update API docs",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c9e9f76f09b1d1bf7f248c2e630f66cd2e53ecba"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Mar 2020 22:20:57 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.15",
+      "version": "0.61.0-beta.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Cursor to ViewWin32Props",
+            "author": "lehon@microsoft.com",
+            "commit": "99c95ae317bd667c8e55fbabb0739fcfe1bf627c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Mar 2020 22:47:03 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0-beta.14",
       "version": "0.61.0-beta.14",

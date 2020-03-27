@@ -100,7 +100,7 @@ inline T ReadValue(IJSValueReader const &reader) noexcept {
 
 // This is a convenience method to call ReadValue for JSValue.
 template <class T>
-inline T ReadValue(const JSValue &jsValue) noexcept {
+inline T ReadValue(JSValue const &jsValue) noexcept {
   T result;
   ReadValue(jsValue, /*out*/ result);
   return result;
@@ -388,11 +388,11 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValue &value) noex
 }
 
 inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValueObject &value) noexcept {
-  value = JSValue::ReadObjectFrom(reader);
+  value = JSValueObject::ReadFrom(reader);
 }
 
 inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValueArray &value) noexcept {
-  value = JSValue::ReadArrayFrom(reader);
+  value = JSValueArray::ReadFrom(reader);
 }
 
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
@@ -424,14 +424,7 @@ template <class... TArgs>
 inline void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &... args) noexcept {
   // Read as many arguments as we can or return default values.
   bool success = reader.ValueType() == JSValueType::Array;
-
-  if constexpr (sizeof...(args) != 0) {
-    // To read variadic template arguments in natural order we must use them in an initializer list.
-    // TODO: can we fold expression instead?
-    [[maybe_unused]] int dummy[] = {
-        (success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}, 0)...};
-  }
-
+  ((success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}), ...);
   success = success && SkipArrayToEnd(reader);
 }
 

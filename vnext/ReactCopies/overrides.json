@@ -1,0 +1,1076 @@
+{
+  "overrides": [
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\AccessibilityManagerTest.js",
+      "baseFile": "IntegrationTests\\AccessibilityManagerTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1232dce43f286df6f60e3aee70dbc22a4edaba4e",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\AppEventsTest.js",
+      "baseFile": "IntegrationTests\\AppEventsTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "cd4a4f3b2f2dd010afa1cd7c77b73599ca2189b6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\AsyncStorageTest.js",
+      "baseFile": "IntegrationTests\\AsyncStorageTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "d37101fcfa67d62a95b2c66a32bb3e820d983ebe",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\GlobalEvalWithSourceUrlTest.js",
+      "baseFile": "IntegrationTests\\GlobalEvalWithSourceUrlTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ef4b23fc1fc049e84257bba1da6ba0d5d216fc66",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\ImageCachePolicyTest.js",
+      "baseFile": "IntegrationTests\\ImageCachePolicyTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "14ba7b115a8725987b06b2804c331140b124dc25",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\ImageSnapshotTest.js",
+      "baseFile": "IntegrationTests\\ImageSnapshotTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ff34a4d19938aada60af66d65773c89c8c70eae0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\IntegrationTestHarnessTest.js",
+      "baseFile": "IntegrationTests\\IntegrationTestHarnessTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "dd0f896ae5e5d3d0d4c85ae3a79b3a4b7bc64a52",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\IntegrationTestsApp.js",
+      "baseFile": "IntegrationTests\\IntegrationTestsApp.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "5c059df1be2af6446556a3ed9afc558b9b85eadc",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\LayoutEventsTest.js",
+      "baseFile": "IntegrationTests\\LayoutEventsTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e89ce302cab2ad44d7d07eb0a3a4a0aadad922ca",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\LoggingTestModule.js",
+      "baseFile": "IntegrationTests\\LoggingTestModule.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "b0f05079cabf5bb6a0d51c7dc4623b77530468b8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\PromiseTest.js",
+      "baseFile": "IntegrationTests\\PromiseTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "3b6116738b8abe75300034f713364f5e241a91bc",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\PropertiesUpdateTest.js",
+      "baseFile": "IntegrationTests\\PropertiesUpdateTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "c94c31a78383cb5cc05cebef8d6bc278c2e52b69",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\RCTRootViewIntegrationTestApp.js",
+      "baseFile": "IntegrationTests\\RCTRootViewIntegrationTestApp.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "aa938ff6fc8c50e3d5b5c3a6b07f71918564e3fd",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\ReactContentSizeUpdateTest.js",
+      "baseFile": "IntegrationTests\\ReactContentSizeUpdateTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "dc1a5ac897f8c6ca3c4369b9008643489875e7c3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\SimpleSnapshotTest.js",
+      "baseFile": "IntegrationTests\\SimpleSnapshotTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "27a4a08e99aed2e75eea5000829fee53d74fafde",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\SizeFlexibilityUpdateTest.js",
+      "baseFile": "IntegrationTests\\SizeFlexibilityUpdateTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1710623b50caca9fb8f344f80ee2fa5a2c46b2b0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\SyncMethodTest.js",
+      "baseFile": "IntegrationTests\\SyncMethodTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "b8064ff95ddca0388d79122974d88ede5498a4ab",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\TimersTest.js",
+      "baseFile": "IntegrationTests\\TimersTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "fea3fd11d8272429d17fe27b94880d444ef67383",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\websocket_integration_test_server.js",
+      "baseFile": "IntegrationTests\\websocket_integration_test_server.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0ecc537a8ad72d718760e379038626bfaa2c00ac",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\WebSocketTest.js",
+      "baseFile": "IntegrationTests\\WebSocketTest.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ad3518f0e3ac0456a943cea71173810998e3683a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\createExamplePage.js",
+      "baseFile": "RNTester\\js\\components\\createExamplePage.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1f845e7cb56ca8e18e51f7755d205fb18fdbe6df",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\ListExampleShared.js",
+      "baseFile": "RNTester\\js\\components\\ListExampleShared.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "200941a9f13b28f395f5a7569759278d4b41ac3c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterBlock.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterBlock.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "f7ca8f1be8f3bb0f1fd0370fc245c1873797b8b9",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterButton.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterButton.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e15b40de7bc098ad223f05ec2a0a846394c17763",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterExampleContainer.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterExampleContainer.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "9458078acead81ba71a8dd5c12c7eb35b50cf3bf",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterExampleFilter.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterExampleFilter.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "cc1dccf3c246a12281a627e2a21025af88c46db8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterExampleList.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterExampleList.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "d9b4912cb42b5709362ea8d4e3974641b56e60a8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterPage.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterPage.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "eac5de6b16e936a8ad274fcadf83ccf804701fc9",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterSettingSwitchRow.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterSettingSwitchRow.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "9e993de8787350250bea33ded80a08d95d3f447d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\RNTesterTitle.js",
+      "baseFile": "RNTester\\js\\components\\RNTesterTitle.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "396add7b6afc6764f872bc843f29086c609eb5d2",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\TextInlineView.js",
+      "baseFile": "RNTester\\js\\components\\TextInlineView.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "f0b82d0b7f0a49d0b3e5e967419a373e6000fcdb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\components\\TextLegend.js",
+      "baseFile": "RNTester\\js\\components\\TextLegend.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "66984ca4f0ce708efefb53359b017ae5d71472a3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Accessibility\\AccessibilityAndroidExample.android.js",
+      "baseFile": "RNTester\\js\\examples\\Accessibility\\AccessibilityAndroidExample.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "89d74dd7676280c958b9e29f199b2b3680a74972",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Accessibility\\AccessibilityExample.js",
+      "baseFile": "RNTester\\js\\examples\\Accessibility\\AccessibilityExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "78f24f9b022d571bfda5c2cfed310312bc13a9e7",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Accessibility\\AccessibilityIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\Accessibility\\AccessibilityIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0d440fac60d699bd1e30dce2c6f372e27b378928",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ActionSheetIOS\\ActionSheetIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\ActionSheetIOS\\ActionSheetIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e0b2f2e7d07a7c14e1e78ca78b0750e41bf6509d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ActivityIndicator\\ActivityIndicatorExample.js",
+      "baseFile": "RNTester\\js\\examples\\ActivityIndicator\\ActivityIndicatorExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "117ffc9881bdc9932dc935d8866b887da9d4dd2f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Alert\\AlertExample.js",
+      "baseFile": "RNTester\\js\\examples\\Alert\\AlertExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1911b0f4735a15c61e6f0216f438e4a7cdf574da",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Alert\\AlertIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\Alert\\AlertIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "b4f224f1cabaca98738e6b551b15abff886cc204",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedExample.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e48e20f84efd3fcdc07a9d2cb9f8fec30f6b8e9c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExApp.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExApp.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "48e89a6a581540bd37a7c98ef0a2fe0bb2d216bb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExBobble.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExBobble.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "5c50326b41a984fa60d2730828e211c14c10efa7",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExChained.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExChained.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "40c8af1dbb860915e57fc0a07b1e93d0d6603048",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExScroll.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExScroll.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "f2040c88079944b276ba753cf41dff8f0600718a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExSet.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExSet.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "4b121b68076aa3244d2276e6349ce2f760c843b2",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExTilt.js",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExTilt.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e57539014c889d86b12cba7e2a2c7f884f7f2e44",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\AppState\\AppStateExample.js",
+      "baseFile": "RNTester\\js\\examples\\AppState\\AppStateExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "86ec2f64d0940d7e161bb60672f7c479ed04a012",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ART\\ARTExample.js",
+      "baseFile": "RNTester\\js\\examples\\ART\\ARTExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "6442a80e189d869fd293846a8c77a4818b1d55e3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\AsyncStorage\\AsyncStorageExample.js",
+      "baseFile": "RNTester\\js\\examples\\AsyncStorage\\AsyncStorageExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "42b20cb312935aab4fcce89a3ee2fdc0e3cc3395",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Border\\BorderExample.js",
+      "baseFile": "RNTester\\js\\examples\\Border\\BorderExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0bb13b8219f257e798b450bb1e89f06fb9a468bf",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\BoxShadow\\BoxShadowExample.js",
+      "baseFile": "RNTester\\js\\examples\\BoxShadow\\BoxShadowExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0b4b7840db2799b4e6fa1df01645b03a08668e71",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Button\\ButtonExample.js",
+      "baseFile": "RNTester\\js\\examples\\Button\\ButtonExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0b28f2fe4e3d83592254bc621411bdc531df759d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\CheckBox\\CheckBoxExample.js",
+      "baseFile": "RNTester\\js\\examples\\CheckBox\\CheckBoxExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "18589e2dfd093a5646d9f26b6506a16b2fea244f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Clipboard\\ClipboardExample.js",
+      "baseFile": "RNTester\\js\\examples\\Clipboard\\ClipboardExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "b02c550fdd43545dfa1ea2f540cc2c8c2a6c147f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Crash\\CrashExample.js",
+      "baseFile": "RNTester\\js\\examples\\Crash\\CrashExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "6327f8bb9205e9e5a758883de8f8585e6754e4f6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\DatePicker\\DatePickerAndroidExample.js",
+      "baseFile": "RNTester\\js\\examples\\DatePicker\\DatePickerAndroidExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "271a411037bd9c0f73e9d5d2999747562c9eb8c8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\DatePicker\\DatePickerIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\DatePicker\\DatePickerIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e1fa645dd346c786b1ab525ec70c785f6d398177",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Dimensions\\DimensionsExample.js",
+      "baseFile": "RNTester\\js\\examples\\Dimensions\\DimensionsExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "d8f48b64af9f547f460f63580b7bc1d79eb591a1",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\FlatList\\FlatListExample.js",
+      "baseFile": "RNTester\\js\\examples\\FlatList\\FlatListExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "a41da5b9c6a17af805d55184dcbea44f29fce812",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Image\\ImageCapInsetsExample.js",
+      "baseFile": "RNTester\\js\\examples\\Image\\ImageCapInsetsExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "37de940f539aa8c6bf34d6177edce98317330a14",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Image\\ImageExample.js",
+      "baseFile": "RNTester\\js\\examples\\Image\\ImageExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "01a988e75ea2bbb69bd81173d45e96305f996c66",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\InputAccessoryView\\InputAccessoryViewExample.js",
+      "baseFile": "RNTester\\js\\examples\\InputAccessoryView\\InputAccessoryViewExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "be3cea9578a171747802e47978a0e56a12d9ca65",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\JSResponderHandlerExample\\JSResponderHandlerExample.js",
+      "baseFile": "RNTester\\js\\examples\\JSResponderHandlerExample\\JSResponderHandlerExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "124fa74039360d065ce715e385a4b3d66d7e2472",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\KeyboardAvoidingView\\KeyboardAvoidingViewExample.js",
+      "baseFile": "RNTester\\js\\examples\\KeyboardAvoidingView\\KeyboardAvoidingViewExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ca0dd9343121691630532448078e92f9b47beb36",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Layout\\LayoutAnimationExample.js",
+      "baseFile": "RNTester\\js\\examples\\Layout\\LayoutAnimationExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "946f28c16f534a01463197c6e99ad35f491ef99d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Layout\\LayoutEventsExample.js",
+      "baseFile": "RNTester\\js\\examples\\Layout\\LayoutEventsExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "248b9f9eb357a33a769b11056f88497999bc1098",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Layout\\LayoutExample.js",
+      "baseFile": "RNTester\\js\\examples\\Layout\\LayoutExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "a26ce736293444edd9c9a009c8b4e271821823e8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Linking\\LinkingExample.js",
+      "baseFile": "RNTester\\js\\examples\\Linking\\LinkingExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "2ac26529307cb35a282dc9a50595ddfe7dfbf3b6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\MaskedView\\MaskedViewExample.js",
+      "baseFile": "RNTester\\js\\examples\\MaskedView\\MaskedViewExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "614ba82f5684353e6a0e4ff74ad374af2a1bdf1e",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Modal\\ModalExample.js",
+      "baseFile": "RNTester\\js\\examples\\Modal\\ModalExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "aa0e759dff40e206015dc6962acc669f228030bb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\MultiColumn\\MultiColumnExample.js",
+      "baseFile": "RNTester\\js\\examples\\MultiColumn\\MultiColumnExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "128700211ae10ddbd7a71e34d970f8d44071150b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\NativeAnimation\\NativeAnimationsExample.js",
+      "baseFile": "RNTester\\js\\examples\\NativeAnimation\\NativeAnimationsExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1afb374d7846223b8f11f30acc1c67dfbbd21186",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\NewAppScreen\\NewAppScreenExample.js",
+      "baseFile": "RNTester\\js\\examples\\NewAppScreen\\NewAppScreenExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "5a1e0c356fc43db65fb80ce085170826d2fbcda0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\OrientationChange\\OrientationChangeExample.js",
+      "baseFile": "RNTester\\js\\examples\\OrientationChange\\OrientationChangeExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "3b0a68301ebf7d2b352d836e93d2e47b73f872b3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\PanResponder\\PanResponderExample.js",
+      "baseFile": "RNTester\\js\\examples\\PanResponder\\PanResponderExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "2b343c24cff62977ba95246b4c5c51ce72dd9d9b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\PermissionsAndroid\\PermissionsExample.js",
+      "baseFile": "RNTester\\js\\examples\\PermissionsAndroid\\PermissionsExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "6ae32a46311160b3511df7ac44189511c80a5ce8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Picker\\PickerExample.js",
+      "baseFile": "RNTester\\js\\examples\\Picker\\PickerExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0115393a9c2e86544663ea8cbac6a69964abe4d6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Picker\\PickerIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\Picker\\PickerIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "653150201b8bd7741bc1402a3af8d523c35b41b5",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\PointerEvents\\PointerEventsExample.js",
+      "baseFile": "RNTester\\js\\examples\\PointerEvents\\PointerEventsExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "6e2925fb5e8b61c49a40d75b244f4b7100f1ae49",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ProgressBarAndroid\\ProgressBarAndroidExample.android.js",
+      "baseFile": "RNTester\\js\\examples\\ProgressBarAndroid\\ProgressBarAndroidExample.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "47f85138dec03f0f2156bf7dc770b8343a074f86",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ProgressViewIOS\\ProgressViewIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\ProgressViewIOS\\ProgressViewIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "186c7e0cee978ad134a0479c33e8d8898fb615a3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\PushNotificationIOS\\PushNotificationIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\PushNotificationIOS\\PushNotificationIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1d2839f4606bfe54ccf6a4cbfad39bd3aba29c5e",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\RCTRootView\\RCTRootViewIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\RCTRootView\\RCTRootViewIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0685bb0690a77fee26062a991eeb180411adbe69",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\RefreshControl\\RefreshControlExample.js",
+      "baseFile": "RNTester\\js\\examples\\RefreshControl\\RefreshControlExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e4f2eb0831e7cfb438cf8a363fc283370cddba7c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\RootViewSizeFlexibilityExample\\RootViewSizeFlexibilityExampleApp.js",
+      "baseFile": "RNTester\\js\\examples\\RootViewSizeFlexibilityExample\\RootViewSizeFlexibilityExampleApp.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "81ccf9e40824e6fdfbdea5c8fc4ccebbd721c677",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\RTL\\RTLExample.js",
+      "baseFile": "RNTester\\js\\examples\\RTL\\RTLExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "3cd592ee90a98f00143d9f66d000f22a96817d06",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\SafeAreaView\\SafeAreaViewExample.js",
+      "baseFile": "RNTester\\js\\examples\\SafeAreaView\\SafeAreaViewExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "a5b90559b06bd9122c95f27e6d5b442129845fd0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ScrollView\\ScrollViewAnimatedExample.js",
+      "baseFile": "RNTester\\js\\examples\\ScrollView\\ScrollViewAnimatedExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "095b43551339fa04bc98249d16c3bdb0a666007b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ScrollView\\ScrollViewExample.js",
+      "baseFile": "RNTester\\js\\examples\\ScrollView\\ScrollViewExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "fcf88b82e07ee3eea31011f713dba9760ea16ed7",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ScrollView\\ScrollViewSimpleExample.js",
+      "baseFile": "RNTester\\js\\examples\\ScrollView\\ScrollViewSimpleExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "441400b25f600e8ab0784b7b804255e23b0dd838",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\SectionList\\SectionListExample.js",
+      "baseFile": "RNTester\\js\\examples\\SectionList\\SectionListExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "3294345d122ddebcab4903decd29b0fe23baacde",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\SegmentedControlIOS\\SegmentedControlIOSExample.js",
+      "baseFile": "RNTester\\js\\examples\\SegmentedControlIOS\\SegmentedControlIOSExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "d8817062f6a50b81d35fefcf9433059e18b6034d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\SetPropertiesExample\\SetPropertiesExampleApp.js",
+      "baseFile": "RNTester\\js\\examples\\SetPropertiesExample\\SetPropertiesExampleApp.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "779f1d5e5a7f51f32b1ac036ae4b64c959ae362d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Share\\ShareExample.js",
+      "baseFile": "RNTester\\js\\examples\\Share\\ShareExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "9175de76198656a03d95b2626af40e50cc03551b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Slider\\SliderExample.js",
+      "baseFile": "RNTester\\js\\examples\\Slider\\SliderExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "66b70917573f773a63054159b85e8a61723a7915",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Snapshot\\SnapshotExample.js",
+      "baseFile": "RNTester\\js\\examples\\Snapshot\\SnapshotExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0cd6fb037f2a439e0490f646b53b22ac6332638a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Snapshot\\SnapshotViewIOS.android.js",
+      "baseFile": "RNTester\\js\\examples\\Snapshot\\SnapshotViewIOS.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "17e99533d014d90cb6dfac6bd7e8e3d8746c28c0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Snapshot\\SnapshotViewIOS.ios.js",
+      "baseFile": "RNTester\\js\\examples\\Snapshot\\SnapshotViewIOS.ios.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "c11e73ee39d277162f6958dd0dee2d3d0179753d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\StatusBar\\StatusBarExample.js",
+      "baseFile": "RNTester\\js\\examples\\StatusBar\\StatusBarExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "5bc82410582bfefc279632ba4574ccad3832271c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Switch\\SwitchExample.js",
+      "baseFile": "RNTester\\js\\examples\\Switch\\SwitchExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "cf13c06e8d77c472301f5ba91aeb3647840c2f99",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Text\\TextExample.android.js",
+      "baseFile": "RNTester\\js\\examples\\Text\\TextExample.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1e6a6dd07490eaab7b44501a3f445f53699ff26e",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Text\\TextExample.ios.js",
+      "baseFile": "RNTester\\js\\examples\\Text\\TextExample.ios.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "9cec5c94d037fc642e755bc314d14d32fb89c813",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TextInput\\TextInputExample.android.js",
+      "baseFile": "RNTester\\js\\examples\\TextInput\\TextInputExample.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ef35718962bdc87f3f25a5998510978075621a1b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TextInput\\TextInputExample.ios.js",
+      "baseFile": "RNTester\\js\\examples\\TextInput\\TextInputExample.ios.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "c34cd04118d651315b4ad9a27474a6806ea08edf",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TimePicker\\TimePickerAndroidExample.js",
+      "baseFile": "RNTester\\js\\examples\\TimePicker\\TimePickerAndroidExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "59074ffe74dae9d791c2e6952c3994370643e765",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Timer\\TimerExample.js",
+      "baseFile": "RNTester\\js\\examples\\Timer\\TimerExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "3c623452fd9a3878fd78e5d7c11b71928ee46704",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\ToastAndroid\\ToastAndroidExample.android.js",
+      "baseFile": "RNTester\\js\\examples\\ToastAndroid\\ToastAndroidExample.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "cec58c26f312e557e884792ce6389bfd015fe5f8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Touchable\\TouchableExample.js",
+      "baseFile": "RNTester\\js\\examples\\Touchable\\TouchableExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ea1d35e17d9bdecdab8addd0a793c8f4a8e8d505",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Transform\\TransformExample.js",
+      "baseFile": "RNTester\\js\\examples\\Transform\\TransformExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "ffd8bc1be71e8d9ba5686d6ba04c774eb9ce9b1a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TransparentHitTest\\TransparentHitTestExample.js",
+      "baseFile": "RNTester\\js\\examples\\TransparentHitTest\\TransparentHitTestExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "a08918d37771b5fd4fd9444b574b9e0cd5a727fb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TurboModule\\SampleTurboModuleExample.js",
+      "baseFile": "RNTester\\js\\examples\\TurboModule\\SampleTurboModuleExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "8e50cbbe2b110a45de0202e86e5bc07a95cb2494",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TurboModule\\TurboModuleExample.js",
+      "baseFile": "RNTester\\js\\examples\\TurboModule\\TurboModuleExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "04e690b3f0773e6a419a49d5e7851fc45c8e812d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\TVEventHandler\\TVEventHandlerExample.js",
+      "baseFile": "RNTester\\js\\examples\\TVEventHandler\\TVEventHandlerExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e55e2dc4773e49536c97c1ab93509406b506bbc4",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Vibration\\VibrationExample.js",
+      "baseFile": "RNTester\\js\\examples\\Vibration\\VibrationExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "779b679edccda54711fa8c56ba1542e67039d36b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\View\\ViewExample.js",
+      "baseFile": "RNTester\\js\\examples\\View\\ViewExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "2883fb236a49da83cb59fb6871a11665779036e0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\WebSocket\\http_test_server.js",
+      "baseFile": "RNTester\\js\\examples\\WebSocket\\http_test_server.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "f753940e140855c6dd54f9d133611e09c4e2ae31",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\WebSocket\\websocket_test_server.js",
+      "baseFile": "RNTester\\js\\examples\\WebSocket\\websocket_test_server.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "244079266f1d034a2c21c425c9231384a654042f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\WebSocket\\WebSocketExample.js",
+      "baseFile": "RNTester\\js\\examples\\WebSocket\\WebSocketExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e9f25a339dd829bb3d50878543999c902348fa68",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExample.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExample.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1c39f9023a859a9db69a2a8b7adb0062b36afdef",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExampleAbortController.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExampleAbortController.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "0301ba51c8618fe71ccea5adbece7fe5df4896fa",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExampleBinaryUpload.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExampleBinaryUpload.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "d7a4b897ec122979d31b4390760f2ee6a3d053cb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExampleDownload.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExampleDownload.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "cc5c07ce44fc8ee5cee868b3c4890cbfbbe1b21b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExampleFetch.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExampleFetch.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "109159d5f7f3d51b8a74bca77ac74b79498e52f5",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExampleHeaders.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExampleHeaders.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "1b54482ec2bd7fb2b44aa35ab95bb468f7c3cbd6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\XHR\\XHRExampleOnTimeOut.js",
+      "baseFile": "RNTester\\js\\examples\\XHR\\XHRExampleOnTimeOut.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "4be5f89cc28c75fdd0c5acc41c43e30c107d0688",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\RNTesterApp.android.js",
+      "baseFile": "RNTester\\js\\RNTesterApp.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "9cc102294d7ed366aff473f17e1caedfcc8ddb4c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\RNTesterApp.ios.js",
+      "baseFile": "RNTester\\js\\RNTesterApp.ios.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "15e3e5bf6115a340a9a364e202afe02c4b33676f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\types\\RNTesterTypes.js",
+      "baseFile": "RNTester\\js\\types\\RNTesterTypes.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "a0a91739d9093ea289b18b6a4463eed92f3ac7aa",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\utils\\RNTesterActions.js",
+      "baseFile": "RNTester\\js\\utils\\RNTesterActions.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "5f3e37fd3b59672aa88e60f9daebcb3fe9d68d66",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\utils\\RNTesterList.android.js",
+      "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e1a725929fbf9b90245e9eddeb797f90b53b8ee9",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\utils\\RNTesterList.ios.js",
+      "baseFile": "RNTester\\js\\utils\\RNTesterList.ios.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "f13bb2799218839da84a844607bc102872d978e4",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\utils\\RNTesterNavigationReducer.js",
+      "baseFile": "RNTester\\js\\utils\\RNTesterNavigationReducer.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "e7867e96d25c275db5975ee34ca29bdb3111ebb2",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\utils\\RNTesterStatePersister.js",
+      "baseFile": "RNTester\\js\\utils\\RNTesterStatePersister.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "c5b474efd9cc9ee8b2819d98e4b34a6350d9e5c2",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\utils\\URIActionMap.js",
+      "baseFile": "RNTester\\js\\utils\\URIActionMap.js",
+      "baseVersion": "0.61.5",
+      "baseHash": "8158050a00a7bd38409d1ec152608751655c9bff",
+      "issue": 4054
+    }
+  ]
+}

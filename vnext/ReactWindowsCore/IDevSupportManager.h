@@ -16,9 +16,6 @@ struct DevSettings;
 
 struct IDevSupportManager {
   virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) = 0;
-#ifdef PATCH_RN
-  virtual JSECreator LoadJavaScriptInSandboxMode(const DevSettings &settings) = 0;
-#endif
   virtual std::string GetJavaScriptFromServer(
       const std::string &debugHost,
       const std::string &jsBundleName,

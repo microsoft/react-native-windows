@@ -4,6 +4,7 @@
 #pragma once
 
 #include <DevSettings.h>
+#include <RedBoxHandler.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 #include <map>
@@ -14,7 +15,7 @@ namespace react {
 
 class ExceptionsManagerModule : public facebook::xplat::module::CxxModule {
  public:
-  ExceptionsManagerModule(std::function<void(JSExceptionInfo)> &&jsExceptionCallback);
+  ExceptionsManagerModule(std::shared_ptr<Mso::React::IRedBoxHandler> redboxHandler);
 
   static constexpr const char *name = "ExceptionsManager";
 
@@ -24,10 +25,7 @@ class ExceptionsManagerModule : public facebook::xplat::module::CxxModule {
   std::vector<Method> getMethods() override;
 
  private:
-  std::function<void(JSExceptionInfo &&)> m_jsExceptionCallback;
-  JSExceptionInfo CreateExceptionInfo(const folly::dynamic &args, JSExceptionType jsExceptionType) const noexcept;
-  std::string RetrieveValueFromMap(const folly::dynamic &map, const std::string &key, folly::dynamic::Type type) const
-      noexcept;
+  std::shared_ptr<Mso::React::IRedBoxHandler> m_redboxHandler;
 };
 
 } // namespace react

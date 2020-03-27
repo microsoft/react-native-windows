@@ -23,8 +23,8 @@
   template struct moduleStruct##_ModuleRegistration<int>;                                                           \
                                                                                                                     \
   template <class TRegistry>                                                                                        \
-  void RegisterModule(TRegistry &registry, moduleStruct *) noexcept {                                               \
-    registry.RegisterModule<moduleStruct>(                                                                          \
+  void RegisterModule(TRegistry &registry) noexcept {                                                               \
+    registry.RegisterModule(                                                                                        \
         moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>{});                 \
   }
 
@@ -44,29 +44,31 @@
 namespace winrt::Microsoft::ReactNative {
 
 struct ModuleRegistration {
-  ModuleRegistration(const wchar_t *moduleName) noexcept;
+  ModuleRegistration(wchar_t const *moduleName) noexcept;
 
   virtual ReactModuleProvider MakeModuleProvider() const noexcept = 0;
 
-  static const ModuleRegistration *Head() noexcept {
+  static ModuleRegistration const *Head() noexcept {
     return s_head;
   }
 
-  const ModuleRegistration *Next() const noexcept {
+  ModuleRegistration const *Next() const noexcept {
     return m_next;
   }
 
-  const wchar_t *ModuleName() const noexcept {
+  wchar_t const *ModuleName() const noexcept {
     return m_moduleName;
   }
 
  private:
-  const wchar_t *m_moduleName;
-  const ModuleRegistration *m_next{nullptr};
+  wchar_t const *m_moduleName{nullptr};
+  ModuleRegistration const *m_next{nullptr};
 
   static const ModuleRegistration *s_head;
 };
 
 void AddAttributedModules(IReactPackageBuilder const &packageBuilder) noexcept;
+
+bool TryAddAttributedModule(IReactPackageBuilder const &packageBuilder, std::wstring_view moduleName) noexcept;
 
 } // namespace winrt::Microsoft::ReactNative

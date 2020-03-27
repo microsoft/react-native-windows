@@ -13,9 +13,12 @@ import {
   Text,
   UIManager,
   View,
+  Linking,
 } from 'react-native';
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
+
+import {MyComp} from './myComp';
 
 // Creating event emitters
 const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
@@ -56,13 +59,19 @@ global.__fbBatchedBridge.registerLazyCallableModule('SampleModuleCpp', () => new
 
 class SampleApp extends Component {
   componentDidMount() {
-    this._TimedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
-    this._TimedEventCppSub = SampleModuleCppEmitter.addListener('TimedEventCpp', getCallback('SampleModuleCpp.TimedEventCpp() => '));
+    this.timedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
+    this.timedEventCppSub = SampleModuleCppEmitter.addListener('TimedEventCpp', getCallback('SampleModuleCpp.TimedEventCpp() => '));
+    this.openURLSub = Linking.addListener('url', (event) => log('Open URL => ' + event.url));
+
+    Linking.getInitialURL()
+      .then(url => log('Initial URL is: ' + url))
+      .catch(err => log('An error occurred: ' + err));
   }
 
   componentWillUnmount() {
-    this._TimedEventCSSub.remove();
-    this._TimedEventCppSub.remove();
+    this.timedEventCSSub.remove();
+    this.timedEventCppSub.remove();
+    this.openURLSub.remove();
   }
 
   onPressSampleModuleCS() {
@@ -260,6 +269,8 @@ class SampleApp extends Component {
   render() {
     return (
       <View style={styles.container}>
+
+        <MyComp/>
         <Text style={styles.welcome}>
           SampleApp
         </Text>
