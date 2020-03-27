@@ -494,7 +494,7 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file." -b 0.61-stable
+          script: node ./node_modules/beachball/bin/beachball.js check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn format:verify
