@@ -319,15 +319,16 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
     auto instanceWrapper = m_instanceWrapper.LoadWithLock();
     instanceWrapper->loadBundle(Mso::Copy(m_options.Identity));
 
-    m_jsMessageThread.Load()->runOnQueue(
-        [weakThis = Mso::WeakPtr{this},
-         loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
-          if (auto strongThis = weakThis.GetStrongPtr()) {
-            if (strongThis->State() != ReactInstanceState::HasError) {
-              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
-            }
-          }
-        });
+    m_jsMessageThread.Load()->runOnQueue([
+      weakThis = Mso::WeakPtr{this},
+      loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})
+    ]() noexcept {
+      if (auto strongThis = weakThis.GetStrongPtr()) {
+        if (strongThis->State() != ReactInstanceState::HasError) {
+          strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+        }
+      }
+    });
   } else {
     m_jsMessageThread.Load()->runOnQueue([
       weakThis = Mso::WeakPtr{this},
