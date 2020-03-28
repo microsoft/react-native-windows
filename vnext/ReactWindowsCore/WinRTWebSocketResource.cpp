@@ -97,6 +97,8 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<C
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
   Close(CloseCode::GoingAway, "Disposed");
+
+  m_waitOnClose.Wait();
 }
 
 #pragma region Private members
@@ -108,11 +110,8 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   {
     co_await resume_background();
 
-    auto action = self->m_socket.ConnectAsync(self->m_uri);
-    //self = nullptr;// tests hang/fail if set to null.
-    co_await action;
+    co_await self->m_socket.ConnectAsync(self->m_uri);
 
-    //self = self->shared_from_this();
     self->m_readyState = ReadyState::Open;
     if (self->m_connectHandler)
     {
@@ -259,18 +258,14 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
 
 fire_and_forget WinRTWebSocketResource::PerformClose()
 {
-  auto self = shared_from_this();
   co_await resume_background();
 
-  auto action = resume_on_signal(self->m_connectPerformed.get());
-  //self = nullptr;//
-  co_await action;
+  co_await resume_on_signal(m_connectPerformed.get());
 
-  //self = shared_from_this();
-  self->m_socket.Close(static_cast<uint16_t>(self->m_closeCode), Utf8ToUtf16(self->m_closeReason));
-  self->m_readyState = ReadyState::Closed;
+  m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+  m_readyState = ReadyState::Closed;
 
-  co_return;
+  m_waitOnClose.Set();
 }
 
 void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)

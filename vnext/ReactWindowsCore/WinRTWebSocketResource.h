@@ -5,6 +5,7 @@
 
 #include <IWebSocketResource.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include <eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -24,6 +25,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   winrt::Windows::Storage::Streams::DataWriter m_writer{m_socket.OutputStream()};
 
   Mso::DispatchQueue m_dispatchQueue;
+  Mso::ManualResetEvent m_waitOnClose;
   std::atomic_bool m_connectRequested;
   std::promise<void> m_connectPerformedPromise;
   winrt::handle m_connectPerformed{
