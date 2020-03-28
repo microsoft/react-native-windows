@@ -6,8 +6,8 @@
 #include <unicode.h>
 
 // Windows API
-#include <Windows.h>
 #include <TlHelp32.h>
+#include <Windows.h>
 
 // Standard library includes
 #include <math.h>
@@ -87,13 +87,12 @@ TEST_CLASS (WebSocketResourcePerformanceTest) { // See http://msdn.microsoft.com
           if (count > threadCount.load())
             threadCount.store(count);
         });
-        ws->SetOnError([this, &errorFound, &errorMessage](IWebSocketResource::Error&& error)
-        {
-            if (errorFound)
-              return;
+        ws->SetOnError([this, &errorFound, &errorMessage](IWebSocketResource::Error &&error) {
+          if (errorFound)
+            return;
 
-            errorFound = true;
-            errorMessage = error.Message;
+          errorFound = true;
+          errorMessage = error.Message;
         });
         ws->Connect();
 
