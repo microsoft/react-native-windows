@@ -3,12 +3,12 @@
 
 #include <CppUnitTest.h>
 #include <IWebSocketResource.h>
-#include <unicode.h>
 #include <Test/WebSocketServer.h>
+#include <unicode.h>
 
 // Windows API
-#include <Windows.h>
 #include <TlHelp32.h>
+#include <Windows.h>
 
 // Standard library includes
 #include <math.h>
@@ -59,13 +59,13 @@ TEST_CLASS (WebSocketResourcePerformanceTest) { // See http://msdn.microsoft.com
     bool errorFound = false;
     string errorMessage;
 
-    //TODO: Re-enable.
-    //auto server = std::make_shared<Test::WebSocketServer>(5556);
-    //server->SetMessageFactory([](string&& message)
+    // TODO: Re-enable.
+    // auto server = std::make_shared<Test::WebSocketServer>(5556);
+    // server->SetMessageFactory([](string&& message)
     //{
     //  return message + "_response";
     //});
-    //server->Start();
+    // server->Start();
     // WebSocket resources scope.
     {
       vector<shared_ptr<IWebSocketResource>> resources;
@@ -112,7 +112,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) { // See http://msdn.microsoft.com
         ws->Send("some message");
       }
     }
-    //server->Stop();
+    // server->Stop();
 
     int32_t finalThreadCount = threadCount.load();
     int64_t threadsPerResource = (finalThreadCount - startThreadCount) / resourceTotal;
