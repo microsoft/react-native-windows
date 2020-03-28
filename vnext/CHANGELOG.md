@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 23:11:17 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Mar 2020 20:29:40 GMT and should not be manually modified.
 
+## 0.0.0-master.3
+Fri, 27 Mar 2020 20:29:40 GMT
+
+### Changes
+
+- Fix direct debugging (acoates@microsoft.com)
 ## 0.0.0-master.2
 Thu, 26 Mar 2020 23:11:17 GMT
 

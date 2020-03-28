@@ -514,7 +514,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_devSettings->errorCallback(e.what());
       return;
     }
-  } else if (m_devSettings->liveReloadCallback != nullptr) {
+  } else if (m_devSettings->liveReloadCallback != nullptr || m_devSettings->useFastRefresh) {
     auto jsBundleString = m_devManager->GetJavaScriptFromServer(
         m_devSettings->debugHost, jsBundleRelativePath, m_devSettings->platformName);
 
