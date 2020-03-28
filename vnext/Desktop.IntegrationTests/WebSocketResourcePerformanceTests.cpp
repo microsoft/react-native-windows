@@ -3,10 +3,12 @@
 
 #include <CppUnitTest.h>
 #include <IWebSocketResource.h>
+#include <Test/WebSocketServer.h>
+#include <unicode.h>
 
-#include <Windows.h>
-
+// Windows API
 #include <TlHelp32.h>
+#include <Windows.h>
 
 // Standard library includes
 #include <math.h>
@@ -16,6 +18,7 @@
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using Microsoft::Common::Unicode::Utf8ToUtf16;
 using std::shared_ptr;
 using std::string;
 using std::vector;
@@ -54,26 +57,51 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     const int startThreadCount = GetCurrentThreadCount();
 
     std::atomic_int32_t threadCount = 0;
+    bool errorFound = false;
+    string errorMessage;
 
+    // TODO: Re-enable.
+    // auto server = std::make_shared<Test::WebSocketServer>(5556);
+    // server->SetMessageFactory([](string&& message)
+    //{
+    //  return message + "_response";
+    //});
+    // server->Start();
     // WebSocket resources scope.
     {
       vector<shared_ptr<IWebSocketResource>> resources;
       for (int i = 0; i < resourceTotal; i++) {
-        auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-        ws->SetOnMessage([this, &threadCount](size_t size, const string &message) {
+        auto ws = IWebSocketResource::Make("ws://localhost:5555/");
+        ws->SetOnMessage([this, &threadCount, &errorFound](size_t size, const string &message) {
+          if (errorFound)
+            return;
+
           auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
             threadCount.store(count);
         });
-        ws->SetOnSend([this, &threadCount](size_t) {
+        ws->SetOnSend([this, &threadCount, &errorFound](size_t) {
+          if (errorFound)
+            return;
+
           auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
             threadCount.store(count);
         });
-        ws->SetOnClose([this, &threadCount](IWebSocketResource::CloseCode, const string & /*reason*/) {
+        ws->SetOnClose([this, &threadCount, &errorFound](IWebSocketResource::CloseCode, const string & /*reason*/) {
+          if (errorFound)
+            return;
+
           auto count = this->GetCurrentThreadCount();
           if (count > threadCount.load())
             threadCount.store(count);
+        });
+        ws->SetOnError([this, &errorFound, &errorMessage](IWebSocketResource::Error &&error) {
+          if (errorFound)
+            return;
+
+          errorFound = true;
+          errorMessage = error.Message;
         });
         ws->Connect();
 
@@ -90,9 +118,12 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
         ws->Close();
       }
     }
+    // server->Stop();
 
     int32_t finalThreadCount = threadCount.load();
     int64_t threadsPerResource = (finalThreadCount - startThreadCount) / resourceTotal;
+
+    Assert::IsFalse(errorFound, Utf8ToUtf16(errorMessage).c_str());
     Assert::AreNotEqual(finalThreadCount, 0);
     Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
   }
