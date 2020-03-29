@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 29 Mar 2020 20:42:04 GMT",
+      "tag": "react-native-windows_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update typescript version to 3.8.3",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 29 Mar 2020 17:41:03 GMT",
       "tag": "react-native-windows_v0.0.0-master.3",
       "version": "0.0.0-master.3",

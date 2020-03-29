@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sun, 29 Mar 2020 20:42:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.2",
+      "version": "0.0.0-master.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update typescript version to 3.8.3",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2020 22:33:20 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.1",
       "version": "0.0.0-master.1",
