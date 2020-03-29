@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Updated C++/WinRT to 2.0.200316.3 and Min Windows to RS3+ (10.0.16299.0)",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-29T19:34:02.105Z"
+}
