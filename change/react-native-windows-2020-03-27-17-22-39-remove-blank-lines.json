@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Remove blank lines in templates",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "commit": "09f8b38ce8d8d6f1515bd9417d2d4153bf0f4d35",
+  "dependentChangeType": "patch",
+  "date": "2020-03-28T00:22:39.475Z"
+}

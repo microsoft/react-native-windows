@@ -2,9 +2,7 @@
 
 #include "App.h"
 #include "ReactPackageProvider.h"
-
 // clang-format off
-
 using namespace winrt::<%=ns%>;
 using namespace winrt::<%=ns%>::implementation;
 
