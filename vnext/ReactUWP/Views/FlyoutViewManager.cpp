@@ -378,7 +378,7 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight)
   flyoutStyle.Setters().Append(
       winrt::Setter(winrt::FrameworkElement::AllowFocusOnInteractionProperty(), winrt::box_value(false)));
   flyoutStyle.Setters().Append(winrt::Setter(
-      winrt::Control::BackgroundProperty(), winrt::box_value<winrt::SolidColorBrush>(winrt::Colors::Transparent())));
+      winrt::Control::BackgroundProperty(), winrt::box_value(winrt::SolidColorBrush{winrt::Colors::Transparent()})));
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
 

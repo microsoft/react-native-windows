@@ -9,12 +9,12 @@ namespace Microsoft.ReactNative {
   [default_interface]
   [webhosthidden]
   runtimeclass ReactRootView : Windows.UI.Xaml.Controls.Grid {
-    [noexcept2] ReactRootView();
+    ReactRootView();
 
-    [noexcept2] ReactNativeHost ReactNativeHost { get; set; };
-    [noexcept2] String ComponentName { get; set; };
-    [noexcept2] JSValueArgWriter InitialProps { get; set; };
+    ReactNativeHost ReactNativeHost { get; set; };
+    String ComponentName { get; set; };
+    JSValueArgWriter InitialProps { get; set; };
 
-    [noexcept2] void ReloadView();
+    void ReloadView();
   }
 } // namespace Microsoft.ReactNative

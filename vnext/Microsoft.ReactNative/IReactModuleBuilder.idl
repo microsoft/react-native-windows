@@ -38,9 +38,9 @@ namespace Microsoft.ReactNative {
   // Builds native modules inside of React native code based on the provided meta-data.
   [webhosthidden]
   interface IReactModuleBuilder {
-    [noexcept2] void AddInitializer(InitializerDelegate initializer);
-    [noexcept2] void AddConstantProvider(ConstantProviderDelegate constantProvider);
-    [noexcept2] void AddMethod(String name, MethodReturnType returnType, MethodDelegate method);
-    [noexcept2] void AddSyncMethod(String name, SyncMethodDelegate method);
+    void AddInitializer(InitializerDelegate initializer);
+    void AddConstantProvider(ConstantProviderDelegate constantProvider);
+    void AddMethod(String name, MethodReturnType returnType, MethodDelegate method);
+    void AddSyncMethod(String name, SyncMethodDelegate method);
   };
 } // namespace Microsoft.ReactNative

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include "pch.h"
 #include <CppUnitTest.h>
 #include <winrt/facebook.react.h>
 #include <functional>
@@ -9,6 +10,8 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 using namespace winrt;
+
+int32_t __stdcall WINRT_RoGetActivationFactory(void *classId, winrt::guid const &iid, void **factory) noexcept;
 
 namespace ABITests {
 
@@ -79,6 +82,11 @@ TEST_CLASS (NativeTraceEventTests) {
    private:
     uint32_t m_registrationCookie;
   };
+
+ public:
+  NativeTraceEventTests() noexcept {
+    winrt_activation_handler = WINRT_RoGetActivationFactory;
+  }
 
   TEST_METHOD(NativeTraceEventHandler_Registered) {
     init_apartment(winrt::apartment_type::single_threaded);

@@ -304,6 +304,7 @@
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -644,6 +645,7 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="RedBox.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
