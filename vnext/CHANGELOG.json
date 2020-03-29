@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 29 Mar 2020 17:41:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove blank lines in templates",
+            "author": "kaigu@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Mar 2020 20:29:40 GMT",
       "tag": "react-native-windows_v0.0.0-master.3",
       "version": "0.0.0-master.3",
