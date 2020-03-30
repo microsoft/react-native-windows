@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Make AsyncStorageModuleWin32 actually async, using C++/WinRT & VC++'s support for coroutines.",
+  "packageName": "react-native-windows",
+  "email": "hpratt@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-03-30T17:57:30.567Z"
+}
