@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Mar 2020 22:21:02 GMT",
+      "tag": "react-native-windows_v0.0.0-master.4",
+      "version": "0.0.0-master.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updated C++/WinRT to 2.0.200316.3 and Min Windows to RS3+ (10.0.16299.0)",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 29 Mar 2020 20:42:04 GMT",
       "tag": "react-native-windows_v0.0.0-master.3",
       "version": "0.0.0-master.3",
