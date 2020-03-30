@@ -27,7 +27,7 @@ steps:
   - task: CmdLine@2
     displayName: run vcvarsamd64_x86
     inputs:
-      script: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsamd64_x86.bat"
+      script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvarsamd64_x86.bat"
 
   - task: NuGetCommand@2
     displayName: NuGet restore
