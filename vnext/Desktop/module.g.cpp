@@ -3,10 +3,9 @@
 
 #include "pch.h"
 #include "winrt/base.h"
-#include "DynamicAutomationPeer.h"
-#include "DynamicAutomationProperties.h"
-#include "ViewControl.h"
-#include "ViewPanel.h"
+void* winrt_make_facebook_react_MemoryTracker();
+void* winrt_make_facebook_react_NativeLogEventSource();
+void* winrt_make_facebook_react_NativeTraceEventSource();
 
 bool __stdcall winrt_can_unload_now() noexcept
 {
@@ -26,24 +25,19 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
         return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
     };
 
-    if (requal(name, L"react.uwp.DynamicAutomationPeer"))
+    if (requal(name, L"facebook.react.MemoryTracker"))
     {
-        return winrt::detach_abi(winrt::make<winrt::react::uwp::factory_implementation::DynamicAutomationPeer>());
+        return winrt_make_facebook_react_MemoryTracker();
     }
 
-    if (requal(name, L"react.uwp.DynamicAutomationProperties"))
+    if (requal(name, L"facebook.react.NativeLogEventSource"))
     {
-        return winrt::detach_abi(winrt::make<winrt::react::uwp::factory_implementation::DynamicAutomationProperties>());
+        return winrt_make_facebook_react_NativeLogEventSource();
     }
 
-    if (requal(name, L"react.uwp.ViewControl"))
+    if (requal(name, L"facebook.react.NativeTraceEventSource"))
     {
-        return winrt::detach_abi(winrt::make<winrt::react::uwp::factory_implementation::ViewControl>());
-    }
-
-    if (requal(name, L"react.uwp.ViewPanel"))
-    {
-        return winrt::detach_abi(winrt::make<winrt::react::uwp::factory_implementation::ViewPanel>());
+        return winrt_make_facebook_react_NativeTraceEventSource();
     }
 
     return nullptr;

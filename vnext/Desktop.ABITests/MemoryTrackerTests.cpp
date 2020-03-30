@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include "pch.h"
 #include <CppUnitTest.h>
 #include <IntegrationTests/ControllableMessageQueueThread.h>
+#include <winrt/base.h>
 #include <winrt/facebook.react.h>
 
 #include "MessageQueueShim.h"
@@ -11,6 +13,8 @@ using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 
+int32_t __stdcall WINRT_RoGetActivationFactory(void *classId, winrt::guid const &iid, void **factory) noexcept;
+
 namespace ABITests {
 
 // We turn clang format off here because it does not work with some of the
@@ -18,6 +22,10 @@ namespace ABITests {
 // clang-format off
 
 TEST_CLASS(MemoryTrackerTests) {
+ public:
+  MemoryTrackerTests() noexcept {
+    winrt_activation_handler = WINRT_RoGetActivationFactory;
+  }
 
   TEST_METHOD(Handler_AddedAndRemoved){
     init_apartment(winrt::apartment_type::single_threaded);

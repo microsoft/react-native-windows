@@ -4,9 +4,9 @@
   <PropertyGroup Label="Globals">
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
-    <!-- Use 19H1 SDK (10.0.18362.0)  Support running on RS2+ (10.0.15063.0) -->
+    <!-- Use 19H1 SDK (10.0.18362.0)  Support running on RS3+ (10.0.16299.0) -->
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
