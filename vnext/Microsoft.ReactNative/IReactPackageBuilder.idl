@@ -12,7 +12,7 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   interface IReactPackageBuilder {
-    [noexcept2] void AddModule(String moduleName, ReactModuleProvider moduleProvider);
-    [noexcept2] void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
+    void AddModule(String moduleName, ReactModuleProvider moduleProvider);
+    void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
   }
 } // namespace Microsoft.ReactNative

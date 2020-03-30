@@ -95,14 +95,14 @@ namespace SampleLibraryCS
         #region Methods using ReactCallbacks
 
         [ReactMethod]
-        public void ExplicitCallbackMethod(ReactCallback<double> callback)
+        public void ExplicitCallbackMethod(Action<double> callback)
         {
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(ExplicitCallbackMethod)}()");
             callback(Math.PI);
         }
 
         [ReactMethod]
-        public void ExplicitCallbackMethodWithArgs(double arg, ReactCallback<double> callback)
+        public void ExplicitCallbackMethodWithArgs(double arg, Action<double> callback)
         {
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(ExplicitCallbackMethodWithArgs)}({arg})");
             callback(Math.PI);
@@ -110,7 +110,7 @@ namespace SampleLibraryCS
 
         // Use callback order as with ReactPromise
         [ReactMethod]
-        public void TwoCallbacksMethod(bool shouldSucceed, ReactCallback<string> onSuccess, ReactCallback<string> onFailure)
+        public void TwoCallbacksMethod(bool shouldSucceed, Action<string> onSuccess, Action<string> onFailure)
         {
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(TwoCallbacksMethod)}({shouldSucceed})");
             if (shouldSucceed)
@@ -125,7 +125,7 @@ namespace SampleLibraryCS
 
         // Use callback order as with ReactPromise
         [ReactMethod]
-        public async void TwoCallbacksAsyncMethod(bool shouldSucceed, ReactCallback<string> onSuccess, ReactCallback<string> onFailure)
+        public async void TwoCallbacksAsyncMethod(bool shouldSucceed, Action<string> onSuccess, Action<string> onFailure)
         {
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(TwoCallbacksAsyncMethod)}({shouldSucceed})");
             await Task.Run(() => { });
@@ -141,7 +141,7 @@ namespace SampleLibraryCS
 
         // Use callback order as in "classic" ReactNative.
         [ReactMethod]
-        public void ReverseTwoCallbacksMethod(bool shouldSucceed, ReactCallback<string> onFailure, ReactCallback<string> onSuccess)
+        public void ReverseTwoCallbacksMethod(bool shouldSucceed, Action<string> onFailure, Action<string> onSuccess)
         {
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(ReverseTwoCallbacksMethod)}({shouldSucceed})");
             if (shouldSucceed)
@@ -156,7 +156,7 @@ namespace SampleLibraryCS
 
         // Use callback order as in "classic" ReactNative.
         [ReactMethod]
-        public async void ReverseTwoCallbacksAsyncMethod(bool shouldSucceed, ReactCallback<string> onFailure, ReactCallback<string> onSuccess)
+        public async void ReverseTwoCallbacksAsyncMethod(bool shouldSucceed, Action<string> onFailure, Action<string> onSuccess)
         {
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(ReverseTwoCallbacksMethod)}({shouldSucceed})");
             await Task.Run(() => { });
