@@ -20,6 +20,7 @@
     <PackageCertificateThumbprint>FCDD40CD2A4E90DD1F10E5C04D5A958E6B5311CA</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>ReactUWPTestApp_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
