@@ -65,7 +65,8 @@
     "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
-      "minor"
+      "minor",
+      "prerelease"
     ]
   }
 }
