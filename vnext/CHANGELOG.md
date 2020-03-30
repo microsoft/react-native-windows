@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 27 Mar 2020 20:29:40 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Mar 2020 22:21:02 GMT and should not be manually modified.
 
+## 0.0.0-master.4
+Mon, 30 Mar 2020 22:21:02 GMT
+
+### Changes
+
+- Updated C++/WinRT to 2.0.200316.3 and Min Windows to RS3+ (10.0.16299.0) (vmorozov@microsoft.com)
 ## 0.0.0-master.3
 Fri, 27 Mar 2020 20:29:40 GMT
 

@@ -26,7 +26,7 @@ namespace TreeDumpLibrary
             m_textBlock = new TextBlock();
             m_textBlock.TextWrapping = TextWrapping.Wrap;
             m_textBlock.IsTextSelectionEnabled = false;
-            m_textBlock.LayoutUpdated += async (source, e) =>
+            m_textBlock.LayoutUpdated += (source, e) =>
             {
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 800 || bounds.Height != 600)
@@ -36,7 +36,7 @@ namespace TreeDumpLibrary
                 }
                 else
                 {
-                    // delay dumping tree by 100ms for layout to stablize
+                    // delay dumping tree by 100ms for layout to stabilize
                     if (m_timer != null)
                     {
                         m_timer.Stop();
@@ -64,20 +64,20 @@ namespace TreeDumpLibrary
 
         public void UpdateProperties(FrameworkElement view, IJSValueReader propertyMapReader)
         {
-            var propertyMap = JSValue.ReadObjectPropertiesFrom(propertyMapReader);
+            var propertyMap = JSValue.ReadObjectFrom(propertyMapReader);
             foreach (KeyValuePair<string, JSValue> kvp in propertyMap)
             {
                 if (kvp.Key == "dumpID")
                 {
-                    SetDumpID((TextBlock)view, kvp.Value.String);
+                    SetDumpID((TextBlock)view, kvp.Value.AsString());
                 }
                 else if (kvp.Key == "uiaID")
                 {
-                    SetUIAID((TextBlock)view, kvp.Value.String);
+                    SetUIAID((TextBlock)view, kvp.Value.AsString());
                 }
                 else if(kvp.Key == "additionalProperties")
                 {
-                    SetAdditionalProperties(kvp.Value.Array);
+                    SetAdditionalProperties(kvp.Value.AsArray());
                 }
             }
         }
@@ -121,7 +121,7 @@ namespace TreeDumpLibrary
         {
             foreach(var property in additionalProperties)
             {
-                m_additionalProperties.Add(property.String);
+                m_additionalProperties.Add(property.AsString());
             }
         }
 
