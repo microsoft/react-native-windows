@@ -16,7 +16,7 @@
   </a>
 </p>
 
-![Hero Image with Logo](https://raw.githubusercontent.com/microsoft/react-native-windows/master/.github/hero2.png)
+![Hero Image with Logo](./.github/hero2.png)
 
 > See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
@@ -55,12 +55,19 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 
 - The version of Windows, React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) where you ran into the issue.
 - A stack trace and reduced repro case when possible.
-- Ensure the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new?labels=vnext&template=vnext.md) is used when filing your issue(s).
+- Ensure the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new?assignees=&labels=bug&template=react-native-windows--vnext--bug-report.md&title=Describe+the+problem) is used when filing your issue(s).
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed our main README's the [Getting Help](https://github.com/microsoft/react-native-windows#getting-help) section.
 
 ## Contributing
 See [Contributing guidelines](./docs/contributing.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
+
+[Good First Task](https://github.com/microsoft/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
+
+### Examples
+
+- Using the CLI in the [Getting Started](https://microsoft.github.io/react-native-windows/docs/getting-started) guide will set you up with a sample React Native for Windows app that you can begin editing right away.
+- If you're looking for sample code, just browse the RNTester folder in the GitHub web UI
 
 ## License
 
