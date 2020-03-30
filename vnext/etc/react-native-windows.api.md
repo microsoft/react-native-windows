@@ -4,7 +4,7 @@
 
 ```ts
 
-import * as React from 'react';
+import * as React_2 from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
 import { View } from 'react-native';
@@ -23,7 +23,7 @@ export type AppTheme = AppThemeModule;
 export type AppThemeTypes = 'light' | 'dark';
 
 // @public (undocumented)
-export class DatePicker extends React.Component<IDatePickerProps> {
+export class DatePicker extends React_2.Component<IDatePickerProps> {
     constructor(props: IDatePickerProps);
     // (undocumented)
     static defaultProps: IDatePickerProps;
@@ -62,7 +62,7 @@ export enum EventPhase {
 }
 
 // @public
-export class Flyout extends React.Component<IFlyoutProps, IFlyoutTargetState> {
+export class Flyout extends React_2.Component<IFlyoutProps, IFlyoutTargetState> {
     constructor(props: IFlyoutProps);
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IFlyoutProps, prevState: IFlyoutTargetState): IFlyoutTargetState;
@@ -73,7 +73,7 @@ export class Flyout extends React.Component<IFlyoutProps, IFlyoutTargetState> {
 // Warning: (ae-forgotten-export) The symbol "GlyphProps" needs to be exported by the entry point typings-index.d.ts
 //
 // @public
-export class Glyph extends React.PureComponent<GlyphProps> {
+export class Glyph extends React_2.PureComponent<GlyphProps> {
     // (undocumented)
     render(): JSX.Element;
 }
@@ -138,7 +138,7 @@ export interface IFlyoutProps extends ViewProps {
     // (undocumented)
     placement?: Placement;
     // (undocumented)
-    target?: React.ReactNode;
+    target?: React_2.ReactNode;
     // (undocumented)
     verticalOffset?: number;
 }
@@ -148,7 +148,7 @@ export interface IFlyoutTargetState {
     // (undocumented)
     target?: number | null;
     // (undocumented)
-    targetRef?: React.ReactNode;
+    targetRef?: React_2.ReactNode;
 }
 
 // @public (undocumented)
@@ -253,7 +253,7 @@ export interface IPopupProps extends ViewProps {
     // (undocumented)
     onDismiss?: (isOpen: boolean) => void;
     // (undocumented)
-    target?: React.ReactNode;
+    target?: React_2.ReactNode;
     // (undocumented)
     verticalOffset?: number;
 }
@@ -263,7 +263,7 @@ export interface IPopupTargetState {
     // (undocumented)
     target?: number | null;
     // (undocumented)
-    targetRef?: React.ReactNode;
+    targetRef?: React_2.ReactNode;
 }
 
 // @public (undocumented)
@@ -280,7 +280,7 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
 // Warning: (ae-forgotten-export) The symbol "State" needs to be exported by the entry point typings-index.d.ts
 //
 // @public
-export class Picker extends React.Component<IPickerProps, State> {
+export class Picker extends React_2.Component<IPickerProps, State> {
     constructor(props: IPickerProps);
     // Warning: (ae-forgotten-export) The symbol "PickerPropsWithChildren" needs to be exported by the entry point typings-index.d.ts
     //
@@ -298,7 +298,7 @@ export class Picker extends React.Component<IPickerProps, State> {
 export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'full' | 'top-edge-aligned-left' | 'top-edge-aligned-right' | 'bottom-edge-aligned-left' | 'bottom-edge-aligned-right' | 'left-edge-aligned-top' | 'right-edge-aligned-top' | 'left-edge-aligned-bottom' | 'right-edge-aligned-bottom';
 
 // @public
-export class Popup extends React.Component<IPopupProps, IPopupTargetState> {
+export class Popup extends React_2.Component<IPopupProps, IPopupTargetState> {
     constructor(props: IPopupProps);
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IPopupProps, prevState: IPopupTargetState): IPopupTargetState;
@@ -307,9 +307,9 @@ export class Popup extends React.Component<IPopupProps, IPopupTargetState> {
 }
 
 // @public (undocumented)
-export const supportKeyboard: <P extends object>(WrappedComponent: React.ComponentType<P>) => React.ForwardRefExoticComponent<React.PropsWithoutRef<P & IKeyboardProps & {
+export const supportKeyboard: <P extends object>(WrappedComponent: React_2.ComponentType<P>) => React_2.ForwardRefExoticComponent<React_2.PropsWithoutRef<P & IKeyboardProps & {
     children?: any;
-}> & React.RefAttributes<any>>;
+}> & React_2.RefAttributes<any>>;
 
 // Warning: (ae-forgotten-export) The symbol "ViewWindowsType" needs to be exported by the entry point typings-index.d.ts
 //
