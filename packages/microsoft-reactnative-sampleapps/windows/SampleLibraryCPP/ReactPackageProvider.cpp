@@ -11,6 +11,9 @@
 #include "CustomUserControlViewManagerCpp.h"
 #include "SampleModuleCpp.h"
 
+// Not sure how the registration of this module should be..
+#include "MyNativeModule.g.h"
+
 using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::SampleLibraryCpp::implementation {

@@ -14,11 +14,14 @@ import {
   UIManager,
   View,
   Linking,
+  Alert,
 } from 'react-native';
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 import {MyComp} from './myComp';
+
+import {default as MyNativeModule} from './MyNativeModule';
 
 // Creating event emitters
 const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
@@ -277,6 +280,8 @@ class SampleApp extends Component {
         <Text style={styles.instructions}>
           This app consumes custom Native Modules and View Managers.
         </Text>
+
+        <Button onPress={() => { Alert(MyNativeModule.getBool(true)); }} />
 
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={() => { this.onPressSampleModuleCpp(); }} title="Call SampleModuleCpp!" disabled={NativeModules.SampleModuleCpp == null} />
