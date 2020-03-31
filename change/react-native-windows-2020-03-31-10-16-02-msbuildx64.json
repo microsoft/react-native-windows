@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update MSBuild Tasks to use MSBuild x64",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-31T17:16:02.126Z"
+}
