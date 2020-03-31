@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 16:24:06 GMT",
+      "tag": "react-native-windows_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make AsyncStorageModuleWin32 actually async, using C++/WinRT & VC++'s support for coroutines.",
+            "author": "hpratt@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 02:03:05 GMT",
       "tag": "react-native-windows_v0.0.0-master.5",
       "version": "0.0.0-master.5",
