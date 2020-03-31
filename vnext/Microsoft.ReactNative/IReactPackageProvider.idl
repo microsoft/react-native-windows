@@ -8,7 +8,7 @@ namespace Microsoft.ReactNative {
   // This interface is to be implemented by package creators.
   [webhosthidden]
   interface IReactPackageProvider {
-    [noexcept2] void CreatePackage(IReactPackageBuilder packageBuilder);
+    void CreatePackage(IReactPackageBuilder packageBuilder);
   };
 
 } // namespace Microsoft.ReactNative

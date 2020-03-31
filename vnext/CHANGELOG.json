@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 02:03:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow user to specify direct debugging port",
+            "author": "daseramo@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Mar 2020 22:21:02 GMT",
+      "tag": "react-native-windows_v0.0.0-master.4",
+      "version": "0.0.0-master.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updated C++/WinRT to 2.0.200316.3 and Min Windows to RS3+ (10.0.16299.0)",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 29 Mar 2020 20:42:04 GMT",
+      "tag": "react-native-windows_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update typescript version to 3.8.3",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 29 Mar 2020 17:41:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove blank lines in templates",
+            "author": "kaigu@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Mar 2020 20:29:40 GMT",
+      "tag": "react-native-windows_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix direct debugging",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2020 23:11:17 GMT",
       "tag": "react-native-windows_v0.0.0-master.2",
       "version": "0.0.0-master.2",

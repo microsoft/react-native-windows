@@ -12,17 +12,17 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   [default_interface]
   runtimeclass ReactNativeHost {
-    [noexcept2] ReactNativeHost();
+    ReactNativeHost();
 
-    [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
-    [noexcept2] ReactInstanceSettings InstanceSettings { get; set; };
+    IVector<IReactPackageProvider> PackageProviders { get; set; };
+    ReactInstanceSettings InstanceSettings { get; set; };
 
-    [noexcept2] void ReloadInstance();
+    void ReloadInstance();
 
-    [noexcept2] void OnSuspend();
-    [noexcept2] void OnEnteredBackground();
-    [noexcept2] void OnLeavingBackground();
-    [noexcept2] void OnResume(OnResumeAction action);
-    [noexcept2] void OnBackPressed();
+    void OnSuspend();
+    void OnEnteredBackground();
+    void OnLeavingBackground();
+    void OnResume(OnResumeAction action);
+    void OnBackPressed();
   }
 } // namespace Microsoft.ReactNative

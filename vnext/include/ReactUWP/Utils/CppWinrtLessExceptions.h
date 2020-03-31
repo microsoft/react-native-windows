@@ -32,7 +32,7 @@ struct lessthrow_await_adapter {
   }
 
   void await_suspend(std::experimental::coroutine_handle<> handle) const {
-    auto context = winrt::capture<winrt::impl::IContextCallback>(WINRT_CoGetObjectContext);
+    auto context = winrt::capture<winrt::impl::IContextCallback>(WINRT_IMPL_CoGetObjectContext);
 
     async.Completed([handle, context = std::move(context)](auto const &, winrt::Windows::Foundation::AsyncStatus) {
       winrt::impl::com_callback_args args{};

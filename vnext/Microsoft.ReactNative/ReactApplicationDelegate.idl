@@ -7,9 +7,9 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   unsealed runtimeclass ReactApplicationDelegate {
-    [noexcept2] ReactApplicationDelegate();
-    [noexcept2] ReactApplicationDelegate(Windows.UI.Xaml.Application application);
-    [noexcept2] void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs args);
-    [noexcept2] Windows.UI.Xaml.UIElement OnCreate(String args);
+    ReactApplicationDelegate();
+    ReactApplicationDelegate(Windows.UI.Xaml.Application application);
+    void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs args);
+    Windows.UI.Xaml.UIElement OnCreate(String args);
   }
 }

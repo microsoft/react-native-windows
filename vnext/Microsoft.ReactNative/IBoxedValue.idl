@@ -8,6 +8,6 @@ namespace Microsoft.ReactNative {
   // Helps to wrap up a simple C++ struct into an IInspectable object
   [webhosthidden]
   interface IBoxedValue {
-    [noexcept2] Int64 GetPtr();
+    Int64 GetPtr();
   }
 } // namespace Microsoft.ReactNative
