@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix crash in timers during instance shutdown, and in systrace",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "d8cf799a2df255fd3c590ba9df5319368cc6f682",
-  "dependentChangeType": "patch",
-  "date": "2020-03-11T05:14:59.356Z"
-}
