@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 00:20:53 GMT",
+      "tag": "react-native-windows_v0.61.0",
+      "version": "0.61.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Explicitly disallow prerelease changes in 0.61-stable",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2020 18:28:07 GMT",
       "tag": "react-native-windows_v0.61.0",
       "version": "0.61.0",
