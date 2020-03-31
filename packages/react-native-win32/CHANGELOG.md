@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 26 Mar 2020 22:33:20 GMT and should not be manually modified.
+This log was last generated on Sun, 29 Mar 2020 20:42:04 GMT and should not be manually modified.
 
+## 0.0.0-master.2
+Sun, 29 Mar 2020 20:42:04 GMT
+
+### Changes
+
+- Update typescript version to 3.8.3 (acoates@microsoft.com)
 ## 0.0.0-master.1
 Thu, 26 Mar 2020 22:33:20 GMT
 

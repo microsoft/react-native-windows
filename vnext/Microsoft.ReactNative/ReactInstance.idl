@@ -7,12 +7,12 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   interface IReactInstance {
-    [noexcept2] void InvokeFunction(String moduleName, String method, IVectorView<IInspectable> arguments);
+    void InvokeFunction(String moduleName, String method, IVectorView<IInspectable> arguments);
   }
 
   [webhosthidden]
   [default_interface]
   runtimeclass ReactInstance : IReactInstance {
-    [noexcept2] ReactInstance();
+    ReactInstance();
   }
 } // namespace Microsoft.ReactNative

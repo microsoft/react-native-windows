@@ -4,8 +4,17 @@
     <Filter Include="ABI">
       <UniqueIdentifier>{b7a226dc-4029-4213-b426-37eb7d0907a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{3f37028f-20c7-4c5c-8504-11059529ab2f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{63472e53-239b-4816-af09-ed2789b8fa95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Executors">
+      <UniqueIdentifier>{57577307-7ee7-4a55-8d17-c142b3f6f9cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Modules">
+      <UniqueIdentifier>{ae049213-3bdf-4cbe-83f4-39625a414539}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{76b82321-affb-4c4c-bfb4-39630e8574b4}</UniqueIdentifier>
@@ -16,17 +25,8 @@
     <Filter Include="Source Files\Executors">
       <UniqueIdentifier>{fe8806a2-f72f-4dc3-9996-3a0ee66101ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Executors">
-      <UniqueIdentifier>{57577307-7ee7-4a55-8d17-c142b3f6f9cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{56988676-220f-43a7-b8b1-8ecc51158498}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Modules">
-      <UniqueIdentifier>{ae049213-3bdf-4cbe-83f4-39625a414539}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{3f37028f-20c7-4c5c-8504-11059529ab2f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,26 +56,20 @@
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
+    <ClCompile Include="BeastWebSocketResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="DevSupportManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp">
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
       <Filter>Source Files\Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TimingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\WebSocketModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="DevSupportManager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HttpResource.cpp">
       <Filter>Source Files</Filter>
@@ -86,16 +80,22 @@
     <ClCompile Include="LazyDevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BeastWebSocketResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
+    <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\NetworkingModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\TimingModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\WebSocketModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -112,18 +112,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Modules\NetworkingModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Executors\WebSocketJSExecutor.h">
-      <Filter>Header Files\Executors</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\TimingModule.h">
-      <Filter>Header Files\Modules</Filter>
+    <ClInclude Include="BeastWebSocketResource.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DevSupportManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executors\WebSocketJSExecutor.h">
+      <Filter>Header Files\Executors</Filter>
     </ClInclude>
     <ClInclude Include="HttpResource.h">
       <Filter>Header Files</Filter>
@@ -134,12 +130,16 @@
     <ClInclude Include="LazyDevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\NetworkingModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TimingModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="NativeModuleFactories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BeastWebSocketResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
