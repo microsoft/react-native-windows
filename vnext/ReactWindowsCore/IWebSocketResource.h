@@ -29,11 +29,11 @@ struct IWebSocketResource {
   /// </summary>
   enum class ReadyState : std::uint16_t
   {
-    Connecting  = 0, // Handle initialized
-    Open        = 1, // Ready to send
-    Closing     = 2, // Currently closing
-    Closed      = 3, // Closed or failed to open
-    Size        = 4 // Metavalue representing the number of entries in this enum.
+    Connecting  = 0,  // Handle initialized
+    Open        = 1,  // Ready to send
+    Closing     = 2,  // Currently closing
+    Closed      = 3,  // Closed or failed to open
+    Size        = 4   // Metavalue representing the number of entries in this enum.
   };
 
   enum class ErrorType : std::size_t
@@ -46,7 +46,7 @@ struct IWebSocketResource {
     Send        = 5,
     Receive     = 6,
     Close       = 7,
-    Size        = 8 // Metavalue representing the number of entries in this enum.
+    Size        = 8   // Metavalue representing the number of entries in this enum.
   };
 
   /// <summary>
@@ -72,7 +72,7 @@ struct IWebSocketResource {
     TryAgainLater   = 1013,
     Reserved2       = 1014,
     Reserved3       = 1015,
-    Size            = 17 // Metavalue representing the number of entries in this enum.
+    Size            = 17  // Metavalue representing the number of entries in this enum.
   };
   // clang-format on
 
