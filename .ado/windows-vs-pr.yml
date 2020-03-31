@@ -141,14 +141,13 @@ jobs:
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          clean: false # Optional
+          clean: true # Optional
           maximumCpuCount: false # Optional
           restoreNugetPackages: false # Optional
           msbuildArgs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-          clean: true # Optional
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
@@ -165,14 +164,13 @@ jobs:
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          clean: false # Optional
+          clean: true # Optional
           maximumCpuCount: false # Optional
           restoreNugetPackages: false # Optional
           msbuildArgs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-          clean: true # Optional
 
       - task: CmdLine@2
         displayName: Create Playground bundle
