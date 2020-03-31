@@ -135,6 +135,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     devSettings->redboxHandler = std::move(settings.RedBoxHandler);
     devSettings->useJITCompilation = settings.EnableJITCompilation;
     devSettings->debugHost = settings.DebugHost;
+    devSettings->debuggerPort = settings.DebuggerPort;
 
     if (!devSettings->redboxHandler &&
         (devSettings->useWebDebugger || devSettings->useDirectDebugger || settings.UseLiveReload)) {
