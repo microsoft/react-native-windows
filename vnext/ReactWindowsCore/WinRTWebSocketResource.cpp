@@ -256,7 +256,6 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
 
     if (m_closeHandler)
     {
-      //TODO: Parameterize (pass via member variables?)
       m_closeHandler(m_closeCode, m_closeReason);
     }
   }
