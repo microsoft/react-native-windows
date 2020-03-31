@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Mar 2020 22:21:02 GMT and should not be manually modified.
+This log was last generated on Tue, 31 Mar 2020 02:03:05 GMT and should not be manually modified.
 
+## 0.0.0-master.5
+Tue, 31 Mar 2020 02:03:05 GMT
+
+### Changes
+
+- Allow user to specify direct debugging port (daseramo@microsoft.com)
 ## 0.0.0-master.4
 Mon, 30 Mar 2020 22:21:02 GMT
 
