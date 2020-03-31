@@ -22,10 +22,9 @@ steps:
       script: yarn install --frozen-lockfile
 
   - task: CmdLine@2
-    displayName: yarn build (local react-native-windows)
+    displayName: yarn build
     inputs:
       script: yarn build
-      workingDirectory: vnext
 
   - task: PowerShell@2
     displayName: Launch test npm server (verdaccio)
