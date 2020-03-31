@@ -70,7 +70,6 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
-          msBuildArchitecture: x86 # Necessary to build C# unit tests
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
 
       - task: VSTest@2
