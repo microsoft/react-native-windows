@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Do Not Override NPM Tag Based on Branch Name (#4434)",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "5933a05f87a12eaf4a483b12e339131128531962",
+  "dependentChangeType": "patch",
+  "date": "2020-03-27T22:10:36.851Z"
+}
