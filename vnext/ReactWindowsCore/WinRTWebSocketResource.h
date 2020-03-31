@@ -25,7 +25,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   winrt::Windows::Storage::Streams::DataWriter m_writer{m_socket.OutputStream()};
 
   Mso::DispatchQueue m_dispatchQueue;
-  Mso::ManualResetEvent m_waitOnClose;
+  Mso::ManualResetEvent m_closePerformed;
   std::atomic_bool m_connectRequested;
   std::promise<void> m_connectPerformedPromise;
   winrt::handle m_connectPerformed{

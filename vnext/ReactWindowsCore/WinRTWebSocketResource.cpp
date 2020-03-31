@@ -100,7 +100,7 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
   Close(CloseCode::GoingAway, "Disposed");
 
-  m_waitOnClose.Wait();
+  m_closePerformed.Wait();
 }
 
 #pragma region Private members
@@ -291,7 +291,7 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
   }
 
   m_readyState = ReadyState::Closed;
-  m_waitOnClose.Set();
+  m_closePerformed.Set();
 }
 
 void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
