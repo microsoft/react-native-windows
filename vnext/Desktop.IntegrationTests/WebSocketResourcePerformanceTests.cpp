@@ -50,8 +50,9 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
   /// test must be run in isolation (no other tests running concurrently).
   ///
   TEST_METHOD(ProcessThreadsPerResource) {
-    const int resourceTotal = 50; // About 3 seconds total running time. 6 if we
-    // increase this value to 100.
+    // About 3 seconds total running time.
+    // 6, if we increase this value to 100.
+    const int resourceTotal = 50;
     const int maxWriteCount = 10;
     const int expectedThreadsPerResource = 3;
     const int startThreadCount = GetCurrentThreadCount();
@@ -60,18 +61,16 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     bool errorFound = false;
     string errorMessage;
 
+    auto server = std::make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string &&message) { return message + "_response"; });
     // TODO: Re-enable.
-    // auto server = std::make_shared<Test::WebSocketServer>(5556);
-    // server->SetMessageFactory([](string&& message)
-    //{
-    //  return message + "_response";
-    //});
     // server->Start();
+
     // WebSocket resources scope.
     {
       vector<shared_ptr<IWebSocketResource>> resources;
       for (int i = 0; i < resourceTotal; i++) {
-        auto ws = IWebSocketResource::Make("ws://localhost:5555/");
+        auto ws = IWebSocketResource::Make("ws://localhost:5555/"); // TODO: Switch to port 5556
         ws->SetOnMessage([this, &threadCount, &errorFound](size_t size, const string &message) {
           if (errorFound)
             return;
@@ -118,7 +117,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
         ws->Close();
       }
     }
-    // server->Stop();
+    // server->Stop();//TODO: Re-enable
 
     int32_t finalThreadCount = threadCount.load();
     int64_t threadsPerResource = (finalThreadCount - startThreadCount) / resourceTotal;

@@ -21,9 +21,9 @@ struct IWebSocketResource {
 
 #pragma endregion Aliases
 
+// clang-format off
 #pragma region Inner types
 
-  // clang-format off
   /// <summary>
   /// As defined in RFC6455.
   /// </summary>
@@ -74,14 +74,15 @@ struct IWebSocketResource {
     Reserved3       = 1015,
     Size            = 17  // Metavalue representing the number of entries in this enum.
   };
-  // clang-format on
 
-  struct Error {
+  struct Error
+  {
     std::string Message;
     const ErrorType Type;
   };
 
 #pragma endregion Inner types
+  // clang-format on
 
   /// <summary>
   /// Creates an <c>IWebSocketResource</c> instance.
