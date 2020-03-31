@@ -25,7 +25,7 @@ namespace SampleLibraryCpp {
 void RegisterModule(ReactModuleBuilder<::SampleLibraryCpp::MyModule> &moduleBuilder) {
   RegisterMyModuleModule(moduleBuilder);
 }
-}
+} // namespace SampleLibraryCpp
 
 namespace winrt::SampleLibraryCpp::implementation {
 
