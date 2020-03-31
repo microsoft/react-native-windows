@@ -5,11 +5,11 @@
 
 #include "DebugHelpers.h"
 
-#define DEBUG_OUTPUT(...) DebugWriteLine("SampleModuleCppImpl", ##__VA_ARGS__);
+#define DEBUG_MYMODULE_OUTPUT(...) DebugWriteLine("MyModule", ##__VA_ARGS__);
 
 namespace SampleLibraryCpp {
 
-struct MyNativeModule {
+struct MyModule {
     void Initialize(IReactContext const & /*reactContext*/) noexcept {
     }
 
@@ -18,21 +18,21 @@ struct MyNativeModule {
     const std::string const3 = "abc";
 
     void voidFunc() noexcept {
-      DEBUG_OUTPUT("voidFunc");
+      DEBUG_MYMODULE_OUTPUT("voidFunc");
     }
 
     bool getBool(bool arg) noexcept {
-      DEBUG_OUTPUT("getBool", arg);
+      DEBUG_MYMODULE_OUTPUT("getBool", arg);
       return arg;
     }
 
     double getNumber(double arg) noexcept {
-      DEBUG_OUTPUT("getNumber", arg);
+      DEBUG_MYMODULE_OUTPUT("getNumber", arg);
       return arg;
     }
 
     std::string getString(std::string arg) noexcept {
-      DEBUG_OUTPUT("getString", arg);
+      DEBUG_MYMODULE_OUTPUT("getString", arg);
       return arg;
     }
 };

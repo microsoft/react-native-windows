@@ -13,11 +13,13 @@ import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboMo
 
 export interface Spec extends TurboModule {
   // Exported methods.
+  /*
   +getConstants: () => {|
     const1: boolean,
     const2: number,
     const3: string,
   |};
+  */
   +voidFunc: () => void;
   +getBool: (arg: boolean) => boolean;
   +getNumber: (arg: number) => number;
@@ -29,4 +31,4 @@ export interface Spec extends TurboModule {
   // +getValueWithPromise: (error: boolean) => Promise<string>;
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>('MyNativeModule'): Spec);
+export default (TurboModuleRegistry.getEnforcing<Spec>('MyModule'): Spec);

@@ -11,15 +11,27 @@
 #include "CustomUserControlViewManagerCpp.h"
 #include "SampleModuleCpp.h"
 
-// Not sure how the registration of this module should be..
-#include "MyNativeModule.g.h"
+// Import generated definitions
+#include "..\..\codegen\NativeModules.g.h"
+
+// Import impls of modules
+#include "MyModule.h"
 
 using namespace winrt::Microsoft::ReactNative;
+
+namespace SampleLibraryCpp {
+
+// Lame that we need this right now
+void RegisterModule(ReactModuleBuilder<::SampleLibraryCpp::MyModule> &moduleBuilder) {
+  RegisterMyModuleModule(moduleBuilder);
+}
+}
 
 namespace winrt::SampleLibraryCpp::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
+  packageBuilder.AddModule(L"MyModule", MakeModuleProvider<::SampleLibraryCpp::MyModule>());
   packageBuilder.AddViewManager(
       L"CustomUserControlViewManagerCpp", []() { return winrt::make<CustomUserControlViewManagerCpp>(); });
   packageBuilder.AddViewManager(L"CircleViewManagerCpp", []() { return winrt::make<CircleViewManagerCpp>(); });

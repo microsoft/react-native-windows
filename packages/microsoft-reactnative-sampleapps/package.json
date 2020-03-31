@@ -7,6 +7,7 @@
     "bundle-cpp": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
     "bundle-cs": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
     "clean": "just-scripts clean",
+    "codegen": "react-native-windows-codegen --file NativeMyModule.js --namespace SampleLibraryCpp",
     "postinstall": "node postinstall.js",
     "start": "react-native start",
     "lint": "just-scripts lint",
@@ -26,6 +27,7 @@
     "@types/react-native": "~0.61.5",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "0.55.0",
+    "react-native-windows-codegen": "0.0.1",
     "react-test-renderer": "16.8.6"
   }
 }

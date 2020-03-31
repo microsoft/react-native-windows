@@ -8,16 +8,25 @@
 import * as yargs from 'yargs';
 import * as path from 'path';
 import * as fs from 'fs';
-import {generate as generateNM2} from './generators/GenerateNM2';
+import {createNM2Generator} from './generators/GenerateNM2';
 // @ts-ignore
-import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow/modules';
-
-const schemaValidator = require('./react-native-codegen/src/SchemaValidator.js');
+import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
+// @ts-ignore
+import * as schemaValidator from 'react-native-tscodegen/lib/rncodegen/src/schemaValidator';
 
 const argv = yargs.options({
   file: {
     type: 'string',
     describe: 'file which contains spec',
+  },
+  test: {
+    type: 'boolean',
+    describe: 'Verify that the generated output is unchanged',
+  },
+  namespace: {
+    type: 'string',
+    describe: 'C++/C# Namespace to put generated native modules in',
+    default: 'MyNamespace',
   },
 }).argv;
 
@@ -64,19 +73,20 @@ function checkFilesForChanges(
   map: Map<string, string>,
   outputDir: string,
 ): boolean {
-  let hasChanged = false;
-
   map.forEach((contents: string, fileName: string) => {
     const location = path.join(outputDir, fileName);
+    if (!fs.existsSync(location)) {
+      return true;
+    }
+
     const currentContents = fs.readFileSync(location, 'utf8');
     if (currentContents !== contents) {
       console.error(`- ${fileName} has changed`);
-
-      hasChanged = true;
+      return true;
     }
   });
 
-  return !hasChanged;
+  return false;
 }
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
@@ -108,6 +118,9 @@ function generate(
     }
   }
 */
+
+  const generateNM2 = createNM2Generator({namespace: argv.namespace});
+
   generatedFiles.push(...generateNM2(libraryName, schema, moduleSpecName));
 
   const filesToUpdate = new Map<string, string>([...generatedFiles]);
@@ -122,8 +135,8 @@ function generate(
 const schema: SchemaType = parseFile(argv.file);
 const libraryName = 'libraryName';
 const moduleSpecName = 'moduleSpecName';
-const outputDirectory = 'codegen-out-dir';
+const outputDirectory = 'codegen';
 generate(
   {libraryName, schema, outputDirectory, moduleSpecName},
-  {generators: [], test: true},
+  {generators: [], test: false},
 );
