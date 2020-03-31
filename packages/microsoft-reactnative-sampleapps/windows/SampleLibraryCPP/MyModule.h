@@ -10,31 +10,30 @@
 namespace SampleLibraryCpp {
 
 struct MyModule {
-    void Initialize(IReactContext const & /*reactContext*/) noexcept {
-    }
+  void Initialize(IReactContext const & /*reactContext*/) noexcept {}
 
-    const bool const1 = false;
-    const double const2 = 1.234;
-    const std::string const3 = "abc";
+  const bool const1 = false;
+  const double const2 = 1.234;
+  const std::string const3 = "abc";
 
-    void voidFunc() noexcept {
-      DEBUG_MYMODULE_OUTPUT("voidFunc");
-    }
+  void voidFunc() noexcept {
+    DEBUG_MYMODULE_OUTPUT("voidFunc");
+  }
 
-    bool getBool(bool arg) noexcept {
-      DEBUG_MYMODULE_OUTPUT("getBool", arg);
-      return arg;
-    }
+  bool getBool(bool arg) noexcept {
+    DEBUG_MYMODULE_OUTPUT("getBool", arg);
+    return arg;
+  }
 
-    double getNumber(double arg) noexcept {
-      DEBUG_MYMODULE_OUTPUT("getNumber", arg);
-      return arg;
-    }
+  double getNumber(double arg) noexcept {
+    DEBUG_MYMODULE_OUTPUT("getNumber", arg);
+    return arg;
+  }
 
-    std::string getString(std::string arg) noexcept {
-      DEBUG_MYMODULE_OUTPUT("getString", arg);
-      return arg;
-    }
+  std::string getString(std::string arg) noexcept {
+    DEBUG_MYMODULE_OUTPUT("getString", arg);
+    return arg;
+  }
 };
 
 } // namespace SampleLibraryCpp
