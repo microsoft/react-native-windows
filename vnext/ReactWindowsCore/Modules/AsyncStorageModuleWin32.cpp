@@ -75,10 +75,10 @@ bool Exec(sqlite3 *db, const CxxModule::Callback &callback, const char *statemen
       &fn);
 }
 
-// Checks that the args parameter is an array, and that args.size() is less
-// than SQLITE_LIMIT_VARIABLE_NUMBER. If not, invokes the callback to report
-// an error and returns false.
-bool CheckSize(sqlite3 *db, folly::dynamic &args, const CxxModule::Callback &callback) {
+// Checks that the args parameter is an array, that args.size() is less than
+// SQLITE_LIMIT_VARIABLE_NUMBER, and that every member of args is a string.
+// Invokes callback to report an error and returns false.
+bool CheckArgs(sqlite3 *db, folly::dynamic &args, const CxxModule::Callback &callback) {
   if (!args.isArray()) {
     InvokeError(callback, "Invalid keys type. Expected an array");
     return false;
@@ -90,6 +90,11 @@ bool CheckSize(sqlite3 *db, folly::dynamic &args, const CxxModule::Callback &cal
     sprintf_s(errorMsg, "Too many keys. Maximum supported keys :%d", varLimit);
     InvokeError(callback, errorMsg);
     return false;
+  }
+  for (int i = 0; i < static_cast<int>(argCount); i++) {
+    if (!args[i].isString()) {
+      InvokeError(callback, "Invalid key type. Expected a string");
+    }
   }
   return true;
 }
@@ -231,14 +236,14 @@ AsyncStorageModuleWin32::AsyncStorageModuleWin32() {
 }
 
 AsyncStorageModuleWin32::~AsyncStorageModuleWin32() {
-  decltype(m_action) action;
+  decltype(m_tasks) tasks;
   {
     // If there is an in-progress async task, cancel it and wait on the
     // condition_variable for the async task to acknowledge cancellation by
     // nulling out m_action. Once m_action is null, it is safe to proceed
     // wth closing the DB connection
     winrt::slim_shared_lock_guard guard{m_lock};
-    m_tasks.clear();
+    swap(tasks, m_tasks);
     if (m_action) {
       m_action.Cancel();
       m_cv.wait(m_lock, [this]() { return m_action == nullptr; });
@@ -363,7 +368,7 @@ void AsyncStorageModuleWin32::DBTask::operator()(sqlite3 *db) {
 
 void AsyncStorageModuleWin32::DBTask::multiGet(sqlite3 *db) {
   folly::dynamic result = folly::dynamic::array;
-  if (!CheckSize(db, m_args, m_callback)) {
+  if (!CheckArgs(db, m_args, m_callback)) {
     return;
   }
 
@@ -374,7 +379,6 @@ void AsyncStorageModuleWin32::DBTask::multiGet(sqlite3 *db) {
     return;
   }
   for (int i = 0; i < argCount; i++) {
-    // todo check that arg is a string?
     if (!BindString(db, m_callback, pStmt, i + 1, m_args[i].getString()))
       return;
   }
@@ -428,7 +432,7 @@ void AsyncStorageModuleWin32::DBTask::multiSet(sqlite3 *db) {
 }
 
 void AsyncStorageModuleWin32::DBTask::multiRemove(sqlite3 *db) {
-  if (!CheckSize(db, m_args, m_callback)) {
+  if (!CheckArgs(db, m_args, m_callback)) {
     return;
   }
 
@@ -437,6 +441,10 @@ void AsyncStorageModuleWin32::DBTask::multiRemove(sqlite3 *db) {
   auto pStmt = PrepareStatement(db, m_callback, sql.data());
   if (!pStmt) {
     return;
+  }
+  for (int i = 0; i < argCount; i++) {
+    if (!BindString(db, m_callback, pStmt, i + 1, m_args[i].getString()))
+      return;
   }
   for (auto stepResult = sqlite3_step(pStmt.get()); stepResult != SQLITE_DONE; stepResult = sqlite3_step(pStmt.get())) {
     if (stepResult != SQLITE_ROW) {
