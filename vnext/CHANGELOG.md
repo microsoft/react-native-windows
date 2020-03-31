@@ -1,7 +1,471 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 13 Feb 2020 01:37:12 GMT and should not be manually modified.
+This log was last generated on Tue, 31 Mar 2020 21:49:07 GMT and should not be manually modified.
 
+## 0.0.0-master.7
+Tue, 31 Mar 2020 21:49:07 GMT
+
+### Changes
+
+- Update MSBuild Tasks to use MSBuild x64 (jthysell@microsoft.com)
+## 0.0.0-master.6
+Tue, 31 Mar 2020 20:21:56 GMT
+
+### Changes
+
+- 1. Make changes in response to Vladimir's feedback in the PR for bb8c00133... 2. Fix a dumb bug in multiRemove; the parameterized query variable was not being bound so nothing ever got deleted (hpratt@microsoft.com)
+## 0.0.0-master.5
+Tue, 31 Mar 2020 02:03:05 GMT
+
+### Changes
+
+- Allow user to specify direct debugging port (daseramo@microsoft.com)
+## 0.0.0-master.4
+Mon, 30 Mar 2020 22:21:02 GMT
+
+### Changes
+
+- Updated C++/WinRT to 2.0.200316.3 and Min Windows to RS3+ (10.0.16299.0) (vmorozov@microsoft.com)
+## 0.0.0-master.3
+Fri, 27 Mar 2020 20:29:40 GMT
+
+### Changes
+
+- Fix direct debugging (acoates@microsoft.com)
+## 0.0.0-master.2
+Thu, 26 Mar 2020 23:11:17 GMT
+
+### Changes
+
+- Tests for NativeModule registration without attributes (vmorozov@microsoft.com)
+## 0.0.0-master.1
+Thu, 26 Mar 2020 22:33:20 GMT
+
+### Changes
+
+- 0.0.0 Master Versioning Scheme (ngerlem@microsoft.com)
+## 0.61.0-beta.75
+Thu, 26 Mar 2020 19:54:26 GMT
+
+### Changes
+
+- Add a timeout to catch hangs during cert generation (acoates@microsoft.com)
+## 0.61.0-beta.74
+Thu, 26 Mar 2020 16:02:57 GMT
+
+### Changes
+
+- Allow NativeModules events to have 0..n arguments (vmorozov@microsoft.com)
+## 0.61.0-beta.73
+Thu, 26 Mar 2020 14:54:10 GMT
+
+### Changes
+
+- Enable basic V8 direct debugging (tudorm@microsoft.com)
+## 0.61.0-beta.72
+Thu, 26 Mar 2020 05:34:25 GMT
+
+### Changes
+
+- Fix hang on react-native-init when run from a non-elevated prompt (acoates@microsoft.com)
+## 0.61.0-beta.71
+Tue, 24 Mar 2020 07:05:57 GMT
+
+### Changes
+
+- Do not enter loaded state when an error occurs during web bundle loadJSBundles (acoates@microsoft.com)
+## 0.61.0-beta.70
+Mon, 23 Mar 2020 21:05:53 GMT
+
+### Changes
+
+- Fixed crash when trying to load invalid image uri (jthysell@microsoft.com)
+## 0.61.0-beta.69
+Mon, 23 Mar 2020 14:55:40 GMT
+
+### Changes
+
+- Implemented Linking module protocol activation (vmorozov@microsoft.com)
+## 0.61.0-beta.68
+Sat, 21 Mar 2020 00:52:27 GMT
+
+### Changes
+
+- Update V8 package (tudorm@microsoft.com)
+## 0.61.0-beta.67
+Thu, 19 Mar 2020 04:03:12 GMT
+
+### Changes
+
+- Add stub devStettingModule to react.uwp (acoates@microsoft.com)
+## 0.61.0-beta.66
+Wed, 18 Mar 2020 23:06:37 GMT
+
+### Changes
+
+- remove unused stubs (kmelmon@microsoft.com)
+## 0.61.0-beta.65
+Wed, 18 Mar 2020 22:00:44 GMT
+
+### Changes
+
+- Changed C# JSValue API to match C++ version (vmorozov@microsoft.com)
+## 0.61.0-beta.64
+Wed, 18 Mar 2020 20:19:18 GMT
+
+### Changes
+
+- Fix ReactInstanceWin::GetBundleRootPath (jthysell@microsoft.com)
+## 0.61.0-beta.63
+Wed, 18 Mar 2020 04:50:36 GMT
+
+### Changes
+
+- remove react-native-windows-extended (kmelmon@microsoft.com)
+## 0.61.0-beta.62
+Tue, 17 Mar 2020 23:28:32 GMT
+
+### Changes
+
+- Set TabIndex to 0 for Pickers (jagorrin@microsoft.com)
+## 0.61.0-beta.61
+Tue, 17 Mar 2020 22:54:20 GMT
+
+### Changes
+
+- Enable fast refresh (acoates@microsoft.com)
+## 0.61.0-beta.60
+Tue, 17 Mar 2020 01:55:59 GMT
+
+### Changes
+
+- Set TabIndex to 0 for ScrollViewers (jagorrin@microsoft.com)
+## 0.61.0-beta.59
+Mon, 16 Mar 2020 19:54:21 GMT
+
+### Changes
+
+- Remove cli.js (kaigu@microsoft.com)
+## 0.61.0-beta.58
+Sat, 14 Mar 2020 03:04:21 GMT
+
+### Changes
+
+- Add cli.js (kaigu@microsoft.com)
+## 0.61.0-beta.57
+Fri, 13 Mar 2020 17:37:53 GMT
+
+### Changes
+
+- Build unit tests in ReactWindows-Universal solution (jthysell@microsoft.com)
+- Address PR comments (dida@ntdev.microsoft.com)
+- Code-Gen nativeModules.g.h for auto-linking (dida@ntdev.microsoft.com)
+## 0.61.0-beta.56
+Thu, 12 Mar 2020 19:18:01 GMT
+
+### Changes
+
+- Use redbox for native errors (acoates@microsoft.com)
+## 0.61.0-beta.55
+Thu, 12 Mar 2020 00:01:14 GMT
+
+### Changes
+
+- Fix JSValueObject operator[] (vmorozov@microsoft.com)
+## 0.61.0-beta.54
+Wed, 11 Mar 2020 19:32:20 GMT
+
+### Changes
+
+- Fully implement ExceptionsManagerModule (acoates@microsoft.com)
+## 0.61.0-beta.53
+Wed, 11 Mar 2020 18:14:12 GMT
+
+### Changes
+
+- Code review feedback (acoates@microsoft.com)
+## 0.61.0-beta.52
+Wed, 11 Mar 2020 16:18:00 GMT
+
+### Changes
+
+- Fix crash in timers during instance shutdown, and in systrace (acoates@microsoft.com)
+## 0.61.0-beta.51
+Tue, 10 Mar 2020 21:51:40 GMT
+
+### Changes
+
+- Bundle command clean-up (jthysell@microsoft.com)
+## 0.61.0-beta.50
+Tue, 10 Mar 2020 00:33:15 GMT
+
+### Changes
+
+- Strip out color markers from redbox error messages (acoates@microsoft.com)
+## 0.61.0-beta.49
+Mon, 09 Mar 2020 20:08:13 GMT
+
+### Changes
+
+- Fix Support For SysTraceSection (ngerlem@microsoft.com)
+## 0.61.0-beta.48
+Mon, 09 Mar 2020 18:53:03 GMT
+
+### Changes
+
+- Add initial redbox implementation (acoates@microsoft.com)
+## 0.61.0-beta.47
+Sat, 07 Mar 2020 19:35:40 GMT
+
+### Changes
+
+- Add XamlHelpers (kaigu@microsoft.com)
+## 0.61.0-beta.46
+Sat, 07 Mar 2020 02:35:07 GMT
+
+### Changes
+
+- Add Override Manifest for Native Code (ngerlem@microsoft.com)
+## 0.61.0-beta.45
+Sat, 07 Mar 2020 01:43:31 GMT
+
+### Changes
+
+- Remove Most cxxreact Patches and Executor Sandboxing Code (ngerlem@microsoft.com)
+- Deprecated JSValue typed value access functions (vmorozov@microsoft.com)
+## 0.61.0-beta.44
+Sat, 07 Mar 2020 01:08:09 GMT
+
+### Changes
+
+- Dont show loading/redbox in ship mode (acoates@microsoft.com)
+## 0.61.0-beta.43
+Sat, 07 Mar 2020 00:30:45 GMT
+
+### Changes
+
+- Bundle commands should work if you dont have react-native installed globally (acoates@microsoft.com)
+## 0.61.0-beta.42
+Fri, 06 Mar 2020 23:55:14 GMT
+
+### Changes
+
+- Add JS engine selection to Playground (tudorm@microsoft.com)
+## 0.61.0-beta.41
+Fri, 06 Mar 2020 22:46:28 GMT
+
+### Changes
+
+- Support dependency config for RNW (dida@ntdev.microsoft.com)
+## 0.61.0-beta.40
+Fri, 06 Mar 2020 19:29:08 GMT
+
+### Changes
+
+- Fix include filters (jthysell@microsoft.com)
+## 0.61.0-beta.39
+Thu, 05 Mar 2020 23:13:07 GMT
+
+### Changes
+
+- undefined (ngerlem@microsoft.com)
+- Configure vnext validate-overrides to check both override manifests (ngerlem@microsoft.com)
+## 0.61.0-beta.38
+Thu, 05 Mar 2020 18:30:29 GMT
+
+### Changes
+
+- Added TryAddAttributedModule in addition to AddAttributedModules (vmorozov@microsoft.com)
+## 0.61.0-beta.37
+Thu, 05 Mar 2020 05:33:57 GMT
+
+### Changes
+
+- Move ViewPanel import from PropertyUtils to FrameworkElementViewManager (jagorrin@microsoft.com)
+## 0.61.0-beta.36
+Thu, 05 Mar 2020 03:41:34 GMT
+
+### Changes
+
+- Enable V8 support for win32 (no defaults changed) (tudorm@microsoft.com)
+## 0.61.0-beta.35
+Thu, 05 Mar 2020 00:11:30 GMT
+
+### Changes
+
+- Support RNW project config (dida@ntdev.microsoft.com)
+## 0.61.0-beta.34
+Wed, 04 Mar 2020 08:47:08 GMT
+
+### Changes
+
+- CI Enforce that Overrides are Recorded Up to Date (ngerlem@microsoft.com)
+## 0.61.0-beta.33
+Wed, 04 Mar 2020 08:11:46 GMT
+
+### Changes
+
+- Moved header files from ReactUWP\Utils to include\ReactUWP\Utils. Updated project references. (lamdoan@microsoft.com)
+## 0.61.0-beta.32
+Tue, 03 Mar 2020 19:02:31 GMT
+
+### Changes
+
+- Remove CMakeLists (ngerlem@microsoft.com)
+## 0.61.0-beta.31
+Mon, 02 Mar 2020 22:47:03 GMT
+
+### Changes
+
+- More Override Manifest Functionality (Unit Tests Coming Next Iteration) (ngerlem@microsoft.com)
+## 0.61.0-beta.30
+Mon, 02 Mar 2020 21:53:02 GMT
+
+### Changes
+
+- Upgrade just-scripts and add root test script (ngerlem@microsoft.com)
+- Add descriptions to dev menu items (acoates@microsoft.com)
+## 0.61.0-beta.29
+Mon, 02 Mar 2020 20:59:31 GMT
+
+### Changes
+
+- Fix a couple of places in run-windows that has incorrect assumptions on install layout (acoates@microsoft.com)
+## 0.61.0-beta.28
+Thu, 27 Feb 2020 23:11:13 GMT
+
+### Changes
+
+- Set IsTabStop to false when tabIndex is negative (lamdoan@microsoft.com)
+- TextBox should have a default tabIndex of 0 (lamdoan@microsoft.com)
+## 0.61.0-beta.27
+Wed, 26 Feb 2020 18:33:35 GMT
+
+### Changes
+
+- Fixed call of methods with two callbacks (vmorozov@microsoft.com)
+## 0.61.0-beta.26
+Wed, 26 Feb 2020 17:21:19 GMT
+
+### Changes
+
+- Standup first TurboModule (acoates@microsoft.com)
+## 0.61.0-beta.25
+Wed, 26 Feb 2020 10:17:18 GMT
+
+### Changes
+
+- Fix concurrency issue in NetworkingModule (lamdoan@microsoft.com)
+## 0.61.0-beta.24
+Tue, 25 Feb 2020 21:50:32 GMT
+
+### Changes
+
+- Plumb directdebugging options through debug menu and instance loading (acoates@microsoft.com)
+## 0.61.0-beta.23
+Tue, 25 Feb 2020 03:42:21 GMT
+
+### Changes
+
+- Declare MessageQueueThread in header that uses it (acoates@microsoft.com)
+## 0.61.0-beta.22
+Sat, 22 Feb 2020 00:21:17 GMT
+
+### Changes
+
+- Force coroutine method parameters pass by value (vmorozov@microsoft.com)
+## 0.61.0-beta.21
+Fri, 21 Feb 2020 23:40:21 GMT
+
+### Changes
+
+- Add a Win32 playground app to RNW (hpratt@microsoft.com)
+## 0.61.0-beta.20
+Fri, 21 Feb 2020 16:46:52 GMT
+
+### Changes
+
+- Fix ReactNativeHost without package providers (vmorozov@microsoft.com)
+## 0.61.0-beta.19
+Fri, 21 Feb 2020 01:27:13 GMT
+
+### Changes
+
+- Fix some reliability isssues for current AsyncStorage implementation (dida@ntdev.microsoft.com)
+- Upgrade ChakraCore Debugger to 0.0.0.43 (julio.rocha@microsoft.com)
+- Update metro configs to support node 12 on windows (acoates)
+## 0.61.0-beta.17
+Thu, 20 Feb 2020 19:20:15 GMT
+
+### Changes
+
+- Bump min. Windows Desktop supported version to 8. (julio.rocha@microsoft.com)
+## 0.61.0-beta.16
+Thu, 20 Feb 2020 16:09:49 GMT
+
+### Changes
+
+- Avoid having native modules without methods (vmorozov@microsoft.com)
+## 0.61.0-beta.15
+Thu, 20 Feb 2020 01:52:30 GMT
+
+### Changes
+
+- Use verdaccio to validate react native init (acoates@microsoft.com)
+## 0.61.0-beta.14
+Wed, 19 Feb 2020 23:34:40 GMT
+
+### Changes
+
+- Implemented NativeModule initialization with IReactContext (vmorozov@microsoft.com)
+## 0.61.0-beta.13
+Wed, 19 Feb 2020 22:45:15 GMT
+
+### Changes
+
+- Revert "Drop StdCall in favor of Cdecl for x86. (#4115)" (ngerlem@microsoft.com)
+## 0.61.0-beta.12
+Wed, 19 Feb 2020 07:10:21 GMT
+
+### Changes
+
+- Use Cdecl for x86. (julio.rocha@microsoft.com)
+## 0.61.0-beta.11
+Wed, 19 Feb 2020 02:24:03 GMT
+
+### Changes
+
+- Remove useIncrementalUpdates assert from Networking module (mcota@microsoft.com)
+## 0.61.0-beta.10
+Tue, 18 Feb 2020 21:13:20 GMT
+
+### Changes
+
+- Fix issues with relative IntDir breaking builds (aschultz@microsoft.com)
+## 0.61.0-beta.9
+Sat, 15 Feb 2020 01:46:09 GMT
+
+### Changes
+
+- update devDependencies to use latest TS types (kmelmon@microsoft.com)
+## 0.61.0-beta.8
+Fri, 14 Feb 2020 21:40:52 GMT
+
+### Changes
+
+- Downngraded OpenSSL to 1.0.2-p.2. (julio.rocha@microsoft.com)
+## 0.61.0-beta.7
+Thu, 13 Feb 2020 21:30:14 GMT
+
+### Changes
+
+- Force Interpretation of Code as UTF-8 When no BOM Present (ngerlem@microsoft.com)
+## 0.61.0-beta.6
+Thu, 13 Feb 2020 05:48:00 GMT
+
+### Changes
+
+- Fixed Microsoft.ReactNative compiler warnings and start treating warnings as errors (vmorozov@microsoft.com)
 ## 0.61.0-beta.5
 Thu, 13 Feb 2020 01:37:12 GMT
 

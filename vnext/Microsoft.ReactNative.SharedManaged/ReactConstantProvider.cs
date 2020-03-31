@@ -15,6 +15,6 @@ namespace Microsoft.ReactNative.Managed
       m_writer.WriteObjectProperty(constantName, value);
     }
 
-    private IJSValueWriter m_writer;
+    private readonly IJSValueWriter m_writer;
   }
 }

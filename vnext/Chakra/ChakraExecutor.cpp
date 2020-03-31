@@ -53,10 +53,10 @@ JsNativeFunction exceptionWrapMethod() {
   struct funcWrapper {
     static JsValueRef __stdcall call(
         JsValueRef function,
-        bool isConstructCall,
+        bool /*isConstructCall*/,
         JsValueRef arguments[],
         unsigned short argumentCount,
-        void *callbackState) {
+        void * /*callbackState*/) {
       JsContextRef ctx;
       JsGetCurrentContext(&ctx);
       try {
@@ -540,7 +540,7 @@ void ChakraExecutor::setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundle
   m_bundleRegistry = std::move(bundleRegistry);
 }
 
-void ChakraExecutor::registerBundle(uint32_t bundleId, const std::string &bundlePath) {
+void ChakraExecutor::registerBundle(uint32_t /*bundleId*/, const std::string & /*bundlePath*/) {
   // NYI
   std::terminate();
 }
@@ -651,12 +651,6 @@ void *ChakraExecutor::getJavaScriptContext() {
   return m_context;
 }
 
-#ifdef PATCH_RN
-int64_t ChakraExecutor::getPeakJsMemoryUsage() const noexcept {
-  return tls_runtimeTracker.MemoryTracker->GetPeakMemoryUsage();
-}
-#endif
-
 void ChakraExecutor::flushQueueImmediate(ChakraValue &&queue) {
   auto queueStr = queue.toJSONString();
   m_delegate->callNativeModules(*this, folly::parseJson(queueStr), false);
@@ -693,7 +687,7 @@ void ChakraExecutor::installNativeHook(const char *name) {
   installGlobalFunction(name, exceptionWrapMethod<method>());
 }
 
-JsValueRef ChakraExecutor::getNativeModule(JsValueRef object, JsValueRef propertyName) {
+JsValueRef ChakraExecutor::getNativeModule(JsValueRef /*object*/, JsValueRef propertyName) {
   std::string string;
 
   /*auto result = */ JsStringToStdStringUtf8(propertyName, string);

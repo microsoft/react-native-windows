@@ -592,8 +592,9 @@ facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
   return new TextInputShadowNode();
 }
 
-XamlView TextInputViewManager::CreateViewCore(int64_t tag) {
+XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/) {
   winrt::TextBox textBox;
+  textBox.TabIndex(0);
   return textBox;
 }
 

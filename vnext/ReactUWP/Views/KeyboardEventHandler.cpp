@@ -106,13 +106,13 @@ PreviewKeyboardEventHandlerOnRoot::PreviewKeyboardEventHandlerOnRoot(const std::
       m_wkReactInstance(reactInstance) {}
 
 void PreviewKeyboardEventHandlerOnRoot::OnPreKeyDown(
-    winrt::IInspectable const &sender,
+    winrt::IInspectable const & /*sender*/,
     winrt::KeyRoutedEventArgs const &args) {
   DispatchEventToJs("topKeyDown", args);
 }
 
 void PreviewKeyboardEventHandlerOnRoot::OnPreKeyUp(
-    winrt::IInspectable const &sender,
+    winrt::IInspectable const & /*sender*/,
     winrt::KeyRoutedEventArgs const &args) {
   DispatchEventToJs("topKeyUp", args);
 }
@@ -165,7 +165,7 @@ void HandledKeyboardEventHandler::EnsureKeyboardEventHandler() {
 
 void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
     KeyboardEventPhase phase,
-    winrt::IInspectable const &sender,
+    winrt::IInspectable const & /*sender*/,
     winrt::KeyRoutedEventArgs const &args) {
   HandledEventPhase currentEventPhase =
       (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
@@ -575,7 +575,7 @@ static const std::string GetOrUnidentified(
   return "Unidentified";
 }
 
-std::string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked) {
+std::string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool /*shiftDown*/, bool /*capLocked*/) {
   int key = static_cast<int>(virtualKey);
 
   if (!isupper(key) && !isdigit(key)) {

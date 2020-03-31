@@ -6,7 +6,7 @@ using System;
 namespace Microsoft.ReactNative.Managed
 {
   [AttributeUsage(AttributeTargets.Class)]
-  internal class ReactModuleAttribute : Attribute
+  class ReactModuleAttribute : Attribute
   {
     public ReactModuleAttribute(string moduleName = null)
     {
@@ -18,6 +18,11 @@ namespace Microsoft.ReactNative.Managed
     public string EventEmitterName { get; set; }
   }
 
+  [AttributeUsage(AttributeTargets.Method)]
+  class ReactInitializerAttribute : Attribute
+  {
+  }
+
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
   class ReactConstantAttribute : Attribute
   {
@@ -26,7 +31,7 @@ namespace Microsoft.ReactNative.Managed
       ConstantName = constantName;
     }
 
-    public string ConstantName { get; private set; }
+    public string ConstantName { get; set; }
   }
 
 
@@ -43,7 +48,7 @@ namespace Microsoft.ReactNative.Managed
       MethodName = methodName;
     }
 
-    public string MethodName { get; private set; }
+    public string MethodName { get; set; }
   }
 
   [AttributeUsage(AttributeTargets.Method)]
@@ -54,7 +59,7 @@ namespace Microsoft.ReactNative.Managed
       MethodName = methodName;
     }
 
-    public string MethodName { get; private set; }
+    public string MethodName { get; set; }
   }
 
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
@@ -65,6 +70,21 @@ namespace Microsoft.ReactNative.Managed
       EventName = eventName;
     }
 
-    public string EventName { get; private set; }
+    public string EventName { get; set; }
+
+    public string EventEmitterName { get; set; }
+  }
+
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  class ReactFunctionAttribute : Attribute
+  {
+    public ReactFunctionAttribute(string functionName = null)
+    {
+      FunctionName = functionName;
+    }
+
+    public string FunctionName { get; set; }
+
+    public string ModuleName { get; set; }
   }
 }

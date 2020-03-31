@@ -140,6 +140,10 @@ void StorageFileIO::append(const std::string &fileContent) {
   fwrite(fileContent.c_str(), sizeof(char), fileContent.size(), m_storageFile.get());
 }
 
+void StorageFileIO::flush() {
+  fflush(m_storageFile.get());
+}
+
 void StorageFileIO::throwLastErrorMessage() {
   char errorMessageBuffer[IOHelperBufferSize + 1] = {0};
 #ifdef LIBLET_BUILD // This is silly and makes our lives more difficult while

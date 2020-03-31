@@ -56,7 +56,7 @@ facebook::react::ShadowNode *SliderViewManager::createShadow() const {
   return new SliderShadowNode();
 }
 
-XamlView SliderViewManager::CreateViewCore(int64_t tag) {
+XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/) {
   auto slider = winrt::Slider();
   return slider;
 }

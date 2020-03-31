@@ -9,12 +9,14 @@
 #include "IReactContext.h"
 
 #include <ReactUWP/Utils/ValueUtils.h>
+#include "ReactHost/MsoUtils.h"
 
 namespace winrt::Microsoft::ReactNative {
 
 ABIViewManager::ABIViewManager(
-    const std::shared_ptr<react::uwp::IReactInstance> &reactInstance,
-    const ReactNative::IViewManager &viewManager)
+    std::shared_ptr<react::uwp::IReactInstance> const &reactInstance,
+    Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
+    ReactNative::IViewManager const &viewManager)
     : Super(reactInstance),
       m_viewManager{viewManager},
       m_viewManagerWithReactContext{viewManager.try_as<IViewManagerWithReactContext>()},
@@ -25,7 +27,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_name{to_string(viewManager.Name())} {
   if (m_viewManagerWithReactContext) {
-    m_viewManagerWithReactContext.ReactContext(winrt::make<ReactContext>(reactInstance).as<IReactContext>());
+    m_viewManagerWithReactContext.ReactContext(winrt::make<ReactContext>(Mso::Copy(reactContext)));
   }
   if (m_viewManagerWithNativeProperties) {
     m_nativeProps = m_viewManagerWithNativeProperties.NativeProps();

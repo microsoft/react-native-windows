@@ -30,33 +30,29 @@
 
 #include "Unicode.h"
 
+#include <Modules/DevSettingsModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
 #include <winrt/Windows.ApplicationModel.h>
 
-#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#endif
 
-#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif // USE_HERMES
+
 #if defined(USE_V8)
+#include <winrt/Windows.Storage.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
+#endif // USE_V8
 
-#include <winrt/Windows.Storage.h>
-
-#include <codecvt>
-#include <locale>
-#else
+#include <ReactWindowsCore/RedBoxHandler.h>
+#include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
-#endif
-#endif
 
 #include <tuple>
 
@@ -67,6 +63,35 @@ UwpReactInstance::UwpReactInstance(
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider)
     : m_moduleProvider(moduleProvider), m_viewManagerProvider(viewManagerProvider) {}
+
+UwpReactInstance::UwpReactInstance(
+    const std::shared_ptr<facebook::react::TurboModuleRegistry> &turboModuleRegistry,
+    const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
+    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider)
+    : m_moduleProvider(moduleProvider),
+      m_viewManagerProvider(viewManagerProvider),
+      m_turboModuleRegistry(turboModuleRegistry) {}
+
+struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
+  // Inherited via IRedBoxHandler
+  virtual void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType) override {
+    std::stringstream ss;
+
+    ss << "A better redbox experience is provided by Microsoft.ReactNative - Consider moving off ReactUwp to Microsoft.ReactNative today!\n\n";
+    ss << info.Message << "\n\n";
+    for (auto frame : info.Callstack) {
+      ss << frame.Method << "\n" << frame.File << ":" << frame.Line << ":" << frame.Column << "\n";
+    }
+    auto dlg = winrt::Windows::UI::Popups::MessageDialog(
+        Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
+    dlg.ShowAsync();
+  }
+  virtual bool isDevSupportEnabled() override {
+    return true;
+  }
+  virtual void updateError(Mso::React::ErrorInfo &&) override {}
+  virtual void dismissRedbox() override {}
+};
 
 void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) {
   if (m_started)
@@ -105,10 +130,17 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     devSettings->debugBundlePath = settings.DebugBundlePath;
     devSettings->useWebDebugger = settings.UseWebDebugger;
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
+    devSettings->debuggerBreakOnNextLine = settings.DebuggerBreakOnNextLine;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
-    devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->redboxHandler = std::move(settings.RedBoxHandler);
     devSettings->useJITCompilation = settings.EnableJITCompilation;
     devSettings->debugHost = settings.DebugHost;
+    devSettings->debuggerPort = settings.DebuggerPort;
+
+    if (!devSettings->redboxHandler &&
+        (devSettings->useWebDebugger || devSettings->useDirectDebugger || settings.UseLiveReload)) {
+      devSettings->redboxHandler = std::move(std::make_shared<UwpReactRedBoxHandler>());
+    }
 
     // In most cases, using the hardcoded ms-appx URI works fine, but there are
     // certain scenarios, such as in optional packaging, where the developer
@@ -172,7 +204,10 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         std::move(i18nInfo),
         std::move(appstate),
         std::move(appTheme),
-        std::weak_ptr<IReactInstance>(spThis));
+        spThis);
+
+    cxxModules.emplace_back(
+        DevSettingsModule::name, []() { return std::make_unique<DevSettingsModule>(); }, m_batchingNativeThread);
 
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =
@@ -182,34 +217,42 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = CreateAndStartJSQueueThread();
 
-#ifdef PATCH_RN
     if (settings.UseJsi) {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
+      switch (settings.jsiEngine) {
+        case JSIEngine::Hermes:
 #if defined(USE_HERMES)
-      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
-#elif defined(USE_V8)
-      preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+          break;
+#endif
+        case JSIEngine::V8:
+#if defined(USE_V8)
+          preparedScriptStore =
+              std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
 
-      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-          devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
-#else
-      if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
-        scriptStore = std::make_unique<UwpScriptStore>();
-        preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(winrt::to_hstring(settings.ByteCodeFileUri));
+          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
+          break;
+#endif
+        case JSIEngine::Chakra:
+          if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
+            scriptStore = std::make_unique<UwpScriptStore>();
+            preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(winrt::to_hstring(settings.ByteCodeFileUri));
+          }
+          devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+              devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
+          break;
       }
-      devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-          devSettings, jsQueue, std::move(scriptStore), std::move(preparedScriptStore));
-#endif
     }
-#endif
 
     try {
       // Create the react instance
       m_instanceWrapper = facebook::react::CreateReactInstance(
           std::string(), // bundleRootPath
           std::move(cxxModules),
+          m_turboModuleRegistry,
           m_uiManager,
           jsQueue,
           m_batchingNativeThread,
@@ -396,9 +439,22 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
 
 #if defined(USE_V8)
 std::string UwpReactInstance::getApplicationLocalFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+  try {
+    auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
 
-  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(std::wstring(local.c_str(), local.size())) + "\\";
+    return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
+  } catch (winrt::hresult_error const &ex) {
+    winrt::hresult hr = ex.to_abi();
+    if (hr == HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE)) {
+      // This is a win32 application using UWP APIs, pick a reasonable location for caching bytecode
+      char tempPath[MAX_PATH];
+      if (GetTempPathA(MAX_PATH, tempPath)) {
+        return std::string(tempPath);
+      }
+    }
+
+    throw ex;
+  }
 }
 #endif
 

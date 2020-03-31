@@ -55,8 +55,10 @@ void ReactNativeHost::ReloadInstance() noexcept {
   if (!m_packageBuilder) {
     m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
 
-    for (auto const &packageProvider : m_packageProviders) {
-      packageProvider.CreatePackage(m_packageBuilder);
+    if (m_packageProviders) {
+      for (auto const &packageProvider : m_packageProviders) {
+        packageProvider.CreatePackage(m_packageBuilder);
+      }
     }
   }
 
@@ -69,19 +71,25 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.EnableDeveloperMenu = m_instanceSettings.EnableDeveloperMenu();
   legacySettings.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
   legacySettings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
+  legacySettings.DebuggerBreakOnNextLine = m_instanceSettings.DebuggerBreakOnNextLine();
   legacySettings.UseJsi = m_instanceSettings.UseJsi();
+  legacySettings.UseFastRefresh = m_instanceSettings.UseFastRefresh();
   legacySettings.UseLiveReload = m_instanceSettings.UseLiveReload();
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
+  legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
   reactOptions.DeveloperSettings.SourceBundlePath = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
   reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
+  reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;
+  reactOptions.DeveloperSettings.UseFastRefresh = legacySettings.UseFastRefresh;
   reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
   reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
+  reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
 
   reactOptions.LegacySettings = std::move(legacySettings);
 
@@ -143,7 +151,7 @@ void ReactNativeHost::OnLeavingBackground() noexcept {
   //_lifecycleStateMachine.OnLeavingBackground();
 }
 
-void ReactNativeHost::OnResume(OnResumeAction const &action) noexcept {
+void ReactNativeHost::OnResume(OnResumeAction const & /*action*/) noexcept {
   OutputDebugStringW(L"TODO: ReactNativeHost::OnResume not implemented");
 
   // see the ReactInstanceManager.cs from the C# implementation

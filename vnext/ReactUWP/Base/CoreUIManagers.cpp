@@ -27,7 +27,6 @@
 #include <Views/TextViewManager.h>
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
-#include <Views/WebViewManager.h>
 
 // Polyester View Managers // TODO: Move Polyester implementations out of this
 // library and depot
@@ -38,23 +37,9 @@
 
 namespace react::uwp {
 
-// TODO: This function is just a stand-in for a system that allows an individual
-// host to provide a
-//  different set of view managers and native ui manager. Having all of this in
-//  one place will simply make it easier to slot in that system when ready.
-
-REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>)
-CreateUIManager(
-    std::shared_ptr<IReactInstance> instance,
-    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
-  std::vector<std::unique_ptr<facebook::react::IViewManager>> viewManagers;
-
-  // Custom view managers
-  if (viewManagerProvider) {
-    viewManagers = viewManagerProvider->GetViewManagers(instance);
-  }
-
-  // Standard view managers
+void AddStandardViewManagers(
+    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
+    std::shared_ptr<IReactInstance> const &instance) noexcept {
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
   viewManagers.push_back(std::make_unique<CheckBoxViewManager>(instance));
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
@@ -72,15 +57,43 @@ CreateUIManager(
   viewManagers.push_back(std::make_unique<TextInputViewManager>(instance));
   viewManagers.push_back(std::make_unique<ViewViewManager>(instance));
   viewManagers.push_back(std::make_unique<VirtualTextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<WebViewManager>(instance));
   viewManagers.push_back(std::make_unique<RefreshControlViewManager>(instance));
+}
 
-  // Polyester view managers
+void AddPolyesterViewManagers(
+    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
+    std::shared_ptr<IReactInstance> const &instance) noexcept {
   viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(instance));
   viewManagers.push_back(std::make_unique<polyester::ButtonContentViewManager>(instance));
   viewManagers.push_back(std::make_unique<polyester::HyperlinkViewManager>(instance));
   viewManagers.push_back(std::make_unique<polyester::IconViewManager>(instance));
+}
 
+// TODO: This function is just a stand-in for a system that allows an individual
+// host to provide a
+//  different set of view managers and native ui manager. Having all of this in
+//  one place will simply make it easier to slot in that system when ready.
+
+REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>)
+CreateUIManager(
+    std::shared_ptr<IReactInstance> instance,
+    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
+  std::vector<std::unique_ptr<facebook::react::IViewManager>> viewManagers;
+
+  // Custom view managers
+  if (viewManagerProvider) {
+    viewManagers = viewManagerProvider->GetViewManagers(instance);
+  }
+
+  AddStandardViewManagers(viewManagers, instance);
+  AddPolyesterViewManagers(viewManagers, instance);
+
+  // Create UIManager, passing in ViewManagers
+  return createIUIManager(std::move(viewManagers), new NativeUIManager());
+}
+
+std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
+    std::vector<react::uwp::NativeViewManager> &&viewManagers) noexcept {
   // Create UIManager, passing in ViewManagers
   return createIUIManager(std::move(viewManagers), new NativeUIManager());
 }

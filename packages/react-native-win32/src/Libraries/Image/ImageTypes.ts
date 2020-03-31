@@ -1,9 +1,15 @@
-import { ViewProps } from 'react-native';
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
+
+import {ViewProps} from 'react-native';
 
 export interface IImageSourceProps {
   uri?: string;
   method?: string;
-  headers?: { [key: string]: string };
+  headers?: {[key: string]: string};
   body?: string;
   width?: number;
   height?: number;

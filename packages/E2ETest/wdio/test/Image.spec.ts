@@ -32,4 +32,10 @@ describe('ImageWithoutBorderTest', () => {
     const result = ImageTestPage.getTreeDumpResult();
     assert(result, '#3. Second dump comparison for image without border!');
   });
+
+  it('ImageRTLTest', () => {
+    ImageTestPage.toggleRTLMode();
+    const result = ImageTestPage.getTreeDumpResult();
+    assert(result, '#4. Dump comparison for image RTL');
+  });
 });

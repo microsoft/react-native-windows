@@ -24,8 +24,6 @@
 #include <folly/dynamic.h>
 #include <codecvt>
 
-#include <react-native-windows-extended.h>
-
 using namespace Playground;
 
 using namespace Microsoft::WRL;
@@ -127,8 +125,6 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
 
-    viewManagers.emplace_back(react_native_windows_extended::CreateCustomViewManager(instance));
-
     return viewManagers;
   }
 };
@@ -161,6 +157,18 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
     if (pane)
       pane->persistUseLiveReload(useLiveReload);
+  }
+
+  void persistUseDirectDebugger(bool useDirectDebugger) {
+    HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
+    if (pane)
+      pane->persistUseDirectDebugger(useDirectDebugger);
+  }
+
+  void persistBreakOnNextLine(bool breakOnNextLine) {
+    HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
+    if (pane)
+      pane->persistBreakOnNextLine(breakOnNextLine);
   }
 
  private:
@@ -211,16 +219,17 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     react::uwp::ReactInstanceSettings settings;
     settings.UseWebDebugger = x_UseWebDebuggerCheckBox->IsChecked->Value;
     settings.UseLiveReload = x_UseLiveReloadCheckBox->IsChecked->Value;
+    settings.UseDirectDebugger = x_UseDirectDebuggerCheckBox->IsChecked->Value;
+    settings.DebuggerBreakOnNextLine = x_BreakOnFirstLineCheckBox->IsChecked->Value;
+    settings.DebuggerPort = m_debuggerPort;
     settings.EnableDeveloperMenu = true;
+    settings.jsiEngine = static_cast<react::uwp::JSIEngine>(x_JsEngine->SelectedIndex);
     if (params.find("debughost") != params.end()) {
       settings.DebugHost = params["debughost"];
     }
     settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
       OutputDebugStringA("In LoggingCallback");
       OutputDebugStringA(message);
-    };
-    settings.JsExceptionCallback = [](facebook::react::JSExceptionInfo &&exceptionInfo) {
-      OutputDebugStringA("in JsExceptionCallback");
     };
     m_instance->Start(m_instance, settings);
     m_instance->loadBundle(Microsoft::Common::Unicode::Utf16ToUtf8(m_loadedBundleFileName));
@@ -240,6 +249,14 @@ void HostingPane::persistUseWebDebugger(bool useWebDebugger) {
 
 void HostingPane::persistUseLiveReload(bool useLiveReload) {
   x_UseLiveReloadCheckBox->IsChecked = useLiveReload;
+}
+
+void HostingPane::persistUseDirectDebugger(bool useDirectDebugger) {
+  x_UseDirectDebuggerCheckBox->IsChecked = useDirectDebugger;
+}
+
+void HostingPane::persistBreakOnNextLine(bool breakOnNextLine) {
+  x_BreakOnFirstLineCheckBox->IsChecked = breakOnNextLine;
 }
 
 void HostingPane::LoadReactNative() {
@@ -327,6 +344,14 @@ void HostingPane::OnReloadClicked(Platform::Object ^, Platform::Object ^) {
       }));
 }
 
+void Playground::HostingPane::OnBeforeTextChanging_CheckAllDigits(
+    Windows::UI::Xaml::Controls::TextBox ^ sender,
+    Windows::UI::Xaml::Controls::TextBoxBeforeTextChangingEventArgs ^ args) {
+  for (auto it = args->NewText->Begin(); it != args->NewText->End(); ++it)
+    if (!iswdigit(*it))
+      args->Cancel = true;
+}
+
 void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
   assert(m_rootView != nullptr);
 
@@ -403,19 +428,20 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
-  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\accessible");
-  m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\animation");
   m_jsFileNames->Append(L"Samples\\calculator");
+  m_jsFileNames->Append(L"Samples\\callbackTest");
   m_jsFileNames->Append(L"Samples\\click");
-  m_jsFileNames->Append(L"Samples\\customViewManager");
   m_jsFileNames->Append(L"Samples\\control");
   m_jsFileNames->Append(L"Samples\\flexbox");
   m_jsFileNames->Append(L"Samples\\focusTest");
   m_jsFileNames->Append(L"Samples\\geosample");
   m_jsFileNames->Append(L"Samples\\image");
   m_jsFileNames->Append(L"Samples\\index");
+  m_jsFileNames->Append(L"Samples\\messages");
   m_jsFileNames->Append(L"Samples\\mouse");
+  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\scrollViewSnapSample");
   m_jsFileNames->Append(L"Samples\\simple");
   m_jsFileNames->Append(L"Samples\\text");
@@ -435,6 +461,16 @@ void HostingPane::InitComboBoxes() {
     x_ReactAppName->IsEditable = true;
     x_JavaScriptFilename->IsEditable = true;
   }
+
+#if !defined(USE_HERMES)
+  x_engineHermes->IsEnabled = false;
+#endif
+
+#if !defined(USE_V8)
+  x_engineV8->IsEnabled = false;
+#endif
+
+  x_JsEngine->SelectedIndex = 0;
 }
 
 void HostingPane::LoadKnownApps() {
@@ -451,4 +487,12 @@ void HostingPane::LoadKnownApps() {
   if (m_ReactAppNames->Size > 0) {
     x_ReactAppName->SelectedIndex = 0;
   }
+}
+
+uint32_t HostingPane::DebuggerPort::get() {
+  return m_debuggerPort;
+}
+
+void HostingPane::DebuggerPort::set(uint32_t value) {
+  m_debuggerPort = value > UINT16_MAX ? defaultDebuggerPort : static_cast<uint16_t>(value);
 }

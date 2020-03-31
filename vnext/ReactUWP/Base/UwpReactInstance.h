@@ -34,6 +34,10 @@ class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from
   UwpReactInstance(
       const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
       const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
+  UwpReactInstance(
+      const std::shared_ptr<facebook::react::TurboModuleRegistry> &turboModuleRegistry,
+      const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
+      const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
 
   void Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) override;
 
@@ -107,6 +111,7 @@ class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from
   std::shared_ptr<facebook::react::InstanceWrapper> m_instanceWrapper;
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{nullptr};
   std::shared_ptr<facebook::react::NativeModuleProvider> m_moduleProvider;
+  std::shared_ptr<facebook::react::TurboModuleRegistry> m_turboModuleRegistry;
   std::shared_ptr<ViewManagerProvider> m_viewManagerProvider;
   std::map<LiveReloadCallbackCookie, std::function<void()>> m_liveReloadCallbacks;
   std::map<ErrorCallbackCookie, std::function<void()>> m_errorCallbacks;

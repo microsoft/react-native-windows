@@ -13,10 +13,6 @@
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(PATCH_RN)'==''">
-    <PATCH_RN>true</PATCH_RN>
-  </PropertyGroup>
-
   <Target Name="EvaluateReactPatchInputs" BeforeTargets="CopyReactPatches">
     <PropertyGroup>
       <ReactCommonSrcPath>$(ReactNativePackageDir)\ReactCommon\</ReactCommonSrcPath>
@@ -25,9 +21,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <DeforkingPatchCommonFiles Include="$(DeforkingPatchCommonPath)\**" Condition="'$(PATCH_RN)'=='true'"/>
+      <DeforkingPatchCommonFiles Include="$(DeforkingPatchCommonPath)\**" />
       <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)\**\*.cpp;$(ReactCommonSrcPath)\**\*.h" />
-      <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(DeforkingPatchCommonPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
+      <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="!Exists('$(DeforkingPatchCommonPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
 
       <!-- Special case to recreate custom header exports in Facebook BUCK logic -->
       <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />

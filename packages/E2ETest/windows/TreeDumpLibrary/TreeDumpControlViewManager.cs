@@ -26,7 +26,7 @@ namespace TreeDumpLibrary
             m_textBlock = new TextBlock();
             m_textBlock.TextWrapping = TextWrapping.Wrap;
             m_textBlock.IsTextSelectionEnabled = false;
-            m_textBlock.LayoutUpdated += async (source, e) =>
+            m_textBlock.LayoutUpdated += (source, e) =>
             {
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 800 || bounds.Height != 600)
@@ -36,7 +36,7 @@ namespace TreeDumpLibrary
                 }
                 else
                 {
-                    // delay dumping tree by 100ms for layout to stablize
+                    // delay dumping tree by 100ms for layout to stabilize
                     if (m_timer != null)
                     {
                         m_timer.Stop();
@@ -64,16 +64,20 @@ namespace TreeDumpLibrary
 
         public void UpdateProperties(FrameworkElement view, IJSValueReader propertyMapReader)
         {
-            var propertyMap = JSValue.ReadObjectPropertiesFrom(propertyMapReader);
+            var propertyMap = JSValue.ReadObjectFrom(propertyMapReader);
             foreach (KeyValuePair<string, JSValue> kvp in propertyMap)
             {
                 if (kvp.Key == "dumpID")
                 {
-                    SetDumpID((TextBlock)view, kvp.Value.String);
+                    SetDumpID((TextBlock)view, kvp.Value.AsString());
                 }
                 else if (kvp.Key == "uiaID")
                 {
-                    SetUIAID((TextBlock)view, kvp.Value.String);
+                    SetUIAID((TextBlock)view, kvp.Value.AsString());
+                }
+                else if(kvp.Key == "additionalProperties")
+                {
+                    SetAdditionalProperties(kvp.Value.AsArray());
                 }
             }
         }
@@ -85,7 +89,8 @@ namespace TreeDumpLibrary
                 return new Dictionary<string, ViewManagerPropertyType>
                 {
                     { "dumpID", ViewManagerPropertyType.String },
-                    { "uiaID", ViewManagerPropertyType.String }
+                    { "uiaID", ViewManagerPropertyType.String },
+                    { "additionalProperties", ViewManagerPropertyType.Array }
                 };
             }
         }
@@ -110,6 +115,14 @@ namespace TreeDumpLibrary
         public void SetUIAID(TextBlock view, string value)
         {
             m_uiaID = value;
+        }
+
+        public void SetAdditionalProperties(IReadOnlyList<JSValue> additionalProperties)
+        {
+            foreach(var property in additionalProperties)
+            {
+                m_additionalProperties.Add(property.AsString());
+            }
         }
 
         private async void dispatcherTimer_Tick(object sender, object e)
@@ -162,7 +175,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            String dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */);
+            String dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */, m_additionalProperties);
             if (dumpText != m_dumpExpectedText)
             {
                 await MatchDump(dumpText);
@@ -251,6 +264,7 @@ namespace TreeDumpLibrary
         private bool m_errStringShowing = false;
         private string m_errString = "";
         private string m_uiaID = null;
+        private List<string> m_additionalProperties = new List<string>();
 
         private DispatcherTimer m_timer = null;
 

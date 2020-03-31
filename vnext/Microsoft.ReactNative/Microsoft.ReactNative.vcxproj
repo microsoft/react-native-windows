@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. -->
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -15,7 +15,7 @@
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
@@ -95,10 +95,12 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <AdditionalIncludeDirectories>
+        $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
         $(ReactNativeWindowsDir)ReactUWP;
         $(ReactNativeWindowsDir)ReactUWP\Views;
-        $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
         $(FollyDir);
+        $(JSI_SourcePath);
         $(ReactNativeDir)ReactCommon;
         $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
@@ -133,9 +135,11 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ChakraRT.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
@@ -161,9 +165,6 @@
       <!-- Custom XAML types must be in the project namespace to be usable by XAML -->
       <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace)</PreprocessorDefinitions>
     </Midl>
-    <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</ForcedIncludeFiles>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
@@ -252,10 +253,11 @@
     <ClInclude Include="..\ReactUWP\Views\ViewPanel.h" />
     <ClInclude Include="..\ReactUWP\Views\ViewViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\VirtualTextViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Views\WebViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\XamlFeatures.h" />
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
+    <ClInclude Include="Base\CxxReactIncludes.h" />
+    <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -268,6 +270,7 @@
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h" />
+    <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -285,8 +288,6 @@
     <ClInclude Include="ReactHost\InstanceFactory.h" />
     <ClInclude Include="ReactHost\IReactInstanceInternal.h" />
     <ClInclude Include="ReactHost\JSBundle.h" />
-    <ClInclude Include="ReactHost\JSExceptionCallbackFactory.h" />
-    <ClInclude Include="ReactHost\JSExceptionInfo.h" />
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
     <ClInclude Include="ReactHost\PropertyBag.h" />
@@ -317,6 +318,7 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
@@ -374,7 +376,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\ContentControlViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp" />
-    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />
@@ -416,7 +417,6 @@
     <ClCompile Include="..\ReactUWP\Views\ViewPanel.cpp" />
     <ClCompile Include="..\ReactUWP\Views\ViewViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\VirtualTextViewManager.cpp" />
-    <ClCompile Include="..\ReactUWP\Views\WebViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp" />
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
@@ -430,6 +430,7 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="Modules\AppStateData.cpp" />
+    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -449,7 +450,6 @@
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="ReactHost\JSExceptionCallbackFactory.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
     <ClCompile Include="ReactHost\PropertyBag.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
@@ -475,6 +475,7 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
@@ -555,17 +556,19 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

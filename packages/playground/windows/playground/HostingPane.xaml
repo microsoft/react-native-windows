@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="auto"/>
@@ -61,6 +60,9 @@
         <ColumnDefinition Width="10"/> <!-- Separator -->
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="auto"/>
+        <ColumnDefinition Width="10"/> <!-- Separator -->
+        <ColumnDefinition Width="auto"/>
+        <ColumnDefinition Width="auto"/>
       </Grid.ColumnDefinitions>
 
       <Button x:Name="x_LoadButton"
@@ -94,8 +96,26 @@
         Margin="2,2,2,2"
         VerticalAlignment="Center"
         Content="-Pane"/>
-    </Grid>
 
+      <TextBlock
+        Grid.Column="7"
+        Margin="2,2,2,2"
+        VerticalAlignment="Center"
+        Text="JS Engine:"/>
+      <ComboBox
+        x:Name="x_JsEngine"
+        Grid.Column="8"
+        Margin="2,2,2,2"
+        MinWidth="150"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center">
+        <ComboBox.Items>
+          <ComboBoxItem Content="Chakra" />
+          <ComboBoxItem Content="Hermes" x:Name="x_engineHermes" />
+          <ComboBoxItem Content="V8" x:Name="x_engineV8" />
+        </ComboBox.Items>
+      </ComboBox>
+    </Grid>
 
     <StackPanel
       Grid.Row="2"
@@ -105,11 +125,32 @@
         VerticalAlignment="Center"
         IsChecked="true"
         Content="Web Debugger"/>
+     <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
+        Margin="5,2"
+        VerticalAlignment="Center"
+        IsChecked="false"
+        Content="Direct Debugging"/>
+      <CheckBox x:Name="x_BreakOnFirstLineCheckBox"
+        Margin="5,2"
+        VerticalAlignment="Center"
+        IsChecked="false"
+        Content="Break on First Line"/>
       <CheckBox x:Name="x_UseLiveReloadCheckBox"
         Margin="5,2"
         VerticalAlignment="Center"
         IsChecked="true"
         Content="Live Reload"/>
+      <TextBlock
+        VerticalAlignment="Center"
+        Margin="5,0,5,3"
+        Text="Debugger Port"/>
+      <TextBox x:Name="x_DebuggerPort"
+        Text="{x:Bind DebuggerPort, Mode=TwoWay}"
+        Margin="5,0"
+        VerticalAlignment="Center"
+        InputScope="Number"
+        MaxLength="5"
+        BeforeTextChanging="OnBeforeTextChanging_CheckAllDigits"/>
       <CheckBox x:Name="x_ReuseInstanceCheckBox"
         Margin="5,2"
         VerticalAlignment="Center"

@@ -33,6 +33,8 @@ struct TestReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
 
   void persistUseWebDebugger(bool useWebDebugger) {}
   void persistUseLiveReload(bool useLiveReload) {}
+  void persistUseDirectDebugger(bool useDirectDebugger) {}
+  void persistBreakOnNextLine(bool breakOnNextLine) {}
 
  private:
   std::shared_ptr<::react::uwp::IReactInstance> m_instance;

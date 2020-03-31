@@ -40,8 +40,14 @@ export const DIRECT_MANIPULATION_RESULT = 'DirectManipulationResult';
 export const IMAGE_TESTPAGE = 'ImageTestPage';
 export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
 export const SHOW_IMAGE_BORDER = 'BorderButton';
+export const SET_RTL_MODE = 'RTLButton';
 export const IMAGE_CONTAINER = 'ImageContainer';
 
 // Control Style Test Page
 export const CONTROL_STYLE_TESTPAGE = 'ControlStyleTestPage';
 export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';
+
+// TransformTestPage
+export const TRANSFORM_TESTPAGE = 'TransformTestPage';
+export const TRANSFORM_TEST_RESULT = 'TransfromTestResult';
+export const APPLY_SCALE_TRANSFORM_BUTTON = 'ApplyScaleTransformButton';

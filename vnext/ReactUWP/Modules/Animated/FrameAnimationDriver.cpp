@@ -21,7 +21,7 @@ FrameAnimationDriver::FrameAnimationDriver(
 }
 
 std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
-    const folly::dynamic &config) {
+    const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation] = []() {
     const auto compositor = winrt::Window::Current().Compositor();
     return std::make_tuple(

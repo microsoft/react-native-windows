@@ -10,6 +10,7 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -56,7 +57,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> appstate,
     std::shared_ptr<react::windows::AppTheme> appTheme,
-    std::weak_ptr<IReactInstance> uwpInstance) noexcept {
+    const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
 
@@ -68,12 +69,12 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       messageQueue);
 
   modules.emplace_back(
-      react::uwp::WebSocketModule::name,
+      react::uwp::WebSocketModule::Name,
       []() { return std::make_unique<react::uwp::WebSocketModule>(); },
       MakeSerialQueueThread());
 
   modules.emplace_back(
-      NetworkingModule::name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
+      NetworkingModule::Name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
 
   modules.emplace_back(
       "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);
@@ -116,8 +117,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       NativeAnimatedModule::name,
-      [uwpInstance = std::move(uwpInstance)]() mutable {
-        return std::make_unique<NativeAnimatedModule>(std::move(uwpInstance));
+      [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
+        return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance));
       },
       messageQueue);
 
@@ -130,12 +131,16 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   // AsyncStorageModule doesn't work without package identity (it indirectly depends on
   // Windows.Storage.StorageFile), so check for package identity before adding it.
-  if (HasPackageIdentity()) {
-    modules.emplace_back(
-        "AsyncLocalStorage",
-        []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
-        MakeSerialQueueThread());
-  }
+  modules.emplace_back(
+      "AsyncLocalStorage",
+      []() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
+        if (HasPackageIdentity()) {
+          return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
+        } else {
+          return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
+        }
+      },
+      MakeSerialQueueThread());
 
   return modules;
 }

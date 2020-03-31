@@ -56,7 +56,7 @@ Make sure bundle server is running(see above 'Run the bundle server' step) and c
 
 - run all specs
 
-packages\E2ETest>`yarn run test`
+packages\E2ETest>`yarn run e2etest`
 
 -  Run one spec
 
@@ -66,7 +66,7 @@ packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
 | Command | Description | Example |
 | --- | --- | --- |
-| test | Run all specs | `yarn run test` |
+| test | Run all specs | `yarn run e2etest` |
 | testspec | Run only one spec | `yarn run testspec wdio\test\login.spec.ts` |
 | buildapp | build the native app with BUNDLE macro <BR/> `--release` specify if it's a release version <BR/>`--arch [string]` The build architecture (ARM, x86, x64) (default: &quot;x86&quot;) | `yarn run buildapp` <BR/> `yarn run buildapp --release` <BR/>`yarn run buildapp --arch x64` <BR/> `yarn run buildapp --arch x64 –release` |
 | deployapp | Deploy the built test app, you can pair it with `--release` and `--arch` | `yarn run deployapp` <BR/> `yarn run deployapp --release` <BR/> `yarn run deployapp --arch x64` <BR/> `yarn run deployapp --arch x64 –release` |

@@ -26,7 +26,7 @@ folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const {
   return props;
 }
 
-XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag) {
+XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
   auto progressRing = winrt::ProgressRing();
   return progressRing;
 }

@@ -28,5 +28,9 @@
     <Namespace Name="Microsoft.ReactNative" Dynamic="Required All" MarshalObject="Required All" />
     <Namespace Name="Microsoft.ReactNative.Managed" Dynamic="Required All" MarshalObject="Required All" />
 
+    <Namespace Name="SampleAppCS" Dynamic="Required All" MarshalObject="Required All" />
+    <Namespace Name="SampleLibraryCpp" Dynamic="Required All" MarshalObject="Required All" />
+    <Namespace Name="SampleLibraryCS" Dynamic="Required All" MarshalObject="Required All" />
+
   </Application>
 </Directives>

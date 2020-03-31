@@ -87,6 +87,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto instanceWrapper = CreateReactInstance(
       "",
       std::move(extraModules),
+      nullptr,
       std::move(uiManager),
       std::move(jsQueue),
       std::move(nativeQueue),

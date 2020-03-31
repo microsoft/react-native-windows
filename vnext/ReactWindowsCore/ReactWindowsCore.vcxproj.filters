@@ -13,8 +13,8 @@
     <Filter Include="Header Files\Modules">
       <UniqueIdentifier>{81319f88-192e-40cf-bc1c-76a84bf37ccd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Sandbox">
-      <UniqueIdentifier>{485cc520-3fae-4b03-896a-bfd3e288aa42}</UniqueIdentifier>
+    <Filter Include="Header Files\Pch">
+      <UniqueIdentifier>{6e20d3aa-721b-4f62-a1aa-ec6af1a114fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{b8d1b3de-1573-4d49-a26f-99892413a797}</UniqueIdentifier>
@@ -24,6 +24,9 @@
     </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{2b4f6cca-9c7e-4bf1-9711-829006f0be1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pch">
+      <UniqueIdentifier>{43770517-0df1-4cff-bd30-563b9d0f56e7}</UniqueIdentifier>
     </Filter>
     <Filter Include="tracing">
       <UniqueIdentifier>{4cc2fae5-bc38-4aff-aa49-33225485e2de}</UniqueIdentifier>
@@ -66,6 +69,9 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -81,8 +87,8 @@
     <ClCompile Include="Modules\UIManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Pch\pch.cpp">
+      <Filter>Source Files\Pch</Filter>
     </ClCompile>
     <ClCompile Include="ShadowNode.cpp">
       <Filter>Source Files</Filter>
@@ -99,8 +105,14 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TurboModuleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -164,7 +176,7 @@
     <ClInclude Include="IUIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IWebSocket.h">
+    <ClInclude Include="IWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigAbiString.h">
@@ -188,6 +200,9 @@
     <ClInclude Include="Modules\AppThemeModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\AsyncStorageModuleWin32.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\ExceptionsManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -195,6 +210,9 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\SourceCodeModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
@@ -209,11 +227,11 @@
     <ClInclude Include="OInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Pch\pch.h">
+      <Filter>Header Files\Pch</Filter>
     </ClInclude>
-    <ClInclude Include="Sandbox\SandboxEndpoint.h">
-      <Filter>Header Files\Sandbox</Filter>
+    <ClInclude Include="RedBoxHandler.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShadowNode.h">
       <Filter>Header Files</Filter>
@@ -236,7 +254,12 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\SourceCodeModule.h" />
+    <ClInclude Include="TurboModuleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TurboModuleRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">

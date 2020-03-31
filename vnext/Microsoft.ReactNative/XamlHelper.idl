@@ -5,13 +5,12 @@ import "IJSValueWriter.idl";
 
 namespace Microsoft.ReactNative {
 
-  delegate void ValueProvider(IJSValueWriter valueWriter);
-
   [webhosthidden]
   [default_interface]
   runtimeclass XamlHelper {
     XamlHelper();
-    static Windows.UI.Xaml.Media.Brush BrushFrom(ValueProvider valueProvider);
+    static Windows.UI.Xaml.Media.Brush BrushFrom(JSValueArgWriter valueProvider);
+    static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
   };
 
 } // namespace Microsoft.ReactNative

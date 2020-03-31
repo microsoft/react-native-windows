@@ -50,7 +50,12 @@ WebSocketJSExecutor::WebSocketJSExecutor(
         OnHitError("Unexpected MessageType from MessageWebSocket.");
       }
     } catch (winrt::hresult_error const &e) {
-      OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+      auto hr = e.code();
+      if (hr == WININET_E_CONNECTION_ABORTED || hr == WININET_E_CONNECTION_RESET) {
+        OnHitError("Lost connection to remote JS debugger.");
+      } else {
+        OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+      }
     } catch (std::exception &e) {
       OnHitError(e.what());
     }

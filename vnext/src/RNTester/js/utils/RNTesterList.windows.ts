@@ -143,6 +143,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Accessibility/AccessibilityExampleWindows'),
   },
   {
+    key: 'AsyncStorageExampleWindows',
+    module: require('./../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
+  },
+  {
     key: 'AlertExample',
     module: require('react-native/RNTester/js/examples/Alert/AlertExample')
       .AlertExample,
@@ -226,6 +230,10 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'WebSocketExample',
     module: require('react-native/RNTester/js/examples/WebSocket/WebSocketExample'),
+  },
+  {
+    key: 'TurboModuleExample',
+    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
   },
   /* TODO: ? XHRExample requires CameraRoll access
   {

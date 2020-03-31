@@ -134,6 +134,9 @@ namespace Microsoft.ReactNative.Managed
 
     private ReactMethodImpl MakeTwoCallbacksMethod(MethodInfo methodInfo, ParameterInfo[] parameters)
     {
+      // Some native modules use first callback as failure, others use second. We make them both to
+      // behave the same way and let developers to assign meaning to the first and second callbacks.
+      //
       // Generate code that looks like:
       //
       // (object module, IJSValueReader inputReader, IJSValueWriter outputWriter,
@@ -141,8 +144,8 @@ namespace Microsoft.ReactNative.Managed
       // {
       //   inputReader.ReadArgs(out ArgType0 arg0, out ArgType1 arg1);
       //   (module as ModuleType).Method(arg0, arg1,
-      //     result => resolve(outputWriter.WriteArgs(result)),
-      //     error => reject(outputWriter.WriteError(error)));
+      //     value1 => resolve(outputWriter.WriteArgs(value1)),
+      //     value2 => reject(outputWriter.WriteArgs(value2)));
       // }
 
       // The last two parameters in parameters are resolve and reject delegates
@@ -153,10 +156,10 @@ namespace Microsoft.ReactNative.Managed
           out var rejectCallbackType, out var rejectArgType),
         inputReader.CallExt(ReadArgsOf(argTypes), args),
         module.CastTo(methodInfo.DeclaringType).Call(methodInfo, args,
-          AutoLambda(resolveCallbackType, Parameter(resolveArgType, out var result),
-            resolve.Invoke(outputWriter.CallExt(WriteArgsOf(resolveArgType), result))),
-          AutoLambda(rejectCallbackType, Parameter(rejectArgType, out var error),
-            reject.Invoke(outputWriter.CallExt(WriteErrorOf(rejectArgType), error)))));
+          AutoLambda(resolveCallbackType, Parameter(resolveArgType, out var value1),
+            resolve.Invoke(outputWriter.CallExt(WriteArgsOf(resolveArgType), value1))),
+          AutoLambda(rejectCallbackType, Parameter(rejectArgType, out var value2),
+            reject.Invoke(outputWriter.CallExt(WriteArgsOf(rejectArgType), value2)))));
     }
 
 

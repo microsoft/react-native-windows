@@ -26,9 +26,9 @@ namespace Microsoft.ReactNative.Managed
     {
       if (!m_isIterating)
       {
-        if (Current.Type == JSValueType.Object)
+        if (Current.TryGetObject(out var currentObject))
         {
-          var properties = Current.Object.GetEnumerator();
+          var properties = currentObject.GetEnumerator();
           if (properties.MoveNext())
           {
             m_stack.Push(StackEntry.ObjectProperty(Current, properties));
@@ -70,9 +70,9 @@ namespace Microsoft.ReactNative.Managed
     {
       if (!m_isIterating)
       {
-        if (Current.Type == JSValueType.Array)
+        if (Current.TryGetArray(out var currentArray))
         {
-          var items = Current.Array.GetEnumerator();
+          var items = currentArray.GetEnumerator();
           if (items.MoveNext())
           {
             m_stack.Push(StackEntry.ArrayItem(Current, items));
@@ -125,22 +125,22 @@ namespace Microsoft.ReactNative.Managed
 
     public string GetString()
     {
-      return (Current.Type == JSValueType.String) ? Current.String : "";
+      return Current.TryGetString(out var stringValue) ? stringValue : "";
     }
 
     public bool GetBoolean()
     {
-      return (Current.Type == JSValueType.Boolean) ? Current.Boolean : false;
+      return Current.TryGetBoolean(out var booleanValue) ? booleanValue : false;
     }
 
     public long GetInt64()
     {
-      return (Current.Type == JSValueType.Int64) ? Current.Int64 : 0;
+      return Current.TryGetInt64(out var int64Value) ? int64Value : 0;
     }
 
     public double GetDouble()
     {
-      return (Current.Type == JSValueType.Double) ? Current.Double : 0;
+      return Current.TryGetDouble(out var doubleValue) ? doubleValue : 0;
     }
 
     private struct StackEntry

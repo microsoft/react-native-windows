@@ -1,7 +1,6 @@
 # Steps template for building any React Native Windows variant.
 
 parameters:
-  applyRnPatches: true
   debug: false
 
   # NuGet & MSBuild
@@ -35,21 +34,23 @@ steps:
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-  - task: MSBuild@1
-    displayName: MSBuild ${{parameters.project}}
+  - task: VSBuild@1
+    displayName: VSBuild ${{parameters.project}}
     inputs:
       solution: ${{parameters.project }}
-      msbuildVersion: ${{parameters.msbuildVersion}}
+      vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
+      clean: false # Optional
+      maximumCpuCount: false # Optional
+      restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
-      msbuildArguments:
+      msbuildArgs:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
-        /p:PATCH_RN=${{parameters.applyRnPatches}}
         ${{parameters.msbuildArguments}}
 
   - task: PublishBuildArtifacts@1

@@ -13,7 +13,7 @@
 namespace facebook {
 namespace react {
 
-JSBigFileString::JSBigFileString(int fd, size_t size, off_t offset /*= 0*/)
+JSBigFileString::JSBigFileString(int fd, size_t size, off_t /*offset*/ /*= 0*/)
     : m_fd(fd), m_size(size), m_data(new char[size + 1]) {
   *(const_cast<char *>(&m_data[m_size])) = '\0';
 }

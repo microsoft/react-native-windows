@@ -18,11 +18,9 @@
 <PROJECT_ROOT>/Libraries/Components/StatusBar/StatusBar.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
-<PROJECT_ROOT>/Libraries/Components/TimePickerAndroid/TimePickerAndroid.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
-<PROJECT_ROOT>/Libraries/Core/ReactNativeVersionCheck.js
 <PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js

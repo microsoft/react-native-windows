@@ -115,7 +115,7 @@ FlyoutShadowNode::~FlyoutShadowNode() {
   m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
-void FlyoutShadowNode::AddView(ShadowNode &child, int64_t index) {
+void FlyoutShadowNode::AddView(ShadowNode &child, int64_t /*index*/) {
   auto childView = static_cast<ShadowNodeBase &>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
   m_previewKeyboardEventHandlerOnRoot->hook(childView);
@@ -378,7 +378,7 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight)
   flyoutStyle.Setters().Append(
       winrt::Setter(winrt::FrameworkElement::AllowFocusOnInteractionProperty(), winrt::box_value(false)));
   flyoutStyle.Setters().Append(winrt::Setter(
-      winrt::Control::BackgroundProperty(), winrt::box_value<winrt::SolidColorBrush>(winrt::Colors::Transparent())));
+      winrt::Control::BackgroundProperty(), winrt::box_value(winrt::SolidColorBrush{winrt::Colors::Transparent()})));
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
 
@@ -415,7 +415,7 @@ const char *FlyoutViewManager::GetName() const {
   return "RCTFlyout";
 }
 
-XamlView FlyoutViewManager::CreateViewCore(int64_t tag) {
+XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/) {
   return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
 }
 
@@ -442,9 +442,9 @@ folly::dynamic FlyoutViewManager::GetExportedCustomDirectEventTypeConstants() co
 
 void FlyoutViewManager::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
-    float left,
-    float top,
+    XamlView /*viewToUpdate*/,
+    float /*left*/,
+    float /*top*/,
     float width,
     float height) {
   auto *pFlyoutShadowNode = static_cast<FlyoutShadowNode *>(&nodeToUpdate);

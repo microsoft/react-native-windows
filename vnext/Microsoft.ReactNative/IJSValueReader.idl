@@ -19,12 +19,12 @@ namespace Microsoft.ReactNative {
   // Forward only reader for JSON like streams or trees.
   [webhosthidden]
   interface IJSValueReader {
-    [noexcept2] JSValueType ValueType { get; };
-    [noexcept2] Boolean GetNextObjectProperty(out String propertyName);
-    [noexcept2] Boolean GetNextArrayItem();
-    [noexcept2] String GetString();
-    [noexcept2] Boolean GetBoolean();
-    [noexcept2] Int64 GetInt64();
-    [noexcept2] Double GetDouble();
+    JSValueType ValueType { get; };
+    Boolean GetNextObjectProperty(out String propertyName);
+    Boolean GetNextArrayItem();
+    String GetString();
+    Boolean GetBoolean();
+    Int64 GetInt64();
+    Double GetDouble();
   }
 } // namespace Microsoft.ReactNative

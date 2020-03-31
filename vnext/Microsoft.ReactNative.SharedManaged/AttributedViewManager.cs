@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using static Microsoft.ReactNative.Managed.ReactContextGenerator;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -31,12 +32,12 @@ namespace Microsoft.ReactNative.Managed
 
     #region Constants
 
-    public virtual ConstantProvider ExportedViewConstants => _exportedViewConstantProvider ?? (_exportedViewConstantProvider = MakeExportedViewConstantProvider());
-    private ConstantProvider _exportedViewConstantProvider;
+    public virtual ConstantProviderDelegate ExportedViewConstants => _exportedViewConstantProvider ?? (_exportedViewConstantProvider = MakeExportedViewConstantProvider());
+    private ConstantProviderDelegate _exportedViewConstantProvider;
 
-    private ConstantProvider MakeExportedViewConstantProvider()
+    private ConstantProviderDelegate MakeExportedViewConstantProvider()
     {
-      return new ConstantProvider((IJSValueWriter constantWriter) =>
+      return new ConstantProviderDelegate((IJSValueWriter constantWriter) =>
       {
         var typeInfo = GetType().GetTypeInfo();
 
@@ -118,10 +119,12 @@ namespace Microsoft.ReactNative.Managed
             var propertyAttribute = methodInfo.GetCustomAttribute<ViewManagerPropertyAttribute>();
             if (null != propertyAttribute)
             {
-              var setter = new ViewManagerProperty<TFrameworkElement>();
-              setter.Name = propertyAttribute.PropertyName ?? methodInfo.Name;
-              setter.Type = propertyAttribute.PropertyType ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
-              setter.Setter = MakeJSValueMethod(methodInfo);
+              var setter = new ViewManagerProperty<TFrameworkElement>
+              {
+                Name = propertyAttribute.PropertyName ?? methodInfo.Name,
+                Type = propertyAttribute.PropertyType ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType),
+                Setter = MakeJSValueMethod(methodInfo)
+              };
 
               properties.Add(setter.Name, setter);
             }
@@ -182,7 +185,7 @@ namespace Microsoft.ReactNative.Managed
 
     private static bool IsEnum(Type t)
     {
-      return IsNullableEnum(t, out Type underlyingType) || t.GetTypeInfo().IsEnum;
+      return IsNullableEnum(t, out _) || t.GetTypeInfo().IsEnum;
     }
 
     #endregion
@@ -237,10 +240,12 @@ namespace Microsoft.ReactNative.Managed
             var commandAttribute = methodInfo.GetCustomAttribute<ViewManagerCommandAttribute>();
             if (null != commandAttribute)
             {
-              var command = new ViewManagerCommand<TFrameworkElement>();
-              command.CommandName = commandAttribute.CommandName ?? methodInfo.Name;
-              command.CommandId = viewManagerCommands.Count;
-              command.CommandMethod = MakeReaderMethod(methodInfo);
+              var command = new ViewManagerCommand<TFrameworkElement>
+              {
+                CommandName = commandAttribute.CommandName ?? methodInfo.Name,
+                CommandId = viewManagerCommands.Count,
+                CommandMethod = MakeReaderMethod(methodInfo)
+              };
               viewManagerCommands.Add(command.CommandId, command);
             }
           }
@@ -263,15 +268,15 @@ namespace Microsoft.ReactNative.Managed
 
     #region Events
 
-    public virtual ConstantProvider ExportedCustomBubblingEventTypeConstants => _exportedCustomBubblingEventTypeConstantProvider ?? (_exportedCustomBubblingEventTypeConstantProvider = MakeExportedCustomBubblingEventTypeConstants());
-    private ConstantProvider _exportedCustomBubblingEventTypeConstantProvider;
+    public virtual ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants => _exportedCustomBubblingEventTypeConstantProvider ?? (_exportedCustomBubblingEventTypeConstantProvider = MakeExportedCustomBubblingEventTypeConstants());
+    private ConstantProviderDelegate _exportedCustomBubblingEventTypeConstantProvider;
 
-    public virtual ConstantProvider ExportedCustomDirectEventTypeConstants => _exportedCustomDirectEventTypeConstantProvider ?? (_exportedCustomDirectEventTypeConstantProvider = MakeExportedDirectEventTypeConstants());
-    private ConstantProvider _exportedCustomDirectEventTypeConstantProvider;
+    public virtual ConstantProviderDelegate ExportedCustomDirectEventTypeConstants => _exportedCustomDirectEventTypeConstantProvider ?? (_exportedCustomDirectEventTypeConstantProvider = MakeExportedDirectEventTypeConstants());
+    private ConstantProviderDelegate _exportedCustomDirectEventTypeConstantProvider;
 
-    private ConstantProvider MakeExportedCustomBubblingEventTypeConstants()
+    private ConstantProviderDelegate MakeExportedCustomBubblingEventTypeConstants()
     {
-      return new ConstantProvider((IJSValueWriter constantWriter) =>
+      return new ConstantProviderDelegate((IJSValueWriter constantWriter) =>
       {
         var typeInfo = GetType().GetTypeInfo();
 
@@ -325,9 +330,9 @@ namespace Microsoft.ReactNative.Managed
       return false;
     }
 
-    private ConstantProvider MakeExportedDirectEventTypeConstants()
+    private ConstantProviderDelegate MakeExportedDirectEventTypeConstants()
     {
-      return new ConstantProvider((IJSValueWriter constantWriter) =>
+      return new ConstantProviderDelegate((IJSValueWriter constantWriter) =>
       {
         var typeInfo = GetType().GetTypeInfo();
 
@@ -393,18 +398,22 @@ namespace Microsoft.ReactNative.Managed
 
     private Delegate MakeEventDelegate(string eventName, Type memberType, Type eventDataType)
     {
+      // Generate code that looks like:
       //
       // (TFrameworkElement view, TEventData eventData) =>
       // {
-      //   ReactContext.DispatchEvent(view, eventName, ReactEventHelpers.ArgWriter(eventData));
+      //   this.ReactContext.DispatchEvent(view, eventName, eventData);
       // };
-      //
 
       ParameterExpression viewParameter = Expression.Parameter(typeof(TFrameworkElement), "view");
       ParameterExpression eventDataParameter = Expression.Parameter(eventDataType, "eventData");
 
       MemberExpression thisReactContext = Expression.Property(Expression.Constant(this), "ReactContext");
-      MethodCallExpression dispatchCall = Expression.Call(thisReactContext, typeof(IReactContext).GetMethod("DispatchEvent"), viewParameter, Expression.Constant(eventName, typeof(string)), Expression.Call(ReactEventInfo.ArgWriterOf(eventDataType), eventDataParameter));
+      MethodCallExpression dispatchCall = Expression.Call(DispatchEventOf(eventDataType),
+        thisReactContext,
+        viewParameter,
+        Expression.Constant(eventName, typeof(string)),
+        eventDataParameter);
 
       return Expression.Lambda(memberType, dispatchCall, viewParameter, eventDataParameter).Compile();
     }

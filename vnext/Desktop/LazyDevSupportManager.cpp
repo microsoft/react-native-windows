@@ -24,15 +24,6 @@ JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(const DevSettings &s
   return m_dsm->LoadJavaScriptInProxyMode(settings);
 }
 
-#ifdef PATCH_RN
-JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &settings) /*override*/
-{
-  EnsureDevSupportManager();
-
-  return m_dsm->LoadJavaScriptInSandboxMode(settings);
-}
-#endif
-
 string LazyDevSupportManager::GetJavaScriptFromServer(
     const string &debugHost,
     const string &jsBundleName,

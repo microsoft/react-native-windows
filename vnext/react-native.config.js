@@ -1,4 +1,6 @@
 // @ts-check
+const projectConfig = require('./local-cli/config/projectConfig');
+const dependencyConfig = require('./local-cli/config/dependencyConfig');
 
 module.exports = {
     // **** This section defined commands and options on how to provide the windows platform to external applications
@@ -8,8 +10,8 @@ module.exports = {
     platforms: {
       windows: {
         linkConfig: () => null,
-        projectConfig: (projectRoot, projectParams) => null,
-        dependencyConfig: (projectRoot, dependencyParams) => null,
+        projectConfig: projectConfig.projectConfigWindows,
+        dependencyConfig: dependencyConfig.dependencyConfigWindows,
       },
     },
 

@@ -24,7 +24,7 @@ const char *RootViewManager::GetName() const {
   return "ROOT";
 }
 
-XamlView RootViewManager::CreateViewCore(int64_t tag) {
+XamlView RootViewManager::CreateViewCore(int64_t /*tag*/) {
   // ASSERT: Can't create a root view directly. Comes from host.
   assert(false);
   return nullptr;
@@ -60,7 +60,7 @@ void RootViewManager::SetLayoutProps(
   // changes.
 }
 
-void RootViewManager::destroyShadow(facebook::react::ShadowNode *node) const {
+void RootViewManager::destroyShadow(facebook::react::ShadowNode * /*node*/) const {
   // Don't delete the node here, allow the NativeUIManager to handle that since
   // it creates it.
 }

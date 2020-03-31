@@ -19,10 +19,6 @@
 #include "Chakra/ChakraUtils.h"
 #include "JSI/Shared/RuntimeHolder.h"
 
-#if (defined(_MSC_VER) && !defined(WINRT))
-#include "Sandbox/SandboxJSExecutor.h"
-#endif
-
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
 
@@ -46,7 +42,6 @@
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 
-#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif
@@ -54,8 +49,9 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
+#include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
-#endif
 
 // forward declaration.
 namespace facebook::react::tracing {
@@ -148,14 +144,27 @@ using namespace facebook;
 namespace facebook {
 namespace react {
 
-#ifdef PATCH_RN
 namespace {
-
-void runtimeInstaller(jsi::Runtime &runtime) {
+void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #ifdef ENABLE_JS_SYSTRACE_TO_ETW
   facebook::react::tracing::initializeJSHooks(runtime);
 #endif
 }
+
+class BridgeJSCallInvoker : public JSCallInvoker {
+ public:
+  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
+      : messageQueueThread_(std::move(messageQueueThread)) {}
+
+  void invokeAsync(std::function<void()> &&func) override {
+    if (auto queue = messageQueueThread_.lock()) {
+      queue->runOnQueue(std::move(func));
+    }
+  }
+
+ private:
+  std::weak_ptr<MessageQueueThread> messageQueueThread_;
+};
 
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
@@ -169,24 +178,44 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
       };
     } else {
-      logger = [loggingHook = std::move(loggingHook_)](const std::string &message, unsigned int logLevel) { ; };
+      logger = [loggingHook = std::move(loggingHook_)](const std::string & /*message*/, unsigned int /*logLevel*/) {};
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
+
+    auto turboModuleManager =
+        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeJSCallInvoker>(jsQueue));
+
+    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+      return turboModuleManager->getModule(name);
+    };
+
+    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+
+    // init TurboModule
+    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+      turboModuleManager->getModule(moduleName);
+    }
 
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook) noexcept
-      : runtimeHolder_{std::move(runtimeHolder)}, loggingHook_{std::move(loggingHook)} {}
+  OJSIExecutorFactory(
+      std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
+      NativeLoggingHook loggingHook,
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry) noexcept
+      : runtimeHolder_{std::move(runtimeHolder)},
+        loggingHook_{std::move(loggingHook)},
+        turboModuleRegistry_{std::move(turboModuleRegistry)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   NativeLoggingHook loggingHook_;
 };
 
 } // namespace
-#endif
 
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char * /*tag*/) {}
 
@@ -237,6 +266,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -245,6 +275,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
+      std::move(turboModuleRegistry),
       std::move(uimanager),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -262,6 +293,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -270,6 +302,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
+      std::move(turboModuleRegistry),
       std::move(uimanager),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -282,72 +315,19 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   return instance;
 }
 
-#if (defined(_MSC_VER) && !defined(WINRT))
-#ifdef PATCH_RN
-
-/*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeSandbox(
-    std::string &&jsString,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::shared_ptr<IDevSupportManager> devManager,
-    SendNativeModuleCall &&sendNativeModuleCall) noexcept {
-  auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
-      std::move(jsString),
-      std::move(configsString),
-      std::move(sourceUrl),
-      std::move(jsQueue),
-      std::move(nativeQueue),
-      std::move(devSettings),
-      std::move(devManager),
-      std::move(sendNativeModuleCall)));
-
-  instance->RegisterForReloadIfNecessary();
-
-  return instance;
-}
-
-/*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeSandbox(
-    std::string &&jsBundleBasePath,
-    std::string &&jsBundleRelativePath,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::shared_ptr<IDevSupportManager> devManager,
-    SendNativeModuleCall &&sendNativeModuleCall) noexcept {
-  auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
-      std::move(jsBundleBasePath),
-      std::move(jsBundleRelativePath),
-      std::move(configsString),
-      std::move(sourceUrl),
-      std::move(jsQueue),
-      std::move(nativeQueue),
-      std::move(devSettings),
-      std::move(devManager),
-      std::move(sendNativeModuleCall)));
-
-  instance->RegisterForReloadIfNecessary();
-
-  return instance;
-}
-#endif
-#endif
-
 InstanceImpl::InstanceImpl(
     std::string &&jsBundleBasePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
     : m_uimanager(std::move(uimanager)),
+      m_turboModuleRegistry(std::move(turboModuleRegistry)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
@@ -372,19 +352,9 @@ InstanceImpl::InstanceImpl(
   }
   m_moduleRegistry = std::make_shared<facebook::react::ModuleRegistry>(std::move(modules));
 
-  // choose ExecutorDelegate and JSExecutor
+  // Choose JSExecutor
   std::shared_ptr<JSExecutorFactory> jsef;
-#ifdef PATCH_RN
-  std::shared_ptr<ExecutorDelegateFactory> edf;
-  if (m_devSettings->useSandbox) {
-#if (defined(_MSC_VER) && !defined(WINRT))
-    edf = std::make_shared<SandboxExecutorDelegateFactory>();
-    auto jseFunc = m_devManager->LoadJavaScriptInSandboxMode(*m_devSettings);
-    jsef = std::make_shared<SandboxJSExecutorFactory>(std::move(jseFunc));
-#endif
-  } else
-#endif
-      /* else */ if (m_devSettings->useWebDebugger) {
+  if (m_devSettings->useWebDebugger) {
     try {
       auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings);
 
@@ -399,11 +369,11 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
-#ifdef PATCH_RN
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -417,14 +387,12 @@ InstanceImpl::InstanceImpl(
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
-          if (!m_devSettings->bytecodeFileName.empty()) {
-            // Take the root path of the bytecode location if provided
-            auto lastSepPosition = m_devSettings->bytecodeFileName.find_last_of("/\\");
-            if (lastSepPosition != std::string::npos) {
-              preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(
-                  m_devSettings->bytecodeFileName.substr(0, lastSepPosition + 1));
-            }
+
+          char tempPath[MAX_PATH];
+          if (GetTempPathA(MAX_PATH, tempPath)) {
+            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
           }
+
           m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
               m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
           break;
@@ -439,10 +407,9 @@ InstanceImpl::InstanceImpl(
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
       }
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
-    } else
-#endif
-    {
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+    } else {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of
       // now. This will go away once we completely move to JSI flow.
       ChakraInstanceArgs instanceArgs;
@@ -484,9 +451,6 @@ InstanceImpl::InstanceImpl(
 
   m_innerInstance->initializeBridge(
       std::make_unique<BridgeUIBatchInstanceCallback>(m_innerInstance, m_uimanager, m_nativeQueue),
-#ifdef PATCH_RN
-      edf,
-#endif
       jsef,
       m_jsThread,
       m_moduleRegistry);
@@ -500,11 +464,10 @@ InstanceImpl::InstanceImpl(
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const &moduleName : m_moduleRegistry->moduleNames()) {
       auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-      if (moduleConfig) {
-        configArray.push_back(std::move(moduleConfig->config));
-      }
+      configArray.push_back(moduleConfig ? std::move(moduleConfig->config) : nullptr);
     }
-    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", std::move(configArray));
     m_innerInstance->setGlobalVariable(
         "__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
@@ -547,7 +510,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_devSettings->errorCallback(e.what());
       return;
     }
-  } else if (m_devSettings->liveReloadCallback != nullptr) {
+  } else if (m_devSettings->liveReloadCallback != nullptr || m_devSettings->useFastRefresh) {
     auto jsBundleString = m_devManager->GetJavaScriptFromServer(
         m_devSettings->debugHost, jsBundleRelativePath, m_devSettings->platformName);
 
@@ -591,82 +554,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   }
 }
 
-#if (defined(_MSC_VER) && !defined(WINRT))
-#ifdef PATCH_RN
-
-// For sandbox process.
-InstanceImpl::InstanceImpl(
-    std::string &&jsString,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::shared_ptr<IDevSupportManager> devManager,
-    SendNativeModuleCall &&sendNativeModuleCall)
-    : InstanceImpl(
-          std::string(),
-          std::move(jsString),
-          std::move(configsString),
-          std::move(sourceUrl),
-          std::move(jsQueue),
-          nativeQueue,
-          std::move(devSettings),
-          std::move(devManager),
-          std::move(sendNativeModuleCall)) {}
-
-// For sandbox process.
-InstanceImpl::InstanceImpl(
-    std::string &&jsBundleBasePath,
-    std::string &&jsBundleRelativePath,
-    std::string &&configsString,
-    std::string &&sourceUrl,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings,
-    std::shared_ptr<IDevSupportManager> devManager,
-    SendNativeModuleCall &&sendNativeModuleCall)
-    : m_jsThread(std::move(jsQueue)),
-      m_nativeQueue(nativeQueue),
-      m_devSettings(std::move(devSettings)),
-      m_devManager(std::move(devManager)),
-      m_innerInstance(std::make_shared<Instance>()) {
-  auto modules = GetDefaultNativeModules(nativeQueue);
-  m_moduleRegistry = std::make_shared<facebook::react::ModuleRegistry>(std::move(modules));
-
-  // Load ChakraExecutor for sandbox process
-  auto edf = std::make_shared<SandboxDelegateFactory>(std::move(sendNativeModuleCall));
-
-  ChakraInstanceArgs chakraInstanceArgs;
-  chakraInstanceArgs.RuntimeAttributes =
-      m_devSettings->useJITCompilation ? JsRuntimeAttributeNone : JsRuntimeAttributeDisableNativeCodeGeneration;
-
-  // Disable bytecode caching with live reload as we don't make guarantees that
-  // the bundle version will change with edits
-  if (m_devSettings->liveReloadCallback == nullptr) {
-    chakraInstanceArgs.BundleUrlMetadataMap = m_devSettings->chakraBundleUrlMetadataMap;
-  }
-
-  auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(chakraInstanceArgs));
-  m_innerInstance->initializeBridge(
-      std::make_unique<BridgeTestInstanceCallback>(), edf, jsef, m_jsThread, m_moduleRegistry);
-
-  m_innerInstance->setGlobalVariable(
-      "__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(std::move(configsString)));
-
-  std::string fullBundleFilePath = GetJSBundleDirectory(m_jsBundleBasePath, jsBundleRelativePath);
-
-  try {
-    m_innerInstance->loadScriptFromString(
-        std::make_unique<const JSBigStdString>(std::move(fullBundleFilePath)), sourceUrl, false /*synchronously*/);
-  } catch (std::exception &e) {
-    m_devSettings->errorCallback(e.what());
-  }
-}
-
-#endif
-#endif
-
 InstanceImpl::~InstanceImpl() {
   m_nativeQueue->quitSynchronous();
 }
@@ -700,8 +587,6 @@ void InstanceImpl::DetachRootView(IReactRootView *rootView) noexcept {
   m_jsThread->runOnQueueSync([]() {});
 }
 
-// TODO: Task #1895397: Host should pass information about to where each native
-// module loaded. (host or sandbox)
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
@@ -748,8 +633,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "ExceptionsManager",
-      [callback{std::move(m_devSettings->jsExceptionCallback)}]() mutable {
-        return std::make_unique<ExceptionsManagerModule>(std::move(callback));
+      [redboxHandler = m_devSettings->redboxHandler]() mutable {
+        return std::make_unique<ExceptionsManagerModule>(redboxHandler);
       },
       nativeQueue));
 

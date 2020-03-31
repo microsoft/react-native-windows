@@ -14,8 +14,22 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public int Y;
   }
 
+  // To specify JS module and default event emitter name:
+  // [ReactModule("simpleNativeModule", EventEmitterName = "simpleNativeModuleEmitter")]
+  [ReactModule]
   class SimpleNativeModule
   {
+    [ReactInitializer]
+    public void Initialize(IReactContext context)
+    {
+      IsInitialized = true;
+      Assert.IsNotNull(context);
+
+      // Event and Function fields are initialized before ReactInitializer method call.
+      Assert.IsNotNull(OnIntEvent);
+      Assert.IsNotNull(JSIntFunction);
+    }
+
     [ReactMethod]
     public int Add(int x, int y)
     {
@@ -180,13 +194,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [ReactMethod]
-    public void ResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public void ResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
     {
       resolve("Hello_3");
     }
 
     [ReactMethod]
-    public void RejectSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public void RejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
     }
@@ -233,13 +247,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
 
     [ReactMethod]
-    public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
     {
       resolve("Hello_3");
     }
 
     [ReactMethod]
-    public static void StaticRejectSayHelloCallbacks(Action<string> resolve, Action<string> reject)
+    public static void StaticRejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
     }
@@ -438,21 +452,108 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       provider.Add("const62", "MyConstant62");
     }
 
-    [ReactEvent("onIntResult1")]
-    public Action<int> OnIntResult1 = null;
-
+    // Field that allows to emit native module events.
     [ReactEvent]
-    public static Action<int> OnIntResult2 = null;
+    public Action<int> OnIntEvent = null;
 
+    // An event without arguments
     [ReactEvent]
-    public Action<Point> OnPointResult3 { get; set; }
+    public Action OnNoArgEvent = null;
 
-    [ReactEvent("onPointResult4")]
-    public static Action<Point> OnPointResult4 { get; set; }
-
+    // An event with two arguments
     [ReactEvent]
-    public Action<JSValue> OnObjectResult5 { get; set; }
+    public Action<Point, Point> OnTwoArgsEvent = null;
 
+    // Specify event name different from the field name.
+    [ReactEvent("onPointEvent")]
+    public Action<Point> OnPointEvent = null;
+
+    // By default we use the event emitter name from ReactModule which is by default 'RCTDeviceEventEmitter'.
+    // Here we specify event emitter name local for this event.
+    [ReactEvent("onStringEvent", EventEmitterName = "MyEventEmitter")]
+    public Action<string> OnStringEvent = null;
+
+    // Use JSValue which is an immutable JSON-like data representation.
+    [ReactEvent]
+    public Action<JSValue> OnJSValueEvent = null;
+
+    // Property that allows to emit native module events.
+    [ReactEvent]
+    public Action<int> OnIntEventProp { get; set; }
+
+    // An event without arguments
+    [ReactEvent]
+    public Action OnNoArgEventProp { get; set; }
+
+    // An event with two arguments
+    [ReactEvent]
+    public Action<Point, Point> OnTwoArgsEventProp { get; set; }
+
+    // Specify event name different from the property name.
+    [ReactEvent("onPointEventProp")]
+    public Action<Point> OnPointEventProp { get; set; }
+
+    // By default we use the event emitter name from ReactModuleAttribute which is by default 'RCTDeviceEventEmitter'.
+    // Here we specify event emitter name local for this event.
+    [ReactEvent("onStringEventProp", EventEmitterName = "MyEventEmitter")]
+    public Action<string> OnStringEventProp { get; set; }
+
+    // Use JSValue which is an immutable JSON-like data representation.
+    [ReactEvent]
+    public Action<JSValue> OnJSValueEventProp { get; set; }
+
+    // Field that allows to call JS functions.
+    [ReactFunction]
+    public Action<int> JSIntFunction = null;
+
+    // Specify JS function name different from the field name.
+    [ReactFunction("pointFunc")]
+    public Action<Point> JSPointFunction = null;
+
+    // Use two arguments. Specify JS function name different from the field name.
+    [ReactFunction("lineFunc")]
+    public Action<Point, Point> JSLineFunction = null;
+
+    // Use no arguments.
+    [ReactFunction]
+    public Action NoArgFunction = null;
+
+    // By default we use the module name from ReactModuleAttribute which is by default the class name.
+    // Here we specify module name local for this function.
+    [ReactFunction("stringFunc", ModuleName = "MyModule")]
+    public Action<string> JSStringFunction = null;
+
+    // Use JSValue which is an immutable JSON-like data representation.
+    [ReactFunction]
+    public Action<JSValue> JSValueFunction = null;
+
+    // Property that allows to call JS functions.
+    [ReactFunction]
+    public Action<int> JSIntFunctionProp { get; set; }
+
+    // Specify JS function name different from the property name.
+    [ReactFunction("pointFuncProp")]
+    public Action<Point> JSPointFunctionProp { get; set; }
+
+    // Use two arguments. Specify JS function name different from the property name.
+    [ReactFunction("lineFuncProp")]
+    public Action<Point, Point> JSLineFunctionProp { get; set; }
+
+    // Use no arguments.
+    [ReactFunction]
+    public Action NoArgFunctionProp { get; set; }
+
+    // By default we use the module name from ReactModuleAttribute which is by default the class name.
+    // Here we specify module name local for this function.
+    [ReactFunction("stringFuncProp", ModuleName = "MyModule")]
+    public Action<string> JSStringFunctionProp { get; set; }
+
+    // Use JSValue which is an immutable JSON-like data representation.
+    [ReactFunction]
+    public Action<JSValue> JSValueFunctionProp { get; set; }
+
+    // Properties below are not exposed to JS and only used by tests to observe results.
+    public bool IsInitialized { get; set; }
     public string Message { get; set; }
     public static string StaticMessage { get; set; }
   }
@@ -460,99 +561,99 @@ namespace Microsoft.ReactNative.Managed.UnitTests
   [TestClass]
   public class NativeModuleTest
   {
-    private ReactModuleBuilderMock m_moduleBuilder;
+    private ReactModuleBuilderMock m_moduleBuilderMock;
     private ReactModuleInfo m_moduleInfo;
     private SimpleNativeModule m_module;
 
     [TestInitialize]
     public void Initialize()
     {
-      m_moduleBuilder = new ReactModuleBuilderMock();
-      m_moduleInfo = new ReactModuleInfo(typeof(SimpleNativeModule), "SimpleNativeModule", "SimpleNativeModule");
-      m_module = (SimpleNativeModule)m_moduleInfo.ModuleProvider(m_moduleBuilder);
+      m_moduleBuilderMock = new ReactModuleBuilderMock();
+      m_moduleInfo = new ReactModuleInfo(typeof(SimpleNativeModule));
+      m_module = m_moduleBuilderMock.CreateModule<SimpleNativeModule>(m_moduleInfo);
     }
 
     [TestMethod]
     public void TestMethodCall_Add()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.Add), 3, 5, (int result) => Assert.AreEqual(8, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.Add), 3, 5, (int result) => Assert.AreEqual(8, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_Negate()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.Negate), 3, (int result) => Assert.AreEqual(-3, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.Negate), 3, (int result) => Assert.AreEqual(-3, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_SayHello()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.SayHello), (string result) => Assert.AreEqual("Hello", result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.SayHello), (string result) => Assert.AreEqual("Hello", result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticAdd()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticAdd), 3, 5, (int result) => Assert.AreEqual(8, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticAdd), 3, 5, (int result) => Assert.AreEqual(8, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegate()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticNegate), 3, (int result) => Assert.AreEqual(-3, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticNegate), 3, (int result) => Assert.AreEqual(-3, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticSayHello()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticSayHello), (string result) => Assert.AreEqual("Hello", result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticSayHello), (string result) => Assert.AreEqual("Hello", result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_SayHello0()
     {
-      m_moduleBuilder.Call0(nameof(SimpleNativeModule.SayHello0));
+      m_moduleBuilderMock.Call0(nameof(SimpleNativeModule.SayHello0));
       Assert.AreEqual("Hello_0", m_module.Message);
     }
 
     [TestMethod]
     public void TestMethodCall_PrintPoint()
     {
-      m_moduleBuilder.Call0(nameof(SimpleNativeModule.PrintPoint), new Point { X = 3, Y = 5 });
+      m_moduleBuilderMock.Call0(nameof(SimpleNativeModule.PrintPoint), new Point { X = 3, Y = 5 });
       Assert.AreEqual("Point: (3, 5)", m_module.Message);
     }
 
     [TestMethod]
     public void TestMethodCall_PrintLine()
     {
-      m_moduleBuilder.Call0(nameof(SimpleNativeModule.PrintLine), new Point { X = 3, Y = 5 }, new Point { X = 6, Y = 8 });
+      m_moduleBuilderMock.Call0(nameof(SimpleNativeModule.PrintLine), new Point { X = 3, Y = 5 }, new Point { X = 6, Y = 8 });
       Assert.AreEqual("Line: (3, 5)-(6, 8)", m_module.Message);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticSayHello1()
     {
-      m_moduleBuilder.Call0(nameof(SimpleNativeModule.StaticSayHello1));
+      m_moduleBuilderMock.Call0(nameof(SimpleNativeModule.StaticSayHello1));
       Assert.AreEqual("Hello_1", SimpleNativeModule.StaticMessage);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticPrintPoint()
     {
-      m_moduleBuilder.Call0(nameof(SimpleNativeModule.StaticPrintPoint), new Point { X = 13, Y = 15 });
+      m_moduleBuilderMock.Call0(nameof(SimpleNativeModule.StaticPrintPoint), new Point { X = 13, Y = 15 });
       Assert.AreEqual("Static Point: (13, 15)", SimpleNativeModule.StaticMessage);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticPrintLine()
     {
-      m_moduleBuilder.Call0(nameof(SimpleNativeModule.StaticPrintLine),
+      m_moduleBuilderMock.Call0(nameof(SimpleNativeModule.StaticPrintLine),
           new Point { X = 13, Y = 15 }, new Point { X = 16, Y = 18 });
       Assert.AreEqual("Static Line: (13, 15)-(16, 18)", SimpleNativeModule.StaticMessage);
     }
@@ -560,513 +661,897 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_AddCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.AddCallback), 7, -8, (int result) => Assert.AreEqual(-1, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.AddCallback), 7, -8, (int result) => Assert.AreEqual(-1, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.NegateCallback), 3, (int result) => Assert.AreEqual(-3, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.NegateCallback), 3, (int result) => Assert.AreEqual(-3, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateAyncCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.NegateAsyncCallback), 3, (int result) => Assert.AreEqual(-3, result)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.NegateAsyncCallback), 3, (int result) => Assert.AreEqual(-3, result)).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_SayHelloCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.SayHelloCallback), (string result) => Assert.AreEqual("Hello_2", result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.SayHelloCallback), (string result) => Assert.AreEqual("Hello_2", result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticAddCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticAddCallback), 4, 56, (int result) => Assert.AreEqual(60, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticAddCallback), 4, 56, (int result) => Assert.AreEqual(60, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticNegateCallback), 33, (int result) => Assert.AreEqual(-33, result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticNegateCallback), 33, (int result) => Assert.AreEqual(-33, result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticNegateAsyncCallback), 33, (int result) => Assert.AreEqual(-33, result)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticNegateAsyncCallback), 33, (int result) => Assert.AreEqual(-33, result)).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticSayHelloCallback()
     {
-      m_moduleBuilder.Call1(nameof(SimpleNativeModule.StaticSayHelloCallback), (string result) => Assert.AreEqual("Static Hello_2", result));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticSayHelloCallback), (string result) => Assert.AreEqual("Static Hello_2", result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_DivideCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.DivideCallbacks), 6, 2,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DivideCallbacks), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Division by 0", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_DivideCallbacksError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.DivideCallbacks), 6, 0,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DivideCallbacks), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Division by 0", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateCallbacks), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateCallbacksError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateCallbacks), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateAsyncCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error)).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateAsyncCallbacksError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error)).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_ResolveSayHelloCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.ResolveSayHelloCallbacks),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.ResolveSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Goodbye", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Goodbye", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_RejectSayHelloCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.RejectSayHelloCallbacks),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.RejectSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Goodbye", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Goodbye", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticDivideCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 2,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Division by 0", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticDivideCallbacksError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 0,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Division by 0", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateCallbacks), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateCallbacksError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateCallbacks), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error)).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncCallbacksError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Already negative", error)).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloCallbacks),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Goodbye", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (string error) => Assert.AreEqual("Goodbye", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticRejectSayHelloCallbacks()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloCallbacks),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Goodbye", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (string error) => Assert.AreEqual("Goodbye", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_DividePromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.DividePromise), 6, 2,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_DividePromiseError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.DividePromise), 6, 0,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegatePromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegatePromise), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegatePromiseError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegatePromise), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateAsyncPromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateAsyncPromiseError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_VoidPromise()
     {
-      m_moduleBuilder.Call2("voidPromise", 2,
+      m_moduleBuilderMock.Call2("voidPromise", 2,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_VoidPromiseError()
     {
-      m_moduleBuilder.Call2("voidPromise", 3,
+      m_moduleBuilderMock.Call2("voidPromise", 3,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_ResolveSayHelloPromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.ResolveSayHelloPromise),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.ResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_RejectSayHelloPromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.RejectSayHelloPromise),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.RejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticDividePromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 2,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticDividePromiseError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 0,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
-          (JSValue error) => Assert.AreEqual("Division by 0", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegatePromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegatePromise), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegatePromiseError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegatePromise), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncPromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncPromiseError()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
-          (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String)).Wait();
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticVoidPromise()
     {
-      m_moduleBuilder.Call2("staticVoidPromise", 2,
+      m_moduleBuilderMock.Call2("staticVoidPromise", 2,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticVoidPromiseError()
     {
-      m_moduleBuilder.Call2("staticVoidPromise", 3,
+      m_moduleBuilderMock.Call2("staticVoidPromise", 3,
           (JSValue.Void result) => { },
-          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloPromise),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticRejectSayHelloPromise()
     {
-      m_moduleBuilder.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloPromise),
+      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
-          (JSValue error) => Assert.AreEqual("Promise rejected", error.Object["message"].String));
-      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+          (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodSyncCall_AddSync()
     {
-      m_moduleBuilder.CallSync(nameof(SimpleNativeModule.AddSync), 3, 5, out int result);
+      m_moduleBuilderMock.CallSync(nameof(SimpleNativeModule.AddSync), 3, 5, out int result);
       Assert.AreEqual(8, result);
     }
 
     [TestMethod]
     public void TestMethodSyncCall_NegateSync()
     {
-      m_moduleBuilder.CallSync(nameof(SimpleNativeModule.NegateSync), 3, out int result);
+      m_moduleBuilderMock.CallSync(nameof(SimpleNativeModule.NegateSync), 3, out int result);
       Assert.AreEqual(-3, result);
     }
 
     [TestMethod]
     public void TestMethodSyncCall_SayHelloSync()
     {
-      m_moduleBuilder.CallSync(nameof(SimpleNativeModule.SayHelloSync), out string result);
+      m_moduleBuilderMock.CallSync(nameof(SimpleNativeModule.SayHelloSync), out string result);
       Assert.AreEqual("Hello", result);
     }
 
     [TestMethod]
     public void TestMethodSyncCall_StaticAddSync()
     {
-      m_moduleBuilder.CallSync(nameof(SimpleNativeModule.StaticAddSync), 3, 5, out int result);
+      m_moduleBuilderMock.CallSync(nameof(SimpleNativeModule.StaticAddSync), 3, 5, out int result);
       Assert.AreEqual(8, result);
     }
 
     [TestMethod]
     public void TestMethodSyncCall_StaticNegateSync()
     {
-      m_moduleBuilder.CallSync(nameof(SimpleNativeModule.StaticNegateSync), 3, out int result);
+      m_moduleBuilderMock.CallSync(nameof(SimpleNativeModule.StaticNegateSync), 3, out int result);
       Assert.AreEqual(-3, result);
     }
 
     [TestMethod]
     public void TestMethodSyncCall_StaticSayHelloSync()
     {
-      m_moduleBuilder.CallSync(nameof(SimpleNativeModule.StaticSayHelloSync), out string result);
+      m_moduleBuilderMock.CallSync(nameof(SimpleNativeModule.StaticSayHelloSync), out string result);
       Assert.AreEqual("Hello", result);
     }
 
     [TestMethod]
     public void TestConstants()
     {
-      var constants = m_moduleBuilder.GetConstants();
-      Assert.AreEqual("MyConstant1", constants[nameof(SimpleNativeModule.Constant1)].String);
-      Assert.AreEqual("MyConstant2", constants["const2"].String);
+      var constants = m_moduleBuilderMock.GetConstants();
+      Assert.AreEqual("MyConstant1", constants[nameof(SimpleNativeModule.Constant1)]);
+      Assert.AreEqual("MyConstant2", constants["const2"]);
       Assert.AreEqual(new Point { X = 2, Y = 3 }, constants["const3"].To<Point>());
       Assert.AreEqual(new Point { X = 3, Y = 4 }, constants[nameof(SimpleNativeModule.Constant4)].To<Point>());
       Assert.AreEqual(new Point { X = 12, Y = 14 }, constants["const51"].To<Point>());
-      Assert.AreEqual("MyConstant52", constants["const52"].String);
+      Assert.AreEqual("MyConstant52", constants["const52"]);
       Assert.AreEqual(new Point { X = 15, Y = 17 }, constants["const61"].To<Point>());
-      Assert.AreEqual("MyConstant62", constants["const62"].String);
+      Assert.AreEqual("MyConstant62", constants["const62"]);
     }
 
     [TestMethod]
-    public void TestEvent_EventField()
+    public void TestEvent_IntEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilder.SetEventHandler("onIntResult1", (int eventArg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, eventArg);
+        Assert.AreEqual(42, args[0]);
         eventRaised = true;
       });
 
-      m_module.OnIntResult1(42);
+      m_module.OnIntEvent(42);
       Assert.IsTrue(eventRaised);
     }
 
     [TestMethod]
-    public void TestEvent_StaticEventField()
+    public void TestEvent_NoArgEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilder.SetEventHandler(nameof(SimpleNativeModule.OnIntResult2), (int eventArg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnNoArgEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(64, eventArg);
+        Assert.AreEqual(0, args.Count);
         eventRaised = true;
       });
 
-      SimpleNativeModule.OnIntResult2(64);
+      m_module.OnNoArgEvent();
       Assert.IsTrue(eventRaised);
     }
 
     [TestMethod]
-    public void TestEvent_EventProperty()
+    public void TestEvent_TwoArgsEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilder.SetEventHandler(nameof(SimpleNativeModule.OnPointResult3), (Point eventArg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnTwoArgsEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(12, eventArg.X);
-        Assert.AreEqual(14, eventArg.Y);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
         eventRaised = true;
       });
 
-      m_module.OnPointResult3(new Point { X = 12, Y = 14 });
+      m_module.OnTwoArgsEvent(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
       Assert.IsTrue(eventRaised);
     }
 
     [TestMethod]
-    public void TestEvent_StaticEventProperty()
+    public void TestEvent_JSNameEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilder.SetEventHandler("onPointResult4", (Point eventArg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(32, eventArg.X);
-        Assert.AreEqual(42, eventArg.Y);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
-      SimpleNativeModule.OnPointResult4(new Point { X = 32, Y = 42 });
+      m_module.OnPointEvent(new Point { X = 4, Y = 2 });
       Assert.IsTrue(eventRaised);
     }
 
     [TestMethod]
-    public void TestEvent_ObjectEventProperty()
+    public void TestEvent_JSEventEmitterEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilder.SetEventHandler(nameof(SimpleNativeModule.OnObjectResult5), (JSValue eventArg) =>
+      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(32, eventArg.Object["X"].Int64);
-        Assert.AreEqual(42, eventArg.Object["Y"].Int64);
+        Assert.AreEqual("Hello World!", args[0]);
         eventRaised = true;
       });
 
-      JSValue data = new JSValue(new Dictionary<string, JSValue>() { { "X", new JSValue(32) }, { "Y", new JSValue(42) }, });
-
-      m_module.OnObjectResult5(data);
+      m_module.OnStringEvent("Hello World!");
       Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSValueObjectEventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnJSValueEvent(new JSValueObject { ["X"] = 4, ["Y"] = 2 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSValueArrayEventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
+        eventRaised = true;
+      });
+
+      m_module.OnJSValueEvent(new JSValueArray { "X", 4, true, new JSValueObject { ["Id"] = 42 } });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSValueArray1EventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(42, args[0][0]);
+        eventRaised = true;
+      });
+
+      m_module.OnJSValueEvent(new JSValueArray { 42 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_IntEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(42, args[0]);
+        eventRaised = true;
+      });
+
+      m_module.OnIntEventProp(42);
+      Assert.IsTrue(eventRaised);
+    }
+
+
+    [TestMethod]
+    public void TestEvent_NoArgEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnNoArgEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        eventRaised = true;
+      });
+
+      m_module.OnNoArgEventProp();
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_TwoArgsEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnTwoArgsEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnTwoArgsEventProp(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSNameEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnPointEventProp(new Point { X = 4, Y = 2 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSEventEmitterEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("Hello World!", args[0]);
+        eventRaised = true;
+      });
+
+      m_module.OnStringEventProp("Hello World!");
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSValueObjectEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnJSValueEventProp(new JSValueObject { ["X"] = 4, ["Y"] = 2 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSValueArrayEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
+        eventRaised = true;
+      });
+
+      m_module.OnJSValueEventProp(new JSValueArray { "X", 4, true, new JSValueObject { ["Id"] = 42 } });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_JSValueArray1EventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(42, args[0][0]);
+        eventRaised = true;
+      });
+
+      m_module.OnJSValueEventProp(new JSValueArray { 42 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSIntFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "JSIntFunction", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(42, args[0]);
+        functionCalled = true;
+      });
+
+      m_module.JSIntFunction(42);
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSNameFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "pointFunc", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        functionCalled = true;
+      });
+
+      m_module.JSPointFunction(new Point { X = 4, Y = 2 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_TwoArgsFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "lineFunc", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        functionCalled = true;
+      });
+
+      m_module.JSLineFunction(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_NoArgFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "NoArgFunction", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        functionCalled = true;
+      });
+
+      m_module.NoArgFunction();
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSModuleNameFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("MyModule", "stringFunc", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("Hello World!", args[0]);
+        functionCalled = true;
+      });
+
+      m_module.JSStringFunction("Hello World!");
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSValueObjectFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "JSValueFunction", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        functionCalled = true;
+      });
+
+      m_module.JSValueFunction(new JSValueObject { { "X", 4 }, { "Y", 2 } });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSValueArrayFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "JSValueFunction", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
+        functionCalled = true;
+      });
+
+      m_module.JSValueFunction(new JSValueArray { "X", 4, true, new JSValueObject { { "Id", 42 } } });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSIntFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "JSIntFunctionProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(42, args[0]);
+        functionCalled = true;
+      });
+
+      m_module.JSIntFunctionProp(42);
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSNameFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "pointFuncProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        functionCalled = true;
+      });
+
+      m_module.JSPointFunctionProp(new Point { X = 4, Y = 2 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_TwoArgsFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "lineFuncProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        functionCalled = true;
+      });
+
+      m_module.JSLineFunctionProp(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_NoArgFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "NoArgFunctionProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        functionCalled = true;
+      });
+
+      m_module.NoArgFunctionProp();
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSModuleNameFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("MyModule", "stringFuncProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("Hello World!", args[0]);
+        functionCalled = true;
+      });
+
+      m_module.JSStringFunctionProp("Hello World!");
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSValueObjectFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "JSValueFunctionProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        functionCalled = true;
+      });
+
+      m_module.JSValueFunctionProp(new JSValueObject { { "X", 4 }, { "Y", 2 } });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_JSValueArrayFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "JSValueFunctionProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
+        functionCalled = true;
+      });
+
+      m_module.JSValueFunctionProp(new JSValueArray { "X", 4, true, new JSValueObject { { "Id", 42 } } });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestInitialized()
+    {
+      Assert.IsTrue(m_module.IsInitialized);
     }
   }
 }

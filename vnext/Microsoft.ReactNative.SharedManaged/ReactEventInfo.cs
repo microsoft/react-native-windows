@@ -2,32 +2,38 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using static Microsoft.ReactNative.Managed.JSValueGenerator;
+using static Microsoft.ReactNative.Managed.ReactContextGenerator;
 using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
   class ReactEventInfo
   {
-    public ReactEventInfo(PropertyInfo propertyInfo, ReactEventAttribute eventAttribute)
+    public ReactEventInfo(PropertyInfo propertyInfo, ReactEventAttribute eventAttribute, string eventEmitterName)
     {
-      EventName = eventAttribute.EventName ?? propertyInfo.Name;
-      var eventArgType = GetEventArgType(propertyInfo.PropertyType,
-        formatError: message => $"{message} Module: {propertyInfo.DeclaringType.Name}, Field: {propertyInfo.Name}");
-      EventImpl = new Lazy<ReactEventImpl>(() => MakeEvent(propertyInfo, eventArgType), LazyThreadSafetyMode.PublicationOnly);
+      var eventName = eventAttribute.EventName ?? propertyInfo.Name;
+      eventEmitterName = eventAttribute.EventEmitterName ?? eventEmitterName;
+      var eventArgTypes = GetEventArgTypes(propertyInfo.PropertyType,
+        formatError: message => $"{message} Module: {propertyInfo.DeclaringType.Name}, Property: {propertyInfo.Name}");
+      EventImpl = new Lazy<ReactEventImpl>(() =>
+        MakeEvent(propertyInfo, eventEmitterName, eventName, eventArgTypes), LazyThreadSafetyMode.PublicationOnly);
     }
 
-    public ReactEventInfo(FieldInfo fieldInfo, ReactEventAttribute eventAttribute)
+    public ReactEventInfo(FieldInfo fieldInfo, ReactEventAttribute eventAttribute, string eventEmitterName)
     {
-      EventName = eventAttribute.EventName ?? fieldInfo.Name;
-      var eventArgType = GetEventArgType(fieldInfo.FieldType,
+      var eventName = eventAttribute.EventName ?? fieldInfo.Name;
+      eventEmitterName = eventAttribute.EventEmitterName ?? eventEmitterName;
+      var eventArgTypes = GetEventArgTypes(fieldInfo.FieldType,
         formatError: message => $"{message} Module: {fieldInfo.DeclaringType.Name}, Field: {fieldInfo.Name}");
-      EventImpl = new Lazy<ReactEventImpl>(() => MakeEvent(fieldInfo, eventArgType), LazyThreadSafetyMode.PublicationOnly);
+      EventImpl = new Lazy<ReactEventImpl>(() =>
+        MakeEvent(fieldInfo, eventEmitterName, eventName, eventArgTypes), LazyThreadSafetyMode.PublicationOnly);
     }
 
-    private static Type GetEventArgType(Type eventType, Func<string, string> formatError)
+    private static Type[] GetEventArgTypes(Type eventType, Func<string, string> formatError)
     {
       if (!typeof(Delegate).IsAssignableFrom(eventType))
       {
@@ -36,63 +42,58 @@ namespace Microsoft.ReactNative.Managed
 
       MethodInfo eventDelegateMethod = eventType.GetMethod("Invoke");
       ParameterInfo[] parameters = eventDelegateMethod.GetParameters();
-      if (parameters.Length != 1)
-      {
-        throw new InvalidOperationException(formatError("React event delegate must have one parameter."));
-      }
 
-      return parameters[0].ParameterType;
+      return parameters.Select(p => p.ParameterType).ToArray();
     }
 
-    private ReactEventImpl MakeEvent(PropertyInfo propertyInfo, Type eventArgType)
+    static MethodInfo EmitJSEvent() =>
+      typeof(IReactContext).GetMethod(nameof(IReactContext.EmitJSEvent));
+
+    private ReactEventImpl MakeEvent(PropertyInfo propertyInfo, string eventEmitterName, string eventName, Type[] eventArgTypes)
     {
       // Generate code that looks like:
       //
-      // (object module, ReactEventHandler eventHandler) =>
+      // (object module, IReactContext reactContext) =>
       // {
-      //   (module as MyModule).eventProperty = (ArgType arg) => eventHandler(ReactEvent.ArgWriter(arg));
+      //   (module as MyModule).EventProperty = (ArgType0 arg0, ArgType1 arg0) =>
+      //     reactContext.EmitJSEvent(eventEmitterName, eventName, arg0, arg1);
       // });
 
       return CompileLambda<ReactEventImpl>(
         Parameter(typeof(object), out var module),
-        Parameter(typeof(ReactEventHandler), out var eventHandler),
+        Parameter(typeof(IReactContext), out var reactContext),
         module.CastTo(propertyInfo.DeclaringType).SetProperty(propertyInfo,
           AutoLambda(propertyInfo.PropertyType,
-            Parameter(eventArgType, out var arg),
-            eventHandler.Invoke(Call(ArgWriterOf(eventArgType), arg)))));
+            Parameters(eventArgTypes, out var args),
+            reactContext.CallExt(EmitJSEventOf(eventArgTypes), Constant(eventEmitterName), Constant(eventName), args))));
     }
 
-    private ReactEventImpl MakeEvent(FieldInfo fieldInfo, Type eventArgType)
+    private ReactEventImpl MakeEvent(FieldInfo fieldInfo, string eventEmitterName, string eventName, Type[] eventArgTypes)
     {
       // Generate code that looks like:
       //
-      // (object module, ReactEventHandler eventHandler) =>
+      // (object module, IReactContext reactContext) =>
       // {
-      //   (module as MyModule).eventField = (ArgType arg) => eventHandler(ReactEvent.ArgWriter(arg));
+      //   (module as MyModule).EventField = (ArgType0 arg0, ArgType1 arg0) =>
+      //     reactContext.EmitJSEvent(eventEmitterName, eventName, arg0, arg1);
       // });
 
       return CompileLambda<ReactEventImpl>(
         Parameter(typeof(object), out var module),
-        Parameter(typeof(ReactEventHandler), out var eventHandler),
+        Parameter(typeof(IReactContext), out var reactContext),
         module.CastTo(fieldInfo.DeclaringType).SetField(fieldInfo,
           AutoLambda(fieldInfo.FieldType,
-            Parameter(eventArgType, out var arg),
-            eventHandler.Invoke(Call(ArgWriterOf(eventArgType), arg)))));
+            Parameters(eventArgTypes, out var args),
+            reactContext.CallExt(EmitJSEventOf(eventArgTypes), Constant(eventEmitterName), Constant(eventName), args))));
     }
 
-    public delegate void ReactEventImpl(object module, ReactEventHandler eventHandler);
-
-    public string EventName { get; private set; }
+    public delegate void ReactEventImpl(object module, IReactContext reactContext);
 
     public Lazy<ReactEventImpl> EventImpl { get; private set; }
 
     public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
-      moduleBuilder.AddEventHandlerSetter(EventName,
-        (ReactEventHandler eventHandler) => EventImpl.Value(module, eventHandler));
+      moduleBuilder.AddInitializer((IReactContext reactContext) => EventImpl.Value(module, reactContext));
     }
-
-    internal static MethodInfo ArgWriterOf(Type typeArg) =>
-      typeof(ReactEventHelper).GetMethod(nameof(ReactEventHelper.ArgWriter)).MakeGenericMethod(typeArg);
   }
 }

@@ -11,7 +11,6 @@
 #include <Views/TextInputViewManager.h>
 #include <Views/TextViewManager.h>
 #include <Views/ViewViewManager.h>
-#include <Views/WebViewManager.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace react::uwp;
@@ -55,12 +54,6 @@ TEST_CLASS (CreateViewManagers) {
 
   TEST_METHOD(CreateViewManagers_Scroll) {
     auto viewManager = std::make_unique<ScrollViewManager>(nullptr);
-
-    Assert::IsFalse(viewManager == nullptr);
-  }
-
-  TEST_METHOD(CreateViewManagers_Web) {
-    auto viewManager = std::make_unique<WebViewManager>(nullptr);
 
     Assert::IsFalse(viewManager == nullptr);
   }

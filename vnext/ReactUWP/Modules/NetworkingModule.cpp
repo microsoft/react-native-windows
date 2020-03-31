@@ -66,9 +66,11 @@ class NetworkingModule::NetworkingHelper : public std::enable_shared_from_this<N
       winrt::Windows::Foundation::IAsyncOperationWithProgress<
           winrt::Windows::Web::Http::HttpResponseMessage,
           winrt::Windows::Web::Http::HttpProgress> completion) {
+    std::scoped_lock lock(m_mutex);
     m_requests[requestId] = completion;
   }
   void RemoveRequest(int64_t requestId) {
+    std::scoped_lock lock(m_mutex);
     m_requests.erase(requestId);
   }
 
@@ -87,6 +89,7 @@ class NetworkingModule::NetworkingHelper : public std::enable_shared_from_this<N
           winrt::Windows::Web::Http::HttpResponseMessage,
           winrt::Windows::Web::Http::HttpProgress>>
       m_requests;
+  std::mutex m_mutex;
   static std::int64_t s_lastRequestId;
 };
 
@@ -235,14 +238,13 @@ void NetworkingModule::NetworkingHelper::SendRequest(
     const folly::dynamic &headers,
     folly::dynamic bodyData,
     const std::string &responseType,
-    bool useIncrementalUpdates,
-    int64_t timeout,
+    [[maybe_unused]] bool useIncrementalUpdates,
+    int64_t /*timeout*/,
     Callback cb) noexcept {
   int64_t requestId = ++s_lastRequestId;
 
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
-  assert(!useIncrementalUpdates);
 
   // Callback with the requestId
   cb({requestId});
@@ -289,9 +291,9 @@ void NetworkingModule::NetworkingHelper::SendRequest(
         content = contentBase64;
       } else if (!bodyData["uri"].empty()) {
         // file content request
-        winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(bodyData["uri"].asString()));
+        winrt::Windows::Foundation::Uri uri2(Microsoft::Common::Unicode::Utf8ToUtf16(bodyData["uri"].asString()));
         winrt::Windows::Storage::StorageFile file =
-            winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri).get();
+            winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri2).get();
         auto stream = file.OpenReadAsync().get();
         winrt::Windows::Web::Http::HttpStreamContent contentStream(stream);
         content = contentStream;
@@ -337,11 +339,18 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 }
 
 void NetworkingModule::NetworkingHelper::AbortRequest(int64_t requestId) noexcept {
-  auto iter = m_requests.find(requestId);
-  if (iter == end(m_requests))
-    return;
+  winrt::Windows::Foundation::IAsyncOperationWithProgress<
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>
+      httpRequest(nullptr);
+  {
+    std::scoped_lock lock(m_mutex);
+    auto iter = m_requests.find(requestId);
+    if (iter == end(m_requests))
+      return;
+    httpRequest = iter->second;
+  }
 
-  auto httpRequest = iter->second;
   try {
     httpRequest.Cancel();
   } catch (...) {
@@ -356,7 +365,6 @@ void NetworkingModule::NetworkingHelper::ClearCookies() noexcept {
 //
 // NetworkingModule
 //
-const char *NetworkingModule::name = "Networking";
 
 NetworkingModule::NetworkingModule() : m_networking(std::make_shared<NetworkingHelper>(this)) {}
 
@@ -365,7 +373,7 @@ NetworkingModule::~NetworkingModule() {
 }
 
 std::string NetworkingModule::getName() {
-  return name;
+  return Name;
 }
 
 std::map<std::string, folly::dynamic> NetworkingModule::getConstants() {

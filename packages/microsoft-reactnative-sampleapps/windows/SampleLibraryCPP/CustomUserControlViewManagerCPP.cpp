@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include <winrt/Windows.UI.Xaml.Media.h>
+
 #include "CustomUserControlViewManagerCpp.h"
 #include "JSValueReader.h"
+#include "JSValueXaml.h"
 #include "NativeModules.h"
 
 #include "CustomUserControlCpp.h"
@@ -71,7 +74,7 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
     FrameworkElement const &view,
     IJSValueReader const &propertyMapReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-    const JSValueObject &propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
+    JSValueObject propertyMap = JSValueObject::ReadFrom(propertyMapReader);
 
     for (auto const &pair : propertyMap) {
       auto const &propertyName = pair.first;
@@ -79,7 +82,7 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
 
       if (propertyName == "label") {
         if (!propertyValue.IsNull()) {
-          auto const &value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
+          auto value = winrt::box_value(winrt::to_hstring(propertyValue.AsString()));
           control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), value);
         } else {
           control.ClearValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty());
@@ -124,11 +127,11 @@ void CustomUserControlViewManagerCpp::DispatchCommand(
 }
 
 // IViewManagerWithExportedEventTypeConstants
-ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTypeConstants() noexcept {
+ConstantProviderDelegate CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTypeConstants() noexcept {
   return nullptr;
 }
 
-ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
+ConstantProviderDelegate CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
   return [](winrt::Microsoft::ReactNative::IJSValueWriter const &constantWriter) {
     constantWriter.WritePropertyName(L"topLabelChanged");
     constantWriter.WriteObjectBegin();

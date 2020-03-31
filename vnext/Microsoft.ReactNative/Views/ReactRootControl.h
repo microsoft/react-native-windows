@@ -72,7 +72,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void ShowInstanceLoading(Mso::React::IReactInstance &reactInstance) noexcept;
   void ShowInstanceWaiting(Mso::React::IReactInstance &reactInstance) noexcept;
   void ShowInstanceLoaded(Mso::React::IReactInstance &reactInstance) noexcept;
-  void ShowInstanceError(Mso::React::IReactInstance &reactInstance) noexcept;
+  void ShowInstanceError() noexcept;
 
   void InitializeDeveloperMenu() noexcept;
   void ShowDeveloperMenu() noexcept;
@@ -99,8 +99,11 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
   std::weak_ptr<facebook::react::InstanceWrapper> m_fbReactInstance;
 
-  bool m_useLiveReload{false};
+  bool m_isDevModeEnabled{false};
+  bool m_useFastRefresh{false};
   bool m_useWebDebugger{false};
+  bool m_directDebugging{false};
+  bool m_breakOnNextLine{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
 
@@ -123,7 +126,9 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   winrt::Button::Click_revoker m_cancelRevoker{};
   winrt::Button::Click_revoker m_toggleInspectorRevoker{};
   winrt::Button::Click_revoker m_reloadJSRevoker{};
-  winrt::Button::Click_revoker m_liveReloadRevoker{};
+  winrt::Button::Click_revoker m_fastRefreshRevoker{};
+  winrt::Button::Click_revoker m_directDebuggingRevoker{};
+  winrt::Button::Click_revoker m_breakOnNextLineRevoker{};
   winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
 };
 

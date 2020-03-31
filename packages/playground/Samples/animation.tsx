@@ -54,12 +54,9 @@ export const TranslatingModule = () => {
     [animatedTranslation],
   );
 
-  useEffect(
-    () => {
-      shiftSteps(5);
-    },
-    [shiftSteps],
-  );
+  useEffect(() => {
+    shiftSteps(5);
+  }, [shiftSteps]);
 
   return (
     <View style={styles.contents}>

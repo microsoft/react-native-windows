@@ -11,9 +11,6 @@
   <a href="https://www.npmjs.org/package/react-native-windows">
     <img src="https://img.shields.io/npm/v/react-native-windows?color=e80441&label=react-native-windows" alt="Current npm package version." />
   </a>
-  <a href="https://www.npmjs.org/package/react-native-windows">
-    <img src="https://img.shields.io/npm/v/react-native-windows/vnext?color=0052cc&label=react-native-windows%40vnext" alt="vnext npm package version." />
-  </a>
   <a href="https://github.com/microsoft/react-native-windows#contributing">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
@@ -21,7 +18,7 @@
 
 ![Hero Image with Logo](./.github/hero2.png)
 
-[React Native](http://facebook.github.io/react-native) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
+[React Native](https://reactnative.dev) enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.
 
 This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc.
 
@@ -45,14 +42,12 @@ Please see the [July 2019 Updates Blog](https://microsoft.github.io/react-native
 
 ## Introduction
 
-See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native.
+See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
 ## System Requirements
 
 - You can run React Native Windows UWP apps only on Windows 10 devices
-   - React Native Windows -[current](https://github.com/microsoft/react-native-windows/tree/master/current) supports Windows 10 SDK >= [14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive) and Windows 8.1
-   - React Native Windows -[vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) currently supports Windows 10 SDK >= [15063](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive). See [Windows 10 Compatability](./win10compat.md) for version support details.
-- You can run React Native Windows WPF apps using the [current](https://github.com/microsoft/react-native-windows/tree/master/current) implementation on Windows 7-10 so long as .NET 4.6 is installed on the end user's machine
+   - React Native Windows currently supports Windows 10 SDK >= [15063](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive). See [Windows 10 Compatibility](https://microsoft.github.io/react-native-windows/docs/win10-compat) for version support details.
 - Download [Visual Studio 2017 Community or Greater](https://www.visualstudio.com/downloads/). (Visual Studio 2015 support has been deprecated.)
 	- You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
 
@@ -60,20 +55,18 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 ## Getting Started
 
-Want to develop a React Native Windows app? Head over to our [Getting Started Guide - current](current/docs/GettingStarted.md).
-
-You can also begin to prototype or try out the **vnext** version under development by checking out the [Getting Started Guide - vnext](https://microsoft.github.io/react-native-windows/docs/getting-started)
+Want to develop a React Native Windows app? Head over to our [Getting Started Guide](https://microsoft.github.io/react-native-windows/docs/getting-started).
 
 ## Getting Help
 
-- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native-platforms
+- Chat with us on [Reactiflux](https://discord.gg/0ZcbPKXt5bWJVmUY) in #react-native
 - If it turns out that you may have found a bug, please [open an issue](#opening-issues)
 
 ## Documentation
 
-[React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](https://reactjs.org/docs/getting-started.html) for further details about the React API in general.
+[React Native already has great documentation](https://reactnative.dev/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](https://reactjs.org/docs/getting-started.html) for further details about the React API in general.
 
-For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation and [here](https://microsoft.github.io/react-native-windows/docs/parity-status) for `vnext`.
+For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](https://microsoft.github.io/react-native-windows/docs/parity-status).
 
 ## Extending React Native
 
@@ -96,9 +89,7 @@ The GitHub issues are intended for bug reports and feature requests. For help an
 
 Make sure to install the [system requirements](#system-requirements). If you just want to get started with developing your own app, read [Getting Started with App Development](#getting-started). You only need to interact with `npm` to use for your app development.
 
-For more information about contributing PRs, see :
-- [Contribution Guidelines for current react-native-windows](current/docs/CONTRIBUTING.md)
-- [Contribution Guidelines for vnext react-native-windows](docs/contributing.md)
+For more information about contributing PRs, see [Contribution Guidelines for react-native-windows](docs/contributing.md)
 
 [Good First Task](https://github.com/microsoft/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 

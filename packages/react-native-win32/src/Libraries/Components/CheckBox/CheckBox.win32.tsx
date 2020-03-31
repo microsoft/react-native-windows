@@ -3,7 +3,8 @@
  */
 
 'use strict';
-import UnimplementedView from '../UnimplementedStubs/UnimplementedViews';
+// @ts-ignore This file is present after the JS build
+import * as UnimplementedView from '../UnimplementedViews/UnimplementedView';
 import { ViewProps } from 'react-native';
 
 // ViewProperties should be CheckBoxProperties, but it doesn't exist in the typings yet

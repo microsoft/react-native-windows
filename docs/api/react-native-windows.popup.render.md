@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-render(): JSX.Element | null;
+render(): JSX.Element;
 ```
 <b>Returns:</b>
 
-`JSX.Element | null`
+`JSX.Element`
 

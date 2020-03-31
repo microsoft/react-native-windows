@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -20,6 +20,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
+    <CppWinRTEnableReferenceProjection>true</CppWinRTEnableReferenceProjection>
     <ProjectGuid>{44DCED9B-9C4C-48FE-8545-0930192BBC16}</ProjectGuid>
     <ProjectName>React.Windows.Desktop.ABITests</ProjectName>
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -52,7 +56,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;$(JSI_Source);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -62,14 +66,10 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(PATCH_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>PATCH_RN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -92,10 +92,7 @@
       <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
     </ProjectReference>
   </ItemGroup>
-  <PropertyGroup>
-    <CppWinRTMakeReferenceProjectionDependsOn>$(CppWinRTMakeReferenceProjectionDependsOn);SetCppWinRTReferences</CppWinRTMakeReferenceProjectionDependsOn>
-  </PropertyGroup>
-  <Target Name="SetCppWinRTReferences">
+  <Target Name="SetCppWinRTReferences" AfterTargets="GetCppWinRTProjectWinMDReferences" BeforeTargets="CppWinRTMakeReferenceProjection" Returns="@(CppWinRTDynamicProjectWinMDReferences)">
     <ItemGroup>
       <!--
       To increase resilience against build configuration changes, we could try to obtain the .winmd
@@ -103,9 +100,9 @@
       'GetTargetFileName' MSBuild task in the 'GetRNDllPath' target below (and potentially share
       build logic with it).
       -->
-      <CppWinRTDynamicWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
-      </CppWinRTDynamicWinMDReferences>
+      </CppWinRTDynamicProjectWinMDReferences>
     </ItemGroup>
   </Target>
   <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
@@ -132,19 +129,23 @@
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="ActivationFactory.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="PerfTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MessageQueueShim.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

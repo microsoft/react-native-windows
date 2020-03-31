@@ -140,9 +140,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp">
-      <Filter>Sandbox</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -266,15 +263,15 @@
     <ClCompile Include="..\ReactUWP\Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\WebViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="Modules\AppStateData.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
@@ -286,9 +283,6 @@
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\JSExceptionCallbackFactory.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactHost\MsoUtils.cpp">
@@ -310,6 +304,7 @@
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -583,17 +578,23 @@
     <ClInclude Include="..\ReactUWP\Views\VirtualTextViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\WebViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\XamlFeatures.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
+    <ClInclude Include="Base\CxxReactIncludes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\FollyIncludes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
@@ -608,12 +609,6 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\JSBundle.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\JSExceptionCallbackFactory.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\JSExceptionInfo.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\MoveOnCopy.h">
@@ -650,6 +645,7 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="RedBox.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
@@ -725,9 +721,6 @@
     </Filter>
     <Filter Include="ReactHost">
       <UniqueIdentifier>{323742e5-5542-43fd-9b79-7914b708b9a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sandbox">
-      <UniqueIdentifier>{a78b93f6-3e91-4fac-a33c-ba1d1a6662c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{72fbc00f-4a01-4363-8807-378641b7a17c}</UniqueIdentifier>

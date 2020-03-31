@@ -131,7 +131,7 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   element.InvalidateArrange();
 }
 
-winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize) {
+winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
   // All children are given as much size as they'd like
   winrt::Size childConstraint(INFINITY, INFINITY);
 

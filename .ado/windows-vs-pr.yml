@@ -5,7 +5,7 @@ trigger: none # will disable CI builds entirely
 
 pr:
   - master
-  - 0.60-stable
+  - "*-stable"
 
 variables:
   - template: variables/msbuild.yml
@@ -26,41 +26,31 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
-          applyRnPatches: true
-        #  LayoutHeaders: true
-        #X64Release:
-        #  BuildConfiguration: Release
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        #X64Debug:
+        #  BuildConfiguration: Debug
         #  BuildPlatform: x64
-        #  applyRnPatches: true
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        #X86Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x86
         #ArmDebug:
         #  BuildConfiguration: Debug
-        #  BuildPlatform: arm
-        #  applyRnPatches: true
-        #X86Debug:
+        #  BuildPlatform: ARM
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+        #Arm64Debug:
         #  BuildConfiguration: Debug
-        #  BuildPlatform: x86
-        #  applyRnPatches: true
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
-          applyRnPatches: true
-        # Temporarily omitting to save disk space.
-        # ArmRelease:
-        #   BuildConfiguration: Release
-        #   BuildPlatform: arm
-        #   applyRnPatches: true
-        Arm64Release:
-          BuildConfiguration: Release
-          BuildPlatform: arm64
-          applyRnPatches: true
-        UnpatchedRNX86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          applyRnPatches: false
+        #  BuildPlatform: ARM64
+        #Arm64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -74,11 +64,10 @@ jobs:
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
           testPlatformVersion: 15.9.2
-        condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
+        condition: and(ne(variables.BuildPlatform, 'ARM'), ne(variables.BuildPlatform, 'ARM64'))
 
       - template: templates/build-rnw.yml
         parameters:
-          applyRnPatches: $(applyRnPatches)
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
@@ -89,7 +78,10 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
-            Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe 
+            Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
+            Mso.UnitTests/Mso.UnitTests.exe
+          # Can't run C# unit tests on build machines until we switch to vs2019, see https://github.com/Microsoft/vstest/issues/1655
+          # Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
@@ -98,7 +90,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: 15.0
-        condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
+        condition: and(ne(variables.BuildPlatform, 'ARM'), ne(variables.BuildPlatform, 'ARM64'))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -112,15 +104,13 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-          applyRnPatches: true
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          applyRnPatches: true
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -133,7 +123,6 @@ jobs:
         
       - template: templates/prepare-env.yml
         parameters:
-          applyRnPatches: $(applyRnPatches)
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
           yarnBuildCmd: build
 
@@ -144,20 +133,44 @@ jobs:
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: MSBuild@1
-        displayName: MSBuild - Playground
+      - task: VSBuild@1
+        displayName: VSBuild - Playground
         inputs:
           solution: packages/playground/windows/Playground.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground Win32
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground-Win32.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: VSBuild@1
+        displayName: VSBuild - Playground Win32
+        inputs:
+          solution: packages/playground/windows/Playground-Win32.sln
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
 
       - task: CmdLine@2
         displayName: Create Playground bundle
@@ -165,62 +178,87 @@ jobs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
           workingDirectory: packages\playground
 
+      - task: CmdLine@2
+        displayName: Create RNTester bundle
+        inputs:
+          script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+          workingDirectory: vnext
+
+  - job: RNWSampleAppsPR
+    displayName: Sample Apps PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        #X64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x64
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        #X86Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x86
+        #X86Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x86
+        #ArmDebug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+    #pool:
+    #  vmImage: $(VmImage)
+    # Temporary override until we move to VS 2019 v142
+    pool:
+      vmImage: windows-2019
+    variables: 
+      VsComponents: Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64,Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141,Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
+      BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
+      runCodesignValidationInjection: false
+      VmImage: windows-2019
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+        parameters:
+          vsComponents: $(VsComponents)
+          yarnBuildCmd: build
+
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps
         inputs:
           command: restore
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
+        condition: succeeded()
 
-      - task: MSBuild@1
-        displayName: MSBuild - SampleApps
+      - task: CmdLine@2
+        displayName: run-windows (Debug)
         inputs:
-          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:BaseIntDir=$(BaseIntDir)
-          clean: true # Optional
-        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'), ne(variables['BuildPlatform'], 'x86'), false) # Disabled. issue #3670  Unable to resolve module `warnOnce`
+          script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --msbuildprops BaseIntDir=$(BaseIntDir)
+          workingDirectory: packages/microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
-      # Possible related to https://social.msdn.microsoft.com/Forums/vstudio/en-US/23c8df57-9c50-476c-9f56-1fe058e75a9d/uwp-app-builds-on-local-machine-fails-on-build-agent-systemprivatecorelib-not-found
-      # use X86 msbuild to avoid ##[error]...Microsoft.AppXPackage.Targets(1248,5): Error MSB3816: Loading assembly "\runtime.win7-x86.microsoft.netcore.runtime.coreclr\1.0.2\runtimes\win7-x86\lib\netstandard1.0\mscorlib.dll" failed. 
-      # System.ArgumentException: A BadImageFormatException has been thrown while parsing the signature.
-      # This is likely due to lack of a generic context. Ensure genericTypeArguments and genericMethodArguments are provided and contain enough context.
-      - task: MSBuild@1
-        displayName: MSBuild - SampleApps
+      - task: CmdLine@2
+        displayName: run-windows (Release)
         inputs:
-          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: x86 # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:BaseIntDir=$(BaseIntDir)
-          clean: true # Optional
-        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'), eq(variables['BuildPlatform'], 'x86'), false) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
+          script: react-native run-windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          workingDirectory: packages/microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
           workingDirectory: packages\microsoft-reactnative-sampleapps
-        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
-
-      - task: CmdLine@2
-        displayName: Create RNTester bundle
-        inputs:
-          script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
-          workingDirectory: vnext
-        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
-
+        condition: succeeded()
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -368,19 +406,55 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      matrix:
-        DebugCpp:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        X86DebugCpp:
           language: cpp
           configuration: Debug
-        DebugCs:
+          platform: x86
+        X86DebugCs:
           language: cs
           configuration: Debug
-        ReleaseCpp:
+          platform: x86
+        #X86ReleaseCpp:
+        #  language: cpp
+        #  configuration: Release
+        #  platform: x86
+        #X86ReleaseCs:
+        #  language: cs
+        #  configuration: Release
+        #  platform: x86
+        #X64DebugCpp:
+        #  language: cpp
+        #  configuration: Debug
+        #  platform: x64
+        #X64DebugCs:
+        #  language: cs
+        #  configuration: Debug
+        #  platform: x64
+        X64ReleaseCpp:
           language: cpp
           configuration: Release
-        ReleaseCs:
+          platform: x64
+        X64ReleaseCs:
           language: cs
           configuration: Release
+          platform: x64
+        #ArmDebugCpp:
+        #  language: cpp
+        #  configuration: Debug
+        #  platform: arm
+        #ArmDebugCs:
+        #  language: cs
+        #  configuration: Debug
+        #  platform: arm
+        ArmReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: arm
+        ArmReleaseCs:
+          language: cs
+          configuration: Release
+          platform: arm
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -393,12 +467,14 @@ jobs:
 
       - template: templates/react-native-init.yml
         parameters:
-          version: 0.60.6
-          platform: x64
+          language: $(language)
+          configuration: $(configuration)
+          platform: $(platform)
+          version: 0.61.5
           vsComponents: $(VsComponents)
 
-  - job: RNWFormatting
-    displayName: Verify change files + lint
+  - job: RNWExtraChecks
+    displayName: Extra Checks
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
@@ -421,7 +497,7 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: node ./node_modules/beachball/bin/beachball.js check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn format:verify
@@ -439,177 +515,24 @@ jobs:
           script: yarn lint
 
       - task: CmdLine@2
+        displayName: yarn test
+        inputs:
+          script: yarn test
+
+      - task: CmdLine@2
+        displayName: yarn validate-overrides
+        inputs:
+          script: yarn validate-overrides
+
+      - task: CmdLine@2
         displayName: yarn api
         inputs:
           script: yarn api
-
-  - job: CurrentPR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    displayName: Current (C#) PR
-    strategy:
-      matrix:
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Debug
-        #X64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Release
-        X64DebugBundle:
-          BuildConfiguration: DebugBundle
-          BuildPlatform: x64
-          UTTestOutputConfigDir: Debug
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-          UTTestOutputConfigDir: Debug
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          UTTestOutputConfigDir: Debug
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
-        #X86ReleaseBundle:
-        #  BuildConfiguration: ReleaseBundle
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-
-      - task: PowerShell@2
-        displayName: Download Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            curl -o $(System.DefaultWorkingDirectory)\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
-
-      - task: ExtractFiles@1
-        displayName: Extract Winium
-        inputs:
-          archiveFilePatterns: $(System.DefaultWorkingDirectory)\winium.zip
-          destinationFolder: $(System.DefaultWorkingDirectory)\winium
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore
-        inputs:
-          command: restore
-          restoreSolution: current/ReactWindows/ReactNative.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
-
-      - task: CmdLine@2
-        displayName: npm install
-        inputs:
-          script: npm install
-          workingDirectory: current
-
-      - task: CmdLine@2
-        displayName: Make Bundle Dir
-        inputs:
-          script: mkdir current\ReactWindows\Playground.Net46\ReactAssets
-
-      - task: CmdLine@2
-        displayName: Make Bundle
-        inputs:
-          script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
-          workingDirectory: current
-
-      - template: templates\install-SDK.yml
-        parameters:
-          sdkVersion: $(Win10Version)
-
-      - task: PowerShell@2
-        displayName: Install Visual Studio dependencies
-        inputs:
-          targetType: filePath
-          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-          arguments:
-            -InstallerUri https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe
-            -Components $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.AR
-        condition: and(ne(variables['VsComponents'], ''), eq(variables['VmImage'], 'windows-2019'))
-
-      - task: MSBuild@1
-        displayName: MSBuild
-        inputs:
-          solution: current/ReactWindows/ReactNative.sln
-          #msbuildLocationMethod: 'version' # Optional. Options: version, location
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          #msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          #msbuildLocation: # Optional
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:TargetPlatformVersion=$(TargetPlatformVersion)
-            /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
-            /p:BaseIntDir=$(BaseIntDir)
-
-          #clean: true # Optional
-          #maximumCpuCount: false # Optional
-          #restoreNugetPackages: false # Optional
-          #logProjectEvents: false # Optional
-          #createLogFile: false # Optional
-          #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
-
-      - task: PowerShell@2
-        displayName: Start Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
-            Start-Sleep -s 5
-
-      - task: VSTest@2
-        displayName: Run Unit Tests
-        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: ReactNative.Net46.Tests.dll # Required when testSelector == TestAssemblies
-          searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          # vsTestVersion: $(VsTestVersion)
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: onAbortOnly
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-      # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
-      # It currently fails, so commenting this out for now
-      #- task: CmdLine@2
-      #  displayName: npm test
-      #  inputs:
-      #    script: npm test
-      #    workingDirectory: current
-      #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
       name: E2ETest
       BuildPlatform: x64
-      applyRnPatches: true
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

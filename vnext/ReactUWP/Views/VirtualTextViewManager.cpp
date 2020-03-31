@@ -29,7 +29,7 @@ const char *VirtualTextViewManager::GetName() const {
   return "RCTVirtualText";
 }
 
-XamlView VirtualTextViewManager::CreateViewCore(int64_t tag) {
+XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/) {
   return winrt::Span();
 }
 

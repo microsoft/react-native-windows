@@ -8,22 +8,25 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   runtimeclass ReactInstanceSettings 
   {
-    [noexcept2] ReactInstanceSettings();
+    ReactInstanceSettings();
 
-    [noexcept2] String MainComponentName { get; set; };
-    [noexcept2] Boolean UseDeveloperSupport { get; set; };
-    [noexcept2] String JavaScriptMainModuleName { get; set; };
-    [noexcept2] String JavaScriptBundleFile { get; set; };
-    [noexcept2] Boolean UseWebDebugger { get; set; };
-    [noexcept2] Boolean UseLiveReload { get; set; };
-    [noexcept2] Boolean UseDirectDebugger { get; set; };
-    [noexcept2] Boolean UseJsi { get; set; };
-    [noexcept2] Boolean EnableJITCompilation { get; set; };
-    [noexcept2] Boolean EnableByteCodeCaching { get; set; };
-    [noexcept2] Boolean EnableDeveloperMenu { get; set; };
-    [noexcept2] String ByteCodeFileUri { get; set; };
-    [noexcept2] String DebugHost { get; set; };
-    [noexcept2] String DebugBundlePath { get; set; };
-    [noexcept2] String BundleRootPath { get; set; };
+    String MainComponentName { get; set; };
+    Boolean UseDeveloperSupport { get; set; };
+    String JavaScriptMainModuleName { get; set; };
+    String JavaScriptBundleFile { get; set; };
+    Boolean UseWebDebugger { get; set; };
+    Boolean UseFastRefresh { get; set; };
+    Boolean UseLiveReload { get; set; };
+    Boolean UseDirectDebugger { get; set; };
+    Boolean DebuggerBreakOnNextLine { get; set; };
+    Boolean UseJsi { get; set; };
+    Boolean EnableJITCompilation { get; set; };
+    Boolean EnableByteCodeCaching { get; set; };
+    Boolean EnableDeveloperMenu { get; set; };
+    String ByteCodeFileUri { get; set; };
+    String DebugHost { get; set; };
+    String DebugBundlePath { get; set; };
+    String BundleRootPath { get; set; };
+    UInt16 DebuggerPort { get; set; };
   }
 }

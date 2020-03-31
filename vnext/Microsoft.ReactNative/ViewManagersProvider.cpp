@@ -14,13 +14,14 @@ namespace winrt::Microsoft::ReactNative {
         ViewManagersProvider::GetViewManagers
 -------------------------------------------------------------------------------*/
 std::vector<react::uwp::NativeViewManager> ViewManagersProvider::GetViewManagers(
-    const std::shared_ptr<react::uwp::IReactInstance> &instance) {
+    Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
+    std::shared_ptr<react::uwp::IReactInstance> const &instance) {
   std::vector<react::uwp::NativeViewManager> viewManagers;
 
   for (auto &entry : m_viewManagerProviders) {
     auto viewManagerProvider = entry.second;
 
-    auto viewManager = std::make_unique<ABIViewManager>(instance, viewManagerProvider());
+    auto viewManager = std::make_unique<ABIViewManager>(instance, reactContext, viewManagerProvider());
 
     viewManagers.emplace_back(std::move(viewManager));
   }

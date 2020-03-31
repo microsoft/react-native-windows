@@ -7,7 +7,7 @@ EXPORTS
 ?OnAccept@WebSocketServer@Test@React@Microsoft@@AAEXVerror_code@system@boost@@@Z
 ?SetMessageFactory@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6G?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@$$QAV12@@Z@std@@@Z
 ?SetOnConnection@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GXXZ@std@@@Z
-?SetOnError@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GX$$QAUError@IWebSocket@React@Microsoft@@@Z@std@@@Z
+?SetOnError@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GX$$QAUError@IWebSocketResource@React@Microsoft@@@Z@std@@@Z
 ?SetOnHandshake@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GXAAU?$message@$0A@U?$basic_string_body@DU?$char_traits@D@std@@V?$allocator@D@2@@http@beast@boost@@V?$basic_fields@V?$allocator@D@std@@@234@@http@beast@boost@@@Z@std@@@Z
 ?SetOnMessage@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z@std@@@Z
 ?Start@WebSocketServer@Test@React@Microsoft@@QAEXXZ

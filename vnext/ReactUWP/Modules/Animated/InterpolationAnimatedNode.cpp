@@ -27,7 +27,7 @@ InterpolationAnimatedNode::InterpolationAnimatedNode(
 
 void InterpolationAnimatedNode::Update() {}
 
-void InterpolationAnimatedNode::OnDetachedFromNode(int64_t animatedNodeTag) {
+void InterpolationAnimatedNode::OnDetachedFromNode([[maybe_unused]] int64_t animatedNodeTag) {
   assert(m_parentTag == animatedNodeTag);
   m_parentTag = s_parentTagUnset;
   m_propertySet.StopAnimation(s_valueName);

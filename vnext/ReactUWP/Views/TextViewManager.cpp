@@ -79,7 +79,7 @@ const char *TextViewManager::GetName() const {
   return "RCTText";
 }
 
-XamlView TextViewManager::CreateViewCore(int64_t tag) {
+XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
   auto textBlock = winrt::TextBlock();
   textBlock.TextWrapping(winrt::TextWrapping::Wrap); // Default behavior in React Native
   return textBlock;

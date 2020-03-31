@@ -5,6 +5,7 @@
  */
 import * as React from 'react';
 import {
+  AppRegistry,
   Button,
   SafeAreaView,
   Text,
@@ -137,8 +138,8 @@ const Status = (props: {
     winner === null
       ? 'Tie game :-/'
       : winner !== undefined
-        ? winner + ' wins!'
-        : turn + "'s turn";
+      ? winner + ' wins!'
+      : turn + "'s turn";
 
   return (
     <View style={{flex: 1}}>
@@ -171,3 +172,5 @@ const winner = (squares: SquareValue[]) => {
   } // tie game
   return undefined;
 };
+
+AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

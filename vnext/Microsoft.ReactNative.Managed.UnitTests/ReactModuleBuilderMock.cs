@@ -1,29 +1,57 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
   class ReactModuleBuilderMock : IReactModuleBuilder
   {
-    private string m_eventEmitterName;
-    private Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
+    private readonly List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
+    private readonly Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
         new Dictionary<string, Tuple<MethodReturnType, MethodDelegate>>();
-    private Dictionary<string, SyncMethodDelegate> m_syncMethods =
+    private readonly Dictionary<string, SyncMethodDelegate> m_syncMethods =
         new Dictionary<string, SyncMethodDelegate>();
-    private List<ConstantProvider> m_constProviders = new List<ConstantProvider>();
-    private Dictionary<string, Action<IJSValueReader>> m_eventHandlers =
-        new Dictionary<string, Action<IJSValueReader>>();
+    private readonly List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
+    private Action<string, string, JSValue> m_jsEventHandler;
+    private Action<string, string, JSValue> m_jsFunctionHandler;
 
     public bool IsResolveCallbackCalled { get; private set; }
     public bool IsRejectCallbackCalled { get; private set; }
 
-    public void SetEventEmitterName(string name)
+    public T CreateModule<T>(ReactModuleInfo moduleInfo) where T : class
     {
-      m_eventEmitterName = name;
+      var reactContext = new ReactContextMock(this);
+      var module = (T)moduleInfo.ModuleProvider(this);
+      foreach (var initializer in m_initializers)
+      {
+        initializer(reactContext);
+      }
+
+      return module;
+    }
+
+    public void Initialize()
+    {
+      var reactContext = new ReactContextMock(this);
+      foreach (var initializer in m_initializers)
+      {
+        initializer(reactContext);
+      }
+    }
+
+    public void AddInitializer(InitializerDelegate initializer)
+    {
+      m_initializers.Add(initializer);
+    }
+
+    public void AddConstantProvider(ConstantProviderDelegate constantProvider)
+    {
+      m_constantProviders.Add(constantProvider);
     }
 
     public void AddMethod(string name, MethodReturnType returnType, MethodDelegate method)
@@ -34,27 +62,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void AddSyncMethod(string name, SyncMethodDelegate method)
     {
       m_syncMethods.Add(name, method);
-    }
-
-    public void AddConstantProvider(ConstantProvider constantProvider)
-    {
-      m_constProviders.Add(constantProvider);
-    }
-
-    public void AddEventHandlerSetter(string name, ReactEventHandlerSetter eventHandlerSetter)
-    {
-      eventHandlerSetter((ReactArgWriter argWriter) =>
-      {
-        if (m_eventHandlers.TryGetValue(name, out var eventHandler))
-        {
-          var writer = new JSValueTreeWriter();
-          writer.WriteArrayBegin();
-          argWriter(writer);
-          writer.WriteArrayEnd();
-
-          eventHandler(new JSValueTreeReader(writer.TakeValue()));
-        }
-      });
     }
 
     public void Call0(string methodName) =>
@@ -219,22 +226,76 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       var constantWriter = new JSValueTreeWriter();
       constantWriter.WriteObjectBegin();
-      foreach (var constantProvider in m_constProviders)
+      foreach (var constantProvider in m_constantProviders)
       {
         constantProvider(constantWriter);
       }
 
       constantWriter.WriteObjectEnd();
-      return constantWriter.TakeValue().Object;
+      return constantWriter.TakeValue().AsObject();
     }
 
-    public void SetEventHandler<T>(string eventName, Action<T> eventHandler)
+    public void ExpectEvent(string eventEmitterName, string eventName, Action<IReadOnlyList<JSValue>> checkValues)
     {
-      m_eventHandlers.Add(eventName, (IJSValueReader reader) =>
+      m_jsEventHandler = (string actualEventEmitterName, string actualEventName, JSValue value) =>
       {
-        reader.ReadArgs(out T arg);
-        eventHandler(arg);
-      });
+        Assert.AreEqual(eventEmitterName, actualEventEmitterName);
+        Assert.AreEqual(eventName, actualEventName);
+        Assert.AreEqual(JSValueType.Array, value.Type);
+        checkValues(value.AsArray());
+      };
+    }
+
+    public void ExpectFunction(string moduleName, string functionName, Action<IReadOnlyList<JSValue>> checkValues)
+    {
+      m_jsFunctionHandler = (string actualModuleName, string actualFunctionName, JSValue value) =>
+      {
+        Assert.AreEqual(moduleName, actualModuleName);
+        Assert.AreEqual(functionName, actualFunctionName);
+        Assert.AreEqual(JSValueType.Array, value.Type);
+        checkValues(value.AsArray());
+      };
+    }
+
+    public void CallJSFunction(string moduleName, string functionName, JSValueArgWriter paramsArgWriter)
+    {
+      var writer = new JSValueTreeWriter();
+      paramsArgWriter(writer);
+      m_jsFunctionHandler(moduleName, functionName, writer.TakeValue());
+    }
+
+    public void EmitJSEvent(string eventEmitterName, string eventName, JSValueArgWriter paramsArgWriter)
+    {
+      var writer = new JSValueTreeWriter();
+      writer.WriteArrayBegin();
+      paramsArgWriter(writer);
+      writer.WriteArrayEnd();
+      m_jsEventHandler(eventEmitterName, eventName, writer.TakeValue());
+    }
+  }
+
+  class ReactContextMock : IReactContext
+  {
+    private readonly ReactModuleBuilderMock m_builder;
+
+    public ReactContextMock(ReactModuleBuilderMock builder)
+    {
+      m_builder = builder;
+    }
+
+    public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void CallJSFunction(string moduleName, string functionName, JSValueArgWriter paramsArgWriter)
+    {
+      m_builder.CallJSFunction(moduleName, functionName, paramsArgWriter);
+    }
+
+    public void EmitJSEvent(string eventEmitterName, string eventName, JSValueArgWriter paramsArgWriter)
+    {
+      m_builder.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
     }
   }
 }

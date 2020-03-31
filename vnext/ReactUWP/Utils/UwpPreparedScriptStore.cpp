@@ -1,11 +1,11 @@
 #include "pch.h"
 
+#include <Utils/UwpPreparedScriptStore.h>
+#include <Utils/UwpScriptStore.h>
+#include <jsi/jsi.h>
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
-#include "Utils/UwpPreparedScriptStore.h"
-#include "Utils/UwpScriptStore.h"
-#include "jsi/jsi.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -27,8 +27,8 @@ UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
 
 std::shared_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPreparedScript(
     const facebook::jsi::ScriptSignature &scriptSignature,
-    const facebook::jsi::JSRuntimeSignature &runtimeSignature,
-    const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+    const facebook::jsi::JSRuntimeSignature & /*runtimeSignature*/,
+    const char * /*prepareTag*/ // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept {
   try {
     // check if app bundle version is older than or equal to the prepared script

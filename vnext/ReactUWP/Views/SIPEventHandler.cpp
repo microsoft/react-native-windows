@@ -40,7 +40,7 @@ void SIPEventHandler::AttachView(XamlView xamlView, bool fireKeyboardEvents) {
     InitializeCoreInputView();
   } else {
     m_loadedRevoker = xamlView.as<winrt::FrameworkElement>().Loaded(
-        winrt::auto_revoke, [this](const auto &sender, const auto &) { InitializeCoreInputView(); });
+        winrt::auto_revoke, [this](const auto & /*sender*/, const auto &) { InitializeCoreInputView(); });
   }
 }
 

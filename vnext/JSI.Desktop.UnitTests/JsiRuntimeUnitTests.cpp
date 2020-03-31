@@ -8,7 +8,6 @@
 #include "JsiRuntimeUnitTests.h"
 
 #include <gtest/gtest.h>
-#include <jsi/decorator.h>
 #include <jsi/jsi.h>
 
 #include <stdlib.h>
@@ -159,7 +158,7 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
   EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
 }
 
-TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
+TEST_P(JsiRuntimeUnitTests_Chakra, HostObjectTest) {
   class ConstantHostObject : public HostObject {
     Value get(Runtime &, const PropNameID &sym) override {
       return 9000;
@@ -329,7 +328,7 @@ TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
   EXPECT_FALSE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "not_existing")).getBool());
 }
 
-TEST_P(JsiRuntimeUnitTests, ArrayTest) {
+TEST_P(JsiRuntimeUnitTests_Chakra, ArrayTest) {
   eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
 
   Object x = rt.global().getPropertyAsObject(rt, "x");
@@ -520,7 +519,7 @@ TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
   EXPECT_TRUE(ctor.callAsConstructor(rt, nullptr, 0).getObject(rt).instanceOf(rt, ctor));
 }
 
-TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
+TEST_P(JsiRuntimeUnitTests_Chakra, HostFunctionTest) {
   auto one = std::make_shared<int>(1);
   Function plusOne = Function::createFromHostFunction(
       rt,
@@ -814,8 +813,9 @@ TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
   try {
     sometimesThrows.call(rt, false, callback);
   } catch (JSError &error) {
-    EXPECT_EQ(error.getMessage(), "Omg, what a nasty exception");
-    EXPECT_EQ(countOccurences("sometimesThrows", error.getStack()), 6);
+    // V8 will include the previous exception messages upon rethrow from native to JS
+    EXPECT_PRED_FORMAT2(::testing::IsSubstring, "Omg, what a nasty exception", error.getMessage());
+    EXPECT_GE(countOccurences("sometimesThrows", error.getStack()), 6);
 
     // system JSC JSI does not implement host function names
     // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);

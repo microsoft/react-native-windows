@@ -4,11 +4,21 @@
 
 ## Picker class
 
+Picker is a controlled component, which expects the selectedValue prop to be updated whenever selection changes, or selection will revert to the prop selectedValue
+
+when using editable=true, onValueChange can be called with a selectedValue of null &amp; Index of -1, and text will be provided. To maintain the text in the controlled component, props should reflect that state by specifying selectedValue of null and specify the text property.
+
 <b>Signature:</b>
 
 ```typescript
-export declare class Picker extends React.Component<IPickerProps> 
+export declare class Picker extends React.Component<IPickerProps, State> 
 ```
+
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)(props)](./react-native-windows.picker._constructor_.md) |  | Constructs a new instance of the <code>Picker</code> class |
 
 ## Properties
 
@@ -20,5 +30,6 @@ export declare class Picker extends React.Component<IPickerProps>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [getDerivedStateFromProps(props)](./react-native-windows.picker.getderivedstatefromprops.md) | <code>static</code> |  |
 |  [render()](./react-native-windows.picker.render.md) |  |  |
 

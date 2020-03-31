@@ -10,7 +10,7 @@ namespace Microsoft.ReactNative.Managed
   class JSValueTreeWriter : IJSValueWriter
   {
     private State m_state = State.Start;
-    private Stack<StackEntry> m_stack = new Stack<StackEntry>();
+    private readonly Stack<StackEntry> m_stack = new Stack<StackEntry>();
     private object m_dynamic;
     private string m_propertyName;
     private JSValue m_result;
@@ -197,6 +197,10 @@ namespace Microsoft.ReactNative.Managed
       else if (m_state == State.Array)
       {
         ((List<JSValue>)m_dynamic).Add(value);
+      }
+      else
+      {
+        m_result = value;
       }
     }
   }

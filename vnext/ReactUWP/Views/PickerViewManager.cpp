@@ -53,6 +53,7 @@ PickerShadowNode::PickerShadowNode() : Super() {
 void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<winrt::ComboBox>();
+  combobox.TabIndex(0);
   auto wkinstance = GetViewManager()->GetReactInstance();
 
   combobox.AllowFocusOnInteraction(true);
@@ -186,7 +187,7 @@ facebook::react::ShadowNode *PickerViewManager::createShadow() const {
   return new PickerShadowNode();
 }
 
-XamlView PickerViewManager::CreateViewCore(int64_t tag) {
+XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/) {
   auto combobox = winrt::ComboBox();
   return combobox;
 }
