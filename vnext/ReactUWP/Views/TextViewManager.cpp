@@ -75,14 +75,14 @@ facebook::react::ShadowNode *TextViewManager::createShadow() const {
   return new TextShadowNode();
 }
 
-const char *TextViewManager::GetName() const {
-  return "RCTText";
-}
-
 XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
   auto textBlock = winrt::TextBlock();
   textBlock.TextWrapping(winrt::TextWrapping::Wrap); // Default behavior in React Native
   return textBlock;
+}
+
+void TextViewManager::VIEWMANAGER_DECLARE_PROPERTY_HANDLER(color) {
+  TryUpdateForeground(target, propertyName, propertyValue);
 }
 
 void TextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {

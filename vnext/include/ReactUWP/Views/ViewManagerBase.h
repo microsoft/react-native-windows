@@ -8,12 +8,76 @@
 #include <XamlView.h>
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
+#include "ShadowNodeBase.h"
+#include <unordered_map >
 
-namespace facebook {
+#define VIEWMANAGER_IMPL(VMClassName, XAMLType, vmType) \
+  const char *GetName() const override {                \
+    return VMClassName;                                 \
+  }                                                     \
+  using TargetXamlType = XAMLType;                      \
+  using ViewManagerType = vmType;
+
 namespace react {
-struct ShadowNode;
+namespace uwp {
+struct ShadowNodeBase;
 }
-} // namespace facebook
+} // namespace react
+
+template <typename TargetXamlType, typename VMType>
+struct RCTUpdatePropertyHandler {
+  typedef void (VMType::*Type)(
+      react::uwp::ShadowNodeBase *,
+      winrt::impl::com_ref<TargetXamlType>,
+      const std::string &,
+      const folly::dynamic &);
+};
+
+#define VIEWMANAGER_PROPERTY_MAP_BEGIN \
+  std::unordered_map<std::string, RCTUpdatePropertyHandler<TargetXamlType, ViewManagerType>::Type> m_propertyHandlers
+
+//
+// namespace facebook {
+//  namespace react {
+//  struct ShadowNode;
+//  }
+//} // namespace facebook
+
+template <typename ViewManagerType>
+void RctUpdateProperties(
+    ViewManagerType *const viewManager,
+    react::uwp::ShadowNodeBase *nodeToUpdate,
+    const folly::dynamic &reactDiffMap) {
+  auto targetObj = nodeToUpdate->GetView().as<ViewManagerType::TargetXamlType>();
+  if (targetObj == nullptr)
+    return;
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    const auto &entry = viewManager->m_propertyHandlers.find(propertyName);
+    if (entry != viewManager->m_propertyHandlers.end()) {
+      auto memberFn = entry->second;
+      (viewManager->*memberFn)(nodeToUpdate, targetObj, propertyName, propertyValue);
+    } else {
+      // this property is not supported
+    }
+  }
+}
+
+#define VIEWMANAGER_PROPERTY_MAP_ENTRY(propName) \
+  { #propName, &ViewManagerType::UpdateProperty_##propName }
+#define VIEWMANAGER_DECLARE_PROPERTY_HANDLER(propName) \
+  UpdateProperty_##propName(                           \
+      react::uwp::ShadowNodeBase *shadowNodeBase,      \
+      winrt::impl::com_ref<TargetXamlType> target,     \
+      const std::string &propertyName,                 \
+      const folly::dynamic &propertyValue)
+#define VIEWMANAGER_PROPERTY_MAP_END                                                        \
+  ;                                                                                         \
+  void UpdatePropertiesInternal(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) /* TODO override */ { \
+    RctUpdateProperties(this, nodeToUpdate, reactDiffMap);                                  \
+  }
 
 namespace react {
 namespace uwp {

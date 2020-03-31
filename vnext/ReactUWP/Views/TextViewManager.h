@@ -16,7 +16,15 @@ class TextViewManager : public FrameworkElementViewManager {
 
   facebook::react::ShadowNode *createShadow() const override;
 
-  const char *GetName() const override;
+  VIEWMANAGER_IMPL("RCTText", winrt::Windows::UI::Xaml::Controls::TextBlock, TextViewManager);
+  void VIEWMANAGER_DECLARE_PROPERTY_HANDLER(color);
+
+  VIEWMANAGER_PROPERTY_MAP_BEGIN {
+      VIEWMANAGER_PROPERTY_MAP_ENTRY(color),
+    //{ "color", &TextViewManager::UpdateProperty_color }
+  } VIEWMANAGER_PROPERTY_MAP_END
+
+
   void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
