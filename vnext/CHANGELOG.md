@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 31 Mar 2020 02:03:05 GMT and should not be manually modified.
+This log was last generated on Tue, 31 Mar 2020 20:21:56 GMT and should not be manually modified.
 
+## 0.0.0-master.6
+Tue, 31 Mar 2020 20:21:56 GMT
+
+### Changes
+
+- 1. Make changes in response to Vladimir's feedback in the PR for bb8c00133... 2. Fix a dumb bug in multiRemove; the parameterized query variable was not being bound so nothing ever got deleted (hpratt@microsoft.com)
 ## 0.0.0-master.5
 Tue, 31 Mar 2020 02:03:05 GMT
 

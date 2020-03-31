@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "1. Make changes in response to Vladimir's feedback in the PR for bb8c00133... 2. Fix a dumb bug in multiRemove; the parameterized query variable was not being bound so nothing ever got deleted",
-  "packageName": "react-native-windows",
-  "email": "hpratt@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-03-31T16:49:09.648Z"
-}
