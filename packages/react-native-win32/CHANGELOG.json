@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 21:47:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.3",
+      "version": "0.27.3",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Do Not Override NPM Tag Based on Branch Name (#4434)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5933a05f87a12eaf4a483b12e339131128531962"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2020 05:53:49 GMT",
       "tag": "@office-iss/react-native-win32_v0.27.3",
       "version": "0.27.3",

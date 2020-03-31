@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 21:47:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.155",
+      "version": "0.60.0-vnext.155",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do Not Override NPM Tag Based on Branch Name (#4434)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5933a05f87a12eaf4a483b12e339131128531962"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 01:03:46 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.155",
       "version": "0.60.0-vnext.155",
