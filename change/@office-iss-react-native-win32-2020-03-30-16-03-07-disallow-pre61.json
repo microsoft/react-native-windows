@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Explicitly disallow prerelease changes in 0.61-stable",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "commit": "63b17a71b8e2aaa7c8f6b5b7084deabf6618d683",
+  "dependentChangeType": "patch",
+  "date": "2020-03-30T23:03:05.067Z"
+}
