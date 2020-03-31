@@ -84,7 +84,6 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri, vector<ChainValidation
   : m_uri{ std::move(uri) }
 {
   m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
-  m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
 
   for (auto certException : certExeptions)
   {
@@ -254,7 +253,12 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
   try
   {
     m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
-    m_readyState = ReadyState::Closed;
+
+    if (m_closeHandler)
+    {
+      //TODO: Parameterize (pass via member variables?)
+      m_closeHandler(m_closeCode, m_closeReason);
+    }
   }
   catch (winrt::hresult_invalid_argument const& e)
   {
@@ -283,11 +287,11 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
   {
     if (m_errorHandler)
     {
-      auto m = e.message().c_str();
       m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Close });
     }
   }
 
+  m_readyState = ReadyState::Closed;
   m_waitOnClose.Set();
 }
 
@@ -325,15 +329,6 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, Message
     {
       m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
     }
-  }
-}
-
-void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedEventArgs const& args)
-{
-  if (m_closeHandler)
-  {
-    //TODO: Parameterize (pass via member variables?)
-    m_closeHandler(CloseCode::Normal, "Closing");
   }
 }
 

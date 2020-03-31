@@ -55,10 +55,6 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IWebSocket const &sender,
       winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs const &args);
-  void OnClosed(
-      winrt::Windows::Networking::Sockets::IWebSocket const &sender,
-      winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs const &args);
-
   void Synchronize();
 
  public:

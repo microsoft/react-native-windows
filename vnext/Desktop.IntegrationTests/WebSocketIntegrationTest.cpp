@@ -131,7 +131,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       });
 
       ws->Connect();
-      ws->Close();
+      ws->Close();//TODO: Either remove or rename test.
     }
 
     server->Stop();
