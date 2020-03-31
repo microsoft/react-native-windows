@@ -48,7 +48,7 @@ class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
   };
   winrt::slim_mutex m_lock;
   winrt::slim_condition_variable m_cv;
-  winrt::Windows::Foundation::IAsyncAction m_action;
+  winrt::Windows::Foundation::IAsyncAction m_action{nullptr};
   std::vector<DBTask> m_tasks;
   sqlite3 *m_db;
 
