@@ -54,8 +54,6 @@ struct IWebSocketResource {
   /// </summary>
   enum class CloseCode : std::uint16_t
   {
-    // Keep in sync with RFC 6455 specification
-    None            = 0,
     Normal          = 1000,
     GoingAway       = 1001,
     ProtocolError   = 1002,
@@ -137,7 +135,7 @@ struct IWebSocketResource {
   /// </param>
   /// <param name="reason">
   /// </param>
-  virtual void Close(CloseCode code = CloseCode::None, const std::string &reason = {}) = 0;
+  virtual void Close(CloseCode code = CloseCode::Normal, const std::string &reason = {}) = 0;
 
   /// <returns>
   /// Current public state as defined in the <c>ReadyState</c> enum.

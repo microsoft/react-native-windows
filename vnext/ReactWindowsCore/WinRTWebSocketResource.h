@@ -32,7 +32,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
       CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)};
   ReadyState m_readyState{ReadyState::Connecting};
 
-  CloseCode m_closeCode{CloseCode::None};
+  CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
   concurrency::concurrent_queue<std::pair<std::string, bool>> m_writeQueue;
 
