@@ -20,6 +20,11 @@ namespace Playground {
  public:
   HostingPane();
 
+  property uint32_t DebuggerPort {
+    uint32_t get();
+    void set(uint32_t value);
+  }
+
   property Windows::UI::Xaml::Input::ICommand ^
       AddPaneCommand {
         void set(Windows::UI::Xaml::Input::ICommand ^ value);
@@ -32,15 +37,9 @@ namespace Playground {
         Windows::UI::Xaml::Input::ICommand ^ get();
       }
 
-      property uint32_t DebuggerPort {
-    uint32_t get();
-    void set(uint32_t value);
-  };
-
- private:
-  void OnSelectionChanged_JavaScriptFilename(
-      Platform::Object ^ sender,
-      Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
+      private : void OnSelectionChanged_JavaScriptFilename(
+                    Platform::Object ^ sender,
+                    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
 
   void OnSelectionChanged_ReactAppName(
       Platform::Object ^ sender,
@@ -48,6 +47,9 @@ namespace Playground {
   void OnLoadClicked(Platform::Object ^ sender, Platform::Object ^ args);
   void OnUnloadClicked(Platform::Object ^ sender, Platform::Object ^ args);
   void OnReloadClicked(Platform::Object ^ sender, Platform::Object ^ args);
+  void OnBeforeTextChanging_CheckAllDigits(
+      Windows::UI::Xaml::Controls::TextBox ^ sender,
+      Windows::UI::Xaml::Controls::TextBoxBeforeTextChangingEventArgs ^ args);
 
   void DetachAndClearRoot();
   void LoadReactNative();

@@ -344,6 +344,14 @@ void HostingPane::OnReloadClicked(Platform::Object ^, Platform::Object ^) {
       }));
 }
 
+void Playground::HostingPane::OnBeforeTextChanging_CheckAllDigits(
+    Windows::UI::Xaml::Controls::TextBox ^ sender,
+    Windows::UI::Xaml::Controls::TextBoxBeforeTextChangingEventArgs ^ args) {
+  for (auto it = args->NewText->Begin(); it != args->NewText->End(); ++it)
+    if (!iswdigit(*it))
+      args->Cancel = true;
+}
+
 void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
   assert(m_rootView != nullptr);
 
