@@ -221,6 +221,7 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     settings.UseLiveReload = x_UseLiveReloadCheckBox->IsChecked->Value;
     settings.UseDirectDebugger = x_UseDirectDebuggerCheckBox->IsChecked->Value;
     settings.DebuggerBreakOnNextLine = x_BreakOnFirstLineCheckBox->IsChecked->Value;
+    settings.DebuggerPort = m_debuggerPort;
     settings.EnableDeveloperMenu = true;
     settings.jsiEngine = static_cast<react::uwp::JSIEngine>(x_JsEngine->SelectedIndex);
     if (params.find("debughost") != params.end()) {
@@ -341,6 +342,14 @@ void HostingPane::OnReloadClicked(Platform::Object ^, Platform::Object ^) {
         LoadReactNative();
         UpdateUI();
       }));
+}
+
+void Playground::HostingPane::OnBeforeTextChanging_CheckAllDigits(
+    Windows::UI::Xaml::Controls::TextBox ^ sender,
+    Windows::UI::Xaml::Controls::TextBoxBeforeTextChangingEventArgs ^ args) {
+  for (auto it = args->NewText->Begin(); it != args->NewText->End(); ++it)
+    if (!iswdigit(*it))
+      args->Cancel = true;
 }
 
 void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
@@ -478,4 +487,12 @@ void HostingPane::LoadKnownApps() {
   if (m_ReactAppNames->Size > 0) {
     x_ReactAppName->SelectedIndex = 0;
   }
+}
+
+uint32_t HostingPane::DebuggerPort::get() {
+  return m_debuggerPort;
+}
+
+void HostingPane::DebuggerPort::set(uint32_t value) {
+  m_debuggerPort = value > UINT16_MAX ? defaultDebuggerPort : static_cast<uint16_t>(value);
 }

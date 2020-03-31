@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 20:21:56 GMT",
+      "tag": "react-native-windows_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "1. Make changes in response to Vladimir's feedback in the PR for bb8c00133... 2. Fix a dumb bug in multiRemove; the parameterized query variable was not being bound so nothing ever got deleted",
+            "author": "hpratt@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2020 16:24:06 GMT",
+      "tag": "react-native-windows_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make AsyncStorageModuleWin32 actually async, using C++/WinRT & VC++'s support for coroutines.",
+            "author": "hpratt@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2020 02:03:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow user to specify direct debugging port",
+            "author": "daseramo@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Mar 2020 22:21:02 GMT",
       "tag": "react-native-windows_v0.0.0-master.4",
       "version": "0.0.0-master.4",
