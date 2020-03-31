@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 02:02:51 GMT and should not be manually modified.
+This log was last generated on Tue, 31 Mar 2020 01:03:46 GMT and should not be manually modified.
 
+## 0.60.0-vnext.155
+Tue, 31 Mar 2020 01:03:46 GMT
+
+### Changes
+
+- Fix crash in timers during instance shutdown, and in systrace (acoates@microsoft.com)
 ## 0.60.0-vnext.154
 Thu, 26 Mar 2020 02:02:51 GMT
 
