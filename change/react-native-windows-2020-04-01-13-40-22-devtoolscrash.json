@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix crash when calling measure on non-framework element",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-01T20:40:22.490Z"
+}
