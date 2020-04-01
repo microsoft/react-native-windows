@@ -27,7 +27,7 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 using Microsoft::React::WebSocketModule;
 #endif
 #include <Modules/ExceptionsManagerModule.h>

@@ -253,9 +253,6 @@ websocket::close_code BaseWebSocketResource<Protocol, SocketLayer, Stream, Resol
           static_cast<uint16_t>(websocket::close_code::needs_extension),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocketResource::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
-      "Exception type enums don't match");
-  static_assert(
       static_cast<uint16_t>(IWebSocketResource::CloseCode::Normal) ==
           static_cast<uint16_t>(websocket::close_code::normal),
       "Exception type enums don't match");

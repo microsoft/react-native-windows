@@ -4,7 +4,7 @@
 // clang-format off
 #include <CppUnitTest.h>
 
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 
 using namespace folly;
 using namespace Microsoft::React;

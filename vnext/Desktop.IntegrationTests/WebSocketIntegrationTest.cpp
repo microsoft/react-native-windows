@@ -109,7 +109,8 @@ TEST_CLASS (WebSocketIntegrationTest)
   TEST_METHOD(ConnectNoClose)
   {
     bool connected = false;
-    bool error = false;
+    bool closed = false;
+    string errorMessage;
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->Start();
 
@@ -120,18 +121,24 @@ TEST_CLASS (WebSocketIntegrationTest)
       {
         connected = true;
       });
-      ws->SetOnError([&error](IWebSocketResource::Error &&)
+      ws->SetOnClose([&closed](CloseCode code, const string& reason)
       {
-        error = true;
+        closed = true;
+      });
+      ws->SetOnError([&errorMessage](IWebSocketResource::Error && error)
+      {
+        errorMessage = error.Message;
       });
 
       ws->Connect();
+      ws->Close();//TODO: Either remove or rename test.
     }
 
     server->Stop();
 
-    Assert::IsFalse(error);
+    Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
+    Assert::IsTrue(closed);
   }
 
   TEST_METHOD(PingClose)

@@ -4,9 +4,12 @@
 // clang-format off
 #include "WinRTWebSocketResource.h"
 
-#include <winrt/Windows.Security.Cryptography.h>
 #include <Unicode.h>
 #include <Utilities.h>
+
+// Windows API
+#include <winrt/Windows.Security.Cryptography.h>
+#include <RestrictedErrorInfo.h>
 
 // Standard Library
 #include <future>
@@ -81,7 +84,6 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri, vector<ChainValidation
   : m_uri{ std::move(uri) }
 {
   m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
-  m_socket.Closed({ this, &WinRTWebSocketResource::OnClosed });
 
   for (auto certException : certExeptions)
   {
@@ -96,80 +98,87 @@ WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<C
 
 WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 {
-  Synchronize();
+  Close(CloseCode::GoingAway, "Disposed");
+
+  m_closePerformed.Wait();
 }
 
 #pragma region Private members
 
 IAsyncAction WinRTWebSocketResource::PerformConnect()
 {
+  auto self = shared_from_this();
   try
   {
     co_await resume_background();
 
-    co_await m_socket.ConnectAsync(m_uri);
+    co_await self->m_socket.ConnectAsync(self->m_uri);
 
-    m_readyState = ReadyState::Open;
-    if (m_connectHandler)
+    self->m_readyState = ReadyState::Open;
+    if (self->m_connectHandler)
     {
-      m_connectHandler();
+      self->m_connectHandler();
     }
   }
   catch (hresult_error const& e)
   {
-    m_readyState = ReadyState::Closed;
-    if (m_errorHandler)
+    self->m_readyState = ReadyState::Closed;
+    if (self->m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
     }
   }
 
-  SetEvent(m_connectPerformed.get());
-  m_connectPerformedPromise.set_value();
-  m_connectRequested = false;
+  SetEvent(self->m_connectPerformed.get());
+  self->m_connectPerformedPromise.set_value();
+  self->m_connectRequested = false;
 }
 
 fire_and_forget WinRTWebSocketResource::PerformPing()
 {
+  auto self = shared_from_this();
   try
   {
     co_await resume_background();
 
-    co_await resume_on_signal(m_connectPerformed.get());
+    co_await resume_on_signal(self->m_connectPerformed.get());
 
-    if (m_readyState != ReadyState::Open)
+    if (self->m_readyState != ReadyState::Open)
     {
+      self = nullptr;
       co_return;
     }
 
-    m_socket.Control().MessageType(SocketMessageType::Utf8);
+    self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
     string s{};
     winrt::array_view<const uint8_t> arr(
       CheckedReinterpretCast<const uint8_t*>(s.c_str()),
       CheckedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
-    m_writer.WriteBytes(arr);
+    self->m_writer.WriteBytes(arr);
 
-    co_await m_writer.StoreAsync();
+    co_await self->m_writer.StoreAsync();
 
-    if (m_pingHandler)
+    if (self->m_pingHandler)
     {
-      m_pingHandler();
+      self->m_pingHandler();
     }
   }
   catch (hresult_error const& e)
   {
-    if (m_errorHandler)
+    if (self->m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
+      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
     }
   }
 }
 
 fire_and_forget WinRTWebSocketResource::PerformWrite()
 {
-  if (m_writeQueue.empty())
+  auto self = shared_from_this();
+  if (self->m_writeQueue.empty())
   {
+    self = nullptr;
     co_return;
   }
 
@@ -177,18 +186,19 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   {
     co_await resume_background();
 
-    co_await resume_on_signal(m_connectPerformed.get());  // Ensure connection attempt has finished
+    co_await resume_on_signal(self->m_connectPerformed.get());  // Ensure connection attempt has finished
 
-    co_await resume_in_queue(m_dispatchQueue);            // Ensure writes happen sequentially
+    co_await resume_in_queue(self->m_dispatchQueue);            // Ensure writes happen sequentially
 
-    if (m_readyState != ReadyState::Open)
+    if (self->m_readyState != ReadyState::Open)
     {
+      self = nullptr;
       co_return;
     }
 
     size_t length;
     std::pair<string, bool> front;
-    bool popped = m_writeQueue.try_pop(front);
+    bool popped = self->m_writeQueue.try_pop(front);
     if (!popped)
     {
       throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
@@ -198,36 +208,36 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
 
     if (isBinary)
     {
-      m_socket.Control().MessageType(SocketMessageType::Binary);
+      self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
       auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(std::move(message)));
       length = buffer.Length();
-      m_writer.WriteBuffer(buffer);
+      self->m_writer.WriteBuffer(buffer);
     }
     else
     {
-      m_socket.Control().MessageType(SocketMessageType::Utf8);
+      self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
       //TODO: Use char_t instead of uint8_t?
       length = message.size();
       winrt::array_view<const uint8_t> arr(
         CheckedReinterpretCast<const uint8_t*>(message.c_str()),
         CheckedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
-      m_writer.WriteBytes(arr);
+      self->m_writer.WriteBytes(arr);
     }
 
-    co_await m_writer.StoreAsync();
+    co_await self->m_writer.StoreAsync();
 
-    if (m_writeHandler)
+    if (self->m_writeHandler)
     {
-      m_writeHandler(length);
+      self->m_writeHandler(length);
     }
   }
   catch (hresult_error const& e)
   {
-    if (m_errorHandler)
+    if (self->m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
+      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
     }
   }
 }
@@ -238,11 +248,48 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
 
   co_await resume_on_signal(m_connectPerformed.get());
 
-  m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+  try
+  {
+    m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+
+    if (m_closeHandler)
+    {
+      m_closeHandler(m_closeCode, m_closeReason);
+    }
+  }
+  catch (winrt::hresult_invalid_argument const& e)
+  {
+    if (m_errorHandler)
+    {
+      string message;
+
+      auto restricted = e.try_as<IRestrictedErrorInfo>();
+      BSTR description;
+      HRESULT error;
+      BSTR restrictedDesc;
+      BSTR capabilitySid;
+      if (SUCCEEDED(restricted->GetErrorDetails(&description, &error, &restrictedDesc, &capabilitySid)))
+      {
+        message = Utf16ToUtf8(description) + ": " + Utf16ToUtf8(restrictedDesc);
+      }
+      else
+      {
+        message = Utf16ToUtf8(e.message());
+      }
+
+      m_errorHandler({ std::move(message), ErrorType::Close });
+    }
+  }
+  catch (hresult_error const& e)
+  {
+    if (m_errorHandler)
+    {
+      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Close });
+    }
+  }
 
   m_readyState = ReadyState::Closed;
-
-  co_return;
+  m_closePerformed.Set();
 }
 
 void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
@@ -279,15 +326,6 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, Message
     {
       m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
     }
-  }
-}
-
-void WinRTWebSocketResource::OnClosed(IWebSocket const& sender, WebSocketClosedEventArgs const& args)
-{
-  if (m_closeHandler)
-  {
-    //TODO: Parameterize (pass via member variables?)
-    m_closeHandler(CloseCode::Normal, "Closing");
   }
 }
 
@@ -345,11 +383,14 @@ void WinRTWebSocketResource::SendBinary(const string& base64String)
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
 {
+  if (m_readyState == ReadyState::Closing || m_readyState == ReadyState::Closed)
+    return;
+
   Synchronize();
 
+  m_readyState = ReadyState::Closing;
   m_closeCode = code;
   m_closeReason = reason;
-
   PerformClose();
 }
 
