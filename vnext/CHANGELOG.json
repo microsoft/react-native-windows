@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Apr 2020 02:15:55 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.156",
+      "version": "0.60.0-vnext.156",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make ensure WinRTWebSocketResource lifetime",
+            "author": "julio@rochsquadron.net",
+            "commit": "4933ad3ba04d361be7bec3c7dda489911f04ca51"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 21:47:28 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.155",
       "version": "0.60.0-vnext.155",

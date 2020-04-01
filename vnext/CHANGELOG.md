@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 31 Mar 2020 01:03:46 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Apr 2020 02:15:55 GMT and should not be manually modified.
 
+## 0.60.0-vnext.156
+Wed, 01 Apr 2020 02:15:55 GMT
+
+### Changes
+
+- Make ensure WinRTWebSocketResource lifetime (julio@rochsquadron.net)
 ## 0.60.0-vnext.155
 Tue, 31 Mar 2020 01:03:46 GMT
 

@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make ensure WinRTWebSocketResource lifetime",
-  "packageName": "react-native-windows",
-  "email": "julio@rochsquadron.net",
-  "commit": "4933ad3ba04d361be7bec3c7dda489911f04ca51",
-  "dependentChangeType": "patch",
-  "date": "2020-04-01T00:31:20.399Z"
-}
