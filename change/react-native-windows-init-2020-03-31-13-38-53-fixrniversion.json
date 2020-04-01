@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix version parameter",
+  "packageName": "react-native-windows-init",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-31T20:38:53.808Z"
+}
