@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 31 Mar 2020 21:49:07 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Apr 2020 05:12:32 GMT and should not be manually modified.
 
+## 0.0.0-master.8
+Wed, 01 Apr 2020 05:12:32 GMT
+
+### Changes
+
+- Set $(ReactNativeWindowsDir) before it is used (vmorozov@microsoft.com)
 ## 0.0.0-master.7
 Tue, 31 Mar 2020 21:49:07 GMT
 

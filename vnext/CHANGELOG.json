@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Apr 2020 05:12:32 GMT",
+      "tag": "react-native-windows_v0.0.0-master.8",
+      "version": "0.0.0-master.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set $(ReactNativeWindowsDir) before it is used",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 21:49:07 GMT",
       "tag": "react-native-windows_v0.0.0-master.7",
       "version": "0.0.0-master.7",
