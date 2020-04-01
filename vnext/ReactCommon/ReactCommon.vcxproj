@@ -73,8 +73,6 @@
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
-      <!-- Only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
-      <ForcedIncludeFiles>stdexcept</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -162,7 +160,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" />
+    <!-- Forced include only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" ForcedIncludeFiles="stdexcept" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
