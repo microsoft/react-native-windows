@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2020 21:49:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.7",
+      "version": "0.0.0-master.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update MSBuild Tasks to use MSBuild x64",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 20:21:56 GMT",
       "tag": "react-native-windows_v0.0.0-master.6",
       "version": "0.0.0-master.6",
