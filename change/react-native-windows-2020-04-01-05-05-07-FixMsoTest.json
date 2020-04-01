@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed Mso test crash",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-01T12:05:07.771Z"
-}

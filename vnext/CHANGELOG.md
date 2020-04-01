@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Apr 2020 05:12:32 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Apr 2020 14:24:03 GMT and should not be manually modified.
 
+## 0.0.0-master.9
+Wed, 01 Apr 2020 14:24:03 GMT
+
+### Changes
+
+- Fixed Mso test crash (vmorozov@microsoft.com)
 ## 0.0.0-master.8
 Wed, 01 Apr 2020 05:12:32 GMT
 
