@@ -907,7 +907,7 @@ void NativeUIManager::measure(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto feView = view.as<winrt::FrameworkElement>();
+  auto feView = view.try_as<winrt::FrameworkElement>();
   if (feView == nullptr) {
     callback(args);
     return;
