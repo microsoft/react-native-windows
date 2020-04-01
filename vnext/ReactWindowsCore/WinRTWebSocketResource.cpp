@@ -182,7 +182,6 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     co_return;
   }
 
-  self = shared_from_this();
   try
   {
     co_await resume_background();
@@ -227,8 +226,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
       self->m_writer.WriteBytes(arr);
     }
 
-    auto operation = m_writer.StoreAsync();
-    co_await operation;
+    co_await self->m_writer.StoreAsync();
 
     if (self->m_writeHandler)
     {
