@@ -1,7 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 31 Mar 2020 20:21:56 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Apr 2020 14:24:03 GMT and should not be manually modified.
 
+## 0.0.0-master.9
+Wed, 01 Apr 2020 14:24:03 GMT
+
+### Changes
+
+- Fixed Mso test crash (vmorozov@microsoft.com)
+## 0.0.0-master.8
+Wed, 01 Apr 2020 05:12:32 GMT
+
+### Changes
+
+- Set $(ReactNativeWindowsDir) before it is used (vmorozov@microsoft.com)
+## 0.0.0-master.7
+Tue, 31 Mar 2020 21:49:07 GMT
+
+### Changes
+
+- Update MSBuild Tasks to use MSBuild x64 (jthysell@microsoft.com)
 ## 0.0.0-master.6
 Tue, 31 Mar 2020 20:21:56 GMT
 
