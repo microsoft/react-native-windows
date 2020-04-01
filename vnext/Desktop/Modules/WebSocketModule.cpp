@@ -4,7 +4,7 @@
 // clang-format off
 #include "pch.h"
 
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
