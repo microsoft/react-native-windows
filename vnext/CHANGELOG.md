@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Apr 2020 14:24:03 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Apr 2020 21:47:08 GMT and should not be manually modified.
 
+## 0.0.0-master.10
+Wed, 01 Apr 2020 21:47:08 GMT
+
+### Changes
+
+- Fix crash when calling measure on non-framework element (acoates@microsoft.com)
 ## 0.0.0-master.9
 Wed, 01 Apr 2020 14:24:03 GMT
 

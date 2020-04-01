@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Apr 2020 21:47:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.10",
+      "version": "0.0.0-master.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash when calling measure on non-framework element",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Apr 2020 14:24:03 GMT",
       "tag": "react-native-windows_v0.0.0-master.9",
       "version": "0.0.0-master.9",
