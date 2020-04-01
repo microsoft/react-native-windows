@@ -182,7 +182,6 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     co_return;
   }
 
-  self = shared_from_this();
   try
   {
     co_await resume_background();
