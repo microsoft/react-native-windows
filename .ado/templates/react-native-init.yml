@@ -87,20 +87,24 @@ steps:
         -Components ${{ parameters.vsComponents }}
     condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
-  - task: MSBuild@1
-    displayName: MSBuild - testcli
+  - task: VSBuild@1
+    displayName: VSBuild - testcli
     inputs:
       solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-      msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-      msbuildArchitecture: x86 # $(MSBuildArchitecture) # Optional. Options: x86, x64
+      vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+      msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
       platform: ${{ parameters.platform }} # Optional
       configuration: ${{ parameters.configuration }} # Optional
+      clean: false # Optional
+      maximumCpuCount: false # Optional
+      restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
-      msbuildArguments:
+      msbuildArgs:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
         /p:BaseIntDir=$(BaseIntDir)
+        /p:AppxGeneratePrisForPortableLibrariesEnabled=false
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()

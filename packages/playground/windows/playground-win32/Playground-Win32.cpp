@@ -91,6 +91,7 @@ struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
 
 struct WindowData {
   static HINSTANCE s_instance;
+  static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
   WUXH::DesktopWindowXamlSource m_desktopWindowXamlSource;
@@ -103,6 +104,7 @@ struct WindowData {
   bool m_reuseInstance{true};
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
+  uint16_t m_debuggerPort{defaultDebuggerPort};
 
   react::uwp::JSIEngine m_jsEngine{react::uwp::JSIEngine::Chakra};
 
@@ -135,6 +137,7 @@ struct WindowData {
           settings.UseLiveReload = m_liveReloadEnabled;
           settings.DebuggerBreakOnNextLine = m_breakOnNextLine;
           settings.UseDirectDebugger = m_useDirectDebugger;
+          settings.DebuggerPort = m_debuggerPort;
           settings.jsiEngine = m_jsEngine;
 
           settings.EnableDeveloperMenu = true;
@@ -280,6 +283,10 @@ struct WindowData {
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->m_useDirectDebugger));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->m_breakOnNextLine));
 
+        auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
+        SetWindowTextW(portEditControl, std::to_wstring(self->m_debuggerPort).c_str());
+        SendMessageW(portEditControl, (UINT)EM_SETLIMITTEXT, (WPARAM)5, (LPARAM)0);
+
         auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Chakra"));
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Hermes"));
@@ -297,6 +304,22 @@ struct WindowData {
             self->m_reuseInstance = IsDlgButtonChecked(hwnd, IDC_REUSEINSTANCE) == BST_CHECKED;
             self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
+
+            WCHAR buffer[6] = {};
+            auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
+            GetWindowTextW(portEditControl, buffer, ARRAYSIZE(buffer));
+
+            try {
+              auto port = std::stoi(buffer);
+              if (port > UINT16_MAX)
+                port = defaultDebuggerPort;
+              self->m_debuggerPort = port;
+            } catch (const std::out_of_range &) {
+              self->m_debuggerPort = defaultDebuggerPort;
+            } catch (const std::invalid_argument &) {
+              // Don't update the debugger port if the new value can't be parsed
+              // (E.g. includes letters or symbols).
+            }
 
             auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
             int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
