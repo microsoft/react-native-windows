@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Apr 2020 21:47:08 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Apr 2020 18:40:22 GMT and should not be manually modified.
 
+## 0.0.0-master.11
+Thu, 02 Apr 2020 18:40:22 GMT
+
+### Changes
+
+- Switching to VS 2019 and v142 tools (jthysell@microsoft.com)
 ## 0.0.0-master.10
 Wed, 01 Apr 2020 21:47:08 GMT
 

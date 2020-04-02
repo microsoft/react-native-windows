@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Switching to VS 2019 and v142 tools",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "48a6c268b66140a908ef37e66f586a527e93aac0",
-  "dependentChangeType": "patch",
-  "date": "2020-02-13T22:37:32.478Z"
-}
