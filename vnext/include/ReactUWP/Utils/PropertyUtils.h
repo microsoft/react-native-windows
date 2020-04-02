@@ -477,9 +477,9 @@ bool TryUpdateOrientation(const T &element, const std::string &propertyName, con
     } else if (propertyValue.isString()) {
       const std::string &valueString = propertyValue.getString();
       if (valueString == "horizontal")
-        element.Orientation(Orientation::Horizontal);
+        element.Orientation(winrt::Orientation::Horizontal);
       else if (valueString == "vertical")
-        element.Orientation(Orientation::Vertical);
+        element.Orientation(winrt::Orientation::Vertical);
     }
 
     return true;

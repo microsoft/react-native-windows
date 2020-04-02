@@ -84,7 +84,7 @@ steps:
       arguments:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
-    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
+    condition: and(ne('${{ parameters.vsComponents }}', ''), eq(variables['VmImage'], 'windows-2019')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
 
   - task: VSBuild@1
     displayName: VSBuild - testcli
