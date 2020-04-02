@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 02 Apr 2020 18:40:22 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Apr 2020 22:39:22 GMT and should not be manually modified.
 
+## 0.0.0-master.12
+Thu, 02 Apr 2020 22:39:22 GMT
+
+### Changes
+
+- Improve popups (aschultz@microsoft.com)
 ## 0.0.0-master.11
 Thu, 02 Apr 2020 18:40:22 GMT
 

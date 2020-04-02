@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 02 Apr 2020 22:39:22 GMT",
+      "tag": "react-native-windows_v0.0.0-master.12",
+      "version": "0.0.0-master.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve popups",
+            "author": "aschultz@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Apr 2020 18:40:22 GMT",
       "tag": "react-native-windows_v0.0.0-master.11",
       "version": "0.0.0-master.11",

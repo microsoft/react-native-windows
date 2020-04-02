@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Improve popups",
-  "packageName": "react-native-windows",
-  "email": "aschultz@microsoft.com",
-  "commit": "c8cea5ce63a603b818edd1a3702f2a863e3bc986",
-  "dependentChangeType": "patch",
-  "date": "2020-02-10T23:48:43.111Z"
-}
