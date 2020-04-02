@@ -58,7 +58,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --msbuildprops BaseIntDir=$(BaseIntDir),UseDotNetNativeToolchain=false
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
       - task: PublishBuildArtifacts@1

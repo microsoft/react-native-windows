@@ -19,10 +19,7 @@ describe('DirectManipulationTest', () => {
       result.includes('width='),
       'measureInWindow response include width'
     );
-    assert.ok(
-      result.includes('x=0;'),
-      'measureInWindow response x!=0, result: ' + result
-    );
+    assert.ok(result.includes('x=0;'), 'measureInWindow response x=0');
   });
 
   it('measureLayout Test', () => {
@@ -31,9 +28,6 @@ describe('DirectManipulationTest', () => {
       result.includes('width=50'),
       'measureLayout response has correct width'
     );
-    assert.ok(
-      result.includes('x=20;'),
-      'measureLayout response x!=20, result: ' + result
-    );
+    assert.ok(result.includes('x=20;'), 'measureLayout response x=20');
   });
 });
