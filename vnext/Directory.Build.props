@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <!-- Initialize $(ReactNativeWindowsDir) before it is used below. -->
-  <Import Project="PropertySheets\ReactPackageDirectories.props" />
+  <Import Project="$(MSBuildThisFileDirectory)\PropertySheets\ReactPackageDirectories.props" />
 
   <PropertyGroup Label="Configuration">
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
@@ -29,7 +29,5 @@
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)\PropertySheets\ReactPackageDirectories.props" />
 
 </Project>
