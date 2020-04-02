@@ -88,7 +88,6 @@ void PopupShadowNode::createView() {
   m_popupOpenedRevoker = popup.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
     auto instance = wkinstance.lock();
     if (!m_updating && instance != nullptr) {
-
       // When multiple flyouts/popups are overlapping, XAML's theme shadows
       // don't render properly. As a workaround we enable a z-index
       // translation based on an elevation derived from the count of open

@@ -244,17 +244,14 @@ export interface IPickerItemData {
 
 // @public (undocumented)
 export interface IPopupProps extends ViewProps {
-    // (undocumented)
     autoFocus?: boolean;
     // (undocumented)
     horizontalOffset?: number;
-    // (undocumented)
     isLightDismissEnabled?: boolean;
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)
     onDismiss?: () => void;
-    // (undocumented)
     target?: React.ReactNode;
     // (undocumented)
     verticalOffset?: number;
