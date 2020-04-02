@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 02 Apr 2020 22:39:22 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Apr 2020 23:27:21 GMT and should not be manually modified.
 
+## 0.0.0-master.13
+Thu, 02 Apr 2020 23:27:21 GMT
+
+### Changes
+
+- Fix VS 2019 16.5 build errors (jthysell@microsoft.com)
 ## 0.0.0-master.12
 Thu, 02 Apr 2020 22:39:22 GMT
 

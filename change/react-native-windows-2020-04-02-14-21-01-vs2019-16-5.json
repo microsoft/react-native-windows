@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix VS 2019 16.5 build errors",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-02T21:21:01.555Z"
-}
