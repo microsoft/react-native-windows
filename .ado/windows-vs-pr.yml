@@ -120,7 +120,7 @@ jobs:
         displayName: 'NuGet pack Microsoft.ReactNative'
         inputs:
           command: pack
-          packagesToPack: $(Build.SourcesDirectory)/vnext/Scripts/Microsot.ReactNative.PR.nuspec
+          packagesToPack: $(Build.SourcesDirectory)/vnext/Scripts/Microsoft.ReactNative.PR.nuspec
           packDestination: $(System.DefaultWorkingDirectory)/TestMSRNNuget
           buildProperties: CommitId=0;version=$(MicrosoftReactNativeVersion);id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target
         condition: eq('true', variables['TestMSRNNuget'])
@@ -129,7 +129,7 @@ jobs:
         displayName: "Publish Artifact: TestMSRNNuget"
         inputs:
           artifactName: TestMSRNNuget
-          pathtoPublish: $(Build.StagingDirectory)
+          pathtoPublish: $(Build.StagingDirectory)/TestMSRNNuget
         condition: eq('true', variables['TestMSRNNuget'])
 
   - job: RNWUniversalOtherProjectsPR
