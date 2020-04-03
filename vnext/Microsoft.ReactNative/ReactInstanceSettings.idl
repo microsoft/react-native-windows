@@ -27,5 +27,6 @@ namespace Microsoft.ReactNative {
     String DebugHost { get; set; };
     String DebugBundlePath { get; set; };
     String BundleRootPath { get; set; };
+    UInt16 DebuggerPort { get; set; };
   }
 }

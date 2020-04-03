@@ -35,9 +35,6 @@ using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::Foundation::Collections;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
-
 template <>
 struct json_type_traits<winrt::react::uwp::AccessibilityAction> {
   static winrt::react::uwp::AccessibilityAction parseJson(const folly::dynamic &json) {
@@ -70,6 +67,9 @@ struct json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>> 
     return vector;
   }
 };
+
+namespace react {
+namespace uwp {
 
 FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}

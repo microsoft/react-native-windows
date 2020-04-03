@@ -26,11 +26,13 @@ TEST_CLASS_EX (ArrayViewTest, LibletAwareMemLeakDetection) {
   }
 
   TEST_METHOD(ArrayView_ctor_initializer_list) {
-    Mso::Async::ArrayView<int> a1({1, 2, 3});
-    TestCheckEqual(3, a1.Size());
-    TestCheckEqual(1, a1[0]);
-    TestCheckEqual(2, a1[1]);
-    TestCheckEqual(3, a1[2]);
+    // We use lambda to avoid ArrayView use temporary objects.
+    [](Mso::Async::ArrayView<int> a1) {
+      TestCheckEqual(3, a1.Size());
+      TestCheckEqual(1, a1[0]);
+      TestCheckEqual(2, a1[1]);
+      TestCheckEqual(3, a1[2]);
+    }({1, 2, 3});
   }
 
   TEST_METHOD(ArrayView_ctor_vector) {

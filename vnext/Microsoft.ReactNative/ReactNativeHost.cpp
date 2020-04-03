@@ -76,6 +76,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseFastRefresh = m_instanceSettings.UseFastRefresh();
   legacySettings.UseLiveReload = m_instanceSettings.UseLiveReload();
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
+  legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
@@ -88,6 +89,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
+  reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
 
   reactOptions.LegacySettings = std::move(legacySettings);
 

@@ -9,7 +9,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
+  - template: variables/vs2019.yml
 
 jobs:
   - job: Setup
@@ -63,15 +63,14 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          testPlatformVersion: 15.9.2
-        condition: and(ne(variables.BuildPlatform, 'ARM'), ne(variables.BuildPlatform, 'ARM64'))
+          testPlatformVersion: latestStable
+        condition: and(ne(variables.BuildPlatform, 'arm'), ne(variables.BuildPlatform, 'arm64'))
 
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
-          msBuildArchitecture: x86 # Necessary to build C# unit tests
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
+          vsComponents: $(VsComponents)
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
@@ -90,8 +89,8 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: 15.0
-        condition: and(ne(variables.BuildPlatform, 'ARM'), ne(variables.BuildPlatform, 'ARM64'))
+          vsTestVersion: latest
+        condition: and(ne(variables.BuildPlatform, 'arm'), ne(variables.BuildPlatform, 'arm64'))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -124,7 +123,7 @@ jobs:
         
       - template: templates/prepare-env.yml
         parameters:
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
+          vsComponents: $(VsComponents)
           yarnBuildCmd: build
 
       - task: NuGetCommand@2
@@ -134,19 +133,21 @@ jobs:
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: MSBuild@1
-        displayName: MSBuild - Playground
+      - task: VSBuild@1
+        displayName: VSBuild - Playground
         inputs:
           solution: packages/playground/windows/Playground.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-          clean: true # Optional
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
@@ -155,19 +156,21 @@ jobs:
           restoreSolution: packages/playground/windows/Playground-Win32.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: MSBuild@1
-        displayName: MSBuild - Playground Win32
+      - task: VSBuild@1
+        displayName: VSBuild - Playground Win32
         inputs:
           solution: packages/playground/windows/Playground-Win32.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-          clean: true # Optional
 
       - task: CmdLine@2
         displayName: Create Playground bundle
@@ -207,16 +210,8 @@ jobs:
           BuildPlatform: ARM
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
-    #pool:
-    #  vmImage: $(VmImage)
-    # Temporary override until we move to VS 2019 v142
     pool:
-      vmImage: windows-2019
-    variables: 
-      VsComponents: Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64,Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141,Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
-      BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
-      runCodesignValidationInjection: false
-      VmImage: windows-2019
+      vmImage: $(VmImage)
 
     steps:
       - checkout: self

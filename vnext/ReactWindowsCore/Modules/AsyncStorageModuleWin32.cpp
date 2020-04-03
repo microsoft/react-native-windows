@@ -7,6 +7,9 @@
 
 /// Implements AsyncStorageModule using winsqlite3.dll (requires Windows version 10.0.10586)
 
+using facebook::react::AsyncStorageModuleWin32;
+using facebook::xplat::module::CxxModule;
+
 namespace {
 
 std::string &AsyncStorageDBPath() {
@@ -14,15 +17,15 @@ std::string &AsyncStorageDBPath() {
   return asyncStorageDBPath;
 }
 
-void InvokeError(facebook::xplat::module::CxxModule::Callback &callback, const char *message) {
+void InvokeError(const CxxModule::Callback &callback, const char *message) {
   callback({folly::dynamic::object("message", message)});
 }
 
-void ExecImplThrows(
-    sqlite3 *db,
-    const char *statement,
-    facebook::react::AsyncStorageModuleWin32::ExecCallback execCallback = nullptr,
-    void *pv = nullptr) {
+using ExecCallback = int(SQLITE_CALLBACK *)(void *, int, char **, char **);
+
+// Execute the provided SQLite statement (and optional execCallback & user data
+// in pv). On error, throw a runtime_error with the SQLite error message
+void Exec(sqlite3 *db, const char *statement, ExecCallback execCallback = nullptr, void *pv = nullptr) {
   char *errMsg = nullptr;
   int rc = sqlite3_exec(db, statement, execCallback, pv, &errMsg);
   if (errMsg) {
@@ -39,12 +42,14 @@ void ExecImplThrows(
   }
 }
 
-bool ExecImpl(
+// Execute the provided SQLite statement (and optional execCallback & user data
+// in pv). On error, reports it to the callback and returns false.
+bool Exec(
     sqlite3 *db,
+    const CxxModule::Callback &callback,
     const char *statement,
-    facebook::react::AsyncStorageModuleWin32::ExecCallback execCallback,
-    void *pv,
-    facebook::xplat::module::CxxModule::Callback &callback) {
+    ExecCallback execCallback = nullptr,
+    void *pv = nullptr) {
   char *errMsg = nullptr;
   int rc = sqlite3_exec(db, statement, execCallback, pv, &errMsg);
   if (errMsg) {
@@ -59,7 +64,21 @@ bool ExecImpl(
   return true;
 }
 
-bool CheckSize(sqlite3 *db, folly::dynamic &args, facebook::xplat::module::CxxModule::Callback &callback) {
+// Convenience wrapper for using Exec with lambda expressions
+template <class Fn>
+bool Exec(sqlite3 *db, const CxxModule::Callback &callback, const char *statement, Fn &fn) {
+  return Exec(
+      db,
+      callback,
+      statement,
+      [](void *pv, int i, char **x, char **y) { return (*static_cast<Fn *>(pv))(i, x, y); },
+      &fn);
+}
+
+// Checks that the args parameter is an array, that args.size() is less than
+// SQLITE_LIMIT_VARIABLE_NUMBER, and that every member of args is a string.
+// Invokes callback to report an error and returns false.
+bool CheckArgs(sqlite3 *db, folly::dynamic &args, const CxxModule::Callback &callback) {
   if (!args.isArray()) {
     InvokeError(callback, "Invalid keys type. Expected an array");
     return false;
@@ -72,18 +91,26 @@ bool CheckSize(sqlite3 *db, folly::dynamic &args, facebook::xplat::module::CxxMo
     InvokeError(callback, errorMsg);
     return false;
   }
+  for (int i = 0; i < static_cast<int>(argCount); i++) {
+    if (!args[i].isString()) {
+      InvokeError(callback, "Invalid key type. Expected a string");
+    }
+  }
   return true;
 }
 
+// RAII object to manage SQLite transaction. On destruction, if
+// Commit() has not been called, rolls back the transactions
+// The provided sqlite connection handle & Callback must outlive
+// the Sqlite3Transaction object
 class Sqlite3Transaction {
   sqlite3 *m_db{nullptr};
-  facebook::xplat::module::CxxModule::Callback *m_callback{nullptr};
+  const CxxModule::Callback *m_callback{nullptr};
 
  public:
   Sqlite3Transaction() = default;
-  Sqlite3Transaction(sqlite3 *db, facebook::xplat::module::CxxModule::Callback &callback)
-      : m_db(db), m_callback(&callback) {
-    if (!ExecImpl(m_db, u8"BEGIN TRANSACTION", nullptr, nullptr, *m_callback)) {
+  Sqlite3Transaction(sqlite3 *db, const CxxModule::Callback &callback) : m_db(db), m_callback(&callback) {
+    if (!Exec(m_db, *m_callback, u8"BEGIN TRANSACTION")) {
       m_db = nullptr;
       m_callback = nullptr;
     }
@@ -108,7 +135,7 @@ class Sqlite3Transaction {
 
   void Rollback() {
     if (m_db) {
-      ExecImpl(m_db, u8"ROLLBACK", nullptr, nullptr, *m_callback);
+      Exec(m_db, *m_callback, u8"ROLLBACK");
       m_db = nullptr;
       m_callback = nullptr;
     }
@@ -118,7 +145,7 @@ class Sqlite3Transaction {
     if (!m_db) {
       return false;
     }
-    auto result = ExecImpl(m_db, u8"COMMIT", nullptr, nullptr, *m_callback);
+    auto result = Exec(m_db, *m_callback, u8"COMMIT");
     m_db = nullptr;
     m_callback = nullptr;
     return result;
@@ -129,6 +156,7 @@ class Sqlite3Transaction {
   }
 };
 
+// Appends argcount variables to prefix in a comma-separated list.
 std::string MakeSQLiteParameterizedStatement(const char *prefix, int argCount) {
   assert(argCount != 0);
   std::string result(prefix);
@@ -139,6 +167,38 @@ std::string MakeSQLiteParameterizedStatement(const char *prefix, int argCount) {
   }
   result += "?)";
   return result;
+}
+
+// Checks if sqliteResult is SQLITE_OK. If not, reports the error via
+// callback & returns false.
+bool CheckSQLiteResult(sqlite3 *db, const CxxModule::Callback &callback, int sqliteResult) {
+  if (sqliteResult == SQLITE_OK) {
+    return true;
+  } else {
+    InvokeError(callback, sqlite3_errmsg(db));
+    return false;
+  }
+}
+
+using Statement = std::unique_ptr<sqlite3_stmt, decltype(&sqlite3_finalize)>;
+
+// Creates a prepared SQLite statement. On error, returns nullptr
+Statement PrepareStatement(sqlite3 *db, const CxxModule::Callback &callback, const char *stmt) {
+  sqlite3_stmt *pStmt{nullptr};
+  if (!CheckSQLiteResult(db, callback, sqlite3_prepare_v2(db, stmt, -1, &pStmt, nullptr))) {
+    return {nullptr, sqlite3_finalize};
+  }
+  return {pStmt, &sqlite3_finalize};
+}
+
+// Binds the index-th variable in this prepared statement to str.
+bool BindString(
+    sqlite3 *db,
+    const CxxModule::Callback &callback,
+    const Statement &stmt,
+    int index,
+    const std::string &str) {
+  return CheckSQLiteResult(db, callback, sqlite3_bind_text(stmt.get(), index, str.c_str(), -1, SQLITE_TRANSIENT));
 }
 
 } // namespace
@@ -166,16 +226,29 @@ AsyncStorageModuleWin32::AsyncStorageModuleWin32() {
     return SQLITE_OK;
   };
 
-  ExecImplThrows(m_db, u8"PRAGMA user_version", getUserVersionCallback, &userVersion);
+  Exec(m_db, u8"PRAGMA user_version", getUserVersionCallback, &userVersion);
 
   if (userVersion == 0) {
-    ExecImplThrows(
+    Exec(
         m_db,
         u8"CREATE TABLE IF NOT EXISTS AsyncLocalStorage(key TEXT PRIMARY KEY, value TEXT NOT NULL); PRAGMA user_version=1");
   }
 }
 
 AsyncStorageModuleWin32::~AsyncStorageModuleWin32() {
+  decltype(m_tasks) tasks;
+  {
+    // If there is an in-progress async task, cancel it and wait on the
+    // condition_variable for the async task to acknowledge cancellation by
+    // nulling out m_action. Once m_action is null, it is safe to proceed
+    // wth closing the DB connection
+    winrt::slim_shared_lock_guard guard{m_lock};
+    swap(tasks, m_tasks);
+    if (m_action) {
+      m_action.Cancel();
+      m_cv.wait(m_lock, [this]() { return m_action == nullptr; });
+    }
+  }
   sqlite3_close(m_db);
 }
 
@@ -187,7 +260,7 @@ std::map<std::string, dynamic> AsyncStorageModuleWin32::getConstants() {
   return {};
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method> AsyncStorageModuleWin32::getMethods() {
+std::vector<CxxModule::Method> AsyncStorageModuleWin32::getMethods() {
   return {Method("multiGet", this, &AsyncStorageModuleWin32::multiGet),
           Method("multiSet", this, &AsyncStorageModuleWin32::multiSet),
           Method("multiRemove", this, &AsyncStorageModuleWin32::multiRemove),
@@ -195,146 +268,210 @@ std::vector<facebook::xplat::module::CxxModule::Method> AsyncStorageModuleWin32:
           Method("getAllKeys", this, &AsyncStorageModuleWin32::getAllKeys)};
 }
 
-void AsyncStorageModuleWin32::multiGet(folly::dynamic params, Callback callback) {
+void AsyncStorageModuleWin32::multiGet(folly::dynamic args, Callback jsCallback) {
+  auto &keys = args[0];
+  if (keys.size() == 0) {
+    jsCallback({{}, {}});
+    return;
+  }
+  AddTask(DBTask::Type::multiGet, std::move(keys), std::move(jsCallback));
+}
+void AsyncStorageModuleWin32::multiSet(folly::dynamic args, Callback jsCallback) {
+  auto &kvps = args[0];
+  if (kvps.size() == 0) {
+    jsCallback({});
+    return;
+  }
+  AddTask(DBTask::Type::multiSet, std::move(kvps), std::move(jsCallback));
+}
+void AsyncStorageModuleWin32::multiRemove(folly::dynamic args, Callback jsCallback) {
+  auto &keys = args[0];
+  if (keys.size() == 0) {
+    jsCallback({{}, {}});
+    return;
+  }
+  AddTask(DBTask::Type::multiRemove, std::move(keys), std::move(jsCallback));
+}
+void AsyncStorageModuleWin32::clear(folly::dynamic, Callback jsCallback) {
+  AddTask(DBTask::Type::clear, std::move(jsCallback));
+}
+void AsyncStorageModuleWin32::getAllKeys(folly::dynamic, Callback jsCallback) {
+  AddTask(DBTask::Type::getAllKeys, std::move(jsCallback));
+}
+
+// Under the lock, add a task to m_tasks and, if no async task is in progress,
+// schedule it
+void AsyncStorageModuleWin32::AddTask(
+    AsyncStorageModuleWin32::DBTask::Type type,
+    folly::dynamic &&args,
+    Callback &&jsCallback) {
+  winrt::slim_lock_guard guard(m_lock);
+  m_tasks.emplace_back(type, std::move(args), std::move(jsCallback));
+  if (!m_action)
+    m_action = RunTasks();
+}
+
+// On a background thread, while the async task  has not been cancelled and
+// there are more tasks to do, run the tasks. When there are either no more
+// tasks or cancellation has been requested, set m_action to null to report
+// that and complete the coroutine. N.B., it is important that detecting that
+// m_tasks is empty and acknowledging completion is done atomically; otherwise
+// there would be a race between the background task detecting m_tasks.empty()
+// and AddTask checking the coroutine is running.
+winrt::Windows::Foundation::IAsyncAction AsyncStorageModuleWin32::RunTasks() {
+  auto cancellationToken = co_await winrt::get_cancellation_token();
+  co_await winrt::resume_background();
+  while (!cancellationToken()) {
+    decltype(m_tasks) tasks;
+    sqlite3 *db{nullptr};
+    {
+      winrt::slim_lock_guard guard(m_lock);
+      if (m_tasks.empty()) {
+        m_action = nullptr;
+        m_cv.notify_all();
+        co_return;
+      }
+      std::swap(tasks, m_tasks);
+      db = m_db;
+    }
+
+    for (auto &task : tasks) {
+      task(db);
+      if (cancellationToken())
+        break;
+    }
+  }
+  winrt::slim_lock_guard guard(m_lock);
+  m_action = nullptr;
+  m_cv.notify_all();
+}
+
+void AsyncStorageModuleWin32::DBTask::operator()(sqlite3 *db) {
+  switch (m_type) {
+    case Type::multiGet:
+      multiGet(db);
+      break;
+    case Type::multiSet:
+      multiSet(db);
+      break;
+    case Type::multiRemove:
+      multiRemove(db);
+      break;
+    case Type::clear:
+      clear(db);
+      break;
+    case Type::getAllKeys:
+      getAllKeys(db);
+      break;
+  }
+}
+
+void AsyncStorageModuleWin32::DBTask::multiGet(sqlite3 *db) {
   folly::dynamic result = folly::dynamic::array;
-  auto &&args = params[0];
-  if (args.size() == 0) {
-    callback({{}, result});
+  if (!CheckArgs(db, m_args, m_callback)) {
     return;
   }
-  if (!CheckSize(m_db, args, callback)) {
-    return;
-  }
-  auto argCount = static_cast<int>(args.size());
+
+  auto argCount = static_cast<int>(m_args.size());
   auto sql = MakeSQLiteParameterizedStatement(u8"SELECT key, value FROM AsyncLocalStorage WHERE key IN ", argCount);
-  auto pStmt = PrepareStatement(sql.data(), callback);
+  auto pStmt = PrepareStatement(db, m_callback, sql.data());
   if (!pStmt) {
     return;
   }
   for (int i = 0; i < argCount; i++) {
-    // todo check that arg is a string?
-    if (!BindString(pStmt, i + 1, args[i].getString(), callback))
+    if (!BindString(db, m_callback, pStmt, i + 1, m_args[i].getString()))
       return;
   }
   for (auto stepResult = sqlite3_step(pStmt.get()); stepResult != SQLITE_DONE; stepResult = sqlite3_step(pStmt.get())) {
     if (stepResult != SQLITE_ROW) {
-      InvokeError(callback, sqlite3_errmsg(m_db));
+      InvokeError(m_callback, sqlite3_errmsg(db));
       return;
     }
 
     auto key = reinterpret_cast<const char *>(sqlite3_column_text(pStmt.get(), 0));
     if (!key) {
-      InvokeError(callback, sqlite3_errmsg(m_db));
+      InvokeError(m_callback, sqlite3_errmsg(db));
       return;
     }
     auto value = reinterpret_cast<const char *>(sqlite3_column_text(pStmt.get(), 1));
     if (!value) {
-      InvokeError(callback, sqlite3_errmsg(m_db));
+      InvokeError(m_callback, sqlite3_errmsg(db));
       return;
     }
     result.push_back(folly::dynamic::array(key, value));
   }
-  callback({{}, result});
+  m_callback({{}, result});
 }
 
-void AsyncStorageModuleWin32::multiSet(folly::dynamic params, Callback callback) {
-  auto &&args = params[0];
-  if (args.size() == 0) {
-    callback({});
-    return;
-  }
-  Sqlite3Transaction transaction(m_db, callback);
+void AsyncStorageModuleWin32::DBTask::multiSet(sqlite3 *db) {
+  Sqlite3Transaction transaction(db, m_callback);
   if (!transaction) {
     return;
   }
-  auto pStmt = PrepareStatement(u8"INSERT OR REPLACE INTO AsyncLocalStorage VALUES(?, ?)", callback);
+  auto pStmt = PrepareStatement(db, m_callback, u8"INSERT OR REPLACE INTO AsyncLocalStorage VALUES(?, ?)");
   if (!pStmt) {
     return;
   }
-  for (auto &&arg : args) {
-    if (!BindString(pStmt, 1, arg[0].getString(), callback) || !BindString(pStmt, 2, arg[1].getString(), callback)) {
+  for (auto &&arg : m_args) {
+    if (!BindString(db, m_callback, pStmt, 1, arg[0].getString()) ||
+        !BindString(db, m_callback, pStmt, 2, arg[1].getString())) {
       return;
     }
     auto rc = sqlite3_step(pStmt.get());
-    if (rc != SQLITE_DONE && !CheckSQLiteResult(rc, callback)) {
+    if (rc != SQLITE_DONE && !CheckSQLiteResult(db, m_callback, rc)) {
       return;
     }
-    if (!CheckSQLiteResult(sqlite3_reset(pStmt.get()), callback)) {
+    if (!CheckSQLiteResult(db, m_callback, sqlite3_reset(pStmt.get()))) {
       return;
     }
   }
   if (!transaction.Commit()) {
     return;
   }
-  callback({});
-} // namespace react
+  m_callback({});
+}
 
-void AsyncStorageModuleWin32::multiRemove(folly::dynamic params, Callback callback) {
-  auto &&args = params[0];
-  if (args.size() == 0) {
-    callback({});
+void AsyncStorageModuleWin32::DBTask::multiRemove(sqlite3 *db) {
+  if (!CheckArgs(db, m_args, m_callback)) {
     return;
   }
-  if (!CheckSize(m_db, args, callback)) {
-    return;
-  }
-  auto argCount = static_cast<int>(args.size());
+
+  auto argCount = static_cast<int>(m_args.size());
   auto sql = MakeSQLiteParameterizedStatement(u8"DELETE FROM AsyncLocalStorage WHERE key IN ", argCount);
-  auto pStmt = PrepareStatement(sql.data(), callback);
+  auto pStmt = PrepareStatement(db, m_callback, sql.data());
   if (!pStmt) {
     return;
   }
+  for (int i = 0; i < argCount; i++) {
+    if (!BindString(db, m_callback, pStmt, i + 1, m_args[i].getString()))
+      return;
+  }
   for (auto stepResult = sqlite3_step(pStmt.get()); stepResult != SQLITE_DONE; stepResult = sqlite3_step(pStmt.get())) {
     if (stepResult != SQLITE_ROW) {
-      InvokeError(callback, sqlite3_errmsg(m_db));
+      InvokeError(m_callback, sqlite3_errmsg(db));
       return;
     }
   }
-  callback({});
+  m_callback({});
 }
 
-void AsyncStorageModuleWin32::clear(folly::dynamic, Callback callback) {
-  if (Exec(u8"DELETE FROM AsyncLocalStorage", callback)) {
-    callback({});
+void AsyncStorageModuleWin32::DBTask::clear(sqlite3 *db) {
+  if (Exec(db, m_callback, u8"DELETE FROM AsyncLocalStorage")) {
+    m_callback({});
   }
 }
 
-void AsyncStorageModuleWin32::getAllKeys(folly::dynamic, Callback callback) {
-  folly::dynamic jsRetVal = folly::dynamic::array;
+void AsyncStorageModuleWin32::DBTask::getAllKeys(sqlite3 *db) {
+  folly::dynamic result = folly::dynamic::array;
   auto getAllKeysCallback = [&](int cCol, char **rgszColText, char **) {
     if (cCol >= 1) {
-      jsRetVal.push_back(rgszColText[0]);
+      result.push_back(rgszColText[0]);
     }
     return SQLITE_OK;
   };
 
-  if (Exec(u8"SELECT key FROM AsyncLocalStorage", callback, getAllKeysCallback)) {
-    callback({{}, jsRetVal});
-  }
-}
-
-AsyncStorageModuleWin32::Statement AsyncStorageModuleWin32::PrepareStatement(const char *stmt, Callback &callback) {
-  sqlite3_stmt *pStmt{nullptr};
-  if (!CheckSQLiteResult(sqlite3_prepare_v2(m_db, stmt, -1, &pStmt, nullptr), callback)) {
-    return {nullptr, sqlite3_finalize};
-  }
-  return {pStmt, &sqlite3_finalize};
-}
-
-bool AsyncStorageModuleWin32::Exec(const char *statement, ExecCallback execCallback, void *pv, Callback &callback) {
-  return ExecImpl(m_db, statement, execCallback, pv, callback);
-}
-
-bool AsyncStorageModuleWin32::BindString(const Statement &stmt, int index, const std::string &str, Callback &callback) {
-  return CheckSQLiteResult(sqlite3_bind_text(stmt.get(), index, str.c_str(), -1, SQLITE_TRANSIENT), callback);
-}
-
-bool AsyncStorageModuleWin32::CheckSQLiteResult(int sqliteResult, Callback &callback) {
-  if (sqliteResult == SQLITE_OK) {
-    return true;
-  } else {
-    InvokeError(callback, sqlite3_errmsg(m_db));
-    return false;
+  if (Exec(db, m_callback, u8"SELECT key FROM AsyncLocalStorage", getAllKeysCallback)) {
+    m_callback({{}, result});
   }
 }
 

@@ -1,7 +1,61 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Mar 2020 22:21:02 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Apr 2020 23:27:21 GMT and should not be manually modified.
 
+## 0.0.0-master.13
+Thu, 02 Apr 2020 23:27:21 GMT
+
+### Changes
+
+- Fix VS 2019 16.5 build errors (jthysell@microsoft.com)
+## 0.0.0-master.12
+Thu, 02 Apr 2020 22:39:22 GMT
+
+### Changes
+
+- Improve popups (aschultz@microsoft.com)
+## 0.0.0-master.11
+Thu, 02 Apr 2020 18:40:22 GMT
+
+### Changes
+
+- Switching to VS 2019 and v142 tools (jthysell@microsoft.com)
+## 0.0.0-master.10
+Wed, 01 Apr 2020 21:47:08 GMT
+
+### Changes
+
+- Fix crash when calling measure on non-framework element (acoates@microsoft.com)
+## 0.0.0-master.9
+Wed, 01 Apr 2020 14:24:03 GMT
+
+### Changes
+
+- Fixed Mso test crash (vmorozov@microsoft.com)
+## 0.0.0-master.8
+Wed, 01 Apr 2020 05:12:32 GMT
+
+### Changes
+
+- Set $(ReactNativeWindowsDir) before it is used (vmorozov@microsoft.com)
+## 0.0.0-master.7
+Tue, 31 Mar 2020 21:49:07 GMT
+
+### Changes
+
+- Update MSBuild Tasks to use MSBuild x64 (jthysell@microsoft.com)
+## 0.0.0-master.6
+Tue, 31 Mar 2020 20:21:56 GMT
+
+### Changes
+
+- 1. Make changes in response to Vladimir's feedback in the PR for bb8c00133... 2. Fix a dumb bug in multiRemove; the parameterized query variable was not being bound so nothing ever got deleted (hpratt@microsoft.com)
+## 0.0.0-master.5
+Tue, 31 Mar 2020 02:03:05 GMT
+
+### Changes
+
+- Allow user to specify direct debugging port (daseramo@microsoft.com)
 ## 0.0.0-master.4
 Mon, 30 Mar 2020 22:21:02 GMT
 

@@ -44,6 +44,7 @@ struct ReactInstanceSettings {
   bool EnableJITCompilation{true};
   bool EnableByteCodeCaching{false};
   bool EnableDeveloperMenu{false};
+  uint16_t DebuggerPort{9229};
 
   std::string ByteCodeFileUri;
   std::string DebugHost;

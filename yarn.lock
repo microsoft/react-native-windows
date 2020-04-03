@@ -4502,9 +4502,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.23.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.23.1.tgz#d69a12a3af1cd6d5aad02a9ab4d136f439265949"
-  integrity sha512-6fwEzAX/oYzZHT+wk0oIsYgQx3ZI9FtxAXFR4dB+LEi8Z1j6GOrb7aYqCW6YL/xAp647PWLefsKzF/+7PoWdmA==
+  version "1.25.2"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.25.2.tgz#32f0d322b58b5628ca7c21724b88a728f437d51f"
+  integrity sha512-86Sw9eazoXxmGunRrt04ICOKSkxkk6C8MYvywoeStNuMcV7kftEZ/Gie78K6Deknuy1mqXq+XGA2qTuCfZRRtg==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"
@@ -7287,19 +7287,7 @@ glob@^6.0.1:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@~7.1.1:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.4.tgz#aa608a2f6c577ad357e1ae5a5c26d9a8d1969255"
-  integrity sha512-hkLPepehmnKk41pUGm3sYxoFs/umurYfYJCerbXEyFIWcAzvpipAgVkBqqT9RBKMGjnq6kMuyYwha6csxbiM1A==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-glob@^7.1.6:
+glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@~7.1.1:
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
