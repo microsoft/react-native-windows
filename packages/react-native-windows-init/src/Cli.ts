@@ -24,7 +24,7 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.options({
+const argv = yargs.version(false).options({
   version: {
     type: 'string',
     describe: 'The version of react-native-windows to use.',

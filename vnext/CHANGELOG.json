@@ -2,6 +2,153 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Apr 2020 17:20:20 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update api docs",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 16:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix template specialization error in FrameworkElementViewManager.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "# Fix co_routine in LocationObserverModule.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix calling winrt::TimeSpan constructor in ValueUtils.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 15:17:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix co_routine in ReactImage.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Apr 2020 23:27:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix VS 2019 16.5 build errors",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Apr 2020 22:39:22 GMT",
+      "tag": "react-native-windows_v0.0.0-master.12",
+      "version": "0.0.0-master.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve popups",
+            "author": "aschultz@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Apr 2020 18:40:22 GMT",
+      "tag": "react-native-windows_v0.0.0-master.11",
+      "version": "0.0.0-master.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Switching to VS 2019 and v142 tools",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Apr 2020 21:47:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.10",
+      "version": "0.0.0-master.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash when calling measure on non-framework element",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Apr 2020 14:24:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.9",
+      "version": "0.0.0-master.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed Mso test crash",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Apr 2020 05:12:32 GMT",
+      "tag": "react-native-windows_v0.0.0-master.8",
+      "version": "0.0.0-master.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set $(ReactNativeWindowsDir) before it is used",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 21:49:07 GMT",
       "tag": "react-native-windows_v0.0.0-master.7",
       "version": "0.0.0-master.7",

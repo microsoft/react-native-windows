@@ -22,10 +22,9 @@ steps:
       script: yarn install --frozen-lockfile
 
   - task: CmdLine@2
-    displayName: yarn build (local react-native-windows)
+    displayName: yarn build
     inputs:
       script: yarn build
-      workingDirectory: vnext
 
   - task: PowerShell@2
     displayName: Launch test npm server (verdaccio)
@@ -85,7 +84,7 @@ steps:
       arguments:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
-    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
+    condition: and(ne('${{ parameters.vsComponents }}', ''), eq(variables['VmImage'], 'windows-2019')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
 
   - task: VSBuild@1
     displayName: VSBuild - testcli
