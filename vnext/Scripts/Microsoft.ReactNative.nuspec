@@ -13,12 +13,22 @@
   </metadata>
   <files>
 
-    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\React.ReactNative.*"   target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative\React.ReactNative.*" target="lib\ship\x86"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*"   target="lib\debug\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\React.ReactNative.*" target="lib\ship\x64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\React.ReactNative.*"   target="lib\debug\arm" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative\React.ReactNative.*" target="lib\ship\arm"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Microsoft.ReactNative.targets" target="build\native"/>
+
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd"   target="lib\uap10.0"/>
+    <!-- <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.xml"   target="lib\uap10.0"/> Whats this xml file? -->
+
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm\native" />
+
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x86\native" />
+
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
 
   </files>
 </package>
