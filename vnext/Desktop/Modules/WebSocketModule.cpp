@@ -148,35 +148,27 @@ std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_
   {
     auto ws = IWebSocketResource::Make(std::move(url));
     auto weakInstance = this->getInstance();
-    ws->SetOnError([this, id, ws, instance = weakInstance.lock()](const IWebSocketResource::Error& err)
-    {
-      if (!instance)
-        return;
+    auto instance = weakInstance.lock();
+    if (!instance)
+      return;
 
+    ws->SetOnError([this, id, ws, instance](const IWebSocketResource::Error& err)
+    {
       auto errorObj = dynamic::object("id", id)("message", err.Message);
       this->SendEvent("websocketFailed", std::move(errorObj));
     });
-    ws->SetOnConnect([this, id, ws, instance = weakInstance.lock()]()
+    ws->SetOnConnect([this, id, ws, instance]()
     {
-      if (!instance)
-        return;
-
       auto args = dynamic::object("id", id);
       this->SendEvent("websocketOpen", std::move(args));
     });
-    ws->SetOnMessage([this, id, ws, instance = weakInstance.lock()](size_t length, const string& message)
+    ws->SetOnMessage([this, id, ws, instance](size_t length, const string& message)
     {
-      if (!instance)
-        return;
-
       auto args = dynamic::object("id", id)("data", message)("type", "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
-    ws->SetOnClose([this, id, ws, instance = weakInstance.lock()](IWebSocketResource::CloseCode code, const string& reason)
+    ws->SetOnClose([this, id, ws, instance](IWebSocketResource::CloseCode code, const string& reason)
     {
-      if (!instance)
-        return;
-
       auto args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
       this->SendEvent("websocketClosed", std::move(args));
     });
