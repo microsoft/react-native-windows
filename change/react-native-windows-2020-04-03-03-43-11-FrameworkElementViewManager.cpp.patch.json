@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix template specialization error in FrameworkElementViewManager.cpp",
+  "packageName": "react-native-windows",
+  "email": "christophpurrer@gmail.com",
+  "dependentChangeType": "none",
+  "date": "2020-04-03T10:43:11.729Z"
+}
