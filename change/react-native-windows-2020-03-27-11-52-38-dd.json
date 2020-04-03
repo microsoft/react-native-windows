@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix direct debugging",
   "packageName": "react-native-windows",
   "email": "acoates@microsoft.com",

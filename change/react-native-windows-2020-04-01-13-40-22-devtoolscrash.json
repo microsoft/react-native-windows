@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix crash when calling measure on non-framework element",
   "packageName": "react-native-windows",
   "email": "acoates@microsoft.com",

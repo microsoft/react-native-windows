@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Set $(ReactNativeWindowsDir) before it is used",
   "packageName": "react-native-windows",
   "email": "vmorozov@microsoft.com",
