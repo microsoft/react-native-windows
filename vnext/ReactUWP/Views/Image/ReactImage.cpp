@@ -125,7 +125,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
     ReactImageSource source) {
   switch (source.sourceType) {
     case ImageSourceType::Download:
-      return co_await GetImageStreamAsync(source);
+      co_return co_await GetImageStreamAsync(source);
     case ImageSourceType::InlineData:
       co_return co_await GetImageInlineDataAsync(source);
     default: // ImageSourceType::Uri
@@ -326,18 +326,18 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
       co_await winrt::RandomAccessStream::CopyAsync(inputStream, memoryStream);
       memoryStream.Seek(0);
 
-      return memoryStream;
+      co_return memoryStream;
     }
   } catch (winrt::hresult_error const &) {
   }
 
-  return nullptr;
+  co_return nullptr;
 }
 
 winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
   size_t start = source.uri.find(',');
   if (start == std::string::npos || start + 1 > source.uri.length())
-    return nullptr;
+    co_return nullptr;
 
   try {
     co_await winrt::resume_background();
@@ -350,12 +350,12 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsyn
     co_await memoryStream.WriteAsync(buffer);
     memoryStream.Seek(0);
 
-    return memoryStream;
+    co_return memoryStream;
   } catch (winrt::hresult_error const &) {
     // Base64 decode failed
   }
 
-  return nullptr;
+  co_return nullptr;
 }
 } // namespace uwp
 } // namespace react
