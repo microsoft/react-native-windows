@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Generate sourcemap for offline RNTester bundle in win32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-03T15:40:03.673Z"
+}
