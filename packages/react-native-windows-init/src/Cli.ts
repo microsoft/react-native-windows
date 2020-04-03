@@ -41,6 +41,12 @@ const argv = yargs.version(false).options({
     type: 'boolean',
     describe: 'Overwrite any existing files without prompting',
   },
+  experimentalNugetDependency: {
+    type: 'boolean',
+    describe:
+      'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
+    hidden: true,
+  },
 }).argv;
 
 const EXITCODE_NO_MATCHING_RNW = 2;
@@ -326,6 +332,7 @@ You can either downgrade your version of ${chalk.green(
       language: argv.language,
       overwrite: argv.overwrite,
       verbose: argv.verbose,
+      experimentalNugetDependency: argv.experimentalNugetDependency,
     });
   } catch (error) {
     console.error(chalk.red(error.message));
