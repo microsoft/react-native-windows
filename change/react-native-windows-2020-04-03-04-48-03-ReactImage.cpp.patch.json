@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix co_routine in ReactImage.cpp",
+  "packageName": "react-native-windows",
+  "email": "christophpurrer@gmail.com",
+  "dependentChangeType": "none",
+  "date": "2020-04-03T11:48:03.462Z"
+}
