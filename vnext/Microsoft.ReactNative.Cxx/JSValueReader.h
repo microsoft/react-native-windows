@@ -149,6 +149,8 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ std::string &value) 
       break;
     case JSValueType::Double:
       value = std::to_string(reader.GetDouble());
+      value.erase(value.find_last_not_of('0') + 1, std::string::npos);
+      value.erase(value.find_last_not_of('.') + 1, std::string::npos);
       break;
     default:
       value = "";
@@ -169,6 +171,8 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ std::wstring &value)
       break;
     case JSValueType::Double:
       value = std::to_wstring(reader.GetDouble());
+      value.erase(value.find_last_not_of('0') + 1, std::wstring::npos);
+      value.erase(value.find_last_not_of('.') + 1, std::wstring::npos);
       break;
     default:
       value = L"";
