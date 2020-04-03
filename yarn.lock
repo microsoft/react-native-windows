@@ -2509,9 +2509,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.7.16"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.7.16.tgz#6e23fb233cbcd9ecdf36903accf607ed32f47a6b"
-  integrity sha512-1iuaNbfLCr8y56Dw3NHbeoJwGfKPwmJSBld0Ziw3ToY+B0BwcHPQxRL+LD460uwyeLcB6de5Sw/QXA2+RwGPSw==
+  version "7.7.17"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.7.17.tgz#d48008767810b4293b2431e4b2bbee3da00d749f"
+  integrity sha512-iHnN6OCIpqzLct5c0E992zki/1Ers/oFLxgzSRVORik0xQD5K+Y46vtgh1BZZAy0p3ZJ8USmg9+LGN3f2qtrew==
   dependencies:
     "@microsoft/api-extractor-model" "7.7.10"
     "@microsoft/tsdoc" "0.12.19"
@@ -4502,9 +4502,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.25.2"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.25.2.tgz#32f0d322b58b5628ca7c21724b88a728f437d51f"
-  integrity sha512-86Sw9eazoXxmGunRrt04ICOKSkxkk6C8MYvywoeStNuMcV7kftEZ/Gie78K6Deknuy1mqXq+XGA2qTuCfZRRtg==
+  version "1.26.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.26.0.tgz#41704f5cbfb52aeee713f806efd10d138dae023d"
+  integrity sha512-H72HNrMCG5QVvMPUov2PfLfx/Flm1cjpITnJWaK5VnW+LqSgNj+DEqKfqopG07U1UxMSxfnN4EDj4Qay+buNbA==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"
@@ -7776,9 +7776,9 @@ invert-kv@^2.0.0:
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
 io-ts@^2.1.1:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.1.2.tgz#8ea4439c902c3d15cda343900bed7ee5a9977f42"
-  integrity sha512-whVRGaNBZSrkPrg1y+sSy/kv/fDjweQPP1UCLhKwJUHWGD6rFgbZ44FBF98JlY/FFzTA0MkhGeHWZ/aFhF42eA==
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.1.3.tgz#02c03c375d14079496f0c046ef8a9aad4fbaeb74"
+  integrity sha512-QFMR2QEBSP6w1TPmkpfca6xkzBbXO+K7ubdbV26GlCGI7CP9LV59bfty422JYtWgbBITuL/zBb1+mziv9f5Wfg==
 
 io.appium.settings@^2.10.0:
   version "2.14.1"
