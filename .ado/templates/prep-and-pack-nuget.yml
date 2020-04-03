@@ -4,6 +4,7 @@ parameters:
   # Note: Nuget pack expects platform-specific file spearators ('\' on Windows).
   nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
   desktopId: 'OfficeReact.Win32'
+  microsoftRNId: 'Microsoft.ReactNative'
   universalId: 'OfficeReact.UWP'
 
 steps:
@@ -28,3 +29,11 @@ steps:
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.universalId}};nugetroot=${{parameters.nugetroot}}
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet pack Microsoft.ReactNative'
+    inputs:
+      command: pack
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec
+      packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
+      buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.microsoftRNId}};nugetroot=${{parameters.nugetroot}}

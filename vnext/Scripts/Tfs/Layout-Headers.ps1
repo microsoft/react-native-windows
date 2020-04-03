@@ -102,3 +102,6 @@ Copy-Item -Force -Recurse -Path $ReactWindowsRoot\include -Destination $TargetRo
 
 # NUSPEC
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\React*.nuspec -Destination $TargetRoot
+
+# Microsoft.ReactNative.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot
