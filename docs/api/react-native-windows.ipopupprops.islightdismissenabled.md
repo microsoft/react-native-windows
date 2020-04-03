@@ -4,6 +4,8 @@
 
 ## IPopupProps.isLightDismissEnabled property
 
+Configures the Popup with a transparent backdrop.
+
 <b>Signature:</b>
 
 ```typescript
