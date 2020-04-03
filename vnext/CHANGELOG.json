@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Apr 2020 16:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix template specialization error in FrameworkElementViewManager.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "# Fix co_routine in LocationObserverModule.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix calling winrt::TimeSpan constructor in ValueUtils.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Apr 2020 15:17:30 GMT",
       "tag": "react-native-windows_v0.0.0-master.13",
       "version": "0.0.0-master.13",
