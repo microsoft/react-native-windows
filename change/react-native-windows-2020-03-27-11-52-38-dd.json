@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix direct debugging",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-03-27T18:52:38.219Z"
+}
