@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Add PR check for new template",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-04-03T22:56:42.274Z"
+}
