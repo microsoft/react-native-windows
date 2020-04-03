@@ -7,7 +7,7 @@
   "typings": "./Libraries/react-native/typings-main.d.ts",
   "scripts": {
     "build": "just-scripts build",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/sourcemap.js",
     "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
