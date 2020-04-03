@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Apr 2020 21:00:59 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make JSValueReader.h compile with Clang [RFC] I have spent quite some time on this but I can't make it compile as a static assert prevents compilation using Clang.",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Apr 2020 20:12:21 GMT",
       "tag": "react-native-windows_v0.0.0-master.13",
       "version": "0.0.0-master.13",

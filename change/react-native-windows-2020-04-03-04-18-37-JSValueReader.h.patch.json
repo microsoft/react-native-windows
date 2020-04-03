@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Make JSValueReader.h compile with Clang [RFC] I have spent quite some time on this but I can't make it compile as a static assert prevents compilation using Clang.",
-  "packageName": "react-native-windows",
-  "email": "christophpurrer@gmail.com",
-  "dependentChangeType": "none",
-  "date": "2020-04-03T11:18:37.745Z"
-}
