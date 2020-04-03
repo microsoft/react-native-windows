@@ -178,7 +178,6 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   auto self = shared_from_this();
   if (self->m_writeQueue.empty())
   {
-    self = nullptr;
     co_return;
   }
 

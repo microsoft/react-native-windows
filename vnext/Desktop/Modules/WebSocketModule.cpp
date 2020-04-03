@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// clang-format off
 #include "pch.h"
 
 #include <Modules/WebSocketModule.h>
@@ -17,27 +16,25 @@ using namespace folly;
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 using std::string;
+using std::weak_ptr;
 
-namespace
-{
+namespace {
 constexpr char moduleName[] = "WebSocketModule";
 } // anonymous namespace
 
-namespace Microsoft::React
-{
+namespace Microsoft::React {
 
-  WebSocketModule::WebSocketModule() {}
+WebSocketModule::WebSocketModule() {}
 
-string WebSocketModule::getName()
-{
+string WebSocketModule::getName() {
   return moduleName;
 }
 
-std::map<string, dynamic> WebSocketModule::getConstants()
-{
+std::map<string, dynamic> WebSocketModule::getConstants() {
   return {};
 }
 
+// clang-format off
 std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
 {
   return
@@ -58,16 +55,16 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 
         IWebSocketResource::Options options;
         dynamic optionsDynamic = jsArgAsDynamic(args, 2);
-        if (!optionsDynamic.empty() && !optionsDynamic["headers"].empty())
+        if (!optionsDynamic.empty() && optionsDynamic.count("headers") != 0)
         {
-          dynamic headersDynamic = optionsDynamic["headers"];
+          const auto& headersDynamic = optionsDynamic["headers"];
           for (const auto& header : headersDynamic.items())
           {
             options.emplace(Utf8ToUtf16(header.first.getString()), header.second.getString());
           }
         }
 
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->Connect(protocols, options);
@@ -80,7 +77,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         // See react-native\Libraries\WebSocket\WebSocket.js:_close
         if (args.size() == 3) // WebSocketModule.close(statusCode, closeReason, this._socketId);
         {
-          auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 2));
+          weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 2));
           if (auto sharedWs = weakWs.lock())
           {
             sharedWs->Close(static_cast<IWebSocketResource::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
@@ -88,7 +85,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         }
         else if (args.size() == 1) // WebSocketModule.close(this._socketId);
         {
-          auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
+          weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
           if (auto sharedWs = weakWs.lock())
           {
             sharedWs->Close(IWebSocketResource::CloseCode::Normal, {});
@@ -104,7 +101,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       "send",
       [this](dynamic args) // const string& message, int64_t id
       {
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->Send(jsArgAsString(args, 0));
@@ -114,7 +111,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       "sendBinary",
       [this](dynamic args) // const string& base64String, int64_t id
       {
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 1));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->SendBinary(jsArgAsString(args, 0));
@@ -124,7 +121,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       "ping",
       [this](dynamic args) // int64_t id
       {
-        auto weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
+        weak_ptr weakWs = this->GetOrCreateWebSocket(jsArgAsInt(args, 0));
         if (auto sharedWs = weakWs.lock())
         {
           sharedWs->Ping();
@@ -132,40 +129,54 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       })
   };
 } // getMethods
+// clang-format on
 
 #pragma region private members
 
-void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
-{
-  auto instance = this->getInstance().lock();
-  if (instance)
-  {
+void WebSocketModule::SendEvent(string &&eventName, dynamic &&args) {
+  auto weakInstance = this->getInstance();
+  if (auto instance = weakInstance.lock()) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
   }
 }
 
-std::weak_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
+// clang-format off
+std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
-  if (m_webSockets.find(id) == m_webSockets.end())
+  auto itr = m_webSockets.find(id);
+  if (itr == m_webSockets.end())
   {
     auto ws = IWebSocketResource::Make(std::move(url));
-    ws->SetOnError([this, id, ws](const IWebSocketResource::Error& err)
+    auto weakInstance = this->getInstance();
+    ws->SetOnError([this, id, ws, instance = weakInstance.lock()](const IWebSocketResource::Error& err)
     {
+      if (!instance)
+        return;
+
       auto errorObj = dynamic::object("id", id)("message", err.Message);
       this->SendEvent("websocketFailed", std::move(errorObj));
     });
-    ws->SetOnConnect([this, id, ws]()
+    ws->SetOnConnect([this, id, ws, instance = weakInstance.lock()]()
     {
+      if (!instance)
+        return;
+
       auto args = dynamic::object("id", id);
       this->SendEvent("websocketOpen", std::move(args));
     });
-    ws->SetOnMessage([this, id, ws](size_t length, const string& message)
+    ws->SetOnMessage([this, id, ws, instance = weakInstance.lock()](size_t length, const string& message)
     {
+      if (!instance)
+        return;
+
       auto args = dynamic::object("id", id)("data", message)("type", "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
-    ws->SetOnClose([this, id, ws](IWebSocketResource::CloseCode code, const string& reason)
+    ws->SetOnClose([this, id, ws, instance = weakInstance.lock()](IWebSocketResource::CloseCode code, const string& reason)
     {
+      if (!instance)
+        return;
+
       auto args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
       this->SendEvent("websocketClosed", std::move(args));
     });
@@ -174,13 +185,13 @@ std::weak_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t 
     return ws;
   }
 
-  return m_webSockets.at(id);
+  return itr->second;
 }
+// clang-format on
 
 #pragma endregion private members
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept
-{
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
   return std::make_unique<WebSocketModule>();
 }
 
