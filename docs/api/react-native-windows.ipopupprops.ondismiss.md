@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-onDismiss?: (isOpen: boolean) => void;
+onDismiss?: () => void;
 ```
