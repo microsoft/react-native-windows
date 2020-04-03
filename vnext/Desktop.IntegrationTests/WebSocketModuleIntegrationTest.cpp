@@ -13,8 +13,8 @@ using std::make_unique;
 using std::unique_ptr;
 using std::vector;
 
-TEST_CLASS (WebSocketModuleIntegrationTest) {
-  // clang-format off
+TEST_CLASS(WebSocketModuleIntegrationTest){
+    // clang-format off
   TEST_METHOD(WebSocketModule_Ping)
   {
     auto module = make_unique<WebSocketModule>();
@@ -31,9 +31,9 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
     auto close = module->getMethods().at(WebSocketModule::MethodId::Close);
     close.func(dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
   }
-  // clang-format on
+// clang-format on
 
-  // clang-format off
+// clang-format off
   TEST_METHOD(WebSocketModule_SendMultiple)
   {
     auto module = make_unique<WebSocketModule>();
@@ -58,5 +58,6 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
     close.func(dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
     close.func(dynamic::array(0, "closing", /*id*/ 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
   }
-  // clang-format on
-};
+// clang-format on
+}
+;
