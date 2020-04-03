@@ -14,11 +14,10 @@ export interface IPopupProps extends ViewProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [autoFocus](./react-native-windows.ipopupprops.autofocus.md) | <code>boolean</code> | Sets whether the Popup will automatically receive focus when opened. Defaults to true. Always true when isLightDismissEnabled === true. |
 |  [horizontalOffset](./react-native-windows.ipopupprops.horizontaloffset.md) | <code>number</code> |  |
-|  [isLightDismissEnabled](./react-native-windows.ipopupprops.islightdismissenabled.md) | <code>boolean</code> | Configures the Popup with a transparent backdrop. |
+|  [isLightDismissEnabled](./react-native-windows.ipopupprops.islightdismissenabled.md) | <code>boolean</code> |  |
 |  [isOpen](./react-native-windows.ipopupprops.isopen.md) | <code>boolean</code> |  |
-|  [onDismiss](./react-native-windows.ipopupprops.ondismiss.md) | <code>() =&gt; void</code> |  |
-|  [target](./react-native-windows.ipopupprops.target.md) | <code>React.ReactNode</code> | Sets a React element to use as an anchor point. When set, the popup will be positioned relative to it. |
+|  [onDismiss](./react-native-windows.ipopupprops.ondismiss.md) | <code>(isOpen: boolean) =&gt; void</code> |  |
+|  [target](./react-native-windows.ipopupprops.target.md) | <code>React.ReactNode</code> |  |
 |  [verticalOffset](./react-native-windows.ipopupprops.verticaloffset.md) | <code>number</code> |  |
 
