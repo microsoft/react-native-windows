@@ -65,6 +65,7 @@ steps:
   - script: |
       nuget sources Add -Name TestMSRNNuget -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget
     displayName: Add TestMSRNNuget as a nuget source
+    condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - task: CmdLine@2
     displayName: Init new project
