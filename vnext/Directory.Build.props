@@ -13,9 +13,6 @@
 
   </PropertyGroup>
 
-  <!-- Initialize $(ReactNativeWindowsDir) before it is used below. -->
-  <Import Project="PropertySheets\ReactPackageDirectories.props" />
-
   <PropertyGroup Label="Configuration">
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
