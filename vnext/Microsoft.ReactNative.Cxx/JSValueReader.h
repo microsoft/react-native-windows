@@ -168,7 +168,7 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ std::wstring &value)
       value = std::to_wstring(reader.GetInt64());
       break;
     case JSValueType::Double:
-      value = std::to_wstring(reader.GetDouble());      
+      value = std::to_wstring(reader.GetDouble());
       break;
     default:
       value = L"";
