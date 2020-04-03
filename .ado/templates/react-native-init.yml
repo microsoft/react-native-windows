@@ -62,6 +62,11 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: ">=4.6.0"
+    condition: eq('true', ${{ parameters.experimentalNugetDependency }})
+
   - script: |
       nuget sources Add -Name TestMSRNNuget -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget
     displayName: Add TestMSRNNuget as a nuget source
