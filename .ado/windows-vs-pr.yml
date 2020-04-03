@@ -33,6 +33,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+          TestMSRNNuget: True
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
@@ -91,13 +92,45 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(ne(variables.BuildPlatform, 'arm'), ne(variables.BuildPlatform, 'arm64'))
-          
+
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             ReactUWP\**
+
+      - script: |
+          npx --no-install beachball bump
+        displayName: Bump package versions to align nuget version with npm version
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PowerShell@2
+        displayName: Prepare minimum nuget for testing experimental init
+        inputs:
+          targetType: 'inline'
+          script: |
+            $pkgJson = Get-Content -Raw -Path .\vnext\package.json | ConvertFrom-Json
+            Write-Output "##vso[task.setvariable variable=MicrosoftReactNativeVersion]$pkgJson.version"
+            $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
+            Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: NuGetCommand@2
+        displayName: 'NuGet pack Microsoft.ReactNative'
+        inputs:
+          command: pack
+          packagesToPack: $(Build.SourcesDirectory)/vnext/Scripts/Microsot.ReactNative.PR.nuspec
+          packDestination: $(System.DefaultWorkingDirectory)/TestMSRNNuget
+          buildProperties: CommitId=0;version=$(MicrosoftReactNativeVersion);id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: TestMSRNNuget"
+        inputs:
+          artifactName: TestMSRNNuget
+          pathtoPublish: $(Build.StagingDirectory)
+        condition: eq('true', variables['TestMSRNNuget'])
 
   - job: RNWUniversalOtherProjectsPR
     displayName: Universal Other Projects PR
@@ -464,6 +497,31 @@ jobs:
           platform: $(platform)
           version: 0.61.5
           vsComponents: $(VsComponents)
+
+
+  - job: CliInitExperimental
+    displayName: Verify react-native init experimental
+    dependsOn:
+     - Setup
+     - RNWUniversalPR
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
+
+      - template: templates/react-native-init.yml
+        parameters:
+          language: cpp
+          configuration: Release
+          platform: x64
+          version: 0.61.5
+          vsComponents: $(VsComponents)
+          experimentalNugetDependency: true
 
   - job: RNWExtraChecks
     displayName: Extra Checks
