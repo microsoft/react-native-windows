@@ -107,6 +107,12 @@ jobs:
         displayName: Bump package versions to align nuget version with npm version
         condition: eq('true', variables['TestMSRNNuget'])
 
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=4.6.0"
+        condition: eq('true', variables['TestMSRNNuget'])
+
       - task: PowerShell@2
         displayName: Prepare minimum nuget for testing experimental init
         inputs:
@@ -117,15 +123,7 @@ jobs:
             Write-Output "##vso[task.setvariable variable=MicrosoftReactNativeVersion]$pkgVersion"
             $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
-        condition: eq('true', variables['TestMSRNNuget'])
-
-      - task: NuGetCommand@2
-        displayName: 'NuGet pack Microsoft.ReactNative'
-        inputs:
-          command: pack
-          packagesToPack: $(Build.SourcesDirectory)/vnext/Scripts/Microsoft.ReactNative.PR.nuspec
-          packDestination: $(System.DefaultWorkingDirectory)/TestMSRNNuget
-          buildProperties: CommitId=0;version=$(MicrosoftReactNativeVersion);id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(System.DefaultWorkingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$(MicrosoftReactNativeVersion);id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PublishBuildArtifacts@1
