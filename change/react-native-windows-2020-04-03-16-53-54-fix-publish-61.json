@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Revert #4487 in 0.61-stable",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-03T23:53:54.845Z"
-}

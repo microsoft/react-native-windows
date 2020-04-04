@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2020 04:18:45 GMT",
+      "tag": "react-native-windows_v0.61.2",
+      "version": "0.61.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Revert #4487 in 0.61-stable",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Apr 2020 17:46:21 GMT",
       "tag": "react-native-windows_v0.61.1",
       "version": "0.61.1",
