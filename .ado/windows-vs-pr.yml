@@ -111,7 +111,8 @@ jobs:
           targetType: 'inline'
           script: |
             $pkgJson = Get-Content -Raw -Path .\vnext\package.json | ConvertFrom-Json
-            Write-Output "##vso[task.setvariable variable=MicrosoftReactNativeVersion]$pkgJson.version"
+            $pkgVersion = $pkgJson.version
+            Write-Output "##vso[task.setvariable variable=MicrosoftReactNativeVersion]$pkgVersion"
             $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
         condition: eq('true', variables['TestMSRNNuget'])
