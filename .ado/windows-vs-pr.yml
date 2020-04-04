@@ -10,7 +10,8 @@ pr:
 variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
-  - reactNativeVersion: 0.61.5
+  - name: reactNativeVersion
+    value: 0.61.5
 
 jobs:
   - job: Setup
