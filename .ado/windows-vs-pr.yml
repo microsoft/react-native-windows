@@ -120,10 +120,9 @@ jobs:
           script: |
             $pkgJson = Get-Content -Raw -Path .\vnext\package.json | ConvertFrom-Json
             $pkgVersion = $pkgJson.version
-            Write-Output "##vso[task.setvariable variable=MicrosoftReactNativeVersion]$pkgVersion"
             $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
-            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(System.DefaultWorkingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$(MicrosoftReactNativeVersion);id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(System.DefaultWorkingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PublishBuildArtifacts@1
@@ -548,7 +547,7 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn format:verify
