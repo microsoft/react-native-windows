@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2020 05:07:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.14",
+      "version": "0.0.0-master.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Clean Up Directory Logic to Fix Publish",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Apr 2020 22:20:34 GMT",
       "tag": "react-native-windows_v0.0.0-master.13",
       "version": "0.0.0-master.13",
