@@ -10,6 +10,7 @@ pr:
 variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
+  reactNativeVersion: 0.61.5
 
 jobs:
   - job: Setup
@@ -496,7 +497,7 @@ jobs:
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
-          version: 0.61.5
+          version: $(reactNativeVersion)
           vsComponents: $(VsComponents)
 
 
@@ -520,7 +521,7 @@ jobs:
           language: cpp
           configuration: Release
           platform: x64
-          version: 0.61.5
+          version: $(reactNativeVersion)
           vsComponents: $(VsComponents)
           experimentalNugetDependency: true
 
