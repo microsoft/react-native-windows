@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Apr 2020 02:15:55 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Apr 2020 00:40:38 GMT and should not be manually modified.
 
+## 0.60.0-vnext.157
+Sat, 04 Apr 2020 00:40:38 GMT
+
+### Changes
+
+- Prevent invalid access to WebSocketModule::getInstance (julio.rocha@microsoft.com)
 ## 0.60.0-vnext.156
 Wed, 01 Apr 2020 02:15:55 GMT
 
