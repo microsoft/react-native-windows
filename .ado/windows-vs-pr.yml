@@ -122,7 +122,7 @@ jobs:
             $pkgVersion = $pkgJson.version
             $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
-            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(System.DefaultWorkingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PublishBuildArtifacts@1
