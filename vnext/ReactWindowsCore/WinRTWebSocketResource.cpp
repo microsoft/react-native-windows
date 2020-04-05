@@ -275,6 +275,11 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
       {
         message = Utf16ToUtf8(e.message());
       }
+      // BSTR's allocated memory must be explicitly released.
+      // See https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/allocating-and-releasing-memory-for-a-bstr
+      SysFreeString(description);
+      SysFreeString(restrictedDesc);
+      SysFreeString(capabilitySid);
 
       m_errorHandler({ std::move(message), ErrorType::Close });
     }
