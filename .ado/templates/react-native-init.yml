@@ -84,6 +84,7 @@ steps:
       targetType: inline
       script: |
         Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget -Destination $(Agent.BuildDirectory)\testcli\packages
+    condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - task: NuGetCommand@2
     displayName: NuGet restore testcli
