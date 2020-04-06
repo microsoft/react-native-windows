@@ -21,66 +21,60 @@ struct IWebSocketResource {
 
 #pragma endregion Aliases
 
-// clang-format off
 #pragma region Inner types
 
   /// <summary>
   /// As defined in RFC6455.
   /// </summary>
-  enum class ReadyState : std::uint16_t
-  {
-    Connecting  = 0,  // Handle initialized
-    Open        = 1,  // Ready to send
-    Closing     = 2,  // Currently closing
-    Closed      = 3,  // Closed or failed to open
-    Size        = 4   // Metavalue representing the number of entries in this enum.
+  enum class ReadyState : std::uint16_t {
+    Connecting = 0, // Handle initialized
+    Open = 1, // Ready to send
+    Closing = 2, // Currently closing
+    Closed = 3, // Closed or failed to open
+    Size = 4 // Metavalue representing the number of entries in this enum.
   };
 
-  enum class ErrorType : std::size_t
-  {
-    None        = 0,
-    Resolution  = 1,
-    Connection  = 2,
-    Handshake   = 3,
-    Ping        = 4,
-    Send        = 5,
-    Receive     = 6,
-    Close       = 7,
-    Size        = 8   // Metavalue representing the number of entries in this enum.
+  enum class ErrorType : std::size_t {
+    None = 0,
+    Resolution = 1,
+    Connection = 2,
+    Handshake = 3,
+    Ping = 4,
+    Send = 5,
+    Receive = 6,
+    Close = 7,
+    Size = 8 // Metavalue representing the number of entries in this enum.
   };
 
   /// <summary>
   /// As defined in https://tools.ietf.org/html/rfc6455#section-7.4
   /// </summary>
-  enum class CloseCode : std::uint16_t
-  {
-    Normal          = 1000,
-    GoingAway       = 1001,
-    ProtocolError   = 1002,
-    UnknownData     = 1003,
-    Reserved1       = 1004,
-    NoStatus        = 1005,
-    Abnormal        = 1006,
-    BadPayload      = 1007,
-    PolicyError     = 1008,
-    TooBig          = 1009,
-    NeedsExtension  = 1010,
-    InternalError   = 1011,
-    ServiceRestart  = 1012,
-    TryAgainLater   = 1013,
-    Reserved2       = 1014,
-    Reserved3       = 1015,
-    Size            = 17  // Metavalue representing the number of entries in this enum.
+  enum class CloseCode : std::uint16_t {
+    Normal = 1000,
+    GoingAway = 1001,
+    ProtocolError = 1002,
+    UnknownData = 1003,
+    Reserved1 = 1004,
+    NoStatus = 1005,
+    Abnormal = 1006,
+    BadPayload = 1007,
+    PolicyError = 1008,
+    TooBig = 1009,
+    NeedsExtension = 1010,
+    InternalError = 1011,
+    ServiceRestart = 1012,
+    TryAgainLater = 1013,
+    Reserved2 = 1014,
+    Reserved3 = 1015,
+    Size = 17 // Metavalue representing the number of entries in this enum.
   };
 
-  struct Error
-  {
+  struct Error {
     std::string Message;
     const ErrorType Type;
   };
 
 #pragma endregion Inner types
-  // clang-format on
 
   /// <summary>
   /// Creates an <c>IWebSocketResource</c> instance.
