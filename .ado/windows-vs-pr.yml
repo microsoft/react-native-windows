@@ -107,12 +107,6 @@ jobs:
         displayName: Bump package versions to align nuget version with npm version
         condition: eq('true', variables['TestMSRNNuget'])
 
-      # The commit tag in the nuspec requires that we use at least nuget 4.6
-      - task: NuGetToolInstaller@0
-        inputs:
-          versionSpec: ">=4.6.0"
-        condition: eq('true', variables['TestMSRNNuget'])
-
       - task: PowerShell@2
         displayName: Prepare minimum nuget for testing experimental init
         inputs:
@@ -158,10 +152,6 @@ jobs:
         parameters:
           vsComponents: $(VsComponents)
           yarnBuildCmd: build
-
-      - task: NuGetToolInstaller@0
-        inputs:
-          versionSpec: ">=4.6.0"
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -259,10 +249,6 @@ jobs:
         parameters:
           vsComponents: $(VsComponents)
           yarnBuildCmd: build
-
-      - task: NuGetToolInstaller@0
-        inputs:
-          versionSpec: ">=4.6.0"
 
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps

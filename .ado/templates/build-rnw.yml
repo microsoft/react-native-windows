@@ -24,10 +24,6 @@ steps:
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
 
-  - task: NuGetToolInstaller@0
-    inputs:
-      versionSpec: ">=4.6.0"
-
   - task: NuGetCommand@2
     displayName: NuGet restore
     inputs:
