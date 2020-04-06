@@ -134,9 +134,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
-      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!='' AND '$(RNW_PKG_VERSION)'!=''">
+      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
         RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
-        RNW_PKG_VERSION=$(RNW_PKG_VERSION);
+        RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);
+        RNW_PKG_VERSION_MINOR=$(RNW_PKG_VERSION_MINOR);
+        RNW_PKG_VERSION_PATCH=$(RNW_PKG_VERSION_PATCH);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)
