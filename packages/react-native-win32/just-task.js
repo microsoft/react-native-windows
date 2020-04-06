@@ -49,6 +49,9 @@ task('copyFlowFiles', () => {
 task('copyPngFiles', () => {
   return copyTask(['src/**/*.png'], '.');
 });
+task('copySvgFiles', () => {
+  return copyTask(['src/**/*.svg'], '.');
+});
 task('initRNLibraries', () => {
   require('../../vnext/scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
@@ -97,6 +100,7 @@ task(
     'initRNLibraries',
     'copyFlowFiles',
     'copyPngFiles',
+    'copySvgFiles',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),
   ),

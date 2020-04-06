@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
+const {getDefaultConfig} = require('metro-config');
 
 const rnPath = fs.realpathSync(
   fs.realpathSync(
@@ -11,53 +12,61 @@ const rnPath = fs.realpathSync(
   ),
 );
 const rnw32Path = __dirname;
+module.exports = (async () => {
+  const {
+    resolver: {sourceExts, assetExts},
+  } = await getDefaultConfig();
 
-module.exports = {
-  // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
-  watchFolders: [
-    // Include hoisted modules
-    path.resolve(__dirname, '../../node_modules'),
-  ],
-
-  resolver: {
-    extraNodeModules: {
-      // Redirect react-native and react-native-windows to this folder
-      'react-native': rnw32Path,
-      'react-native-win32': rnw32Path,
-    },
-    // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: [
-      'ios',
-      'android',
-      'windesktop',
-      'windows',
-      'web',
-      'macos',
-      'win32',
+  return {
+    // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
+    watchFolders: [
+      // Include hoisted modules
+      path.resolve(__dirname, '../../node_modules'),
     ],
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.61 when haste is removed
-    blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
-      new RegExp(
-        `${path
-          .resolve(
-            require.resolve('@react-native-community/cli/package.json'),
-            '../node_modules/react-native',
-          )
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
-    ]),
-  },
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
+
+    resolver: {
+      assetExts: assetExts.filter(ext => ext !== 'svg'),
+      sourceExts: [...sourceExts, 'svg'],
+      extraNodeModules: {
+        // Redirect react-native and react-native-windows to this folder
+        'react-native': rnw32Path,
+        'react-native-win32': rnw32Path,
       },
-    }),
-  },
-};
+      // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
+      platforms: [
+        'ios',
+        'android',
+        'windesktop',
+        'windows',
+        'web',
+        'macos',
+        'win32',
+      ],
+      // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
+      // This should go away after RN 0.61 when haste is removed
+      blacklistRE: blacklist([
+        new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}/.*`),
+        new RegExp(
+          `${path
+            .resolve(
+              require.resolve('@react-native-community/cli/package.json'),
+              '../node_modules/react-native',
+            )
+            .replace(/[/\\]/g, '/')}/.*`,
+        ),
+      ]),
+    },
+    transformer: {
+      babelTransformerPath: require.resolve('./transformer-selector.js'),
+      getTransformOptions: async () => ({
+        transform: {
+          experimentalImportSupport: false,
+          inlineRequires: false,
+        },
+      }),
+    },
+  };
+})();
 
 // Check that we have built our JS files before running the bundler, otherwise we'll get a harder to diagnose "Unable to resolve module" error
 if (

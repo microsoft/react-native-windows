@@ -55,6 +55,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('../../../Libraries/Image/Tests/ImageWin32Test'),
   },
   {
+    key: 'SvgWin32Test',
+    module: require('../../../Libraries/Image/Tests/SvgWin32Test'),
+  },
+  {
     key: 'PickerExample',
     module: require('react-native/RNTester/js/examples/Picker/PickerExample'),
   }
