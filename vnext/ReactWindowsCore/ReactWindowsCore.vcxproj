@@ -100,9 +100,6 @@
         $(ReactNativeWindowsDir)\ReactWindowsCore\pch;
         $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
         $(ReactNativeWindowsDir)\Mso;
-        $(ProjectDir);
-        $(GeneratedFilesDir);
-        $(IntDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

@@ -14,7 +14,6 @@ const {
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
-const projDir = 'proj';
 
 function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
   console.log('Generating self-signed certificate...');
@@ -70,8 +69,10 @@ function copyProjectTemplateAndReplace(
 
   const language = options.language;
   const ns = options.ns || newProjectName;
+  const projDir = options.experimentalNugetDependency ? 'proj-experimental' : 'proj';
   const srcPath = path.join(srcRootPath, language);
   const projectGuid = uuid.v4();
+  const rnwVersion = require('react-native-windows/package.json').version;
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
@@ -83,6 +84,7 @@ function copyProjectTemplateAndReplace(
     '<%=name%>': newProjectName,
     '<%=projectGuid%>': projectGuid,
     '<%=projectGuidUpper%>': projectGuid.toUpperCase(),
+    '<%rnwVersion%>' : rnwVersion,
     '<%=packageGuid%>': packageGuid,
     '<%=currentUser%>': currentUser,
     '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',

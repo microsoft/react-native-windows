@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Native-Platform Condition="'$(Platform)' == 'Win32'">x86</Native-Platform>
+        <Native-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</Native-Platform>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
+        <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd">
+            <Implementation>Microsoft.ReactNative.dll</Implementation>
+        </Reference>
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\Microsoft.ReactNative.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\Microsoft.ReactNative.pri" />
+    </ItemGroup>
+</Project>
