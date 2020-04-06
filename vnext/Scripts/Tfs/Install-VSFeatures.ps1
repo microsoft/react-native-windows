@@ -12,6 +12,8 @@ param (
 	[switch] $Collect
 )
 
+Write-Host "Downloading web installer..."
+
 Invoke-WebRequest -Method Get `
 	-Uri $InstallerUri `
 	-OutFile $VsInstaller
@@ -24,17 +26,22 @@ $VsInstallOutputDir = "${env:System_DefaultWorkingDirectory}\vs"
 
 New-Item -ItemType directory -Path $VsInstallOutputDir
 
+Write-Host "Running web installer to download components..."
+
 Start-Process `
 	-FilePath "$VsInstaller" `
 	-ArgumentList ( `
 		'--layout', "$VsInstallOutputDir",
 		'--wait',
 		'--norestart',
+		'--verbose',
 		'--quiet' + `
 		$componentList
 	) `
 	-Wait `
 	-PassThru
+
+Write-Host "Running actual VS installer..."
 
 Start-Process `
 	-FilePath "$VsInstallOutputDir\vs_Enterprise.exe" `
@@ -42,8 +49,9 @@ Start-Process `
 		'modify',
 		'--installPath', "`"$VsInstallPath`"" ,
 		'--wait',
-		'--quiet',
-		'--norestart' + `
+		'--norestart'
+		'--verbose',
+		'--quiet' + `
 		$componentList
 	) `
 	-Wait `
