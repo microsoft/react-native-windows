@@ -1,6 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 02 Apr 2020 23:27:21 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Apr 2020 05:07:07 GMT and should not be manually modified.
+
+<!-- Start content -->
+
+## 0.0.0-master.14
+
+Sat, 04 Apr 2020 05:07:07 GMT
+
+### Changes
+
+- Clean Up Directory Logic to Fix Publish (ngerlem@microsoft.com)
 
 ## 0.0.0-master.13
 Thu, 02 Apr 2020 23:27:21 GMT

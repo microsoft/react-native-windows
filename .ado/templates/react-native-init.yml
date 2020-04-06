@@ -50,6 +50,10 @@ steps:
       npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public
     displayName: Publish packages to verdaccio
 
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: ">=4.6.0"
+
   - task: CmdLine@2
     displayName: Install react-native cli
     inputs:
