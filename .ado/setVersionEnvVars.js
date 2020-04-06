@@ -9,7 +9,8 @@ const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
 // Helper to format npmVersion in a way that the Version.rc resource files want it
 function npmVersionToRcVersion(npmVersion) {
   let groups = npmVersion.split(/[\.-]/);
-  return `${groups[0]},${groups[1]},${groups[2]},${groups[4]}`;
+  const [major,minor,patch,_junk,prerelease] = groups;
+  return `${major},${minor},${patch},${prerelease ? prerelease : '0'}`;
 }
 
 let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));

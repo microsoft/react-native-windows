@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <description>Contains Windows Implementation of React-Native</description>
+    <authors>Microsoft</authors>
+    <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
+  </metadata>
+  <files>
+
+    <file src="$nugetroot$\Microsoft.ReactNative.targets" target="build\native"/>
+
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd"   target="lib\uap10.0"/>
+    <!-- 
+    Uncomment once we are producing doc xml file
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.xml"   target="lib\uap10.0"/> 
+    -->
+
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm\native" />
+
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x86\native" />
+
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
+
+  </files>
+</package>

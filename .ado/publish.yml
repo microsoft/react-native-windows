@@ -2,7 +2,7 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml
+  - template: variables/vs2019.yml
 
 trigger:
   batch: true
@@ -151,8 +151,7 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Universal.sln
-          msBuildArchitecture: x86 # Necessary to build C# unit tests
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
+          vsComponents: $(VsComponents)
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
