@@ -80,8 +80,7 @@ jobs:
           testAssemblyVer2: |
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
-          # Can't run C# unit tests on build machines until we switch to vs2019, see https://github.com/Microsoft/vstest/issues/1655
-          # Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
