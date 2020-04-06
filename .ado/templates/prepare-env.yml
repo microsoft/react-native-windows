@@ -22,10 +22,6 @@ steps:
       script: |
         Get-WmiObject Win32_LogicalDisk
 
-  - task: UseNode@1
-    inputs:
-      version: '10.x'
-
   - task: CmdLine@2
     displayName: yarn install
     inputs:

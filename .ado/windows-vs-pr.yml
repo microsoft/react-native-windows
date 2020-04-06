@@ -486,10 +486,6 @@ jobs:
     pool:
       vmImage: $(VmImage)
     steps:
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-
       - template: templates/react-native-init.yml
         parameters:
           language: $(language)
@@ -510,10 +506,6 @@ jobs:
     pool:
       vmImage: $(VmImage)
     steps:
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-
       - template: templates/react-native-init.yml
         parameters:
           language: cpp
