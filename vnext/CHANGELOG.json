@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Apr 2020 21:15:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.15",
+      "version": "0.0.0-master.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 package version",
+            "author": "tudorm@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Apr 2020 05:07:07 GMT",
       "tag": "react-native-windows_v0.0.0-master.14",
       "version": "0.0.0-master.14",
