@@ -148,43 +148,39 @@ std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_
   {
     auto ws = IWebSocketResource::Make(std::move(url));
     auto weakInstance = this->getInstance();
-    ws->SetOnError([this, id, weakWs = weak_ptr<IWebSocketResource>(ws), weakInstance](const IWebSocketResource::Error& err)
+    ws->SetOnError([this, id, weakInstance](const IWebSocketResource::Error& err)
     {
       auto strongInstance = weakInstance.lock();
       if (!strongInstance)
         return;
 
-      auto strongWs = weakWs.lock();
       auto errorObj = dynamic::object("id", id)("message", err.Message);
       this->SendEvent("websocketFailed", std::move(errorObj));
     });
-    ws->SetOnConnect([this, id, weakWs = weak_ptr<IWebSocketResource>(ws), weakInstance]()
+    ws->SetOnConnect([this, id, weakInstance]()
     {
       auto strongInstance = weakInstance.lock();
       if (!strongInstance)
         return;
 
-      auto strongWs = weakWs.lock();
       auto args = dynamic::object("id", id);
       this->SendEvent("websocketOpen", std::move(args));
     });
-    ws->SetOnMessage([this, id, weakWs = weak_ptr<IWebSocketResource>(ws), weakInstance](size_t length, const string& message)
+    ws->SetOnMessage([this, id, weakInstance](size_t length, const string& message)
     {
       auto strongInstance = weakInstance.lock();
       if (!strongInstance)
         return;
 
-      auto strongWs = weakWs.lock();
       auto args = dynamic::object("id", id)("data", message)("type", "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
-    ws->SetOnClose([this, id, weakWs = weak_ptr<IWebSocketResource>(ws), weakInstance](IWebSocketResource::CloseCode code, const string& reason)
+    ws->SetOnClose([this, id, weakInstance](IWebSocketResource::CloseCode code, const string& reason)
     {
       auto strongInstance = weakInstance.lock();
       if (!strongInstance)
         return;
 
-      auto strongWs = weakWs.lock();
       auto args = dynamic::object("id", id)("code", static_cast<uint16_t>(code))("reason", reason);
       this->SendEvent("websocketClosed", std::move(args));
     });
