@@ -159,6 +159,10 @@ jobs:
           vsComponents: $(VsComponents)
           yarnBuildCmd: build
 
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=4.6.0"
+
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
         inputs:
@@ -255,6 +259,10 @@ jobs:
         parameters:
           vsComponents: $(VsComponents)
           yarnBuildCmd: build
+
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=4.6.0"
 
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps
