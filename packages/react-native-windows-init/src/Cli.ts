@@ -324,7 +324,11 @@ You can either downgrade your version of ${chalk.green(
     );
     execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
     console.log(
-      chalk.green(`react-native-windows@${version} successfully installed.`),
+      chalk.green(
+        `react-native-windows@${chalk.cyan(
+          require('react-native-windows/package.json').version,
+        )} successfully installed.`,
+      ),
     );
 
     const generateWindows = require(reactNativeWindowsGeneratePath());

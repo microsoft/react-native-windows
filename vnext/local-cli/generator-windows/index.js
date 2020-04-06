@@ -69,6 +69,9 @@ function copyProjectTemplateAndReplace(
 
   const language = options.language;
   const ns = options.ns || newProjectName;
+  if (options.experimentalNugetDependency) {
+    console.log('Using experimental NuGet dependency.');
+  }
   const projDir = options.experimentalNugetDependency ? 'proj-experimental' : 'proj';
   const srcPath = path.join(srcRootPath, language);
   const projectGuid = uuid.v4();
