@@ -55,16 +55,15 @@ steps:
     inputs:
       script: npm install -g react-native-cli
 
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: ">=4.6.0"
+
   - task: DownloadBuildArtifacts@0
     displayName: 'Download TestMSRNNuget Artifact'
     inputs:
       artifactName: TestMSRNNuget
       downloadPath: $(System.DefaultWorkingDirectory)
-    condition: eq('true', ${{ parameters.experimentalNugetDependency }})
-
-  - task: NuGetToolInstaller@0
-    inputs:
-      versionSpec: ">=4.6.0"
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - script: |
