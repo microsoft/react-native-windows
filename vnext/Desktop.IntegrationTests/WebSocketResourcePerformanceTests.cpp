@@ -63,7 +63,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
 
     auto server = std::make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    // TODO: Re-enable.
+    // TODO:  #4493 - Allow TestWebSocketServer to handle multiple incoming messages.
     // server->Start();
 
     // WebSocket resources scope.
@@ -117,7 +117,8 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
         ws->Close();
       }
     }
-    // server->Stop();//TODO: Re-enable
+    // TODO:  #4493 - Allow TestWebSocketServer to handle multiple incoming messages.
+    // server->Stop();
 
     int32_t finalThreadCount = threadCount.load();
     int64_t threadsPerResource = (finalThreadCount - startThreadCount) / resourceTotal;

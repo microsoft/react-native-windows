@@ -54,6 +54,7 @@
 #include "ChakraRuntimeHolder.h"
 
 #if (defined(_MSC_VER) && !defined(WINRT))
+// Type only available in Desktop.
 using Microsoft::React::WebSocketModule;
 #endif
 
