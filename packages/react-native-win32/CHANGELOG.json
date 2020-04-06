@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 03 Apr 2020 20:12:21 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update API files",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 18:59:23 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Generate sourcemap for offline RNTester bundle in win32",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 29 Mar 2020 20:42:04 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.2",
       "version": "0.0.0-master.2",

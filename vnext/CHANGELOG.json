@@ -2,6 +2,123 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2020 05:07:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.14",
+      "version": "0.0.0-master.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Clean Up Directory Logic to Fix Publish",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 22:20:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Beginings of Microsoft.ReactNative nuget",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 21:00:59 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make JSValueReader.h compile with Clang [RFC] I have spent quite some time on this but I can't make it compile as a static assert prevents compilation using Clang.",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 20:12:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update API files",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 17:20:20 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update api docs",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 16:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix template specialization error in FrameworkElementViewManager.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "# Fix co_routine in LocationObserverModule.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix calling winrt::TimeSpan constructor in ValueUtils.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 15:17:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix co_routine in ReactImage.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Apr 2020 23:27:21 GMT",
       "tag": "react-native-windows_v0.0.0-master.13",
       "version": "0.0.0-master.13",

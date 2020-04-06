@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 03 Apr 2020 22:20:34 GMT",
+      "tag": "react-native-windows-init_v0.1.3",
+      "version": "0.1.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add flag for future template generation",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Apr 2020 05:12:32 GMT",
       "tag": "react-native-windows-init_v0.1.2",
       "version": "0.1.2",
