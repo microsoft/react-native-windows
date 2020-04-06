@@ -119,7 +119,7 @@ std::future<bool> WebSocketJSExecutor::ConnectAsync(
   m_errorCallback = std::move(errorCallback);
 
   m_webSocket =
-      IWebSocketResource::Make(webSocketServerUrl, /*legacyImplementation*/ true); // TODO: Deprecate legacy impl.
+      IWebSocketResource::Make(webSocketServerUrl, /*legacyImplementation*/ true); // TODO: Drop legacy impl #4509
   m_webSocket->SetOnMessage([this](size_t /*length*/, const string &message) { this->OnMessageReceived(message); });
   m_webSocket->SetOnError([this](const IWebSocketResource::Error &err) { this->SetState(State::Error); });
 
