@@ -3,11 +3,16 @@
 
 
   <!--
-    We should move all of these to the vnext Directory.build.props once we no longer have to support ReactUwp playground
+    We should move all of these to the vnext Directory.build.props once we no longer have to support ReactUwp playground.
+
+    IMPORTANT: Traversals left in a directory will break some tools like midl, but we also cannot call
+    [MSBuild]::NormalizeDirectory on relative paths since cwd is not always correct. This logic should prfer to operate
+    on full paths annd avoid extra normalization.
   -->
   <PropertyGroup>
-
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)\..\</ReactNativeWindowsDir>
+    <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory($(ReactNativeWindowsDir)))</ReactNativeWindowsDir>
+
     <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
 
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
@@ -20,22 +25,15 @@
     <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
-
     <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)\react-native-patched\</ReactNativeDir>
 
-    <!-- For relative paths, make it relative to MSBuildProjectDirectory not CurrentWorkingDirectory. -->
-    <ReactNativeDir>$([MSBuild]::NormalizeDirectory( $([System.IO.Path]::Combine( $(MSBuildProjectDirectory), $(ReactNativeDir) )) ))</ReactNativeDir>
-
     <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
+
     <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.folly\folly-2019.09.30.00</FollyDir>
+    <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
+
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- Normalize the directory names -->
-    <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory($(ReactNativeWindowsDir)))</ReactNativeWindowsDir>
-    <ReactNativePackageDir>$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)))</ReactNativePackageDir>
-    <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
-  </PropertyGroup>
 
 </Project>
 
