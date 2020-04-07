@@ -1,13 +1,6 @@
 /*
    This file is used as the root export of this package.
 
-   Since react-native is removing haste as a module lookup mechanism,
-   we need to re-export the whole of react-native from react-native-windows.
-
-   We also export the things that are actually exposed to users as part of react-native-windows.
-   Following how react-native exports everything, we export using inline requires
-   to support the inline require optimizations that the various react-native bundlers use.
-
    NOTE: when adding exports here, they should also be added to the `typings-index.ts` file,
          which will provide proper type information for these exports.
 
@@ -15,7 +8,7 @@
 */
 import * as ReactNativeWindows from './typings-index';
 
-const ReactNativeImplementation = require('./react-native-implementation.js');
+const ReactNativeImplementation = {};
 
 Object.defineProperty(ReactNativeImplementation, 'DatePicker', {
   get: () => {

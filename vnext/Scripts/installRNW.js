@@ -74,7 +74,8 @@ function copyFile(srcPath, targetPath, filename) {
   );
 }
 
-exports.copyRNLibraries = baseDir => {
+
+exports.installRNW = installationPath => {
   const reactNativePath = path.dirname(
     require.resolve('react-native/package.json'),
   );
@@ -83,38 +84,14 @@ exports.copyRNLibraries = baseDir => {
     require.resolve('react-native-windows/package.json'),
   );
 
-  const rnInstallationPath = path.resolve(reactNativeWindowsPath, './react-native-installation');
+  if (!fs.existsSync(installationPath)) {
+    fs.mkdirSync(installationPath);
+  }
 
-  copyDirectories(reactNativeWindowsPath, rnInstallationPath, [
-    {
-      src: 'ReactCopies/RNTester',
-      dest: 'RNTester',
-    },
-    {
-      src: 'ReactCopies/IntegrationTests',
-      dest: 'IntegrationTests',
-      rmFilter: '*.js',
-    },
-  ]);
-
-  copyDirectories(baseDir, rnInstallationPath, [
-    {
-      src: 'RNTester',
-      dest: 'RNTester',
-      mergeFiles: true,
-    },
-  ]);
-
-/*
-// TODO:  figure out what to do with these
-  copyDirectories(reactNativePath, baseDir, [
+  copyDirectories(reactNativePath, installationPath, [
     {
       src: 'flow',
       dest: 'flow',
-    },
-    {
-      src: 'flow-typed',
-      dest: 'flow-typed',
     },
     {
       src: 'jest',
@@ -124,19 +101,16 @@ exports.copyRNLibraries = baseDir => {
       src: 'Libraries',
       dest: 'Libraries',
     },
-    {
-      src: 'packages/react-native-codegen/src',
-      dest: 'packages/react-native-codegen/src',
-    },
   ]);
-*/
 
-  copyDirectories(baseDir, baseDir, [
+  copyFile(reactNativePath, installationPath, 'rn-get-polyfills.js');
+  copyFile(reactNativePath, installationPath, 'package.json');
+
+  copyDirectories(reactNativeWindowsPath, installationPath, [
     {
-      src: 'src/jest',
-      dest: 'jest',
+      src: 'Libraries',
+      dest: 'Libraries',
       mergeFiles: true,
     },
   ]);
-
 };

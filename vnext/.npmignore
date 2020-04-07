@@ -23,6 +23,7 @@ ReactWindows-Universal.sln
 ReactWindows-Desktop.sln
 RNTester.*
 RNTester/
+react-native-installation
 src/
 target
 temp

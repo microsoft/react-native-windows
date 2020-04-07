@@ -8,8 +8,8 @@
     "directory": "vnext"
   },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
-  "main": "Libraries/react-native/react-native-implementation.windows.js",
-  "typings": "Libraries/react-native/typings-index.d.ts",
+  "main": "Libraries/react-native-windows/react-native-windows-implementation.js",
+  "typings": "Libraries/react-native-windows/typings-index.d.ts",
   "scripts": {
     "api": "just-scripts api",
     "build": "just-scripts build",
@@ -20,7 +20,8 @@
     "lint": "just-scripts lint",
     "start": "react-native start",
     "watch": "tsc -w",
-    "validate-overrides": "override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
+    "validate-overrides": "override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json",
+    "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",

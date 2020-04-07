@@ -53,6 +53,7 @@ node_modules
 /RNTester
 /RNTester.*
 /index.*
+/react-native-installation
 
 # Visual Studio
 .vs/

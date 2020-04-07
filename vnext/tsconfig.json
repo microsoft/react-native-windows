@@ -16,7 +16,7 @@
     "strict": true,
     "rootDir": "src",
     "paths": {
-      "react-native-windows": ["src/Libraries/react-native/typings-index"] // This mapping is relative to "baseUrl"
+      "react-native-windows": ["src/Libraries/react-native-windows/typings-index"] // This mapping is relative to "baseUrl"
     }
   },
   "include": ["src"],

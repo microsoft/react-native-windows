@@ -53,6 +53,9 @@ task('copyFlowFiles', () => {
 task('initRNLibraries', () => {
   require('./Scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
+task('installRNW', () => {
+  require('./Scripts/installRNW').installRNW(path.resolve(__dirname, './react-native-installation'));
+});
 
 task('ts', () => {
   return tscTask({
@@ -77,9 +80,10 @@ task(
   'build',
   series(
     condition('clean', () => true || argv().clean),
-    'initRNLibraries',
     'copyFlowFiles',
     'ts',
+    'installRNW',
+    'initRNLibraries',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );
