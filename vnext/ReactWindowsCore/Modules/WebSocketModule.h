@@ -43,20 +43,13 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// <summary>
   /// Creates or retrieves a raw <c>IWebSocketResource</c> pointer.
   /// </summary>
-  IWebSocketResource *GetOrCreateWebSocket(int64_t id, std::string &&url = std::string());
+  std::shared_ptr<IWebSocketResource> GetOrCreateWebSocket(std::int64_t id, std::string &&url = {});
 
   /// <summary>
   /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
   /// As defined in WebSocket.js.
   /// </summary>
-  std::map<int64_t, std::unique_ptr<IWebSocketResource>> m_webSockets;
+  std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
 };
 
 } // namespace Microsoft::React
-
-// Deprecated. Keeping for compatibility.
-namespace facebook::react {
-
-using WebSocketModule = Microsoft::React::WebSocketModule;
-
-} // namespace facebook::react

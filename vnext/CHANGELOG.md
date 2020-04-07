@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Apr 2020 05:07:07 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 00:48:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.16
+
+Tue, 07 Apr 2020 00:48:37 GMT
+
+### Changes
+
+- undefined (julio@rochsquadron.net)
+
+## 0.0.0-master.15
+
+Mon, 06 Apr 2020 21:15:49 GMT
+
+### Changes
+
+- Update V8 package version (tudorm@microsoft.com)
 
 ## 0.0.0-master.14
 

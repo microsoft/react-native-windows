@@ -406,8 +406,8 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ABI\idl\ReactUWPABI.idl">
-      <!-- Enable Windows Runtime ABI header files. when /reference is passed to midl.exe, the ABI head includes headers like Windows.AI.MachineLearning.MachineLearningContract.h 
-      which doesn't exist actually in SDK. To workaround the problem, DisableReferences is enabled to disable /reference.      
+      <!-- Enable Windows Runtime ABI header files. when /reference is passed to midl.exe, the ABI head includes headers like Windows.AI.MachineLearning.MachineLearningContract.h
+      which doesn't exist actually in SDK. To workaround the problem, DisableReferences is enabled to disable /reference.
        -->
       <DisableReferences>true</DisableReferences>
       <HeaderFileName>$(IdlHeaderDirectory)\%(Filename).h</HeaderFileName>

@@ -76,7 +76,15 @@
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        REACTWINDOWS_BUILD;
+        NOMINMAX;
+        FOLLY_NO_CONFIG;
+        WIN32=0;
+        RN_EXPORT=;
+        CHAKRACORE;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
         $(ReactNativeWindowsDir);
@@ -94,9 +102,11 @@
         $(ProjectDir);
         $(GeneratedFilesDir);
         $(IntDir);
+        $(ReactNativeWindowsDir)\Mso;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -163,6 +173,7 @@
     <ClInclude Include="ChakraRuntimeHolder.h" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(USE_V8)' == 'true'" />
+    <ClInclude Include="WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
@@ -196,6 +207,7 @@
     <ClCompile Include="ChakraRuntimeHolder.cpp" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(USE_HERMES)' == 'true'" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(USE_V8)' == 'true'" />
+    <ClCompile Include="WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man" />
