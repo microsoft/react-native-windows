@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 00:48:37 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 06:29:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.17
+
+Tue, 07 Apr 2020 06:29:14 GMT
+
+### Changes
+
+- Clean up normalization (ngerlem@microsoft.com)
 
 ## 0.0.0-master.16
 

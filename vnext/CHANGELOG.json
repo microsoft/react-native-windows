@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2020 06:29:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.17",
+      "version": "0.0.0-master.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Clean up normalization",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2020 00:48:37 GMT",
       "tag": "react-native-windows_v0.0.0-master.16",
       "version": "0.0.0-master.16",
