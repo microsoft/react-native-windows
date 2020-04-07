@@ -14,7 +14,7 @@ Desktop.UnitTests
 FollyWin32
 IntegrationTests
 IntegrationTestScripts
-NuGet.Config
+/NuGet.Config
 package-deps.json
 packages
 react-native-windows.build.log

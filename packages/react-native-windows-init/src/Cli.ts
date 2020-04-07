@@ -315,7 +315,6 @@ You can either downgrade your version of ${chalk.green(
     const pkgmgr = isProjectUsingYarn(process.cwd())
       ? 'yarn add'
       : 'npm install --save';
-
     const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
     console.log(
       `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
@@ -324,7 +323,13 @@ You can either downgrade your version of ${chalk.green(
     );
     execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
     console.log(
-      chalk.green(`react-native-windows@${version} successfully installed.`),
+      chalk.green(
+        `react-native-windows@${chalk.cyan(
+          require(require.resolve('react-native-windows/package.json', {
+            paths: [process.cwd()],
+          })).version,
+        )} successfully installed.`,
+      ),
     );
 
     const generateWindows = require(reactNativeWindowsGeneratePath());
