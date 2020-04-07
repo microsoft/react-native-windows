@@ -54,7 +54,7 @@ steps:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: and(ne('${{ parameters.vsComponents }}', ''), eq(variables['VmImage'], 'windows-2019')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
+    condition: and(ne('${{ parameters.vsComponents }}', '')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
 
   - task: PowerShell@2
     displayName: List disksize after prepare-env
