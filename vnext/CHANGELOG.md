@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 20:21:01 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 21:11:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.21
+
+Tue, 07 Apr 2020 21:11:39 GMT
+
+### Changes
+
+- placeholderTextColor for secureTextEntry on TextInput (dzndlhov@microsoft.com)
 
 ## 0.0.0-master.20
 
