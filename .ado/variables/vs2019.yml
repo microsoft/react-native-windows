@@ -1,6 +1,6 @@
 variables:
   VmImage: windows-2019
-  VsComponents: 'Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64'
+  # VsComponents: 'Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64'
   VsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
   MSBuildVersion: 16.0
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\ked32bft.vu0'

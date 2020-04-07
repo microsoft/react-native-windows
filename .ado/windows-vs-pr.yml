@@ -73,8 +73,8 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: $(VsComponents)
-          installVsComponents: true
+          # vsComponents: $(VsComponents)
+          # installVsComponents: true
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
@@ -152,8 +152,8 @@ jobs:
       - template: templates/prepare-env.yml
         parameters:
           vsComponents: $(VsComponents)
-          installVsComponents: true
-          yarnBuildCmd: build
+          # installVsComponents: true
+          # yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -256,8 +256,8 @@ jobs:
       - template: templates/prepare-env.yml
         parameters:
           vsComponents: $(VsComponents)
-          installVsComponents: true
-          yarnBuildCmd: build
+          # installVsComponents: true
+          # yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps
@@ -511,8 +511,8 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
-          vsComponents: $(VsComponents)
-          installVsComponents: true
+          # vsComponents: $(VsComponents)
+          # installVsComponents: true
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
@@ -531,8 +531,8 @@ jobs:
           configuration: Release
           platform: x64
           version: $(reactNativeVersion)
-          vsComponents: $(VsComponents)
-          installVsComponents: true
+          # vsComponents: $(VsComponents)
+          # installVsComponents: true
           experimentalNugetDependency: true
 
   - job: RNWExtraChecks
