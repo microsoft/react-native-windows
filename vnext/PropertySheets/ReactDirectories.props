@@ -31,9 +31,7 @@
 
     <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.folly\folly-2019.09.30.00</FollyDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
-
   </PropertyGroup>
-
 
 </Project>
 
