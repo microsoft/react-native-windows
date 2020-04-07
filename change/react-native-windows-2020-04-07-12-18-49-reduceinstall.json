@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Optimizing VS component installer to speed up CI builds",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-07T19:18:49.438Z"
+}
