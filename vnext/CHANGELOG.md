@@ -1,8 +1,48 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Apr 2020 05:07:07 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 18:46:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.19
+
+Tue, 07 Apr 2020 18:46:38 GMT
+
+### Patches
+
+- Start of implementation for nuget template (acoates@microsoft.com)
+
+## 0.0.0-master.18
+
+Tue, 07 Apr 2020 07:15:14 GMT
+
+### Changes
+
+- Enabling arm64 where possible (jthysell@microsoft.com)
+
+## 0.0.0-master.17
+
+Tue, 07 Apr 2020 06:29:14 GMT
+
+### Changes
+
+- Clean up normalization (ngerlem@microsoft.com)
+
+## 0.0.0-master.16
+
+Tue, 07 Apr 2020 00:48:37 GMT
+
+### Changes
+
+- undefined (julio@rochsquadron.net)
+
+## 0.0.0-master.15
+
+Mon, 06 Apr 2020 21:15:49 GMT
+
+### Changes
+
+- Update V8 package version (tudorm@microsoft.com)
 
 ## 0.0.0-master.14
 

@@ -4,6 +4,7 @@ parameters:
   version:
   platform:
   configuration:
+  experimentalNugetDependency: false
   vsComponents: ''
   vsInstallerUri: $(VsInstallerUri)
 
@@ -49,10 +50,21 @@ steps:
       npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public
     displayName: Publish packages to verdaccio
 
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: ">=4.6.0"
+
   - task: CmdLine@2
     displayName: Install react-native cli
     inputs:
       script: npm install -g react-native-cli
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download TestMSRNNuget Artifact'
+    inputs:
+      artifactName: TestMSRNNuget
+      downloadPath: $(System.DefaultWorkingDirectory)
+    condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - task: CmdLine@2
     displayName: Init new project
@@ -63,8 +75,16 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }}
+      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }} --experimentalNugetDependency ${{ parameters.experimentalNugetDependency }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
+
+  - task: PowerShell@2
+    displayName: Install private Microsoft.ReactNative package
+    inputs:
+      targetType: inline
+      script: |
+        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget -Destination $(Agent.BuildDirectory)\testcli\windows\packages
+    condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - task: NuGetCommand@2
     displayName: NuGet restore testcli
@@ -102,7 +122,6 @@ steps:
       msbuildArgs:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-        /p:BaseIntDir=$(BaseIntDir)
         /p:AppxGeneratePrisForPortableLibrariesEnabled=false
 
   - task: PublishBuildArtifacts@1
@@ -110,7 +129,7 @@ steps:
     timeoutInMinutes: 10
     inputs:
       pathtoPublish: $(Agent.BuildDirectory)/testcli/windows/testcli.sln.log
-      artifactName: Detailed Logs for testcli.sln ${{ parameters.platform }} ${{ parameters.configuration }}
+      artifactName: Detailed Logs for testcli.sln ${{ parameters.platform }} ${{ parameters.configuration }} ${{ parameters.experimentalNugetDependency }}
       publishLocation: 'Container'
 
   - task: CmdLine@2

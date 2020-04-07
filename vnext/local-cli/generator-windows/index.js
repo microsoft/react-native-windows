@@ -1,3 +1,4 @@
+// @ts-check
 'use strict';
 const chalk = require('chalk');
 const path = require('path');
@@ -23,7 +24,7 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
       const timeout = 10000; // 10 seconds;
       const thumbprint = childProcess.execSync(`powershell -command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`, {timeout}).toString().trim();
       if (!fs.existsSync(path.join(windowsDir, newProjectName))) {
-        fs.createDir(path.join(windowsDir, newProjectName));
+        fs.mkdirSync(path.join(windowsDir, newProjectName));
       }
       childProcess.execSync(`powershell -command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd"`, {timeout});
       console.log(chalk.green('Self-signed certificate generated successfully.'));
@@ -69,6 +70,9 @@ function copyProjectTemplateAndReplace(
 
   const language = options.language;
   const ns = options.ns || newProjectName;
+  if (options.experimentalNugetDependency) {
+    console.log('Using experimental NuGet dependency.');
+  }
   const projDir = options.experimentalNugetDependency ? 'proj-experimental' : 'proj';
   const srcPath = path.join(srcRootPath, language);
   const projectGuid = uuid.v4();
@@ -108,7 +112,16 @@ function copyProjectTemplateAndReplace(
     [
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj') },
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj.filters') },
-    ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+      { from: path.join(srcPath, projDir, 'packages.config'), to: path.join(windowsDir, newProjectName, 'packages.config') },
+      { from: path.join(srcPath, projDir, 'packages.config'), to: 'packages.config' },
+  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+
+  // Once we are publishing to nuget.org, this shouldn't be needed anymore
+  if (options.experimentalNugetDependency) {
+    [
+      { from: path.join(srcPath, projDir, 'NuGet.Config'), to: 'NuGet.Config' },
+  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+  }
   }
 
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars, options.overwrite);
@@ -143,8 +156,7 @@ function installDependencies(options) {
 
   // Install dependencies using correct package manager
   const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
-  const execOptions = options && options.verbose ? { stdio: 'inherit' } : {};
-  childProcess.execSync(isYarn ? 'yarn' : 'npm i', execOptions);
+  childProcess.execSync(isYarn ? 'yarn' : 'npm i', options && options.verbose ? { stdio: 'inherit' } : {});
 }
 
 module.exports = {

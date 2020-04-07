@@ -22,9 +22,9 @@ steps:
       script: |
         Get-WmiObject Win32_LogicalDisk
 
-  - task: UseNode@1
+  - task: NuGetToolInstaller@0
     inputs:
-      version: '10.x'
+      versionSpec: ">=4.6.0"
 
   - task: CmdLine@2
     displayName: yarn install

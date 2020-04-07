@@ -41,7 +41,7 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
