@@ -62,7 +62,7 @@ steps:
   - task: DownloadBuildArtifacts@0
     displayName: 'Download TestMSRNNuget Artifact'
     inputs:
-      artifactName: TestMSRNNuget
+      artifactName: TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }}
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
