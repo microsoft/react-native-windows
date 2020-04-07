@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 06:29:14 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 07:15:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.18
+
+Tue, 07 Apr 2020 07:15:14 GMT
+
+### Changes
+
+- Enabling arm64 where possible (jthysell@microsoft.com)
 
 ## 0.0.0-master.17
 
