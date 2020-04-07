@@ -88,6 +88,7 @@ steps:
       arguments:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
+        -UseWebInstaller:$false
     condition: and(ne('${{ parameters.vsComponents }}', '')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
 
   - task: VSBuild@1
