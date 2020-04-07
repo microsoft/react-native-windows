@@ -49,7 +49,7 @@ Start-Process `
 		'modify',
 		'--installPath', "`"$VsInstallPath`"" ,
 		'--wait',
-		'--norestart'
+		'--norestart',
 		'--verbose',
 		'--quiet' + `
 		$componentList
