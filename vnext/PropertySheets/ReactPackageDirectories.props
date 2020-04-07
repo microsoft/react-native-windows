@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-
   <!--
-    We should move all of these to the vnext Directory.build.props once we no longer have to support ReactUwp playground
-  -->
-  <PropertyGroup>
+   Projects should include the following code in their project file before importing this file:
 
+  <PropertyGroup>
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+  </PropertyGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPackageDirectories.props" />
+  -->
+
+  <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)\..\</ReactNativeWindowsDir>
     <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
-
-    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
-    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
-    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
-
-    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
-
-    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
-
     <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)\react-native-patched\</ReactNativeDir>
-
+    
     <!-- For relative paths, make it relative to MSBuildProjectDirectory not CurrentWorkingDirectory. -->
     <ReactNativeDir>$([MSBuild]::NormalizeDirectory( $([System.IO.Path]::Combine( $(MSBuildProjectDirectory), $(ReactNativeDir) )) ))</ReactNativeDir>
 
