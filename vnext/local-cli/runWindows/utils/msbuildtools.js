@@ -155,11 +155,21 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   ];
 
   const vsPath = VSWhere(requires.join(' '), version, 'installationPath');
+
+  if (verbose) {
+    console.log('VS path: ' + vsPath);
+  }
+
   const installationVersion = VSWhere(
     requires.join(' '),
     version,
     'installationVersion',
   );
+
+  if (verbose) {
+    console.log('VS version: ' + installationVersion);
+  }
+
   // VS 2019 changed path naming convention
   const vsVersion = version === '16.0' ? 'Current' : version;
 
@@ -170,6 +180,10 @@ function checkMSBuildVersion(version, buildArch, verbose) {
     vsVersion,
     'Bin/MSBuild.exe',
   );
+
+  if (verbose) {
+    console.log('Looking for MSBuilt at: ' + msBuildPath);
+  }
 
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
 
