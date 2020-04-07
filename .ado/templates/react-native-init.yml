@@ -6,6 +6,7 @@ parameters:
   configuration:
   experimentalNugetDependency: false
   vsComponents: ''
+  listVsComponents: false
   installVsComponents: false
 
 steps:
@@ -101,6 +102,7 @@ steps:
     inputs:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+    condition: and(succeeded(), ${{ parameters.listVsComponents }})
 
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
