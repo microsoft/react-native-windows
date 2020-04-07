@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Update V8 package version",
+  "packageName": "react-native-windows",
+  "email": "tudorm@microsoft.com",
+  "commit": "34f6517b498998f2851c11819d3df20d9e0254e7",
+  "dependentChangeType": "patch",
+  "date": "2020-04-06T21:12:34.254Z"
+}
