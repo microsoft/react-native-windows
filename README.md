@@ -55,7 +55,7 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 
 - The version of Windows, React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) where you ran into the issue.
 - A stack trace and reduced repro case when possible.
-- Ensure the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new?assignees=&labels=bug&template=react-native-windows--vnext--bug-report.md&title=Describe+the+problem) is used when filing your issue(s).
+- Ensure the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new/choose) is used when filing your issue(s).
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed our main README's the [Getting Help](https://github.com/microsoft/react-native-windows#getting-help) section.
 
