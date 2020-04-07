@@ -9,54 +9,73 @@ param (
 
 	[System.IO.FileInfo] $VsInstallPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise",
 
+	[System.IO.FileInfo] $VsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer",
+
 	[switch] $Collect
+
+	[switch] $UseWebInstaller = $true
 )
-
-Write-Host "Downloading web installer..."
-
-Invoke-WebRequest -Method Get `
-	-Uri $InstallerUri `
-	-OutFile $VsInstaller
 
 $Components | ForEach-Object {
 	$componentList += '--add', $_
 }
 
-$VsInstallOutputDir = "${env:System_DefaultWorkingDirectory}\vs"
+if ($UseWebInstaller) {
+	Write-Host "Downloading web installer..."
 
-New-Item -ItemType directory -Path $VsInstallOutputDir
+	Invoke-WebRequest -Method Get `
+		-Uri $InstallerUri `
+		-OutFile $VsInstaller
 
-Write-Host "Running web installer to download components..."
+	$VsInstallOutputDir = "${env:System_DefaultWorkingDirectory}\vs"
 
-Start-Process `
-	-FilePath "$VsInstaller" `
-	-ArgumentList ( `
-		'--layout', "$VsInstallOutputDir",
-		'--wait',
-		'--norestart',
-		'--verbose',
-		'--quiet' + `
-		$componentList
-	) `
-	-Wait `
-	-PassThru
+	New-Item -ItemType directory -Path $VsInstallOutputDir
 
-Write-Host "Running actual VS installer..."
+	Write-Host "Running web installer to download requested components..."
 
-Start-Process `
-	-FilePath "$VsInstallOutputDir\vs_Enterprise.exe" `
-	-ArgumentList (
-		'modify',
-		'--installPath', "`"$VsInstallPath`"" ,
-		'--wait',
-		'--norestart',
-		'--verbose',
-		'--quiet' + `
-		$componentList
-	) `
-	-Wait `
-	-PassThru `
-	-OutVariable returnCode
+	Start-Process `
+		-FilePath "$VsInstaller" `
+		-ArgumentList ( `
+			'--layout', "$VsInstallOutputDir",
+			'--wait',
+			'--norestart',
+			'--quiet' + `
+			$componentList
+		) `
+		-Wait
+
+	Write-Host "Running VS installer to add requested components..."
+
+	Start-Process `
+		-FilePath "$VsInstallOutputDir\vs_Enterprise.exe" `
+		-ArgumentList (
+			'modify',
+			'--installPath', "`"$VsInstallPath`"" ,
+			'--wait',
+			'--norestart',
+			'--quiet' + `
+			$componentList
+		) `
+		-Wait `
+		-OutVariable returnCode
+
+	Remove-Item --path $VsInstallOutputDir
+	
+} else {
+	Write-Host "Using local installer..."
+
+	Start-Process `
+		-FilePath "$VsInstallerPath\vs_installershell.exe" `
+		-ArgumentList (
+			'modify',
+			'--installPath', "`"$VsInstallPath`"" ,
+			'--norestart',
+			'--quiet' + `
+			$componentList
+		) `
+		-Wait `
+		-OutVariable returnCode
+}
 
 if ($Collect) {
 	Invoke-WebRequest -Method Get `
