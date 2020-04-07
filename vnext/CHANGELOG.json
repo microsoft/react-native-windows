@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2020 18:46:38 GMT",
+      "tag": "react-native-windows_v0.0.0-master.19",
+      "version": "0.0.0-master.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start of implementation for nuget template",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2020 07:15:14 GMT",
       "tag": "react-native-windows_v0.0.0-master.18",
       "version": "0.0.0-master.18",

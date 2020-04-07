@@ -10,6 +10,8 @@ pr:
 variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
+  - name: reactNativeVersion
+    value: 0.61.5
 
 jobs:
   - job: Setup
@@ -33,6 +35,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+          TestMSRNNuget: True
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
@@ -92,13 +95,37 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
-          
+
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             ReactUWP\**
+
+      - script: |
+          npx --no-install beachball bump
+        displayName: Bump package versions to align nuget version with npm version
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PowerShell@2
+        displayName: Prepare minimum nuget for testing experimental init
+        inputs:
+          targetType: 'inline'
+          script: |
+            $pkgJson = Get-Content -Raw -Path .\vnext\package.json | ConvertFrom-Json
+            $pkgVersion = $pkgJson.version
+            $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
+            Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: TestMSRNNuget"
+        inputs:
+          artifactName: TestMSRNNuget
+          pathtoPublish: $(Build.StagingDirectory)/TestMSRNNuget
+        condition: eq('true', variables['TestMSRNNuget'])
 
   - job: RNWUniversalOtherProjectsPR
     displayName: Universal Other Projects PR
@@ -483,9 +510,30 @@ jobs:
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
-          version: 0.61.5
+          version: $(reactNativeVersion)
           vsComponents: $(VsComponents)
           installVsComponents: true
+
+  - job: CliInitExperimental
+    displayName: Verify react-native init experimental
+    dependsOn:
+     - Setup
+     - RNWUniversalPR
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - template: templates/react-native-init.yml
+        parameters:
+          language: cpp
+          configuration: Release
+          platform: x64
+          version: $(reactNativeVersion)
+          vsComponents: $(VsComponents)
+          installVsComponents: true
+          experimentalNugetDependency: true
 
   - job: RNWExtraChecks
     displayName: Extra Checks
@@ -511,7 +559,7 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn format:verify
