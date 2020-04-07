@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Apr 2020 00:40:38 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 19:00:31 GMT and should not be manually modified.
 
+## 0.60.0-vnext.158
+Tue, 07 Apr 2020 19:00:31 GMT
+
+### Changes
+
+- Update V8 package version (tudorm@microsoft.com)
 ## 0.60.0-vnext.157
 Sat, 04 Apr 2020 00:40:38 GMT
 
