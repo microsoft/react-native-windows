@@ -49,10 +49,6 @@ steps:
       script: rd /S /Q IntegrationTestsCopy
       workingDirectory: vnext
 
-  - task: NuGetToolInstaller@0
-    inputs:
-      versionSpec: ">=4.6.0"
-
   - task: CmdLine@2
     displayName: Install react-native cli
     inputs:
