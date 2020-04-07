@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 18:46:38 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 20:21:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.20
+
+Tue, 07 Apr 2020 20:21:01 GMT
+
+### Changes
+
+- Fix issue adding react-native-windows to a package in a monorepo (acoates@microsoft.com)
 
 ## 0.0.0-master.19
 
