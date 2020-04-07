@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 07:15:14 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Apr 2020 18:46:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.19
+
+Tue, 07 Apr 2020 18:46:38 GMT
+
+### Patches
+
+- Start of implementation for nuget template (acoates@microsoft.com)
 
 ## 0.0.0-master.18
 
