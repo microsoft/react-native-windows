@@ -27,6 +27,10 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
+  - task: UseNode@1
+    inputs:
+      version: '10.x'
+
   - task: CmdLine@2
     displayName: Modify package.json to use unforked RN
     inputs:
