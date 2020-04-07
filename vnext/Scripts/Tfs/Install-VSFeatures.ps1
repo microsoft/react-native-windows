@@ -7,11 +7,15 @@ param (
 
 	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
 
+	[string] $VsInstallOutputDir = "${env:System_DefaultWorkingDirectory}\vs",
+
 	[System.IO.FileInfo] $VsInstallPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise",
 
 	[System.IO.FileInfo] $VsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer",
 
-	[switch] $Collect
+	[switch] $Collect = $false,
+
+	[switch] $Cleanup = $false,
 
 	[switch] $UseWebInstaller = $true
 )
@@ -27,8 +31,6 @@ if ($UseWebInstaller) {
 		-Uri $InstallerUri `
 		-OutFile $VsInstaller
 
-	$VsInstallOutputDir = "${env:System_DefaultWorkingDirectory}\vs"
-
 	New-Item -ItemType directory -Path $VsInstallOutputDir
 
 	Write-Host "Running web installer to download requested components..."
@@ -42,7 +44,8 @@ if ($UseWebInstaller) {
 			'--quiet' + `
 			$componentList
 		) `
-		-Wait
+		-Wait `
+		-PassThru
 
 	Write-Host "Running VS installer to add requested components..."
 
@@ -57,9 +60,15 @@ if ($UseWebInstaller) {
 			$componentList
 		) `
 		-Wait `
+		-PassThru `
 		-OutVariable returnCode
 
-	Remove-Item --path $VsInstallOutputDir
+	if ($Cleanup) {
+		Write-Host "Cleaning up..."
+
+		Remove-Item -Path $VsInstaller
+		Remove-Item -Path $VsInstallOutputDir -Recurse
+	}
 	
 } else {
 	Write-Host "Using local installer..."
