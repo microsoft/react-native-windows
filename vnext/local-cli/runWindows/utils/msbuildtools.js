@@ -161,11 +161,7 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 
   // https://aka.ms/vs/workloads
-  const requires = [
-    'Microsoft.Component.MSBuild',
-    getVCToolsByArch(buildArch),
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
-  ];
+  const requires = ['Microsoft.Component.MSBuild', getVCToolsByArch(buildArch)];
 
   const vsPath = VSWhere(
     requires.join(' '),
