@@ -64,7 +64,7 @@ jobs:
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
           testPlatformVersion: latestStable
-        condition: and(ne(variables.BuildPlatform, 'arm'), ne(variables.BuildPlatform, 'arm64'))
+        condition: not(startsWith(variables.BuildPlatform, 'arm'))
 
       - template: templates/build-rnw.yml
         parameters:
@@ -80,7 +80,7 @@ jobs:
           testAssemblyVer2: |
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
-          # Can't run C# unit tests on build machines until we switch to vs2019, see https://github.com/Microsoft/vstest/issues/1655
+          # Managed unit tests crash with .net native https://github.com/Microsoft/vstest/issues/3838
           # Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
@@ -90,7 +90,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
-        condition: and(ne(variables.BuildPlatform, 'arm'), ne(variables.BuildPlatform, 'arm64'))
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -208,6 +208,12 @@ jobs:
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
+        #Arm64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM64
+        #Arm64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: ARM64
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool:
@@ -447,6 +453,22 @@ jobs:
           language: cs
           configuration: Release
           platform: arm
+        #Arm64DebugCpp:
+        #  language: cpp
+        #  configuration: Debug
+        #  platform: arm64
+        #Arm64DebugCs:
+        #  language: cs
+        #  configuration: Debug
+        #  platform: arm64
+        #Arm64ReleaseCpp:
+        #  language: cpp
+        #  configuration: Release
+        #  platform: arm64
+        #Arm64ReleaseCs:
+        #  language: cs
+        #  configuration: Release
+        #  platform: arm64
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
