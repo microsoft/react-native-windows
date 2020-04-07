@@ -97,6 +97,12 @@ steps:
       sdkVersion: $(Win10Version)
 
   - task: PowerShell@2
+    displayName: List Visual Studio Components
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+
+  - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
       targetType: filePath

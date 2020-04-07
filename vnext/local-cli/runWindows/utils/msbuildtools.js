@@ -106,14 +106,14 @@ function VSWhere(requires, version, property, verbose) {
     if (verbose) {
       console.log('Found vswhere.');
     }
-    const vsPath = child_process
+    const propertyValue = child_process
       .execSync(
         `"${vsWherePath}" -version [${version},${Number(version) +
           1}) -products * -requires ${requires} -property ${property}`,
       )
       .toString()
       .split(EOL)[0];
-    return vsPath;
+    return propertyValue;
   } else {
     if (verbose) {
       console.log("Couldn't find vswhere, querying registry.");
