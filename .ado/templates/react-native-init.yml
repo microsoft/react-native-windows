@@ -122,7 +122,6 @@ steps:
       msbuildArgs:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-        /p:BaseIntDir=$(BaseIntDir)
         /p:AppxGeneratePrisForPortableLibrariesEnabled=false
 
   - task: PublishBuildArtifacts@1

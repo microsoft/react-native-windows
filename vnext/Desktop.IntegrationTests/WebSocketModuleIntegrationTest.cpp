@@ -5,8 +5,8 @@
 
 #include <Modules/WebSocketModule.h>
 
-using namespace facebook::react;
 using namespace folly;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::make_unique;
@@ -19,7 +19,7 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
 
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
     connect.func(
-        dynamic::array("ws://localhost:5555/", dynamic(), dynamic(), /*id*/ 0),
+        dynamic::array("ws://localhost:5556/", dynamic(), dynamic(), /*id*/ 0),
         [](vector<dynamic>) {},
         [](vector<dynamic>) {});
 
@@ -35,11 +35,11 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
 
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
     connect.func(
-        dynamic::array("ws://localhost:5555/", dynamic(), dynamic(), /*id*/ 0),
+        dynamic::array("ws://localhost:5556/", dynamic(), dynamic(), /*id*/ 0),
         [](vector<dynamic>) {},
         [](vector<dynamic>) {});
     connect.func(
-        dynamic::array("ws://localhost:5555/", dynamic(), dynamic(), /*id*/ 1),
+        dynamic::array("ws://localhost:5556/", dynamic(), dynamic(), /*id*/ 1),
         [](vector<dynamic>) {},
         [](vector<dynamic>) {});
 
