@@ -71,6 +71,7 @@ jobs:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents)
+          installVsComponents: true
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
@@ -124,6 +125,7 @@ jobs:
       - template: templates/prepare-env.yml
         parameters:
           vsComponents: $(VsComponents)
+          installVsComponents: true
           yarnBuildCmd: build
 
       - task: NuGetCommand@2
@@ -227,6 +229,7 @@ jobs:
       - template: templates/prepare-env.yml
         parameters:
           vsComponents: $(VsComponents)
+          installVsComponents: true
           yarnBuildCmd: build
 
       - task: NuGetCommand@2
@@ -482,6 +485,7 @@ jobs:
           platform: $(platform)
           version: 0.61.5
           vsComponents: $(VsComponents)
+          installVsComponents: true
 
   - job: RNWExtraChecks
     displayName: Extra Checks

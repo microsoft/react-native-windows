@@ -7,6 +7,7 @@ parameters:
   # Visual Studio Installer
   vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
+  installVsComponents: false
 
 steps:
   - task: PowerShell@2
@@ -55,7 +56,7 @@ steps:
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
         -Cleanup:$true
-    condition: and(ne('${{ parameters.vsComponents }}', '')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
+    condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
   - task: PowerShell@2
     displayName: List disksize after prepare-env
