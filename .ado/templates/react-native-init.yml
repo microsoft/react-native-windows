@@ -83,7 +83,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget -Destination $(Agent.BuildDirectory)\testcli\packages
+        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget -Destination $(Agent.BuildDirectory)\testcli\windows\packages
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - task: NuGetCommand@2
