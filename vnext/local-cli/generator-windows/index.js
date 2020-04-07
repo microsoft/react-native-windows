@@ -135,7 +135,7 @@ function installDependencies(options) {
   const cwd = process.cwd();
 
   // Extract react-native peer dependency version
-  const vnextPackageJsonPath = path.join(cwd, 'node_modules', 'react-native-windows', 'package.json');
+  const vnextPackageJsonPath = require.resolve('react-native-windows/package.json', {paths: [process.cwd()]});
   const vnextPackageJson = JSON.parse(fs.readFileSync(vnextPackageJsonPath, { encoding: 'UTF8' }));
   let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
   const depDelim = ' || ';
@@ -150,7 +150,7 @@ function installDependencies(options) {
   // Patch package.json to have proper react-native version and install
   const projectPackageJsonPath = path.join(cwd, 'package.json');
   const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
-  projectPackageJson.scripts.start = 'react-native start';
+  projectPackageJson.scripts.windows = 'react-native run-windows';
   projectPackageJson.dependencies['react-native'] = reactNativeVersion;
   fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
 
