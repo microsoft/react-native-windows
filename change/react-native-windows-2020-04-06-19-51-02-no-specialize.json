@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Clean up normalization",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-07T02:51:02.164Z"
+}
