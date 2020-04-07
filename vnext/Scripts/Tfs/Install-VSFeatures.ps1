@@ -2,8 +2,7 @@ param (
 	[Parameter(Mandatory=$true)]
 	[string[]] $Components,
 
-	[Parameter(Mandatory=$true)]
-	[uri] $InstallerUri,
+	[uri] $InstallerUri = "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe",
 
 	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
 
@@ -51,7 +50,7 @@ if ($UseWebInstaller) {
 		-Wait `
 		-PassThru
 
-	Write-Host "Running VS installer to add requested components..."
+	Write-Host "Running downloaded VS installer to add requested components..."
 
 	Start-Process `
 		-FilePath "$VsInstallOutputDir\vs_Enterprise.exe" `
@@ -75,7 +74,7 @@ if ($UseWebInstaller) {
 	}
 	
 } else {
-	Write-Host "Using local installer..."
+	Write-Host "Running local installer to add requested components..."
 
 	Start-Process `
 		-FilePath "$LocalVsInstaller" `

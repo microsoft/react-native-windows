@@ -5,7 +5,6 @@ parameters:
   debug: false
 
   # Visual Studio Installer
-  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
   installVsComponents: false
 
@@ -52,7 +51,6 @@ steps:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
       arguments:
-        -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
         -Cleanup:$true
