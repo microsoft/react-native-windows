@@ -17,12 +17,16 @@ param (
 
 	[switch] $Cleanup = $false,
 
-	[switch] $UseWebInstaller = $true
+	[switch] $UseWebInstaller = $false
 )
 
 $Components | ForEach-Object {
 	$componentList += '--add', $_
 }
+
+$LocalVsInstaller = "$VsInstallerPath\vs_installershell.exe"
+
+$UseWebInstaller = $UseWebInstaller -or -not (Test-Path -Path "$LocalVsInstaller")
 
 if ($UseWebInstaller) {
 	Write-Host "Downloading web installer..."
@@ -74,7 +78,7 @@ if ($UseWebInstaller) {
 	Write-Host "Using local installer..."
 
 	Start-Process `
-		-FilePath "$VsInstallerPath\vs_installershell.exe" `
+		-FilePath "$LocalVsInstaller" `
 		-ArgumentList (
 			'modify',
 			'--installPath', "`"$VsInstallPath`"" ,

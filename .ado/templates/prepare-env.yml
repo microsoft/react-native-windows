@@ -55,7 +55,6 @@ steps:
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
         -Cleanup:$true
-        -UseWebInstaller:$false
     condition: and(ne('${{ parameters.vsComponents }}', '')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
 
   - task: PowerShell@2
