@@ -22,6 +22,10 @@ steps:
       script: |
         Get-WmiObject Win32_LogicalDisk
 
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: ">=4.6.0"
+
   - task: UseNode@1
     inputs:
       version: '10.x'
