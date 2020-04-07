@@ -432,7 +432,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             registerEvents();
             control = newPasswordBox.as<winrt::Control>();
             passwordBox = newPasswordBox;
-            if (m_placeholderTextColor != NULL) {
+            if (!m_placeholderTextColor.isNull()) {
               setPasswordBoxPlaceholderForeground(newPasswordBox, m_placeholderTextColor);
             }
           }
@@ -444,7 +444,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             registerEvents();
             control = newTextBox.as<winrt::Control>();
             textBox = newTextBox;
-            if (m_placeholderTextColor != NULL) {
+            if (!m_placeholderTextColor.isNull()) {
               textBox.PlaceholderForeground(SolidColorBrushFrom(m_placeholderTextColor));
             }
           }
@@ -490,7 +490,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         control.ClearValue(
             m_isTextBox ? winrt::TextBox::InputScopeProperty() : winrt::PasswordBox::InputScopeProperty());
     } else if (propertyName == "placeholderTextColor") {
-      m_placeholderTextColor = NULL;
+      m_placeholderTextColor = nullptr;
       if (textBox.try_as<winrt::ITextBox6>() && m_isTextBox) {
         if (IsValidColorValue(propertyValue)) {
           m_placeholderTextColor = propertyValue;
