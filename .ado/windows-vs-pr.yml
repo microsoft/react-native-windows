@@ -75,15 +75,13 @@ jobs:
           project: vnext/ReactWindows-Universal.sln
 
       - task: VSTest@2
-        displayName: Run Universal Unit Tests
+        displayName: Run Native Universal Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
-          # Managed unit tests crash with .net native https://github.com/Microsoft/vstest/issues/3838
-          # Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
@@ -93,6 +91,21 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+      
+      - task: VSTest@2
+        displayName: Run Managed Universal Unit Tests
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
