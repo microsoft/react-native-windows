@@ -81,6 +81,8 @@ struct DevSettings {
   /// is loaded.
   bool useWebDebugger{false};
 
+  bool useFastRefresh{false};
+
   // Enables ChakraCore console redirection to debugger
   bool debuggerConsoleRedirection{false};
 

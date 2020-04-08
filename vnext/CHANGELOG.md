@@ -1,7 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Mar 2020 18:28:07 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Apr 2020 04:18:45 GMT and should not be manually modified.
 
+## 0.61.2
+Sat, 04 Apr 2020 04:18:45 GMT
+
+### Patches
+
+- Revert #4487 in 0.61-stable (ngerlem@microsoft.com)
+## 0.61.1
+Fri, 03 Apr 2020 17:46:21 GMT
+
+### Patches
+
+- Add a timeout to catch hangs during cert generation (acoates@microsoft.com)
+- Fix direct debugging (acoates@microsoft.com)
+- Update MSBuild Tasks to use MSBuild x64 (jthysell@microsoft.com)
+- Set $(ReactNativeWindowsDir) before it is used (vmorozov@microsoft.com)
+- Fix crash when calling measure on non-framework element (acoates@microsoft.com)
 ## 0.61.0
 Thu, 26 Mar 2020 18:28:07 GMT
 
