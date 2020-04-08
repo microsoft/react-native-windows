@@ -99,14 +99,14 @@ jobs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
-          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: latest
+          vsTestVersion: toolsInstaller
+          otheConsoleOptions: /framework:FrameworkUap10
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')), eq(variables.BuildPlatform, 'x86'), eq(variables.BuildConfiguration, 'Debug')) # Only running on x86 Debug due to https://github.com/microsoft/react-native-windows/issues/4533
 
       - template: templates/publish-build-artifacts-for-nuget.yml
