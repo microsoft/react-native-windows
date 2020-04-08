@@ -96,16 +96,18 @@ function getSolutionFile(options) {
 }
 
 function parseMsBuildProps(options) {
+  var result = {};
   if (options.msbuildprops) {
-    var result = {};
     var props = options.msbuildprops.split(',');
     for (var i = 0; i < props.length; i++) {
       var prop = props[i].split('=');
       result[prop[0]] = prop[1];
     }
-    return result;
   }
-  return null;
+  if (options.directDebugging) {
+    result.UseDirectDebugging = 'true';
+  }
+  return result;
 }
 
 module.exports = {

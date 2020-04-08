@@ -117,6 +117,9 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(UseDirectDebugging)' == 'true'">
+    <DefineConstants>$(DefineConstants);USE_DIRECT_DEBUGGING</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
