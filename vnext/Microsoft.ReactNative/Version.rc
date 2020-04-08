@@ -21,6 +21,10 @@
 #define RNW_PKG_VERSION_PATCH 0
 #endif
 
+#ifndef RNW_PKG_VERSION_MAJOR
+#define RNW_PKG_VERSION_MAJOR 1000
+#endif
+
 #ifdef RNW_PKG_VERSION
 #define VER_FILEVERSION RNW_PKG_VERSION
 #else
@@ -49,9 +53,9 @@ BEGIN
 VALUE "CompanyName", "Microsoft"
 VALUE "FileDescription", "React-Native-Windows"
 VALUE "FileVersion", VER_FILEVERSION_STR
-VALUE "InternalName", "react.uwp.dll"
+VALUE "InternalName", "Microsoft.ReactNative.dll"
 VALUE "LegalCopyright", "(c) Microsoft Corporation. All rights reserved."
-VALUE "OriginalFilename", "react.uwp.dll"
+VALUE "OriginalFilename", "Microsoft.ReactNative.dll"
 VALUE "ProductName", "React-Native-Windows"
 VALUE "ProductVersion", VER_FILEVERSION_STR
 END

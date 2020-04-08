@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2020 13:58:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.23",
+      "version": "0.0.0-master.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Apply version numbers to Microsoft.ReactNative",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Apr 2020 00:50:14 GMT",
       "tag": "react-native-windows_v0.0.0-master.22",
       "version": "0.0.0-master.22",

@@ -318,9 +318,6 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
-          msbuildArguments:
-            /p:RNW_PKG_VERSION_STR="Private Build"
-            /p:RNW_PKG_VERSION="1000,0,0,0"
 
       - task: CmdLine@2
         displayName: Build react-native-win32 RNTester bundle
