@@ -73,7 +73,6 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: $(VsComponents)
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
@@ -149,9 +148,6 @@ jobs:
         submodules: false
         
       - template: templates/prepare-env.yml
-        parameters:
-          vsComponents: $(VsComponents)
-          yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -252,9 +248,6 @@ jobs:
         submodules: false
         
       - template: templates/prepare-env.yml
-        parameters:
-          vsComponents: $(VsComponents)
-          yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps
@@ -508,8 +501,6 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
-          vsComponents: $(VsComponents)
-
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
@@ -528,7 +519,6 @@ jobs:
           configuration: Release
           platform: x64
           version: $(reactNativeVersion)
-          vsComponents: $(VsComponents)
           experimentalNugetDependency: true
 
   - job: RNWExtraChecks

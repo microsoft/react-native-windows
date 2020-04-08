@@ -90,24 +90,34 @@ class MSBuildTools {
   }
 }
 
-function VSWhere(requires, version, property) {
+function VSWhere(requires, version, property, verbose) {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
     process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
+  if (verbose) {
+    console.log('Looking for vswhere at: ' + vsWherePath);
+  }
+
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
-    const vsPath = child_process
+    if (verbose) {
+      console.log('Found vswhere.');
+    }
+    const propertyValue = child_process
       .execSync(
         `"${vsWherePath}" -version [${version},${Number(version) +
           1}) -products * -requires ${requires} -property ${property}`,
       )
       .toString()
       .split(EOL)[0];
-    return vsPath;
+    return propertyValue;
   } else {
+    if (verbose) {
+      console.log("Couldn't find vswhere, querying registry.");
+    }
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
     let toolsPath = null;
     // Try to get the MSBuild path using registry
@@ -116,6 +126,9 @@ function VSWhere(requires, version, property) {
       let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
       if (toolsPathOutput) {
         let toolsPathOutputStr = toolsPathOutput[1];
+        if (verbose) {
+          console.log('Query found: ' + toolsPathOutputStr);
+        }
         // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
         if (version === '16.0') {
           toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
@@ -148,18 +161,30 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 
   // https://aka.ms/vs/workloads
-  const requires = [
-    'Microsoft.Component.MSBuild',
-    getVCToolsByArch(buildArch),
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
-  ];
+  const requires = ['Microsoft.Component.MSBuild', getVCToolsByArch(buildArch)];
 
-  const vsPath = VSWhere(requires.join(' '), version, 'installationPath');
+  const vsPath = VSWhere(
+    requires.join(' '),
+    version,
+    'installationPath',
+    verbose,
+  );
+
+  if (verbose) {
+    console.log('VS path: ' + vsPath);
+  }
+
   const installationVersion = VSWhere(
     requires.join(' '),
     version,
     'installationVersion',
+    verbose,
   );
+
+  if (verbose) {
+    console.log('VS version: ' + installationVersion);
+  }
+
   // VS 2019 changed path naming convention
   const vsVersion = version === '16.0' ? 'Current' : version;
 
@@ -170,6 +195,10 @@ function checkMSBuildVersion(version, buildArch, verbose) {
     vsVersion,
     'Bin/MSBuild.exe',
   );
+
+  if (verbose) {
+    console.log('Looking for MSBuilt at: ' + msBuildPath);
+  }
 
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
 

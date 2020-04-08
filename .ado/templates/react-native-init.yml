@@ -6,7 +6,8 @@ parameters:
   configuration:
   experimentalNugetDependency: false
   vsComponents: ''
-  vsInstallerUri: $(VsInstallerUri)
+  listVsComponents: false
+  installVsComponents: false
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -97,14 +98,21 @@ steps:
       sdkVersion: $(Win10Version)
 
   - task: PowerShell@2
+    displayName: List Visual Studio Components
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+    condition: and(succeeded(), ${{ parameters.listVsComponents }})
+
+  - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
       arguments:
-        -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
-    condition: and(ne('${{ parameters.vsComponents }}', ''), eq(variables['VmImage'], 'windows-2019')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
+        -Cleanup:$true
+    condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
   - task: VSBuild@1
     displayName: VSBuild - testcli
