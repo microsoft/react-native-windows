@@ -175,8 +175,8 @@ shared_ptr<Instance> CreateMockInstance(shared_ptr<JSExecutorFactory> jsef) {
 #pragma endregion // Move
 
 TEST_CLASS (WebSocketModuleTest) {
-
-  const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{"connect", "close", "send", "sendBinary", "ping"};
+  const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{
+      "connect", "close", "send", "sendBinary", "ping"};
   TEST_METHOD(WebSocketModuleTest_CreateModule) {
     auto module = make_unique<WebSocketModule>();
 
