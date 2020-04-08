@@ -95,6 +95,7 @@ class MockJSExecutorFactory : public JSExecutorFactory {
 using folly::dynamic;
 using std::function;
 using std::string;
+using std::unique_ptr;
 
 void MockMessageQueueThread::runOnQueue(function<void()> &&) /*override*/ {}
 void MockMessageQueueThread::runOnQueueSync(function<void()> &&work) /*override*/
