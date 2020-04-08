@@ -89,7 +89,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: latest
+          vsTestVersion: toolsInstaller
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - task: VSTest@2
@@ -99,6 +99,8 @@ jobs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
+          pathtoCustomTestAdapters: |
+            $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
