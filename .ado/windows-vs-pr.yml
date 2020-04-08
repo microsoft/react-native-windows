@@ -21,6 +21,11 @@ jobs:
           targetType: filePath
           filePath: .ado/shouldSkipPRBuild.ps1
 
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=4.6.0"
+
   - job: RNWUniversalPR
     displayName: Universal PR
     dependsOn: Setup
@@ -108,7 +113,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -167,7 +172,7 @@ jobs:
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), ne(variables['BuildPlatform'], 'x86'), false) # Disabled. issue #3670  Unable to resolve module `warnOnce`
 
       # Possible related to https://social.msdn.microsoft.com/Forums/vstudio/en-US/23c8df57-9c50-476c-9f56-1fe058e75a9d/uwp-app-builds-on-local-machine-fails-on-build-agent-systemprivatecorelib-not-found
-      # use X86 msbuild to avoid ##[error]...Microsoft.AppXPackage.Targets(1248,5): Error MSB3816: Loading assembly "\runtime.win7-x86.microsoft.netcore.runtime.coreclr\1.0.2\runtimes\win7-x86\lib\netstandard1.0\mscorlib.dll" failed. 
+      # use X86 msbuild to avoid ##[error]...Microsoft.AppXPackage.Targets(1248,5): Error MSB3816: Loading assembly "\runtime.win7-x86.microsoft.netcore.runtime.coreclr\1.0.2\runtimes\win7-x86\lib\netstandard1.0\mscorlib.dll" failed.
       # System.ArgumentException: A BadImageFormatException has been thrown while parsing the signature.
       # This is likely due to lack of a generic context. Ensure genericTypeArguments and genericMethodArguments are provided and contain enough context.
       - task: MSBuild@1
