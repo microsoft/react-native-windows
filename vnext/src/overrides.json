@@ -548,8 +548,8 @@
       "type": "patch",
       "file": "Libraries\\Lists\\VirtualizedList.windows.js",
       "baseFile": "Libraries\\Lists\\VirtualizedList.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "7b2c7473ce02f51dc5d1e625622df5b62dc9b71c",
+      "baseVersion": "0.62.1",
+      "baseHash": "28df77a107962f12c19471b1f882fa802c065619",
       "issue": "LEGACY_FIXME"
     },
     {
