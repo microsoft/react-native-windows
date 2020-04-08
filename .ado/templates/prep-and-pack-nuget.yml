@@ -28,7 +28,7 @@ steps:
     inputs:
       targetType: filePath
       filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
-      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
+      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/Microsoft.ReactNative.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/Microsoft.ReactNative.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack Desktop'
