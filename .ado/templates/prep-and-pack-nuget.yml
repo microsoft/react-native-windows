@@ -20,13 +20,15 @@ steps:
     displayName: Strip slices from ReactUwp.nuspec
     inputs:
       targetType: filePath
-      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1 -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
+      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
+      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
 
   - task: PowerShell@2
     displayName: Strip slices from Microsoft.ReactNative.nuspec
     inputs:
       targetType: filePath
-      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1 -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
+      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
+      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/Microsot.ReactNative.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack Desktop'
