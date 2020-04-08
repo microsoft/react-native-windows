@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Make WS callbacks capture weak instance instead of strong instance pointer",
+  "packageName": "react-native-windows",
+  "email": "julio@rochsquadron.net",
+  "commit": "f9231ef1758e686f6cf2ea5133b8e7eb692a6d74",
+  "dependentChangeType": "patch",
+  "date": "2020-04-06T22:55:46.289Z"
+}

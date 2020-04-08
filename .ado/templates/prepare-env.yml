@@ -57,7 +57,7 @@ steps:
     displayName: Install react-native-cli
     inputs:
       script: npm install -g react-native-cli
-      
+
   - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
@@ -84,3 +84,7 @@ steps:
       targetType: inline # filePath | inline
       script: |
         Get-WmiObject Win32_LogicalDisk
+
+  - task: NuGetToolInstaller@1
+    inputs:
+      versionSpec: ">=4.6.0"
