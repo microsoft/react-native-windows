@@ -175,10 +175,8 @@ shared_ptr<Instance> CreateMockInstance(shared_ptr<JSExecutorFactory> jsef) {
 #pragma endregion // Move
 
 TEST_CLASS (WebSocketModuleTest) {
-  enum class MethodId : size_t { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-  const char *MethodName[static_cast<size_t>(MethodId::SIZE)]{"connect", "close", "send", "sendBinary", "ping"};
-
+  const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{"connect", "close", "send", "sendBinary", "ping"};
   TEST_METHOD(WebSocketModuleTest_CreateModule) {
     auto module = make_unique<WebSocketModule>();
 
@@ -186,7 +184,7 @@ TEST_CLASS (WebSocketModuleTest) {
     Assert::AreEqual(string("WebSocketModule"), module->getName());
 
     auto methods = module->getMethods();
-    for (size_t i = 0; i < static_cast<size_t>(MethodId::SIZE); i++) {
+    for (size_t i = 0; i < static_cast<size_t>(WebSocketModule::MethodId::SIZE); i++) {
       Assert::AreEqual(string(MethodName[i]), string(methods[i].name));
     }
 
