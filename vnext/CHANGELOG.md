@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Apr 2020 00:50:14 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Apr 2020 13:58:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.23
+
+Wed, 08 Apr 2020 13:58:29 GMT
+
+### Changes
+
+- Apply version numbers to Microsoft.ReactNative (acoates@microsoft.com)
 
 ## 0.0.0-master.22
 
