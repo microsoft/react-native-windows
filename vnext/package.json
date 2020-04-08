@@ -54,12 +54,12 @@
     "prettier": "1.17.0",
     "react": "16.9.0",
     "react-native-windows-override-tools": "^0.0.1",
-    "react-native": "0.62.0-rc.3",
+    "react-native": "0.62.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.9.0",
-    "react-native": "0.62.0-rc.3"
+    "react-native": "0.62.1"
   },
   "beachball": {
     "defaultNpmTag": "master",
