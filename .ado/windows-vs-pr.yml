@@ -38,7 +38,8 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-          TestMSRNNuget: True
+          TestMSRNNuget: true
+          LayoutHeaders: true
         #X86Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x86
@@ -526,8 +527,8 @@ jobs:
       - template: templates/react-native-init.yml
         parameters:
           language: cpp
-          configuration: Release
-          platform: x64
+          configuration: Debug
+          platform: x86
           version: $(reactNativeVersion)
           vsComponents: $(VsComponents)
           experimentalNugetDependency: true
