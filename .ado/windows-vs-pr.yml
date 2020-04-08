@@ -106,7 +106,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
-        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')), eq(variables.BuildPlatform, 'x86'), eq(variables.BuildConfiguration, 'Debug'))
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')), eq(variables.BuildPlatform, 'x86'), eq(variables.BuildConfiguration, 'Debug')) # Only running on x86 Debug due to https://github.com/microsoft/react-native-windows/issues/4533
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
