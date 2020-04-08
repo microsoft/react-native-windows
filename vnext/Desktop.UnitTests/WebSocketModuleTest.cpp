@@ -44,6 +44,8 @@ class MockInstanceCallback : public InstanceCallback {
 
 class MockJSExecutor : public JSExecutor {
  public:
+  std::function<void(const std::string &, const std::string &, const folly::dynamic &)> CallFunctionFunctor;
+
 #pragma region JSExecutor overrides
 
   void loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) override;
@@ -74,8 +76,12 @@ class MockJSExecutor : public JSExecutor {
 };
 
 class MockJSExecutorFactory : public JSExecutorFactory {
-#pragma region JSExecutorFactory overrides
  public:
+  std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>
+      CreateJSExecutorFunction;
+
+#pragma region JSExecutorFactory overrides
+
   std::unique_ptr<JSExecutor> createJSExecutor(
       std::shared_ptr<ExecutorDelegate> delegate,
       std::shared_ptr<MessageQueueThread> jsQueue) override;
@@ -86,7 +92,9 @@ class MockJSExecutorFactory : public JSExecutorFactory {
 #pragma region Move
 
 // MockMessageQueueThread
+using folly::dynamic;
 using std::function;
+using std::string;
 
 void MockMessageQueueThread::runOnQueue(function<void()> &&) /*override*/ {}
 void MockMessageQueueThread::runOnQueueSync(function<void()> &&work) /*override*/
@@ -102,15 +110,18 @@ void MockInstanceCallback::incrementPendingJSCalls() /*override*/ {}
 void MockInstanceCallback::decrementPendingJSCalls() /*override*/ {}
 
 // MockJSExecutor
-void MockJSExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) {}
-void MockJSExecutor::setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) {}
-void MockJSExecutor::registerBundle(uint32_t bundleId, const std::string &bundlePath) {}
-void MockJSExecutor::callFunction(
-    const std::string &moduleId,
-    const std::string &methodId,
-    const folly::dynamic &arguments) {}
-void MockJSExecutor::invokeCallback(const double callbackId, const folly::dynamic &arguments) {}
-void MockJSExecutor::setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue) {}
+void MockJSExecutor::loadApplicationScript(unique_ptr<const JSBigString> script, string sourceURL) {}
+void MockJSExecutor::setBundleRegistry(unique_ptr<RAMBundleRegistry> bundleRegistry) {}
+void MockJSExecutor::registerBundle(uint32_t bundleId, const string &bundlePath) {}
+
+void MockJSExecutor::callFunction(const string &moduleId, const string &methodId, const dynamic &arguments) {
+  if (CallFunctionFunctor) {
+    CallFunctionFunctor(moduleId, methodId, arguments);
+  }
+}
+
+void MockJSExecutor::invokeCallback(const double callbackId, const dynamic &arguments) {}
+void MockJSExecutor::setGlobalVariable(string propName, unique_ptr<const JSBigString> jsonValue) {}
 void *MockJSExecutor::getJavaScriptContext() {
   return nullptr;
 }
@@ -131,13 +142,33 @@ using std::make_shared;
 using std::make_unique;
 using std::shared_ptr;
 using std::unique_ptr;
+using std::vector;
 
 unique_ptr<JSExecutor> MockJSExecutorFactory::createJSExecutor(
     shared_ptr<ExecutorDelegate> delegate,
     shared_ptr<MessageQueueThread> jsQueue) /*override*/
 {
-  std::vector<unique_ptr<NativeModule>> modules{};
+  if (CreateJSExecutorFunction) {
+    return CreateJSExecutorFunction(delegate, jsQueue);
+  }
+
   return make_unique<MockJSExecutor>();
+}
+
+// MockInstance.cpp ?
+
+shared_ptr<Instance> CreateMockInstance(shared_ptr<JSExecutorFactory> jsef) {
+  auto instance = make_shared<Instance>();
+  auto callback = make_unique<MockInstanceCallback>();
+  auto jsQueue = make_shared<MockMessageQueueThread>();
+  auto moduleRegistry = make_shared<ModuleRegistry>(
+      vector<unique_ptr<NativeModule>>(), // modules
+      nullptr // moduleNotFoundCallback
+  );
+
+  instance->initializeBridge(std::move(callback), jsef, jsQueue, moduleRegistry);
+
+  return instance;
 }
 
 #pragma endregion // Move
@@ -148,35 +179,34 @@ TEST_CLASS (WebSocketModuleTest) {
   const char *MethodName[static_cast<size_t>(MethodId::SIZE)]{"connect", "close", "send", "sendBinary", "ping"};
 
   TEST_METHOD(WebSocketModuleTest_CreateModule) {
-    auto module = std::make_unique<WebSocketModule>();
+    auto module = make_unique<WebSocketModule>();
 
     Assert::IsFalse(module == nullptr);
-    Assert::AreEqual(std::string("WebSocketModule"), module->getName());
+    Assert::AreEqual(string("WebSocketModule"), module->getName());
 
     auto methods = module->getMethods();
     for (size_t i = 0; i < static_cast<size_t>(MethodId::SIZE); i++) {
-      Assert::AreEqual(std::string(MethodName[i]), std::string(methods[i].name));
+      Assert::AreEqual(string(MethodName[i]), string(methods[i].name));
     }
 
     Assert::AreEqual(static_cast<size_t>(0), module->getConstants().size());
   }
 
   TEST_METHOD(WebSocketModuleDummyRemove) {
-    auto instance = std::make_shared<Instance>();
-    auto callback = std::make_unique<MockInstanceCallback>();
-    auto jsef = std::make_shared<MockJSExecutorFactory>();
-    auto jsQueue = std::make_shared<MockMessageQueueThread>();
-    auto moduleRegistry = std::make_shared<ModuleRegistry>(
-        std::vector<unique_ptr<NativeModule>>(), // modules
-        nullptr // moduleNotFoundCallback
-    );
+    auto jsef = make_shared<MockJSExecutorFactory>();
+    auto instance = CreateMockInstance(jsef);
 
-    instance->initializeBridge(
-        std::move(callback), // callback
-        jsef, // jsef
-        jsQueue, // jsQueue
-        moduleRegistry // moduleRegistry
-    );
+    jsef->CreateJSExecutorFunction = [](shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
+      auto jse = make_unique<MockJSExecutor>();
+      jse->CallFunctionFunctor = [](const string &, const string &, const dynamic &) {
+        // TODO: Handle callFunction
+      };
+
+      return std::move(jse);
+    };
+
+    auto module = make_unique<WebSocketModule>();
+    // TODO: Mock member WebSocket resource.
   }
 };
 
