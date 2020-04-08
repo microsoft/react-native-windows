@@ -354,7 +354,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (outOfDateFiles.length > 0) {
     const errorMessage =
-      "Found overrides whose original files have changed. Upgrade overrides using 'yarn override auto-upgrade <override>' and 'yarn override manual-upgrade <override>' (where override is package relative):";
+      "Found overrides whose original files have changed. Upgrade overrides using 'yarn override auto-upgrade <manifest>' and 'yarn override manual-upgrade <manifest>' (where override is package relative):";
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();
