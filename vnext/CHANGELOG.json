@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2020 03:19:41 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.159",
+      "version": "0.60.0-vnext.159",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make WS callbacks capture weak instance instead of strong instance pointer",
+            "author": "julio@rochsquadron.net",
+            "commit": "f9231ef1758e686f6cf2ea5133b8e7eb692a6d74"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2020 19:00:31 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.158",
       "version": "0.60.0-vnext.158",

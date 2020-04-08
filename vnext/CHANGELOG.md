@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 19:00:31 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Apr 2020 03:19:41 GMT and should not be manually modified.
 
+## 0.60.0-vnext.159
+Wed, 08 Apr 2020 03:19:41 GMT
+
+### Changes
+
+- Make WS callbacks capture weak instance instead of strong instance pointer (julio@rochsquadron.net)
 ## 0.60.0-vnext.158
 Tue, 07 Apr 2020 19:00:31 GMT
 
