@@ -21,18 +21,18 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getName" />
   /// </summary>
-  std::string getName();
+  std::string getName() override;
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getConstants" />
   /// </summary>
-  virtual std::map<std::string, folly::dynamic> getConstants();
+  std::map<std::string, folly::dynamic> getConstants() override;
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getMethods" />
   /// </summary>
   /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
-  virtual std::vector<Method> getMethods();
+  std::vector<Method> getMethods() override;
 
  private:
   /// <summary>

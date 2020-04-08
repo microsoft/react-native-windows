@@ -44,7 +44,7 @@ class MockInstanceCallback : public InstanceCallback {
 
 class MockJSExecutor : public JSExecutor {
  public:
-  std::function<void(const std::string &, const std::string &, const folly::dynamic &)> CallFunctionFunctor;
+  std::function<void(const std::string &, const std::string &, const folly::dynamic &)> CallFunctionImpl;
 
 #pragma region JSExecutor overrides
 
@@ -78,7 +78,7 @@ class MockJSExecutor : public JSExecutor {
 class MockJSExecutorFactory : public JSExecutorFactory {
  public:
   std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>
-      CreateJSExecutorFunction;
+      CreateJSExecutorImpl;
 
 #pragma region JSExecutorFactory overrides
 
@@ -116,8 +116,8 @@ void MockJSExecutor::setBundleRegistry(unique_ptr<RAMBundleRegistry> bundleRegis
 void MockJSExecutor::registerBundle(uint32_t bundleId, const string &bundlePath) {}
 
 void MockJSExecutor::callFunction(const string &moduleId, const string &methodId, const dynamic &arguments) {
-  if (CallFunctionFunctor) {
-    CallFunctionFunctor(moduleId, methodId, arguments);
+  if (CallFunctionImpl) {
+    CallFunctionImpl(moduleId, methodId, arguments);
   }
 }
 
@@ -149,8 +149,8 @@ unique_ptr<JSExecutor> MockJSExecutorFactory::createJSExecutor(
     shared_ptr<ExecutorDelegate> delegate,
     shared_ptr<MessageQueueThread> jsQueue) /*override*/
 {
-  if (CreateJSExecutorFunction) {
-    return CreateJSExecutorFunction(delegate, jsQueue);
+  if (CreateJSExecutorImpl) {
+    return CreateJSExecutorImpl(delegate, jsQueue);
   }
 
   return make_unique<MockJSExecutor>();
@@ -177,7 +177,7 @@ shared_ptr<Instance> CreateMockInstance(shared_ptr<JSExecutorFactory> jsef) {
 TEST_CLASS (WebSocketModuleTest) {
   const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{
       "connect", "close", "send", "sendBinary", "ping"};
-  TEST_METHOD(WebSocketModuleTest_CreateModule) {
+  TEST_METHOD(CreateModule) {
     auto module = make_unique<WebSocketModule>();
 
     Assert::IsFalse(module == nullptr);
@@ -191,13 +191,13 @@ TEST_CLASS (WebSocketModuleTest) {
     Assert::AreEqual(static_cast<size_t>(0), module->getConstants().size());
   }
 
-  TEST_METHOD(WebSocketModuleDummyRemove) {
+  TEST_METHOD(ConnectSucceeds) {
     auto jsef = make_shared<MockJSExecutorFactory>();
     auto instance = CreateMockInstance(jsef);
 
-    jsef->CreateJSExecutorFunction = [](shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
+    jsef->CreateJSExecutorImpl = [](shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
       auto jse = make_unique<MockJSExecutor>();
-      jse->CallFunctionFunctor = [](const string &, const string &, const dynamic &) {
+      jse->CallFunctionImpl = [](const string &, const string &, const dynamic &) {
         // TODO: Handle callFunction
       };
 
