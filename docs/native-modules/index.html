@@ -118,30 +118,30 @@
 <h3><a class="anchor" aria-hidden="true" id="1-authoring-your-native-module"></a><a href="#1-authoring-your-native-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. Authoring your Native Module</h3>
 <p>Here is a sample native module written in C# called <code>FancyMath</code>. It is a simple class that defines two numerical constants and a method 'add'.</p>
 <p><em>FancyMath.cs</em></p>
-<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> System<span class="token punctuation">;</span>
-<span class="token keyword">using</span> Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">;</span>
+<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> <span class="token namespace">System</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed</span><span class="token punctuation">;</span>
 
-<span class="token keyword">namespace</span> NativeModuleSample
+<span class="token keyword">namespace</span> <span class="token namespace">NativeModuleSample</span>
 <span class="token punctuation">{</span>
-  <span class="token punctuation">[</span><span class="token class-name">ReactModule</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ReactModule</span></span><span class="token punctuation">]</span>
   <span class="token keyword">class</span> <span class="token class-name">FancyMath</span>
   <span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token class-name">ReactConstant</span><span class="token punctuation">]</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> E <span class="token operator">=</span> Math<span class="token punctuation">.</span>E<span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ReactConstant</span></span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">double</span></span> E <span class="token operator">=</span> Math<span class="token punctuation">.</span>E<span class="token punctuation">;</span>
 
-    <span class="token punctuation">[</span><span class="token class-name">ReactConstant</span><span class="token punctuation">(</span><span class="token string">"Pi"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> PI <span class="token operator">=</span> Math<span class="token punctuation">.</span>PI<span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ReactConstant</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"Pi"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">double</span></span> PI <span class="token operator">=</span> Math<span class="token punctuation">.</span>PI<span class="token punctuation">;</span>
 
-    <span class="token punctuation">[</span><span class="token class-name">ReactMethod</span><span class="token punctuation">(</span><span class="token string">"add"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">double</span> a<span class="token punctuation">,</span> <span class="token keyword">double</span> b<span class="token punctuation">)</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ReactMethod</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"add"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">double</span></span> <span class="token function">Add</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">double</span></span> a<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">double</span></span> b<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
-        <span class="token keyword">double</span> result <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token keyword">double</span></span> result <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
         <span class="token function">AddEvent</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> result<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token punctuation">[</span><span class="token class-name">ReactEvent</span><span class="token punctuation">]</span>
-    <span class="token keyword">public</span> ReactEvent<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> AddEvent <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ReactEvent</span></span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name">ReactEvent<span class="token punctuation">&lt;</span><span class="token keyword">double</span><span class="token punctuation">></span></span> AddEvent <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
@@ -161,13 +161,13 @@
 </blockquote>
 <p>Now, we want to register our new <code>FancyMath</code> module with React Native so we can use it from JavaScript code. To do this, first we're going to create a <code>ReactPackageProvider</code> which implements <a href="https://github.com/microsoft/react-native-windows/blob/master/vnext/Microsoft.ReactNative/IReactPackageProvider.idl">Microsoft.ReactNative.IReactPackageProvider</a>.</p>
 <p><em>ReactPackageProvider.cs</em></p>
-<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">;</span>
+<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed</span><span class="token punctuation">;</span>
 
-<span class="token keyword">namespace</span> NativeModuleSample
+<span class="token keyword">namespace</span> <span class="token namespace">NativeModuleSample</span>
 <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">sealed</span> <span class="token keyword">class</span> <span class="token class-name">ReactPackageProvider</span> <span class="token punctuation">:</span> <span class="token class-name">IReactPackageProvider</span>
+  <span class="token keyword">public</span> <span class="token keyword">sealed</span> <span class="token keyword">class</span> <span class="token class-name">ReactPackageProvider</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IReactPackageProvider</span></span>
   <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">CreatePackage</span><span class="token punctuation">(</span><span class="token class-name">IReactPackageBuilder</span> packageBuilder<span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">CreatePackage</span><span class="token punctuation">(</span><span class="token class-name">IReactPackageBuilder</span> packageBuilder<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
       packageBuilder<span class="token punctuation">.</span><span class="token function">AddAttributedModules</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
@@ -177,18 +177,18 @@
 <p>Here we've implemented the <code>CreatePackage</code> method, which receives <code>packageBuilder</code> to build contents of the package. Since we use reflection to discover and bind native module, we call <code>AddAttributedModules</code> extension method to register all native modules in our assembly that have the <code>ReactModule</code> attribute.</p>
 <p>Now that we have the <code>ReactPackageProvider</code>, it's time to register it within our <code>ReactApplication</code>. We do that by simply adding the proviver to the <code>PackageProviders</code> property.</p>
 <p><em>App.xaml.cs</em></p>
-<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">;</span>
+<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>ReactNative</span><span class="token punctuation">;</span>
 
-<span class="token keyword">namespace</span> SampleApp
+<span class="token keyword">namespace</span> <span class="token namespace">SampleApp</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">sealed</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">:</span> <span class="token class-name">ReactApplication</span>
+    <span class="token keyword">sealed</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ReactApplication</span></span>
     <span class="token punctuation">{</span>
         <span class="token keyword">public</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token punctuation">{</span>
             <span class="token comment">/* Other Init Code */</span>
 
-            PackageProviders<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">.</span>ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Includes any modules in this project</span>
-            PackageProviders<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NativeModuleSample<span class="token punctuation">.</span>ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            PackageProviders<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">.</span>ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Includes any modules in this project</span>
+            PackageProviders<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">NativeModuleSample<span class="token punctuation">.</span>ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
             <span class="token comment">/* Other Init Code */</span>
         <span class="token punctuation">}</span>

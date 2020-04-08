@@ -110,7 +110,7 @@
 <ul>
 <li>run all specs</li>
 </ul>
-<p>packages\E2ETest&gt;<code>yarn run test</code></p>
+<p>packages\E2ETest&gt;<code>yarn run e2etest</code></p>
 <ul>
 <li>Run one spec</li>
 </ul>
@@ -121,7 +121,7 @@
 <tr><th>Command</th><th>Description</th><th>Example</th></tr>
 </thead>
 <tbody>
-<tr><td>test</td><td>Run all specs</td><td><code>yarn run test</code></td></tr>
+<tr><td>test</td><td>Run all specs</td><td><code>yarn run e2etest</code></td></tr>
 <tr><td>testspec</td><td>Run only one spec</td><td><code>yarn run testspec wdio\test\login.spec.ts</code></td></tr>
 <tr><td>buildapp</td><td>build the native app with BUNDLE macro <BR/> <code>--release</code> specify if it's a release version <BR/><code>--arch [string]</code> The build architecture (ARM, x86, x64) (default: &quot;x86&quot;)</td><td><code>yarn run buildapp</code> <BR/> <code>yarn run buildapp --release</code> <BR/><code>yarn run buildapp --arch x64</code> <BR/> <code>yarn run buildapp --arch x64 –release</code></td></tr>
 <tr><td>deployapp</td><td>Deploy the built test app, you can pair it with <code>--release</code> and <code>--arch</code></td><td><code>yarn run deployapp</code> <BR/> <code>yarn run deployapp --release</code> <BR/> <code>yarn run deployapp --arch x64</code> <BR/> <code>yarn run deployapp --arch x64 –release</code></td></tr>
