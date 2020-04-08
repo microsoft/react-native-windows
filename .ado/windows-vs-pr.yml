@@ -75,14 +75,13 @@ jobs:
           project: vnext/ReactWindows-Universal.sln
 
       - task: VSTest@2
-        displayName: Run Universal Unit Tests
-        timeoutInMinutes: 10 # Set smaller timeout , due to hangs
+        displayName: Run Universal Unit Tests (Native)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
-            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
@@ -92,6 +91,22 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (Managed)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')), eq(variables.BuildPlatform, 'x86'), eq(variables.BuildConfiguration, 'Debug'))
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
