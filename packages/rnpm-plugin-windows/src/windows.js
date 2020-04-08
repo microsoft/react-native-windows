@@ -21,38 +21,63 @@ const REACT_NATIVE_WINDOWS_GENERATE_PATH = function() {
   );
 };
 
+async function getDefaultVersionTag(version) {
+  const validVersion = semver.valid(version);
+  const validRange = semver.validRange(version);
+  if (!validVersion && !validRange) {
+    console.error(chalk.red(`'${version}' is not a valid version`));
+    process.exit(1);
+  }
+
+  // 0.57 and below had stable untagged releases
+  if ((validVersion && semver.lt(validVersion, '0.58.0'))
+    || (validRange && semver.gtr('0.58.0', validRange))) {
+    return null;
+  }
+
+  // 0.58 went to RC (See #2559)
+  if ((validVersion && semver.lt(validVersion, '0.59.0'))
+    || (validRange && semver.gtr('0.59.0', validRange))) {
+    return 'rc';
+  }
+
+  // 0.59 tags releases as "legacy" or "vnext"
+  if ((validVersion && semver.lt(validVersion, '0.60.0'))
+    || (validRange && semver.gtr('0.60.0', validRange))) {
+    return  (await prompts({
+      type: 'select',
+      name: 'template',
+      message: 'What version of react-native-windows would you like to install?',
+      choices: [
+        { value: 'vnext', title: ' [1mLatest[22m      - High performance react-native-windows built on a shared C++ core from facebook (supports C++ or C#).' },
+        { value: 'legacy', title: ' [1mLegacy[22m      - Older react-native-windows implementation - (C# only, react-native <= 0.59 only)' },
+      ],
+    })).template;
+  }
+
+  // 0.60 releases all use the vnext tag
+  if ((validVersion && semver.lt(validVersion, '0.61.0'))
+    || (validRange && semver.gtr('0.61.0', validRange))) {
+    return 'vnext';
+  }
+
+  // 0.61 and after don't tag stable releases
+  return null;
+}
+
 module.exports = async function (config, args, options) {
   try {
-    const name = args[0] ? args[0] : Common.getReactNativeAppName();
-    const ns = options.namespace ? options.namespace : name;
-    let version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
+    const name = args[0] || Common.getReactNativeAppName();
+    const ns = options.namespace || name;
+    const version = options.windowsVersion || Common.getReactNativeVersion();
+    let rnwPackage = version;
+    // If the version is a file: link, there's no need to compute what package to install.
+    // This is useful when testing local changes to the repo that haven't been published yet.
+    if (!version.startsWith("file:")) {
+      const versionTag = options.template || await getDefaultVersionTag(version);
 
-    let template = options.template;
-    if (!template) {
-      const validVersion = semver.valid(version);
-      const validRange = semver.validRange(version);
-      // If the RN version is >= 0.60 we know they have to use vnext
-      if ((validVersion && semver.gte(validVersion, '0.60.0')) ||
-          (!validVersion && validRange && semver.ltr('0.59.1000', validRange))) {
-            template = 'vnext';
-          }
-
-      // If the RN version is >= 0.59 then we need to query which version the user wants
-      if (!template && ((validVersion && semver.gte(validVersion, '0.59.0')) ||
-          (!validVersion && validRange && semver.ltr('0.58.1000', validRange)))) {
-            template = (await prompts({
-              type: 'select',
-              name: 'template',
-              message: 'What version of react-native-windows would you like to install?',
-              choices: [
-                { value: 'vnext', title: ' [1mLatest[22m      - High performance react-native-windows built on a shared C++ core from facebook (supports C++ or C#).' },
-                { value: 'legacy', title: ' [1mLegacy[22m      - Older react-native-windows implementation - (C# only, react-native <= 0.59 only)' },
-              ],
-            })).template;
-      }
+      rnwPackage = await Common.getInstallPackage(version, versionTag);
     }
-
-    let rnwPackage = await Common.getInstallPackage(version, template, !!template);
 
     console.log(`Installing ${rnwPackage}...`);
     const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';

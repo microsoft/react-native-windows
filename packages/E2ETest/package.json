@@ -24,8 +24,8 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.62.0-rc.3",
-    "react-native-windows": "0.0.0-master.1",
-    "rnpm-plugin-windows": "^0.5.1-0"
+    "react-native-windows": "0.0.0-master.22",
+    "rnpm-plugin-windows": "^0.6.1"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
@@ -49,7 +49,7 @@
     "rimraf": "^3.0.0",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.8.0",
-    "typescript": "^3.5.1",
+    "typescript": "^3.8.3",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "webdriverio": "5.12.1"
   }

@@ -1,13 +1,13 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-master.1",
+  "version": "0.0.0-master.3",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
   "typings": "./typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/sourcemap.js",
     "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
@@ -56,7 +56,8 @@
     "react": "16.9.0",
     "react-native-windows-override-tools": "^0.0.1",
     "react-native": "0.62.0-rc.3",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.0",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.9.0",
@@ -64,7 +65,7 @@
     "react-native": "0.62.0-rc.3"
   },
   "beachball": {
-    "defaultNpmTag": "beta",
+    "defaultNpmTag": "master",
     "disallowedChangeTypes": [
       "major",
       "minor",

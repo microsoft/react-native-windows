@@ -14,8 +14,8 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.62.0-rc.3",
-    "react-native-windows": "0.0.0-master.1",
-    "rnpm-plugin-windows": "^0.5.1-0"
+    "react-native-windows": "0.0.0-master.22",
+    "rnpm-plugin-windows": "^0.6.1"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

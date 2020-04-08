@@ -543,6 +543,14 @@ struct SimpleNativeModule {
   REACT_EVENT(OnIntEvent)
   std::function<void(int)> OnIntEvent;
 
+  // An event without arguments
+  REACT_EVENT(OnNoArgEvent)
+  std::function<void()> OnNoArgEvent;
+
+  // An event with two arguments
+  REACT_EVENT(OnTwoArgsEvent)
+  std::function<void(Point const &, Point const &)> OnTwoArgsEvent;
+
   // Specify event name different from the field name.
   REACT_EVENT(OnPointEvent, L"onPointEvent")
   std::function<void(Point const &)> OnPointEvent;
@@ -567,6 +575,10 @@ struct SimpleNativeModule {
   // Use two arguments. Specify JS function name different from the field name.
   REACT_FUNCTION(JSLineFunction, L"lineFunc")
   std::function<void(Point const &, Point const &)> JSLineFunction;
+
+  // Use no arguments.
+  REACT_FUNCTION(JSNoArgFunction)
+  std::function<void()> JSNoArgFunction;
 
   // By default we use the module name from REACT_MODULE which is by default the struct name.
   // Here we specify module name local for this function.
@@ -1327,22 +1339,51 @@ TEST_CLASS (NativeModuleTest) {
 
   TEST_METHOD(TestEvent_IntEventField) {
     bool eventRaised = false;
-    m_builderMock.ExpectEvent(L"RCTDeviceEventEmitter", L"OnIntEvent", [&eventRaised](JSValue const &arg) noexcept {
-      TestCheck(arg == 42);
-      eventRaised = true;
-    });
+    m_builderMock.ExpectEvent(
+        L"RCTDeviceEventEmitter", L"OnIntEvent", [&eventRaised](JSValueArray const &args) noexcept {
+          TestCheck(args[0] == 42);
+          eventRaised = true;
+        });
 
     m_module->OnIntEvent(42);
     TestCheck(eventRaised);
   }
 
+  TEST_METHOD(TestEvent_OnNoArgEventField) {
+    bool eventRaised = false;
+    m_builderMock.ExpectEvent(
+        L"RCTDeviceEventEmitter", L"OnNoArgEvent", [&eventRaised](JSValueArray const &args) noexcept {
+          TestCheckEqual(0, args.size());
+          eventRaised = true;
+        });
+
+    m_module->OnNoArgEvent();
+    TestCheck(eventRaised);
+  }
+
+  TEST_METHOD(TestEvent_TwoArgsEventField) {
+    bool eventRaised = false;
+    m_builderMock.ExpectEvent(
+        L"RCTDeviceEventEmitter", L"OnTwoArgsEvent", [&eventRaised](JSValueArray const &args) noexcept {
+          TestCheckEqual(4, args[0]["X"]);
+          TestCheckEqual(2, args[0]["Y"]);
+          TestCheckEqual(12, args[1]["X"]);
+          TestCheckEqual(18, args[1]["Y"]);
+          eventRaised = true;
+        });
+
+    m_module->OnTwoArgsEvent(Point{/*X =*/4, /*Y =*/2}, Point{/*X =*/12, /*Y =*/18});
+    TestCheck(eventRaised);
+  }
+
   TEST_METHOD(TestEvent_JSNameEventField) {
     bool eventRaised = false;
-    m_builderMock.ExpectEvent(L"RCTDeviceEventEmitter", L"onPointEvent", [&eventRaised](JSValue const &arg) noexcept {
-      TestCheck(arg["X"] == 4);
-      TestCheck(arg["Y"] == 2);
-      eventRaised = true;
-    });
+    m_builderMock.ExpectEvent(
+        L"RCTDeviceEventEmitter", L"onPointEvent", [&eventRaised](JSValueArray const &args) noexcept {
+          TestCheck(args[0]["X"] == 4);
+          TestCheck(args[0]["Y"] == 2);
+          eventRaised = true;
+        });
 
     m_module->OnPointEvent(Point{/*X =*/4, /*Y =*/2});
     TestCheck(eventRaised == true);
@@ -1350,8 +1391,8 @@ TEST_CLASS (NativeModuleTest) {
 
   TEST_METHOD(TestEvent_JSEventEmitterEventField) {
     bool eventRaised = false;
-    m_builderMock.ExpectEvent(L"MyEventEmitter", L"onStringEvent", [&eventRaised](JSValue const &arg) noexcept {
-      TestCheck(arg == "Hello World!");
+    m_builderMock.ExpectEvent(L"MyEventEmitter", L"onStringEvent", [&eventRaised](JSValueArray const &args) noexcept {
+      TestCheckEqual("Hello World!", args[0]);
       eventRaised = true;
     });
 
@@ -1362,9 +1403,9 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestEvent_JSValueObjectEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValue const &arg) noexcept {
-          TestCheck(arg["X"] == 4);
-          TestCheck(arg["Y"] == 2);
+        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValueArray const &args) noexcept {
+          TestCheck(args[0]["X"] == 4);
+          TestCheck(args[0]["Y"] == 2);
           eventRaised = true;
         }));
 
@@ -1375,11 +1416,11 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestEvent_JSValueArrayEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValue const &arg) noexcept {
-          TestCheck(arg[0] == "X");
-          TestCheck(arg[1] == 4);
-          TestCheck(arg[2] == true);
-          TestCheck(arg[3]["Id"] == 42);
+        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValueArray const &args) noexcept {
+          TestCheck(args[0][0] == "X");
+          TestCheck(args[0][1] == 4);
+          TestCheck(args[0][2] == true);
+          TestCheck(args[0][3]["Id"] == 42);
           eventRaised = true;
         }));
 
@@ -1390,8 +1431,8 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestEvent_JSValueArray1EventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValue const &arg) noexcept {
-          TestCheck(arg[0] == 4);
+        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValueArray const &args) noexcept {
+          TestCheck(args[0][0] == 4);
           eventRaised = true;
         }));
 
@@ -1437,6 +1478,18 @@ TEST_CLASS (NativeModuleTest) {
 
     m_module->JSLineFunction(Point{/*X =*/4, /*Y =*/2}, Point{/*X =*/12, /*Y =*/18});
     TestCheck(functionCalled == true);
+  }
+
+  TEST_METHOD(TestFunction_NoArgFunctionField) {
+    bool functionCalled = false;
+    m_builderMock.ExpectFunction(
+        L"SimpleNativeModule", L"JSNoArgFunction", [&functionCalled](JSValueArray const &args) noexcept {
+          TestCheckEqual(0, args.size());
+          functionCalled = true;
+        });
+
+    m_module->JSNoArgFunction();
+    TestCheck(functionCalled);
   }
 
   TEST_METHOD(TestFunction_JSModuleNameFunctionField) {

@@ -45,7 +45,8 @@
     "diff-match-patch": "^1.0.4",
     "fp-ts": "^2.5.0",
     "jest": "^24.9.0",
-    "just-scripts": "^0.36.1"
+    "just-scripts": "^0.36.1",
+    "typescript": "^3.8.3"
   },
   "engines": {
     "node": ">=10"

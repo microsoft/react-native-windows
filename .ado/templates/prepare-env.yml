@@ -5,8 +5,9 @@ parameters:
   debug: false
 
   # Visual Studio Installer
-  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
+  listVsComponents: false
+  installVsComponents: false
 
 steps:
   - task: PowerShell@2
@@ -22,9 +23,9 @@ steps:
       script: |
         Get-WmiObject Win32_LogicalDisk
 
-  - task: UseNode@1
+  - task: NuGetToolInstaller@0
     inputs:
-      version: '10.x'
+      versionSpec: ">=4.6.0"
 
   - task: CmdLine@2
     displayName: yarn install
@@ -46,15 +47,22 @@ steps:
       sdkVersion: $(Win10Version)
 
   - task: PowerShell@2
+    displayName: List Visual Studio Components
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+    condition: and(succeeded(), ${{ parameters.listVsComponents }})
+
+  - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
       arguments:
-        -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
+        -Cleanup:$true
+    condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
   - task: PowerShell@2
     displayName: List disksize after prepare-env

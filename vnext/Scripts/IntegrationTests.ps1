@@ -35,7 +35,7 @@ param (
 	[System.IO.FileInfo] $VsTest =	"${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\" +
 						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
-	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
+	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)",
 
 	[System.IO.FileInfo] $NodePath = (Get-Command node.exe).Definition,
 
@@ -62,7 +62,7 @@ if (! $NoServers) {
 
 	if (!$packager) {
 		Write-Warning 'Packager not found. Attempting to start...'
-		Start-Packager -ReactNativeLocation ($PSScriptRoot | Split-Path) -NpmPath $NpmPath
+		Start-Packager -ReactNativeLocation $ReactNativeLocation -NpmPath $NpmPath
 		$notFound = $true
 	} else {
 		Write-Host 'Found Packager.'

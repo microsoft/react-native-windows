@@ -13,7 +13,7 @@ export const supportKeyboard = <P extends object>(
 ) => {
   interface IForwardRefProps {
     // tslint:disable-next-line:no-any
-    forwardedRef?: React.Ref<any>;
+    forwardedRef: React.Ref<any>;
   }
 
   // children is used to avoid error: Property 'children' does not exist on type 'IntrinsicAttributes & ViewProps &

@@ -11,6 +11,8 @@
 
 #include "winrt/Microsoft.ReactNative.h"
 
+#include <string>
+
 namespace winrt::Microsoft::ReactNative {
 
 // A value can be read from IJSValueReader in one of three ways:
@@ -134,29 +136,6 @@ inline void ReadValue(TJSValue const &jsValue, /*out*/ T &value) noexcept {
   ReadValue(reader, /*out*/ value);
 }
 
-template <typename TChar, typename TValue>
-inline std::basic_string<TChar> basic_string_convert(TValue value) {
-  static_assert(std::is_arithmetic_v<TValue>);
-  char temp[32];
-  std::to_chars_result result;
-  if constexpr (std::is_integral_v<TValue>) {
-    result = std::to_chars(std::begin(temp), std::end(temp), value);
-  } else {
-    // Floating point
-    result = std::to_chars(std::begin(temp), std::end(temp), value, std::chars_format::general);
-  }
-  WINRT_ASSERT(result.ec == std::errc{});
-  if constexpr (std::is_same_v<TChar, wchar_t>) {
-    wchar_t buffer[32];
-    auto end = std::copy(std::begin(temp), result.ptr, buffer);
-    return std::wstring{buffer, static_cast<std::size_t>(end - buffer)};
-  } else if constexpr (std::is_same_v<TChar, char>) {
-    return std::string{temp, static_cast<std::size_t>(result.ptr - temp)};
-  } else {
-    static_assert(false, "Unsupported char type");
-  }
-}
-
 inline void ReadValue(IJSValueReader const &reader, /*out*/ std::string &value) noexcept {
   switch (reader.ValueType()) {
     case JSValueType::String:
@@ -166,10 +145,12 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ std::string &value) 
       value = reader.GetBoolean() ? "true" : "false";
       break;
     case JSValueType::Int64:
-      value = basic_string_convert<char>(reader.GetInt64());
+      value = std::to_string(reader.GetInt64());
       break;
     case JSValueType::Double:
-      value = basic_string_convert<char>(reader.GetDouble());
+      value = std::to_string(reader.GetDouble());
+      value.erase(value.find_last_not_of('0') + 1, std::string::npos);
+      value.erase(value.find_last_not_of('.') + 1, std::string::npos);
       break;
     default:
       value = "";
@@ -186,10 +167,12 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ std::wstring &value)
       value = reader.GetBoolean() ? L"true" : L"false";
       break;
     case JSValueType::Int64:
-      value = basic_string_convert<wchar_t>(reader.GetInt64());
+      value = std::to_wstring(reader.GetInt64());
       break;
     case JSValueType::Double:
-      value = basic_string_convert<wchar_t>(reader.GetDouble());
+      value = std::to_wstring(reader.GetDouble());
+      value.erase(value.find_last_not_of('0') + 1, std::wstring::npos);
+      value.erase(value.find_last_not_of('.') + 1, std::wstring::npos);
       break;
     default:
       value = L"";
@@ -424,14 +407,7 @@ template <class... TArgs>
 inline void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &... args) noexcept {
   // Read as many arguments as we can or return default values.
   bool success = reader.ValueType() == JSValueType::Array;
-
-  if constexpr (sizeof...(args) != 0) {
-    // To read variadic template arguments in natural order we must use them in an initializer list.
-    // TODO: can we fold expression instead?
-    [[maybe_unused]] int dummy[] = {
-        (success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}, 0)...};
-  }
-
+  ((success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}), ...);
   success = success && SkipArrayToEnd(reader);
 }
 

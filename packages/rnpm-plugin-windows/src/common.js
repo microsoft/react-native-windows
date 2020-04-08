@@ -41,13 +41,16 @@ function getLatestVersion() {
 
 function isTagMatch(packageVersion, requestTag) {
   const prerelease = semver.prerelease(packageVersion);
-  return prerelease && prerelease[0] === requestTag;
+  if (prerelease === null && !requestTag) {
+    return true;
+  } else {
+    return prerelease && prerelease[0] === requestTag;
+  }
 }
 
 function isVersionMatch(packageVersion, requestVersion, requestTag) {
-  // Master RNW can map to versions outside of its major and minor
-  if (requestTag === 'master') {
-    return true;
+  if (semver.parse(packageVersion) === null) {
+    return false;
   }
 
   const { major, minor } = semver.parse(packageVersion);
@@ -57,53 +60,67 @@ function isVersionMatch(packageVersion, requestVersion, requestTag) {
     isTagMatch(packageVersion, requestTag);
 }
 
-function queryPackages(rnVersionRange, tag, callback) {
-  // Ignore the version range of React Native if asking for master, since our
-  // RNW version may not align.
-  if (tag === 'master') {
-    return npm.packages.release('react-native-windows', 'master', (err, rel) => callback(err, rel[0]));
-  } else {
-    return npm.packages.range('react-native-windows', rnVersionRange, callback);
-  }
-}
+function getLatestMatchingVersion(versionRange, tag) {
+  return new Promise((resolve, reject) => {
+    // Ignore the version range of React Native if asking for master, since our
+    // RNW version may not align.
+    if (tag === 'master') {
+      npm.packages.release('react-native-windows', 'master', (err, rel) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rel[0].version);
+        }
+      });
+    } else {
+      npm.packages.releases('react-native-windows', (err, rels) => {
+        if (err) {
+          reject(err);
+        } else {
+          const matchingVersions = Object.keys(rels)
+            .filter(v => isVersionMatch(v, versionRange, tag))
+            .sort(semver.rcompare);
 
-function getMatchingVersion(version, tag, ignoreStable) {
-  const versionStr = tag === 'master' ? 'master' : version;
-  console.log(`Checking for react-native-windows version matching ${versionStr}...`);
-  return new Promise(function (resolve, reject) {
-    queryPackages(version, tag, (err, release) => {
-      if (err || !release) {
-        return getLatestVersion()
-          .then(latestVersion => {
-            reject(new Error(`Could not find react-native-windows@${versionStr}. ` +
-              `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
-              `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
-            }).catch(error => reject(new Error(`Could not find react-native-windows@${version}.`)));
-      }
-
-      const matchedVersion = release.version;
-      const matchedPrerelease = semver.prerelease(matchedVersion);
-      const isPrerelease = tag && !!matchedPrerelease;
-      if (!isVersionMatch(matchedVersion, version, tag) && (ignoreStable || isPrerelease)) {
-        const versions = Object.keys(release.versions);
-        const candidates = versions.filter(v => isVersionMatch(v, version, tag)).sort(semver.rcompare);
-        if (candidates.length === 0) {
-          const tagMatches = versions.filter(v => isTagMatch(v, tag)).sort(semver.rcompare);
-          if (tagMatches.length === 0) {
-            reject(new Error(`Could not find react-native-windows@${version}-${tag}.*.`));
+          if (matchingVersions.length > 0) {
+            resolve(matchingVersions[0]);
           } else {
-            const latestVersion = tagMatches[0];
-            reject(new Error(`Could not find react-native-windows@${version}-${tag}.*. ` +
-              `Latest version of react-native-windows for tag '${tag}' is ${latestVersion}, try switching to ` +
-              `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
+            reject();
           }
         }
-        resolve(candidates[0]);
-      } else {
-        resolve(matchedVersion);
-      }
-    });
+      });
+    }
   });
+}
+
+/**
+ * Matches a version range to a version of react-native-windows to install. This is a hairy process
+ * with a few different cases. Note that we will not run this at all if an exact version was given
+ * for --windowsVersion.
+ *
+ * - If no version was specified we are passed a range based on React Native version. E.g. "0.61.*".
+ *   We will try to match this against available packages, but need special rules for prerelease
+ *   tags since we use them for even stable releases for several versions. Because of that we cannot
+ *   use the semver range directly.
+ *
+ * - If our tag is "master", we grab the latest master label builds, since our RN version may not
+ *   correspond to our RNW version. This will change once we're aligned to Facebook's master builds.
+ *
+ * - Users can pass in a range to --windowsVersion and we will try to respect it according to above
+ *   matching logic. We likely do not do the right thing here in many cases sine we do not query the
+ *   registry for the range directly, instead using custom logic to also ensure tag matches.
+ */
+async function getMatchingVersion(versionRange, tag) {
+  const versionStr = tag === 'master' ? 'master' : versionRange;
+  console.log(`Checking for react-native-windows version matching ${versionStr}...`);
+
+  try {
+    return await getLatestMatchingVersion(versionRange, tag);
+  } catch (ex) {
+    const latestVersion = await getLatestVersion();
+    throw new Error(`Could not find react-native-windows@${versionStr}. ` +
+      `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
+      `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`);
+  }
 }
 
 const isSupportedVersion = function(validVersion, validRange) {
@@ -117,7 +134,7 @@ const isSupportedVersion = function(validVersion, validRange) {
   }
 };
 
-const getInstallPackage = function (version, tag, useStable) {
+const getInstallPackage = function (version, tag) {
   const packageToInstall = 'react-native-windows';
   const validVersion = semver.valid(version);
   const validRange = semver.validRange(version);
@@ -131,12 +148,9 @@ const getInstallPackage = function (version, tag, useStable) {
 
   if (validVersion) {
     return Promise.resolve(`${packageToInstall}@${version}`);
-  } else if (validRange) {
-    return getMatchingVersion(version, tag, useStable)
-      .then(resultVersion => `${packageToInstall}@${resultVersion}`);
   } else {
-    console.error('Invalid version specified for --windowsVersion');
-    process.exit(1);
+    return getMatchingVersion(version, tag)
+      .then(resultVersion => `${packageToInstall}@${resultVersion}`);
   }
 };
 

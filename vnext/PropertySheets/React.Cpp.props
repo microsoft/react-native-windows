@@ -3,14 +3,14 @@
 
   <PropertyGroup Label="Globals">
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
-    <!-- Use 19H1 SDK (10.0.18362.0)  Support running on RS2+ (10.0.15063.0) -->
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <!-- Use 19H1 SDK (10.0.18362.0)  Support running on RS3+ (10.0.16299.0) -->
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -28,7 +28,7 @@
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
 
     <USE_V8 Condition="'$(USE_V8)' == '' AND '$(Platform)' != 'ARM' AND '$(Platform)' != 'ARM64'">true</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.2.4</V8_Version>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.2.5</V8_Version>
     <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
 
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->

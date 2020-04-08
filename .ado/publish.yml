@@ -2,7 +2,7 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml
+  - template: variables/vs2019.yml
 
 trigger:
   batch: true
@@ -39,16 +39,9 @@ jobs:
           script: yarn build
 
       - task: CmdLine@2
-        displayName: Beachball Publish (for master)
+        displayName: Beachball Publish
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***" --bump-deps --access public
-        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
-
-      - task: CmdLine@2
-        displayName: Beachball Publish (for other branches)
-        inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag v$(Build.SourceBranchName) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
-        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
@@ -156,8 +149,6 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Universal.sln
-          msBuildArchitecture: x86 # Necessary to build C# unit tests
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:

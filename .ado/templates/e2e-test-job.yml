@@ -9,16 +9,8 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
-    # E2ETest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
-    # E2ETest can only be executed on windows-2019 or above, so force to use windows-2019 image and override vs2017.yml variables
-    # so pool and variables are hard coded here.
     pool:
-      vmImage: windows-2019
-    variables: 
-      VsComponents: Microsoft.Component.MSBuild,Microsoft.VisualStudio.ComponentGroup.UWP.VC,Microsoft.VisualStudio.Component.VC.Tools.x86.x64,Microsoft.VisualStudio.Component.VC.Tools.ARM,Microsoft.VisualStudio.Component.VC.Tools.ARM64,Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141,Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
-      BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
-      runCodesignValidationInjection: false
-      VmImage: windows-2019
+      vmImage: $(VmImage)
 
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -51,9 +43,6 @@ jobs:
             Get-WmiObject Win32_LogicalDisk
             
       - template: prepare-env.yml
-        parameters:
-          vsComponents: $(VsComponents)
-          yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp

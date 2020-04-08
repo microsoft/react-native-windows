@@ -53,6 +53,11 @@
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 
+#if (defined(_MSC_VER) && !defined(WINRT))
+// Type only available in Desktop.
+using Microsoft::React::WebSocketModule;
+#endif
+
 // forward declaration.
 namespace facebook::react::tracing {
 void initializeETW();
@@ -510,7 +515,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_devSettings->errorCallback(e.what());
       return;
     }
-  } else if (m_devSettings->liveReloadCallback != nullptr) {
+  } else if (m_devSettings->liveReloadCallback != nullptr || m_devSettings->useFastRefresh) {
     auto jsBundleString = m_devManager->GetJavaScriptFromServer(
         m_devSettings->debugHost, jsBundleRelativePath, m_devSettings->platformName);
 

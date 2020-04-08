@@ -1,3 +1,4 @@
+// @ts-check
 'use strict';
 const chalk = require('chalk');
 const path = require('path');
@@ -14,30 +15,25 @@ const {
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
-const projDir = 'proj';
 
 function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
   console.log('Generating self-signed certificate...');
   let toCopyTempKey = false;
   if (os.platform() === 'win32') {
-    const certGenCommand = [
-      `$cert = New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject "CN=${currentUser}" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}Subject Type:End Entity") -CertStoreLocation "Cert:\\CurrentUser\\My"`,
-      '$pwd = ConvertTo-SecureString -String password -Force -AsPlainText',
-      `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join(windowsDir, newProjectName)}`,
-      `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd`,
-      '$cert.Thumbprint',
-    ];
-    const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
-
-    if (certGenProcess.status === 0) {
-      const certGenProcessOutput = certGenProcess.stdout.toString().trim().split('\n');
+    try {
+      const timeout = 10000; // 10 seconds;
+      const thumbprint = childProcess.execSync(`powershell -command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`, {timeout}).toString().trim();
+      if (!fs.existsSync(path.join(windowsDir, newProjectName))) {
+        fs.mkdirSync(path.join(windowsDir, newProjectName));
+      }
+      childProcess.execSync(`powershell -command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd"`, {timeout});
       console.log(chalk.green('Self-signed certificate generated successfully.'));
-      return certGenProcessOutput[certGenProcessOutput.length - 1];
+      return thumbprint;
+      } catch (err) {
+        console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
+        toCopyTempKey = true;
+      }
     } else {
-      console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
-      toCopyTempKey = true;
-    }
-  } else {
     console.log(chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'));
     toCopyTempKey = true;
   }
@@ -74,8 +70,13 @@ function copyProjectTemplateAndReplace(
 
   const language = options.language;
   const ns = options.ns || newProjectName;
+  if (options.experimentalNugetDependency) {
+    console.log('Using experimental NuGet dependency.');
+  }
+  const projDir = options.experimentalNugetDependency ? 'proj-experimental' : 'proj';
   const srcPath = path.join(srcRootPath, language);
   const projectGuid = uuid.v4();
+  const rnwVersion = require('react-native-windows/package.json').version;
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
@@ -87,6 +88,7 @@ function copyProjectTemplateAndReplace(
     '<%=name%>': newProjectName,
     '<%=projectGuid%>': projectGuid,
     '<%=projectGuidUpper%>': projectGuid.toUpperCase(),
+    '<%rnwVersion%>' : rnwVersion,
     '<%=packageGuid%>': packageGuid,
     '<%=currentUser%>': currentUser,
     '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',
@@ -110,7 +112,16 @@ function copyProjectTemplateAndReplace(
     [
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj') },
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj.filters') },
-    ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+      { from: path.join(srcPath, projDir, 'packages.config'), to: path.join(windowsDir, newProjectName, 'packages.config') },
+      { from: path.join(srcPath, projDir, 'packages.config'), to: 'packages.config' },
+  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+
+  // Once we are publishing to nuget.org, this shouldn't be needed anymore
+  if (options.experimentalNugetDependency) {
+    [
+      { from: path.join(srcPath, projDir, 'NuGet.Config'), to: 'NuGet.Config' },
+  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+  }
   }
 
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars, options.overwrite);
@@ -124,7 +135,7 @@ function installDependencies(options) {
   const cwd = process.cwd();
 
   // Extract react-native peer dependency version
-  const vnextPackageJsonPath = path.join(cwd, 'node_modules', 'react-native-windows', 'package.json');
+  const vnextPackageJsonPath = require.resolve('react-native-windows/package.json', {paths: [process.cwd()]});
   const vnextPackageJson = JSON.parse(fs.readFileSync(vnextPackageJsonPath, { encoding: 'UTF8' }));
   let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
   const depDelim = ' || ';
@@ -139,14 +150,13 @@ function installDependencies(options) {
   // Patch package.json to have proper react-native version and install
   const projectPackageJsonPath = path.join(cwd, 'package.json');
   const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
-  projectPackageJson.scripts.start = 'react-native start';
+  projectPackageJson.scripts.windows = 'react-native run-windows';
   projectPackageJson.dependencies['react-native'] = reactNativeVersion;
   fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
 
   // Install dependencies using correct package manager
   const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
-  const execOptions = options && options.verbose ? { stdio: 'inherit' } : {};
-  childProcess.execSync(isYarn ? 'yarn' : 'npm i', execOptions);
+  childProcess.execSync(isYarn ? 'yarn' : 'npm i', options && options.verbose ? { stdio: 'inherit' } : {});
 }
 
 module.exports = {

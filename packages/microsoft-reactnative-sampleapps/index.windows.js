@@ -18,6 +18,8 @@ import {
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
+import {MyComp} from './myComp';
+
 // Creating event emitters
 const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
 const SampleModuleCppEmitter = new NativeEventEmitter(NativeModules.SampleModuleCpp);
@@ -63,7 +65,7 @@ class SampleApp extends Component {
 
     Linking.getInitialURL()
       .then(url => log('Initial URL is: ' + url))
-      .catch(err => log('An error occurred: '+ err));
+      .catch(err => log('An error occurred: ' + err));
   }
 
   componentWillUnmount() {
@@ -267,6 +269,8 @@ class SampleApp extends Component {
   render() {
     return (
       <View style={styles.container}>
+
+        <MyComp/>
         <Text style={styles.welcome}>
           SampleApp
         </Text>

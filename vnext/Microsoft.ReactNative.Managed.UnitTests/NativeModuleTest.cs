@@ -456,6 +456,14 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactEvent]
     public Action<int> OnIntEvent = null;
 
+    // An event without arguments
+    [ReactEvent]
+    public Action OnNoArgEvent = null;
+
+    // An event with two arguments
+    [ReactEvent]
+    public Action<Point, Point> OnTwoArgsEvent = null;
+
     // Specify event name different from the field name.
     [ReactEvent("onPointEvent")]
     public Action<Point> OnPointEvent = null;
@@ -472,6 +480,14 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     // Property that allows to emit native module events.
     [ReactEvent]
     public Action<int> OnIntEventProp { get; set; }
+
+    // An event without arguments
+    [ReactEvent]
+    public Action OnNoArgEventProp { get; set; }
+
+    // An event with two arguments
+    [ReactEvent]
+    public Action<Point, Point> OnTwoArgsEventProp { get; set; }
 
     // Specify event name different from the property name.
     [ReactEvent("onPointEventProp")]
@@ -498,6 +514,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactFunction("lineFunc")]
     public Action<Point, Point> JSLineFunction = null;
 
+    // Use no arguments.
+    [ReactFunction]
+    public Action NoArgFunction = null;
+
     // By default we use the module name from ReactModuleAttribute which is by default the class name.
     // Here we specify module name local for this function.
     [ReactFunction("stringFunc", ModuleName = "MyModule")]
@@ -519,6 +539,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactFunction("lineFuncProp")]
     public Action<Point, Point> JSLineFunctionProp { get; set; }
 
+    // Use no arguments.
+    [ReactFunction]
+    public Action NoArgFunctionProp { get; set; }
+
     // By default we use the module name from ReactModuleAttribute which is by default the class name.
     // Here we specify module name local for this function.
     [ReactFunction("stringFuncProp", ModuleName = "MyModule")]
@@ -528,7 +552,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactFunction]
     public Action<JSValue> JSValueFunctionProp { get; set; }
 
-
+    // Properties below are not exposed to JS and only used by tests to observe results.
     public bool IsInitialized { get; set; }
     public string Message { get; set; }
     public static string StaticMessage { get; set; }
@@ -1075,9 +1099,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_IntEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg);
+        Assert.AreEqual(42, args[0]);
         eventRaised = true;
       });
 
@@ -1086,13 +1110,44 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
+    public void TestEvent_NoArgEventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnNoArgEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        eventRaised = true;
+      });
+
+      m_module.OnNoArgEvent();
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_TwoArgsEventField()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnTwoArgsEvent", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnTwoArgsEvent(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
     public void TestEvent_JSNameEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1104,9 +1159,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSEventEmitterEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("Hello World!", arg);
+        Assert.AreEqual("Hello World!", args[0]);
         eventRaised = true;
       });
 
@@ -1118,10 +1173,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueObjectEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1133,12 +1188,12 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArrayEventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("X", arg[0]);
-        Assert.AreEqual(4, arg[1]);
-        Assert.AreEqual(true, arg[2]);
-        Assert.AreEqual(42, arg[3]["Id"]);
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
         eventRaised = true;
       });
 
@@ -1150,9 +1205,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArray1EventField()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEvent", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg[0]);
+        Assert.AreEqual(42, args[0][0]);
         eventRaised = true;
       });
 
@@ -1164,9 +1219,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_IntEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnIntEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg);
+        Assert.AreEqual(42, args[0]);
         eventRaised = true;
       });
 
@@ -1174,14 +1229,46 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       Assert.IsTrue(eventRaised);
     }
 
+
+    [TestMethod]
+    public void TestEvent_NoArgEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnNoArgEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        eventRaised = true;
+      });
+
+      m_module.OnNoArgEventProp();
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_TwoArgsEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnTwoArgsEventProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
+        Assert.AreEqual(12, args[1]["X"]);
+        Assert.AreEqual(18, args[1]["Y"]);
+        eventRaised = true;
+      });
+
+      m_module.OnTwoArgsEventProp(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(eventRaised);
+    }
+
     [TestMethod]
     public void TestEvent_JSNameEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "onPointEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1193,9 +1280,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSEventEmitterEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("MyEventEmitter", "onStringEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("Hello World!", arg);
+        Assert.AreEqual("Hello World!", args[0]);
         eventRaised = true;
       });
 
@@ -1207,10 +1294,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueObjectEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(4, arg["X"]);
-        Assert.AreEqual(2, arg["Y"]);
+        Assert.AreEqual(4, args[0]["X"]);
+        Assert.AreEqual(2, args[0]["Y"]);
         eventRaised = true;
       });
 
@@ -1222,12 +1309,12 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArrayEventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual("X", arg[0]);
-        Assert.AreEqual(4, arg[1]);
-        Assert.AreEqual(true, arg[2]);
-        Assert.AreEqual(42, arg[3]["Id"]);
+        Assert.AreEqual("X", args[0][0]);
+        Assert.AreEqual(4, args[0][1]);
+        Assert.AreEqual(true, args[0][2]);
+        Assert.AreEqual(42, args[0][3]["Id"]);
         eventRaised = true;
       });
 
@@ -1239,9 +1326,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestEvent_JSValueArray1EventProperty()
     {
       bool eventRaised = false;
-      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (JSValue arg) =>
+      m_moduleBuilderMock.ExpectEvent("RCTDeviceEventEmitter", "OnJSValueEventProp", (IReadOnlyList<JSValue> args) =>
       {
-        Assert.AreEqual(42, arg[0]);
+        Assert.AreEqual(42, args[0][0]);
         eventRaised = true;
       });
 
@@ -1279,7 +1366,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
-    public void TestFunction_TwoArgFunctionField()
+    public void TestFunction_TwoArgsFunctionField()
     {
       bool functionCalled = false;
       m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "lineFunc", (IReadOnlyList<JSValue> args) =>
@@ -1292,6 +1379,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       });
 
       m_module.JSLineFunction(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_NoArgFunctionField()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "NoArgFunction", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        functionCalled = true;
+      });
+
+      m_module.NoArgFunction();
       Assert.IsTrue(functionCalled);
     }
 
@@ -1371,7 +1472,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
-    public void TestFunction_TwoArgFunctionProperty()
+    public void TestFunction_TwoArgsFunctionProperty()
     {
       bool functionCalled = false;
       m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "lineFuncProp", (IReadOnlyList<JSValue> args) =>
@@ -1384,6 +1485,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       });
 
       m_module.JSLineFunctionProp(new Point { X = 4, Y = 2 }, new Point { X = 12, Y = 18 });
+      Assert.IsTrue(functionCalled);
+    }
+
+    [TestMethod]
+    public void TestFunction_NoArgFunctionProperty()
+    {
+      bool functionCalled = false;
+      m_moduleBuilderMock.ExpectFunction("SimpleNativeModule", "NoArgFunctionProp", (IReadOnlyList<JSValue> args) =>
+      {
+        Assert.AreEqual(0, args.Count);
+        functionCalled = true;
+      });
+
+      m_module.NoArgFunctionProp();
       Assert.IsTrue(functionCalled);
     }
 
