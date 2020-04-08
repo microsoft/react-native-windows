@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove using namespace in ReactPackageProvider.h",
-  "packageName": "react-native-windows",
-  "email": "kaigu@microsoft.com",
-  "commit": "b30ad9980a5b343465dd97c00449f7e6b0b08190",
-  "dependentChangeType": "patch",
-  "date": "2020-04-08T01:40:36.322Z"
-}
