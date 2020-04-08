@@ -108,10 +108,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Text/TextExample'),
   },
   {
-    key: 'TextInputExample',
-    module: require('./../examples-win/TextInput/TextInputExample'),
-  },
-  {
     key: 'TouchableExample',
     module: require('react-native/RNTester/js/examples/Touchable/TouchableExample'),
   },

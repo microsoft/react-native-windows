@@ -799,14 +799,6 @@
       "file": "RNTester\\js\\examples-win\\Text\\TextExample.windows.tsx"
     },
     {
-      "type": "derived",
-      "file": "RNTester\\js\\examples-win\\TextInput\\TextInputExample.windows.tsx",
-      "baseFile": "RNTester\\js\\examples\\TextInput\\TextInputExample.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "c34cd04118d651315b4ad9a27474a6806ea08edf",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "platform",
       "file": "RNTester\\js\\examples-win\\Theming\\ThemingExample.windows.tsx"
     },
