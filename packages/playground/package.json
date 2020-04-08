@@ -3,27 +3,25 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "build": "just-scripts build",
-    "clean": "just-scripts clean",
-    "lint:fix": "just-scripts lint:fix",
-    "lint": "just-scripts lint",
-    "postinstall": "node postinstall.js",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
     "start": "react-native start",
-    "watch": "tsc -w"
+    "test": "jest",
+    "lint": "eslint .",
+    "windows": "react-native run-windows"
   },
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-windows": "0.0.0-master.23",
-    "rnpm-plugin-windows": "^0.6.1"
+    "react-native-windows": "0.0.0-master.23"
   },
   "devDependencies": {
-    "@babel/core": "7.5.5",
-    "@babel/runtime": "7.5.5",
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
     "@types/react": "16.9.0",
     "@types/react-native": "~0.61.5",
-    "just-scripts": "^0.36.1",
-    "metro-react-native-babel-preset": "0.55.0",
-    "react-test-renderer": "16.8.6"
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-test-renderer": "16.9.0",
+    "@react-native-community/eslint-config": "^0.0.5"
   }
 }
