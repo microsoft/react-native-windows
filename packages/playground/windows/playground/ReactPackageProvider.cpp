@@ -7,14 +7,10 @@
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::playground::implementation
-{
+namespace winrt::playground::implementation {
 
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
-{
-    AddAttributedModules(packageBuilder);
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
+  AddAttributedModules(packageBuilder);
 }
 
 } // namespace winrt::playground::implementation
-
-

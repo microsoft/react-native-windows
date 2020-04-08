@@ -102,7 +102,7 @@ struct App : ApplicationT<App> {
         L"       <ComboBox.Items>"
         L"         <ComboBoxItem Content='RNTesterApp' />"
         L"       </ComboBox.Items>"
-        L"     </ComboBox>"        
+        L"     </ComboBox>"
         L"   </Grid>"
         L""
         L"   <StackPanel"
@@ -180,8 +180,8 @@ struct App : ApplicationT<App> {
     m_DebuggerPort = rootGrid.FindName(L"x_DebuggerPort").as<TextBox>();
 
     m_DebuggerPort.Text(std::to_wstring(Host().InstanceSettings().DebuggerPort()));
-    
-  // IsEditable is only supported on RS4 or higher
+
+    // IsEditable is only supported on RS4 or higher
     if (Windows::Foundation::Metadata::ApiInformation::IsApiContractPresent(
             L"Windows.Foundation.UniversalApiContract", 6)) {
       m_rootComponentNameCombo.IsEditable(true);
@@ -199,81 +199,75 @@ struct App : ApplicationT<App> {
     rootGrid.FindName(L"x_JsEngine").as<ComboBox>().SelectedIndex(0);
 
     auto loadButton = rootGrid.FindName(L"x_LoadButton").as<Button>();
-    
+
     m_LoadButtonRevoker = loadButton.Click(
-        winrt::auto_revoke, [this](auto const & /*sender*/, RoutedEventArgs const & /*args*/) noexcept {
-          Load();
-        });
+        winrt::auto_revoke, [this](auto const & /*sender*/, RoutedEventArgs const & /*args*/) noexcept { Load(); });
+  }
 
+  void Load() {
+    auto host = Host();
+    auto bundleFile = unbox_value<hstring>(m_entryPointCombo.SelectedItem().as<ComboBoxItem>().Content());
+    host.InstanceSettings().JavaScriptBundleFile(bundleFile);
+    auto mainComponentName = unbox_value<hstring>(m_rootComponentNameCombo.SelectedItem().as<ComboBoxItem>().Content());
+    host.InstanceSettings().MainComponentName(mainComponentName);
+    host.InstanceSettings().UseWebDebugger(m_UseWebDebuggerCheckBox.IsChecked().GetBoolean());
+    host.InstanceSettings().UseDirectDebugger(m_UseDirectDebuggerCheckBox.IsChecked().GetBoolean());
+    host.InstanceSettings().DebuggerBreakOnNextLine(m_BreakOnFirstLineCheckBox.IsChecked().GetBoolean());
+    host.InstanceSettings().UseFastRefresh(m_BreakOnFirstLineCheckBox.IsChecked().GetBoolean());
+    host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(m_DebuggerPort.Text()))));
+
+    // Nudge the ReactNativeHost to create the instance and wrapping context
+    host.ReloadInstance();
+
+    m_reactRootView = ReactRootView();
+    m_reactRootView.ComponentName(host.InstanceSettings().MainComponentName());
+    m_reactRootView.ReactNativeHost(host);
+
+    m_rootElement.Children().Clear();
+    m_rootElement.Children().Append(m_reactRootView);
+  }
+
+ private:
+  Microsoft::ReactNative::ReactNativeHost Host() noexcept {
+    if (!m_host) {
+      m_host = Microsoft::ReactNative::ReactNativeHost();
+      m_host.InstanceSettings(InstanceSettings());
+      m_host.PackageProviders(PackageProviders());
     }
 
-    void Load()
-    {
-      auto host = Host();
-      auto bundleFile = unbox_value<hstring>(m_entryPointCombo.SelectedItem().as<ComboBoxItem>().Content());
-      host.InstanceSettings().JavaScriptBundleFile(bundleFile);
-      auto mainComponentName = unbox_value<hstring>(m_rootComponentNameCombo.SelectedItem().as<ComboBoxItem>().Content());
-      host.InstanceSettings().MainComponentName(mainComponentName);
-      host.InstanceSettings().UseWebDebugger(m_UseWebDebuggerCheckBox.IsChecked().GetBoolean());
-      host.InstanceSettings().UseDirectDebugger(m_UseDirectDebuggerCheckBox.IsChecked().GetBoolean());
-      host.InstanceSettings().DebuggerBreakOnNextLine(m_BreakOnFirstLineCheckBox.IsChecked().GetBoolean());
-      host.InstanceSettings().UseFastRefresh(m_BreakOnFirstLineCheckBox.IsChecked().GetBoolean());
-      host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(m_DebuggerPort.Text()))));
+    return m_host;
+  }
 
-      // Nudge the ReactNativeHost to create the instance and wrapping context
-      host.ReloadInstance();
-
-      m_reactRootView = ReactRootView();
-      m_reactRootView.ComponentName(host.InstanceSettings().MainComponentName());
-      m_reactRootView.ReactNativeHost(host);
-
-      m_rootElement.Children().Clear();
-      m_rootElement.Children().Append(m_reactRootView);
+  Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
+    if (!m_instanceSettings) {
+      m_instanceSettings = ReactInstanceSettings();
     }
 
-private:
-    Microsoft::ReactNative::ReactNativeHost Host() noexcept {
-      if (!m_host) {
-        m_host = Microsoft::ReactNative::ReactNativeHost();
-        m_host.InstanceSettings(InstanceSettings());
-        m_host.PackageProviders(PackageProviders());
-      }
+    return m_instanceSettings;
+  }
 
-      return m_host;
+  Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> PackageProviders() noexcept {
+    if (!m_packageProviders) {
+      m_packageProviders = single_threaded_vector<Microsoft::ReactNative::IReactPackageProvider>();
     }
 
-    Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
-      if (!m_instanceSettings) {
-        m_instanceSettings = ReactInstanceSettings();
-      }
+    return m_packageProviders;
+  }
 
-      return m_instanceSettings;
-    }
+  Microsoft::ReactNative::ReactRootView m_reactRootView{nullptr};
+  Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
+  Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders{nullptr};
+  Button::Click_revoker m_LoadButtonRevoker{};
+  CheckBox m_UseWebDebuggerCheckBox{nullptr};
+  CheckBox m_UseDirectDebuggerCheckBox{nullptr};
+  CheckBox m_BreakOnFirstLineCheckBox{nullptr};
+  CheckBox m_UseFastRefreshCheckBox{nullptr};
 
-    Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider>
-    PackageProviders() noexcept {
-      if (!m_packageProviders) {
-        m_packageProviders = single_threaded_vector<Microsoft::ReactNative::IReactPackageProvider>();
-      }
-
-      return m_packageProviders;
-    }
-
-    Microsoft::ReactNative::ReactRootView m_reactRootView{nullptr};
-    Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
-    Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-    Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders{
-        nullptr};
-    Button::Click_revoker m_LoadButtonRevoker{};
-    CheckBox m_UseWebDebuggerCheckBox{nullptr};
-    CheckBox m_UseDirectDebuggerCheckBox{nullptr};
-    CheckBox m_BreakOnFirstLineCheckBox{nullptr};
-    CheckBox m_UseFastRefreshCheckBox{nullptr};
-    
-    ComboBox m_entryPointCombo{nullptr};
-    ComboBox m_rootComponentNameCombo{nullptr};
-    Grid m_rootElement{nullptr};
-    TextBox m_DebuggerPort{nullptr};
+  ComboBox m_entryPointCombo{nullptr};
+  ComboBox m_rootComponentNameCombo{nullptr};
+  Grid m_rootElement{nullptr};
+  TextBox m_DebuggerPort{nullptr};
 };
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
