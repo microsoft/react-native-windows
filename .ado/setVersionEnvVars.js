@@ -1,9 +1,8 @@
 // @ts-check
-import fs from 'fs';
-import path from 'path';
-import child_process from 'child_process';
-import semver from 'semver';
-
+const fs = require('fs'); 
+const path = require('path');
+const child_process = require('child_process');
+const semver = require('semver');
 const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
 
 // Helper to format npmVersion in a way that the Version.rc resource files want it
