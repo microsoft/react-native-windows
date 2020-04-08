@@ -99,6 +99,7 @@ jobs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
+          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
