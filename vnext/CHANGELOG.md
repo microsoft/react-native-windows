@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Apr 2020 21:11:39 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Apr 2020 00:50:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.22
+
+Wed, 08 Apr 2020 00:50:14 GMT
+
+### Changes
+
+- Optimizing VS component installer to speed up CI builds (jthysell@microsoft.com)
 
 ## 0.0.0-master.21
 

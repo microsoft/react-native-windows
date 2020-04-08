@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2020 00:50:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.22",
+      "version": "0.0.0-master.22",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Optimizing VS component installer to speed up CI builds",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2020 21:11:39 GMT",
       "tag": "react-native-windows_v0.0.0-master.21",
       "version": "0.0.0-master.21",
