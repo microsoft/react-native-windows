@@ -16,7 +16,8 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-  WebSocketModule();
+  WebSocketModule(
+      std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> &&resourceFactory = nullptr);
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getName" />
@@ -50,6 +51,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// As defined in WebSocket.js.
   /// </summary>
   std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
+
+  /// <summary>
+  /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+  /// </summary>
+  std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> m_resourceFactory;
 };
 
 } // namespace Microsoft::React

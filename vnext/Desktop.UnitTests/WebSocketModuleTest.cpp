@@ -97,7 +97,11 @@ using std::function;
 using std::string;
 using std::unique_ptr;
 
-void MockMessageQueueThread::runOnQueue(function<void()> &&) /*override*/ {}
+void MockMessageQueueThread::runOnQueue(function<void()> &&work) /*override*/
+{
+  work();
+}
+
 void MockMessageQueueThread::runOnQueueSync(function<void()> &&work) /*override*/
 {
   work();
@@ -177,6 +181,7 @@ shared_ptr<Instance> CreateMockInstance(shared_ptr<JSExecutorFactory> jsef) {
 TEST_CLASS (WebSocketModuleTest) {
   const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{
       "connect", "close", "send", "sendBinary", "ping"};
+
   TEST_METHOD(CreateModule) {
     auto module = make_unique<WebSocketModule>();
 
@@ -191,21 +196,75 @@ TEST_CLASS (WebSocketModuleTest) {
     Assert::AreEqual(static_cast<size_t>(0), module->getConstants().size());
   }
 
-  TEST_METHOD(ConnectSucceeds) {
+  TEST_METHOD(ConnectSendsEvent) {
     auto jsef = make_shared<MockJSExecutorFactory>();
-    auto instance = CreateMockInstance(jsef);
 
-    jsef->CreateJSExecutorImpl = [](shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
+    string eventName;
+    string moduleName;
+    string methodName;
+    jsef->CreateJSExecutorImpl = [&eventName, &moduleName, &methodName](
+                                     shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
       auto jse = make_unique<MockJSExecutor>();
-      jse->CallFunctionImpl = [](const string &, const string &, const dynamic &) {
-        // TODO: Handle callFunction
+      jse->CallFunctionImpl = [&eventName, &moduleName, &methodName](
+                                  const string &module, const string &method, const dynamic &args) {
+        moduleName = module;
+        methodName = method;
+        eventName = args.at(0).asString();
       };
 
       return std::move(jse);
     };
+    auto instance = CreateMockInstance(jsef);
 
-    auto module = make_unique<WebSocketModule>();
-    // TODO: Mock member WebSocket resource.
+    struct MockWebSocketResource : public IWebSocketResource {
+      void Connect(const Protocols &, const Options &) override {
+        m_onConnect();
+      }
+
+      void Ping() override {}
+
+      void Send(const string &) override {}
+
+      void SendBinary(const string &) override {}
+
+      void Close(CloseCode, const string &) override {}
+
+      ReadyState GetReadyState() const override {
+        return ReadyState::Open;
+      }
+
+      void SetOnConnect(function<void()> &&onConnect) override {
+        m_onConnect = std::move(onConnect);
+      }
+
+      void SetOnPing(function<void()> &&) override {}
+
+      void SetOnSend(function<void(size_t)> &&) override {}
+
+      void SetOnMessage(function<void(size_t, const string &)> &&) {}
+
+      void SetOnClose(function<void(CloseCode, const string &)> &&) {}
+
+      void SetOnError(function<void(Error &&)> &&) {}
+
+     private:
+      function<void()> m_onConnect;
+    };
+
+    auto module =
+        make_unique<WebSocketModule>([](const string &, bool, bool) { return make_shared<MockWebSocketResource>(); });
+    module->setInstance(instance);
+
+    // Execute module method
+    auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
+    connect.func(
+        dynamic::array("ws://localhost:0", dynamic(), dynamic(), /*id*/ 0),
+        [](vector<dynamic>) {},
+        [](vector<dynamic>) {});
+
+    Assert::AreEqual({"RCTDeviceEventEmitter"}, moduleName);
+    Assert::AreEqual({"emit"}, methodName);
+    Assert::AreEqual({"websocketOpen"}, eventName);
   }
 };
 
