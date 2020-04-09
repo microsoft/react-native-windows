@@ -93,7 +93,9 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
-            /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
+            /p:RNW_PKG_VERSION_MAJOR="$(RNW_PKG_VERSION_MAJOR)"
+            /p:RNW_PKG_VERSION_MINOR="$(RNW_PKG_VERSION_MINOR)"
+            /p:RNW_PKG_VERSION_PATCH="$(RNW_PKG_VERSION_PATCH)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -156,6 +158,7 @@ jobs:
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             ReactUWP\**
+            Microsoft.ReactNative\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2

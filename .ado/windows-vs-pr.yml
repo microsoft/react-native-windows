@@ -35,10 +35,11 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          TestMSRNNuget: True
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
+          TestMSRNNuget: true
+          LayoutHeaders: true
         #X86Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x86
@@ -72,7 +73,7 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
-          project: vnext/ReactWindows-Universal.sln
+          project: vnext/Microsoft.ReactNative.sln
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
@@ -99,7 +100,7 @@ jobs:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
-            ReactUWP\**
+            Microsoft.ReactNative\**
 
       - script: |
           npx --no-install beachball bump
@@ -113,15 +114,15 @@ jobs:
           script: |
             $pkgJson = Get-Content -Raw -Path .\vnext\package.json | ConvertFrom-Json
             $pkgVersion = $pkgJson.version
-            $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
+            $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -slices ("$(BuildPlatform).$(BuildConfiguration)")
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
-            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target" -Verbosity Detailed
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target;baseplatform=$(BuildPlatform);baseconfiguration=$(BuildConfiguration)" -Verbosity Detailed
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: TestMSRNNuget"
         inputs:
-          artifactName: TestMSRNNuget
+          artifactName: TestMSRNNuget.$(BuildPlatform).$(BuildConfiguration)
           pathtoPublish: $(Build.StagingDirectory)/TestMSRNNuget
         condition: eq('true', variables['TestMSRNNuget'])
 
@@ -318,9 +319,6 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
-          msbuildArguments:
-            /p:RNW_PKG_VERSION_STR="Private Build"
-            /p:RNW_PKG_VERSION="1000,0,0,0"
 
       - task: CmdLine@2
         displayName: Build react-native-win32 RNTester bundle
@@ -516,8 +514,8 @@ jobs:
       - template: templates/react-native-init.yml
         parameters:
           language: cpp
-          configuration: Release
-          platform: x64
+          configuration: Debug
+          platform: x86
           version: $(reactNativeVersion)
           experimentalNugetDependency: true
 
@@ -602,12 +600,7 @@ jobs:
         inputs:
           versionSpec: ">=4.6.0"
 
-      # Exclude ReactUWP from nuget because we didn't build all the flavours.
-      - task: PowerShell@2
-        displayName: Exclude ReactUWP from ReactUwp.nuspec
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            ((Get-Content -path vnext\Scripts\ReactUwp.nuspec -Raw) -replace ".*ReactUWP\\React.UWP.*","") | Set-Content -Path vnext\Scripts\ReactUwp.nuspec
-
       - template: templates/prep-and-pack-nuget.yml
+        parameters:
+          slices: '("x64.Release", "x86.Debug", "ARM.Debug")'
+          packUniversal: false
