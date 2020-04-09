@@ -28,8 +28,8 @@
     "rnpm-plugin-windows": "^0.6.1"
   },
   "devDependencies": {
-    "@babel/core": "7.5.5",
-    "@babel/runtime": "7.5.5",
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
