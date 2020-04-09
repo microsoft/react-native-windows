@@ -29,12 +29,9 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 
 ## System Requirements
 
-- You can run React Native Windows UWP apps only on Windows 10 devices
-   - React Native Windows currently supports Windows 10 SDK >= [15063](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive). See [Windows 10 Compatibility](https://microsoft.github.io/react-native-windows/docs/win10-compat) for version support details.
-- Download [Visual Studio 2017 Community or Greater](https://www.visualstudio.com/downloads/). (Visual Studio 2015 support has been deprecated.)
-	- You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
+You can run React Native Windows UWP apps only on Windows 10 devices.
 
-> Development on React Native Windows itself currently requires Visual Studio 2017 or higher. It is not currently supported with VS Code, but work is ongoing as tracked [here](https://github.com/microsoft/vscode-react-native/issues/1007).
+For a full and detailed list of the system requirements and how to set up your development platform, see our [System Requirements](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) documentation on our website.
 
 ## Documentation
 [React Native already has great documentation](https://reactnative.dev/docs/getting-started.html) and we're working to ensure the React Native Windows is part of that documentation story.
