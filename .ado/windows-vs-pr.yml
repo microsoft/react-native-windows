@@ -65,11 +65,6 @@ jobs:
         clean: false
         submodules: false
 
-      # - task: VisualStudioTestPlatformInstaller@1
-      #   inputs:
-      #     testPlatformVersion: latestStable
-      #   condition: not(startsWith(variables.BuildPlatform, 'arm'))
-
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
