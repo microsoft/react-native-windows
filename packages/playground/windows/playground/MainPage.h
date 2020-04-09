@@ -9,9 +9,11 @@ struct MainPage : MainPageT<MainPage> {
   hstring Test();
   void Test(hstring const &value);
 
-  void OnLoadClick(Windows::Foundation::IInspectable const & /*sender*/, Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
+  void OnLoadClick(
+      Windows::Foundation::IInspectable const & /*sender*/,
+      Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
 
-private:
+ private:
   Microsoft::ReactNative::ReactNativeHost Host() noexcept;
   Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> PackageProviders() noexcept;

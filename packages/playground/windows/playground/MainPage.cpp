@@ -39,8 +39,7 @@ void MainPage::Test(hstring const & /*value*/) {
 
 void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
-    Windows::UI::Xaml::RoutedEventArgs const & /*args*/)
-{
+    Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
   auto host = Host();
   auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
@@ -66,17 +65,15 @@ void MainPage::OnLoadClick(
 void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionChanged(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,
     winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const & /*e*/) {
-
-    if (x_rootComponentNameCombo()) {
+  if (x_rootComponentNameCombo()) {
     auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
-  if (std::wstring(bundleFile).compare(L"Samples\\rntester") == 0) {
+    if (std::wstring(bundleFile).compare(L"Samples\\rntester") == 0) {
       x_rootComponentNameCombo().SelectedIndex(0);
-  } else {
-    x_rootComponentNameCombo().SelectedIndex(1);
-  }
+    } else {
+      x_rootComponentNameCombo().SelectedIndex(1);
     }
+  }
 }
-
 
 Microsoft::ReactNative::ReactNativeHost MainPage::Host() noexcept {
   if (!m_host) {
@@ -104,6 +101,5 @@ MainPage::PackageProviders() noexcept {
 
   return m_packageProviders;
 }
-
 
 } // namespace winrt::playground::implementation
