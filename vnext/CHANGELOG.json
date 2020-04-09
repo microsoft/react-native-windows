@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Apr 2020 04:05:40 GMT",
+      "tag": "react-native-windows_v0.61.3",
+      "version": "0.61.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add missing placeholder certs for when cert generation fails",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Apr 2020 04:18:45 GMT",
       "tag": "react-native-windows_v0.61.2",
       "version": "0.61.2",

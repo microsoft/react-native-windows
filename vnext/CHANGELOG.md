@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Apr 2020 04:18:45 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Apr 2020 04:05:40 GMT and should not be manually modified.
 
+## 0.61.3
+Thu, 09 Apr 2020 04:05:40 GMT
+
+### Patches
+
+- Add missing placeholder certs for when cert generation fails (acoates@microsoft.com)
 ## 0.61.2
 Sat, 04 Apr 2020 04:18:45 GMT
 

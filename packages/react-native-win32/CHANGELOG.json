@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 09 Apr 2020 04:05:40 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0",
+      "version": "0.61.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Removing change script which runs wrong command",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 00:20:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.61.0",
       "version": "0.61.0",

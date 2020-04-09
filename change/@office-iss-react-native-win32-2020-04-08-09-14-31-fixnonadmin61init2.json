@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Removing change script which runs wrong command",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-04-08T16:14:31.528Z"
-}
