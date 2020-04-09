@@ -92,10 +92,9 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
     );
   } catch (e) {
     if (!options.isRetryingNuget) {
-      options.isRetryingNuget = true;
+      const retryOptions = Object.assign({isRetryingNuget: true}, options);
       fs.unlinkSync(nugetPath);
-      await restoreNuGetPackages(options, slnFile, verbose);
-      return;
+      return restoreNuGetPackages(retryOptions, slnFile, verbose);
     }
     throw e;
   }

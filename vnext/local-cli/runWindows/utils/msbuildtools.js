@@ -22,6 +22,16 @@ const {
 } = require('./commandWithProgress');
 const execSync = require('child_process').execSync;
 
+function unique(arr) {
+  let arrOut = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!arrOut.find(x => x === arr[i])) {
+      arrOut.push(arr[i]);
+    }
+  }
+  return arrOut;
+}
+
 const MSBUILD_VERSIONS = ['16.0'];
 
 class MSBuildTools {
@@ -52,6 +62,7 @@ class MSBuildTools {
     newInfo(`Build platform: ${buildArch}`);
 
     const verbosityOption = verbose ? 'normal' : 'quiet';
+    const errorLog = path.join(process.env.temp, `msbuild_${process.pid}.err`);
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -59,7 +70,7 @@ class MSBuildTools {
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
       '/bl',
-      '/flp1:errorsonly;logfile=msbuild.err'
+      `/flp1:errorsonly;logfile=${errorLog}`,
     ];
 
     if (msBuildProps) {
@@ -79,13 +90,32 @@ class MSBuildTools {
 
     const progressName = 'Building Solution';
     const spinner = newSpinner(progressName);
-    await commandWithProgress(
-      spinner,
-      progressName,
-      path.join(this.path, 'msbuild.exe'),
-      [slnFile].concat(args),
-      verbose,
-    );
+    try {
+      await commandWithProgress(
+        spinner,
+        progressName,
+        path.join(this.path, 'msbuild.exe'),
+        [slnFile].concat(args),
+        verbose,
+      );
+    } catch (e) {
+      let error = e;
+      if (!e) {
+        error = new Error(
+          unique(
+            fs
+              .readFileSync(errorLog)
+              .toString()
+              .split('\n'),
+          )[0],
+        );
+      }
+      throw error;
+    }
+    // If we have no errors, delete the error log when we're done
+    if (fs.statSync(errorLog).size === 0) {
+      fs.unlinkSync(errorLog);
+    }
   }
 }
 

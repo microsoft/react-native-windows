@@ -41,11 +41,16 @@ function newSpinner(text) {
   return ora(options).start();
 }
 
-async function runPowerShellScriptFunction(text, script, funcName, verbose) {
+async function runPowerShellScriptFunction(
+  taskDescription,
+  script,
+  funcName,
+  verbose,
+) {
   try {
     await commandWithProgress(
-      newSpinner(text),
-      text,
+      newSpinner(taskDescription),
+      taskDescription,
       'powershell',
       [
         '-NoProfile',
@@ -58,7 +63,7 @@ async function runPowerShellScriptFunction(text, script, funcName, verbose) {
   } catch {
     // The error output from the process will be shown if verbose is set.
     // We don't capture the process output if verbose is set, but at least we have the task name in text, so throw that.
-    throw new Error(text);
+    throw new Error(taskDescription);
   }
 }
 
@@ -71,7 +76,7 @@ function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
     }
 
     const cp = child_process.spawn(command, args, spawnOptions);
-    var error = null;
+    let firstErrorLine = null;
     if (!verbose) {
       cp.stdout.on('data', chunk => {
         const text = chunk.toString();
@@ -79,14 +84,14 @@ function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
       });
       cp.stderr.on('data', chunk => {
         const text = chunk.toString();
-        if (!error) {
-          error = text;
+        if (!firstErrorLine) {
+          firstErrorLine = text;
         }
         if (verbose) {
           console.error(chalk.red(text));
         }
         if (text) {
-          setSpinnerText(spinner, taskDoingName + ': ERROR: ', error);
+          setSpinnerText(spinner, taskDoingName + ': ERROR: ', firstErrorLine);
         }
       });
     }

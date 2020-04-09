@@ -12,17 +12,6 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
-const fs = require('fs');
-
-function unique(arr) {
-  let arrOut = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (!arrOut.find(x => x === arr[i])) {
-      arrOut.push(arr[i]);
-    }
-  }
-  return arrOut;
-}
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
@@ -81,11 +70,10 @@ async function runWindows(config, args, options) {
         verbose,
       );
     } catch (e) {
-      if (!e) {
-        e = unique(fs.readFileSync('msbuild.err').toString().split('\n'));
-      }
       newError(
-        `Build failed with message ${e}. Check your build configuration.`,
+        `Build failed with message ${
+          e.message
+        }. Check your build configuration.`,
       );
       process.exit(1);
     }
