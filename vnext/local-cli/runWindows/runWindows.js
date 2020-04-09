@@ -12,6 +12,7 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
+const chalk = require('chalk');
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
@@ -75,6 +76,9 @@ async function runWindows(config, args, options) {
           e.message
         }. Check your build configuration.`,
       );
+      if (e.logfile) {
+        console.log('See', chalk.bold(e.logfile));
+      }
       process.exit(1);
     }
   } else {
