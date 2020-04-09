@@ -2521,14 +2521,6 @@
     js-yaml "~3.13.1"
     resolve "1.8.1"
 
-"@microsoft/api-extractor-model@7.7.10":
-  version "7.7.10"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.7.10.tgz#52c661825f05a311b9d2dfdecd8d523c0c751b92"
-  integrity sha512-gMFDXwUgoQYz9TgatyNPALDdZN4xBC3Un3fGwlzME+vM13PoJ26pGuqI7kv/OlK9+q2sgrEdxWns8D3UnLf2TA==
-  dependencies:
-    "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.19.6"
-
 "@microsoft/api-extractor-model@7.7.11":
   version "7.7.11"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.7.11.tgz#9dfc5425f4a6a2b6b1ebc39332ae8101ab8da36a"
@@ -2751,19 +2743,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.0.0.tgz#ae9a430f2c5795debca491f15a989fce86ea75a0"
   integrity sha512-GLhSN8dRt4lpixPQh+8prSCy6PYk/MT/mvji/ojAd5yshowDo6HFsimCSTD/uWAdjpUq91XK9tVdTNWfGRlKQA==
 
-"@rushstack/node-core-library@3.19.6":
-  version "3.19.6"
-  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.19.6.tgz#da67dc9e93fb36b807007892ca6b699fc0c81e6d"
-  integrity sha512-1+FoymIdr9W9k0D8fdZBBPwi5YcMwh/RyESuL5bY29rLICFxSLOPK+ImVZ1OcWj9GEMsvDx5pNpJ311mHQk+MA==
-  dependencies:
-    "@types/node" "10.17.13"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~5.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
-
 "@rushstack/node-core-library@3.19.7":
   version "3.19.7"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.19.7.tgz#8d8a193fd6f99536c92dd797ab50fd5fcb7630ea"
@@ -2776,15 +2755,6 @@
     semver "~5.3.0"
     timsort "~0.3.0"
     z-schema "~3.18.3"
-
-"@rushstack/ts-command-line@4.3.13":
-  version "4.3.13"
-  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.3.13.tgz#f84cdfad2e50663419bcf4064acf6b9dbfc6e674"
-  integrity sha512-BUBbjYu67NJGQkpHu8aYm7kDoMFizL1qx78+72XE3mX/vDdXYJzw/FWS7TPcMJmY4kNlYs979v2B0Q0qa2wRiw==
-  dependencies:
-    "@types/argparse" "1.0.33"
-    argparse "~1.0.9"
-    colors "~1.2.1"
 
 "@rushstack/ts-command-line@4.3.14":
   version "4.3.14"
@@ -4532,9 +4502,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.28.0.tgz#e4c4951ef623f33f04715390b0f90d401a119b6d"
-  integrity sha512-WS6jfTDR6bRNgJNG+61buzz2ZUuwdjGwMNNmmEYfaM45wgwjfZV8F76Qrk2DmtzbUEyuJJdKGGh+Al975p4saQ==
+  version "1.28.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.28.1.tgz#ac71ffbdc9ccfd9ec15d0d332cca9ac708c87891"
+  integrity sha512-i/aynDcXbXCI7QoLn8D3t4BrZHD/oqpnupPTGUe+wlIxnPVys9Mej2TeR4AWsI3PevbyxTPRinVn5ytpqBaY0A==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"
