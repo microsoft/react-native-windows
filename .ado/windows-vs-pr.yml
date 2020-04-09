@@ -73,7 +73,7 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
-          project: vnext/ReactWindows-Universal.sln
+          project: vnext/Microsoft.ReactNative.sln
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
@@ -100,7 +100,6 @@ jobs:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
-            ReactUWP\**
             Microsoft.ReactNative\**
 
       - script: |
@@ -593,3 +592,4 @@ jobs:
       - template: templates/prep-and-pack-nuget.yml
         parameters:
           slices: '("x64.Release", "x86.Debug", "ARM.Debug")'
+          packUniversal: false
