@@ -22,7 +22,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.0",
+    "@babel/runtime": "^7.8.4",
     "abort-controller": "^3.0.0",
     "art": "^0.10.0",
     "base64-js": "^1.1.2",
