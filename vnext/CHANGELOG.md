@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Apr 2020 17:16:44 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Apr 2020 21:36:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.27
+
+Thu, 09 Apr 2020 21:36:07 GMT
+
+### Changes
+
+- Enable managed unit tests (jthysell@microsoft.com)
 
 ## 0.0.0-master.26
 

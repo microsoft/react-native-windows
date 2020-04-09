@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Apr 2020 21:36:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.27",
+      "version": "0.0.0-master.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable managed unit tests",
+            "author": "jthysell@microsoft.com",
+            "commit": "98049fcc569ec9ff0ee735311b1f4552adee8be2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 20:28:53 GMT",
       "tag": "react-native-windows_v0.0.0-master.26",
       "version": "0.0.0-master.26",
