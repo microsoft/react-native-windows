@@ -8,7 +8,6 @@
   "scripts": {
     "build": "just-scripts build",
     "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev",
-    "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
