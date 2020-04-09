@@ -44,7 +44,7 @@ class MockInstanceCallback : public InstanceCallback {
 
 class MockJSExecutor : public JSExecutor {
  public:
-  std::function<void(const std::string &, const std::string &, const folly::dynamic &)> CallFunctionImpl;
+  std::function<void(const std::string &, const std::string &, const folly::dynamic &)> CallFunctionMock;
 
 #pragma region JSExecutor overrides
 
@@ -78,7 +78,7 @@ class MockJSExecutor : public JSExecutor {
 class MockJSExecutorFactory : public JSExecutorFactory {
  public:
   std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>
-      CreateJSExecutorImpl;
+      CreateJSExecutorMock;
 
 #pragma region JSExecutorFactory overrides
 
@@ -120,8 +120,8 @@ void MockJSExecutor::setBundleRegistry(unique_ptr<RAMBundleRegistry> bundleRegis
 void MockJSExecutor::registerBundle(uint32_t bundleId, const string &bundlePath) {}
 
 void MockJSExecutor::callFunction(const string &moduleId, const string &methodId, const dynamic &arguments) {
-  if (CallFunctionImpl) {
-    CallFunctionImpl(moduleId, methodId, arguments);
+  if (CallFunctionMock) {
+    CallFunctionMock(moduleId, methodId, arguments);
   }
 }
 
@@ -153,8 +153,8 @@ unique_ptr<JSExecutor> MockJSExecutorFactory::createJSExecutor(
     shared_ptr<ExecutorDelegate> delegate,
     shared_ptr<MessageQueueThread> jsQueue) /*override*/
 {
-  if (CreateJSExecutorImpl) {
-    return CreateJSExecutorImpl(delegate, jsQueue);
+  if (CreateJSExecutorMock) {
+    return CreateJSExecutorMock(delegate, jsQueue);
   }
 
   return make_unique<MockJSExecutor>();
@@ -202,10 +202,10 @@ TEST_CLASS (WebSocketModuleTest) {
     string eventName;
     string moduleName;
     string methodName;
-    jsef->CreateJSExecutorImpl = [&eventName, &moduleName, &methodName](
+    jsef->CreateJSExecutorMock = [&eventName, &moduleName, &methodName](
                                      shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
       auto jse = make_unique<MockJSExecutor>();
-      jse->CallFunctionImpl = [&eventName, &moduleName, &methodName](
+      jse->CallFunctionMock = [&eventName, &moduleName, &methodName](
                                   const string &module, const string &method, const dynamic &args) {
         moduleName = module;
         methodName = method;
