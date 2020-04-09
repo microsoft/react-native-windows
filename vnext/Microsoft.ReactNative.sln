@@ -37,9 +37,81 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "ReactCommon\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{25C4DA8C-A4D2-4D5F-950A-E5371A8AB659}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third Party Dependencies", "Third Party Dependencies", "{814A1893-F3C3-45BA-8C80-5377CFD86C5F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies (External)", "Dependencies (External)", "{814A1893-F3C3-45BA-8C80-5377CFD86C5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internal", "Internal", "{6348365C-E58A-4CB4-96CA-E2A6C1201DD6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies (Internal)", "Dependencies (Internal)", "{6348365C-E58A-4CB4-96CA-E2A6C1201DD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{1DA4BB3B-D0B1-4933-BDBA-60B553B4F946}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertySheets", "{D1CDE6A6-E011-4852-8500-E259AD60846F}"
+	ProjectSection(SolutionItems) = preProject
+		PropertySheets\ARM.props = PropertySheets\ARM.props
+		PropertySheets\ARM64.props = PropertySheets\ARM64.props
+		PropertySheets\Bundle.Common.targets = PropertySheets\Bundle.Common.targets
+		PropertySheets\Bundle.Cpp.targets = PropertySheets\Bundle.Cpp.targets
+		PropertySheets\Bundle.props = PropertySheets\Bundle.props
+		PropertySheets\Bundle.targets = PropertySheets\Bundle.targets
+		PropertySheets\Debug.props = PropertySheets\Debug.props
+		PropertySheets\React.Cpp.props = PropertySheets\React.Cpp.props
+		PropertySheets\ReactCommunity.cpp.props = PropertySheets\ReactCommunity.cpp.props
+		PropertySheets\ReactDirectories.props = PropertySheets\ReactDirectories.props
+		PropertySheets\ReactPatches.targets = PropertySheets\ReactPatches.targets
+		PropertySheets\Release.props = PropertySheets\Release.props
+		PropertySheets\Warnings.props = PropertySheets\Warnings.props
+		PropertySheets\Win32.props = PropertySheets\Win32.props
+		PropertySheets\x64.props = PropertySheets\x64.props
+		PropertySheets\x86.props = PropertySheets\x86.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{4CA4053F-17D8-4619-8600-FF672209828C}"
+	ProjectSection(SolutionItems) = preProject
+		PropertySheets\Application\ARM.props = PropertySheets\Application\ARM.props
+		PropertySheets\Application\ARM64.props = PropertySheets\Application\ARM64.props
+		PropertySheets\Application\Debug.props = PropertySheets\Application\Debug.props
+		PropertySheets\Application\DebugBundle.props = PropertySheets\Application\DebugBundle.props
+		PropertySheets\Application\Release.props = PropertySheets\Application\Release.props
+		PropertySheets\Application\ReleaseBundle.props = PropertySheets\Application\ReleaseBundle.props
+		PropertySheets\Application\Win32.props = PropertySheets\Application\Win32.props
+		PropertySheets\Application\x64.props = PropertySheets\Application\x64.props
+		PropertySheets\Application\x86.props = PropertySheets\Application\x86.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamicLibrary", "DynamicLibrary", "{19F9503C-4A05-4F96-8A41-0BD93228F220}"
+	ProjectSection(SolutionItems) = preProject
+		PropertySheets\DynamicLibrary\ARM.props = PropertySheets\DynamicLibrary\ARM.props
+		PropertySheets\DynamicLibrary\ARM64.props = PropertySheets\DynamicLibrary\ARM64.props
+		PropertySheets\DynamicLibrary\Debug.props = PropertySheets\DynamicLibrary\Debug.props
+		PropertySheets\DynamicLibrary\DebugBundle.props = PropertySheets\DynamicLibrary\DebugBundle.props
+		PropertySheets\DynamicLibrary\Release.props = PropertySheets\DynamicLibrary\Release.props
+		PropertySheets\DynamicLibrary\ReleaseBundle.props = PropertySheets\DynamicLibrary\ReleaseBundle.props
+		PropertySheets\DynamicLibrary\Win32.props = PropertySheets\DynamicLibrary\Win32.props
+		PropertySheets\DynamicLibrary\x64.props = PropertySheets\DynamicLibrary\x64.props
+		PropertySheets\DynamicLibrary\x86.props = PropertySheets\DynamicLibrary\x86.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticLibrary", "StaticLibrary", "{529E25F3-F1D4-41CC-9BAC-DEE9A5B0FF97}"
+	ProjectSection(SolutionItems) = preProject
+		PropertySheets\StaticLibrary\ARM.props = PropertySheets\StaticLibrary\ARM.props
+		PropertySheets\StaticLibrary\ARM64.props = PropertySheets\StaticLibrary\ARM64.props
+		PropertySheets\StaticLibrary\Debug.props = PropertySheets\StaticLibrary\Debug.props
+		PropertySheets\StaticLibrary\DebugBundle.props = PropertySheets\StaticLibrary\DebugBundle.props
+		PropertySheets\StaticLibrary\Release.props = PropertySheets\StaticLibrary\Release.props
+		PropertySheets\StaticLibrary\ReleaseBundle.props = PropertySheets\StaticLibrary\ReleaseBundle.props
+		PropertySheets\StaticLibrary\Win32.props = PropertySheets\StaticLibrary\Win32.props
+		PropertySheets\StaticLibrary\x64.props = PropertySheets\StaticLibrary\x64.props
+		PropertySheets\StaticLibrary\x86.props = PropertySheets\StaticLibrary\x86.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MIDL", "MIDL", "{A7A199BB-2B8D-4142-92D0-5EA0B299F287}"
+	ProjectSection(SolutionItems) = preProject
+		PropertySheets\MIDL\midlrt.props = PropertySheets\MIDL\midlrt.props
+		PropertySheets\MIDL\midlrt.targets = PropertySheets\MIDL\midlrt.targets
+		PropertySheets\MIDL\MidlRT.xml = PropertySheets\MIDL\MidlRT.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -225,6 +297,11 @@ Global
 		{11C084A3-A57C-4296-A679-CAC17B603144} = {6348365C-E58A-4CB4-96CA-E2A6C1201DD6}
 		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0} = {6348365C-E58A-4CB4-96CA-E2A6C1201DD6}
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {814A1893-F3C3-45BA-8C80-5377CFD86C5F}
+		{D1CDE6A6-E011-4852-8500-E259AD60846F} = {1DA4BB3B-D0B1-4933-BDBA-60B553B4F946}
+		{4CA4053F-17D8-4619-8600-FF672209828C} = {D1CDE6A6-E011-4852-8500-E259AD60846F}
+		{19F9503C-4A05-4F96-8A41-0BD93228F220} = {D1CDE6A6-E011-4852-8500-E259AD60846F}
+		{529E25F3-F1D4-41CC-9BAC-DEE9A5B0FF97} = {D1CDE6A6-E011-4852-8500-E259AD60846F}
+		{A7A199BB-2B8D-4142-92D0-5EA0B299F287} = {D1CDE6A6-E011-4852-8500-E259AD60846F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {988F03E6-640A-4C7E-8B55-C1291B70669E}
