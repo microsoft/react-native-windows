@@ -603,3 +603,4 @@ jobs:
       - template: templates/prep-and-pack-nuget.yml
         parameters:
           slices: '("x64.Release", "x86.Debug", "ARM.Debug")'
+          packUniversal: false
