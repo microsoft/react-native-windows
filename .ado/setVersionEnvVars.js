@@ -1,9 +1,8 @@
 // @ts-check
-import fs from 'fs';
-import path from 'path';
-import child_process from 'child_process';
-import semver from 'semver';
-
+const fs = require('fs'); 
+const path = require('path');
+const child_process = require('child_process');
+const semver = require('semver');
 const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
 
 // Helper to format npmVersion in a way that the Version.rc resource files want it
@@ -57,6 +56,9 @@ console.log("##[set-env name=RNW_PKG_VERSION_MINOR;]${versionEnvVars.RNW_PKG_VER
 console.log("::[set-env name=RNW_PKG_VERSION_PATCH;]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("##[set-env name=RNW_PKG_VERSION_PATCH;]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MAJOR]${versionEnvVars.RNW_PKG_VERSION_MAJOR}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MINOR]${versionEnvVars.RNW_PKG_VERSION_MINOR}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("::[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
 console.log("##[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
 console.log("##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}");

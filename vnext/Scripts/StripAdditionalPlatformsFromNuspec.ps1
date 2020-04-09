@@ -3,21 +3,39 @@
 
 param (
     [string]$nuspec = "$PSScriptRoot\Microsoft.ReactNative.nuspec",
-    [string]$outfile = "$PSScriptRoot\Microsoft.ReactNative.PR.nuspec"
+    [string]$outfile = "$PSScriptRoot\Microsoft.ReactNative.PR.nuspec",
+    [string[]]$slices = @("x64.Release")
  )
 
 Write-Output "Creating filtered version of : $nuspec"
 $xml = [xml](gc $nuspec)
 
+$allSlices = @("x64.Release", "x64.Debug", "x86.Release", "x86.Debug", "ARM.Release", "ARM.Debug", "ARM64.Release", "ARM64.Debug")
+
 $nodesToRemove = @();
+
+# Validate slices args are all valid slices
+foreach($s in $slices) {
+    if (!$allSlices.Contains($s)) {
+        Write-Output "Invalid slice '$s'";
+        Exit 1;
+    }
+}
 
 foreach($file in $xml.package.files.ChildNodes) {
     if ($file.NodeType -eq "Comment") {
         continue;
     }
 
-    if ($file.src.Contains("ARM") -or $file.src.Contains("x86")) {
-        $nodesToRemove += $file
+    foreach($slice in $allSlices) {
+        $sliceInfo = $slice.split('.');
+        $platform = $sliceInfo[0];
+        $flavor = $sliceInfo[1];
+
+        if ($file.src.Contains($platform) -and $file.src.Contains($flavor) -and !$slices.Contains("$platform.$flavor")) {
+            $nodesToRemove += $file
+            break;
+        }
     }
 }
 

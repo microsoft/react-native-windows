@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Apr 2020 13:58:29 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Apr 2020 19:59:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.25
+
+Wed, 08 Apr 2020 19:59:18 GMT
+
+### Changes
+
+- Remove using namespace in ReactPackageProvider.h (kaigu@microsoft.com)
+
+## 0.0.0-master.24
+
+Wed, 08 Apr 2020 17:48:10 GMT
+
+### Changes
+
+- Rework more publish logic - produce nugets in PRs (acoates@microsoft.com)
 
 ## 0.0.0-master.23
 
