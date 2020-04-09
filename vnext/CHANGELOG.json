@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Apr 2020 20:28:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.26",
+      "version": "0.0.0-master.26",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bumping dev deps",
+            "author": "acoates@microsoft.com",
+            "commit": "03fb17db7b929a6a9ec5b3ce4a00f8ea54560b03",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 19:49:28 GMT",
       "tag": "react-native-windows_v0.0.0-master.26",
       "version": "0.0.0-master.26",
