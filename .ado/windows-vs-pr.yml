@@ -65,10 +65,10 @@ jobs:
         clean: false
         submodules: false
 
-      - task: VisualStudioTestPlatformInstaller@1
-        inputs:
-          testPlatformVersion: latestStable
-        condition: not(startsWith(variables.BuildPlatform, 'arm'))
+      # - task: VisualStudioTestPlatformInstaller@1
+      #   inputs:
+      #     testPlatformVersion: latestStable
+      #   condition: not(startsWith(variables.BuildPlatform, 'arm'))
 
       - template: templates/build-rnw.yml
         parameters:
@@ -90,7 +90,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - task: VSTest@2
@@ -106,7 +106,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - template: templates/publish-build-artifacts-for-nuget.yml
