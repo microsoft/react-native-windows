@@ -51,17 +51,16 @@ class MSBuildTools {
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
 
-    //const verbosityOption = verbose ? 'normal' : 'quiet';
-    const verbosityOption = 'normal';
+    const verbosityOption = verbose ? 'normal' : 'quiet';
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
+      '/bl',
+      '/flp1:errorsonly;logfile=msbuild.err'
     ];
-
-    args.push('/bl');
 
     if (msBuildProps) {
       Object.keys(msBuildProps).forEach(function(key) {
@@ -73,7 +72,7 @@ class MSBuildTools {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
       newError(e.message);
-      return;
+      throw e;
     }
 
     console.log(`Running MSBuild with args ${args.join(' ')}`);

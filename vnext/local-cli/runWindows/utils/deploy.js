@@ -20,6 +20,7 @@ const {
   newWarn,
   newSpinner,
   commandWithProgress,
+  runPowerShellScriptFunction,
 } = require('./commandWithProgress');
 
 function pushd(pathArg) {
@@ -166,36 +167,24 @@ async function deployToDesktop(options, verbose) {
 
   const popd = pushd(options.root);
 
-  const removingText = 'Removing old version of the app';
-  await commandWithProgress(
-    newSpinner(removingText),
-    removingText,
-    'powershell',
-    `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`.split(
-      ' ',
-    ),
+  await runPowerShellScriptFunction(
+    'Removing old version of the app',
+    windowsStoreAppUtils,
+    `Uninstall-App ${appName}`,
     verbose,
   );
 
-  const devmodeText = 'Enabling Developer Mode';
-  const devmodeEnable = `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; EnableDevmode "${script}"`;
-
-  await commandWithProgress(
-    newSpinner(devmodeText),
-    devmodeText,
-    'powershell',
-    devmodeEnable.split(' '),
+  await runPowerShellScriptFunction(
+    'Enabling Developer Mode',
+    windowsStoreAppUtils,
+    `EnableDevMode "${script}"`,
     verbose,
   );
 
-  const installingText = 'Installing new version of the app';
-  const installApp = `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}" -Force`;
-
-  await commandWithProgress(
-    newSpinner(installingText),
-    installingText,
-    'powershell',
-    installApp.split(' '),
+  await runPowerShellScriptFunction(
+    'Installing new version of the app',
+    windowsStoreAppUtils,
+    `Install-App "${script}" -Force`,
     verbose,
   );
 
@@ -223,14 +212,10 @@ async function deployToDesktop(options, verbose) {
   );
 
   if (shouldLaunchApp(options)) {
-    const startingText = 'Starting the app';
-    await commandWithProgress(
-      newSpinner(startingText),
-      startingText,
-      'powershell',
-      `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`.split(
-        ' ',
-      ),
+    await runPowerShellScriptFunction(
+      'Starting the app',
+      windowsStoreAppUtils,
+      `Start-Locally ${appName} ${args}`,
       verbose,
     );
   } else {

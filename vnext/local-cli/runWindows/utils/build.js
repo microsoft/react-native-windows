@@ -42,7 +42,7 @@ async function buildSolution(
 }
 
 async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
-  const text = 'Restoring NuGets';
+  const text = 'Restoring NuGet packages ';
   const spinner = newSpinner(text);
   console.log(nugetPath);
   await commandWithProgress(
@@ -74,7 +74,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
       ensureNugetSpinner,
       dlNugetText,
       'powershell',
-      `Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
+      `$progressPreference = [System.Management.Automation.ActionPreference]::SilentlyContinue; Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
         ' ',
       ),
       verbose,
@@ -83,12 +83,22 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   ensureNugetSpinner.succeed('Found NuGet Binary');
 
   const msbuildTools = MSBuildTools.findAvailableVersion('x86', verbose);
-  await nugetRestore(
-    nugetPath,
-    slnFile,
-    verbose,
-    msbuildTools.installationVersion,
-  );
+  try {
+    await nugetRestore(
+      nugetPath,
+      slnFile,
+      verbose,
+      msbuildTools.installationVersion,
+    );
+  } catch (e) {
+    if (!options.isRetryingNuget) {
+      options.isRetryingNuget = true;
+      fs.unlinkSync(nugetPath);
+      await restoreNuGetPackages(options, slnFile, verbose);
+      return;
+    }
+    throw e;
+  }
 }
 
 function getSolutionFile(options) {
