@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Apr 2020 19:59:18 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Apr 2020 17:16:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.26
+
+Thu, 09 Apr 2020 17:16:44 GMT
+
+### Changes
+
+- Creating new Microsoft.ReactNative.sln without legacy ReactUWP (jthysell@microsoft.com)
 
 ## 0.0.0-master.25
 
