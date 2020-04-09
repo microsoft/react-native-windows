@@ -9,11 +9,11 @@ const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
 
 const rnPath = fs.realpathSync(
-  fs.realpathSync(
-    path.resolve(require.resolve('react-native/package.json'), '..'),
-  ),
+  path.resolve(require.resolve('react-native/package.json'), '..'),
 );
-const rnwPath = path.resolve(__dirname, '../../vnext');
+const rnwPath = fs.realpathSync(
+  path.resolve(require.resolve('react-native-windows/package.json'), '..'),
+);
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -26,34 +26,22 @@ module.exports = {
 
   resolver: {
     extraNodeModules: {
-      // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
+      // Redirect react-native to react-native-windows
       'react-native': rnwPath,
       'react-native-windows': rnwPath,
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
     platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.61 when haste is removed
+    // This should go in RN 0.61 when haste is removed
     blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath)}.*`.replace(/[/\\]/g, '/')),
       new RegExp(
-        `${path.resolve(rnwPath, 'node_modules/react-native')}.*`.replace(
-          /[/\\]/g,
-          '/',
-        ),
+        `${(path.resolve(rnPath) + path.sep).replace(/[/\\]/g, '/')}.*`,
       ),
-      new RegExp(
-        `${path.resolve(rnwPath, 'ReactCopies')}.*`.replace(/[/\\]/g, '/'),
-      ),
-      new RegExp(
-        `${path.resolve(
-          require.resolve('@react-native-community/cli/package.json'),
-          '../node_modules/react-native',
-        )}.*`.replace(/[/\\]/g, '/'),
-      ),
+
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
-        `${path.resolve(__dirname, 'windows')}.*`.replace(/[/\\]/g, '/'),
+        `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
   },

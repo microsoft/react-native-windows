@@ -172,6 +172,7 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
@@ -195,18 +196,6 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-
-      - task: CmdLine@2
-        displayName: Create Playground bundle
-        inputs:
-          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
-          workingDirectory: packages\playground
-
-      - task: CmdLine@2
-        displayName: Create RNTester bundle
-        inputs:
-          script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
-          workingDirectory: vnext
 
   - job: RNWSampleAppsPR
     displayName: Sample Apps PR

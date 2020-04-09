@@ -73,10 +73,7 @@ var TextValues = [
   'Because if they had four, they would be chicken sedans!',
 ];
 
-var UserNameValues = [
-  'Parent',
-  'Child',
-];
+var UserNameValues = ['Parent', 'Child'];
 
 var AvatarValues = [
   require('./images/blueuser.png'),
@@ -112,7 +109,13 @@ function CreateMessage(id: number) {
   m.UserName = GetValue(id, UserNameValues);
   m.Avatar = GetValue(id, AvatarValues);
   m.Timestamp = new Date(new Date().getTime() + id * 60000);
-  m.Time = '' + m.Timestamp.getHours() % 12 + ':' + ('0' + m.Timestamp.getMinutes()).slice(-2) + ' ' + (m.Timestamp.getHours() > 12 ? 'PM' : 'AM' );
+  m.Time =
+    '' +
+    (m.Timestamp.getHours() % 12) +
+    ':' +
+    ('0' + m.Timestamp.getMinutes()).slice(-2) +
+    ' ' +
+    (m.Timestamp.getHours() > 12 ? 'PM' : 'AM');
   return m;
 }
 
@@ -132,10 +135,16 @@ class MessageView extends React.Component<MessageViewProps> {
   render() {
     return (
       <View style={styles.message}>
-        <Image style={styles.messageAvatar} source={this.props.message.Avatar} testID={this.props.message.MessageId} />
+        <Image
+          style={styles.messageAvatar}
+          source={this.props.message.Avatar}
+          testID={this.props.message.MessageId}
+        />
         <View style={styles.messageContents}>
           <View style={styles.messageHeader}>
-            <Text style={styles.messageUserName}>{this.props.message.UserName}</Text>
+            <Text style={styles.messageUserName}>
+              {this.props.message.UserName}
+            </Text>
             <Text style={styles.messageTime}>{this.props.message.Time}</Text>
           </View>
           <Text style={styles.messageText}>{this.props.message.Text}</Text>
