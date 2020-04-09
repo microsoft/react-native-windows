@@ -15,7 +15,7 @@
 
   <Properties>
     <DisplayName>playground</DisplayName>
-    <PublisherDisplayName>Andre</PublisherDisplayName>
+    <PublisherDisplayName>RNWTest</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

@@ -173,6 +173,7 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
