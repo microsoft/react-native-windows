@@ -29,14 +29,6 @@ MainPage::MainPage() {
   }
 }
 
-hstring MainPage::Test() {
-  throw hresult_not_implemented();
-}
-
-void MainPage::Test(hstring const & /*value*/) {
-  throw hresult_not_implemented();
-}
-
 void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
     Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {

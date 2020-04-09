@@ -6,9 +6,6 @@ namespace winrt::playground::implementation {
 struct MainPage : MainPageT<MainPage> {
   MainPage();
 
-  hstring Test();
-  void Test(hstring const &value);
-
   void OnLoadClick(
       Windows::Foundation::IInspectable const & /*sender*/,
       Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
