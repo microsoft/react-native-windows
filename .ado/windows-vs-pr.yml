@@ -99,7 +99,7 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
-            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
@@ -107,7 +107,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
-        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')), eq(variables.BuildPlatform, 'x86'), eq(variables.BuildConfiguration, 'Debug')) # Only running on x86 Debug due to https://github.com/microsoft/react-native-windows/issues/4533
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
