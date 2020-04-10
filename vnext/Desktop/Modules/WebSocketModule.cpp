@@ -146,7 +146,8 @@ std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_
   auto itr = m_webSockets.find(id);
   if (itr == m_webSockets.end())
   {
-    auto ws = IWebSocketResource::Make(std::move(url));
+    // #4559: Revert legacyImplementation or set externally.
+    auto ws = IWebSocketResource::Make(std::move(url), /*legacyImplementation*/ true);
     auto weakInstance = this->getInstance();
     ws->SetOnError([this, id, weakInstance](const IWebSocketResource::Error& err)
     {
