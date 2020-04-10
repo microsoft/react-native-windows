@@ -3,30 +3,75 @@
 
 #include <CppUnitTest.h>
 #include <Modules/WebSocketModule.h>
+#include "InstanceMocks.h"
+#include "WebSocketMocks.h"
 
 using namespace facebook::react;
 using namespace facebook::xplat::module;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using folly::dynamic;
+using std::function;
+using std::make_shared;
+using std::make_unique;
+using std::shared_ptr;
+using std::string;
+using std::unique_ptr;
+using std::vector;
+
 namespace Microsoft::React::Test {
 
 TEST_CLASS (WebSocketModuleTest) {
-  enum class MethodId : size_t { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
+  const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{
+      "connect", "close", "send", "sendBinary", "ping"};
 
-  const char *MethodName[static_cast<size_t>(MethodId::SIZE)]{"connect", "close", "send", "sendBinary", "ping"};
-
-  TEST_METHOD(WebSocketModuleTest_CreateModule) {
-    auto module = std::make_unique<WebSocketModule>();
+  TEST_METHOD(CreateModule) {
+    auto module = make_unique<WebSocketModule>();
 
     Assert::IsFalse(module == nullptr);
-    Assert::AreEqual(std::string("WebSocketModule"), module->getName());
+    Assert::AreEqual(string("WebSocketModule"), module->getName());
 
     auto methods = module->getMethods();
-    for (size_t i = 0; i < static_cast<size_t>(MethodId::SIZE); i++) {
-      Assert::AreEqual(std::string(MethodName[i]), std::string(methods[i].name));
+    for (size_t i = 0; i < static_cast<size_t>(WebSocketModule::MethodId::SIZE); i++) {
+      Assert::AreEqual(string(MethodName[i]), string(methods[i].name));
     }
 
     Assert::AreEqual(static_cast<size_t>(0), module->getConstants().size());
+  }
+
+  TEST_METHOD(ConnectSendsEvent) {
+    string eventName;
+    string moduleName;
+    string methodName;
+    auto jsef = make_shared<MockJSExecutorFactory>();
+    jsef->CreateJSExecutorMock = [&eventName, &moduleName, &methodName](
+                                     shared_ptr<ExecutorDelegate>, shared_ptr<MessageQueueThread>) {
+      auto jse = make_unique<MockJSExecutor>();
+      jse->CallFunctionMock = [&eventName, &moduleName, &methodName](
+                                  const string &module, const string &method, const dynamic &args) {
+        moduleName = module;
+        methodName = method;
+        eventName = args.at(0).asString();
+      };
+
+      return std::move(jse);
+    };
+
+    auto instance = CreateMockInstance(jsef);
+    auto module = make_unique<WebSocketModule>();
+    module->setInstance(instance);
+    module->SetResourceFactory([](const string &, bool, bool) { return make_shared<MockWebSocketResource>(); });
+
+    // Execute module method
+    auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);
+    connect.func(
+        dynamic::array("ws://localhost:0", dynamic(), dynamic(), /*id*/ 0),
+        [](vector<dynamic>) {},
+        [](vector<dynamic>) {});
+
+    Assert::AreEqual({"RCTDeviceEventEmitter"}, moduleName);
+    Assert::AreEqual({"emit"}, methodName);
+    Assert::AreEqual({"websocketOpen"}, eventName);
   }
 };
 
