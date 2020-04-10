@@ -93,19 +93,17 @@ class MSBuildTools {
     } catch (e) {
       let error = e;
       if (!e) {
-        error = new Error(
-          fs
-            .readFileSync(errorLog)
-            .toString()
-            .split(EOL)[0],
-        );
+        const firstMessage = (await fs.promises.readFile(errorLog))
+          .toString()
+          .split(EOL)[0];
+        error = new Error(firstMessage);
         error.logfile = errorLog;
       }
       throw error;
     }
     // If we have no errors, delete the error log when we're done
-    if (fs.statSync(errorLog).size === 0) {
-      fs.unlinkSync(errorLog);
+    if ((await fs.promises.stat(errorLog)).size === 0) {
+      await fs.promises.unlink(errorLog);
     }
   }
 }
