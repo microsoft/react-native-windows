@@ -122,7 +122,6 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   }
   catch (hresult_error const& e)
   {
-    self->m_readyState = ReadyState::Closed;
     if (self->m_errorHandler)
     {
       self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
