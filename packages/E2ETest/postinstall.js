@@ -41,6 +41,5 @@ link(
   path.resolve(require.resolve('rnpm-plugin-windows/package.json'), '..'),
 );
 
-require('react-native-windows/scripts/installRNW').installRNW();
 
 
