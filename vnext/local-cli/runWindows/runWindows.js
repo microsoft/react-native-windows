@@ -12,6 +12,7 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
+const chalk = require('chalk');
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
@@ -71,8 +72,13 @@ async function runWindows(config, args, options) {
       );
     } catch (e) {
       newError(
-        `Build failed with message ${e}. Check your build configuration.`,
+        `Build failed with message ${
+          e.message
+        }. Check your build configuration.`,
       );
+      if (e.logfile) {
+        console.log('See', chalk.bold(e.logfile));
+      }
       process.exit(1);
     }
   } else {
@@ -89,7 +95,7 @@ async function runWindows(config, args, options) {
         await deploy.deployToDesktop(options, verbose);
       }
     } catch (e) {
-      newError(`Failed to deploy: ${e.message}`);
+      newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
       process.exit(1);
     }
   } else {
