@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Apr 2020 06:15:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.28",
+      "version": "0.0.0-master.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve inner loop and error reporting (local CLI)",
+            "author": "asklar@microsoft.com",
+            "commit": "ff6f8f57587f7364143a701ef6637039b6643cf4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Apr 2020 01:16:08 GMT",
       "tag": "react-native-windows_v0.0.0-master.27",
       "version": "0.0.0-master.27",
