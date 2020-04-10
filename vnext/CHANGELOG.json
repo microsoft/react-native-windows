@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Apr 2020 22:03:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.30",
+      "version": "0.0.0-master.30",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplified C++ macros and improved their comments",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5e9ec2a384eca8c9489e812811faade446f56397",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Apr 2020 14:44:13 GMT",
       "tag": "react-native-windows_v0.0.0-master.29",
       "version": "0.0.0-master.29",

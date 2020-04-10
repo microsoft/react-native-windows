@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Apr 2020 14:44:13 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Apr 2020 22:03:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.30
+
+Fri, 10 Apr 2020 22:03:49 GMT
+
+### Changes
+
+- Simplified C++ macros and improved their comments (vmorozov@microsoft.com)
 
 ## 0.0.0-master.29
 

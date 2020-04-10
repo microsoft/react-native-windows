@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Simplified C++ macros and improved their comments",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-10T20:52:12.369Z"
-}
