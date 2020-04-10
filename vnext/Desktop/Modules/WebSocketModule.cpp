@@ -15,6 +15,7 @@ using namespace folly;
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
+using std::shared_ptr;
 using std::string;
 using std::weak_ptr;
 
@@ -24,7 +25,15 @@ constexpr char moduleName[] = "WebSocketModule";
 
 namespace Microsoft::React {
 
-WebSocketModule::WebSocketModule() {}
+WebSocketModule::WebSocketModule()
+    : m_resourceFactory{[](const string &url, bool legacyImplementation, bool acceptSelfSigned) {
+        return IWebSocketResource::Make(url, legacyImplementation, acceptSelfSigned);
+      }} {}
+
+void WebSocketModule::SetResourceFactory(
+    std::function<shared_ptr<IWebSocketResource>(const string &, bool, bool)> &&resourceFactory) {
+  m_resourceFactory = std::move(resourceFactory);
+}
 
 string WebSocketModule::getName() {
   return moduleName;
@@ -146,7 +155,7 @@ std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_
   auto itr = m_webSockets.find(id);
   if (itr == m_webSockets.end())
   {
-    auto ws = IWebSocketResource::Make(std::move(url));
+    auto ws = m_resourceFactory(std::move(url), /*legacyImplementation*/ false, /*acceptSelfSigned*/ false);
     auto weakInstance = this->getInstance();
     ws->SetOnError([this, id, weakInstance](const IWebSocketResource::Error& err)
     {
