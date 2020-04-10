@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Hard-code Beast WebSocket resource in WebSoketModule",
-  "packageName": "react-native-windows",
-  "email": "julio@rochsquadron.net",
-  "commit": "d309f4270973168b37c543e062a290e35faf95a0",
-  "dependentChangeType": "patch",
-  "date": "2020-04-10T01:29:29.446Z"
-}

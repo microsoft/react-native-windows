@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Apr 2020 03:02:30 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.160",
+      "version": "0.60.0-vnext.160",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Hard-code Beast WebSocket resource in WebSoketModule",
+            "author": "julio@rochsquadron.net",
+            "commit": "d309f4270973168b37c543e062a290e35faf95a0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Apr 2020 03:19:41 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.159",
       "version": "0.60.0-vnext.159",

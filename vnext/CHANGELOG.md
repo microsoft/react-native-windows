@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Apr 2020 03:19:41 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Apr 2020 03:02:30 GMT and should not be manually modified.
 
+## 0.60.0-vnext.160
+Fri, 10 Apr 2020 03:02:30 GMT
+
+### Changes
+
+- Hard-code Beast WebSocket resource in WebSoketModule (julio@rochsquadron.net)
 ## 0.60.0-vnext.159
 Wed, 08 Apr 2020 03:19:41 GMT
 
