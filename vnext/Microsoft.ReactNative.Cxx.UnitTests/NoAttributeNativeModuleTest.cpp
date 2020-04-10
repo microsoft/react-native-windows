@@ -573,24 +573,24 @@ void RegisterModule(ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noex
   moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::StaticAddSync, L"StaticAddSync");
   moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::StaticNegateSync, L"StaticNegateSync");
   moduleBuilder.RegisterSyncMethod(&SimpleNativeModule2::StaticSayHelloSync, L"StaticSayHelloSync");
-  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant1, L"Constant1");
-  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant2, L"const2");
-  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant3, L"const3");
-  moduleBuilder.RegisterConstant(&SimpleNativeModule2::Constant4, L"Constant4");
-  moduleBuilder.RegisterConstMethod(&SimpleNativeModule2::Constant5, L"Constant5");
-  moduleBuilder.RegisterConstMethod(&SimpleNativeModule2::Constant6, L"Constant6");
-  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnIntEvent, L"OnIntEvent");
-  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnNoArgEvent, L"OnNoArgEvent");
-  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnTwoArgsEvent, L"OnTwoArgsEvent");
-  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnPointEvent, L"onPointEvent");
-  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnStringEvent, L"onStringEvent", L"MyEventEmitter");
-  moduleBuilder.RegisterEvent(&SimpleNativeModule2::OnJSValueEvent, L"OnJSValueEvent");
-  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSIntFunction, L"JSIntFunction");
-  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSPointFunction, L"pointFunc");
-  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSLineFunction, L"lineFunc");
-  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSNoArgFunction, L"JSNoArgFunction");
-  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSStringFunction, L"stringFunc", L"MyModule");
-  moduleBuilder.RegisterFunction(&SimpleNativeModule2::JSValueFunction, L"JSValueFunction");
+  moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant1, L"Constant1");
+  moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant2, L"const2");
+  moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant3, L"const3");
+  moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant4, L"Constant4");
+  moduleBuilder.RegisterConstantMethod(&SimpleNativeModule2::Constant5, L"Constant5");
+  moduleBuilder.RegisterConstantMethod(&SimpleNativeModule2::Constant6, L"Constant6");
+  moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnIntEvent, L"OnIntEvent");
+  moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnNoArgEvent, L"OnNoArgEvent");
+  moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnTwoArgsEvent, L"OnTwoArgsEvent");
+  moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnPointEvent, L"onPointEvent");
+  moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnStringEvent, L"onStringEvent", L"MyEventEmitter");
+  moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnJSValueEvent, L"OnJSValueEvent");
+  moduleBuilder.RegisterFunctionField(&SimpleNativeModule2::JSIntFunction, L"JSIntFunction");
+  moduleBuilder.RegisterFunctionField(&SimpleNativeModule2::JSPointFunction, L"pointFunc");
+  moduleBuilder.RegisterFunctionField(&SimpleNativeModule2::JSLineFunction, L"lineFunc");
+  moduleBuilder.RegisterFunctionField(&SimpleNativeModule2::JSNoArgFunction, L"JSNoArgFunction");
+  moduleBuilder.RegisterFunctionField(&SimpleNativeModule2::JSStringFunction, L"stringFunc", L"MyModule");
+  moduleBuilder.RegisterFunctionField(&SimpleNativeModule2::JSValueFunction, L"JSValueFunction");
 }
 
 TEST_CLASS (NoAttributeNativeModuleTest) {
