@@ -16,8 +16,9 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-  WebSocketModule(
-      std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> &&resourceFactory = nullptr);
+  WebSocketModule();
+
+#pragma region CxxModule overrides
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getName" />
@@ -34,6 +35,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// </summary>
   /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
   std::vector<Method> getMethods() override;
+
+#pragma endregion CxxModule overrides
+
+  void SetResourceFactory(
+      std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> &&resourceFactory = nullptr);
 
  private:
   /// <summary>

@@ -58,9 +58,9 @@ TEST_CLASS (WebSocketModuleTest) {
     };
 
     auto instance = CreateMockInstance(jsef);
-    auto module =
-        make_unique<WebSocketModule>([](const string &, bool, bool) { return make_shared<MockWebSocketResource>(); });
+    auto module = make_unique<WebSocketModule>();
     module->setInstance(instance);
+    module->SetResourceFactory([](const string &, bool, bool) { return make_shared<MockWebSocketResource>(); });
 
     // Execute module method
     auto connect = module->getMethods().at(WebSocketModule::MethodId::Connect);

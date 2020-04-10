@@ -25,15 +25,14 @@ constexpr char moduleName[] = "WebSocketModule";
 
 namespace Microsoft::React {
 
-WebSocketModule::WebSocketModule(
+WebSocketModule::WebSocketModule()
+    : m_resourceFactory{[](const string &url, bool legacyImplementation, bool acceptSelfSigned) {
+        return IWebSocketResource::Make(url, legacyImplementation, acceptSelfSigned);
+      }} {}
+
+void WebSocketModule::SetResourceFactory(
     std::function<shared_ptr<IWebSocketResource>(const string &, bool, bool)> &&resourceFactory) {
-  if (resourceFactory) {
-    m_resourceFactory = std::move(resourceFactory);
-  } else {
-    m_resourceFactory = [](const string &url, bool legacyImplementation, bool acceptSelfSigned) {
-      return IWebSocketResource::Make(url, legacyImplementation, acceptSelfSigned);
-    };
-  }
+  m_resourceFactory = std::move(resourceFactory);
 }
 
 string WebSocketModule::getName() {
