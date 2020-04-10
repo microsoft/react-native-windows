@@ -2,6 +2,26 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Apr 2020 01:16:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.27",
+      "version": "0.0.0-master.27",
+      "comments": {
+        "none": [
+          {
+            "author": "julio@rochsquadron.net",
+            "commit": "c8085b5bb88342ed9c7b91ed3c093818ef67aad2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow WebSocketModule to use custom resource factory",
+            "author": "julio@rochsquadron.net",
+            "commit": "c8085b5bb88342ed9c7b91ed3c093818ef67aad2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 21:36:07 GMT",
       "tag": "react-native-windows_v0.0.0-master.27",
       "version": "0.0.0-master.27",
