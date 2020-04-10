@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Allow WebSocketModule to use custom resource factory",
-  "packageName": "react-native-windows",
-  "email": "julio@rochsquadron.net",
-  "dependentChangeType": "none",
-  "date": "2020-04-09T23:51:56.846Z"
-}
