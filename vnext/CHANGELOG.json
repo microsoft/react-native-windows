@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Apr 2020 14:44:13 GMT",
+      "tag": "react-native-windows_v0.0.0-master.29",
+      "version": "0.0.0-master.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't set readyState on connection error",
+            "author": "julio@rochsquadron.net",
+            "commit": "9d68988472f32739185957959e78c35c51203e49",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Apr 2020 06:15:31 GMT",
       "tag": "react-native-windows_v0.0.0-master.28",
       "version": "0.0.0-master.28",

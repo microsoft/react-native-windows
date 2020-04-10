@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Apr 2020 06:15:31 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Apr 2020 14:44:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.29
+
+Fri, 10 Apr 2020 14:44:13 GMT
+
+### Changes
+
+- Don't set readyState on connection error (julio@rochsquadron.net)
 
 ## 0.0.0-master.28
 
