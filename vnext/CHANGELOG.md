@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Apr 2020 03:02:30 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Apr 2020 15:37:50 GMT and should not be manually modified.
 
+## 0.60.0-vnext.161
+Fri, 10 Apr 2020 15:37:50 GMT
+
+### Changes
+
+- Don't set readyState on connection error (julio@rochsquadron.net)
 ## 0.60.0-vnext.160
 Fri, 10 Apr 2020 03:02:30 GMT
 

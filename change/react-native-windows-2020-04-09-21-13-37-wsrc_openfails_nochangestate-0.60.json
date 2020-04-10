@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Don't set readyState on connection error",
-  "packageName": "react-native-windows",
-  "email": "julio@rochsquadron.net",
-  "commit": "83e71956a206c16b5d26d82b403f9c870f4ea634",
-  "dependentChangeType": "patch",
-  "date": "2020-04-10T04:13:37.103Z"
-}

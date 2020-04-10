@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Apr 2020 15:37:50 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.161",
+      "version": "0.60.0-vnext.161",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't set readyState on connection error",
+            "author": "julio@rochsquadron.net",
+            "commit": "83e71956a206c16b5d26d82b403f9c870f4ea634"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Apr 2020 03:02:30 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.160",
       "version": "0.60.0-vnext.160",
