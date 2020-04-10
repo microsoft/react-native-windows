@@ -316,6 +316,8 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 <p><em>CustomUserControlViewManager.h</em></p>
 <pre><code class="hljs css language-c++">#pragma once
 
+#include "pch.h"
+
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::ViewManagerSample::implementation {
@@ -446,65 +448,65 @@ void CustomUserControlViewManager::DispatchCommand(
 }
 
 }
-
 </code></pre>
 <h4><a class="anchor" aria-hidden="true" id="2-registering-your-view-manager-1"></a><a href="#2-registering-your-view-manager-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Registering your View Manager</h4>
 <p>As with native modules, we want to register our new <code>CustomUserControlViewManager</code> with React Native so we can actually use it. To do this, first we're going to create a <code>ReactPackageProvider</code> which implements <a href="https://github.com/microsoft/react-native-windows/blob/master/vnext/Microsoft.ReactNative/IReactPackageProvider.idl">Microsoft.ReactNative.IReactPackageProvider</a>.</p>
 <p><em>ReactPackageProvider.idl</em></p>
-<pre><code class="hljs css language-c++"><span class="hljs-keyword">namespace</span> ViewManagerSample {
-
-runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+<pre><code class="hljs css language-c++"><span class="hljs-keyword">namespace</span> ViewManagerSample
 {
-  ReactPackageProvider();
-};
-
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+    {
+        ReactPackageProvider();
+    };
 }
 </code></pre>
 <p>After that we add the .h and.cpp files:</p>
 <p><em>ReactPackageProvider.h</em></p>
 <pre><code class="hljs css language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.h"</span></span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>ViewManagerSample<span class="token operator">::</span>implementation <span class="token punctuation">{</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
 
-<span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>ReactPackageProvider<span class="token operator">></span>
+<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>ViewManagerSample<span class="token operator">::</span>implementation
 <span class="token punctuation">{</span>
-  <span class="token function">ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
-  <span class="token keyword">void</span> <span class="token function">CreatePackage</span><span class="token punctuation">(</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token operator">::</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>ReactPackageProvider<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token function">ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">}</span> <span class="token comment">// namespace winrt::ViewManagerSample::implementation</span>
+        <span class="token keyword">void</span> <span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>ViewManagerSample<span class="token operator">::</span>factory_implementation <span class="token punctuation">{</span>
-
-<span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>
-                                     ReactPackageProvider<span class="token punctuation">,</span>
-                                     implementation<span class="token operator">::</span>ReactPackageProvider<span class="token operator">></span>
+<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>ViewManagerSample<span class="token operator">::</span>factory_implementation
 <span class="token punctuation">{</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token punctuation">}</span> <span class="token comment">// namespace winrt::ViewManagerSample::factory_implementation</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>ReactPackageProvider<span class="token punctuation">,</span> implementation<span class="token operator">::</span>ReactPackageProvider<span class="token operator">></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p><em>ReactPackageProvider.cpp</em></p>
 <pre><code class="hljs css language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"pch.h"</span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.h"</span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.cpp"</span></span>
 
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;ModuleRegistration.h></span></span>
+
+<span class="token comment">// NOTE: You must include the headers of your native modules here in</span>
+<span class="token comment">// order for the AddAttributedModules call below to find them.</span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"CustomUserControlViewManager.h"</span></span>
 
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
 
 <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>ViewManagerSample<span class="token operator">::</span>implementation <span class="token punctuation">{</span>
 
 <span class="token keyword">void</span> ReactPackageProvider<span class="token operator">::</span><span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
+<span class="token keyword">noexcept</span> <span class="token punctuation">{</span>
   packageBuilder<span class="token punctuation">.</span><span class="token function">AddViewManager</span><span class="token punctuation">(</span>
       L<span class="token string">"CustomUserControlViewManager"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> winrt<span class="token operator">::</span>make<span class="token operator">&lt;</span>CustomUserControlViewManager<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span> <span class="token comment">// namespace winrt::ViewManagerSample::implementation</span>
-
 </code></pre>
 <p>Here we've implemented the <code>CreatePackage</code> method, which receives <code>packageBuilder</code> to build contents of the package. And then we call <code>AddViewManager</code> with the name of our view manager and a lambda which returns an instance of the view manager.</p>
 <p>Now that we have the <code>ReactPackageProvider</code>, it's time to register it within our <code>ReactApplication</code>. We do that by simply adding the proviver to the <code>PackageProviders</code> property.</p>
@@ -513,6 +515,7 @@ runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
 
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"App.h"</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"ReactPackageProvider.h"</span></span>
+
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"winrt/ViewManagerSample.h"</span></span>
 
 <span class="hljs-keyword">namespace</span> winrt::SampleApp::implementation {

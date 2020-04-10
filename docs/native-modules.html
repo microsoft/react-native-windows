@@ -360,18 +360,17 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 <span class="token punctuation">{</span>
     <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>ReactPackageProvider<span class="token punctuation">,</span> implementation<span class="token operator">::</span>ReactPackageProvider<span class="token operator">></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-
 </code></pre>
 <p><em>ReactPackageProvider.cpp</em></p>
 <pre><code class="hljs css language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"pch.h"</span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.h"</span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.cpp"</span></span>
 
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;ModuleRegistration.h></span></span>
+
 <span class="token comment">// NOTE: You must include the headers of your native modules here in</span>
 <span class="token comment">// order for the AddAttributedModules call below to find them.</span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"FancyMath.h"</span></span>
-
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
 
 <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
 <span class="token punctuation">{</span>
