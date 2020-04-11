@@ -10,7 +10,7 @@ const rnPath = fs.realpathSync(
     path.resolve(require.resolve('react-native/package.json'), '..'),
   ),
 );
-const rnw32Path = __dirname;
+const rnInstallPath = path.resolve(__dirname, './react-native-installation');
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -21,9 +21,9 @@ module.exports = {
 
   resolver: {
     extraNodeModules: {
-      // Redirect react-native and react-native-windows to this folder
-      'react-native': rnw32Path,
-      'react-native-win32': rnw32Path,
+      // Redirect react-native to the installation path
+      'react-native-windows': rnInstallPath,
+      'react-native': rnInstallPath,
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
     platforms: [

@@ -74,69 +74,17 @@ function copyFile(srcPath, targetPath, filename) {
   );
 }
 
-exports.copyRNLibraries = baseDir => {
-  const reactNativePath = path.dirname(
-    require.resolve('react-native/package.json'),
-  );
-
-  const reactNativeWindowsPath = path.dirname(
-    require.resolve('react-native-windows/package.json'),
-  );
+exports.copyRNWin32Libraries = baseDir => {
 
   const rnInstallationPath = path.resolve(baseDir, './react-native-installation');
-
-  copyDirectories(reactNativeWindowsPath, rnInstallationPath, [
-    {
-      src: 'ReactCopies/RNTester',
-      dest: 'RNTester',
-    },
-    {
-      src: 'ReactCopies/IntegrationTests',
-      dest: 'IntegrationTests',
-      rmFilter: '*.js',
-    },
-  ]);
 
   copyDirectories(baseDir, rnInstallationPath, [
     {
       src: 'RNTester',
       dest: 'RNTester',
       mergeFiles: true,
-    },
   ]);
 
-/*
-// TODO:  figure out what to do with these
-  copyDirectories(reactNativePath, baseDir, [
-    {
-      src: 'flow',
-      dest: 'flow',
-    },
-    {
-      src: 'flow-typed',
-      dest: 'flow-typed',
-    },
-    {
-      src: 'jest',
-      dest: 'jest',
-    },
-    {
-      src: 'Libraries',
-      dest: 'Libraries',
-    },
-    {
-      src: 'packages/react-native-codegen/src',
-      dest: 'packages/react-native-codegen/src',
-    },
-  ]);
-*/
-
-  copyDirectories(baseDir, baseDir, [
-    {
-      src: 'src/jest',
-      dest: 'jest',
-      mergeFiles: true,
-    },
-  ]);
-
+  copyFile(baseDir, rnInstallationPath, 'RNTester.js');
+  copyFile(baseDir, rnInstallationPath, 'RNTester.js.map');
 };

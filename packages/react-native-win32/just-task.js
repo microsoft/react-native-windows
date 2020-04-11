@@ -52,7 +52,9 @@ task('copyPngFiles', () => {
 task('initRNLibraries', () => {
   require('../../vnext/scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
-
+task('installRNW', () => {
+  require('../../vnext/Scripts/installRNW').installRNW(__dirname, path.resolve(__dirname, './react-native-installation'));
+});
 task('flow-check', () => {
   require('child_process').execSync('npx flow check', { stdio: 'inherit' });
 });
@@ -94,10 +96,11 @@ task(
   'build',
   series(
     condition('clean', () => argv().clean),
-    'initRNLibraries',
     'copyFlowFiles',
     'copyPngFiles',
     'ts',
+    'installRNW',
+    'initRNLibraries',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );
