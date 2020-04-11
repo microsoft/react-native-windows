@@ -13,95 +13,199 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  mainContainer: {
+    width: 400,
+    height: 400,
+    backgroundColor: '#CCCCCC',
+  },
+  contentContainer: {
+    flex: 1,
+    backgroundColor: '#F2E2C4',
+  },
+  contentContainerHovered: {
+    backgroundColor: '#B3A791',
+  },
+  contentChild: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 200,
+    height: 200,
+    backgroundColor: '#C2D2F2',
+  },
+  contentChildHovered: {
+    backgroundColor: '#8F9BB3',
+  },
+  overlayContainer: {
+    position: 'absolute',
+    right: -100,
+    top: 100,
+    width: 200,
+    height: 200,
+    backgroundColor: '#FF9C65',
+  },
+  overlayContainerHovered: {
+    backgroundColor: '#BF754D',
+  },
+  overlayChild: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 100,
+    height: 100,
+    backgroundColor: '#99A4BF',
+  },
+  overlayChildHovered: {
+    backgroundColor: '#666D80',
+  },
+});
+
 export default class Bootstrap extends React.Component<
   {},
   {
     clicked: number;
-    mouseEntered0: boolean;
-    mouseEntered1: boolean;
-    mouseEntered2: boolean;
+    pageHover: boolean;
+    contentHover: boolean;
+    contentChildHover: boolean;
+    overlayHover: boolean;
+    overlayChildHover: boolean;
   }
 > {
   constructor(props: {}) {
     super(props);
     this.state = {
       clicked: 0,
-      mouseEntered0: false,
-      mouseEntered1: false,
-      mouseEntered2: false,
+      pageHover: false,
+      contentHover: false,
+      contentChildHover: false,
+      overlayHover: false,
+      overlayChildHover: false,
     };
   }
 
   render() {
+    const pageProps: any = {
+      style: styles.page,
+      onMouseEnter: this.mouseEnterPage,
+      onMouseLeave: this.mouseLeavePage,
+    };
     return (
-      <View
-        style={styles.container}
-        {...{
-          // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-          onMouseEnter: this.mouseEnter0,
-          onMouseLeave: this.mouseLeave0,
-        }}>
-        <View
-          style={{
-            backgroundColor: this.state.mouseEntered1 ? 'yellow' : 'green',
-          }}
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            onMouseEnter: this.mouseEnter1,
-            onMouseLeave: this.mouseLeave1,
-          }}>
-          <TouchableHighlight
-            onPress={this.press}
-            onPressIn={this.pressIn}
-            onPressOut={this.pressOut}
-            style={{
-              backgroundColor: this.state.mouseEntered2
-                ? 'blue'
-                : 'transparent',
-            }}
-            {...{
-              // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-              onMouseEnter: this.mouseEnter2,
-              onMouseLeave: this.mouseLeave2,
-            }}>
-            <Text>World</Text>
-          </TouchableHighlight>
-          <Text>Hello</Text>
+      <View {...pageProps}>
+        <View style={styles.mainContainer}>
+          {this.renderContent()}
+          {this.renderOverlay()}
         </View>
-        <View
-          style={{
-            backgroundColor: this.state.mouseEntered0 ? 'green' : 'transparent',
-          }}>
-          <Text>Mousey</Text>
+        <View>
+          <Text>{this.state.pageHover ? 'Mouse over page' : ''}</Text>
         </View>
       </View>
     );
   }
 
+  renderContent(): JSX.Element {
+    const containerProps: any = {
+      style: [
+        styles.contentContainer,
+        this.state.contentHover ? styles.contentContainerHovered : undefined,
+      ],
+      onMouseEnter: this.mouseEnterContentContainer,
+      onMouseLeave: this.mouseLeaveContentContainer,
+    };
+    const childProps: any = {
+      style: [
+        styles.contentChild,
+        this.state.contentChildHover ? styles.contentChildHovered : undefined,
+      ],
+      onMouseEnter: this.mouseEnterContentChild,
+      onMouseLeave: this.mouseLeaveContentChild,
+    };
+    const touchableProps: any = {
+      onPress: this.press,
+      onPressIn: this.pressIn,
+      onPressOut: this.pressOut,
+    };
+
+    return (
+      <View {...containerProps}>
+        <TouchableHighlight {...touchableProps}>
+          <View {...childProps}>
+            <Text>This is a TouchableHighlight</Text>
+          </View>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+
+  renderOverlay(): JSX.Element {
+    const containerProps: any = {
+      style: [
+        styles.overlayContainer,
+        this.state.overlayHover ? styles.overlayContainerHovered : undefined,
+      ],
+      onMouseEnter: this.mouseEnterOverlay,
+      onMouseLeave: this.mouseLeaveOverlay,
+    };
+    const childProps: any = {
+      style: [
+        styles.overlayChild,
+        this.state.overlayChildHover ? styles.overlayChildHovered : undefined,
+      ],
+      onMouseEnter: this.mouseEnterOverlayChild,
+      onMouseLeave: this.mouseLeaveOverlayChild,
+    };
+
+    return (
+      <View {...containerProps}>
+        <View {...childProps}>
+          <Text>This is an overlay view</Text>
+        </View>
+      </View>
+    );
+  }
+
+  mouseEnterPage = () => {
+    this.setState({pageHover: true});
+  };
+  mouseLeavePage = () => {
+    this.setState({pageHover: false});
+  };
+
+  mouseEnterContentContainer = () => {
+    this.setState({contentHover: true});
+  };
+  mouseLeaveContentContainer = () => {
+    this.setState({contentHover: false});
+  };
+
+  mouseEnterContentChild = () => {
+    this.setState({contentChildHover: true});
+  };
+  mouseLeaveContentChild = () => {
+    this.setState({contentChildHover: false});
+  };
+
+  mouseEnterOverlay = () => {
+    this.setState({overlayHover: true});
+  };
+  mouseLeaveOverlay = () => {
+    this.setState({overlayHover: false});
+  };
+  mouseEnterOverlayChild = () => {
+    this.setState({overlayChildHover: true});
+  };
+  mouseLeaveOverlayChild = () => {
+    this.setState({overlayChildHover: false});
+  };
+
   click = () => {
     this.setState({clicked: this.state.clicked + 1});
-  };
-  mouseEnter0 = () => {
-    this.setState({mouseEntered0: true});
-  };
-
-  mouseLeave0 = () => {
-    this.setState({mouseEntered0: false});
-  };
-
-  mouseEnter1 = () => {
-    this.setState({mouseEntered1: true});
-  };
-
-  mouseLeave1 = () => {
-    this.setState({mouseEntered1: false});
-  };
-  mouseEnter2 = () => {
-    this.setState({mouseEntered2: true});
-  };
-
-  mouseLeave2 = () => {
-    this.setState({mouseEntered2: false});
   };
   press = (event: GestureResponderEvent) => {
     console.log('press');
@@ -116,19 +220,5 @@ export default class Bootstrap extends React.Component<
     console.log(event);
   };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#C5CCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);
