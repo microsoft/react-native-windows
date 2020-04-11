@@ -35,7 +35,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   std::queue<std::pair<std::string, bool>> m_writeRequests;
 
   std::atomic_size_t m_pingRequests{0};
-  CloseCode m_closeCodeRequest{CloseCode::None};
+  CloseCode m_closeCodeRequest{CloseCode::Normal};
   std::string m_closeReasonRequest;
 
   // Internal status flags.
@@ -112,8 +112,6 @@ class BaseWebSocketResource : public IWebSocketResource {
 
   BaseWebSocketResource(Url &&url);
 
-  ~BaseWebSocketResource() override;
-
   /// <summary>
   /// Finalizes the connection setup to the remote endpoint.
   /// Sets the ready state to <c>Open</c>.
@@ -130,6 +128,8 @@ class BaseWebSocketResource : public IWebSocketResource {
   virtual void Handshake(const IWebSocketResource::Options &options);
 
  public:
+  ~BaseWebSocketResource() override;
+
 #pragma region IWebSocketResource
 
   /// <summary>
