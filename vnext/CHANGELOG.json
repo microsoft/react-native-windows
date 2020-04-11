@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 11 Apr 2020 10:24:51 GMT",
+      "tag": "react-native-windows_v0.61.4",
+      "version": "0.61.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Port WinRTWebSocketResource from master branch",
+            "author": "julio@rochsquadron.net",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 04:05:40 GMT",
       "tag": "react-native-windows_v0.61.3",
       "version": "0.61.3",

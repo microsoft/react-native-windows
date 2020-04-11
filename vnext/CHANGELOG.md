@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Apr 2020 04:05:40 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Apr 2020 10:24:51 GMT and should not be manually modified.
 
+## 0.61.4
+Sat, 11 Apr 2020 10:24:51 GMT
+
+### Patches
+
+- Port WinRTWebSocketResource from master branch (julio@rochsquadron.net)
 ## 0.61.3
 Thu, 09 Apr 2020 04:05:40 GMT
 
