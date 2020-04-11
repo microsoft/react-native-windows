@@ -64,9 +64,11 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         L"  </Grid.RowDefinitions>"
         L"  <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>"
         L"    <StackPanel HorizontalAlignment='Stretch'>"
-        L"      <Grid Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15'>"
-        L"        <TextBlock x:Name='ErrorMessageText' FontSize='20' Foreground='White' TextWrapping='Wrap'/>"
-        L"      </Grid>"
+        L"      <StackPanel Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15'>"
+        L"        <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
+        L"        <Border Padding='15,15,15,0'/>"
+        L"        <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
+        L"      </StackPanel>"
         L"      <StackPanel HorizontalAlignment='Stretch' x:Name='StackPanel' Margin='15' />"
         L"    </StackPanel>"
         L"  </ScrollViewer>"
@@ -78,6 +80,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         winrt::Windows::UI::Xaml::Markup::XamlReader::Load(xamlString));
     m_errorMessageText =
         m_redboxContent.FindName(L"ErrorMessageText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
+    m_errorStackText = m_redboxContent.FindName(L"ErrorStackText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
     m_stackPanel = m_redboxContent.FindName(L"StackPanel").as<winrt::Windows::UI::Xaml::Controls::StackPanel>();
     m_dismissButton = m_redboxContent.FindName(L"DismissButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
     m_reloadButton = m_redboxContent.FindName(L"ReloadButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
@@ -140,9 +143,23 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
  private:
   void UpdateErorrMessageUI() noexcept {
-    std::regex colorsreg("\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
-    m_errorMessageText.Text(
-        Microsoft::Common::Unicode::Utf8ToUtf16(std::regex_replace(m_errorInfo.Message, colorsreg, "")));
+    try {
+      auto json = folly::parseJson(m_errorInfo.Message);
+      if (json.count("name") && json["name"] == "Error") {
+        auto message = json["message"].asString();
+        auto stack = json["stack"].asString().substr(ARRAYSIZE("Error: ") + message.length());
+        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+        return;
+      }
+    } catch (...) {
+    }
+    // fall back to displaying the raw message string
+    const std::regex colorsRegex(
+        "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
+    const std::string formated = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
+    m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(formated));
+    m_errorStackText.Text(L"");
   }
 
   void PopulateFrameStackUI() noexcept {
@@ -215,6 +232,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   winrt::Windows::UI::Xaml::Controls::Button m_dismissButton{nullptr};
   winrt::Windows::UI::Xaml::Controls::Button m_reloadButton{nullptr};
   winrt::Windows::UI::Xaml::Controls::TextBlock m_errorMessageText{nullptr};
+  winrt::Windows::UI::Xaml::Controls::TextBlock m_errorStackText{nullptr};
 
   bool m_showing = false;
   Mso::Functor<void(uint32_t)> m_onClosedCallback;
