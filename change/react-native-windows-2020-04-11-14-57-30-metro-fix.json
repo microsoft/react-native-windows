@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "refactor react-native-windows installation for better metro support",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-11T21:57:30.042Z"
+}
