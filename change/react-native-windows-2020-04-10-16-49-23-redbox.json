@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode)",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-10T23:49:23.308Z"
-}

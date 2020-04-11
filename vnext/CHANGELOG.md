@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Apr 2020 22:03:49 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Apr 2020 02:36:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.31
+
+Sat, 11 Apr 2020 02:36:32 GMT
+
+### Changes
+
+- Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode) (asklar@microsoft.com)
 
 ## 0.0.0-master.30
 

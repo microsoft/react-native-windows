@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 11 Apr 2020 02:36:32 GMT",
+      "tag": "react-native-windows_v0.0.0-master.31",
+      "version": "0.0.0-master.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode)",
+            "author": "asklar@microsoft.com",
+            "commit": "69528f606dd6ed89f75b4be2780d7eaefdf1656e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Apr 2020 22:03:49 GMT",
       "tag": "react-native-windows_v0.0.0-master.30",
       "version": "0.0.0-master.30",
