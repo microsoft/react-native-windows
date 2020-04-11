@@ -96,7 +96,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     });
 
     PopulateFrameStackUI();
-    UpdateErorrMessageUI();
+    UpdateErrorMessageUI();
 
     // Do some kind of sizing logic...
     auto window = winrt::Windows::UI::Xaml::Window::Current();
@@ -149,7 +149,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     return type;
     //
   }
-  void UpdateErorrMessageUI() noexcept {
+  void UpdateErrorMessageUI() noexcept {
     try {
       auto json = folly::parseJson(m_errorInfo.Message);
       if (json.count("name") && json["name"] == "Error") {
