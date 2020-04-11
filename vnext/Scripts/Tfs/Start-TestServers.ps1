@@ -39,7 +39,7 @@ if ($Preload) {
 	Start-Sleep -Seconds $SleepSeconds
 
 	# Preload the RNTesterApp integration bundle for better performance in integration tests.
-	Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true" | Out-Null
+	Invoke-WebRequest -Uri "http://localhost:8081/react-native-installation/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true" | Out-Null
 
 	Write-Host 'Done preloading bundles.'
 }

@@ -65,7 +65,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
     // Point to an existing script accessible via the repository's packaging
     // service.
     auto bigString = unique_ptr<JSBigString>(
-        new JSBigStdString("http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true"));
+        new JSBigStdString("http://localhost:8081/react-native-installation/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true"));
     jse->loadApplicationScript(std::move(bigString), "");
 
     jsQueue->quitSynchronous();
