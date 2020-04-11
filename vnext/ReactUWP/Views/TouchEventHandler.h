@@ -67,10 +67,8 @@ class TouchEventHandler {
   size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::UIElement sourceElement);
   ReactPointer
   CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::UIElement sourceElement);
-  void UpdateReactPointer(
-      ReactPointer &pointer,
-      const winrt::PointerRoutedEventArgs &args,
-      winrt::UIElement sourceElement);
+  void
+  UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, winrt::UIElement sourceElement);
   void UpdatePointersInViews(
       std::shared_ptr<IReactInstance> instance,
       const winrt::PointerRoutedEventArgs &args,
@@ -86,7 +84,6 @@ class TouchEventHandler {
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
   folly::dynamic GetPointerJson(const ReactPointer &pointer, int64_t target);
 
-  
   struct TagSet {
     std::unordered_set<int64_t> tags;
     std::vector<int64_t> orderedTags;
@@ -96,10 +93,8 @@ class TouchEventHandler {
   std::unordered_map<uint32_t /*pointerId*/, TagSet /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
-  bool TagFromOriginalSource(
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t *pTag,
-      winrt::UIElement *pSourceElement);
+  bool
+  TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, winrt::UIElement *pSourceElement);
 
   XamlView m_xamlView;
   std::weak_ptr<IReactInstance> m_wkReactInstance;

@@ -22,9 +22,7 @@
 namespace react {
 namespace uwp {
 
-std::vector<int64_t> GetTagsForBranch(
-    facebook::react::INativeUIManagerHost *host,
-    int64_t tag);
+std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag);
 
 TouchEventHandler::TouchEventHandler(const std::weak_ptr<IReactInstance> &reactInstance)
     : m_xamlView(nullptr), m_wkReactInstance(reactInstance) {}
@@ -264,7 +262,7 @@ void TouchEventHandler::UpdatePointersInViews(
   if ((existingViews == nullptr && newViews.size() == 0) ||
       (existingViews != nullptr && existingViews->orderedTags == newViews))
     return;
-  
+
   // Prep to fire pointer events
   std::unordered_set<int64_t> newViewsSet(newViews.begin(), newViews.end());
   ReactPointer pointer;
@@ -412,9 +410,7 @@ bool TouchEventHandler::TagFromOriginalSource(
 // Retreives the path of nodes from an element to the root.
 // The order of the returned list is from child to parent.
 //
-std::vector<int64_t> GetTagsForBranch(
-    facebook::react::INativeUIManagerHost *host,
-    int64_t tag) {
+std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag) {
   std::vector<int64_t> tags;
 
   auto *shadowNode = host->FindShadowNodeForTag(tag);
