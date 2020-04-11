@@ -17,7 +17,10 @@ class RawTextViewManager : public ViewManagerBase {
   RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
-  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
 
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,

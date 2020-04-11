@@ -27,7 +27,7 @@ class ViewViewManager : public FrameworkElementViewManager {
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   facebook::react::ShadowNode *createShadow() const override;
 
-  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
+  bool UpdateProperty(ShadowNodeBase *nodeToUpdate, const std::string &propertyName, const folly::dynamic &propertyValue) override;
 
   // Yoga Layout
   void SetLayoutProps(

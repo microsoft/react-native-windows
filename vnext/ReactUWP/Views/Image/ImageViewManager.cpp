@@ -111,16 +111,17 @@ facebook::react::ShadowNode *ImageViewManager::createShadow() const {
   return new ImageShadowNode();
 }
 
-void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool ImageViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto grid{nodeToUpdate->GetView().as<winrt::Grid>()};
 
   if (grid == nullptr)
-    return;
+    return true;
 
   bool finalizeBorderRadius{false};
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName{pair.first.getString()};
-    const folly::dynamic &propertyValue{pair.second};
+  bool ret = true;
 
     if (propertyName == "source") {
       setSource(grid, propertyValue);
@@ -130,17 +131,16 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
       reactImage->ResizeMode(resizeMode);
     } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
       finalizeBorderRadius = true;
-      continue;
     } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
-      continue;
-    }
+    } else {
+      ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     // TODO: overflow
   }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
-
   if (finalizeBorderRadius)
     UpdateCornerRadiusOnElement(nodeToUpdate, grid);
+
+  return ret;
 }
 
 void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {

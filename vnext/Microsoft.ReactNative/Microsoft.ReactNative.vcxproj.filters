@@ -318,6 +318,7 @@
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="cdebug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
@@ -659,6 +660,7 @@
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="cdebug.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl">
@@ -740,5 +742,8 @@
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
   </ItemGroup>
 </Project>

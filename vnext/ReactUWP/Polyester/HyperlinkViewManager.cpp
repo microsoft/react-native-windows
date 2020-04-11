@@ -60,14 +60,13 @@ folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
   return directEvents;
 }
 
-void HyperlinkViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool HyperlinkViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)
-    return;
-
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+    return true;
 
     if (propertyName == "disabled") {
       if (propertyValue.isBool())
@@ -81,10 +80,11 @@ void HyperlinkViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const 
     } else if (propertyName == "url") {
       winrt::Uri myUri(asHstring(propertyValue));
       button.NavigateUri(myUri);
+    } else {
+      return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
-  }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+    return true;
 }
 
 } // namespace polyester
