@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <map>
+#include <string>
 #include <vector>
 
 namespace Microsoft::React {
@@ -33,7 +34,7 @@ struct IWebSocketResource {
     Size = 4 // Metavalue representing the number of entries in this enum.
   };
 
-  enum class ErrorType : size_t {
+  enum class ErrorType : std::size_t {
     None = 0,
     Resolution = 1,
     Connection = 2,
@@ -49,8 +50,6 @@ struct IWebSocketResource {
   /// As defined in https://tools.ietf.org/html/rfc6455#section-7.4
   /// </summary>
   enum class CloseCode : std::uint16_t {
-    // Keep in sync with RFC 6455 specification
-    None = 0,
     Normal = 1000,
     GoingAway = 1001,
     ProtocolError = 1002,
@@ -84,7 +83,8 @@ struct IWebSocketResource {
   /// WebSocket URL address the instance will connect to.
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
-  static std::unique_ptr<IWebSocketResource> Make(const std::string &url);
+  static std::shared_ptr<IWebSocketResource>
+  Make(const std::string &url, bool legacyImplementation = false, bool acceptSelfSigned = false);
 
   virtual ~IWebSocketResource() {}
 
@@ -129,7 +129,7 @@ struct IWebSocketResource {
   /// </param>
   /// <param name="reason">
   /// </param>
-  virtual void Close(CloseCode code, const std::string &reason) = 0;
+  virtual void Close(CloseCode code = CloseCode::Normal, const std::string &reason = {}) = 0;
 
   /// <returns>
   /// Current public state as defined in the <c>ReadyState</c> enum.
@@ -182,10 +182,3 @@ struct IWebSocketResource {
 };
 
 } // namespace Microsoft::React
-
-// Deprecated. Keeping for compatibility with dependent code.
-namespace facebook::react {
-
-using IWebSocket = Microsoft::React::IWebSocketResource;
-
-} // namespace facebook::react

@@ -253,9 +253,6 @@ websocket::close_code BaseWebSocketResource<Protocol, SocketLayer, Stream, Resol
           static_cast<uint16_t>(websocket::close_code::needs_extension),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocketResource::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
-      "Exception type enums don't match");
-  static_assert(
       static_cast<uint16_t>(IWebSocketResource::CloseCode::Normal) ==
           static_cast<uint16_t>(websocket::close_code::normal),
       "Exception type enums don't match");
@@ -603,26 +600,6 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 } // namespace Beast
 
-#pragma region IWebSocketResource static members
-
-/*static*/ unique_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
-  Url url(urlString);
-
-  if (url.scheme == "ws") {
-    if (url.port.empty())
-      url.port = "80";
-
-    return unique_ptr<IWebSocketResource>(new Beast::WebSocketResource(std::move(url)));
-  } else if (url.scheme == "wss") {
-    if (url.port.empty())
-      url.port = "443";
-
-    return unique_ptr<IWebSocketResource>(new Beast::SecureWebSocket(std::move(url)));
-  } else
-    throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
-}
-
-#pragma endregion IWebSocketResource static members
 } // namespace Microsoft::React
 
 namespace boost::asio {

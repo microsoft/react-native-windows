@@ -91,12 +91,11 @@
         $(FollyDir);
         $(ReactNativeWindowsDir)\ReactWindowsCore\pch;
         $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
-        $(ProjectDir);
-        $(GeneratedFilesDir);
-        $(IntDir);
+        $(ReactNativeWindowsDir)\Mso;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -162,6 +161,7 @@
     <ClInclude Include="ChakraRuntimeHolder.h" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(USE_V8)' == 'true'" />
+    <ClInclude Include="WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
@@ -195,6 +195,7 @@
     <ClCompile Include="ChakraRuntimeHolder.cpp" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(USE_HERMES)' == 'true'" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(USE_V8)' == 'true'" />
+    <ClCompile Include="WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man" />
