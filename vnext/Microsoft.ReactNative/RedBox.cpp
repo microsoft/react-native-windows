@@ -80,8 +80,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         winrt::Windows::UI::Xaml::Markup::XamlReader::Load(xamlString));
     m_errorMessageText =
         m_redboxContent.FindName(L"ErrorMessageText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
-    m_errorStackText = 
-      m_redboxContent.FindName(L"ErrorStackText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
+    m_errorStackText = m_redboxContent.FindName(L"ErrorStackText").as<winrt::Windows::UI::Xaml::Controls::TextBlock>();
     m_stackPanel = m_redboxContent.FindName(L"StackPanel").as<winrt::Windows::UI::Xaml::Controls::StackPanel>();
     m_dismissButton = m_redboxContent.FindName(L"DismissButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
     m_reloadButton = m_redboxContent.FindName(L"ReloadButton").as<winrt::Windows::UI::Xaml::Controls::Button>();
@@ -144,7 +143,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
  private:
   void UpdateErorrMessageUI() noexcept {
-    const std::regex colorsRegex("\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
+    const std::regex colorsRegex(
+        "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     std::string formated = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
 
     auto json = folly::parseJson(m_errorInfo.Message);
@@ -154,8 +154,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
       m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
     } else {
-      m_errorMessageText.Text(
-          Microsoft::Common::Unicode::Utf8ToUtf16(formated));
+      m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(formated));
+      m_errorStackText.Text(L"");
     }
   }
 
