@@ -54,7 +54,7 @@ task('initRNLibraries', () => {
   require('./Scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
 task('installRNW', () => {
-  require('./Scripts/installRNW').installRNW(path.resolve(__dirname, './react-native-installation'));
+  require('./Scripts/installRNW').installRNW(__dirname, path.resolve(__dirname, './react-native-installation'));
 });
 
 task('ts', () => {

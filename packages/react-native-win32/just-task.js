@@ -55,6 +55,9 @@ task('initRNLibraries', () => {
 task('installRNW', () => {
   require('../../vnext/Scripts/installRNW').installRNW(__dirname, path.resolve(__dirname, './react-native-installation'));
 });
+task('copyRNWin32Libraries', () => {
+  require('./Scripts/copyRNWin32Libraries').copyRNWin32Libraries(__dirname);
+});
 task('flow-check', () => {
   require('child_process').execSync('npx flow check', { stdio: 'inherit' });
 });
@@ -101,6 +104,7 @@ task(
     'ts',
     'installRNW',
     'initRNLibraries',
+    'copyRNWin32Libraries',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );

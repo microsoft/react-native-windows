@@ -83,6 +83,7 @@ exports.copyRNWin32Libraries = baseDir => {
       src: 'RNTester',
       dest: 'RNTester',
       mergeFiles: true,
+    },
   ]);
 
   copyFile(baseDir, rnInstallationPath, 'RNTester.js');
