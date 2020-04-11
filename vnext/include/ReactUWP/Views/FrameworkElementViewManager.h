@@ -26,7 +26,10 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   virtual void TransferProperties(XamlView oldView, XamlView newView) override;
 
  protected:
-  bool UpdateProperty(ShadowNodeBase *nodeToUpdate, const std::string& propertyName, const folly::dynamic& propertyValue) override;
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
 
   void TransferProperty(XamlView oldView, XamlView newView, winrt::Windows::UI::Xaml::DependencyProperty dp);
 

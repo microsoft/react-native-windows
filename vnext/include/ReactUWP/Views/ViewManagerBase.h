@@ -82,8 +82,11 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   virtual void OnViewCreated(XamlView view){};
   virtual bool
   UpdateProperty(ShadowNodeBase *nodeToUpdate, const std::string &propertyName, const folly::dynamic &propertyValue);
-  virtual void NotifyUnimplementedProperty(ShadowNodeBase *nodeToUpdate, const std::string& propertyName, const folly::dynamic& value);
-  #ifdef DEBUG
+  virtual void NotifyUnimplementedProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &value);
+#ifdef DEBUG
   struct TestHook {
     static void NotifyUnimplementedProperty(
         const std::string &viewManager,
@@ -91,7 +94,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
         const std::string &propertyName,
         const folly::dynamic &propertyValue);
   };
-  #endif
+#endif
  protected:
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };

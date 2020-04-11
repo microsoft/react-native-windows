@@ -68,23 +68,23 @@ bool HyperlinkViewManager::UpdateProperty(
   if (button == nullptr)
     return true;
 
-    if (propertyName == "disabled") {
-      if (propertyValue.isBool())
-        button.IsEnabled(!propertyValue.asBool());
-    } else if (propertyName == "tooltip") {
-      if (propertyValue.isString()) {
-        winrt::TextBlock tooltip = winrt::TextBlock();
-        tooltip.Text(asHstring(propertyValue));
-        winrt::ToolTipService::SetToolTip(button, tooltip);
-      }
-    } else if (propertyName == "url") {
-      winrt::Uri myUri(asHstring(propertyValue));
-      button.NavigateUri(myUri);
-    } else {
-      return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  if (propertyName == "disabled") {
+    if (propertyValue.isBool())
+      button.IsEnabled(!propertyValue.asBool());
+  } else if (propertyName == "tooltip") {
+    if (propertyValue.isString()) {
+      winrt::TextBlock tooltip = winrt::TextBlock();
+      tooltip.Text(asHstring(propertyValue));
+      winrt::ToolTipService::SetToolTip(button, tooltip);
     }
+  } else if (propertyName == "url") {
+    winrt::Uri myUri(asHstring(propertyValue));
+    button.NavigateUri(myUri);
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  }
 
-    return true;
+  return true;
 }
 
 } // namespace polyester

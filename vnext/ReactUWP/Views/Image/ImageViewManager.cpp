@@ -123,17 +123,17 @@ bool ImageViewManager::UpdateProperty(
   bool finalizeBorderRadius{false};
   bool ret = true;
 
-    if (propertyName == "source") {
-      setSource(grid, propertyValue);
-    } else if (propertyName == "resizeMode") {
-      auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
-      auto reactImage{grid.as<ReactImage>()};
-      reactImage->ResizeMode(resizeMode);
-    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
-      finalizeBorderRadius = true;
-    } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
-    } else {
-      ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  if (propertyName == "source") {
+    setSource(grid, propertyValue);
+  } else if (propertyName == "resizeMode") {
+    auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
+    auto reactImage{grid.as<ReactImage>()};
+    reactImage->ResizeMode(resizeMode);
+  } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
+    finalizeBorderRadius = true;
+  } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
+  } else {
+    ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     // TODO: overflow
   }
 

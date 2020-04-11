@@ -142,13 +142,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   }
 
  private:
-   std::string GetHeuristic(const std::string& message, const std::string& type) {
+  std::string GetHeuristic(const std::string &message, const std::string &type) {
     if (message.find_first_of("Metro Bundler has encountered an error") != message.npos) {
-       return type + (" ─ See http://aka.ms/RNWTroubleshootMetro");
+      return type + (" ─ See http://aka.ms/RNWTroubleshootMetro");
     }
     return type;
-     // 
-
+    //
   }
   void UpdateErorrMessageUI() noexcept {
     try {
@@ -160,10 +159,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
         return;
       } else if (json.count("type") && json["type"] == "InternalError") {
-          auto message = json["message"].asString();
-          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(GetHeuristic(message, json["type"].asString())));
-          return;
+        auto message = json["message"].asString();
+        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(GetHeuristic(message, json["type"].asString())));
+        return;
       }
     } catch (...) {
     }

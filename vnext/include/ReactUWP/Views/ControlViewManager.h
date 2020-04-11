@@ -18,9 +18,9 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
 
   folly::dynamic GetNativeProps() const override;
   bool UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) override;
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
   void TransferProperties(XamlView oldView, XamlView newView) override;
 
  protected:
