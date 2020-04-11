@@ -64,8 +64,8 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
     bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
     // Point to an existing script accessible via the repository's packaging
     // service.
-    auto bigString = unique_ptr<JSBigString>(
-        new JSBigStdString("http://localhost:8081/react-native-installation/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true"));
+    auto bigString = unique_ptr<JSBigString>(new JSBigStdString(
+        "http://localhost:8081/react-native-installation/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true"));
     jse->loadApplicationScript(std::move(bigString), "");
 
     jsQueue->quitSynchronous();
