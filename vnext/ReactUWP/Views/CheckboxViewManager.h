@@ -19,12 +19,12 @@ class CheckBoxViewManager : public ControlViewManager {
 
   facebook::react::ShadowNode *createShadow() const override;
 
+ protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
       const folly::dynamic &propertyValue) override;
 
- protected:
   XamlView CreateViewCore(int64_t tag) override;
 
   friend class CheckBoxShadowNode;

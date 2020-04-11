@@ -17,10 +17,6 @@ class RawTextViewManager : public ViewManagerBase {
   RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
-  bool UpdateProperty(
-      ShadowNodeBase *nodeToUpdate,
-      const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
 
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
@@ -32,6 +28,11 @@ class RawTextViewManager : public ViewManagerBase {
   bool RequiresYogaNode() const override;
 
  protected:
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
   XamlView CreateViewCore(int64_t tag) override;
 
  private:

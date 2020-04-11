@@ -14,10 +14,6 @@ class ImageViewManager : public FrameworkElementViewManager {
   ImageViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
-  bool UpdateProperty(
-      ShadowNodeBase *nodeToUpdate,
-      const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
 
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   folly::dynamic GetNativeProps() const override;
@@ -25,6 +21,11 @@ class ImageViewManager : public FrameworkElementViewManager {
   void EmitImageEvent(winrt::Windows::UI::Xaml::Controls::Grid grid, const char *eventName, ReactImageSource &source);
 
  protected:
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
   XamlView CreateViewCore(int64_t tag) override;
 
  private:

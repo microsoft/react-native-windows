@@ -17,10 +17,6 @@ class TextViewManager : public FrameworkElementViewManager {
   facebook::react::ShadowNode *createShadow() const override;
 
   const char *GetName() const override;
-  bool UpdateProperty(
-      ShadowNodeBase *nodeToUpdate,
-      const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
@@ -31,6 +27,11 @@ class TextViewManager : public FrameworkElementViewManager {
   void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
 
  protected:
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
   XamlView CreateViewCore(int64_t tag) override;
 };
 
