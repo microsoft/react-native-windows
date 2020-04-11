@@ -1,10 +1,9 @@
 #pragma once
-#include <sstream>
 #include <ostream>
+#include <sstream>
 
-template<typename CharT = char>
+template <typename CharT = char>
 struct debugbuffer_t : public std::basic_stringbuf<CharT, std::char_traits<CharT>> {
-
   virtual ~debugbuffer_t() {
     sync();
   }
@@ -15,7 +14,7 @@ struct debugbuffer_t : public std::basic_stringbuf<CharT, std::char_traits<CharT
     return 0;
   }
 
-private:
+ private:
   void _OutputDebugString(PCSTR str) {
     ::OutputDebugStringA(str);
   }
@@ -24,20 +23,14 @@ private:
   }
 };
 
-template<class CharT>
-class basic_dostream : 
-    public std::basic_ostream<CharT>
-{
-public:
-
-    basic_dostream() : std::basic_ostream<CharT>
-                (new debugbuffer_t<CharT>()) {}
-    ~basic_dostream() 
-    {
-      delete this->rdbuf();
-    }
+template <class CharT>
+class basic_dostream : public std::basic_ostream<CharT> {
+ public:
+  basic_dostream() : std::basic_ostream<CharT>(new debugbuffer_t<CharT>()) {}
+  ~basic_dostream() {
+    delete this->rdbuf();
+  }
 };
 
 extern basic_dostream<char> cdebug;
 extern basic_dostream<wchar_t> cwdebug;
-
