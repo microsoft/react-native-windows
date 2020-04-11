@@ -125,8 +125,6 @@ export default class Bootstrap extends React.Component<
       ],
       onMouseEnter: this.mouseEnterContentChild,
       onMouseLeave: this.mouseLeaveContentChild,
-    };
-    const touchableProps: any = {
       onPress: this.press,
       onPressIn: this.pressIn,
       onPressOut: this.pressOut,
@@ -134,10 +132,8 @@ export default class Bootstrap extends React.Component<
 
     return (
       <View {...containerProps}>
-        <TouchableHighlight {...touchableProps}>
-          <View {...childProps}>
-            <Text>This is a TouchableHighlight</Text>
-          </View>
+        <TouchableHighlight {...childProps}>
+          <Text>This is a TouchableHighlight</Text>
         </TouchableHighlight>
       </View>
     );
