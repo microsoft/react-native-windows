@@ -143,20 +143,23 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
  private:
   void UpdateErorrMessageUI() noexcept {
+    try {
+      auto json = folly::parseJson(m_errorInfo.Message);
+      if (json.count("name") && json["name"] == "Error") {
+        auto message = json["message"].asString();
+        auto stack = json["stack"].asString().substr(ARRAYSIZE("Error: ") + message.length());
+        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+        return;
+      }
+    } catch (...) {
+    }
+    // fall back to displaying the raw message string
     const std::regex colorsRegex(
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
-    std::string formated = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
-
-    auto json = folly::parseJson(m_errorInfo.Message);
-    if (json.count("name") && json["name"] == "Error") {
-      auto message = json["message"].asString();
-      auto stack = json["stack"].asString().substr(ARRAYSIZE("Error: ") + message.length());
-      m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-      m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
-    } else {
-      m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(formated));
-      m_errorStackText.Text(L"");
-    }
+    const std::string formated = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
+    m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(formated));
+    m_errorStackText.Text(L"");
   }
 
   void PopulateFrameStackUI() noexcept {
