@@ -1,4 +1,5 @@
 // @ts-check
+const path = require('path');
 const projectConfig = require('./local-cli/config/projectConfig');
 const dependencyConfig = require('./local-cli/config/dependencyConfig');
 
@@ -17,5 +18,5 @@ module.exports = {
 
     // *****
     // This is only used when building bundles within react-native-windows.
-    reactNativePath: '.',
+    reactNativePath: path.resolve(__dirname, './react-native-installation'),
   };

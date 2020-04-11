@@ -103,6 +103,11 @@ exports.copyRNLibraries = baseDir => {
       dest: 'RNTester',
       mergeFiles: true,
     },
+    {
+      src: 'IntegrationTests',
+      dest: 'IntegrationTests',
+      mergeFiles: true,
+    },
   ]);
 
 /*

@@ -80,8 +80,9 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
 
     // React instance scope
     {
-      shared_ptr<ITestInstance> instance =
-          GetInstance(std::move(bundlePath), std::move(modules), std::move(devSettings));
+      string realBundlePath = "react-native-installation/" + bundlePath;
+      shared_ptr<ITestInstance> instance =         
+          GetInstance(std::move(realBundlePath), std::move(modules), std::move(devSettings));
 
       InitializeLogging([&result, &functionCalled](RCTLogLevel logLevel, const char *message) {
         if (TestStatus::Pending != result.Status)
