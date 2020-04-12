@@ -83,7 +83,10 @@ exports.copyRNLibraries = baseDir => {
     require.resolve('react-native-windows/package.json'),
   );
 
-  const rnInstallationPath = path.resolve(baseDir, './react-native-installation');
+  const rnInstallationPath = path.resolve(
+    baseDir,
+    './react-native-installation',
+  );
 
   copyDirectories(reactNativeWindowsPath, rnInstallationPath, [
     {
@@ -110,7 +113,7 @@ exports.copyRNLibraries = baseDir => {
     },
   ]);
 
-/*
+  /*
 // TODO:  figure out what to do with these
   copyDirectories(reactNativePath, baseDir, [
     {
@@ -143,5 +146,4 @@ exports.copyRNLibraries = baseDir => {
       mergeFiles: true,
     },
   ]);
-
 };

@@ -15,7 +15,9 @@ const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
 );
 
-const rnInstallPath = fs.realpathSync(path.resolve(rnwPath, '../../../react-native-installation'));
+const rnInstallPath = fs.realpathSync(
+  path.resolve(rnwPath, '../../../react-native-installation'),
+);
 
 module.exports = {
   resolver: {
@@ -37,7 +39,7 @@ module.exports = {
       ),
     ]),
   },
-  transformer: {    
+  transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

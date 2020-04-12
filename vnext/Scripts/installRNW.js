@@ -74,7 +74,6 @@ function copyFile(srcPath, targetPath, filename) {
   );
 }
 
-
 exports.installRNW = (reactNativeWindowsPath, installationPath) => {
   const reactNativePath = path.dirname(
     require.resolve('react-native/package.json'),
