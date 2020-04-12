@@ -8,6 +8,7 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Documents.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.Web.Http.h>
@@ -169,22 +170,18 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
 
         if (IsMetroBundlerError(message, json["type"].asString())) {
-          m_errorStackText.Text(
-              Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See " METRO_TROUBLESHOOTING_URL)));
-          m_errorStackText.IsTextSelectionEnabled(false);
-          m_errorStackText.Tapped([](IInspectable const & /*sender*/, xaml::Input::TappedRoutedEventArgs const &e) {
-            winrt::Windows::System::Launcher::LaunchUriAsync(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
-          });
+          xaml::Documents::Hyperlink link;
+          link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
+          xaml::Documents::Run linkRun;
 
-          m_errorStackText.PointerEntered([&](IInspectable const &, xaml::Input::PointerRoutedEventArgs const &) {
-            auto hand = winrt::Windows::UI::Core::CoreCursor(winrt::Windows::UI::Core::CoreCursorType::Hand, 1);
-            m_beforeCursor = xaml::Window::Current().CoreWindow().PointerCursor();
-            xaml::Window::Current().CoreWindow().PointerCursor(hand);
-          });
-
-          m_errorStackText.PointerExited([&](IInspectable const &, xaml::Input::PointerRoutedEventArgs const &) {
-            xaml::Window::Current().CoreWindow().PointerCursor(m_beforeCursor);
-          });
+          linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
+          link.Foreground(
+              xaml::Media::SolidColorBrush(winrt::Windows::UI::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+          link.Inlines().Append(linkRun);
+          xaml::Documents::Run normalRun;
+          normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
+          m_errorStackText.Inlines().Append(normalRun);
+          m_errorStackText.Inlines().Append(link);
         } else {
           m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
         }
@@ -291,7 +288,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   xaml::Controls::Button m_reloadButton{nullptr};
   xaml::Controls::TextBlock m_errorMessageText{nullptr};
   xaml::Controls::TextBlock m_errorStackText{nullptr};
-  winrt::Windows::UI::Core::CoreCursor m_beforeCursor{nullptr};
+
   bool m_showing = false;
   Mso::Functor<void(uint32_t)> m_onClosedCallback;
   winrt::event_token m_tokenClosed;
