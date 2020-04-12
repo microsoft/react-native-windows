@@ -1,7 +1,7 @@
 #pragma once
+#include <windows.h>
 #include <ostream>
 #include <sstream>
-#include <windows.h>
 
 template <typename CharT = char>
 struct debugbuffer_t : public std::basic_stringbuf<CharT, std::char_traits<CharT>> {
