@@ -69,7 +69,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         L"  </Grid.RowDefinitions>"
         L"  <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>"
         L"    <StackPanel HorizontalAlignment='Stretch'>"
-        L"      <StackPanel Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15'>"
+        L"      <StackPanel Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>"
         L"        <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
         L"        <Border Padding='15,15,15,0'/>"
         L"        <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
@@ -85,6 +85,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_errorMessageText = m_redboxContent.FindName(L"ErrorMessageText").as<xaml::Controls::TextBlock>();
     m_errorStackText = m_redboxContent.FindName(L"ErrorStackText").as<xaml::Controls::TextBlock>();
     m_stackPanel = m_redboxContent.FindName(L"StackPanel").as<xaml::Controls::StackPanel>();
+    m_stackPanelUpper = m_redboxContent.FindName(L"StackPanelUpper").as<xaml::Controls::StackPanel>();
     m_dismissButton = m_redboxContent.FindName(L"DismissButton").as<xaml::Controls::Button>();
     m_reloadButton = m_redboxContent.FindName(L"ReloadButton").as<xaml::Controls::Button>();
 
@@ -198,14 +199,47 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
         webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
         webView.MinWidth(400);
-        webView.MinHeight(400);
 
         m_stackPanel.Children().Clear();
         m_stackPanel.Children().Append(webView);
 
+        // XAML doesn't currently provide a way to measure a WebView control,
+        // So we're going to tell the WebView to measure itself by running some javascript,
+        // and then we'll post a message back to XAML to set the XAML WebView minimum height.
+        // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
+        // the fact that we're running javascript in the WebView, to set the
+        // foreground/background to match the rest of the RedBox.
+        // setProperty returns undefined so we continue the first expression with a comma
+        // whereas the height expression gets executed because of the ||
+        // (since the setProperty calls resulted in undefined).
+        // Finally, it's important to note that JS expressions of that are not of string type
+        // need to be manually converted to string for them to get marshaled properly back here.
+        webView.NavigationCompleted(
+            [=](IInspectable const &, xaml::Controls::WebViewNavigationCompletedEventArgs const &) {
+              // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
+              std::vector<winrt::hstring> args{
+                  L"(document.body.style.setProperty('color', 'white'), "
+                  L"document.body.style.setProperty('background', '#be0000')) "
+                  L"|| document.documentElement.scrollHeight.toString()"};
+              auto async = webView.InvokeScriptAsync(L"eval", std::move(args));
+
+              async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&state) {
+                auto result = op.GetResults();
+                int documentHeight = _wtoi(result.c_str());
+                winrt::Window::Current().CoreWindow().Dispatcher().RunAsync(
+                    winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [=]() {
+                      // Ensure the webview has a min height of the content it wants to show,
+                      // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
+                      constexpr int horizontalScrollbarHeight = 12;
+                      webView.MinHeight(documentHeight + horizontalScrollbarHeight);
+                    });
+              });
+            });
+
         webView.NavigateToString(content);
-        m_errorMessageText.Text(L"");
-        m_errorStackText.Text(L"");
+
+        m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
+        m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
 
         return;
       }
@@ -281,6 +315,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     }
   }
 
+  xaml::Controls::StackPanel m_stackPanelUpper{nullptr};
   xaml::Controls::StackPanel m_stackPanel{nullptr};
   xaml::Controls::Primitives::Popup m_popup{nullptr};
   xaml::Controls::Grid m_redboxContent{nullptr};
