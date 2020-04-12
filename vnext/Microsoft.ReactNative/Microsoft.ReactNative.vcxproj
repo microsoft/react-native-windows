@@ -262,7 +262,6 @@
     <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
-    <ClInclude Include="cdebug.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -425,7 +424,6 @@
     <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp" />
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="cdebug.cpp" />
     <ClCompile Include="DynamicReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>

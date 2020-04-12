@@ -318,7 +318,6 @@
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="cdebug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
@@ -660,7 +659,6 @@
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="cdebug.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl">
