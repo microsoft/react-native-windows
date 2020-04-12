@@ -5,11 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
 
-const rnPath = fs.realpathSync(
-  fs.realpathSync(
-    path.resolve(require.resolve('react-native/package.json'), '..'),
-  ),
-);
 const rnw32Path = __dirname;
 
 module.exports = {
@@ -20,25 +15,18 @@ module.exports = {
   ],
 
   resolver: {
+    resolveRequest: require('./metro-react-native-platform').reactNativePlatformResolver(
+      {win32: '@office-iss/react-native-win32'},
+    ),
     extraNodeModules: {
-      // Redirect react-native and react-native-windows to this folder
-      'react-native': rnw32Path,
+      // Redirect react-native-windows to actual path to avoid symlink
       'react-native-win32': rnw32Path,
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: [
-      'ios',
-      'android',
-      'windesktop',
-      'windows',
-      'web',
-      'macos',
-      'win32',
-    ],
+    platforms: ['ios', 'android', 'win32'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.61 when haste is removed
     blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
       new RegExp(
         `${path
           .resolve(

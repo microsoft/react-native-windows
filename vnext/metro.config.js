@@ -20,9 +20,11 @@ module.exports = {
   ],
 
   resolver: {
+    resolveRequest: require('./metro-react-native-platform').reactNativePlatformResolver(
+      {windows: 'react-native-windows'},
+    ),
     extraNodeModules: {
-      // Redirect react-native and react-native-windows to this folder
-      'react-native': rnwPath,
+      // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
