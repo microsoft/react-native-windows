@@ -64,20 +64,20 @@
       "file": "Libraries\\AppTheme\\AppThemeTypes.ts"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windesktop.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
-      "issue": "LEGACY_FIXME"
+      "issue": 4578
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windows.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
-      "issue": "LEGACY_FIXME"
+      "issue": 4578
     },
     {
       "type": "derived",
