@@ -36,8 +36,20 @@ export interface Spec extends TurboModule {
   +setHidden: (hidden: boolean) => void;
 }
 
-// [Win32 Change from getEnforcing to get
-export default (TurboModuleRegistry.get<Spec>(
-  'StatusBarManager',
-): ?Spec);
+// [Win32 Change from getEnforcing to get and provide a stub (See #4363)
+let NativeStausBarManager = TurboModuleRegistry.get<Spec>('StatusBarManager');
+if (!NativeStausBarManager) {
+  NativeStausBarManager = {
+    getConstants: () => ({HEIGHT: 0, DEFAULT_BACKGROUND_COLOR: 0}),
+    setColor: (
+      color: number | NativeOrDynamicColorType,
+      animated: boolean,
+    ) => {},
+    setTranslucent: (translucent: boolean) => {},
+    setStyle: (statusBarStyle?: ?string) => {},
+    setHidden: (hidden: boolean) => {},
+  };
+}
+
+export default (NativeStausBarManager: Spec);
 // Win32]
