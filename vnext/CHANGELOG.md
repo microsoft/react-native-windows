@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Apr 2020 07:51:05 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Apr 2020 18:45:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.33
+
+Mon, 13 Apr 2020 18:45:40 GMT
+
+### Changes
+
+- Remove Folly ContinueOnError (ngerlem@microsoft.com)
 
 ## 0.0.0-master.32
 
