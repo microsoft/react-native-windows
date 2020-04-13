@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RCTCheckBox = requireNativeComponent('RCTCheckBox');
+const RCTCheckBox = requireNativeComponent<ICheckBoxProps>('RCTCheckBox');
 
 /**
  * Renders a boolean input.
@@ -30,7 +30,6 @@ const RCTCheckBox = requireNativeComponent('RCTCheckBox');
  * @keyword toggle
  */
 class CheckBox extends React.Component<ICheckBoxProps> {
-  // tslint:disable-next-line:no-any
   private _rctCheckBox: any;
 
   public constructor(props: ICheckBoxProps) {
@@ -49,7 +48,7 @@ class CheckBox extends React.Component<ICheckBoxProps> {
     );
   }
 
-  private _setRef = (checkBox: CheckBox /*RCTCheckBox*/) => {
+  private _setRef = (checkBox: any /*RCTCheckBox*/) => {
     this._rctCheckBox = checkBox;
   };
 
