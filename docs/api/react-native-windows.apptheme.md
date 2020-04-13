@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-AppTheme: AppThemeModule
+AppTheme: AppThemeModule | MissingNativeAppThemeShim
 ```

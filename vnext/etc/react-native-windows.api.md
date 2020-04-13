@@ -4,6 +4,7 @@
 
 ```ts
 
+import { NativeEventEmitter } from 'react-native';
 import * as React_2 from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
@@ -14,10 +15,12 @@ import { ViewStyle } from 'react-native';
 // Warning: (ae-forgotten-export) The symbol "AppThemeModule" needs to be exported by the entry point typings-index.d.ts
 //
 // @public (undocumented)
-export const AppTheme: AppThemeModule;
-
-// @public (undocumented)
 export type AppTheme = AppThemeModule;
+
+// Warning: (ae-forgotten-export) The symbol "MissingNativeAppThemeShim" needs to be exported by the entry point typings-index.d.ts
+//
+// @public (undocumented)
+export const AppTheme: AppThemeModule | MissingNativeAppThemeShim;
 
 // @public (undocumented)
 export type AppThemeTypes = 'light' | 'dark';
