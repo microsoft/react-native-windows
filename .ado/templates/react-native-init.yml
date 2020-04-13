@@ -63,7 +63,7 @@ steps:
   - task: DownloadBuildArtifacts@0
     displayName: 'Download TestMSRNNuget Artifact'
     inputs:
-      artifactName: TestMSRNNuget
+      artifactName: TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }}
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
@@ -84,7 +84,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget -Destination $(Agent.BuildDirectory)\testcli\windows\packages
+        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }} -Destination $(Agent.BuildDirectory)\testcli\windows\packages
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
   - task: NuGetCommand@2

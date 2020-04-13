@@ -313,9 +313,6 @@ jobs:
 
       - name: Build ReactWindows.sln
         run: msbuild vnext\ReactWindows.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
-        env:
-          RNW_PKG_VERSION_STR: Private Build
-          RNW_PKG_VERSION: 1000,0,0,0
 
       - name: Run Desktop Unit Tests
         if: matrix.BuildPlatform != 'arm'
