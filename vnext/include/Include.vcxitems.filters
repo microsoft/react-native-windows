@@ -20,6 +20,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactUwp.h">
       <Filter>ReactUWP</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\cdebug.h">
+      <Filter>ReactWindowsCore</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\II18nModule.h">
       <Filter>ReactWindowsCore</Filter>
     </ClInclude>

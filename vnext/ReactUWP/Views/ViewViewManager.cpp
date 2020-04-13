@@ -332,61 +332,55 @@ folly::dynamic ViewViewManager::GetNativeProps() const {
   return props;
 }
 
-void ViewViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool ViewViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
   bool shouldBeControl = pViewShadowNode->IsControl();
   bool finalizeBorderRadius{false};
 
   auto pPanel = pViewShadowNode->GetViewPanel();
-
+  bool ret = true;
   if (pPanel != nullptr) {
-    for (const auto &pair : reactDiffMap.items()) {
-      const std::string &propertyName = pair.first.getString();
-      const folly::dynamic &propertyValue = pair.second;
-
-      if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-        finalizeBorderRadius = true;
-        continue;
-      } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
-        continue;
-      } else if (propertyName == "onClick") {
-        pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
-      } else if (propertyName == "overflow") {
-        if (propertyValue.isString()) {
-          bool clipChildren = propertyValue.getString() == "hidden";
-          pPanel.ClipChildren(clipChildren);
-        }
-      } else if (propertyName == "pointerEvents") {
-        if (propertyValue.isString()) {
-          bool hitTestable = propertyValue.getString() != "none";
-          pPanel.IsHitTestVisible(hitTestable);
-        }
-      } else if (propertyName == "acceptsKeyboardFocus") {
-        if (propertyValue.isBool())
-          shouldBeControl = propertyValue.getBool();
-      } else if (propertyName == "enableFocusRing") {
-        if (propertyValue.isBool())
-          pViewShadowNode->EnableFocusRing(propertyValue.getBool());
-        else if (propertyValue.isNull())
-          pViewShadowNode->EnableFocusRing(false);
-      } else if (propertyName == "tabIndex") {
-        if (propertyValue.isNumber()) {
-          auto tabIndex = propertyValue.asDouble();
-          if (tabIndex == static_cast<int32_t>(tabIndex)) {
-            pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
-          }
-        } else if (propertyValue.isNull()) {
-          pViewShadowNode->TabIndex(-1);
-        }
+    if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
+    } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
+    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
+      finalizeBorderRadius = true;
+    } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
+    } else if (propertyName == "onClick") {
+      pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
+    } else if (propertyName == "overflow") {
+      if (propertyValue.isString()) {
+        bool clipChildren = propertyValue.getString() == "hidden";
+        pPanel.ClipChildren(clipChildren);
       }
+    } else if (propertyName == "pointerEvents") {
+      if (propertyValue.isString()) {
+        bool hitTestable = propertyValue.getString() != "none";
+        pPanel.IsHitTestVisible(hitTestable);
+      }
+    } else if (propertyName == "acceptsKeyboardFocus") {
+      if (propertyValue.isBool())
+        shouldBeControl = propertyValue.getBool();
+    } else if (propertyName == "enableFocusRing") {
+      if (propertyValue.isBool())
+        pViewShadowNode->EnableFocusRing(propertyValue.getBool());
+      else if (propertyValue.isNull())
+        pViewShadowNode->EnableFocusRing(false);
+    } else if (propertyName == "tabIndex") {
+      if (propertyValue.isNumber()) {
+        auto tabIndex = propertyValue.asDouble();
+        if (tabIndex == static_cast<int32_t>(tabIndex)) {
+          pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
+        }
+      } else if (propertyValue.isNull()) {
+        pViewShadowNode->TabIndex(-1);
+      }
+    } else {
+      ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 
   if (auto view = pViewShadowNode->GetView().try_as<winrt::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
@@ -400,6 +394,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
   pPanel.FinalizeProperties();
 
   TryUpdateView(pViewShadowNode, pPanel, shouldBeControl);
+  return ret;
 }
 
 void ViewViewManager::TryUpdateView(

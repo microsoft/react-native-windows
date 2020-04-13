@@ -6,12 +6,15 @@
 #include <Views/ViewManagerBase.h>
 
 #include "ViewPanel.h"
+#include "cdebug.h"
+#include "unicode.h"
 
 #include <Modules/NativeUIManager.h>
 
 #include <IReactInstance.h>
 #include <IXamlRootView.h>
 #include <Views/ShadowNodeBase.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.h>
 
 using namespace folly;
@@ -226,15 +229,26 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
-
-    if (propertyName == "onLayout") {
-      nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
-    } else if (propertyName == "keyDownEvents") {
-      nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
-    } else if (propertyName == "keyUpEvents") {
-      nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+    if (!UpdateProperty(nodeToUpdate, propertyName, propertyValue)) {
+      NotifyUnimplementedProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
+}
+
+bool ViewManagerBase::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "onLayout") {
+    nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
+  } else if (propertyName == "keyDownEvents") {
+    nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else if (propertyName == "keyUpEvents") {
+    nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else {
+    return false;
+  }
+  return true;
 }
 
 void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newView*/) {}
@@ -245,6 +259,60 @@ void ViewManagerBase::DispatchCommand(
     const folly::dynamic & /*commandArgs*/) {
   assert(false); // View did not handle its command
 }
+
+void ViewManagerBase::NotifyUnimplementedProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &value) {
+#ifdef DEBUG
+  auto viewManagerName = nodeToUpdate->GetViewManager()->GetName();
+  auto element(nodeToUpdate->GetView().as<winrt::IInspectable>());
+
+  if (element != nullptr) {
+    auto className = Microsoft::Common::Unicode::Utf16ToUtf8(winrt::get_class_name(element));
+    TestHook::NotifyUnimplementedProperty(viewManagerName, className, propertyName, value);
+  } else {
+    cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << std::endl;
+  }
+#endif // DEBUG
+}
+
+#ifdef DEBUG
+
+void ViewManagerBase::TestHook::NotifyUnimplementedProperty(
+    const std::string &viewManager,
+    const std::string &reactClassName,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  std::string value;
+  size_t size{};
+  try {
+    if (propertyValue.isObject()) {
+      value = "[Object]";
+    } else if (propertyValue.isNull()) {
+      value = "[Null]";
+    } else if (propertyValue.isArray()) {
+      size = propertyValue.size();
+      value = "[Array]";
+    } else {
+      value = propertyValue.asString();
+    }
+  } catch (const TypeError &e) {
+    value = e.what();
+  }
+
+  cdebug << "[UnimplementedProperty] ViewManager = " << viewManager << " elementClass = " << reactClassName
+         << " propertyName = " << propertyName << " value = " << value;
+
+  if (size != 0) {
+    cdebug << " (" << size << " elems)";
+  }
+
+  cdebug << std::endl;
+  // DebugBreak();
+}
+
+#endif // DEBUG
 
 void ViewManagerBase::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,

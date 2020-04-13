@@ -16,7 +16,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   folly::dynamic GetNativeProps() const override;
-  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   // Helper functions related to setting/updating TransformMatrix
   void RefreshTransformMatrix(ShadowNodeBase *shadowNode);
@@ -27,6 +26,11 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   virtual void TransferProperties(XamlView oldView, XamlView newView) override;
 
  protected:
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
   void TransferProperty(XamlView oldView, XamlView newView, winrt::Windows::UI::Xaml::DependencyProperty dp);
 
   void TransferProperty(
