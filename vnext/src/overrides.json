@@ -375,8 +375,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\TextInput\\TextInput.windows.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "53a59e839404c2f565cb47b00fee6b4541045d6c",
+      "baseVersion": "0.62.1",
+      "baseHash": "ddc98a5d277a630f3ac95c5d416a1028ba27382d",
       "issue": "LEGACY_FIXME"
     },
     {
