@@ -40,7 +40,7 @@ class StubNativeModule : public facebook::xplat::module::CxxModule {
 
   std::map<std::string, folly::dynamic> getConstants() override {
     // CxxModules require a constant or method to register properly
-      return {{"Dummy", "Something"}};
+    return {{"Dummy", "Something"}};
   }
 
   std::vector<Method> getMethods() override {
