@@ -203,9 +203,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_stackPanel.Children().Clear();
         m_stackPanel.Children().Append(webView);
 
+        auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
         // XAML doesn't currently provide a way to measure a WebView control,
         // So we're going to tell the WebView to measure itself by running some javascript,
-        // and then we'll post a message back to XAML to set the XAML WebView minimum height.
+        // and then we'll post a task back to XAML to set the XAML WebView minimum height.
         // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
         // the fact that we're running javascript in the WebView, to set the
         // foreground/background to match the rest of the RedBox.
@@ -226,13 +227,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
               async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&state) {
                 auto result = op.GetResults();
                 int documentHeight = _wtoi(result.c_str());
-                winrt::Window::Current().CoreWindow().Dispatcher().RunAsync(
-                    winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [=]() {
-                      // Ensure the webview has a min height of the content it wants to show,
-                      // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
-                      constexpr int horizontalScrollbarHeight = 12;
-                      webView.MinHeight(documentHeight + horizontalScrollbarHeight);
-                    });
+                dispatcher.TryEnqueue([=]() {
+                  // Ensure the webview has a min height of the content it wants to show,
+                  // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
+                  constexpr int horizontalScrollbarHeight = 12;
+                  webView.MinHeight(documentHeight + horizontalScrollbarHeight);
+                });
               });
             });
 
