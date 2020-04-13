@@ -1,8 +1,56 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Apr 2020 17:16:44 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Apr 2020 07:51:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.32
+
+Mon, 13 Apr 2020 07:51:05 GMT
+
+### Changes
+
+- Refactor View managers to detect unimplemented props (asklar@microsoft.com)
+
+## 0.0.0-master.31
+
+Sat, 11 Apr 2020 02:36:32 GMT
+
+### Changes
+
+- Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode) (asklar@microsoft.com)
+
+## 0.0.0-master.30
+
+Fri, 10 Apr 2020 22:03:49 GMT
+
+### Changes
+
+- Simplified C++ macros and improved their comments (vmorozov@microsoft.com)
+
+## 0.0.0-master.29
+
+Fri, 10 Apr 2020 14:44:13 GMT
+
+### Changes
+
+- Don't set readyState on connection error (julio@rochsquadron.net)
+
+## 0.0.0-master.28
+
+Fri, 10 Apr 2020 06:15:31 GMT
+
+### Changes
+
+- Improve inner loop and error reporting (local CLI) (asklar@microsoft.com)
+
+## 0.0.0-master.27
+
+Thu, 09 Apr 2020 21:36:07 GMT
+
+### Changes
+
+- Enable managed unit tests (jthysell@microsoft.com)
 
 ## 0.0.0-master.26
 

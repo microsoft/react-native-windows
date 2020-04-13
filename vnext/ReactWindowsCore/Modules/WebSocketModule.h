@@ -18,21 +18,28 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 
   WebSocketModule();
 
+#pragma region CxxModule overrides
+
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getName" />
   /// </summary>
-  std::string getName();
+  std::string getName() override;
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getConstants" />
   /// </summary>
-  virtual std::map<std::string, folly::dynamic> getConstants();
+  std::map<std::string, folly::dynamic> getConstants() override;
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getMethods" />
   /// </summary>
   /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
-  virtual std::vector<Method> getMethods();
+  std::vector<Method> getMethods() override;
+
+#pragma endregion CxxModule overrides
+
+  void SetResourceFactory(
+      std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> &&resourceFactory = nullptr);
 
  private:
   /// <summary>
@@ -50,6 +57,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// As defined in WebSocket.js.
   /// </summary>
   std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
+
+  /// <summary>
+  /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+  /// </summary>
+  std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> m_resourceFactory;
 };
 
 } // namespace Microsoft::React

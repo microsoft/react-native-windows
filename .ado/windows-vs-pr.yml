@@ -65,27 +65,36 @@ jobs:
         clean: false
         submodules: false
 
-      - task: VisualStudioTestPlatformInstaller@1
-        inputs:
-          testPlatformVersion: latestStable
-        condition: not(startsWith(variables.BuildPlatform, 'arm'))
-
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
       - task: VSTest@2
-        displayName: Run Universal Unit Tests
+        displayName: Run Universal Unit Tests (Native)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
-          # Managed unit tests crash with .net native https://github.com/Microsoft/vstest/issues/3838
-          # Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (Managed)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)

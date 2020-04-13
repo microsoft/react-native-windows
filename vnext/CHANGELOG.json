@@ -2,6 +2,131 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Apr 2020 07:51:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.32",
+      "version": "0.0.0-master.32",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor View managers to detect unimplemented props",
+            "author": "asklar@microsoft.com",
+            "commit": "31bed1cc68714020ad6dc82ac4784647ffc41fb4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Apr 2020 02:36:32 GMT",
+      "tag": "react-native-windows_v0.0.0-master.31",
+      "version": "0.0.0-master.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode)",
+            "author": "asklar@microsoft.com",
+            "commit": "69528f606dd6ed89f75b4be2780d7eaefdf1656e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 22:03:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.30",
+      "version": "0.0.0-master.30",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplified C++ macros and improved their comments",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5e9ec2a384eca8c9489e812811faade446f56397",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 14:44:13 GMT",
+      "tag": "react-native-windows_v0.0.0-master.29",
+      "version": "0.0.0-master.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't set readyState on connection error",
+            "author": "julio@rochsquadron.net",
+            "commit": "9d68988472f32739185957959e78c35c51203e49",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 06:15:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.28",
+      "version": "0.0.0-master.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve inner loop and error reporting (local CLI)",
+            "author": "asklar@microsoft.com",
+            "commit": "ff6f8f57587f7364143a701ef6637039b6643cf4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 01:16:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.27",
+      "version": "0.0.0-master.27",
+      "comments": {
+        "none": [
+          {
+            "author": "julio@rochsquadron.net",
+            "commit": "c8085b5bb88342ed9c7b91ed3c093818ef67aad2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow WebSocketModule to use custom resource factory",
+            "author": "julio@rochsquadron.net",
+            "commit": "c8085b5bb88342ed9c7b91ed3c093818ef67aad2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 21:36:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.27",
+      "version": "0.0.0-master.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable managed unit tests",
+            "author": "jthysell@microsoft.com",
+            "commit": "98049fcc569ec9ff0ee735311b1f4552adee8be2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 20:28:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.26",
+      "version": "0.0.0-master.26",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bumping dev deps",
+            "author": "acoates@microsoft.com",
+            "commit": "03fb17db7b929a6a9ec5b3ce4a00f8ea54560b03",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 19:49:28 GMT",
       "tag": "react-native-windows_v0.0.0-master.26",
       "version": "0.0.0-master.26",

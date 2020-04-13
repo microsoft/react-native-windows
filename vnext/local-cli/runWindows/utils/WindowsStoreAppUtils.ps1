@@ -88,7 +88,10 @@ function EnableDevmode {
         New-Item -Path $RegistryKeyPath -ItemType Directory -Force
     }
 
-    Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1
+    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+    if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
+        Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
+    }
 }
 
 #
