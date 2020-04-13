@@ -741,4 +741,7 @@
       <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
 </Project>
