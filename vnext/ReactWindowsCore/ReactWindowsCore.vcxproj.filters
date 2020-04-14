@@ -114,6 +114,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="V8JSIRuntimeHolder.cpp" />
+    <ClCompile Include="cdebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">

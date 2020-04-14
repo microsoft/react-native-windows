@@ -40,7 +40,7 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().UseWebDebugger(x_UseWebDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseDirectDebugger(x_UseDirectDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
-  host.InstanceSettings().UseFastRefresh(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
+  host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
 
   // Nudge the ReactNativeHost to create the instance and wrapping context
