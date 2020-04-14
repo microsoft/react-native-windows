@@ -10,9 +10,11 @@
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
-export type PlatformSelectSpec<D, I> = {
+export type PlatformSelectSpec<A, N, D> = {
+  win32?: A,
+  native?: N,
   default?: D,
-  win32?: I,
+  ...
 };
 
 const Platform = {
@@ -39,8 +41,8 @@ const Platform = {
           isTesting: false,
           reactNativeVersion: {
             major: 0,
-            minor: 61,
-            patch: 5,
+            minor: 62,
+            patch: 0,
             prerelease: undefined,
           },
         };
@@ -54,11 +56,15 @@ const Platform = {
     }
     return false;
   },
-  get isTV() {
+  get isTV(): boolean {
     return false;
   },
-  select: <D, I>(spec: PlatformSelectSpec<D, I>): D | I =>
-    'win32' in spec ? spec.win32 : spec.default,
+  select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
+  'win32' in spec
+    ? spec.win32
+    : 'native' in spec
+    ? spec.native
+    : spec.default,
 };
 
 module.exports = Platform;
