@@ -29,10 +29,6 @@ module.exports = {
       // Redirect react-native-windows to avoid symlink (metro doesn't like symlinks)
       'react-native-windows': rnwPath,
     },
-    // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: ['ios', 'android', 'windows'],
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go in RN 0.61 when haste is removed
     blacklistRE: blacklist([
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(

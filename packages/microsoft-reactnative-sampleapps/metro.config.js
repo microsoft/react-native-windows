@@ -4,7 +4,6 @@
  *
  * @format
  */
-const fs = require('fs');
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
 
@@ -27,8 +26,6 @@ module.exports = {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
       'react-native-windows': rnwPath,
     },
-    // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: ['ios', 'android', 'windows'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
@@ -43,15 +40,6 @@ module.exports = {
           .resolve(rnwPath, 'node_modules/react-native')
           .replace(/[/\\]/g, '/')}.*`,
       ),
-      new RegExp(
-        `${path
-          .resolve(
-            require.resolve('@react-native-community/cli/package.json'),
-            '../node_modules/react-native',
-          )
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
-
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,

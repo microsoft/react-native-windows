@@ -12,7 +12,6 @@ module.exports = {
     resolveRequest: require('react-native-windows/metro-react-native-platform').reactNativePlatformResolver(
       {windows: 'react-native-windows'},
     ),
-    platforms: ['ios', 'android', 'windows'],
     blacklistRE: blacklist([
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
