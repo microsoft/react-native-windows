@@ -109,7 +109,7 @@ steps:
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
   # Work around issue of parameters not getting expanded in conditions properly
- - powershell: |
+  - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
 
   - task: CmdLine@2
