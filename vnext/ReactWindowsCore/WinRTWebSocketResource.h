@@ -21,7 +21,8 @@ namespace Microsoft::React {
 class WinRTWebSocketResource : public IWebSocketResource, public std::enable_shared_from_this<WinRTWebSocketResource> {
   winrt::Windows::Foundation::Uri m_uri;
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
-  // winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
+  // TODO: Use or remove.
+  winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::IDataWriter m_writer;
 
   Mso::DispatchQueue m_dispatchQueue;
@@ -55,7 +56,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IWebSocket const &sender,
-      winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs const &args);
+      winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &args);
   void Synchronize();
 
  public:
