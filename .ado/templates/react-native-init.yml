@@ -87,12 +87,6 @@ steps:
         Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }} -Destination $(Agent.BuildDirectory)\testcli\windows\packages
     condition: eq('true', ${{ parameters.experimentalNugetDependency }})
 
-  - task: NuGetCommand@2
-    displayName: NuGet restore testcli
-    inputs:
-      command: restore
-      restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-
   - template: install-SDK.yml
     parameters:
       sdkVersion: $(Win10Version)
@@ -114,23 +108,19 @@ steps:
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
-  - task: VSBuild@1
-    displayName: VSBuild - testcli
+  - task: CmdLine@2
+    displayName: Build project (Release)
     inputs:
-      solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-      vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-      msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-      platform: ${{ parameters.platform }} # Optional
-      configuration: ${{ parameters.configuration }} # Optional
-      clean: false # Optional
-      maximumCpuCount: false # Optional
-      restoreNugetPackages: false # Optional
-      createLogFile: true
-      logFileVerbosity: detailed
-      msbuildArgs:
-        /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-        /p:PlatformToolset=$(MSBuildPlatformToolset)
-        /p:AppxGeneratePrisForPortableLibrariesEnabled=false
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --release
+      workingDirectory: $(Agent.BuildDirectory)
+    condition: eq('Release', ${{ parameters.configuration }})
+
+  - task: CmdLine@2
+    displayName: Build project (Debug)
+    inputs:
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy
+      workingDirectory: $(Agent.BuildDirectory)
+    condition: ne('Release', ${{ parameters.configuration }})
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
