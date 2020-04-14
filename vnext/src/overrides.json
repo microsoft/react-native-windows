@@ -413,8 +413,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableHighlight.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableHighlight.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "abdab04c325389eb9380feef0a35dfc5ba4ea64a",
+      "baseVersion": "0.62.2",
+      "baseHash": "b930d8995dab7c9aad3e14c3a78b73431c791a56",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -429,16 +429,16 @@
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableOpacity.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableOpacity.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "6d291945cff157c0418793efac2e8adb5deaa90c",
+      "baseVersion": "0.62.2",
+      "baseHash": "356d5eb7b824b35b79fb4108b3dffcd8c3cfa4f7",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "869bbbbdae6aade61594671504096d90a1ed303c",
+      "baseVersion": "0.62.2",
+      "baseHash": "78e0bcf18020ec967f7d96767d7b555af5b9b3b6",
       "issue": "LEGACY_FIXME"
     },
     {
