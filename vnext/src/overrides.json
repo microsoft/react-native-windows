@@ -618,7 +618,7 @@
       "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "48265ddff91efb254176c02f8d40bc71acce3252",
-      "issue": "LEGACY_FIXME"
+      "issue": 3990
     },
     {
       "type": "platform",
@@ -634,7 +634,7 @@
       "baseFile": "Libraries\\StyleSheet\\processColor.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "c24356f7c86e22d2d52ce2d7cded979509ad931c",
-      "issue": "LEGACY_FIXME"
+      "issue": 3990
     },
     {
       "type": "patch",
@@ -642,7 +642,7 @@
       "baseFile": "Libraries\\StyleSheet\\processColorArray.js",
       "baseVersion": "0.61.5",
       "baseHash": "66b19d011a777ed38e5513eda9da2d61c9045595",
-      "issue": "LEGACY_FIXME"
+      "issue": 3990
     },
     {
       "type": "platform",
@@ -658,7 +658,7 @@
       "baseFile": "Libraries\\StyleSheet\\StyleSheetTypes.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "b973dbd7645c513fa8eb3373ad68d58c7fc6032e",
-      "issue": "LEGACY_FIXME"
+      "issue": 3990
     },
     {
       "type": "patch",
