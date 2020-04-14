@@ -188,8 +188,6 @@ async function addOverride(overridePath: string) {
  * Remove an override from the manifest
  */
 async function removeOverride(overridePath: string) {
-  await checkFileExists('override', overridePath);
-
   const manifestPath = await FileSearch.findManifest(overridePath);
   const manifestDir = path.dirname(manifestPath);
 
