@@ -693,8 +693,8 @@
             VerticalAlignment=Stretch
             Visibility=Visible
             [Windows.UI.Xaml.Controls.Border]
-                Background=#99FFFFFF
-                BorderBrush=#CC000000
+                Background=#33E1E1E1
+                BorderBrush=#55FF00FF
                 BorderThickness=1,1,1,1
                 Clip=[NULL]
                 CornerRadius=0,0,0,0
@@ -712,7 +712,7 @@
                 HorizontalAlignment=Left
                 Margin=0,0,0,0
                 Padding=12,0,0,2
-                RenderSize=104.5,24.5
+                RenderSize=90,21
                 VerticalAlignment=Center
                 Visibility=Visible
             [Windows.UI.Xaml.Controls.FontIcon]
@@ -804,7 +804,7 @@
                 VerticalAlignment=Stretch
                 Visibility=Visible
             [Windows.UI.Xaml.Controls.Border]
-                Background=#FF40007F
+                Background=#FF0078D7
                 BorderBrush=#66000000
                 BorderThickness=1,1,1,1
                 Clip=[NULL]
@@ -827,7 +827,7 @@
                 HorizontalAlignment=Stretch
                 Margin=12,5,0,7
                 Padding=0,0,0,0
-                RenderSize=756,22
+                RenderSize=756,19
                 VerticalAlignment=Center
                 Visibility=Visible
                 [Windows.UI.Xaml.Controls.TextBlock]
@@ -837,7 +837,7 @@
                     HorizontalAlignment=Stretch
                     Margin=0,0,0,0
                     Padding=0,0,0,0
-                    RenderSize=756,22
+                    RenderSize=756,19
                     VerticalAlignment=Stretch
                     Visibility=Visible
             [Windows.UI.Xaml.Controls.TextBox]
