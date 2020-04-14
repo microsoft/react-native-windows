@@ -828,11 +828,11 @@
     },
     {
       "type": "derived",
-      "file": "RNTester\\js\\RNTesterApp.windows.tsx",
-      "baseFile": "RNTester\\js\\RNTesterApp.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "9cc102294d7ed366aff473f17e1caedfcc8ddb4c",
-      "issue": "LEGACY_FIXME"
+      "file": "RNTester\\js\\RNTesterApp.windows.js",
+      "baseFile": "RNTester\\js\\RNTesterApp.ios.js",
+      "baseVersion": "0.62.2",
+      "baseHash": "e1e649835256a5460c4bae59ef465727a5ae9983",
+      "issue": 4586
     },
     {
       "type": "derived",
