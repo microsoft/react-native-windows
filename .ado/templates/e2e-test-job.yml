@@ -107,6 +107,13 @@ jobs:
           script: "Start-Process msinfo32 -ArgumentList '/report $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\msinfo32.txt' -Wait"
         condition: failed()
 
+      - task: PowerShell@2
+        displayName: "Get-ShellScaling"
+        inputs:
+          targetType: "inline"
+          script: ". $(Build.SourcesDirectory)\\.ado\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
+        condition: failed()
+
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
