@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 14 Apr 2020 18:14:12 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Apr 2020 19:34:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.37
+
+Tue, 14 Apr 2020 19:34:42 GMT
+
+### Changes
+
+- [generator] Use `npx` for consistency (eloy.de.enige@gmail.com)
 
 ## 0.0.0-master.36
 
