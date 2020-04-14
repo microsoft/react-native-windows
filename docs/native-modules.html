@@ -90,16 +90,9 @@
 <p>NOTE: If you are unable to use the reflection-based annotation approach, you can define native modules directly using the ABI. This is outlined in the <a href="/react-native-windows/docs/native-modules-advanced">Writing Native Modules without using Attributes</a> document.</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="initial-setup"></a><a href="#initial-setup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Initial Setup</h2>
-<p>Prerequisite: Follow the <a href="/react-native-windows/docs/native-modules-setup">Native Modules Setup Guide</a> to create the Visual Studio infrastructure to author your own stand-alone native module for React Native Windows</p>
+<p>Follow the <a href="/react-native-windows/docs/native-modules-setup">Native Modules Setup Guide</a> to create the Visual Studio infrastructure to author your own stand-alone native module for React Native Windows.</p>
 <p>Once you have set up your development environment and project structure, you are ready to write code.</p>
-<p>If you are only planning on adding a native module to your existing React Native Windows app, ie:</p>
-<ol>
-<li>You followed <a href="/react-native-windows/docs/getting-started">Consuming react native windows</a>, where</li>
-<li>You ran <code>react-native windows --template vnext</code> to add Windows to your project, and</li>
-<li>You are just adding your native code to the app project under the <code>windows</code> folder.</li>
-</ol>
-<p>Then you can simply open the Visual Studio solution in the <code>windows</code> folder and add the new files directly to the app project.</p>
-<p>If you are instead creating a standalone native module, or adding Windows support to an existing native module, check out the <a href="/react-native-windows/docs/native-modules-setup">Native Modules Setup</a> guide first.</p>
+<p>Open the Visual Studio solution in the <code>windows</code> folder and add the new files directly to the app project.</p>
 <h2><a class="anchor" aria-hidden="true" id="sample-native-module-c"></a><a href="#sample-native-module-c" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sample Native Module (C#)</h2>
 <h3><a class="anchor" aria-hidden="true" id="attributes"></a><a href="#attributes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Attributes</h3>
 <table>
