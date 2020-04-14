@@ -172,8 +172,10 @@
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup>
+    <UseDevBundle Condition="'$(Configuration)' == 'Debug'">true</UseDevBundle>
+    <UseDevBundle Condition="'$(Configuration)' != 'Debug'">false</UseDevBundle>
     <BundleCommand>
-      npx --no-install react-native bundle --platform windows --entry-file Samples/rntester.tsx --bundle-output $(MSBuildThisFileDirectory)/Bundle/index.windows.bundle --assets-dest $(MSBuildThisFileDirectory)/Bundle
+      npx --no-install react-native bundle --platform windows --entry-file Samples/rntester.tsx --bundle-output $(MSBuildThisFileDirectory)/Bundle/Samples/rntester.bundle --assets-dest $(MSBuildThisFileDirectory)/Bundle --dev $(UseDevBundle)
     </BundleCommand>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
@@ -190,4 +192,8 @@
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
+    <Target Name="EnsureBundleDir" BeforeTargets="MakeBundle" 
+      Condition="'$(UseBundle)' == 'true'">
+        <MakeDir Directories="Bundle\Samples" Condition="!Exists('Bundle\Samples')"/>
+    </Target>
 </Project>
