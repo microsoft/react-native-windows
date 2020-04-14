@@ -98,7 +98,7 @@ jobs:
         inputs:
           sourceFolder: $(Build.SourcesDirectory)\packages\E2ETest\errorShots
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
-          contents: TreeDump\**
+          contents: **
         condition: succeededOrFailed()
 
       - task: PowerShell@2
