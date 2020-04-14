@@ -3,7 +3,7 @@ parameters:
   language:
   version:
   platform:
-  configuration: Debug
+  configuration:
   experimentalNugetDependency: false
   vsComponents: ''
   listVsComponents: false
@@ -108,19 +108,23 @@ steps:
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
+  # Work around issue of parameters not getting expanded in conditions properly
+ - powershell: |
+      Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
+
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --release
       workingDirectory: $(Agent.BuildDirectory)
-    condition: and(succeeded(), eq('Release', '${{ parameters.configuration }}'))
+    condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy
       workingDirectory: $(Agent.BuildDirectory)
-    condition: and(succeeded(), eq('Debug', '${{ parameters.configuration }}'))
+    condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
