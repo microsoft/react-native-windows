@@ -693,8 +693,8 @@
             VerticalAlignment=Stretch
             Visibility=Visible
             [Windows.UI.Xaml.Controls.Border]
-                Background=#33E1E1E1
-                BorderBrush=#55FF00FF
+                Background=#99FFFFFF
+                BorderBrush=#CC000000
                 BorderThickness=1,1,1,1
                 Clip=[NULL]
                 CornerRadius=0,0,0,0

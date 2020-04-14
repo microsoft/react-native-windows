@@ -187,7 +187,7 @@
         RenderSize=120,50
         VerticalAlignment=Center
         Visibility=Visible
-        Width=40
+        Width=32
         [Windows.UI.Xaml.Controls.Grid]
             Background=#33000000
             BorderBrush=#5500FF00
@@ -436,7 +436,7 @@
                 HorizontalAlignment=Stretch
                 Margin=10,10,10,10
                 Padding=10,10,10,10
-                RenderSize=780,42.5
+                RenderSize=780,39
                 VerticalAlignment=Stretch
                 Visibility=Visible
             [Windows.UI.Xaml.Controls.Button]
@@ -632,7 +632,7 @@
                 HorizontalAlignment=Stretch
                 Margin=10,10,10,10
                 Padding=10,10,10,10
-                RenderSize=780,42.5
+                RenderSize=780,39
                 VerticalAlignment=Stretch
                 Visibility=Visible
             [Windows.UI.Xaml.Controls.Primitives.ToggleButton]
@@ -712,7 +712,7 @@
                 HorizontalAlignment=Left
                 Margin=0,0,0,0
                 Padding=12,0,0,2
-                RenderSize=104.5,24.5
+                RenderSize=90,21
                 VerticalAlignment=Center
                 Visibility=Visible
             [Windows.UI.Xaml.Controls.FontIcon]
@@ -804,7 +804,7 @@
                 VerticalAlignment=Stretch
                 Visibility=Visible
             [Windows.UI.Xaml.Controls.Border]
-                Background=#FF40007F
+                Background=#FF0078D7
                 BorderBrush=#66000000
                 BorderThickness=10,10,10,10
                 Clip=[NULL]
@@ -827,7 +827,7 @@
                 HorizontalAlignment=Stretch
                 Margin=12,5,0,7
                 Padding=0,0,0,0
-                RenderSize=756,22
+                RenderSize=756,19
                 VerticalAlignment=Center
                 Visibility=Visible
                 [Windows.UI.Xaml.Controls.TextBlock]
@@ -837,7 +837,7 @@
                     HorizontalAlignment=Stretch
                     Margin=0,0,0,0
                     Padding=0,0,0,0
-                    RenderSize=756,22
+                    RenderSize=756,19
                     VerticalAlignment=Stretch
                     Visibility=Visible
             [Windows.UI.Xaml.Controls.TextBox]
