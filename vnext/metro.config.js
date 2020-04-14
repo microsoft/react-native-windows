@@ -25,13 +25,6 @@ module.exports = {
       // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
     },
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.61 when haste is removed
-    blacklistRE: blacklist([
-      new RegExp(
-        `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
-      ),
-    ]),
   },
   transformer: {
     getTransformOptions: async () => ({

@@ -26,20 +26,10 @@ module.exports = {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
       'react-native-windows': rnwPath,
     },
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
       new RegExp(
         '.*microsoft-reactnative-sampleapps/msbuild.*'.replace(/[/\\]/g, '\\/'),
       ), // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
-      new RegExp(
-        `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
-      ),
-      new RegExp(
-        `${path
-          .resolve(rnwPath, 'node_modules/react-native')
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
