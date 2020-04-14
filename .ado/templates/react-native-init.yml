@@ -113,14 +113,14 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --release
       workingDirectory: $(Agent.BuildDirectory)
-    condition: and(succeeded(), eq('Release', ${{ parameters.configuration }}))
+    condition: and(succeeded(), eq('Release', '${{ parameters.configuration }}''))
 
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy
       workingDirectory: $(Agent.BuildDirectory)
-    condition: and(succeeded(), eq('Debug', ${{ parameters.configuration }}))
+    condition: and(succeeded(), eq('Debug', '${{ parameters.configuration }}''))
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
