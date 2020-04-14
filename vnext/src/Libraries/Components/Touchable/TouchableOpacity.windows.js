@@ -227,8 +227,10 @@ class TouchableOpacity extends React.Component<Props, State> {
     // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before
     // adopting `Pressability`, so preserve that behavior.
     const {
-      onBlur,
-      onFocus,
+      // [Windows We used to manually hook up onFocus and onBlur. Do we still need to?
+      // onBlur,
+      // onFocus,
+      // Windows]
       ...eventHandlersWithoutBlurAndFocus
     } = this.state.pressability.getEventHandlers();
 
@@ -261,6 +263,18 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.focusable !== false && this.props.onPress !== undefined
         }
         ref={this.props.hostRef}
+        accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
+        accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
+        onAccessibilityTap={this.props.onAccessibilityTap} // [Windows]
+        acceptsKeyboardFocus={
+          (this.props.acceptsKeyboardFocus === undefined ||
+            this.props.acceptsKeyboardFocus === true) &&
+          !this.props.disabled
+        } // [Windows]
+        tabIndex={this.props.tabIndex} // [Windows]
+        tooltip={this.props.tooltip} // [Windows]
+        onMouseEnter={this.props.onMouseEnter} // [Windows]
+        onMouseLeave={this.props.onMouseLeave} // [Windows]
         {...eventHandlersWithoutBlurAndFocus}>
         {this.props.children}
         {__DEV__ ? (
