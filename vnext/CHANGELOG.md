@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Apr 2020 18:45:40 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Apr 2020 02:46:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.34
+
+Tue, 14 Apr 2020 02:46:30 GMT
+
+### Changes
+
+- add missing headers to proj file (kmelmon@microsoft.com)
 
 ## 0.0.0-master.33
 
