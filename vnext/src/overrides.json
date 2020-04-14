@@ -709,8 +709,8 @@
       "type": "derived",
       "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.windesktop.js",
       "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.js",
-      "baseVersion": "0.62.1",
-      "baseHash": "d9d32ba9f097d8fabfe3afee56a8420d0451f285"
+      "baseVersion": "0.62.2",
+      "baseHash": "80f52a83aa0b9750a8955bc79975d2b3914c664b"
     },
     {
       "type": "derived",
