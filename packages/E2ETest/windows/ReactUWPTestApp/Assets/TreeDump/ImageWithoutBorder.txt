@@ -4,6 +4,7 @@
     BorderThickness=0,0,0,0
     Clip=[NULL]
     CornerRadius=0,0,0,0
+    FlowDirection=LeftToRight
     Height=300
     HorizontalAlignment=Stretch
     Margin=0,0,0,0
@@ -11,4 +12,4 @@
     VerticalAlignment=Stretch
     Visibility=Visible
     Width=500
-  [Windows.UI.Xaml.DependencyObject]
+    [Windows.UI.Xaml.DependencyObject]

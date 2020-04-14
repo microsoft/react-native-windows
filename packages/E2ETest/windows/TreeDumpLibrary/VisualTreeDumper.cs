@@ -173,6 +173,7 @@ namespace TreeDumpLibrary
         {
             PropertyNameAllowList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
             "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip",
+                "FlowDirection",
 #if TREEDUMP_NAMES
             "Name",
 #endif

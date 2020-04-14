@@ -4,6 +4,7 @@
     BorderThickness=0,0,0,0
     Clip=[NULL]
     CornerRadius=0,0,0,0
+    FlowDirection=LeftToRight
     Height=300
     HorizontalAlignment=Stretch
     Margin=0,0,0,0
@@ -12,15 +13,16 @@
     VerticalAlignment=Stretch
     Visibility=Visible
     Width=500
-  [Microsoft.ReactNative.ViewPanel]
-      Background=[NULL]
-      BorderBrush=#00000000
-      BorderThickness=0,0,0,0
-      Clip=[NULL]
-      CornerRadius=0,0,0,0
-      HorizontalAlignment=Stretch
-      Margin=0,0,0,0
-      RenderSize=500,300
-      VerticalAlignment=Stretch
-      Visibility=Visible
-    [Windows.UI.Xaml.DependencyObject]
+    [Microsoft.ReactNative.ViewPanel]
+        Background=[NULL]
+        BorderBrush=#00000000
+        BorderThickness=0,0,0,0
+        Clip=[NULL]
+        CornerRadius=0,0,0,0
+        FlowDirection=LeftToRight
+        HorizontalAlignment=Stretch
+        Margin=0,0,0,0
+        RenderSize=500,300
+        VerticalAlignment=Stretch
+        Visibility=Visible
+        [Windows.UI.Xaml.DependencyObject]

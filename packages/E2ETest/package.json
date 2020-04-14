@@ -13,7 +13,7 @@
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run e2etest",
     "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle --logging && npm run e2etest",
-    "e2etest": "rimraf reports/* && npm run prettier && wdio",
+    "e2etest": "rimraf reports/* && npm run prettier && node run_wdio.js",
     "testspec": "npm run prettier && wdio --spec",
     "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle",
     "buildapp": "react-native run-windows --no-launch --no-packager --no-deploy",
