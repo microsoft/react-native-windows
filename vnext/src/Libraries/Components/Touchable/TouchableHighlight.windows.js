@@ -10,12 +10,14 @@
 
 'use strict';
 
-import Pressability from '../../Pressability/Pressability.js';
-import {PressabilityDebugView} from '../../Pressability/PressabilityDebug.js';
-import StyleSheet, {type ViewStyleProp} from '../../StyleSheet/StyleSheet.js';
-import type {ColorValue} from '../../StyleSheet/StyleSheetTypes.js';
-import TVTouchable from './TVTouchable.js';
-import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback.js';
+// [Windows Remove .js
+import Pressability from '../../Pressability/Pressability';
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
+import StyleSheet, {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
+import type {ColorValue} from '../../StyleSheet/StyleSheetTypes';
+import TVTouchable from './TVTouchable';
+import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
+// Windows]
 import Platform from '../../Utilities/Platform';
 import View from '../../Components/View/View';
 import * as React from 'react';

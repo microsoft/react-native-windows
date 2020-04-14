@@ -10,9 +10,11 @@
 
 'use strict';
 
-import Pressability from '../../Pressability/Pressability.js';
-import {PressabilityDebugView} from '../../Pressability/PressabilityDebug.js';
-import TVTouchable from './TVTouchable.js';
+// [Windows Remove .js
+import Pressability from '../../Pressability/Pressability';
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
+import TVTouchable from './TVTouchable';
+// Windows]
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
