@@ -12,9 +12,11 @@ const processColor = require('./processColor');
 import type {
   ColorStop,
   NativeOrDynamicColorType,
-} from '../Color/NativeOrDynamicColorType';
+} from './NativeOrDynamicColorType';
 
-function processColorObject(color?: NativeOrDynamicColorType) {
+function processColorObject(
+  color?: NativeOrDynamicColorType,
+): ?NativeOrDynamicColorType {
   if (color && typeof color === 'object') {
     if (
       color.hasOwnProperty('colorStops') &&

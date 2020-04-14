@@ -33,29 +33,24 @@ XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/) {
   return winrt::Span();
 }
 
-void VirtualTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool VirtualTextViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto span = nodeToUpdate->GetView().as<winrt::Span>();
   if (span == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
-
-    // FUTURE: In the future cppwinrt will generate code where static methods on
-    // base types can be called.  For now we specify the base type explicitly
-    if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    }
+  // FUTURE: In the future cppwinrt will generate code where static methods on
+  // base types can be called.  For now we specify the base type explicitly
+  if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
 }
 
 void VirtualTextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {

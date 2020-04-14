@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 14 Apr 2020 14:59:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.4",
+      "version": "0.0.0-master.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to React Native 0.62",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ae37f8e7518f808116ce906a7f7b32f00412612d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 20:28:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
       "version": "0.0.0-master.3",

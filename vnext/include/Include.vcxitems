@@ -39,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\KeyboardEventHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ShadowNodeBase.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ViewManagerBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\cdebug.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\II18nModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ReactWindowsAPI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\SourceCodeModule.h" />

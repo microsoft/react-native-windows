@@ -20,7 +20,7 @@ export interface IFlyoutTargetState {
   targetRef?: React.ReactNode;
 }
 
-const RCTFlyout = requireNativeComponent('RCTFlyout');
+const RCTFlyout = requireNativeComponent<IFlyoutProps>('RCTFlyout');
 
 /**
  * Renders a flyout component.
