@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using Microsoft.ReactNative;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.Foundation;
 
 namespace ReactUWPTestApp
 {
