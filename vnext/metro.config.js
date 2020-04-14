@@ -16,7 +16,10 @@ module.exports = {
 
   resolver: {
     resolveRequest: require('./metro-react-native-platform').reactNativePlatformResolver(
-      {windows: 'react-native-windows'},
+      {
+        windesktop: 'react-native-windows',
+        windows: 'react-native-windows',
+      },
     ),
     extraNodeModules: {
       // Redirect react-native-windows to this folder

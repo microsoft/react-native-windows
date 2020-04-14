@@ -10,7 +10,8 @@
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "windows": "react-native run-windows"
   },
   "dependencies": {
     "react": "16.9.0",

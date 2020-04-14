@@ -9,6 +9,7 @@
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
     "watch": "tsc -w",
+    "windows": "react-native run-windows",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run e2etest",
     "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle --logging && npm run e2etest",
