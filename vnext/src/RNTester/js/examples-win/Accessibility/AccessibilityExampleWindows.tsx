@@ -12,11 +12,12 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+
+import {AppTheme} from '../../../../Libraries/AppTheme/AppTheme';
 import {
-  AppTheme,
   IAppThemeChangedEvent,
   IHighContrastChangedEvent,
-} from 'react-native-windows';
+} from '../../../../Libraries/AppTheme/AppThemeTypes';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {

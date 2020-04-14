@@ -68,14 +68,4 @@ module.exports = {
     'list', // RNW-only
     'listitem', // RNW-only
   ],
-  // This must be kept in sync with the AccessibilityStatesMask in RCTViewManager.m
-  DeprecatedAccessibilityStates: [
-    'selected',
-    'disabled',
-    'checked',
-    'unchecked',
-    'busy',
-    'expanded',
-    'collapsed',
-  ],
 };
