@@ -106,6 +106,7 @@ jobs:
         inputs:
           targetType: "inline"
           script: "Start-Process msinfo32 -ArgumentList '/report $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\msinfo32.txt' -Wait"
+        condition: failed()
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
