@@ -111,7 +111,7 @@ jobs:
         displayName: "Get-ShellScaling"
         inputs:
           targetType: "inline"
-          script: ". $(Build.SourcesDirectory)\\.ado\Get-ShellScaling.ps1 &gt; $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
+          script: ". $(Build.SourcesDirectory)\\.ado\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
         condition: failed()
 
       - task: PublishBuildArtifacts@1
