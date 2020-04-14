@@ -3,7 +3,7 @@ parameters:
   language:
   version:
   platform:
-  configuration:
+  configuration: Debug
   experimentalNugetDependency: false
   vsComponents: ''
   listVsComponents: false
