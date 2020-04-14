@@ -93,6 +93,7 @@
         $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(JSI_Source);
         $(ReactNativeWindowsDir)JSI\Shared;
         $(ReactNativeWindowsDir)stubs;

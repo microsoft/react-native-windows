@@ -13,7 +13,9 @@ import {
   IPickerChangeEvent,
 } from './PickerProps';
 
-const RCTPicker = requireNativeComponent('RCTPicker');
+const RCTPicker = requireNativeComponent<
+  IPickerProps & {items: IPickerItemData[]; selectedIndex: number}
+>('RCTPicker');
 
 class PickerItem extends React.Component<IPickerItemProps> {
   public render(): JSX.Element | null {
@@ -100,7 +102,7 @@ export class Picker extends React.Component<IPickerProps, State> {
     );
   }
 
-  private _setRef = (comboBox: Picker /*RCTPicker*/) => {
+  private _setRef = (comboBox: any /*RCTPicker*/) => {
     this._rctPicker = comboBox;
   };
 

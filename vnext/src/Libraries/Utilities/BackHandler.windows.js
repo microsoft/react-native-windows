@@ -1,15 +1,19 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @format
  * @flow
  */
 
+// On Apple TV, this implements back navigation using the TV remote's menu button.
+// On iOS, this just implements a stub.
+
 'use strict';
 
 // TODO Hx: Implement.
-
-function emptyFunction() {}
 
 /**
  * Detect hardware button presses for back navigation.
@@ -42,14 +46,26 @@ function emptyFunction() {}
  * ```
  */
 
-var BackHandler = {
-  exitApp: emptyFunction,
-  addEventListener() {
-    return {
-      remove: emptyFunction,
-    };
+type BackPressEventName = 'backPress' | 'hardwareBackPress';
+
+type TBackHandler = {|
+  +exitApp: () => void,
+  +addEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => {remove: () => void, ...},
+  +removeEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => void,
+|};
+
+const BackHandler: TBackHandler = {
+  exitApp: () => {},
+  addEventListener: (eventName: BackPressEventName, handler: Function) => {
+    return {remove: () => {}};
   },
-  removeEventListener: emptyFunction,
+  removeEventListener: (eventName: BackPressEventName, handler: Function) => {},
 };
 
 module.exports = BackHandler;

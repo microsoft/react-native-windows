@@ -67,8 +67,8 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['dist', 'flow', 'flow-typed', 'jest', 'Libraries', 'RNTester', 'lib'].map(
-      p => path.join(process.cwd(), p),
+    ['dist', 'flow', 'jest', 'Libraries', 'RNTester'].map(p =>
+      path.join(process.cwd(), p),
     ),
   );
 });

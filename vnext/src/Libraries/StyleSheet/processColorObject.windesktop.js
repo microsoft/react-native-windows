@@ -6,7 +6,7 @@
 
 'use strict';
 
-import type {NativeOrDynamicColorType} from 'normalizeColorObject';
+import type {NativeOrDynamicColorType} from './normalizeColorObject';
 
 function processColorObject(
   color: NativeOrDynamicColorType,

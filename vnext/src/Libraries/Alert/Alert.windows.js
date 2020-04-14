@@ -13,11 +13,13 @@ export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
   style?: AlertButtonStyle,
+  ...
 }>;
 
 type Options = {
   cancelable?: ?boolean,
-  onDismiss?: ?Function,
+  onDismiss?: ?() => void,
+  ...
 };
 
 export type AlertType = $Keys<{

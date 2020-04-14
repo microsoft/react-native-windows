@@ -81,7 +81,7 @@ export default class Manifest {
         const baseFile = override.baseFile;
         const baseContent = await this.reactRepo.getFileContents(baseFile);
         if (baseContent === null) {
-          errors.push({type: 'baseFileNotFound', file: override.baseFile});
+          errors.push({type: 'baseFileNotFound', file: override.file});
           return;
         }
 

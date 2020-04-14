@@ -156,7 +156,7 @@ test('BaseFileNotFound', async () => {
 
   const expectedError: ValidationError = {
     type: 'baseFileNotFound',
-    file: 'foo\\bar.js',
+    file: 'aaa\\aaa.windows.js',
   };
 
   const testManifest = new Manifest(ourManifestData, ovrRepo, reactRepo);

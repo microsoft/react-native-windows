@@ -51,7 +51,7 @@ export type BasePropsWin32 = {
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
 };
 
-// Warning: (ae-forgotten-export) The symbol "IButtonWin32State" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "IButtonWin32State" needs to be exported by the entry point typings-index.d.ts
 //
 // @public
 export class ButtonWin32 extends React_2.Component<IButtonWin32Props, IButtonWin32State> {
@@ -89,7 +89,7 @@ export interface IButtonWin32Props extends RN.ButtonProps {
     style?: RN.StyleProp<IButtonWin32Style>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Omit" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "Omit" needs to be exported by the entry point typings-index.d.ts
 //
 // @public (undocumented)
 export interface IButtonWin32Style extends Omit_4<RN.TextStyle, ButtonWin32OmitStyles> {
@@ -106,7 +106,7 @@ export interface IDimensions {
     width: number;
 }
 
-// Warning: (ae-forgotten-export) The symbol "PartiallyRequired" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "PartiallyRequired" needs to be exported by the entry point typings-index.d.ts
 //
 // @public (undocumented)
 export type IHandledKeyboardEvent = PartiallyRequired<INativeKeyboardEvent, 'key'>;
@@ -152,7 +152,7 @@ export interface IPersonaCoinProps extends ViewProps {
     presence: PersonaCoinPresence;
     // (undocumented)
     size: PersonaCoinSize;
-    // Warning: (ae-forgotten-export) The symbol "IImageSourceProps" needs to be exported by the entry point typings-main.d.ts
+    // Warning: (ae-forgotten-export) The symbol "IImageSourceProps" needs to be exported by the entry point typings-index.d.ts
     //
     // (undocumented)
     source?: string | IImageSourceProps;
@@ -220,7 +220,7 @@ export type IStateConditions = {
     [P in IState]: boolean;
 };
 
-// Warning: (ae-forgotten-export) The symbol "Omit" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "Omit" needs to be exported by the entry point typings-index.d.ts
 //
 // @public (undocumented)
 export interface ITextWin32Props extends Omit_3<RN.TextProps, TextWin32OmitTypes>, BasePropsWin32 {
@@ -302,7 +302,7 @@ export interface ITouchInfo {
     touchActive: boolean;
 }
 
-// Warning: (ae-forgotten-export) The symbol "ISignalTransitions" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "ISignalTransitions" needs to be exported by the entry point typings-index.d.ts
 //
 // @public
 export type ITransitions = {
@@ -315,7 +315,7 @@ export interface IViewWin32 {
     focus: () => void;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Omit" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "Omit" needs to be exported by the entry point typings-index.d.ts
 //
 // @public
 export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
@@ -425,7 +425,7 @@ export class TextWin32 extends React_2.Component<ITextWin32Props, {}> {
 // @public (undocumented)
 export type TextWin32OmitTypes = RN.TextPropsAndroid & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit_3<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
 
-// Warning: (ae-forgotten-export) The symbol "IInternalTouchableWin32State" needs to be exported by the entry point typings-main.d.ts
+// Warning: (ae-forgotten-export) The symbol "IInternalTouchableWin32State" needs to be exported by the entry point typings-index.d.ts
 //
 // @public
 export class TouchableWin32 extends React_2.Component<ITouchableWin32Props, IInternalTouchableWin32State> {

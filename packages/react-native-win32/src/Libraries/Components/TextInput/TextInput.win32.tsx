@@ -29,19 +29,23 @@ import {
   NativeModules,
   requireNativeComponent,
   TextInputProps,
+  NativeMethods,
 } from 'react-native';
 import {
   IBlurEvent,
   IChangeEvent,
   IFocusEvent,
-  IRCTInput,
 } from './TextInput.Types.win32';
 
 const TextAncestor = require('../../Text/TextAncestor');
 const TextInputState = require('./TextInputState');
 
+type RCTTextInputProps = TextInputProps & {
+  text: string;
+};
+
 // RCTTextInput is the native component that win32 understands
-const RCTTextInput = requireNativeComponent('RCTTextInput');
+const RCTTextInput = requireNativeComponent<RCTTextInputProps>('RCTTextInput');
 
 // Adding typings on ViewManagers is problematic as available functionality is not known until
 // registration at runtime and would require native and js to always be in sync.
@@ -55,13 +59,13 @@ class TextInput extends React.Component<TextInputProps, {}> {
 
   private _rafID: number;
 
-  private _inputRef: React.RefObject<IRCTInput>;
+  private _inputRef: React.RefObject<React.Component<RCTTextInputProps> & Readonly<NativeMethods>>;
   private _lastNativeText: string;
   private _eventCount = 0;
 
   constructor(props) {
     super(props);
-    this._inputRef = React.createRef<IRCTInput>();
+    this._inputRef = React.createRef();
   }
 
   /**

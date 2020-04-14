@@ -5,11 +5,17 @@
  * Device info doesn't can't be a global set of data for win32
  * (probably not for android either).
  *
- * Since the API as designed by facebook can't work, we just return null here to crash when used
+ * Since the API as designed by facebook can't work, we stub out all we can
  * @format
  * @flow
  */
 
 'use strict';
 
-module.exports = {getConstants() { return {isIPhoneX_deprecated: false}}};
+import type {Spec} from './NativeDeviceInfo';
+
+const DeviceInfo: Spec = {
+  getConstants: () => ({Dimensions: {}}),
+};
+
+module.exports = DeviceInfo;
