@@ -62,14 +62,6 @@ namespace TreeDumpLibrary
             {
                 var v = _translator.PropertyValueToString(propertyName, value);
                 _logger.LogProperty(_indent + 1, propertyName, v, isLast);
-                if (_filter.ShouldVisitPropertyValue(v))
-                {
-
-                }
-                else
-                {
-
-                }
             }
 
             public void BeginChildren()
@@ -85,6 +77,10 @@ namespace TreeDumpLibrary
             public bool ShouldVisitPropertyValue(string propertyName, object value)
             {
                 string s = _translator.PropertyValueToString(propertyName, value);
+                if (propertyName == "Name" && s.StartsWith("<reacttag>:"))
+                {
+                    return false;
+                }
                 return _filter.ShouldVisitPropertyValue(s);
             }
         }
@@ -176,7 +172,12 @@ namespace TreeDumpLibrary
         public DefaultFilter()
         {
             PropertyNameAllowList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
-            "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip", /*"ActualOffset" 19h1*/};
+            "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip",
+#if TREEDUMP_NAMES
+            "Name",
+#endif
+            /*"ActualOffset" 19h1*/
+            };
         }
 
         public bool ShouldVisitPropertyValue(string propertyValue)

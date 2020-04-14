@@ -240,7 +240,7 @@ namespace TreeDumpLibrary
             Hyperlink diffLink = new Hyperlink();
             diffLink.Click += (_1, _2) =>
             {
-                string commandLine = $"code.cmd --diff {masterFile.Path} {outFile.Path}";
+                string commandLine = $"code.cmd --diff \"{masterFile.Path}\" \"{outFile.Path}\"";
                 DataPackage dataPackage = new DataPackage();
                 dataPackage.SetText(commandLine);
                 Clipboard.SetContent(dataPackage);
