@@ -513,12 +513,12 @@
       "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Image\\Image.windows.js",
       "baseFile": "Libraries\\Image\\Image.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "96c015ca1381817447cc98f72319ac89b30651b1",
-      "issue": "LEGACY_FIXME"
+      "baseVersion": "0.62.1",
+      "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0",
+      "issue": 4590
     },
     {
       "type": "patch",
