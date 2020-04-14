@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "auto-upgrade react-native-win32",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "commit": "bf1781126d52dc3e659613640d9044c807f53dcc",
-  "dependentChangeType": "patch",
-  "date": "2020-03-12T12:02:11.400Z"
-}

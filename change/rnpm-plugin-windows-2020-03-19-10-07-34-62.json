@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Try to teach the CLI about master",
-  "packageName": "rnpm-plugin-windows",
-  "email": "ngerlem@microsoft.com",
-  "commit": "899829e62cccb1189f19517c3cee9f14a77020a2",
-  "dependentChangeType": "patch",
-  "date": "2020-03-19T17:07:34.801Z"
-}
