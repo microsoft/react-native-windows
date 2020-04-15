@@ -152,9 +152,10 @@ static folly::dynamic GetAccessibilityStateProps() {
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
   props.update(folly::dynamic::object("accessible", "boolean")("accessibilityRole", "string")(
-      "accessibilityState", GetAccessibilityStateProps())("accessibilityHint", "string")(
-      "accessibilityLabel", "string")("accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
-      "testID", "string")("tooltip", "string")("accessibilityActions", "array")("accessibilityLiveRegion", "string"));
+      "accessibilityStates", "array")("accessibilityState", GetAccessibilityStateProps())(
+      "accessibilityHint", "string")("accessibilityLabel", "string")("accessibilityPosInSet", "number")(
+      "accessibilitySetSize", "number")("testID", "string")("tooltip", "string")("accessibilityActions", "array")(
+      "accessibilityLiveRegion", "string"));
   return props;
 }
 
@@ -393,6 +394,45 @@ bool FrameworkElementViewManager::UpdateProperty(
       } else if (propertyValue.isNull()) {
         element.ClearValue(DynamicAutomationProperties::AccessibilityRoleProperty());
       }
+    } else if (propertyName == "accessibilityStates") {
+      bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = {};
+
+      if (propertyValue.isArray()) {
+        for (const auto &state : propertyValue) {
+          if (!state.isString())
+            continue;
+
+          if (state.getString() == "selected")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)] = true;
+          else if (state.getString() == "disabled")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)] = true;
+          else if (state.getString() == "checked")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)] = true;
+          else if (state.getString() == "unchecked")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)] = true;
+          else if (state.getString() == "busy")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)] = true;
+          else if (state.getString() == "expanded")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)] = true;
+          else if (state.getString() == "collapsed")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)] = true;
+        }
+      }
+
+      DynamicAutomationProperties::SetAccessibilityStateSelected(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)]);
+      DynamicAutomationProperties::SetAccessibilityStateDisabled(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)]);
+      DynamicAutomationProperties::SetAccessibilityStateChecked(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)]);
+      DynamicAutomationProperties::SetAccessibilityStateUnchecked(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)]);
+      DynamicAutomationProperties::SetAccessibilityStateBusy(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)]);
+      DynamicAutomationProperties::SetAccessibilityStateExpanded(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)]);
+      DynamicAutomationProperties::SetAccessibilityStateCollapsed(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityState") {
       bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = {};
 
