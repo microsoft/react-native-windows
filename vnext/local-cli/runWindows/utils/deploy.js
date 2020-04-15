@@ -162,7 +162,11 @@ async function deployToDesktop(options, verbose) {
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
 
-  const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+  let args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+
+  if (options.directDebugging) {
+    args.push('directDebugging', options.directDebugging);
+  }
 
   const popd = pushd(options.root);
 

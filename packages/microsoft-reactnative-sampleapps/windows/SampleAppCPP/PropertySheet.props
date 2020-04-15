@@ -8,11 +8,7 @@
     <CppWinRTVerbosity>normal</CppWinRTVerbosity>
   </PropertyGroup>
   <PropertyGroup />
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <PreprocessorDefinitions Condition="'$(UseDirectDebugging)'=='true'">USE_DIRECT_DEBUGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <ItemDefinitionGroup />
   <ItemGroup>
     <BuildMacro Include="CppWinRTVerbosity">
       <Value>$(CppWinRTVerbosity)</Value>

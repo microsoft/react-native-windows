@@ -31,13 +31,6 @@ App::App() noexcept
     InstanceSettings().EnableDeveloperMenu(false);
 #endif
 
-#if USE_DIRECT_DEBUGGING
-    InstanceSettings().UseWebDebugger(false);
-    InstanceSettings().UseDirectDebugger(true);
-    InstanceSettings().DebuggerBreakOnNextLine(true);
-    InstanceSettings().DebuggerPort(9229);
-#endif
-
     PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
 
     REACT_REGISTER_NATIVE_MODULE_PACKAGES(); //code-gen macro from autolink

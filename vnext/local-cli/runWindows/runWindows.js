@@ -124,7 +124,7 @@ runWindows({
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
  *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
- *    direct-debugging: Boolean - Enables direct debugging by default
+ *    direct-debugging: Number - Enable direct debugging on specified port
  */
 module.exports = {
   name: 'run-windows',
@@ -208,9 +208,8 @@ module.exports = {
       default: false,
     },
     {
-      command: '--direct-debugging',
-      description: 'Turn on direct debugging by default',
-      default: false,
+      command: '--direct-debugging [number]',
+      description: 'Enable direct debugging on specified port',
     },
   ],
 };

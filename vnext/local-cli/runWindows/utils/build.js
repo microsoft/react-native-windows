@@ -104,9 +104,6 @@ function parseMsBuildProps(options) {
       result[prop[0]] = prop[1];
     }
   }
-  if (options.directDebugging) {
-    result.UseDirectDebugging = 'true';
-  }
   return result;
 }
 

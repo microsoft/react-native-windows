@@ -24,13 +24,6 @@ namespace <%=ns%>
         InstanceSettings.EnableDeveloperMenu = false;
 #endif
 
-#if USE_DIRECT_DEBUGGING
-        InstanceSettings.UseWebDebugger = false;
-        InstanceSettings.UseDirectDebugger = true;
-        InstanceSettings.DebuggerBreakOnNextLine = true;
-        InstanceSettings.DebuggerPort = 9229;
-#endif
-
         PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
 
         InitializeComponent();
