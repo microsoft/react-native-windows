@@ -35,6 +35,9 @@ module.exports = {
     ]),
   },
   transformer: {
+    // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
+    // Hopefully we can fix the default in the future
+    assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

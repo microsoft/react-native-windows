@@ -14,8 +14,4 @@ module.exports = {
         dependencyConfig: dependencyConfig.dependencyConfigWindows,
       },
     },
-
-    // *****
-    // This is only used when building bundles within react-native-windows.
-    reactNativePath: '.',
   };

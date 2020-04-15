@@ -95,7 +95,6 @@ function copyProjectTemplateAndReplace(
   };
 
   [
-    { from: path.join(srcRootPath, 'react-native.config.js'), to: 'react-native.config.js' },
     { from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js' },
     { from: path.join(srcRootPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, bundleDir, '.gitignore') },
