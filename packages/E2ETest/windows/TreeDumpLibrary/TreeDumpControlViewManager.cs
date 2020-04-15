@@ -5,9 +5,11 @@ using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Data.Json;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -32,7 +34,7 @@ namespace TreeDumpLibrary
                 if (bounds.Width != 800 || bounds.Height != 600)
                 {
                     // Dump disabled when window size is not 800x600!
-                    UpdateResult(false /*matchDump*/, "Window has been resized, dump comparison is only valid at default launch size: 800x600!, current size:" + bounds.ToString());
+                    UpdateResult(false /*matchDump*/ , "Window has been resized, dump comparison is only valid at default launch size: 800x600!, current size:" + bounds.ToString());
                 }
                 else
                 {
@@ -83,11 +85,10 @@ namespace TreeDumpLibrary
         }
 
         IReadOnlyDictionary<string, ViewManagerPropertyType> IViewManagerWithNativeProperties.NativeProps => new Dictionary<string, ViewManagerPropertyType>
-                {
-                    { "dumpID", ViewManagerPropertyType.String },
-                    { "uiaID", ViewManagerPropertyType.String },
-                    { "additionalProperties", ViewManagerPropertyType.Array }
-                };
+        { { "dumpID", ViewManagerPropertyType.String },
+            { "uiaID", ViewManagerPropertyType.String },
+            { "additionalProperties", ViewManagerPropertyType.Array }
+        };
 
         public void SetDumpID(TextBlock view, string value)
         {
@@ -170,7 +171,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */, m_additionalProperties, mode);
+            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */ , m_additionalProperties, mode);
             if (dumpText != m_dumpExpectedText)
             {
                 await MatchDump(dumpText);
@@ -195,11 +196,11 @@ namespace TreeDumpLibrary
                 }
                 catch (IOException)
                 {
-                    UpdateResult(false /*matchDump*/, "Tree dump master file not found in testapp package!");
+                    UpdateResult(false /*matchDump*/ , "Tree dump master file not found in testapp package!");
                 }
             }
 
-            if (m_dumpExpectedText != dumpText)
+            if (!DumpsAreEqual(m_dumpExpectedText, dumpText))
             {
                 StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
                 string fileName = GetOutputFile();
@@ -207,18 +208,85 @@ namespace TreeDumpLibrary
                 {
                     StorageFile outFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(outFile, dumpText);
-                    UpdateResult(false /*matchDump*/,
+                    UpdateResult(false /*matchDump*/ ,
                         $"Tree dump file does not match master at {masterFile.Path} - See output at {outFile.Path}",
                         GetInlines(masterFile, outFile, m_textBlock));
                 }
                 catch (IOException)
                 {
-                    UpdateResult(false /*matchDump*/, "Can't write dump output file:" + fileName);
+                    UpdateResult(false /*matchDump*/ , "Can't write dump output file:" + fileName);
                 }
             }
             else
             {
-                UpdateResult(true /*matchDump*/, "");
+                UpdateResult(true /*matchDump*/ , "");
+            }
+        }
+
+        private bool DumpsAreEqual(string dumpExpectedText, string dumpText)
+        {
+            if (mode == DumpTreeMode.Default)
+            {
+                return dumpExpectedText == dumpText;
+            }
+            else
+            {
+                JsonValue expected = JsonValue.Parse(dumpExpectedText);
+                JsonValue actual = JsonValue.Parse(dumpText);
+                return JsonComparesEqual(expected, actual);
+            }
+        }
+
+        private bool JsonComparesEqual(IJsonValue expected, IJsonValue actual)
+        {
+            if (expected.ValueType != actual.ValueType)
+            {
+                return false;
+            }
+            switch (expected.ValueType)
+            {
+                case JsonValueType.String:
+                    if (expected.GetString() == actual.GetString())
+                    {
+                        return true;
+                    }
+                    else { Debug.WriteLine($"Expected {expected.GetString()} got {actual.GetString()}"); return false; }
+                case JsonValueType.Number:
+                    return expected.GetNumber() == actual.GetNumber();
+                case JsonValueType.Boolean:
+                    return expected.GetBoolean() == actual.GetBoolean();
+                case JsonValueType.Null:
+                    return true;
+                case JsonValueType.Array:
+                    {
+                        var ea = expected.GetArray();
+                        var aa = actual.GetArray();
+                        if (ea.Count != aa.Count) { return false; }
+                        for (uint i = 0; i < ea.Count; i++)
+                        {
+                            if (!JsonComparesEqual(ea[(int)i], aa[(int)i]))
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                case JsonValueType.Object:
+                    {
+                        var eo = expected.GetObject();
+                        var ao = actual.GetObject();
+                        if (eo.Keys.Count != ao.Keys.Count) { return false; }
+                        foreach (var key in eo.Keys)
+                        {
+                            if (!JsonComparesEqual(eo.GetNamedValue(key), ao.GetNamedValue(key)))
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                default:
+                    throw new ArgumentException();
             }
         }
 
@@ -240,11 +308,13 @@ namespace TreeDumpLibrary
             Hyperlink outLink = new Hyperlink();
             outLink.Click += (_1, _2) => { Windows.System.Launcher.LaunchFileAsync(outFile); };
             outLink.Inlines.Add(new Run() { Text = "output" });
-            List<Inline> inlines = new List<Inline>() {
-                            new Run() { Text = "Tree dump " },
-                            outLink,
-                            new Run() { Text = " does not match " },
-                            masterLink};
+            List<Inline> inlines = new List<Inline>()
+            {
+                new Run () { Text = "Tree dump " },
+                outLink,
+                new Run () { Text = " does not match " },
+                masterLink
+            };
 
             #region Diff support - Replace with LaunchUriAsync when we find the VSCode protocol handler Uri for diffing
             string code_cmd = Environment.ExpandEnvironmentVariables(@"%UserProfile%\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd");

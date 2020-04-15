@@ -78,7 +78,7 @@ namespace TreeDumpLibrary
             public bool ShouldVisitPropertyValue(string propertyName, object value)
             {
                 string s = _translator.PropertyValueToString(propertyName, value);
-                if (propertyName == "Name" && s.StartsWith("<reacttag>:"))
+                if (propertyName == "Name" && (value as string).StartsWith("<reacttag>:"))
                 {
                     return false;
                 }
@@ -235,18 +235,26 @@ visitor.ShouldVisitPropertyValue(property.Name, GetObjectProperty(node, property
             {
                 return "null";
             }
-
-            if (propertyObject is SolidColorBrush)
+            else if (propertyObject is int || propertyObject is bool || propertyObject is double)
             {
-                return (propertyObject as SolidColorBrush).Color.ToString();
+                return propertyObject.ToString();
+            }
+            else if (propertyObject is SolidColorBrush)
+            {
+                return Quote((propertyObject as SolidColorBrush).Color.ToString());
             }
             else if (propertyObject is Size)
             {
                 // comparing doubles is numerically unstable so just compare their integer parts
                 Size size = (Size)propertyObject;
-                return $"{(int)size.Width},{(int)size.Height}";
+                return $"[{(int)size.Width}, {(int)size.Height}]";
             }
-            return propertyObject.ToString();
+            return Quote(propertyObject.ToString());
+        }
+
+        public static string Quote(string s)
+        {
+            return '"' + s.Replace("\"", "\\\"") + '"';
         }
     }
 }

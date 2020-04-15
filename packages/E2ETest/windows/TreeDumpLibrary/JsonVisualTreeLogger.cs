@@ -17,7 +17,7 @@ namespace TreeDumpLibrary
         public void BeginNode(int indent, string nodeName, DependencyObject obj)
         {
             AppendLogger(indent, "{");
-            LogProperty(indent + 2, "XamlType", nodeName, false); // we will probably have some properties
+            LogProperty(indent + 2, "XamlType", JsonPropertyValueTranslator.Quote(nodeName), false); // we will probably have some properties
         }
 
         public void EndArray(int indent, string propertyName)
@@ -37,7 +37,7 @@ namespace TreeDumpLibrary
 
         public void LogProperty(int indent, string propertyName, object propertyValue, bool isLast)
         {
-            AppendLogger(indent, $"\"{propertyName}\": \"{propertyValue}\"{GetDelimiter(isLast)}");
+            AppendLogger(indent, $"\"{propertyName}\": {propertyValue}{GetDelimiter(isLast)}");
         }
 
         public override string ToString()
