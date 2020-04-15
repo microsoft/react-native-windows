@@ -14,9 +14,9 @@ std::string StatusBarManagerModule::getName() {
 
 std::vector<Method> StatusBarManagerModule::getMethods() {
   return {
-    Method("setStyle", [](folly::dynamic /*args*/) noexcept {}),
-    Method("setHidden", [](folly::dynamic /*args*/) noexcept {}),
-    };
+      Method("setStyle", [](folly::dynamic /*args*/) noexcept {}),
+      Method("setHidden", [](folly::dynamic /*args*/) noexcept {}),
+  };
 }
 
 std::map<std::string, folly::dynamic> StatusBarManagerModule::getConstants() {
