@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Apr 2020 23:02:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.41",
+      "version": "0.0.0-master.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix PickerWindows (and DatePickerExample Page)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e0adf5e83e1afa6d0cd975432385c747a3dc360a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Apr 2020 22:26:36 GMT",
       "tag": "react-native-windows_v0.0.0-master.40",
       "version": "0.0.0-master.40",
