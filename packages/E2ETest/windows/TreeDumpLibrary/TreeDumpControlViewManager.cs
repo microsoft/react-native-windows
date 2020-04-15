@@ -288,6 +288,7 @@ namespace TreeDumpLibrary
             {
                 UpdateTextBlockText("TreeDump:Failed, click to see more!");
                 m_errString += "\r\n" + helpText;
+                errors.Inlines.Clear();
                 if (inlines != null)
                 {
                     errors.Inlines.AddRange(inlines);

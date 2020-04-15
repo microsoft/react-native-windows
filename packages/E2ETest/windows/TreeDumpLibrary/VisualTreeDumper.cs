@@ -240,6 +240,12 @@ visitor.ShouldVisitPropertyValue(property.Name, GetObjectProperty(node, property
             {
                 return (propertyObject as SolidColorBrush).Color.ToString();
             }
+            else if (propertyObject is Size)
+            {
+                // comparing doubles is numerically unstable so just compare their integer parts
+                Size size = (Size)propertyObject;
+                return $"{(int)size.Width},{(int)size.Height}";
+            }
             return propertyObject.ToString();
         }
     }

@@ -58,9 +58,13 @@ function parseLog(logfile) {
   const xmlString = fs.readFileSync(logfile);
   let name;
   parser.parseString(xmlString, (err, res) => {
-    const attr = res.testsuites.testsuite[0].ATTR;
-    if (attr.errors > 0 || attr.failures > 0) {
-      name = attr.name;
+    if (!res.testsuites) {
+      name = 'something went wrong';
+    } else {
+      const attr = res.testsuites.testsuite[0].ATTR;
+      if (attr.errors > 0 || attr.failures > 0) {
+        name = attr.name;
+      }
     }
   });
   return name;
