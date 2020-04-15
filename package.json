@@ -15,11 +15,6 @@
     "test": "lerna run test --stream -- --color",
     "validate-overrides": "lerna run validate-overrides --stream -- --color"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn format"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git"
