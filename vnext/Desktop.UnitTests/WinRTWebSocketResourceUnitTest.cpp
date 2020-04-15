@@ -10,12 +10,8 @@ using std::string;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(WinRTWebSocketResourceUnitTest) {
-
-  TEST_METHOD(Dummy)
-  {
-
-  }
+TEST_CLASS (WinRTWebSocketResourceUnitTest) {
+  TEST_METHOD(Dummy) {}
 };
 
-} // Microsoft::React::Test
+} // namespace Microsoft::React::Test
