@@ -58,7 +58,10 @@ function parseLog(logfile) {
   const xmlString = fs.readFileSync(logfile);
   let name;
   parser.parseString(xmlString, (err, res) => {
-    name = res.testsuites.testsuite[0].ATTR.name;
+    const attr = res.testsuites.testsuite[0].ATTR;
+    if (attr.errors > 0 || attr.failures > 0) {
+      name = attr.name;
+    }
   });
   return name;
 }
@@ -66,7 +69,9 @@ function parseLog(logfile) {
 function parseLogs() {
   const reportsDir = path.join(__dirname, 'reports');
   const logs = fs.readdirSync(reportsDir).filter(x => x.endsWith('.log'));
-  const names = logs.map(x => parseLog(path.join(reportsDir, x)));
+  const names = logs
+    .map(x => parseLog(path.join(reportsDir, x)))
+    .filter(x => x != null);
   return names;
 }
 
