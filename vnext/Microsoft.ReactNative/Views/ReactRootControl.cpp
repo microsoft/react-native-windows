@@ -185,6 +185,12 @@ void ReactRootControl::InitRootView(
 
   UpdateRootViewInternal();
 
+  winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
+      [uwpReactInstance](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
+        uwpReactInstance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+        args.Handled(true);
+      });
+
   m_isInitialized = true;
 }
 

@@ -81,8 +81,7 @@ void TouchEventHandler::OnPointerPressed(
   // If this was caused by the user pressing the "back" hardware button, fire that event instead
   if (args.GetCurrentPoint(sourceElement).Properties().PointerUpdateKind() ==
       winrt::Windows::UI::Input::PointerUpdateKind::XButton1Pressed) {
-    DispatchBackEvent();
-    args.Handled(true);
+    args.Handled(DispatchBackEvent());
     return;
   }
 
@@ -349,9 +348,14 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   instance->CallJsFunction("RCTEventEmitter", "receiveTouches", std::move(params));
 }
 
-void TouchEventHandler::DispatchBackEvent() {
+bool TouchEventHandler::DispatchBackEvent() {
   auto instance = m_wkReactInstance.lock();
-  instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+  if (instance != nullptr && !instance->IsInError()) {
+    instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+    return true;
+  }
+
+  return false;
 }
 
 const char *TouchEventHandler::GetPointerDeviceTypeName(
