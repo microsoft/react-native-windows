@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Apr 2020 22:26:36 GMT",
+      "tag": "react-native-windows_v0.0.0-master.40",
+      "version": "0.0.0-master.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use a custom resolver wrapper to allow metro to run for multiple platforms at once",
+            "author": "acoates@microsoft.com",
+            "commit": "d53d06aec7ddb8a17480a5e8dc9522e115792a64",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 19:18:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.39",
+      "version": "0.0.0-master.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename DeveloperSettings.SourceBundlePath -> SourceBundleName",
+            "author": "rezha@microsoft.com",
+            "commit": "63aeb0fc68cdb843c6d77fa7f44af88a6f2b9783",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 07:53:39 GMT",
+      "tag": "react-native-windows_v0.0.0-master.38",
+      "version": "0.0.0-master.38",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix bug where not specifying height on TextInput causes 0 height",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5ec607d93ba3daf586ed07cf9f18f65ba6262683",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 19:34:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.37",
+      "version": "0.0.0-master.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[generator] Use `npx` for consistency",
+            "author": "eloy.de.enige@gmail.com",
+            "commit": "7c66e60b03170a9639fb73314003a2f8f583de70",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 18:14:12 GMT",
+      "tag": "react-native-windows_v0.0.0-master.36",
+      "version": "0.0.0-master.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Elevate to install app certificate if necessary",
+            "author": "asklar@microsoft.com",
+            "commit": "e731d7699d106d023ccaa9ccf422da6d25407262",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Apr 2020 14:59:17 GMT",
       "tag": "react-native-windows_v0.0.0-master.35",
       "version": "0.0.0-master.35",

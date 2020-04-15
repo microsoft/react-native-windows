@@ -95,7 +95,6 @@ function copyProjectTemplateAndReplace(
   };
 
   [
-    { from: path.join(srcRootPath, 'react-native.config.js'), to: 'react-native.config.js' },
     { from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js' },
     { from: path.join(srcRootPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, bundleDir, '.gitignore') },
@@ -128,7 +127,7 @@ function copyProjectTemplateAndReplace(
   copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars, options.overwrite);
 
   console.log(chalk.white.bold('To run your app on UWP:'));
-  console.log(chalk.white('   react-native run-windows'));
+  console.log(chalk.white('   npx react-native run-windows'));
 }
 
 function installDependencies(options) {
