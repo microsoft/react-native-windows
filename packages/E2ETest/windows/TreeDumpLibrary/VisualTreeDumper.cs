@@ -78,9 +78,11 @@ namespace TreeDumpLibrary
             public bool ShouldVisitPropertyValue(string propertyName, object value)
             {
                 string s = _translator.PropertyValueToString(propertyName, value);
-                if (propertyName == "Name" && (value as string).StartsWith("<reacttag>:"))
+                if (propertyName == "Name")
                 {
-                    return false;
+                    string name = value as string;
+                    return !name.StartsWith("<reacttag>:") &&
+                        name != "";
                 }
                 return _filter.ShouldVisitPropertyValue(s);
             }
@@ -110,7 +112,8 @@ namespace TreeDumpLibrary
             {
                 var properties = (from property in node.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                   where visitor.ShouldVisitProperty(property) &&
-visitor.ShouldVisitPropertyValue(property.Name, GetObjectProperty(node, property))
+                                        visitor.ShouldVisitPropertyValue(property.Name,
+                                            GetObjectProperty(node, property))
                                   orderby property.Name
                                   select property).ToArray();
 

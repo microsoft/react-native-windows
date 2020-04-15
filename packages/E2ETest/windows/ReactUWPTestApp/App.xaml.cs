@@ -54,6 +54,13 @@ namespace ReactUWPTestApp
             base.OnLaunched(e);
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
+#if !E2ETEST_OVERRIDE_4122
+#error [E2ETest] - There is a bug in Yoga with v142/VS2019 that makes the masters for this app different in Release|x64 than in other platforms.
+#error However we want to test what people will be shipping. As a result, the tree dump output won't match the masters (which have the bug).
+#error You can disable this warning by defining the constant E2ETEST_OVERRIDE_4122 in the project properties page under "Define Constants"
+#error For more information see https://github.com/microsoft/react-native-windows/issues/4122
+#endif
+
         }
     }
 }
