@@ -50,8 +50,8 @@ function SelectSpecs(folder) {
 }
 
 let opts = SelectSpecs(specFolder);
-console.log(opts);
-process.exit(0);
+console.log(`Selected tests: ${opts}`);
+
 const wdio = new Launcher('wdio.conf.js', { specs: opts });
 
 function parseLog(logfile) {
