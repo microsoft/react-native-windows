@@ -1,55 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="WebSocketTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocketModuleTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocketJSExecutorTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UtilsTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManagerModuleTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EmptyUIManagerModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AsyncStorageTest.cpp">
+    <ClCompile Include="InstanceMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AsyncStorageManagerTest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Unit Tests</Filter>
     </ClCompile>
-    <ClCompile Include="StringConversionTest_Desktop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnicodeTestStrings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnicodeConversionTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BytecodeUnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LayoutAnimationTests.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AsyncStorageTest.cpp">
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="BaseWebSocketTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="BytecodeUnitTests.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="LayoutAnimationTests.cpp">
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="MemoryMappedBufferTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="StringConversionTest_Desktop.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManagerModuleTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UnicodeConversionTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UnicodeTestStrings.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilsTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketJSExecutorTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketModuleTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp">
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="WebSocketMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InstanceMocks.cpp">
+    <ClCompile Include="WinRTNetworkingMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,6 +68,9 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{047f5ee2-0f34-4c7c-aee6-cef679234701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Tests">
+      <UniqueIdentifier>{73161bf3-3cf2-47a9-b674-c436649b71a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InstanceMocks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WinRTNetworkingMocks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
