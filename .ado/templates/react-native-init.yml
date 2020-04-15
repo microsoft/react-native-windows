@@ -84,7 +84,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }} -Destination $(Agent.BuildDirectory)\testcli\windows\packages
+        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }} -Destination (nuget locals global-packages -list).Split()[1]
     condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
   - template: install-SDK.yml
