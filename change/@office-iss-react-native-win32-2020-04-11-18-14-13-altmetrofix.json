@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Use a custom resolver wrapper to allow metro to run for multiple platforms at once",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-12T01:14:10.605Z"
+}
