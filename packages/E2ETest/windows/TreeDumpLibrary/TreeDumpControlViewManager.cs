@@ -177,10 +177,11 @@ namespace TreeDumpLibrary
             }
         }
 
-        private readonly DumpTreeMode mode = DumpTreeMode.Default;
+        private readonly DumpTreeMode mode = DumpTreeMode.Json;
+
         private async Task MatchDump(string dumpText)
         {
-            StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(@"Assets\TreeDump\" + m_dumpID + ".txt");
+            StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{GetMasterFile()}");
             if (m_dumpExpectedText == null)
             {
                 try
@@ -188,7 +189,7 @@ namespace TreeDumpLibrary
                     m_dumpExpectedText = await FileIO.ReadTextAsync(masterFile);
 
                     StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                    string copyFileName = "TreeDump\\" + m_dumpID + ".txt";
+                    string copyFileName = GetMasterFile();
                     var copyDumpFile = await storageFolder.CreateFileAsync(copyFileName, CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(copyDumpFile, m_dumpExpectedText);
                 }
@@ -201,7 +202,7 @@ namespace TreeDumpLibrary
             if (m_dumpExpectedText != dumpText)
             {
                 StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                string fileName = "TreeDump\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".json" : ".out");
+                string fileName = GetOutputFile();
                 try
                 {
                     StorageFile outFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
@@ -219,6 +220,16 @@ namespace TreeDumpLibrary
             {
                 UpdateResult(true /*matchDump*/, "");
             }
+        }
+
+        private string GetOutputFile()
+        {
+            return "TreeDump\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".json" : ".out");
+        }
+
+        private string GetMasterFile()
+        {
+            return "TreeDump\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".json" : ".txt");
         }
 
         private static IList<Inline> GetInlines(StorageFile masterFile, StorageFile outFile, UIElement anchor)

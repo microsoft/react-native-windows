@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -91,11 +92,11 @@ namespace TreeDumpLibrary
             ((List<string>)propertyFilter.PropertyNameAllowList).AddRange(additionalProperties);
 
             IPropertyValueTranslator translator = (mode == DumpTreeMode.Json ?
-                                                    new JsonPropertyValueTranslator() as IPropertyValueTranslator :
-                                                    new DefaultPropertyValueTranslator());
+                new JsonPropertyValueTranslator() as IPropertyValueTranslator :
+                new DefaultPropertyValueTranslator());
             IVisualTreeLogger logger = (mode == DumpTreeMode.Json ?
-                                        new JsonVisualTreeLogger() as IVisualTreeLogger :
-                                        new DefaultVisualTreeLogger());
+                new JsonVisualTreeLogger() as IVisualTreeLogger :
+                new DefaultVisualTreeLogger());
             Visitor visitor = new Visitor(propertyFilter, translator, logger);
 
             WalkThroughTree(root, excludedNode, visitor);
@@ -109,7 +110,7 @@ namespace TreeDumpLibrary
             {
                 var properties = (from property in node.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                   where visitor.ShouldVisitProperty(property) &&
-                                        visitor.ShouldVisitPropertyValue(property.Name, GetObjectProperty(node, property))
+visitor.ShouldVisitPropertyValue(property.Name, GetObjectProperty(node, property))
                                   orderby property.Name
                                   select property).ToArray();
 
@@ -171,13 +172,25 @@ namespace TreeDumpLibrary
 
         public DefaultFilter()
         {
-            PropertyNameAllowList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
-            "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip",
+            PropertyNameAllowList = new List<string>
+            {
+                "Foreground",
+                "Background",
+                "Padding",
+                "Margin",
+                "RenderSize",
+                "Visibility",
+                "CornerRadius",
+                "BorderThickness",
+                "Width",
+                "Height",
+                "BorderBrush",
+                "VerticalAlignment",
+                "HorizontalAlignment",
+                "Clip",
                 "FlowDirection",
-#if TREEDUMP_NAMES
-            "Name",
-#endif
-            /*"ActualOffset" 19h1*/
+                "Name",
+                /*"ActualOffset" 19h1*/
             };
         }
 
@@ -203,6 +216,12 @@ namespace TreeDumpLibrary
             if (propertyObject is SolidColorBrush)
             {
                 return (propertyObject as SolidColorBrush).Color.ToString();
+            }
+            else if (propertyObject is Size)
+            {
+                // comparing doubles is numerically unstable so just compare their integer parts
+                Size size = (Size)propertyObject;
+                return $"{(int)size.Width},{(int)size.Height}";
             }
             return propertyObject.ToString();
         }

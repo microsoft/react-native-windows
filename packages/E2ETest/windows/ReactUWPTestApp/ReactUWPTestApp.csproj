@@ -132,12 +132,7 @@
     <None Include="ReactUWPTestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\TreeDump\ControlStyleRegularBorder.txt" />
-    <Content Include="Assets\TreeDump\ControlStyleRoundBorder.txt" />
-    <Content Include="Assets\TreeDump\ImageRTL.txt" />
-    <Content Include="Assets\TreeDump\ImageWithBorder.txt" />
-    <Content Include="Assets\TreeDump\ImageWithoutBorder-Subsequent.txt" />
-    <Content Include="Assets\TreeDump\ImageWithoutBorder.txt" />
+    <Content Include="Assets\TreeDump\*" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -181,8 +176,8 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
     <BundleCommand>
-    echo WorkingDir %CD%
-    npx --no-install yarn run bundle
+      echo WorkingDir %CD%
+      npx --no-install yarn run bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
