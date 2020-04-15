@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Apr 2020 20:53:18 GMT",
+      "tag": "react-native-windows_v0.61.4",
+      "version": "0.61.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix bug where not specifying height on TextInput causes 0 height",
+            "author": "kmelmon@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Apr 2020 10:24:51 GMT",
       "tag": "react-native-windows_v0.61.4",
       "version": "0.61.4",

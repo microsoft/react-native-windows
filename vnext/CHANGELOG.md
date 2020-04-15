@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 Apr 2020 10:24:51 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Apr 2020 20:53:18 GMT and should not be manually modified.
 
+## 0.61.4
+Wed, 15 Apr 2020 20:53:18 GMT
+
+### Changes
+
+- fix bug where not specifying height on TextInput causes 0 height (kmelmon@microsoft.com)
 ## 0.61.4
 Sat, 11 Apr 2020 10:24:51 GMT
 
