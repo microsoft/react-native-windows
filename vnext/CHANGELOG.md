@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Apr 2020 19:18:34 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Apr 2020 22:26:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.40
+
+Wed, 15 Apr 2020 22:26:36 GMT
+
+### Changes
+
+- Use a custom resolver wrapper to allow metro to run for multiple platforms at once (acoates@microsoft.com)
 
 ## 0.0.0-master.39
 
