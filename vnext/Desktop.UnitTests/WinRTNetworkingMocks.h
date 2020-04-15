@@ -4,11 +4,42 @@
 #pragma once
 
 #include <winrt/Windows.Networking.Sockets.h>
+#include <functional>
 
 namespace Microsoft::React::Test {
 
 struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessageWebSocket
 {
+
+#pragma region Mocks
+
+  // IWebSocket
+  std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const&) /*const*/> ConnectAsyncMock;
+
+  std::function<void(winrt::param::hstring const&, winrt::param::hstring const&) /*const*/> SetRequestHeaderMock;
+
+  std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> OutputStreamMock;
+
+  std::function<void(std::uint16_t, winrt::param::hstring const&) /*const*/> CloseMock;
+
+  std::function<winrt::event_token(winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Networking::Sockets::IWebSocket, winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const&) /*const*/> ClosedTokenMock;
+
+  std::function<Closed_revoker(winrt::auto_revoke_t, winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Networking::Sockets::IWebSocket, winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const&) /*const*/> ClosedRevokerMock;
+
+  std::function<void(std::uint16_t, winrt::param::hstring const&) /*const*/> MockCloseVoid;
+
+  // IMessageWebSocket
+  std::function<winrt::Windows::Networking::Sockets::MessageWebSocketControl() /*const*/> ControlMock;
+
+  std::function<winrt::Windows::Networking::Sockets::MessageWebSocketInformation() /*const*/> InformationMock;
+
+  std::function<winrt::event_token(winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Networking::Sockets::IMessageWebSocket, winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const&) /*const*/> MessageReceivedTokenMock;
+
+  std::function<MessageReceived_revoker(winrt::auto_revoke_t, winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Networking::Sockets::IMessageWebSocket, winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const&) /*const*/> MessageReceivedRevokerMock;
+
+  std::function<void(winrt::event_token const&)> MessageReceivedVoidMock;
+
+#pragma endregion
 
 #pragma region IWebSocket overrides
 
