@@ -152,9 +152,9 @@ static folly::dynamic GetAccessibilityStateProps() {
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
   props.update(folly::dynamic::object("accessible", "boolean")("accessibilityRole", "string")(
-      "accessibilityState", GetAccessibilityStateProps())("accessibilityHint", "string")("accessibilityLabel", "string")(
-      "accessibilityPosInSet", "number")("accessibilitySetSize", "number")("testID", "string")("tooltip", "string")(
-      "accessibilityActions", "array")("accessibilityLiveRegion", "string"));
+      "accessibilityState", GetAccessibilityStateProps())("accessibilityHint", "string")(
+      "accessibilityLabel", "string")("accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
+      "testID", "string")("tooltip", "string")("accessibilityActions", "array")("accessibilityLiveRegion", "string"));
   return props;
 }
 

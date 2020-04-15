@@ -294,7 +294,7 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue',
           }}
           accessibilityRole="none"
-          accessibilityState={{disabled:this.state.viewDisabled}}>
+          accessibilityState={{disabled: this.state.viewDisabled}}>
           <Text>
             This View should be{' '}
             {this.state.viewDisabled ? 'disabled' : 'enabled'} according to UIA
@@ -319,7 +319,7 @@ class AccessibilityStateExamples extends React.Component {
               accessibilityRole="button"
               accessibilityLabel={'Selectable item ' + (item.index + 1)}
               accessibilityState={{
-                selected: this.state.itemsSelected[item.index] 
+                selected: this.state.itemsSelected[item.index],
               }}
               onPress={() => this.selectPress(item.index)}>
               <Text>
@@ -349,7 +349,7 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityRole="checkbox"
           //@ts-ignore
           accessibilityState={{
-            checked: this.state.viewChecked
+            checked: this.state.viewChecked,
           }}>
           <Text>
             This View should be{' '}
@@ -396,7 +396,7 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityRole="none"
           //@ts-ignore
           accessibilityState={{
-            expanded: !this.state.viewCollapsed
+            expanded: !this.state.viewCollapsed,
           }}>
           <Text>
             This View should be{' '}
