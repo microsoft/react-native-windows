@@ -95,7 +95,7 @@ steps:
         $newSource.Attributes.Append($valueAttr);
         $packageSources = $xml.ChildNodes.Item(1).packageSources;
         $packageSources.InsertBefore($newSource, $packageSources.FirstChild);
-        $xml.save($(Agent.BuildDirectory)\testcli\windows\Nuget.Config);
+        $xml.save("$(Agent.BuildDirectory)\testcli\windows\Nuget.Config");
 
     condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
