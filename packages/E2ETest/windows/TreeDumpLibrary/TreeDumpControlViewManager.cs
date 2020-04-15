@@ -229,7 +229,7 @@ namespace TreeDumpLibrary
 
         private string GetMasterFile()
         {
-            return "TreeDump\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".json" : ".txt");
+            return "TreeDump\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".master.json" : ".txt");
         }
 
         private static IList<Inline> GetInlines(StorageFile masterFile, StorageFile outFile, UIElement anchor)
