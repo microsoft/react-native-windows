@@ -36,7 +36,8 @@ export interface Spec extends TurboModule {
   +setHidden: (hidden: boolean) => void;
 }
 
-// [Win32 Change from getEnforcing to get and provide a stub (See #4363)
+// [Win32 Change from getEnforcing to get and provide a stub (See #4363). This
+// can be removed once devmain integrates with 0.62 native bits.
 let NativeStausBarManager = TurboModuleRegistry.get<Spec>('StatusBarManager');
 if (!NativeStausBarManager) {
   NativeStausBarManager = {

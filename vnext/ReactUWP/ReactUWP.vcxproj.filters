@@ -142,9 +142,6 @@
     <ClCompile Include="Modules\NetworkingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\StatusBarModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -517,9 +514,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\NetworkingModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
