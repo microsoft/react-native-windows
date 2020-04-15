@@ -33,7 +33,7 @@ struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessa
           winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
       ClosedRevokerMock;
 
-  std::function<void(std::uint16_t, winrt::param::hstring const &) /*const*/> MockCloseVoid;
+  std::function<void(winrt::event_token const &) /*const*/ /*noexcept*/> ClosedVoidMock;
 
   // IMessageWebSocket
   std::function<winrt::Windows::Networking::Sockets::MessageWebSocketControl() /*const*/> ControlMock;

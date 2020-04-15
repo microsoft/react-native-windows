@@ -17,51 +17,91 @@ namespace Microsoft::React::Test {
 
 // IWebSocket
 IOutputStream MockMessageWebSocket::OutputStream() const {
-  return {};
+  if (OutputStreamMock)
+    return OutputStreamMock();
+
+  throw std::exception("Not implemented");
 }
 
 IAsyncAction MockMessageWebSocket::ConnectAsync(Uri const &uri) const {
-  return {};
+  if (ConnectAsyncMock)
+    return ConnectAsyncMock(uri);
+
+  throw std::exception("Not implemented");
 }
 
-void MockMessageWebSocket::SetRequestHeader(hstring const &headerName, hstring const &headerValue) const {}
+void MockMessageWebSocket::SetRequestHeader(hstring const &headerName, hstring const &headerValue) const {
+  if (SetRequestHeaderMock)
+    SetRequestHeaderMock(headerName, headerValue);
+
+  throw std::exception("Not implemented");
+}
 
 event_token MockMessageWebSocket::Closed(
     TypedEventHandler<IWebSocket, IWebSocketClosedEventArgs> const &eventHandler) const {
-  return {};
+  if (ClosedTokenMock)
+    return ClosedTokenMock(eventHandler);
+
+  throw std::exception("Not implemented");
 }
 
 IWebSocket::Closed_revoker MockMessageWebSocket::Closed(
-    auto_revoke_t,
+    auto_revoke_t autoRevoke,
     TypedEventHandler<IWebSocket, IWebSocketClosedEventArgs> const &eventHandler) const {
-  return {};
+  if (ClosedRevokerMock)
+    return ClosedRevokerMock(autoRevoke, eventHandler);
+
+  throw std::exception("Not implemented");
 }
 
-void MockMessageWebSocket::Closed(event_token const &eventCookie) const noexcept {}
+void MockMessageWebSocket::Closed(event_token const &eventCookie) const noexcept {
+  if (ClosedVoidMock)
+    ClosedVoidMock(eventCookie);
+}
 
-void MockMessageWebSocket::Close(uint16_t code, hstring const &reason) const {}
+void MockMessageWebSocket::Close(uint16_t code, hstring const &reason) const {
+  if (CloseMock)
+    CloseMock(code, reason);
+
+  throw std::exception("Not implemented");
+}
 
 // IMessageWebSocket
 MessageWebSocketControl MockMessageWebSocket::Control() const {
-  return nullptr;
+  if (ControlMock)
+    return ControlMock();
+
+  throw std::exception("Not implemented");
 }
 
 MessageWebSocketInformation MockMessageWebSocket::Information() const {
-  return nullptr;
+  if (InformationMock)
+    InformationMock();
+
+  throw std::exception("Not implemented");
 }
 
 event_token MockMessageWebSocket::MessageReceived(
     TypedEventHandler<IMessageWebSocket, IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const {
-  return {};
+  if (MessageReceivedTokenMock)
+    return MessageReceivedTokenMock(eventHandler);
+
+  throw std::exception("Not implemented");
 }
 
 IMessageWebSocket::MessageReceived_revoker MockMessageWebSocket::MessageReceived(
-    auto_revoke_t,
+    auto_revoke_t autoRevoke,
     TypedEventHandler<IMessageWebSocket, IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const {
-  return {};
+  if (MessageReceivedRevokerMock)
+    return MessageReceivedRevokerMock(autoRevoke, eventHandler);
+
+  throw std::exception("Not implemented");
 }
 
-void MockMessageWebSocket::MessageReceived(event_token const &eventCookie) const noexcept {}
+void MockMessageWebSocket::MessageReceived(event_token const &eventCookie) const noexcept {
+  if (MessageReceivedVoidMock)
+    MessageReceivedVoidMock(eventCookie);
+}
 
 #pragma endregion MockMessageWebSocket
 
