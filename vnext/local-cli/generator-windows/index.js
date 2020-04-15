@@ -119,7 +119,7 @@ function copyProjectTemplateAndReplace(
   // Once we are publishing to nuget.org, this shouldn't be needed anymore
   if (options.experimentalNugetDependency) {
     [
-      { from: path.join(srcPath, projDir, 'NuGet.Config'), to: path.join(windowsDir, 'NuGet.Config.sln') },
+      { from: path.join(srcPath, projDir, 'NuGet.Config'), to: path.join(windowsDir, 'NuGet.Config') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
   }
   }
