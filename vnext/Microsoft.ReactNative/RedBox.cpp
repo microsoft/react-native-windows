@@ -277,7 +277,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           std::string stackFrameUri = "http://";
           stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
           stackFrameUri.append(":");
-          stackFrameUri.append(devSettings.SourceBundlePath.empty() ? "8081" : devSettings.SourceBundlePort);
+          stackFrameUri.append(devSettings.SourceBundlePort.empty() ? "8081" : devSettings.SourceBundlePort);
           stackFrameUri.append("/open-stack-frame");
 
           Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};

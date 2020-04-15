@@ -118,17 +118,17 @@ struct ReactDevOptions {
   std::string DebugHost;
 
   //! When using web debugging and/or live reload, the source is obtained from the packager.
-  //! The source url for the bundle is "http://{HOST}:{PORT}/{PATH}{EXTENSION}?platform=..."
+  //! The source url for the bundle is "http://{HOST}:{PORT}/{NAME}{EXTENSION}?platform=..."
   //! which defaults to:
   //! {HOST} = "localhost",
   //! {PORT} = "8081",
-  //! {PATH} = "index.{PLATFORM}" where {PLATFORM} = "ios", "android", "win32", etc.
+  //! {NAME} = "index.{PLATFORM}" where {PLATFORM} = "ios", "android", "win32", etc.
   //! {EXTENSION} = ".bundle"
   //! Specify a value for a component, or leave empty to use the default.
-  std::string SourceBundleHost; // {HOST}
-  std::string SourceBundlePort; // {PORT}
-  std::string SourceBundlePath; // {PATH}
-  std::string SourceBundleExtension; // {EXTENSION}
+  std::string SourceBundleHost; // Host domain (without port) for the bundler server. Default: "localhost".
+  std::string SourceBundlePort; // Host port for the bundler server. Default: "8081".
+  std::string SourceBundleName; // Bundle name without any extension (e.g. "index.win32"). Default: "index.{PLATFORM}"
+  std::string SourceBundleExtension; // Bundle name extension. Default: ".bundle".
 
   //! Module name used for loading the debug bundle.
   //! e.g. The modules name registered in the jsbundle via AppRegistry.registerComponent('ModuleName', () =>
