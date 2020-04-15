@@ -9,6 +9,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const {execSync} = require('child_process');
 const glob = require('glob');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
@@ -63,16 +64,34 @@ async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
 }
 
 async function restoreNuGetPackages(options, slnFile, verbose) {
-  const nugetPath =
+  let nugetPath =
     options.nugetPath || path.join(os.tmpdir(), 'nuget.4.9.2.exe');
 
-  const dlNugetText = 'Downloading NuGet Binary';
-  const ensureNugetSpinner = newSpinner(dlNugetText);
-  const exists = await existsAsync(nugetPath);
-  if (!exists) {
+  const ensureNugetSpinner = newSpinner('Locating NuGet executable');
+  if (!(await existsAsync(nugetPath))) {
+    try {
+      let localNuget = execSync('where nuget')
+        .toString()
+        .trim();
+      // Ensure the local nuget exe is at least version 4.6
+      let localNugetVersion = execSync(
+        `powershell -Command (Get-Item ${localNuget}).VersionInfo.FileVersion`,
+      ).toString();
+      const localNugetVersionBits = localNugetVersion.split('.');
+      if (
+        parseInt(localNugetVersionBits[0], 10) > 4 ||
+        (parseInt(localNugetVersionBits[0], 10) === 4 &&
+          parseInt(localNugetVersionBits[1], 10) > 6)
+      ) {
+        nugetPath = localNuget;
+      }
+    } catch {}
+  }
+
+  if (!(await existsAsync(nugetPath))) {
     await commandWithProgress(
       ensureNugetSpinner,
-      dlNugetText,
+      'Downloading NuGet Binary',
       'powershell',
       `$progressPreference = [System.Management.Automation.ActionPreference]::SilentlyContinue; Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
         ' ',
@@ -81,6 +100,10 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
     );
   }
   ensureNugetSpinner.succeed('Found NuGet Binary');
+
+  if (verbose) {
+    console.log(`Using Nuget: ${nugetPath}`);
+  }
 
   const msbuildTools = MSBuildTools.findAvailableVersion('x86', verbose);
   try {
