@@ -80,7 +80,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
-  reactOptions.DeveloperSettings.SourceBundlePath = legacySettings.DebugBundlePath;
+  reactOptions.DeveloperSettings.SourceBundleName = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
   reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
   reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;

@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Rename DeveloperSettings.SourceBundlePath -> SourceBundleName",
+  "packageName": "react-native-windows",
+  "email": "rezha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-15T07:20:55.380Z"
+}
