@@ -13,6 +13,8 @@
 
 'use strict';
 
+const RCTDeviceEventEmitter = require('../EventEmitter/RCTDeviceEventEmitter');
+
 // TODO Hx: Implement.
 
 /**
@@ -48,6 +50,20 @@
 
 type BackPressEventName = 'backPress' | 'hardwareBackPress';
 
+const DEVICE_BACK_EVENT = 'hardwareBackPress';
+
+const _backListeners = [];
+
+RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, () => {
+  for (let i = _backListeners.length - 1; i >= 0; i--) {
+    if (_backListeners[i]()) {
+      return;
+    }
+  }
+
+  BackHandler.exitApp();
+});
+
 type TBackHandler = {|
   +exitApp: () => void,
   +addEventListener: (
@@ -63,9 +79,24 @@ type TBackHandler = {|
 const BackHandler: TBackHandler = {
   exitApp: () => {},
   addEventListener: (eventName: BackPressEventName, handler: Function) => {
-    return {remove: () => {}};
+    debugger;
+    if (_backListeners.indexOf(handler) === -1) {
+      _backListeners.push(handler);
+    }
+
+    return {
+      remove: () => {
+        BackHandler.removeEventListener(eventName, handler);
+      },
+    };
   },
-  removeEventListener: (eventName: BackPressEventName, handler: Function) => {},
+  removeEventListener: (eventName: BackPressEventName, handler: Function) => {
+    const handlerIndex = _backListeners.indexOf(handler);
+
+    if (handlerIndex !== -1) {
+      _backListeners.splice(handlerIndex, 1);
+    }
+  },
 };
 
 module.exports = BackHandler;

@@ -78,6 +78,7 @@ class TouchEventHandler {
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
+  void DispatchBackEvent();
   const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
   const char *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
