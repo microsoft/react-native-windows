@@ -1,36 +1,37 @@
 {
     "XamlType": "Windows.UI.Xaml.Controls.Border",
     "Background": "#FFFFFF00",
-    "BorderBrush": "null",
+    "BorderBrush": null,
     "BorderThickness": "0,0,0,0",
-    "Clip": "null",
+    "Clip": null,
     "CornerRadius": "0,0,0,0",
     "FlowDirection": "LeftToRight",
-    "Height": "300",
+    "Height": 300,
     "HorizontalAlignment": "Stretch",
     "Margin": "0,0,0,0",
+    "Name": "",
     "Padding": "0,0,0,0",
-    "RenderSize": "500,300",
+    "RenderSize": [500, 300],
     "VerticalAlignment": "Stretch",
     "Visibility": "Visible",
-    "Width": "500",
+    "Width": 500,
     "children": [
     {
         "XamlType": "Microsoft.ReactNative.ViewPanel",
-        "Background": "null",
+        "Background": null,
         "BorderBrush": "#00000000",
         "BorderThickness": "0,0,0,0",
-        "Clip": "null",
+        "Clip": null,
         "CornerRadius": "0,0,0,0",
         "FlowDirection": "LeftToRight",
         "HorizontalAlignment": "Stretch",
         "Margin": "0,0,0,0",
-        "RenderSize": "500,300",
+        "RenderSize": [500, 300],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible",
         "children": [
         {
-            "XamlType": "Windows.UI.Xaml.DependencyObject",
+            "XamlType": "Windows.UI.Xaml.DependencyObject"
         }
         ]
     }

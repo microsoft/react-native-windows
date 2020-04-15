@@ -14,10 +14,10 @@ namespace TreeDumpLibrary
             AppendLogger(indent, $"\"{propertyName}\": [");
         }
 
-        public void BeginNode(int indent, string nodeName, DependencyObject obj)
+        public void BeginNode(int indent, string nodeName, DependencyObject obj, bool hasProperties)
         {
             AppendLogger(indent, "{");
-            LogProperty(indent + 2, "XamlType", JsonPropertyValueTranslator.Quote(nodeName), false); // we will probably have some properties
+            LogProperty(indent + 2, "XamlType", JsonPropertyValueTranslator.Quote(nodeName), !hasProperties);
         }
 
         public void EndArray(int indent, string propertyName)

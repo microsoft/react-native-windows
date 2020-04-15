@@ -38,9 +38,9 @@ namespace TreeDumpLibrary
                 _logger.EndNode(_indent, obj.GetType().FullName, obj, isLast);
             }
 
-            public void BeginVisitNode(DependencyObject obj)
+            public void BeginVisitNode(DependencyObject obj, bool hasProperties)
             {
-                _logger.BeginNode(_indent, obj.GetType().FullName, obj);
+                _logger.BeginNode(_indent, obj.GetType().FullName, obj, hasProperties);
                 _indent++;
             }
 
@@ -144,7 +144,8 @@ visitor.ShouldVisitPropertyValue(property.Name, GetObjectProperty(node, property
         {
             if (node != null)
             {
-                visitor.BeginVisitNode(node);
+                // Assume that if we have a UIElement, we'll have some properties
+                visitor.BeginVisitNode(node, node is UIElement);
 
                 var childrenCount = VisualTreeHelper.GetChildrenCount(node);
                 WalkThroughProperties(node, visitor, childrenCount != 0);

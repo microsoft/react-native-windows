@@ -7,7 +7,7 @@ namespace TreeDumpLibrary
 {
     public interface IVisualTreeLogger
     {
-        void BeginNode(int indent, string nodeName, DependencyObject obj);
+        void BeginNode(int indent, string nodeName, DependencyObject obj, bool hasProperties);
         void EndNode(int indent, string nodeName, DependencyObject obj, bool isLast);
         void LogProperty(int indent, string propertyName, object propertyValue, bool isLast);
         string ToString();

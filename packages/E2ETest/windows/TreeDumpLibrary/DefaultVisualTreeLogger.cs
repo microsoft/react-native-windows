@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Text;
@@ -8,7 +8,7 @@ namespace TreeDumpLibrary
 {
     public sealed class DefaultVisualTreeLogger : IVisualTreeLogger
     {
-        public void BeginNode(int indent, string nodeName, DependencyObject obj)
+        public void BeginNode(int indent, string nodeName, DependencyObject obj, bool hasProperties)
         {
             AppendLogger(indent, $"[{nodeName}]");
         }
