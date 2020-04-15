@@ -294,7 +294,7 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue',
           }}
           accessibilityRole="none"
-          accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
+          accessibilityState={{disabled:this.state.viewDisabled}}>
           <Text>
             This View should be{' '}
             {this.state.viewDisabled ? 'disabled' : 'enabled'} according to UIA
@@ -318,9 +318,9 @@ class AccessibilityStateExamples extends React.Component {
               }}
               accessibilityRole="button"
               accessibilityLabel={'Selectable item ' + (item.index + 1)}
-              accessibilityStates={
-                this.state.itemsSelected[item.index] ? ['selected'] : []
-              }
+              accessibilityState={{
+                selected: this.state.itemsSelected[item.index] 
+              }}
               onPress={() => this.selectPress(item.index)}>
               <Text>
                 {this.state.itemsSelected[item.index]
@@ -348,9 +348,9 @@ class AccessibilityStateExamples extends React.Component {
           //@ts-ignore
           accessibilityRole="checkbox"
           //@ts-ignore
-          accessibilityStates={
-            this.state.viewChecked ? ['checked'] : ['unchecked']
-          }>
+          accessibilityState={{
+            checked: this.state.viewChecked
+          }}>
           <Text>
             This View should be{' '}
             {this.state.viewChecked ? 'Checked' : 'Unchecked'} according to UIA
@@ -372,7 +372,7 @@ class AccessibilityStateExamples extends React.Component {
           }}
           accessibilityRole="none"
           //@ts-ignore
-          accessibilityStates={this.state.viewBusy ? ['busy'] : []}>
+          accessibilityState={{busy: this.state.viewBusy}}>
           <Text>
             This View should be {this.state.viewBusy ? 'Busy' : 'Not Busy'}{' '}
             according to UIA
@@ -395,9 +395,9 @@ class AccessibilityStateExamples extends React.Component {
           }}
           accessibilityRole="none"
           //@ts-ignore
-          accessibilityStates={
-            this.state.viewCollapsed ? ['collapsed'] : ['expanded']
-          }>
+          accessibilityState={{
+            expanded: !this.state.viewCollapsed
+          }}>
           <Text>
             This View should be{' '}
             {this.state.viewCollapsed ? 'Collapsed' : 'Expanded'} according to
