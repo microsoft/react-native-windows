@@ -115,14 +115,14 @@ steps:
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --release
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --release
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
 

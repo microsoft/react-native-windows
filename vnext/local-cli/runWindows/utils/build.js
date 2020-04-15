@@ -70,21 +70,9 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   const ensureNugetSpinner = newSpinner('Locating NuGet executable');
   if (!(await existsAsync(nugetPath))) {
     try {
-      let localNuget = execSync('where nuget')
+      nugetPath = execSync('where nuget')
         .toString()
         .trim();
-      // Ensure the local nuget exe is at least version 4.6
-      let localNugetVersion = execSync(
-        `powershell -Command (Get-Item ${localNuget}).VersionInfo.FileVersion`,
-      ).toString();
-      const localNugetVersionBits = localNugetVersion.split('.');
-      if (
-        parseInt(localNugetVersionBits[0], 10) > 4 ||
-        (parseInt(localNugetVersionBits[0], 10) === 4 &&
-          parseInt(localNugetVersionBits[1], 10) > 6)
-      ) {
-        nugetPath = localNuget;
-      }
     } catch {}
   }
 
