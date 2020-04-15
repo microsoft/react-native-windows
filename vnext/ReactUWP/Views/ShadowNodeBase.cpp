@@ -92,6 +92,12 @@ void ShadowNodeBase::ReparentView(XamlView view) {
     }
   }
   ReplaceView(view);
+
+  // Let the UIManager know about this so it can update the yoga context.
+  if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
+    auto pNativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
+    pNativeUiManager->ReplaceView(*static_cast<ShadowNode *>(this));
+  }
 }
 
 winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTransformPS() {
