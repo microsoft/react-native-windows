@@ -19,7 +19,7 @@ const RCTPicker = requireNativeComponent<
 
 class PickerItem extends React.Component<IPickerItemProps> {
   public render(): JSX.Element | null {
-    return null;
+    throw null;
   }
 }
 
@@ -85,20 +85,19 @@ export class Picker extends React.Component<IPickerProps, State> {
   }
 
   public render(): JSX.Element {
-    const props = {...this.props};
-    props.onStartShouldSetResponder = () => true;
-    props.onResponderTerminationRequest = () => false;
-    props.style = this.props.style;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const {children, ...propsWihoutChildren} = {...this.props};
+    propsWihoutChildren.onStartShouldSetResponder = () => true;
+    propsWihoutChildren.onResponderTerminationRequest = () => false;
 
     return (
       <RCTPicker
-        {...props}
+        {...propsWihoutChildren}
         items={this.state.items}
         selectedIndex={this.state.selectedIndex}
         onChange={this._onChange}
-        ref={this._setRef}>
-        {this.props.children}
-      </RCTPicker>
+        ref={this._setRef}
+      />
     );
   }
 
