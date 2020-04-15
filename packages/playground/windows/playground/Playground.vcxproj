@@ -172,14 +172,12 @@
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup>
-    <UseDevBundle Condition="'$(Configuration)' == 'Debug'">true</UseDevBundle>
-    <UseDevBundle Condition="'$(Configuration)' != 'Debug'">false</UseDevBundle>
-    <BundleCommand>
-      npx --no-install react-native bundle --platform windows --entry-file Samples/rntester.tsx --bundle-output $(MSBuildThisFileDirectory)/Bundle/Samples/rntester.bundle --assets-dest $(MSBuildThisFileDirectory)/Bundle --dev $(UseDevBundle)
-    </BundleCommand>
+    <BundleEntryFile>Samples/rntester.tsx</BundleEntryFile>
+    <BundleOutputPath>Bundle/Samples/rntester.bundle</BundleOutputPath>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
-  <Import Project="..\..\..\..\vnext\PropertySheets\Bundle.Cpp.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />

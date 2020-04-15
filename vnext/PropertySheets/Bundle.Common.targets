@@ -4,8 +4,6 @@
  Licensed under the MIT License.. 
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildThisFileDirectory)\Bundle.props"/>
-
   <Target Name="MakeBundle" BeforeTargets="PrepareForBuild" 
       Condition="'$(UseBundle)' == 'true'">
         <MakeDir Directories="$(BundleContentRoot)" Condition=" !Exists('$(BundleContentRoot)') and '$(BundleContentRoot)' != '' " />

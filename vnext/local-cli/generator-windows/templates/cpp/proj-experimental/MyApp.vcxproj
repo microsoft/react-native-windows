@@ -150,15 +150,8 @@
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-
-  <PropertyGroup>
-    <UseDevBundle Condition="'$(Configuration)' == 'Debug'">true</UseDevBundle>
-    <UseDevBundle Condition="'$(Configuration)' != 'Debug'">false</UseDevBundle>
-    <BundleCommand>
-      npx --no-install react-native bundle --platform windows --entry-file index.js --bundle-output $(MSBuildThisFileDirectory)/Bundle/index.windows.bundle --assets-dest $(MSBuildThisFileDirectory)/Bundle --dev $(UseDevBundle)
-    </BundleCommand>
-  </PropertyGroup>
-  <Import Project="..\..\node_modules\react-native-windows\PropertySheets\Bundle.Cpp.targets"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets"/>
 
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />

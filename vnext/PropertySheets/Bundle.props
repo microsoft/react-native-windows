@@ -10,6 +10,13 @@
     <UseBundle Condition=" '$(Configuration)' == 'Release' and '$(UseBundle)' == '' ">true</UseBundle>
     <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">Bundle</BundleContentRoot>
     <BundleContent Condition = " '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)\**\*</BundleContent>
+    <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' == 'Debug'">true</UseDevBundle>
+    <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' != 'Debug'">false</UseDevBundle>
+    <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
+    <BundleOutputPath Condition="'$(BundleOutputPath)' == ''">Bundle/index.windows.bundle</BundleOutputPath>
+    <BundleCommand Condition="'$(BundleCommand)' == ''">
+      npx --no-install react-native bundle --platform windows --entry-file $(BundleEntryFile) --bundle-output $(BundleOutputPath) --assets-dest $(BundleContentRoot) --dev $(UseDevBundle)
+    </BundleCommand>
   </PropertyGroup>
 
   <PropertyGroup>
