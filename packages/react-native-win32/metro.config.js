@@ -3,14 +3,6 @@
  */
 const fs = require('fs');
 const path = require('path');
-const blacklist = require('metro-config/src/defaults/blacklist');
-
-const rnPath = fs.realpathSync(
-  fs.realpathSync(
-    path.resolve(require.resolve('react-native/package.json'), '..'),
-  ),
-);
-const rnw32Path = __dirname;
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -20,36 +12,14 @@ module.exports = {
   ],
 
   resolver: {
-    extraNodeModules: {
-      // Redirect react-native and react-native-windows to this folder
-      'react-native': rnw32Path,
-      'react-native-win32': rnw32Path,
-    },
-    // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: [
-      'ios',
-      'android',
-      'windesktop',
-      'windows',
-      'web',
-      'macos',
-      'win32',
-    ],
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.61 when haste is removed
-    blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
-      new RegExp(
-        `${path
-          .resolve(
-            require.resolve('@react-native-community/cli/package.json'),
-            '../node_modules/react-native',
-          )
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
-    ]),
+    resolveRequest: require('./metro-react-native-platform').reactNativePlatformResolver(
+      {win32: '@office-iss/react-native-win32'},
+    ),
   },
   transformer: {
+    // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
+    // Hopefully we can fix the default in the future
+    assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
