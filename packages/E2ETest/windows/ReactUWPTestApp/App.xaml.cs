@@ -1,16 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using Microsoft.ReactNative;
+using System;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.Foundation;
 
 namespace ReactUWPTestApp
 {
@@ -59,6 +56,16 @@ namespace ReactUWPTestApp
             base.OnLaunched(e);
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
+#if !E2ETEST_OVERRIDE_4122
+#error [E2ETest] - There is a bug in Yoga with v142/VS2019 that makes the masters for this app different in Release|x64 than in other platforms.
+#error However we want to test what people will be shipping. As a result, the tree dump output won't match the masters (which have the bug).
+#error You can disable this warning by defining the constant E2ETEST_OVERRIDE_4122 in the project properties page under "Define Constants"
+#error For more information see https://github.com/microsoft/react-native-windows/issues/4122
+#endif
+            if (DisplayInformation.GetForCurrentView().ResolutionScale != ResolutionScale.Scale100Percent)
+            {
+                throw new Exception("A bug requires this app to run at 100% for accurate results - See https://github.com/microsoft/react-native-windows/issues/4619");
+            }
         }
     }
 }

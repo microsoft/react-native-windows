@@ -23,6 +23,12 @@ jobs:
             
       - template: prepare-env.yml
 
+      - task: CmdLine@2
+        displayName: Set LocalDumps
+        inputs:
+          script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd
+          workingDirectory: $(Build.SourcesDirectory)
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
@@ -75,6 +81,11 @@ jobs:
           script: 'if ((Get-Process React*) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
+        displayName: mkdir errorShots
+        inputs:
+          script: mkdir $(Build.SourcesDirectory)\packages\E2ETest\errorShots
+
+      - task: CmdLine@2
         displayName: run e2etest
         inputs:
           script: yarn run e2etest
@@ -87,7 +98,28 @@ jobs:
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
           contents: TreeDump\**
         condition: succeededOrFailed()
-        
+
+      - task: CopyFiles@2
+        displayName: Copy tree dump screenshots
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)\packages\E2ETest\errorShots
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+        condition: succeededOrFailed()
+
+      - task: PowerShell@2
+        displayName: "MSInfo32"
+        inputs:
+          targetType: "inline"
+          script: "Start-Process msinfo32 -ArgumentList '/report $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\msinfo32.txt' -Wait"
+        condition: failed()
+
+      - task: PowerShell@2
+        displayName: "Get-ShellScaling"
+        inputs:
+          targetType: "inline"
+          script: ". $(Build.SourcesDirectory)\\.ado\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
+        condition: failed()
+
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
