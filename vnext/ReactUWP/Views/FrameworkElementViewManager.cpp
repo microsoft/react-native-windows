@@ -449,8 +449,8 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate,
       bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = {};
 
       if (propertyValue.isObject()) {
-        for (const auto &pair : propertyValue.items()) {
-          const std::string &innerName = pair.first.getString();
+        for (const auto &innerPair : propertyValue.items()) {
+          const std::string &innerName = innerPair.first.getString();
           const folly::dynamic &innerValue = pair.second;
 
           if (innerName == "selected")
