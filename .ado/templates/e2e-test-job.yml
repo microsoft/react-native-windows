@@ -23,6 +23,11 @@ jobs:
             
       - template: prepare-env.yml
 
+      - task: CmdLine@2
+        displayName: Print LocalDumps
+        inputs:
+          scripts: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps"
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
