@@ -7,23 +7,23 @@
     "bundle-cpp": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
     "bundle-cs": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
     "clean": "just-scripts clean",
-    "postinstall": "node postinstall.js",
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "windows": "react-native run-windows"
   },
   "dependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-windows": "0.0.0-master.31",
+    "react-native": "0.62.2",
+    "react-native-windows": "0.0.0-master.41",
     "rnpm-plugin-windows": "^0.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@types/react": "16.9.0",
-    "@types/react-native": "~0.61.5",
+    "@types/react-native": "^0.62.2",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
     "react-test-renderer": "16.9.0"

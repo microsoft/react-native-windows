@@ -6,7 +6,9 @@
 
 import React = require('react');
 import {Button, CheckBox, Text, TextInput, View} from 'react-native';
-import {Flyout, Picker, Popup} from 'react-native-windows';
+import {Flyout} from '../../../../Libraries/Components/Flyout/Flyout';
+import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import {Popup} from '../../../../Libraries/Components/Popup/Popup';
 import {Placement} from '../../../../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {

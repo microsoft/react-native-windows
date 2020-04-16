@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "implement accessibilityState",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-15T22:25:43.418Z"
+}

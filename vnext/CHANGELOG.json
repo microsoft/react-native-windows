@@ -2,6 +2,156 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Apr 2020 23:02:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.41",
+      "version": "0.0.0-master.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix PickerWindows (and DatePickerExample Page)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e0adf5e83e1afa6d0cd975432385c747a3dc360a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 22:26:36 GMT",
+      "tag": "react-native-windows_v0.0.0-master.40",
+      "version": "0.0.0-master.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use a custom resolver wrapper to allow metro to run for multiple platforms at once",
+            "author": "acoates@microsoft.com",
+            "commit": "d53d06aec7ddb8a17480a5e8dc9522e115792a64",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 19:18:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.39",
+      "version": "0.0.0-master.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename DeveloperSettings.SourceBundlePath -> SourceBundleName",
+            "author": "rezha@microsoft.com",
+            "commit": "63aeb0fc68cdb843c6d77fa7f44af88a6f2b9783",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 07:53:39 GMT",
+      "tag": "react-native-windows_v0.0.0-master.38",
+      "version": "0.0.0-master.38",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix bug where not specifying height on TextInput causes 0 height",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5ec607d93ba3daf586ed07cf9f18f65ba6262683",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 19:34:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.37",
+      "version": "0.0.0-master.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[generator] Use `npx` for consistency",
+            "author": "eloy.de.enige@gmail.com",
+            "commit": "7c66e60b03170a9639fb73314003a2f8f583de70",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 18:14:12 GMT",
+      "tag": "react-native-windows_v0.0.0-master.36",
+      "version": "0.0.0-master.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Elevate to install app certificate if necessary",
+            "author": "asklar@microsoft.com",
+            "commit": "e731d7699d106d023ccaa9ccf422da6d25407262",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 14:59:17 GMT",
+      "tag": "react-native-windows_v0.0.0-master.35",
+      "version": "0.0.0-master.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to React Native 0.62",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ae37f8e7518f808116ce906a7f7b32f00412612d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 02:46:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.34",
+      "version": "0.0.0-master.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add missing headers to proj file",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c143c56da362a813c9f85152d041243cfb1c29e7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Apr 2020 18:45:40 GMT",
+      "tag": "react-native-windows_v0.0.0-master.33",
+      "version": "0.0.0-master.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Folly ContinueOnError",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab65bd96a36db5ca70e7041f026028fa6c639a0a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Apr 2020 07:51:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.32",
+      "version": "0.0.0-master.32",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor View managers to detect unimplemented props",
+            "author": "asklar@microsoft.com",
+            "commit": "31bed1cc68714020ad6dc82ac4784647ffc41fb4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Apr 2020 02:36:32 GMT",
       "tag": "react-native-windows_v0.0.0-master.31",
       "version": "0.0.0-master.31",

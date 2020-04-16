@@ -5,15 +5,15 @@
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
-    "postinstall": "node postinstall.js",
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
     "watch": "tsc -w",
+    "windows": "react-native run-windows",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run e2etest",
     "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle --logging && npm run e2etest",
-    "e2etest": "rimraf reports/* && npm run prettier && wdio",
+    "e2etest": "rimraf reports/* && npm run prettier && node run_wdio.js",
     "testspec": "npm run prettier && wdio --spec",
     "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle",
     "buildapp": "react-native run-windows --no-launch --no-packager --no-deploy",
@@ -22,9 +22,10 @@
     "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
   },
   "dependencies": {
+    "prompt-sync": "^4.2.0",
     "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-windows": "0.0.0-master.31",
+    "react-native": "0.62.2",
+    "react-native-windows": "0.0.0-master.41",
     "rnpm-plugin-windows": "^0.6.1"
   },
   "devDependencies": {
@@ -33,7 +34,7 @@
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
-    "@types/react-native": "~0.61.5",
+    "@types/react-native": "^0.62.2",
     "@wdio/appium-service": "5.12.1",
     "@wdio/cli": "5.12.1",
     "@wdio/dot-reporter": "5.12.1",

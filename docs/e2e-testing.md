@@ -18,7 +18,7 @@ E2E test app, test library and test cases are in packages/E2ETest/, and they are
 
 # Run E2E test
 
-- Make sure you have installed [dependencies](./GettingStarted.md#dependencies)
+- Make sure you have installed [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies)
 
 ## Procedures to setup and run E2E test
 

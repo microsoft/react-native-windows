@@ -261,7 +261,7 @@ winrt::hstring DynamicAutomationPeer::GetContentName() const {
 
         for (auto const &child : viewPanel.Children()) {
           if (auto const &textBlock = child.try_as<winrt::TextBlock>()) {
-            name = (name.empty() ? L"" : L" ") + name + textBlock.Text();
+            name = name.empty() ? textBlock.Text() : (L" " + name + textBlock.Text());
           } else if (auto const &stringableName = child.try_as<winrt::IStringable>()) {
             name = (name.empty() ? L"" : L" ") + name + stringableName.ToString();
           }

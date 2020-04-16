@@ -102,7 +102,7 @@
         $(FollyDir);
         $(JSI_Source);
         $(ReactNativeDir)\ReactCommon;
-        $(ReactNativeDir)\ReactCommon\jscallinvoker;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)JSI\Shared;

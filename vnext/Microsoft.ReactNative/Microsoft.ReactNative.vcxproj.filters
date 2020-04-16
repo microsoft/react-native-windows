@@ -485,6 +485,21 @@
     <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -740,5 +755,8 @@
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
   </ItemGroup>
 </Project>

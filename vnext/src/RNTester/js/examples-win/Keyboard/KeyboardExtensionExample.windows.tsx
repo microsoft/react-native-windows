@@ -7,11 +7,11 @@
 import * as React from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {
-  supportKeyboard,
+  HandledEventPhase,
   IHandledKeyboardEvent,
   IKeyboardEvent,
-  HandledEventPhase,
-} from 'react-native-windows';
+} from '../../../../Libraries/Components/Keyboard/KeyboardExtProps';
+import {supportKeyboard} from '../../../../Libraries/Components/Keyboard/KeyboardExt';
 
 const ViewWindows = supportKeyboard(View);
 

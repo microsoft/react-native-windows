@@ -1,8 +1,88 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 Apr 2020 02:36:32 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Apr 2020 23:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.41
+
+Wed, 15 Apr 2020 23:02:16 GMT
+
+### Changes
+
+- Fix PickerWindows (and DatePickerExample Page) (ngerlem@microsoft.com)
+
+## 0.0.0-master.40
+
+Wed, 15 Apr 2020 22:26:36 GMT
+
+### Changes
+
+- Use a custom resolver wrapper to allow metro to run for multiple platforms at once (acoates@microsoft.com)
+
+## 0.0.0-master.39
+
+Wed, 15 Apr 2020 19:18:34 GMT
+
+### Changes
+
+- Rename DeveloperSettings.SourceBundlePath -> SourceBundleName (rezha@microsoft.com)
+
+## 0.0.0-master.38
+
+Wed, 15 Apr 2020 07:53:39 GMT
+
+### Changes
+
+- fix bug where not specifying height on TextInput causes 0 height (kmelmon@microsoft.com)
+
+## 0.0.0-master.37
+
+Tue, 14 Apr 2020 19:34:42 GMT
+
+### Changes
+
+- [generator] Use `npx` for consistency (eloy.de.enige@gmail.com)
+
+## 0.0.0-master.36
+
+Tue, 14 Apr 2020 18:14:12 GMT
+
+### Changes
+
+- Elevate to install app certificate if necessary (asklar@microsoft.com)
+
+## 0.0.0-master.35
+
+Tue, 14 Apr 2020 14:59:17 GMT
+
+### Changes
+
+- Upgrade to React Native 0.62 (ngerlem@microsoft.com)
+
+## 0.0.0-master.34
+
+Tue, 14 Apr 2020 02:46:30 GMT
+
+### Changes
+
+- add missing headers to proj file (kmelmon@microsoft.com)
+
+## 0.0.0-master.33
+
+Mon, 13 Apr 2020 18:45:40 GMT
+
+### Changes
+
+- Remove Folly ContinueOnError (ngerlem@microsoft.com)
+
+## 0.0.0-master.32
+
+Mon, 13 Apr 2020 07:51:05 GMT
+
+### Changes
+
+- Refactor View managers to detect unimplemented props (asklar@microsoft.com)
 
 ## 0.0.0-master.31
 

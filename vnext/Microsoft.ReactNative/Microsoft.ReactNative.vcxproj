@@ -87,6 +87,9 @@
     <Import Project="PropertySheet.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(GeneratedFilesDir);$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -103,6 +106,7 @@
         $(FollyDir);
         $(JSI_SourcePath);
         $(ReactNativeDir)ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
@@ -168,6 +172,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h" />
@@ -535,7 +544,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-      <ResourceCompile Include="Version.rc">
+    <ResourceCompile Include="Version.rc">
       <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
         RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
         RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);
