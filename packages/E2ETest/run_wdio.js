@@ -54,11 +54,12 @@ let opts = SelectSpecs(specFolder);
 console.log(`Selected tests: ${opts}`);
 
 function OverrideHyperV() {
-  const baseboardMfr = child_process.execSync(
-    'powershell.exe (gwmi Win32_BaseBoard).Manufacturer'
-  );
-  if (baseboardMfr != 'Microsoft Corporation' )  {
-    console.log(`Not running in Hyperv. Mfr = ${baseboardMfr}`);
+  const baseboardMfr = child_process
+    .execSync('powershell.exe (gwmi Win32_BaseBoard).Manufacturer')
+    .toString()
+    .replace(/[\r\n]/, '');
+  if (!baseboardMfr.startsWith('Microsoft Corporation')) {
+    console.log(`Not running in HyperV. Mfr = ${baseboardMfr}`);
     const answer = prompt(
       'E2ETest is meant to be run in a HyperV VM. Continue? (Y/N)'
     );
