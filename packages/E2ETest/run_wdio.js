@@ -53,13 +53,18 @@ function SelectSpecs(folder) {
 let opts = SelectSpecs(specFolder);
 console.log(`Selected tests: ${opts}`);
 
-
 function OverrideHyperV() {
-  const isHyperV_VM = child_process.execSync('powershell.exe (gwmi Win32_BaseBoard).Manufacturer -eq \\\"Microsoft Corporation\\\"');
+  const isHyperV_VM = child_process.execSync(
+    'powershell.exe (gwmi Win32_BaseBoard).Manufacturer -eq \\"Microsoft Corporation\\"'
+  );
   if (isHyperV_VM != 'True') {
     console.log('Not running in Hyperv');
-    const answer = prompt('E2ETest is meant to be run in a HyperV VM. Continue? (Y/N)');
-    if (answer.toUpperCase() != 'Y') { process.exit(0); }
+    const answer = prompt(
+      'E2ETest is meant to be run in a HyperV VM. Continue? (Y/N)'
+    );
+    if (answer.toUpperCase() != 'Y') {
+      process.exit(0);
+    }
   }
 }
 
