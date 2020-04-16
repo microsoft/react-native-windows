@@ -108,7 +108,6 @@ function Process(code) {
   process.exit(code);
 }
 
-process.exit(4);
 wdio.run().then(
   code => {
     Process(code);
