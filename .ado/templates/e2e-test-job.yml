@@ -27,6 +27,7 @@ jobs:
         displayName: Set LocalDumps
         inputs:
           scripts: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd
+          workingDirectory: $(Build.SourcesDirectory)
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
@@ -123,6 +124,7 @@ jobs:
         displayName: Dir staging directory
         inputs:
           scripts: dir $(Build.StagingDirectory) /s
+          workingDirectory: $(Build.StagingDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
