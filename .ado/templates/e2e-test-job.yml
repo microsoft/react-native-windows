@@ -24,9 +24,9 @@ jobs:
       - template: prepare-env.yml
 
       - task: CmdLine@2
-        displayName: Print LocalDumps
+        displayName: Set LocalDumps
         inputs:
-          scripts: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps"
+          scripts: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
@@ -118,6 +118,11 @@ jobs:
           targetType: "inline"
           script: ". $(Build.SourcesDirectory)\\.ado\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
         condition: failed()
+
+      - task: CmdLine@2
+        displayName: Dir staging directory
+        inputs:
+          scripts: dir $(Build.StagingDirectory) /s
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
