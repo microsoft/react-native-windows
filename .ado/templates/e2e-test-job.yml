@@ -120,13 +120,6 @@ jobs:
           script: ". $(Build.SourcesDirectory)\\.ado\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
         condition: failed()
 
-      - task: CmdLine@2
-        displayName: Dir staging directory
-        inputs:
-          script: dir $(Build.StagingDirectory) /s
-          workingDirectory: $(Build.StagingDirectory)
-        condition: succeededOrFailed()
-
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
