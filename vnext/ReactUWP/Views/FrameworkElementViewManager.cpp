@@ -141,12 +141,21 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
   }
 }
 
+static folly::dynamic GetAccessibilityStateProps() {
+  folly::dynamic props = folly::dynamic::object();
+
+  props.update(folly::dynamic::object("selected", "boolean")("disabled", "boolean")("checked", "string")(
+      "busy", "boolean")("expanded", "boolean"));
+  return props;
+}
+
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
   props.update(folly::dynamic::object("accessible", "boolean")("accessibilityRole", "string")(
-      "accessibilityStates", "array")("accessibilityHint", "string")("accessibilityLabel", "string")(
-      "accessibilityPosInSet", "number")("accessibilitySetSize", "number")("testID", "string")("tooltip", "string")(
-      "accessibilityActions", "array")("accessibilityLiveRegion", "string"));
+      "accessibilityStates", "array")("accessibilityState", GetAccessibilityStateProps())(
+      "accessibilityHint", "string")("accessibilityLabel", "string")("accessibilityPosInSet", "number")(
+      "accessibilitySetSize", "number")("testID", "string")("tooltip", "string")("accessibilityActions", "array")(
+      "accessibilityLiveRegion", "string"));
   return props;
 }
 
@@ -407,6 +416,49 @@ bool FrameworkElementViewManager::UpdateProperty(
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)] = true;
           else if (state.getString() == "collapsed")
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)] = true;
+        }
+      }
+
+      DynamicAutomationProperties::SetAccessibilityStateSelected(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)]);
+      DynamicAutomationProperties::SetAccessibilityStateDisabled(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)]);
+      DynamicAutomationProperties::SetAccessibilityStateChecked(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)]);
+      DynamicAutomationProperties::SetAccessibilityStateUnchecked(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)]);
+      DynamicAutomationProperties::SetAccessibilityStateBusy(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)]);
+      DynamicAutomationProperties::SetAccessibilityStateExpanded(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)]);
+      DynamicAutomationProperties::SetAccessibilityStateCollapsed(
+          element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)]);
+    } else if (propertyName == "accessibilityState") {
+      bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = {};
+
+      if (propertyValue.isObject()) {
+        for (const auto &pair : propertyValue.items()) {
+          const std::string &innerName = pair.first.getString();
+          const folly::dynamic &innerValue = pair.second;
+
+          if (innerName == "selected")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)] = innerValue.getBool();
+          else if (innerName == "disabled")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)] = innerValue.getBool();
+          else if (innerName == "checked") {
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)] =
+                innerValue.isBool() && innerValue.getBool();
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)] =
+                innerValue.isBool() && !innerValue.getBool();
+            // If the state is "mixed" we'll just set both Checked and Unchecked to false,
+            // then later in the IToggleProvider implementation it will return the Intermediate state
+            // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
+          } else if (innerName == "busy")
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)] = innerValue.getBool();
+          else if (innerName == "expanded") {
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)] = innerValue.getBool();
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)] = !innerValue.getBool();
+          }
         }
       }
 
