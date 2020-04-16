@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "implement accessibilityState",
   "packageName": "react-native-windows",
   "email": "kmelmon@microsoft.com",
