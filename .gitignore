@@ -156,3 +156,4 @@ bld/
 *_coverage.xml
 
 tsdoc-metadata.json
+*.dmp
