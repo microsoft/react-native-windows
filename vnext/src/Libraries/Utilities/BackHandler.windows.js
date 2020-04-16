@@ -15,8 +15,6 @@
 
 const RCTDeviceEventEmitter = require('../EventEmitter/RCTDeviceEventEmitter');
 
-// TODO Hx: Implement.
-
 /**
  * Detect hardware button presses for back navigation.
  *
