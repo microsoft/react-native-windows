@@ -86,6 +86,9 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -403,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h">
+      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>

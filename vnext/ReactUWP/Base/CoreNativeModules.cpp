@@ -10,6 +10,7 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
@@ -104,9 +105,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       react::windows::AppThemeModule::name,
-      [appTheme = std::move(appTheme)]() mutable {
-        return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme));
-      },
+      [appTheme]() mutable { return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme)); },
       messageQueue);
 
   modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
@@ -126,6 +125,13 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       "I18nManager",
       [i18nInfo = std::move(i18nInfo)]() mutable {
         return createI18nModule(std::make_unique<I18nModule>(std::move(i18nInfo)));
+      },
+      messageQueue);
+
+  modules.emplace_back(
+      AppearanceModule::Name,
+      [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
+        return std::make_unique<AppearanceModule>(std::move(wpUwpInstance));
       },
       messageQueue);
 
