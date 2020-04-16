@@ -24,15 +24,16 @@ static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstrin
   Microsoft::ReactNative::implementation::ReactNativeHost *hostImpl{
       get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
   if (!arguments.empty() /*&& host.HasInstance()*/) {
+    constexpr wchar_t delimiter = L',';
     std::wistringstream argumentStream(arguments);
     std::wstring token;
-    while (std::getline(argumentStream, token, L' ')) {
+    while (std::getline(argumentStream, token, delimiter)) {
       if (token == L"-?") {
         std::cout << "Options:\n"
-                     "  directDebugging <port>    Enable direct debugging on specified port.\n";
+                     "  directDebugging,<port>    Enable direct debugging on specified port.\n";
         std::cout.flush();
       } else if (token == L"directDebugging") {
-        if (std::getline(argumentStream, token, L' ')) {
+        if (std::getline(argumentStream, token, delimiter)) {
           const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
           hostImpl->InstanceSettings().UseWebDebugger(false);
           hostImpl->InstanceSettings().UseDirectDebugger(true);
