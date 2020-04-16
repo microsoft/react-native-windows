@@ -4,16 +4,30 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
-
-// On Apple TV, this implements back navigation using the TV remote's menu button.
-// On iOS, this just implements a stub.
 
 'use strict';
 
-const RCTDeviceEventEmitter = require('../EventEmitter/RCTDeviceEventEmitter');
+import NativeDeviceEventManager from '../../Libraries/NativeModules/specs/NativeDeviceEventManager';
+import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
+
+const DEVICE_BACK_EVENT = 'hardwareBackPress';
+
+type BackPressEventName = 'backPress' | 'hardwareBackPress';
+
+const _backPressSubscriptions = [];
+
+RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function() {
+  for (let i = _backPressSubscriptions.length - 1; i >= 0; i--) {
+    if (_backPressSubscriptions[i]()) {
+      return;
+    }
+  }
+
+  BackHandler.exitApp();
+});
 
 /**
  * Detect hardware button presses for back navigation.
@@ -45,23 +59,6 @@ const RCTDeviceEventEmitter = require('../EventEmitter/RCTDeviceEventEmitter');
  * });
  * ```
  */
-
-type BackPressEventName = 'backPress' | 'hardwareBackPress';
-
-const DEVICE_BACK_EVENT = 'hardwareBackPress';
-
-const _backListeners = [];
-
-RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, () => {
-  for (let i = _backListeners.length - 1; i >= 0; i--) {
-    if (_backListeners[i]()) {
-      return;
-    }
-  }
-
-  BackHandler.exitApp();
-});
-
 type TBackHandler = {|
   +exitApp: () => void,
   +addEventListener: (
@@ -73,25 +70,45 @@ type TBackHandler = {|
     handler: Function,
   ) => void,
 |};
-
 const BackHandler: TBackHandler = {
-  exitApp: () => {},
-  addEventListener: (eventName: BackPressEventName, handler: Function) => {
-    if (_backListeners.indexOf(handler) === -1) {
-      _backListeners.push(handler);
+  exitApp: function(): void {
+    if (!NativeDeviceEventManager) {
+      return;
     }
 
+    NativeDeviceEventManager.invokeDefaultBackPressHandler();
+  },
+
+  /**
+   * Adds an event handler. Supported events:
+   *
+   * - `hardwareBackPress`: Fires when the Android hardware back button is pressed or when the
+   * tvOS menu button is pressed.
+   */
+  addEventListener: function(
+    eventName: BackPressEventName,
+    handler: Function,
+  ): {remove: () => void, ...} {
+    if (_backPressSubscriptions.indexOf(handler) === -1) {
+      _backPressSubscriptions.push(handler);
+    }
     return {
-      remove: () => {
-        BackHandler.removeEventListener(eventName, handler);
-      },
+      remove: (): void => BackHandler.removeEventListener(eventName, handler),
     };
   },
-  removeEventListener: (eventName: BackPressEventName, handler: Function) => {
-    const handlerIndex = _backListeners.indexOf(handler);
 
-    if (handlerIndex !== -1) {
-      _backListeners.splice(handlerIndex, 1);
+  /**
+   * Removes the event handler.
+   */
+  removeEventListener: function(
+    eventName: BackPressEventName,
+    handler: Function,
+  ): void {
+    if (_backPressSubscriptions.indexOf(handler) !== -1) {
+      _backPressSubscriptions.splice(
+        _backPressSubscriptions.indexOf(handler),
+        1,
+      );
     }
   },
 };

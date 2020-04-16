@@ -610,11 +610,6 @@ void ReactRootControl::ReloadViewHost() noexcept {
 
 void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   auto rootElement(rootView.as<winrt::UIElement>());
-  if (rootElement == nullptr) {
-    assert(false);
-    return;
-  }
-
   winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
       [this](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
         args.Handled(OnBackRequested());
@@ -641,14 +636,9 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
 }
 
 bool ReactRootControl::OnBackRequested() noexcept {
-  if (m_weakReactInstance.IsExpired()) {
-    return false;
-  }
-
-  auto &legacyReactInstance = query_cast<Mso::React::ILegacyReactInstance &>(*m_weakReactInstance.GetStrongPtr());
-  auto uwpReactInstance = legacyReactInstance.UwpReactInstance();
-  if (uwpReactInstance != nullptr) {
-    uwpReactInstance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+    auto &legacyReactInstance = query_cast<Mso::React::ILegacyReactInstance &>(*m_weakReactInstance.GetStrongPtr());
+    legacyReactInstance.CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
     return true;
   }
 
