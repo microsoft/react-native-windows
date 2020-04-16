@@ -1,8 +1,9 @@
-const Launcher = require('@wdio/cli').default;
 const path = require('path');
 const fs = require('fs');
 const xml2js = require('xml2js');
 const parser = new xml2js.Parser({ attrkey: 'ATTR' });
+const child_process = require('child_process');
+const prompt = require('prompt-sync')();
 
 const specFolder = 'wdio/test';
 
@@ -52,6 +53,20 @@ function SelectSpecs(folder) {
 let opts = SelectSpecs(specFolder);
 console.log(`Selected tests: ${opts}`);
 
+
+function OverrideHyperV() {
+  const isHyperV_VM = child_process.execSync('powershell.exe (gwmi Win32_BaseBoard).Manufacturer -eq \\\"Microsoft Corporation\\\"');
+  if (isHyperV_VM != 'True') {
+    console.log('Not running in Hyperv');
+    const answer = prompt('E2ETest is meant to be run in a HyperV VM. Continue? (Y/N)');
+    if (answer.toUpperCase() != 'Y') { process.exit(0); }
+  }
+}
+
+OverrideHyperV();
+
+const Launcher = require('@wdio/cli').default;
+
 const wdio = new Launcher('wdio.conf.js', { specs: opts });
 
 function parseLog(logfile) {
@@ -87,6 +102,7 @@ function Process(code) {
   process.exit(code);
 }
 
+process.exit(4);
 wdio.run().then(
   code => {
     Process(code);

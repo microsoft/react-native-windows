@@ -27,7 +27,7 @@
         "HorizontalAlignment": "Left",
         "Margin": "0,0,0,0",
         "Padding": "0,0,0,0",
-        "RenderSize": [50, 50],
+        "RenderSize": [51, 50],
         "VerticalAlignment": "Center",
         "Visibility": "Visible",
         "Width": 51,
@@ -43,7 +43,7 @@
             "HorizontalAlignment": "Stretch",
             "Margin": "0,0,0,0",
             "Padding": "0,0,0,0",
-            "RenderSize": [50, 50],
+            "RenderSize": [51, 50],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -554,7 +554,7 @@
                 "Margin": "10,10,10,10",
                 "Name": "PlaceholderTextContentPresenter",
                 "Padding": "10,10,10,10",
-                "RenderSize": [780, 42],
+                "RenderSize": [780, 43],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -802,7 +802,7 @@
                 "Margin": "10,10,10,10",
                 "Name": "PlaceholderTextContentPresenter",
                 "Padding": "10,10,10,10",
-                "RenderSize": [780, 42],
+                "RenderSize": [780, 43],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -903,7 +903,7 @@
                 "Margin": "0,0,0,0",
                 "Name": "DateText",
                 "Padding": "12,0,0,2",
-                "RenderSize": [104, 24],
+                "RenderSize": [105, 25],
                 "VerticalAlignment": "Center",
                 "Visibility": "Visible"
             },

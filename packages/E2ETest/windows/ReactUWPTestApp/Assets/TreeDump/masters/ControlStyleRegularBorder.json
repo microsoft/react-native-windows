@@ -27,7 +27,7 @@
         "HorizontalAlignment": "Left",
         "Margin": "0,0,0,0",
         "Padding": "0,0,0,0",
-        "RenderSize": [50, 50],
+        "RenderSize": [51, 50],
         "VerticalAlignment": "Center",
         "Visibility": "Visible",
         "Width": 51,
@@ -43,7 +43,7 @@
             "HorizontalAlignment": "Stretch",
             "Margin": "0,0,0,0",
             "Padding": "0,0,0,0",
-            "RenderSize": [50, 50],
+            "RenderSize": [51, 50],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -357,11 +357,11 @@
         "CornerRadius": "0,0,0,0",
         "FlowDirection": "LeftToRight",
         "Foreground": "#FFFFFFFF",
-        "Height": 50,
+        "Height": 41,
         "HorizontalAlignment": "Stretch",
         "Margin": "0,0,0,0",
         "Padding": "10,10,10,10",
-        "RenderSize": [800, 50],
+        "RenderSize": [800, 41],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible",
         "Width": 800,
@@ -377,7 +377,7 @@
             "HorizontalAlignment": "Stretch",
             "Margin": "0,0,0,0",
             "Padding": "0,0,0,0",
-            "RenderSize": [800, 50],
+            "RenderSize": [800, 41],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -393,7 +393,7 @@
                 "Margin": "0,0,0,0",
                 "Name": "BorderElement",
                 "Padding": "0,0,0,0",
-                "RenderSize": [800, 50],
+                "RenderSize": [800, 41],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -410,7 +410,7 @@
                 "Margin": "1,1,1,1",
                 "Name": "ContentElement",
                 "Padding": "10,10,10,10",
-                "RenderSize": [798, 48],
+                "RenderSize": [798, 39],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible",
                 "children": [
@@ -426,7 +426,7 @@
                     "Margin": "0,0,0,0",
                     "Name": "Root",
                     "Padding": "0,0,0,0",
-                    "RenderSize": [798, 48],
+                    "RenderSize": [798, 39],
                     "VerticalAlignment": "Stretch",
                     "Visibility": "Visible",
                     "children": [
@@ -441,7 +441,7 @@
                         "HorizontalAlignment": "Stretch",
                         "Margin": "0,0,0,0",
                         "Padding": "0,0,0,0",
-                        "RenderSize": [798, 48],
+                        "RenderSize": [798, 39],
                         "VerticalAlignment": "Stretch",
                         "Visibility": "Visible",
                         "children": [
@@ -458,7 +458,7 @@
                             "Margin": "10,10,10,10",
                             "Name": "ScrollContentPresenter",
                             "Padding": "0,0,0,0",
-                            "RenderSize": [778, 28],
+                            "RenderSize": [778, 19],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible",
                             "children": [
@@ -468,7 +468,7 @@
                                 "FlowDirection": "LeftToRight",
                                 "HorizontalAlignment": "Stretch",
                                 "Margin": "0,0,0,0",
-                                "RenderSize": [778, 28],
+                                "RenderSize": [778, 19],
                                 "VerticalAlignment": "Stretch",
                                 "Visibility": "Visible"
                             }
@@ -485,7 +485,7 @@
                             "HorizontalAlignment": "Stretch",
                             "Margin": "0,0,0,0",
                             "Padding": "0,0,0,0",
-                            "RenderSize": [798, 48],
+                            "RenderSize": [798, 39],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible"
                         },
@@ -554,7 +554,7 @@
                 "Margin": "1,1,1,1",
                 "Name": "PlaceholderTextContentPresenter",
                 "Padding": "10,10,10,10",
-                "RenderSize": [798, 48],
+                "RenderSize": [798, 39],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -605,11 +605,11 @@
         "CornerRadius": "0,0,0,0",
         "FlowDirection": "LeftToRight",
         "Foreground": "#FFFFFFFF",
-        "Height": 50,
+        "Height": 41,
         "HorizontalAlignment": "Stretch",
         "Margin": "0,0,0,0",
         "Padding": "10,10,10,10",
-        "RenderSize": [800, 50],
+        "RenderSize": [800, 41],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible",
         "Width": 800,
@@ -625,7 +625,7 @@
             "HorizontalAlignment": "Stretch",
             "Margin": "0,0,0,0",
             "Padding": "0,0,0,0",
-            "RenderSize": [800, 50],
+            "RenderSize": [800, 41],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -641,7 +641,7 @@
                 "Margin": "0,0,0,0",
                 "Name": "BorderElement",
                 "Padding": "0,0,0,0",
-                "RenderSize": [800, 50],
+                "RenderSize": [800, 41],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -658,7 +658,7 @@
                 "Margin": "1,1,1,1",
                 "Name": "ContentElement",
                 "Padding": "10,10,10,10",
-                "RenderSize": [798, 48],
+                "RenderSize": [798, 39],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible",
                 "children": [
@@ -674,7 +674,7 @@
                     "Margin": "0,0,0,0",
                     "Name": "Root",
                     "Padding": "0,0,0,0",
-                    "RenderSize": [798, 48],
+                    "RenderSize": [798, 39],
                     "VerticalAlignment": "Stretch",
                     "Visibility": "Visible",
                     "children": [
@@ -689,7 +689,7 @@
                         "HorizontalAlignment": "Stretch",
                         "Margin": "0,0,0,0",
                         "Padding": "0,0,0,0",
-                        "RenderSize": [798, 48],
+                        "RenderSize": [798, 39],
                         "VerticalAlignment": "Stretch",
                         "Visibility": "Visible",
                         "children": [
@@ -706,7 +706,7 @@
                             "Margin": "10,10,10,10",
                             "Name": "ScrollContentPresenter",
                             "Padding": "0,0,0,0",
-                            "RenderSize": [778, 28],
+                            "RenderSize": [778, 19],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible",
                             "children": [
@@ -716,7 +716,7 @@
                                 "FlowDirection": "LeftToRight",
                                 "HorizontalAlignment": "Stretch",
                                 "Margin": "0,0,0,0",
-                                "RenderSize": [778, 28],
+                                "RenderSize": [778, 19],
                                 "VerticalAlignment": "Stretch",
                                 "Visibility": "Visible"
                             }
@@ -733,7 +733,7 @@
                             "HorizontalAlignment": "Stretch",
                             "Margin": "0,0,0,0",
                             "Padding": "0,0,0,0",
-                            "RenderSize": [798, 48],
+                            "RenderSize": [798, 39],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible"
                         },
@@ -802,7 +802,7 @@
                 "Margin": "1,1,1,1",
                 "Name": "PlaceholderTextContentPresenter",
                 "Padding": "10,10,10,10",
-                "RenderSize": [798, 48],
+                "RenderSize": [798, 39],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -903,7 +903,7 @@
                 "Margin": "0,0,0,0",
                 "Name": "DateText",
                 "Padding": "12,0,0,2",
-                "RenderSize": [104, 24],
+                "RenderSize": [90, 21],
                 "VerticalAlignment": "Center",
                 "Visibility": "Visible"
             },
@@ -980,11 +980,11 @@
         "CornerRadius": "0,0,0,0",
         "FlowDirection": "LeftToRight",
         "Foreground": "#FFFFFFFF",
-        "Height": 50,
+        "Height": 32,
         "HorizontalAlignment": "Left",
         "Margin": "0,0,0,0",
         "Padding": "12,5,0,7",
-        "RenderSize": [800, 50],
+        "RenderSize": [800, 32],
         "VerticalAlignment": "Top",
         "Visibility": "Visible",
         "Width": 800,
@@ -1001,7 +1001,7 @@
             "Margin": "0,0,0,0",
             "Name": "LayoutRoot",
             "Padding": "0,0,0,0",
-            "RenderSize": [800, 50],
+            "RenderSize": [800, 32],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -1017,7 +1017,7 @@
                 "Margin": "0,0,0,0",
                 "Name": "Background",
                 "Padding": "0,0,0,0",
-                "RenderSize": [800, 50],
+                "RenderSize": [800, 32],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -1033,7 +1033,7 @@
                 "Margin": "0,0,0,0",
                 "Name": "HighlightBackground",
                 "Padding": "0,0,0,0",
-                "RenderSize": [800, 50],
+                "RenderSize": [800, 32],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -1050,7 +1050,7 @@
                 "Margin": "12,5,0,7",
                 "Name": "ContentPresenter",
                 "Padding": "0,0,0,0",
-                "RenderSize": [756, 22],
+                "RenderSize": [756, 19],
                 "VerticalAlignment": "Center",
                 "Visibility": "Visible",
                 "children": [
@@ -1063,7 +1063,7 @@
                     "Margin": "0,0,0,0",
                     "Name": "PlaceholderTextBlock",
                     "Padding": "0,0,0,0",
-                    "RenderSize": [756, 22],
+                    "RenderSize": [756, 19],
                     "VerticalAlignment": "Stretch",
                     "Visibility": "Visible"
                 }

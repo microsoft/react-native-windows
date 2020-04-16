@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
+using System;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 
@@ -60,7 +62,10 @@ namespace ReactUWPTestApp
 #error You can disable this warning by defining the constant E2ETEST_OVERRIDE_4122 in the project properties page under "Define Constants"
 #error For more information see https://github.com/microsoft/react-native-windows/issues/4122
 #endif
-
+            if (DisplayInformation.GetForCurrentView().ResolutionScale != ResolutionScale.Scale100Percent)
+            {
+                throw new Exception("A bug requires this app to run at 100% for accurate results - See https://github.com/microsoft/react-native-windows/issues/4619");
+            }
         }
     }
 }
