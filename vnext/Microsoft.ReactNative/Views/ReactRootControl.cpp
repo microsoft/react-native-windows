@@ -184,12 +184,7 @@ void ReactRootControl::InitRootView(
   m_SIPEventHandler->AttachView(xamlRootView, /*fireKeyboradEvents:*/ true);
 
   UpdateRootViewInternal();
-
-  winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
-      [uwpReactInstance](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
-        uwpReactInstance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
-        args.Handled(true);
-      });
+  AttachBackHandlers(xamlRootView);
 
   m_isInitialized = true;
 }
@@ -611,6 +606,53 @@ void ReactRootControl::ReloadViewHost() noexcept {
   if (auto reactViewHost = m_reactViewHost.Get()) {
     reactViewHost->ReloadViewInstance();
   }
+}
+
+void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
+  auto rootElement(rootView.as<winrt::UIElement>());
+  if (rootElement == nullptr) {
+    assert(false);
+    return;
+  }
+
+  winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
+      [this](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
+        args.Handled(OnBackRequested());
+      });
+
+  // Handle keyboard "back" button press
+  winrt::KeyboardAccelerator goBack{};
+  goBack.Key(winrt::VirtualKey::GoBack);
+  goBack.Invoked(
+      [this](winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+        args.Handled(OnBackRequested());
+      });
+  rootElement.KeyboardAccelerators().Append(goBack);
+
+  // Handle Alt+Left keyboard shortcut
+  winrt::KeyboardAccelerator altLeft{};
+  altLeft.Key(winrt::VirtualKey::Left);
+  altLeft.Invoked(
+      [this](winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+        args.Handled(OnBackRequested());
+      });
+  rootElement.KeyboardAccelerators().Append(altLeft);
+  altLeft.Modifiers(winrt::VirtualKeyModifiers::Menu);
+}
+
+bool ReactRootControl::OnBackRequested() noexcept {
+  if (m_weakReactInstance.IsExpired()) {
+    return false;
+  }
+
+  auto &legacyReactInstance = query_cast<Mso::React::ILegacyReactInstance &>(*m_weakReactInstance.GetStrongPtr());
+  auto uwpReactInstance = legacyReactInstance.UwpReactInstance();
+  if (uwpReactInstance != nullptr) {
+    uwpReactInstance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+    return true;
+  }
+
+  return false;
 }
 
 Mso::React::IReactViewHost *ReactRootControl::ReactViewHost() noexcept {

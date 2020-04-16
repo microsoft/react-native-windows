@@ -83,6 +83,9 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void ReloadHost() noexcept;
   void ReloadViewHost() noexcept;
 
+  void AttachBackHandlers(XamlView const &rootView) noexcept;
+  bool OnBackRequested() noexcept;
+
  private:
   int64_t m_rootTag{-1};
 

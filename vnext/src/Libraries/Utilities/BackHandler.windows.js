@@ -79,7 +79,6 @@ type TBackHandler = {|
 const BackHandler: TBackHandler = {
   exitApp: () => {},
   addEventListener: (eventName: BackPressEventName, handler: Function) => {
-    debugger;
     if (_backListeners.indexOf(handler) === -1) {
       _backListeners.push(handler);
     }
