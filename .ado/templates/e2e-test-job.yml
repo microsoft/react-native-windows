@@ -125,6 +125,7 @@ jobs:
         inputs:
           script: dir $(Build.StagingDirectory) /s
           workingDirectory: $(Build.StagingDirectory)
+        condition: succeededOrFailed()
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
