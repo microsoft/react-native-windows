@@ -144,8 +144,7 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
 static folly::dynamic GetAccessibilityStateProps() {
   folly::dynamic props = folly::dynamic::object();
 
-  // TODO:  "checked" is spec'd as being either a boolean or the string "mixed".  How do we handle "mixed"?
-  props.update(folly::dynamic::object("selected", "boolean")("disabled", "boolean")("checked", "boolean")(
+  props.update(folly::dynamic::object("selected", "boolean")("disabled", "boolean")("checked", "string")(
       "busy", "boolean")("expanded", "boolean"));
   return props;
 }
@@ -446,9 +445,14 @@ bool FrameworkElementViewManager::UpdateProperty(
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)] = innerValue.getBool();
           else if (innerName == "disabled")
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)] = innerValue.getBool();
-          else if (innerName == "checked") {
-            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)] = innerValue.getBool();
-            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)] = !innerValue.getBool();
+          else if (innerName == "checked") { 
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)] =
+                innerValue.isBool() && innerValue.getBool();
+            states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)] =
+                innerValue.isBool() && !innerValue.getBool();
+            // If the state is "mixed" we'll just set both Checked and Unchecked to false,
+            // then later in the IToggleProvider implementation it will return the Intermediate state
+            // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
           } else if (innerName == "busy")
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)] = innerValue.getBool();
           else if (innerName == "expanded") {
