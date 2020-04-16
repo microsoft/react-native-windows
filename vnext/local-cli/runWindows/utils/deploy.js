@@ -164,8 +164,9 @@ async function deployToDesktop(options, verbose) {
 
   let args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
 
-  if (options.directDebugging) {
-    args.push('directDebugging', options.directDebugging);
+  const port = parseInt(options.directDebugging, 10);
+  if (!isNaN(port)) {
+    args.push('directDebugging', port.toString());
   }
 
   const popd = pushd(options.root);

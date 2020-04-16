@@ -27,10 +27,13 @@ static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstrin
     std::wistringstream argumentStream(arguments);
     std::wstring token;
     while (std::getline(argumentStream, token, L' ')) {
-      if (token == L"directDebugging" && std::getline(argumentStream, token, L' ')) {
-        wchar_t *nextPosition = nullptr;
-        const uint16_t port = static_cast<uint16_t>(std::wcstol(token.c_str(), &nextPosition, 10));
-        if (nextPosition == nullptr) {
+      if (token == L"-?") {
+        std::cout << "Options:\n"
+                     "  directDebugging <port>    Enable direct debugging on specified port.\n";
+        std::cout.flush();
+      } else if (token == L"directDebugging") {
+        if (std::getline(argumentStream, token, L' ')) {
+          const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
           hostImpl->InstanceSettings().UseWebDebugger(false);
           hostImpl->InstanceSettings().UseDirectDebugger(true);
           hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
