@@ -445,7 +445,7 @@ bool FrameworkElementViewManager::UpdateProperty(
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)] = innerValue.getBool();
           else if (innerName == "disabled")
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)] = innerValue.getBool();
-          else if (innerName == "checked") { 
+          else if (innerName == "checked") {
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)] =
                 innerValue.isBool() && innerValue.getBool();
             states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)] =

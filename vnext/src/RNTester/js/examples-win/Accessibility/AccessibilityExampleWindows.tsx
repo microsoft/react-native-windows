@@ -270,7 +270,7 @@ class AccessibilityStateExamples extends React.Component {
   public state = {
     viewDisabled: false,
     itemsSelected: [false, false, false],
-    viewChecked: false,
+    viewChecked: 0,
     viewBusy: false,
     viewCollapsed: false,
   };
@@ -332,8 +332,8 @@ class AccessibilityStateExamples extends React.Component {
           keyExtractor={(item, index) => index.toString()}
         />
         <Text>
-          The following TouchableHighlight toggles accessibilityState.checked
-          and accessibilityState.unchecked for the View under it:
+          The following TouchableHighlight cycles accessibilityState.checked
+          through unchecked/checked/mixed for the View under it:
         </Text>
         <TouchableHighlight
           style={{width: 100, height: 50, backgroundColor: 'blue'}}
@@ -343,21 +343,21 @@ class AccessibilityStateExamples extends React.Component {
         </TouchableHighlight>
         <View
           style={{
-            backgroundColor: this.state.viewChecked ? 'gray' : 'lightskyblue',
+            backgroundColor: this.state.viewChecked === 0 ? 'green' : this.state.viewChecked === 1 ? 'gray' : 'lightskyblue',
           }}
           //@ts-ignore
           accessibilityRole="checkbox"
           //@ts-ignore
           accessibilityState={{
-            checked: this.state.viewChecked,
+            checked: this.state.viewChecked === 0 ? false : this.state.viewChecked === 1 ? true : 'mixed',
           }}>
           <Text>
             This View should be{' '}
-            {this.state.viewChecked ? 'Checked' : 'Unchecked'} according to UIA
+            {this.state.viewChecked === 0 ? 'Unchecked' : this.state.viewChecked === 1 ? 'Checked' : 'Mixed'} according to UIA
           </Text>
         </View>
         <Text>
-          The following TouchableHighlight toggles accessibilityState.busy for
+          The following TouchableHighlight toggles the acessibilityState.busy for
           the View under it:
         </Text>
         <TouchableHighlight
@@ -419,7 +419,11 @@ class AccessibilityStateExamples extends React.Component {
   };
 
   private checkedPress = () => {
-    this.setState({viewChecked: !this.state.viewChecked});
+    let newChecked = this.state.viewChecked + 1;
+    if (newChecked === 3) {
+      newChecked = 0;
+    }
+    this.setState({viewChecked: newChecked});
   };
 
   private busyPress = () => {
