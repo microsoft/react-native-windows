@@ -105,7 +105,9 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       react::windows::AppThemeModule::name,
-      [appTheme]() mutable { return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme)); },
+      [appTheme = std::move(appTheme)]() mutable {
+        return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme));
+      },
       messageQueue);
 
   modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
