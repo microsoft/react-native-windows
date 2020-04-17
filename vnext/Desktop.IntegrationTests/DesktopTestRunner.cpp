@@ -30,27 +30,6 @@ using std::vector;
 
 namespace Microsoft::React::Test {
 
-class StubNativeModule : public facebook::xplat::module::CxxModule {
- public:
-  StubNativeModule(std::string name) : m_name(std::move(name)) {}
-
-  std::string getName() override {
-    return m_name;
-  }
-
-  std::map<std::string, folly::dynamic> getConstants() override {
-    // CxxModules require a constant or method to register properly
-    return {{"Dummy", "Something"}};
-  }
-
-  std::vector<Method> getMethods() override {
-    return {};
-  }
-
- private:
-  std::string m_name;
-};
-
 shared_ptr<ITestInstance> TestRunner::GetInstance(
     string &&jsBundleFile,
     vector<tuple<string, CxxModule::Provider>> &&cxxModules,
@@ -94,10 +73,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       make_tuple(
           TestDeviceInfoModule::name,
           []() -> unique_ptr<CxxModule> { return make_unique<TestDeviceInfoModule>(); },
-          nativeQueue),
-      make_tuple(
-          "StatusBarManager",
-          []() -> unique_ptr<CxxModule> { return make_unique<StubNativeModule>("StatusBarManager"); },
           nativeQueue)};
 
   // <0> string
