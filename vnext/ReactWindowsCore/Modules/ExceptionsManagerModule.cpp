@@ -110,12 +110,12 @@ std::string ExceptionsManagerModule::RetrieveValueFromMap(
   std::string value;
   auto iterator = map.find(key);
   if (iterator != map.items().end()) {
+    if (iterator->second.isNull()) {
+      return "<Unknown>";
+    }
     if (type == folly::dynamic::STRING) {
       value = iterator->second.asString();
     } else {
-      if (iterator->second.isNull()) {
-        return "<Unknown>";
-      }
       assert(iterator->second.isNumber());
       std::stringstream stream;
       stream << static_cast<int64_t>(iterator->second.asDouble());
