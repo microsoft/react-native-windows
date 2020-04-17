@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Apr 2020 20:53:18 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Apr 2020 00:25:34 GMT and should not be manually modified.
 
+## 0.61.5
+Fri, 17 Apr 2020 00:25:34 GMT
+
+### Patches
+
+- implement accessibilityState (kmelmon@microsoft.com)
 ## 0.61.4
 Wed, 15 Apr 2020 20:53:18 GMT
 
