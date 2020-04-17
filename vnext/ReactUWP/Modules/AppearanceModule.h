@@ -18,17 +18,15 @@ class AppearanceChangeListener final : public Mso::ActiveObject<> {
 
  public:
   AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance) noexcept;
-  void Initialize() noexcept override;
-
-  const char *GetColorScheme() noexcept;
+  const char *GetColorScheme() const noexcept;
 
  private:
   static const char *ToString(ApplicationTheme theme) noexcept;
   void OnColorValuesChanged() noexcept;
 
   UISettings m_uiSettings;
+  UISettings::ColorValuesChanged_revoker m_revoker;
   std::atomic<ApplicationTheme> m_currentTheme;
-  Mso::ManualResetEvent m_inited;
   std::weak_ptr<IReactInstance> m_weakReactInstance;
 };
 
@@ -36,7 +34,7 @@ class AppearanceModule final : public facebook::xplat::module::CxxModule {
  public:
   static constexpr const char *Name = "Appearance";
 
-  AppearanceModule(std::weak_ptr<IReactInstance> &&reactInstance) noexcept;
+  AppearanceModule(Mso::CntPtr<AppearanceChangeListener> &&appearanceListener) noexcept;
   std::string getName() override;
   std::vector<Method> getMethods() override;
 

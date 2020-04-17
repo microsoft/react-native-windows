@@ -15,25 +15,23 @@ using Method = facebook::xplat::module::CxxModule::Method;
 namespace react::uwp {
 
 AppearanceChangeListener::AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance) noexcept
-    : Mso::ActiveObject<>(Mso::DispatchQueue::MainUIQueue()), m_weakReactInstance(std::move(reactInstance)) {}
+    : Mso::ActiveObject<>(Mso::DispatchQueue::MainUIQueue()), m_weakReactInstance(std::move(reactInstance)) {
+  // Ensure we're constructed on the UI thread
+  VerifyIsInQueueElseCrash();
 
-void AppearanceChangeListener::Initialize() noexcept {
   m_currentTheme = Application::Current().RequestedTheme();
 
-  // UISettings will notify us on a background thread regardless of where we construct it or register for events. Let it
-  // be constructed before init, but redirect callbacks to the UI thread where we can check app theme.
-  m_uiSettings.ColorValuesChanged([weakThis{Mso::WeakPtr(this)}](const auto &, const auto &) noexcept {
-    if (auto strongThis = weakThis.GetStrongPtr()) {
-      strongThis->InvokeInQueueStrong([strongThis]() noexcept { strongThis->OnColorValuesChanged(); });
-    }
-  });
-
-  m_inited.Set();
+  // UISettings will notify us on a background thread regardless of where we construct it or register for events.
+  // Redirect callbacks to the UI thread where we can check app theme.
+  m_revoker = m_uiSettings.ColorValuesChanged(
+      winrt::auto_revoke, [weakThis{Mso::WeakPtr(this)}](const auto & /*sender*/, const auto & /*args*/) noexcept {
+        if (auto strongThis = weakThis.GetStrongPtr()) {
+          strongThis->InvokeInQueueStrong([strongThis]() noexcept { strongThis->OnColorValuesChanged(); });
+        }
+      });
 }
 
-const char *AppearanceChangeListener::GetColorScheme() noexcept {
-  // Wait until we have an initial valid value from the UI thread before returning anything
-  m_inited.Wait();
+const char *AppearanceChangeListener::GetColorScheme() const noexcept {
   return ToString(m_currentTheme);
 }
 
@@ -53,8 +51,8 @@ void AppearanceChangeListener::OnColorValuesChanged() noexcept {
   }
 }
 
-AppearanceModule::AppearanceModule(std::weak_ptr<IReactInstance> &&reactInstance) noexcept
-    : m_changeListener(Mso::Make<AppearanceChangeListener>(std::move(reactInstance))) {}
+AppearanceModule::AppearanceModule(Mso::CntPtr<AppearanceChangeListener> &&appearanceListener) noexcept
+    : m_changeListener(std::move(appearanceListener)) {}
 
 std::string AppearanceModule::getName() {
   return AppearanceModule::Name;

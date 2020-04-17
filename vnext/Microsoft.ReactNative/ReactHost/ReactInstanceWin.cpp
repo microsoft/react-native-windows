@@ -152,6 +152,7 @@ void ReactInstanceWin::Initialize() noexcept {
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           strongThis->m_i18nInfo = react::uwp::I18nModule::GetI18nInfo();
+          strongThis->m_appearanceListener = Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance);
         }
       })
       .Then(Queue(), [ this, weakThis = Mso::WeakPtr{this} ]() noexcept {
@@ -199,6 +200,7 @@ void ReactInstanceWin::Initialize() noexcept {
               std::move(m_i18nInfo),
               std::move(m_appState),
               std::move(m_appTheme),
+              std::move(m_appearanceListener),
               m_legacyReactInstance);
 
           cxxModules.emplace_back(

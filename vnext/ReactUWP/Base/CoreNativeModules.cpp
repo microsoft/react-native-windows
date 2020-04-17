@@ -58,6 +58,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> appstate,
     std::shared_ptr<react::windows::AppTheme> appTheme,
+    Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -132,8 +133,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       AppearanceModule::Name,
-      [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
-        return std::make_unique<AppearanceModule>(std::move(wpUwpInstance));
+      [appearanceListener = std::move(appearanceListener)]() mutable {
+        return std::make_unique<AppearanceModule>(std::move(appearanceListener));
       },
       messageQueue);
 

@@ -4,8 +4,10 @@
 #pragma once
 
 #include <Modules/AppThemeModule.h>
+#include <ReactUWP/Modules/AppearanceModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/NativeModuleProvider.h>
+#include <smartPtr/cntPtr.h>
 #include <memory>
 #include <vector>
 
@@ -31,6 +33,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> appstate,
     std::shared_ptr<react::windows::AppTheme> appTheme,
+    Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept;
 
 } // namespace react::uwp
