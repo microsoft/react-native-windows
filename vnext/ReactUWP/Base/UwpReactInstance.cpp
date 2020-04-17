@@ -111,7 +111,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   // Objects that must be created on the UI thread
   auto deviceInfo(std::make_shared<DeviceInfo>(spThis));
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
-  std::shared_ptr<react::windows::AppTheme> appTheme =
+  std::shared_ptr<react::uwp::AppTheme> appTheme =
       std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
   std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
   auto appearanceListener = Mso::Make<AppearanceChangeListener>(spThis);
@@ -201,8 +201,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         m_uiManager,
         m_batchingNativeThread,
         m_defaultNativeThread,
-        deviceInfo,
-        devSettings,
+        std::move(deviceInfo),
         std::move(i18nInfo),
         std::move(appstate),
         std::move(appTheme),

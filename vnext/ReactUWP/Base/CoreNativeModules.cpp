@@ -19,7 +19,6 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
-#include <Modules/StatusBarModule.h>
 #include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
@@ -50,14 +49,13 @@ bool HasPackageIdentity() noexcept {
 } // namespace
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
-    std::shared_ptr<facebook::react::IUIManager> uiManager,
+    const std::shared_ptr<facebook::react::IUIManager> &uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
-    std::shared_ptr<DeviceInfo> deviceInfo,
-    std::shared_ptr<facebook::react::DevSettings> devSettings,
-    const I18nModule::I18nInfo &&i18nInfo,
-    std::shared_ptr<facebook::react::AppState> appstate,
-    std::shared_ptr<react::windows::AppTheme> appTheme,
+    std::shared_ptr<DeviceInfo> &&deviceInfo,
+    I18nModule::I18nInfo &&i18nInfo,
+    std::shared_ptr<facebook::react::AppState> &&appstate,
+    std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
   // Modules
@@ -65,7 +63,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       "UIManager",
-      [uiManager = std::move(uiManager), uiMessageQueue]() {
+      [uiManager, uiMessageQueue]() {
         return facebook::react::createUIManagerModule(std::shared_ptr(uiManager), std::shared_ptr(uiMessageQueue));
       },
       messageQueue);
@@ -105,17 +103,15 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       MakeSerialQueueThread());
 
   modules.emplace_back(
-      react::windows::AppThemeModule::name,
+      react::uwp::AppThemeModule::Name,
       [appTheme = std::move(appTheme)]() mutable {
-        return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme));
+        return std::make_unique<react::uwp::AppThemeModule>(std::move(appTheme));
       },
       messageQueue);
 
   modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
 
   modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
-
-  modules.emplace_back(StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,

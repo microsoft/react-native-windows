@@ -119,9 +119,6 @@
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -438,9 +435,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h">

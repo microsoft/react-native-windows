@@ -216,7 +216,6 @@
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\NativeUIManager.h" />
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h" />
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h" />
@@ -380,7 +379,6 @@
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NativeUIManager.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp" />

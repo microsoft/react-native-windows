@@ -162,7 +162,7 @@ void ReactInstanceWin::Initialize() noexcept {
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
           devSettings->debugHost = GetDebugHost();
-          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundlePath;
+          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName;
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
@@ -195,8 +195,7 @@ void ReactInstanceWin::Initialize() noexcept {
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
-              m_deviceInfo,
-              devSettings,
+              std::move(m_deviceInfo),
               std::move(m_i18nInfo),
               std::move(m_appState),
               std::move(m_appTheme),
@@ -275,8 +274,8 @@ void ReactInstanceWin::Initialize() noexcept {
             if (m_options.DeveloperSettings.IsDevModeEnabled && State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
                   STRING(RN_PLATFORM),
-                  m_options.DeveloperSettings.SourceBundlePath.empty() ? m_options.Identity
-                                                                       : m_options.DeveloperSettings.SourceBundlePath,
+                  m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
+                                                                       : m_options.DeveloperSettings.SourceBundleName,
                   GetSourceBundleHost(),
                   GetSourceBundlePort(),
                   m_options.DeveloperSettings.UseFastRefresh);
