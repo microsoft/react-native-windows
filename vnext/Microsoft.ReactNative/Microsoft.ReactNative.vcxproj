@@ -205,6 +205,7 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
@@ -367,6 +368,7 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />

@@ -10,6 +10,7 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
@@ -55,6 +56,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> &&appstate,
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
+    Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -122,6 +124,13 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       "I18nManager",
       [i18nInfo = std::move(i18nInfo)]() mutable {
         return createI18nModule(std::make_unique<I18nModule>(std::move(i18nInfo)));
+      },
+      messageQueue);
+
+  modules.emplace_back(
+      AppearanceModule::Name,
+      [appearanceListener = std::move(appearanceListener)]() mutable {
+        return std::make_unique<AppearanceModule>(std::move(appearanceListener));
       },
       messageQueue);
 
