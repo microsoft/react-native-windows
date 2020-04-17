@@ -793,6 +793,7 @@ void NativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
         auto context = std::make_unique<YogaContext>(node.GetView());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
+        m_tagsToYogaContext.erase(node.m_tag);
         m_tagsToYogaContext.emplace(node.m_tag, std::move(context));
       }
     } else {

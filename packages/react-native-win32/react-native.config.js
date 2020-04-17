@@ -8,8 +8,4 @@ module.exports = {
         dependencyConfig: (projectRoot, dependencyParams) => null,
       },
     },
-
-    // *****
-    // This is only used when building bundles within react-native-win32.
-    reactNativePath: '.',
   };

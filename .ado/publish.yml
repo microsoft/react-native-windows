@@ -4,11 +4,17 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Nightly publish build
+  branches:
+    include:
+    - master
+
 trigger:
   batch: true
   branches:
     include:
-      - master
       - "*-stable"
 
 pr: none

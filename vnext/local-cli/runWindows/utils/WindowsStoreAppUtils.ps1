@@ -132,14 +132,26 @@ function Install-App {
         [string] $Path, <# Full path to Add-AppDevPackage.ps1 #>
         [switch] $Force = $false
     )
-    if (!$Force -and ((CheckIfNeedDeveloperLicense) -or (CheckIfNeedInstallCertificate (Join-Path $Path ".."))))
+    $needInstallCertificate = CheckIfNeedInstallCertificate (Join-Path $Path "..");
+    $runningElevated = [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
+
+    if (!$Force -and ((CheckIfNeedDeveloperLicense) -or ($needInstallCertificate)))
     {
         # we can't run the script with -force param if license/certificate installation step is required
         Invoke-Expression ("& `"$Path`"")
     }
     else
     {
-        Invoke-Expression ("& `"$Path`" -force")
+        if (!$runningElevated)
+        {
+            $Path = [System.IO.Path]::GetFullPath($Path);
+            $process = Start-Process Powershell -ArgumentList "$Path -force" -Verb RunAs -ErrorAction Stop -PassThru
+            $process.WaitForExit();
+        }
+        else
+        {
+            Invoke-Expression ("& `"$Path`" -force") -ErrorAction Stop
+        }     
     }
 }
 
@@ -178,6 +190,6 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $args = [system.String]::Join(",", $argv)
+    $args = [system.String]::Join(" ", $argv)
     $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
 }

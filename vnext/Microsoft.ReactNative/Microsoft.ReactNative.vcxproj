@@ -106,6 +106,7 @@
         $(FollyDir);
         $(JSI_SourcePath);
         $(ReactNativeDir)ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
@@ -204,6 +205,7 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
@@ -214,7 +216,6 @@
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\NativeUIManager.h" />
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h" />
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h" />
@@ -367,6 +368,7 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />
@@ -377,7 +379,6 @@
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NativeUIManager.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp" />
