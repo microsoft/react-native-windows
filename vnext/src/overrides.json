@@ -683,10 +683,10 @@
     {
       "type": "derived",
       "file": "Libraries\\Utilities\\BackHandler.windows.js",
-      "baseFile": "Libraries\\Utilities\\BackHandler.ios.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "aa2d482b80ae66104d632c75c24646fdcbe916af",
-      "issue": "LEGACY_FIXME"
+      "baseFile": "Libraries\\Utilities\\BackHandler.android.js",
+      "baseVersion": "0.62.2",
+      "baseHash": "b1633b6bb5e3dc842011b09f778626c39bf6b654",
+      "issue": 4629
     },
     {
       "type": "derived",
