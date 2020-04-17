@@ -611,10 +611,13 @@ void ReactRootControl::ReloadViewHost() noexcept {
 }
 
 void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
+  auto weakThis = weak_from_this();
   m_backRequestedRevoker = winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
       winrt::auto_revoke,
-      [this](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
-        args.Handled(OnBackRequested());
+      [weakThis](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
+        if (auto self = weakThis.lock()) {
+          args.Handled(self->OnBackRequested());
+        }
       });
 
   // In addition to handling the BackRequested event, UWP suggests that we listen for other user inputs that should
@@ -629,9 +632,9 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   // Handle keyboard "back" button press
   winrt::KeyboardAccelerator goBack{};
   goBack.Key(winrt::VirtualKey::GoBack);
-  auto weakThis = weak_from_this();
   goBack.Invoked(
-      [weakThis](winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+      [weakThis](
+          winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
         if (auto self = weakThis.lock()) {
           args.Handled(self->OnBackRequested());
         }
@@ -642,7 +645,8 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   winrt::KeyboardAccelerator altLeft{};
   altLeft.Key(winrt::VirtualKey::Left);
   altLeft.Invoked(
-      [weakThis](winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+      [weakThis](
+          winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
         if (auto self = weakThis.lock()) {
           args.Handled(self->OnBackRequested());
         }
@@ -657,7 +661,7 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
 void ReactRootControl::RemoveBackHandlers() noexcept {
   m_backRequestedRevoker.revoke();
   if (auto rootView = m_weakRootView.get()) {
-    if(auto element = rootView.try_as<winrt::UIElement>()) {
+    if (auto element = rootView.try_as<winrt::UIElement>()) {
       element.KeyboardAccelerators().Clear();
     }
   }
