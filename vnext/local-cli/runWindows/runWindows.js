@@ -143,7 +143,7 @@ module.exports = {
     },
     {
       command: '--arch [string]',
-      description: 'The build architecture (ARM, x86, x64)',
+      description: 'The build architecture (ARM, ARM64, x86, x64)',
       default: 'x86',
     },
     {

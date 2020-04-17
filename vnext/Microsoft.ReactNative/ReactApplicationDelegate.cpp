@@ -30,8 +30,8 @@ static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstrin
     while (std::getline(argumentStream, token, delimiter)) {
       if (token == L"-?") {
         std::cout << "Options:" << std::endl
-                  << "  directDebugging <port>    Enable direct debugging on specified port." << std::endl;
-      } else if (token == L"directDebugging") {
+                  << "  --direct-debugging <port>    Enable direct debugging on specified port." << std::endl;
+      } else if (token == L"--direct-debugging") {
         if (std::getline(argumentStream, token, delimiter)) {
           const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
           hostImpl->InstanceSettings().UseWebDebugger(false);

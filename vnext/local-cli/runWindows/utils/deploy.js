@@ -162,11 +162,18 @@ async function deployToDesktop(options, verbose) {
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
 
-  let args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+  let args = ['--remote-debugging', options.proxy ? 'true' : 'false'];
 
-  const port = parseInt(options.directDebugging, 10);
-  if (!isNaN(port)) {
-    args.push('directDebugging', port.toString());
+  if (options.directDebugging) {
+    const port = parseInt(options.directDebugging, 10);
+    if (!isNaN(port) && port > 1024 && port < 65535) {
+      args.push('--direct-debugging', port.toString());
+    } else {
+      newError(
+        'Direct debugging port not specified, invalid or out of bounds.',
+      );
+      process.exit(1);
+    }
   }
 
   const popd = pushd(options.root);
