@@ -190,6 +190,6 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $args = [system.String]::Join(",", $argv)
+    $args = [system.String]::Join(" ", $argv)
     $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
 }

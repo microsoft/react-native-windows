@@ -116,16 +116,15 @@ function getSolutionFile(options) {
 }
 
 function parseMsBuildProps(options) {
+  let result = {};
   if (options.msbuildprops) {
-    var result = {};
-    var props = options.msbuildprops.split(',');
-    for (var i = 0; i < props.length; i++) {
-      var prop = props[i].split('=');
+    const props = options.msbuildprops.split(',');
+    for (let i = 0; i < props.length; i++) {
+      const prop = props[i].split('=');
       result[prop[0]] = prop[1];
     }
-    return result;
   }
-  return null;
+  return result;
 }
 
 module.exports = {
