@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Apr 2020 23:02:16 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Apr 2020 00:04:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.42
+
+Fri, 17 Apr 2020 00:04:27 GMT
+
+### Changes
+
+- run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now. (asklar@winse.microsoft.com)
+- Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows (acoates@microsoft.com)
+- implement accessibilityState (kmelmon@microsoft.com)
 
 ## 0.0.0-master.41
 

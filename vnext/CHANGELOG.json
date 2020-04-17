@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 17 Apr 2020 00:04:27 GMT",
+      "tag": "react-native-windows_v0.0.0-master.42",
+      "version": "0.0.0-master.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now.",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "4c320cffcdae239af2f00bba1982f71d65146d05",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows",
+            "author": "acoates@microsoft.com",
+            "commit": "83f6067f50abd97e6bb2f59d41afe9dad04e26d0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "implement accessibilityState",
+            "author": "kmelmon@microsoft.com",
+            "commit": "9718f847a204dc971e5ea2e239ffb688db282c73",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Apr 2020 23:02:16 GMT",
       "tag": "react-native-windows_v0.0.0-master.41",
       "version": "0.0.0-master.41",
