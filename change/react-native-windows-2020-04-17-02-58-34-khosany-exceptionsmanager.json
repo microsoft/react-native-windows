@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixing ExceptionsManagerModule",
-  "packageName": "react-native-windows",
-  "email": "khosany@microsoft.com",
-  "commit": "5349aeb14874490a3c910d85287e98f1a7510d9e",
-  "date": "2020-04-17T09:58:34.258Z"
-}

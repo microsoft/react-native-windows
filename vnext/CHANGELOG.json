@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 17 Apr 2020 14:06:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.162",
+      "version": "0.60.0-vnext.162",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing ExceptionsManagerModule",
+            "author": "khosany@microsoft.com",
+            "commit": "5349aeb14874490a3c910d85287e98f1a7510d9e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Apr 2020 15:37:50 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.161",
       "version": "0.60.0-vnext.161",
