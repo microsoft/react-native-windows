@@ -155,7 +155,9 @@
     <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <!-- Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122 -->
+    <ClCompile Condition="'$(Platform)' == 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" FloatingPointModel="Strict" />
+    <ClCompile Condition="'$(Platform)' != 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
