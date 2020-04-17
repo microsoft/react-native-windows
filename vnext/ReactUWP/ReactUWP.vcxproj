@@ -65,6 +65,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
     <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -77,6 +78,8 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <!--
@@ -106,7 +109,7 @@
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)JSI\Shared;
-        $(ReactNativeWindowsDir)Pch;
+        $(ReactNativeWindowsDir)ReactUwp\Pch;
         $(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;
         $(ReactNativeWindowsDir)ReactWindowsCore;
         $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
@@ -180,6 +183,7 @@
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h" />
+    <ClInclude Include="Modules\AppearanceModule.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
@@ -275,6 +279,7 @@
     <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
+    <ClCompile Include="Modules\AppearanceModule.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
