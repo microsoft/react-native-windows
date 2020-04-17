@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "StatusBarManagerModule.h"
-#include <VersionHelpers.h>
 
 using Method = facebook::xplat::module::CxxModule::Method;
 
