@@ -69,14 +69,14 @@ void MockMessageWebSocket::Close(uint16_t code, hstring const &reason) const {
 
 // IMessageWebSocket
 MessageWebSocketControl MockMessageWebSocket::Control() const {
-  //if (Mocks.Control)
+  // if (Mocks.Control)
   //  return Mocks.Control();
 
   throw exception("Not implemented");
 }
 
 MessageWebSocketInformation MockMessageWebSocket::Information() const {
-  //if (Mocks.Information)
+  // if (Mocks.Information)
   //  return Mocks.Information();
 
   throw exception("Not implemented");
@@ -84,7 +84,7 @@ MessageWebSocketInformation MockMessageWebSocket::Information() const {
 
 event_token MockMessageWebSocket::MessageReceived(
     TypedEventHandler<IMessageWebSocket, IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const {
-  //if (Mocks.MessageReceivedToken)
+  // if (Mocks.MessageReceivedToken)
   //  return Mocks.MessageReceivedToken(eventHandler);
 
   throw exception("Not implemented");
@@ -93,14 +93,14 @@ event_token MockMessageWebSocket::MessageReceived(
 IMessageWebSocket::MessageReceived_revoker MockMessageWebSocket::MessageReceived(
     auto_revoke_t autoRevoke,
     TypedEventHandler<IMessageWebSocket, IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const {
-  //if (Mocks.MessageReceivedRevoker)
+  // if (Mocks.MessageReceivedRevoker)
   //  return Mocks.MessageReceivedRevoker(autoRevoke, eventHandler);
 
   throw exception("Not implemented");
 }
 
 void MockMessageWebSocket::MessageReceived(event_token const &eventCookie) const noexcept {
-  //if (Mocks.MessageReceivedVoid)
+  // if (Mocks.MessageReceivedVoid)
   //  Mocks.MessageReceivedVoid(eventCookie);
 }
 
