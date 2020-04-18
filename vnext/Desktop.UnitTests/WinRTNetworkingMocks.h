@@ -9,7 +9,7 @@
 namespace Microsoft::React::Test {
 
 struct MockMessageWebSocket
-    : public winrt::implements<MockMessageWebSocket, winrt::Windows::Networking::Sockets::IWebSocket> {
+    : public winrt::implements<MockMessageWebSocket, winrt::Windows::Networking::Sockets::IMessageWebSocket> {
   struct Mocks {
     // IWebSocket
     std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
@@ -42,15 +42,15 @@ struct MockMessageWebSocket
 
     std::function<winrt::event_token(
         winrt::Windows::Foundation::TypedEventHandler<
-            winrt::Windows::Networking::Sockets::IMessageWebSocket,
-            winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
+            winrt::Windows::Networking::Sockets::MessageWebSocket,
+            winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
         MessageReceivedToken;
 
     std::function<winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker(
         winrt::auto_revoke_t,
         winrt::Windows::Foundation::TypedEventHandler<
-            winrt::Windows::Networking::Sockets::IMessageWebSocket,
-            winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
+            winrt::Windows::Networking::Sockets::MessageWebSocket,
+            winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
         MessageReceivedRevoker;
 
     std::function<void(winrt::event_token const &)> MessageReceivedVoid;
@@ -89,26 +89,19 @@ struct MockMessageWebSocket
 
 #pragma region IMessageWebSocket overrides
 
-  // Methods
-
-  // TODO: IMessageWebSocketControl?
   winrt::Windows::Networking::Sockets::MessageWebSocketControl Control() const;
-
   winrt::Windows::Networking::Sockets::MessageWebSocketInformation Information() const;
-
-  // Events
-
   winrt::event_token MessageReceived(
       winrt::Windows::Foundation::TypedEventHandler<
-          winrt::Windows::Networking::Sockets::IMessageWebSocket,
-          winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const;
-
+          winrt::Windows::Networking::Sockets::MessageWebSocket,
+          winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &eventHandler) const;
+  // using MessageReceived_revoker = winrt::impl::event_revoker<winrt::Windows::Networking::Sockets::IMessageWebSocket,
+  // &winrt::impl::abi_t<winrt::Windows::Networking::Sockets::IMessageWebSocket>::remove_MessageReceived>;
   winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker MessageReceived(
       winrt::auto_revoke_t,
       winrt::Windows::Foundation::TypedEventHandler<
-          winrt::Windows::Networking::Sockets::IMessageWebSocket,
-          winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const;
-
+          winrt::Windows::Networking::Sockets::MessageWebSocket,
+          winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &eventHandler) const;
   void MessageReceived(winrt::event_token const &eventCookie) const noexcept;
 
 #pragma endregion IMessageWebSocket overrides

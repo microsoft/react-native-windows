@@ -63,6 +63,13 @@
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
+      <!--
+        WINRT_LEAN_AND_MEAN - Allow out-of-library interface implementations
+      -->
+      <UndefinePreprocessorDefinitions>
+        WINRT_LEAN_AND_MEAN;
+        %(UndefinePreprocessorDefinitions)
+      </UndefinePreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
