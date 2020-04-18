@@ -23,30 +23,27 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   TEST_METHOD(ConnectSucceedsCloseSucceeds) {
     bool connected = true;
     string errorMessage;
-    auto imws{ winrt::make<MockMessageWebSocket>() };
-    auto mws{ imws.as<MockMessageWebSocket>() };
-    mws->Mocks.ConnectAsync = [](const Uri&) -> IAsyncAction
-    {
-      return IAsyncAction();
-    };
-    //mws->Mocks.MessageReceivedToken = [](TypedEventHandler<MessageWebSocket,
-    //MessageWebSocketMessageReceivedEventArgs> const&) -> event_token
+    auto imws{winrt::make<MockMessageWebSocket>()};
+    auto mws{imws.as<MockMessageWebSocket>()};
+    mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return IAsyncAction(); };
+    // mws->Mocks.MessageReceivedToken = [](TypedEventHandler<MessageWebSocket,
+    // MessageWebSocketMessageReceivedEventArgs> const&) -> event_token
     //{
     //  return event_token{};
     //};
-    mws->Mocks.Close = [](uint16_t, const hstring&) {};
+    mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
-    //auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{ L"ws://host:0" },
-    //CertExceptions{});
+    // auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{ L"ws://host:0" },
+    // CertExceptions{});
 
-    //rc->SetOnConnect([&connected]() { connected = true; });
-    //rc->SetOnError([&errorMessage](Error &&error) { errorMessage = errorMessage; });
+    // rc->SetOnConnect([&connected]() { connected = true; });
+    // rc->SetOnError([&errorMessage](Error &&error) { errorMessage = errorMessage; });
 
     //// Exercise resource methods
-    //rc->Connect({}, {});
+    // rc->Connect({}, {});
 
-    //Assert::AreNotEqual({}, errorMessage);
-    //Assert::IsTrue(connected);
+    // Assert::AreNotEqual({}, errorMessage);
+    // Assert::IsTrue(connected);
   }
 
   TEST_METHOD(ConnectFails) {
