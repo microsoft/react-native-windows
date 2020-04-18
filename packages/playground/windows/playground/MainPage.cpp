@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+#include "winrt/Microsoft.ReactNative.h"
 #include "winrt/TreeDumpLibrary.h"
 
 using namespace winrt;

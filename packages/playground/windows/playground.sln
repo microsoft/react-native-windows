@@ -40,7 +40,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared", "..\..\..\vnext\Sh
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeDumpLibrary", "..\..\E2ETest\windows\TreeDumpLibrary\TreeDumpLibrary.csproj", "{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeDumpLibrary", "TreeDumpLibrary\TreeDumpLibrary.csproj", "{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

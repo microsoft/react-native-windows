@@ -39,7 +39,6 @@
   <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props" />
   <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props" />
   <!-- End Custom .NET Native targets -->
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -183,18 +182,12 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+    <ProjectReference Include="..\TreeDumpLibrary\TreeDumpLibrary.csproj">
+      <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\seguiemj.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="TreeDumpLibrary">
-      <HintPath>..\TreeDumpLibrary\bin\x86\Debug\TreeDumpLibrary.winmd</HintPath>
-      <IsWinMDFile>true</IsWinMDFile>
-    </Reference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
@@ -219,11 +212,11 @@
   <Target Name="AfterInjectNetCoreFramework" AfterTargets="InjectNetCoreFramework">
     <ItemGroup>
       <PackagingOutputs Include="@(_InjectNetCoreFrameworkPayload)" Condition="'%(_InjectNetCoreFrameworkPayload.NuGetPackageId)' == '$(_CoreRuntimePackageId)' and '$(UseDotNetNativeToolchain)' != 'true'">
-      <TargetPath>%(Filename)%(Extension)</TargetPath>
-      <ProjectName>$(ProjectName)</ProjectName>
-      <OutputGroup>CopyLocalFilesOutputGroup</OutputGroup>
-    </PackagingOutputs>
-  </ItemGroup>
+        <TargetPath>%(Filename)%(Extension)</TargetPath>
+        <ProjectName>$(ProjectName)</ProjectName>
+        <OutputGroup>CopyLocalFilesOutputGroup</OutputGroup>
+      </PackagingOutputs>
+    </ItemGroup>
   </Target>
   <!-- Import all of the .NET Native / CoreCLR targets at the end of the project -->
   <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
@@ -237,5 +230,4 @@
   <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets" />
   <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets" />
   <!-- End Custom .NET Native targets -->
-
 </Project>
