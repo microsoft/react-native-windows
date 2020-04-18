@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add support for React Native BackHandler API",
-  "packageName": "react-native-windows",
-  "email": "jahiggin@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-16T18:09:41.547Z"
-}

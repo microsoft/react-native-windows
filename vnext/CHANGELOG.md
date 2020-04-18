@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 17 Apr 2020 00:04:27 GMT and should not be manually modified.
+This log was last generated on Sat, 18 Apr 2020 00:04:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.43
+
+Sat, 18 Apr 2020 00:04:34 GMT
+
+### Changes
+
+- Allow enabling of direct debugging through the CLI. (12337821+nasadigital@users.noreply.github.com)
+- Implelent Shared StatusBarManagerModule and Do Module Cleanup (ngerlem@microsoft.com)
+- Implement AppearanceModule (ngerlem@microsoft.com)
+- Add support for React Native BackHandler API (jahiggin@microsoft.com)
+- remove AccessibilityStates (kmelmon@microsoft.com)
+- Fix issue with yoga layout in x64 release (acoates@microsoft.com)
 
 ## 0.0.0-master.42
 

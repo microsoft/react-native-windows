@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 18 Apr 2020 00:04:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implelent Shared StatusBarManagerModule and Do Module Cleanup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "609c18ca016e9e4b5831890bad56309f02280566",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Apr 2020 22:26:36 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.5",
       "version": "0.0.0-master.5",
