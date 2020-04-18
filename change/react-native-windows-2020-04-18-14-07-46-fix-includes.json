@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "applying package updates ***NO_CI***",
+  "comment": "fix include paths",
   "packageName": "react-native-windows",
   "email": "kmelmon@microsoft.com",
   "dependentChangeType": "patch",
