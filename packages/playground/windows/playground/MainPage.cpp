@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+#include "winrt/TreeDumpLibrary.h"
 
 using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
@@ -53,6 +54,15 @@ void MainPage::OnLoadClick(
   x_rootElement().Children().Clear();
   x_rootElement().Children().Append(m_reactRootView);
 }
+
+void MainPage::UpdateTreeDump(
+    Windows::Foundation::IInspectable const & /*sender*/,
+    Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
+  
+    auto dump = TreeDumpLibrary::VisualTreeDumper::DumpTree(
+      x_rootElement(), nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
+}
+
 
 void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionChanged(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,

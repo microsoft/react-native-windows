@@ -133,6 +133,11 @@
                 VerticalAlignment="Center"
                 InputScope="Number"
                 MaxLength="5" />
+            <Button x:Name="x_TreeDump"
+                Width="20"
+                Content="tree dump goes here"
+                Click="UpdateTreeDump"/>
+
         </StackPanel>
 
         <Grid x:Name="x_rootElement"
