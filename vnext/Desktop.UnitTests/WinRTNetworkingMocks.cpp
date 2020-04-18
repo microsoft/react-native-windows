@@ -39,7 +39,7 @@ void MockMessageWebSocket::SetRequestHeader(hstring const &headerName, hstring c
 }
 
 event_token MockMessageWebSocket::Closed(
-    TypedEventHandler<IWebSocket, IWebSocketClosedEventArgs> const &eventHandler) const {
+    TypedEventHandler<IWebSocket, WebSocketClosedEventArgs> const &eventHandler) const {
   if (Mocks.ClosedToken)
     return Mocks.ClosedToken(eventHandler);
 
@@ -48,7 +48,7 @@ event_token MockMessageWebSocket::Closed(
 
 IWebSocket::Closed_revoker MockMessageWebSocket::Closed(
     auto_revoke_t autoRevoke,
-    TypedEventHandler<IWebSocket, IWebSocketClosedEventArgs> const &eventHandler) const {
+    TypedEventHandler<IWebSocket, WebSocketClosedEventArgs> const &eventHandler) const {
   if (Mocks.ClosedRevoker)
     return Mocks.ClosedRevoker(autoRevoke, eventHandler);
 

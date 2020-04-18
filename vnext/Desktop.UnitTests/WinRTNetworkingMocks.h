@@ -8,7 +8,8 @@
 
 namespace Microsoft::React::Test {
 
-struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessageWebSocket {
+struct MockMessageWebSocket
+    : public winrt::implements<MockMessageWebSocket, winrt::Windows::Networking::Sockets::IWebSocket> {
   struct Mocks {
     // IWebSocket
     std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
@@ -22,14 +23,14 @@ struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessa
 
     std::function<winrt::event_token(winrt::Windows::Foundation::TypedEventHandler<
                                      winrt::Windows::Networking::Sockets::IWebSocket,
-                                     winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
+                                     winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &) /*const*/>
         ClosedToken;
 
-    std::function<Closed_revoker(
+    std::function<winrt::Windows::Networking::Sockets::IMessageWebSocket::Closed_revoker(
         winrt::auto_revoke_t,
         winrt::Windows::Foundation::TypedEventHandler<
             winrt::Windows::Networking::Sockets::IWebSocket,
-            winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
+            winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &) /*const*/>
         ClosedRevoker;
 
     std::function<void(winrt::event_token const &) /*const*/ /*noexcept*/> ClosedVoid;
@@ -45,7 +46,7 @@ struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessa
             winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
         MessageReceivedToken;
 
-    std::function<MessageReceived_revoker(
+    std::function<winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker(
         winrt::auto_revoke_t,
         winrt::Windows::Foundation::TypedEventHandler<
             winrt::Windows::Networking::Sockets::IMessageWebSocket,
@@ -74,13 +75,13 @@ struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessa
   // TODO: WebSocketClosedEventArgs instead?
   winrt::event_token Closed(winrt::Windows::Foundation::TypedEventHandler<
                             winrt::Windows::Networking::Sockets::IWebSocket,
-                            winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &eventHandler) const;
+                            winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &eventHandler) const;
 
-  Closed_revoker Closed(
+  winrt::Windows::Networking::Sockets::IMessageWebSocket::Closed_revoker Closed(
       winrt::auto_revoke_t,
       winrt::Windows::Foundation::TypedEventHandler<
           winrt::Windows::Networking::Sockets::IWebSocket,
-          winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &eventHandler) const;
+          winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &eventHandler) const;
 
   void Closed(winrt::event_token const &eventCookie) const noexcept;
 
@@ -102,7 +103,7 @@ struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessa
           winrt::Windows::Networking::Sockets::IMessageWebSocket,
           winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &eventHandler) const;
 
-  MessageReceived_revoker MessageReceived(
+  winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker MessageReceived(
       winrt::auto_revoke_t,
       winrt::Windows::Foundation::TypedEventHandler<
           winrt::Windows::Networking::Sockets::IMessageWebSocket,
