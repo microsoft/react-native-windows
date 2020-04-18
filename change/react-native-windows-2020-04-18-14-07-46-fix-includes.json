@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "applying package updates ***NO_CI***",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-18T21:07:46.779Z"
+}
