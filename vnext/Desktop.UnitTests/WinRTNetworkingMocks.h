@@ -9,53 +9,53 @@
 namespace Microsoft::React::Test {
 
 struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessageWebSocket {
-#pragma region Mocks
+  struct Mocks {
+    // IWebSocket
+    std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
+        ConnectAsync;
 
-  // IWebSocket
-  std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
-      ConnectAsyncMock;
+    std::function<void(winrt::param::hstring const &, winrt::param::hstring const &) /*const*/> SetRequestHeader;
 
-  std::function<void(winrt::param::hstring const &, winrt::param::hstring const &) /*const*/> SetRequestHeaderMock;
+    std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> OutputStream;
 
-  std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> OutputStreamMock;
+    std::function<void(std::uint16_t, winrt::param::hstring const &) /*const*/> Close;
 
-  std::function<void(std::uint16_t, winrt::param::hstring const &) /*const*/> CloseMock;
+    std::function<winrt::event_token(winrt::Windows::Foundation::TypedEventHandler<
+                                     winrt::Windows::Networking::Sockets::IWebSocket,
+                                     winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
+        ClosedToken;
 
-  std::function<winrt::event_token(winrt::Windows::Foundation::TypedEventHandler<
-                                   winrt::Windows::Networking::Sockets::IWebSocket,
-                                   winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
-      ClosedTokenMock;
+    std::function<Closed_revoker(
+        winrt::auto_revoke_t,
+        winrt::Windows::Foundation::TypedEventHandler<
+            winrt::Windows::Networking::Sockets::IWebSocket,
+            winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
+        ClosedRevoker;
 
-  std::function<Closed_revoker(
-      winrt::auto_revoke_t,
-      winrt::Windows::Foundation::TypedEventHandler<
-          winrt::Windows::Networking::Sockets::IWebSocket,
-          winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs> const &) /*const*/>
-      ClosedRevokerMock;
+    std::function<void(winrt::event_token const &) /*const*/ /*noexcept*/> ClosedVoid;
 
-  std::function<void(winrt::event_token const &) /*const*/ /*noexcept*/> ClosedVoidMock;
+    // IMessageWebSocket
+    std::function<winrt::Windows::Networking::Sockets::MessageWebSocketControl() /*const*/> Control;
 
-  // IMessageWebSocket
-  std::function<winrt::Windows::Networking::Sockets::MessageWebSocketControl() /*const*/> ControlMock;
+    std::function<winrt::Windows::Networking::Sockets::MessageWebSocketInformation() /*const*/> Information;
 
-  std::function<winrt::Windows::Networking::Sockets::MessageWebSocketInformation() /*const*/> InformationMock;
+    std::function<winrt::event_token(
+        winrt::Windows::Foundation::TypedEventHandler<
+            winrt::Windows::Networking::Sockets::IMessageWebSocket,
+            winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
+        MessageReceivedToken;
 
-  std::function<winrt::event_token(
-      winrt::Windows::Foundation::TypedEventHandler<
-          winrt::Windows::Networking::Sockets::IMessageWebSocket,
-          winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
-      MessageReceivedTokenMock;
+    std::function<MessageReceived_revoker(
+        winrt::auto_revoke_t,
+        winrt::Windows::Foundation::TypedEventHandler<
+            winrt::Windows::Networking::Sockets::IMessageWebSocket,
+            winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
+        MessageReceivedRevoker;
 
-  std::function<MessageReceived_revoker(
-      winrt::auto_revoke_t,
-      winrt::Windows::Foundation::TypedEventHandler<
-          winrt::Windows::Networking::Sockets::IMessageWebSocket,
-          winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
-      MessageReceivedRevokerMock;
+    std::function<void(winrt::event_token const &)> MessageReceivedVoid;
+  };
 
-  std::function<void(winrt::event_token const &)> MessageReceivedVoidMock;
-
-#pragma endregion
+  Mocks Mocks;
 
 #pragma region IWebSocket overrides
 
@@ -115,39 +115,41 @@ struct MockMessageWebSocket : public winrt::Windows::Networking::Sockets::IMessa
 }; // MockMessageWebSocket
 
 struct MockDataWriter : public winrt::Windows::Storage::Streams::IDataWriter {
-#pragma region Mocks
+  struct Mocks {
+    std::function<std::uint32_t() /*const*/> UnstoredBufferLength;
+    std::function<winrt::Windows::Storage::Streams::UnicodeEncoding() /*const*/> GetUnicodeEncoding;
+    std::function<void(winrt::Windows::Storage::Streams::UnicodeEncoding const &value) /*const*/> SetUnicodeEncoding;
+    std::function<winrt::Windows::Storage::Streams::ByteOrder() /*const*/> GetByteOrder;
+    std::function<void(winrt::Windows::Storage::Streams::ByteOrder const &value) /*const*/> SetByteOrder;
+    std::function<void(std::uint8_t value) /*const*/> WriteByte;
+    std::function<void(winrt::array_view<std::uint8_t const> value) /*const*/> WriteBytes;
+    std::function<void(winrt::Windows::Storage::Streams::IBuffer const &buffer) /*const*/> WriteBuffer;
+    std::function<void(
+        winrt::Windows::Storage::Streams::IBuffer const &buffer,
+        std::uint32_t start,
+        std::uint32_t count) /*const*/>
+        WriteBufferRange;
+    std::function<void(bool value) /*const*/> WriteBoolean;
+    std::function<void(winrt::guid const &value) /*const*/> WriteGuid;
+    std::function<void(std::int16_t value) /*const*/> WriteInt16;
+    std::function<void(std::int32_t value) /*const*/> WriteInt32;
+    std::function<void(std::int64_t value) /*const*/> WriteInt64;
+    std::function<void(std::uint16_t value) /*const*/> WriteUInt16;
+    std::function<void(std::uint32_t value) /*const*/> WriteUInt32;
+    std::function<void(std::uint64_t value) /*const*/> WriteUInt64;
+    std::function<void(float value) /*const*/> WriteSingle;
+    std::function<void(double value) /*const*/> WriteDouble;
+    std::function<void(winrt::Windows::Foundation::DateTime const &value) /*const*/> WriteDateTime;
+    std::function<void(winrt::Windows::Foundation::TimeSpan const &value) /*const*/> WriteTimeSpan;
+    std::function<std::uint32_t(winrt::param::hstring const &value) /*const*/> WriteString;
+    std::function<std::uint32_t(winrt::param::hstring const &value) /*const*/> MeasureString;
+    std::function<winrt::Windows::Storage::Streams::DataWriterStoreOperation() /*const*/> StoreAsync;
+    std::function<winrt::Windows::Foundation::IAsyncOperation<bool>() /*const*/> FlushAsync;
+    std::function<winrt::Windows::Storage::Streams::IBuffer() /*const*/> DetachBuffer;
+    std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> DetachStream;
+  };
 
-  std::function<std::uint32_t() /*const*/> UnstoredBufferLengthMock;
-  std::function<winrt::Windows::Storage::Streams::UnicodeEncoding() /*const*/> GetUnicodeEncodingMock;
-  std::function<void(winrt::Windows::Storage::Streams::UnicodeEncoding const &value) /*const*/> SetUnicodeEncodingMock;
-  std::function<winrt::Windows::Storage::Streams::ByteOrder() /*const*/> GetByteOrderMock;
-  std::function<void(winrt::Windows::Storage::Streams::ByteOrder const &value) /*const*/> SetByteOrderMock;
-  std::function<void(std::uint8_t value) /*const*/> WriteByteMock;
-  std::function<void(winrt::array_view<std::uint8_t const> value) /*const*/> WriteBytesMock;
-  std::function<void(winrt::Windows::Storage::Streams::IBuffer const &buffer) /*const*/> WriteBufferMock;
-  std::function<
-      void(winrt::Windows::Storage::Streams::IBuffer const &buffer, std::uint32_t start, std::uint32_t count) /*const*/>
-      WriteBufferRangeMock;
-  std::function<void(bool value) /*const*/> WriteBooleanMock;
-  std::function<void(winrt::guid const &value) /*const*/> WriteGuidMock;
-  std::function<void(std::int16_t value) /*const*/> WriteInt16Mock;
-  std::function<void(std::int32_t value) /*const*/> WriteInt32Mock;
-  std::function<void(std::int64_t value) /*const*/> WriteInt64Mock;
-  std::function<void(std::uint16_t value) /*const*/> WriteUInt16Mock;
-  std::function<void(std::uint32_t value) /*const*/> WriteUInt32Mock;
-  std::function<void(std::uint64_t value) /*const*/> WriteUInt64Mock;
-  std::function<void(float value) /*const*/> WriteSingleMock;
-  std::function<void(double value) /*const*/> WriteDoubleMock;
-  std::function<void(winrt::Windows::Foundation::DateTime const &value) /*const*/> WriteDateTimeMock;
-  std::function<void(winrt::Windows::Foundation::TimeSpan const &value) /*const*/> WriteTimeSpanMock;
-  std::function<std::uint32_t(winrt::param::hstring const &value) /*const*/> WriteStringMock;
-  std::function<std::uint32_t(winrt::param::hstring const &value) /*const*/> MeasureStringMock;
-  std::function<winrt::Windows::Storage::Streams::DataWriterStoreOperation() /*const*/> StoreAsyncMock;
-  std::function<winrt::Windows::Foundation::IAsyncOperation<bool>() /*const*/> FlushAsyncMock;
-  std::function<winrt::Windows::Storage::Streams::IBuffer() /*const*/> DetachBufferMock;
-  std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> DetachStreamMock;
-
-#pragma endregion Mocks
+  Mocks Mocks;
 
 #pragma region IDataWriter overrides
 

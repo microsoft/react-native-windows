@@ -49,7 +49,8 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   }
 
   TEST_METHOD(ConnectFails) {
-    auto mws{winrt::make<MockMessageWebSocket>()};
+    // auto mws{winrt::make<MockMessageWebSocket>()};
+    MockMessageWebSocket mws;
     MockDataWriter dw;
     Uri uri(L"ws://host:0");
   }
