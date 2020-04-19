@@ -35,6 +35,10 @@ export class BasePage {
     );
   }
 
+  treeDump() {
+    return this.treeDumpButton.getText();
+  }
+
   // getTreeDumpResult() {
   //   var testResult = false;
   //   const maxWait = 20;
@@ -64,6 +68,10 @@ export class BasePage {
 
   protected get loadButton() {
     return By('x_LoadButton');
+  }
+
+  protected get treeDumpButton() {
+    return By('x_TreeDump');
   }
 
   private get reactControlErrorMessage() {

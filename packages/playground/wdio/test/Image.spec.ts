@@ -4,21 +4,30 @@
  */
 
 import HomePage from '../pages/HomePage';
-import { By } from '../pages/BasePage';
+// import { By } from '../pages/BasePage';
 // import ImageTestPage from '../pages/ImageTestPage';
 import assert from 'assert';
+// import WebdriverIO from 'webdriverio';
 
 beforeAll(() => {
   HomePage.loadRNTester();
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
   HomePage.waitForPageLoaded();
   // HomePage.clickAndGotoImagePage();
 });
 
 describe('basicTest', () => {
   it('basicTest', () => {
-    const treedump = By('x_TreeDump');
-    const size = treedump.getSize();
-    assert(size.width == 20, `size = ${size}`);
+
+    const port = $$('x_DebuggerPort');
+    assert(port);
+    // assert(`port = ${port.getText()}`);
+
+    const treedumpText = HomePage.treeDump();
+    assert(treedumpText == "tree dump goes here");
+    // const treedump = By('x_TreeDump');
+    // const size = treedump.getSize();
+    // assert(size.width == 20, `size = ${size}`);
   });
 });
 // describe('ImageWithoutBorderTest', () => {

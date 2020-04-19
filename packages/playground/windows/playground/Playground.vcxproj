@@ -74,6 +74,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <Reference>
+      <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+    </Reference>
+  </ItemDefinitionGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -182,10 +187,23 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
     <ProjectReference Include="..\TreeDumpLibrary\TreeDumpLibrary.csproj">
       <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
+    <Reference Include="..\TreeDumpLibrary\bin\$(Platform)\$(Configuration)\TreeLibraryDump.winmd" />
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <Reference>
+        <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+    </Reference>
+</ItemDefinitionGroup>
   <ItemGroup>
     <Font Include="Assets\seguiemj.ttf" />
   </ItemGroup>

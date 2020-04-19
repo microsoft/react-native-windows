@@ -69,7 +69,7 @@ function OverrideHyperV() {
   }
 }
 
-OverrideHyperV();
+// OverrideHyperV();
 
 const Launcher = require('@wdio/cli').default;
 

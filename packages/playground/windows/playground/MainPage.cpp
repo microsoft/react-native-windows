@@ -62,6 +62,7 @@ void MainPage::UpdateTreeDump(
   
     auto dump = TreeDumpLibrary::VisualTreeDumper::DumpTree(
       x_rootElement(), nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
+    x_TreeDump().Content(winrt::box_value(dump));
 }
 
 
