@@ -10,14 +10,17 @@ import assert from 'assert';
 // import WebdriverIO from 'webdriverio';
 
 beforeAll(() => {
-  HomePage.loadRNTester();
-  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
-  HomePage.waitForPageLoaded();
+  // HomePage.loadRNTester();
+  // Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
+  // HomePage.waitForPageLoaded();
   // HomePage.clickAndGotoImagePage();
 });
 
 describe('basicTest', () => {
-  it('basicTest', () => {
+  it('basicTest', async () => {
+    await browser.waitUntil(() => $('~x_LoadButton') != undefined);// HomePage.isPageLoaded);
+    assert($('~x_LoadButton') != undefined);
+    HomePage.loadRNTester();
 
     const port = $$('x_DebuggerPort');
     assert(port);

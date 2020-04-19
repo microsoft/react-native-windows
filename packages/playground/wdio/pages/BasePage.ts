@@ -11,7 +11,7 @@
 const REACT_CONTROL_ERROR_TEST_ID = 'ReactControlErrorMessage';
 
 export function By(testId: string): WebdriverIO.Element {
-  return $('~' + testId);
+  return $(`~${testId}`);
 }
 
 export function wait(timeout: number) {
@@ -31,7 +31,7 @@ export class BasePage {
         return this.isPagedLoadedOrLoadBundleError();
       },
       this.timeoutForPageLoaded(timeout),
-      'Wait for page ' + this.constructor.name + ' timeout'
+      `Wait for page ${this.constructor.name} timeout`
     );
   }
 

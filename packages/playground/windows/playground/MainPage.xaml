@@ -134,7 +134,7 @@
                 InputScope="Number"
                 MaxLength="5" />
             <Button x:Name="x_TreeDump"
-                Width="20"
+                Width="60" Height="36"
                 Content="tree dump goes here"
                 Click="UpdateTreeDump"/>
 

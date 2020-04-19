@@ -3,10 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Media;
 
 namespace TreeDumpLibrary
@@ -54,9 +58,9 @@ namespace TreeDumpLibrary
                 return (node as UIElement) != null;
             }
 
-            public bool ShouldVisitProperty(PropertyInfo propertyInfo)
+            public bool ShouldVisitProperty(string propertyName)
             {
-                return _filter.ShouldVisitProperty(propertyInfo.Name);
+                return _filter.ShouldVisitProperty(propertyName);
             }
 
             public void VisitProperty(string propertyName, object value, bool isLast)
@@ -88,6 +92,38 @@ namespace TreeDumpLibrary
             }
         }
 
+        private static JsonObject FindElementByAutomationId(JsonObject obj, string automationId)
+        {
+            if (obj.Keys.Contains("AutomationId") && obj["AutomationId"].GetString() == automationId)
+            {
+                return obj;
+            }
+            if (obj.Keys.Contains("children"))
+            {
+                var array = obj.GetNamedArray("children");
+                foreach (var i in array)
+                {
+                    var element = FindElementByAutomationId(i.GetObject(), automationId);
+                    if (element != null)
+                    {
+                        return element;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static IAsyncOperation<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
+        {
+            string json = DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
+            var obj = JsonValue.Parse(json).GetObject();
+            var element = FindElementByAutomationId(obj, "PageHeader");
+            var value = element.GetNamedString("Text");
+            var pageName = new System.Text.RegularExpressions.Regex(@"[<|>]").Replace(value, "");
+            var match = TreeDumpHelper.MatchDump(json, pageName);
+            return match.AsAsyncOperation();
+        }
+
         public static string DumpTree(DependencyObject root, DependencyObject excludedNode, IList<string> additionalProperties, DumpTreeMode mode)
         {
             var propertyFilter = new DefaultFilter();
@@ -105,25 +141,31 @@ namespace TreeDumpLibrary
 
             return visitor.ToString();
         }
-
+        
         private static void WalkThroughProperties(DependencyObject node, Visitor visitor, bool hasChildren)
         {
             if (visitor.ShouldVisitPropertiesForNode(node))
             {
                 var properties = (from property in node.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                  where visitor.ShouldVisitProperty(property) &&
+                                  where visitor.ShouldVisitProperty(property.Name) &&
                                         visitor.ShouldVisitPropertyValue(property.Name,
                                             GetObjectProperty(node, property))
                                   orderby property.Name
                                   select property).ToArray();
+                var automationId = node.GetValue(AutomationProperties.AutomationIdProperty);
 
                 for (int i = 0; i < properties.Length; i++)
                 {
                     var property = properties[i];
                     object value = null;
                     value = GetObjectProperty(node, property);
-                    bool isLast = (i == properties.Length - 1) && !hasChildren;
+                    bool isLast = (i == properties.Length - 1) && !hasChildren && (automationId == null);
                     visitor.VisitProperty(property.Name, value, isLast);
+                }
+
+                if (automationId != null)
+                {
+                    visitor.VisitProperty("AutomationId", automationId, !hasChildren);
                 }
             }
         }
@@ -148,9 +190,10 @@ namespace TreeDumpLibrary
             if (node != null)
             {
                 // Assume that if we have a UIElement, we'll have some properties
-                visitor.BeginVisitNode(node, node is UIElement);
-
                 var childrenCount = VisualTreeHelper.GetChildrenCount(node);
+                bool hasProperties = node is UIElement || (childrenCount > 0);
+                visitor.BeginVisitNode(node, hasProperties);
+
                 WalkThroughProperties(node, visitor, childrenCount != 0);
                 if (childrenCount != 0)
                 {
@@ -194,6 +237,7 @@ namespace TreeDumpLibrary
                 "Clip",
                 "FlowDirection",
                 "Name",
+                "Text"
                 /*"ActualOffset" 19h1*/
             };
         }

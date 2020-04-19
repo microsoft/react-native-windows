@@ -47,11 +47,20 @@
     <Filter Include="Assets">
       <UniqueIdentifier>{e48dc53e-40b1-40cb-970a-f89935452892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\TreeDump">
+      <UniqueIdentifier>{7ef22ecf-eda1-466b-91fb-b44d2a32001f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\TreeDump\masters">
+      <UniqueIdentifier>{7e42b3a6-79e8-4671-be2d-585a12a4ac22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
     <None Include="playground_TemporaryKey.pfx" />
+    <None Include="Assets\TreeDump\masters\RNTester.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

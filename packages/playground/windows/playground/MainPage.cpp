@@ -59,10 +59,21 @@ void MainPage::OnLoadClick(
 void MainPage::UpdateTreeDump(
     Windows::Foundation::IInspectable const & /*sender*/,
     Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
-  
-    auto dump = TreeDumpLibrary::VisualTreeDumper::DumpTree(
-      x_rootElement(), nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
-    x_TreeDump().Content(winrt::box_value(dump));
+
+    auto str = TreeDumpLibrary::VisualTreeDumper::DumpTree(m_reactRootView, nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
+
+    TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
+        .Completed([=](const IAsyncOperation<bool> &ao, auto &&b) {
+          bool matches = false;
+
+          try {
+            matches = ao.GetResults();
+          } catch (winrt::hresult_error &e) {
+            OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester");
+          }
+          x_TreeDump().Content(winrt::box_value(winrt::to_hstring(matches ? L"OK" : L"ERROR")));
+        });
+    
 }
 
 
