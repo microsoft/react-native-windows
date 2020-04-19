@@ -28,9 +28,6 @@ describe('DirectManipulationTest', () => {
       result.includes('width=50'),
       'measureLayout response has correct width'
     );
-    // https://github.com/microsoft/react-native-windows/issues/4122
-    // Un-comment this when bug 4122 is fixed
-    // E2ETEST_OVERRIDE_4122
-    // assert.ok(result.includes('x=20;'), 'measureLayout response x=20');
+    assert.ok(result.includes('x=20;'), 'measureLayout response x=20');
   });
 });
