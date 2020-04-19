@@ -11,6 +11,7 @@ import {
   Text,
   GestureResponderEvent,
   TouchableHighlight,
+  BackHandler,
 } from 'react-native';
 
 export default class Bootstrap extends React.Component<
@@ -30,6 +31,10 @@ export default class Bootstrap extends React.Component<
       mouseEntered1: false,
       mouseEntered2: false,
     };
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.back);
   }
 
   render() {
@@ -114,6 +119,10 @@ export default class Bootstrap extends React.Component<
   pressOut = (event: GestureResponderEvent) => {
     console.log('pressout');
     console.log(event);
+  };
+  back = () => {
+    console.log('hardwareBackPress');
+    return true;
   };
 }
 

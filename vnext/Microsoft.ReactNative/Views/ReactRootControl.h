@@ -15,6 +15,7 @@
 
 namespace winrt {
 using namespace Windows::UI;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
@@ -83,6 +84,10 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void ReloadHost() noexcept;
   void ReloadViewHost() noexcept;
 
+  void AttachBackHandlers(XamlView const &rootView) noexcept;
+  void RemoveBackHandlers() noexcept;
+  bool OnBackRequested() noexcept;
+
  private:
   int64_t m_rootTag{-1};
 
@@ -130,6 +135,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   winrt::Button::Click_revoker m_directDebuggingRevoker{};
   winrt::Button::Click_revoker m_breakOnNextLineRevoker{};
   winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
+  winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};
 };
 
 //! This class ensures that we access ReactRootView from UI thread.

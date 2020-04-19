@@ -458,31 +458,31 @@
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
       <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\Helpers.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">

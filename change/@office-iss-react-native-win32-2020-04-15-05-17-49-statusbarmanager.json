@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implelent Shared StatusBarManagerModule and Do Module Cleanup",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-15T12:17:45.965Z"
-}
