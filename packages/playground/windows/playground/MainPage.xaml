@@ -134,8 +134,8 @@
                 InputScope="Number"
                 MaxLength="5" />
             <Button x:Name="x_TreeDump"
-                Width="60" Height="36"
-                Content="tree dump goes here"
+                Width="80" Height="36"
+                Content="🌲"
                 Click="UpdateTreeDump"/>
 
         </StackPanel>

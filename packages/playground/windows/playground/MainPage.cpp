@@ -4,6 +4,9 @@
 #include "winrt/Microsoft.ReactNative.h"
 #include "winrt/TreeDumpLibrary.h"
 #include <winrt/Windows.UI.ViewManagement.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
+#include <winrt/Windows.System.h>
 
 using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
@@ -57,6 +60,33 @@ void MainPage::OnLoadClick(
   x_rootElement().Children().Append(m_reactRootView);
 }
 
+DependencyObject FindElementByAutomationId(DependencyObject node, const hstring &id) {
+  auto value = node.GetValue(Automation::AutomationProperties::AutomationIdProperty());
+  if (value && winrt::unbox_value<hstring>(value) == id) {
+    return node;
+  } else {
+    auto count = VisualTreeHelper::GetChildrenCount(node);
+    for (auto i = 0; i < count; i++) {
+      auto ret = FindElementByAutomationId(VisualTreeHelper::GetChild(node, i), id);
+      if (ret) {
+        return ret;
+      }
+    }
+  }
+  return nullptr;
+}
+
+hstring GetCurentPageName(DependencyObject root) {
+  auto header = FindElementByAutomationId(root, L"PageHeader");
+  if (header != nullptr) {
+    return header.as<TextBlock>().Text();
+  }
+  return {};
+}
+
+static Windows::System::DispatcherQueueTimer timer{nullptr};
+static hstring lastPageName{};
+
 void MainPage::UpdateTreeDump(
     Windows::Foundation::IInspectable const & /*sender*/,
     Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
@@ -65,19 +95,38 @@ void MainPage::UpdateTreeDump(
     
     auto str = TreeDumpLibrary::VisualTreeDumper::DumpTree(m_reactRootView, nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
 
-    TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
-        .Completed([=](const IAsyncOperation<bool> &ao, auto &&b) {
-          bool matches = false;
+    if (timer == nullptr) {
+      auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
+      timer = dispatcher.CreateTimer();
+      timer.IsRepeating(true);
+      timer.Interval(std::chrono::seconds(1));
+      timer.Tick([=](auto &&, auto &&) {
+        auto name = GetCurentPageName(m_reactRootView);
+        auto text = winrt::unbox_value<hstring>(x_TreeDump().Content());
+        if ((lastPageName != name) || (text == L"ERROR")) {
+          auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
+          x_TreeDump().Background(ok);
+          x_TreeDump().Content(winrt::box_value(winrt::to_hstring(L"...")));
+          lastPageName = name;
+          TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
+              .Completed([=](const IAsyncOperation<bool> &ao, auto &&) {
+                bool matches = false;
 
-          try {
-            matches = ao.GetResults();
-          } catch (winrt::hresult_error &e) {
-            OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester: ");
-            OutputDebugString(e.message().data());
-            OutputDebugString(L"\n");
-          }
-          x_TreeDump().Content(winrt::box_value(winrt::to_hstring(matches ? L"OK" : L"ERROR")));
-        });
+                try {
+                  matches = ao.GetResults();
+                } catch (winrt::hresult_error &e) {
+                  OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester: ");
+                  OutputDebugString(e.message().data());
+                  OutputDebugString(L"\n");
+                }
+                x_TreeDump().Content(winrt::box_value(winrt::to_hstring(matches ? L"OK" : L"ERROR")));
+                x_TreeDump().Background(matches ? ok : SolidColorBrush(ColorHelper::FromArgb(0xff, 0xee, 00, 40)));
+              });
+        }
+      });
+      timer.Start();
+    }
+
     
 }
 

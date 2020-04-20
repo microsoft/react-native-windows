@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -119,6 +120,10 @@ namespace TreeDumpLibrary
             string json = DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
             var obj = JsonValue.Parse(json).GetObject();
             var element = FindElementByAutomationId(obj, "PageHeader");
+            if (element == null)
+            {
+                return Task.Run(() => false).AsAsyncOperation();
+            }
             var value = element.GetNamedString("Text");
             var pageName = new System.Text.RegularExpressions.Regex(@"[<|>]").Replace(value, "");
             var match = TreeDumpHelper.MatchDump(json, pageName);
