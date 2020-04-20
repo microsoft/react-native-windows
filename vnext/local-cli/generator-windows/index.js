@@ -97,7 +97,7 @@ function copyProjectTemplateAndReplace(
   [
     { from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js' },
     { from: path.join(srcRootPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
-    { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, bundleDir, '.gitignore') },
+    { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, '.gitignore') },
     { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
