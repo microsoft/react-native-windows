@@ -37,7 +37,7 @@
     <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx --no-install react-native bundle</BundleCliCommand>
 
     <!-- This should be the app package root, this is where the bundle command will be run from -->
-    <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([System.IO.Path]::GetDirectoryName('$([System.IO.Path]::GetDirectoryName('$(ProjectDir)'))'))</BundleCommandWorkingDir>
+    <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</BundleCommandWorkingDir>
 
     <!-- Entry file of the JS bundle. Defaults to use index.windows.js if it exists, otherwise index.js -->
     <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
