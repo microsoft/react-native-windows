@@ -69,7 +69,9 @@ const Header = ({
           ]}>
           <View style={styles.header}>
             <View style={styles.headerCenter}>
-              <Text style={{...styles.title, ...{color: theme.LabelColor}}}>
+              <Text
+                style={{...styles.title, ...{color: theme.LabelColor}}}
+                testID="PageHeader">
                 {title}
               </Text>
             </View>
