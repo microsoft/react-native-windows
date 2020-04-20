@@ -1,8 +1,47 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Apr 2020 22:26:36 GMT and should not be manually modified.
+This log was last generated on Sun, 19 Apr 2020 00:04:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.44
+
+Sun, 19 Apr 2020 00:04:29 GMT
+
+### Changes
+
+- fix include paths (kmelmon@microsoft.com)
+
+## 0.0.0-master.43
+
+Sat, 18 Apr 2020 00:04:34 GMT
+
+### Changes
+
+- Allow enabling of direct debugging through the CLI. (12337821+nasadigital@users.noreply.github.com)
+- Implelent Shared StatusBarManagerModule and Do Module Cleanup (ngerlem@microsoft.com)
+- Implement AppearanceModule (ngerlem@microsoft.com)
+- Add support for React Native BackHandler API (jahiggin@microsoft.com)
+- remove AccessibilityStates (kmelmon@microsoft.com)
+- Fix issue with yoga layout in x64 release (acoates@microsoft.com)
+
+## 0.0.0-master.42
+
+Fri, 17 Apr 2020 00:04:27 GMT
+
+### Changes
+
+- run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now. (asklar@winse.microsoft.com)
+- Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows (acoates@microsoft.com)
+- implement accessibilityState (kmelmon@microsoft.com)
+
+## 0.0.0-master.41
+
+Wed, 15 Apr 2020 23:02:16 GMT
+
+### Changes
+
+- Fix PickerWindows (and DatePickerExample Page) (ngerlem@microsoft.com)
 
 ## 0.0.0-master.40
 

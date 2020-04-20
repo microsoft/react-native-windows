@@ -130,6 +130,7 @@ runWindows({
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
  *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
+ *    direct-debugging: Number - Enable direct debugging on specified port
  */
 module.exports = {
   name: 'run-windows',
@@ -148,7 +149,7 @@ module.exports = {
     },
     {
       command: '--arch [string]',
-      description: 'The build architecture (ARM, x86, x64)',
+      description: 'The build architecture (ARM, ARM64, x86, x64)',
       default: 'x86',
     },
     {
@@ -211,6 +212,10 @@ module.exports = {
       command: '--autolink',
       description: 'Auto link native modules',
       default: false,
+    },
+    {
+      command: '--direct-debugging [number]',
+      description: 'Enable direct debugging on specified port',
     },
   ],
 };

@@ -28,8 +28,11 @@
     <Filter Include="Source Files\Pch">
       <UniqueIdentifier>{43770517-0df1-4cff-bd30-563b9d0f56e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="tracing">
-      <UniqueIdentifier>{4cc2fae5-bc38-4aff-aa49-33225485e2de}</UniqueIdentifier>
+    <Filter Include="Header Files\Tracing">
+      <UniqueIdentifier>{eae44522-b665-4bd2-85f2-8ca26f4ce15f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tracing">
+      <UniqueIdentifier>{8b1364fc-cc9f-4ca9-834b-894849d8b487}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +66,6 @@
     <ClCompile Include="Modules\AppStateModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\AppThemeModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -96,9 +96,6 @@
     <ClCompile Include="ShadowNodeRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tracing\tracing.cpp">
-      <Filter>tracing</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -108,15 +105,27 @@
     <ClCompile Include="TurboModuleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <ClCompile Include="WinRTWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp" />
     <ClCompile Include="cdebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tracing\tracing.cpp">
+      <Filter>Source Files\Tracing</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\StatusBarManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="V8JSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp">
+      <Filter>Source Files</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp">
+      <Filter>Source Files</Filter>
+    </CLCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h">
@@ -203,12 +212,6 @@
     <ClInclude Include="MemoryTracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\AppStateModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\AppThemeModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\AsyncStorageModuleWin32.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -254,9 +257,6 @@
     <ClInclude Include="Tracing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tracing\fbsystrace.h">
-      <Filter>tracing</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -272,7 +272,18 @@
     <ClInclude Include="WinRTWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="V8JSIRuntimeHolder.h" />
+    <ClInclude Include="tracing\fbsystrace.h">
+      <Filter>Header Files\Tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AppStateModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\StatusBarManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="V8JSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man">

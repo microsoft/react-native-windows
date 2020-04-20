@@ -242,7 +242,8 @@ export default class Manifest {
    */
   static hashContent(str: string) {
     const hasher = crypto.createHash('sha1');
-    hasher.update(str);
+    const normalizedStr = str.replace(/(?<!\r)\n/g, '\r\n');
+    hasher.update(normalizedStr);
     return hasher.digest('hex');
   }
 
