@@ -10,10 +10,7 @@ struct MainPage : MainPageT<MainPage> {
       Windows::Foundation::IInspectable const & /*sender*/,
       Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
 
-  void UpdateTreeDump(
-      Windows::Foundation::IInspectable const & /*sender*/,
-      Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
-
+  void SetUpTreeDump();
 
  private:
   Microsoft::ReactNative::ReactNativeHost Host() noexcept;

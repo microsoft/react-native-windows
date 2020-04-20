@@ -58,6 +58,7 @@ void MainPage::OnLoadClick(
 
   x_rootElement().Children().Clear();
   x_rootElement().Children().Append(m_reactRootView);
+  SetUpTreeDump();
 }
 
 DependencyObject FindElementByAutomationId(DependencyObject node, const hstring &id) {
@@ -87,26 +88,22 @@ hstring GetCurentPageName(DependencyObject root) {
 static Windows::System::DispatcherQueueTimer timer{nullptr};
 static hstring lastPageName{};
 
-void MainPage::UpdateTreeDump(
-    Windows::Foundation::IInspectable const & /*sender*/,
-    Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
-
-    Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
-    
+void MainPage::SetUpTreeDump() {
     auto str = TreeDumpLibrary::VisualTreeDumper::DumpTree(m_reactRootView, nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
 
     if (timer == nullptr) {
       auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
       timer = dispatcher.CreateTimer();
       timer.IsRepeating(true);
-      timer.Interval(std::chrono::seconds(1));
+      timer.Interval(std::chrono::seconds(3));
       timer.Tick([=](auto &&, auto &&) {
         auto name = GetCurentPageName(m_reactRootView);
-        auto text = winrt::unbox_value<hstring>(x_TreeDump().Content());
-        if ((lastPageName != name) || (text == L"ERROR")) {
-          auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
-          x_TreeDump().Background(ok);
-          x_TreeDump().Content(winrt::box_value(winrt::to_hstring(L"...")));
+        auto text = x_TreeDump().Text();
+        if ((lastPageName != name) || (text != L"OK")) {
+            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
+            auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
+          x_TreeDump().Foreground(ok);
+          x_TreeDump().Text(L"...");
           lastPageName = name;
           TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
               .Completed([=](const IAsyncOperation<bool> &ao, auto &&) {
@@ -119,8 +116,8 @@ void MainPage::UpdateTreeDump(
                   OutputDebugString(e.message().data());
                   OutputDebugString(L"\n");
                 }
-                x_TreeDump().Content(winrt::box_value(winrt::to_hstring(matches ? L"OK" : L"ERROR")));
-                x_TreeDump().Background(matches ? ok : SolidColorBrush(ColorHelper::FromArgb(0xff, 0xee, 00, 40)));
+                x_TreeDump().Text(matches ? L"OK" : L"ERROR");
+                x_TreeDump().Foreground(matches ? ok : SolidColorBrush(ColorHelper::FromArgb(0xff, 0xee, 00, 40)));
               });
         }
       });

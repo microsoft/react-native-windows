@@ -133,10 +133,10 @@
                 VerticalAlignment="Center"
                 InputScope="Number"
                 MaxLength="5" />
-            <Button x:Name="x_TreeDump"
+            <TextBlock x:Name="x_TreeDump"
                 Width="80" Height="36"
-                Content="🌲"
-                Click="UpdateTreeDump"/>
+                Text="🌲"
+                />
 
         </StackPanel>
 
