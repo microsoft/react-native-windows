@@ -105,6 +105,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
   void HideCaretIfNeeded();
+  void setPasswordBoxPlaceholderForeground(winrt::PasswordBox passwordBox, folly::dynamic color);
   winrt::Shape FindCaret(winrt::DependencyObject element);
 
   bool m_shouldClearTextOnFocus = false;
@@ -112,6 +113,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   bool m_contextMenuHidden = false;
   bool m_hideCaret = false;
   bool m_isTextBox = true;
+  folly::dynamic m_placeholderTextColor;
 
   // Javascripts is running in a different thread. If the typing is very fast,
   // It's possible that two TextChanged are raised but TextInput just got the
@@ -368,6 +370,20 @@ void TextInputShadowNode::HideCaretIfNeeded() {
   }
 }
 
+void TextInputShadowNode::setPasswordBoxPlaceholderForeground(winrt::PasswordBox passwordBox, folly::dynamic color) {
+  m_placeholderTextColor = color;
+  auto defaultRD = winrt::Windows::UI::Xaml::ResourceDictionary();
+  auto solidColorBrush = ColorFrom(color);
+  defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForeground"), winrt::box_value(solidColorBrush));
+  defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundFocused"), winrt::box_value(solidColorBrush));
+  defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundPointerOver"), winrt::box_value(solidColorBrush));
+  auto passwordBoxResource = winrt::Windows::UI::Xaml::ResourceDictionary();
+  auto themeDictionaries = passwordBoxResource.ThemeDictionaries();
+  themeDictionaries.Insert(winrt::box_value(L"Default"), defaultRD);
+  passwordBoxResource.Insert(winrt::box_value(L"ThemeDictionaries"), themeDictionaries);
+  passwordBox.Resources(passwordBoxResource);
+}
+
 void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
   auto control = GetView().as<winrt::Control>();
@@ -416,6 +432,9 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             registerEvents();
             control = newPasswordBox.as<winrt::Control>();
             passwordBox = newPasswordBox;
+            if (!m_placeholderTextColor.isNull()) {
+              setPasswordBoxPlaceholderForeground(newPasswordBox, m_placeholderTextColor);
+            }
           }
         } else {
           if (!m_isTextBox) {
@@ -425,6 +444,9 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             registerEvents();
             control = newTextBox.as<winrt::Control>();
             textBox = newTextBox;
+            if (!m_placeholderTextColor.isNull()) {
+              textBox.PlaceholderForeground(SolidColorBrushFrom(m_placeholderTextColor));
+            }
           }
         }
       }
@@ -467,6 +489,17 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       } else if (propertyValue.isNull())
         control.ClearValue(
             m_isTextBox ? winrt::TextBox::InputScopeProperty() : winrt::PasswordBox::InputScopeProperty());
+    } else if (propertyName == "placeholderTextColor") {
+      m_placeholderTextColor = nullptr;
+      if (textBox.try_as<winrt::ITextBox6>() && m_isTextBox) {
+        if (IsValidColorValue(propertyValue)) {
+          m_placeholderTextColor = propertyValue;
+          textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
+        } else if (propertyValue.isNull())
+          textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
+      } else if (m_isTextBox != true && IsValidColorValue(propertyValue)) {
+        setPasswordBoxPlaceholderForeground(passwordBox, propertyValue);
+      }
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -483,13 +516,6 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             textBox.IsReadOnly(!propertyValue.asBool());
           else if (propertyValue.isNull())
             textBox.ClearValue(winrt::TextBox::IsReadOnlyProperty());
-        } else if (propertyName == "placeholderTextColor") {
-          if (textBox.try_as<winrt::ITextBox6>()) {
-            if (IsValidColorValue(propertyValue))
-              textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
-            else if (propertyValue.isNull())
-              textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
-          }
         } else if (propertyName == "scrollEnabled") {
           if (propertyValue.isBool() && textBox.TextWrapping() == winrt::TextWrapping::Wrap) {
             auto scrollMode = propertyValue.asBool() ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled;
@@ -533,7 +559,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           }
         }
       } else { // Applicable properties for PasswordBox
-        if (propertyName == "text") {
+        if (propertyName == "text" && !m_isTextBox) {
           if (m_mostRecentEventCount == m_nativeEventCount) {
             if (propertyValue.isString()) {
               auto oldValue = passwordBox.Password();

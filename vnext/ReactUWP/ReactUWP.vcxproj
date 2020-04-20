@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -65,6 +65,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
     <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -77,6 +78,8 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <!--
@@ -102,11 +105,11 @@
         $(FollyDir);
         $(JSI_Source);
         $(ReactNativeDir)\ReactCommon;
-        $(ReactNativeDir)\ReactCommon\jscallinvoker;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)JSI\Shared;
-        $(ReactNativeWindowsDir)Pch;
+        $(ReactNativeWindowsDir)ReactUwp\Pch;
         $(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;
         $(ReactNativeWindowsDir)ReactWindowsCore;
         $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
@@ -180,6 +183,7 @@
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h" />
+    <ClInclude Include="Modules\AppearanceModule.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
@@ -219,7 +223,6 @@
     <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
-    <ClInclude Include="Modules\StatusBarModule.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="Pch\pch.h" />
@@ -276,6 +279,7 @@
     <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
+    <ClCompile Include="Modules\AppearanceModule.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
@@ -319,7 +323,6 @@
     <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
-    <ClCompile Include="Modules\StatusBarModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="Pch\pch.cpp">
@@ -406,8 +409,8 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ABI\idl\ReactUWPABI.idl">
-      <!-- Enable Windows Runtime ABI header files. when /reference is passed to midl.exe, the ABI head includes headers like Windows.AI.MachineLearning.MachineLearningContract.h 
-      which doesn't exist actually in SDK. To workaround the problem, DisableReferences is enabled to disable /reference.      
+      <!-- Enable Windows Runtime ABI header files. when /reference is passed to midl.exe, the ABI head includes headers like Windows.AI.MachineLearning.MachineLearningContract.h
+      which doesn't exist actually in SDK. To workaround the problem, DisableReferences is enabled to disable /reference.
        -->
       <DisableReferences>true</DisableReferences>
       <HeaderFileName>$(IdlHeaderDirectory)\%(Filename).h</HeaderFileName>
@@ -422,7 +425,15 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
-      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!='' AND '$(RNW_PKG_VERSION)'!=''">RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);RNW_PKG_VERSION=$(RNW_PKG_VERSION);_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
+        RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
+        RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);
+        RNW_PKG_VERSION_MINOR=$(RNW_PKG_VERSION_MINOR);
+        RNW_PKG_VERSION_PATCH=$(RNW_PKG_VERSION_PATCH);
+        _UNICODE;
+        UNICODE;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
     </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

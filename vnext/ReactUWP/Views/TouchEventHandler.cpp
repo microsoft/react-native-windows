@@ -78,6 +78,13 @@ void TouchEventHandler::OnPointerPressed(
   if (!TagFromOriginalSource(args, &tag, &sourceElement))
     return;
 
+  // If this was caused by the user pressing the "back" hardware button, fire that event instead
+  if (args.GetCurrentPoint(sourceElement).Properties().PointerUpdateKind() ==
+      winrt::Windows::UI::Input::PointerUpdateKind::XButton1Pressed) {
+    args.Handled(DispatchBackEvent());
+    return;
+  }
+
   if (m_xamlView.as<winrt::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, tag, sourceElement);
@@ -339,6 +346,16 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
 
   auto instance = m_wkReactInstance.lock();
   instance->CallJsFunction("RCTEventEmitter", "receiveTouches", std::move(params));
+}
+
+bool TouchEventHandler::DispatchBackEvent() {
+  auto instance = m_wkReactInstance.lock();
+  if (instance != nullptr && !instance->IsInError()) {
+    instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+    return true;
+  }
+
+  return false;
 }
 
 const char *TouchEventHandler::GetPointerDeviceTypeName(

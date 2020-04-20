@@ -1,6 +1,40 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sun, 29 Mar 2020 20:42:04 GMT and should not be manually modified.
+This log was last generated on Sat, 18 Apr 2020 00:04:34 GMT and should not be manually modified.
+
+<!-- Start content -->
+
+## 0.0.0-master.6
+
+Sat, 18 Apr 2020 00:04:34 GMT
+
+### Changes
+
+- Implelent Shared StatusBarManagerModule and Do Module Cleanup (ngerlem@microsoft.com)
+
+## 0.0.0-master.5
+
+Wed, 15 Apr 2020 22:26:36 GMT
+
+### Changes
+
+- Use a custom resolver wrapper to allow metro to run for multiple platforms at once (acoates@microsoft.com)
+
+## 0.0.0-master.4
+
+Tue, 14 Apr 2020 14:59:17 GMT
+
+### Changes
+
+- Upgrade to React Native 0.62 (ngerlem@microsoft.com)
+
+## 0.0.0-master.3
+
+Fri, 03 Apr 2020 18:59:23 GMT
+
+### Changes
+
+- Generate sourcemap for offline RNTester bundle in win32 (acoates@microsoft.com)
 
 ## 0.0.0-master.2
 Sun, 29 Mar 2020 20:42:04 GMT
@@ -3354,4 +3388,3 @@ Mon, 01 May 2017 19:28:16 GMT
 ### Patches
 
 - Move @office-iss/react-native to 0.40.1 to fix build
-

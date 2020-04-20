@@ -81,7 +81,7 @@ export default class Manifest {
         const baseFile = override.baseFile;
         const baseContent = await this.reactRepo.getFileContents(baseFile);
         if (baseContent === null) {
-          errors.push({type: 'baseFileNotFound', file: override.baseFile});
+          errors.push({type: 'baseFileNotFound', file: override.file});
           return;
         }
 
@@ -242,7 +242,8 @@ export default class Manifest {
    */
   static hashContent(str: string) {
     const hasher = crypto.createHash('sha1');
-    hasher.update(str);
+    const normalizedStr = str.replace(/(?<!\r)\n/g, '\r\n');
+    hasher.update(normalizedStr);
     return hasher.digest('hex');
   }
 

@@ -22,7 +22,7 @@ const {
 } = require('./commandWithProgress');
 const execSync = require('child_process').execSync;
 
-const MSBUILD_VERSIONS = ['16.0', '15.0', '14.0', '12.0', '4.0'];
+const MSBUILD_VERSIONS = ['16.0'];
 
 class MSBuildTools {
   // version is something like 16.0 for 2019
@@ -51,25 +51,17 @@ class MSBuildTools {
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
 
-    //const verbosityOption = verbose ? 'normal' : 'quiet';
-    const verbosityOption = 'normal';
+    const verbosityOption = verbose ? 'normal' : 'minimal';
+    const errorLog = path.join(process.env.temp, `msbuild_${process.pid}.err`);
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
+      '/bl',
+      `/flp1:errorsonly;logfile=${errorLog}`,
     ];
-
-    args.push('/p:PlatformToolset=v141');
-
-    // Set platform toolset for VS 2017 (this way we can keep the base sln file working for VS 2015)
-    if (this.version === '15.0') {
-      args.push('/p:VisualStudioVersion=15.0');
-    } else if (this.version === '16.0') {
-      args.push('/p:VisualStudioVersion=16.0');
-    }
-    args.push('/bl');
 
     if (msBuildProps) {
       Object.keys(msBuildProps).forEach(function(key) {
@@ -81,41 +73,69 @@ class MSBuildTools {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
       newError(e.message);
-      return;
+      throw e;
     }
 
-    console.log(`Running MSBuild with args ${args.join(' ')}`);
+    if (verbose) {
+      console.log(`Running MSBuild with args ${args.join(' ')}`);
+    }
 
     const progressName = 'Building Solution';
     const spinner = newSpinner(progressName);
-    await commandWithProgress(
-      spinner,
-      progressName,
-      path.join(this.path, 'msbuild.exe'),
-      [slnFile].concat(args),
-      verbose,
-    );
+    try {
+      await commandWithProgress(
+        spinner,
+        progressName,
+        path.join(this.path, 'msbuild.exe'),
+        [slnFile].concat(args),
+        verbose,
+      );
+    } catch (e) {
+      let error = e;
+      if (!e) {
+        const firstMessage = (await fs.promises.readFile(errorLog))
+          .toString()
+          .split(EOL)[0];
+        error = new Error(firstMessage);
+        error.logfile = errorLog;
+      }
+      throw error;
+    }
+    // If we have no errors, delete the error log when we're done
+    if ((await fs.promises.stat(errorLog)).size === 0) {
+      await fs.promises.unlink(errorLog);
+    }
   }
 }
 
-function VSWhere(requires, version, property) {
+function VSWhere(requires, version, property, verbose) {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
     process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
+  if (verbose) {
+    console.log('Looking for vswhere at: ' + vsWherePath);
+  }
+
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
-    const vsPath = child_process
+    if (verbose) {
+      console.log('Found vswhere.');
+    }
+    const propertyValue = child_process
       .execSync(
         `"${vsWherePath}" -version [${version},${Number(version) +
           1}) -products * -requires ${requires} -property ${property}`,
       )
       .toString()
       .split(EOL)[0];
-    return vsPath;
+    return propertyValue;
   } else {
+    if (verbose) {
+      console.log("Couldn't find vswhere, querying registry.");
+    }
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
     let toolsPath = null;
     // Try to get the MSBuild path using registry
@@ -124,11 +144,11 @@ function VSWhere(requires, version, property) {
       let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
       if (toolsPathOutput) {
         let toolsPathOutputStr = toolsPathOutput[1];
+        if (verbose) {
+          console.log('Query found: ' + toolsPathOutputStr);
+        }
         // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
-        if (
-          version === '15.0' ||
-          (version === '14.0' && toolsPathOutputStr.indexOf('amd64') > -1)
-        ) {
+        if (version === '16.0') {
           toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
         }
         toolsPath = toolsPathOutputStr;
@@ -140,27 +160,15 @@ function VSWhere(requires, version, property) {
   }
 }
 
-function getVC141Component(version, buildArch) {
-  if (version === '16.0') {
-    switch (buildArch.toLowerCase()) {
-      case 'x86':
-      case 'x64':
-        return 'Microsoft.VisualStudio.Component.VC.v141.x86.x64';
-      case 'arm':
-        return 'Microsoft.VisualStudio.Component.VC.v141.ARM';
-      case 'arm64':
-        return 'Microsoft.VisualStudio.Component.VC.v141.ARM64';
-    }
-  } else {
-    switch (buildArch.toLowerCase()) {
-      case 'x86':
-      case 'x64':
-        return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
-      case 'arm':
-        return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
-      case 'arm64':
-        return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
-    }
+function getVCToolsByArch(buildArch) {
+  switch (buildArch.toLowerCase()) {
+    case 'x86':
+    case 'x64':
+      return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
+    case 'arm':
+      return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
+    case 'arm64':
+      return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
   }
 }
 
@@ -171,25 +179,30 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 
   // https://aka.ms/vs/workloads
-  const requires16 = [
-    'Microsoft.Component.MSBuild',
-    getVC141Component(version, buildArch),
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141',
-  ];
-  const requires15 = [
-    'Microsoft.Component.MSBuild',
-    getVC141Component(version, buildArch),
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
-  ];
+  const requires = ['Microsoft.Component.MSBuild', getVCToolsByArch(buildArch)];
 
-  const requires = version === '16.0' ? requires16 : requires15;
+  const vsPath = VSWhere(
+    requires.join(' '),
+    version,
+    'installationPath',
+    verbose,
+  );
 
-  const vsPath = VSWhere(requires.join(' '), version, 'installationPath');
+  if (verbose) {
+    console.log('VS path: ' + vsPath);
+  }
+
   const installationVersion = VSWhere(
     requires.join(' '),
     version,
     'installationVersion',
+    verbose,
   );
+
+  if (verbose) {
+    console.log('VS version: ' + installationVersion);
+  }
+
   // VS 2019 changed path naming convention
   const vsVersion = version === '16.0' ? 'Current' : version;
 
@@ -200,6 +213,10 @@ function checkMSBuildVersion(version, buildArch, verbose) {
     vsVersion,
     'Bin/MSBuild.exe',
   );
+
+  if (verbose) {
+    console.log('Looking for MSBuilt at: ' + msBuildPath);
+  }
 
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
 
@@ -234,11 +251,11 @@ module.exports.findAvailableVersion = function(buildArch, verbose) {
       throw new Error(
         `MSBuild tools not found for version ${
           process.env.VisualStudioVersion
-        } (from environment). Make sure all required components have been installed (e.g. v141 support)`,
+        } (from environment). Make sure all required components have been installed`,
       );
     } else {
       throw new Error(
-        'MSBuild tools not found. Make sure all required components have been installed (e.g. v141 support)',
+        'MSBuild tools not found. Make sure all required components have been installed',
       );
     }
   }

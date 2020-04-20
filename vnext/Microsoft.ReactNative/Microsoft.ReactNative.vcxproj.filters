@@ -86,6 +86,9 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -114,9 +117,6 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp">
@@ -404,6 +404,9 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -434,9 +437,6 @@
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -458,32 +458,47 @@
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
       <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\Helpers.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h">
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
+      <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h">
       <Filter>Views</Filter>
@@ -740,5 +755,8 @@
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
   </ItemGroup>
 </Project>

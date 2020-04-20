@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RCTDatePicker = requireNativeComponent('RCTDatePicker');
+const RCTDatePicker = requireNativeComponent<any>('RCTDatePicker');
 
 export class DatePicker extends React.Component<IDatePickerProps> {
   public static defaultProps: IDatePickerProps = {
@@ -64,7 +64,7 @@ export class DatePicker extends React.Component<IDatePickerProps> {
     );
   }
 
-  private _setRef = (datepicker: DatePicker /*RCTDatePicker*/) => {
+  private _setRef = (datepicker: any /*RCTDatePicker*/) => {
     this._rctDatePicker = datepicker;
   };
 

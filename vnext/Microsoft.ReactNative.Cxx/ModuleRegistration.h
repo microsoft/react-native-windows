@@ -4,6 +4,17 @@
 #pragma once
 #include "winrt/Microsoft.ReactNative.h"
 
+// We implement optional parameter macros based on the StackOverflow discussion:
+// https://stackoverflow.com/questions/3046889/optional-parameters-with-c-macros
+// Please refer to it if you want to understand it works.
+#define INTERNAL_REACT_GET_ARG_4(arg1, arg2, arg3, arg4, ...) arg4
+#define INTERNAL_REACT_RECOMPOSER_4(argsWithParentheses) INTERNAL_REACT_GET_ARG_4 argsWithParentheses
+
+//
+// The macros below are internal implementation details for macro defined in nativeModules.h
+//
+
+// Register struct as a ReactNative module.
 #define INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, eventEmitterName)                                    \
   struct moduleStruct;                                                                                              \
                                                                                                                     \
@@ -23,7 +34,7 @@
   template struct moduleStruct##_ModuleRegistration<int>;                                                           \
                                                                                                                     \
   template <class TRegistry>                                                                                        \
-  void RegisterModule(TRegistry &registry) noexcept {                                                               \
+  constexpr void RegisterModule(TRegistry &registry) noexcept {                                                     \
     registry.RegisterModule(                                                                                        \
         moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>{});                 \
   }
@@ -31,15 +42,31 @@
 #define INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, moduleName) \
   INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, nullptr)
 
-#define INTERNAL_REACT_MODULE_1_ARGS(moduleStruct) INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
+#define INTERNAL_REACT_MODULE_1_ARG(moduleStruct) INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
 
-#define INTERNAL_REACT_MODULE_4TH_ARG(arg1, arg2, arg3, arg4, ...) arg4
+#define INTERNAL_REACT_MODULE(...) \
+  INTERNAL_REACT_RECOMPOSER_4(     \
+      (__VA_ARGS__, INTERNAL_REACT_MODULE_3_ARGS, INTERNAL_REACT_MODULE_2_ARGS, INTERNAL_REACT_MODULE_1_ARG, ))
 
-#define INTERNAL_REACT_MODULE_RECOMPOSER(argsWithParentheses) INTERNAL_REACT_MODULE_4TH_ARG argsWithParentheses
+// Register struct member.
+// For each registered member we create a static method that registers it.
+// The member Id is generated as a ReactMemberId<__COUNTER__> type.
+// To invoke the static registration methods, we increment ReactMemberId while static member exists.
+#define INTERNAL_REACT_MEMBER_4_ARGS(memberType, member, memberName, moduleName)                 \
+  template <class TClass, class TRegistry>                                                       \
+  constexpr static void RegisterMember(                                                          \
+      TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
+    registry.Register##memberType(&TClass::member, memberName, moduleName);                      \
+  }
 
-#define INTERNAL_REACT_MODULE(...)  \
-  INTERNAL_REACT_MODULE_RECOMPOSER( \
-      (__VA_ARGS__, INTERNAL_REACT_MODULE_3_ARGS, INTERNAL_REACT_MODULE_2_ARGS, INTERNAL_REACT_MODULE_1_ARGS, ))
+#define INTERNAL_REACT_MEMBER_3_ARGS(memberType, member, memberName) \
+  INTERNAL_REACT_MEMBER_4_ARGS(memberType, member, memberName, nullptr)
+
+#define INTERNAL_REACT_MEMBER_2_ARGS(memberType, member) INTERNAL_REACT_MEMBER_3_ARGS(memberType, member, L## #member)
+
+#define INTERNAL_REACT_MEMBER(...) \
+  INTERNAL_REACT_RECOMPOSER_4(     \
+      (__VA_ARGS__, INTERNAL_REACT_MEMBER_4_ARGS, INTERNAL_REACT_MEMBER_3_ARGS, INTERNAL_REACT_MEMBER_2_ARGS, ))
 
 namespace winrt::Microsoft::ReactNative {
 

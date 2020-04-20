@@ -24,7 +24,7 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.options({
+const argv = yargs.version(false).options({
   version: {
     type: 'string',
     describe: 'The version of react-native-windows to use.',
@@ -40,6 +40,12 @@ const argv = yargs.options({
   overwrite: {
     type: 'boolean',
     describe: 'Overwrite any existing files without prompting',
+  },
+  experimentalNugetDependency: {
+    type: 'boolean',
+    describe:
+      'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
+    hidden: true,
   },
 }).argv;
 
@@ -309,7 +315,6 @@ You can either downgrade your version of ${chalk.green(
     const pkgmgr = isProjectUsingYarn(process.cwd())
       ? 'yarn add'
       : 'npm install --save';
-
     const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
     console.log(
       `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
@@ -318,7 +323,13 @@ You can either downgrade your version of ${chalk.green(
     );
     execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
     console.log(
-      chalk.green(`react-native-windows@${version} successfully installed.`),
+      chalk.green(
+        `react-native-windows@${chalk.cyan(
+          require(require.resolve('react-native-windows/package.json', {
+            paths: [process.cwd()],
+          })).version,
+        )} successfully installed.`,
+      ),
     );
 
     const generateWindows = require(reactNativeWindowsGeneratePath());
@@ -326,6 +337,7 @@ You can either downgrade your version of ${chalk.green(
       language: argv.language,
       overwrite: argv.overwrite,
       verbose: argv.verbose,
+      experimentalNugetDependency: argv.experimentalNugetDependency,
     });
   } catch (error) {
     console.error(chalk.red(error.message));

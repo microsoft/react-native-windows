@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "<%=name%>", "<%=name%>\<%=name%>.vcxproj", "{<%=projectGuidUpper%>}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx", "..\node_modules\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems", "{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "..\node_modules\react-native-windows\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\node_modules\react-native-windows\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{67a1076f-7790-4203-86ea-4402ccb5e782}*SharedItemsImports = 13
+		..\node_modules\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{<%=projectGuid%>}*SharedItemsImports = 4
+		..\node_modules\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{<%=projectGuidUpper%>}.Debug|ARM.ActiveCfg = Debug|ARM
+		{<%=projectGuidUpper%>}.Debug|ARM.Build.0 = Debug|ARM
+		{<%=projectGuidUpper%>}.Debug|ARM.Deploy.0 = Debug|ARM
+		{<%=projectGuidUpper%>}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{<%=projectGuidUpper%>}.Debug|ARM64.Build.0 = Debug|ARM64
+		{<%=projectGuidUpper%>}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{<%=projectGuidUpper%>}.Debug|x64.ActiveCfg = Debug|x64
+		{<%=projectGuidUpper%>}.Debug|x64.Build.0 = Debug|x64
+		{<%=projectGuidUpper%>}.Debug|x64.Deploy.0 = Debug|x64
+		{<%=projectGuidUpper%>}.Debug|x86.ActiveCfg = Debug|Win32
+		{<%=projectGuidUpper%>}.Debug|x86.Build.0 = Debug|Win32
+		{<%=projectGuidUpper%>}.Debug|x86.Deploy.0 = Debug|Win32
+		{<%=projectGuidUpper%>}.Release|ARM.ActiveCfg = Release|ARM
+		{<%=projectGuidUpper%>}.Release|ARM.Build.0 = Release|ARM
+		{<%=projectGuidUpper%>}.Release|ARM.Deploy.0 = Release|ARM
+		{<%=projectGuidUpper%>}.Release|ARM64.ActiveCfg = Release|ARM64
+		{<%=projectGuidUpper%>}.Release|ARM64.Build.0 = Release|ARM64
+		{<%=projectGuidUpper%>}.Release|ARM64.Deploy.0 = Release|ARM64
+		{<%=projectGuidUpper%>}.Release|x64.ActiveCfg = Release|x64
+		{<%=projectGuidUpper%>}.Release|x64.Build.0 = Release|x64
+		{<%=projectGuidUpper%>}.Release|x64.Deploy.0 = Release|x64
+		{<%=projectGuidUpper%>}.Release|x86.ActiveCfg = Release|Win32
+		{<%=projectGuidUpper%>}.Release|x86.Build.0 = Release|Win32
+		{<%=projectGuidUpper%>}.Release|x86.Deploy.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D43FAD39-F619-437D-BB40-04A3982ACB6A}
+	EndGlobalSection
+EndGlobal

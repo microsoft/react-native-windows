@@ -20,6 +20,7 @@ const {
   newWarn,
   newSpinner,
   commandWithProgress,
+  runPowerShellScriptFunction,
 } = require('./commandWithProgress');
 
 function pushd(pathArg) {
@@ -162,40 +163,40 @@ async function deployToDesktop(options, verbose) {
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
 
-  const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+  let args = ['--remote-debugging', options.proxy ? 'true' : 'false'];
+
+  if (options.directDebugging) {
+    const port = parseInt(options.directDebugging, 10);
+    if (!isNaN(port) && port > 1024 && port < 65535) {
+      args.push('--direct-debugging', port.toString());
+    } else {
+      newError(
+        'Direct debugging port not specified, invalid or out of bounds.',
+      );
+      process.exit(1);
+    }
+  }
 
   const popd = pushd(options.root);
 
-  const removingText = 'Removing old version of the app';
-  await commandWithProgress(
-    newSpinner(removingText),
-    removingText,
-    'powershell',
-    `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`.split(
-      ' ',
-    ),
+  await runPowerShellScriptFunction(
+    'Removing old version of the app',
+    windowsStoreAppUtils,
+    `Uninstall-App ${appName}`,
     verbose,
   );
 
-  const devmodeText = 'Enabling Developer Mode';
-  const devmodeEnable = `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; EnableDevmode "${script}"`;
-
-  await commandWithProgress(
-    newSpinner(devmodeText),
-    devmodeText,
-    'powershell',
-    devmodeEnable.split(' '),
+  await runPowerShellScriptFunction(
+    'Enabling Developer Mode',
+    windowsStoreAppUtils,
+    `EnableDevMode "${script}"`,
     verbose,
   );
 
-  const installingText = 'Installing new version of the app';
-  const installApp = `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}" -Force`;
-
-  await commandWithProgress(
-    newSpinner(installingText),
-    installingText,
-    'powershell',
-    installApp.split(' '),
+  await runPowerShellScriptFunction(
+    'Installing new version of the app',
+    windowsStoreAppUtils,
+    `Install-App "${script}" -Force`,
     verbose,
   );
 
@@ -223,14 +224,10 @@ async function deployToDesktop(options, verbose) {
   );
 
   if (shouldLaunchApp(options)) {
-    const startingText = 'Starting the app';
-    await commandWithProgress(
-      newSpinner(startingText),
-      startingText,
-      'powershell',
-      `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`.split(
-        ' ',
-      ),
+    await runPowerShellScriptFunction(
+      'Starting the app',
+      windowsStoreAppUtils,
+      `Start-Locally ${appName} ${args}`,
       verbose,
     );
   } else {

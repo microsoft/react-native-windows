@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603144}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <RootNamespace>ReactWindowsCore</RootNamespace>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -34,19 +42,11 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603144}</ProjectGuid>
-    <Keyword>StaticLibrary</Keyword>
-    <RootNamespace>ReactWindowsCore</RootNamespace>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
@@ -76,7 +76,15 @@
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        REACTWINDOWS_BUILD;
+        NOMINMAX;
+        FOLLY_NO_CONFIG;
+        WIN32=0;
+        RN_EXPORT=;
+        CHAKRACORE;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
         $(ReactNativeWindowsDir);
@@ -85,19 +93,20 @@
         $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(JSI_Source);
         $(ReactNativeWindowsDir)JSI\Shared;
         $(ReactNativeWindowsDir)stubs;
         $(FollyDir);
         $(ReactNativeWindowsDir)\ReactWindowsCore\pch;
         $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
-        $(ProjectDir);
-        $(GeneratedFilesDir);
-        $(IntDir);
+        $(ReactNativeWindowsDir)\Mso;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <PreprocessToFile>false</PreprocessToFile>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -138,12 +147,12 @@
     <ClInclude Include="MemoryMappedBuffer.h" />
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
-    <ClInclude Include="Modules\AppThemeModule.h" />
     <ClInclude Include="Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\PlatformConstantsModule.h" />
     <ClInclude Include="Modules\SourceCodeModule.h" />
+    <ClInclude Include="Modules\StatusBarManagerModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
     <ClInclude Include="Modules\WebSocketModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
@@ -162,8 +171,10 @@
     <ClInclude Include="ChakraRuntimeHolder.h" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(USE_V8)' == 'true'" />
+    <ClInclude Include="WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cdebug.cpp" />
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
     <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
@@ -173,13 +184,13 @@
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
-    <ClCompile Include="Modules\AppThemeModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
+    <ClCompile Include="Modules\StatusBarManagerModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -195,6 +206,7 @@
     <ClCompile Include="ChakraRuntimeHolder.cpp" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(USE_HERMES)' == 'true'" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(USE_V8)' == 'true'" />
+    <ClCompile Include="WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="etw\react_native_windows.man" />

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.5",
+  "version": "0.0.0-master.44",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -8,8 +8,8 @@
     "directory": "vnext"
   },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
-  "main": "Libraries/react-native/react-native-implementation.windows.js",
-  "typings": "Libraries/react-native/typings-index.d.ts",
+  "main": "./index.windows.js",
+  "typings": "./typings-index.d.ts",
   "scripts": {
     "api": "just-scripts api",
     "build": "just-scripts build",
@@ -23,7 +23,7 @@
     "validate-overrides": "override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.0",
+    "@babel/runtime": "^7.8.4",
     "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
     "envinfo": "^7.5.0",
@@ -45,21 +45,21 @@
     "@types/es6-promise": "0.0.32",
     "@types/ora": "^3.2.0",
     "@types/react": "16.9.0",
-    "@types/react-native": "~0.61.5",
+    "@types/react-native": "^0.62.2",
     "eslint": "5.1.0",
     "eslint-plugin-prettier": "2.6.2",
-    "flow-bin": "^0.105.0",
+    "flow-bin": "^0.113.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
     "react": "16.9.0",
     "react-native-windows-override-tools": "^0.0.1",
-    "react-native": "0.61.5",
+    "react-native": "0.62.2",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.62.2"
   },
   "beachball": {
     "defaultNpmTag": "master",

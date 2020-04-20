@@ -6,22 +6,22 @@
 
 import React = require('react');
 import {Button, Text, TextInput, View} from 'react-native';
-import {Popup} from 'react-native-windows';
+import {Popup} from '../../../../Libraries/Components/Popup/Popup';
 
-interface IPopupExampleState {
-  isFlyoutVisible: boolean;
+interface IAnchoredPopupExampleState {
+  showPopup: boolean;
   buttonTitle: string;
-  isLightDismissEnabled: boolean;
 }
 
-class PopupExample extends React.Component<{}, IPopupExampleState> {
-  // tslint:disable-next-line:no-any
-  private _textInput: any;
+class AnchoredPopupExample extends React.Component<
+  {},
+  IAnchoredPopupExampleState
+> {
+  private _textInput: React.RefObject<TextInput>;
 
-  public state: IPopupExampleState = {
-    isFlyoutVisible: false,
-    buttonTitle: 'Open Flyout',
-    isLightDismissEnabled: false,
+  public state: IAnchoredPopupExampleState = {
+    showPopup: false,
+    buttonTitle: 'Open Popup',
   };
 
   public constructor(props: any) {
@@ -37,17 +37,17 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
           <Text style={{padding: 10, width: 300, height: 32}}>
             Text Input to Anchor popup to:{' '}
           </Text>
-          <TextInput style={{height: 32, width: 300}} ref={this._setRef} />
+          <TextInput style={{height: 32, width: 300}} ref={this._textInput} />
         </View>
         <View style={{justifyContent: 'center', padding: 50}}>
-          <Button onPress={this._onPress} title={this.state.buttonTitle} />
+          <Button onPress={this._togglePopup} title={this.state.buttonTitle} />
         </View>
-        {this.state.isFlyoutVisible && (
+        {this.state.showPopup && (
           <Popup
-            isOpen={this.state.isFlyoutVisible}
-            isLightDismissEnabled={this.state.isLightDismissEnabled}
+            isOpen={this.state.showPopup}
             onDismiss={this._onPopupDismissed}
-            target={this._textInput}
+            target={this._textInput.current}
+            isLightDismissEnabled={true}
             horizontalOffset={10}
             verticalOffset={10}>
             <View
@@ -60,7 +60,54 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
                 }}>
                 This is a flyout
               </Text>
-              <Button onPress={this._onPopupButtonPressed} title="Close" />
+              <Button onPress={this._togglePopup} title="Close" />
+            </View>
+          </Popup>
+        )}
+      </View>
+    );
+  }
+  _togglePopup = () => {
+    this.setState(state => ({
+      buttonTitle: state.showPopup ? 'Open Popup' : 'Close Popup',
+      showPopup: !state.showPopup,
+    }));
+  };
+
+  _onPopupDismissed = () => {
+    this.setState({buttonTitle: 'Open Popup', showPopup: false});
+  };
+}
+
+interface IPopupPlacementExampleState {
+  showPopup: boolean;
+}
+
+class PopupPlacementExample extends React.Component<
+  {},
+  IPopupPlacementExampleState
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      showPopup: false,
+    };
+  }
+
+  public render() {
+    return (
+      <View style={{width: 500, height: 500}}>
+        <Button onPress={this._togglePopup} title={'Toggle popup'} />
+        {this.state.showPopup && (
+          <Popup
+            style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}
+            isOpen={this.state.showPopup}
+            onDismiss={this._onPopupDismissed}
+            isLightDismissEnabled={false}>
+            <View style={{backgroundColor: 'lightgray', flex: 1}}>
+              <Text>This is a popup</Text>
+              <Button onPress={this._togglePopup} title="Toggle popup" />
+              <Button onPress={this._noop} title="This is a button" />
             </View>
           </Popup>
         )}
@@ -68,20 +115,18 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
     );
   }
 
-  private _setRef = (textInput: TextInput) => {
-    this._textInput = textInput;
+  _togglePopup = () => {
+    this.setState(state => ({
+      showPopup: !state.showPopup,
+    }));
   };
 
-  _onPress = () => {
-    this.setState({buttonTitle: 'Close Flyout', isFlyoutVisible: true});
+  _onPopupDismissed = () => {
+    this.setState({showPopup: false});
   };
 
-  _onPopupButtonPressed = () => {
-    this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
-  };
-
-  _onPopupDismissed = (isOpen: boolean) => {
-    this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: isOpen});
+  _noop = () => {
+    return;
   };
 }
 
@@ -91,9 +136,15 @@ export const description =
   'Displays content on top of existing content, within the bounds of the application window.';
 export const examples = [
   {
-    title: 'Popup Anchor to text input',
+    title: 'Popup Anchor to text input w/ light dismiss',
     render: function(): JSX.Element {
-      return <PopupExample />;
+      return <AnchoredPopupExample />;
+    },
+  },
+  {
+    title: 'Popup centered on screen',
+    render: function(): JSX.Element {
+      return <PopupPlacementExample />;
     },
   },
 ];

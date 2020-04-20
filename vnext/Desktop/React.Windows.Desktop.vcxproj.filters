@@ -83,6 +83,9 @@
     <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="WebSocketResourceFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\NetworkingModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>

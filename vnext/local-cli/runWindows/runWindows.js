@@ -12,6 +12,7 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
+const chalk = require('chalk');
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
@@ -71,8 +72,13 @@ async function runWindows(config, args, options) {
       );
     } catch (e) {
       newError(
-        `Build failed with message ${e}. Check your build configuration.`,
+        `Build failed with message ${
+          e.message
+        }. Check your build configuration.`,
       );
+      if (e.logfile) {
+        console.log('See', chalk.bold(e.logfile));
+      }
       process.exit(1);
     }
   } else {
@@ -89,7 +95,7 @@ async function runWindows(config, args, options) {
         await deploy.deployToDesktop(options, verbose);
       }
     } catch (e) {
-      newError(`Failed to deploy: ${e.message}`);
+      newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
       process.exit(1);
     }
   } else {
@@ -124,6 +130,7 @@ runWindows({
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
  *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
+ *    direct-debugging: Number - Enable direct debugging on specified port
  */
 module.exports = {
   name: 'run-windows',
@@ -142,7 +149,7 @@ module.exports = {
     },
     {
       command: '--arch [string]',
-      description: 'The build architecture (ARM, x86, x64)',
+      description: 'The build architecture (ARM, ARM64, x86, x64)',
       default: 'x86',
     },
     {
@@ -205,6 +212,10 @@ module.exports = {
       command: '--autolink',
       description: 'Auto link native modules',
       default: false,
+    },
+    {
+      command: '--direct-debugging [number]',
+      description: 'Enable direct debugging on specified port',
     },
   ],
 };

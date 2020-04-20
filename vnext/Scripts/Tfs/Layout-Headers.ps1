@@ -101,4 +101,11 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop.Test.DLL -Name -Recurse -Include $
 Copy-Item -Force -Recurse -Path $ReactWindowsRoot\include -Destination $TargetRoot\inc
 
 # NUSPEC
-Copy-Item -Force -Path $ReactWindowsRoot\Scripts\React*.nuspec -Destination $TargetRoot
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\*.nuspec -Destination $TargetRoot
+
+#Copy StripAdditionalPlatformsFromNuspec.ps1 for use by publish task
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -Destination $TargetRoot
+
+
+# Microsoft.ReactNative.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -78,7 +78,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!--
+        comsuppw.lib  - _com_util::ConvertStringToBSTR
+        Winhttp.lib   - WebSocket resource implementation
+      -->
+      <AdditionalDependencies>
+        comsuppw.lib;
+        Shlwapi.lib;
+        Version.lib;
+        Winhttp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <!--
       Replaces the WindowsApp.lib link reference in Microsoft.Windows.CppWinRT.props until
       we have a better solution for handling the absence of WinRT string and error DLLs on Win7.
@@ -134,9 +144,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
-      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!='' AND '$(RNW_PKG_VERSION)'!=''">
+      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
         RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
-        RNW_PKG_VERSION=$(RNW_PKG_VERSION);
+        RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);
+        RNW_PKG_VERSION_MINOR=$(RNW_PKG_VERSION_MINOR);
+        RNW_PKG_VERSION_PATCH=$(RNW_PKG_VERSION_PATCH);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)

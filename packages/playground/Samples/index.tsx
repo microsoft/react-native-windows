@@ -132,7 +132,7 @@ class PopupButton extends React.Component<
     this.closePopup();
   }
 
-  _onPopupDismissed(_isOpen: boolean) {
+  _onPopupDismissed() {
     this.closePopup();
   }
 }

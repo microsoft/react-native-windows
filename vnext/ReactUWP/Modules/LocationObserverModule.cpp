@@ -103,7 +103,7 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Geolocation
     LocationObserverOptions &options) {
   auto location =
       co_await geoLocator.GetGeopositionAsync(TimeSpanFromMs(options.maxAge), TimeSpanFromMs(options.timeout));
-  return location;
+  co_return location;
 }
 
 void LocationObserverModule::LocationObserver::getCurrentPosition(

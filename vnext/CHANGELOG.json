@@ -2,6 +2,799 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 19 Apr 2020 00:04:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.44",
+      "version": "0.0.0-master.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix include paths",
+            "author": "kmelmon@microsoft.com",
+            "commit": "52bf9690a1e48d18f8d36c3f8de8aaa95fdd174a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Apr 2020 00:04:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.43",
+      "version": "0.0.0-master.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow enabling of direct debugging through the CLI.",
+            "author": "12337821+nasadigital@users.noreply.github.com",
+            "commit": "c1a2140928b37d9c761c41bfa0fcc38704a14099",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implelent Shared StatusBarManagerModule and Do Module Cleanup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "609c18ca016e9e4b5831890bad56309f02280566",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement AppearanceModule",
+            "author": "ngerlem@microsoft.com",
+            "commit": "317d9fc1474930ef56c869706707126a78834c8b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add support for React Native BackHandler API",
+            "author": "jahiggin@microsoft.com",
+            "commit": "783410677774bcac2b7ada5900e2cec8675e5b2c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "remove AccessibilityStates",
+            "author": "kmelmon@microsoft.com",
+            "commit": "f3d983eff16d81b60127b67ff8f056d4c6f20e29",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix issue with yoga layout in x64 release",
+            "author": "acoates@microsoft.com",
+            "commit": "a67124cbd122bc9f90f7a9d5f328c94c504fe283",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Apr 2020 00:04:27 GMT",
+      "tag": "react-native-windows_v0.0.0-master.42",
+      "version": "0.0.0-master.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now.",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "4c320cffcdae239af2f00bba1982f71d65146d05",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows",
+            "author": "acoates@microsoft.com",
+            "commit": "83f6067f50abd97e6bb2f59d41afe9dad04e26d0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "implement accessibilityState",
+            "author": "kmelmon@microsoft.com",
+            "commit": "9718f847a204dc971e5ea2e239ffb688db282c73",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 23:02:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.41",
+      "version": "0.0.0-master.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix PickerWindows (and DatePickerExample Page)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e0adf5e83e1afa6d0cd975432385c747a3dc360a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 22:26:36 GMT",
+      "tag": "react-native-windows_v0.0.0-master.40",
+      "version": "0.0.0-master.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use a custom resolver wrapper to allow metro to run for multiple platforms at once",
+            "author": "acoates@microsoft.com",
+            "commit": "d53d06aec7ddb8a17480a5e8dc9522e115792a64",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 19:18:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.39",
+      "version": "0.0.0-master.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename DeveloperSettings.SourceBundlePath -> SourceBundleName",
+            "author": "rezha@microsoft.com",
+            "commit": "63aeb0fc68cdb843c6d77fa7f44af88a6f2b9783",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 07:53:39 GMT",
+      "tag": "react-native-windows_v0.0.0-master.38",
+      "version": "0.0.0-master.38",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix bug where not specifying height on TextInput causes 0 height",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5ec607d93ba3daf586ed07cf9f18f65ba6262683",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 19:34:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.37",
+      "version": "0.0.0-master.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[generator] Use `npx` for consistency",
+            "author": "eloy.de.enige@gmail.com",
+            "commit": "7c66e60b03170a9639fb73314003a2f8f583de70",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 18:14:12 GMT",
+      "tag": "react-native-windows_v0.0.0-master.36",
+      "version": "0.0.0-master.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Elevate to install app certificate if necessary",
+            "author": "asklar@microsoft.com",
+            "commit": "e731d7699d106d023ccaa9ccf422da6d25407262",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 14:59:17 GMT",
+      "tag": "react-native-windows_v0.0.0-master.35",
+      "version": "0.0.0-master.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to React Native 0.62",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ae37f8e7518f808116ce906a7f7b32f00412612d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 02:46:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.34",
+      "version": "0.0.0-master.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add missing headers to proj file",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c143c56da362a813c9f85152d041243cfb1c29e7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Apr 2020 18:45:40 GMT",
+      "tag": "react-native-windows_v0.0.0-master.33",
+      "version": "0.0.0-master.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Folly ContinueOnError",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab65bd96a36db5ca70e7041f026028fa6c639a0a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Apr 2020 07:51:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.32",
+      "version": "0.0.0-master.32",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor View managers to detect unimplemented props",
+            "author": "asklar@microsoft.com",
+            "commit": "31bed1cc68714020ad6dc82ac4784647ffc41fb4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Apr 2020 02:36:32 GMT",
+      "tag": "react-native-windows_v0.0.0-master.31",
+      "version": "0.0.0-master.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode)",
+            "author": "asklar@microsoft.com",
+            "commit": "69528f606dd6ed89f75b4be2780d7eaefdf1656e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 22:03:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.30",
+      "version": "0.0.0-master.30",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplified C++ macros and improved their comments",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5e9ec2a384eca8c9489e812811faade446f56397",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 14:44:13 GMT",
+      "tag": "react-native-windows_v0.0.0-master.29",
+      "version": "0.0.0-master.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't set readyState on connection error",
+            "author": "julio@rochsquadron.net",
+            "commit": "9d68988472f32739185957959e78c35c51203e49",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 06:15:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.28",
+      "version": "0.0.0-master.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve inner loop and error reporting (local CLI)",
+            "author": "asklar@microsoft.com",
+            "commit": "ff6f8f57587f7364143a701ef6637039b6643cf4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Apr 2020 01:16:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.27",
+      "version": "0.0.0-master.27",
+      "comments": {
+        "none": [
+          {
+            "author": "julio@rochsquadron.net",
+            "commit": "c8085b5bb88342ed9c7b91ed3c093818ef67aad2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow WebSocketModule to use custom resource factory",
+            "author": "julio@rochsquadron.net",
+            "commit": "c8085b5bb88342ed9c7b91ed3c093818ef67aad2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 21:36:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.27",
+      "version": "0.0.0-master.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable managed unit tests",
+            "author": "jthysell@microsoft.com",
+            "commit": "98049fcc569ec9ff0ee735311b1f4552adee8be2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 20:28:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.26",
+      "version": "0.0.0-master.26",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bumping dev deps",
+            "author": "acoates@microsoft.com",
+            "commit": "03fb17db7b929a6a9ec5b3ce4a00f8ea54560b03",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 19:49:28 GMT",
+      "tag": "react-native-windows_v0.0.0-master.26",
+      "version": "0.0.0-master.26",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bumping dev deps",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 17:16:44 GMT",
+      "tag": "react-native-windows_v0.0.0-master.26",
+      "version": "0.0.0-master.26",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Creating new Microsoft.ReactNative.sln without legacy ReactUWP",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Apr 2020 19:59:18 GMT",
+      "tag": "react-native-windows_v0.0.0-master.25",
+      "version": "0.0.0-master.25",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove using namespace in ReactPackageProvider.h",
+            "author": "kaigu@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Apr 2020 17:48:10 GMT",
+      "tag": "react-native-windows_v0.0.0-master.24",
+      "version": "0.0.0-master.24",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rework more publish logic - produce nugets in PRs",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Apr 2020 13:58:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.23",
+      "version": "0.0.0-master.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Apply version numbers to Microsoft.ReactNative",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Apr 2020 00:50:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.22",
+      "version": "0.0.0-master.22",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Optimizing VS component installer to speed up CI builds",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2020 21:11:39 GMT",
+      "tag": "react-native-windows_v0.0.0-master.21",
+      "version": "0.0.0-master.21",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "placeholderTextColor for secureTextEntry on TextInput",
+            "author": "dzndlhov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2020 20:21:01 GMT",
+      "tag": "react-native-windows_v0.0.0-master.20",
+      "version": "0.0.0-master.20",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix issue adding react-native-windows to a package in a monorepo",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2020 18:46:38 GMT",
+      "tag": "react-native-windows_v0.0.0-master.19",
+      "version": "0.0.0-master.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start of implementation for nuget template",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2020 07:15:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.18",
+      "version": "0.0.0-master.18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enabling arm64 where possible",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2020 06:29:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.17",
+      "version": "0.0.0-master.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Clean up normalization",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2020 00:48:37 GMT",
+      "tag": "react-native-windows_v0.0.0-master.16",
+      "version": "0.0.0-master.16",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio@rochsquadron.net",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Apr 2020 21:15:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.15",
+      "version": "0.0.0-master.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 package version",
+            "author": "tudorm@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Apr 2020 05:07:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.14",
+      "version": "0.0.0-master.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Clean Up Directory Logic to Fix Publish",
+            "author": "ngerlem@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 22:20:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Beginings of Microsoft.ReactNative nuget",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 21:00:59 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make JSValueReader.h compile with Clang [RFC] I have spent quite some time on this but I can't make it compile as a static assert prevents compilation using Clang.",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 20:12:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update API files",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 17:20:20 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update api docs",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 16:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix template specialization error in FrameworkElementViewManager.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "# Fix co_routine in LocationObserverModule.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix calling winrt::TimeSpan constructor in ValueUtils.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Apr 2020 15:17:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix co_routine in ReactImage.cpp",
+            "author": "christophpurrer@gmail.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Apr 2020 23:27:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix VS 2019 16.5 build errors",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Apr 2020 22:39:22 GMT",
+      "tag": "react-native-windows_v0.0.0-master.12",
+      "version": "0.0.0-master.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve popups",
+            "author": "aschultz@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Apr 2020 18:40:22 GMT",
+      "tag": "react-native-windows_v0.0.0-master.11",
+      "version": "0.0.0-master.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Switching to VS 2019 and v142 tools",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Apr 2020 21:47:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.10",
+      "version": "0.0.0-master.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash when calling measure on non-framework element",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Apr 2020 14:24:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.9",
+      "version": "0.0.0-master.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed Mso test crash",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Apr 2020 05:12:32 GMT",
+      "tag": "react-native-windows_v0.0.0-master.8",
+      "version": "0.0.0-master.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set $(ReactNativeWindowsDir) before it is used",
+            "author": "vmorozov@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2020 21:49:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.7",
+      "version": "0.0.0-master.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update MSBuild Tasks to use MSBuild x64",
+            "author": "jthysell@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2020 20:21:56 GMT",
+      "tag": "react-native-windows_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "1. Make changes in response to Vladimir's feedback in the PR for bb8c00133... 2. Fix a dumb bug in multiRemove; the parameterized query variable was not being bound so nothing ever got deleted",
+            "author": "hpratt@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2020 16:24:06 GMT",
+      "tag": "react-native-windows_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make AsyncStorageModuleWin32 actually async, using C++/WinRT & VC++'s support for coroutines.",
+            "author": "hpratt@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 02:03:05 GMT",
       "tag": "react-native-windows_v0.0.0-master.5",
       "version": "0.0.0-master.5",

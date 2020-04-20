@@ -5,20 +5,7 @@
  * @ts-check
  */
 
-const path = require('path');
-const {
-  task,
-  series,
-  option,
-  argv,
-  tscTask,
-  eslintTask,
-} = require('just-scripts');
-const libPath = path.resolve(process.cwd(), 'lib');
-const srcPath = path.resolve(process.cwd(), 'src');
-
-option('production');
-option('clean');
+const {task, series, eslintTask} = require('just-scripts');
 
 task('eslint', () => {
   return eslintTask();
@@ -26,19 +13,6 @@ task('eslint', () => {
 task('eslint:fix', () => {
   return eslintTask({fix: true});
 });
-task('ts', () => {
-  return tscTask({
-    pretty: true,
-    noEmit: true,
-    ...(argv().production && {
-      inlineSources: true,
-      sourceRoot: path.relative(libPath, srcPath),
-    }),
-    target: 'es6',
-    module: 'commonjs',
-  });
-});
 
-task('build', series('ts'));
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));

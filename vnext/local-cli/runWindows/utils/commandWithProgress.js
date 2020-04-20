@@ -41,6 +41,32 @@ function newSpinner(text) {
   return ora(options).start();
 }
 
+async function runPowerShellScriptFunction(
+  taskDescription,
+  script,
+  funcName,
+  verbose,
+) {
+  try {
+    await commandWithProgress(
+      newSpinner(taskDescription),
+      taskDescription,
+      'powershell',
+      [
+        '-NoProfile',
+        '-ExecutionPolicy',
+        'RemoteSigned',
+        `Import-Module "${script}"; ${funcName} -ErrorAction Stop; exit $LASTEXITCODE`,
+      ],
+      verbose,
+    );
+  } catch {
+    // The error output from the process will be shown if verbose is set.
+    // We don't capture the process output if verbose is set, but at least we have the task name in text, so throw that.
+    throw new Error(taskDescription);
+  }
+}
+
 function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
   return new Promise(function(resolve, reject) {
     const spawnOptions = verbose ? {stdio: 'inherit'} : {};
@@ -50,7 +76,7 @@ function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
     }
 
     const cp = child_process.spawn(command, args, spawnOptions);
-
+    let firstErrorLine = null;
     if (!verbose) {
       cp.stdout.on('data', chunk => {
         const text = chunk.toString();
@@ -58,10 +84,16 @@ function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
       });
       cp.stderr.on('data', chunk => {
         const text = chunk.toString();
+        if (!firstErrorLine) {
+          firstErrorLine = text;
+        }
         if (verbose) {
           console.error(chalk.red(text));
         }
-        setSpinnerText(spinner, taskDoingName + ': ERROR: ', text);
+        if (text) {
+          setSpinnerText(spinner, taskDoingName + ': ERROR: ', firstErrorLine);
+        }
+        reject(new Error(firstErrorLine));
       });
     }
     cp.on('error', e => {
@@ -105,4 +137,5 @@ module.exports = {
   newSpinner,
   newSuccess,
   newWarn,
+  runPowerShellScriptFunction,
 };

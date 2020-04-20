@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <ProjectName>ReactCommon</ProjectName>
+    <RootNamespace>ReactCommon</RootNamespace>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+    <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
@@ -34,20 +45,9 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</ProjectGuid>
-    <Keyword>StaticLibrary</Keyword>
-    <ProjectName>ReactCommon</ProjectName>
-    <RootNamespace>ReactCommon</RootNamespace>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-  </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
@@ -68,7 +68,15 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeDir)\ReactCommon\jscallinvoker;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(ReactNativeDir)\ReactCommon;
+        $(JSI_SourcePath);$(JSI_Source);
+        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(FollyDir);$(ReactNativeWindowsDir)stubs;
+        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
+        %(AdditionalIncludeDirectories);
+      </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -138,29 +146,32 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
+    <!-- Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122 -->
+    <ClCompile Condition="'$(Platform)' == 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" FloatingPointModel="Strict" />
+    <ClCompile Condition="'$(Platform)' != 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" />
+    <!-- Forced include only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" ForcedIncludeFiles="stdexcept" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp" />
   </ItemGroup>
   <ItemGroup>

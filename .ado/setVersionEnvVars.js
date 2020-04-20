@@ -1,14 +1,15 @@
 // @ts-check
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs'); 
+const path = require('path');
 const child_process = require('child_process');
-
+const semver = require('semver');
 const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
 
 // Helper to format npmVersion in a way that the Version.rc resource files want it
 function npmVersionToRcVersion(npmVersion) {
   let groups = npmVersion.split(/[\.-]/);
-  return `${groups[0]},${groups[1]},${groups[2]},${groups[4]}`;
+  const [major,minor,patch,_junk,prerelease] = groups;
+  return `${major},${minor},${patch},${prerelease ? prerelease : '0'}`;
 }
 
 let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
@@ -18,7 +19,9 @@ const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString().tri
 
 let versionEnvVars = {
   RNW_PKG_VERSION_STR: pkgJson.version,
-  RNW_PKG_VERSION: npmVersionToRcVersion(pkgJson.version),
+  RNW_PKG_VERSION_MAJOR: semver.major(pkgJson.version),
+  RNW_PKG_VERSION_MINOR: semver.minor(pkgJson.version),
+  RNW_PKG_VERSION_PATCH: semver.patch(pkgJson.version),
   npmVersion: pkgJson.version,
   publishCommitId: commitId
 }
@@ -27,8 +30,10 @@ let versionEnvVars = {
 
 // Set env variable to allow VS to build dll with correct version information
 console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}`);
+console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_MAJOR]${versionEnvVars.RNW_PKG_VERSION_MAJOR}`);
+console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_MINOR]${versionEnvVars.RNW_PKG_VERSION_MINOR}`);
+console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvVars.RNW_PKG_VERSION_PATCH}`);
 // Set env variable to allow VS to build dll with correct version information
-console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION]${versionEnvVars.RNW_PKG_VERSION}`);
 console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${versionEnvVars.npmVersion}`);
 console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${versionEnvVars.publishCommitId}`);
 
@@ -44,10 +49,16 @@ fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'),
 `
 console.log("::[set-env name=RNW_PKG_VERSION_STR;]${versionEnvVars.RNW_PKG_VERSION_STR}");
 console.log("##[set-env name=RNW_PKG_VERSION_STR;]${versionEnvVars.RNW_PKG_VERSION_STR}");
+console.log("::[set-env name=RNW_PKG_VERSION_MAJOR;]${versionEnvVars.RNW_PKG_VERSION_MAJOR}");
+console.log("##[set-env name=RNW_PKG_VERSION_MAJOR;]${versionEnvVars.RNW_PKG_VERSION_MAJOR}");
+console.log("::[set-env name=RNW_PKG_VERSION_MINOR;]${versionEnvVars.RNW_PKG_VERSION_MINOR}");
+console.log("##[set-env name=RNW_PKG_VERSION_MINOR;]${versionEnvVars.RNW_PKG_VERSION_MINOR}");
+console.log("::[set-env name=RNW_PKG_VERSION_PATCH;]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
+console.log("##[set-env name=RNW_PKG_VERSION_PATCH;]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}");
-console.log("::[set-env name=RNW_PKG_VERSION;]${versionEnvVars.RNW_PKG_VERSION}");
-console.log("##[set-env name=RNW_PKG_VERSION;]${versionEnvVars.RNW_PKG_VERSION}");
-console.log("##vso[task.setvariable variable=RNW_PKG_VERSION]${versionEnvVars.RNW_PKG_VERSION}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MAJOR]${versionEnvVars.RNW_PKG_VERSION_MAJOR}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MINOR]${versionEnvVars.RNW_PKG_VERSION_MINOR}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("::[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
 console.log("##[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
 console.log("##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}");
