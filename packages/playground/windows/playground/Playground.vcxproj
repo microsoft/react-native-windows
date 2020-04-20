@@ -179,6 +179,12 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\TreeDump\masters\ActivityIndicator.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\TreeDump\masters\RNTester.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="packages.config" />
     <None Include="playground_TemporaryKey.pfx" />
     <None Include="PropertySheet.props" />
@@ -201,9 +207,9 @@
   </ItemGroup>
   <ItemDefinitionGroup>
     <Reference>
-        <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+      <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
     </Reference>
-</ItemDefinitionGroup>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <Font Include="Assets\seguiemj.ttf" />
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include "MainPage.g.cpp"
 #include "winrt/Microsoft.ReactNative.h"
 #include "winrt/TreeDumpLibrary.h"
+#include <winrt/Windows.UI.ViewManagement.h>
 
 using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
@@ -60,6 +61,8 @@ void MainPage::UpdateTreeDump(
     Windows::Foundation::IInspectable const & /*sender*/,
     Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
 
+    Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
+    
     auto str = TreeDumpLibrary::VisualTreeDumper::DumpTree(m_reactRootView, nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
 
     TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
@@ -69,7 +72,9 @@ void MainPage::UpdateTreeDump(
           try {
             matches = ao.GetResults();
           } catch (winrt::hresult_error &e) {
-            OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester");
+            OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester: ");
+            OutputDebugString(e.message().data());
+            OutputDebugString(L"\n");
           }
           x_TreeDump().Content(winrt::box_value(winrt::to_hstring(matches ? L"OK" : L"ERROR")));
         });

@@ -61,6 +61,9 @@
     <None Include="Assets\TreeDump\masters\RNTester.json">
       <Filter>Assets\TreeDump\masters</Filter>
     </None>
+    <None Include="Assets\TreeDump\masters\ActivityIndicator.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

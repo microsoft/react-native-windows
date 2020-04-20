@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -55,7 +53,10 @@ namespace TreeDumpLibrary
 
             public bool ShouldVisitPropertiesForNode(DependencyObject node)
             {
-                return (node as UIElement) != null;
+                var fe = node as FrameworkElement;
+                string[] excludedNames = new string[] { "VerticalScrollBar", "HorizontalScrollBar", "ScrollBarSeparator" };
+                if (fe != null && excludedNames.Contains(fe.Name)) { return false; }
+                return true;
             }
 
             public bool ShouldVisitProperty(string propertyName)
@@ -185,25 +186,36 @@ namespace TreeDumpLibrary
             return value;
         }
 
+        private static DependencyObject[] GetChildren(DependencyObject node, Visitor visitor)
+        {
+            DependencyObject[] dos = new DependencyObject[VisualTreeHelper.GetChildrenCount(node)];
+            for (int i = 0; i < dos.Length; i++)
+            {
+                dos[i] = VisualTreeHelper.GetChild(node, i);
+            }
+            return dos.Where((n) => visitor.ShouldVisitPropertiesForNode(n)).ToArray();
+        }
+
         private static void WalkThroughTree(DependencyObject node, DependencyObject excludedNode, Visitor visitor, bool isLast = true)
         {
-            if (node != null)
+            if (node != null && visitor.ShouldVisitPropertiesForNode(node))
             {
                 // Assume that if we have a UIElement, we'll have some properties
-                var childrenCount = VisualTreeHelper.GetChildrenCount(node);
-                bool hasProperties = node is UIElement || (childrenCount > 0);
+                var children = GetChildren(node, visitor);
+                bool hasProperties = node is UIElement || (children.Length > 0);
+
                 visitor.BeginVisitNode(node, hasProperties);
 
-                WalkThroughProperties(node, visitor, childrenCount != 0);
-                if (childrenCount != 0)
+                WalkThroughProperties(node, visitor, children.Length != 0);
+                if (children.Length != 0)
                 {
                     visitor.BeginChildren();
-                    for (int i = 0; i < childrenCount; i++)
+                    for (int i = 0; i < children.Length; i++)
                     {
-                        var child = VisualTreeHelper.GetChild(node, i);
+                        var child = children[i];
                         if (child != excludedNode)
                         {
-                            bool isLastChild = (i == childrenCount - 1);
+                            bool isLastChild = (i == children.Length - 1);
                             WalkThroughTree(child, excludedNode, visitor, isLastChild);
                         }
                     }
