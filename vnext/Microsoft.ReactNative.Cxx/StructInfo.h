@@ -9,7 +9,7 @@
 
 #define REACT_STRUCT(type)                                                           \
   struct type;                                                                       \
-  winrt::Microsoft::ReactNative::FieldMap GetStructInfo(type *) noexcept {           \
+  inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(type *) noexcept {    \
     winrt::Microsoft::ReactNative::FieldMap fieldMap{};                              \
     winrt::Microsoft::ReactNative::CollectStructFields<type, __COUNTER__>(fieldMap); \
     return fieldMap;                                                                 \
