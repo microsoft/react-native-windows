@@ -34,13 +34,13 @@
   template struct moduleStruct##_ModuleRegistration<int>;                                                           \
                                                                                                                     \
   template <class TRegistry>                                                                                        \
-  constexpr void RegisterModule(TRegistry &registry) noexcept {                                                     \
+  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                                 \
     registry.RegisterModule(                                                                                        \
-        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>{});                 \
+        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{});              \
   }
 
 #define INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, moduleName) \
-  INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, nullptr)
+  INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, L"")
 
 #define INTERNAL_REACT_MODULE_1_ARG(moduleStruct) INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
 
@@ -48,21 +48,24 @@
   INTERNAL_REACT_RECOMPOSER_4(     \
       (__VA_ARGS__, INTERNAL_REACT_MODULE_3_ARGS, INTERNAL_REACT_MODULE_2_ARGS, INTERNAL_REACT_MODULE_1_ARG, ))
 
-// Register struct member.
-// For each registered member we create a static method that registers it.
+// Provide meta data information about struct member.
+// For each member with a 'custom attribute' macro we create a static method to provide meta data.
 // The member Id is generated as a ReactMemberId<__COUNTER__> type.
-// To invoke the static registration methods, we increment ReactMemberId while static member exists.
-#define INTERNAL_REACT_MEMBER_4_ARGS(memberType, member, memberName, moduleName)                 \
-  template <class TClass, class TRegistry>                                                       \
-  constexpr static void RegisterMember(                                                          \
-      TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.Register##memberType(&TClass::member, memberName, moduleName);                      \
+// To enumerate the static methods, we can increment ReactMemberId while static member exists.
+#define INTERNAL_REACT_MEMBER_4_ARGS(memberKind, member, jsMemberName, jsModuleName)                          \
+  template <class TStruct, class TVisitor>                                                                    \
+  constexpr static void GetReactMemberAttribute(                                                              \
+      TVisitor &visitor, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__> attributeId) noexcept { \
+    visitor.Visit(                                                                                            \
+        &TStruct::member,                                                                                     \
+        attributeId,                                                                                          \
+        winrt::Microsoft::ReactNative::React##memberKind##Attribute{jsMemberName, jsModuleName});             \
   }
 
-#define INTERNAL_REACT_MEMBER_3_ARGS(memberType, member, memberName) \
-  INTERNAL_REACT_MEMBER_4_ARGS(memberType, member, memberName, nullptr)
+#define INTERNAL_REACT_MEMBER_3_ARGS(memberKind, member, jsMemberName) \
+  INTERNAL_REACT_MEMBER_4_ARGS(memberKind, member, jsMemberName, L"")
 
-#define INTERNAL_REACT_MEMBER_2_ARGS(memberType, member) INTERNAL_REACT_MEMBER_3_ARGS(memberType, member, L## #member)
+#define INTERNAL_REACT_MEMBER_2_ARGS(memberKind, member) INTERNAL_REACT_MEMBER_3_ARGS(memberKind, member, L## #member)
 
 #define INTERNAL_REACT_MEMBER(...) \
   INTERNAL_REACT_RECOMPOSER_4(     \

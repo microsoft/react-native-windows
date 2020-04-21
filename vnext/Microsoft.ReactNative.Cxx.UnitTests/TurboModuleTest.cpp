@@ -9,9 +9,8 @@
 #include "future/futureWait.h"
 
 namespace ReactNativeTests {
-
-REACT_MODULE(SimpleNativeModule)
-struct SimpleNativeModule {
+REACT_MODULE(MyTurboModule)
+struct MyTurboModule {
   REACT_INIT(Initialize)
   void Initialize(React::IReactContext const &context) noexcept {
     IsInitialized = true;
@@ -71,9 +70,9 @@ struct SimpleNativeModule {
     Message = ss.str();
   }
 
-  REACT_METHOD(StaticSayHello1)
-  static void StaticSayHello1() noexcept {
-    StaticMessage = "Hello_1";
+  REACT_METHOD(StaticSayHello0)
+  static void StaticSayHello0() noexcept {
+    StaticMessage = "Hello_0";
   }
 
   REACT_METHOD(StaticPrintPoint)
@@ -586,24 +585,544 @@ struct SimpleNativeModule {
   static std::string StaticMessage;
 };
 
-/*static*/ std::string SimpleNativeModule::StaticMessage;
+/*static*/ std::string MyTurboModule::StaticMessage;
 
-TEST_CLASS (NativeModuleTest) {
-  React::ReactModuleBuilderMock m_builderMock{};
-  React::IReactModuleBuilder m_moduleBuilder;
+// The TurboModule spec is going to be generated from the Flow spec file.
+// It verifies that:
+// - module methods names are unique;
+// - method names are matching to the module spec method names;
+// - method signatures match the spec method signatures.
+struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto methods = std::tuple{
+      Method<void(int, int, Callback<int>) noexcept>{0, L"Add"},
+      Method<void(int, Callback<int>) noexcept>{1, L"Negate"},
+      Method<void(Callback<std::string>) noexcept>{2, L"SayHello"},
+      Method<void(int, int, Callback<int>) noexcept>{3, L"StaticAdd"},
+      Method<void(int, Callback<int>) noexcept>{4, L"StaticNegate"},
+      Method<void(Callback<std::string>) noexcept>{5, L"StaticSayHello"},
+      Method<void() noexcept>{6, L"SayHello0"},
+      Method<void(Point) noexcept>{7, L"PrintPoint"},
+      Method<void(Point, Point) noexcept>{8, L"PrintLine"},
+      Method<void() noexcept>{9, L"StaticSayHello0"},
+      Method<void(Point) noexcept>{10, L"StaticPrintPoint"},
+      Method<void(Point, Point) noexcept>{11, L"StaticPrintLine"},
+      Method<void(int, int, Callback<int>) noexcept>{12, L"AddCallback"},
+      Method<void(int, Callback<int>) noexcept>{13, L"NegateCallback"},
+      Method<void(int, Callback<int>) noexcept>{14, L"NegateAsyncCallback"},
+      Method<void(int, Callback<int>) noexcept>{15, L"NegateDispatchQueueCallback"},
+      Method<void(int, Callback<int>) noexcept>{16, L"NegateFutureCallback"},
+      Method<void(Callback<std::string>) noexcept>{17, L"SayHelloCallback"},
+      Method<void(int, int, Callback<int>) noexcept>{18, L"StaticAddCallback"},
+      Method<void(int, Callback<int>) noexcept>{19, L"StaticNegateCallback"},
+      Method<void(int, Callback<int>) noexcept>{20, L"StaticNegateAsyncCallback"},
+      Method<void(int, Callback<int>) noexcept>{21, L"StaticNegateDispatchQueueCallback"},
+      Method<void(int, Callback<int>) noexcept>{22, L"StaticNegateFutureCallback"},
+      Method<void(Callback<std::string>) noexcept>{23, L"StaticSayHelloCallback"},
+      Method<void(int, int, Callback<int>, Callback<std::string>) noexcept>{24, L"DivideCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{25, L"NegateCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{26, L"NegateAsyncCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{27, L"NegateDispatchQueueCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{28, L"NegateFutureCallbacks"},
+      Method<void(Callback<std::string>, Callback<std::string>) noexcept>{29, L"ResolveSayHelloCallbacks"},
+      Method<void(Callback<std::string>, Callback<std::string>) noexcept>{30, L"RejectSayHelloCallbacks"},
+      Method<void(int, int, Callback<int>, Callback<std::string>) noexcept>{31, L"StaticDivideCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{32, L"StaticNegateCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{33, L"StaticNegateAsyncCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{34, L"StaticNegateDispatchQueueCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string>) noexcept>{35, L"StaticNegateFutureCallbacks"},
+      Method<void(Callback<std::string>, Callback<std::string>) noexcept>{36, L"StaticResolveSayHelloCallbacks"},
+      Method<void(Callback<std::string>, Callback<std::string>) noexcept>{37, L"StaticRejectSayHelloCallbacks"},
+      Method<void(int, int, Promise<int>) noexcept>{38, L"DividePromise"},
+      Method<void(int, Promise<int>) noexcept>{39, L"NegatePromise"},
+      Method<void(int, Promise<int>) noexcept>{40, L"NegateAsyncPromise"},
+      Method<void(int, Promise<int>) noexcept>{41, L"NegateDispatchQueuePromise"},
+      Method<void(int, Promise<int>) noexcept>{42, L"NegateFuturePromise"},
+      Method<void(int, Promise<void>) noexcept>{43, L"voidPromise"},
+      Method<void(Promise<std::string>) noexcept>{44, L"ResolveSayHelloPromise"},
+      Method<void(Promise<std::string>) noexcept>{45, L"RejectSayHelloPromise"},
+      Method<void(int, int, Promise<int>) noexcept>{46, L"StaticDividePromise"},
+      Method<void(int, Promise<int>) noexcept>{47, L"StaticNegatePromise"},
+      Method<void(int, Promise<int>) noexcept>{48, L"StaticNegateAsyncPromise"},
+      Method<void(int, Promise<int>) noexcept>{49, L"StaticNegateDispatchQueuePromise"},
+      Method<void(int, Promise<int>) noexcept>{50, L"StaticNegateFuturePromise"},
+      Method<void(int, Promise<void>) noexcept>{51, L"staticVoidPromise"},
+      Method<void(Promise<std::string>) noexcept>{52, L"StaticResolveSayHelloPromise"},
+      Method<void(Promise<std::string>) noexcept>{53, L"StaticRejectSayHelloPromise"},
+      SyncMethod<int(int, int) noexcept>{54, L"AddSync"},
+      SyncMethod<int(int) noexcept>{55, L"NegateSync"},
+      SyncMethod<std::string() noexcept>{56, L"SayHelloSync"},
+      SyncMethod<int(int, int) noexcept>{57, L"StaticAddSync"},
+      SyncMethod<int(int) noexcept>{58, L"StaticNegateSync"},
+      SyncMethod<std::string() noexcept>{59, L"StaticSayHelloSync"},
+  };
+
+  template <class TModule>
+  static constexpr void ValidateModule() noexcept {
+    constexpr auto methodCheckResults = CheckMethods<TModule, MyTurboModuleSpec>();
+
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        0,
+        "Add",
+        "    REACT_METHOD(Add) int Add(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Add) void Add(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Add) winrt::fire_and_forget Add(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Add) static int Add(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Add) static void Add(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Add) static React::Coroutine Add(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        1,
+        "Negate",
+        "    REACT_METHOD(Negate) int Negate(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Negate) void Negate(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Negate) winrt::fire_and_forget Negate(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Negate) static int Negate(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Negate) static void Negate(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(Negate) static winrt::fire_and_forget Negate(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        2,
+        "SayHello",
+        "    REACT_METHOD(SayHello) std::string SayHello() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello) void SayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello) winrt::fire_and_forget SayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello) static std::string SayHello() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello) static void SayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello) static winrt::fire_and_forget SayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        3,
+        "StaticAdd",
+        "    REACT_METHOD(StaticAdd) int StaticAdd(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAdd) void StaticAdd(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAdd) winrt::fire_and_forget StaticAdd(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAdd) static int StaticAdd(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAdd) static void StaticAdd(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAdd) static winrt::fire_and_forget StaticAdd(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        4,
+        "StaticNegate",
+        "    REACT_METHOD(StaticNegate) int StaticNegate(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegate) void StaticNegate(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegate) winrt::fire_and_forget StaticNegate(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegate) static int StaticNegate(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegate) static void StaticNegate(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegate) static winrt::fire_and_forget StaticNegate(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        5,
+        "StaticSayHello",
+        "    REACT_METHOD(StaticSayHello) std::string StaticSayHello() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello) void StaticSayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello) winrt::fire_and_forget StaticSayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello) static std::string StaticSayHello() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello) static void StaticSayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello) static winrt::fire_and_forget StaticSayHello(ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        6,
+        "SayHello0",
+        "    REACT_METHOD(SayHello0) void SayHello0() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello0) winrt::fire_and_forget SayHello0() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello0) static void SayHello0() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHello0) static winrt::fire_and_forget SayHello0() noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        7,
+        "PrintPoint",
+        "    REACT_METHOD(PrintPoint) void PrintPoint(Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(PrintPoint) winrt::fire_and_forget PrintPoint(Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(PrintPoint) static void PrintPoint(Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(PrintPoint) static winrt::fire_and_forget PrintPoint(Point) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        8,
+        "PrintLine",
+        "    REACT_METHOD(PrintPoint) void PrintLine(Point, Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(PrintPoint) winrt::fire_and_forget PrintLine(Point, Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(PrintPoint) static void PrintLine(Point, Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(PrintPoint) static winrt::fire_and_forget PrintLine(Point, Point) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        9,
+        "StaticSayHello0",
+        "    REACT_METHOD(StaticSayHello0) void StaticSayHello0() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello0) winrt::fire_and_forget StaticSayHello0() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello0) static void StaticSayHello0() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHello0) static winrt::fire_and_forget StaticSayHello0() noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        10,
+        "StaticPrintPoint",
+        "    REACT_METHOD(StaticPrintPoint) void StaticPrintPoint(Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticPrintPoint) winrt::fire_and_forget StaticPrintPoint(Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticPrintPoint) static void StaticPrintPoint(Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticPrintPoint) static winrt::fire_and_forget StaticPrintPoint(Point) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        11,
+        "StaticPrintLine",
+        "    REACT_METHOD(StaticPrintPoint) void StaticPrintLine(Point, Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticPrintPoint) winrt::fire_and_forget StaticPrintLine(Point, Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticPrintPoint) static void StaticPrintLine(Point, Point) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticPrintPoint) static winrt::fire_and_forget StaticPrintLine(Point, Point) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        12,
+        "AddCallback",
+        "    REACT_METHOD(AddCallback) int AddCallback(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(AddCallback) void AddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(AddCallback) winrt::fire_and_forget AddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(AddCallback) static int AddCallback(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(AddCallback) static void AddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(AddCallback) static winrt::fire_and_forget AddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        13,
+        "NegateCallback",
+        "    REACT_METHOD(NegateCallback) int NegateCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallback) void NegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallback) winrt::fire_and_forget NegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallback) static int NegateCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallback) static void NegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallback) static winrt::fire_and_forget NegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        14,
+        "NegateAsyncCallback",
+        "    REACT_METHOD(NegateAsyncCallback) int NegateAsyncCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallback) void NegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallback) winrt::fire_and_forget NegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallback) static int NegateAsyncCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallback) static void NegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallback) static winrt::fire_and_forget NegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        15,
+        "NegateDispatchQueueCallback",
+        "    REACT_METHOD(NegateDispatchQueueCallback) int NegateDispatchQueueCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallback) void NegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallback) winrt::fire_and_forget NegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallback) static int NegateDispatchQueueCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallback) static void NegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallback) static winrt::fire_and_forget NegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        16,
+        "NegateFutureCallback",
+        "    REACT_METHOD(NegateFutureCallback) int NegateFutureCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallback) void NegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallback) winrt::fire_and_forget NegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallback) static int NegateFutureCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallback) static void NegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallback) static winrt::fire_and_forget NegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        17,
+        "SayHelloCallback",
+        "    REACT_METHOD(SayHelloCallback) std::string SayHelloCallback() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHelloCallback) void SayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHelloCallback) winrt::fire_and_forget SayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHelloCallback) static std::string SayHelloCallback() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHelloCallback) static void SayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHelloCallback) static winrt::fire_and_forget SayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        18,
+        "StaticAddCallback",
+        "    REACT_METHOD(StaticAddCallback) int StaticAddCallback(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAddCallback) void StaticAddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAddCallback) winrt::fire_and_forget StaticAddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAddCallback) static int StaticAddCallback(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAddCallback) static void StaticAddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAddCallback) static winrt::fire_and_forget StaticAddCallback(int, int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        19,
+        "StaticNegateCallback",
+        "    REACT_METHOD(StaticNegateCallback) int StaticNegateCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallback) void StaticNegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallback) winrt::fire_and_forget StaticNegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallback) static int StaticNegateCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallback) static void StaticNegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallback) static winrt::fire_and_forget StaticNegateCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        20,
+        "StaticNegateAsyncCallback",
+        "    REACT_METHOD(StaticNegateAsyncCallback) int StaticNegateAsyncCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallback) void StaticNegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallback) winrt::fire_and_forget StaticNegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallback) static int StaticNegateAsyncCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallback) static void StaticNegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallback) static winrt::fire_and_forget StaticNegateAsyncCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        21,
+        "StaticNegateDispatchQueueCallback",
+        "    REACT_METHOD(StaticNegateDispatchQueueCallback) int StaticNegateDispatchQueueCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallback) void StaticNegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallback) winrt::fire_and_forget StaticNegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallback) static int StaticNegateDispatchQueueCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallback) static void StaticNegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallback) static winrt::fire_and_forget StaticNegateDispatchQueueCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        22,
+        "StaticNegateFutureCallback",
+        "    REACT_METHOD(StaticNegateFutureCallback) int StaticNegateFutureCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallback) void StaticNegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallback) winrt::fire_and_forget StaticNegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallback) static int StaticNegateFutureCallback(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallback) static void StaticNegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallback) static winrt::fire_and_forget StaticNegateFutureCallback(int, ReactCallback<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        23,
+        "StaticSayHelloCallback",
+        "    REACT_METHOD(StaticSayHelloCallback) std::string StaticSayHelloCallback() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHelloCallback) void StaticSayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHelloCallback) winrt::fire_and_forget StaticSayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHelloCallback) static std::string StaticSayHelloCallback() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHelloCallback) static void StaticSayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHelloCallback) static winrt::fire_and_forget StaticSayHelloCallback(ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        24,
+        "DivideCallbacks",
+        "    REACT_METHOD(DivideCallbacks) void DivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(DivideCallbacks) winrt::fire_and_forget DivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(DivideCallbacks) static void DivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(DivideCallbacks) static winrt::fire_and_forget DivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        25,
+        "NegateCallbacks",
+        "    REACT_METHOD(NegateCallbacks) void NegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallbacks) winrt::fire_and_forget NegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallbacks) static void NegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateCallbacks) static winrt::fire_and_forget NegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        26,
+        "NegateAsyncCallbacks",
+        "    REACT_METHOD(NegateAsyncCallbacks) void NegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallbacks) winrt::fire_and_forget NegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallbacks) static void NegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncCallbacks) static winrt::fire_and_forget NegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        27,
+        "NegateDispatchQueueCallbacks",
+        "    REACT_METHOD(NegateDispatchQueueCallbacks) void NegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallbacks) winrt::fire_and_forget NegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallbacks) static void NegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueueCallbacks) static winrt::fire_and_forget NegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        28,
+        "NegateFutureCallbacks",
+        "    REACT_METHOD(NegateFutureCallbacks) void NegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallbacks) winrt::fire_and_forget NegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallbacks) static void NegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFutureCallbacks) static winrt::fire_and_forget NegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        29,
+        "ResolveSayHelloCallbacks",
+        "    REACT_METHOD(ResolveSayHelloCallbacks) void ResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(ResolveSayHelloCallbacks) winrt::fire_and_forget ResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(ResolveSayHelloCallbacks) static void ResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(ResolveSayHelloCallbacks) static winrt::fire_and_forget ResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        30,
+        "RejectSayHelloCallbacks",
+        "    REACT_METHOD(RejectSayHelloCallbacks) void RejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(RejectSayHelloCallbacks) winrt::fire_and_forget RejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(RejectSayHelloCallbacks) static void RejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(RejectSayHelloCallbacks) static winrt::fire_and_forget RejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        31,
+        "StaticDivideCallbacks",
+        "    REACT_METHOD(StaticDivideCallbacks) void StaticDivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticDivideCallbacks) winrt::fire_and_forget StaticDivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticDivideCallbacks) static void StaticDivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticDivideCallbacks) static winrt::fire_and_forget StaticDivideCallbacks(int, int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        32,
+        "StaticNegateCallbacks",
+        "    REACT_METHOD(StaticNegateCallbacks) void StaticNegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallbacks) winrt::fire_and_forget StaticNegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallbacks) static void StaticNegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateCallbacks) static winrt::fire_and_forget StaticNegateCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        33,
+        "StaticNegateAsyncCallbacks",
+        "    REACT_METHOD(StaticNegateAsyncCallbacks) void StaticNegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallbacks) winrt::fire_and_forget StaticNegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallbacks) static void StaticNegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncCallbacks) static winrt::fire_and_forget StaticNegateAsyncCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        34,
+        "StaticNegateDispatchQueueCallbacks",
+        "    REACT_METHOD(StaticNegateDispatchQueueCallbacks) void StaticNegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallbacks) winrt::fire_and_forget StaticNegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallbacks) static void StaticNegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueueCallbacks) static winrt::fire_and_forget StaticNegateDispatchQueueCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        35,
+        "StaticNegateFutureCallbacks",
+        "    REACT_METHOD(StaticNegateFutureCallbacks) void StaticNegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallbacks) winrt::fire_and_forget StaticNegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallbacks) static void StaticNegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFutureCallbacks) static winrt::fire_and_forget StaticNegateFutureCallbacks(int, ReactCallback<int>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        36,
+        "StaticResolveSayHelloCallbacks",
+        "    REACT_METHOD(StaticResolveSayHelloCallbacks) void StaticResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticResolveSayHelloCallbacks) winrt::fire_and_forget StaticResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticResolveSayHelloCallbacks) static void StaticResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticResolveSayHelloCallbacks) static winrt::fire_and_forget StaticResolveSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        37,
+        "StaticRejectSayHelloCallbacks",
+        "    REACT_METHOD(StaticRejectSayHelloCallbacks) void StaticRejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticRejectSayHelloCallbacks) winrt::fire_and_forget StaticRejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticRejectSayHelloCallbacks) static void StaticRejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticRejectSayHelloCallbacks) static winrt::fire_and_forget StaticRejectSayHelloCallbacks(ReactCallback<std::string>, ReactCallback<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        38,
+        "DividePromise",
+        "    REACT_METHOD(DividePromise) void DividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(DividePromise) winrt::fire_and_forget DividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(DividePromise) static void DividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(DividePromise) static winrt::fire_and_forget DividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        39,
+        "NegatePromise",
+        "    REACT_METHOD(NegatePromise) void NegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegatePromise) winrt::fire_and_forget NegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegatePromise) static void NegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegatePromise) static winrt::fire_and_forget NegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        40,
+        "NegateAsyncPromise",
+        "    REACT_METHOD(NegateAsyncPromise) void NegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncPromise) winrt::fire_and_forget NegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncPromise) static void NegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateAsyncPromise) static winrt::fire_and_forget NegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        41,
+        "NegateDispatchQueuePromise",
+        "    REACT_METHOD(NegateDispatchQueuePromise) void NegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueuePromise) winrt::fire_and_forget NegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueuePromise) static void NegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateDispatchQueuePromise) static winrt::fire_and_forget NegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        42,
+        "NegateFuturePromise",
+        "    REACT_METHOD(NegateFuturePromise) void NegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFuturePromise) winrt::fire_and_forget NegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFuturePromise) static void NegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateFuturePromise) static winrt::fire_and_forget NegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        43,
+        "voidPromise",
+        "    REACT_METHOD(voidPromise) void voidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(voidPromise) winrt::fire_and_forget voidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(voidPromise) static void voidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(voidPromise) static winrt::fire_and_forget voidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        44,
+        "ResolveSayHelloPromise",
+        "    REACT_METHOD(ResolveSayHelloPromise) void ResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(ResolveSayHelloPromise) winrt::fire_and_forget ResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(ResolveSayHelloPromise) static void ResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(ResolveSayHelloPromise) static winrt::fire_and_forget ResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        45,
+        "RejectSayHelloPromise",
+        "    REACT_METHOD(RejectSayHelloPromise) void RejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(RejectSayHelloPromise) winrt::fire_and_forget RejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(RejectSayHelloPromise) static void RejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(RejectSayHelloPromise) static winrt::fire_and_forget RejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        46,
+        "StaticDividePromise",
+        "    REACT_METHOD(StaticDividePromise) void StaticDividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticDividePromise) winrt::fire_and_forget StaticDividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticDividePromise) static void StaticDividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticDividePromise) static winrt::fire_and_forget StaticDividePromise(int, int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        47,
+        "StaticNegatePromise",
+        "    REACT_METHOD(StaticNegatePromise) void StaticNegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegatePromise) winrt::fire_and_forget StaticNegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegatePromise) static void StaticNegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegatePromise) static winrt::fire_and_forget StaticNegatePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        48,
+        "StaticNegateAsyncPromise",
+        "    REACT_METHOD(StaticNegateAsyncPromise) void StaticNegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncPromise) winrt::fire_and_forget StaticNegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncPromise) static void StaticNegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateAsyncPromise) static winrt::fire_and_forget StaticNegateAsyncPromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        49,
+        "StaticNegateDispatchQueuePromise",
+        "    REACT_METHOD(StaticNegateDispatchQueuePromise) void StaticNegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueuePromise) winrt::fire_and_forget StaticNegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueuePromise) static void StaticNegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateDispatchQueuePromise) static winrt::fire_and_forget StaticNegateDispatchQueuePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        50,
+        "StaticNegateFuturePromise",
+        "    REACT_METHOD(StaticNegateFuturePromise) void StaticNegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFuturePromise) winrt::fire_and_forget StaticNegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFuturePromise) static void StaticNegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateFuturePromise) static winrt::fire_and_forget StaticNegateFuturePromise(int, ReactPromise<int>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        51,
+        "staticVoidPromise",
+        "    REACT_METHOD(staticVoidPromise) void staticVoidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(staticVoidPromise) winrt::fire_and_forget staticVoidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(staticVoidPromise) static void staticVoidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(staticVoidPromise) static winrt::fire_and_forget staticVoidPromise(int, ReactPromise<void>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        52,
+        "StaticResolveSayHelloPromise",
+        "    REACT_METHOD(StaticResolveSayHelloPromise) void StaticResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticResolveSayHelloPromise) winrt::fire_and_forget StaticResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticResolveSayHelloPromise) static void StaticResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticResolveSayHelloPromise) static winrt::fire_and_forget StaticResolveSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+        53,
+        "StaticRejectSayHelloPromise",
+        "    REACT_METHOD(StaticRejectSayHelloPromise) void StaticRejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticRejectSayHelloPromise) winrt::fire_and_forget StaticRejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticRejectSayHelloPromise) static void StaticRejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticRejectSayHelloPromise) static winrt::fire_and_forget StaticRejectSayHelloPromise(ReactPromise<std::string>) noexcept {/*implementation*/}\n");
+    REACT_SHOW_SYNC_METHOD_SPEC_ERRORS(
+        54,
+        "AddSync",
+        "    REACT_METHOD(AddSync) int AddSync(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(AddSync) static int AddSync(int, int) noexcept {/*implementation*/}\n");
+    REACT_SHOW_SYNC_METHOD_SPEC_ERRORS(
+        55,
+        "NegateSync",
+        "    REACT_METHOD(NegateSync) int NegateSync(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(NegateSync) static int NegateSync(int) noexcept {/*implementation*/}\n");
+    REACT_SHOW_SYNC_METHOD_SPEC_ERRORS(
+        56,
+        "SayHelloSync",
+        "    REACT_METHOD(SayHelloSync) std::string SayHelloSync() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(SayHelloSync) static std::string SayHelloSync() noexcept {/*implementation*/}\n");
+    REACT_SHOW_SYNC_METHOD_SPEC_ERRORS(
+        57,
+        "StaticAddSync",
+        "    REACT_METHOD(StaticAddSync) int StaticAddSync(int, int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticAddSync) static int StaticAddSync(int, int) noexcept {/*implementation*/}\n");
+    REACT_SHOW_SYNC_METHOD_SPEC_ERRORS(
+        58,
+        "StaticNegateSync",
+        "    REACT_METHOD(StaticNegateSync) int StaticNegateSync(int) noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticNegateSync) static int StaticNegateSync(int) noexcept {/*implementation*/}\n");
+    REACT_SHOW_SYNC_METHOD_SPEC_ERRORS(
+        59,
+        "StaticSayHelloSync",
+        "    REACT_METHOD(StaticSayHelloSync) std::string StaticSayHelloSync() noexcept {/*implementation*/}\n"
+        "    REACT_METHOD(StaticSayHelloSync) static std::string StaticSayHelloSync() noexcept {/*implementation*/}\n");
+  }
+};
+
+TEST_CLASS (TurboModuleTest) {
+  winrt::Microsoft::ReactNative::ReactModuleBuilderMock m_builderMock{};
+  winrt::Microsoft::ReactNative::IReactModuleBuilder m_moduleBuilder;
   Windows::Foundation::IInspectable m_moduleObject{nullptr};
-  SimpleNativeModule *m_module;
+  MyTurboModule *m_module;
 
-  NativeModuleTest() {
-    m_moduleBuilder = winrt::make<React::ReactModuleBuilderImpl>(m_builderMock);
-    auto provider = React::MakeModuleProvider<SimpleNativeModule>();
+  TurboModuleTest() {
+    m_moduleBuilder = winrt::make<winrt::Microsoft::ReactNative::ReactModuleBuilderImpl>(m_builderMock);
+    auto provider = winrt::Microsoft::ReactNative::MakeTurboModuleProvider<MyTurboModule, MyTurboModuleSpec>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
-    auto reactModule = m_moduleObject.as<React::IBoxedValue>();
-    m_module = &React::BoxedValue<SimpleNativeModule>::GetImpl(reactModule);
+    auto reactModule = m_moduleObject.as<winrt::Microsoft::ReactNative::IBoxedValue>();
+    m_module = &winrt::Microsoft::ReactNative::BoxedValue<MyTurboModule>::GetImpl(reactModule);
   }
 
   TEST_METHOD(TestMethodCall_Add) {
-    m_builderMock.Call1(L"Add", std::function<void(int)>([](int result) noexcept { TestCheck(result == 8); }), 3, 5);
+    m_builderMock.Call1(L"Add", std::function<void(int)>([](int result) noexcept { TestCheckEqual(8, result); }), 3, 5);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -652,19 +1171,19 @@ TEST_CLASS (NativeModuleTest) {
     TestCheck(m_module->Message == "Line: (3, 5)-(6, 8)");
   }
 
-  TEST_METHOD(TestMethodCall_StaticSayHello1) {
-    m_builderMock.Call0(L"StaticSayHello1");
-    TestCheck(SimpleNativeModule::StaticMessage == "Hello_1");
+  TEST_METHOD(TestMethodCall_StaticSayHello0) {
+    m_builderMock.Call0(L"StaticSayHello0");
+    TestCheck(MyTurboModule::StaticMessage == "Hello_0");
   }
 
   TEST_METHOD(TestMethodCall_StaticPrintPoint) {
     m_builderMock.Call0(L"StaticPrintPoint", Point{/*X =*/13, /*Y =*/15});
-    TestCheck(SimpleNativeModule::StaticMessage == "Static Point: (13, 15)");
+    TestCheck(MyTurboModule::StaticMessage == "Static Point: (13, 15)");
   }
 
   TEST_METHOD(TestMethodCall_StaticPrintLine) {
     m_builderMock.Call0(L"StaticPrintLine", Point{/*X =*/13, /*Y =*/15}, Point{/*X =*/16, /*Y =*/18});
-    TestCheck(SimpleNativeModule::StaticMessage == "Static Line: (13, 15)-(16, 18)");
+    TestCheck(MyTurboModule::StaticMessage == "Static Line: (13, 15)-(16, 18)");
   }
 
   TEST_METHOD(TestMethodCall_AddCallback) {
@@ -1434,7 +1953,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSIntFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSIntFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
+        L"MyTurboModule", L"JSIntFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0] == 42);
           functionCalled = true;
         });
@@ -1446,7 +1965,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSNameFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"pointFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
+        L"MyTurboModule", L"pointFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           functionCalled = true;
@@ -1459,7 +1978,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_TwoArgFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"lineFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
+        L"MyTurboModule", L"lineFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           TestCheck(args[1]["X"] == 12);
@@ -1474,7 +1993,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_NoArgFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSNoArgFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
+        L"MyTurboModule", L"JSNoArgFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheckEqual(0, args.size());
           functionCalled = true;
         });
@@ -1498,7 +2017,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSValueObjectFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSValueFunction", ([&functionCalled](React::JSValueArray const &args) noexcept {
+        L"MyTurboModule", L"JSValueFunction", ([&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           functionCalled = true;
@@ -1511,7 +2030,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestFunction_JSValueArrayFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule", L"JSValueFunction", ([&functionCalled](React::JSValueArray const &args) noexcept {
+        L"MyTurboModule", L"JSValueFunction", ([&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0][0] == "X");
           TestCheck(args[0][1] == 4);
           TestCheck(args[0][2] == true);
