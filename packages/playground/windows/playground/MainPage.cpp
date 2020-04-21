@@ -95,13 +95,14 @@ void MainPage::SetUpTreeDump() {
       auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
       timer = dispatcher.CreateTimer();
       timer.IsRepeating(true);
-      timer.Interval(std::chrono::seconds(3));
+      timer.Interval(std::chrono::milliseconds(200));
       timer.Tick([=](auto &&, auto &&) {
         auto name = GetCurentPageName(m_reactRootView);
         auto text = x_TreeDump().Text();
         if ((lastPageName != name) || (text != L"OK")) {
             Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
             auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
+            timer.Interval(timer.Interval() * 2);
           x_TreeDump().Foreground(ok);
           x_TreeDump().Text(L"...");
           lastPageName = name;
@@ -111,6 +112,9 @@ void MainPage::SetUpTreeDump() {
 
                 try {
                   matches = ao.GetResults();
+                  if (matches) {
+                    timer.Interval(std::chrono::milliseconds(200));
+                  }
                 } catch (winrt::hresult_error &e) {
                   OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester: ");
                   OutputDebugString(e.message().data());
