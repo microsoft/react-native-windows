@@ -564,6 +564,13 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
     xamlRootGrid.Children().Append(m_developerMenuRoot);
   }
+
+  // Notify instance that dev menu is shown -- This is used to trigger a connection to dev tools
+  if (auto instance = m_weakReactInstance.GetStrongPtr()) {
+    auto innerInstance = query_cast<Mso::React::ILegacyReactInstance &>(*instance).GetInnerInstance();
+    innerInstance->callJSFunction(
+        "RCTNativeAppEventEmitter", "emit", folly::dynamic::array("RCTDevMenuShown"));
+  }
 }
 
 void ReactRootControl::DismissDeveloperMenu() noexcept {
