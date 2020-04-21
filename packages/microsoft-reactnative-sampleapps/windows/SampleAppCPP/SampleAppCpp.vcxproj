@@ -198,11 +198,7 @@
     <Import Project="..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
-  <PropertyGroup>
-    <BundleCommand>
-      npx --no-install yarn run bundle-cpp
-    </BundleCommand>
-  </PropertyGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -184,6 +184,7 @@ void ReactRootControl::InitRootView(
   m_SIPEventHandler->AttachView(xamlRootView, /*fireKeyboradEvents:*/ true);
 
   UpdateRootViewInternal();
+  AttachBackHandlers(xamlRootView);
 
   m_isInitialized = true;
 }
@@ -231,6 +232,8 @@ void ReactRootControl::UninitRootView() noexcept {
   if (!m_previewKeyboardEventHandlerOnRoot) {
     m_previewKeyboardEventHandlerOnRoot->unhook();
   }
+
+  RemoveBackHandlers();
 
   // If the redbox error UI is shown we need to remove it, otherwise let the
   // natural teardown process do this
@@ -561,6 +564,12 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
     xamlRootGrid.Children().Append(m_developerMenuRoot);
   }
+
+  // Notify instance that dev menu is shown -- This is used to trigger a connection to dev tools
+  if (auto instance = m_weakReactInstance.GetStrongPtr()) {
+    query_cast<Mso::React::ILegacyReactInstance &>(*instance).CallJsFunction(
+        "RCTNativeAppEventEmitter", "emit", folly::dynamic::array("RCTDevMenuShown"));
+  }
 }
 
 void ReactRootControl::DismissDeveloperMenu() noexcept {
@@ -605,6 +614,73 @@ void ReactRootControl::ReloadViewHost() noexcept {
   if (auto reactViewHost = m_reactViewHost.Get()) {
     reactViewHost->ReloadViewInstance();
   }
+}
+
+void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
+  auto weakThis = weak_from_this();
+  m_backRequestedRevoker = winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
+      winrt::auto_revoke,
+      [weakThis](winrt::IInspectable const & /*sender*/, winrt::BackRequestedEventArgs const &args) {
+        if (auto self = weakThis.lock()) {
+          args.Handled(self->OnBackRequested());
+        }
+      });
+
+  // In addition to handling the BackRequested event, UWP suggests that we listen for other user inputs that should
+  // trigger back navigation that don't fire that event:
+  // https://docs.microsoft.com/en-us/windows/uwp/design/basics/navigation-history-and-backwards-navigation
+  auto rootElement(rootView.try_as<winrt::UIElement>());
+  if (rootElement == nullptr) {
+    assert(false);
+    return;
+  }
+
+  // Handle keyboard "back" button press
+  winrt::KeyboardAccelerator goBack{};
+  goBack.Key(winrt::VirtualKey::GoBack);
+  goBack.Invoked(
+      [weakThis](
+          winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+        if (auto self = weakThis.lock()) {
+          args.Handled(self->OnBackRequested());
+        }
+      });
+  rootElement.KeyboardAccelerators().Append(goBack);
+
+  // Handle Alt+Left keyboard shortcut
+  winrt::KeyboardAccelerator altLeft{};
+  altLeft.Key(winrt::VirtualKey::Left);
+  altLeft.Invoked(
+      [weakThis](
+          winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+        if (auto self = weakThis.lock()) {
+          args.Handled(self->OnBackRequested());
+        }
+      });
+  rootElement.KeyboardAccelerators().Append(altLeft);
+  altLeft.Modifiers(winrt::VirtualKeyModifiers::Menu);
+
+  // Hide keyboard accelerator tooltips
+  rootElement.KeyboardAcceleratorPlacementMode(winrt::KeyboardAcceleratorPlacementMode::Hidden);
+}
+
+void ReactRootControl::RemoveBackHandlers() noexcept {
+  m_backRequestedRevoker.revoke();
+  if (auto rootView = m_weakRootView.get()) {
+    if (auto element = rootView.try_as<winrt::UIElement>()) {
+      element.KeyboardAccelerators().Clear();
+    }
+  }
+}
+
+bool ReactRootControl::OnBackRequested() noexcept {
+  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+    query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance)
+        .CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+    return true;
+  }
+
+  return false;
 }
 
 Mso::React::IReactViewHost *ReactRootControl::ReactViewHost() noexcept {

@@ -205,6 +205,7 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
@@ -215,7 +216,6 @@
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\NativeUIManager.h" />
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h" />
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h" />
@@ -223,15 +223,15 @@
     <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h" />
-    <ClInclude Include="..\ReactUWP\Utils\Helpers.h" />
-    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h" />
-    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h" />
-    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h" />
-    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h" />
-    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h" />
-    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h" />
     <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\CheckboxViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\DatePickerViewManager.h" />
@@ -368,6 +368,7 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />
@@ -378,7 +379,6 @@
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NativeUIManager.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp" />

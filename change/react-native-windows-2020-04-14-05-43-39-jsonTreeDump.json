@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now.",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-14T12:43:39.263Z"
-}
