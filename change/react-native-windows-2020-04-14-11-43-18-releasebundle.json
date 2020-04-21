@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Make default template build non-dev bundle when not using debug configuration",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-14T18:43:18.289Z"
+}

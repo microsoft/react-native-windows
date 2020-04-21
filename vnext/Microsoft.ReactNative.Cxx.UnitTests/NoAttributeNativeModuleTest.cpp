@@ -507,7 +507,7 @@ struct SimpleNativeModule2 {
 
 /*static*/ std::string SimpleNativeModule2::StaticMessage;
 
-void RegisterModule(ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noexcept {
+void GetReactModuleInfo(SimpleNativeModule2 *, ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noexcept {
   moduleBuilder.RegisterModuleName(L"SimpleNativeModule2");
   moduleBuilder.RegisterInitMethod(&SimpleNativeModule2::Initialize);
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::Add, L"Add");
@@ -577,8 +577,8 @@ void RegisterModule(ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noex
   moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant2, L"const2");
   moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant3, L"const3");
   moduleBuilder.RegisterConstantField(&SimpleNativeModule2::Constant4, L"Constant4");
-  moduleBuilder.RegisterConstantMethod(&SimpleNativeModule2::Constant5, L"Constant5");
-  moduleBuilder.RegisterConstantMethod(&SimpleNativeModule2::Constant6, L"Constant6");
+  moduleBuilder.RegisterConstantMethod(&SimpleNativeModule2::Constant5);
+  moduleBuilder.RegisterConstantMethod(&SimpleNativeModule2::Constant6);
   moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnIntEvent, L"OnIntEvent");
   moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnNoArgEvent, L"OnNoArgEvent");
   moduleBuilder.RegisterEventField(&SimpleNativeModule2::OnTwoArgsEvent, L"OnTwoArgsEvent");

@@ -6,10 +6,49 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
+
+    <!-- 
+      UseBundle causes the bundle to be created and included inside the application install.  And defines the BUNDLE #define in code,
+      which causes the app to load from the bundle file rather than loading the bundle from a bundle server
+    -->
     <UseBundle Condition=" '$(Configuration)' == 'Debug' and '$(UseBundle)' == '' ">false</UseBundle>
     <UseBundle Condition=" '$(Configuration)' == 'Release' and '$(UseBundle)' == '' ">true</UseBundle>
-    <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">Bundle</BundleContentRoot>
-    <BundleContent Condition = " '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)\**\*</BundleContent>
+
+    <!-- Root directory where bundle assets will be copied to, be sure to update BundleContent if you change this -->
+    <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">$([MSBuild]::NormalizePath('$(ProjectDir)\Bundle'))</BundleContentRoot>
+
+    <!-- Files included in BundleContent will be included in the application install - by default this includes the bundle file, and assets from the bundler  -->
+    <BundleContent Condition=" '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)\**\*</BundleContent>
+
+    <!-- The name of the JS bundle assert to be placed in $(BundleOutputPath)-->
+    <BundleAssetName Condition="'$(BundleAssetName)' == ''">index.windows.bundle</BundleAssetName>
+
+    <!-- Where should be final JS bundle be written to -->
+    <BundleOutputPath Condition="'$(BundleOutputPath)' == ''">$([MSBuild]::NormalizePath('$(ProjectDir)\Bundle'))</BundleOutputPath>
+
+    <!-- Should the bundle created be a dev bundle -->
+    <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' == 'Debug'">true</UseDevBundle>
+    <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' != 'Debug'">false</UseDevBundle>
+
+    <!-- Extra arguments to pass to the bundler command -->
+    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == ''"></BundlerExtraArgs>
+
+    <!-- Command to use to create a bundle -->
+    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx --no-install react-native bundle</BundleCliCommand>
+
+    <!-- This should be the app package root, this is where the bundle command will be run from -->
+    <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</BundleCommandWorkingDir>
+
+    <!-- Entry file of the JS bundle. Defaults to use index.windows.js if it exists, otherwise index.js -->
+    <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
+    <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
+
+    <!-- Optional config file for the bundle command (metro will use metro.config.js by default) -->
+    <BundleConfigFile Condition="'$(BundleConfigFile)' == ''"></BundleConfigFile>
+
+    <!-- Location where source map file for the JS bundle will be created -->
+    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$(OutDir)\sourcemaps\react</BundleSourceMapDir>
+
   </PropertyGroup>
 
   <PropertyGroup>
