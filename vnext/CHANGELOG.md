@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 17 Apr 2020 00:25:34 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Apr 2020 20:39:09 GMT and should not be manually modified.
 
+## 0.61.6
+Tue, 21 Apr 2020 20:39:09 GMT
+
+### Patches
+
+- Added inline to REACT_STRUCT's GetStructInfo to use in header files (vmorozov@microsoft.com)
 ## 0.61.5
 Fri, 17 Apr 2020 00:25:34 GMT
 
