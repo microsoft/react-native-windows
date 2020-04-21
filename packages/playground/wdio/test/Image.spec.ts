@@ -3,11 +3,29 @@
  * Licensed under the MIT License.
  */
 
-import HomePage from '../pages/HomePage';
+// import HomePage from '../pages/HomePage';
 // import { By } from '../pages/BasePage';
 // import ImageTestPage from '../pages/ImageTestPage';
 import assert from 'assert';
+import WebdriverIO from '@wdio/sync';
 // import WebdriverIO from 'webdriverio';
+
+function VerifyTreeDumpOk(pageName : string) {
+  browser.waitUntil(() => $('~x_TreeDump').getText() == 'OK', 15000, `ERROR - treedump comparison failed for page ${pageName}`);
+  const treedump = $('~x_TreeDump').getText();
+  assert(treedump == 'OK', `treedump = ${treedump} on page ${pageName}`);
+}
+
+function VerifyPage(element : WebdriverIO.Element) {
+  const name = element.getText();
+  element.click();
+  browser.waitUntil(() => $('~PageHeader').getText() == name, 10000, `Timeout waiting for page ${name} to load, pageheader was ${$('~PageHeader').getText()}`);
+  browser.pause(2000); // wait 2 seconds for the page header to refresh post-navigation
+  VerifyTreeDumpOk(name);
+  const backButton = $('/Window/Window[2]/Button[2]');
+  backButton.waitForEnabled();
+  backButton.click();
+}
 
 beforeAll(() => {
   // HomePage.loadRNTester();
@@ -18,16 +36,39 @@ beforeAll(() => {
 
 describe('basicTest', () => {
   it('basicTest', async () => {
-    await browser.waitUntil(() => $('~x_LoadButton') != undefined);// HomePage.isPageLoaded);
-    assert($('~x_LoadButton') != undefined);
-    HomePage.loadRNTester();
+    browser.maximizeWindow();
+    $('~x_LoadButton').waitForEnabled(30000, false, "TIMEOUT. NOT ENABLED"); //.findElement('accessibility id', 'x_LoadButton'), 30000, "TIMEOUT 30s");// $('~x_LoadButton') != undefined);// HomePage.isPageLoaded);
+    const load = $('~x_LoadButton');
+    load.click();
+    $('~PageHeader').waitForDisplayed(30000, false, 'No pageheader');
+    const title = $('~PageHeader').getText();
+    assert(title == 'RNTester');
 
-    const port = $$('x_DebuggerPort');
-    assert(port);
-    // assert(`port = ${port.getText()}`);
+    VerifyTreeDumpOk('RNTester');
+    
+    const activityIndicator = $('/Window/Window[2]/Pane[1]/Text[2]');
+    activityIndicator.waitForEnabled(30000, false, 'No ActivityIndicator');
+    assert(activityIndicator.getText() == '<ActivityIndicator>' , `text = ${activityIndicator.getText()}`);
+    
+    const paneItems = $$('/Window/Window[2]/Pane[1]/Text');
+    const numberOfPages = paneItems.length;
+    assert($('/Window/Window[2]/Pane[1]/Text[1]').getText() == 'COMPONENTS');
 
-    const treedumpText = HomePage.treeDump();
-    assert(treedumpText == "tree dump goes here");
+    for (let i = 2; i < numberOfPages; i += 2) {
+      VerifyPage($(`/Window/Window[2]/Pane[1]/Text[${i}]`));
+    }
+
+    assert(paneItems.length == 2, `length = ${paneItems.length}`);
+
+    // assert($('~x_LoadButton') != undefined);
+    // HomePage.loadRNTester();
+
+    // const port = $$('x_DebuggerPort');
+    // assert(port);
+    // // assert(`port = ${port.getText()}`);
+
+    // const treedumpText = HomePage.treeDump();
+    // assert(treedumpText == "tree dump goes here");
     // const treedump = By('x_TreeDump');
     // const size = treedump.getSize();
     // assert(size.width == 20, `size = ${size}`);

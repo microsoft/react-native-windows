@@ -23,7 +23,7 @@ exports.config = {
     // hostname: '172.18.5.185',
     // port: 4444,
     // path: '/wd/hub',
-    
+
     //
     // ==================
     // Specify Test Files
@@ -34,7 +34,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        'wdio/test/**/*.ts'
+        'wdio/test/**/*.ts',
     ],
     // Patterns to exclude.
     exclude: [
@@ -76,7 +76,7 @@ exports.config = {
             'appium:deviceName': 'WindowsPC',
             'appium:app': 'a752ebd1-71f2-4731-af80-c81e1782cc2b_gg9qsjdrgpss6!App',
             'deviceName': 'WindowsPC',
-            'app': 'a752ebd1-71f2-4731-af80-c81e1782cc2b_gg9qsjdrgpss6!App',
+            'app': 'RNWPlayground_gg9qsjdrgpss6!App',
             'winAppDriver:experimental-w3c': true,
         },
         // {
@@ -137,7 +137,7 @@ exports.config = {
         logPath: './reports/',
         args: {
             port: '4723',
-        }
+        },
     },
 
     //
@@ -153,7 +153,7 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
     reporters: ['dot', ['junit', { outputDir : '.\\reports' }]],
-    
+
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -162,8 +162,8 @@ exports.config = {
         timeout: 60000,
         compilers: [
             // 'ts-node/register',
-            'tsconfig-paths/register'
-        ]
+            'tsconfig-paths/register',
+        ],
     },
 
     jasmineNodeOpts: {
@@ -201,7 +201,7 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
     before: function (capabilities, specs) {
-        // require('ts-node/register');        
+        // require('ts-node/register');
         require('ts-node').register({ files: true });
     },
     /**
@@ -211,7 +211,7 @@ exports.config = {
      */
     // beforeCommand: function (commandName, args) {
     // },
-    
+
     /**
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
@@ -240,11 +240,11 @@ exports.config = {
      * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
      * @param {Object} test test details
      */
-    afterTest: function (test) {        
+    afterTest: function (test) {
         if (test.error !== undefined) {
             let name = 'ERROR-' + Date.now();
             browser.saveScreenshot('./errorShots/' + name + '.png');
-        }        
+        }
     },
     /**
      * Hook that gets executed after the suite has ended
@@ -252,7 +252,7 @@ exports.config = {
      */
     // afterSuite: function (suite) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {String} commandName hook command name
@@ -288,4 +288,4 @@ exports.config = {
      */
     // onComplete: function(exitCode, config, capabilities, results) {
     // }
-}
+};

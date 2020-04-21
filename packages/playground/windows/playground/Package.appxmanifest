@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap mp">
 
  <Identity
-    Name="a752ebd1-71f2-4731-af80-c81e1782cc2b"
+    Name="RNWPlayground"
     Publisher="CN=playground"
     Version="1.0.0.0" />
 
