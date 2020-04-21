@@ -567,8 +567,7 @@ void ReactRootControl::ShowDeveloperMenu() noexcept {
 
   // Notify instance that dev menu is shown -- This is used to trigger a connection to dev tools
   if (auto instance = m_weakReactInstance.GetStrongPtr()) {
-    auto innerInstance = query_cast<Mso::React::ILegacyReactInstance &>(*instance).GetInnerInstance();
-    innerInstance->callJSFunction(
+    query_cast<Mso::React::ILegacyReactInstance &>(*instance).CallJsFunction(
         "RCTNativeAppEventEmitter", "emit", folly::dynamic::array("RCTDevMenuShown"));
   }
 }
