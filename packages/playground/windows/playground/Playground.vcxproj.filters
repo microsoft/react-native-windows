@@ -64,6 +64,12 @@
     <None Include="Assets\TreeDump\masters\ActivityIndicator.json">
       <Filter>Assets\TreeDump\masters</Filter>
     </None>
+    <None Include="Assets\TreeDump\masters\Button.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
+    <None Include="Assets\TreeDump\masters\CheckBox.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
