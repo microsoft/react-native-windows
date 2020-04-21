@@ -171,14 +171,12 @@ jobs:
         inputs:
           solution: packages/playground/windows/Playground.sln
           vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
           clean: true # Optional
           maximumCpuCount: false # Optional
           restoreNugetPackages: false # Optional
           msbuildArgs:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
@@ -195,14 +193,12 @@ jobs:
         inputs:
           solution: packages/playground/windows/Playground-Win32.sln
           vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
           clean: true # Optional
           maximumCpuCount: false # Optional
           restoreNugetPackages: false # Optional
           msbuildArgs:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
 

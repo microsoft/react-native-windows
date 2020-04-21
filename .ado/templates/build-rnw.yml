@@ -6,8 +6,6 @@ parameters:
   # NuGet & MSBuild
   project:
   msbuildVersion: $(MSBuildVersion)
-  msBuildArchitecture: $(MSBuildArchitecture)
-  preferredToolArchitecture: $(MSBuildPreferredToolArchitecture)
   platformToolset: $(MSBuildPlatformToolset)
   msbuildArguments: ''
   yarnBuildCmd: build
@@ -41,7 +39,6 @@ steps:
     inputs:
       solution: ${{parameters.project }}
       vsVersion: ${{parameters.msbuildVersion}}
-      msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       clean: false # Optional
@@ -50,7 +47,6 @@ steps:
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
-        /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
         ${{parameters.msbuildArguments}}
