@@ -661,7 +661,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
   // setup polling for live reload
-  if (!m_devManager->HasException() && m_devSettings->liveReloadCallback != nullptr) {
+  if (!m_devManager->HasException() && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
     m_devManager->StartPollingLiveReload(m_devSettings->debugHost, m_devSettings->liveReloadCallback);
   }
 }
