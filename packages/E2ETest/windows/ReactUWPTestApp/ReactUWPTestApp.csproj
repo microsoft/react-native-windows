@@ -174,11 +174,9 @@
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
   <PropertyGroup>
-    <BundleCommand>
-      echo WorkingDir %CD%
-      npx --no-install yarn run bundle
-    </BundleCommand>
+    <BundleEntryFile>dist/app/index.js</BundleEntryFile>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
