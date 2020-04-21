@@ -112,8 +112,8 @@ struct ReactModuleBuilderMock {
   std::vector<ConstantProviderDelegate> m_constantProviders;
   std::map<std::wstring, std::tuple<MethodReturnType, MethodDelegate>> m_methods;
   std::map<std::wstring, SyncMethodDelegate> m_syncMethods;
-  bool m_isResolveCallbackCalled;
-  bool m_isRejectCallbackCalled;
+  bool m_isResolveCallbackCalled{false};
+  bool m_isRejectCallbackCalled{false};
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsFunctionHandler;
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsEventHandler;
 };
