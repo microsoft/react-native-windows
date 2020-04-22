@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2020 00:04:29 GMT",
+      "tag": "react-native-windows-init_v0.1.5",
+      "version": "0.1.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix react-native-windows-init to work with tags (@master)",
+            "author": "acoates@microsoft.com",
+            "commit": "a34e2169b7a0224cd2486fab5bd224077234d5d5",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2020 18:46:38 GMT",
       "tag": "react-native-windows-init_v0.1.4",
       "version": "0.1.4",
