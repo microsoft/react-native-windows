@@ -95,12 +95,10 @@ std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::re
 
             auto version = (int)json.GetNamedNumber(L"version", 0.0);
             if (version != 2) {
-              AssertSz(false, "Message with incompatible or missing version of protocol received");
               return;
             }
             auto method = std::wstring(json.GetNamedString(L"method", L""));
             if (method.empty()) {
-              AssertSz(false, "No method provided");
               return;
             }
 
@@ -108,7 +106,6 @@ std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::re
               reloadCallback();
             } else if (!method.compare(L"devMenu")) {
               // TODO showDevMenu
-              ;
             } else if (!method.compare(L"captureHeap")) {
               // TODO captureHeap
             }
