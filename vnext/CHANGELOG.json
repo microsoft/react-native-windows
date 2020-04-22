@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2020 00:04:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.45",
+      "version": "0.0.0-master.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make default template build non-dev bundle when not using debug configuration",
+            "author": "acoates@microsoft.com",
+            "commit": "5c98e236066ced8eb314fae9995c288cb2eee798",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implemented C++ TurboModule compile time spec validation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "21dea64efa55d0cc23d0ad0e33a058b0e3981800",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix devtools connection to match RN0.62",
+            "author": "acoates@microsoft.com",
+            "commit": "c779043f0dd5e57f66b7609a8a09270aa78ad1b7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 19 Apr 2020 00:04:29 GMT",
       "tag": "react-native-windows_v0.0.0-master.44",
       "version": "0.0.0-master.44",
