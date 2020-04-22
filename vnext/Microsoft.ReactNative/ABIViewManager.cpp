@@ -130,7 +130,7 @@ folly::dynamic ABIViewManager::GetCommands() const {
 }
 
 void ABIViewManager::DispatchCommand(
-    winrt::Windows::UI::Xaml::DependencyObject viewToUpdate,
+    const winrt::Windows::UI::Xaml::DependencyObject &viewToUpdate,
     int64_t commandId,
     const folly::dynamic &commandArgs) {
   if (m_viewManagerWithCommands) {
@@ -185,8 +185,8 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
 }
 
 void ABIViewManager::AddView(
-    winrt::Windows::UI::Xaml::DependencyObject parent,
-    winrt::Windows::UI::Xaml::DependencyObject child,
+    const winrt::Windows::UI::Xaml::DependencyObject &parent,
+    const winrt::Windows::UI::Xaml::DependencyObject &child,
     int64_t index) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.AddView(parent.as<winrt::FrameworkElement>(), child.as<winrt::UIElement>(), index);
@@ -195,7 +195,7 @@ void ABIViewManager::AddView(
   }
 }
 
-void ABIViewManager::RemoveAllChildren(winrt::Windows::UI::Xaml::DependencyObject parent) {
+void ABIViewManager::RemoveAllChildren(const winrt::Windows::UI::Xaml::DependencyObject &parent) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.RemoveAllChildren(parent.as<winrt::FrameworkElement>());
   } else {
@@ -203,7 +203,7 @@ void ABIViewManager::RemoveAllChildren(winrt::Windows::UI::Xaml::DependencyObjec
   }
 }
 
-void ABIViewManager::RemoveChildAt(winrt::Windows::UI::Xaml::DependencyObject parent, int64_t index) {
+void ABIViewManager::RemoveChildAt(const winrt::Windows::UI::Xaml::DependencyObject &parent, int64_t index) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.RemoveChildAt(parent.as<winrt::FrameworkElement>(), index);
   } else {
@@ -212,9 +212,9 @@ void ABIViewManager::RemoveChildAt(winrt::Windows::UI::Xaml::DependencyObject pa
 }
 
 void ABIViewManager::ReplaceChild(
-    winrt::Windows::UI::Xaml::DependencyObject parent,
-    winrt::Windows::UI::Xaml::DependencyObject oldChild,
-    winrt::Windows::UI::Xaml::DependencyObject newChild) {
+    const winrt::Windows::UI::Xaml::DependencyObject &parent,
+    const winrt::Windows::UI::Xaml::DependencyObject &oldChild,
+    const winrt::Windows::UI::Xaml::DependencyObject &newChild) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.ReplaceChild(
         parent.as<winrt::FrameworkElement>(), oldChild.as<winrt::UIElement>(), newChild.as<winrt::UIElement>());

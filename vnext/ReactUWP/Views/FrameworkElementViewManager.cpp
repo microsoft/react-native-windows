@@ -74,13 +74,13 @@ namespace uwp {
 FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
-void FrameworkElementViewManager::TransferProperty(XamlView oldView, XamlView newView, winrt::DependencyProperty dp) {
+void FrameworkElementViewManager::TransferProperty(const XamlView &oldView, const XamlView &newView, winrt::DependencyProperty dp) {
   TransferProperty(oldView, newView, dp, dp);
 }
 
 void FrameworkElementViewManager::TransferProperty(
-    XamlView oldView,
-    XamlView newView,
+    const XamlView &oldView,
+    const XamlView &newView,
     winrt::DependencyProperty oldViewDP,
     winrt::DependencyProperty newViewDP) {
   auto oldValue = oldView.ReadLocalValue(oldViewDP);
@@ -90,7 +90,7 @@ void FrameworkElementViewManager::TransferProperty(
   }
 }
 
-void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView newView) {
+void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   // Render Properties
   TransferProperty(oldView, newView, winrt::UIElement::OpacityProperty());
 

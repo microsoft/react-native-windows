@@ -462,7 +462,7 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
   return scrollViewer;
 }
 
-void ScrollViewManager::AddView(XamlView parent, XamlView child, [[maybe_unused]] int64_t index) {
+void ScrollViewManager::AddView(const XamlView &parent, const XamlView &child, [[maybe_unused]] int64_t index) {
   assert(index == 0);
 
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
@@ -470,18 +470,18 @@ void ScrollViewManager::AddView(XamlView parent, XamlView child, [[maybe_unused]
   snapPointManager->Content(child);
 }
 
-void ScrollViewManager::RemoveAllChildren(XamlView parent) {
+void ScrollViewManager::RemoveAllChildren(const XamlView &parent) {
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
   auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
   snapPointManager->Content(nullptr);
 }
 
-void ScrollViewManager::RemoveChildAt(XamlView parent, [[maybe_unused]] int64_t index) {
+void ScrollViewManager::RemoveChildAt(const XamlView &parent, [[maybe_unused]] int64_t index) {
   assert(index == 0);
   RemoveAllChildren(parent);
 }
 
-void ScrollViewManager::SnapToInterval(XamlView parent, float interval) {
+void ScrollViewManager::SnapToInterval(const XamlView &parent, float interval) {
   if (parent) {
     if (const auto scrollViewer = parent.as<winrt::ScrollViewer>()) {
       ScrollViewUWPImplementation(scrollViewer).SnapToInterval(interval);
@@ -489,7 +489,7 @@ void ScrollViewManager::SnapToInterval(XamlView parent, float interval) {
   }
 }
 
-void ScrollViewManager::SnapToOffsets(XamlView parent, const winrt::IVectorView<float> &offsets) {
+void ScrollViewManager::SnapToOffsets(const XamlView &parent, const winrt::IVectorView<float> &offsets) {
   if (parent) {
     if (const auto scrollViewer = parent.as<winrt::ScrollViewer>()) {
       ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);

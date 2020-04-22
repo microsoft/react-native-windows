@@ -198,19 +198,19 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   return view;
 }
 
-void ViewManagerBase::AddView(XamlView /*parent*/, XamlView /*child*/, int64_t /*index*/) {
+void ViewManagerBase::AddView(const XamlView & /*parent*/, const XamlView & /*child*/, int64_t /*index*/) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-void ViewManagerBase::RemoveChildAt(XamlView /*parent*/, int64_t /*index*/) {
+void ViewManagerBase::RemoveChildAt(const XamlView & /*parent*/, int64_t /*index*/) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-void ViewManagerBase::RemoveAllChildren(XamlView parent) {}
+void ViewManagerBase::RemoveAllChildren(const XamlView &parent) {}
 
-void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild) {
+void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
@@ -251,10 +251,10 @@ bool ViewManagerBase::UpdateProperty(
   return true;
 }
 
-void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newView*/) {}
+void ViewManagerBase::TransferProperties(const XamlView & /*oldView*/, const XamlView & /*newView*/) {}
 
 void ViewManagerBase::DispatchCommand(
-    XamlView /*viewToUpdate*/,
+    const XamlView & /*viewToUpdate*/,
     int64_t /*commandId*/,
     const folly::dynamic & /*commandArgs*/) {
   assert(false); // View did not handle its command
@@ -316,7 +316,7 @@ void ViewManagerBase::TestHook::NotifyUnimplementedProperty(
 
 void ViewManagerBase::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
+    const XamlView &viewToUpdate,
     float left,
     float top,
     float width,

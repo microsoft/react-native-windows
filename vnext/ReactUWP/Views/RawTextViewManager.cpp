@@ -84,7 +84,7 @@ void RawTextViewManager::NotifyAncestorsTextChanged(IReactInstance *instance, Sh
 
 void RawTextViewManager::SetLayoutProps(
     ShadowNodeBase & /*nodeToUpdate*/,
-    XamlView /*viewToUpdate*/,
+    const XamlView & /*viewToUpdate*/,
     float /*left*/,
     float /*top*/,
     float /*width*/,

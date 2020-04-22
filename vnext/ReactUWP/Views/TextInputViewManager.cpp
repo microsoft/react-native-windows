@@ -628,7 +628,7 @@ YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-void TextInputViewManager::TransferInputScope(XamlView oldView, XamlView newView, const bool copyToPasswordBox) {
+void TextInputViewManager::TransferInputScope(const XamlView &oldView, const XamlView &newView, const bool copyToPasswordBox) {
   // transfer input scope, only common keyboardType between secureTextEntry
   // on/off is numeric, so only need to transfer input scope "Number" <=>
   // "NumericPin", everything else leave it as default.
@@ -656,7 +656,7 @@ void TextInputViewManager::TransferInputScope(XamlView oldView, XamlView newView
   }
 }
 
-void TextInputViewManager::TransferProperties(XamlView oldView, XamlView newView) {
+void TextInputViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   if ((oldView.try_as<winrt::TextBox>() != nullptr && newView.try_as<winrt::PasswordBox>() != nullptr) ||
       (oldView.try_as<winrt::PasswordBox>() != nullptr && newView.try_as<winrt::TextBox>() != nullptr)) {
     bool copyToPasswordBox = oldView.try_as<winrt::TextBox>() != nullptr;
