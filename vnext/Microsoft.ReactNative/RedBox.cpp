@@ -188,14 +188,20 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
         auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
         const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
+
+        const auto errorName = json["name"].asString();
         std::string stack;
-        if (boost::starts_with(originalStack, json["name"].asString() + ": " + message)) {
-          stack = originalStack.substr((json["name"].asString() + ": " + message).length());
+
+        const auto prefix = errorName + ": " + message;
+        if (boost::starts_with(originalStack, prefix)) {
+          stack = originalStack.substr(prefix.length());
         } else {
-          stack = originalStack.substr(originalStack.find("\n    at ") + 1);
+          constexpr char startOfStackTrace[] = "\n    at ";
+          stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
         }
+
         m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-        // some messages like SyntaxError rely on fixed width font to be properly formatted and indented
+        // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
         m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
 
         m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
