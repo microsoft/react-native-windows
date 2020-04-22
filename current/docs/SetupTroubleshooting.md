@@ -81,3 +81,13 @@ Object reference not set to an instance of an object
 
 #### Solution:
 Install the 10.0.14393.0 Windows 10 SDK in the Visual Studio Installer
+
+#### Error:
+Appx generation with relese build takes a long time and freezes without completion.
+
+#### Solution:
+- Upgade Microsoft.NETCore.UniversalWindowsPlatform to 6.2.9
+- Move the minimum supported Windows version to 16299
+- Upgrade the react-native-windows plugin to 6.0.1
+
+See [Appx generation very slow issue](https://github.com/microsoft/react-native-windows/issues/3096) for detailed discussion.
