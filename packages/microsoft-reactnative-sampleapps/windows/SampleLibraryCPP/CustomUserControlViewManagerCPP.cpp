@@ -105,18 +105,18 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
 }
 
 // IViewManagerWithCommands
-IMapView<hstring, int64_t> CustomUserControlViewManagerCpp::Commands() noexcept {
-  auto commands = winrt::single_threaded_map<hstring, int64_t>();
-  commands.Insert(L"CustomCommand", 0);
+IVectorView<hstring> CustomUserControlViewManagerCpp::Commands() noexcept {
+  auto commands = winrt::single_threaded_vector<hstring>();
+  commands.Append(L"CustomCommand");
   return commands.GetView();
 }
 
 void CustomUserControlViewManagerCpp::DispatchCommand(
     FrameworkElement const &view,
-    int64_t commandId,
+    winrt::hstring const &commandId,
     IJSValueReader const &commandArgsReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-    if (commandId == 0) {
+    if (commandId == L"CustomCommand") {
       std::string arg = std::to_string(winrt::unbox_value<int64_t>(view.Tag()));
       arg.append(", \"");
       arg.append(winrt::to_string(commandArgsReader.GetString()));
