@@ -469,7 +469,7 @@ const BorderRadiiExample = withRTLState(({isRTL, setRTL}) => {
       <View style={directionStyle(isRTL)}>
         <View
           style={{
-            borderColor: 'black',  // [Windows] specify a color
+            borderColor: 'black', // [Windows] specify a color
             borderWidth: 10,
             borderTopStartRadius: 10,
             borderTopEndRadius: 20,
@@ -523,7 +523,7 @@ const BorderExample = withRTLState(({isRTL, setRTL}) => {
 });
 
 const directionStyle = isRTL =>
-  Platform.OS !== 'android' ? {direction: isRTL ? 'rtl' : 'ltr'} : null;    // [Windows] Don't explicitly check for iOS 
+  Platform.OS !== 'android' ? {direction: isRTL ? 'rtl' : 'ltr'} : null; // [Windows] Don't explicitly check for iOS
 
 const styles = StyleSheet.create({
   container: {
