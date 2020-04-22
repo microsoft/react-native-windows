@@ -7,7 +7,6 @@
     "bundle-cpp": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
     "bundle-cs": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
     "clean": "just-scripts clean",
-    "codegen": "react-native-windows-codegen --file NativeMyModule.js --namespace SampleLibraryCpp",
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
