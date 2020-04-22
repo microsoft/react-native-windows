@@ -19,8 +19,9 @@ type FilesOutput = Map<string, string>;
 
 const moduleTemplate = `
 /*
- * This function registers a class as implementing a TurboModule Spec
- * The class must implement all the methods as required by the Spec.
+ * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
+ * in a way that also verifies at compile time that the native module matches the interface required
+ * by the TurboModule JS spec.
  */
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
@@ -37,7 +38,7 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
 const template = `
 /**
- * This file is auto-generated.
+ * This file is auto-generated from a NativeModule spec file in js.
  */
 
 #pragma once
