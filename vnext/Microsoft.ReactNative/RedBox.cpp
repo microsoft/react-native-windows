@@ -158,15 +158,13 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 #define MAKE_WIDE_STR(x) _MAKE_WIDE_STR(x)
 
   void UpdateErrorMessageUI() noexcept {
+    const std::regex colorsRegex(
+        "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
+    const std::string plain = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
+
     try {
-      auto json = folly::parseJson(m_errorInfo.Message);
-      if (json.count("name") && json["name"] == "Error") {
-        auto message = json["message"].asString();
-        auto stack = json["stack"].asString().substr(ARRAYSIZE("Error: ") + message.length());
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
-        return;
-      } else if (json.count("type") && json["type"] == "InternalError") {
+      auto json = folly::parseJson(plain);
+      if (json.count("type") && json["type"] == "InternalError") {
         auto message = json["message"].asString();
         m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
 
@@ -187,14 +185,34 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
         }
         return;
+      } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
+        auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
+        const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
+
+        const auto errorName = json["name"].asString();
+        std::string stack;
+
+        const auto prefix = errorName + ": " + message;
+        if (boost::starts_with(originalStack, prefix)) {
+          stack = originalStack.substr(prefix.length());
+        } else {
+          constexpr char startOfStackTrace[] = "\n    at ";
+          stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
+        }
+
+        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+        // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
+        m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
+
+        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+        return;
       }
     } catch (...) {
       std::string doctype = "<!DOCTYPE HTML>";
-      if (boost::istarts_with(m_errorInfo.Message, doctype)) {
+      if (boost::istarts_with(plain, doctype)) {
         auto webView = xaml::Controls::WebView(xaml::Controls::WebViewExecutionMode::SameThread);
 
-        winrt::hstring content(
-            Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message.substr(doctype.length()).c_str()));
+        winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
 
         webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
         webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
@@ -245,10 +263,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       }
     }
     // fall back to displaying the raw message string
-    const std::regex colorsRegex(
-        "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
-    const std::string formated = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
-    m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(formated));
+    m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(plain));
     m_errorStackText.Text(L"");
   }
 
