@@ -20,6 +20,8 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 
 import {MyComp} from './myComp';
 
+import {default as MyModule} from './NativeMyModule';
+
 // Creating event emitters
 const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
 const SampleModuleCppEmitter = new NativeEventEmitter(NativeModules.SampleModuleCpp);
@@ -277,6 +279,8 @@ class SampleApp extends Component {
         <Text style={styles.instructions}>
           This app consumes custom Native Modules and View Managers.
         </Text>
+
+        <Button onPress={() => { MyModule.voidFunc(); }} title="Call MyModule tests"/>
 
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={() => { this.onPressSampleModuleCpp(); }} title="Call SampleModuleCpp!" disabled={NativeModules.SampleModuleCpp == null} />
