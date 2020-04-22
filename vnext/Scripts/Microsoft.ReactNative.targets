@@ -8,7 +8,9 @@
         <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd">
             <Implementation>Microsoft.ReactNative.dll</Implementation>
         </Reference>
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\Microsoft.ReactNative.pri" />
+    <ReferenceCopyLocalPaths Condition="${Configuration) == 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\debug\Microsoft.ReactNative.dll" />
+    <ReferenceCopyLocalPaths Condition="${Configuration) == 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\debug\Microsoft.ReactNative.pri" />
+    <ReferenceCopyLocalPaths Condition="${Configuration) != 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\Microsoft.ReactNative.dll" />
+    <ReferenceCopyLocalPaths Condition="${Configuration) != 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\Microsoft.ReactNative.pri" />
     </ItemGroup>
 </Project>
