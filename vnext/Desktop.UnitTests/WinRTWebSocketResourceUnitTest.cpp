@@ -23,7 +23,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   TEST_METHOD(ConnectSucceedsCloseSucceeds) {
     bool connected = true;
     string errorMessage;
-    auto imws{winrt::make<MockMessageWebSocket>()};
+    auto imws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
     auto mws{imws.as<MockMessageWebSocket>()};
 
     MessageWebSocket m;
@@ -49,7 +49,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   }
 
   TEST_METHOD(ConnectFails) {
-    auto mws{winrt::make<MockMessageWebSocket>()};
+    auto mws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
     MockDataWriter dw;
     Uri uri(L"ws://host:0");
   }

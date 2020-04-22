@@ -8,8 +8,14 @@
 
 namespace Microsoft::React::Test {
 
-struct MockMessageWebSocket
-    : public winrt::implements<MockMessageWebSocket, winrt::Windows::Networking::Sockets::IMessageWebSocket> {
+/// <summary>
+//  Mocks winrt::Windows::Networking::Sockets::MessageWebSocket
+/// </summary>
+struct MockMessageWebSocket : public winrt::implements<
+                                  MockMessageWebSocket,
+                                  winrt::Windows::Networking::Sockets::IMessageWebSocket,
+                                  winrt::Windows::Networking::Sockets::IMessageWebSocket2,
+                                  winrt::Windows::Networking::Sockets::IMessageWebSocket3> {
   struct Mocks {
     // IWebSocket
     std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
@@ -95,8 +101,6 @@ struct MockMessageWebSocket
       winrt::Windows::Foundation::TypedEventHandler<
           winrt::Windows::Networking::Sockets::MessageWebSocket,
           winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &eventHandler) const;
-  // using MessageReceived_revoker = winrt::impl::event_revoker<winrt::Windows::Networking::Sockets::IMessageWebSocket,
-  // &winrt::impl::abi_t<winrt::Windows::Networking::Sockets::IMessageWebSocket>::remove_MessageReceived>;
   winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker MessageReceived(
       winrt::auto_revoke_t,
       winrt::Windows::Foundation::TypedEventHandler<
@@ -105,6 +109,33 @@ struct MockMessageWebSocket
   void MessageReceived(winrt::event_token const &eventCookie) const noexcept;
 
 #pragma endregion IMessageWebSocket overrides
+
+#pragma region IMessageWebSoket2 override
+
+  winrt::event_token ServerCustomValidationRequested(
+      winrt::Windows::Foundation::TypedEventHandler<
+          winrt::Windows::Networking::Sockets::MessageWebSocket,
+          winrt::Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> const &eventHandler)
+      const;
+  winrt::Windows::Networking::Sockets::IMessageWebSocket2::ServerCustomValidationRequested_revoker
+  ServerCustomValidationRequested(
+      winrt::auto_revoke_t,
+      winrt::Windows::Foundation::TypedEventHandler<
+          winrt::Windows::Networking::Sockets::MessageWebSocket,
+          winrt::Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> const &eventHandler)
+      const;
+  void ServerCustomValidationRequested(winrt::event_token const &eventCookie) const noexcept;
+
+#pragma endregion IMessageWebSoket2 override
+
+#pragma region IMessageWebSocket3 overrides
+
+  winrt::Windows::Foundation::IAsyncOperationWithProgress<std::uint32_t, std::uint32_t> SendNonfinalFrameAsync(
+      winrt::Windows::Storage::Streams::IBuffer const &data) const;
+  winrt::Windows::Foundation::IAsyncOperationWithProgress<std::uint32_t, std::uint32_t> SendFinalFrameAsync(
+      winrt::Windows::Storage::Streams::IBuffer const &data) const;
+
+#pragma endregion IMessageWebSocket3 overrides
 
 }; // MockMessageWebSocket
 
