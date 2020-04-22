@@ -14,7 +14,6 @@ import {
   UIManager,
   View,
   Linking,
-  Alert,
 } from 'react-native';
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
