@@ -18,17 +18,12 @@
   "dependencies": {
     "chalk": "^3",
     "react-native-tscodegen": "0.0.10",
+    "react-native-codegen": "0.0.2",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/yargs": "^15.0.3",
     "just-scripts": "^0.36.1"
-  },
-  "files": [
-    "bin.js",
-    "lib-commonjs",
-    "README.md",
-    "react-native-codegen/src"
-  ]
+  }
 }

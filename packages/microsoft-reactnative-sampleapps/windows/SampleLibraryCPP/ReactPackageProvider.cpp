@@ -19,19 +19,13 @@
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace SampleLibraryCpp {
-
-// Lame that we need this right now
-void RegisterModule(ReactModuleBuilder<::SampleLibraryCpp::MyModule> &moduleBuilder) {
-  RegisterMyModuleModule(moduleBuilder);
-}
-} // namespace SampleLibraryCpp
-
 namespace winrt::SampleLibraryCpp::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
-  packageBuilder.AddModule(L"MyModule", MakeModuleProvider<::SampleLibraryCpp::MyModule>());
+
+  packageBuilder.AddModule(
+      L"MyModule", MakeTurboModuleProvider<::SampleLibraryCpp::MyModule, ::SampleLibraryCpp::MyModuleSpec>());
   packageBuilder.AddViewManager(
       L"CustomUserControlViewManagerCpp", []() { return winrt::make<CustomUserControlViewManagerCpp>(); });
   packageBuilder.AddViewManager(L"CircleViewManagerCpp", []() { return winrt::make<CircleViewManagerCpp>(); });
