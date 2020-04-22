@@ -628,7 +628,10 @@ YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-void TextInputViewManager::TransferInputScope(const XamlView &oldView, const XamlView &newView, const bool copyToPasswordBox) {
+void TextInputViewManager::TransferInputScope(
+    const XamlView &oldView,
+    const XamlView &newView,
+    const bool copyToPasswordBox) {
   // transfer input scope, only common keyboardType between secureTextEntry
   // on/off is numeric, so only need to transfer input scope "Number" <=>
   // "NumericPin", everything else leave it as default.

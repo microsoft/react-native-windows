@@ -74,7 +74,10 @@ namespace uwp {
 FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
-void FrameworkElementViewManager::TransferProperty(const XamlView &oldView, const XamlView &newView, winrt::DependencyProperty dp) {
+void FrameworkElementViewManager::TransferProperty(
+    const XamlView &oldView,
+    const XamlView &newView,
+    winrt::DependencyProperty dp) {
   TransferProperty(oldView, newView, dp, dp);
 }
 

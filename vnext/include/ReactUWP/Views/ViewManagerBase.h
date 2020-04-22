@@ -65,8 +65,13 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   virtual void DispatchCommand(const XamlView &viewToUpdate, int64_t commandId, const folly::dynamic &commandArgs);
 
   // Yoga Layout
-  virtual void
-  SetLayoutProps(ShadowNodeBase &nodeToUpdate, const XamlView &viewToUpdate, float left, float top, float width, float height);
+  virtual void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      const XamlView &viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height);
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
