@@ -1,0 +1,305 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
+
+'use strict';
+
+import {
+  SchemaType,
+  MethodTypeShape,
+  // FunctionTypeAnnotation,
+  FunctionTypeAnnotationParam,
+  FunctionTypeAnnotationParamTypeAnnotation,
+  FunctionTypeAnnotationReturn,
+} from 'react-native-tscodegen';
+
+type FilesOutput = Map<string, string>;
+
+const moduleTemplate = `
+/*
+ * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
+ * in a way that also verifies at compile time that the native module matches the interface required
+ * by the TurboModule JS spec.
+ */
+struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto methods = std::tuple{
+::_MODULE_PROPERTIES_TUPLE_::
+  };
+
+  template <class TModule>
+  static constexpr void ValidateModule() noexcept {
+    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();
+
+::_MODULE_PROPERTIES_SPEC_ERRORS_::
+  }
+};`;
+
+const template = `
+/**
+ * This file is auto-generated from a NativeModule spec file in js.
+ */
+
+#pragma once
+
+#include "NativeModules.h"
+#include <tuple>
+
+namespace ::_NAMESPACE_:: {
+::_MODULES_::
+
+} // namespace ::_NAMESPACE_::
+`;
+
+function translateSpecFunctionParam(
+  param: FunctionTypeAnnotationParam,
+): string {
+  switch (param.typeAnnotation.type) {
+    case 'StringTypeAnnotation':
+      return 'std::string';
+    case 'NumberTypeAnnotation':
+    case 'FloatTypeAnnotation':
+      return 'double';
+    case 'Int32TypeAnnotation':
+      return 'int';
+    case 'BooleanTypeAnnotation':
+      return 'bool';
+    case 'FunctionTypeAnnotation': {
+      // Ideally we'd get more information about the expected parameters of the callback
+      // But the current schema doesn't seem to provide the necessary information.
+      return 'Callback<JSValue>';
+    }
+    case 'ArrayTypeAnnotation':
+      // Ideally we'd get more information about the expected type of the array
+      // But the current schema doesn't seem to provide the necessary information.
+      return 'JSValueArray';
+    case 'GenericObjectTypeAnnotation':
+      return 'JSValueObject';
+    default:
+      throw new Error(`Unhandled type: ${param.typeAnnotation.type}`);
+  }
+}
+
+function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
+  switch (param.typeAnnotation.type) {
+    case 'StringTypeAnnotation':
+      return 'std::string';
+    case 'NumberTypeAnnotation':
+    case 'FloatTypeAnnotation':
+      return 'double';
+    case 'Int32TypeAnnotation':
+      return 'int';
+    case 'BooleanTypeAnnotation':
+      return 'bool';
+    case 'FunctionTypeAnnotation': {
+      // Ideally we'd get more information about the expected parameters of the callback
+      // But the current schema doesn't seem to provide the necessary information.
+      return 'std::function<void(React::JSValue const &)> const &';
+    }
+    case 'ArrayTypeAnnotation':
+      // Ideally we'd get more information about the expected type of the array
+      // But the current schema doesn't seem to provide the necessary information.
+      return 'React::JSValueArray &&';
+    case 'GenericObjectTypeAnnotation':
+      return 'React::JSValueObject &&';
+    default:
+      throw new Error(`Unhandled type: ${param.typeAnnotation.type}`);
+  }
+}
+
+function translateSpecReturnType(
+  type:
+    | FunctionTypeAnnotationParamTypeAnnotation
+    | FunctionTypeAnnotationReturn,
+) {
+  switch (type.type) {
+    case 'VoidTypeAnnotation':
+      return 'void';
+    case 'StringTypeAnnotation':
+      return 'std::string';
+    case 'NumberTypeAnnotation':
+    case 'FloatTypeAnnotation':
+      return 'double';
+    case 'Int32TypeAnnotation':
+      return 'int';
+    case 'BooleanTypeAnnotation':
+      return 'bool';
+    case 'GenericPromiseTypeAnnotation':
+      return 'void';
+    case 'ArrayTypeAnnotation':
+      // Ideally we'd get more information about the expected type of the array
+      // But the current schema doesn't seem to provide the necessary information.
+      return 'JSValueArray';
+    case 'GenericObjectTypeAnnotation':
+      return 'JSValueObject';
+    default:
+      throw new Error(`Unhandled type: ${type.type}`);
+  }
+}
+
+function translateImplReturnType(
+  type:
+    | FunctionTypeAnnotationParamTypeAnnotation
+    | FunctionTypeAnnotationReturn,
+) {
+  switch (type.type) {
+    case 'VoidTypeAnnotation':
+      return 'void';
+    case 'StringTypeAnnotation':
+      return 'std::string';
+    case 'NumberTypeAnnotation':
+    case 'FloatTypeAnnotation':
+      return 'double';
+    case 'Int32TypeAnnotation':
+      return 'int';
+    case 'BooleanTypeAnnotation':
+      return 'bool';
+    case 'GenericPromiseTypeAnnotation':
+      return 'void';
+    case 'ArrayTypeAnnotation':
+      // Ideally we'd get more information about the expected type of the array
+      // But the current schema doesn't seem to provide the necessary information.
+      return 'React::JSValueArray';
+    case 'GenericObjectTypeAnnotation':
+      return 'React::JSValueObject';
+    default:
+      throw new Error(`Unhandled type: ${type.type}`);
+  }
+}
+
+function translateSpecArgs(params: ReadonlyArray<FunctionTypeAnnotationParam>) {
+  return params.map(param => {
+    const translatedParam = translateSpecFunctionParam(param);
+    return `${translatedParam}`;
+  });
+}
+
+function translateArgs(params: ReadonlyArray<FunctionTypeAnnotationParam>) {
+  return params.map(param => {
+    const translatedParam = translateFunctionParam(param);
+    return `${translatedParam} ${param.name}`;
+  });
+}
+
+function isMethodSync(prop: MethodTypeShape) {
+  return (
+    prop.typeAnnotation.returnTypeAnnotation.type !== 'VoidTypeAnnotation' &&
+    prop.typeAnnotation.returnTypeAnnotation.type !==
+      'GenericPromiseTypeAnnotation'
+  );
+}
+
+function isPromise(prop: MethodTypeShape) {
+  return (
+    prop.typeAnnotation.returnTypeAnnotation.type ===
+    'GenericPromiseTypeAnnotation'
+  );
+}
+
+function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
+  let args = translateArgs(prop.typeAnnotation.params);
+  if (isPromise(prop)) {
+    // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
+    args.push('React::ReactPromise<React::JSValue> &&result');
+  }
+
+  // TODO be much more exhastive on the possible method signatures that can be used..
+  let sig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+    prop.name
+  }) ${translateImplReturnType(prop.typeAnnotation.returnTypeAnnotation)} ${
+    prop.name
+  }(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  let staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+    prop.name
+  }) static ${translateImplReturnType(
+    prop.typeAnnotation.returnTypeAnnotation,
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
+
+  return [sig, staticsig];
+}
+
+function translatePossibleMethodSignatures(prop: MethodTypeShape): string {
+  return getPossibleMethodSignatures(prop)
+    .map(sig => `"    ${sig}"`)
+    .join(',\n          ');
+}
+
+function renderProperties(
+  properties: ReadonlyArray<MethodTypeShape>,
+  tuple: boolean,
+): string {
+  // We skip the constants for now, since we dont have Spec file validation of them.
+  return properties
+    .filter(prop => prop.name !== 'getConstants')
+    .map((prop, index) => {
+      let params = prop.typeAnnotation.params;
+
+      const traversedArgs = translateSpecArgs(params);
+
+      const translatedReturnParam = translateSpecReturnType(
+        prop.typeAnnotation.returnTypeAnnotation,
+      );
+
+      if (isPromise(prop)) {
+        // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
+        traversedArgs.push('Promise<JSValue>');
+      }
+
+      if (tuple) {
+        return `      ${
+          isMethodSync(prop) ? 'Sync' : ''
+        }Method<${translatedReturnParam}(${traversedArgs.join(
+          ',',
+        )}) noexcept>{${index}, L"${prop.name}"},`;
+      } else {
+        return `    REACT_SHOW_METHOD_SPEC_ERRORS(
+          ${index},
+          "${prop.name}",
+          ${translatePossibleMethodSignatures(prop)});`;
+      }
+    })
+    .join('\n');
+}
+
+export function createNM2Generator({namespace}: {namespace: string}) {
+  return (
+    _libraryName: string,
+    schema: SchemaType,
+    _moduleSpecName: string,
+  ): FilesOutput => {
+    // console.log(JSON.stringify(schema, null, 2));
+
+    const nativeModules = Object.keys(schema.modules)
+      .map(moduleName => {
+        const modules = schema.modules[moduleName].nativeModules;
+        if (modules == null) {
+          return null;
+        }
+
+        return modules;
+      })
+      .filter(Boolean)
+      .reduce((acc, components) => Object.assign(acc, components), {});
+
+    const modules = Object.keys(nativeModules)
+      .map(name => {
+        const {properties} = nativeModules[name];
+        const traversedProperties = renderProperties(properties, false);
+        const traversedPropertyTuples = renderProperties(properties, true);
+
+        return moduleTemplate
+          .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
+          .replace(/::_MODULE_PROPERTIES_SPEC_ERRORS_::/g, traversedProperties)
+          .replace(/::_MODULE_NAME_::/g, name);
+      })
+      .join('\n');
+
+    const fileName = 'NativeModules.g.h';
+    const replacedTemplate = template
+      .replace(/::_NAMESPACE_::/g, namespace)
+      .replace(/::_MODULES_::/g, modules);
+
+    return new Map([[fileName, replacedTemplate]]);
+  };
+}

@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2020 00:04:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.45",
+      "version": "0.0.0-master.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make default template build non-dev bundle when not using debug configuration",
+            "author": "acoates@microsoft.com",
+            "commit": "5c98e236066ced8eb314fae9995c288cb2eee798",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implemented C++ TurboModule compile time spec validation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "21dea64efa55d0cc23d0ad0e33a058b0e3981800",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix devtools connection to match RN0.62",
+            "author": "acoates@microsoft.com",
+            "commit": "c779043f0dd5e57f66b7609a8a09270aa78ad1b7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 19 Apr 2020 00:04:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.44",
+      "version": "0.0.0-master.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix include paths",
+            "author": "kmelmon@microsoft.com",
+            "commit": "52bf9690a1e48d18f8d36c3f8de8aaa95fdd174a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Apr 2020 00:04:34 GMT",
+      "tag": "react-native-windows_v0.0.0-master.43",
+      "version": "0.0.0-master.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow enabling of direct debugging through the CLI.",
+            "author": "12337821+nasadigital@users.noreply.github.com",
+            "commit": "c1a2140928b37d9c761c41bfa0fcc38704a14099",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implelent Shared StatusBarManagerModule and Do Module Cleanup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "609c18ca016e9e4b5831890bad56309f02280566",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement AppearanceModule",
+            "author": "ngerlem@microsoft.com",
+            "commit": "317d9fc1474930ef56c869706707126a78834c8b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add support for React Native BackHandler API",
+            "author": "jahiggin@microsoft.com",
+            "commit": "783410677774bcac2b7ada5900e2cec8675e5b2c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "remove AccessibilityStates",
+            "author": "kmelmon@microsoft.com",
+            "commit": "f3d983eff16d81b60127b67ff8f056d4c6f20e29",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix issue with yoga layout in x64 release",
+            "author": "acoates@microsoft.com",
+            "commit": "a67124cbd122bc9f90f7a9d5f328c94c504fe283",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Apr 2020 00:04:27 GMT",
       "tag": "react-native-windows_v0.0.0-master.42",
       "version": "0.0.0-master.42",

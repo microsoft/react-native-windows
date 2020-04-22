@@ -20,10 +20,27 @@ using namespace Windows::ApplicationModel::Activation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-static void ApplyArguments(ReactNative::ReactNativeHost const & /*host*/, std::wstring const &arguments) noexcept {
-  // Microsoft::ReactNative::implementation::ReactNativeHost* hostImpl {
-  // get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
+static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
+  Microsoft::ReactNative::implementation::ReactNativeHost *hostImpl{
+      get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
   if (!arguments.empty() /*&& host.HasInstance()*/) {
+    constexpr wchar_t delimiter = L' ';
+    std::wistringstream argumentStream(arguments);
+    std::wstring token;
+    while (std::getline(argumentStream, token, delimiter)) {
+      if (token == L"-?") {
+        std::cout << "Options:" << std::endl
+                  << "  --direct-debugging <port>    Enable direct debugging on specified port." << std::endl;
+      } else if (token == L"--direct-debugging") {
+        if (std::getline(argumentStream, token, delimiter)) {
+          const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
+          hostImpl->InstanceSettings().UseWebDebugger(false);
+          hostImpl->InstanceSettings().UseDirectDebugger(true);
+          hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
+          hostImpl->InstanceSettings().DebuggerPort(port);
+        }
+      }
+    }
     // TODO: check for 'remoteDebugging'.  Return if not found.  Otherwise,
     // validate a value is provided and then parse it to set the
     // ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled flag

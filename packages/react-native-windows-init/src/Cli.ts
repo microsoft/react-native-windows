@@ -8,7 +8,7 @@
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 import * as semver from 'semver';
-import {execSync} from 'child_process';
+import {exec, execSync} from 'child_process';
 import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
@@ -171,22 +171,38 @@ function getLatestMatchingVersion(
         },
       );
     } else {
-      // Assume that versionSemVer is actually a tag
-      npm.packages.release(
-        pkg,
-        versionSemVer,
-        (err: any, details: {version: string}[]) => {
-          if (err) {
-            reject(err);
-          } else if (details && details.length > 0) {
-            resolve(details[0].version);
-            return;
-          }
-          reject(
-            new Error(`No matching version of ${pkg}@${versionSemVer} found`),
-          );
-        },
-      );
+      try {
+        exec(
+          `npm info ${pkg}@${versionSemVer} version --json`,
+          (err, stdout, _stderr) => {
+            try {
+              if (!err) {
+                let candidates = JSON.parse(stdout);
+                if (typeof candidates === 'string') {
+                  resolve(candidates);
+                  return;
+                }
+                candidates = candidates.sort(semver.rcompare);
+                if (candidates && candidates.length > 0) {
+                  resolve(candidates[0]);
+                  return;
+                }
+              }
+              reject(
+                new Error(
+                  `No matching version of ${pkg}@${versionSemVer} found`,
+                ),
+              );
+            } catch (e) {
+              reject(e);
+            }
+          },
+        );
+      } catch (err) {
+        reject(
+          new Error(`No matching version of ${pkg}@${versionSemVer} found`),
+        );
+      }
     }
   });
 }

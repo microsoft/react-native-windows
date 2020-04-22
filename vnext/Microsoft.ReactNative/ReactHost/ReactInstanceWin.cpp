@@ -152,6 +152,7 @@ void ReactInstanceWin::Initialize() noexcept {
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           strongThis->m_i18nInfo = react::uwp::I18nModule::GetI18nInfo();
+          strongThis->m_appearanceListener = Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance);
         }
       })
       .Then(Queue(), [ this, weakThis = Mso::WeakPtr{this} ]() noexcept {
@@ -194,11 +195,11 @@ void ReactInstanceWin::Initialize() noexcept {
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
-              m_deviceInfo,
-              devSettings,
+              std::move(m_deviceInfo),
               std::move(m_i18nInfo),
               std::move(m_appState),
               std::move(m_appTheme),
+              std::move(m_appearanceListener),
               m_legacyReactInstance);
 
           cxxModules.emplace_back(
@@ -512,7 +513,7 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
 
 std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
   // Live reload is enabled if we provide a callback function.
-  if (m_options.DeveloperSettings.UseLiveReload) {
+  if (m_options.DeveloperSettings.UseLiveReload || m_options.DeveloperSettings.UseFastRefresh) {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnLiveReload);
   }
   return std::function<void()>{};

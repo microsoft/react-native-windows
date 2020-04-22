@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 15 Apr 2020 22:26:36 GMT and should not be manually modified.
+This log was last generated on Sat, 18 Apr 2020 00:04:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.6
+
+Sat, 18 Apr 2020 00:04:34 GMT
+
+### Changes
+
+- Implelent Shared StatusBarManagerModule and Do Module Cleanup (ngerlem@microsoft.com)
 
 ## 0.0.0-master.5
 
