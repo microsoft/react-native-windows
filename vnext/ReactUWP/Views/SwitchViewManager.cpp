@@ -160,5 +160,17 @@ bool SwitchViewManager::UpdateProperty(
   return true;
 }
 
+void SwitchViewManager::DispatchCommand(
+    const XamlView &viewToUpdate,
+    const std::string &commandId,
+    const folly::dynamic &commandArgs) {
+  if (commandId == "setValue") {
+    auto value = commandArgs[0].asBool();
+    viewToUpdate.as<winrt::ToggleSwitch>().IsEnabled(value);
+  } else {
+    Super::DispatchCommand(viewToUpdate, commandId, commandArgs);
+  }
+}
+
 } // namespace uwp
 } // namespace react

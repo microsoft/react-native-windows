@@ -17,6 +17,8 @@ class SwitchViewManager : public ControlViewManager {
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;
   facebook::react::ShadowNode *createShadow() const override;
+  void DispatchCommand(const XamlView &viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs)
+      override;
 
  protected:
   bool UpdateProperty(

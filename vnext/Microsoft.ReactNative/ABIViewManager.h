@@ -40,7 +40,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
   void DispatchCommand(
       const winrt::Windows::UI::Xaml::DependencyObject &viewToUpdate,
-      int64_t commandId,
+      const std::string &commandId,
       const folly::dynamic &commandArgs) override;
 
   folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;

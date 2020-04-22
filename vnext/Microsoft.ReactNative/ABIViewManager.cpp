@@ -115,29 +115,31 @@ void ABIViewManager::UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, 
 }
 
 folly::dynamic ABIViewManager::GetCommands() const {
-  folly::dynamic innerParent = Super::GetCommands();
+  folly::dynamic commandMap = folly::dynamic::object();
 
+  // Why are we providing commands with the same key and value? React Native 0.61 internally introduced string command
+  // IDs which can be dispatched directly without querying the ViewManager for commands. Integer command IDs are
+  // internally deprecated, but querying for command ID is still the documented path. Returning constants as their
+  // string lets us internally only support the string path.
   if (m_viewManagerWithCommands) {
-    auto outerChild = m_viewManagerWithCommands.Commands();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value{pair.Value()};
-      innerParent.insert(key, value);
+    for (const auto &commandName : m_viewManagerWithCommands.Commands()) {
+      auto commandAsStr = to_string(commandName);
+      commandMap[commandAsStr] = commandAsStr;
     }
   }
 
-  return innerParent;
+  return commandMap;
 }
 
 void ABIViewManager::DispatchCommand(
     const winrt::Windows::UI::Xaml::DependencyObject &viewToUpdate,
-    int64_t commandId,
+    const std::string &commandId,
     const folly::dynamic &commandArgs) {
   if (m_viewManagerWithCommands) {
     auto view = viewToUpdate.as<winrt::FrameworkElement>();
 
     IJSValueReader argReader = winrt::make<DynamicReader>(commandArgs);
-    m_viewManagerWithCommands.DispatchCommand(view, commandId, argReader);
+    m_viewManagerWithCommands.DispatchCommand(view, to_hstring(commandId), argReader);
   }
 }
 

@@ -44,7 +44,7 @@ bool ShadowNodeBase::NeedsForceLayout() {
   return false;
 }
 
-void ShadowNodeBase::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
+void ShadowNodeBase::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   GetViewManager()->DispatchCommand(GetView(), commandId, commandArgs);
 }
 
