@@ -38,11 +38,11 @@ struct CustomUserControlViewManagerCpp
       winrt::Microsoft::ReactNative::IJSValueReader const &propertyMapReader) noexcept;
 
   // IViewManagerWithCommands
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, int64_t> Commands() noexcept;
+  winrt::Windows::Foundation::Collections::IVectorView<winrt::hstring> Commands() noexcept;
 
   void DispatchCommand(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
-      int64_t commandId,
+      winrt::hstring const &commandId,
       winrt::Microsoft::ReactNative::IJSValueReader const &commandArgsReader) noexcept;
 
   // IViewManagerWithExportedEventTypeConstants

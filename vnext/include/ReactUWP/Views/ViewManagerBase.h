@@ -62,7 +62,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
 
   virtual void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap);
 
-  virtual void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic &commandArgs);
+  virtual void DispatchCommand(XamlView viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs);
 
   // Yoga Layout
   virtual void
