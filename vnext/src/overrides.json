@@ -816,6 +816,14 @@
     },
     {
       "type": "patch",
+      "file": "RNTester\\js\\examples\\RTL\\RTLExample.windows.js",
+      "baseFile": "RNTester\\js\\examples\\RTL\\RTLExample.js",
+      "baseVersion": "0.62.2",
+      "baseHash": "70a65dc896406e7ad971f0a9a770b7ea30f43b9e",
+      "issue": 678
+    },
+    {
+      "type": "patch",
       "file": "RNTester\\js\\examples\\ScrollView\\ScrollViewExample.windows.js",
       "baseFile": "RNTester\\js\\examples\\ScrollView\\ScrollViewExample.js",
       "baseVersion": "0.62.0-rc.3",

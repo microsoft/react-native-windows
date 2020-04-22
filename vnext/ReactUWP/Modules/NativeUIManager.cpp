@@ -507,13 +507,12 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
 
       YGNodeStyleSetDisplay(yogaNode, display);
     } else if (key == "direction") {
-      YGDirection direction = YGDirectionInherit;
-      if (value == "inherit" || value.isNull())
-        direction = YGDirectionInherit;
-      else if (value == "ltr" || value.isNull())
-        direction = YGDirectionLTR;
-      else if (value == "rtl")
-        direction = YGDirectionRTL;
+      // https://github.com/microsoft/react-native-windows/issues/4668
+      // In order to support the direction property, we tell yoga to always layout
+      // in LTR direction, then push the appropriate FlowDirection into XAML.
+      // This way XAML handles flipping in RTL mode, which works both for RN components
+      // as well as native components that have purely XAML sub-trees (eg ComboBox).
+      YGDirection direction = YGDirectionLTR;
 
       YGNodeStyleSetDirection(yogaNode, direction);
     } else if (key == "aspectRatio") {
