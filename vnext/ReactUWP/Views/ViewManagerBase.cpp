@@ -255,7 +255,7 @@ void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newVie
 
 void ViewManagerBase::DispatchCommand(
     XamlView /*viewToUpdate*/,
-    int64_t /*commandId*/,
+    const std::string & /*commandId*/,
     const folly::dynamic & /*commandArgs*/) {
   assert(false); // View did not handle its command
 }

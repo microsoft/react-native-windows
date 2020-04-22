@@ -16,6 +16,7 @@
 #include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
+#include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -73,12 +74,64 @@ void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings &setti
   DownloadFromAsync(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(settings.debugHost)).get();
 }
 
+std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::react::DevSettings &settings) {
+  m_ws = winrt::Windows::Networking::Sockets::MessageWebSocket();
+
+  m_wsMessageRevoker = m_ws.MessageReceived(
+      winrt::auto_revoke, [reloadCallback = settings.liveReloadCallback](auto && /*sender*/, auto &&args) noexcept {
+        try {
+          auto reader = args.GetDataReader();
+
+          uint32_t len = reader.UnconsumedBufferLength();
+          if (args.MessageType() == winrt::Windows::Networking::Sockets::SocketMessageType::Utf8) {
+            reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+            std::vector<uint8_t> data(len);
+            reader.ReadBytes(data);
+
+            auto response =
+                std::string(Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+            auto json =
+                winrt::Windows::Data::Json::JsonObject::Parse(Microsoft::Common::Unicode::Utf8ToUtf16(response));
+
+            auto version = (int)json.GetNamedNumber(L"version", 0.0);
+            if (version != 2) {
+              return;
+            }
+            auto method = std::wstring(json.GetNamedString(L"method", L""));
+            if (method.empty()) {
+              return;
+            }
+
+            if (!method.compare(L"reload")) {
+              reloadCallback();
+            } else if (!method.compare(L"devMenu")) {
+              // TODO showDevMenu
+            } else if (!method.compare(L"captureHeap")) {
+              // TODO captureHeap
+            }
+          }
+        } catch (winrt::hresult_error const &e) {
+        }
+      });
+
+  winrt::Windows::Foundation::Uri uri(
+      Microsoft::Common::Unicode::Utf8ToUtf16("ws://" + settings.debugHost + "/message"));
+  auto async = m_ws.ConnectAsync(uri);
+
+#ifdef DEFAULT_CPPWINRT_EXCEPTIONS
+  co_await async;
+#else
+  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
+#endif
+}
+
 facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) {
   // Reset exception state since client is requesting new service
   m_exceptionCaught = false;
 
   try {
     LaunchDevTools(settings);
+    CreatePackagerConnection(settings);
 
     return [this, settings](
                std::shared_ptr<facebook::react::ExecutorDelegate> delegate,

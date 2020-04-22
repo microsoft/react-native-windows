@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 19 Apr 2020 00:04:29 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Apr 2020 00:04:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.45
+
+Wed, 22 Apr 2020 00:04:29 GMT
+
+### Changes
+
+- Make default template build non-dev bundle when not using debug configuration (acoates@microsoft.com)
+- Implemented C++ TurboModule compile time spec validation (vmorozov@microsoft.com)
+- Fix devtools connection to match RN0.62 (acoates@microsoft.com)
 
 ## 0.0.0-master.44
 

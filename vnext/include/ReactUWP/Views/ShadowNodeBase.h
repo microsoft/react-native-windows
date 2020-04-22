@@ -54,7 +54,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   virtual ~ShadowNodeBase() {}
 
   virtual void onDropViewInstance() override;
-  virtual void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) override;
+  virtual void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
   virtual void removeAllChildren() override;
   virtual void AddView(ShadowNode &child, int64_t index) override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
