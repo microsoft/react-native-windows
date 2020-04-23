@@ -820,7 +820,7 @@
       "baseFile": "RNTester\\js\\examples\\RTL\\RTLExample.js",
       "baseVersion": "0.62.2",
       "baseHash": "70a65dc896406e7ad971f0a9a770b7ea30f43b9e",
-      "issue": 678
+      "issue": 4678
     },
     {
       "type": "patch",
