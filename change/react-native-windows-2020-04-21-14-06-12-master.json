@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Hook up to packager websocket to allow 'r' to reload instance",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-21T21:06:12.961Z"
-}
