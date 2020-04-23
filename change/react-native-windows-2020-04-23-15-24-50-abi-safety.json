@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Add Microsoft.ReactNative.IntegrationTests project",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-04-23T22:24:50.780Z"
+}
