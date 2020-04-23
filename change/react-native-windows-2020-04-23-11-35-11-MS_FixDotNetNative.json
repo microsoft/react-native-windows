@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed .Net Native crash for custom struct deserialization",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-23T18:35:11.572Z"
+}
