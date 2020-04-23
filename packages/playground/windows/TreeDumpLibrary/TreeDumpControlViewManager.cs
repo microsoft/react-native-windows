@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
@@ -71,9 +72,12 @@ namespace TreeDumpLibrary
 
         private static bool JsonComparesEqual(IJsonValue expected, IJsonValue actual, string keyName)
         {
+            //const string anything = "‎<ANYTHING>";
             const string Anything = "<ANYTHING>";
-            if (expected.ValueType == JsonValueType.String && expected.GetString() == Anything)
+            //System.Diagnostics.Debug.Assert(anything == Anything);
+            if (expected.ValueType == JsonValueType.String && Regex.Replace(expected.GetString(), @"\p{C}", "") == Anything)
             {
+                Debug.WriteLine($"Skipping ignored value: {actual.ValueType} {actual}");
                 return true;
             }
             //Debug.WriteLine($"keyname: {keyName} {expected.ValueType} {actual.ValueType}");
@@ -138,18 +142,6 @@ namespace TreeDumpLibrary
             {
                 var _e = ea[i];
                 var _a = aa[i];
-                //if (_e.ValueType == JsonValueType.Object &&
-                //    _a.ValueType == JsonValueType.Object)
-                //{
-                //    if (_e != ea.GetObjectAt((uint)i))
-                //    {
-                //        Debug.WriteLine($"GetObjectAt expected {_e} {ea.GetObjectAt((uint)i)}");
-                //    }
-                //    if (_a != aa.GetObjectAt((uint)i))
-                //    {
-                //        Debug.WriteLine($"GetObjectAt actual {_a} {aa.GetObjectAt((uint)i)}");
-                //    }
-                //}
                 if (!JsonComparesEqual(_e, _a, "array element"))
                 {
                     Debug.WriteLine($"Array element {i} expected {_e.ValueType} got {_a.ValueType}");
@@ -161,22 +153,6 @@ namespace TreeDumpLibrary
 
         private static bool JsonCompareObject(JsonObject eo, JsonObject ao)
         {
-            //var et = eo.GetNamedString("XamlType");
-            //var at = ao.GetNamedString("XamlType");
-            //Debug.WriteLine($"type: {et}");
-            //if (et == "Windows.UI.Xaml.Controls.Primitives.Thumb")
-            //{
-            //    if (et == at)
-            //    {
-            //        Debug.WriteLine("Ignoring Windows.UI.Xaml.Controls.Primitives.Thumb");
-            //    }
-            //    else
-            //    {
-            //        Debug.WriteLine($"Expected thumb but got {at}");
-            //    }
-            //    return true; // Ignore scrollbar Thumbs
-            //}
-
             var evisible = true;
             const string visibilityProperty = "Visibility";
             if (eo.Keys.Contains(visibilityProperty))
