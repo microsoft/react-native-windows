@@ -75,7 +75,7 @@ void ShadowNodeBase::ReplaceView(XamlView view) {
   }
 }
 
-void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView) {
+void ShadowNodeBase::ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) {
   GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
 }
 

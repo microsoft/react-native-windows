@@ -53,18 +53,18 @@ bool VirtualTextViewManager::UpdateProperty(
   return true;
 }
 
-void VirtualTextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void VirtualTextViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto span(parent.as<winrt::Span>());
   auto childInline(child.as<winrt::Inline>());
   span.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
 }
 
-void VirtualTextViewManager::RemoveAllChildren(XamlView parent) {
+void VirtualTextViewManager::RemoveAllChildren(const XamlView &parent) {
   auto span(parent.as<winrt::Span>());
   span.Inlines().Clear();
 }
 
-void VirtualTextViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void VirtualTextViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   auto span(parent.as<winrt::Span>());
   return span.Inlines().RemoveAt(static_cast<uint32_t>(index));
 }

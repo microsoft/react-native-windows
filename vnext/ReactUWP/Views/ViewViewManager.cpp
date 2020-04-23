@@ -135,7 +135,7 @@ class ViewShadowNode : public ShadowNodeBase {
     }
   }
 
-  void ReplaceChild(XamlView oldChildView, XamlView newChildView) override {
+  void ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) override {
     auto pPanel = GetViewPanel();
     if (pPanel != nullptr) {
       uint32_t index;
@@ -513,7 +513,7 @@ void ViewViewManager::TryUpdateView(
 
 void ViewViewManager::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
+    const XamlView &viewToUpdate,
     float left,
     float top,
     float width,

@@ -23,7 +23,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       winrt::UIElement uielement,
       winrt::Windows::UI::Composition::CompositionPropertySet transformPS);
 
-  virtual void TransferProperties(XamlView oldView, XamlView newView) override;
+  virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
  protected:
   bool UpdateProperty(
@@ -31,11 +31,12 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       const std::string &propertyName,
       const folly::dynamic &propertyValue) override;
 
-  void TransferProperty(XamlView oldView, XamlView newView, winrt::Windows::UI::Xaml::DependencyProperty dp);
+  void
+  TransferProperty(const XamlView &oldView, const XamlView &newView, winrt::Windows::UI::Xaml::DependencyProperty dp);
 
   void TransferProperty(
-      XamlView oldView,
-      XamlView newView,
+      const XamlView &oldView,
+      const XamlView &newView,
       winrt::DependencyProperty oldViewDP,
       winrt::DependencyProperty newViewDP);
 

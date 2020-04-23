@@ -16,9 +16,9 @@ class VirtualTextViewManager : public ViewManagerBase {
 
   const char *GetName() const override;
 
-  void AddView(XamlView parent, XamlView child, int64_t index) override;
-  void RemoveAllChildren(XamlView parent) override;
-  void RemoveChildAt(XamlView parent, int64_t index) override;
+  void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
+  void RemoveAllChildren(const XamlView &parent) override;
+  void RemoveChildAt(const XamlView &parent, int64_t index) override;
 
   bool RequiresYogaNode() const override;
 

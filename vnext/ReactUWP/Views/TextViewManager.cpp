@@ -142,18 +142,18 @@ bool TextViewManager::UpdateProperty(
   return true;
 }
 
-void TextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void TextViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto textBlock(parent.as<winrt::TextBlock>());
   auto childInline(child.as<winrt::Inline>());
   textBlock.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
 }
 
-void TextViewManager::RemoveAllChildren(XamlView parent) {
+void TextViewManager::RemoveAllChildren(const XamlView &parent) {
   auto textBlock(parent.as<winrt::TextBlock>());
   textBlock.Inlines().Clear();
 }
 
-void TextViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void TextViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   auto textBlock(parent.as<winrt::TextBlock>());
   return textBlock.Inlines().RemoveAt(static_cast<uint32_t>(index));
 }
