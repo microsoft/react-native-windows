@@ -71,6 +71,11 @@ namespace TreeDumpLibrary
 
         private static bool JsonComparesEqual(IJsonValue expected, IJsonValue actual, string keyName)
         {
+            const string Anything = "<ANYTHING>";
+            if (expected.ValueType == JsonValueType.String && expected.GetString() == Anything)
+            {
+                return true;
+            }
             //Debug.WriteLine($"keyname: {keyName} {expected.ValueType} {actual.ValueType}");
             if (expected.ValueType != actual.ValueType)
             {

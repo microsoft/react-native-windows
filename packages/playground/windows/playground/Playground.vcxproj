@@ -188,6 +188,24 @@
     <None Include="Assets\TreeDump\masters\CheckBox.json">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="Assets\TreeDump\masters\DatePicker.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\TreeDump\masters\Fast Path Texts.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\TreeDump\masters\FlatList.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\TreeDump\masters\Flyout.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\TreeDump\masters\Glyph UWP.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\TreeDump\masters\Image.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
     <None Include="Assets\TreeDump\masters\RNTester.json">
       <DeploymentContent>true</DeploymentContent>
     </None>

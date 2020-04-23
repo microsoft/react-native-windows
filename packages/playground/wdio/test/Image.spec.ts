@@ -17,10 +17,16 @@ function VerifyTreeDumpOk(pageName : string) {
 }
 
 function VerifyPage(element : WebdriverIO.Element) {
-  const name = element.getText();
+    const name = element.getText();
   element.click();
   browser.waitUntil(() => $('~PageHeader').getText() == name, 10000, `Timeout waiting for page ${name} to load, pageheader was ${$('~PageHeader').getText()}`);
   browser.pause(2000); // wait 2 seconds for the page header to refresh post-navigation
+
+  const dismissYellowBox = $('/Window/Window[2]/Custom/Text');
+    if (dismissYellowBox && dismissYellowBox.isDisplayed()) {
+        dismissYellowBox.waitForEnabled(1000);
+    dismissYellowBox.click();
+  }
   VerifyTreeDumpOk(name);
   const backButton = $('/Window/Window[2]/Button[2]');
   backButton.waitForEnabled();
@@ -45,7 +51,7 @@ describe('basicTest', () => {
     assert(title == 'RNTester');
 
     VerifyTreeDumpOk('RNTester');
-    
+
     const activityIndicator = $('/Window/Window[2]/Pane[1]/Text[2]');
     activityIndicator.waitForEnabled(30000, false, 'No ActivityIndicator');
     assert(activityIndicator.getText() == '<ActivityIndicator>' , `text = ${activityIndicator.getText()}`);
@@ -54,24 +60,25 @@ describe('basicTest', () => {
     const numberOfPages = paneItems.length;
     assert($('/Window/Window[2]/Pane[1]/Text[1]').getText() == 'COMPONENTS');
 
+      const allowedPages = [
+          'RNTester',
+          '<ActivityIndicator>',
+          '<Button>',
+          '<CheckBox>',
+          '<DatePicker>',
+          'Fast Path Texts',
+          // '<FlatList>',
+          '<Flyout>',
+          '<Glyph> UWP',
+          // #4691   '<Image>',
+      ];
     for (let i = 2; i < numberOfPages; i += 2) {
-      VerifyPage($(`/Window/Window[2]/Pane[1]/Text[${i}]`));
+      const page = $(`/Window/Window[2]/Pane[1]/Text[${i}]`);
+      if (allowedPages.find((x) => x == page.getText())) {
+        VerifyPage(page);
+      }
     }
 
-    assert(paneItems.length == 2, `length = ${paneItems.length}`);
-
-    // assert($('~x_LoadButton') != undefined);
-    // HomePage.loadRNTester();
-
-    // const port = $$('x_DebuggerPort');
-    // assert(port);
-    // // assert(`port = ${port.getText()}`);
-
-    // const treedumpText = HomePage.treeDump();
-    // assert(treedumpText == "tree dump goes here");
-    // const treedump = By('x_TreeDump');
-    // const size = treedump.getSize();
-    // assert(size.width == 20, `size = ${size}`);
   });
 });
 // describe('ImageWithoutBorderTest', () => {

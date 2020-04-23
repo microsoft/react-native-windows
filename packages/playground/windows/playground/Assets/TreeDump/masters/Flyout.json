@@ -1,0 +1,1167 @@
+{
+    "XamlType": "Microsoft.ReactNative.ReactRootView",
+    "Background": null,
+    "BorderBrush": null,
+    "BorderThickness": "0,0,0,0",
+    "Clip": null,
+    "CornerRadius": "0,0,0,0",
+    "FlowDirection": "LeftToRight",
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [1280, 565],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "children": [
+    {
+        "XamlType": "Windows.UI.Xaml.Controls.Grid",
+        "Background": null,
+        "BorderBrush": null,
+        "BorderThickness": "0,0,0,0",
+        "Clip": null,
+        "CornerRadius": "0,0,0,0",
+        "FlowDirection": "LeftToRight",
+        "HorizontalAlignment": "Stretch",
+        "Margin": "0,0,0,0",
+        "Padding": "0,0,0,0",
+        "RenderSize": [1280, 565],
+        "VerticalAlignment": "Stretch",
+        "Visibility": "Visible",
+        "children": [
+        {
+            "XamlType": "Microsoft.ReactNative.ViewPanel",
+            "Background": null,
+            "BorderBrush": "#00000000",
+            "BorderThickness": "0,0,0,0",
+            "Clip": null,
+            "CornerRadius": "0,0,0,0",
+            "FlowDirection": "LeftToRight",
+            "Height": 566,
+            "HorizontalAlignment": "Stretch",
+            "Margin": "0,0,0,0",
+            "RenderSize": [1280, 566],
+            "VerticalAlignment": "Stretch",
+            "Visibility": "Visible",
+            "Width": 1280,
+            "children": [
+            {
+                "XamlType": "Microsoft.ReactNative.ViewPanel",
+                "Background": null,
+                "BorderBrush": "#00000000",
+                "BorderThickness": "0,0,0,0",
+                "Clip": null,
+                "CornerRadius": "0,0,0,0",
+                "FlowDirection": "LeftToRight",
+                "Height": 566,
+                "HorizontalAlignment": "Stretch",
+                "Margin": "0,0,0,0",
+                "RenderSize": [1280, 566],
+                "VerticalAlignment": "Stretch",
+                "Visibility": "Visible",
+                "Width": 1280,
+                "children": [
+                {
+                    "XamlType": "Microsoft.ReactNative.ViewPanel",
+                    "Background": null,
+                    "BorderBrush": "#00000000",
+                    "BorderThickness": "0,0,0,0",
+                    "Clip": null,
+                    "CornerRadius": "0,0,0,0",
+                    "FlowDirection": "LeftToRight",
+                    "Height": 566,
+                    "HorizontalAlignment": "Stretch",
+                    "Margin": "0,0,0,0",
+                    "RenderSize": [1280, 566],
+                    "VerticalAlignment": "Stretch",
+                    "Visibility": "Visible",
+                    "Width": 1280,
+                    "children": [
+                    {
+                        "XamlType": "Microsoft.ReactNative.ViewPanel",
+                        "Background": "#FFFFFFFF",
+                        "BorderBrush": "#00000000",
+                        "BorderThickness": "0,0,0,0.5",
+                        "Clip": null,
+                        "CornerRadius": "0,0,0,0",
+                        "FlowDirection": "LeftToRight",
+                        "Height": 41,
+                        "HorizontalAlignment": "Stretch",
+                        "Margin": "0,0,0,0",
+                        "RenderSize": [1280, 41],
+                        "VerticalAlignment": "Stretch",
+                        "Visibility": "Visible",
+                        "Width": 1280,
+                        "children": [
+                        {
+                            "XamlType": "Microsoft.ReactNative.ViewPanel",
+                            "Background": null,
+                            "BorderBrush": "#00000000",
+                            "BorderThickness": "0,0,0,0",
+                            "Clip": null,
+                            "CornerRadius": "0,0,0,0",
+                            "FlowDirection": "LeftToRight",
+                            "Height": 40,
+                            "HorizontalAlignment": "Stretch",
+                            "Margin": "0,0,0,0",
+                            "RenderSize": [1280, 40],
+                            "VerticalAlignment": "Stretch",
+                            "Visibility": "Visible",
+                            "Width": 1280,
+                            "children": [
+                            {
+                                "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                "Background": null,
+                                "BorderBrush": "#00000000",
+                                "BorderThickness": "0,0,0,0",
+                                "Clip": null,
+                                "CornerRadius": "0,0,0,0",
+                                "FlowDirection": "LeftToRight",
+                                "Height": 29,
+                                "HorizontalAlignment": "Stretch",
+                                "Margin": "0,0,0,0",
+                                "RenderSize": [1280, 29],
+                                "VerticalAlignment": "Stretch",
+                                "Visibility": "Visible",
+                                "Width": 1280,
+                                "children": [
+                                {
+                                    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                    "Clip": null,
+                                    "FlowDirection": "LeftToRight",
+                                    "Foreground": "#FF000000",
+                                    "Height": 29,
+                                    "HorizontalAlignment": "Stretch",
+                                    "Margin": "0,0,0,0",
+                                    "Padding": "0,0,0,0",
+                                    "RenderSize": [91, 29],
+                                    "Text": "<Flyout>",
+                                    "VerticalAlignment": "Stretch",
+                                    "Visibility": "Visible",
+                                    "Width": 91,
+                                    "AutomationId": "PageHeader"
+                                }
+                                ]
+                            },
+                            {
+                                "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                "Background": null,
+                                "BorderBrush": "#00000000",
+                                "BorderThickness": "0,0,0,0",
+                                "Clip": null,
+                                "CornerRadius": "0,0,0,0",
+                                "FlowDirection": "LeftToRight",
+                                "Height": 40,
+                                "HorizontalAlignment": "Stretch",
+                                "Margin": "0,0,0,0",
+                                "RenderSize": [52, 40],
+                                "VerticalAlignment": "Stretch",
+                                "Visibility": "Visible",
+                                "Width": 52,
+                                "children": [
+                                {
+                                    "XamlType": "Microsoft.ReactNative.ViewControl",
+                                    "Background": null,
+                                    "BorderBrush": null,
+                                    "BorderThickness": "0,0,0,0",
+                                    "Clip": null,
+                                    "CornerRadius": "0,0,0,0",
+                                    "FlowDirection": "LeftToRight",
+                                    "Foreground": "#FF000000",
+                                    "Height": 39,
+                                    "HorizontalAlignment": "Stretch",
+                                    "Margin": "0,0,0,0",
+                                    "Padding": "0,0,0,0",
+                                    "RenderSize": [52, 39],
+                                    "VerticalAlignment": "Stretch",
+                                    "Visibility": "Visible",
+                                    "Width": 52,
+                                    "children": [
+                                    {
+                                        "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+                                        "Background": null,
+                                        "BorderBrush": null,
+                                        "BorderThickness": "0,0,0,0",
+                                        "Clip": null,
+                                        "CornerRadius": "0,0,0,0",
+                                        "FlowDirection": "LeftToRight",
+                                        "Foreground": "#FF000000",
+                                        "HorizontalAlignment": "Stretch",
+                                        "Margin": "0,0,0,0",
+                                        "Padding": "0,0,0,0",
+                                        "RenderSize": [52, 39],
+                                        "VerticalAlignment": "Stretch",
+                                        "Visibility": "Visible",
+                                        "children": [
+                                        {
+                                            "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                            "Background": null,
+                                            "BorderBrush": "#00000000",
+                                            "BorderThickness": "0,0,0,0",
+                                            "Clip": null,
+                                            "CornerRadius": "0,0,0,0",
+                                            "FlowDirection": "LeftToRight",
+                                            "Height": 39,
+                                            "HorizontalAlignment": "Stretch",
+                                            "Margin": "0,0,0,0",
+                                            "RenderSize": [52, 39],
+                                            "VerticalAlignment": "Stretch",
+                                            "Visibility": "Visible",
+                                            "Width": 52,
+                                            "children": [
+                                            {
+                                                "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                "Background": "#FF2196F3",
+                                                "BorderBrush": null,
+                                                "BorderThickness": "0,0,0,0",
+                                                "Clip": null,
+                                                "CornerRadius": "2,2,2,2",
+                                                "FlowDirection": "LeftToRight",
+                                                "Height": 39,
+                                                "HorizontalAlignment": "Stretch",
+                                                "Margin": "0,0,0,0",
+                                                "Padding": "0,0,0,0",
+                                                "RenderSize": [52, 39],
+                                                "VerticalAlignment": "Stretch",
+                                                "Visibility": "Visible",
+                                                "Width": 52,
+                                                "children": [
+                                                {
+                                                    "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                    "Background": null,
+                                                    "BorderBrush": "#00000000",
+                                                    "BorderThickness": "0,0,0,0",
+                                                    "Clip": null,
+                                                    "CornerRadius": "2,2,2,2",
+                                                    "FlowDirection": "LeftToRight",
+                                                    "HorizontalAlignment": "Stretch",
+                                                    "Margin": "0,0,0,0",
+                                                    "RenderSize": [52, 39],
+                                                    "VerticalAlignment": "Stretch",
+                                                    "Visibility": "Visible",
+                                                    "children": [
+                                                    {
+                                                        "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                        "Clip": null,
+                                                        "FlowDirection": "LeftToRight",
+                                                        "Foreground": "#FFFFFFFF",
+                                                        "Height": 23,
+                                                        "HorizontalAlignment": "Stretch",
+                                                        "Margin": "0,0,0,0",
+                                                        "Padding": "0,0,0,0",
+                                                        "RenderSize": [36, 23],
+                                                        "Text": "Back",
+                                                        "VerticalAlignment": "Stretch",
+                                                        "Visibility": "Visible",
+                                                        "Width": 36
+                                                    }
+                                                    ]
+                                                }
+                                                ]
+                                            }
+                                            ]
+                                        }
+                                        ]
+                                    }
+                                    ]
+                                }
+                                ]
+                            }
+                            ]
+                        }
+                        ]
+                    },
+                    {
+                        "XamlType": "Microsoft.ReactNative.ViewPanel",
+                        "Background": "#FFF2F2F7",
+                        "BorderBrush": "#00000000",
+                        "BorderThickness": "0,0,0,0",
+                        "Clip": null,
+                        "CornerRadius": "0,0,0,0",
+                        "FlowDirection": "LeftToRight",
+                        "Height": 525,
+                        "HorizontalAlignment": "Stretch",
+                        "Margin": "0,0,0,0",
+                        "RenderSize": [1280, 525],
+                        "VerticalAlignment": "Stretch",
+                        "Visibility": "Visible",
+                        "Width": 1280,
+                        "children": [
+                        {
+                            "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
+                            "Background": "#00FFFFFF",
+                            "BorderBrush": "#00FFFFFF",
+                            "BorderThickness": "0,0,0,0",
+                            "Clip": null,
+                            "CornerRadius": "0,0,0,0",
+                            "FlowDirection": "LeftToRight",
+                            "Foreground": "#FF000000",
+                            "Height": 525,
+                            "HorizontalAlignment": "Stretch",
+                            "Margin": "0,0,0,0",
+                            "Padding": "0,0,0,0",
+                            "RenderSize": [1280, 525],
+                            "VerticalAlignment": "Stretch",
+                            "Visibility": "Visible",
+                            "Width": 1280,
+                            "children": [
+                            {
+                                "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                "Background": null,
+                                "BorderBrush": "#00FFFFFF",
+                                "BorderThickness": "0,0,0,0",
+                                "Clip": null,
+                                "CornerRadius": "0,0,0,0",
+                                "FlowDirection": "LeftToRight",
+                                "HorizontalAlignment": "Stretch",
+                                "Margin": "0,0,0,0",
+                                "Name": "Root",
+                                "Padding": "0,0,0,0",
+                                "RenderSize": [1280, 525],
+                                "VerticalAlignment": "Stretch",
+                                "Visibility": "Visible",
+                                "children": [
+                                {
+                                    "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                    "Background": "#00FFFFFF",
+                                    "BorderBrush": null,
+                                    "BorderThickness": "0,0,0,0",
+                                    "Clip": null,
+                                    "CornerRadius": "0,0,0,0",
+                                    "FlowDirection": "LeftToRight",
+                                    "HorizontalAlignment": "Stretch",
+                                    "Margin": "0,0,0,0",
+                                    "Padding": "0,0,0,0",
+                                    "RenderSize": [1280, 525],
+                                    "VerticalAlignment": "Stretch",
+                                    "Visibility": "Visible",
+                                    "children": [
+                                    {
+                                        "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
+                                        "Background": null,
+                                        "BorderBrush": null,
+                                        "BorderThickness": "0,0,0,0",
+                                        "Clip": "Windows.UI.Xaml.Media.RectangleGeometry",
+                                        "CornerRadius": "0,0,0,0",
+                                        "FlowDirection": "LeftToRight",
+                                        "Foreground": "#FF000000",
+                                        "HorizontalAlignment": "Stretch",
+                                        "Margin": "0,0,0,0",
+                                        "Name": "ScrollContentPresenter",
+                                        "Padding": "0,0,0,0",
+                                        "RenderSize": [1280, 525],
+                                        "VerticalAlignment": "Stretch",
+                                        "Visibility": "Visible",
+                                        "children": [
+                                        {
+                                            "XamlType": "Windows.UI.Xaml.DependencyObject",
+                                            "children": [
+                                            {
+                                                "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+                                                "Background": null,
+                                                "BorderBrush": null,
+                                                "BorderThickness": "0,0,0,0",
+                                                "Clip": null,
+                                                "CornerRadius": "0,0,0,0",
+                                                "FlowDirection": "LeftToRight",
+                                                "Foreground": "#FF000000",
+                                                "HorizontalAlignment": "Left",
+                                                "Margin": "0,0,0,0",
+                                                "Padding": "0,0,0,0",
+                                                "RenderSize": [1280, 708],
+                                                "VerticalAlignment": "Top",
+                                                "Visibility": "Visible",
+                                                "children": [
+                                                {
+                                                    "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                    "Background": null,
+                                                    "BorderBrush": "#00000000",
+                                                    "BorderThickness": "0,0,0,0",
+                                                    "Clip": null,
+                                                    "CornerRadius": "0,0,0,0",
+                                                    "FlowDirection": "LeftToRight",
+                                                    "Height": 708,
+                                                    "HorizontalAlignment": "Stretch",
+                                                    "Margin": "0,0,0,0",
+                                                    "RenderSize": [1280, 708],
+                                                    "VerticalAlignment": "Stretch",
+                                                    "Visibility": "Visible",
+                                                    "Width": 1280,
+                                                    "children": [
+                                                    {
+                                                        "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                        "Background": "#FFFFFFFF",
+                                                        "BorderBrush": "#493C3C43",
+                                                        "BorderThickness": "0.5,0.5,0.5,0.5",
+                                                        "Clip": null,
+                                                        "CornerRadius": "3,3,3,3",
+                                                        "FlowDirection": "LeftToRight",
+                                                        "Height": 428,
+                                                        "HorizontalAlignment": "Stretch",
+                                                        "Margin": "0,0,0,0",
+                                                        "Padding": "0,0,0,0",
+                                                        "RenderSize": [1260, 428],
+                                                        "VerticalAlignment": "Stretch",
+                                                        "Visibility": "Visible",
+                                                        "Width": 1260,
+                                                        "children": [
+                                                        {
+                                                            "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                            "Background": null,
+                                                            "BorderBrush": "#493C3C43",
+                                                            "BorderThickness": "0.5,0.5,0.5,0.5",
+                                                            "Clip": "Windows.UI.Xaml.Media.RectangleGeometry",
+                                                            "CornerRadius": "3,3,3,3",
+                                                            "FlowDirection": "LeftToRight",
+                                                            "HorizontalAlignment": "Stretch",
+                                                            "Margin": "0,0,0,0",
+                                                            "RenderSize": [1259, 427],
+                                                            "VerticalAlignment": "Stretch",
+                                                            "Visibility": "Visible",
+                                                            "children": [
+                                                            {
+                                                                "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                "Background": "#14747480",
+                                                                "BorderBrush": null,
+                                                                "BorderThickness": "0,0,0,0.5",
+                                                                "Clip": null,
+                                                                "CornerRadius": "3,2.5,0,0",
+                                                                "FlowDirection": "LeftToRight",
+                                                                "Height": 34,
+                                                                "HorizontalAlignment": "Stretch",
+                                                                "Margin": "0,0,0,0",
+                                                                "Padding": "0,0,0,0",
+                                                                "RenderSize": [1259, 34],
+                                                                "VerticalAlignment": "Stretch",
+                                                                "Visibility": "Visible",
+                                                                "Width": 1259,
+                                                                "children": [
+                                                                {
+                                                                    "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                    "Background": null,
+                                                                    "BorderBrush": "#00000000",
+                                                                    "BorderThickness": "0,0,0,0.5",
+                                                                    "Clip": null,
+                                                                    "CornerRadius": "3,2.5,0,0",
+                                                                    "FlowDirection": "LeftToRight",
+                                                                    "HorizontalAlignment": "Stretch",
+                                                                    "Margin": "0,0,0,0",
+                                                                    "RenderSize": [1259, 33],
+                                                                    "VerticalAlignment": "Stretch",
+                                                                    "Visibility": "Visible",
+                                                                    "children": [
+                                                                    {
+                                                                        "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                        "Clip": null,
+                                                                        "FlowDirection": "LeftToRight",
+                                                                        "Foreground": "#FF000000",
+                                                                        "Height": 23,
+                                                                        "HorizontalAlignment": "Stretch",
+                                                                        "Margin": "0,0,0,0",
+                                                                        "Padding": "0,0,0,0",
+                                                                        "RenderSize": [1239, 23],
+                                                                        "Text": "Flyout Anchor to text input",
+                                                                        "VerticalAlignment": "Stretch",
+                                                                        "Visibility": "Visible",
+                                                                        "Width": 1239
+                                                                    }
+                                                                    ]
+                                                                }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                "Background": null,
+                                                                "BorderBrush": "#00000000",
+                                                                "BorderThickness": "0,0,0,0",
+                                                                "Clip": null,
+                                                                "CornerRadius": "0,0,0,0",
+                                                                "FlowDirection": "LeftToRight",
+                                                                "Height": 374,
+                                                                "HorizontalAlignment": "Stretch",
+                                                                "Margin": "0,0,0,0",
+                                                                "RenderSize": [1239, 374],
+                                                                "VerticalAlignment": "Stretch",
+                                                                "Visibility": "Visible",
+                                                                "Width": 1239,
+                                                                "children": [
+                                                                {
+                                                                    "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                    "Background": null,
+                                                                    "BorderBrush": "#00000000",
+                                                                    "BorderThickness": "0,0,0,0",
+                                                                    "Clip": null,
+                                                                    "CornerRadius": "0,0,0,0",
+                                                                    "FlowDirection": "LeftToRight",
+                                                                    "Height": 374,
+                                                                    "HorizontalAlignment": "Stretch",
+                                                                    "Margin": "0,0,0,0",
+                                                                    "RenderSize": [1239, 374],
+                                                                    "VerticalAlignment": "Stretch",
+                                                                    "Visibility": "Visible",
+                                                                    "Width": 1239,
+                                                                    "children": [
+                                                                    {
+                                                                        "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                        "Background": null,
+                                                                        "BorderBrush": "#00000000",
+                                                                        "BorderThickness": "0,0,0,0",
+                                                                        "Clip": null,
+                                                                        "CornerRadius": "0,0,0,0",
+                                                                        "FlowDirection": "LeftToRight",
+                                                                        "Height": 63,
+                                                                        "HorizontalAlignment": "Stretch",
+                                                                        "Margin": "0,0,0,0",
+                                                                        "RenderSize": [1239, 63],
+                                                                        "VerticalAlignment": "Stretch",
+                                                                        "Visibility": "Visible",
+                                                                        "Width": 1239,
+                                                                        "children": [
+                                                                        {
+                                                                            "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                            "Clip": null,
+                                                                            "FlowDirection": "LeftToRight",
+                                                                            "Foreground": "#FF000000",
+                                                                            "Height": 43,
+                                                                            "HorizontalAlignment": "Stretch",
+                                                                            "Margin": "0,0,0,0",
+                                                                            "Padding": "10,10,10,10",
+                                                                            "RenderSize": [164, 43],
+                                                                            "Text": "Placement Options: ",
+                                                                            "VerticalAlignment": "Stretch",
+                                                                            "Visibility": "Visible",
+                                                                            "Width": 164
+                                                                        },
+                                                                        {
+                                                                            "XamlType": "Windows.UI.Xaml.Controls.ComboBox",
+                                                                            "Background": "#66FFFFFF",
+                                                                            "BorderBrush": "#66000000",
+                                                                            "BorderThickness": "2,2,2,2",
+                                                                            "Clip": null,
+                                                                            "CornerRadius": "0,0,0,0",
+                                                                            "FlowDirection": "LeftToRight",
+                                                                            "Foreground": "#FF000000",
+                                                                            "Height": 35,
+                                                                            "HorizontalAlignment": "Left",
+                                                                            "Margin": "0,0,0,0",
+                                                                            "Padding": "12,5,0,7",
+                                                                            "RenderSize": [200, 35],
+                                                                            "Text": "",
+                                                                            "VerticalAlignment": "Top",
+                                                                            "Visibility": "Visible",
+                                                                            "Width": 200,
+                                                                            "children": [
+                                                                            {
+                                                                                "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                                                                "Background": null,
+                                                                                "BorderBrush": null,
+                                                                                "BorderThickness": "0,0,0,0",
+                                                                                "Clip": null,
+                                                                                "CornerRadius": "0,0,0,0",
+                                                                                "FlowDirection": "LeftToRight",
+                                                                                "HorizontalAlignment": "Stretch",
+                                                                                "Margin": "0,0,0,0",
+                                                                                "Name": "LayoutRoot",
+                                                                                "Padding": "0,0,0,0",
+                                                                                "RenderSize": [200, 35],
+                                                                                "VerticalAlignment": "Stretch",
+                                                                                "Visibility": "Visible",
+                                                                                "children": [
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                                    "Background": "#66FFFFFF",
+                                                                                    "BorderBrush": "#66000000",
+                                                                                    "BorderThickness": "2,2,2,2",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "Background",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [200, 35],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                                    "Background": "#FF409EFE",
+                                                                                    "BorderBrush": "#66000000",
+                                                                                    "BorderThickness": "2,2,2,2",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "HighlightBackground",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [200, 35],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+                                                                                    "Background": null,
+                                                                                    "BorderBrush": null,
+                                                                                    "BorderThickness": "0,0,0,0",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#FF000000",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "12,5,0,7",
+                                                                                    "Name": "ContentPresenter",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [156, 22],
+                                                                                    "VerticalAlignment": "Center",
+                                                                                    "Visibility": "Visible",
+                                                                                    "children": [
+                                                                                    {
+                                                                                        "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                                        "Clip": null,
+                                                                                        "FlowDirection": "LeftToRight",
+                                                                                        "Foreground": "#FF000000",
+                                                                                        "HorizontalAlignment": "Left",
+                                                                                        "Margin": "0,0,0,0",
+                                                                                        "Padding": "0,0,0,0",
+                                                                                        "RenderSize": [25, 22],
+                                                                                        "Text": "top",
+                                                                                        "VerticalAlignment": "Top",
+                                                                                        "Visibility": "Visible"
+                                                                                    }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.TextBox",
+                                                                                    "Background": "#66FFFFFF",
+                                                                                    "BorderBrush": "#00FFFFFF",
+                                                                                    "BorderThickness": "2,2,2,2",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#FF000000",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "EditableText",
+                                                                                    "Padding": "10,3,30,5",
+                                                                                    "RenderSize": [0, 0],
+                                                                                    "Text": "",
+                                                                                    "VerticalAlignment": "Center",
+                                                                                    "Visibility": "Collapsed"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                                    "Background": "#00FFFFFF",
+                                                                                    "BorderBrush": null,
+                                                                                    "BorderThickness": "0,0,0,0",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "HorizontalAlignment": "Right",
+                                                                                    "Margin": "0,2,2,2",
+                                                                                    "Name": "DropDownOverlay",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [0, 0],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Collapsed",
+                                                                                    "Width": 30
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.FontIcon",
+                                                                                    "Clip": null,
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#CC000000",
+                                                                                    "HorizontalAlignment": "Right",
+                                                                                    "Margin": "0,10,10,10",
+                                                                                    "Name": "DropDownGlyph",
+                                                                                    "RenderSize": [12, 12],
+                                                                                    "VerticalAlignment": "Center",
+                                                                                    "Visibility": "Visible",
+                                                                                    "children": [
+                                                                                    {
+                                                                                        "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                                                                        "Background": "#00000000",
+                                                                                        "BorderBrush": null,
+                                                                                        "BorderThickness": "0,0,0,0",
+                                                                                        "Clip": null,
+                                                                                        "CornerRadius": "0,0,0,0",
+                                                                                        "FlowDirection": "LeftToRight",
+                                                                                        "HorizontalAlignment": "Stretch",
+                                                                                        "Margin": "0,0,0,0",
+                                                                                        "Padding": "0,0,0,0",
+                                                                                        "RenderSize": [12, 12],
+                                                                                        "VerticalAlignment": "Stretch",
+                                                                                        "Visibility": "Visible",
+                                                                                        "children": [
+                                                                                        {
+                                                                                            "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                                            "Clip": null,
+                                                                                            "FlowDirection": "LeftToRight",
+                                                                                            "Foreground": "#CC000000",
+                                                                                            "HorizontalAlignment": "Stretch",
+                                                                                            "Margin": "0,0,0,0",
+                                                                                            "Padding": "0,0,0,0",
+                                                                                            "RenderSize": [12, 12],
+                                                                                            "Text": "",
+                                                                                            "VerticalAlignment": "Center",
+                                                                                            "Visibility": "Visible"
+                                                                                        }
+                                                                                        ]
+                                                                                    }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+                                                                                    "Background": null,
+                                                                                    "BorderBrush": null,
+                                                                                    "BorderThickness": "0,0,0,0",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#99000000",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "DescriptionPresenter",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [200, 0],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.Primitives.Popup",
+                                                                                    "Clip": null,
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "Popup",
+                                                                                    "RenderSize": [168, 0],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible"
+                                                                                }
+                                                                                ]
+                                                                            }
+                                                                            ]
+                                                                        }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                        "Background": null,
+                                                                        "BorderBrush": "#00000000",
+                                                                        "BorderThickness": "0,0,0,0",
+                                                                        "Clip": null,
+                                                                        "CornerRadius": "0,0,0,0",
+                                                                        "FlowDirection": "LeftToRight",
+                                                                        "Height": 79,
+                                                                        "HorizontalAlignment": "Stretch",
+                                                                        "Margin": "0,0,0,0",
+                                                                        "RenderSize": [200, 79],
+                                                                        "VerticalAlignment": "Stretch",
+                                                                        "Visibility": "Visible",
+                                                                        "Width": 200,
+                                                                        "children": [
+                                                                        {
+                                                                            "XamlType": "Microsoft.ReactNative.ViewControl",
+                                                                            "Background": null,
+                                                                            "BorderBrush": null,
+                                                                            "BorderThickness": "0,0,0,0",
+                                                                            "Clip": null,
+                                                                            "CornerRadius": "0,0,0,0",
+                                                                            "FlowDirection": "LeftToRight",
+                                                                            "Foreground": "#FF000000",
+                                                                            "Height": 39,
+                                                                            "HorizontalAlignment": "Stretch",
+                                                                            "Margin": "0,0,0,0",
+                                                                            "Padding": "0,0,0,0",
+                                                                            "RenderSize": [160, 39],
+                                                                            "VerticalAlignment": "Stretch",
+                                                                            "Visibility": "Visible",
+                                                                            "Width": 160,
+                                                                            "children": [
+                                                                            {
+                                                                                "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+                                                                                "Background": null,
+                                                                                "BorderBrush": null,
+                                                                                "BorderThickness": "0,0,0,0",
+                                                                                "Clip": null,
+                                                                                "CornerRadius": "0,0,0,0",
+                                                                                "FlowDirection": "LeftToRight",
+                                                                                "Foreground": "#FF000000",
+                                                                                "HorizontalAlignment": "Stretch",
+                                                                                "Margin": "0,0,0,0",
+                                                                                "Padding": "0,0,0,0",
+                                                                                "RenderSize": [160, 39],
+                                                                                "VerticalAlignment": "Stretch",
+                                                                                "Visibility": "Visible",
+                                                                                "children": [
+                                                                                {
+                                                                                    "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                                    "Background": null,
+                                                                                    "BorderBrush": "#00000000",
+                                                                                    "BorderThickness": "0,0,0,0",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Height": 39,
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "RenderSize": [160, 39],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible",
+                                                                                    "Width": 160,
+                                                                                    "children": [
+                                                                                    {
+                                                                                        "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                                        "Background": "#FF2196F3",
+                                                                                        "BorderBrush": null,
+                                                                                        "BorderThickness": "0,0,0,0",
+                                                                                        "Clip": null,
+                                                                                        "CornerRadius": "2,2,2,2",
+                                                                                        "FlowDirection": "LeftToRight",
+                                                                                        "Height": 39,
+                                                                                        "HorizontalAlignment": "Stretch",
+                                                                                        "Margin": "0,0,0,0",
+                                                                                        "Padding": "0,0,0,0",
+                                                                                        "RenderSize": [160, 39],
+                                                                                        "VerticalAlignment": "Stretch",
+                                                                                        "Visibility": "Visible",
+                                                                                        "Width": 160,
+                                                                                        "children": [
+                                                                                        {
+                                                                                            "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                                            "Background": null,
+                                                                                            "BorderBrush": "#00000000",
+                                                                                            "BorderThickness": "0,0,0,0",
+                                                                                            "Clip": null,
+                                                                                            "CornerRadius": "2,2,2,2",
+                                                                                            "FlowDirection": "LeftToRight",
+                                                                                            "HorizontalAlignment": "Stretch",
+                                                                                            "Margin": "0,0,0,0",
+                                                                                            "RenderSize": [160, 39],
+                                                                                            "VerticalAlignment": "Stretch",
+                                                                                            "Visibility": "Visible",
+                                                                                            "children": [
+                                                                                            {
+                                                                                                "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                                                "Clip": null,
+                                                                                                "FlowDirection": "LeftToRight",
+                                                                                                "Foreground": "#FFFFFFFF",
+                                                                                                "Height": 23,
+                                                                                                "HorizontalAlignment": "Stretch",
+                                                                                                "Margin": "0,0,0,0",
+                                                                                                "Padding": "0,0,0,0",
+                                                                                                "RenderSize": [144, 23],
+                                                                                                "Text": "Open Flyout",
+                                                                                                "VerticalAlignment": "Stretch",
+                                                                                                "Visibility": "Visible",
+                                                                                                "Width": 144
+                                                                                            }
+                                                                                            ]
+                                                                                        }
+                                                                                        ]
+                                                                                    }
+                                                                                    ]
+                                                                                }
+                                                                                ]
+                                                                            }
+                                                                            ]
+                                                                        }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                                        "Background": null,
+                                                                        "BorderBrush": "#00000000",
+                                                                        "BorderThickness": "0,0,0,0",
+                                                                        "Clip": null,
+                                                                        "CornerRadius": "0,0,0,0",
+                                                                        "FlowDirection": "LeftToRight",
+                                                                        "Height": 232,
+                                                                        "HorizontalAlignment": "Stretch",
+                                                                        "Margin": "0,0,0,0",
+                                                                        "RenderSize": [1239, 232],
+                                                                        "VerticalAlignment": "Stretch",
+                                                                        "Visibility": "Visible",
+                                                                        "Width": 1239,
+                                                                        "children": [
+                                                                        {
+                                                                            "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                            "Clip": null,
+                                                                            "FlowDirection": "LeftToRight",
+                                                                            "Foreground": "#FF000000",
+                                                                            "Height": 32,
+                                                                            "HorizontalAlignment": "Stretch",
+                                                                            "Margin": "0,0,0,0",
+                                                                            "Padding": "10,10,10,10",
+                                                                            "RenderSize": [300, 42],
+                                                                            "Text": "Text Input to Anchor flyout to: ",
+                                                                            "VerticalAlignment": "Stretch",
+                                                                            "Visibility": "Visible",
+                                                                            "Width": 300
+                                                                        },
+                                                                        {
+                                                                            "XamlType": "Windows.UI.Xaml.Controls.TextBox",
+                                                                            "Background": "#66FFFFFF",
+                                                                            "BorderBrush": "#66000000",
+                                                                            "BorderThickness": "2,2,2,2",
+                                                                            "Clip": null,
+                                                                            "CornerRadius": "0,0,0,0",
+                                                                            "FlowDirection": "LeftToRight",
+                                                                            "Foreground": "#FF000000",
+                                                                            "Height": 32,
+                                                                            "HorizontalAlignment": "Stretch",
+                                                                            "Margin": "0,0,0,0",
+                                                                            "Padding": "10,3,6,6",
+                                                                            "RenderSize": [250, 32],
+                                                                            "Text": "",
+                                                                            "VerticalAlignment": "Stretch",
+                                                                            "Visibility": "Visible",
+                                                                            "Width": 250,
+                                                                            "children": [
+                                                                            {
+                                                                                "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                                                                "Background": null,
+                                                                                "BorderBrush": null,
+                                                                                "BorderThickness": "0,0,0,0",
+                                                                                "Clip": null,
+                                                                                "CornerRadius": "0,0,0,0",
+                                                                                "FlowDirection": "LeftToRight",
+                                                                                "HorizontalAlignment": "Stretch",
+                                                                                "Margin": "0,0,0,0",
+                                                                                "Padding": "0,0,0,0",
+                                                                                "RenderSize": [250, 32],
+                                                                                "VerticalAlignment": "Stretch",
+                                                                                "Visibility": "Visible",
+                                                                                "children": [
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                                    "Background": "#66FFFFFF",
+                                                                                    "BorderBrush": "#66000000",
+                                                                                    "BorderThickness": "2,2,2,2",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "BorderElement",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [250, 32],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
+                                                                                    "Background": "#00FFFFFF",
+                                                                                    "BorderBrush": "#00FFFFFF",
+                                                                                    "BorderThickness": "0,0,0,0",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#FF000000",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "2,2,2,2",
+                                                                                    "Name": "ContentElement",
+                                                                                    "Padding": "10,3,6,6",
+                                                                                    "RenderSize": [246, 28],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible",
+                                                                                    "children": [
+                                                                                    {
+                                                                                        "XamlType": "Windows.UI.Xaml.Controls.Border",
+                                                                                        "Background": null,
+                                                                                        "BorderBrush": "#00FFFFFF",
+                                                                                        "BorderThickness": "0,0,0,0",
+                                                                                        "Clip": null,
+                                                                                        "CornerRadius": "0,0,0,0",
+                                                                                        "FlowDirection": "LeftToRight",
+                                                                                        "HorizontalAlignment": "Stretch",
+                                                                                        "Margin": "0,0,0,0",
+                                                                                        "Name": "Root",
+                                                                                        "Padding": "0,0,0,0",
+                                                                                        "RenderSize": [246, 28],
+                                                                                        "VerticalAlignment": "Stretch",
+                                                                                        "Visibility": "Visible",
+                                                                                        "children": [
+                                                                                        {
+                                                                                            "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                                                                            "Background": "#00FFFFFF",
+                                                                                            "BorderBrush": null,
+                                                                                            "BorderThickness": "0,0,0,0",
+                                                                                            "Clip": null,
+                                                                                            "CornerRadius": "0,0,0,0",
+                                                                                            "FlowDirection": "LeftToRight",
+                                                                                            "HorizontalAlignment": "Stretch",
+                                                                                            "Margin": "0,0,0,0",
+                                                                                            "Padding": "0,0,0,0",
+                                                                                            "RenderSize": [246, 28],
+                                                                                            "VerticalAlignment": "Stretch",
+                                                                                            "Visibility": "Visible",
+                                                                                            "children": [
+                                                                                            {
+                                                                                                "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
+                                                                                                "Background": null,
+                                                                                                "BorderBrush": null,
+                                                                                                "BorderThickness": "0,0,0,0",
+                                                                                                "Clip": "Windows.UI.Xaml.Media.RectangleGeometry",
+                                                                                                "CornerRadius": "0,0,0,0",
+                                                                                                "FlowDirection": "LeftToRight",
+                                                                                                "Foreground": "#FF000000",
+                                                                                                "HorizontalAlignment": "Stretch",
+                                                                                                "Margin": "10,3,6,6",
+                                                                                                "Name": "ScrollContentPresenter",
+                                                                                                "Padding": "0,0,0,0",
+                                                                                                "RenderSize": [230, 19],
+                                                                                                "VerticalAlignment": "Stretch",
+                                                                                                "Visibility": "Visible",
+                                                                                                "children": [
+                                                                                                {
+                                                                                                    "XamlType": "Windows.UI.Xaml.FrameworkElement",
+                                                                                                    "Clip": null,
+                                                                                                    "FlowDirection": "LeftToRight",
+                                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                                    "Margin": "0,0,0,0",
+                                                                                                    "RenderSize": [230, 19],
+                                                                                                    "VerticalAlignment": "Stretch",
+                                                                                                    "Visibility": "Visible"
+                                                                                                }
+                                                                                                ]
+                                                                                            },
+                                                                                            {
+                                                                                                "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                                                                                "Background": null,
+                                                                                                "BorderBrush": null,
+                                                                                                "BorderThickness": "0,0,0,0",
+                                                                                                "Clip": null,
+                                                                                                "CornerRadius": "0,0,0,0",
+                                                                                                "FlowDirection": "LeftToRight",
+                                                                                                "HorizontalAlignment": "Stretch",
+                                                                                                "Margin": "0,0,0,0",
+                                                                                                "Padding": "0,0,0,0",
+                                                                                                "RenderSize": [246, 28],
+                                                                                                "VerticalAlignment": "Stretch",
+                                                                                                "Visibility": "Visible"
+                                                                                            }
+                                                                                            ]
+                                                                                        }
+                                                                                        ]
+                                                                                    }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                                                                                    "Clip": null,
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#99000000",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "2,2,2,2",
+                                                                                    "Name": "PlaceholderTextContentPresenter",
+                                                                                    "Padding": "10,3,6,6",
+                                                                                    "RenderSize": [0, 0],
+                                                                                    "Text": "",
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Collapsed"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.Button",
+                                                                                    "Background": "#33000000",
+                                                                                    "BorderBrush": "#00FFFFFF",
+                                                                                    "BorderThickness": "2,2,2,2",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#FF000000",
+                                                                                    "HorizontalAlignment": "Left",
+                                                                                    "Margin": "0,0,-2,0",
+                                                                                    "Name": "DeleteButton",
+                                                                                    "Padding": "8,4,8,5",
+                                                                                    "RenderSize": [0, 0],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Collapsed"
+                                                                                },
+                                                                                {
+                                                                                    "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+                                                                                    "Background": null,
+                                                                                    "BorderBrush": null,
+                                                                                    "BorderThickness": "0,0,0,0",
+                                                                                    "Clip": null,
+                                                                                    "CornerRadius": "0,0,0,0",
+                                                                                    "FlowDirection": "LeftToRight",
+                                                                                    "Foreground": "#99000000",
+                                                                                    "HorizontalAlignment": "Stretch",
+                                                                                    "Margin": "0,0,0,0",
+                                                                                    "Name": "DescriptionPresenter",
+                                                                                    "Padding": "0,0,0,0",
+                                                                                    "RenderSize": [250, 0],
+                                                                                    "VerticalAlignment": "Stretch",
+                                                                                    "Visibility": "Visible"
+                                                                                }
+                                                                                ]
+                                                                            }
+                                                                            ]
+                                                                        }
+                                                                        ]
+                                                                    }
+                                                                    ]
+                                                                }
+                                                                ]
+                                                            }
+                                                            ]
+                                                        }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "XamlType": "Microsoft.ReactNative.ViewPanel",
+                                                        "Background": null,
+                                                        "BorderBrush": "#00000000",
+                                                        "BorderThickness": "0,0,0,0",
+                                                        "Clip": null,
+                                                        "CornerRadius": "0,0,0,0",
+                                                        "FlowDirection": "LeftToRight",
+                                                        "Height": 270,
+                                                        "HorizontalAlignment": "Stretch",
+                                                        "Margin": "0,0,0,0",
+                                                        "RenderSize": [1280, 270],
+                                                        "VerticalAlignment": "Stretch",
+                                                        "Visibility": "Visible",
+                                                        "Width": 1280
+                                                    }
+                                                    ]
+                                                }
+                                                ]
+                                            }
+                                            ]
+                                        }
+                                        ]
+                                    },
+                                    {
+                                        "XamlType": "Windows.UI.Xaml.Controls.Grid",
+                                        "Background": null,
+                                        "BorderBrush": null,
+                                        "BorderThickness": "0,0,0,0",
+                                        "Clip": null,
+                                        "CornerRadius": "0,0,0,0",
+                                        "FlowDirection": "LeftToRight",
+                                        "HorizontalAlignment": "Stretch",
+                                        "Margin": "0,0,0,0",
+                                        "Padding": "0,0,0,0",
+                                        "RenderSize": [1280, 525],
+                                        "VerticalAlignment": "Stretch",
+                                        "Visibility": "Visible"
+                                    }
+                                    ]
+                                }
+                                ]
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}

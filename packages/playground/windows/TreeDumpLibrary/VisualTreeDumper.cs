@@ -3,11 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
+using Windows.Storage.FileProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Media;
@@ -118,16 +121,23 @@ namespace TreeDumpLibrary
         public static IAsyncOperation<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
         {
             string json = DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
-            var obj = JsonValue.Parse(json).GetObject();
-            var element = FindElementByAutomationId(obj, "PageHeader");
-            if (element == null)
+            try
             {
-                return Task.Run(() => false).AsAsyncOperation();
+                var obj = JsonValue.Parse(json).GetObject();
+                var element = FindElementByAutomationId(obj, "PageHeader");
+                if (element == null)
+                {
+                    return Task.Run(() => false).AsAsyncOperation();
+                }
+                var value = element.GetNamedString("Text");
+                var pageName = new System.Text.RegularExpressions.Regex(@"[<|>]").Replace(value, "");
+                var match = TreeDumpHelper.MatchDump(json, pageName);
+                return match.AsAsyncOperation();
+            } catch
+            {
+                Debug.WriteLine("JSON ERROR:\n" + json);
+                throw;
             }
-            var value = element.GetNamedString("Text");
-            var pageName = new System.Text.RegularExpressions.Regex(@"[<|>]").Replace(value, "");
-            var match = TreeDumpHelper.MatchDump(json, pageName);
-            return match.AsAsyncOperation();
         }
 
         public static string DumpTree(DependencyObject root, DependencyObject excludedNode, IList<string> additionalProperties, DumpTreeMode mode)
@@ -319,6 +329,8 @@ namespace TreeDumpLibrary
 
         public static string Quote(string s)
         {
+            s = s.Replace('\t', ' ').Replace("\n", @"\n");
+            s = Regex.Replace(s, @"\p{Cs}", ""); // remove surrogate pairs e.g. emojis
             return '"' + s.Replace("\"", "\\\"") + '"';
         }
     }

@@ -102,7 +102,8 @@ void MainPage::SetUpTreeDump() {
         if ((lastPageName != name) || (text != L"OK")) {
             Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
             auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
-            timer.Interval(timer.Interval() * 2);
+            auto currentMS = std::chrono::duration_cast<std::chrono::milliseconds>(timer.Interval() * 2).count();
+            timer.Interval(std::chrono::milliseconds(std::min(3000ll, currentMS)));
           x_TreeDump().Foreground(ok);
           x_TreeDump().Text(L"...");
           lastPageName = name;

@@ -2385,10 +2385,10 @@
                 "Clip": null,
                 "CornerRadius": "0,0,0,0",
                 "FlowDirection": "LeftToRight",
-                "Height": 195,
+                "Height": 49,
                 "HorizontalAlignment": "Stretch",
                 "Margin": "0,0,0,0",
-                "RenderSize": [1280, 195],
+                "RenderSize": [1280, 49],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible",
                 "Width": 1280,
@@ -2508,11 +2508,11 @@
                     "CornerRadius": "0,0,0,0",
                     "FlowDirection": "LeftToRight",
                     "Foreground": "#FF000000",
-                    "Height": 194,
+                    "Height": 48,
                     "HorizontalAlignment": "Stretch",
                     "Margin": "0,0,0,0",
                     "Padding": "0,0,0,0",
-                    "RenderSize": [1280, 194],
+                    "RenderSize": [1280, 48],
                     "VerticalAlignment": "Stretch",
                     "Visibility": "Visible",
                     "Width": 1280,
@@ -2529,7 +2529,7 @@
                         "Margin": "0,0,0,0",
                         "Name": "Root",
                         "Padding": "0,0,0,0",
-                        "RenderSize": [1280, 194],
+                        "RenderSize": [1280, 48],
                         "VerticalAlignment": "Stretch",
                         "Visibility": "Visible",
                         "children": [
@@ -2544,7 +2544,7 @@
                             "HorizontalAlignment": "Stretch",
                             "Margin": "0,0,0,0",
                             "Padding": "0,0,0,0",
-                            "RenderSize": [1280, 194],
+                            "RenderSize": [1280, 48],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible",
                             "children": [
@@ -2561,7 +2561,7 @@
                                 "Margin": "0,0,0,0",
                                 "Name": "ScrollContentPresenter",
                                 "Padding": "0,0,0,0",
-                                "RenderSize": [1280, 194],
+                                "RenderSize": [1280, 48],
                                 "VerticalAlignment": "Stretch",
                                 "Visibility": "Visible",
                                 "children": [
@@ -2580,7 +2580,7 @@
                                         "HorizontalAlignment": "Left",
                                         "Margin": "0,0,0,0",
                                         "Padding": "0,0,0,0",
-                                        "RenderSize": [1280, 194],
+                                        "RenderSize": [1280, 48],
                                         "VerticalAlignment": "Top",
                                         "Visibility": "Visible",
                                         "children": [
@@ -2592,10 +2592,10 @@
                                             "Clip": null,
                                             "CornerRadius": "0,0,0,0",
                                             "FlowDirection": "LeftToRight",
-                                            "Height": 194,
+                                            "Height": 48,
                                             "HorizontalAlignment": "Stretch",
                                             "Margin": "0,0,0,0",
-                                            "RenderSize": [1280, 194],
+                                            "RenderSize": [1280, 48],
                                             "VerticalAlignment": "Stretch",
                                             "Visibility": "Visible",
                                             "Width": 1280,
@@ -2608,10 +2608,10 @@
                                                 "Clip": null,
                                                 "CornerRadius": "0,0,0,0",
                                                 "FlowDirection": "LeftToRight",
-                                                "Height": 49,
+                                                "Height": 48,
                                                 "HorizontalAlignment": "Stretch",
                                                 "Margin": "0,0,0,0",
-                                                "RenderSize": [1280, 49],
+                                                "RenderSize": [1280, 48],
                                                 "VerticalAlignment": "Stretch",
                                                 "Visibility": "Visible",
                                                 "Width": 1280,
@@ -2706,327 +2706,6 @@
                                                     ]
                                                 }
                                                 ]
-                                            },
-                                            {
-                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                "Background": null,
-                                                "BorderBrush": "#00000000",
-                                                "BorderThickness": "0,0,0,0",
-                                                "Clip": null,
-                                                "CornerRadius": "0,0,0,0",
-                                                "FlowDirection": "LeftToRight",
-                                                "Height": 48,
-                                                "HorizontalAlignment": "Stretch",
-                                                "Margin": "0,0,0,0",
-                                                "RenderSize": [1280, 48],
-                                                "VerticalAlignment": "Stretch",
-                                                "Visibility": "Visible",
-                                                "Width": 1280,
-                                                "children": [
-                                                {
-                                                    "XamlType": "Microsoft.ReactNative.ViewControl",
-                                                    "Background": null,
-                                                    "BorderBrush": null,
-                                                    "BorderThickness": "0,0,0,0",
-                                                    "Clip": null,
-                                                    "CornerRadius": "0,0,0,0",
-                                                    "FlowDirection": "LeftToRight",
-                                                    "Foreground": "#FF000000",
-                                                    "Height": 48,
-                                                    "HorizontalAlignment": "Stretch",
-                                                    "Margin": "0,0,0,0",
-                                                    "Padding": "0,0,0,0",
-                                                    "RenderSize": [1280, 48],
-                                                    "VerticalAlignment": "Stretch",
-                                                    "Visibility": "Visible",
-                                                    "Width": 1280,
-                                                    "children": [
-                                                    {
-                                                        "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-                                                        "Background": null,
-                                                        "BorderBrush": null,
-                                                        "BorderThickness": "0,0,0,0",
-                                                        "Clip": null,
-                                                        "CornerRadius": "0,0,0,0",
-                                                        "FlowDirection": "LeftToRight",
-                                                        "Foreground": "#FF000000",
-                                                        "HorizontalAlignment": "Stretch",
-                                                        "Margin": "0,0,0,0",
-                                                        "Padding": "0,0,0,0",
-                                                        "RenderSize": [1280, 48],
-                                                        "VerticalAlignment": "Stretch",
-                                                        "Visibility": "Visible",
-                                                        "children": [
-                                                        {
-                                                            "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                            "Background": "#F2FABA30",
-                                                            "BorderBrush": "#00000000",
-                                                            "BorderThickness": "0,0,0,0",
-                                                            "Clip": null,
-                                                            "CornerRadius": "0,0,0,0",
-                                                            "FlowDirection": "LeftToRight",
-                                                            "Height": 48,
-                                                            "HorizontalAlignment": "Stretch",
-                                                            "Margin": "0,0,0,0",
-                                                            "RenderSize": [1280, 48],
-                                                            "VerticalAlignment": "Stretch",
-                                                            "Visibility": "Visible",
-                                                            "Width": 1280,
-                                                            "children": [
-                                                            {
-                                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                                "Background": null,
-                                                                "BorderBrush": "#00000000",
-                                                                "BorderThickness": "0,0,0,0",
-                                                                "Clip": null,
-                                                                "CornerRadius": "0,0,0,0",
-                                                                "FlowDirection": "LeftToRight",
-                                                                "Height": 45,
-                                                                "HorizontalAlignment": "Stretch",
-                                                                "Margin": "0,0,0,0",
-                                                                "RenderSize": [1256, 45],
-                                                                "VerticalAlignment": "Stretch",
-                                                                "Visibility": "Visible",
-                                                                "Width": 1256,
-                                                                "children": [
-                                                                {
-                                                                    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
-                                                                    "Clip": null,
-                                                                    "FlowDirection": "LeftToRight",
-                                                                    "Foreground": "#FFFFFFFF",
-                                                                    "Height": 45,
-                                                                    "HorizontalAlignment": "Stretch",
-                                                                    "Margin": "0,0,0,0",
-                                                                    "Padding": "0,0,0,0",
-                                                                    "RenderSize": [1256, 45],
-                                                                    "Text": "Slider has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-community/slider' instead of 'react-native'. See https://github.com/react-native-community/react-native-slider",
-                                                                    "VerticalAlignment": "Stretch",
-                                                                    "Visibility": "Visible",
-                                                                    "Width": 1256
-                                                                }
-                                                                ]
-                                                            }
-                                                            ]
-                                                        }
-                                                        ]
-                                                    }
-                                                    ]
-                                                }
-                                                ]
-                                            },
-                                            {
-                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                "Background": null,
-                                                "BorderBrush": "#00000000",
-                                                "BorderThickness": "0,0,0,0",
-                                                "Clip": null,
-                                                "CornerRadius": "0,0,0,0",
-                                                "FlowDirection": "LeftToRight",
-                                                "Height": 49,
-                                                "HorizontalAlignment": "Stretch",
-                                                "Margin": "0,0,0,0",
-                                                "RenderSize": [1280, 49],
-                                                "VerticalAlignment": "Stretch",
-                                                "Visibility": "Visible",
-                                                "Width": 1280,
-                                                "children": [
-                                                {
-                                                    "XamlType": "Microsoft.ReactNative.ViewControl",
-                                                    "Background": null,
-                                                    "BorderBrush": null,
-                                                    "BorderThickness": "0,0,0,0",
-                                                    "Clip": null,
-                                                    "CornerRadius": "0,0,0,0",
-                                                    "FlowDirection": "LeftToRight",
-                                                    "Foreground": "#FF000000",
-                                                    "Height": 48,
-                                                    "HorizontalAlignment": "Stretch",
-                                                    "Margin": "0,0,0,0",
-                                                    "Padding": "0,0,0,0",
-                                                    "RenderSize": [1280, 48],
-                                                    "VerticalAlignment": "Stretch",
-                                                    "Visibility": "Visible",
-                                                    "Width": 1280,
-                                                    "children": [
-                                                    {
-                                                        "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-                                                        "Background": null,
-                                                        "BorderBrush": null,
-                                                        "BorderThickness": "0,0,0,0",
-                                                        "Clip": null,
-                                                        "CornerRadius": "0,0,0,0",
-                                                        "FlowDirection": "LeftToRight",
-                                                        "Foreground": "#FF000000",
-                                                        "HorizontalAlignment": "Stretch",
-                                                        "Margin": "0,0,0,0",
-                                                        "Padding": "0,0,0,0",
-                                                        "RenderSize": [1280, 48],
-                                                        "VerticalAlignment": "Stretch",
-                                                        "Visibility": "Visible",
-                                                        "children": [
-                                                        {
-                                                            "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                            "Background": "#F2FABA30",
-                                                            "BorderBrush": "#00000000",
-                                                            "BorderThickness": "0,0,0,0",
-                                                            "Clip": null,
-                                                            "CornerRadius": "0,0,0,0",
-                                                            "FlowDirection": "LeftToRight",
-                                                            "Height": 48,
-                                                            "HorizontalAlignment": "Stretch",
-                                                            "Margin": "0,0,0,0",
-                                                            "RenderSize": [1280, 48],
-                                                            "VerticalAlignment": "Stretch",
-                                                            "Visibility": "Visible",
-                                                            "Width": 1280,
-                                                            "children": [
-                                                            {
-                                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                                "Background": null,
-                                                                "BorderBrush": "#00000000",
-                                                                "BorderThickness": "0,0,0,0",
-                                                                "Clip": null,
-                                                                "CornerRadius": "0,0,0,0",
-                                                                "FlowDirection": "LeftToRight",
-                                                                "Height": 45,
-                                                                "HorizontalAlignment": "Stretch",
-                                                                "Margin": "0,0,0,0",
-                                                                "RenderSize": [1256, 45],
-                                                                "VerticalAlignment": "Stretch",
-                                                                "Visibility": "Visible",
-                                                                "Width": 1256,
-                                                                "children": [
-                                                                {
-                                                                    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
-                                                                    "Clip": null,
-                                                                    "FlowDirection": "LeftToRight",
-                                                                    "Foreground": "#FFFFFFFF",
-                                                                    "Height": 45,
-                                                                    "HorizontalAlignment": "Stretch",
-                                                                    "Margin": "0,0,0,0",
-                                                                    "Padding": "0,0,0,0",
-                                                                    "RenderSize": [1256, 45],
-                                                                    "Text": "Picker has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-community/picker' instead of 'react-native'. See https://github.com/react-native-community/react-native-picker",
-                                                                    "VerticalAlignment": "Stretch",
-                                                                    "Visibility": "Visible",
-                                                                    "Width": 1256
-                                                                }
-                                                                ]
-                                                            }
-                                                            ]
-                                                        }
-                                                        ]
-                                                    }
-                                                    ]
-                                                }
-                                                ]
-                                            },
-                                            {
-                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                "Background": null,
-                                                "BorderBrush": "#00000000",
-                                                "BorderThickness": "0,0,0,0",
-                                                "Clip": null,
-                                                "CornerRadius": "0,0,0,0",
-                                                "FlowDirection": "LeftToRight",
-                                                "Height": 48,
-                                                "HorizontalAlignment": "Stretch",
-                                                "Margin": "0,0,0,0",
-                                                "RenderSize": [1280, 48],
-                                                "VerticalAlignment": "Stretch",
-                                                "Visibility": "Visible",
-                                                "Width": 1280,
-                                                "children": [
-                                                {
-                                                    "XamlType": "Microsoft.ReactNative.ViewControl",
-                                                    "Background": null,
-                                                    "BorderBrush": null,
-                                                    "BorderThickness": "0,0,0,0",
-                                                    "Clip": null,
-                                                    "CornerRadius": "0,0,0,0",
-                                                    "FlowDirection": "LeftToRight",
-                                                    "Foreground": "#FF000000",
-                                                    "Height": 48,
-                                                    "HorizontalAlignment": "Stretch",
-                                                    "Margin": "0,0,0,0",
-                                                    "Padding": "0,0,0,0",
-                                                    "RenderSize": [1280, 48],
-                                                    "VerticalAlignment": "Stretch",
-                                                    "Visibility": "Visible",
-                                                    "Width": 1280,
-                                                    "children": [
-                                                    {
-                                                        "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-                                                        "Background": null,
-                                                        "BorderBrush": null,
-                                                        "BorderThickness": "0,0,0,0",
-                                                        "Clip": null,
-                                                        "CornerRadius": "0,0,0,0",
-                                                        "FlowDirection": "LeftToRight",
-                                                        "Foreground": "#FF000000",
-                                                        "HorizontalAlignment": "Stretch",
-                                                        "Margin": "0,0,0,0",
-                                                        "Padding": "0,0,0,0",
-                                                        "RenderSize": [1280, 48],
-                                                        "VerticalAlignment": "Stretch",
-                                                        "Visibility": "Visible",
-                                                        "children": [
-                                                        {
-                                                            "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                            "Background": "#F2FABA30",
-                                                            "BorderBrush": "#00000000",
-                                                            "BorderThickness": "0,0,0,0",
-                                                            "Clip": null,
-                                                            "CornerRadius": "0,0,0,0",
-                                                            "FlowDirection": "LeftToRight",
-                                                            "Height": 48,
-                                                            "HorizontalAlignment": "Stretch",
-                                                            "Margin": "0,0,0,0",
-                                                            "RenderSize": [1280, 48],
-                                                            "VerticalAlignment": "Stretch",
-                                                            "Visibility": "Visible",
-                                                            "Width": 1280,
-                                                            "children": [
-                                                            {
-                                                                "XamlType": "Microsoft.ReactNative.ViewPanel",
-                                                                "Background": null,
-                                                                "BorderBrush": "#00000000",
-                                                                "BorderThickness": "0,0,0,0",
-                                                                "Clip": null,
-                                                                "CornerRadius": "0,0,0,0",
-                                                                "FlowDirection": "LeftToRight",
-                                                                "Height": 45,
-                                                                "HorizontalAlignment": "Stretch",
-                                                                "Margin": "0,0,0,0",
-                                                                "RenderSize": [1256, 45],
-                                                                "VerticalAlignment": "Stretch",
-                                                                "Visibility": "Visible",
-                                                                "Width": 1256,
-                                                                "children": [
-                                                                {
-                                                                    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
-                                                                    "Clip": null,
-                                                                    "FlowDirection": "LeftToRight",
-                                                                    "Foreground": "#FFFFFFFF",
-                                                                    "Height": 45,
-                                                                    "HorizontalAlignment": "Stretch",
-                                                                    "Margin": "0,0,0,0",
-                                                                    "Padding": "0,0,0,0",
-                                                                    "RenderSize": [1256, 45],
-                                                                    "Text": "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-community/async-storage' instead of 'react-native'. See https://github.com/react-native-community/async-storage",
-                                                                    "VerticalAlignment": "Stretch",
-                                                                    "Visibility": "Visible",
-                                                                    "Width": 1256
-                                                                }
-                                                                ]
-                                                            }
-                                                            ]
-                                                        }
-                                                        ]
-                                                    }
-                                                    ]
-                                                }
-                                                ]
                                             }
                                             ]
                                         }
@@ -3047,7 +2726,7 @@
                                 "HorizontalAlignment": "Stretch",
                                 "Margin": "0,0,0,0",
                                 "Padding": "0,0,0,0",
-                                "RenderSize": [1280, 194],
+                                "RenderSize": [1280, 48],
                                 "VerticalAlignment": "Stretch",
                                 "Visibility": "Visible"
                             }

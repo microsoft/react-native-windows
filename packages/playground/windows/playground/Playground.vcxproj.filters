@@ -70,6 +70,24 @@
     <None Include="Assets\TreeDump\masters\CheckBox.json">
       <Filter>Assets\TreeDump\masters</Filter>
     </None>
+    <None Include="Assets\TreeDump\masters\DatePicker.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
+    <None Include="Assets\TreeDump\masters\Fast Path Texts.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
+    <None Include="Assets\TreeDump\masters\FlatList.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
+    <None Include="Assets\TreeDump\masters\Flyout.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
+    <None Include="Assets\TreeDump\masters\Glyph UWP.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
+    <None Include="Assets\TreeDump\masters\Image.json">
+      <Filter>Assets\TreeDump\masters</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
