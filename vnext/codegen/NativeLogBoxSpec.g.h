@@ -26,11 +26,13 @@ struct LogBoxSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "show",
-          "    REACT_METHOD(show) void show() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(show) void show() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(show) static void show() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "hide",
-          "    REACT_METHOD(hide) void hide() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(hide) void hide() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(hide) static void hide() noexcept { /* implementation */ }}\n");
   }
 };
 

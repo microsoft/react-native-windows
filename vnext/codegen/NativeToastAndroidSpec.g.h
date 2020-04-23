@@ -27,15 +27,18 @@ struct ToastAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "show",
-          "    REACT_METHOD(show) void show(std::string message, double duration) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(show) void show(std::string message, double duration) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(show) static void show(std::string message, double duration) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "showWithGravity",
-          "    REACT_METHOD(showWithGravity) void showWithGravity(std::string message, double duration, double gravity) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(showWithGravity) void showWithGravity(std::string message, double duration, double gravity) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showWithGravity) static void showWithGravity(std::string message, double duration, double gravity) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "showWithGravityAndOffset",
-          "    REACT_METHOD(showWithGravityAndOffset) void showWithGravityAndOffset(std::string message, double duration, double gravity, double xOffset, double yOffset) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(showWithGravityAndOffset) void showWithGravityAndOffset(std::string message, double duration, double gravity, double xOffset, double yOffset) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showWithGravityAndOffset) static void showWithGravityAndOffset(std::string message, double duration, double gravity, double xOffset, double yOffset) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -25,7 +25,8 @@ struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "alertWithArgs",
-          "    REACT_METHOD(alertWithArgs) void alertWithArgs(React::JSValueObject && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(alertWithArgs) void alertWithArgs(React::JSValueObject && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(alertWithArgs) static void alertWithArgs(React::JSValueObject && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 

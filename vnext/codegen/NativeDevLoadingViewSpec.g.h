@@ -26,11 +26,13 @@ struct DevLoadingViewSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showMessage",
-          "    REACT_METHOD(showMessage) void showMessage(std::string message, React::JSValueObject && color, React::JSValueObject && backgroundColor) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(showMessage) void showMessage(std::string message, React::JSValueObject && color, React::JSValueObject && backgroundColor) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showMessage) static void showMessage(std::string message, React::JSValueObject && color, React::JSValueObject && backgroundColor) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "hide",
-          "    REACT_METHOD(hide) void hide() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(hide) void hide() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(hide) static void hide() noexcept { /* implementation */ }}\n");
   }
 };
 

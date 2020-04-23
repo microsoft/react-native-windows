@@ -26,11 +26,13 @@ struct ModalManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "addListener",
-          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "removeListeners",
-          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
   }
 };
 

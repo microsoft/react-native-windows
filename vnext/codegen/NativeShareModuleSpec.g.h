@@ -25,7 +25,8 @@ struct ShareModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "share",
-          "    REACT_METHOD(share) void share(React::JSValueObject && content, std::string dialogTitle, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(share) void share(React::JSValueObject && content, std::string dialogTitle, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(share) static void share(React::JSValueObject && content, std::string dialogTitle, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -27,15 +27,18 @@ struct I18nManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "allowRTL",
-          "    REACT_METHOD(allowRTL) void allowRTL(bool allowRTL) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(allowRTL) void allowRTL(bool allowRTL) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(allowRTL) static void allowRTL(bool allowRTL) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "forceRTL",
-          "    REACT_METHOD(forceRTL) void forceRTL(bool forceRTL) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(forceRTL) void forceRTL(bool forceRTL) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(forceRTL) static void forceRTL(bool forceRTL) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "swapLeftAndRightInRTL",
-          "    REACT_METHOD(swapLeftAndRightInRTL) void swapLeftAndRightInRTL(bool flipStyles) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(swapLeftAndRightInRTL) void swapLeftAndRightInRTL(bool flipStyles) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(swapLeftAndRightInRTL) static void swapLeftAndRightInRTL(bool flipStyles) noexcept { /* implementation */ }}\n");
   }
 };
 

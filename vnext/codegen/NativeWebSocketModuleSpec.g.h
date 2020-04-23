@@ -31,31 +31,38 @@ struct WebSocketModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "connect",
-          "    REACT_METHOD(connect) void connect(std::string url, React::JSValueArray && protocols, React::JSValueObject && options, double socketID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(connect) void connect(std::string url, React::JSValueArray && protocols, React::JSValueObject && options, double socketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(connect) static void connect(std::string url, React::JSValueArray && protocols, React::JSValueObject && options, double socketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "send",
-          "    REACT_METHOD(send) void send(std::string message, double forSocketID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(send) void send(std::string message, double forSocketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(send) static void send(std::string message, double forSocketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "sendBinary",
-          "    REACT_METHOD(sendBinary) void sendBinary(std::string base64String, double forSocketID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(sendBinary) void sendBinary(std::string base64String, double forSocketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(sendBinary) static void sendBinary(std::string base64String, double forSocketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "ping",
-          "    REACT_METHOD(ping) void ping(double socketID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(ping) void ping(double socketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(ping) static void ping(double socketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "close",
-          "    REACT_METHOD(close) void close(double code, std::string reason, double socketID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(close) void close(double code, std::string reason, double socketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(close) static void close(double code, std::string reason, double socketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "addListener",
-          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "removeListeners",
-          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
   }
 };
 

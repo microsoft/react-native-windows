@@ -27,15 +27,18 @@ struct TimingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "createTimer",
-          "    REACT_METHOD(createTimer) void createTimer(double callbackID, double duration, double jsSchedulingTime, bool repeats) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(createTimer) void createTimer(double callbackID, double duration, double jsSchedulingTime, bool repeats) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(createTimer) static void createTimer(double callbackID, double duration, double jsSchedulingTime, bool repeats) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "deleteTimer",
-          "    REACT_METHOD(deleteTimer) void deleteTimer(double timerID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(deleteTimer) void deleteTimer(double timerID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(deleteTimer) static void deleteTimer(double timerID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setSendIdleEvents",
-          "    REACT_METHOD(setSendIdleEvents) void setSendIdleEvents(bool sendIdleEvents) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setSendIdleEvents) void setSendIdleEvents(bool sendIdleEvents) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setSendIdleEvents) static void setSendIdleEvents(bool sendIdleEvents) noexcept { /* implementation */ }}\n");
   }
 };
 

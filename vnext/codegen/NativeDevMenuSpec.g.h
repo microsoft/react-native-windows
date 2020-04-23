@@ -29,23 +29,28 @@ struct DevMenuSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "show",
-          "    REACT_METHOD(show) void show() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(show) void show() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(show) static void show() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "reload",
-          "    REACT_METHOD(reload) void reload() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(reload) void reload() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reload) static void reload() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "debugRemotely",
-          "    REACT_METHOD(debugRemotely) void debugRemotely(bool enableDebug) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(debugRemotely) void debugRemotely(bool enableDebug) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(debugRemotely) static void debugRemotely(bool enableDebug) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "setProfilingEnabled",
-          "    REACT_METHOD(setProfilingEnabled) void setProfilingEnabled(bool enabled) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setProfilingEnabled) void setProfilingEnabled(bool enabled) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setProfilingEnabled) static void setProfilingEnabled(bool enabled) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "setHotLoadingEnabled",
-          "    REACT_METHOD(setHotLoadingEnabled) void setHotLoadingEnabled(bool enabled) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setHotLoadingEnabled) void setHotLoadingEnabled(bool enabled) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setHotLoadingEnabled) static void setHotLoadingEnabled(bool enabled) noexcept { /* implementation */ }}\n");
   }
 };
 

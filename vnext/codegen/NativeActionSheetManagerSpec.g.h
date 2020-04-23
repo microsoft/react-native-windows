@@ -26,11 +26,13 @@ struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showActionSheetWithOptions",
-          "    REACT_METHOD(showActionSheetWithOptions) void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(showActionSheetWithOptions) void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showActionSheetWithOptions) static void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "showShareActionSheetWithOptions",
-          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & failureCallback, std::function<void(React::JSValue const &)> const & successCallback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & failureCallback, std::function<void(React::JSValue const &)> const & successCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & failureCallback, std::function<void(React::JSValue const &)> const & successCallback) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -27,15 +27,18 @@ struct BugReportingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "startReportAProblemFlow",
-          "    REACT_METHOD(startReportAProblemFlow) void startReportAProblemFlow() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(startReportAProblemFlow) void startReportAProblemFlow() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(startReportAProblemFlow) static void startReportAProblemFlow() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setExtraData",
-          "    REACT_METHOD(setExtraData) void setExtraData(React::JSValueObject && extraData, React::JSValueObject && extraFiles) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setExtraData) void setExtraData(React::JSValueObject && extraData, React::JSValueObject && extraFiles) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setExtraData) static void setExtraData(React::JSValueObject && extraData, React::JSValueObject && extraFiles) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setCategoryID",
-          "    REACT_METHOD(setCategoryID) void setCategoryID(std::string categoryID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setCategoryID) void setCategoryID(std::string categoryID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setCategoryID) static void setCategoryID(std::string categoryID) noexcept { /* implementation */ }}\n");
   }
 };
 

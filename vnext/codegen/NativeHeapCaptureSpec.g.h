@@ -26,11 +26,13 @@ struct HeapCaptureSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "captureHeap",
-          "    REACT_METHOD(captureHeap) void captureHeap(std::string path) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(captureHeap) void captureHeap(std::string path) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(captureHeap) static void captureHeap(std::string path) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "captureComplete",
-          "    REACT_METHOD(captureComplete) void captureComplete(std::string path, std::string error) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(captureComplete) void captureComplete(std::string path, std::string error) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(captureComplete) static void captureComplete(std::string path, std::string error) noexcept { /* implementation */ }}\n");
   }
 };
 

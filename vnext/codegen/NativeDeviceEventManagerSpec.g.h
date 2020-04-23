@@ -25,7 +25,8 @@ struct DeviceEventManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "invokeDefaultBackPressHandler",
-          "    REACT_METHOD(invokeDefaultBackPressHandler) void invokeDefaultBackPressHandler() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(invokeDefaultBackPressHandler) void invokeDefaultBackPressHandler() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(invokeDefaultBackPressHandler) static void invokeDefaultBackPressHandler() noexcept { /* implementation */ }}\n");
   }
 };
 

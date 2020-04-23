@@ -28,19 +28,23 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "isReduceMotionEnabled",
-          "    REACT_METHOD(isReduceMotionEnabled) void isReduceMotionEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(isReduceMotionEnabled) void isReduceMotionEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(isReduceMotionEnabled) static void isReduceMotionEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "isTouchExplorationEnabled",
-          "    REACT_METHOD(isTouchExplorationEnabled) void isTouchExplorationEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(isTouchExplorationEnabled) void isTouchExplorationEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(isTouchExplorationEnabled) static void isTouchExplorationEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setAccessibilityFocus",
-          "    REACT_METHOD(setAccessibilityFocus) void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setAccessibilityFocus) void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setAccessibilityFocus) static void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "announceForAccessibility",
-          "    REACT_METHOD(announceForAccessibility) void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(announceForAccessibility) void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(announceForAccessibility) static void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -26,11 +26,13 @@ struct JSDevSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "onSuccess",
-          "    REACT_METHOD(onSuccess) void onSuccess(React::JSValueObject && data) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(onSuccess) void onSuccess(React::JSValueObject && data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(onSuccess) static void onSuccess(React::JSValueObject && data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "onFailure",
-          "    REACT_METHOD(onFailure) void onFailure(double errorCode, std::string error) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(onFailure) void onFailure(double errorCode, std::string error) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(onFailure) static void onFailure(double errorCode, std::string error) noexcept { /* implementation */ }}\n");
   }
 };
 

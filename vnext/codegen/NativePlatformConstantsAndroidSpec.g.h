@@ -25,7 +25,8 @@ struct PlatformConstantsAndroidSpec : winrt::Microsoft::ReactNative::TurboModule
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getAndroidID",
-          "    REACT_SYNC_METHOD(getAndroidID) std::string getAndroidID() noexcept { /* implementation */ }}");
+          "    REACT_SYNC_METHOD(getAndroidID) std::string getAndroidID() noexcept { /* implementation */ }}\n"
+          "    REACT_SYNC_METHOD(getAndroidID) static std::string getAndroidID() noexcept { /* implementation */ }}\n");
   }
 };
 

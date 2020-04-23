@@ -25,7 +25,8 @@ struct JSCSamplingProfilerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "operationComplete",
-          "    REACT_METHOD(operationComplete) void operationComplete(double token, std::string result, std::string error) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(operationComplete) void operationComplete(double token, std::string result, std::string error) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(operationComplete) static void operationComplete(double token, std::string result, std::string error) noexcept { /* implementation */ }}\n");
   }
 };
 

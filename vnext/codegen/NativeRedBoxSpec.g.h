@@ -26,11 +26,13 @@ struct RedBoxSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "setExtraData",
-          "    REACT_METHOD(setExtraData) void setExtraData(React::JSValueObject && extraData, std::string forIdentifier) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setExtraData) void setExtraData(React::JSValueObject && extraData, std::string forIdentifier) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setExtraData) static void setExtraData(React::JSValueObject && extraData, std::string forIdentifier) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "dismiss",
-          "    REACT_METHOD(dismiss) void dismiss() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(dismiss) void dismiss() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(dismiss) static void dismiss() noexcept { /* implementation */ }}\n");
   }
 };
 

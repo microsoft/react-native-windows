@@ -25,7 +25,8 @@ struct SoundManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "playTouchSound",
-          "    REACT_METHOD(playTouchSound) void playTouchSound() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(playTouchSound) void playTouchSound() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(playTouchSound) static void playTouchSound() noexcept { /* implementation */ }}\n");
   }
 };
 

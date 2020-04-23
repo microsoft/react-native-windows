@@ -26,11 +26,13 @@ struct AnimationsDebugModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpe
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "startRecordingFps",
-          "    REACT_METHOD(startRecordingFps) void startRecordingFps() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(startRecordingFps) void startRecordingFps() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(startRecordingFps) static void startRecordingFps() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "stopRecordingFps",
-          "    REACT_METHOD(stopRecordingFps) void stopRecordingFps(double animationStopTimeMs) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(stopRecordingFps) void stopRecordingFps(double animationStopTimeMs) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(stopRecordingFps) static void stopRecordingFps(double animationStopTimeMs) noexcept { /* implementation */ }}\n");
   }
 };
 

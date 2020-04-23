@@ -30,27 +30,33 @@ struct AsyncStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "multiGet",
-          "    REACT_METHOD(multiGet) void multiGet(React::JSValueArray && keys, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(multiGet) void multiGet(React::JSValueArray && keys, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiGet) static void multiGet(React::JSValueArray && keys, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "multiSet",
-          "    REACT_METHOD(multiSet) void multiSet(React::JSValueArray && kvPairs, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(multiSet) void multiSet(React::JSValueArray && kvPairs, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiSet) static void multiSet(React::JSValueArray && kvPairs, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "multiMerge",
-          "    REACT_METHOD(multiMerge) void multiMerge(React::JSValueArray && kvPairs, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(multiMerge) void multiMerge(React::JSValueArray && kvPairs, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiMerge) static void multiMerge(React::JSValueArray && kvPairs, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "multiRemove",
-          "    REACT_METHOD(multiRemove) void multiRemove(React::JSValueArray && keys, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(multiRemove) void multiRemove(React::JSValueArray && keys, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiRemove) static void multiRemove(React::JSValueArray && keys, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "clear",
-          "    REACT_METHOD(clear) void clear(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(clear) void clear(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(clear) static void clear(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "getAllKeys",
-          "    REACT_METHOD(getAllKeys) void getAllKeys(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(getAllKeys) void getAllKeys(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getAllKeys) static void getAllKeys(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 

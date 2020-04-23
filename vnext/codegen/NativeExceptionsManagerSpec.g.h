@@ -29,23 +29,28 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "reportFatalException",
-          "    REACT_METHOD(reportFatalException) void reportFatalException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(reportFatalException) void reportFatalException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportFatalException) static void reportFatalException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "reportSoftException",
-          "    REACT_METHOD(reportSoftException) void reportSoftException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(reportSoftException) void reportSoftException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportSoftException) static void reportSoftException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "reportException",
-          "    REACT_METHOD(reportException) void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(reportException) void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportException) static void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "updateExceptionMessage",
-          "    REACT_METHOD(updateExceptionMessage) void updateExceptionMessage(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(updateExceptionMessage) void updateExceptionMessage(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(updateExceptionMessage) static void updateExceptionMessage(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "dismissRedbox",
-          "    REACT_METHOD(dismissRedbox) void dismissRedbox() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(dismissRedbox) void dismissRedbox() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(dismissRedbox) static void dismissRedbox() noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -28,19 +28,23 @@ struct FrameRateLoggerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "setGlobalOptions",
-          "    REACT_METHOD(setGlobalOptions) void setGlobalOptions(React::JSValueObject && options) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setGlobalOptions) void setGlobalOptions(React::JSValueObject && options) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setGlobalOptions) static void setGlobalOptions(React::JSValueObject && options) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setContext",
-          "    REACT_METHOD(setContext) void setContext(std::string context) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setContext) void setContext(std::string context) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setContext) static void setContext(std::string context) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "beginScroll",
-          "    REACT_METHOD(beginScroll) void beginScroll() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(beginScroll) void beginScroll() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(beginScroll) static void beginScroll() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "endScroll",
-          "    REACT_METHOD(endScroll) void endScroll() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(endScroll) void endScroll() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(endScroll) static void endScroll() noexcept { /* implementation */ }}\n");
   }
 };
 

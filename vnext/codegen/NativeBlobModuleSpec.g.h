@@ -30,27 +30,33 @@ struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "addNetworkingHandler",
-          "    REACT_METHOD(addNetworkingHandler) void addNetworkingHandler() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(addNetworkingHandler) void addNetworkingHandler() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addNetworkingHandler) static void addNetworkingHandler() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "addWebSocketHandler",
-          "    REACT_METHOD(addWebSocketHandler) void addWebSocketHandler(double id) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(addWebSocketHandler) void addWebSocketHandler(double id) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addWebSocketHandler) static void addWebSocketHandler(double id) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "removeWebSocketHandler",
-          "    REACT_METHOD(removeWebSocketHandler) void removeWebSocketHandler(double id) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(removeWebSocketHandler) void removeWebSocketHandler(double id) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(removeWebSocketHandler) static void removeWebSocketHandler(double id) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "sendOverSocket",
-          "    REACT_METHOD(sendOverSocket) void sendOverSocket(React::JSValueObject && blob, double socketID) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(sendOverSocket) void sendOverSocket(React::JSValueObject && blob, double socketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(sendOverSocket) static void sendOverSocket(React::JSValueObject && blob, double socketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "createFromParts",
-          "    REACT_METHOD(createFromParts) void createFromParts(React::JSValueArray && parts, std::string withId) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(createFromParts) void createFromParts(React::JSValueArray && parts, std::string withId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(createFromParts) static void createFromParts(React::JSValueArray && parts, std::string withId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "release",
-          "    REACT_METHOD(release) void release(std::string blobId) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(release) void release(std::string blobId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(release) static void release(std::string blobId) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -30,27 +30,33 @@ struct ImagePickerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "canRecordVideos",
-          "    REACT_METHOD(canRecordVideos) void canRecordVideos(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(canRecordVideos) void canRecordVideos(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(canRecordVideos) static void canRecordVideos(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "canUseCamera",
-          "    REACT_METHOD(canUseCamera) void canUseCamera(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(canUseCamera) void canUseCamera(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(canUseCamera) static void canUseCamera(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "openCameraDialog",
-          "    REACT_METHOD(openCameraDialog) void openCameraDialog(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & cancelCallback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(openCameraDialog) void openCameraDialog(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & cancelCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(openCameraDialog) static void openCameraDialog(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & cancelCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "openSelectDialog",
-          "    REACT_METHOD(openSelectDialog) void openSelectDialog(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & cancelCallback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(openSelectDialog) void openSelectDialog(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & cancelCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(openSelectDialog) static void openSelectDialog(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & cancelCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "clearAllPendingVideos",
-          "    REACT_METHOD(clearAllPendingVideos) void clearAllPendingVideos() noexcept { /* implementation */ }}");
+          "    REACT_METHOD(clearAllPendingVideos) void clearAllPendingVideos() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(clearAllPendingVideos) static void clearAllPendingVideos() noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "removePendingVideo",
-          "    REACT_METHOD(removePendingVideo) void removePendingVideo(std::string url) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(removePendingVideo) void removePendingVideo(std::string url) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(removePendingVideo) static void removePendingVideo(std::string url) noexcept { /* implementation */ }}\n");
   }
 };
 

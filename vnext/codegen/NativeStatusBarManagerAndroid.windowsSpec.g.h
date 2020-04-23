@@ -28,19 +28,23 @@ struct StatusBarManagerAndroid.windowsSpec : winrt::Microsoft::ReactNative::Turb
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "setColor",
-          "    REACT_METHOD(setColor) void setColor(React::JSValueObject && color, bool animated) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setColor) void setColor(React::JSValueObject && color, bool animated) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setColor) static void setColor(React::JSValueObject && color, bool animated) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setTranslucent",
-          "    REACT_METHOD(setTranslucent) void setTranslucent(bool translucent) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setTranslucent) void setTranslucent(bool translucent) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setTranslucent) static void setTranslucent(bool translucent) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setStyle",
-          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setStyle) static void setStyle(std::string statusBarStyle) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "setHidden",
-          "    REACT_METHOD(setHidden) void setHidden(bool hidden) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setHidden) void setHidden(bool hidden) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setHidden) static void setHidden(bool hidden) noexcept { /* implementation */ }}\n");
   }
 };
 

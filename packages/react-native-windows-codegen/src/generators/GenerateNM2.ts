@@ -223,22 +223,20 @@ function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
     prop.name
   }(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
-  //@ts-ignore
-  let _staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+  let staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) static ${translateImplReturnType(
     prop.typeAnnotation.returnTypeAnnotation,
   )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
-  return [sig];
   // Return more options once the macro is fixed
-  // return [sig, staticsig];
+  return [sig, staticsig];
 }
 
 function translatePossibleMethodSignatures(prop: MethodTypeShape): string {
   return getPossibleMethodSignatures(prop)
-    .map(sig => `"    ${sig}"`)
-    .join(',\n          ');
+    .map(sig => `"    ${sig}\\n"`)
+    .join('\n          ');
 }
 
 function renderProperties(

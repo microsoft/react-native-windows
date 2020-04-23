@@ -25,7 +25,8 @@ struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showAlert",
-          "    REACT_METHOD(showAlert) void showAlert(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(showAlert) void showAlert(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showAlert) static void showAlert(React::JSValueObject && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n");
   }
 };
 

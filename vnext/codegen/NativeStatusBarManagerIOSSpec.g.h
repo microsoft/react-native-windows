@@ -30,27 +30,33 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getHeight",
-          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setNetworkActivityIndicatorVisible",
-          "    REACT_METHOD(setNetworkActivityIndicatorVisible) void setNetworkActivityIndicatorVisible(bool visible) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setNetworkActivityIndicatorVisible) void setNetworkActivityIndicatorVisible(bool visible) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setNetworkActivityIndicatorVisible) static void setNetworkActivityIndicatorVisible(bool visible) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "addListener",
-          "    REACT_METHOD(addListener) void addListener(std::string eventType) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(addListener) void addListener(std::string eventType) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addListener) static void addListener(std::string eventType) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "removeListeners",
-          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "setStyle",
-          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setStyle) static void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "setHidden",
-          "    REACT_METHOD(setHidden) void setHidden(bool hidden, std::string withAnimation) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(setHidden) void setHidden(bool hidden, std::string withAnimation) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setHidden) static void setHidden(bool hidden, std::string withAnimation) noexcept { /* implementation */ }}\n");
   }
 };
 

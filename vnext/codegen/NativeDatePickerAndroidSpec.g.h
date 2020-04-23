@@ -25,7 +25,8 @@ struct DatePickerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "open",
-          "    REACT_METHOD(open) void open(React::JSValueObject && options, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(open) void open(React::JSValueObject && options, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(open) static void open(React::JSValueObject && options, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 

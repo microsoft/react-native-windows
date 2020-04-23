@@ -26,11 +26,13 @@ struct FileReaderModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "readAsDataURL",
-          "    REACT_METHOD(readAsDataURL) void readAsDataURL(React::JSValueObject && data, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(readAsDataURL) void readAsDataURL(React::JSValueObject && data, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(readAsDataURL) static void readAsDataURL(React::JSValueObject && data, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "readAsText",
-          "    REACT_METHOD(readAsText) void readAsText(React::JSValueObject && data, std::string encoding, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}");
+          "    REACT_METHOD(readAsText) void readAsText(React::JSValueObject && data, std::string encoding, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(readAsText) static void readAsText(React::JSValueObject && data, std::string encoding, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 
