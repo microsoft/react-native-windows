@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Getting Started · React Native for Windows &amp; Mac</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="This guide will help you get started on setting up your very first React Native for Windows app."/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Getting Started · React Native for Windows &amp; Mac"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="This guide will help you get started on setting up your very first React Native for Windows app."/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows &amp; Mac Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows &amp; Mac Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows &amp; Mac"/><h2 class="headerTitleWithLogo">React Native for Windows &amp; Mac</h2></a><a href="/react-native-windows/versions"><h3>next</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive siteNavItemActive"><a href="/react-native-windows/docs/next/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/next/flyout-component" target="_self">APIs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>The Basics (Windows)</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/next/getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/rnw-dependencies">System Requirements</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/contributing">Contributing to microsoft/react-native-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/parity-status">API Parity</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/windowsbrush-and-theme">Using Windows Brushes and Responding to Themes</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Testing<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/e2e-test">Author and Run E2E Test for React Native Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/e2e-test-more-about">More about E2E test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Modules (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/view-managers">Native UI Components</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-setup">Native Module Setup</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-using">Using Community Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-marshalling-data">Marshalling Data</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-jsvalue">Using JSValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-advanced">Native Modules (Advanced)</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/getting-started.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Getting Started</h1></header><article><div><span><p>This guide will help you get started on setting up your very first React Native for Windows app.</p>
+<p>Make sure you have installed all of the <a href="/react-native-windows/docs/next/rnw-dependencies">development dependencies</a>.</p>
+<p>If you're looking to build directly from the repo or you want to make contributions to the react-native-windows, check out the guide for <a href="/react-native-windows/docs/next/building-rnw">building the react-native-windows repo</a>.</p>
+<p>For information around how to set up React Native, see the <a href="https://reactnative.dev/docs/getting-started">React Native Getting Started Guide</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="install-react-native-for-windows"></a><a href="#install-react-native-for-windows" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install React Native for Windows</h2>
+<p>Remember to call <code>react-native init</code> from the place you want your project directory to live.</p>
+<pre><code class="hljs">npx react-native init &lt;project name&gt; --version ^<span class="hljs-number">0.61</span><span class="hljs-number">.5</span>
+</code></pre>
+<blockquote>
+<p>If you've installed react native globally in the past, via <code>npm install -g react-native</code>, and are having issues with the new instructions, try running:<br>
+<code>npx --ignore-existing react-native init &lt;myproject&gt; --template react-native@^0.61.5</code> instead.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="navigate-into-this-newly-created-directory"></a><a href="#navigate-into-this-newly-created-directory" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Navigate into this newly created directory</h3>
+<p>Once your project has been initialized, React Native will have created a new sub directory where all your generated files live.</p>
+<pre><code class="hljs">cd &lt;project <span class="hljs-built_in">name</span>&gt;
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="install-the-windows-extension"></a><a href="#install-the-windows-extension" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the Windows extension</h3>
+<p>Lastly, install the React Native for Windows packages.</p>
+<pre><code class="hljs">npx react-<span class="hljs-keyword">native</span>-windows-<span class="hljs-keyword">init</span> --overwrite
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="confirming-metro-js-reinstallation"></a><a href="#confirming-metro-js-reinstallation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Confirming Metro JS reinstallation</h4>
+<h2><a class="anchor" aria-hidden="true" id="running-a-react-native-windows-app"></a><a href="#running-a-react-native-windows-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running a React Native Windows App</h2>
+<blockquote>
+<p>Make sure a browser is launched and running before running a React Native Windows app.
+Also ensure your system meets all the <a href="https://microsoft.github.io/react-native-windows/docs/rnw-dependencies">requirements</a> to build a Windows app as well.</p>
+</blockquote>
+<ul>
+<li><p>Without Using Visual Studio</p>
+<p>In your React Native Windows project directory, run:</p>
+<pre><code class="hljs">npx react-native <span class="hljs-keyword">run</span><span class="bash">-windows</span>
+</code></pre>
+<p>A new Command Prompt window will open with the React packager as well as a <code>react-native-windows</code> app. This step may take a while during first run since it involves building the entire project and all dependencies. You can now start developing! :tada:</p></li>
+<li><p>Using Visual Studio</p>
+<ul>
+<li>Open the solution file in the application folder in Visual Studio (e.g., <code>AwesomeProject/windows/AwesomeProject.sln</code>)</li>
+<li>Select the <code>Debug</code> configuration and the <code>x64</code> platform from the combo box controls to the left of the <code>Run</code> button and underneath the <code>Team</code> and <code>Tools</code> menu item.</li>
+<li>Run <code>yarn start</code> from your project directory, and wait for the React Native packager to report success.</li>
+<li>Click the <code>Run</code> button to the right of the platform combo box control in VS, or select the <code>Debug</code>-&gt;<code>Start without Debugging</code> menu item. You now see your new app and Chrome should have loaded <code>http://localhost:8081/debugger-ui/</code> in a new tab. Press <code>F12</code> or <code>Ctrl+Shift+I</code> in Chrome to open its Developer Tools. :tada:</li>
+</ul></li>
+<li><p>With VS Code</p>
+<ul>
+<li>Open your applications folder in VS Code.</li>
+<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native">React Native Tools</a> plugin for VS Code.</li>
+<li>Create a new file in the applications root directory, <code>.vscode/launch.json</code> and paste the following configuration:</li>
+</ul>
+<pre><code class="hljs">{
+    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"0.2.0"</span>,
+    <span class="hljs-attr">"configurations"</span>: [
+        {
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Debug Windows"</span>,
+            <span class="hljs-attr">"cwd"</span>: <span class="hljs-string">"${workspaceFolder}"</span>,
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"reactnative"</span>,
+            <span class="hljs-attr">"request"</span>: <span class="hljs-string">"launch"</span>,
+            <span class="hljs-attr">"platform"</span>: <span class="hljs-string">"windows"</span>
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>Press <code>F5</code> or navigate to the debug menu (alternatively press <code>Ctrl+Shift+D</code>) and in the Debug dropdown select &quot;Debug Windows&quot; and press the green arrow to run the application.</li>
+</ul></li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="authoring-native-modules"></a><a href="#authoring-native-modules" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Authoring Native Modules</h2>
+<p>See <a href="/react-native-windows/docs/next/native-modules">Native Modules and React Native Windows</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="building-a-standalone-react-native-windows-app"></a><a href="#building-a-standalone-react-native-windows-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Building a standalone React Native Windows App</h2>
+<p>Follow these steps to build a version of your app that you can install or publish to the store. This version will package your bundle and assets into the appx package so you don't need to run Metro.</p>
+<ul>
+<li>Open the solution in Visual Studio</li>
+<li>Select the DebugBundle or ReleaseBundle configuration from the Configuration Manager dropdown. DebugBundle is similar to Debug in that it adds more debugging info to the native code. Use this if you want to debug the native code. ReleaseBundle is similar to Release, you'll typically use this when producing a final package to publish to the store.</li>
+<li>Build the solution. You can now launch without first launching Metro.</li>
+<li>If you want to build an appx package to share or publish, use the Project =&gt; Publish =&gt; Create App Packages... option.</li>
+</ul>
+<p>See also this article for additional details: <a href="https://techcommunity.microsoft.com/t5/windows-dev-appconsult/getting-started-with-react-native-for-windows/ba-p/912093#">https://techcommunity.microsoft.com/t5/windows-dev-appconsult/getting-started-with-react-native-for-windows/ba-p/912093#</a></p>
+</body>
+</html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/react-native-windows/docs/next/rnw-dependencies"><span>System Requirements</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#install-react-native-for-windows">Install React Native for Windows</a><ul class="toc-headings"><li><a href="#navigate-into-this-newly-created-directory">Navigate into this newly created directory</a></li><li><a href="#install-the-windows-extension">Install the Windows extension</a></li></ul></li><li><a href="#running-a-react-native-windows-app">Running a React Native Windows App</a></li><li><a href="#authoring-native-modules">Authoring Native Modules</a></li><li><a href="#building-a-standalone-react-native-windows-app">Building a standalone React Native Windows App</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

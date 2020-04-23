@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Using JSValue · React Native for Windows &amp; Mac</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt;**This documentation and the underlying platform code is a work in progress.**"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Using JSValue · React Native for Windows &amp; Mac"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="&gt;**This documentation and the underlying platform code is a work in progress.**"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows &amp; Mac Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows &amp; Mac Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows &amp; Mac"/><h2 class="headerTitleWithLogo">React Native for Windows &amp; Mac</h2></a><a href="/react-native-windows/versions"><h3>next</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/next/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/next/flyout-component" target="_self">APIs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Native Modules (Windows)</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/rnw-dependencies">System Requirements</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/contributing">Contributing to microsoft/react-native-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/parity-status">API Parity</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/windowsbrush-and-theme">Using Windows Brushes and Responding to Themes</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Testing<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/e2e-test">Author and Run E2E Test for React Native Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/e2e-test-more-about">More about E2E test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Modules (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/view-managers">Native UI Components</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-setup">Native Module Setup</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-using">Using Community Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-marshalling-data">Marshalling Data</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/next/native-modules-jsvalue">Using JSValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/native-modules-advanced">Native Modules (Advanced)</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/native-modules-jsvalue.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Using JSValue</h1></header><article><div><span><blockquote>
+<p><strong>This documentation and the underlying platform code is a work in progress.</strong></p>
+</blockquote>
+<p>JSValue is a native, immutable invariant value type, and is meant to hold any of the commonly used JS types: bools, ints, doubles, strings, arrays, and objects. It is provided for native developers (writing native modules or view managers) who want an equivalent to the <code>folly::dynamic</code> type that is compatible with the WinRT ABI surface provided by <code>Microsoft.ReactNative</code>.</p>
+<p>Two JSValue implementations are provided: one for C++ developers in the <code>Microsoft.ReactNative.Cxx</code> shared project, and one for C# developers in the <code>Microsoft.ReactNative.SharedManaged</code> project.</p>
+<blockquote>
+<p>This purpose of this document is to provide equivalency to the scenarios supported by <a href="https://github.com/facebook/folly/blob/master/folly/docs/Dynamic.md">folly/dynamic.h</a>.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="overview"></a><a href="#overview" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Overview</h2>
+<h3><a class="anchor" aria-hidden="true" id="c"></a><a href="#c" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>C#</h3>
+<p>Here are some code samples to get started (assumes a <code>using Microsoft.ReactNative.Managed;</code> was used):</p>
+<pre><code class="hljs css language-csharp"><span class="token class-name">JSValue</span> twelve <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span> <span class="token comment">// creates a JSValue that holds an integer</span>
+<span class="token class-name">JSValue</span> str <span class="token operator">=</span> <span class="token string">"string"</span><span class="token punctuation">;</span> <span class="token comment">// yep, this one is a String</span>
+
+<span class="token comment">// a few other types.</span>
+<span class="token class-name">JSValue</span> nul <span class="token operator">=</span> JSValue<span class="token punctuation">.</span>Null<span class="token punctuation">;</span>
+<span class="token class-name">JSValue</span> boolean <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Arrays can be initialized with JSValueArray.</span>
+<span class="token class-name">JSValueArray</span> array <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">"array "</span><span class="token punctuation">,</span> <span class="token string">"of"</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">" elements"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+Debug<span class="token punctuation">.</span><span class="token function">Assert</span><span class="token punctuation">(</span>array<span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">JSValueArray</span> emptyArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Debug<span class="token punctuation">.</span><span class="token function">Assert</span><span class="token punctuation">(</span>emptyArray<span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// JSValueArrays can be implicitly converted to JSValues, however</span>
+<span class="token comment">// like all JSValues they will be immutable. Accessing the contents</span>
+<span class="token comment">// via the AsArray() method will return an IReadOnlyList&lt;JSValue>.</span>
+<span class="token class-name">JSValue</span> array2 <span class="token operator">=</span> array<span class="token punctuation">;</span>
+Debug<span class="token punctuation">.</span><span class="token function">Assert</span><span class="token punctuation">(</span>array2<span class="token punctuation">.</span><span class="token function">AsArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">JSValue</span> emptyArray2 <span class="token operator">=</span> emptyArray<span class="token punctuation">;</span>
+Debug<span class="token punctuation">.</span><span class="token function">Assert</span><span class="token punctuation">(</span>emptyArray2<span class="token punctuation">.</span><span class="token function">AsArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Maps from strings to JSValues are called objects. The</span>
+<span class="token comment">// JSValueObject type is how you make an empty map from strings</span>
+<span class="token comment">// to JSValues.</span>
+<span class="token class-name">JSValueObject</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+map<span class="token punctuation">[</span><span class="token string">"something"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+map<span class="token punctuation">[</span><span class="token string">"another_something"</span><span class="token punctuation">]</span> <span class="token operator">=</span> map<span class="token punctuation">[</span><span class="token string">"something"</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">AsInt32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+<span class="token comment">// JSValueObjects may be initialzed this way</span>
+<span class="token class-name">JSValueObject</span> map2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token punctuation">{</span> <span class="token string">"something"</span><span class="token punctuation">,</span> <span class="token number">12</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token string">"another_something"</span><span class="token punctuation">,</span> <span class="token number">24</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Like JSValueArrays, JSValueObjects can also be implicitly</span>
+<span class="token comment">// converted to JSValues, and likewise they will be immutable.</span>
+<span class="token comment">// Accessing the contents via the AsObject() method will return an</span>
+<span class="token comment">// IReadOnlyDictionary&lt;string, JSValue>.</span>
+<span class="token class-name">JSValue</span> map3 <span class="token operator">=</span> map<span class="token punctuation">;</span>
+Debug<span class="token punctuation">.</span><span class="token function">Assert</span><span class="token punctuation">(</span>map3<span class="token punctuation">.</span><span class="token function">AsObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">JSValue</span> map4 <span class="token operator">=</span> map2<span class="token punctuation">;</span>
+Debug<span class="token punctuation">.</span><span class="token function">Assert</span><span class="token punctuation">(</span>map4<span class="token punctuation">.</span><span class="token function">AsObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="cwinrt"></a><a href="#cwinrt" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>C++/WinRT</h3>
+<p>Here are some code samples to get started (assumes a <code>#include &quot;JSValue.h&quot;</code> was used):</p>
+<pre><code class="hljs css language-c++">JSValue twelve = <span class="hljs-number">12</span>; <span class="hljs-comment">// creates a JSValue that holds an integer</span>
+JSValue str = <span class="hljs-string">"string"</span>; <span class="hljs-comment">// yep, this one is a String</span>
+
+<span class="hljs-comment">// a few other types.</span>
+JSValue nul = <span class="hljs-literal">nullptr</span>;
+JSValue <span class="hljs-keyword">boolean</span> = <span class="hljs-literal">false</span>;
+
+<span class="hljs-comment">// Arrays can be initialized with JSValueArray.</span>
+JSValueArray <span class="hljs-built_in">array</span> = JSValueArray{ <span class="hljs-string">"array "</span>, <span class="hljs-string">"of"</span>, <span class="hljs-number">4</span>, <span class="hljs-string">" elements"</span> };
+assert(<span class="hljs-built_in">array</span>.<span class="hljs-built_in">size</span>() == <span class="hljs-number">4</span>);
+JSValueArray emptyArray = JSValueArray{};
+assert(emptyArray.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>);
+
+<span class="hljs-comment">// JSValueArrays can be explicitly converted to JSValues, however</span>
+<span class="hljs-comment">// like all JSValues they will be immutable. Accessing the contents</span>
+<span class="hljs-comment">// via the AsArray() method will return a const JSValueArray.</span>
+JSValue array2 = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(<span class="hljs-built_in">array</span>);
+assert(array2.AsArray().<span class="hljs-built_in">size</span>() == <span class="hljs-number">4</span>);
+JSValue emptyArray2 = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(emptyArray);
+assert(emptyArray2.AsArray().<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>);
+
+<span class="hljs-comment">// Maps from strings to JSValues are called objects. The</span>
+<span class="hljs-comment">// JSValueObject type is how you make an empty map from strings</span>
+<span class="hljs-comment">// to JSValues.</span>
+JSValueObject <span class="hljs-built_in">map</span> = JSValueObject{};
+<span class="hljs-built_in">map</span>[<span class="hljs-string">"something"</span>] = <span class="hljs-number">12</span>;
+<span class="hljs-built_in">map</span>[<span class="hljs-string">"another_something"</span>] = <span class="hljs-built_in">map</span>[<span class="hljs-string">"something"</span>].AsInt32() * <span class="hljs-number">2</span>;
+
+<span class="hljs-comment">// JSValueObjects may be initialzed this way</span>
+JSValueObject map2 = JSValueObject
+{
+    { <span class="hljs-string">"something"</span>, <span class="hljs-number">12</span> },
+    { <span class="hljs-string">"another_something"</span>, <span class="hljs-number">24</span> },
+};
+
+<span class="hljs-comment">// Like JSValueArrays, JSValueObjects can also be explicitly</span>
+<span class="hljs-comment">// converted to JSValues, and likewise they will be immutable.</span>
+<span class="hljs-comment">// Accessing the contents via the AsObject() method will return</span>
+<span class="hljs-comment">// a const JSValueObject.</span>
+JSValue map3 = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(<span class="hljs-built_in">map</span>);
+assert(map3.AsObject().<span class="hljs-built_in">size</span>() == <span class="hljs-number">2</span>);
+JSValue map4 = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(map2);
+assert(map4.AsObject().<span class="hljs-built_in">size</span>() == <span class="hljs-number">2</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="runtime-type-checking-and-conversions"></a><a href="#runtime-type-checking-and-conversions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Runtime Type Checking and Conversions</h2>
+<p>While most unsupported operations will cause compilation errors, some operations on JSValues require checking at runtime that the stored type is compatible with the operation. Some operations may throw runtime exceptions or produce unexpected behavior as type conversions fail and default values are returned.</p>
+<p>More examples should hopefully clarify this:</p>
+<h3><a class="anchor" aria-hidden="true" id="c-1"></a><a href="#c-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>C#</h3>
+<pre><code class="hljs css language-csharp"><span class="token class-name">JSValue</span> dint <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span>
+
+<span class="token class-name">JSValue</span> str <span class="token operator">=</span> <span class="token string">"foo"</span><span class="token punctuation">;</span>
+<span class="token class-name">JSValue</span> anotherStr <span class="token operator">=</span> str <span class="token operator">+</span> <span class="token string">"something"</span><span class="token punctuation">;</span> <span class="token comment">// fine</span>
+<span class="token class-name">JSValue</span> thisDoesntCompile <span class="token operator">=</span> str <span class="token operator">+</span> dint<span class="token punctuation">;</span> <span class="token comment">// compilation error</span>
+</code></pre>
+<p>Explicit type conversions can be requested for some of the basic types:</p>
+<pre><code class="hljs css language-csharp"><span class="token class-name">JSValue</span> dint <span class="token operator">=</span> <span class="token number">12345678</span><span class="token punctuation">;</span>
+<span class="token class-name">JSValue</span> doub <span class="token operator">=</span> dint<span class="token punctuation">.</span><span class="token function">AsDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// doub will hold 12345678.0</span>
+<span class="token class-name">JSValue</span> str <span class="token operator">=</span> dint<span class="token punctuation">.</span><span class="token function">AsString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// str == "12345678"</span>
+
+<span class="token class-name">JSValue</span> hugeInt <span class="token operator">=</span> <span class="token keyword">long</span><span class="token punctuation">.</span>MaxValue<span class="token punctuation">;</span> <span class="token comment">// hugeInt = 9223372036854775807</span>
+<span class="token class-name">JSValue</span> hugeDoub <span class="token operator">=</span> hugeInt<span class="token punctuation">.</span><span class="token function">AsDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// hugeDoub = 9.2233720368547758E+18</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="cwinrt-1"></a><a href="#cwinrt-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>C++/WinRT</h3>
+<pre><code class="hljs css language-c++">JSValue dint = <span class="hljs-number">42</span>;
+
+JSValue str = <span class="hljs-string">"foo"</span>;
+JSValue thisDoesntCompile = str + <span class="hljs-string">"something"</span>; <span class="hljs-comment">// compilation error</span>
+JSValue thisDoesntCompile2 = str + dint; <span class="hljs-comment">// compilation error</span>
+</code></pre>
+<p>Explicit type conversions can be requested for some of the basic types:</p>
+<pre><code class="hljs css language-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> max</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">undef</span> max</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+
+JSValue dint = <span class="hljs-number">12345678</span>;
+JSValue doub = dint.AsDouble(); <span class="hljs-comment">// doub will hold 12345678.0</span>
+JSValue str = dint.AsString(); <span class="hljs-comment">// str == "12345678"</span>
+JSValue hugeInt = <span class="hljs-built_in">std</span>::numeric_limits&lt;<span class="hljs-keyword">int64_t</span>&gt;::<span class="hljs-built_in">max</span>();
+JSValue hugeDoub = hugeInt.AsDouble();
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="iteration-and-lookup"></a><a href="#iteration-and-lookup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Iteration and Lookup</h2>
+<h3><a class="anchor" aria-hidden="true" id="c-2"></a><a href="#c-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>C#</h3>
+<p>You can iterate over JSValueArrays as you would over any C# enumerable.</p>
+<pre><code class="hljs css language-csharp"><span class="token class-name">JSValueArray</span> array <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">"foo"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> val <span class="token keyword">in</span> array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">doSomethingWith</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>You can iterate over JSValueObjects just like any other <code>IDictionary&lt;string, JSValue&gt;</code>.</p>
+<pre><code class="hljs css language-csharp"><span class="token class-name">JSValueObject</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">{</span> <span class="token string">"2"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token string">"world"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"x"</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> kvp <span class="token keyword">in</span> obj<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Key is kvp.Key, value is kvp.Value</span>
+    <span class="token function">processKey</span><span class="token punctuation">(</span>kvp<span class="token punctuation">.</span>Key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">processValue</span><span class="token punctuation">(</span>kvp<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> key <span class="token keyword">in</span> obj<span class="token punctuation">.</span>Keys<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">processKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> <span class="token keyword">value</span> <span class="token keyword">in</span> obj<span class="token punctuation">.</span>Values<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">processValue</span><span class="token punctuation">(</span><span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>You can find an element by key in a JSValueObject using the <code>TryGetValue()</code> method,
+which takes the key and returns <code>true</code> if a key is present and provides the value as an out variable. If the key is not preset, it returns <code>false</code> and the out variable will be null.</p>
+<pre><code class="hljs css language-csharp"><span class="token class-name">JSValueObject</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">JSValueObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">{</span> <span class="token string">"2"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token string">"world"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"x"</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name">JSValue</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// value is "world"</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span><span class="token string">"no_such_key"</span><span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name">JSValue</span> value2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// this block will not be executed</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// value2 is null</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="cwinrt-2"></a><a href="#cwinrt-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>C++/WinRT</h3>
+<p>You can iterate over JSValueArrays as you would over any C++ sequence container.</p>
+<pre><code class="hljs css language-c++">JSValueArray <span class="hljs-built_in">array</span> = JSValueArray{ <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-string">"foo"</span> };
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; val : <span class="hljs-built_in">array</span>)
+{
+    doSomethingWith(val);
+}
+</code></pre>
+<p>You can iterate over JSValueObjects just like any other C++ <code>std::map</code>.</p>
+<pre><code class="hljs css language-c++">JSValueObject obj = JSValueObject{ { <span class="hljs-string">"2"</span>, <span class="hljs-number">3</span>}, { <span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span> }, { <span class="hljs-string">"x"</span>, <span class="hljs-number">4</span> } };
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; pair : obj)
+{
+    <span class="hljs-comment">// Key is pair.first, value is pair.second</span>
+    processKey(pair.first);
+    processValue(pair.second);
+}
+</code></pre>
+<p>You can find an element by key in a dynamic map using the <code>find()</code> method,
+which returns an iterator:</p>
+<pre><code class="hljs css language-c++">JSValueObject obj = JSValueObject{ { <span class="hljs-string">"2"</span>, <span class="hljs-number">3</span>}, { <span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span> }, { <span class="hljs-string">"x"</span>, <span class="hljs-number">4</span> } };
+
+<span class="hljs-keyword">auto</span> pos = obj.<span class="hljs-built_in">find</span>(<span class="hljs-string">"hello"</span>);
+<span class="hljs-comment">// pos-&gt;first is "hello"</span>
+<span class="hljs-comment">// pos-&gt;second is "world"</span>
+
+<span class="hljs-keyword">auto</span> pos = obj.<span class="hljs-built_in">find</span>(<span class="hljs-string">"no_such_key"</span>);
+<span class="hljs-comment">// pos == obj.end()</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="use-for-json"></a><a href="#use-for-json" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Use for JSON</h2>
+<p>Unlike <code>folly::dynamic</code>, there are no built-in mechanisms for parsing or creating JSON strings directy from JValues.</p>
+<h2><a class="anchor" aria-hidden="true" id="performance"></a><a href="#performance" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Performance</h2>
+<p>JSValues can be useful for manipulating large and complex JS objects in your native code, giving you random access to just the values you need. However, note that there is a performance penalty to doing this, as the entirety of the JS object will be parsed into the JSValue before it is passed to your code.</p>
+<p>The performance hit of using JSValue in your external native code is in addition to the performance hit of Microsoft.ReactNative's own internal use of <code>folly::dynamic</code>. Data is marshalled out of Microsoft.ReactNative through a high-performance serialization interface, however reading that data back into a JSValue means taking the time and memory to completely re-construct the original object structure.</p>
+<p>For more information, see <a href="/react-native-windows/docs/next/native-modules-marshalling-data">Marshalling Data</a>.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/next/native-modules-marshalling-data"><span class="arrow-prev">← </span><span>Marshalling Data</span></a><a class="docs-next button" href="/react-native-windows/docs/next/native-modules-advanced"><span>Native Modules (Advanced)</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#overview">Overview</a><ul class="toc-headings"><li><a href="#c">C#</a></li><li><a href="#cwinrt">C++/WinRT</a></li></ul></li><li><a href="#runtime-type-checking-and-conversions">Runtime Type Checking and Conversions</a><ul class="toc-headings"><li><a href="#c-1">C#</a></li><li><a href="#cwinrt-1">C++/WinRT</a></li></ul></li><li><a href="#iteration-and-lookup">Iteration and Lookup</a><ul class="toc-headings"><li><a href="#c-2">C#</a></li><li><a href="#cwinrt-2">C++/WinRT</a></li></ul></li><li><a href="#use-for-json">Use for JSON</a></li><li><a href="#performance">Performance</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
