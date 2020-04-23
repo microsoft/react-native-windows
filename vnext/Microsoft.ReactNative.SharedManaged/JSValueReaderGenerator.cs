@@ -260,7 +260,7 @@ namespace Microsoft.ReactNative.Managed
       // }
 
       var fields =
-              from field in classType.GetFields(BindingFlags.Public | BindingFlags.Instance)
+        from field in classType.GetFields(BindingFlags.Public | BindingFlags.Instance)
         where !field.IsInitOnly
         select new { field.Name, Type = field.FieldType };
       var properties =
