@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Apr 2020 00:04:29 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Apr 2020 00:04:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.46
+
+Thu, 23 Apr 2020 00:04:37 GMT
+
+### Changes
+
+- Hook up to packager websocket to allow 'r' to reload instance (acoates@microsoft.com)
+- Handle syntax errors in RedBox (asklar@microsoft.com)
+- Publish ship and debug bits in the nuget (acoates@microsoft.com)
+- Implement String ViewManager Command IDs (ngerlem@microsoft.com)
 
 ## 0.0.0-master.45
 

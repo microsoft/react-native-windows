@@ -13,11 +13,15 @@
 
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
+#include "../../codegen/NativeClipboardSpec.g.h"
+#include "NativeModules.h"
+#include "NativeModulesProvider.h"
 #include "Unicode.h"
 
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "Modules/AppStateData.h"
+#include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
@@ -201,6 +205,17 @@ void ReactInstanceWin::Initialize() noexcept {
               std::move(m_appTheme),
               std::move(m_appearanceListener),
               m_legacyReactInstance);
+
+          auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
+          nmp->AddModuleProvider(
+              L"Clipboard",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::Clipboard,
+                  ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+
+          auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
+          cxxModules.insert(
+              cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
 
           cxxModules.emplace_back(
               Microsoft::ReactNative::DevSettingsModule::name,

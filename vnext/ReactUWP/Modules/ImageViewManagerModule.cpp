@@ -36,10 +36,7 @@ namespace uwp {
 //
 class ImageViewManagerModule::ImageViewManagerModuleImpl {
  public:
-  ImageViewManagerModuleImpl(
-      ImageViewManagerModule *parent,
-      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-      : m_parent(parent), m_queueThread(defaultQueueThread) {}
+  ImageViewManagerModuleImpl(ImageViewManagerModule *parent) : m_parent(parent) {}
 
   void Disconnect() {
     m_parent = nullptr;
@@ -52,7 +49,6 @@ class ImageViewManagerModule::ImageViewManagerModuleImpl {
 
  private:
   ImageViewManagerModule *m_parent;
-  std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
 };
 
 winrt::fire_and_forget GetImageSizeAsync(
@@ -134,9 +130,8 @@ void ImageViewManagerModule::ImageViewManagerModuleImpl::queryCache(
 //
 const char *ImageViewManagerModule::name = "ImageLoader";
 
-ImageViewManagerModule::ImageViewManagerModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-    : m_imageViewManagerModule(std::make_shared<ImageViewManagerModuleImpl>(this, defaultQueueThread)) {}
+ImageViewManagerModule::ImageViewManagerModule()
+    : m_imageViewManagerModule(std::make_shared<ImageViewManagerModuleImpl>(this)) {}
 
 ImageViewManagerModule::~ImageViewManagerModule() {}
 

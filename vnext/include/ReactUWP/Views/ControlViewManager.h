@@ -21,7 +21,7 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
       const folly::dynamic &propertyValue) override;
-  void TransferProperties(XamlView oldView, XamlView newView) override;
+  void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
  protected:
   void OnViewCreated(XamlView view) override;

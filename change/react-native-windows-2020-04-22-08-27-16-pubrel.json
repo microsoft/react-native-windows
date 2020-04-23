@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Publish ship and debug bits in the nuget",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-22T15:27:16.797Z"
-}

@@ -55,18 +55,24 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
-  virtual void AddView(XamlView parent, XamlView child, int64_t index);
-  virtual void RemoveAllChildren(XamlView parent);
-  virtual void RemoveChildAt(XamlView parent, int64_t index);
-  virtual void ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild);
+  virtual void AddView(const XamlView &parent, const XamlView &child, int64_t index);
+  virtual void RemoveAllChildren(const XamlView &parent);
+  virtual void RemoveChildAt(const XamlView &parent, int64_t index);
+  virtual void ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild);
 
   virtual void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap);
 
-  virtual void DispatchCommand(XamlView viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs);
+  virtual void
+  DispatchCommand(const XamlView &viewToUpdatee, const std::string &commandId, const folly::dynamic &commandArgs);
 
   // Yoga Layout
-  virtual void
-  SetLayoutProps(ShadowNodeBase &nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height);
+  virtual void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      const XamlView &viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height);
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
@@ -75,7 +81,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
     return m_wkReactInstance;
   }
 
-  virtual void TransferProperties(XamlView oldView, XamlView newView);
+  virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
 
  protected:
   virtual XamlView CreateViewCore(int64_t tag) = 0;

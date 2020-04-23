@@ -161,7 +161,7 @@ bool SwitchViewManager::UpdateProperty(
 }
 
 void SwitchViewManager::DispatchCommand(
-    XamlView viewToUpdate,
+    const XamlView &viewToUpdate,
     const std::string &commandId,
     const folly::dynamic &commandArgs) {
   if (commandId == "setValue") {

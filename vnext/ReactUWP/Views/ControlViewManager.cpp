@@ -18,7 +18,7 @@ folly::dynamic ControlViewManager::GetNativeProps() const {
   props.update(folly::dynamic::object("tabIndex", "number"));
   return props;
 }
-void ControlViewManager::TransferProperties(XamlView oldView, XamlView newView) {
+void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, winrt::Control::FontSizeProperty());
   TransferProperty(oldView, newView, winrt::Control::FontFamilyProperty());
   TransferProperty(oldView, newView, winrt::Control::FontWeightProperty());

@@ -58,7 +58,7 @@ facebook::react::ShadowNode *ContentControlViewManager::createShadow() const {
   return new ContentControlShadowNode();
 }
 
-void ContentControlViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void ContentControlViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   // ContentControl holds a single child, so should never insert after
   if (index != 0) {
     // ASSERT: Currently considering any index other than 0 as ignorable since
@@ -72,13 +72,13 @@ void ContentControlViewManager::AddView(XamlView parent, XamlView child, int64_t
     contentControl.Content(child.as<winrt::IInspectable>());
 }
 
-void ContentControlViewManager::RemoveAllChildren(XamlView parent) {
+void ContentControlViewManager::RemoveAllChildren(const XamlView &parent) {
   auto contentControl(parent.as<winrt::ContentControl>());
   if (contentControl != nullptr)
     contentControl.Content(nullptr);
 }
 
-void ContentControlViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void ContentControlViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   if (index != 0)
     return;
 

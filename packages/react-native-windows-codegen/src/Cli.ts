@@ -8,6 +8,7 @@
 import * as yargs from 'yargs';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
@@ -18,6 +19,10 @@ const argv = yargs.options({
   file: {
     type: 'string',
     describe: 'file which contains spec',
+  },
+  files: {
+    type: 'array',
+    describe: 'glob patterns for files which contains specs',
   },
   test: {
     type: 'boolean',
@@ -104,6 +109,27 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   return success;
 }
 
+function combineSchemas(files: string[]): SchemaType {
+  return files.reduce(
+    (merged, filename) => {
+      const contents = fs.readFileSync(filename, 'utf8');
+      if (
+        contents &&
+        (/export\s+default\s+\(?codegenNativeComponent</.test(contents) ||
+          /extends TurboModule/.test(contents))
+      ) {
+        const schema = parseFile(filename);
+
+        if (schema && schema.modules) {
+          merged.modules = {...merged.modules, ...schema.modules};
+        }
+      }
+      return merged;
+    },
+    {modules: {}},
+  );
+}
+
 function generate(
   {libraryName, schema, outputDirectory, moduleSpecName}: Options,
   {/*generators,*/ test}: Config,
@@ -132,7 +158,18 @@ function generate(
   return writeMapToFiles(filesToUpdate, outputDirectory);
 }
 
-const schema: SchemaType = parseFile(argv.file);
+if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
+  console.error('You must specify either --file or --files.');
+  process.exit(1);
+}
+
+let schema: SchemaType;
+if (argv.file) {
+  schema = parseFile(argv.file);
+} else {
+  schema = combineSchemas(globby.sync(argv.files as string[]));
+}
+
 const libraryName = 'libraryName';
 const moduleSpecName = 'moduleSpecName';
 const outputDirectory = 'codegen';

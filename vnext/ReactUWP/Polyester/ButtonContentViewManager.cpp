@@ -24,14 +24,14 @@ namespace polyester {
 ButtonContentViewManager::ButtonContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
-void ButtonContentViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void ButtonContentViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto stackPanel(parent.as<StackPanel>());
   if (stackPanel != nullptr) {
     stackPanel.Children().InsertAt(static_cast<uint32_t>(index), child.as<UIElement>());
   }
 }
 
-void ButtonContentViewManager::RemoveAllChildren(XamlView parent) {
+void ButtonContentViewManager::RemoveAllChildren(const XamlView &parent) {
   auto stackPanel(parent.as<StackPanel>());
   if (stackPanel != nullptr) {
     stackPanel.Children().Clear();
@@ -40,7 +40,7 @@ void ButtonContentViewManager::RemoveAllChildren(XamlView parent) {
   }
 }
 
-void ButtonContentViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void ButtonContentViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   auto stackPanel(parent.as<StackPanel>());
   if (stackPanel != nullptr) {
     stackPanel.Children().RemoveAt(static_cast<uint32_t>(index));

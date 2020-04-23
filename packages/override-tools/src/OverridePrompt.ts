@@ -5,13 +5,9 @@
  * @format
  */
 
-import * as prompts from 'prompts';
+import * as inquirer from 'inquirer';
 
 import {OverrideType} from './Manifest';
-
-const PROMPT_OPTIONS: prompts.Options = {
-  onCancel: () => process.exit(1),
-};
 
 const WIN_PLATFORM_EXT = /(\.win32|\.windows|\.windesktop)\.js/;
 
@@ -33,34 +29,31 @@ export async function askForDetails(overrideFile: string): Promise<Details> {
 }
 
 async function promptOverrideType(): Promise<OverrideType> {
-  const response = await prompts(
+  const response = await inquirer.prompt([
     {
-      type: 'select',
+      type: 'list',
       name: 'type',
       message: 'Override type:',
       choices: [
         {
-          title: 'Derived from upstream',
-          // @ts-ignore description is missing from typings
-          description: 'E.g. a Windows implementation of an existing component',
+          name:
+            'Derived from upstream      (E.g. a Windows implementation of an existing component)',
           value: 'derived',
+          short: 'Derived',
         },
         {
-          title: 'Patches to upstream',
-          // @ts-ignore description is missing from typings
-          description: 'E.g. commenting out code',
+          name: 'Patches to upstream        (E.g. commenting out code)',
           value: 'patch',
+          short: 'Patch',
         },
         {
-          title: 'Independent platform logic',
-          // @ts-ignore description is missing from typings
-          description: 'E.g. Windows-specific modules',
+          name: 'Independent platform logic (E.g. Windows-specific modules)',
           value: 'platform',
+          short: 'Platform',
         },
       ],
     },
-    PROMPT_OPTIONS,
-  );
+  ]);
 
   return response.type;
 }
@@ -68,41 +61,37 @@ async function promptOverrideType(): Promise<OverrideType> {
 async function promptDerivedDetails(): Promise<Details> {
   let issue: number;
 
-  const copiedResponse = await prompts(
+  const copiedResponse = await inquirer.prompt([
     {
-      type: 'toggle',
+      type: 'confirm',
       name: 'codeCopied',
-      active: 'Yes',
-      inactive: 'No',
-      initial: true,
+      default: true,
       message: 'Does the derived file copy code from upstream?',
     },
-    PROMPT_OPTIONS,
-  );
+  ]);
 
   if (copiedResponse.codeCopied) {
     console.log(
       'Copying code from upstream adds significant technical debt. Please create an issue using the "Deforking" label to track making changes so that code can be shared.',
     );
-    const issueResponse = await prompts(
+    const issueResponse = await inquirer.prompt([
       {
-        type: 'number',
+        type: 'input',
+        validate: validateIssueNumber,
         name: 'issue',
-        message: 'Github Issue:',
+        message: 'Github Issue Number:',
       },
-      PROMPT_OPTIONS,
-    );
+    ]);
     issue = issueResponse.issue;
   }
 
-  const baseFileResponse = await prompts(
+  const baseFileResponse = await inquirer.prompt([
     {
-      type: 'text',
+      type: 'input',
       name: 'baseFile',
       message: 'What file does this override derive from (pick the closest)?',
     },
-    PROMPT_OPTIONS,
-  );
+  ]);
 
   return {type: 'derived', baseFile: baseFileResponse.baseFile, issue};
 }
@@ -111,15 +100,21 @@ async function promptPatchDetails(overrideFile: string): Promise<Details> {
   console.log(
     'Patch-style overrides add signficant technical debt. Please create an issue using the "Deforking" label to track removal of the patch.',
   );
-  const response = await prompts(
+  const response = await inquirer.prompt([
     {
-      type: 'number',
+      type: 'input',
+      validate: validateIssueNumber,
       name: 'issue',
-      message: 'Github Issue:',
+      message: 'Github Issue Number:',
     },
-    PROMPT_OPTIONS,
-  );
+  ]);
 
   const baseFile = overrideFile.replace(WIN_PLATFORM_EXT, '.js');
   return {type: 'patch', baseFile, issue: response.issue};
+}
+
+function validateIssueNumber(answer: string): boolean | string {
+  return (
+    Number.isInteger(Number.parseInt(answer)) || 'Github issue must be a number'
+  );
 }

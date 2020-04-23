@@ -19,10 +19,19 @@ type FilesOutput = Map<string, string>;
 
 const moduleTemplate = `
 /*
+ * This file is auto-generated from a NativeModule spec file in js.
+ *
  * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
  * in a way that also verifies at compile time that the native module matches the interface required
  * by the TurboModule JS spec.
  */
+#pragma once
+
+#include "NativeModules.h"
+#include <tuple>
+
+namespace ::_NAMESPACE_:: {
+
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
 ::_MODULE_PROPERTIES_TUPLE_::
@@ -34,20 +43,7 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
 ::_MODULE_PROPERTIES_SPEC_ERRORS_::
   }
-};`;
-
-const template = `
-/**
- * This file is auto-generated from a NativeModule spec file in js.
- */
-
-#pragma once
-
-#include "NativeModules.h"
-#include <tuple>
-
-namespace ::_NAMESPACE_:: {
-::_MODULES_::
+};
 
 } // namespace ::_NAMESPACE_::
 `;
@@ -76,8 +72,15 @@ function translateSpecFunctionParam(
       return 'JSValueArray';
     case 'GenericObjectTypeAnnotation':
       return 'JSValueObject';
+    case 'ObjectTypeAnnotation':
+      // TODO we have more information here, and could create a more specific type
+      return 'JSValueObject';
     default:
-      throw new Error(`Unhandled type: ${param.typeAnnotation.type}`);
+      throw new Error(
+        `Unhandled type in translateSpecFunctionParam: ${
+          param.typeAnnotation.type
+        }`,
+      );
   }
 }
 
@@ -103,8 +106,15 @@ function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
       return 'React::JSValueArray &&';
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject &&';
+    case 'ObjectTypeAnnotation':
+      // TODO we have more information here, and could create a more specific type
+      return 'React::JSValueObject &&';
     default:
-      throw new Error(`Unhandled type: ${param.typeAnnotation.type}`);
+      throw new Error(
+        `Unhandled type in translateFunctionParam: ${
+          param.typeAnnotation.type
+        }`,
+      );
   }
 }
 
@@ -164,7 +174,9 @@ function translateImplReturnType(
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
     default:
-      throw new Error(`Unhandled type: ${type.type}`);
+      throw new Error(
+        `Unhandled type in translateImplReturnType: ${type.type}`,
+      );
   }
 }
 
@@ -210,6 +222,7 @@ function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
   }) ${translateImplReturnType(prop.typeAnnotation.returnTypeAnnotation)} ${
     prop.name
   }(${args.join(', ')}) noexcept { /* implementation */ }}`;
+
   let staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) static ${translateImplReturnType(
@@ -221,8 +234,8 @@ function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
 
 function translatePossibleMethodSignatures(prop: MethodTypeShape): string {
   return getPossibleMethodSignatures(prop)
-    .map(sig => `"    ${sig}"`)
-    .join(',\n          ');
+    .map(sig => `"    ${sig}\\n"`)
+    .join('\n          ');
 }
 
 function renderProperties(
@@ -243,14 +256,14 @@ function renderProperties(
 
       if (isPromise(prop)) {
         // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
-        traversedArgs.push('Promise<JSValue>');
+        traversedArgs.push('Promise<React::JSValue>');
       }
 
       if (tuple) {
         return `      ${
           isMethodSync(prop) ? 'Sync' : ''
         }Method<${translatedReturnParam}(${traversedArgs.join(
-          ',',
+          ', ',
         )}) noexcept>{${index}, L"${prop.name}"},`;
       } else {
         return `    REACT_SHOW_METHOD_SPEC_ERRORS(
@@ -268,7 +281,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
     schema: SchemaType,
     _moduleSpecName: string,
   ): FilesOutput => {
-    // console.log(JSON.stringify(schema, null, 2));
+    let files = new Map<string, string>();
 
     const nativeModules = Object.keys(schema.modules)
       .map(moduleName => {
@@ -282,24 +295,22 @@ export function createNM2Generator({namespace}: {namespace: string}) {
       .filter(Boolean)
       .reduce((acc, components) => Object.assign(acc, components), {});
 
-    const modules = Object.keys(nativeModules)
-      .map(name => {
-        const {properties} = nativeModules[name];
-        const traversedProperties = renderProperties(properties, false);
-        const traversedPropertyTuples = renderProperties(properties, true);
+    Object.keys(nativeModules).forEach(name => {
+      console.log(`Generating Native${name}Spec.g.h`);
+      const {properties} = nativeModules[name];
+      const traversedProperties = renderProperties(properties, false);
+      const traversedPropertyTuples = renderProperties(properties, true);
 
-        return moduleTemplate
+      files.set(
+        `Native${name}Spec.g.h`,
+        moduleTemplate
           .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
           .replace(/::_MODULE_PROPERTIES_SPEC_ERRORS_::/g, traversedProperties)
-          .replace(/::_MODULE_NAME_::/g, name);
-      })
-      .join('\n');
+          .replace(/::_MODULE_NAME_::/g, name)
+          .replace(/::_NAMESPACE_::/g, namespace),
+      );
+    });
 
-    const fileName = 'NativeModules.g.h';
-    const replacedTemplate = template
-      .replace(/::_NAMESPACE_::/g, namespace)
-      .replace(/::_MODULES_::/g, modules);
-
-    return new Map([[fileName, replacedTemplate]]);
+    return files;
   };
 }
