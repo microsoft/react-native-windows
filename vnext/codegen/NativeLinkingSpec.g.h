@@ -16,10 +16,10 @@ namespace Microsoft::ReactNativeSpecs {
 struct LinkingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(Promise<React::JSValue>) noexcept>{0, L"getInitialURL"},
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{1, L"canOpenURL"},
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{2, L"openURL"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"canOpenURL"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"openURL"},
       Method<void(Promise<React::JSValue>) noexcept>{3, L"openSettings"},
-      Method<void(std::string,JSValueArray,Promise<React::JSValue>) noexcept>{4, L"sendIntent"},
+      Method<void(std::string, JSValueArray, Promise<React::JSValue>) noexcept>{4, L"sendIntent"},
       Method<void(std::string) noexcept>{5, L"addListener"},
       Method<void(double) noexcept>{6, L"removeListeners"},
   };

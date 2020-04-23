@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct DatePickerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject,Promise<React::JSValue>) noexcept>{0, L"open"},
+      Method<void(JSValueObject, Promise<React::JSValue>) noexcept>{0, L"open"},
   };
 
   template <class TModule>

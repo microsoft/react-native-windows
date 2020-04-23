@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct PermissionsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{0, L"checkPermission"},
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{1, L"requestPermission"},
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{2, L"shouldShowRequestPermissionRationale"},
-      Method<void(JSValueArray,Promise<React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{0, L"checkPermission"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"requestPermission"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"shouldShowRequestPermissionRationale"},
+      Method<void(JSValueArray, Promise<React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
   };
 
   template <class TModule>

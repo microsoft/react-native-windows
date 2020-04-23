@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ImageLoaderIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{0, L"getSize"},
-      Method<void(std::string,JSValueObject,Promise<React::JSValue>) noexcept>{1, L"getSizeWithHeaders"},
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{2, L"prefetchImage"},
-      Method<void(JSValueArray,Promise<React::JSValue>) noexcept>{3, L"queryCache"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{0, L"getSize"},
+      Method<void(std::string, JSValueObject, Promise<React::JSValue>) noexcept>{1, L"getSizeWithHeaders"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"prefetchImage"},
+      Method<void(JSValueArray, Promise<React::JSValue>) noexcept>{3, L"queryCache"},
   };
 
   template <class TModule>

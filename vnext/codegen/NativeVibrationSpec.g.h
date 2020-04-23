@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct VibrationSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(double) noexcept>{0, L"vibrate"},
-      Method<void(JSValueArray,double) noexcept>{1, L"vibrateByPattern"},
+      Method<void(JSValueArray, double) noexcept>{1, L"vibrateByPattern"},
       Method<void() noexcept>{2, L"cancel"},
   };
 

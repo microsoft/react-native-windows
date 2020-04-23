@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AsyncStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueArray,Callback<JSValue>) noexcept>{0, L"multiGet"},
-      Method<void(JSValueArray,Callback<JSValue>) noexcept>{1, L"multiSet"},
-      Method<void(JSValueArray,Callback<JSValue>) noexcept>{2, L"multiMerge"},
-      Method<void(JSValueArray,Callback<JSValue>) noexcept>{3, L"multiRemove"},
+      Method<void(JSValueArray, Callback<JSValue>) noexcept>{0, L"multiGet"},
+      Method<void(JSValueArray, Callback<JSValue>) noexcept>{1, L"multiSet"},
+      Method<void(JSValueArray, Callback<JSValue>) noexcept>{2, L"multiMerge"},
+      Method<void(JSValueArray, Callback<JSValue>) noexcept>{3, L"multiRemove"},
       Method<void(Callback<JSValue>) noexcept>{4, L"clear"},
       Method<void(Callback<JSValue>) noexcept>{5, L"getAllKeys"},
   };

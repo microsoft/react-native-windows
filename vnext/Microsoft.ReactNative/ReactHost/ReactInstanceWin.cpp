@@ -214,10 +214,8 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
 
           auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
-          for (auto mod : modules) {
-            auto [name, provider, queue] = mod;
-            cxxModules.emplace_back(name, provider, queue);
-          }
+          cxxModules.insert(
+              cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
 
           cxxModules.emplace_back(
               Microsoft::ReactNative::DevSettingsModule::name,

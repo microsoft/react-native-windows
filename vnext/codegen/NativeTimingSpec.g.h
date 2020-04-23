@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct TimingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(double,double,double,bool) noexcept>{0, L"createTimer"},
+      Method<void(double, double, double, bool) noexcept>{0, L"createTimer"},
       Method<void(double) noexcept>{1, L"deleteTimer"},
       Method<void(bool) noexcept>{2, L"setSendIdleEvents"},
   };

@@ -15,12 +15,12 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{0, L"getCurrentBoldTextState"},
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{1, L"getCurrentGrayscaleState"},
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{2, L"getCurrentInvertColorsState"},
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{3, L"getCurrentReduceMotionState"},
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{4, L"getCurrentReduceTransparencyState"},
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{5, L"getCurrentVoiceOverState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{0, L"getCurrentBoldTextState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{1, L"getCurrentGrayscaleState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{2, L"getCurrentInvertColorsState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{3, L"getCurrentReduceMotionState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{4, L"getCurrentReduceTransparencyState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{5, L"getCurrentVoiceOverState"},
       Method<void(JSValueObject) noexcept>{6, L"setAccessibilityContentSizeMultipliers"},
       Method<void(double) noexcept>{7, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{8, L"announceForAccessibility"},

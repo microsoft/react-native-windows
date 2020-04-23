@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject,Callback<JSValue>) noexcept>{0, L"showActionSheetWithOptions"},
-      Method<void(JSValueObject,Callback<JSValue>,Callback<JSValue>) noexcept>{1, L"showShareActionSheetWithOptions"},
+      Method<void(JSValueObject, Callback<JSValue>) noexcept>{0, L"showActionSheetWithOptions"},
+      Method<void(JSValueObject, Callback<JSValue>, Callback<JSValue>) noexcept>{1, L"showShareActionSheetWithOptions"},
   };
 
   template <class TModule>

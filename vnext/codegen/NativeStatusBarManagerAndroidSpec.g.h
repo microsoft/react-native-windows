@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct StatusBarManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(double,bool) noexcept>{0, L"setColor"},
+      Method<void(double, bool) noexcept>{0, L"setColor"},
       Method<void(bool) noexcept>{1, L"setTranslucent"},
       Method<void(std::string) noexcept>{2, L"setStyle"},
       Method<void(bool) noexcept>{3, L"setHidden"},

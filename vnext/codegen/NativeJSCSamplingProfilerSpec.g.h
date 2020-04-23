@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct JSCSamplingProfilerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(double,std::string,std::string) noexcept>{0, L"operationComplete"},
+      Method<void(double, std::string, std::string) noexcept>{0, L"operationComplete"},
   };
 
   template <class TModule>

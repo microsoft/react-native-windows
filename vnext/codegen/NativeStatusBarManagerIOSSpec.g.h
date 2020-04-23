@@ -19,8 +19,8 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
       Method<void(bool) noexcept>{1, L"setNetworkActivityIndicatorVisible"},
       Method<void(std::string) noexcept>{2, L"addListener"},
       Method<void(double) noexcept>{3, L"removeListeners"},
-      Method<void(std::string,bool) noexcept>{4, L"setStyle"},
-      Method<void(bool,std::string) noexcept>{5, L"setHidden"},
+      Method<void(std::string, bool) noexcept>{4, L"setStyle"},
+      Method<void(bool, std::string) noexcept>{5, L"setHidden"},
   };
 
   template <class TModule>

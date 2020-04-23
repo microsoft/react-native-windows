@@ -21,9 +21,9 @@ struct MyModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<std::string(std::string) noexcept>{3, L"getString"},
       SyncMethod<JSValueArray(JSValueArray) noexcept>{4, L"getArray"},
       SyncMethod<JSValueObject(JSValueObject) noexcept>{5, L"getObject"},
-      SyncMethod<JSValueObject(double,std::string,JSValueObject) noexcept>{6, L"getValue"},
+      SyncMethod<JSValueObject(double, std::string, JSValueObject) noexcept>{6, L"getValue"},
       Method<void(Callback<JSValue>) noexcept>{7, L"getValueWithCallback"},
-      Method<void(bool,Promise<React::JSValue>) noexcept>{8, L"getValueWithPromise"},
+      Method<void(bool, Promise<React::JSValue>) noexcept>{8, L"getValueWithPromise"},
   };
 
   template <class TModule>

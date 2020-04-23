@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct HeadlessJsTaskSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(double) noexcept>{0, L"notifyTaskFinished"},
-      Method<void(double,Promise<React::JSValue>) noexcept>{1, L"notifyTaskRetry"},
+      Method<void(double, Promise<React::JSValue>) noexcept>{1, L"notifyTaskRetry"},
   };
 
   template <class TModule>

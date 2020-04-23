@@ -15,9 +15,9 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ToastAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string,double) noexcept>{0, L"show"},
-      Method<void(std::string,double,double) noexcept>{1, L"showWithGravity"},
-      Method<void(std::string,double,double,double,double) noexcept>{2, L"showWithGravityAndOffset"},
+      Method<void(std::string, double) noexcept>{0, L"show"},
+      Method<void(std::string, double, double) noexcept>{1, L"showWithGravity"},
+      Method<void(std::string, double, double, double, double) noexcept>{2, L"showWithGravityAndOffset"},
   };
 
   template <class TModule>

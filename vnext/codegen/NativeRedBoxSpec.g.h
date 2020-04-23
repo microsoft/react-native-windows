@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct RedBoxSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject,std::string) noexcept>{0, L"setExtraData"},
+      Method<void(JSValueObject, std::string) noexcept>{0, L"setExtraData"},
       Method<void() noexcept>{1, L"dismiss"},
   };
 

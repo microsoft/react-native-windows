@@ -16,10 +16,10 @@ namespace Microsoft::ReactNativeSpecs {
 struct ImageLoaderAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(double) noexcept>{0, L"abortRequest"},
-      Method<void(std::string,Promise<React::JSValue>) noexcept>{1, L"getSize"},
-      Method<void(std::string,JSValueObject,Promise<React::JSValue>) noexcept>{2, L"getSizeWithHeaders"},
-      Method<void(std::string,double,Promise<React::JSValue>) noexcept>{3, L"prefetchImage"},
-      Method<void(JSValueArray,Promise<React::JSValue>) noexcept>{4, L"queryCache"},
+      Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"getSize"},
+      Method<void(std::string, JSValueObject, Promise<React::JSValue>) noexcept>{2, L"getSizeWithHeaders"},
+      Method<void(std::string, double, Promise<React::JSValue>) noexcept>{3, L"prefetchImage"},
+      Method<void(JSValueArray, Promise<React::JSValue>) noexcept>{4, L"queryCache"},
   };
 
   template <class TModule>

@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct NetworkingAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string,std::string,double,JSValueArray,JSValueObject,std::string,bool,double,bool) noexcept>{0, L"sendRequest"},
+      Method<void(std::string, std::string, double, JSValueArray, JSValueObject, std::string, bool, double, bool) noexcept>{0, L"sendRequest"},
       Method<void(double) noexcept>{1, L"abortRequest"},
       Method<void(Callback<JSValue>) noexcept>{2, L"clearCookies"},
       Method<void(std::string) noexcept>{3, L"addListener"},

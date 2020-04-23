@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct HeapCaptureSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string) noexcept>{0, L"captureHeap"},
-      Method<void(std::string,std::string) noexcept>{1, L"captureComplete"},
+      Method<void(std::string, std::string) noexcept>{1, L"captureComplete"},
   };
 
   template <class TModule>

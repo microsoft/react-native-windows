@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct FileReaderModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject,Promise<React::JSValue>) noexcept>{0, L"readAsDataURL"},
-      Method<void(JSValueObject,std::string,Promise<React::JSValue>) noexcept>{1, L"readAsText"},
+      Method<void(JSValueObject, Promise<React::JSValue>) noexcept>{0, L"readAsDataURL"},
+      Method<void(JSValueObject, std::string, Promise<React::JSValue>) noexcept>{1, L"readAsText"},
   };
 
   template <class TModule>

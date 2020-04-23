@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string,std::string) noexcept>{0, L"onFinishRemoteNotification"},
+      Method<void(std::string, std::string) noexcept>{0, L"onFinishRemoteNotification"},
       Method<void(double) noexcept>{1, L"setApplicationIconBadgeNumber"},
       Method<void(Callback<JSValue>) noexcept>{2, L"getApplicationIconBadgeNumber"},
-      Method<void(JSValueObject,Promise<React::JSValue>) noexcept>{3, L"requestPermissions"},
+      Method<void(JSValueObject, Promise<React::JSValue>) noexcept>{3, L"requestPermissions"},
       Method<void() noexcept>{4, L"abandonPermissions"},
       Method<void(Callback<JSValue>) noexcept>{5, L"checkPermissions"},
       Method<void(JSValueObject) noexcept>{6, L"presentLocalNotification"},

@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AppStateSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<JSValue>,Callback<JSValue>) noexcept>{0, L"getCurrentAppState"},
+      Method<void(Callback<JSValue>, Callback<JSValue>) noexcept>{0, L"getCurrentAppState"},
       Method<void(std::string) noexcept>{1, L"addListener"},
       Method<void(double) noexcept>{2, L"removeListeners"},
   };

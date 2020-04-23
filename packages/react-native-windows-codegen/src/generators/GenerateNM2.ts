@@ -264,7 +264,7 @@ function renderProperties(
         return `      ${
           isMethodSync(prop) ? 'Sync' : ''
         }Method<${translatedReturnParam}(${traversedArgs.join(
-          ',',
+          ', ',
         )}) noexcept>{${index}, L"${prop.name}"},`;
       } else {
         return `    REACT_SHOW_METHOD_SPEC_ERRORS(
