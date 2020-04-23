@@ -210,7 +210,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         spThis);
 
     cxxModules.emplace_back(
-        ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, m_batchingUIThread);
+        ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, m_batchingNativeThread);
 
     cxxModules.emplace_back(
         DevSettingsModule::name, []() { return std::make_unique<DevSettingsModule>(); }, m_batchingNativeThread);
