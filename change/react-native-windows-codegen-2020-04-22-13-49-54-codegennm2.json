@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Initial react-native-windows-codegen",
-  "packageName": "react-native-windows-codegen",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-22T20:49:54.580Z"
-}
