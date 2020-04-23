@@ -513,7 +513,7 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
 
 std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
   // Live reload is enabled if we provide a callback function.
-  if (m_options.DeveloperSettings.UseLiveReload) {
+  if (m_options.DeveloperSettings.UseLiveReload || m_options.DeveloperSettings.UseFastRefresh) {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnLiveReload);
   }
   return std::function<void()>{};

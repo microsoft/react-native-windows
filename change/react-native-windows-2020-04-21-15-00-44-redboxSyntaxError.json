@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Handle syntax errors in RedBox",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-21T22:00:44.285Z"
-}

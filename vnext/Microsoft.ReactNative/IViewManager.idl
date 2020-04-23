@@ -40,7 +40,7 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithNativeProperties
   {
-    Windows.Foundation.Collections.IMapView<String, ViewManagerPropertyType> NativeProps { get; };
+    IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
     void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, IJSValueReader propertyMapReader);
   }
@@ -48,9 +48,9 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithCommands
   {
-    Windows.Foundation.Collections.IMapView<String, Int64> Commands { get; };
+    IVectorView<String> Commands { get; };
 
-    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, IJSValueReader commandArgsReader);
+    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
   }
 
   [webhosthidden]

@@ -34,7 +34,7 @@ EXPORTS
 ?createIUIManager@react@facebook@@YA?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@$$QEAV?$vector@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@V?$allocator@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@@2@@4@PEAUINativeUIManager@12@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 ?destroy@dynamic@folly@@AEAAXXZ
-?dispatchCommand@ShadowNode@react@facebook@@UEAAX_JAEBUdynamic@folly@@@Z
+?dispatchCommand@ShadowNode@react@facebook@@UEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@folly@@@Z
 ?getModuleRegistry@Instance@react@facebook@@QEAAAEAVModuleRegistry@23@XZ
 ?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ?get_ptrImpl@dynamic@folly@@AEGBAPEBU12@AEBU12@@Z

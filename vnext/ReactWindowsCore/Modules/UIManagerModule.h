@@ -43,7 +43,9 @@ class UIManager : public IUIManager, INativeUIManagerHost {
       folly::dynamic &addChildTags,
       folly::dynamic &addAtIndices,
       folly::dynamic &removeFrom) override;
-  void dispatchViewManagerCommand(int64_t reactTag, int64_t commandId, folly::dynamic &&commandArgs) override;
+
+  void dispatchViewManagerCommand(int64_t reactTag, const std::string &commandId, folly::dynamic &&commandArgs)
+      override;
   void replaceExistingNonRootView(int64_t oldTag, int64_t newTag) override;
   void onBatchComplete() override;
   void measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) override;

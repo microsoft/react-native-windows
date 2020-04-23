@@ -63,7 +63,10 @@ class EmptyUIManager {
       std::function<void()> /*final Callback*/ callback);
   void setJSResponder(int64_t reactTag, bool blockNativeResponder);
   void clearJSResponder();
-  void dispatchViewManagerCommand(int64_t reactTag, int64_t commandId, folly::dynamic /*ReadableMap*/ commandArgs);
+  void dispatchViewManagerCommand(
+      int64_t reactTag,
+      const std::string &commandId,
+      folly::dynamic /*ReadableMap*/ commandArgs);
   void showPopupMenu(
       int64_t reactTag,
       folly::dynamic /*ReadableMap*/ items,

@@ -320,7 +320,10 @@ void UIManager::replaceExistingNonRootView(int64_t oldTag, int64_t newTag) {
   manageChildren(parent.m_tag, emptyVec, emptyVec, tagToAdd, indicesToAdd, indicesToRemove);
 }
 
-void UIManager::dispatchViewManagerCommand(int64_t reactTag, int64_t commandId, folly::dynamic &&commandArgs) {
+void UIManager::dispatchViewManagerCommand(
+    int64_t reactTag,
+    const std::string &commandId,
+    folly::dynamic &&commandArgs) {
   m_nativeUIManager->ensureInBatch();
   auto &node = m_nodeRegistry.getNode(reactTag);
   if (!node.m_zombie)
@@ -507,8 +510,11 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
       Method(
           "dispatchViewManagerCommand",
           [manager](dynamic args) {
+            // 0.61 allows directly dispatching command names instead of querying the ViewManager for the command ID.
+            // In stock React Native, integer commands are deprecated but not yet removed. RNW APIs only allow strings,
+            // and provide command constants as their literal string.
             manager->dispatchViewManagerCommand(
-                jsArgAsInt(args, 0), jsArgAsInt(args, 1), std::move(jsArgAsDynamic(args, 2)));
+                jsArgAsInt(args, 0), jsArgAsString(args, 1), std::move(jsArgAsDynamic(args, 2)));
           }),
       Method("measure", [manager](dynamic args, Callback cb) { manager->measure(jsArgAsInt(args, 0), cb); }),
       Method(

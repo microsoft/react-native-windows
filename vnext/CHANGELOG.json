@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Apr 2020 00:04:37 GMT",
+      "tag": "react-native-windows_v0.0.0-master.46",
+      "version": "0.0.0-master.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Hook up to packager websocket to allow 'r' to reload instance",
+            "author": "acoates@microsoft.com",
+            "commit": "2fad67bf25bc6eff90417cff91493d9479db5076",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Handle syntax errors in RedBox",
+            "author": "asklar@microsoft.com",
+            "commit": "16a4ede863a147bf2b473b1eb3b85e6b19c3cb72",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Publish ship and debug bits in the nuget",
+            "author": "acoates@microsoft.com",
+            "commit": "b35cc97adef395d7b9886425ef3b12ccd5cec6ee",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement String ViewManager Command IDs",
+            "author": "ngerlem@microsoft.com",
+            "commit": "509b9e5a57f6d032f2422ead1e09207f10855cbd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2020 00:04:29 GMT",
       "tag": "react-native-windows_v0.0.0-master.45",
       "version": "0.0.0-master.45",
