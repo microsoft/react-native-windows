@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity name="Microsoft.ReactNative.IntegrationTests" type="win32" version="1.0.0.0" />
+
+  <file name="Microsoft.ReactNative.dll">
+    <activatableClass
+        name="Microsoft.ReactNative.ReactNativeHost"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+  </file>
+
+</assembly>
