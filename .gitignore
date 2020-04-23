@@ -157,3 +157,5 @@ bld/
 
 tsdoc-metadata.json
 *.dmp
+**/errorShots
+**/appium.txt

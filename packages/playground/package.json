@@ -10,6 +10,7 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
+    "chalk": "^4.0.0",
     "react": "16.9.0",
     "react-native": "0.62.2",
     "react-native-windows": "0.0.0-master.46"
