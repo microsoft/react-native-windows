@@ -169,7 +169,9 @@ async function addOverride(overridePath: string) {
 
   const overrideDetails = await OverridePrompt.askForDetails(relOverride);
 
-  const spinner = ora('Adding override (This may take a while on first run)').start();
+  const spinner = ora(
+    'Adding override (This may take a while on first run)',
+  ).start();
   await spinnerGuard(spinner, async () => {
     await manifest.addOverride(
       overrideDetails.type,

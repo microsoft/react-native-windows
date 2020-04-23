@@ -36,22 +36,23 @@ async function promptOverrideType(): Promise<OverrideType> {
       message: 'Override type:',
       choices: [
         {
-          name: 'Derived from upstream      (E.g. a Windows implementation of an existing component)',
+          name:
+            'Derived from upstream      (E.g. a Windows implementation of an existing component)',
           value: 'derived',
-          short: 'Derived'
+          short: 'Derived',
         },
         {
           name: 'Patches to upstream        (E.g. commenting out code)',
           value: 'patch',
-          short: 'Patch'
+          short: 'Patch',
         },
         {
           name: 'Independent platform logic (E.g. Windows-specific modules)',
           value: 'platform',
-          short: 'Platform'
+          short: 'Platform',
         },
       ],
-    }
+    },
   ]);
 
   return response.type;
@@ -66,7 +67,7 @@ async function promptDerivedDetails(): Promise<Details> {
       name: 'codeCopied',
       default: true,
       message: 'Does the derived file copy code from upstream?',
-    }
+    },
   ]);
 
   if (copiedResponse.codeCopied) {
@@ -112,6 +113,8 @@ async function promptPatchDetails(overrideFile: string): Promise<Details> {
   return {type: 'patch', baseFile, issue: response.issue};
 }
 
-function validateIssueNumber(answer: string) : boolean | string {
-  return Number.isInteger(Number.parseInt(answer)) || 'Github issue must be a number';
+function validateIssueNumber(answer: string): boolean | string {
+  return (
+    Number.isInteger(Number.parseInt(answer)) || 'Github issue must be a number'
+  );
 }
