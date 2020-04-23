@@ -1,8 +1,11 @@
 
-/**
+/*
  * This file is auto-generated from a NativeModule spec file in js.
+ *
+ * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
+ * in a way that also verifies at compile time that the native module matches the interface required
+ * by the TurboModule JS spec.
  */
-
 #pragma once
 
 #include "NativeModules.h"
@@ -10,11 +13,6 @@
 
 namespace SampleLibraryCpp {
 
-/*
- * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
- * in a way that also verifies at compile time that the native module matches the interface required
- * by the TurboModule JS spec.
- */
 struct MyModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"voidFunc"},
@@ -78,6 +76,7 @@ struct MyModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(getValueWithPromise) void getValueWithPromise(bool error, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}",
           "    REACT_METHOD(getValueWithPromise) static void getValueWithPromise(bool error, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}");
   }
-};
 
 } // namespace SampleLibraryCpp
+
+};

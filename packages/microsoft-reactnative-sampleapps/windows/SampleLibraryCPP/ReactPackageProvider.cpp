@@ -11,10 +11,9 @@
 #include "CustomUserControlViewManagerCpp.h"
 #include "SampleModuleCpp.h"
 
-// Import generated definitions
-#include "..\..\codegen\NativeModules.g.h"
+// Generated spec files
+#include "..\..\codegen\NativeMyModuleSpec.g.h"
 
-// Import impls of modules
 #include "MyModule.h"
 
 using namespace winrt::Microsoft::ReactNative;

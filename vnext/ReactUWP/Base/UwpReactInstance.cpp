@@ -14,6 +14,7 @@
 // Modules
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Threading/JSQueueThread.h>
 #include <Threading/UIMessageQueueThread.h>
@@ -207,6 +208,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         std::move(appTheme),
         std::move(appearanceListener),
         spThis);
+
+    cxxModules.emplace_back(
+        ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, m_batchingUIThread);
 
     cxxModules.emplace_back(
         DevSettingsModule::name, []() { return std::make_unique<DevSettingsModule>(); }, m_batchingNativeThread);

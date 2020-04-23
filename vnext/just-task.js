@@ -36,6 +36,12 @@ task('apiDocumenter', () => {
   );
 });
 
+task('codegen', () => {
+  execSync(
+    'npx react-native-windows-codegen --files Libraries/**/Native*.js --namespace Microsoft::ReactNativeSpecs',
+  );
+});
+
 task('flow-check', () => {
   require('child_process').execSync('npx flow check', {stdio: 'inherit'});
 });
@@ -80,6 +86,7 @@ task(
     'initRNLibraries',
     'copyFlowFiles',
     'ts',
+    'codegen',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );
