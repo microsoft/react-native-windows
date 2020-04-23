@@ -19,6 +19,7 @@ const {
   apiExtractorUpdateTask,
   cleanTask,
 } = require('just-scripts');
+const {execSync} = require('child_process');
 const libPath = path.resolve(process.cwd(), 'lib');
 const srcPath = path.resolve(process.cwd(), 'src');
 
