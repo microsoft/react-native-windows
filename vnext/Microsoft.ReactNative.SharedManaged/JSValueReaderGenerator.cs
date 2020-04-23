@@ -99,6 +99,9 @@ namespace Microsoft.ReactNative.Managed
     static TypeWrapper ReadValueDelegateOf(Type typeArg) =>
       new TypeWrapper(typeof(ReadValueDelegate<>).MakeGenericType(typeArg));
 
+    static TypeWrapper ReadClassDelegateOf(Type typeArg) =>
+      new TypeWrapper(typeof(ReadClassDelegate<>).MakeGenericType(typeArg));
+
     static MethodInfo ReadValueOf(Type typeArg)
     {
       var readValueNoParamMethod =
@@ -211,13 +214,33 @@ namespace Microsoft.ReactNative.Managed
         : null;
     }
 
+    public static void ReadClass<TClass>(IJSValueReader reader, out TClass value) where TClass : new()
+    {
+      // .Net Native seems to have a bug that does not allow to have 'out' or 'ref' parameters.
+      // We use a return value to work around this issue.
+      value = JSValueReaderReadClassOf<TClass>.ReadClass(reader);
+    }
+
     private static Delegate GenerateReadValueForClass(Type valueType)
+    {
+      var valueTypeInfo = valueType.GetTypeInfo();
+      bool isStruct = valueTypeInfo.IsValueType && !valueTypeInfo.IsEnum;
+      bool isClass = valueTypeInfo.IsClass;
+      if (isStruct || (isClass && valueType.GetConstructor(Type.EmptyTypes) != null))
+      {
+        return MethodOf(nameof(ReadClass), valueType).CreateDelegate(typeof(ReadValueDelegate<>).MakeGenericType(valueType));
+      }
+
+      return null;
+    }
+
+    internal static Delegate GenerateReadClassDelegate(Type classType)
     {
       // Generate code that looks like:
       //
-      // (IJSValueReader reader, out Type value) =>
+      // (IJSValueReader reader) =>
       // {
-      //   value = new Type();
+      //   Type value = new Type();
       //   if (reader.ValueType == JSValueType.Object)
       //   {
       //     while (reader.GetNextObjectProperty(out string propertyName))
@@ -232,41 +255,50 @@ namespace Microsoft.ReactNative.Managed
       //       }
       //     }
       //   }
+      //
+      //   return value;
       // }
 
-      var valueTypeInfo = valueType.GetTypeInfo();
-      bool isStruct = valueTypeInfo.IsValueType && !valueTypeInfo.IsEnum;
-      bool isClass = valueTypeInfo.IsClass;
-      if (isStruct || (isClass && valueType.GetConstructor(Type.EmptyTypes) != null))
-      {
-        var fields =
-          from field in valueType.GetFields(BindingFlags.Public | BindingFlags.Instance)
-          where !field.IsInitOnly
-          select new { field.Name, Type = field.FieldType };
-        var properties =
-          from property in valueType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-          let propertySetter = property.SetMethod
-          where propertySetter.IsPublic
-          select new { property.Name, Type = property.PropertyType };
-        var members = fields.Concat(properties).ToArray();
+      var fields =
+              from field in classType.GetFields(BindingFlags.Public | BindingFlags.Instance)
+        where !field.IsInitOnly
+        select new { field.Name, Type = field.FieldType };
+      var properties =
+        from property in classType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        let propertySetter = property.SetMethod
+        where propertySetter.IsPublic
+        select new { property.Name, Type = property.PropertyType };
+      var members = fields.Concat(properties).ToArray();
 
-        return ReadValueDelegateOf(valueType).CompileLambda(
-          Parameter(typeof(IJSValueReader), out var reader),
-          Parameter(valueType.MakeByRefType(), out var value),
-          value.Assign(New(valueType)),
-          IfThen(Equal(reader.Property(ValueType), Constant(JSValueType.Object)),
-            ifTrue: AutoBlock(
-              Variable(typeof(string), out var propertyName),
-              While(reader.Call(GetNextObjectProperty, propertyName),
-                (members.Length != 0)
-                ? Switch(propertyName,
-                    members.Select(member => SwitchCase(
-                      value.SetPropertyStatement(member.Name, reader.CallExt(ReadValueOf(member.Type))),
-                      Constant(member.Name))).ToArray()) as Expression
-                : Default(typeof(void))))));
-      }
-
-      return null;
+      return ReadClassDelegateOf(classType).CompileLambda(
+        Parameter(typeof(IJSValueReader), out var reader),
+        Variable(classType, out var value, New(classType)),
+        IfThen(Equal(reader.Property(ValueType), Constant(JSValueType.Object)),
+          ifTrue: AutoBlock(
+            Variable(typeof(string), out var propertyName),
+            While(reader.Call(GetNextObjectProperty, propertyName),
+            (members.Length != 0)
+            ? Switch(propertyName,
+                members.Select(member => SwitchCase(
+                  value.SetPropertyStatement(member.Name, reader.CallExt(ReadValueOf(member.Type))),
+                  Constant(member.Name))).ToArray()) as Expression
+            : Default(typeof(void))))),
+        value.AsExpression);
     }
+  }
+
+  //============================================================================
+  // .Net Native has a bug that it fails with a 'ref' parameters in generated
+  // lambdas. To work around this issue we use a return value for a ReadValue
+  // generated against a class or struct.
+  //============================================================================
+
+  delegate T ReadClassDelegate<T>(IJSValueReader reader);
+
+  // This class provides constant time access to the ReadClass delegate.
+  static class JSValueReaderReadClassOf<T>
+  {
+    public static ReadClassDelegate<T> ReadClass =
+      (ReadClassDelegate<T>)JSValueReaderGenerator.GenerateReadClassDelegate(typeof(T));
   }
 }
