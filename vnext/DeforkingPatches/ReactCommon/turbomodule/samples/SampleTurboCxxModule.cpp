@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -15,8 +15,8 @@ namespace facebook {
 namespace react {
 
 SampleTurboCxxModule::SampleTurboCxxModule(
-    std::shared_ptr<JSCallInvoker> jsInvoker)
-    : NativeSampleTurboCxxModuleSpecJSI(jsInvoker) {}
+    std::shared_ptr<CallInvoker> callInvoker)
+    : NativeSampleTurboCxxModuleSpecJSI(callInvoker) {}
 
 void SampleTurboCxxModule::voidFunc(jsi::Runtime &rt) {
   // Nothing to do

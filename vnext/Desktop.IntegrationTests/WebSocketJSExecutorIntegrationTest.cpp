@@ -51,6 +51,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(LoadApplicationScriptSucceeds)
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(LoadApplicationScriptSucceeds) {
     auto jsQueue = make_shared<TestMessageQueueThread>();

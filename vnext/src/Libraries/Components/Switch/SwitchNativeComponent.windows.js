@@ -1,68 +1,59 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * @flow
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow strict-local
  * @format
  */
 
 'use strict';
 
-const Platform = require('../../Utilities/Platform');
-const ReactNative = require('../../Renderer/shims/ReactNative');
-
-const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
-
+import type {BubblingEventHandler, WithDefault} from '../../Types/CodegenTypes';
 import type {ColorValue} from '../../StyleSheet/StyleSheetTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
+import * as React from 'react';
 
-import type {NativeOrDynamicColorType} from '../../Color/NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
+import codegenNativeComponent from '../../Utilities/codegenNativeComponent';
+import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import type {NativeOrDynamicColorType} from '../../StyleSheet/NativeOrDynamicColorType'; // [Windows]
 
 type SwitchChangeEvent = $ReadOnly<{|
   value: boolean,
 |}>;
 
-type SwitchProps = $ReadOnly<{|
+type NativeProps = $ReadOnly<{|
   ...ViewProps,
-  disabled?: ?boolean,
-  onChange?: ?(event: SwitchChangeEvent) => mixed,
-  thumbColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-  trackColorForFalse?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-  trackColorForTrue?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-  value?: ?boolean,
+
+  // Props
+  disabled?: WithDefault<boolean, false>,
+  value?: WithDefault<boolean, false>,
+  tintColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  onTintColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  thumbTintColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+
+  // Deprecated props
+  thumbColor?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  trackColorForFalse?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+  trackColorForTrue?: ?ColorValue | NativeOrDynamicColorType, // [Windows]
+
+  // Events
+  onChange?: ?BubblingEventHandler<SwitchChangeEvent>,
 |}>;
 
-// @see ReactSwitchManager.java
-export type NativeAndroidProps = $ReadOnly<{|
-  ...SwitchProps,
+type ComponentType = HostComponent<NativeProps>;
 
-  enabled?: ?boolean,
-  on?: ?boolean,
-  thumbTintColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-  trackTintColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-|}>;
+interface NativeCommands {
+  +setValue: (viewRef: React.ElementRef<ComponentType>, value: boolean) => void;
+}
 
-// @see RCTSwitchManager.m
-export type NativeIOSProps = $ReadOnly<{|
-  ...SwitchProps,
+export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
+  supportedCommands: ['setValue'],
+});
 
-  onTintColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-  thumbTintColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-  tintColor?: ?(string | NativeOrDynamicColorType), // TODO(macOS ISS#2323203)
-|}>;
-
-type SwitchNativeComponentType = Class<
-  ReactNative.NativeComponent<
-    $ReadOnly<{|
-      ...NativeAndroidProps,
-      ...NativeIOSProps,
-    |}>,
-  >,
->;
-
-const SwitchNativeComponent: SwitchNativeComponentType =
-  Platform.OS === 'android'
-    ? (requireNativeComponent('AndroidSwitch'): any)
-    : (requireNativeComponent('RCTSwitch'): any);
-
-module.exports = SwitchNativeComponent;
+export default (codegenNativeComponent<NativeProps>('Switch', {
+  paperComponentName: 'RCTSwitch',
+  excludedPlatform: 'android',
+}): ComponentType);

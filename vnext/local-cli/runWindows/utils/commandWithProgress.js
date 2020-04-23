@@ -93,6 +93,7 @@ function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
         if (text) {
           setSpinnerText(spinner, taskDoingName + ': ERROR: ', firstErrorLine);
         }
+        reject(new Error(firstErrorLine));
       });
     }
     cp.on('error', e => {

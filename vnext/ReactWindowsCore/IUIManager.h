@@ -44,7 +44,8 @@ class IUIManager {
       folly::dynamic &addChildTags,
       folly::dynamic &addAtIndices,
       folly::dynamic &removeFrom) = 0;
-  virtual void dispatchViewManagerCommand(int64_t reactTag, int64_t commandId, folly::dynamic &&commandArgs) = 0;
+  virtual void
+  dispatchViewManagerCommand(int64_t reactTag, const std::string &commandId, folly::dynamic &&commandArgs) = 0;
   virtual void replaceExistingNonRootView(int64_t oldTag, int64_t newTag) = 0;
   virtual void measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual void measureInWindow(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) = 0;

@@ -8,6 +8,7 @@
 const {
   task,
   series,
+  parallel,
   option,
   argv,
   tscTask,
@@ -15,6 +16,7 @@ const {
 } = require('just-scripts');
 const fs = require('fs');
 const path = require('path');
+const {execSync} = require('child_process');
 
 option('production');
 option('clean');
@@ -36,6 +38,12 @@ task('ts', () => {
   });
 });
 
+task('codegen', () => {
+  execSync(
+    'npx react-native-windows-codegen --file NativeMyModule.js --namespace SampleLibraryCpp',
+  );
+});
+
 function ensureDirectoryExists(filePath) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
@@ -49,6 +57,6 @@ task('prepareBundle', () => {
   ensureDirectoryExists('windows/SampleAppCPP/Bundle');
 });
 
-task('build', series('ts'));
+task('build', parallel('ts', 'codegen'));
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));

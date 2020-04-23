@@ -44,7 +44,7 @@ bool ShadowNodeBase::NeedsForceLayout() {
   return false;
 }
 
-void ShadowNodeBase::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
+void ShadowNodeBase::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   GetViewManager()->DispatchCommand(GetView(), commandId, commandArgs);
 }
 
@@ -92,6 +92,12 @@ void ShadowNodeBase::ReparentView(XamlView view) {
     }
   }
   ReplaceView(view);
+
+  // Let the UIManager know about this so it can update the yoga context.
+  if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
+    auto pNativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
+    pNativeUiManager->ReplaceView(*static_cast<ShadowNode *>(this));
+  }
 }
 
 winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTransformPS() {

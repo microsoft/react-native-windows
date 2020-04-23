@@ -7,6 +7,7 @@
  * @flow
  * @format
  */
+
 'use strict';
 
 const PixelRatio = require('../Utilities/PixelRatio');
@@ -152,7 +153,7 @@ export type ImageStyle = ____ImageStyle_Internal;
  */
 export type DangerouslyImpreciseStyle = ____DangerouslyImpreciseStyle_Internal;
 
-let hairlineWidth =
+let hairlineWidth: number =
   Platform.OS === 'win32' ? 0.5 : PixelRatio.roundToNearestPixel(0.4); // TODO(windows ISS) - Avoid calls to PixelRatio - needs multi window support
 if (hairlineWidth === 0) {
   hairlineWidth = 1 / PixelRatio.get();

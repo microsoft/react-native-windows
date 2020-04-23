@@ -39,53 +39,48 @@ void ControlViewManager::TransferProperties(XamlView oldView, XamlView newView) 
   Super::TransferProperties(oldView, newView);
 }
 
-void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool ControlViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
   bool finalizeBorderRadius{false};
+  bool ret = true;
 
   if (control != nullptr) {
-    for (const auto &pair : reactDiffMap.items()) {
-      const std::string &propertyName = pair.first.getString();
-      const folly::dynamic &propertyValue = pair.second;
-
-      if (TryUpdateBackgroundBrush(control, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateBorderProperties(nodeToUpdate, control, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, control, propertyName, propertyValue)) {
-        finalizeBorderRadius = true;
-        continue;
-      } else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue)) {
-        continue;
-      } else if (propertyName == "tabIndex") {
-        if (propertyValue.isNumber()) {
-          auto tabIndex = propertyValue.asDouble();
-          if (tabIndex == static_cast<int32_t>(tabIndex)) {
-            if (tabIndex < 0) {
-              control.IsTabStop(false);
-              control.ClearValue(winrt::Control::TabIndexProperty());
-            } else {
-              control.IsTabStop(true);
-              control.TabIndex(static_cast<int32_t>(tabIndex));
-            }
+    if (TryUpdateBackgroundBrush(control, propertyName, propertyValue)) {
+    } else if (TryUpdateBorderProperties(nodeToUpdate, control, propertyName, propertyValue)) {
+    } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
+    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, control, propertyName, propertyValue)) {
+      finalizeBorderRadius = true;
+    } else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue)) {
+    } else if (propertyName == "tabIndex") {
+      if (propertyValue.isNumber()) {
+        auto tabIndex = propertyValue.asDouble();
+        if (tabIndex == static_cast<int32_t>(tabIndex)) {
+          if (tabIndex < 0) {
+            control.IsTabStop(false);
+            control.ClearValue(winrt::Control::TabIndexProperty());
+          } else {
+            control.IsTabStop(true);
+            control.TabIndex(static_cast<int32_t>(tabIndex));
           }
-        } else if (propertyValue.isNull()) {
-          control.ClearValue(winrt::Control::TabIndexProperty());
         }
+      } else if (propertyValue.isNull()) {
+        control.ClearValue(winrt::Control::TabIndexProperty());
       }
+    } else {
+      ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 
   if (finalizeBorderRadius && control.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
     // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
   }
+  return ret;
 }
 
 void ControlViewManager::OnViewCreated(XamlView view) {

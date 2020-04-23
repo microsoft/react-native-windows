@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Windows.UI.Xaml;
@@ -192,27 +193,21 @@ namespace Microsoft.ReactNative.Managed
 
     #region Commands
 
-    public virtual IReadOnlyDictionary<string, long> Commands
+    public virtual IReadOnlyList<string> Commands
     {
       get
       {
         if (null == _commands)
         {
-          var commands = new Dictionary<string, long>();
+          _commands = ViewManagerCommands.Keys.ToList();
 
-          foreach (var kvp in ViewManagerCommands)
-          {
-            commands.Add(kvp.Value.CommandName, kvp.Value.CommandId);
-          }
-
-          _commands = commands;
         }
         return _commands;
       }
     }
-    private IReadOnlyDictionary<string, long> _commands;
+    private IReadOnlyList<string> _commands;
 
-    public virtual void DispatchCommand(FrameworkElement view, long commandId, IJSValueReader commandArgsReader)
+    public virtual void DispatchCommand(FrameworkElement view, string commandId, IJSValueReader commandArgsReader)
     {
       if (view is TFrameworkElement viewAsT)
       {
@@ -227,13 +222,13 @@ namespace Microsoft.ReactNative.Managed
       }
     }
 
-    internal Dictionary<long, ViewManagerCommand<TFrameworkElement>> ViewManagerCommands
+    internal Dictionary<string, ViewManagerCommand<TFrameworkElement>> ViewManagerCommands
     {
       get
       {
         if (null == _viewManagerCommands)
         {
-          var viewManagerCommands = new Dictionary<long, ViewManagerCommand<TFrameworkElement>>();
+          var viewManagerCommands = new Dictionary<string, ViewManagerCommand<TFrameworkElement>>();
 
           foreach (var methodInfo in GetType().GetTypeInfo().DeclaredMethods)
           {
@@ -243,10 +238,9 @@ namespace Microsoft.ReactNative.Managed
               var command = new ViewManagerCommand<TFrameworkElement>
               {
                 CommandName = commandAttribute.CommandName ?? methodInfo.Name,
-                CommandId = viewManagerCommands.Count,
                 CommandMethod = MakeReaderMethod(methodInfo)
               };
-              viewManagerCommands.Add(command.CommandId, command);
+              viewManagerCommands.Add(command.CommandName, command);
             }
           }
 
@@ -255,12 +249,11 @@ namespace Microsoft.ReactNative.Managed
         return _viewManagerCommands;
       }
     }
-    private Dictionary<long, ViewManagerCommand<TFrameworkElement>> _viewManagerCommands;
+    private Dictionary<string, ViewManagerCommand<TFrameworkElement>> _viewManagerCommands;
 
     internal struct ViewManagerCommand<U> where U : TFrameworkElement
     {
       public string CommandName;
-      public long CommandId;
       public Action<U, IJSValueReader> CommandMethod;
     }
 

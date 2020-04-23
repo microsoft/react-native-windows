@@ -5,6 +5,7 @@
  */
 'use strict';
 
+import {NativeEventEmitter, NativeModules} from 'react-native';
 import {
   AppThemeTypes,
   IAppThemeChangedEvent,
@@ -12,6 +13,50 @@ import {
   IHighContrastChangedEvent,
 } from './AppThemeTypes';
 const invariant = require('invariant');
+
+const NativeAppTheme = NativeModules.RTCAppTheme;
+
+class AppThemeModule extends NativeEventEmitter {
+  public isAvailable: boolean;
+  private _isHighContrast: boolean;
+  private _currentTheme: AppThemeTypes;
+  private _highContrastColors: IHighContrastColors;
+
+  constructor() {
+    super(NativeAppTheme);
+    this.isAvailable = true;
+
+    this._highContrastColors = NativeAppTheme.initialHighContrastColors;
+    this._isHighContrast = NativeAppTheme.initialHighContrast;
+    this.addListener(
+      'highContrastChanged',
+      (nativeEvent: IHighContrastChangedEvent) => {
+        this._isHighContrast = nativeEvent.isHighContrast;
+        this._highContrastColors = nativeEvent.highContrastColors;
+      },
+    );
+
+    this._currentTheme = NativeAppTheme.initialAppTheme;
+    this.addListener(
+      'appThemeChanged',
+      ({currentTheme}: {currentTheme: AppThemeTypes}) => {
+        this._currentTheme = currentTheme;
+      },
+    );
+  }
+
+  get currentTheme(): AppThemeTypes {
+    return this._currentTheme;
+  }
+
+  get isHighContrast(): boolean {
+    return this._isHighContrast;
+  }
+
+  get currentHighContrastColors(): IHighContrastColors {
+    return this._highContrastColors;
+  }
+}
 
 function throwMissingNativeModule() {
   invariant(
@@ -23,9 +68,9 @@ function throwMissingNativeModule() {
 
 // This module depends on the native `RCTAppTheme` module. If you don't include it,
 // `AppTheme.isAvailable` will return `false`, and any method calls will throw.
-class AppThemeModule {
+class MissingNativeAppThemeShim {
   public isAvailable = false;
-  public currentTheme: AppThemeTypes = 'light';
+  public currentTheme = '';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
 
@@ -65,5 +110,7 @@ class AppThemeModule {
   }
 }
 
-export const AppTheme = new AppThemeModule();
 export type AppTheme = AppThemeModule;
+export const AppTheme = NativeAppTheme
+  ? new AppThemeModule()
+  : new MissingNativeAppThemeShim();

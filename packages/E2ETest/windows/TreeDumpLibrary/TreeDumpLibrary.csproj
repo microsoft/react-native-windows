@@ -106,13 +106,17 @@
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DefaultVisualTreeLogger.cs" />
+    <Compile Include="IPropertyValueTranslator.cs" />
+    <Compile Include="IVisualTreeLogger.cs" />
+    <Compile Include="JsonVisualTreeLogger.cs" />
     <Compile Include="TreeDumpControlViewManager.cs" />
     <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="VisualTreeDumper.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

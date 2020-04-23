@@ -169,7 +169,9 @@ async function addOverride(overridePath: string) {
 
   const overrideDetails = await OverridePrompt.askForDetails(relOverride);
 
-  const spinner = ora('Adding override').start();
+  const spinner = ora(
+    'Adding override (This may take a while on first run)',
+  ).start();
   await spinnerGuard(spinner, async () => {
     await manifest.addOverride(
       overrideDetails.type,
@@ -180,7 +182,7 @@ async function addOverride(overridePath: string) {
 
     const manifestData = manifest.getAsData();
     await ManifestData.writeToFile(manifestData, manifestPath);
-    spinner.succeed();
+    spinner.succeed('Adding override');
   });
 }
 
@@ -188,8 +190,6 @@ async function addOverride(overridePath: string) {
  * Remove an override from the manifest
  */
 async function removeOverride(overridePath: string) {
-  await checkFileExists('override', overridePath);
-
   const manifestPath = await FileSearch.findManifest(overridePath);
   const manifestDir = path.dirname(manifestPath);
 
@@ -330,7 +330,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (filesMissing.length > 0) {
     const errorMessage =
-      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'yarn override add <override>':";
+      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'yarn override add <override>' (where override is package relative):";
     console.error(chalk.red(errorMessage));
     filesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -338,7 +338,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (overridesMissing.length > 0) {
     const errorMessage =
-      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>':";
+      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>' (where override is package relative):";
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -346,7 +346,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (baseFilesNotFound.length > 0) {
     const errorMessage =
-      "Found overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>':";
+      "Found overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>' (where override is package relative):";
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -354,7 +354,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (outOfDateFiles.length > 0) {
     const errorMessage =
-      "Found overrides whose original files have changed. Upgrade overrides using 'yarn override auto-upgrade <override>' and 'yarn override manual-upgrade <override>':";
+      "Found overrides whose original files have changed. Upgrade overrides using 'yarn override auto-upgrade <manifest>' and 'yarn override manual-upgrade <manifest>' (where manifest is package relative):";
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();

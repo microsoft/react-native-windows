@@ -20,7 +20,7 @@
 
 #define INTERNAL_REACT_STRUCT(structType)                                                  \
   struct structType;                                                                       \
-  winrt::Microsoft::ReactNative::FieldMap GetStructInfo(structType *) noexcept {           \
+  inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(structType *) noexcept {    \
     winrt::Microsoft::ReactNative::FieldMap fieldMap{};                                    \
     winrt::Microsoft::ReactNative::CollectStructFields<structType, __COUNTER__>(fieldMap); \
     return fieldMap;                                                                       \

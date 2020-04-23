@@ -1,0 +1,20 @@
+{
+  "name": "react-native-windows-codegen",
+  "entries": [
+    {
+      "date": "Thu, 23 Apr 2020 00:04:37 GMT",
+      "tag": "react-native-windows-codegen_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Initial react-native-windows-codegen",
+            "author": "acoates@microsoft.com",
+            "commit": "dcccb2c4d84ff530de5a80ac7e947c3287dff5ab",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    }
+  ]
+}

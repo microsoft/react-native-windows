@@ -2,6 +2,51 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 18 Apr 2020 00:04:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implelent Shared StatusBarManagerModule and Do Module Cleanup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "609c18ca016e9e4b5831890bad56309f02280566",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 22:26:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use a custom resolver wrapper to allow metro to run for multiple platforms at once",
+            "author": "acoates@microsoft.com",
+            "commit": "d53d06aec7ddb8a17480a5e8dc9522e115792a64",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 14:59:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.4",
+      "version": "0.0.0-master.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to React Native 0.62",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ae37f8e7518f808116ce906a7f7b32f00412612d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2020 20:28:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
       "version": "0.0.0-master.3",

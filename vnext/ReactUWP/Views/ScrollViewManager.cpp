@@ -11,10 +11,10 @@
 namespace react {
 namespace uwp {
 
-enum class ScrollViewCommands {
-  ScrollTo = 1,
-  ScrollToEnd,
-};
+namespace ScrollViewCommands {
+constexpr const char *ScrollTo = "scrollTo";
+constexpr const char *ScrollToEnd = "scrollToEnd";
+}; // namespace ScrollViewCommands
 
 class ScrollViewShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -22,7 +22,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
  public:
   ScrollViewShadowNode();
   ~ScrollViewShadowNode();
-  void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) override;
+  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
 
@@ -65,28 +65,23 @@ ScrollViewShadowNode::~ScrollViewShadowNode() {
   m_SIPEventHandler.reset();
 }
 
-void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
+void ScrollViewShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
-  switch (commandId) {
-    case static_cast<int64_t>(ScrollViewCommands::ScrollTo): {
-      double x = commandArgs[0].asDouble();
-      double y = commandArgs[1].asDouble();
-      bool animated = commandArgs[2].asBool();
-      scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
-      break;
-    }
-    case static_cast<int64_t>(ScrollViewCommands::ScrollToEnd): {
-      bool animated = commandArgs[0].asBool();
-      bool horiz = scrollViewer.HorizontalScrollMode() == winrt::ScrollMode::Auto;
-      if (horiz)
-        scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
-      else
-        scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated /*disableAnimation*/);
-      break;
-    }
+  if (commandId == ScrollViewCommands::ScrollTo) {
+    double x = commandArgs[0].asDouble();
+    double y = commandArgs[1].asDouble();
+    bool animated = commandArgs[2].asBool();
+    scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
+  } else if (commandId == ScrollViewCommands::ScrollToEnd) {
+    bool animated = commandArgs[0].asBool();
+    bool horiz = scrollViewer.HorizontalScrollMode() == winrt::ScrollMode::Auto;
+    if (horiz)
+      scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
+    else
+      scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated /*disableAnimation*/);
   }
 }
 
@@ -413,11 +408,10 @@ const char *ScrollViewManager::GetName() const {
 }
 
 folly::dynamic ScrollViewManager::GetCommands() const {
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object(
-      "scrollTo", static_cast<std::underlying_type_t<ScrollViewCommands>>(ScrollViewCommands::ScrollTo))(
-      "scrollToEnd", static_cast<std::underlying_type_t<ScrollViewCommands>>(ScrollViewCommands::ScrollToEnd)));
-  return commands;
+  // Upstream JS will dispatch the string directly instead of ever actually calling this, but providing a real
+  // implementation is simple enough in case anything changes.
+  return folly::dynamic::object(ScrollViewCommands::ScrollTo, ScrollViewCommands::ScrollTo)(
+      ScrollViewCommands::ScrollToEnd, ScrollViewCommands::ScrollToEnd);
 }
 
 folly::dynamic ScrollViewManager::GetNativeProps() const {
