@@ -15,7 +15,7 @@ namespace Microsoft::ReactNative {
     std::wstring text = std::wstring(co_await data.GetTextAsync());
     result.Resolve(React::JSValue{Microsoft::Common::Unicode::Utf16ToUtf8(text)});
   } catch (winrt::hresult_error const &e) {
-    result.Reject(e.message);
+    result.Reject(std::wstring(e.message()).c_str());
   } catch (...) {
     result.Reject(React::ReactError());
   }

@@ -229,7 +229,6 @@ function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
     prop.typeAnnotation.returnTypeAnnotation,
   )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
-  // Return more options once the macro is fixed
   return [sig, staticsig];
 }
 
