@@ -66,8 +66,7 @@ inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[Shado
   return thickness;
 }
 
-inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(
-    double cornerRadii[ShadowCorners::CountCorners]) {
+inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::CountCorners]) {
   winrt::Windows::UI::Xaml::CornerRadius cornerRadius;
   const double defaultRadius = std::max<double>(0, cornerRadii[ShadowCorners::AllCorners]);
   double topStartRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopLeft], cornerRadii[ShadowCorners::TopStart]);
@@ -88,16 +87,14 @@ inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(
 template <class T>
 void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
   node->m_padding[edge] = margin;
-  winrt::Thickness thickness =
-      GetThickness(node->m_padding);
+  winrt::Thickness thickness = GetThickness(node->m_padding);
   element.Padding(thickness);
 }
 
 template <class T>
 void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
   node->m_border[edge] = margin;
-  winrt::Thickness thickness =
-      GetThickness(node->m_border);
+  winrt::Thickness thickness = GetThickness(node->m_border);
   element.BorderThickness(thickness);
 }
 
@@ -134,8 +131,7 @@ UpdateCornerRadiusValueOnNode(ShadowNodeBase *node, ShadowCorners corner, const 
 
 template <class T>
 void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
-  winrt::CornerRadius cornerRadius =
-      GetCornerRadius(node->m_cornerRadius);
+  winrt::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius);
   element.CornerRadius(cornerRadius);
 }
 
