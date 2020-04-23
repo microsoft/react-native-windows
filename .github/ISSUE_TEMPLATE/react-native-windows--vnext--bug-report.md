@@ -15,6 +15,7 @@ assignees: ''
 If you are using latest version:
 1. `react-native -v`:
 2. `react-native run-windows --info`:
+3. `reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"`
 
 Otherwise if `--info` doesn't exist:
 1. `react-native -v`:
