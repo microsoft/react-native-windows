@@ -19,6 +19,7 @@ const {
   apiExtractorUpdateTask,
   cleanTask,
 } = require('just-scripts');
+const {execSync} = require('child_process');
 const libPath = path.resolve(process.cwd(), 'lib');
 const srcPath = path.resolve(process.cwd(), 'src');
 
@@ -33,6 +34,12 @@ task('apiDocumenter', () => {
   require('child_process').execSync(
     'npx @microsoft/api-documenter markdown -i temp -o ../docs/api',
     {stdio: 'inherit'},
+  );
+});
+
+task('codegen', () => {
+  execSync(
+    'npx react-native-windows-codegen --files Libraries/**/Native*.js --namespace Microsoft::ReactNativeSpecs',
   );
 });
 
@@ -80,6 +87,7 @@ task(
     'initRNLibraries',
     'copyFlowFiles',
     'ts',
+    'codegen',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );

@@ -80,6 +80,7 @@
   <Import Project="..\JSI\Shared\JSI.Shared.vcxitems" Label="Shared" />
   <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
+  <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -207,7 +208,6 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
     <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\I18nModule.h" />
@@ -280,6 +280,7 @@
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h" />
+    <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
@@ -370,7 +371,6 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp" />
@@ -440,6 +440,7 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="Modules\AppStateData.cpp" />
+    <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">

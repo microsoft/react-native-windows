@@ -87,7 +87,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       ImageViewManagerModule::name,
-      [messageQueue]() { return std::make_unique<ImageViewManagerModule>(messageQueue); },
+      [messageQueue]() { return std::make_unique<ImageViewManagerModule>(); },
       messageQueue);
 
   modules.emplace_back(
@@ -110,8 +110,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       messageQueue);
 
   modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
-
-  modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,
