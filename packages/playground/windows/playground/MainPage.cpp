@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.ViewManagement.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 #include "winrt/Microsoft.ReactNative.h"
 #include "winrt/TreeDumpLibrary.h"
-#include <winrt/Windows.UI.ViewManagement.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.Automation.h>
-#include <winrt/Windows.System.h>
 
 using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
@@ -89,49 +89,44 @@ static Windows::System::DispatcherQueueTimer timer{nullptr};
 static hstring lastPageName{};
 
 void MainPage::SetUpTreeDump() {
-    auto str = TreeDumpLibrary::VisualTreeDumper::DumpTree(m_reactRootView, nullptr, {}, TreeDumpLibrary::DumpTreeMode::Json);
+  if (timer == nullptr) {
+    auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
+    timer = dispatcher.CreateTimer();
+    timer.IsRepeating(true);
+    timer.Interval(std::chrono::milliseconds(200));
+    timer.Tick([=](auto &&, auto &&) {
+      auto name = GetCurentPageName(m_reactRootView);
+      auto text = x_TreeDump().Text();
+      if ((lastPageName != name) || (text != L"OK")) {
+        Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
+        auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
+        auto currentMS = std::chrono::duration_cast<std::chrono::milliseconds>(timer.Interval() * 2).count();
+        timer.Interval(std::chrono::milliseconds(std::min(3000ll, currentMS)));
+        x_TreeDump().Foreground(ok);
+        x_TreeDump().Text(L"...");
+        lastPageName = name;
+        TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
+            .Completed([=](const IAsyncOperation<bool> &ao, auto &&) {
+              bool matches = false;
 
-    if (timer == nullptr) {
-      auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
-      timer = dispatcher.CreateTimer();
-      timer.IsRepeating(true);
-      timer.Interval(std::chrono::milliseconds(200));
-      timer.Tick([=](auto &&, auto &&) {
-        auto name = GetCurentPageName(m_reactRootView);
-        auto text = x_TreeDump().Text();
-        if ((lastPageName != name) || (text != L"OK")) {
-            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1280, 1024));
-            auto ok = SolidColorBrush(ColorHelper::FromArgb(0xff, 0, 0xee, 0x40));
-            auto currentMS = std::chrono::duration_cast<std::chrono::milliseconds>(timer.Interval() * 2).count();
-            timer.Interval(std::chrono::milliseconds(std::min(3000ll, currentMS)));
-          x_TreeDump().Foreground(ok);
-          x_TreeDump().Text(L"...");
-          lastPageName = name;
-          TreeDumpLibrary::VisualTreeDumper::DoesTreeDumpMatchForRNTester(m_reactRootView)
-              .Completed([=](const IAsyncOperation<bool> &ao, auto &&) {
-                bool matches = false;
-
-                try {
-                  matches = ao.GetResults();
-                  if (matches) {
-                    timer.Interval(std::chrono::milliseconds(200));
-                  }
-                } catch (winrt::hresult_error &e) {
-                  OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester: ");
-                  OutputDebugString(e.message().data());
-                  OutputDebugString(L"\n");
+              try {
+                matches = ao.GetResults();
+                if (matches) {
+                  timer.Interval(std::chrono::milliseconds(200));
                 }
-                x_TreeDump().Text(matches ? L"OK" : L"ERROR");
-                x_TreeDump().Foreground(matches ? ok : SolidColorBrush(ColorHelper::FromArgb(0xff, 0xee, 00, 40)));
-              });
-        }
-      });
-      timer.Start();
-    }
-
-    
+              } catch (winrt::hresult_error &e) {
+                OutputDebugString(L"Error from DoesTreeDumpMatchForRNTester: ");
+                OutputDebugString(e.message().data());
+                OutputDebugString(L"\n");
+              }
+              x_TreeDump().Text(matches ? L"OK" : L"ERROR");
+              x_TreeDump().Foreground(matches ? ok : SolidColorBrush(ColorHelper::FromArgb(0xff, 0xee, 00, 40)));
+            });
+      }
+    });
+    timer.Start();
+  }
 }
-
 
 void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionChanged(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,

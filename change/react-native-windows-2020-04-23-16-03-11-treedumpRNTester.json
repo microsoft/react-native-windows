@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "RNTester visual tests",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-23T23:03:11.029Z"
+}
