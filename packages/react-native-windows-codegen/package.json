@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-codegen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -17,12 +17,14 @@
   },
   "dependencies": {
     "chalk": "^3",
+    "globby": "^9.2.0",
     "react-native-tscodegen": "0.0.10",
     "react-native-codegen": "0.0.2",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
+    "@types/globby": "^9.1.0",
     "@types/yargs": "^15.0.3",
     "just-scripts": "^0.36.1"
   }

@@ -30,19 +30,19 @@ XamlView RootViewManager::CreateViewCore(int64_t /*tag*/) {
   return nullptr;
 }
 
-void RootViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void RootViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto panel(parent.as<winrt::Panel>());
   if (panel != nullptr)
     panel.Children().InsertAt(static_cast<uint32_t>(index), child.as<winrt::UIElement>());
 }
 
-void RootViewManager::RemoveAllChildren(XamlView parent) {
+void RootViewManager::RemoveAllChildren(const XamlView &parent) {
   auto panel(parent.as<winrt::Panel>());
   if (panel != nullptr)
     panel.Children().Clear();
 }
 
-void RootViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void RootViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   auto panel(parent.as<winrt::Panel>());
   if (panel != nullptr)
     panel.Children().RemoveAt(static_cast<uint32_t>(index));
@@ -50,7 +50,7 @@ void RootViewManager::RemoveChildAt(XamlView parent, int64_t index) {
 
 void RootViewManager::SetLayoutProps(
     ShadowNodeBase & /*nodeToUpdate*/,
-    XamlView /*nodeToUpdate*/,
+    const XamlView & /*nodeToUpdate*/,
     float /*left*/,
     float /*top*/,
     float /*width*/,

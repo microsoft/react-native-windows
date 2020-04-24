@@ -77,7 +77,7 @@ function getWindowsStoreAppUtils(options) {
   return windowsStoreAppUtilsPath;
 }
 
-function getAppxManifest(options) {
+function getAppxManifestPath(options) {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
@@ -91,7 +91,15 @@ function getAppxManifest(options) {
       }", using search path: "${appxManifestGlob}" `,
     );
   }
-  return parse(fs.readFileSync(appxPath, 'utf8'));
+  return appxPath;
+}
+
+function parseAppxManifest(appxManifestPath) {
+  return parse(fs.readFileSync(appxManifestPath, 'utf8'));
+}
+
+function getAppxManifest(options) {
+  return parseAppxManifest(getAppxManifestPath(options));
 }
 
 function handleResponseError(e) {
@@ -154,7 +162,8 @@ async function deployToDevice(options, verbose) {
 async function deployToDesktop(options, verbose) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
-  const appxManifest = getAppxManifest(options);
+  const appxManifestPath = getAppxManifestPath(options);
+  const appxManifest = parseAppxManifest(appxManifestPath);
   const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'Identity';
   })[0];
@@ -193,12 +202,22 @@ async function deployToDesktop(options, verbose) {
     verbose,
   );
 
-  await runPowerShellScriptFunction(
-    'Installing new version of the app',
-    windowsStoreAppUtils,
-    `Install-App "${script}" -Force`,
-    verbose,
-  );
+  if (options.release) {
+    await runPowerShellScriptFunction(
+      'Installing new version of the app',
+      windowsStoreAppUtils,
+      `Install-App "${script}" -Force`,
+      verbose,
+    );
+  } else {
+    const realAppxManifestPath = fs.realpathSync(appxManifestPath);
+    await runPowerShellScriptFunction(
+      'Installing new version of the app from layout',
+      windowsStoreAppUtils,
+      `Install-AppFromDirectory "${realAppxManifestPath}"`,
+      verbose,
+    );
+  }
 
   const appFamilyName = execSync(
     `powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,

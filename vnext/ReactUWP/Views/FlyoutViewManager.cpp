@@ -442,7 +442,7 @@ folly::dynamic FlyoutViewManager::GetExportedCustomDirectEventTypeConstants() co
 
 void FlyoutViewManager::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView /*viewToUpdate*/,
+    const XamlView & /*viewToUpdate*/,
     float /*left*/,
     float /*top*/,
     float width,

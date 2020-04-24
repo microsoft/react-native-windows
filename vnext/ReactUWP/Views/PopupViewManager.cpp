@@ -326,7 +326,7 @@ XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/) {
 
 void PopupViewManager::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
+    const XamlView &viewToUpdate,
     float left,
     float top,
     float width,

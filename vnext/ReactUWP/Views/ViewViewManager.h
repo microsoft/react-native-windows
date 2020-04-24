@@ -30,7 +30,7 @@ class ViewViewManager : public FrameworkElementViewManager {
   // Yoga Layout
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
-      XamlView viewToUpdate,
+      const XamlView &viewToUpdate,
       float left,
       float top,
       float width,
