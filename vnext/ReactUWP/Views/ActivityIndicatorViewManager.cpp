@@ -45,7 +45,7 @@ bool ActivityIndicatorViewManager::UpdateProperty(
     else if (propertyValue.isNull())
       progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
   } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyName);
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
   return true;
 }
