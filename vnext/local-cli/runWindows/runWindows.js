@@ -14,6 +14,15 @@ const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
 const chalk = require('chalk');
 
+function ExitProcessWithError(loggingWasEnabled) {
+  if (!loggingWasEnabled) {
+    console.log(
+      `Re-run the command with ${chalk.bold('--logging')} for more information`,
+    );
+  }
+  process.exit(1);
+}
+
 async function runWindows(config, args, options) {
   const verbose = options.logging;
   if (verbose) {
@@ -32,7 +41,7 @@ async function runWindows(config, args, options) {
       return;
     } catch (e) {
       newError('Unable to print environment info.\n' + e.toString());
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
   }
 
@@ -48,14 +57,14 @@ async function runWindows(config, args, options) {
       newError(
         'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
       );
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
 
     try {
       await build.restoreNuGetPackages(options, slnFile, verbose);
     } catch (e) {
       newError('Failed to restore the NuGet packages: ' + e.toString());
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
 
     // Get build/deploy options
@@ -79,7 +88,7 @@ async function runWindows(config, args, options) {
       if (e.logfile) {
         console.log('See', chalk.bold(e.logfile));
       }
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
   } else {
     newInfo('Build step is skipped');
@@ -96,7 +105,7 @@ async function runWindows(config, args, options) {
       }
     } catch (e) {
       newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
   } else {
     newInfo('Deploy step is skipped');
