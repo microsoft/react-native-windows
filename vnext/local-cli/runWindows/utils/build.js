@@ -15,6 +15,7 @@ const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
 const {commandWithProgress, newSpinner} = require('./commandWithProgress');
 const util = require('util');
+const chalk = require('chalk');
 const existsAsync = util.promisify(fs.exists);
 
 async function buildSolution(
@@ -112,7 +113,17 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
 }
 
 function getSolutionFile(options) {
-  return glob.sync(path.join(options.root, 'windows/*.sln'))[0];
+  const solutions = glob.sync(path.join(options.root, 'windows/*.sln'));
+  if (solutions.length == 0) {
+    return null;
+  } else if (solutions.length == 1) {
+    return solutions[0];
+  } else {
+    console.log(chalk.red('More than one solution file found:'));
+    console.log(chalk.bold(solutions.map(x => fs.realpathSync(x)).join('\n')));
+    console.log('Use --sln {slnFile} to specify which one to build');
+    return null;
+  }
 }
 
 function parseMsBuildProps(options) {

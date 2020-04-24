@@ -52,7 +52,7 @@ async function runWindows(config, args, options) {
     autolink.updateAutoLink(verbose);
   }
   if (options.build) {
-    const slnFile = build.getSolutionFile(options);
+    const slnFile = options.sln || build.getSolutionFile(options);
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
@@ -138,6 +138,7 @@ runWindows({
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
+ *    sln: String - Solution file to build
  *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  *    direct-debugging: Number - Enable direct debugging on specified port
  */
@@ -208,13 +209,18 @@ module.exports = {
       default: false,
     },
     {
+      command: '--sln [string]',
+      description: 'Solution file to build, e.g. windows\\myApp.sln',
+      default: undefined,
+    },
+    {
       command: '--msbuildprops [string]',
       description:
         'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
     },
     {
       command: '--info',
-      description: 'Dump enviroment information',
+      description: 'Dump environment information',
       default: false,
     },
     {
