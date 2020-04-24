@@ -17,9 +17,7 @@ const chalk = require('chalk');
 function ExitProcessWithError(loggingWasEnabled) {
   if (!loggingWasEnabled) {
     console.log(
-      'Re-run the command with',
-      chalk.bold('--logging'),
-      'for more information',
+      `Re-run the command with ${chalk.bold('--logging')} for more information`,
     );
   }
   process.exit(1);
