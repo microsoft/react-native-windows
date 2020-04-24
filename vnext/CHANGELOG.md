@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 23 Apr 2020 00:04:37 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Apr 2020 00:04:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.47
+
+Fri, 24 Apr 2020 00:04:41 GMT
+
+### Changes
+
+- Pass XamlView's through ReactUwp View Managers by Const Ref (ngerlem@microsoft.com)
+- fix RTL (kmelmon@microsoft.com)
+- Use spec file for clipboard module (acoates@microsoft.com)
+- Fix Missing Include in DevSupportManagerUwp (ngerlem@microsoft.com)
+- Fixed .Net Native crash for custom struct deserialization (vmorozov@microsoft.com)
 
 ## 0.0.0-master.46
 

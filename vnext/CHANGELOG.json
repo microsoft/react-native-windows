@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Apr 2020 00:04:41 GMT",
+      "tag": "react-native-windows_v0.0.0-master.47",
+      "version": "0.0.0-master.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Pass XamlView's through ReactUwp View Managers by Const Ref",
+            "author": "ngerlem@microsoft.com",
+            "commit": "884b7785de848e82d3f36bd48ffbaf51f2a9144c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix RTL",
+            "author": "kmelmon@microsoft.com",
+            "commit": "b79777438c8e3b17d007aade83172dd676bfa0c5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use spec file for clipboard module",
+            "author": "acoates@microsoft.com",
+            "commit": "a5deb259266022af61129b636f84e3e81eaf46da",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Missing Include in DevSupportManagerUwp",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6cf4c2bb579b424783530f1b3213a9fcb5742d2d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed .Net Native crash for custom struct deserialization",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a09efe2a735abf54ca49bd9e3ce3a32a8ba2ba44",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Apr 2020 00:04:37 GMT",
       "tag": "react-native-windows_v0.0.0-master.46",
       "version": "0.0.0-master.46",
