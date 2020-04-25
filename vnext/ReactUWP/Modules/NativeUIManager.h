@@ -7,8 +7,6 @@
 #include <IReactRootView.h>
 #include <Views/ViewManagerBase.h>
 
-#include <winrt/Windows.UI.Xaml.h>
-
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
 
@@ -104,7 +102,7 @@ class NativeUIManager : public facebook::react::INativeUIManager {
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
-  std::vector<winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
+  std::vector<xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
   std::vector<int64_t> m_extraLayoutNodes;
 

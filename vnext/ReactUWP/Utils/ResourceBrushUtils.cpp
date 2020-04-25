@@ -6,20 +6,13 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
 
-#include <winrt/Windows.UI.Xaml.h>
-
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 
 void UpdateResourceBrush(
-    const winrt::FrameworkElement &element,
+    const xaml::FrameworkElement &element,
     const std::wstring &resourceName,
-    const winrt::Brush brush) {
+    const xaml::Media::Brush brush) {
   const auto resources = element.Resources();
   if (resources != nullptr) {
     if (brush != nullptr) {
@@ -30,7 +23,7 @@ void UpdateResourceBrush(
   }
 }
 
-void UpdateTextControlBackgroundResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
+void UpdateTextControlBackgroundResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush) {
   UpdateResourceBrush(element, c_textControlBackground, brush);
   UpdateResourceBrush(element, c_textControlBackgroundPointerOver, brush);
   UpdateResourceBrush(element, c_textControlBackgroundFocused, brush);
@@ -39,7 +32,7 @@ void UpdateTextControlBackgroundResourceBrushes(const winrt::FrameworkElement &e
   UpdateResourceBrush(element, c_textControlButtonForegroundPressed, brush);
 }
 
-void UpdateCheckBoxBackgroundResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
+void UpdateCheckBoxBackgroundResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush) {
   UpdateResourceBrush(element, c_checkBoxBackgroundUnchecked, brush);
   UpdateResourceBrush(element, c_checkBoxBackgroundUncheckedPointerOver, brush);
   UpdateResourceBrush(element, c_checkBoxBackgroundUncheckedPressed, brush);
@@ -54,7 +47,7 @@ void UpdateCheckBoxBackgroundResourceBrushes(const winrt::FrameworkElement &elem
   UpdateResourceBrush(element, c_checkBoxBackgroundIndeterminateDisabled, brush);
 }
 
-void UpdateTextControlForegroundResourceBrushes(const winrt::FrameworkElement element, const winrt::Brush brush) {
+void UpdateTextControlForegroundResourceBrushes(const xaml::FrameworkElement element, const xaml::Media::Brush brush) {
   UpdateResourceBrush(element, c_textControlForeground, brush);
   UpdateResourceBrush(element, c_textControlForegroundPointerOver, brush);
   UpdateResourceBrush(element, c_textControlForegroundFocused, brush);
@@ -65,12 +58,12 @@ void UpdateTextControlForegroundResourceBrushes(const winrt::FrameworkElement el
   UpdateResourceBrush(element, c_textControlButtonBackgroundPressed, brush);
 }
 
-void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush b) {
+void UpdateTextControlBorderResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush& b) {
   // Workaround for bug https://microsoft.visualstudio.com/OS/_workitems/edit/26118890.
   // Remove when the bug gets fixed.
-  winrt::Brush brush = b;
-  if (auto solidBrush = b.as<winrt::SolidColorBrush>()) {
-    brush = winrt::SolidColorBrush{solidBrush.Color()};
+  xaml::Media::Brush brush = b;
+  if (auto solidBrush = b.as<xaml::Media::SolidColorBrush>()) {
+    brush = xaml::Media::SolidColorBrush{solidBrush.Color()};
   }
 
   UpdateResourceBrush(element, c_textControlBorderBrush, brush);
@@ -79,7 +72,7 @@ void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &eleme
   UpdateResourceBrush(element, c_textControlBorderBrushDisabled, brush);
 }
 
-void UpdateToggleSwitchBorderResourceBrushes(const winrt::ToggleSwitch &toggleSwitch, const winrt::Brush brush) {
+void UpdateToggleSwitchBorderResourceBrushes(const xaml::Controls::ToggleSwitch &toggleSwitch, const xaml::Media::Brush brush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
@@ -90,7 +83,7 @@ void UpdateToggleSwitchBorderResourceBrushes(const winrt::ToggleSwitch &toggleSw
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
 }
 
-void UpdateCheckBoxBorderResourceBrushes(const winrt::CheckBox &checkBox, const winrt::Brush brush) {
+void UpdateCheckBoxBorderResourceBrushes(const xaml::Controls::CheckBox &checkBox, const xaml::Media::Brush brush) {
   UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUnchecked, brush);
   UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUncheckedPointerOver, brush);
   UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUncheckedPressed, brush);
@@ -105,7 +98,7 @@ void UpdateCheckBoxBorderResourceBrushes(const winrt::CheckBox &checkBox, const 
   UpdateResourceBrush(checkBox, c_checkBoxBorderBrushIndeterminateDisabled, brush);
 }
 
-void UpdateToggleSwitchThumbResourceBrushes(const winrt::ToggleSwitch &toggleSwitch, const winrt::Brush thumbBrush) {
+void UpdateToggleSwitchThumbResourceBrushes(const xaml::Controls::ToggleSwitch &toggleSwitch, const xaml::Media::Brush thumbBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
@@ -117,9 +110,9 @@ void UpdateToggleSwitchThumbResourceBrushes(const winrt::ToggleSwitch &toggleSwi
 }
 
 void UpdateToggleSwitchTrackResourceBrushes(
-    const winrt::ToggleSwitch &toggleSwitch,
-    const winrt::Brush onTrackBrush,
-    const winrt::Brush offTrackBrush) {
+    const xaml::Controls::ToggleSwitch &toggleSwitch,
+    const xaml::Media::Brush onTrackBrush,
+    const xaml::Media::Brush offTrackBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
@@ -131,38 +124,38 @@ void UpdateToggleSwitchTrackResourceBrushes(
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffDisabled, offTrackBrush);
 }
 
-bool IsObjectATextControl(const winrt::DependencyObject &object) {
-  return object.try_as<winrt::TextBox>() != nullptr || object.try_as<winrt::PasswordBox>() != nullptr ||
-      object.try_as<winrt::RichEditBox>() != nullptr || object.try_as<winrt::AutoSuggestBox>() != nullptr;
+bool IsObjectATextControl(const xaml::DependencyObject &object) {
+  return object.try_as<xaml::Controls::TextBox>() != nullptr || object.try_as<xaml::Controls::PasswordBox>() != nullptr ||
+      object.try_as<xaml::Controls::RichEditBox>() != nullptr || object.try_as<xaml::Controls::AutoSuggestBox>() != nullptr;
 }
 
 void UpdateControlBackgroundResourceBrushes(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element,
-    const winrt::Media::Brush brush) {
+    const xaml::FrameworkElement &element,
+    const xaml::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateTextControlBackgroundResourceBrushes(element, brush);
-  } else if (const auto checkBox = element.try_as<winrt::CheckBox>()) {
+  } else if (const auto checkBox = element.try_as<xaml::Controls::CheckBox>()) {
     UpdateCheckBoxBackgroundResourceBrushes(checkBox, brush);
   }
 }
 
 void UpdateControlForegroundResourceBrushes(
-    const winrt::Windows::UI::Xaml::DependencyObject object,
-    const winrt::Media::Brush brush) {
+    const xaml::DependencyObject object,
+    const xaml::Media::Brush brush) {
   if (IsObjectATextControl(object)) {
-    const auto element = object.try_as<winrt::FrameworkElement>();
+    const auto element = object.try_as<xaml::FrameworkElement>();
     UpdateTextControlForegroundResourceBrushes(element, brush);
   }
 }
 
 void UpdateControlBorderResourceBrushes(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element,
-    const winrt::Media::Brush brush) {
+    const xaml::FrameworkElement &element,
+    const xaml::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateTextControlBorderResourceBrushes(element, brush);
-  } else if (const auto toggleSwitch = element.try_as<winrt::ToggleSwitch>()) {
+  } else if (const auto toggleSwitch = element.try_as<xaml::Controls::ToggleSwitch>()) {
     UpdateToggleSwitchBorderResourceBrushes(toggleSwitch, brush);
-  } else if (const auto checkBox = element.try_as<winrt::CheckBox>()) {
+  } else if (const auto checkBox = element.try_as<xaml::Controls::CheckBox>()) {
     UpdateCheckBoxBorderResourceBrushes(checkBox, brush);
   }
 }

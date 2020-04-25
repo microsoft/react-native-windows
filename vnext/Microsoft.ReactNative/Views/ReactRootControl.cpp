@@ -21,12 +21,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Markup.h>
-#include <winrt/Windows.UI.Xaml.Media.Media3D.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 #include <ReactHost/React.h>
 #include <ReactHost/React_Win.h>
@@ -104,7 +98,7 @@ std::string ReactRootControl::JSComponentName() const noexcept {
 
 int64_t ReactRootControl::GetActualHeight() const noexcept {
   if (auto xamlRootView = m_weakXamlRootView.get()) {
-    if (auto element = xamlRootView.as<winrt::FrameworkElement>()) {
+    if (auto element = xamlRootView.as<xaml::FrameworkElement>()) {
       return static_cast<int64_t>(element.ActualHeight());
     }
   }
@@ -114,7 +108,7 @@ int64_t ReactRootControl::GetActualHeight() const noexcept {
 
 int64_t ReactRootControl::GetActualWidth() const noexcept {
   if (auto xamlRootView = m_weakXamlRootView.get()) {
-    if (auto element = xamlRootView.as<winrt::FrameworkElement>()) {
+    if (auto element = xamlRootView.as<xaml::FrameworkElement>()) {
       return static_cast<int64_t>(element.ActualWidth());
     }
   }
@@ -138,9 +132,9 @@ void ReactRootControl::blur(XamlView const &xamlView) noexcept {
   EnsureFocusSafeHarbor();
   if (m_focusSafeHarbor) {
     m_focusSafeHarbor.IsTabStop(true);
-    winrt::FocusManager::TryFocusAsync(m_focusSafeHarbor, winrt::FocusState::Pointer);
+    xaml::Input::FocusManager::TryFocusAsync(m_focusSafeHarbor, winrt::FocusState::Pointer);
   } else
-    winrt::FocusManager::TryFocusAsync(xamlView, winrt::FocusState::Pointer);
+    xaml::Input::FocusManager::TryFocusAsync(xamlView, winrt::FocusState::Pointer);
 }
 
 void ReactRootControl::InitRootView(
@@ -292,9 +286,9 @@ void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactI
     if (m_waitingTextBlock == nullptr) {
       m_waitingTextBlock = winrt::TextBlock();
       m_greenBoxGrid = winrt::Grid{};
-      m_greenBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
       m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Center);
+      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
     }
 
     // Add box grid to root view
@@ -306,9 +300,9 @@ void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactI
 
     // Format TextBlock
     m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_waitingTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
+    m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
     m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_waitingTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
+    m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
     winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
     m_waitingTextBlock.Margin(margin);
   }
@@ -328,9 +322,9 @@ void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance & /*reactI
     if (m_waitingTextBlock == nullptr) {
       m_waitingTextBlock = winrt::TextBlock();
       m_greenBoxGrid = winrt::Grid{};
-      m_greenBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
       m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Center);
+      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
     }
 
     // Add box grid to root view
@@ -342,9 +336,9 @@ void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance & /*reactI
 
     // Format TextBlock
     m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_waitingTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
+    m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
     m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_waitingTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
+    m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
     winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
     m_waitingTextBlock.Margin(margin);
   }
@@ -365,9 +359,9 @@ void ReactRootControl::PrepareXamlRootView(XamlView const &rootView) noexcept {
     // Xaml's default projection in 3D is orthographic (all lines are parallel)
     // However React Native's default projection is a one-point perspective.
     // Set a default perspective projection on the main control to mimic this.
-    auto perspectiveTransform3D = winrt::Windows::UI::Xaml::Media::Media3D::PerspectiveTransform3D();
+    auto perspectiveTransform3D = xaml::Media::Media3D::PerspectiveTransform3D();
     perspectiveTransform3D.Depth(850);
-    winrt::Windows::UI::Xaml::Media::Media3D::Transform3D t3d(perspectiveTransform3D);
+    xaml::Media::Media3D::Transform3D t3d(perspectiveTransform3D);
     newRootView.Transform3D(t3d);
     children.Append(newRootView);
     m_weakXamlRootView = newRootView.try_as<XamlView>();
@@ -384,7 +378,7 @@ void ReactRootControl::EnsureFocusSafeHarbor() noexcept {
     auto panel = rootView.try_as<winrt::Panel>();
     VerifyElseCrash(panel.Children().Size() == 1);
 
-    m_focusSafeHarbor = winrt::ContentControl{};
+    m_focusSafeHarbor = xaml::Controls::ContentControl{};
     m_focusSafeHarbor.Width(0.0);
     m_focusSafeHarbor.IsTabStop(false);
     panel.Children().InsertAt(0, m_focusSafeHarbor);
@@ -404,9 +398,9 @@ void ReactRootControl::InitializeDeveloperMenu() noexcept {
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
       winrt::auto_revoke, [this](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
         if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
-            KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Shift) &&
+            KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
             KeyboardHelper::IsModifiedKeyPressed(
-                winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Control)) {
+                winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control)) {
           if (!IsDeveloperMenuShowing()) {
             ShowDeveloperMenu();
           }
@@ -629,18 +623,18 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   // In addition to handling the BackRequested event, UWP suggests that we listen for other user inputs that should
   // trigger back navigation that don't fire that event:
   // https://docs.microsoft.com/en-us/windows/uwp/design/basics/navigation-history-and-backwards-navigation
-  auto rootElement(rootView.try_as<winrt::UIElement>());
+  auto rootElement(rootView.try_as<xaml::UIElement>());
   if (rootElement == nullptr) {
     assert(false);
     return;
   }
 
   // Handle keyboard "back" button press
-  winrt::KeyboardAccelerator goBack{};
-  goBack.Key(winrt::VirtualKey::GoBack);
+  xaml::Input::KeyboardAccelerator goBack{};
+  goBack.Key(winrt::Windows::System::VirtualKey::GoBack);
   goBack.Invoked(
       [weakThis](
-          winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+          xaml::Input::KeyboardAccelerator const & /*sender*/, xaml::Input::KeyboardAcceleratorInvokedEventArgs const &args) {
         if (auto self = weakThis.lock()) {
           args.Handled(self->OnBackRequested());
         }
@@ -648,26 +642,26 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   rootElement.KeyboardAccelerators().Append(goBack);
 
   // Handle Alt+Left keyboard shortcut
-  winrt::KeyboardAccelerator altLeft{};
-  altLeft.Key(winrt::VirtualKey::Left);
+  xaml::Input::KeyboardAccelerator altLeft{};
+  altLeft.Key(winrt::Windows::System::VirtualKey::Left);
   altLeft.Invoked(
       [weakThis](
-          winrt::KeyboardAccelerator const & /*sender*/, winrt::KeyboardAcceleratorInvokedEventArgs const &args) {
+          xaml::Input::KeyboardAccelerator const & /*sender*/, xaml::Input::KeyboardAcceleratorInvokedEventArgs const &args) {
         if (auto self = weakThis.lock()) {
           args.Handled(self->OnBackRequested());
         }
       });
   rootElement.KeyboardAccelerators().Append(altLeft);
-  altLeft.Modifiers(winrt::VirtualKeyModifiers::Menu);
+  altLeft.Modifiers(winrt::Windows::System::VirtualKeyModifiers::Menu);
 
   // Hide keyboard accelerator tooltips
-  rootElement.KeyboardAcceleratorPlacementMode(winrt::KeyboardAcceleratorPlacementMode::Hidden);
+  rootElement.KeyboardAcceleratorPlacementMode(xaml::Input::KeyboardAcceleratorPlacementMode::Hidden);
 }
 
 void ReactRootControl::RemoveBackHandlers() noexcept {
   m_backRequestedRevoker.revoke();
   if (auto rootView = m_weakRootView.get()) {
-    if (auto element = rootView.try_as<winrt::UIElement>()) {
+    if (auto element = rootView.try_as<xaml::UIElement>()) {
       element.KeyboardAccelerators().Clear();
     }
   }

@@ -5,8 +5,6 @@
 
 #include "AppStateModuleUwp.h"
 
-#include <winrt/Windows.UI.Xaml.h>
-
 namespace react {
 namespace uwp {
 
@@ -18,9 +16,9 @@ AppState::AppState(const std::shared_ptr<IReactInstance> &reactInstance)
     : facebook::react::AppState(), m_wkReactInstance(reactInstance) {
   m_lastState = "active";
 
-  m_enteredBackgroundRevoker = winrt::Windows::UI::Xaml::Application::Current().EnteredBackground(
+  m_enteredBackgroundRevoker = xaml::Application::Current().EnteredBackground(
       winrt::auto_revoke, {this, &AppState::EnteredBackground});
-  m_leavingBackgroundRevoker = winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
+  m_leavingBackgroundRevoker = xaml::Application::Current().LeavingBackground(
       winrt::auto_revoke, {this, &AppState::LeavingBackground});
 }
 

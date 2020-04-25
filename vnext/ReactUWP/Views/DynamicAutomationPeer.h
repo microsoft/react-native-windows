@@ -4,11 +4,6 @@
 #pragma once
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#include <winrt/Windows.UI.Xaml.Automation.Provider.h>
-#include <winrt/Windows.UI.Xaml.Automation.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 #include "DynamicAutomationProperties.h"
 
@@ -24,14 +19,14 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   using Super = DynamicAutomationPeerT<DynamicAutomationPeer>;
 
   DynamicAutomationPeer() = delete;
-  DynamicAutomationPeer(winrt::Windows::UI::Xaml::FrameworkElement const &owner);
+  DynamicAutomationPeer(xaml::FrameworkElement const &owner);
 
   winrt::hstring GetClassNameCore() const;
   winrt::hstring GetNameCore() const;
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
+  xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
   winrt::Windows::Foundation::IInspectable GetPatternCore(
-      winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const &patternInterface) const;
+      xaml::Automation::Peers::PatternInterface const &patternInterface) const;
 
   bool IsEnabledCore() const;
 
@@ -47,21 +42,21 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   bool IsSelectionRequired() const {
     return false;
   }
-  winrt::com_array<winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetSelection() const;
+  winrt::com_array<xaml::Automation::Provider::IRawElementProviderSimple> GetSelection() const;
 
   // ISelectionItemProvider
   bool IsSelected() const;
-  winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple SelectionContainer() const;
+  xaml::Automation::Provider::IRawElementProviderSimple SelectionContainer() const;
   void AddToSelection() const;
   void RemoveFromSelection() const;
   void Select() const;
 
   // IToggleProvider
-  winrt::Windows::UI::Xaml::Automation::ToggleState ToggleState() const;
+  xaml::Automation::ToggleState ToggleState() const;
   void Toggle() const;
 
   // IExpandCollapseProvider
-  winrt::Windows::UI::Xaml::Automation::ExpandCollapseState ExpandCollapseState() const;
+  xaml::Automation::ExpandCollapseState ExpandCollapseState() const;
   void Expand() const;
   void Collapse() const;
 
@@ -72,21 +67,21 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   bool GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
   winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler() const;
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty();
+  static xaml::DependencyProperty AccessibilityActionsProperty();
   static void SetAccessibilityActions(
-      Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value);
   static Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> GetAccessibilityActions(
-      Windows::UI::Xaml::UIElement const &element);
+      xaml::UIElement const &element);
   static void DispatchAccessibilityAction(
-      Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       std::wstring_view const &actionName);
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
+  static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(
-      Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value);
   static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
-      winrt::Windows::UI::Xaml::UIElement const &element);
+      xaml::UIElement const &element);
 };
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
 

@@ -3,23 +3,14 @@
 
 #pragma once
 #include <folly/dynamic.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
 #include <optional>
 #include <set>
-
+#include "CppWinRTIncludes.h"
 #include <IReactInstance.h>
 #include "XamlView.h"
 
 namespace winrt {
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::System;
-using namespace Windows::UI::Core;
+  using namespace Windows::UI::Core;
 } // namespace winrt
 
 namespace react {
@@ -49,7 +40,7 @@ struct HandledKeyboardEvent : ModifiedKeyState {
   std::string code{};
 };
 
-typedef std::function<void(winrt::IInspectable const &, winrt::KeyRoutedEventArgs const &)> KeyboardEventCallback;
+typedef std::function<void(winrt::IInspectable const &, xaml::Input::KeyRoutedEventArgs const &)> KeyboardEventCallback;
 
 class KeyboardEventBaseHandler {
  public:
@@ -72,8 +63,8 @@ class PreviewKeyboardEventHandler : public KeyboardEventBaseHandler {
   void unhook();
 
  private:
-  winrt::UIElement::PreviewKeyDown_revoker m_previewKeyDownRevoker{};
-  winrt::UIElement::PreviewKeyUp_revoker m_previewKeyUpRevoker{};
+  xaml::UIElement::PreviewKeyDown_revoker m_previewKeyDownRevoker{};
+  xaml::UIElement::PreviewKeyUp_revoker m_previewKeyUpRevoker{};
 };
 
 class KeyboardEventHandler : public KeyboardEventBaseHandler {
@@ -84,8 +75,8 @@ class KeyboardEventHandler : public KeyboardEventBaseHandler {
   void unhook();
 
  private:
-  winrt::UIElement::KeyDown_revoker m_keyDownRevoker{};
-  winrt::UIElement::KeyUp_revoker m_keyUpRevoker{};
+  xaml::UIElement::KeyDown_revoker m_keyDownRevoker{};
+  xaml::UIElement::KeyUp_revoker m_keyUpRevoker{};
 };
 
 class PreviewKeyboardEventHandlerOnRoot : public PreviewKeyboardEventHandler {
@@ -93,10 +84,10 @@ class PreviewKeyboardEventHandlerOnRoot : public PreviewKeyboardEventHandler {
   PreviewKeyboardEventHandlerOnRoot(const std::weak_ptr<IReactInstance> &reactInstance);
 
  private:
-  void OnPreKeyDown(winrt::IInspectable const &sender, winrt::KeyRoutedEventArgs const &args);
-  void OnPreKeyUp(winrt::IInspectable const &sender, winrt::KeyRoutedEventArgs const &args);
+  void OnPreKeyDown(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);
+  void OnPreKeyUp(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);
 
-  void DispatchEventToJs(std::string const &name, winrt::KeyRoutedEventArgs const &args);
+  void DispatchEventToJs(std::string const &name, xaml::Input::KeyRoutedEventArgs const &args);
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };
 
@@ -118,7 +109,7 @@ class HandledKeyboardEventHandler {
   void KeyboardEventHandledHandler(
       KeyboardEventPhase phase,
       winrt::IInspectable const &sender,
-      winrt::KeyRoutedEventArgs const &args);
+      xaml::Input::KeyRoutedEventArgs const &args);
   bool ShouldMarkKeyboardHandled(
       std::vector<HandledKeyboardEvent> const &handledEvents,
       HandledKeyboardEvent currentEvent);
@@ -132,11 +123,11 @@ class HandledKeyboardEventHandler {
 
 struct KeyboardHelper {
   static std::vector<HandledKeyboardEvent> FromJS(folly::dynamic const &obj);
-  static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const &args);
-  static std::string FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
-  static std::string CodeFromVirtualKey(winrt::VirtualKey key);
-  static bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::VirtualKey virtualKey);
-  static bool IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::VirtualKey virtualKey);
+  static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, xaml::Input::KeyRoutedEventArgs const &args);
+  static std::string FromVirtualKey(winrt::Windows::System::VirtualKey key, bool shiftDown, bool capLocked);
+  static std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey key);
+  static bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
+  static bool IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
 };
 } // namespace uwp
 } // namespace react

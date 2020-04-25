@@ -6,7 +6,7 @@
 #include "ContentControlViewManager.h"
 
 namespace winrt {
-using Button = winrt::Windows::UI::Xaml::Controls::Button;
+using Button = xaml::Controls::Button;
 }
 
 namespace react {

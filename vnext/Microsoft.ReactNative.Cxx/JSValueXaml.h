@@ -11,7 +11,7 @@ namespace winrt::Microsoft::ReactNative {
 
 #ifndef CXXUNITTESTS
 
-inline void ReadValue(JSValue const &jsValue, Windows::UI::Xaml::Media::Brush &value) noexcept {
+inline void ReadValue(JSValue const &jsValue, xaml::Media::Brush &value) noexcept {
   value = XamlHelper::BrushFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
 

@@ -39,7 +39,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   folly::dynamic GetCommands() const override;
 
   void DispatchCommand(
-      const winrt::Windows::UI::Xaml::DependencyObject &viewToUpdate,
+      const xaml::DependencyObject &viewToUpdate,
       const std::string &commandId,
       const folly::dynamic &commandArgs) override;
 
@@ -48,18 +48,18 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
   void AddView(
-      const winrt::Windows::UI::Xaml::DependencyObject &parent,
-      const winrt::Windows::UI::Xaml::DependencyObject &child,
+      const xaml::DependencyObject &parent,
+      const xaml::DependencyObject &child,
       int64_t index) override;
-  void RemoveAllChildren(const winrt::Windows::UI::Xaml::DependencyObject &parent) override;
-  void RemoveChildAt(const winrt::Windows::UI::Xaml::DependencyObject &parent, int64_t index) override;
+  void RemoveAllChildren(const xaml::DependencyObject &parent) override;
+  void RemoveChildAt(const xaml::DependencyObject &parent, int64_t index) override;
   void ReplaceChild(
-      const winrt::Windows::UI::Xaml::DependencyObject &parent,
-      const winrt::Windows::UI::Xaml::DependencyObject &oldChild,
-      const winrt::Windows::UI::Xaml::DependencyObject &newChild) override;
+      const xaml::DependencyObject &parent,
+      const xaml::DependencyObject &oldChild,
+      const xaml::DependencyObject &newChild) override;
 
  protected:
-  winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;
+  xaml::DependencyObject CreateViewCore(int64_t) override;
 
   std::string m_name;
   ReactNative::IViewManager m_viewManager;

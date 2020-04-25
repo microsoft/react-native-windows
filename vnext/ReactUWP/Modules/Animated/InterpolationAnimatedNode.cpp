@@ -70,7 +70,7 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
   m_offsetAnimation = offsetAnimation;
 }
 
-winrt::ExpressionAnimation InterpolationAnimatedNode::CreateExpressionAnimation(
+comp::ExpressionAnimation InterpolationAnimatedNode::CreateExpressionAnimation(
     const winrt::Compositor &compositor,
     ValueAnimatedNode &parent) {
   const auto animation = compositor.CreateExpressionAnimation();

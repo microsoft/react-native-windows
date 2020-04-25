@@ -7,7 +7,6 @@
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 #include <winrt/Windows.Graphics.Display.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include <memory>
 #include <vector>
 

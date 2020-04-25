@@ -10,16 +10,8 @@
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 #include <Views/ShadowNodeBase.h>
-
-namespace winrt {
-using namespace Windows::UI::Xaml;
-}
 
 namespace react {
 namespace uwp {
@@ -40,14 +32,14 @@ static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
     {"borderWidth", ShadowEdges::AllEdges},
 };
 
-inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges]) {
+inline xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges]) {
   const double defaultWidth = std::max<double>(0, thicknesses[ShadowEdges::AllEdges]);
   double startWidth = DefaultOrOverride(thicknesses[ShadowEdges::Left], thicknesses[ShadowEdges::Start]);
   double endWidth = DefaultOrOverride(thicknesses[ShadowEdges::Right], thicknesses[ShadowEdges::End]);
 
   // Compute each edge.  Most specific setting wins, so fill from broad to
   // narrow: all, horiz/vert, start/end, left/right
-  winrt::Windows::UI::Xaml::Thickness thickness = {defaultWidth, defaultWidth, defaultWidth, defaultWidth};
+  xaml::Thickness thickness = {defaultWidth, defaultWidth, defaultWidth, defaultWidth};
 
   if (thicknesses[ShadowEdges::Horizontal] != c_UndefinedEdge)
     thickness.Left = thickness.Right = thicknesses[ShadowEdges::Horizontal];
@@ -66,8 +58,8 @@ inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[Shado
   return thickness;
 }
 
-inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::CountCorners]) {
-  winrt::Windows::UI::Xaml::CornerRadius cornerRadius;
+inline xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::CountCorners]) {
+  xaml::CornerRadius cornerRadius;
   const double defaultRadius = std::max<double>(0, cornerRadii[ShadowCorners::AllCorners]);
   double topStartRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopLeft], cornerRadii[ShadowCorners::TopStart]);
   double topEndRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopRight], cornerRadii[ShadowCorners::TopEnd]);
@@ -87,19 +79,19 @@ inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(double cornerRadii
 template <class T>
 void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
   node->m_padding[edge] = margin;
-  winrt::Thickness thickness = GetThickness(node->m_padding);
+  xaml::Thickness thickness = GetThickness(node->m_padding);
   element.Padding(thickness);
 }
 
 template <class T>
 void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
   node->m_border[edge] = margin;
-  winrt::Thickness thickness = GetThickness(node->m_border);
+  xaml::Thickness thickness = GetThickness(node->m_border);
   element.BorderThickness(thickness);
 }
 
 template <class T>
-void SetBorderBrush(const T &element, const winrt::Windows::UI::Xaml::Media::Brush &brush) {
+void SetBorderBrush(const T &element, const xaml::Media::Brush &brush) {
   element.BorderBrush(brush);
 }
 
@@ -131,7 +123,7 @@ UpdateCornerRadiusValueOnNode(ShadowNodeBase *node, ShadowCorners corner, const 
 
 template <class T>
 void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
-  winrt::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius);
+  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius);
   element.CornerRadius(cornerRadius);
 }
 
@@ -270,7 +262,7 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
       element.ClearValue(T::FontSizeProperty());
   } else if (propertyName == "fontFamily") {
     if (propertyValue.isString())
-      element.FontFamily(winrt::Windows::UI::Xaml::Media::FontFamily(asWStr(propertyValue)));
+      element.FontFamily(xaml::Media::FontFamily(asWStr(propertyValue)));
     else if (propertyValue.isNull())
       element.ClearValue(T::FontFamilyProperty());
   } else if (propertyName == "fontWeight") {
@@ -326,15 +318,15 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
 template <class T>
 void SetTextAlignment(const T &element, const std::string &value) {
   if (value == "left")
-    element.TextAlignment(winrt::TextAlignment::Left);
+    element.TextAlignment(xaml::TextAlignment::Left);
   else if (value == "right")
-    element.TextAlignment(winrt::TextAlignment::Right);
+    element.TextAlignment(xaml::TextAlignment::Right);
   else if (value == "center")
-    element.TextAlignment(winrt::TextAlignment::Center);
+    element.TextAlignment(xaml::TextAlignment::Center);
   else if (value == "justify")
-    element.TextAlignment(winrt::TextAlignment::Justify);
+    element.TextAlignment(xaml::TextAlignment::Justify);
   else
-    element.TextAlignment(winrt::TextAlignment::DetectFromContent);
+    element.TextAlignment(xaml::TextAlignment::DetectFromContent);
 }
 
 template <class T>
@@ -356,13 +348,13 @@ bool TryUpdateTextAlignment(const T &element, const std::string &propertyName, c
 template <class T>
 void SetTextTrimming(const T &element, const std::string &value) {
   if (value == "clip")
-    element.TextTrimming(winrt::TextTrimming::Clip);
+    element.TextTrimming(xaml::TextTrimming::Clip);
   else if (value == "head" || value == "middle" || value == "tail") {
     // "head" and "middle" not supported by UWP, but "tail"
     // behavior is the most similar
-    element.TextTrimming(winrt::TextTrimming::CharacterEllipsis);
+    element.TextTrimming(xaml::TextTrimming::CharacterEllipsis);
   } else
-    element.TextTrimming(winrt::TextTrimming::None);
+    element.TextTrimming(xaml::TextTrimming::None);
 }
 
 template <class T>
@@ -389,7 +381,7 @@ bool TryUpdateTextDecorationLine(
   if (propertyName == "textDecorationLine") {
     // FUTURE: remove when SDK target minVer >= 10.0.15063.0
     static bool isTextDecorationsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-        L"Windows.UI.Xaml.Controls.TextBlock", L"TextDecorations");
+        XAML_NAMESPACE ".Controls.TextBlock", L"TextDecorations");
     if (!isTextDecorationsSupported)
       return true;
 
@@ -421,11 +413,11 @@ bool TryUpdateTextDecorationLine(
 template <class T>
 void SetFlowDirection(const T &element, const std::string &value) {
   if (value == "rtl")
-    element.FlowDirection(winrt::FlowDirection::RightToLeft);
+    element.FlowDirection(xaml::FlowDirection::RightToLeft);
   else if (value == "ltr")
-    element.FlowDirection(winrt::FlowDirection::LeftToRight);
+    element.FlowDirection(xaml::FlowDirection::LeftToRight);
   else // 'auto', 'inherit'
-    element.ClearValue(winrt::FrameworkElement::FlowDirectionProperty());
+    element.ClearValue(xaml::FrameworkElement::FlowDirectionProperty());
 }
 
 template <class T>
@@ -466,9 +458,9 @@ bool TryUpdateOrientation(const T &element, const std::string &propertyName, con
     } else if (propertyValue.isString()) {
       const std::string &valueString = propertyValue.getString();
       if (valueString == "horizontal")
-        element.Orientation(winrt::Orientation::Horizontal);
+        element.Orientation(xaml::Controls::Orientation::Horizontal);
       else if (valueString == "vertical")
-        element.Orientation(winrt::Orientation::Vertical);
+        element.Orientation(xaml::Controls::Orientation::Vertical);
     }
 
     return true;

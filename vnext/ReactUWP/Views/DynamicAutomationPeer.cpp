@@ -6,9 +6,6 @@
 #include "DynamicAutomationPeer.h"
 #include "DynamicAutomationProperties.h"
 
-#include <winrt/Windows.UI.Xaml.Interop.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-
 // Needed for latest versions of C++/WinRT
 #if __has_include("DynamicAutomationPeer.g.cpp")
 #include "DynamicAutomationPeer.g.cpp"
@@ -16,18 +13,18 @@
 
 namespace winrt {
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Automation;
-using namespace Windows::UI::Xaml::Automation::Peers;
-using namespace Windows::UI::Xaml::Automation::Provider;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Interop;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Automation;
+using namespace xaml::Automation::Peers;
+using namespace xaml::Automation::Provider;
+using namespace xaml::Controls;
+using namespace xaml::Interop;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
-DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const &owner) : Super(owner) {}
+DynamicAutomationPeer::DynamicAutomationPeer(xaml::FrameworkElement const &owner) : Super(owner) {}
 
 winrt::hstring DynamicAutomationPeer::GetClassNameCore() const {
   return L"DynamicAutomationPeer";
@@ -312,7 +309,7 @@ bool DynamicAutomationPeer::HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE:
           value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
           break;
       }
-      return (value != winrt::DependencyProperty::UnsetValue());
+      return (value != xaml::DependencyProperty::UnsetValue());
     }
   } catch (...) {
   }

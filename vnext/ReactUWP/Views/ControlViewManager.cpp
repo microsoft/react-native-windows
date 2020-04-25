@@ -19,22 +19,22 @@ folly::dynamic ControlViewManager::GetNativeProps() const {
   return props;
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
-  TransferProperty(oldView, newView, winrt::Control::FontSizeProperty());
-  TransferProperty(oldView, newView, winrt::Control::FontFamilyProperty());
-  TransferProperty(oldView, newView, winrt::Control::FontWeightProperty());
-  TransferProperty(oldView, newView, winrt::Control::FontStyleProperty());
-  TransferProperty(oldView, newView, winrt::Control::CharacterSpacingProperty());
-  TransferProperty(oldView, newView, winrt::Control::IsTextScaleFactorEnabledProperty());
-  TransferProperty(oldView, newView, winrt::Control::BackgroundProperty());
-  TransferProperty(oldView, newView, winrt::Control::BorderBrushProperty());
-  TransferProperty(oldView, newView, winrt::Control::BorderThicknessProperty());
-  TransferProperty(oldView, newView, winrt::Control::PaddingProperty());
-  TransferProperty(oldView, newView, winrt::Control::ForegroundProperty());
-  TransferProperty(oldView, newView, winrt::Control::TabIndexProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::FontFamilyProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::FontWeightProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::FontStyleProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::CharacterSpacingProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::IsTextScaleFactorEnabledProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::BackgroundProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::BorderBrushProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::BorderThicknessProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::PaddingProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::ForegroundProperty());
+  TransferProperty(oldView, newView, xaml::Controls::Control::TabIndexProperty());
   // Control.CornerRadius is only supported on >= RS5
-  if (oldView.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>() &&
-      newView.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
-    TransferProperty(oldView, newView, winrt::Control::CornerRadiusProperty());
+  if (oldView.try_as<xaml::Controls::IControl7>() &&
+      newView.try_as<xaml::Controls::IControl7>()) {
+    TransferProperty(oldView, newView, xaml::Controls::Control::CornerRadiusProperty());
   }
   Super::TransferProperties(oldView, newView);
 }
@@ -43,7 +43,7 @@ bool ControlViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-  auto control(nodeToUpdate->GetView().as<winrt::Control>());
+  auto control(nodeToUpdate->GetView().as<xaml::Controls::Control>());
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
   bool finalizeBorderRadius{false};
@@ -62,21 +62,21 @@ bool ControlViewManager::UpdateProperty(
         if (tabIndex == static_cast<int32_t>(tabIndex)) {
           if (tabIndex < 0) {
             control.IsTabStop(false);
-            control.ClearValue(winrt::Control::TabIndexProperty());
+            control.ClearValue(xaml::Controls::Control::TabIndexProperty());
           } else {
             control.IsTabStop(true);
             control.TabIndex(static_cast<int32_t>(tabIndex));
           }
         }
       } else if (propertyValue.isNull()) {
-        control.ClearValue(winrt::Control::TabIndexProperty());
+        control.ClearValue(xaml::Controls::Control::TabIndexProperty());
       }
     } else {
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
 
-  if (finalizeBorderRadius && control.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+  if (finalizeBorderRadius && control.try_as<xaml::Controls::IControl7>()) {
     // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
   }
@@ -86,7 +86,7 @@ bool ControlViewManager::UpdateProperty(
 void ControlViewManager::OnViewCreated(XamlView view) {
   // Set the default cornerRadius to 0 for Control: WinUI usually default cornerRadius to 2
   // Only works on >= RS5 becuase Control.CornerRadius is only supported >= RS5
-  if (auto control = view.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+  if (auto control = view.try_as<xaml::Controls::IControl7>()) {
     control.CornerRadius({0});
   }
 }

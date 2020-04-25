@@ -13,7 +13,7 @@
 #include "Windows.UI.Xaml.h"
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml; // C++/CX
 
 namespace winrt::Microsoft::ReactNative {
 

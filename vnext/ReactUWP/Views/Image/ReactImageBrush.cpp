@@ -7,15 +7,14 @@
 
 #include <sstream>
 
-#include <winrt/Windows.UI.Composition.h>
 
 #include "BorderEffect.h"
 
 namespace winrt {
 using namespace winrt::Windows::Storage::Streams;
-using namespace winrt::Windows::UI::Composition;
-using namespace winrt::Windows::UI::Xaml;
-using namespace winrt::Windows::UI::Xaml::Media;
+using namespace comp;
+using namespace xaml;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -131,7 +130,7 @@ winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 winrt::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    winrt::CompositionSurfaceBrush surfaceBrush{winrt::Window::Current().Compositor().CreateSurfaceBrush()};
+    winrt::CompositionSurfaceBrush surfaceBrush{xaml::Window::Current().Compositor().CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
@@ -162,7 +161,7 @@ winrt::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     borderEffect.Source(borderEffectSourceParameter);
 
     winrt::CompositionEffectFactory effectFactory{
-        winrt::Window::Current().Compositor().CreateEffectFactory(borderEffect)};
+        xaml::Window::Current().Compositor().CreateEffectFactory(borderEffect)};
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);

@@ -19,12 +19,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Markup.h>
-#include <winrt/Windows.UI.Xaml.Media.Media3D.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 namespace react {
 namespace uwp {
@@ -72,7 +66,7 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
     if (m_errorTextBlock == nullptr) {
       m_errorTextBlock = winrt::TextBlock();
       m_redBoxGrid = winrt::Grid();
-      m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
+      m_redBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
       m_redBoxGrid.Children().Append(m_errorTextBlock);
     }
 
@@ -86,9 +80,9 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
 
     // Format TextBlock
     m_errorTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_errorTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
+    m_errorTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
     m_errorTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_errorTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
+    m_errorTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
     winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
     m_errorTextBlock.Margin(margin);
   }
@@ -114,9 +108,9 @@ void ReactControl::HandleInstanceWaitingOnUIThread() {
     if (m_waitingTextBlock == nullptr) {
       m_waitingTextBlock = winrt::TextBlock();
       m_greenBoxGrid = winrt::Grid();
-      m_greenBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
       m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Top);
+      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Top);
     }
 
     // Add box grid to root view
@@ -128,9 +122,9 @@ void ReactControl::HandleInstanceWaitingOnUIThread() {
 
     // Format TextBlock
     m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_waitingTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
+    m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
     m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_waitingTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
+    m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
     winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
     m_waitingTextBlock.Margin(margin);
   }
@@ -251,9 +245,9 @@ void ReactControl::blur(XamlView const &xamlView) noexcept {
   EnsureFocusSafeHarbor();
   if (m_focusSafeHarbor) {
     m_focusSafeHarbor.IsTabStop(true);
-    winrt::FocusManager::TryFocusAsync(m_focusSafeHarbor, winrt::FocusState::Pointer);
+    xaml::Input::FocusManager::TryFocusAsync(m_focusSafeHarbor, winrt::FocusState::Pointer);
   } else
-    winrt::FocusManager::TryFocusAsync(xamlView, winrt::FocusState::Pointer);
+    xaml::Input::FocusManager::TryFocusAsync(xamlView, winrt::FocusState::Pointer);
 }
 
 void ReactControl::DetachInstance() {
@@ -321,14 +315,14 @@ std::string ReactControl::JSComponentName() const noexcept {
 }
 
 int64_t ReactControl::GetActualHeight() const {
-  auto element = m_xamlRootView.as<winrt::FrameworkElement>();
+  auto element = m_xamlRootView.as<xaml::FrameworkElement>();
   assert(element != nullptr);
 
   return static_cast<int64_t>(element.ActualHeight());
 }
 
 int64_t ReactControl::GetActualWidth() const {
-  auto element = m_xamlRootView.as<winrt::FrameworkElement>();
+  auto element = m_xamlRootView.as<xaml::FrameworkElement>();
   assert(element != nullptr);
 
   return static_cast<int64_t>(element.ActualWidth());
@@ -349,9 +343,9 @@ void ReactControl::PrepareXamlRootView(XamlView const &rootView) {
     // Xaml's default projection in 3D is orthographic (all lines are parallel)
     // However React Native's default projection is a one-point perspective.
     // Set a default perspective projection on the main control to mimic this.
-    auto perspectiveTransform3D = winrt::Windows::UI::Xaml::Media::Media3D::PerspectiveTransform3D();
+    auto perspectiveTransform3D = xaml::Media::Media3D::PerspectiveTransform3D();
     perspectiveTransform3D.Depth(850);
-    winrt::Windows::UI::Xaml::Media::Media3D::Transform3D t3d(perspectiveTransform3D);
+    xaml::Media::Media3D::Transform3D t3d(perspectiveTransform3D);
     newRootView.Transform3D(t3d);
     children.Append(newRootView);
     m_xamlRootView = newRootView;
@@ -365,7 +359,7 @@ void ReactControl::EnsureFocusSafeHarbor() {
     auto panel = m_rootView.try_as<winrt::Panel>();
     assert(panel.Children().Size() == 1);
 
-    m_focusSafeHarbor = winrt::ContentControl();
+    m_focusSafeHarbor = xaml::Controls::ContentControl();
     m_focusSafeHarbor.Width(0.0);
     m_focusSafeHarbor.IsTabStop(false);
     panel.Children().InsertAt(0, m_focusSafeHarbor);
@@ -382,9 +376,9 @@ void ReactControl::InitializeDeveloperMenu() {
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
       winrt::auto_revoke, [this](const auto &sender, const winrt::AcceleratorKeyEventArgs &args) {
         if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
-            KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Shift) &&
+            KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
             KeyboardHelper::IsModifiedKeyPressed(
-                winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Control)) {
+                winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control)) {
           if (!IsDeveloperMenuShowing()) {
             ShowDeveloperMenu();
           }

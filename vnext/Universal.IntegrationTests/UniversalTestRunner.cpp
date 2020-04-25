@@ -9,7 +9,7 @@
 #include <cxxreact/ReactMarker.h>
 #include "UniversalTestInstance.h"
 
-#include <Windows.UI.Xaml.h>
+#include <Windows.UI.Xaml.h>  // C++/CX
 #include <wrl.h>
 
 #include <concrt.h> // Concurrency namespace.

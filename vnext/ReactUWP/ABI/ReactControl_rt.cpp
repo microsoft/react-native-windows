@@ -112,7 +112,7 @@ void ReactControl::CreateInnerInstance() {
   Microsoft::WRL::ComPtr<ABI::Windows::UI::Xaml::IFrameworkElement> spFrameworkElementABI;
   spThis.As(&spFrameworkElementABI);
   ::react::uwp::XamlView pXamlView =
-      reinterpret_cast<const winrt::Windows::UI::Xaml::FrameworkElement &>(spFrameworkElementABI);
+      reinterpret_cast<const xaml::FrameworkElement &>(spFrameworkElementABI);
 
   m_pInnerControl = std::make_shared<::react::uwp::ReactControl>(this, pXamlView);
   m_pInnerControl->SetJSComponentName(std::string(m_jsComponentName));

@@ -3,8 +3,6 @@
 
 #pragma once
 #include <folly/dynamic.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
 #include <optional>
 #include <set>
 
@@ -13,11 +11,11 @@
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Input;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -64,16 +62,16 @@ class TouchEventHandler {
     bool ctrlKey = false;
     bool altKey = false;
   };
-  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::FrameworkElement sourceElement);
   ReactPointer
-  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::FrameworkElement sourceElement);
   void UpdateReactPointer(
       ReactPointer &pointer,
       const winrt::PointerRoutedEventArgs &args,
-      winrt::FrameworkElement sourceElement);
+      xaml::FrameworkElement sourceElement);
   void
-  UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
-  void SendPointerMove(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::FrameworkElement sourceElement);
+  void SendPointerMove(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::FrameworkElement sourceElement);
 
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
@@ -91,7 +89,7 @@ class TouchEventHandler {
   bool TagFromOriginalSource(
       const winrt::PointerRoutedEventArgs &args,
       int64_t *pTag,
-      winrt::FrameworkElement *pSourceElement);
+      xaml::FrameworkElement *pSourceElement);
   std::set<int64_t> GetTagsAtPoint(const winrt::PointerRoutedEventArgs &e);
 
   XamlView m_xamlView;

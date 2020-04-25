@@ -6,17 +6,12 @@
 #include "ExpressionAnimationStore.h"
 #include "XamlFeatures.h"
 
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Composition;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 
 // Expression for computing the center point of a UIElement, produces a vector3
 // with 2D translation to center.
-winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpression() {
+comp::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpression() {
   /*
 
   // Because of a bug in the Composition system, we cannot cache this
@@ -30,7 +25,7 @@ winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpres
 
   if (m_elementCenterPointExpression == nullptr) {
     m_elementCenterPointExpression =
-        winrt::Window::Current().Compositor().CreateExpressionAnimation(
+        xaml::Window::Current().Compositor().CreateExpressionAnimation(
             L"vector3(0.5 * uielement.ActualSize.x, 0.5 *
   uielement.ActualSize.y, 0)");
   }
@@ -45,7 +40,7 @@ winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpres
   // The way we obtain the center of an element is by using the ActualSize façade. However this was only added in 19h1
   // An expression animation that refers to a non-existent property (e.g. in RS5) will crash, so use the CenterPoint as
   // a fallback. This might be wrong but at least we won't crash.
-  return winrt::Window::Current().Compositor().CreateExpressionAnimation(
+  return xaml::Window::Current().Compositor().CreateExpressionAnimation(
       g_HasActualSizeProperty == TriBit::Set
           ? L"vector3(0.5 * uielement.ActualSize.x, 0.5 * uielement.ActualSize.y, 0)"
           : L"vector3(uielement.CenterPoint.X, uielement.CenterPoint.Y, uielement.CenterPoint.Z)");
@@ -53,9 +48,9 @@ winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpres
 
 // Expression for applying a TransformMatrix about the centerpoint of a
 // UIElement, produces a Matrix4x4 with overall transform.
-winrt::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpression() {
+comp::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpression() {
   if (m_transformCenteringExpression == nullptr) {
-    m_transformCenteringExpression = winrt::Window::Current().Compositor().CreateExpressionAnimation(
+    m_transformCenteringExpression = xaml::Window::Current().Compositor().CreateExpressionAnimation(
         L"Matrix4x4.CreateFromTranslation(-PS.center) * PS.transform * Matrix4x4.CreateFromTranslation(PS.center)");
   }
 

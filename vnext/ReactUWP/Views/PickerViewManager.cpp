@@ -12,7 +12,6 @@
 #include <IReactInstance.h>
 
 #include <winrt/Windows.Foundation.Metadata.h>
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
 namespace react {
 namespace uwp {
@@ -41,18 +40,18 @@ class PickerShadowNode : public ShadowNodeBase {
   // FUTURE: remove when we can require RS5+
   bool m_isEditableComboboxSupported;
 
-  winrt::ComboBox::SelectionChanged_revoker m_comboBoxSelectionChangedRevoker{};
-  winrt::ComboBox::DropDownClosed_revoker m_comboBoxDropDownClosedRevoker{};
+  xaml::Controls::ComboBox::SelectionChanged_revoker m_comboBoxSelectionChangedRevoker{};
+  xaml::Controls::ComboBox::DropDownClosed_revoker m_comboBoxDropDownClosedRevoker{};
 };
 
 PickerShadowNode::PickerShadowNode() : Super() {
   m_isEditableComboboxSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-      L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
+      XAML_NAMESPACE L".Controls.ComboBox", L"IsEditableProperty");
 }
 
 void PickerShadowNode::createView() {
   Super::createView();
-  auto combobox = GetView().as<winrt::ComboBox>();
+  auto combobox = GetView().as<xaml::Controls::ComboBox>();
   combobox.TabIndex(0);
   auto wkinstance = GetViewManager()->GetReactInstance();
 
@@ -76,7 +75,7 @@ void PickerShadowNode::createView() {
     // When the drop down closes, attempt to move focus to its anchor
     // textbox to prevent cases where focus can land on an outer flyout
     // content and therefore trigger a unexpected flyout dismissal
-    winrt::FocusManager::TryFocusAsync(combobox, winrt::FocusState::Programmatic);
+    xaml::Input::FocusManager::TryFocusAsync(combobox, xaml::FocusState::Programmatic);
   });
 }
 
@@ -84,7 +83,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
 
   bool updateSelectedIndex = false;
-  auto combobox = GetView().as<winrt::ComboBox>();
+  auto combobox = GetView().as<xaml::Controls::ComboBox>();
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
@@ -94,14 +93,14 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
         if (propertyValue.isBool())
           combobox.IsEditable(propertyValue.asBool());
         else if (propertyValue.isNull())
-          combobox.ClearValue(winrt::ComboBox::IsEditableProperty());
+          combobox.ClearValue(xaml::Controls::ComboBox::IsEditableProperty());
       }
     } else if (propertyName == "text") {
       if (m_isEditableComboboxSupported) {
         if (propertyValue.isString())
           combobox.Text(asHstring(propertyValue));
         else if (propertyValue.isNull())
-          combobox.ClearValue(winrt::ComboBox::TextProperty());
+          combobox.ClearValue(xaml::Controls::ComboBox::TextProperty());
       }
     } else if (propertyName == "enabled") {
       if (propertyValue.isBool())
@@ -132,14 +131,14 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
 }
 
 void PickerShadowNode::RepopulateItems() {
-  auto combobox = GetView().as<winrt::ComboBox>();
+  auto combobox = GetView().as<xaml::Controls::ComboBox>();
 
   auto comboBoxItems = combobox.Items();
   comboBoxItems.Clear();
   for (const auto &item : m_items) {
     if (item.count("label")) {
       std::string label = item["label"].asString();
-      auto comboboxItem = winrt::ComboBoxItem();
+      auto comboboxItem = xaml::Controls::ComboBoxItem();
 
       comboboxItem.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(label)));
 
@@ -188,7 +187,7 @@ facebook::react::ShadowNode *PickerViewManager::createShadow() const {
 }
 
 XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/) {
-  auto combobox = winrt::ComboBox();
+  auto combobox = xaml::Controls::ComboBox();
   return combobox;
 }
 

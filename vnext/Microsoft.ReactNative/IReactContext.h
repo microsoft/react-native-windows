@@ -13,7 +13,7 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
 
  public: // IReactContext
   void DispatchEvent(
-      winrt::Windows::UI::Xaml::FrameworkElement const &view,
+      xaml::FrameworkElement const &view,
       hstring const &eventName,
       JSValueArgWriter const &eventDataArgWriter) noexcept;
   void CallJSFunction(

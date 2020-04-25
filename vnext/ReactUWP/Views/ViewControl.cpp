@@ -12,15 +12,15 @@
 #endif
 
 namespace winrt {
-using namespace Windows::UI::Xaml::Automation::Peers;
-using namespace Windows::UI::Xaml;
+using namespace xaml::Automation::Peers;
+using namespace xaml;
 } // namespace winrt
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
 ViewControl::ViewControl() : Super() {
-  VerticalContentAlignment(winrt::VerticalAlignment::Stretch);
-  HorizontalContentAlignment(winrt::HorizontalAlignment::Stretch);
+  VerticalContentAlignment(xaml::VerticalAlignment::Stretch);
+  HorizontalContentAlignment(xaml::HorizontalAlignment::Stretch);
 }
 
 winrt::AutomationPeer ViewControl::OnCreateAutomationPeer() {
@@ -30,7 +30,7 @@ winrt::AutomationPeer ViewControl::OnCreateAutomationPeer() {
 winrt::PROJECT_ROOT_NAMESPACE::ViewPanel ViewControl::GetPanel() const {
   auto child = Content();
 
-  if (auto border = child.try_as<winrt::Windows::UI::Xaml::Controls::Border>()) {
+  if (auto border = child.try_as<xaml::Controls::Border>()) {
     child = border.Child();
   }
 

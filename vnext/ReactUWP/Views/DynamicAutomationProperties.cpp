@@ -5,9 +5,6 @@
 
 #include "DynamicAutomationProperties.h"
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Interop.h>
-
 // Needed for latest versions of C++/WinRT
 #if __has_include("DynamicAutomationProperties.g.cpp")
 #include "DynamicAutomationProperties.g.cpp"
@@ -16,8 +13,8 @@
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Interop;
+using namespace xaml;
+using namespace xaml::Interop;
 } // namespace winrt
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
@@ -25,8 +22,8 @@ namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 const winrt::TypeName dynamicAutomationTypeName{winrt::hstring{L"DynamicAutomationProperties"},
                                                 winrt::TypeKind::Metadata};
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityRoleProperty() {
-  static winrt::DependencyProperty s_AccessibilityRoleProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityRoleProperty() {
+  static xaml::DependencyProperty s_AccessibilityRoleProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityRole",
       winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(),
       dynamicAutomationTypeName,
@@ -36,19 +33,19 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityRole(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles const &value) {
   element.SetValue(AccessibilityRoleProperty(), winrt::box_value<PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(value));
 }
 
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles DynamicAutomationProperties::GetAccessibilityRole(
-    winrt::Windows::UI::Xaml::UIElement const &element) {
+    xaml::UIElement const &element) {
   return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(
       element.GetValue(AccessibilityRoleProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateSelectedProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateSelectedProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateSelectedProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateSelectedProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateSelected",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -58,17 +55,17 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateSelected(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateSelectedProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateSelected(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateSelected(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateSelectedProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateDisabledProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateDisabledProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateDisabledProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateDisabledProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateDisabled",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -78,17 +75,17 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateDisabled(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateDisabledProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateDisabled(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateDisabled(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateDisabledProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateCheckedProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateCheckedProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateCheckedProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateCheckedProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateChecked",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -98,17 +95,17 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateChecked(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateCheckedProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateChecked(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateChecked(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateCheckedProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateUncheckedProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateUncheckedProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateUncheckedProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateUncheckedProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateUnchecked",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -118,17 +115,17 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateUnchecked(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateUncheckedProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateUnchecked(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateUnchecked(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateUncheckedProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateBusyProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateBusyProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateBusyProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateBusyProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateBusy",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -138,17 +135,17 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateBusy(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateBusyProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateBusy(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateBusy(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateBusyProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateExpandedProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateExpandedProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateExpandedProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateExpandedProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateExpanded",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -158,17 +155,17 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateExpanded(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateExpandedProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateExpanded(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateExpanded(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateExpandedProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateCollapsedProperty() {
-  static winrt::DependencyProperty s_AccessibilityStateCollapsedProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateCollapsedProperty() {
+  static xaml::DependencyProperty s_AccessibilityStateCollapsedProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateCollapsed",
       winrt::xaml_typename<bool>(),
       dynamicAutomationTypeName,
@@ -178,18 +175,18 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityStateCollapsed(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     bool value) {
   element.SetValue(AccessibilityStateCollapsedProperty(), winrt::box_value<bool>(value));
 }
 
-bool DynamicAutomationProperties::GetAccessibilityStateCollapsed(winrt::Windows::UI::Xaml::UIElement const &element) {
+bool DynamicAutomationProperties::GetAccessibilityStateCollapsed(xaml::UIElement const &element) {
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateCollapsedProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty() {
-  static winrt::DependencyProperty s_AccessibilityInvokeEventHandlerProperty =
-      winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty() {
+  static xaml::DependencyProperty s_AccessibilityInvokeEventHandlerProperty =
+      xaml::DependencyProperty::RegisterAttached(
           L"AccessibilityInvokeEventHandler",
           winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(),
           dynamicAutomationTypeName,
@@ -200,7 +197,7 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler const &value) {
   element.SetValue(
       AccessibilityInvokeEventHandlerProperty(),
@@ -208,13 +205,13 @@ void DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(
 }
 
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler
-DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(winrt::Windows::UI::Xaml::UIElement const &element) {
+DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(xaml::UIElement const &element) {
   return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(
       element.GetValue(AccessibilityInvokeEventHandlerProperty()));
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionsProperty() {
-  static winrt::DependencyProperty s_AccessibilityActionsProperty = winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionsProperty() {
+  static xaml::DependencyProperty s_AccessibilityActionsProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityActions",
       winrt::xaml_typename<Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>>(),
       dynamicAutomationTypeName,
@@ -224,19 +221,19 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityActions(
-    Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value) {
   return element.SetValue(AccessibilityActionsProperty(), winrt::box_value(value));
 }
 
 Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>
-DynamicAutomationProperties::GetAccessibilityActions(Windows::UI::Xaml::UIElement const &element) {
+DynamicAutomationProperties::GetAccessibilityActions(xaml::UIElement const &element) {
   return winrt::unbox_value<Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>>(
       element.GetValue(AccessibilityActionsProperty()));
 }
 
 void DynamicAutomationProperties::DispatchAccessibilityAction(
-    Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     std::wstring_view const &actionName) {
   if (element) {
     auto vector = GetAccessibilityActions(element);
@@ -254,9 +251,9 @@ void DynamicAutomationProperties::DispatchAccessibilityAction(
   }
 }
 
-winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionEventHandlerProperty() {
-  static winrt::DependencyProperty s_AccessibilityActionEventHandlerProperty =
-      winrt::DependencyProperty::RegisterAttached(
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionEventHandlerProperty() {
+  static xaml::DependencyProperty s_AccessibilityActionEventHandlerProperty =
+      xaml::DependencyProperty::RegisterAttached(
           L"AccessibilityActionEventHandler",
           winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(),
           dynamicAutomationTypeName,
@@ -267,7 +264,7 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 }
 
 void DynamicAutomationProperties::SetAccessibilityActionEventHandler(
-    winrt::Windows::UI::Xaml::UIElement const &element,
+    xaml::UIElement const &element,
     winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value) {
   element.SetValue(
       AccessibilityActionEventHandlerProperty(),
@@ -275,7 +272,7 @@ void DynamicAutomationProperties::SetAccessibilityActionEventHandler(
 }
 
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler
-DynamicAutomationProperties::GetAccessibilityActionEventHandler(winrt::Windows::UI::Xaml::UIElement const &element) {
+DynamicAutomationProperties::GetAccessibilityActionEventHandler(xaml::UIElement const &element) {
   return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(
       element.GetValue(AccessibilityActionEventHandlerProperty()));
 }

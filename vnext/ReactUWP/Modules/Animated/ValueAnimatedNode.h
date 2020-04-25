@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 
 namespace winrt {
-using namespace winrt::Windows::UI::Composition;
+using namespace comp;
 }
 
 namespace react {

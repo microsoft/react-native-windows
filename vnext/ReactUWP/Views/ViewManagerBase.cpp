@@ -14,13 +14,11 @@
 #include <IReactInstance.h>
 #include <IXamlRootView.h>
 #include <Views/ShadowNodeBase.h>
-#include <winrt/Windows.UI.Xaml.Interop.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 using namespace folly;
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 }
 
 namespace react {
@@ -48,7 +46,7 @@ YGSize DefaultYogaSelfMeasureFunc(
   // TODO: VEC context != nullptr, DefaultYogaSelfMeasureFunc expects a context.
 
   XamlView view = context->view;
-  auto element = view.as<winrt::UIElement>();
+  auto element = view.as<xaml::UIElement>();
 
   float constrainToWidth =
       widthMode == YGMeasureMode::YGMeasureModeUndefined ? std::numeric_limits<float>::max() : width;
@@ -59,8 +57,8 @@ YGSize DefaultYogaSelfMeasureFunc(
     winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
 
     // Clear out current size so it doesn't constrain the measurement
-    auto widthProp = winrt::FrameworkElement::WidthProperty();
-    auto heightProp = winrt::FrameworkElement::HeightProperty();
+    auto widthProp = xaml::FrameworkElement::WidthProperty();
+    auto heightProp = xaml::FrameworkElement::HeightProperty();
     auto origWidth = element.GetValue(widthProp);
     auto origHeight = element.GetValue(heightProp);
     element.ClearValue(widthProp);
@@ -185,7 +183,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   // In Debug, set the element name to the tag for convienent
   // searching within VisualStudio's Live Visual Tree pane
 #ifdef DEBUG
-  auto element = view.try_as<winrt::FrameworkElement>();
+  auto element = view.try_as<xaml::FrameworkElement>();
   if (element) {
     element.Name(L"<reacttag>: " + std::to_wstring(tag));
   }
@@ -321,12 +319,12 @@ void ViewManagerBase::SetLayoutProps(
     float top,
     float width,
     float height) {
-  auto element = viewToUpdate.as<winrt::UIElement>();
+  auto element = viewToUpdate.as<xaml::UIElement>();
   if (element == nullptr) {
     // TODO: Assert
     return;
   }
-  auto fe = element.as<winrt::FrameworkElement>();
+  auto fe = element.as<xaml::FrameworkElement>();
 
   // Set Position & Size Properties
   ViewPanel::SetLeft(element, left);

@@ -9,10 +9,10 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactApplicationDelegate : ReactApplicationDelegateT<ReactApplicationDelegate> {
   ReactApplicationDelegate() = default;
-  ReactApplicationDelegate(Windows::UI::Xaml::Application const &application) noexcept;
+  ReactApplicationDelegate(xaml::Application const &application) noexcept;
 
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &args) noexcept;
-  Windows::UI::Xaml::UIElement OnCreate(hstring const &args) noexcept;
+  xaml::UIElement OnCreate(hstring const &args) noexcept;
 
  private:
   void OnResuming(IInspectable const &sender, IInspectable const &args) noexcept;
@@ -25,7 +25,7 @@ struct ReactApplicationDelegate : ReactApplicationDelegateT<ReactApplicationDele
       Windows::ApplicationModel::EnteredBackgroundEventArgs const &args) noexcept;
 
  private:
-  Windows::UI::Xaml::Application m_application{nullptr};
+  xaml::Application m_application{nullptr};
   IReactApplication m_reactApplication{nullptr};
   winrt::com_ptr<ReactRootView> m_reactRootView{nullptr};
 };
