@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 21 Apr 2020 20:39:09 GMT and should not be manually modified.
+This log was last generated on Sat, 25 Apr 2020 04:46:21 GMT and should not be manually modified.
 
+## 0.61.7
+Sat, 25 Apr 2020 04:46:21 GMT
+
+### Patches
+
+- Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475 (tudorm@microsoft.com)
 ## 0.61.6
 Tue, 21 Apr 2020 20:39:09 GMT
 

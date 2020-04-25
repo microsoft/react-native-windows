@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475",
-  "packageName": "react-native-windows",
-  "email": "tudorm@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-25T02:55:04.378Z"
-}

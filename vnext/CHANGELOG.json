@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Apr 2020 04:46:21 GMT",
+      "tag": "react-native-windows_v0.61.7",
+      "version": "0.61.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475",
+            "author": "tudorm@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Apr 2020 20:39:09 GMT",
       "tag": "react-native-windows_v0.61.6",
       "version": "0.61.6",
