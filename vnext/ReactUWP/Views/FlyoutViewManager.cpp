@@ -368,7 +368,7 @@ void FlyoutShadowNode::SetTargetFrameworkElement() {
 }
 
 void FlyoutShadowNode::AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight) {
-  winrt::Style flyoutStyle({XAML_NAMESPACE L".Controls.FlyoutPresenter", winrt::TypeKind::Metadata});
+  winrt::Style flyoutStyle({XAML_NAMESPACE_STR L".Controls.FlyoutPresenter", winrt::TypeKind::Metadata});
   flyoutStyle.Setters().Append(winrt::Setter(xaml::FrameworkElement::MaxWidthProperty(), winrt::box_value(maxWidth)));
   flyoutStyle.Setters().Append(winrt::Setter(xaml::FrameworkElement::MaxHeightProperty(), winrt::box_value(maxHeight)));
   flyoutStyle.Setters().Append(winrt::Setter(xaml::Controls::Control::PaddingProperty(), winrt::box_value(0)));

@@ -3,6 +3,7 @@
 // information.
 
 #pragma once
+#include "NamespaceRedirect.h"
 
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.Metadata.h>
@@ -11,7 +12,6 @@
 #include <winrt/Windows.System.h>
 
 #ifndef WINUI3_SUPPORT
-#define XAML_NAMESPACE L"Windows.UI.Xaml"
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.System.h>
@@ -45,8 +45,6 @@ namespace comp = winrt::Windows::UI::Composition;
 
 #else
 
-#define XAML_NAMESPACE L"Microsoft.UI.Xaml"
-
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Text.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
@@ -68,3 +66,7 @@ using namespace Windows::UI::Core;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 } // namespace winrt
+
+#define _QUOTE(x) L#x
+#define QUOTE(x) _QUOTE(x)
+#define XAML_NAMESPACE_STR QUOTE(XAML_NAMESPACE)

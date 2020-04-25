@@ -3,12 +3,13 @@
 
 import "IJSValueWriter.idl";
 import "ReactNativeHost.idl";
+#include "../include/NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 
   [default_interface]
   [webhosthidden]
-  runtimeclass ReactRootView : Windows.UI.Xaml.Controls.Grid {
+  runtimeclass ReactRootView : WUXMUX_TYPE(Controls.Grid) {
     ReactRootView();
 
     ReactNativeHost ReactNativeHost { get; set; };

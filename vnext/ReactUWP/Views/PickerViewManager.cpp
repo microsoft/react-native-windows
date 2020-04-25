@@ -46,7 +46,7 @@ class PickerShadowNode : public ShadowNodeBase {
 
 PickerShadowNode::PickerShadowNode() : Super() {
   m_isEditableComboboxSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-      XAML_NAMESPACE L".Controls.ComboBox", L"IsEditableProperty");
+      XAML_NAMESPACE_STR L".Controls.ComboBox", L"IsEditableProperty");
 }
 
 void PickerShadowNode::createView() {

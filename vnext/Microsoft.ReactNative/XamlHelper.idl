@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "IJSValueWriter.idl";
+#include "../include/NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 
@@ -9,7 +10,7 @@ namespace Microsoft.ReactNative {
   [default_interface]
   runtimeclass XamlHelper {
     XamlHelper();
-    static Windows.UI.Xaml.Media.Brush BrushFrom(JSValueArgWriter valueProvider);
+    static WUXMUX_TYPE(Media.Brush) BrushFrom(JSValueArgWriter valueProvider);
     static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
   };
 

@@ -381,7 +381,7 @@ bool TryUpdateTextDecorationLine(
   if (propertyName == "textDecorationLine") {
     // FUTURE: remove when SDK target minVer >= 10.0.15063.0
     static bool isTextDecorationsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-        XAML_NAMESPACE ".Controls.TextBlock", L"TextDecorations");
+        XAML_NAMESPACE_STR L".Controls.TextBlock", L"TextDecorations");
     if (!isTextDecorationsSupported)
       return true;
 
