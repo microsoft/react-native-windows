@@ -155,7 +155,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::shared_ptr<facebook::react::AppState> m_appState;
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
-  std::pair<std::string, bool> m_i18nInfo{};
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
   std::string m_bundleRootPath;
 };

@@ -12,6 +12,8 @@ struct II18nModule {
   virtual ~II18nModule(){};
   virtual std::string getLocaleIdentifier() = 0;
   virtual bool getIsRTL() = 0;
+  virtual void setAllowRTL(bool allowRTL) = 0;
+  virtual void setForceRTL(bool forceRTL) = 0;
 };
 
 std::unique_ptr<facebook::xplat::module::CxxModule> createI18nModule(std::unique_ptr<II18nModule> module);

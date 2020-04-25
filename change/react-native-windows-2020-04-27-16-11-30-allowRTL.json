@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "auto-detect RTL and push into root view",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-27T23:11:30.614Z"
+}

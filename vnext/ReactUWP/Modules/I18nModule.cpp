@@ -30,14 +30,55 @@ namespace uwp {
   return std::make_pair<std::string, bool>(std::move(locale), std::move(isRTL));
 }
 
-I18nModule::I18nModule(std::pair<std::string, bool> &&i18nInfo) : m_i18nInfo(std::move(i18nInfo)) {}
+I18nModule::I18nModule() : m_helper(I18nHelper::Instance()) {}
 
 std::string I18nModule::getLocaleIdentifier() {
-  return m_i18nInfo.first;
+  return m_helper.getLocaleIdentifier();
 }
 
 bool I18nModule::getIsRTL() {
-  return m_i18nInfo.second;
+  return m_helper.getIsRTL();
+}
+
+void I18nModule::setAllowRTL(bool allowRTL) {
+  m_helper.setAllowRTL(allowRTL);
+}
+
+void I18nModule::setForceRTL(bool forceRTL) {
+  m_helper.setForceRTL(forceRTL);
+}
+
+/*static*/ I18nHelper &I18nHelper::Instance() {
+  static I18nHelper theInstance;
+  return theInstance;
+}
+
+I18nHelper::I18nHelper() {}
+
+void I18nHelper::setInfo(I18nModule::I18nInfo &&i18nInfo) {
+  m_i18nInfo = i18nInfo;
+}
+
+std::string I18nHelper::getLocaleIdentifier() {
+  return m_i18nInfo.first;
+}
+
+bool I18nHelper::getIsRTL() {
+  if (m_forceRTL) {
+    // Used for debugging purposes, forces RTL even in LTR locales
+    return true;
+  }
+
+  // If the app allows RTL (default is true), then we are in RTL if the locale is RTL
+  return m_allowRTL && m_i18nInfo.second;
+}
+
+void I18nHelper::setAllowRTL(bool allowRTL) {
+  m_allowRTL = allowRTL;
+}
+
+void I18nHelper::setForceRTL(bool forceRTL) {
+  m_forceRTL = forceRTL;
 }
 
 } // namespace uwp

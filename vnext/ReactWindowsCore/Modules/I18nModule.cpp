@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 #include "I18nModule.h"
+#include <cxxreact/JsArgumentHelpers.h>
+
+using namespace facebook::xplat;
 
 namespace react {
 namespace windows {
@@ -18,7 +21,10 @@ std::map<std::string, folly::dynamic> I18nModule::getConstants() {
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> I18nModule::getMethods() {
-  return {};
+  return {
+      Method("allowRTL", [this](folly::dynamic args) { this->m_module->setAllowRTL(jsArgAsBool(args, 0)); }),
+      Method("forceRTL", [this](folly::dynamic args) { this->m_module->setForceRTL(jsArgAsBool(args, 0)); }),
+  };
 }
 
 std::unique_ptr<facebook::xplat::module::CxxModule> createI18nModule(std::unique_ptr<II18nModule> module) {
