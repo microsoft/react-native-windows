@@ -3,12 +3,8 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#include <winrt/Windows.UI.Xaml.Automation.h>
-#include <winrt/Windows.UI.Xaml.h>
-
 #include <ReactWindowsCore/ReactWindowsAPI.h>
-
+#include "CppWinRTIncludes.h"
 namespace react {
 namespace uwp {
 

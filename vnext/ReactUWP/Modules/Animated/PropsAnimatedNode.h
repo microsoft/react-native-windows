@@ -29,7 +29,7 @@ class PropsAnimatedNode : public AnimatedNode {
  private:
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
   ShadowNodeBase *GetShadowNodeBase();
-  winrt::UIElement GetUIElement();
+  xaml::UIElement GetUIElement();
 
   std::weak_ptr<IReactInstance> m_instance{};
   std::map<std::string, int64_t> m_propMapping{};

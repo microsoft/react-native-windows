@@ -20,10 +20,10 @@ FrameAnimationDriver::FrameAnimationDriver(
   m_toValue = config.find("toValue").dereference().second.asDouble();
 }
 
-std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
+std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation] = []() {
-    const auto compositor = winrt::Window::Current().Compositor();
+    const auto compositor = xaml::Window::Current().Compositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation());

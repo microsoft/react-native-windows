@@ -22,7 +22,7 @@ SubtractionAnimatedNode::SubtractionAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [firstNode = m_firstInput, nodes = m_inputNodes, manager]() {
-    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
 
     anim.Expression([firstNode, nodes, manager, anim]() {
       anim.SetReferenceParameter(s_baseName, manager->GetValueAnimatedNode(firstNode)->PropertySet());

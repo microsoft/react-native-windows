@@ -13,6 +13,7 @@
 #include <future>
 #include <memory>
 #include <string>
+#include <future>
 
 namespace facebook {
 namespace react {
