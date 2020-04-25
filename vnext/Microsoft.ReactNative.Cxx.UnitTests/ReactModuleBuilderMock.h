@@ -8,12 +8,11 @@
 
 #include <functional>
 #include "JSValue.h"
+#include "..\include\CppWinRTIncludes.h"
 
 #undef GetCurrentTime
-#include "Windows.UI.Xaml.h"
 
 using namespace winrt;
-using namespace Windows::UI::Xaml; // C++/CX
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -122,7 +121,7 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
   void DispatchEvent(
-      FrameworkElement const & /*view*/,
+      xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,
       JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {}
 
