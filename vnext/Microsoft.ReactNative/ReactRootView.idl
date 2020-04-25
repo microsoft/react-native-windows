@@ -9,7 +9,7 @@ namespace Microsoft.ReactNative {
 
   [default_interface]
   [webhosthidden]
-  runtimeclass ReactRootView : WUXMUX_TYPE(Controls.Grid) {
+  runtimeclass ReactRootView : XAML_NAMESPACE.Controls.Grid {
     ReactRootView();
 
     ReactNativeHost ReactNativeHost { get; set; };

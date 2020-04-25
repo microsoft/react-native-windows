@@ -24,7 +24,7 @@ namespace Microsoft.ReactNative
   {
     String Name { get; };
 
-    WUXMUX_TYPE(FrameworkElement) CreateView();
+    XAML_NAMESPACE.FrameworkElement CreateView();
   }
 
   [webhosthidden]
@@ -44,7 +44,7 @@ namespace Microsoft.ReactNative
   {
     IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
-    void UpdateProperties(WUXMUX_TYPE(FrameworkElement) view, IJSValueReader propertyMapReader);
+    void UpdateProperties(XAML_NAMESPACE.FrameworkElement view, IJSValueReader propertyMapReader);
   }
 
   [webhosthidden]
@@ -52,7 +52,7 @@ namespace Microsoft.ReactNative
   {
     IVectorView<String> Commands { get; };
 
-    void DispatchCommand(WUXMUX_TYPE(FrameworkElement) view, String commandId, IJSValueReader commandArgsReader);
+    void DispatchCommand(XAML_NAMESPACE.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
   }
 
   [webhosthidden]
@@ -66,12 +66,12 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithChildren
   {
-    void AddView(WUXMUX_TYPE(FrameworkElement) parent, WUXMUX_TYPE(UIElement) child, Int64 index);
+    void AddView(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement child, Int64 index);
 
-    void RemoveAllChildren(WUXMUX_TYPE(FrameworkElement) parent);
+    void RemoveAllChildren(XAML_NAMESPACE.FrameworkElement parent);
 
-    void RemoveChildAt(WUXMUX_TYPE(FrameworkElement) parent, Int64 index);
+    void RemoveChildAt(XAML_NAMESPACE.FrameworkElement parent, Int64 index);
 
-    void ReplaceChild(WUXMUX_TYPE(FrameworkElement) parent, WUXMUX_TYPE(UIElement) oldChild, WUXMUX_TYPE(UIElement) newChild);
+    void ReplaceChild(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement oldChild, XAML_NAMESPACE.UIElement newChild);
   }
 } // namespace Microsoft.ReactNative

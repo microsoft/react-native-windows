@@ -27,35 +27,35 @@ namespace PROJECT_ROOT_NAMESPACE
     ViewPanel();
 
     // Public Methods
-    void InsertAt(UInt32 index, WUXMUX_TYPE(UIElement) value);
+    void InsertAt(UInt32 index, XAML_NAMESPACE.UIElement value);
       void RemoveAt(UInt32 index);
       void Clear();
 
     void FinalizeProperties();
-      WUXMUX_TYPE(Controls.Border) GetOuterBorder();
+      XAML_NAMESPACE.Controls.Border GetOuterBorder();
 
     // Public Properties
-    WUXMUX_TYPE(Media.Brush) ViewBackground { get; set; };
-    WUXMUX_TYPE(Thickness) BorderThickness { get; set; };
-    WUXMUX_TYPE(Media.Brush) BorderBrush { get; set; };
-    WUXMUX_TYPE(CornerRadius) CornerRadius { get; set; };
+    XAML_NAMESPACE.Media.Brush ViewBackground { get; set; };
+    XAML_NAMESPACE.Thickness BorderThickness { get; set; };
+    XAML_NAMESPACE.Media.Brush BorderBrush { get; set; };
+    XAML_NAMESPACE.CornerRadius CornerRadius { get; set; };
     Boolean ClipChildren { get; set; };
 
     // ViewPanel Properties
-    static WUXMUX_TYPE(DependencyProperty) ViewBackgroundProperty { get; };
-    static WUXMUX_TYPE(DependencyProperty) BorderThicknessProperty { get; };
-    static WUXMUX_TYPE(DependencyProperty) BorderBrushProperty { get; };
-    static WUXMUX_TYPE(DependencyProperty) CornerRadiusProperty { get; };
-    static WUXMUX_TYPE(DependencyProperty) ClipChildrenProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty ViewBackgroundProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty BorderThicknessProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty BorderBrushProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty CornerRadiusProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty ClipChildrenProperty { get; };
 
     // Attached Properties
-    static WUXMUX_TYPE(DependencyProperty) TopProperty { get; };
-    static void SetTop(WUXMUX_TYPE(UIElement) element, Double value);
-    static Double GetTop(WUXMUX_TYPE(UIElement) element);
+    static XAML_NAMESPACE.DependencyProperty TopProperty { get; };
+    static void SetTop(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetTop(XAML_NAMESPACE.UIElement element);
 
-    static WUXMUX_TYPE(DependencyProperty) LeftProperty { get; };
-    static void SetLeft(WUXMUX_TYPE(UIElement) element, Double value);
-    static Double GetLeft(WUXMUX_TYPE(UIElement) element);
+    static XAML_NAMESPACE.DependencyProperty LeftProperty { get; };
+    static void SetLeft(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetLeft(XAML_NAMESPACE.UIElement element);
   }
 
   [default_interface]

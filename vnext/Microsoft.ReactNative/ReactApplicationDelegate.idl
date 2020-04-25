@@ -9,8 +9,8 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   unsealed runtimeclass ReactApplicationDelegate {
     ReactApplicationDelegate();
-    ReactApplicationDelegate(WUXMUX_TYPE(Application) application);
+    ReactApplicationDelegate(XAML_NAMESPACE.Application application);
     void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs args);
-    WUXMUX_TYPE(UIElement) OnCreate(String args);
+    XAML_NAMESPACE.UIElement OnCreate(String args);
   }
 }

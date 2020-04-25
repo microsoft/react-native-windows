@@ -10,7 +10,7 @@ namespace Microsoft.ReactNative {
   [default_interface]
   runtimeclass XamlHelper {
     XamlHelper();
-    static WUXMUX_TYPE(Media.Brush) BrushFrom(JSValueArgWriter valueProvider);
+    static XAML_NAMESPACE.Media.Brush BrushFrom(JSValueArgWriter valueProvider);
     static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
   };
 
