@@ -673,8 +673,10 @@ void TextInputViewManager::TransferInputScope(
 }
 
 void TextInputViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
-  if ((oldView.try_as<xaml::Controls::TextBox>() != nullptr && newView.try_as<xaml::Controls::PasswordBox>() != nullptr) ||
-      (oldView.try_as<xaml::Controls::PasswordBox>() != nullptr && newView.try_as<xaml::Controls::TextBox>() != nullptr)) {
+  if ((oldView.try_as<xaml::Controls::TextBox>() != nullptr &&
+       newView.try_as<xaml::Controls::PasswordBox>() != nullptr) ||
+      (oldView.try_as<xaml::Controls::PasswordBox>() != nullptr &&
+       newView.try_as<xaml::Controls::TextBox>() != nullptr)) {
     bool copyToPasswordBox = oldView.try_as<xaml::Controls::TextBox>() != nullptr;
 
     // sync common properties between TextBox and PasswordBox
