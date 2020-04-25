@@ -33,8 +33,8 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   void TransferProperty(
       const XamlView &oldView,
       const XamlView &newView,
-      winrt::DependencyProperty oldViewDP,
-      winrt::DependencyProperty newViewDP);
+      xaml::DependencyProperty oldViewDP,
+      xaml::DependencyProperty newViewDP);
 
  private:
   void ApplyTransformMatrix(
