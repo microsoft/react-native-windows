@@ -84,6 +84,14 @@ void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly
   }
 }
 
+winrt::IInspectable ReactContext::UserData() const noexcept {
+    if (auto instance = m_reactInstance.GetStrongPtr()) {
+      return instance->Options().UserData;
+    } else {
+      return nullptr;
+    }
+  }
+
 //=============================================================================================
 // LoadedCallbackGuard ensures that the OnReactInstanceLoaded is always called.
 // It calls OnReactInstanceLoaded in destructor with a cancellation error.
@@ -432,15 +440,8 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 }
 
 void ReactInstanceWin::InitJSMessageThread() noexcept {
-  // Use the explicit JSQueue if it is provided.
-  const auto &properties = m_options.Properties;
-  auto jsDispatchQueue = Mso::DispatchQueue{properties.Get(JSDispatchQueueProperty)};
-  if (jsDispatchQueue) {
-    VerifyElseCrashSz(jsDispatchQueue.IsSerial(), "JS Queue must be sequential");
-  } else {
-    // Currently we have to use Looper DispatchQueue because our JS Engine based on Chakra uses thread local storage.
-    jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
-  }
+  // Currently we have to use Looper DispatchQueue because our JS Engine based on Chakra uses thread local storage.
+  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
 
   // Create MessageQueueThread for the DispatchQueue
   VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");

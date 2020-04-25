@@ -66,6 +66,14 @@ void ReactModuleBuilderMock::EmitJSEvent(
   m_jsEventHandler(eventEmitterName, eventName, TakeJSValue(writer));
 }
 
+Windows::Foundation::IInspectable ReactModuleBuilderMock::UserData() noexcept {
+  return m_userData;
+}
+
+void ReactModuleBuilderMock::SetUserData(Windows::Foundation::IInspectable const &userData) noexcept {
+  m_userData = userData;
+}
+
 void ReactModuleBuilderMock::AddInitializer(InitializerDelegate const &initializer) noexcept {
   m_initializers.push_back(initializer);
 }
@@ -158,6 +166,10 @@ void ReactContextMock::EmitJSEvent(
     hstring const &eventName,
     JSValueArgWriter const &paramsArgWriter) noexcept {
   m_builderMock->EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
+}
+
+Windows::Foundation::IInspectable ReactContextMock::UserData() noexcept {
+  return m_builderMock->UserData();
 }
 
 } // namespace winrt::Microsoft::ReactNative

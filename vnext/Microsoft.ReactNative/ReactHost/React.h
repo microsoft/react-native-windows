@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "JSBundle.h"
-#include "PropertyBag.h"
 #include "RedBoxHandler.h"
 #include "dispatchQueue/dispatchQueue.h"
 #include "errorCode/errorCode.h"
@@ -43,13 +42,6 @@ using OnReactInstanceDestroyedCallback = Mso::Functor<void(IReactInstance &)>;
 //! Returns default OnError handler.
 LIBLET_PUBLICAPI OnErrorCallback GetDefaultOnErrorHandler() noexcept;
 
-//! PropertyBag named property for JavaScript dispatch queue.
-constexpr const Mso::JSHost::NamedProperty<Mso::IDispatchQueueService> JSDispatchQueueProperty{"JSDispatchQueue"};
-
-//! PropertyBag named property for Native dispatch queue.
-constexpr const Mso::JSHost::NamedProperty<Mso::IDispatchQueueService> NativeDispatchQueueProperty{
-    "NativeDispatchQueue"};
-
 enum class ReactInstanceState {
   Loading,
   WaitingForDebugger,
@@ -73,6 +65,7 @@ MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
+  virtual winrt::IInspectable UserData() const noexcept = 0;
 };
 
 //! Settings per each IReactViewHost associated with an IReactHost instance.
@@ -219,8 +212,8 @@ struct ReactOptions {
 
   ReactDevOptions DeveloperSettings = {};
 
-  //! Additional properties associated with the ReactOptions.
-  Mso::JSHost::PropertyBag Properties;
+  //! Supplied properties that are passed to native modules.
+  winrt::IInspectable UserData;
 
   //! Adds registered JS bundle to JSBundles.
   LIBLET_PUBLICAPI ReactOptions &AddRegisteredJSBundle(std::string_view jsBundleId) noexcept;

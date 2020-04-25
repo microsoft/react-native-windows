@@ -91,6 +91,8 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
   reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
 
+  reactOptions.UserData = m_instanceSettings.UserData();
+
   reactOptions.LegacySettings = std::move(legacySettings);
 
   reactOptions.ModuleProvider = modulesProvider;

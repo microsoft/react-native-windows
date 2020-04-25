@@ -28,5 +28,8 @@ namespace Microsoft.ReactNative {
     String DebugBundlePath { get; set; };
     String BundleRootPath { get; set; };
     UInt16 DebuggerPort { get; set; };
+
+    // User provided state passed to native modules using REACT_INIT. Useful for injecting dependencies.
+    Object UserData { get; set; };
   }
 }

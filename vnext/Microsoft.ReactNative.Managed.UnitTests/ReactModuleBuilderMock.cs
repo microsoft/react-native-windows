@@ -19,9 +19,11 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     private readonly List<ConstantProviderDelegate> m_constantProviders = new List<ConstantProviderDelegate>();
     private Action<string, string, JSValue> m_jsEventHandler;
     private Action<string, string, JSValue> m_jsFunctionHandler;
+    private object m_userData;
 
     public bool IsResolveCallbackCalled { get; private set; }
     public bool IsRejectCallbackCalled { get; private set; }
+    public object UserData { get; set; }
 
     public T CreateModule<T>(ReactModuleInfo moduleInfo) where T : class
     {
@@ -277,6 +279,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
   class ReactContextMock : IReactContext
   {
     private readonly ReactModuleBuilderMock m_builder;
+
+    public object UserData { get => m_builder.UserData; }
 
     public ReactContextMock(ReactModuleBuilderMock builder)
     {

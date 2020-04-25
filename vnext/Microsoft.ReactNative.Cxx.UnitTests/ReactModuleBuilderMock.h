@@ -75,6 +75,9 @@ struct ReactModuleBuilderMock {
       std::wstring_view eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
+  Windows::Foundation::IInspectable UserData() noexcept;
+  void SetUserData(Windows::Foundation::IInspectable const &userData) noexcept;
+
   Windows::Foundation::IInspectable CreateModule(
       ReactModuleProvider const &provider,
       IReactModuleBuilder const &moduleBuilder) noexcept;
@@ -116,6 +119,7 @@ struct ReactModuleBuilderMock {
   bool m_isRejectCallbackCalled{false};
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsFunctionHandler;
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsEventHandler;
+  Windows::Foundation::IInspectable m_userData;
 };
 
 struct ReactContextMock : implements<ReactContextMock, IReactContext> {
@@ -135,6 +139,8 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
       hstring const &eventEmitterName,
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
+
+  Windows::Foundation::IInspectable UserData() noexcept;
 
  private:
   ReactModuleBuilderMock *m_builderMock;

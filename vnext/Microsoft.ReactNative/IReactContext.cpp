@@ -47,4 +47,8 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
+winrt::IInspectable ReactContext::UserData() noexcept {
+  return m_context->UserData();
+}
+
 } // namespace winrt::Microsoft::ReactNative

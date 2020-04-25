@@ -25,6 +25,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       IsInitialized = true;
       Assert.IsNotNull(context);
 
+      UserData = context.UserData;
+
       // Event and Function fields are initialized before ReactInitializer method call.
       Assert.IsNotNull(OnIntEvent);
       Assert.IsNotNull(JSIntFunction);
@@ -556,6 +558,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public bool IsInitialized { get; set; }
     public string Message { get; set; }
     public static string StaticMessage { get; set; }
+    public object UserData { get; set; }
   }
 
   [TestClass]
@@ -1552,6 +1555,36 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestInitialized()
     {
       Assert.IsTrue(m_module.IsInitialized);
+    }
+  }
+
+  [TestClass]
+  public class NativeModuleUserDataTest
+  {
+    private ReactModuleBuilderMock m_moduleBuilderMock;
+    private ReactModuleInfo m_moduleInfo;
+    private SimpleNativeModule m_module;
+
+    [TestMethod]
+    public void NullUserData()
+    {
+      var moduleBuilderMock = new ReactModuleBuilderMock();
+      var moduleInfo = new ReactModuleInfo(typeof(SimpleNativeModule));
+      var module = m_moduleBuilderMock.CreateModule<SimpleNativeModule>(m_moduleInfo);
+
+      Assert.IsNull(module.UserData);
+    }
+
+    [TestMethod]
+    public void IntUserData()
+    {
+      var moduleBuilderMock = new ReactModuleBuilderMock();
+      moduleBuilderMock.UserData = 42;
+
+      var moduleInfo = new ReactModuleInfo(typeof(SimpleNativeModule));
+      var module = m_moduleBuilderMock.CreateModule<SimpleNativeModule>(m_moduleInfo);
+
+      Assert.AreEqual(42, module.UserData);
     }
   }
 }

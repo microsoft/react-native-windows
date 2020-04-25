@@ -17,6 +17,8 @@ struct SimpleNativeModule {
     IsInitialized = true;
     TestCheck(context != nullptr);
 
+    UserData = context.UserData();
+
     // Event and Function fields are initialized before REACT_INIT method call.
     TestCheck(this->OnIntEvent != nullptr);
     TestCheck(this->JSIntFunction != nullptr);
@@ -583,6 +585,7 @@ struct SimpleNativeModule {
  public: // Used to report some test messages
   bool IsInitialized{false};
   std::string Message;
+  Windows::Foundation::IInspectable UserData;
   static std::string StaticMessage;
 };
 
@@ -1525,6 +1528,34 @@ TEST_CLASS (NativeModuleTest) {
 
   TEST_METHOD(TestInitialized) {
     TestCheck(m_module->IsInitialized);
+  }
+};
+
+
+TEST_CLASS (NativeModuleUserDataTest) {
+
+  TEST_METHOD(NullUserData) {
+    React::ReactModuleBuilderMock builderMock{};
+    auto moduleBuilder = winrt::make<React::ReactModuleBuilderImpl>(builderMock);
+    auto provider = React::MakeModuleProvider<SimpleNativeModule>();
+    auto moduleObject = builderMock.CreateModule(provider, moduleBuilder);
+    auto reactModule = moduleObject.as<React::IBoxedValue>();
+    auto &module = React::BoxedValue<SimpleNativeModule>::GetImpl(reactModule);
+
+    TestCheck(module.UserData == nullptr);
+  }
+
+  TEST_METHOD(IntUserData) {
+    React::ReactModuleBuilderMock builderMock{};
+    builderMock.SetUserData(winrt::box_value<int32_t>(42));
+
+    auto moduleBuilder = winrt::make<React::ReactModuleBuilderImpl>(builderMock);
+    auto provider = React::MakeModuleProvider<SimpleNativeModule>();
+    auto moduleObject = builderMock.CreateModule(provider, moduleBuilder);
+    auto reactModule = moduleObject.as<React::IBoxedValue>();
+    auto &module = React::BoxedValue<SimpleNativeModule>::GetImpl(reactModule);
+
+    TestCheck(winrt::unbox_value<int32_t>(module.UserData) == 42);
   }
 };
 

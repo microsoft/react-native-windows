@@ -288,9 +288,6 @@
     <ClCompile Include="ReactHost\MsoUtils.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
-    <ClCompile Include="ReactHost\PropertyBag.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
@@ -630,12 +627,6 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\MsoUtils.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\PropertyBag.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\PropertyBag_internal.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\React.h">

@@ -25,6 +25,8 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
+  winrt::IInspectable UserData() noexcept;
+
  private:
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };

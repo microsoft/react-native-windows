@@ -78,6 +78,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t DebuggerPort() noexcept;
   void DebuggerPort(uint16_t value) noexcept;
 
+  IInspectable UserData() noexcept;
+  void UserData(IInspectable const &value) noexcept;
+
  private:
   hstring m_mainComponentName{};
   bool m_useDeveloperSupport{REACT_DEFAULT_USE_DEVELOPER_SUPPORT};
@@ -97,6 +100,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_debugBundlePath{};
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
+  IInspectable m_userData{};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -255,6 +259,14 @@ inline uint16_t ReactInstanceSettings::DebuggerPort() noexcept {
 
 inline void ReactInstanceSettings::DebuggerPort(uint16_t value) noexcept {
   m_debuggerPort = value;
+}
+
+inline winrt::Windows::Foundation::IInspectable ReactInstanceSettings::UserData() noexcept {
+  return m_userData;
+}
+
+inline void ReactInstanceSettings::UserData(winrt::Windows::Foundation::IInspectable const& value) noexcept {
+  m_userData = value;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

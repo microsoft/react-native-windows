@@ -301,8 +301,6 @@
     <ClInclude Include="ReactHost\JSBundle.h" />
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
-    <ClInclude Include="ReactHost\PropertyBag.h" />
-    <ClInclude Include="ReactHost\PropertyBag_internal.h" />
     <ClInclude Include="ReactHost\React.h" />
     <ClInclude Include="ReactHost\ReactErrorProvider.h" />
     <ClInclude Include="ReactHost\ReactHost.h" />
@@ -462,7 +460,6 @@
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\PropertyBag.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
