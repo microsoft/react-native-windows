@@ -12,7 +12,6 @@
 #include <regex>
 #include "Unicode.h"
 
-namespace xaml = xaml;
 using namespace winrt::Windows::Foundation;
 
 namespace Mso::React {
