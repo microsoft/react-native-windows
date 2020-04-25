@@ -14,7 +14,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedA
   const auto [scopedBatch, animation, easingFunction] = []() {
     const auto compositor = xaml::Window::Current().Compositor();
     return std::make_tuple(
-        compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations),
+        compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation(),
         compositor.CreateLinearEasingFunction());
   }();

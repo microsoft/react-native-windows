@@ -25,7 +25,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimat
   const auto [scopedBatch, animation] = []() {
     const auto compositor = xaml::Window::Current().Compositor();
     return std::make_tuple(
-        compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations),
+        compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation());
   }();
 

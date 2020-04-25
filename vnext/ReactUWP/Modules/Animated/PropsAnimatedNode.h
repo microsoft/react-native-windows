@@ -41,9 +41,9 @@ class PropsAnimatedNode : public AnimatedNode {
   comp::ExpressionAnimation m_centerPointAnimation{nullptr};
   winrt::Numerics::float3 m_rotationAxis{0, 0, 1};
   bool m_needsCenterPointAnimation{false};
-  winrt::CompositionPropertySet m_subchannelPropertySet{nullptr};
-  winrt::CompositionAnimation m_translationCombined{nullptr};
-  winrt::CompositionAnimation m_scaleCombined{nullptr};
+  comp::CompositionPropertySet m_subchannelPropertySet{nullptr};
+  comp::CompositionAnimation m_translationCombined{nullptr};
+  comp::CompositionAnimation m_scaleCombined{nullptr};
 
   static constexpr int64_t s_connectedViewTagUnset{-1};
 };

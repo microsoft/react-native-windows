@@ -25,7 +25,7 @@ class ValueAnimatedNode : public AnimatedNode {
   void Offset(double offset);
   void FlattenOffset();
   void ExtractOffset();
-  winrt::CompositionPropertySet PropertySet() {
+  comp::CompositionPropertySet PropertySet() {
     return m_propertySet;
   };
 
@@ -40,7 +40,7 @@ class ValueAnimatedNode : public AnimatedNode {
   static constexpr std::wstring_view s_offsetName{L"o"};
 
  protected:
-  winrt::CompositionPropertySet m_propertySet{nullptr};
+  comp::CompositionPropertySet m_propertySet{nullptr};
 
   static constexpr std::string_view s_inputName{"input"};
 

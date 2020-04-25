@@ -13,7 +13,7 @@ class CalculatedAnimationDriver : public AnimationDriver {
  public:
   using AnimationDriver::AnimationDriver;
 
-  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(
+  std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> MakeAnimation(
       const folly::dynamic &config) override;
 
  protected:

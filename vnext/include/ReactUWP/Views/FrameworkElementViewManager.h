@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Composition.h>
 #include "ViewManagerBase.h"
 
 namespace react {
