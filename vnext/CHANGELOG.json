@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Apr 2020 00:05:26 GMT",
+      "tag": "react-native-windows_v0.0.0-master.48",
+      "version": "0.0.0-master.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Better error reporting and elevating if necessary in CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "64b2e0fa0f4e097625d2fe5167382f006c0a1301",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Detect when we have more than one SLN as it may not be obvious to the user. Add --sln option to CLI.",
+            "author": "asklar@microsoft.com",
+            "commit": "f27e6f8e77bdbb95bfcf7bb947ab674de61c8adb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Install from layout in Debug builds",
+            "author": "asklar@microsoft.com",
+            "commit": "b31235c1c6d3c85e3121826622cd8f474434530a",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add Microsoft.ReactNative.IntegrationTests project",
+            "author": "aeulitz@microsoft.com",
+            "commit": "3b1b1267b70a62afd55d29c2625dbf5e39ef2a34",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Apr 2020 00:04:41 GMT",
       "tag": "react-native-windows_v0.0.0-master.47",
       "version": "0.0.0-master.47",

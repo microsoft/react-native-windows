@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 24 Apr 2020 00:04:41 GMT and should not be manually modified.
+This log was last generated on Sat, 25 Apr 2020 00:05:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.48
+
+Sat, 25 Apr 2020 00:05:26 GMT
+
+### Changes
+
+- Better error reporting and elevating if necessary in CLI (asklar@microsoft.com)
+- Detect when we have more than one SLN as it may not be obvious to the user. Add --sln option to CLI. (asklar@microsoft.com)
+- Install from layout in Debug builds (asklar@microsoft.com)
 
 ## 0.0.0-master.47
 

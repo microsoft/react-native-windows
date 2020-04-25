@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Better error reporting and elevating if necessary in CLI",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-22T05:09:26.240Z"
-}
