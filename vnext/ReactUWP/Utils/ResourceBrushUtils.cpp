@@ -65,7 +65,14 @@ void UpdateTextControlForegroundResourceBrushes(const winrt::FrameworkElement el
   UpdateResourceBrush(element, c_textControlButtonBackgroundPressed, brush);
 }
 
-void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
+void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush b) {
+  // Workaround for bug https://microsoft.visualstudio.com/OS/_workitems/edit/26118890.
+  // Remove when the bug gets fixed.
+  winrt::Brush brush = b;
+  if (auto solidBrush = b.as<winrt::SolidColorBrush>()) {
+    brush = winrt::SolidColorBrush{solidBrush.Color()};
+  }
+
   UpdateResourceBrush(element, c_textControlBorderBrush, brush);
   UpdateResourceBrush(element, c_textControlBorderBrushPointerOver, brush);
   UpdateResourceBrush(element, c_textControlBorderBrushFocused, brush);

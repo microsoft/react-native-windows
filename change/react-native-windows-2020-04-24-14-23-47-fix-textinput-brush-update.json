@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Use separate brush for text control border",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-24T21:23:47.396Z"
+}
