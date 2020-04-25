@@ -16,17 +16,11 @@ namespace uwp {
 // re-rendering with different props in response to state
 // change events (onFocus, onBlur, onMouseEnter, onMouseLeave)
 // or when changing enabled/disabled props.
-void UpdateControlBackgroundResourceBrushes(
-    const xaml::FrameworkElement &element,
-    const xaml::Media::Brush brush);
+void UpdateControlBackgroundResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush);
 
-void UpdateControlForegroundResourceBrushes(
-    const xaml::DependencyObject object,
-    const xaml::Media::Brush brush);
+void UpdateControlForegroundResourceBrushes(const xaml::DependencyObject object, const xaml::Media::Brush brush);
 
-void UpdateControlBorderResourceBrushes(
-    const xaml::FrameworkElement &element,
-    const xaml::Media::Brush brush);
+void UpdateControlBorderResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush);
 
 void UpdateToggleSwitchThumbResourceBrushes(
     const xaml::Controls::ToggleSwitch &toggleSwitch,

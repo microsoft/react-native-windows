@@ -47,10 +47,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
-  void AddView(
-      const xaml::DependencyObject &parent,
-      const xaml::DependencyObject &child,
-      int64_t index) override;
+  void AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) override;
   void RemoveAllChildren(const xaml::DependencyObject &parent) override;
   void RemoveChildAt(const xaml::DependencyObject &parent, int64_t index) override;
   void ReplaceChild(

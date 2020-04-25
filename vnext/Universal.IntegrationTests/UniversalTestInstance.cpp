@@ -8,7 +8,7 @@
 #include <wrl.h>
 
 namespace cx {
-  namespace xaml = ::Windows::UI::Xaml;
+namespace xaml = ::Windows::UI::Xaml;
 }
 
 using namespace react::uwp;
@@ -63,8 +63,7 @@ void UniversalTestInstance::AttachMeasuredRootView(std::string &&appName) noexce
         Microsoft::WRL::ComPtr<::ABI::Windows::UI::Xaml::IFrameworkElement> spFrameworkElementABI =
             reinterpret_cast<::ABI::Windows::UI::Xaml::IFrameworkElement *>(rootFrameworkElement);
         // Create C++/WinRT pointer from ABI pointer.
-        ::react::uwp::XamlView xamlView =
-            reinterpret_cast<const xaml::FrameworkElement &>(spFrameworkElementABI);
+        ::react::uwp::XamlView xamlView = reinterpret_cast<const xaml::FrameworkElement &>(spFrameworkElementABI);
 
         m_rootView = ::react::uwp::CreateReactRootView(xamlView, L"DummyTest", m_instanceCreator);
 

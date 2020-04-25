@@ -79,9 +79,7 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> GetAccessibilityActions(
       xaml::UIElement const &element);
 
-  static void DispatchAccessibilityAction(
-      xaml::UIElement const &element,
-      std::wstring_view const &actionName);
+  static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
 
   static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(

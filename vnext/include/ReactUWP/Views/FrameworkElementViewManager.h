@@ -18,9 +18,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
 
   // Helper functions related to setting/updating TransformMatrix
   void RefreshTransformMatrix(ShadowNodeBase *shadowNode);
-  void StartTransformAnimation(
-      xaml::UIElement uielement,
-      comp::CompositionPropertySet transformPS);
+  void StartTransformAnimation(xaml::UIElement uielement, comp::CompositionPropertySet transformPS);
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
@@ -30,8 +28,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       const std::string &propertyName,
       const folly::dynamic &propertyValue) override;
 
-  void
-  TransferProperty(const XamlView &oldView, const XamlView &newView, xaml::DependencyProperty dp);
+  void TransferProperty(const XamlView &oldView, const XamlView &newView, xaml::DependencyProperty dp);
 
   void TransferProperty(
       const XamlView &oldView,

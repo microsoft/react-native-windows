@@ -186,10 +186,7 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
   return parent;
 }
 
-void ABIViewManager::AddView(
-    const xaml::DependencyObject &parent,
-    const xaml::DependencyObject &child,
-    int64_t index) {
+void ABIViewManager::AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.AddView(parent.as<xaml::FrameworkElement>(), child.as<xaml::UIElement>(), index);
   } else {

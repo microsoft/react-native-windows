@@ -100,8 +100,8 @@ bool TextViewManager::UpdateProperty(
       auto numberLines = static_cast<int32_t>(propertyValue.asDouble());
       if (numberLines == 1) {
         textBlock.TextWrapping(xaml::TextWrapping::NoWrap); // setting no wrap for single line
-                                                             // text for better trimming
-                                                             // experience
+                                                            // text for better trimming
+                                                            // experience
       } else {
         textBlock.TextWrapping(xaml::TextWrapping::Wrap);
       }

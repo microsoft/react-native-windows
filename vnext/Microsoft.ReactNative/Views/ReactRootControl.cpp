@@ -398,7 +398,8 @@ void ReactRootControl::InitializeDeveloperMenu() noexcept {
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
       winrt::auto_revoke, [this](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
         if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
-            KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
+            KeyboardHelper::IsModifiedKeyPressed(
+                winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
             KeyboardHelper::IsModifiedKeyPressed(
                 winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control)) {
           if (!IsDeveloperMenuShowing()) {
@@ -632,25 +633,25 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   // Handle keyboard "back" button press
   xaml::Input::KeyboardAccelerator goBack{};
   goBack.Key(winrt::Windows::System::VirtualKey::GoBack);
-  goBack.Invoked(
-      [weakThis](
-          xaml::Input::KeyboardAccelerator const & /*sender*/, xaml::Input::KeyboardAcceleratorInvokedEventArgs const &args) {
-        if (auto self = weakThis.lock()) {
-          args.Handled(self->OnBackRequested());
-        }
-      });
+  goBack.Invoked([weakThis](
+                     xaml::Input::KeyboardAccelerator const & /*sender*/,
+                     xaml::Input::KeyboardAcceleratorInvokedEventArgs const &args) {
+    if (auto self = weakThis.lock()) {
+      args.Handled(self->OnBackRequested());
+    }
+  });
   rootElement.KeyboardAccelerators().Append(goBack);
 
   // Handle Alt+Left keyboard shortcut
   xaml::Input::KeyboardAccelerator altLeft{};
   altLeft.Key(winrt::Windows::System::VirtualKey::Left);
-  altLeft.Invoked(
-      [weakThis](
-          xaml::Input::KeyboardAccelerator const & /*sender*/, xaml::Input::KeyboardAcceleratorInvokedEventArgs const &args) {
-        if (auto self = weakThis.lock()) {
-          args.Handled(self->OnBackRequested());
-        }
-      });
+  altLeft.Invoked([weakThis](
+                      xaml::Input::KeyboardAccelerator const & /*sender*/,
+                      xaml::Input::KeyboardAcceleratorInvokedEventArgs const &args) {
+    if (auto self = weakThis.lock()) {
+      args.Handled(self->OnBackRequested());
+    }
+  });
   rootElement.KeyboardAccelerators().Append(altLeft);
   altLeft.Modifiers(winrt::Windows::System::VirtualKeyModifiers::Menu);
 

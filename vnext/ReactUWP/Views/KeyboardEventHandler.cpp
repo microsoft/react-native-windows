@@ -3,11 +3,11 @@
 
 #include "pch.h"
 
+#include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
 #include "Utils/Helpers.h"
 #include "Utils/PropertyHandlerUtils.h"
 #include "Views/KeyboardEventHandler.h"
-#include <winrt/Windows.System.h>
 
 using namespace std::placeholders;
 
@@ -576,7 +576,8 @@ static const std::string GetOrUnidentified(
   return "Unidentified";
 }
 
-std::string KeyboardHelper::FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool /*shiftDown*/, bool /*capLocked*/) {
+std::string
+KeyboardHelper::FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool /*shiftDown*/, bool /*capLocked*/) {
   int key = static_cast<int>(virtualKey);
 
   if (!isupper(key) && !isdigit(key)) {
@@ -590,8 +591,10 @@ std::string KeyboardHelper::FromVirtualKey(winrt::Windows::System::VirtualKey vi
   return std::string(1, static_cast<char>(key));
 }
 
-inline winrt::Windows::System::VirtualKey
-GetLeftOrRightModifiedKey(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey leftKey, winrt::Windows::System::VirtualKey rightKey) {
+inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
+    winrt::CoreWindow const &coreWindow,
+    winrt::Windows::System::VirtualKey leftKey,
+    winrt::Windows::System::VirtualKey rightKey) {
   return KeyboardHelper::IsModifiedKeyPressed(coreWindow, leftKey) ? leftKey : rightKey;
 }
 
@@ -606,23 +609,31 @@ std::string KeyboardHelper::CodeFromVirtualKey(winrt::Windows::System::VirtualKe
     // Override the virtual key if it's modified key of Control, Shift or Menu
     auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
     if (virtualKey == winrt::Windows::System::VirtualKey::Control) {
-      virtualKey =
-          GetLeftOrRightModifiedKey(coreWindow, winrt::Windows::System::VirtualKey::LeftControl, winrt::Windows::System::VirtualKey::RightControl);
+      virtualKey = GetLeftOrRightModifiedKey(
+          coreWindow,
+          winrt::Windows::System::VirtualKey::LeftControl,
+          winrt::Windows::System::VirtualKey::RightControl);
     } else if (virtualKey == winrt::Windows::System::VirtualKey::Shift) {
-      virtualKey = GetLeftOrRightModifiedKey(coreWindow, winrt::Windows::System::VirtualKey::LeftShift, winrt::Windows::System::VirtualKey::RightShift);
+      virtualKey = GetLeftOrRightModifiedKey(
+          coreWindow, winrt::Windows::System::VirtualKey::LeftShift, winrt::Windows::System::VirtualKey::RightShift);
     } else if (virtualKey == winrt::Windows::System::VirtualKey::Menu) {
-      virtualKey = GetLeftOrRightModifiedKey(coreWindow, winrt::Windows::System::VirtualKey::LeftMenu, winrt::Windows::System::VirtualKey::RightMenu);
+      virtualKey = GetLeftOrRightModifiedKey(
+          coreWindow, winrt::Windows::System::VirtualKey::LeftMenu, winrt::Windows::System::VirtualKey::RightMenu);
     }
   }
 
   return GetOrUnidentified(virtualKey, g_virtualKeyToCode);
 }
 
-bool KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey) {
+bool KeyboardHelper::IsModifiedKeyPressed(
+    winrt::CoreWindow const &coreWindow,
+    winrt::Windows::System::VirtualKey virtualKey) {
   return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
 }
 
-bool KeyboardHelper::IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey) {
+bool KeyboardHelper::IsModifiedKeyLocked(
+    winrt::CoreWindow const &coreWindow,
+    winrt::Windows::System::VirtualKey virtualKey) {
   return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Locked) ==
       winrt::CoreVirtualKeyStates::Locked;
 }

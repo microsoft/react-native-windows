@@ -7,7 +7,6 @@
 
 #include <sstream>
 
-
 #include "BorderEffect.h"
 
 namespace winrt {

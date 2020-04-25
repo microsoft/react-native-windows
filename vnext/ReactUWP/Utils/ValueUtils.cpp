@@ -104,7 +104,8 @@ SolidColorBrushFrom(const folly::dynamic &d) {
     return BrushFromColorObject(d).as<xaml::Media::SolidColorBrush>();
   }
 
-  thread_local static std::map<winrt::Color, winrt::weak_ref<xaml::Media::SolidColorBrush>, ColorComp> solidColorBrushCache;
+  thread_local static std::map<winrt::Color, winrt::weak_ref<xaml::Media::SolidColorBrush>, ColorComp>
+      solidColorBrushCache;
 
   const auto color = d.isNumber() ? ColorFrom(d) : winrt::Colors::Transparent();
   if (solidColorBrushCache.count(color) != 0) {

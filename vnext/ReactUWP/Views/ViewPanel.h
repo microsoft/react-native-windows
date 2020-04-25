@@ -99,12 +99,8 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   bool m_hasOuterBorder;
 
  private:
-  static void VisualPropertyChanged(
-      xaml::DependencyObject sender,
-      xaml::DependencyPropertyChangedEventArgs e);
-  static void PositionPropertyChanged(
-      xaml::DependencyObject sender,
-      xaml::DependencyPropertyChangedEventArgs e);
+  static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
+  static void PositionPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
 };
 
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation

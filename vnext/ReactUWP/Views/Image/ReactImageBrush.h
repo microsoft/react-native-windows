@@ -40,8 +40,7 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   bool IsImageSmallerThanView();
   comp::CompositionStretch ResizeModeToStretch();
   comp::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
-  comp::CompositionEffectBrush GetOrCreateEffectBrush(
-      comp::CompositionSurfaceBrush const &surfaceBrush);
+  comp::CompositionEffectBrush GetOrCreateEffectBrush(comp::CompositionSurfaceBrush const &surfaceBrush);
 
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::Foundation::Size m_availableSize{};

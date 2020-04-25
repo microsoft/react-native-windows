@@ -54,9 +54,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateSelected
   return s_AccessibilityStateSelectedProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateSelected(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateSelected(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateSelectedProperty(), winrt::box_value<bool>(value));
 }
 
@@ -74,9 +72,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateDisabled
   return s_AccessibilityStateDisabledProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateDisabled(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateDisabled(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateDisabledProperty(), winrt::box_value<bool>(value));
 }
 
@@ -94,9 +90,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateCheckedP
   return s_AccessibilityStateCheckedProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateChecked(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateChecked(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateCheckedProperty(), winrt::box_value<bool>(value));
 }
 
@@ -114,9 +108,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateUnchecke
   return s_AccessibilityStateUncheckedProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateUnchecked(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateUnchecked(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateUncheckedProperty(), winrt::box_value<bool>(value));
 }
 
@@ -134,9 +126,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateBusyProp
   return s_AccessibilityStateBusyProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateBusy(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateBusy(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateBusyProperty(), winrt::box_value<bool>(value));
 }
 
@@ -154,9 +144,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateExpanded
   return s_AccessibilityStateExpandedProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateExpanded(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateExpanded(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateExpandedProperty(), winrt::box_value<bool>(value));
 }
 
@@ -174,9 +162,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateCollapse
   return s_AccessibilityStateCollapsedProperty;
 }
 
-void DynamicAutomationProperties::SetAccessibilityStateCollapsed(
-    xaml::UIElement const &element,
-    bool value) {
+void DynamicAutomationProperties::SetAccessibilityStateCollapsed(xaml::UIElement const &element, bool value) {
   element.SetValue(AccessibilityStateCollapsedProperty(), winrt::box_value<bool>(value));
 }
 

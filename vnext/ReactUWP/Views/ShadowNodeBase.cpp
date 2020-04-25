@@ -135,8 +135,7 @@ void ShadowNodeBase::UpdateTransformPS() {
     // we will use this value in the scenario where a View changed its backing
     // XAML element, here we will just transfer existing value to a new backing
     // XAML element.
-    if (m_transformPS.TryGetMatrix4x4(L"transform", unused) ==
-        comp::CompositionGetValueStatus::NotFound) {
+    if (m_transformPS.TryGetMatrix4x4(L"transform", unused) == comp::CompositionGetValueStatus::NotFound) {
       m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
     }
   }

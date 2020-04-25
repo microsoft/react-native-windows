@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "RedBox.h"
+#include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.Web.Http.h>
-#include "CppWinRTIncludes.h"
-#include <boost/algorithm/string.hpp>
 #include <regex>
+#include "CppWinRTIncludes.h"
 #include "Unicode.h"
 
 using namespace winrt::Windows::Foundation;

@@ -43,9 +43,9 @@ void ContentControlShadowNode::createView() {
     // Button styles may have padding Yoga is not aware of
     obj.RegisterPropertyChangedCallback(
         xaml::Controls::Control::PaddingProperty(),
-        [this](
-            xaml::DependencyObject const & /*sender*/,
-            xaml::DependencyProperty const & /*dp*/) { m_paddingDirty = true; });
+        [this](xaml::DependencyObject const & /*sender*/, xaml::DependencyProperty const & /*dp*/) {
+          m_paddingDirty = true;
+        });
   }
 }
 

@@ -58,7 +58,7 @@ void UpdateTextControlForegroundResourceBrushes(const xaml::FrameworkElement ele
   UpdateResourceBrush(element, c_textControlButtonBackgroundPressed, brush);
 }
 
-void UpdateTextControlBorderResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush& b) {
+void UpdateTextControlBorderResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush &b) {
   // Workaround for bug https://microsoft.visualstudio.com/OS/_workitems/edit/26118890.
   // Remove when the bug gets fixed.
   xaml::Media::Brush brush = b;
@@ -72,7 +72,9 @@ void UpdateTextControlBorderResourceBrushes(const xaml::FrameworkElement &elemen
   UpdateResourceBrush(element, c_textControlBorderBrushDisabled, brush);
 }
 
-void UpdateToggleSwitchBorderResourceBrushes(const xaml::Controls::ToggleSwitch &toggleSwitch, const xaml::Media::Brush brush) {
+void UpdateToggleSwitchBorderResourceBrushes(
+    const xaml::Controls::ToggleSwitch &toggleSwitch,
+    const xaml::Media::Brush brush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
@@ -98,7 +100,9 @@ void UpdateCheckBoxBorderResourceBrushes(const xaml::Controls::CheckBox &checkBo
   UpdateResourceBrush(checkBox, c_checkBoxBorderBrushIndeterminateDisabled, brush);
 }
 
-void UpdateToggleSwitchThumbResourceBrushes(const xaml::Controls::ToggleSwitch &toggleSwitch, const xaml::Media::Brush thumbBrush) {
+void UpdateToggleSwitchThumbResourceBrushes(
+    const xaml::Controls::ToggleSwitch &toggleSwitch,
+    const xaml::Media::Brush thumbBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
@@ -125,13 +129,13 @@ void UpdateToggleSwitchTrackResourceBrushes(
 }
 
 bool IsObjectATextControl(const xaml::DependencyObject &object) {
-  return object.try_as<xaml::Controls::TextBox>() != nullptr || object.try_as<xaml::Controls::PasswordBox>() != nullptr ||
-      object.try_as<xaml::Controls::RichEditBox>() != nullptr || object.try_as<xaml::Controls::AutoSuggestBox>() != nullptr;
+  return object.try_as<xaml::Controls::TextBox>() != nullptr ||
+      object.try_as<xaml::Controls::PasswordBox>() != nullptr ||
+      object.try_as<xaml::Controls::RichEditBox>() != nullptr ||
+      object.try_as<xaml::Controls::AutoSuggestBox>() != nullptr;
 }
 
-void UpdateControlBackgroundResourceBrushes(
-    const xaml::FrameworkElement &element,
-    const xaml::Media::Brush brush) {
+void UpdateControlBackgroundResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateTextControlBackgroundResourceBrushes(element, brush);
   } else if (const auto checkBox = element.try_as<xaml::Controls::CheckBox>()) {
@@ -139,18 +143,14 @@ void UpdateControlBackgroundResourceBrushes(
   }
 }
 
-void UpdateControlForegroundResourceBrushes(
-    const xaml::DependencyObject object,
-    const xaml::Media::Brush brush) {
+void UpdateControlForegroundResourceBrushes(const xaml::DependencyObject object, const xaml::Media::Brush brush) {
   if (IsObjectATextControl(object)) {
     const auto element = object.try_as<xaml::FrameworkElement>();
     UpdateTextControlForegroundResourceBrushes(element, brush);
   }
 }
 
-void UpdateControlBorderResourceBrushes(
-    const xaml::FrameworkElement &element,
-    const xaml::Media::Brush brush) {
+void UpdateControlBorderResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateTextControlBorderResourceBrushes(element, brush);
   } else if (const auto toggleSwitch = element.try_as<xaml::Controls::ToggleSwitch>()) {

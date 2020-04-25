@@ -43,7 +43,8 @@ class SnapPointManagingContentControl
       xaml::Controls::Orientation orientation,
       winrt::SnapPointsAlignment alignment);
 
-  float GetRegularSnapPoints(xaml::Controls::Orientation orientation, winrt::SnapPointsAlignment alignment, float offset);
+  float
+  GetRegularSnapPoints(xaml::Controls::Orientation orientation, winrt::SnapPointsAlignment alignment, float offset);
 
   // Helpers
   void SetHorizontal(bool horizontal);

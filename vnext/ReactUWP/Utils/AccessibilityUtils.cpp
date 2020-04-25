@@ -12,7 +12,8 @@ namespace uwp {
 
 REACTWINDOWS_API_(void)
 AnnounceLiveRegionChangedIfNeeded(const xaml::FrameworkElement &element) {
-  if (xaml::Automation::AutomationProperties::GetLiveSetting(element) != xaml::Automation::Peers::AutomationLiveSetting::Off &&
+  if (xaml::Automation::AutomationProperties::GetLiveSetting(element) !=
+          xaml::Automation::Peers::AutomationLiveSetting::Off &&
       !xaml::Automation::AutomationProperties::GetName(element).empty()) {
     auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
     if (nullptr != peer) {

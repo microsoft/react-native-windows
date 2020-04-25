@@ -16,10 +16,10 @@ AppState::AppState(const std::shared_ptr<IReactInstance> &reactInstance)
     : facebook::react::AppState(), m_wkReactInstance(reactInstance) {
   m_lastState = "active";
 
-  m_enteredBackgroundRevoker = xaml::Application::Current().EnteredBackground(
-      winrt::auto_revoke, {this, &AppState::EnteredBackground});
-  m_leavingBackgroundRevoker = xaml::Application::Current().LeavingBackground(
-      winrt::auto_revoke, {this, &AppState::LeavingBackground});
+  m_enteredBackgroundRevoker =
+      xaml::Application::Current().EnteredBackground(winrt::auto_revoke, {this, &AppState::EnteredBackground});
+  m_leavingBackgroundRevoker =
+      xaml::Application::Current().LeavingBackground(winrt::auto_revoke, {this, &AppState::LeavingBackground});
 }
 
 AppState::~AppState() = default;

@@ -32,8 +32,7 @@ void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlV
   TransferProperty(oldView, newView, xaml::Controls::Control::ForegroundProperty());
   TransferProperty(oldView, newView, xaml::Controls::Control::TabIndexProperty());
   // Control.CornerRadius is only supported on >= RS5
-  if (oldView.try_as<xaml::Controls::IControl7>() &&
-      newView.try_as<xaml::Controls::IControl7>()) {
+  if (oldView.try_as<xaml::Controls::IControl7>() && newView.try_as<xaml::Controls::IControl7>()) {
     TransferProperty(oldView, newView, xaml::Controls::Control::CornerRadiusProperty());
   }
   Super::TransferProperties(oldView, newView);
