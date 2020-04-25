@@ -155,7 +155,7 @@ void ReactInstanceWin::Initialize() noexcept {
           strongThis->m_deviceInfo = std::make_shared<react::uwp::DeviceInfo>(legacyInstance);
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
-          strongThis->m_i18nInfo = react::uwp::I18nModule::GetI18nInfo();
+          react::uwp::I18nHelper().Instance().setInfo(react::uwp::I18nModule::GetI18nInfo());
           strongThis->m_appearanceListener = Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance);
         }
       })
@@ -200,7 +200,6 @@ void ReactInstanceWin::Initialize() noexcept {
               m_batchingUIThread,
               m_uiMessageThread.Load(),
               std::move(m_deviceInfo),
-              std::move(m_i18nInfo),
               std::move(m_appState),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
