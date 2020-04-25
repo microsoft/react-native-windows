@@ -7,8 +7,8 @@
 #include "future/future.h"
 
 #include <functional>
-#include "JSValue.h"
 #include "..\include\CppWinRTIncludes.h"
+#include "JSValue.h"
 
 #undef GetCurrentTime
 
