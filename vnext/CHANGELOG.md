@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 25 Apr 2020 00:05:26 GMT and should not be manually modified.
+This log was last generated on Sun, 26 Apr 2020 00:04:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.49
+
+Sun, 26 Apr 2020 00:04:59 GMT
+
+### Changes
+
+- Use separate brush for text control border (kaigu@microsoft.com)
+- Fix typo causing activity indicators to be sad and colorless (asklar@microsoft.com)
+- Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475 (tudorm@microsoft.com)
 
 ## 0.0.0-master.48
 

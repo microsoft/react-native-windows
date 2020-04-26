@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 26 Apr 2020 00:04:59 GMT",
+      "tag": "react-native-windows_v0.0.0-master.49",
+      "version": "0.0.0-master.49",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use separate brush for text control border",
+            "author": "kaigu@microsoft.com",
+            "commit": "a968e0b74fff1dc94e63f4790a6fbcad3cddf3d9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix typo causing activity indicators to be sad and colorless",
+            "author": "asklar@microsoft.com",
+            "commit": "5860ea46f1ebc6bc54f94c6898b3692cdf9f0bd9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475",
+            "author": "tudorm@microsoft.com",
+            "commit": "ee88d355cbede3139fe634b89df8bc7800994e10",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Apr 2020 00:05:26 GMT",
       "tag": "react-native-windows_v0.0.0-master.48",
       "version": "0.0.0-master.48",
