@@ -7,6 +7,7 @@
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
+#include "ReactContext.h"
 #include "ReactPromise.h"
 
 #include <functional>
@@ -383,12 +384,12 @@ template <class TMethod>
 struct ModuleInitMethodInfo;
 
 template <class TModule>
-struct ModuleInitMethodInfo<void (TModule::*)(IReactContext const &) noexcept> {
+struct ModuleInitMethodInfo<void (TModule::*)(ReactContext const &) noexcept> {
   using ModuleType = TModule;
-  using MethodType = void (TModule::*)(IReactContext const &) noexcept;
+  using MethodType = void (TModule::*)(ReactContext const &) noexcept;
 
   static InitializerDelegate GetInitializer(void *module, MethodType method) noexcept {
-    return [ module = static_cast<ModuleType *>(module), method ](IReactContext const &reactContext) noexcept {
+    return [ module = static_cast<ModuleType *>(module), method ](ReactContext const &reactContext) noexcept {
       (module->*method)(reactContext);
     };
   }
