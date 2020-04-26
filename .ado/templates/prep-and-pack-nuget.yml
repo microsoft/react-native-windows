@@ -39,6 +39,7 @@ steps:
     displayName: 'NuGet pack Desktop'
     inputs:
       command: pack
+      verbosityPack: 'Detailed'
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/ReactWin32.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.desktopId}};nugetroot=${{parameters.nugetroot}}
@@ -48,6 +49,7 @@ steps:
     displayName: 'NuGet pack Universal'
     inputs:
       command: pack
+      verbosityPack: 'Detailed'
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.universalId}};nugetroot=${{parameters.nugetroot}}
@@ -57,6 +59,7 @@ steps:
     displayName: 'NuGet pack Microsoft.ReactNative'
     inputs:
       command: pack
+      verbosityPack: 'Detailed'
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/Microsoft.ReactNative.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.microsoftRNId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
