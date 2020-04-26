@@ -12,9 +12,9 @@ namespace ReactNativeTests {
 REACT_MODULE(MyTurboModule)
 struct MyTurboModule {
   REACT_INIT(Initialize)
-  void Initialize(React::IReactContext const &context) noexcept {
+  void Initialize(React::ReactContext const &context) noexcept {
     IsInitialized = true;
-    TestCheck(context != nullptr);
+    TestCheck(context);
 
     // Event and Function fields are initialized before REACT_INIT method call.
     TestCheck(this->OnIntEvent != nullptr);
