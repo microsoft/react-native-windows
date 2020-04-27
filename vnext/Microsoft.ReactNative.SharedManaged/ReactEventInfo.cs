@@ -65,7 +65,8 @@ namespace Microsoft.ReactNative.Managed
         module.CastTo(propertyInfo.DeclaringType).SetProperty(propertyInfo,
           AutoLambda(propertyInfo.PropertyType,
             Parameters(eventArgTypes, out var args),
-            reactContext.CallExt(EmitJSEventOf(eventArgTypes), Constant(eventEmitterName), Constant(eventName), args))));
+            New(ReactContextConstructor(), reactContext).Call(
+              EmitJSEventOf(eventArgTypes), Constant(eventEmitterName), Constant(eventName), args))));
     }
 
     private ReactEventImpl MakeEvent(FieldInfo fieldInfo, string eventEmitterName, string eventName, Type[] eventArgTypes)
@@ -84,7 +85,8 @@ namespace Microsoft.ReactNative.Managed
         module.CastTo(fieldInfo.DeclaringType).SetField(fieldInfo,
           AutoLambda(fieldInfo.FieldType,
             Parameters(eventArgTypes, out var args),
-            reactContext.CallExt(EmitJSEventOf(eventArgTypes), Constant(eventEmitterName), Constant(eventName), args))));
+            New(ReactContextConstructor(), reactContext).Call(
+              EmitJSEventOf(eventArgTypes), Constant(eventEmitterName), Constant(eventName), args))));
     }
 
     public delegate void ReactEventImpl(object module, IReactContext reactContext);

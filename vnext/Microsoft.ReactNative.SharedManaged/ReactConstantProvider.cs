@@ -3,18 +3,18 @@
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactConstantProvider
+  struct ReactConstantProvider
   {
     public ReactConstantProvider(IJSValueWriter writer)
     {
-      m_writer = writer;
+      Writer = writer;
     }
+
+    public IJSValueWriter Writer { get; }
 
     public void Add<T>(string constantName, T value)
     {
-      m_writer.WriteObjectProperty(constantName, value);
+      Writer.WriteObjectProperty(constantName, value);
     }
-
-    private readonly IJSValueWriter m_writer;
   }
 }

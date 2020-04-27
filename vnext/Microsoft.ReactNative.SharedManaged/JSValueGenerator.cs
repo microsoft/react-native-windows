@@ -212,66 +212,41 @@ namespace Microsoft.ReactNative.Managed
         return Expression.Assign(AsExpression, value);
       }
 
-      public Expression Call(MethodInfo method, params Expression[] args)
+      // This method allows us to expand the argument array that may use parameters that are
+      // Expressions, VariableWrappers, or arrays of them.
+      // The argument expressions are added to the args list.
+      private void ExpandArgArray(IList<Expression> args, object[] argObjects)
       {
+        foreach (var arg in argObjects)
+        {
+          switch (arg)
+          {
+            case object[] items: ExpandArgArray(args, items); break;
+            case VariableWrapper variable: args.Add(variable.AsExpression); break;
+            case Expression expr: args.Add(expr); break;
+          }
+        }
+      }
+
+      public MethodCallExpression Call(MethodInfo method, params object[] arguments)
+      {
+        var args = new List<Expression>();
+        ExpandArgArray(args, arguments);
         return Expression.Call(AsExpression, method, args);
-      }
-
-      public Expression Call(string methodName, params Expression[] args)
-      {
-        return Call(Type.GetMethod(methodName), args);
-      }
-
-      public Expression CallExt(MethodInfo method)
-      {
-        return Expression.Call(method, AsExpression);
-      }
-
-      public Expression CallExt(MethodInfo method, Expression arg0)
-      {
-        return Expression.Call(method, AsExpression, arg0);
-      }
-
-      public Expression CallExt(MethodInfo method, Expression arg0, Expression arg1)
-      {
-        return Expression.Call(method, AsExpression, arg0, arg1);
-      }
-
-      public Expression CallExt(MethodInfo method, params Expression[] args)
-      {
-        return Expression.Call(method, Enumerable.Repeat(AsExpression, 1).Concat(args));
-      }
-
-      public Expression CallExt(MethodInfo method, params VariableWrapper[] args)
-      {
-        return Expression.Call(method,
-          Enumerable.Repeat(this, 1).Concat(args).Select(v => v.AsExpression));
       }
 
       public MethodCallExpression CallExt(MethodInfo method, params object[] arguments)
       {
         var args = new List<Expression> { AsExpression };
-
-        void ParseArgs(object[] argObjects)
-        {
-          foreach (var arg in argObjects)
-          {
-            switch (arg)
-            {
-              case object[] items: ParseArgs(items); break;
-              case VariableWrapper variable: args.Add(variable.AsExpression); break;
-              case Expression expr: args.Add(expr); break;
-            }
-          }
-        }
-
-        ParseArgs(arguments);
+        ExpandArgArray(args, arguments);
         return Expression.Call(method, args);
       }
 
       // It can be used only for delegate types
-      public Expression Invoke(params Expression[] args)
+      public Expression Invoke(params object[] arguments)
       {
+        var args = new List<Expression>();
+        ExpandArgArray(args, arguments);
         return Expression.Invoke(AsExpression, args);
       }
 
