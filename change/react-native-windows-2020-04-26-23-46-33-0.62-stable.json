@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Publish as 0.62 Preview",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-27T06:46:33.752Z"
+}

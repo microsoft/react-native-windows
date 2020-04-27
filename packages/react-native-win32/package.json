@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-master.6",
+  "version": "0.62.0-preview.0",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "just-scripts build",
     "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/sourcemap.js",
-    "change": "beachball change",
+    "change": "beachball change -b 0.62-stable",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
@@ -65,7 +65,7 @@
     "react-native": "0.62.2"
   },
   "beachball": {
-    "defaultNpmTag": "master",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

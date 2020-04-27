@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.50",
+  "version": "0.62.0-preview.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   "scripts": {
     "api": "just-scripts api",
     "build": "just-scripts build",
-    "change": "beachball change",
+    "change": "beachball change -b 0.62-stable",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
@@ -63,7 +63,7 @@
     "react-native": "0.62.2"
   },
   "beachball": {
-    "defaultNpmTag": "master",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",
