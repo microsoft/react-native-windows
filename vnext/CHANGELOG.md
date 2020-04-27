@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 26 Apr 2020 00:04:59 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Apr 2020 00:04:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.50
+
+Mon, 27 Apr 2020 00:04:59 GMT
+
+### Changes
+
+- Added C++ ReactContext for Module Initialize method (vmorozov@microsoft.com)
 
 ## 0.0.0-master.49
 

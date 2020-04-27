@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Apr 2020 00:04:59 GMT",
+      "tag": "react-native-windows_v0.0.0-master.50",
+      "version": "0.0.0-master.50",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added C++ ReactContext for Module Initialize method",
+            "author": "vmorozov@microsoft.com",
+            "commit": "1c83c380f4a12f0ed963ff11c720e061c4920c77",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 26 Apr 2020 00:04:59 GMT",
       "tag": "react-native-windows_v0.0.0-master.49",
       "version": "0.0.0-master.49",
