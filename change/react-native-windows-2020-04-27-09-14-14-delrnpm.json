@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Remove rnpm-plugin-windows",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-04-27T16:14:12.892Z"
+}
