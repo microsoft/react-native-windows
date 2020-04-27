@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "beachball": "^1.13.4",
+    "husky": "^4.2.5",
     "lerna": "^3.16.1"
   },
   "resolutions": {
