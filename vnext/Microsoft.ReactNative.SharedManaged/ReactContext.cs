@@ -16,7 +16,8 @@ namespace Microsoft.ReactNative.Managed
 
     public void DispatchEvent<T>(FrameworkElement view, string eventName, T arg)
     {
-      if (arg is JSValueArgWriter argWriter)
+      var argWriter = arg as JSValueArgWriter;
+      if (argWriter != null)
       {
         ContextAbi.DispatchEvent(view, eventName, argWriter);
       }
@@ -33,7 +34,8 @@ namespace Microsoft.ReactNative.Managed
 
     public void CallJSFunction<T1>(string moduleName, string methodName, T1 arg1)
     {
-      if (arg1 is JSValueArgWriter argWriter)
+      var argWriter = arg1 as JSValueArgWriter;
+      if (argWriter != null)
       {
         ContextAbi.CallJSFunction(moduleName, methodName, argWriter);
       }
@@ -84,7 +86,8 @@ namespace Microsoft.ReactNative.Managed
 
     public void EmitJSEvent<T1>(string eventEmitterName, string eventName, T1 arg1)
     {
-      if (arg1 is JSValueArgWriter argWriter)
+      var argWriter = arg1 as JSValueArgWriter;
+      if (argWriter != null)
       {
         ContextAbi.EmitJSEvent(eventEmitterName, eventName, argWriter);
       }
