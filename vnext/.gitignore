@@ -85,3 +85,6 @@ temp
 /coverage
 /third-party
 /packages/
+
+# Copied from root as part of build
+/README.md
