@@ -43,7 +43,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "@office-iss/rex-win32": "0.0.33",
+    "@office-iss/rex-win32": "0.0.0-devmain.12823.10000",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
