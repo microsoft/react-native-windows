@@ -19,7 +19,6 @@ If you are using latest version:
 
 Otherwise if `--info` doesn't exist:
 1. `react-native -v`:
-2. `npm ls rnpm-plugin-windows`:
 3. `npm ls react-native-windows`:
 4. `node -v`:
 5. `npm -v`:
