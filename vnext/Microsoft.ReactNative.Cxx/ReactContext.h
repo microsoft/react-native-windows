@@ -17,6 +17,8 @@ namespace winrt::Microsoft::ReactNative {
 struct ReactContext {
   ReactContext(IReactContext const &context) noexcept;
 
+  IReactContext const &ContextAbi() const noexcept;
+
   explicit operator bool() noexcept;
 
   template <class... TArgs>
@@ -55,6 +57,10 @@ struct ReactContext {
 //==============================================================================
 
 inline ReactContext::ReactContext(IReactContext const &context) noexcept : m_context{context} {}
+
+inline IReactContext const &ReactContext::ContextAbi() const noexcept {
+  return m_context;
+}
 
 inline ReactContext::operator bool() noexcept {
   return m_context != nullptr;

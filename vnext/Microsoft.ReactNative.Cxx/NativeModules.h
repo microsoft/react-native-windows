@@ -694,6 +694,10 @@ struct ReactConstantProvider {
     WriteProperty(m_writer, name, value);
   }
 
+  IJSValueWriter const &Writer() const noexcept {
+    return m_writer;
+  }
+
  private:
   IJSValueWriter m_writer;
 };
