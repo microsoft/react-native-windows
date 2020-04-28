@@ -1,5 +1,5 @@
 # This file defines the Windows Visual Studio PR build steps used during the CI loop
-name: $(Date:yyyyMMdd).$(Rev:.r)
+name: $(Date:yyyyMMdd).$(Rev:r)
 
 trigger: none # will disable CI builds entirely
 
