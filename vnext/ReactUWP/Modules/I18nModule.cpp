@@ -32,11 +32,11 @@ namespace uwp {
 
 I18nModule::I18nModule() : m_helper(I18nHelper::Instance()) {}
 
-std::string I18nModule::getLocaleIdentifier() {
+std::string I18nModule::getLocaleIdentifier() const {
   return m_helper.getLocaleIdentifier();
 }
 
-bool I18nModule::getIsRTL() {
+bool I18nModule::getIsRTL() const {
   return m_helper.getIsRTL();
 }
 
@@ -59,11 +59,11 @@ void I18nHelper::setInfo(I18nModule::I18nInfo &&i18nInfo) {
   m_i18nInfo = i18nInfo;
 }
 
-std::string I18nHelper::getLocaleIdentifier() {
+std::string I18nHelper::getLocaleIdentifier() const {
   return m_i18nInfo.first;
 }
 
-bool I18nHelper::getIsRTL() {
+bool I18nHelper::getIsRTL() const {
   if (m_forceRTL) {
     // Used for debugging purposes, forces RTL even in LTR locales
     return true;

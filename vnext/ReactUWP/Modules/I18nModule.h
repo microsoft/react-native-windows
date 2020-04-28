@@ -20,8 +20,8 @@ class I18nModule final : public react::windows::II18nModule {
   // II18nModule
   I18nModule();
 
-  std::string getLocaleIdentifier() override;
-  bool getIsRTL() override;
+  std::string getLocaleIdentifier() const override;
+  bool getIsRTL() const override;
   void setAllowRTL(bool allowRTL) override;
   void setForceRTL(bool forceRTL) override;
 
@@ -36,15 +36,15 @@ class I18nHelper {
   I18nHelper();
 
   void setInfo(I18nModule::I18nInfo &&i18nInfo);
-  std::string getLocaleIdentifier();
-  bool getIsRTL();
+  std::string getLocaleIdentifier() const;
+  bool getIsRTL() const;
   void setAllowRTL(bool allowRTL);
   void setForceRTL(bool forceRTL);
 
  private:
   I18nModule::I18nInfo m_i18nInfo;
-  bool m_allowRTL = true;
-  bool m_forceRTL = false;
+  bool m_allowRTL{true};
+  bool m_forceRTL{false};
 };
 
 } // namespace uwp
