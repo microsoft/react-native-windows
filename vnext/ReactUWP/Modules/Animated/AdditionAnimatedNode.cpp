@@ -18,7 +18,7 @@ AdditionAnimatedNode::AdditionAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"0";

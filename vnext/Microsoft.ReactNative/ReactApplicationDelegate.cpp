@@ -14,7 +14,7 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 

@@ -53,7 +53,7 @@ void ScrollViewUWPImplementation::UpdateScrollableSize() const {
     const auto zoomFactor = scrollViewer.ZoomFactor();
     const auto scaledViewportWidth = static_cast<float>(scrollViewer.ViewportWidth() / zoomFactor);
     const auto scaledviewportHeight = static_cast<float>(scrollViewer.ViewportHeight() / zoomFactor);
-    const auto scrollViewContent = scrollViewer.Content().as<winrt::ContentControl>();
+    const auto scrollViewContent = scrollViewer.Content().as<xaml::Controls::ContentControl>();
     const auto contentWidth = scrollViewContent.ActualWidth();
     const auto contentHeight = scrollViewContent.ActualHeight();
 

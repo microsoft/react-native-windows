@@ -6,7 +6,6 @@
 
 #include <IReactInstance.h>
 #include <object/unknownObject.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 #include "IXamlRootView.h"
 #include "ReactHost/React.h"
 #include "SIPEventHandler.h"
@@ -16,11 +15,11 @@
 namespace winrt {
 using namespace Windows::UI;
 using namespace Windows::UI::Core;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Input;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react::uwp {
@@ -120,8 +119,8 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   winrt::weak_ref<XamlView> m_weakRootView{nullptr};
   winrt::weak_ref<XamlView> m_weakXamlRootView{nullptr};
 
-  winrt::ContentControl m_focusSafeHarbor{nullptr};
-  winrt::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
+  xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
+  xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
   winrt::Grid m_redBoxGrid{nullptr};
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_errorTextBlock{nullptr};

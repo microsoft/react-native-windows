@@ -30,7 +30,7 @@ class AppTheme {
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
-  winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{winrt::Windows::UI::Xaml::ApplicationTheme::Light};
+  xaml::ApplicationTheme m_currentTheme{xaml::ApplicationTheme::Light};
   bool m_isHighContrast;
   folly::dynamic m_highContrastColors;
 

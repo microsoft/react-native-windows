@@ -7,12 +7,10 @@
 
 #include <IXamlRootView.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 } // namespace winrt
 
 namespace react {
@@ -33,7 +31,7 @@ XamlView RootViewManager::CreateViewCore(int64_t /*tag*/) {
 void RootViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto panel(parent.as<winrt::Panel>());
   if (panel != nullptr)
-    panel.Children().InsertAt(static_cast<uint32_t>(index), child.as<winrt::UIElement>());
+    panel.Children().InsertAt(static_cast<uint32_t>(index), child.as<xaml::UIElement>());
 }
 
 void RootViewManager::RemoveAllChildren(const XamlView &parent) {

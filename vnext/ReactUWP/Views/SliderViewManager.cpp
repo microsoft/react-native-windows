@@ -10,10 +10,8 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-
 namespace winrt {
-using ToggleButton = Windows::UI::Xaml::Controls::Primitives::ToggleButton;
+using ToggleButton = xaml::Controls::Primitives::ToggleButton;
 }
 
 namespace react {
@@ -57,7 +55,7 @@ facebook::react::ShadowNode *SliderViewManager::createShadow() const {
 }
 
 XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/) {
-  auto slider = winrt::Slider();
+  auto slider = xaml::Controls::Slider();
   return slider;
 }
 
@@ -65,7 +63,7 @@ bool SliderViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-  auto slider = nodeToUpdate->GetView().as<winrt::Slider>();
+  auto slider = nodeToUpdate->GetView().as<xaml::Controls::Slider>();
   if (slider == nullptr)
     return true;
 
@@ -73,7 +71,7 @@ bool SliderViewManager::UpdateProperty(
     if (propertyValue.isBool())
       slider.IsEnabled(!propertyValue.asBool());
     else if (propertyValue.isNull())
-      slider.ClearValue(winrt::Control::IsEnabledProperty());
+      slider.ClearValue(xaml::Controls::Control::IsEnabledProperty());
   } else if (propertyName == "value") {
     if (propertyValue.isNumber())
       slider.Value(propertyValue.asDouble());

@@ -7,13 +7,12 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
-#include <winrt/Windows.UI.Xaml.Shapes.h>
 #include "SwitchViewManager.h"
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Shapes;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Shapes;
 } // namespace winrt
 
 namespace react {
@@ -148,7 +147,7 @@ bool SwitchViewManager::UpdateProperty(
     if (propertyValue.isBool())
       toggleSwitch.IsEnabled(!propertyValue.asBool());
     else if (propertyValue.isNull())
-      toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
+      toggleSwitch.ClearValue(xaml::Controls::Control::IsEnabledProperty());
   } else if (propertyName == "value") {
     if (propertyValue.isBool())
       toggleSwitch.IsOn(propertyValue.asBool());

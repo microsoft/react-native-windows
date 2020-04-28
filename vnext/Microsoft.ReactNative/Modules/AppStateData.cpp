@@ -7,7 +7,7 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::ApplicationModel;
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 
 namespace react::uwp {
 

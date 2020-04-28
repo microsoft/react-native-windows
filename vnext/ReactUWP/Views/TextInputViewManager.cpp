@@ -12,12 +12,12 @@
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
-#include <winrt/Windows.UI.Xaml.Shapes.h>
+#include "CppWinRTIncludes.h"
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Shapes;
+using namespace xaml;
+using namespace xaml::Shapes;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -60,21 +60,21 @@ struct json_type_traits<react::uwp::Selection> {
   }
 };
 
-static const std::unordered_map<std::string, winrt::InputScopeNameValue> textBoxKeyboardTypeMap = {
-    {"default", winrt::InputScopeNameValue::Default},
-    {"number-pad", winrt::InputScopeNameValue::TelephoneNumber},
-    {"decimal-pad", winrt::InputScopeNameValue::Digits},
-    {"email-address", winrt::InputScopeNameValue::EmailNameOrAddress},
-    {"phone-pad", winrt::InputScopeNameValue::TelephoneNumber},
-    {"numeric", winrt::InputScopeNameValue::Number},
-    {"url", winrt::InputScopeNameValue::Url},
-    {"web-search", winrt::InputScopeNameValue::Search}};
+static const std::unordered_map<std::string, xaml::Input::InputScopeNameValue> textBoxKeyboardTypeMap = {
+    {"default", xaml::Input::InputScopeNameValue::Default},
+    {"number-pad", xaml::Input::InputScopeNameValue::TelephoneNumber},
+    {"decimal-pad", xaml::Input::InputScopeNameValue::Digits},
+    {"email-address", xaml::Input::InputScopeNameValue::EmailNameOrAddress},
+    {"phone-pad", xaml::Input::InputScopeNameValue::TelephoneNumber},
+    {"numeric", xaml::Input::InputScopeNameValue::Number},
+    {"url", xaml::Input::InputScopeNameValue::Url},
+    {"web-search", xaml::Input::InputScopeNameValue::Search}};
 
-static const std::unordered_map<std::string, winrt::InputScopeNameValue> passwordBoxKeyboardTypeMap = {
-    {"default", winrt::InputScopeNameValue::Password},
-    {"numeric", winrt::InputScopeNameValue::NumericPin}};
+static const std::unordered_map<std::string, xaml::Input::InputScopeNameValue> passwordBoxKeyboardTypeMap = {
+    {"default", xaml::Input::InputScopeNameValue::Password},
+    {"numeric", xaml::Input::InputScopeNameValue::NumericPin}};
 
-static winrt::InputScopeNameValue parseKeyboardType(const folly::dynamic &val, const bool isTextBox) {
+static xaml::Input::InputScopeNameValue parseKeyboardType(const folly::dynamic &val, const bool isTextBox) {
   auto keyboardTypeMap = isTextBox ? textBoxKeyboardTypeMap : passwordBoxKeyboardTypeMap;
 
   auto iter = keyboardTypeMap.find(val.asString());
@@ -83,7 +83,7 @@ static winrt::InputScopeNameValue parseKeyboardType(const folly::dynamic &val, c
     return iter->second;
   }
 
-  return isTextBox ? winrt::InputScopeNameValue::Default : winrt::InputScopeNameValue::Password;
+  return isTextBox ? xaml::Input::InputScopeNameValue::Default : xaml::Input::InputScopeNameValue::Password;
 }
 
 namespace react {
@@ -105,8 +105,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
   void HideCaretIfNeeded();
-  void setPasswordBoxPlaceholderForeground(winrt::PasswordBox passwordBox, folly::dynamic color);
-  winrt::Shape FindCaret(winrt::DependencyObject element);
+  void setPasswordBoxPlaceholderForeground(xaml::Controls::PasswordBox passwordBox, folly::dynamic color);
+  winrt::Shape FindCaret(xaml::DependencyObject element);
 
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
@@ -123,22 +123,22 @@ class TextInputShadowNode : public ShadowNodeBase {
   uint32_t m_mostRecentEventCount{0}; // EventCount from javascript
 
  private:
-  winrt::TextBox::TextChanging_revoker m_textBoxTextChangingRevoker{};
-  winrt::TextBox::TextChanged_revoker m_textBoxTextChangedRevoker{};
-  winrt::TextBox::SelectionChanged_revoker m_textBoxSelectionChangedRevoker{};
-  winrt::TextBox::ContextMenuOpening_revoker m_textBoxContextMenuOpeningRevoker{};
+  xaml::Controls::TextBox::TextChanging_revoker m_textBoxTextChangingRevoker{};
+  xaml::Controls::TextBox::TextChanged_revoker m_textBoxTextChangedRevoker{};
+  xaml::Controls::TextBox::SelectionChanged_revoker m_textBoxSelectionChangedRevoker{};
+  xaml::Controls::TextBox::ContextMenuOpening_revoker m_textBoxContextMenuOpeningRevoker{};
 
-  winrt::PasswordBox::PasswordChanging_revoker m_passwordBoxPasswordChangingRevoker{};
-  winrt::PasswordBox::PasswordChanged_revoker m_passwordBoxPasswordChangedRevoker{};
-  winrt::PasswordBox::ContextMenuOpening_revoker m_passwordBoxContextMenuOpeningRevoker{};
+  xaml::Controls::PasswordBox::PasswordChanging_revoker m_passwordBoxPasswordChangingRevoker{};
+  xaml::Controls::PasswordBox::PasswordChanged_revoker m_passwordBoxPasswordChangedRevoker{};
+  xaml::Controls::PasswordBox::ContextMenuOpening_revoker m_passwordBoxContextMenuOpeningRevoker{};
 
-  winrt::Control::GotFocus_revoker m_controlGotFocusRevoker{};
-  winrt::Control::LostFocus_revoker m_controlLostFocusRevoker{};
-  winrt::Control::KeyDown_revoker m_controlKeyDownRevoker{};
-  winrt::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
-  winrt::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
-  winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
-  winrt::Control::Loaded_revoker m_controlLoadedRevoker{};
+  xaml::Controls::Control::GotFocus_revoker m_controlGotFocusRevoker{};
+  xaml::Controls::Control::LostFocus_revoker m_controlLostFocusRevoker{};
+  xaml::Controls::Control::KeyDown_revoker m_controlKeyDownRevoker{};
+  xaml::Controls::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
+  xaml::Controls::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
+  xaml::Controls::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
+  xaml::Controls::Control::Loaded_revoker m_controlLoadedRevoker{};
 };
 
 void TextInputShadowNode::createView() {
@@ -158,7 +158,7 @@ void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
 }
 
 void TextInputShadowNode::registerEvents() {
-  auto control = GetView().as<winrt::Control>();
+  auto control = GetView().as<xaml::Controls::Control>();
   auto wkinstance = GetViewManager()->GetReactInstance();
   auto tag = m_tag;
 
@@ -176,42 +176,42 @@ void TextInputShadowNode::registerEvents() {
   // another TextChanged event with correct event count.
   if (m_isTextBox) {
     m_passwordBoxPasswordChangingRevoker = {};
-    m_textBoxTextChangingRevoker =
-        control.as<winrt::TextBox>().TextChanging(winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
+    m_textBoxTextChangingRevoker = control.as<xaml::Controls::TextBox>().TextChanging(
+        winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
   } else {
     m_textBoxTextChangingRevoker = {};
-    if (control.try_as<winrt::IPasswordBox4>()) {
-      m_passwordBoxPasswordChangingRevoker = control.as<winrt::IPasswordBox4>().PasswordChanging(
+    if (control.try_as<xaml::Controls::IPasswordBox4>()) {
+      m_passwordBoxPasswordChangingRevoker = control.as<xaml::Controls::IPasswordBox4>().PasswordChanging(
           winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
     }
   }
 
   if (m_isTextBox) {
     m_passwordBoxPasswordChangedRevoker = {};
-    auto textBox = control.as<winrt::TextBox>();
+    auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxTextChangedRevoker = textBox.TextChanged(
         winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(textBox.Text()); });
   } else {
     m_textBoxTextChangedRevoker = {};
-    auto passwordBox = control.as<winrt::PasswordBox>();
+    auto passwordBox = control.as<xaml::Controls::PasswordBox>();
     m_passwordBoxPasswordChangedRevoker = passwordBox.PasswordChanged(
         winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(passwordBox.Password()); });
   }
 
   if (m_isTextBox) {
     m_passwordBoxContextMenuOpeningRevoker = {};
-    auto textBox = control.as<winrt::TextBox>();
+    auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxContextMenuOpeningRevoker =
-        textBox.ContextMenuOpening(winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
+        textBox.ContextMenuOpening(winrt::auto_revoke, [=](auto &&, xaml::Controls::ContextMenuEventArgs const &e) {
           if (m_contextMenuHidden) {
             e.Handled(true);
           }
         });
   } else {
     m_textBoxContextMenuOpeningRevoker = {};
-    auto passwordBox = control.as<winrt::PasswordBox>();
+    auto passwordBox = control.as<xaml::Controls::PasswordBox>();
     m_passwordBoxContextMenuOpeningRevoker =
-        passwordBox.ContextMenuOpening(winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
+        passwordBox.ContextMenuOpening(winrt::auto_revoke, [=](auto &&, xaml::Controls::ContextMenuEventArgs const &e) {
           if (m_contextMenuHidden) {
             e.Handled(true);
           }
@@ -221,17 +221,17 @@ void TextInputShadowNode::registerEvents() {
   m_controlGotFocusRevoker = control.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (m_shouldClearTextOnFocus) {
       if (m_isTextBox) {
-        control.as<winrt::TextBox>().ClearValue(winrt::TextBox::TextProperty());
+        control.as<xaml::Controls::TextBox>().ClearValue(xaml::Controls::TextBox::TextProperty());
       } else {
-        control.as<winrt::PasswordBox>().ClearValue(winrt::PasswordBox::PasswordProperty());
+        control.as<xaml::Controls::PasswordBox>().ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
       }
     }
 
     if (m_shouldSelectTextOnFocus) {
       if (m_isTextBox) {
-        control.as<winrt::TextBox>().SelectAll();
+        control.as<xaml::Controls::TextBox>().SelectAll();
       } else {
-        control.as<winrt::PasswordBox>().SelectAll();
+        control.as<xaml::Controls::PasswordBox>().SelectAll();
       }
     }
     HideCaretIfNeeded();
@@ -248,10 +248,10 @@ void TextInputShadowNode::registerEvents() {
     folly::dynamic eventDataEndEditing = {};
     if (m_isTextBox) {
       eventDataEndEditing =
-          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
+          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
     } else {
-      eventDataEndEditing =
-          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
+      eventDataEndEditing = folly::dynamic::object("target", tag)(
+          "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
     }
     if (!m_updating && instance != nullptr) {
       instance->DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
@@ -259,24 +259,25 @@ void TextInputShadowNode::registerEvents() {
     }
   });
 
-  m_controlKeyDownRevoker = control.KeyDown(winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
-    if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
-      if (auto instance = wkinstance.lock()) {
-        folly::dynamic eventDataSubmitEditing = {};
-        if (m_isTextBox) {
-          eventDataSubmitEditing =
-              folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
-        } else {
-          eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-              "text", HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
+  m_controlKeyDownRevoker =
+      control.KeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
+        if (args.Key() == winrt::Windows::System::VirtualKey::Enter && !args.Handled()) {
+          if (auto instance = wkinstance.lock()) {
+            folly::dynamic eventDataSubmitEditing = {};
+            if (m_isTextBox) {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
+            } else {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
+            }
+            instance->DispatchEvent(tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
+          }
         }
-        instance->DispatchEvent(tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
-      }
-    }
-  });
+      });
 
   if (m_isTextBox) {
-    auto textBox = control.as<winrt::TextBox>();
+    auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxSelectionChangedRevoker = textBox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
       auto instance = wkinstance.lock();
       folly::dynamic selectionData = folly::dynamic::object("start", textBox.SelectionStart())(
@@ -290,7 +291,7 @@ void TextInputShadowNode::registerEvents() {
   m_controlSizeChangedRevoker =
       control.SizeChanged(winrt::auto_revoke, [=](auto &&, winrt::SizeChangedEventArgs const &args) {
         if (m_isTextBox) {
-          if (control.as<winrt::TextBox>().TextWrapping() == winrt::TextWrapping::Wrap) {
+          if (control.as<xaml::Controls::TextBox>().TextWrapping() == xaml::TextWrapping::Wrap) {
             auto instance = wkinstance.lock();
             folly::dynamic contentSizeData =
                 folly::dynamic::object("width", args.NewSize().Width)("height", args.NewSize().Height);
@@ -302,10 +303,10 @@ void TextInputShadowNode::registerEvents() {
       });
 
   m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto textBoxView = control.GetTemplateChild(asHstring("ContentElement")).as<winrt::ScrollViewer>();
+    auto textBoxView = control.GetTemplateChild(asHstring("ContentElement")).as<xaml::Controls::ScrollViewer>();
     if (textBoxView) {
       m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
-          winrt::auto_revoke, [=](auto &&, winrt::ScrollViewerViewChangingEventArgs const &args) {
+          winrt::auto_revoke, [=](auto &&, xaml::Controls::ScrollViewerViewChangingEventArgs const &args) {
             auto instance = wkinstance.lock();
             if (!m_updating && instance != nullptr) {
               folly::dynamic offsetData = folly::dynamic::object("x", args.FinalView().HorizontalOffset())(
@@ -318,9 +319,9 @@ void TextInputShadowNode::registerEvents() {
     HideCaretIfNeeded();
   });
 
-  if (control.try_as<winrt::IUIElement7>()) {
+  if (control.try_as<xaml::IUIElement7>()) {
     m_controlCharacterReceivedRevoker = control.CharacterReceived(
-        winrt::auto_revoke, [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
+        winrt::auto_revoke, [=](auto &&, xaml::Input::CharacterReceivedRoutedEventArgs const &args) {
           auto instance = wkinstance.lock();
           std::string key;
           wchar_t s[2] = L" ";
@@ -341,7 +342,7 @@ void TextInputShadowNode::registerEvents() {
   }
 }
 
-winrt::Shape TextInputShadowNode::FindCaret(winrt::DependencyObject element) {
+xaml::Shapes::Shape TextInputShadowNode::FindCaret(xaml::DependencyObject element) {
   if (element == nullptr)
     return nullptr;
 
@@ -361,23 +362,25 @@ winrt::Shape TextInputShadowNode::FindCaret(winrt::DependencyObject element) {
 // hacking solution to hide the caret
 void TextInputShadowNode::HideCaretIfNeeded() {
   if (m_hideCaret) {
-    auto control = GetView().as<winrt::Control>();
+    auto control = GetView().as<xaml::Controls::Control>();
     if (auto caret = FindCaret(control)) {
-      caret.CompositeMode(winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
-      winrt::SolidColorBrush transparentColor(winrt::Colors::Transparent());
+      caret.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
+      xaml::Media::SolidColorBrush transparentColor(winrt::Windows::UI::Colors::Transparent());
       caret.Fill(transparentColor);
     }
   }
 }
 
-void TextInputShadowNode::setPasswordBoxPlaceholderForeground(winrt::PasswordBox passwordBox, folly::dynamic color) {
+void TextInputShadowNode::setPasswordBoxPlaceholderForeground(
+    xaml::Controls::PasswordBox passwordBox,
+    folly::dynamic color) {
   m_placeholderTextColor = color;
-  auto defaultRD = winrt::Windows::UI::Xaml::ResourceDictionary();
+  auto defaultRD = xaml::ResourceDictionary();
   auto solidColorBrush = ColorFrom(color);
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForeground"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundFocused"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundPointerOver"), winrt::box_value(solidColorBrush));
-  auto passwordBoxResource = winrt::Windows::UI::Xaml::ResourceDictionary();
+  auto passwordBoxResource = xaml::ResourceDictionary();
   auto themeDictionaries = passwordBoxResource.ThemeDictionaries();
   themeDictionaries.Insert(winrt::box_value(L"Default"), defaultRD);
   passwordBoxResource.Insert(winrt::box_value(L"ThemeDictionaries"), themeDictionaries);
@@ -386,9 +389,9 @@ void TextInputShadowNode::setPasswordBoxPlaceholderForeground(winrt::PasswordBox
 
 void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
-  auto control = GetView().as<winrt::Control>();
-  auto textBox = control.try_as<winrt::TextBox>();
-  auto passwordBox = control.try_as<winrt::PasswordBox>();
+  auto control = GetView().as<xaml::Controls::Control>();
+  auto textBox = control.try_as<xaml::Controls::TextBox>();
+  auto passwordBox = control.try_as<xaml::Controls::PasswordBox>();
 
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();
@@ -403,7 +406,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isBool())
         control.IsTextScaleFactorEnabled(propertyValue.asBool());
       else if (propertyValue.isNull())
-        control.ClearValue(winrt::Control::IsTextScaleFactorEnabledProperty());
+        control.ClearValue(xaml::Controls::Control::IsTextScaleFactorEnabledProperty());
     } else if (propertyName == "clearTextOnFocus") {
       if (propertyValue.isBool())
         m_shouldClearTextOnFocus = propertyValue.asBool();
@@ -426,11 +429,11 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isBool()) {
         if (propertyValue.asBool()) {
           if (m_isTextBox) {
-            winrt::PasswordBox newPasswordBox;
+            xaml::Controls::PasswordBox newPasswordBox;
             ReparentView(newPasswordBox);
             m_isTextBox = false;
             registerEvents();
-            control = newPasswordBox.as<winrt::Control>();
+            control = newPasswordBox.as<xaml::Controls::Control>();
             passwordBox = newPasswordBox;
             if (!m_placeholderTextColor.isNull()) {
               setPasswordBoxPlaceholderForeground(newPasswordBox, m_placeholderTextColor);
@@ -438,11 +441,11 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           }
         } else {
           if (!m_isTextBox) {
-            winrt::TextBox newTextBox;
+            xaml::Controls::TextBox newTextBox;
             ReparentView(newTextBox);
             m_isTextBox = true;
             registerEvents();
-            control = newTextBox.as<winrt::Control>();
+            control = newTextBox.as<xaml::Controls::Control>();
             textBox = newTextBox;
             if (!m_placeholderTextColor.isNull()) {
               textBox.PlaceholderForeground(SolidColorBrushFrom(m_placeholderTextColor));
@@ -453,50 +456,58 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "maxLength") {
       if (propertyValue.isNumber()) {
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::MaxLengthProperty() : winrt::PasswordBox::MaxLengthProperty(),
+            m_isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
+                        : xaml::Controls::PasswordBox::MaxLengthProperty(),
             winrt::PropertyValue::CreateInt32(static_cast<int32_t>(propertyValue.asDouble())));
       } else if (propertyValue.isNull()) {
-        control.ClearValue(m_isTextBox ? winrt::TextBox::MaxLengthProperty() : winrt::PasswordBox::MaxLengthProperty());
+        control.ClearValue(
+            m_isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
+                        : xaml::Controls::PasswordBox::MaxLengthProperty());
       }
     } else if (propertyName == "placeholder") {
       if (propertyValue.isString()) {
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty() : winrt::PasswordBox::PlaceholderTextProperty(),
+            m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
+                        : xaml::Controls::PasswordBox::PlaceholderTextProperty(),
             winrt::PropertyValue::CreateString(asHstring(propertyValue)));
       } else if (propertyValue.isNull()) {
         control.ClearValue(
-            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty() : winrt::PasswordBox::PlaceholderTextProperty());
+            m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
+                        : xaml::Controls::PasswordBox::PlaceholderTextProperty());
       }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
-                        : winrt::PasswordBox::SelectionHighlightColorProperty(),
+            m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
+                        : xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
             SolidColorBrushFrom(propertyValue));
       } else if (propertyValue.isNull())
         control.ClearValue(
-            m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
-                        : winrt::PasswordBox::SelectionHighlightColorProperty());
+            m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
+                        : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
       if (propertyValue.isString()) {
         auto inputScopeNameVaue = parseKeyboardType(propertyValue, m_isTextBox);
-        auto scope = winrt::InputScope();
-        auto scopeName = winrt::InputScopeName(inputScopeNameVaue);
+        auto scope = xaml::Input::InputScope();
+        auto scopeName = xaml::Input::InputScopeName(inputScopeNameVaue);
         auto names = scope.Names();
         names.Append(scopeName);
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::InputScopeProperty() : winrt::PasswordBox::InputScopeProperty(), scope);
+            m_isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
+                        : xaml::Controls::PasswordBox::InputScopeProperty(),
+            scope);
       } else if (propertyValue.isNull())
         control.ClearValue(
-            m_isTextBox ? winrt::TextBox::InputScopeProperty() : winrt::PasswordBox::InputScopeProperty());
+            m_isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
+                        : xaml::Controls::PasswordBox::InputScopeProperty());
     } else if (propertyName == "placeholderTextColor") {
       m_placeholderTextColor = nullptr;
-      if (textBox.try_as<winrt::ITextBox6>() && m_isTextBox) {
+      if (textBox.try_as<xaml::Controls::ITextBox6>() && m_isTextBox) {
         if (IsValidColorValue(propertyValue)) {
           m_placeholderTextColor = propertyValue;
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         } else if (propertyValue.isNull())
-          textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
+          textBox.ClearValue(xaml::Controls::TextBox::PlaceholderForegroundProperty());
       } else if (m_isTextBox != true && IsValidColorValue(propertyValue)) {
         setPasswordBoxPlaceholderForeground(passwordBox, propertyValue);
       }
@@ -507,20 +518,21 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         } else if (propertyName == "multiline") {
           if (propertyValue.isBool()) {
             const bool isMultiline = propertyValue.asBool();
-            textBox.TextWrapping(isMultiline ? winrt::TextWrapping::Wrap : winrt::TextWrapping::NoWrap);
+            textBox.TextWrapping(isMultiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
             textBox.AcceptsReturn(isMultiline);
           } else if (propertyValue.isNull())
-            textBox.ClearValue(winrt::TextBox::TextWrappingProperty());
+            textBox.ClearValue(xaml::Controls::TextBox::TextWrappingProperty());
         } else if (propertyName == "editable") {
           if (propertyValue.isBool())
             textBox.IsReadOnly(!propertyValue.asBool());
           else if (propertyValue.isNull())
-            textBox.ClearValue(winrt::TextBox::IsReadOnlyProperty());
+            textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty());
         } else if (propertyName == "scrollEnabled") {
-          if (propertyValue.isBool() && textBox.TextWrapping() == winrt::TextWrapping::Wrap) {
-            auto scrollMode = propertyValue.asBool() ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled;
-            winrt::ScrollViewer::SetVerticalScrollMode(textBox, scrollMode);
-            winrt::ScrollViewer::SetHorizontalScrollMode(textBox, scrollMode);
+          if (propertyValue.isBool() && textBox.TextWrapping() == xaml::TextWrapping::Wrap) {
+            auto scrollMode =
+                propertyValue.asBool() ? xaml::Controls::ScrollMode::Auto : xaml::Controls::ScrollMode::Disabled;
+            xaml::Controls::ScrollViewer::SetVerticalScrollMode(textBox, scrollMode);
+            xaml::Controls::ScrollViewer::SetHorizontalScrollMode(textBox, scrollMode);
           }
         } else if (propertyName == "selection") {
           if (propertyValue.isObject()) {
@@ -533,7 +545,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           if (propertyValue.isBool())
             textBox.IsSpellCheckEnabled(propertyValue.asBool());
           else if (propertyValue.isNull())
-            textBox.ClearValue(winrt::TextBox::IsSpellCheckEnabledProperty());
+            textBox.ClearValue(xaml::Controls::TextBox::IsSpellCheckEnabledProperty());
         } else if (propertyName == "text") {
           if (m_mostRecentEventCount == m_nativeEventCount) {
             if (propertyValue.isString()) {
@@ -543,19 +555,19 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
                 textBox.Text(newValue);
               }
             } else if (propertyValue.isNull())
-              textBox.ClearValue(winrt::TextBox::TextProperty());
+              textBox.ClearValue(xaml::Controls::TextBox::TextProperty());
           }
         } else if (propertyName == "autoCapitalize") {
-          if (textBox.try_as<winrt::ITextBox6>()) {
+          if (textBox.try_as<xaml::Controls::ITextBox6>()) {
             if (propertyValue.isString()) {
               if (propertyValue.asString() == "characters") {
-                textBox.CharacterCasing(winrt::CharacterCasing::Upper);
+                textBox.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
               } else { // anything else turns off autoCap (should be "None" but
                        // we don't support "words"/"senetences" yet)
-                textBox.CharacterCasing(winrt::CharacterCasing::Normal);
+                textBox.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
               }
             } else if (propertyValue.isNull())
-              textBox.ClearValue(winrt::TextBox::CharacterCasingProperty());
+              textBox.ClearValue(xaml::Controls::TextBox::CharacterCasingProperty());
           }
         }
       } else { // Applicable properties for PasswordBox
@@ -568,7 +580,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
                 passwordBox.Password(newValue);
               }
             } else if (propertyValue.isNull())
-              passwordBox.ClearValue(winrt::PasswordBox::PasswordProperty());
+              passwordBox.ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
           }
         }
       }
@@ -619,7 +631,7 @@ facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
 }
 
 XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/) {
-  winrt::TextBox textBox;
+  xaml::Controls::TextBox textBox;
   textBox.TabIndex(0);
   return textBox;
 }
@@ -635,63 +647,80 @@ void TextInputViewManager::TransferInputScope(
   // transfer input scope, only common keyboardType between secureTextEntry
   // on/off is numeric, so only need to transfer input scope "Number" <=>
   // "NumericPin", everything else leave it as default.
-  winrt::InputScope inputScope;
+  xaml::Input::InputScope inputScope;
   if (copyToPasswordBox) {
-    inputScope = oldView.try_as<winrt::TextBox>().InputScope();
+    inputScope = oldView.try_as<xaml::Controls::TextBox>().InputScope();
   } else {
-    inputScope = oldView.try_as<winrt::PasswordBox>().InputScope();
+    inputScope = oldView.try_as<xaml::Controls::PasswordBox>().InputScope();
   }
 
   if (inputScope != nullptr) {
     auto nameValue = inputScope.Names().GetAt(0).NameValue();
 
-    if ((nameValue == winrt::InputScopeNameValue::Number && copyToPasswordBox) ||
-        (nameValue == winrt::InputScopeNameValue::NumericPin && !copyToPasswordBox)) {
-      auto newScope = winrt::InputScope();
-      auto scopeName = winrt::InputScopeName(
-          copyToPasswordBox ? winrt::InputScopeNameValue::NumericPin : winrt::InputScopeNameValue::Number);
+    if ((nameValue == xaml::Input::InputScopeNameValue::Number && copyToPasswordBox) ||
+        (nameValue == xaml::Input::InputScopeNameValue::NumericPin && !copyToPasswordBox)) {
+      auto newScope = xaml::Input::InputScope();
+      auto scopeName = xaml::Input::InputScopeName(
+          copyToPasswordBox ? xaml::Input::InputScopeNameValue::NumericPin : xaml::Input::InputScopeNameValue::Number);
       auto names = newScope.Names();
       names.Append(scopeName);
       newView.SetValue(
-          copyToPasswordBox ? winrt::PasswordBox::InputScopeProperty() : winrt::TextBox::InputScopeProperty(),
+          copyToPasswordBox ? xaml::Controls::PasswordBox::InputScopeProperty()
+                            : xaml::Controls::TextBox::InputScopeProperty(),
           newScope);
     }
   }
 }
 
 void TextInputViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
-  if ((oldView.try_as<winrt::TextBox>() != nullptr && newView.try_as<winrt::PasswordBox>() != nullptr) ||
-      (oldView.try_as<winrt::PasswordBox>() != nullptr && newView.try_as<winrt::TextBox>() != nullptr)) {
-    bool copyToPasswordBox = oldView.try_as<winrt::TextBox>() != nullptr;
+  if ((oldView.try_as<xaml::Controls::TextBox>() != nullptr &&
+       newView.try_as<xaml::Controls::PasswordBox>() != nullptr) ||
+      (oldView.try_as<xaml::Controls::PasswordBox>() != nullptr &&
+       newView.try_as<xaml::Controls::TextBox>() != nullptr)) {
+    bool copyToPasswordBox = oldView.try_as<xaml::Controls::TextBox>() != nullptr;
 
     // sync common properties between TextBox and PasswordBox
     if (copyToPasswordBox) {
-      TransferProperty(oldView, newView, winrt::TextBox::MaxLengthProperty(), winrt::PasswordBox::MaxLengthProperty());
-      TransferProperty(
-          oldView, newView, winrt::TextBox::PlaceholderTextProperty(), winrt::PasswordBox::PlaceholderTextProperty());
       TransferProperty(
           oldView,
           newView,
-          winrt::TextBox::SelectionHighlightColorProperty(),
-          winrt::PasswordBox::SelectionHighlightColorProperty());
-      newView.as<winrt::PasswordBox>().Password(oldView.as<winrt::TextBox>().Text());
+          xaml::Controls::TextBox::MaxLengthProperty(),
+          xaml::Controls::PasswordBox::MaxLengthProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          xaml::Controls::TextBox::PlaceholderTextProperty(),
+          xaml::Controls::PasswordBox::PlaceholderTextProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          xaml::Controls::TextBox::SelectionHighlightColorProperty(),
+          xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
+      newView.as<xaml::Controls::PasswordBox>().Password(oldView.as<xaml::Controls::TextBox>().Text());
     } else {
-      TransferProperty(oldView, newView, winrt::PasswordBox::MaxLengthProperty(), winrt::TextBox::MaxLengthProperty());
-      TransferProperty(
-          oldView, newView, winrt::PasswordBox::PlaceholderTextProperty(), winrt::TextBox::PlaceholderTextProperty());
       TransferProperty(
           oldView,
           newView,
-          winrt::PasswordBox::SelectionHighlightColorProperty(),
-          winrt::TextBox::SelectionHighlightColorProperty());
-      newView.as<winrt::TextBox>().Text(oldView.as<winrt::PasswordBox>().Password());
+          xaml::Controls::PasswordBox::MaxLengthProperty(),
+          xaml::Controls::TextBox::MaxLengthProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          xaml::Controls::PasswordBox::PlaceholderTextProperty(),
+          xaml::Controls::TextBox::PlaceholderTextProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
+          xaml::Controls::TextBox::SelectionHighlightColorProperty());
+      newView.as<xaml::Controls::TextBox>().Text(oldView.as<xaml::Controls::PasswordBox>().Password());
     }
 
     TransferInputScope(oldView, newView, copyToPasswordBox);
     // Set focus if current control has focus
-    auto focusState = oldView.as<winrt::Control>().FocusState();
+    auto focusState = oldView.as<xaml::Controls::Control>().FocusState();
     if (focusState != winrt::FocusState::Unfocused) {
-      newView.as<winrt::Control>().Focus(focusState);
+      newView.as<xaml::Controls::Control>().Focus(focusState);
     }
   }
   Super::TransferProperties(oldView, newView);

@@ -9,7 +9,6 @@
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Xaml.Navigation.h>
 
 using namespace winrt;
 using namespace Windows::ApplicationModel;
@@ -17,9 +16,9 @@ using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Core;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Navigation;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Navigation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

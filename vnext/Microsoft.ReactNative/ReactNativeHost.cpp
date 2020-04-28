@@ -9,8 +9,8 @@
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
