@@ -187,9 +187,8 @@ void NativeUIManager::AddRootView(
   m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
 
   // Push the appropriate FlowDirection into the root view.
-  auto flow = I18nHelper::Instance().getIsRTL() ? winrt::FlowDirection::RightToLeft : winrt::FlowDirection::LeftToRight;
-  view.as<winrt::FrameworkElement>().FlowDirection(
-      I18nHelper::Instance().getIsRTL() ? winrt::FlowDirection::RightToLeft : winrt::FlowDirection::LeftToRight);
+  view.as<xaml::FrameworkElement>().FlowDirection(
+      I18nHelper::Instance().getIsRTL() ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
 
