@@ -274,7 +274,14 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           bitmapImage = winrt::BitmapImage{};
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
-              winrt::auto_revoke, [imageBrush](const auto &, const auto &) { imageBrush.Opacity(1); });
+              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                imageBrush.Opacity(1);
+
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                }
+              });
 
           imageBrush.ImageSource(bitmapImage);
         }
