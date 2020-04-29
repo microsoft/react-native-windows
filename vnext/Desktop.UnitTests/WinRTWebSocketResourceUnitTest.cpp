@@ -24,8 +24,8 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     bool connected = true;
     string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
-    auto mws{imws.as<MockMessageWebSocket>()};
 
+    auto mws{imws.as<MockMessageWebSocket>()};
     MessageWebSocket m;
     mws->Mocks.Control = [&m]() -> MessageWebSocketControl { return m.Control(); };
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return IAsyncAction(); };
