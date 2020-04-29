@@ -104,30 +104,6 @@ void MockMessageWebSocket::MessageReceived(event_token const &eventCookie) const
     Mocks.MessageReceivedVoid(eventCookie);
 }
 
-// IMessageWebSocket2
-event_token MockMessageWebSocket::ServerCustomValidationRequested(
-    TypedEventHandler<MessageWebSocket, WebSocketServerCustomValidationRequestedEventArgs> const &eventHandler) const {
-  throw exception("Not implemented");
-}
-
-IMessageWebSocket2::ServerCustomValidationRequested_revoker MockMessageWebSocket::ServerCustomValidationRequested(
-    auto_revoke_t,
-    TypedEventHandler<MessageWebSocket, WebSocketServerCustomValidationRequestedEventArgs> const &eventHandler) const {
-  throw exception("Not implemented");
-}
-
-void MockMessageWebSocket::ServerCustomValidationRequested(event_token const &eventCookie) const noexcept {}
-
-// IMessageWebSocket3
-IAsyncOperationWithProgress<uint32_t, uint32_t> MockMessageWebSocket::SendNonfinalFrameAsync(
-    IBuffer const &data) const {
-  throw exception("Not implemented");
-}
-
-IAsyncOperationWithProgress<uint32_t, uint32_t> MockMessageWebSocket::SendFinalFrameAsync(IBuffer const &data) const {
-  throw exception("Not implemented");
-}
-
 #pragma endregion MockMessageWebSocket
 
 #pragma region MockDataWriter
