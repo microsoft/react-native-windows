@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <sstream>
+
 #include <IReactInstance.h>
 
 #include <ReactUWP\Modules\NativeUIManager.h>
@@ -154,8 +154,8 @@ void ShadowNodeBase::EnsureHandledKeyboardEventHandler() {
   }
 }
 
-void ShadowNodeBase::YellowBox(const std::string& message) {
-  const auto instance =  GetViewManager()->GetReactInstance().lock();
+void ShadowNodeBase::YellowBox(const std::string &message) {
+  const auto instance = GetViewManager()->GetReactInstance().lock();
   instance->CallJsFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
 }
 
