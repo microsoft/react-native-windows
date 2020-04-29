@@ -13,6 +13,7 @@
 
 #include <IReactInstance.h>
 #include <IXamlRootView.h>
+#include <TestHook.h>
 #include <Views/ShadowNodeBase.h>
 
 using namespace folly;
@@ -274,43 +275,6 @@ void ViewManagerBase::NotifyUnimplementedProperty(
   }
 #endif // DEBUG
 }
-
-#ifdef DEBUG
-
-void ViewManagerBase::TestHook::NotifyUnimplementedProperty(
-    const std::string &viewManager,
-    const std::string &reactClassName,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
-  std::string value;
-  size_t size{};
-  try {
-    if (propertyValue.isObject()) {
-      value = "[Object]";
-    } else if (propertyValue.isNull()) {
-      value = "[Null]";
-    } else if (propertyValue.isArray()) {
-      size = propertyValue.size();
-      value = "[Array]";
-    } else {
-      value = propertyValue.asString();
-    }
-  } catch (const TypeError &e) {
-    value = e.what();
-  }
-
-  cdebug << "[UnimplementedProperty] ViewManager = " << viewManager << " elementClass = " << reactClassName
-         << " propertyName = " << propertyName << " value = " << value;
-
-  if (size != 0) {
-    cdebug << " (" << size << " elems)";
-  }
-
-  cdebug << std::endl;
-  // DebugBreak();
-}
-
-#endif // DEBUG
 
 void ViewManagerBase::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
