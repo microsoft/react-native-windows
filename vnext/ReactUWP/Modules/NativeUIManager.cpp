@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include "I18nModule.h"
 #include "NativeUIManager.h"
 
 #include <ReactRootView.h>
@@ -184,6 +185,10 @@ void NativeUIManager::AddRootView(
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
   m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
+
+  // Push the appropriate FlowDirection into the root view.
+  view.as<xaml::FrameworkElement>().FlowDirection(
+      I18nHelper::Instance().getIsRTL() ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
 
@@ -851,7 +856,9 @@ void NativeUIManager::DoLayout() {
     float actualWidth = static_cast<float>(rootElement.ActualWidth());
     float actualHeight = static_cast<float>(rootElement.ActualHeight());
 
-    // TODO: Real direction (VSO 1697992: RTL Layout)
+    // We must always run layout in LTR mode, which might seem unintuitive.
+    // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
+    // which will inherit down the XAML tree, allowing all native controls to pick it up.
     YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
 
     for (auto &tagToYogaNode : m_tagsToYogaNodes) {

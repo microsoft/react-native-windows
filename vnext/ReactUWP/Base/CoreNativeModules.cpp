@@ -53,7 +53,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
     std::shared_ptr<DeviceInfo> &&deviceInfo,
-    I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> &&appstate,
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
@@ -119,11 +118,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       messageQueue);
 
   modules.emplace_back(
-      "I18nManager",
-      [i18nInfo = std::move(i18nInfo)]() mutable {
-        return createI18nModule(std::make_unique<I18nModule>(std::move(i18nInfo)));
-      },
-      messageQueue);
+      "I18nManager", []() mutable { return createI18nModule(std::make_unique<I18nModule>()); }, messageQueue);
 
   modules.emplace_back(
       AppearanceModule::Name,
