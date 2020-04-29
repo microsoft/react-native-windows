@@ -1,8 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 #pragma once
 #ifdef DEBUG
+#include <folly/dynamic.h>
 #include <string>
 #include <vector>
-#include <folly/dynamic.h>
 
 struct TestHook {
   static void NotifyUnimplementedProperty(
