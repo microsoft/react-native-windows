@@ -18,8 +18,7 @@
   "dependencies": {
     "chalk": "^3",
     "globby": "^9.2.0",
-    "react-native-tscodegen": "0.0.10",
-    "react-native-codegen": "0.0.2",
+    "react-native-tscodegen": "0.62.1",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
