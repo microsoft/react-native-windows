@@ -92,15 +92,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
       const folly::dynamic &value);
-#ifdef DEBUG
-  struct TestHook {
-    static void NotifyUnimplementedProperty(
-        const std::string &viewManager,
-        const std::string &reactClassName,
-        const std::string &propertyName,
-        const folly::dynamic &propertyValue);
-  };
-#endif
+
  protected:
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };

@@ -92,9 +92,6 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -318,6 +315,8 @@
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="TestHook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
@@ -408,9 +407,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h">
@@ -674,6 +670,8 @@
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\ClipboardModule.h" />
+    <ClInclude Include="TestHook.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl">
