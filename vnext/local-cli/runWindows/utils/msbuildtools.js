@@ -56,6 +56,7 @@ class MSBuildTools {
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
+      '/maxCpuCount',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
