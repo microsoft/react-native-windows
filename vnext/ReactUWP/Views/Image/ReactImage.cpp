@@ -10,6 +10,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include "Unicode.h"
+#include "cdebug.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -84,6 +85,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
     default: // ResizeMode::Center
       // This function should never be called for the 'repeat' resizeMode case.
       // That is handled by the shouldUseCompositionBrush/switchBrushes code path.
+      // #4691
       assert(value != ResizeMode::Repeat);
 
       if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
@@ -328,7 +330,8 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
 
       co_return memoryStream;
     }
-  } catch (winrt::hresult_error const &) {
+  } catch (winrt::hresult_error const &e) {
+    DEBUG_HRESULT_ERROR(e);
   }
 
   co_return nullptr;
