@@ -65,9 +65,11 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
     if (propertyName == "color") {
       if (IsValidColorValue(propertyValue))
         glyphs.Fill(BrushFrom(propertyValue));
-#if FUTURE
-      else if (propertyValue.isNull())
-        ; // Log error, must have a color
+#ifdef DEBUG
+      else if (propertyValue.isNull()) {
+        // Log error, must have a color
+        YellowBox("IconShadowNode - color property must be non-null");
+      }
 #endif
     } else if (propertyName == "fontUri") {
       if (propertyValue.isString()) {
