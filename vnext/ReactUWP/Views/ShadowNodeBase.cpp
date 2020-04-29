@@ -154,9 +154,11 @@ void ShadowNodeBase::EnsureHandledKeyboardEventHandler() {
   }
 }
 
-void ShadowNodeBase::YellowBox(const std::string &message) {
+void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
   const auto instance = GetViewManager()->GetReactInstance().lock();
-  instance->CallJsFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
+  if (instance) {
+    instance->CallJsFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
+  }
 }
 
 } // namespace uwp

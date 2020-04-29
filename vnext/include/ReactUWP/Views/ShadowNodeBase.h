@@ -68,7 +68,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
     return false;
   }
 
-  void YellowBox(const std::string &message);
+  void YellowBox(const std::string &message) const noexcept;
 
   ViewManagerBase *GetViewManager() const;
   XamlView GetView() const {
