@@ -38,7 +38,7 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
   void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &e);
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
-  void OnNavigationFailed(IInspectable const &, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const &);
+  void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
  protected:
   virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();

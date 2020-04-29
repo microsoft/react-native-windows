@@ -1,8 +1,67 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 23 Apr 2020 00:04:37 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2020 00:04:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.52
+
+Wed, 29 Apr 2020 00:04:54 GMT
+
+### Changes
+
+- Start forking namespace and includes for WUX->MUX move (asklar@microsoft.com)
+- Update react version (kaigu@microsoft.com)
+- Exclude unittests and proposals from being published in the npm package (dannyvv@microsoft.com)
+
+## 0.0.0-master.51
+
+Tue, 28 Apr 2020 00:04:13 GMT
+
+### Changes
+
+- Added C# ReactContext for Module Initialize method (vmorozov@microsoft.com)
+- Use readme file from root of repo for react-native-windows (acoates@microsoft.com)
+
+## 0.0.0-master.50
+
+Mon, 27 Apr 2020 00:04:59 GMT
+
+### Changes
+
+- Added C++ ReactContext for Module Initialize method (vmorozov@microsoft.com)
+
+## 0.0.0-master.49
+
+Sun, 26 Apr 2020 00:04:59 GMT
+
+### Changes
+
+- Use separate brush for text control border (kaigu@microsoft.com)
+- Fix typo causing activity indicators to be sad and colorless (asklar@microsoft.com)
+- Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475 (tudorm@microsoft.com)
+
+## 0.0.0-master.48
+
+Sat, 25 Apr 2020 00:05:26 GMT
+
+### Changes
+
+- Better error reporting and elevating if necessary in CLI (asklar@microsoft.com)
+- Detect when we have more than one SLN as it may not be obvious to the user. Add --sln option to CLI. (asklar@microsoft.com)
+- Install from layout in Debug builds (asklar@microsoft.com)
+
+## 0.0.0-master.47
+
+Fri, 24 Apr 2020 00:04:41 GMT
+
+### Changes
+
+- Pass XamlView's through ReactUwp View Managers by Const Ref (ngerlem@microsoft.com)
+- fix RTL (kmelmon@microsoft.com)
+- Use spec file for clipboard module (acoates@microsoft.com)
+- Fix Missing Include in DevSupportManagerUwp (ngerlem@microsoft.com)
+- Fixed .Net Native crash for custom struct deserialization (vmorozov@microsoft.com)
 
 ## 0.0.0-master.46
 

@@ -6,11 +6,6 @@
 #include <IReactInstance.h>
 #include <folly/dynamic.h>
 #include <stdint.h>
-#include <winrt/Windows.UI.Xaml.h>
-
-namespace winrt {
-using namespace Windows::UI::Xaml;
-}
 
 namespace react {
 namespace uwp {
@@ -27,7 +22,7 @@ inline typename T asEnum(folly::dynamic const &obj) {
   return static_cast<T>(obj.asInt());
 }
 
-ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const &fe);
+ReactId getViewId(_In_ IReactInstance *instance, xaml::FrameworkElement const &fe);
 std::int32_t CountOpenPopups();
 
 bool IsRS3OrHigher();

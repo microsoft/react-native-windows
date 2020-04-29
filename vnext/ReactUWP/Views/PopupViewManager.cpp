@@ -12,10 +12,8 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.UI.Core.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-
 namespace winrt {
-using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
 namespace react {
@@ -36,7 +34,7 @@ class PopupShadowNode : public ShadowNodeBase {
 
   static void OnPopupClosed(IReactInstance &instance, int64_t tag);
   winrt::Windows::Foundation::Size GetAppWindowSize();
-  winrt::ContentControl GetControl();
+  xaml::Controls::ContentControl GetControl();
   void UpdateTabStops();
   void UpdateLayout();
 
@@ -54,8 +52,8 @@ class PopupShadowNode : public ShadowNodeBase {
   int64_t m_targetTag;
   winrt::Popup::Closed_revoker m_popupClosedRevoker{};
   winrt::Popup::Opened_revoker m_popupOpenedRevoker{};
-  winrt::FrameworkElement::SizeChanged_revoker m_popupSizeChangedRevoker{};
-  winrt::Window::SizeChanged_revoker m_windowSizeChangedRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_popupSizeChangedRevoker{};
+  xaml::Window::SizeChanged_revoker m_windowSizeChangedRevoker{};
 };
 
 PopupShadowNode::~PopupShadowNode() {
@@ -63,9 +61,9 @@ PopupShadowNode::~PopupShadowNode() {
   m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
-winrt::ContentControl PopupShadowNode::GetControl() {
+xaml::Controls::ContentControl PopupShadowNode::GetControl() {
   auto popup = GetView().as<winrt::Popup>();
-  auto control = popup.Child().as<winrt::ContentControl>();
+  auto control = popup.Child().as<xaml::Controls::ContentControl>();
 
   return control;
 }
@@ -93,7 +91,7 @@ void PopupShadowNode::createView() {
       // translation based on an elevation derived from the count of open
       // popups/flyouts. We apply this translation on open of the popup.
       // (Translation is only supported on RS5+, eg. IUIElement9)
-      if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
+      if (auto uiElement9 = GetView().try_as<xaml::IUIElement9>()) {
         auto numOpenPopups = CountOpenPopups();
         if (numOpenPopups > 0) {
           winrt::Numerics::float3 translation{0, 0, (float)16 * numOpenPopups};
@@ -113,7 +111,7 @@ void PopupShadowNode::createView() {
     }
   });
 
-  m_windowSizeChangedRevoker = winrt::Window::Current().SizeChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
+  m_windowSizeChangedRevoker = xaml::Window::Current().SizeChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
     auto instance = wkinstance.lock();
     if (!m_updating && instance != nullptr) {
       UpdateLayout();
@@ -248,7 +246,7 @@ void PopupShadowNode::UpdateLayout() {
 
     if (pShadowNodeChild != nullptr) {
       auto targetView = pShadowNodeChild->GetView();
-      auto targetElement = targetView.as<winrt::FrameworkElement>();
+      auto targetElement = targetView.as<xaml::FrameworkElement>();
 
       auto popupTransform = targetElement.TransformToVisual(popup);
       winrt::Point bottomRightPoint(
@@ -259,7 +257,7 @@ void PopupShadowNode::UpdateLayout() {
     }
   } else // Center relative to app window
   {
-    auto appWindow = winrt::Window::Current().Content();
+    auto appWindow = xaml::Window::Current().Content();
     auto popupToWindow = appWindow.TransformToVisual(popup);
     auto appWindowSize = GetAppWindowSize();
     winrt::Point centerPoint;
@@ -275,18 +273,18 @@ void PopupShadowNode::UpdateTabStops() {
   auto control = GetControl();
   if (m_autoFocus) {
     control.IsTabStop(true);
-    control.TabFocusNavigation(winrt::Windows::UI::Xaml::Input::KeyboardNavigationMode::Cycle);
-    winrt::FocusManager::TryFocusAsync(control, winrt::Windows::UI::Xaml::FocusState::Programmatic);
+    control.TabFocusNavigation(xaml::Input::KeyboardNavigationMode::Cycle);
+    xaml::Input::FocusManager::TryFocusAsync(control, xaml::FocusState::Programmatic);
   } else {
     control.IsTabStop(false);
-    control.TabFocusNavigation(winrt::Windows::UI::Xaml::Input::KeyboardNavigationMode::Local);
+    control.TabFocusNavigation(xaml::Input::KeyboardNavigationMode::Local);
   }
 }
 
 winrt::Size PopupShadowNode::GetAppWindowSize() {
   winrt::Size windowSize = winrt::SizeHelper::Empty();
 
-  if (auto current = winrt::Window::Current()) {
+  if (auto current = xaml::Window::Current()) {
     if (auto coreWindow = current.CoreWindow()) {
       windowSize.Width = coreWindow.Bounds().Width;
       windowSize.Height = coreWindow.Bounds().Height;
@@ -317,7 +315,7 @@ facebook::react::ShadowNode *PopupViewManager::createShadow() const {
 
 XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/) {
   auto popup = winrt::Popup();
-  auto control = winrt::ContentControl();
+  auto control = xaml::Controls::ContentControl();
 
   popup.Child(control);
 
@@ -332,7 +330,7 @@ void PopupViewManager::SetLayoutProps(
     float width,
     float height) {
   auto popup = viewToUpdate.as<winrt::Popup>();
-  auto control = popup.Child().as<winrt::ContentControl>();
+  auto control = popup.Child().as<xaml::Controls::ContentControl>();
 
   control.Width(width);
   control.Height(height);

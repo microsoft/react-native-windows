@@ -23,7 +23,7 @@ class AnimationDriver {
   void StartAnimation();
   void StopAnimation(bool ignoreCompletedHandlers = false);
 
-  virtual std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(
+  virtual std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> MakeAnimation(
       const folly::dynamic & /*config*/) {
     return std::make_tuple(nullptr, nullptr);
   };
@@ -61,8 +61,8 @@ class AnimationDriver {
   folly::dynamic m_config{};
   std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
 
-  winrt::Windows::UI::Composition::CompositionAnimation m_animation{nullptr};
-  winrt::Windows::UI::Composition::CompositionScopedBatch m_scopedBatch{nullptr};
+  comp::CompositionAnimation m_animation{nullptr};
+  comp::CompositionScopedBatch m_scopedBatch{nullptr};
   // auto revoker for scopedBatch.Completed is broken, tracked by internal bug
   // #22399779
   winrt::event_token m_scopedBatchCompletedToken{};

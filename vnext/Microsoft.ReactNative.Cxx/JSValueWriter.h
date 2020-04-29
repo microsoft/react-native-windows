@@ -11,10 +11,9 @@
 namespace winrt::Microsoft::ReactNative {
 
 //==============================================================================
-// IJSValueWriter extensions
+// IJSValueWriter extensions forward declarations
 //==============================================================================
 
-// Forward declarations
 void WriteValue(IJSValueWriter const &writer, std::nullptr_t) noexcept;
 template <class T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, int> = 1>
 void WriteValue(IJSValueWriter const &writer, T const &value) noexcept;
@@ -60,6 +59,9 @@ void WriteProperties(IJSValueWriter const &writer, T const &value) noexcept;
 
 template <class... TArgs>
 void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexcept;
+
+template <class... TArgs>
+JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept;
 
 IJSValueWriter MakeJSValueTreeWriter() noexcept;
 
@@ -252,6 +254,13 @@ inline void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexc
   writer.WriteArrayBegin();
   (WriteValue(writer, args), ...);
   writer.WriteArrayEnd();
+}
+
+template <class... TArgs>
+inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
+  return [args...](IJSValueWriter const &writer) noexcept {
+    WriteArgs(writer, args...);
+  };
 }
 
 } // namespace winrt::Microsoft::ReactNative

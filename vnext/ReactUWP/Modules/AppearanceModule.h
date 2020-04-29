@@ -13,7 +13,7 @@ namespace react::uwp {
 
 // Listens for the current theme on the UI thread, storing the most recent. Will emit JS events on Appearance change.
 class AppearanceChangeListener final : public Mso::ActiveObject<> {
-  using ApplicationTheme = winrt::Windows::UI::Xaml::ApplicationTheme;
+  using ApplicationTheme = xaml::ApplicationTheme;
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
  public:

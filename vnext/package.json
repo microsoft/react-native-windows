@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.46",
+  "version": "0.0.0-master.52",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -52,14 +52,14 @@
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
-    "react": "16.9.0",
-    "react-native-windows-codegen": "0.0.2",
+    "react": "16.11.0",
+    "react-native-windows-codegen": "0.0.3",
     "react-native-windows-override-tools": "^0.0.1",
     "react-native": "0.62.2",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "react": "16.9.0",
+    "react": "16.11.0",
     "react-native": "0.62.2"
   },
   "beachball": {

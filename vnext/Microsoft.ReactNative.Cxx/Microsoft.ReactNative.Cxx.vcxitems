@@ -23,6 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactContext.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />

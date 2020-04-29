@@ -50,13 +50,13 @@ class ScrollViewShadowNode : public ShadowNodeBase {
 
   std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
 
-  winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
-  winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
   winrt::ScrollViewer::ViewChanged_revoker m_scrollViewerViewChangedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
   winrt::ScrollViewer::DirectManipulationCompleted_revoker m_scrollViewerDirectManipulationCompletedRevoker{};
   winrt::ScrollViewer::DirectManipulationStarted_revoker m_scrollViewerDirectManipulationStartedRevoker{};
-  winrt::Control::Loaded_revoker m_controlLoadedRevoker{};
+  xaml::Controls::Control::Loaded_revoker m_controlLoadedRevoker{};
 };
 
 ScrollViewShadowNode::ScrollViewShadowNode() {}

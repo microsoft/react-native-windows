@@ -33,7 +33,7 @@ struct SampleModuleCppImpl {
 #pragma region Initialization
 
   REACT_INIT(Initialize)
-  void Initialize(IReactContext const & /*reactContext*/) noexcept {
+  void Initialize(ReactContext const & /*reactContext*/) noexcept {
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
         [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           TimedEvent(++m_timerCount);

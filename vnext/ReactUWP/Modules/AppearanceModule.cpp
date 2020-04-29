@@ -6,8 +6,8 @@
 
 #include <winrt/Windows.UI.ViewManagement.h>
 
-using Application = winrt::Windows::UI::Xaml::Application;
-using ApplicationTheme = winrt::Windows::UI::Xaml::ApplicationTheme;
+using Application = xaml::Application;
+using ApplicationTheme = xaml::ApplicationTheme;
 using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
 using Method = facebook::xplat::module::CxxModule::Method;

@@ -16,17 +16,13 @@
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Input;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {

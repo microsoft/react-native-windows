@@ -18,7 +18,7 @@ DiffClampAnimatedNode::DiffClampAnimatedNode(
   m_max = config.find(s_maxName).dereference().second.asDouble();
 
   m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, min = m_min, max = m_max, manager]() {
-    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
     anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
     anim.SetScalarParameter(s_minParameterName, static_cast<float>(min));
     anim.SetScalarParameter(s_maxParameterName, static_cast<float>(max));

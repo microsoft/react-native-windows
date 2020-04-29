@@ -8,14 +8,12 @@
 
 #include <Utils/ValueUtils.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -28,7 +26,7 @@ void ContentControlShadowNode::DoExtraLayoutPrep(YGNodeRef yogaNode) {
 
   m_paddingDirty = false;
 
-  auto contentControl = GetView().try_as<winrt::ContentControl>();
+  auto contentControl = GetView().try_as<xaml::Controls::ContentControl>();
   auto padding = contentControl.Padding();
 
   YGNodeStyleSetPadding(yogaNode, YGEdgeLeft, static_cast<float>(padding.Left));
@@ -40,14 +38,14 @@ void ContentControlShadowNode::DoExtraLayoutPrep(YGNodeRef yogaNode) {
 void ContentControlShadowNode::createView() {
   Super::createView();
 
-  auto obj = GetView().try_as<winrt::DependencyObject>();
+  auto obj = GetView().try_as<xaml::DependencyObject>();
   if (obj != nullptr) {
     // Button styles may have padding Yoga is not aware of
     obj.RegisterPropertyChangedCallback(
-        winrt::Windows::UI::Xaml::Controls::Control::PaddingProperty(),
-        [this](
-            winrt::Windows::UI::Xaml::DependencyObject const & /*sender*/,
-            winrt::Windows::UI::Xaml::DependencyProperty const & /*dp*/) { m_paddingDirty = true; });
+        xaml::Controls::Control::PaddingProperty(),
+        [this](xaml::DependencyObject const & /*sender*/, xaml::DependencyProperty const & /*dp*/) {
+          m_paddingDirty = true;
+        });
   }
 }
 
@@ -67,13 +65,13 @@ void ContentControlViewManager::AddView(const XamlView &parent, const XamlView &
     return;
   }
 
-  auto contentControl(parent.as<winrt::ContentControl>());
+  auto contentControl(parent.as<xaml::Controls::ContentControl>());
   if (contentControl != nullptr)
     contentControl.Content(child.as<winrt::IInspectable>());
 }
 
 void ContentControlViewManager::RemoveAllChildren(const XamlView &parent) {
-  auto contentControl(parent.as<winrt::ContentControl>());
+  auto contentControl(parent.as<xaml::Controls::ContentControl>());
   if (contentControl != nullptr)
     contentControl.Content(nullptr);
 }
@@ -82,7 +80,7 @@ void ContentControlViewManager::RemoveChildAt(const XamlView &parent, int64_t in
   if (index != 0)
     return;
 
-  auto contentControl(parent.as<winrt::ContentControl>());
+  auto contentControl(parent.as<xaml::Controls::ContentControl>());
   if (contentControl != nullptr)
     contentControl.Content(nullptr);
 }

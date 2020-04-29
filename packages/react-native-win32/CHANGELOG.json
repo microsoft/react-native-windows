@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 28 Apr 2020 00:04:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update rex-win32 version to something more recent",
+            "author": "acoates@microsoft.com",
+            "commit": "fc72e04428dff1c31acdb9183f3ce95a0a5a53c1",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 Apr 2020 00:04:34 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
       "version": "0.0.0-master.6",

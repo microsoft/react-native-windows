@@ -38,7 +38,7 @@ const char *ABIViewManager::GetName() const {
   return m_name.c_str();
 }
 
-winrt::Windows::UI::Xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t) {
+xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t) {
   auto view = m_viewManager.CreateView();
   return view;
 }
@@ -102,7 +102,7 @@ folly::dynamic ABIViewManager::GetNativeProps() const {
 
 void ABIViewManager::UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   if (m_viewManagerWithNativeProperties) {
-    auto view = nodeToUpdate->GetView().as<winrt::FrameworkElement>();
+    auto view = nodeToUpdate->GetView().as<xaml::FrameworkElement>();
 
     IJSValueReader propertyMapReader = winrt::make<DynamicReader>(reactDiffMap);
 
@@ -132,11 +132,11 @@ folly::dynamic ABIViewManager::GetCommands() const {
 }
 
 void ABIViewManager::DispatchCommand(
-    const winrt::Windows::UI::Xaml::DependencyObject &viewToUpdate,
+    const xaml::DependencyObject &viewToUpdate,
     const std::string &commandId,
     const folly::dynamic &commandArgs) {
   if (m_viewManagerWithCommands) {
-    auto view = viewToUpdate.as<winrt::FrameworkElement>();
+    auto view = viewToUpdate.as<xaml::FrameworkElement>();
 
     IJSValueReader argReader = winrt::make<DynamicReader>(commandArgs);
     m_viewManagerWithCommands.DispatchCommand(view, to_hstring(commandId), argReader);
@@ -186,40 +186,37 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
   return parent;
 }
 
-void ABIViewManager::AddView(
-    const winrt::Windows::UI::Xaml::DependencyObject &parent,
-    const winrt::Windows::UI::Xaml::DependencyObject &child,
-    int64_t index) {
+void ABIViewManager::AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) {
   if (m_viewManagerWithChildren) {
-    m_viewManagerWithChildren.AddView(parent.as<winrt::FrameworkElement>(), child.as<winrt::UIElement>(), index);
+    m_viewManagerWithChildren.AddView(parent.as<xaml::FrameworkElement>(), child.as<xaml::UIElement>(), index);
   } else {
     Super::AddView(parent, child, index);
   }
 }
 
-void ABIViewManager::RemoveAllChildren(const winrt::Windows::UI::Xaml::DependencyObject &parent) {
+void ABIViewManager::RemoveAllChildren(const xaml::DependencyObject &parent) {
   if (m_viewManagerWithChildren) {
-    m_viewManagerWithChildren.RemoveAllChildren(parent.as<winrt::FrameworkElement>());
+    m_viewManagerWithChildren.RemoveAllChildren(parent.as<xaml::FrameworkElement>());
   } else {
     Super::RemoveAllChildren(parent);
   }
 }
 
-void ABIViewManager::RemoveChildAt(const winrt::Windows::UI::Xaml::DependencyObject &parent, int64_t index) {
+void ABIViewManager::RemoveChildAt(const xaml::DependencyObject &parent, int64_t index) {
   if (m_viewManagerWithChildren) {
-    m_viewManagerWithChildren.RemoveChildAt(parent.as<winrt::FrameworkElement>(), index);
+    m_viewManagerWithChildren.RemoveChildAt(parent.as<xaml::FrameworkElement>(), index);
   } else {
     Super::RemoveChildAt(parent, index);
   }
 }
 
 void ABIViewManager::ReplaceChild(
-    const winrt::Windows::UI::Xaml::DependencyObject &parent,
-    const winrt::Windows::UI::Xaml::DependencyObject &oldChild,
-    const winrt::Windows::UI::Xaml::DependencyObject &newChild) {
+    const xaml::DependencyObject &parent,
+    const xaml::DependencyObject &oldChild,
+    const xaml::DependencyObject &newChild) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.ReplaceChild(
-        parent.as<winrt::FrameworkElement>(), oldChild.as<winrt::UIElement>(), newChild.as<winrt::UIElement>());
+        parent.as<xaml::FrameworkElement>(), oldChild.as<xaml::UIElement>(), newChild.as<xaml::UIElement>());
   } else {
     Super::ReplaceChild(parent, oldChild, newChild);
   }

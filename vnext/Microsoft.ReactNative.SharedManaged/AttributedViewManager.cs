@@ -402,8 +402,9 @@ namespace Microsoft.ReactNative.Managed
       ParameterExpression eventDataParameter = Expression.Parameter(eventDataType, "eventData");
 
       MemberExpression thisReactContext = Expression.Property(Expression.Constant(this), "ReactContext");
-      MethodCallExpression dispatchCall = Expression.Call(DispatchEventOf(eventDataType),
-        thisReactContext,
+      NewExpression reactContext = Expression.New(ReactContextConstructor(), thisReactContext);
+      MethodCallExpression dispatchCall = Expression.Call(reactContext,
+        DispatchEventOf(eventDataType),
         viewParameter,
         Expression.Constant(eventName, typeof(string)),
         eventDataParameter);

@@ -10,8 +10,6 @@
 
 #include "ImageViewManagerModule.h"
 
-#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-
 #include <cxxreact/JsArgumentHelpers.h>
 
 #include <Views/Image/ReactImage.h>
@@ -26,7 +24,7 @@
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
-using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace xaml::Media::Imaging;
 } // namespace winrt
 
 namespace react {

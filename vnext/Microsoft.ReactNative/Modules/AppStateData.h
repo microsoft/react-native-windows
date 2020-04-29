@@ -6,7 +6,6 @@
 #include <Modules/AppStateModule.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include "ReactHost/React.h"
 #include "activeObject/activeObject.h"
 
@@ -30,8 +29,8 @@ struct AppStateData : Mso::ActiveObject<> {
   std::mutex m_stateMutex;
   char const *m_lastState{nullptr};
   Mso::CntPtr<Mso::React::IReactContext> m_reactContext;
-  winrt::Windows::UI::Xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
-  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
+  xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
+  xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
 };
 
 // It is a temporary class that we need to keep until we remove ReactUWP

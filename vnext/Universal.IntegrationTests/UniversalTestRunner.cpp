@@ -9,16 +9,16 @@
 #include <cxxreact/ReactMarker.h>
 #include "UniversalTestInstance.h"
 
-#include <Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Xaml.h>
+#include <Windows.UI.Xaml.h> // C++/CX
 #include <wrl.h>
 
 #include <concrt.h> // Concurrency namespace.
 
 #include "MainPage.xaml.h"
 
-namespace xaml = Windows::UI::Xaml;
-
+namespace cx {
+namespace xaml = ::Windows::UI::Xaml;
+}
 using namespace facebook::react;
 using namespace facebook::xplat::module;
 

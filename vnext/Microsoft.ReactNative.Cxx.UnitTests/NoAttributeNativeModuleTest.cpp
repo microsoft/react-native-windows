@@ -8,21 +8,21 @@
 #include "NativeModules.h"
 #include "future/futureWait.h"
 
-namespace winrt::Microsoft::ReactNative {
+namespace ReactNativeTests {
 
 struct Point2 {
   int X;
   int Y;
 };
 
-FieldMap GetStructInfo(Point2 *) noexcept {
+React::FieldMap GetStructInfo(Point2 *) noexcept {
   return {{L"X", &Point2::X}, {L"Y", &Point2::Y}};
 }
 
 struct SimpleNativeModule2 {
-  void Initialize(IReactContext const &context) noexcept {
+  void Initialize(React::ReactContext const &context) noexcept {
     IsInitialized = true;
-    TestCheck(context != nullptr);
+    TestCheck(context);
 
     // Event and Function fields are initialized before REACT_INIT method call.
     TestCheck(this->OnIntEvent != nullptr);
@@ -281,62 +281,62 @@ struct SimpleNativeModule2 {
     reject("Goodbye");
   }
 
-  void DividePromise(int x, int y, ReactPromise<int> const &result) noexcept {
+  void DividePromise(int x, int y, React::ReactPromise<int> const &result) noexcept {
     if (y != 0) {
       result.Resolve(x / y);
     } else {
-      ReactError error{};
+      React::ReactError error{};
       error.Message = "Division by 0";
       result.Reject(std::move(error));
     }
   }
 
-  void NegatePromise(int x, ReactPromise<int> const &result) noexcept {
+  void NegatePromise(int x, React::ReactPromise<int> const &result) noexcept {
     if (x >= 0) {
       result.Resolve(-x);
     } else {
-      ReactError error{};
+      React::ReactError error{};
       error.Message = "Already negative";
       result.Reject(std::move(error));
     }
   }
 
-  fire_and_forget NegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
+  fire_and_forget NegateAsyncPromise(int x, React::ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
       result.Resolve(-x);
     } else {
-      ReactError error{};
+      React::ReactError error{};
       error.Message = "Already negative";
       result.Reject(std::move(error));
     }
   }
 
-  void NegateDispatchQueuePromise(int x, ReactPromise<int> const &result) noexcept {
+  void NegateDispatchQueuePromise(int x, React::ReactPromise<int> const &result) noexcept {
     Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
-        ReactError error{};
+        React::ReactError error{};
         error.Message = "Already negative";
         result.Reject(std::move(error));
       }
     });
   }
 
-  void NegateFuturePromise(int x, ReactPromise<int> const &result) noexcept {
+  void NegateFuturePromise(int x, React::ReactPromise<int> const &result) noexcept {
     Mso::PostFuture([ x, result ]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
-        ReactError error{};
+        React::ReactError error{};
         error.Message = "Already negative";
         result.Reject(std::move(error));
       }
     });
   }
 
-  void VoidPromise(int x, ReactPromise<void> const &result) noexcept {
+  void VoidPromise(int x, React::ReactPromise<void> const &result) noexcept {
     if (x % 2 == 0) {
       result.Resolve();
     } else {
@@ -344,72 +344,72 @@ struct SimpleNativeModule2 {
     }
   }
 
-  void ResolveSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
+  void ResolveSayHelloPromise(React::ReactPromise<std::string> const &result) noexcept {
     result.Resolve("Hello_4");
   }
 
-  void RejectSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
-    ReactError error{};
+  void RejectSayHelloPromise(React::ReactPromise<std::string> const &result) noexcept {
+    React::ReactError error{};
     error.Message = "Promise rejected";
     result.Reject(std::move(error));
   }
 
-  static void StaticDividePromise(int x, int y, ReactPromise<int> const &result) noexcept {
+  static void StaticDividePromise(int x, int y, React::ReactPromise<int> const &result) noexcept {
     if (y != 0) {
       result.Resolve(x / y);
     } else {
-      ReactError error{};
+      React::ReactError error{};
       error.Message = "Division by 0";
       result.Reject(std::move(error));
     }
   }
 
-  static void StaticNegatePromise(int x, ReactPromise<int> const &result) noexcept {
+  static void StaticNegatePromise(int x, React::ReactPromise<int> const &result) noexcept {
     if (x >= 0) {
       result.Resolve(-x);
     } else {
-      ReactError error{};
+      React::ReactError error{};
       error.Message = "Already negative";
       result.Reject(std::move(error));
     }
   }
 
-  static fire_and_forget StaticNegateAsyncPromise(int x, ReactPromise<int> result) noexcept {
+  static fire_and_forget StaticNegateAsyncPromise(int x, React::ReactPromise<int> result) noexcept {
     co_await winrt::resume_background();
     if (x >= 0) {
       result.Resolve(-x);
     } else {
-      ReactError error{};
+      React::ReactError error{};
       error.Message = "Already negative";
       result.Reject(std::move(error));
     }
   }
 
-  static void StaticNegateDispatchQueuePromise(int x, ReactPromise<int> const &result) noexcept {
+  static void StaticNegateDispatchQueuePromise(int x, React::ReactPromise<int> const &result) noexcept {
     Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
-        ReactError error{};
+        React::ReactError error{};
         error.Message = "Already negative";
         result.Reject(std::move(error));
       }
     });
   }
 
-  static void StaticNegateFuturePromise(int x, ReactPromise<int> const &result) noexcept {
+  static void StaticNegateFuturePromise(int x, React::ReactPromise<int> const &result) noexcept {
     Mso::PostFuture([ x, result ]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
-        ReactError error{};
+        React::ReactError error{};
         error.Message = "Already negative";
         result.Reject(std::move(error));
       }
     });
   }
 
-  void StaticVoidPromise(int x, ReactPromise<void> const &result) noexcept {
+  void StaticVoidPromise(int x, React::ReactPromise<void> const &result) noexcept {
     if (x % 2 == 0) {
       result.Resolve();
     } else {
@@ -417,12 +417,12 @@ struct SimpleNativeModule2 {
     }
   }
 
-  static void StaticResolveSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
+  static void StaticResolveSayHelloPromise(React::ReactPromise<std::string> const &result) noexcept {
     result.Resolve("Hello_4");
   }
 
-  static void StaticRejectSayHelloPromise(ReactPromise<std::string> const &result) noexcept {
-    ReactError error{};
+  static void StaticRejectSayHelloPromise(React::ReactPromise<std::string> const &result) noexcept {
+    React::ReactError error{};
     error.Message = "Promise rejected";
     result.Reject(std::move(error));
   }
@@ -459,12 +459,12 @@ struct SimpleNativeModule2 {
 
   static constexpr Point2 Constant4{/*X =*/3, /*Y =*/4};
 
-  void Constant5(ReactConstantProvider &provider) noexcept {
+  void Constant5(React::ReactConstantProvider &provider) noexcept {
     provider.Add(L"const51", Point2{/*X =*/12, /*Y =*/14});
     provider.Add(L"const52", "MyConstant52");
   }
 
-  static void Constant6(ReactConstantProvider &provider) noexcept {
+  static void Constant6(React::ReactConstantProvider &provider) noexcept {
     provider.Add(L"const61", Point2{/*X =*/15, /*Y =*/17});
     provider.Add(L"const62", "MyConstant62");
   }
@@ -482,7 +482,7 @@ struct SimpleNativeModule2 {
 
   std::function<void(char const *)> OnStringEvent;
 
-  std::function<void(const JSValue &)> OnJSValueEvent;
+  std::function<void(const React::JSValue &)> OnJSValueEvent;
 
   // Allows to call JS functions.
   std::function<void(int)> JSIntFunction;
@@ -496,8 +496,8 @@ struct SimpleNativeModule2 {
 
   std::function<void(char const *)> JSStringFunction;
 
-  // Use JSValue which is an immutable JSON-like data representation.
-  std::function<void(const JSValue &)> JSValueFunction;
+  // Use React::JSValue which is an immutable JSON-like data representation.
+  std::function<void(const React::JSValue &)> JSValueFunction;
 
  public: // Used to report some test messages
   bool IsInitialized{false};
@@ -507,7 +507,7 @@ struct SimpleNativeModule2 {
 
 /*static*/ std::string SimpleNativeModule2::StaticMessage;
 
-void GetReactModuleInfo(SimpleNativeModule2 *, ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noexcept {
+void GetReactModuleInfo(SimpleNativeModule2 *, React::ReactModuleBuilder<SimpleNativeModule2> &moduleBuilder) noexcept {
   moduleBuilder.RegisterModuleName(L"SimpleNativeModule2");
   moduleBuilder.RegisterInitMethod(&SimpleNativeModule2::Initialize);
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::Add, L"Add");
@@ -594,17 +594,17 @@ void GetReactModuleInfo(SimpleNativeModule2 *, ReactModuleBuilder<SimpleNativeMo
 }
 
 TEST_CLASS (NoAttributeNativeModuleTest) {
-  ReactModuleBuilderMock m_builderMock{};
-  IReactModuleBuilder m_moduleBuilder;
+  React::ReactModuleBuilderMock m_builderMock{};
+  React::IReactModuleBuilder m_moduleBuilder;
   Windows::Foundation::IInspectable m_moduleObject{nullptr};
   SimpleNativeModule2 *m_module;
 
   NoAttributeNativeModuleTest() {
-    m_moduleBuilder = make<ReactModuleBuilderImpl>(m_builderMock);
-    auto provider = MakeModuleProvider<SimpleNativeModule2>();
+    m_moduleBuilder = winrt::make<React::ReactModuleBuilderImpl>(m_builderMock);
+    auto provider = React::MakeModuleProvider<SimpleNativeModule2>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
-    auto reactModule = m_moduleObject.as<IBoxedValue>();
-    m_module = &BoxedValue<SimpleNativeModule2>::GetImpl(reactModule);
+    auto reactModule = m_moduleObject.as<React::IBoxedValue>();
+    m_module = &React::BoxedValue<SimpleNativeModule2>::GetImpl(reactModule);
   }
 
   TEST_METHOD(TestMethodCall_Add) {
@@ -1001,8 +1001,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"DividePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
         6,
         2);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
@@ -1012,8 +1012,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"DividePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
         6,
         0);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
@@ -1023,8 +1023,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"NegatePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1033,8 +1033,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"NegatePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1043,8 +1043,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"NegateAsyncPromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1053,8 +1053,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"NegateAsyncPromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1063,8 +1063,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"NegateDispatchQueuePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1073,8 +1073,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"NegateDispatchQueuePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1083,8 +1083,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"NegateFuturePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1093,8 +1093,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"NegateFuturePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1103,8 +1103,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"voidPromise",
         std::function<void()>([]() noexcept {}),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
         2);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1113,8 +1113,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"voidPromise",
         std::function<void()>([]() noexcept {}),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
         3);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1124,8 +1124,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
         L"ResolveSayHelloPromise",
         std::function<void(const std::string &)>(
             [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1134,8 +1134,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
         L"RejectSayHelloPromise",
         std::function<void(const std::string &)>(
             [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
 
@@ -1143,8 +1143,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"StaticDividePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
         6,
         2);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
@@ -1154,8 +1154,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"StaticDividePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == 3); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Division by 0"); }),
         6,
         0);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
@@ -1165,8 +1165,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"StaticNegatePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1175,8 +1175,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"StaticNegateAsyncPromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1185,8 +1185,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"StaticNegateAsyncPromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1195,8 +1195,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"StaticNegatePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1205,8 +1205,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"StaticNegateDispatchQueuePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1215,8 +1215,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"StaticNegateDispatchQueuePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1225,8 +1225,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"StaticNegateFuturePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         5));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1235,8 +1235,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     Mso::FutureWait(m_builderMock.Call2(
         L"StaticNegateFuturePromise",
         std::function<void(int)>([](int result) noexcept { TestCheck(result == -5); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1245,8 +1245,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"staticVoidPromise",
         std::function<void()>([]() noexcept {}),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
         2);
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -1255,8 +1255,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_builderMock.Call2(
         L"staticVoidPromise",
         std::function<void()>([]() noexcept {}),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
         3);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
@@ -1266,8 +1266,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
         L"StaticResolveSayHelloPromise",
         std::function<void(const std::string &)>(
             [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1276,8 +1276,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
         L"StaticRejectSayHelloPromise",
         std::function<void(const std::string &)>(
             [](const std::string &result) noexcept { TestCheck(result == "Hello_4"); }),
-        std::function<void(JSValue const &)>(
-            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
+        std::function<void(React::JSValue const &)>(
+            [](React::JSValue const &error) noexcept { TestCheck(error["message"] == "Promise rejected"); }));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
 
@@ -1336,7 +1336,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestEvent_IntEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnIntEvent", [&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"OnIntEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheck(args[0] == 42);
           eventRaised = true;
         });
@@ -1348,7 +1348,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestEvent_OnNoArgEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnNoArgEvent", [&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"OnNoArgEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheckEqual(0, args.size());
           eventRaised = true;
         });
@@ -1360,7 +1360,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestEvent_TwoArgsEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnTwoArgsEvent", [&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"OnTwoArgsEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheckEqual(4, args[0]["X"]);
           TestCheckEqual(2, args[0]["Y"]);
           TestCheckEqual(12, args[1]["X"]);
@@ -1375,7 +1375,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestEvent_JSNameEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"onPointEvent", [&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"onPointEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           eventRaised = true;
@@ -1387,10 +1387,11 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
 
   TEST_METHOD(TestEvent_JSEventEmitterEventField) {
     bool eventRaised = false;
-    m_builderMock.ExpectEvent(L"MyEventEmitter", L"onStringEvent", [&eventRaised](JSValueArray const &args) noexcept {
-      TestCheckEqual("Hello World!", args[0]);
-      eventRaised = true;
-    });
+    m_builderMock.ExpectEvent(
+        L"MyEventEmitter", L"onStringEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
+          TestCheckEqual("Hello World!", args[0]);
+          eventRaised = true;
+        });
 
     m_module->OnStringEvent("Hello World!");
     TestCheck(eventRaised == true);
@@ -1399,20 +1400,20 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestEvent_JSValueObjectEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           eventRaised = true;
         }));
 
-    m_module->OnJSValueEvent(JSValueObject{{"X", 4}, {"Y", 2}});
+    m_module->OnJSValueEvent(React::JSValueObject{{"X", 4}, {"Y", 2}});
     TestCheck(eventRaised == true);
   }
 
   TEST_METHOD(TestEvent_JSValueArrayEventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheck(args[0][0] == "X");
           TestCheck(args[0][1] == 4);
           TestCheck(args[0][2] == true);
@@ -1420,26 +1421,26 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
           eventRaised = true;
         }));
 
-    m_module->OnJSValueEvent(JSValueArray{"X", 4, true, JSValueObject{{"Id", 42}}});
+    m_module->OnJSValueEvent(React::JSValueArray{"X", 4, true, React::JSValueObject{{"Id", 42}}});
     TestCheck(eventRaised == true);
   }
 
   TEST_METHOD(TestEvent_JSValueArray1EventField) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
-        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](JSValueArray const &args) noexcept {
+        L"RCTDeviceEventEmitter", L"OnJSValueEvent", ([&eventRaised](React::JSValueArray const &args) noexcept {
           TestCheck(args[0][0] == 4);
           eventRaised = true;
         }));
 
-    m_module->OnJSValueEvent(JSValueArray{4});
+    m_module->OnJSValueEvent(React::JSValueArray{4});
     TestCheck(eventRaised == true);
   }
 
   TEST_METHOD(TestFunction_JSIntFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule2", L"JSIntFunction", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSIntFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0] == 42);
           functionCalled = true;
         });
@@ -1451,7 +1452,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestFunction_JSNameFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule2", L"pointFunc", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"pointFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           functionCalled = true;
@@ -1464,7 +1465,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestFunction_JSTwoArgFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule2", L"lineFunc", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"lineFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           TestCheck(args[1]["X"] == 12);
@@ -1479,7 +1480,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestFunction_JSNoArgFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule2", L"JSNoArgFunction", [&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSNoArgFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheckEqual(0, args.size());
           functionCalled = true;
         });
@@ -1490,10 +1491,11 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
 
   TEST_METHOD(TestFunction_JSModuleNameFunctionField) {
     bool functionCalled = false;
-    m_builderMock.ExpectFunction(L"MyModule", L"stringFunc", [&functionCalled](JSValueArray const &args) noexcept {
-      TestCheck(args[0] == "Hello World!");
-      functionCalled = true;
-    });
+    m_builderMock.ExpectFunction(
+        L"MyModule", L"stringFunc", [&functionCalled](React::JSValueArray const &args) noexcept {
+          TestCheck(args[0] == "Hello World!");
+          functionCalled = true;
+        });
 
     m_module->JSStringFunction("Hello World!");
     TestCheck(functionCalled == true);
@@ -1502,20 +1504,20 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestFunction_JSValueObjectFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule2", L"JSValueFunction", ([&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSValueFunction", ([&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0]["X"] == 4);
           TestCheck(args[0]["Y"] == 2);
           functionCalled = true;
         }));
 
-    m_module->JSValueFunction(JSValueObject{{"X", 4}, {"Y", 2}});
+    m_module->JSValueFunction(React::JSValueObject{{"X", 4}, {"Y", 2}});
     TestCheck(functionCalled == true);
   }
 
   TEST_METHOD(TestFunction_JSValueArrayFunctionField) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
-        L"SimpleNativeModule2", L"JSValueFunction", ([&functionCalled](JSValueArray const &args) noexcept {
+        L"SimpleNativeModule2", L"JSValueFunction", ([&functionCalled](React::JSValueArray const &args) noexcept {
           TestCheck(args[0][0] == "X");
           TestCheck(args[0][1] == 4);
           TestCheck(args[0][2] == true);
@@ -1523,7 +1525,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
           functionCalled = true;
         }));
 
-    m_module->JSValueFunction(JSValueArray{"X", 4, true, JSValueObject{{"Id", 42}}});
+    m_module->JSValueFunction(React::JSValueArray{"X", 4, true, React::JSValueObject{{"Id", 42}}});
     TestCheck(functionCalled == true);
   }
 
@@ -1532,4 +1534,4 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   }
 };
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace ReactNativeTests

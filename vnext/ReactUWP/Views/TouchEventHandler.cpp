@@ -14,10 +14,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 namespace react {
 namespace uwp {
@@ -30,7 +26,7 @@ TouchEventHandler::~TouchEventHandler() {
 }
 
 void TouchEventHandler::AddTouchHandlers(XamlView xamlView) {
-  auto uiElement(xamlView.as<winrt::UIElement>());
+  auto uiElement(xamlView.as<xaml::UIElement>());
   if (uiElement == nullptr) {
     assert(false);
     return;
@@ -74,7 +70,7 @@ void TouchEventHandler::OnPointerPressed(
 
   // Only if the view has a Tag can we process this
   int64_t tag;
-  winrt::FrameworkElement sourceElement(nullptr);
+  xaml::FrameworkElement sourceElement(nullptr);
   if (!TagFromOriginalSource(args, &tag, &sourceElement))
     return;
 
@@ -85,7 +81,7 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (m_xamlView.as<winrt::FrameworkElement>().CapturePointer(args.Pointer())) {
+  if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, tag, sourceElement);
 
@@ -128,7 +124,7 @@ void TouchEventHandler::OnPointerMoved(
 
   // Only if the view has a Tag can we process this
   int64_t tag;
-  winrt::FrameworkElement sourceElement(nullptr);
+  xaml::FrameworkElement sourceElement(nullptr);
   if (!TagFromOriginalSource(args, &tag, &sourceElement))
     return;
 
@@ -158,7 +154,7 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   // if the view has a Tag, update the pointer info.
   // Regardless of that, ensure we Dispatch & cleanup the pointer
   int64_t tag;
-  winrt::FrameworkElement sourceElement(nullptr);
+  xaml::FrameworkElement sourceElement(nullptr);
   if (TagFromOriginalSource(args, &tag, &sourceElement))
     UpdateReactPointer(m_pointers[pointerIndex], args, sourceElement);
 
@@ -168,13 +164,13 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (m_pointers.size() == 0)
     m_touchId = 0;
 
-  m_xamlView.as<winrt::FrameworkElement>().ReleasePointerCapture(args.Pointer());
+  m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
 }
 
 size_t TouchEventHandler::AddReactPointer(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::FrameworkElement sourceElement) {
+    xaml::FrameworkElement sourceElement) {
   ReactPointer pointer = CreateReactPointer(args, tag, sourceElement);
   m_pointers.emplace_back(std::move(pointer));
   return m_pointers.size() - 1;
@@ -183,7 +179,7 @@ size_t TouchEventHandler::AddReactPointer(
 TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::FrameworkElement sourceElement) {
+    xaml::FrameworkElement sourceElement) {
   auto point = args.GetCurrentPoint(sourceElement);
 
   ReactPointer pointer;
@@ -204,8 +200,8 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
 void TouchEventHandler::UpdateReactPointer(
     ReactPointer &pointer,
     const winrt::PointerRoutedEventArgs &args,
-    winrt::FrameworkElement sourceElement) {
-  auto rootPoint = args.GetCurrentPoint(m_xamlView.as<winrt::FrameworkElement>());
+    xaml::FrameworkElement sourceElement) {
+  auto rootPoint = args.GetCurrentPoint(m_xamlView.as<xaml::FrameworkElement>());
   auto point = args.GetCurrentPoint(sourceElement);
 
   pointer.positionRoot = rootPoint.Position();
@@ -236,7 +232,7 @@ std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId
 void TouchEventHandler::UpdatePointersInViews(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::FrameworkElement sourceElement) {
+    xaml::FrameworkElement sourceElement) {
   auto instance = m_wkReactInstance.lock();
   if (!instance || instance->IsInError())
     return;
@@ -289,7 +285,7 @@ void TouchEventHandler::UpdatePointersInViews(
 void TouchEventHandler::SendPointerMove(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::FrameworkElement sourceElement) {
+    xaml::FrameworkElement sourceElement) {
   auto instance = m_wkReactInstance.lock();
   auto nativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
   facebook::react::INativeUIManagerHost *puiManagerHost = nativeUiManager->getHost();
@@ -302,7 +298,7 @@ void TouchEventHandler::SendPointerMove(
   }
   if (node == nullptr || !node->m_onMouseMove)
     return;
-  sourceElement = node->GetView().try_as<winrt::FrameworkElement>();
+  sourceElement = node->GetView().try_as<xaml::FrameworkElement>();
   if (sourceElement == nullptr)
     return;
 
@@ -402,20 +398,20 @@ const char *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) n
 bool TouchEventHandler::TagFromOriginalSource(
     const winrt::PointerRoutedEventArgs &args,
     int64_t *pTag,
-    winrt::FrameworkElement *pSourceElement) {
+    xaml::FrameworkElement *pSourceElement) {
   assert(pTag != nullptr);
 
   if (args.OriginalSource() == nullptr)
     return false;
 
-  auto sourceElement = args.OriginalSource().try_as<winrt::FrameworkElement>();
+  auto sourceElement = args.OriginalSource().try_as<xaml::FrameworkElement>();
   if (sourceElement == nullptr) {
     // TODO: Do we need to handle this for non FrameworkElement views?
     return false;
   } else {
     auto tag = sourceElement.Tag();
     while (tag == nullptr && sourceElement && winrt::VisualTreeHelper::GetParent(sourceElement)) {
-      sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<winrt::FrameworkElement>();
+      sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::FrameworkElement>();
       tag = sourceElement.Tag();
     }
 
@@ -436,7 +432,7 @@ bool TouchEventHandler::TagFromOriginalSource(
 
 std::set<int64_t> TouchEventHandler::GetTagsAtPoint(const winrt::PointerRoutedEventArgs &e) {
   std::set<int64_t> tags;
-  winrt::UIElement root(m_xamlView.as<winrt::UIElement>());
+  xaml::UIElement root(m_xamlView.as<xaml::UIElement>());
 
   winrt::Point point = e.GetCurrentPoint(root).Position();
   auto transform = root.TransformToVisual(nullptr);
@@ -444,7 +440,7 @@ std::set<int64_t> TouchEventHandler::GetTagsAtPoint(const winrt::PointerRoutedEv
 
   auto elements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(point, root);
   for (const auto &elem : elements) {
-    auto element = elem.try_as<winrt::FrameworkElement>();
+    auto element = elem.try_as<xaml::FrameworkElement>();
     if (element != nullptr) {
       auto tag = element.Tag();
       if (tag != nullptr)
