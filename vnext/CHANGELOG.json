@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2020 00:04:54 GMT",
+      "tag": "react-native-windows_v0.0.0-master.52",
+      "version": "0.0.0-master.52",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Start forking namespace and includes for WUX->MUX move",
+            "author": "asklar@microsoft.com",
+            "commit": "567fc48cf6858ece96ff60fcd52e20cded72cbfc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update react version",
+            "author": "kaigu@microsoft.com",
+            "commit": "ccbd12b30c0f0fba11329753b6a54d7a3ae14613",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Exclude unittests and proposals from being published in the npm package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "64144a989231a5573b665ac189ac015c6f007dfc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Apr 2020 00:04:13 GMT",
       "tag": "react-native-windows_v0.0.0-master.51",
       "version": "0.0.0-master.51",

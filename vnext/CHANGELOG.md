@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Apr 2020 00:04:13 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2020 00:04:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.52
+
+Wed, 29 Apr 2020 00:04:54 GMT
+
+### Changes
+
+- Start forking namespace and includes for WUX->MUX move (asklar@microsoft.com)
+- Update react version (kaigu@microsoft.com)
+- Exclude unittests and proposals from being published in the npm package (dannyvv@microsoft.com)
 
 ## 0.0.0-master.51
 
