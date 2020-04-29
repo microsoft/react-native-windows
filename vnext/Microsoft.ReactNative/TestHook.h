@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #pragma once
-#ifdef DEBUG
 #include <folly/dynamic.h>
 #include <string>
 #include <vector>
@@ -14,5 +13,3 @@ struct TestHook {
       const folly::dynamic &propertyValue);
   static std::vector<std::string> layoutProperties;
 };
-
-#endif // DEBUG
