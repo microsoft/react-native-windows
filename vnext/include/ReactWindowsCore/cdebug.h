@@ -35,3 +35,8 @@ class basic_dostream : public std::basic_ostream<CharT> {
 
 extern basic_dostream<char> cdebug;
 extern basic_dostream<wchar_t> cwdebug;
+
+#define DEBUG_HRESULT_ERROR(e)                    \
+  cdebug << __FILE__ << " (" << __LINE__ << ") "; \
+  cdebug.flush();                                 \
+  cwdebug << e.message().c_str() << std::endl;
