@@ -162,9 +162,7 @@ jobs:
         parameters:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
-          contents: |
-            ReactUWP\**
-            Microsoft.ReactNative\**
+          contents: Microsoft.ReactNative\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
