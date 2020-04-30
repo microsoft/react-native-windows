@@ -192,8 +192,6 @@ async function deployToDesktop(options, verbose, slnFile) {
     }
   }
 
-  const popd = pushd(options.root);
-
   await runPowerShellScriptFunction(
     'Removing old version of the app',
     windowsStoreAppUtils,
@@ -260,7 +258,6 @@ async function deployToDesktop(options, verbose, slnFile) {
     newInfo('Skip the step to start the app');
   }
 
-  popd();
 }
 
 function startServerInNewWindow(options, verbose) {
