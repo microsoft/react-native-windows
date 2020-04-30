@@ -4,15 +4,55 @@
 #pragma once
 
 #include "ReactApplication.g.h"
+#include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct ReactApplication : ReactApplicationT<ReactApplication> {
-  using Super = ReactApplicationT<ReactApplication>;
+// NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
+// without the default constructor where it calls a factory for the base type.
+// This is done to fix the aggregation issue in types inheriting from the ReactApplication.
+// We call the factory in the ReactApplication constructor where we can pass correct
+// 'outer' interface.
+//
+// This class must match the generated ReactApplication_base.
+// It must be updated if the shape of generated ReactApplication_base is changed in future.
+// The only difference is that this class has no default constructor.
+template <typename D, typename... I>
+struct __declspec(empty_bases) NoDefaultCtorReactApplication_base
+    : implements<
+          D,
+          Microsoft::ReactNative::ReactApplication,
+          composable,
+          composing,
+          xaml::IApplicationOverrides,
+          xaml::IApplicationOverrides2,
+          I...>,
+      impl::require<D, xaml::IApplication, xaml::IApplication2, xaml::IApplication3>,
+      impl::base<D, xaml::Application>,
+      xaml::IApplicationOverridesT<D>,
+      xaml::IApplicationOverrides2T<D> {
+  using base_type = NoDefaultCtorReactApplication_base;
+  using class_type = Microsoft::ReactNative::ReactApplication;
+  using implements_type = typename NoDefaultCtorReactApplication_base::implements_type;
+  using implements_type::implements_type;
+  using composable_base = xaml::Application;
 
+  hstring GetRuntimeClassName() const {
+    return L"Microsoft.ReactNative.ReactApplication";
+  }
+
+ protected:
+  using dispatch = impl::dispatch_to_overridable<D, xaml::IApplicationOverrides, xaml::IApplicationOverrides2>;
+  auto overridable() noexcept {
+    return dispatch::overridable(static_cast<D &>(*this));
+  }
+};
+
+struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
  public: // ReactApplication ABI API
-  ReactApplication() noexcept;
+  ReactApplication();
+  ReactApplication(IInspectable const &outer) noexcept;
 
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
@@ -57,6 +97,13 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
 
-struct ReactApplication : ReactApplicationT<ReactApplication, implementation::ReactApplication> {};
+// Override the CreateInstance method to pass baseInterface to the ReactApplication constructor
+// to support correct COM aggregation that is need to inherit from the ReactApplication.
+struct ReactApplication : ReactApplicationT<ReactApplication, implementation::ReactApplication> {
+  auto CreateInstance(IInspectable const &baseInterface, IInspectable &innerInterface) {
+    return impl::composable_factory<implementation::ReactApplication>::template CreateInstance<
+        Microsoft::ReactNative::ReactApplication>(baseInterface, innerInterface, baseInterface);
+  }
+};
 
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
