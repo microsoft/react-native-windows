@@ -159,7 +159,13 @@ async function deployToDevice(options, verbose) {
   }
 }
 
-async function deployToDesktop(options, verbose) {
+function hasDotNetProjects(slnFile) {
+  const contents = fs.readFileSync(slnFile).toString();
+  let r = /\"([^"]+\.(csproj|vbproj))\"/;
+  return r.test(contents);
+}
+
+async function deployToDesktop(options, verbose, slnFile) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options);
@@ -202,7 +208,8 @@ async function deployToDesktop(options, verbose) {
     verbose,
   );
 
-  if (options.release) {
+  // #4749 - need to deploy from appx for .net projects.
+  if (options.release || hasDotNetProjects(slnFile)) {
     await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
