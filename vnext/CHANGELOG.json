@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Apr 2020 00:04:27 GMT",
+      "tag": "react-native-windows_v0.0.0-master.53",
+      "version": "0.0.0-master.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "auto-detect RTL and push into root view",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ee00cce8da0f3fdc5a3ddb7ac7ced3e2dc01c2d5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Refactor TestHook out of ViewManagerBase and special case layout properties",
+            "author": "asklar@microsoft.com",
+            "commit": "f923f9890441ad5aa6340c95bf412441165c3fcc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Expose Debug macro for hresult_error. Start catching these...",
+            "author": "asklar@microsoft.com",
+            "commit": "5edb66b341b6c36e85702eb2a7ea8953495affc9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Try uninstalling without elevation in case since it is not needed for layout installs (debug)",
+            "author": "asklar@microsoft.com",
+            "commit": "297e217a48d2795b75f88a986ab5d344a384aa42",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2020 00:04:54 GMT",
       "tag": "react-native-windows_v0.0.0-master.52",
       "version": "0.0.0-master.52",

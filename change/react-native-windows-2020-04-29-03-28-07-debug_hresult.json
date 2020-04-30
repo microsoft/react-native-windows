@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Expose Debug macro for hresult_error. Start catching these...",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-29T10:28:07.247Z"
-}

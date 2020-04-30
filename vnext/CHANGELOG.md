@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Apr 2020 00:04:54 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2020 00:04:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.53
+
+Thu, 30 Apr 2020 00:04:27 GMT
+
+### Changes
+
+- auto-detect RTL and push into root view (kmelmon@microsoft.com)
+- Refactor TestHook out of ViewManagerBase and special case layout properties (asklar@microsoft.com)
+- Expose Debug macro for hresult_error. Start catching these... (asklar@microsoft.com)
+- Try uninstalling without elevation in case since it is not needed for layout installs (debug) (asklar@microsoft.com)
 
 ## 0.0.0-master.52
 
