@@ -3,8 +3,6 @@
 
 #pragma once
 #include <folly/dynamic.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
 #include <optional>
 #include <set>
 
@@ -13,11 +11,11 @@
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Input;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -64,20 +62,21 @@ class TouchEventHandler {
     bool ctrlKey = false;
     bool altKey = false;
   };
-  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::UIElement sourceElement);
+  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
   ReactPointer
-  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::UIElement sourceElement);
+  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
   void
-  UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, winrt::UIElement sourceElement);
+  UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
   void UpdatePointersInViews(
       std::shared_ptr<IReactInstance> instance,
       const winrt::PointerRoutedEventArgs &args,
       int64_t tag,
-      winrt::UIElement sourceElement);
+      xaml::UIElement sourceElement);
 
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
+  bool DispatchBackEvent();
   const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
   const char *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
@@ -94,7 +93,7 @@ class TouchEventHandler {
   int64_t m_touchId = 0;
 
   bool
-  TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, winrt::UIElement *pSourceElement);
+  TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement);
 
   XamlView m_xamlView;
   std::weak_ptr<IReactInstance> m_wkReactInstance;

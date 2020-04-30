@@ -90,7 +90,7 @@ class ViewShadowNode : public ShadowNodeBase {
     if (IsControl()) {
       if (tabIndex < 0) {
         GetControl().IsTabStop(false);
-        GetControl().ClearValue(winrt::Control::TabIndexProperty());
+        GetControl().ClearValue(xaml::Controls::Control::TabIndexProperty());
       } else {
         GetControl().IsTabStop(true);
         GetControl().TabIndex(tabIndex);
@@ -107,7 +107,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     GetViewPanel().InsertAt(
-        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<winrt::UIElement>());
+        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>());
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
@@ -123,25 +123,25 @@ class ViewShadowNode : public ShadowNodeBase {
     // TODO NOW: Why do we do this? Removal of children doesn't seem to imply we
     // tear down the infrastr
     if (IsControl()) {
-      auto control = m_view.as<winrt::ContentControl>();
+      auto control = m_view.as<xaml::Controls::ContentControl>();
       current = control.Content().as<XamlView>();
       control.Content(nullptr);
     }
 
     if (HasOuterBorder()) {
-      if (auto border = current.try_as<winrt::Border>()) {
+      if (auto border = current.try_as<xaml::Controls::Border>()) {
         border.Child(nullptr);
       }
     }
   }
 
-  void ReplaceChild(XamlView oldChildView, XamlView newChildView) override {
+  void ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) override {
     auto pPanel = GetViewPanel();
     if (pPanel != nullptr) {
       uint32_t index;
-      if (pPanel.Children().IndexOf(oldChildView.as<winrt::UIElement>(), index)) {
+      if (pPanel.Children().IndexOf(oldChildView.as<xaml::UIElement>(), index)) {
         pPanel.RemoveAt(index);
-        pPanel.InsertAt(index, newChildView.as<winrt::UIElement>());
+        pPanel.InsertAt(index, newChildView.as<xaml::UIElement>());
       } else {
         assert(false);
       }
@@ -160,13 +160,13 @@ class ViewShadowNode : public ShadowNodeBase {
     XamlView current = m_view;
 
     if (IsControl()) {
-      if (auto control = m_view.try_as<winrt::ContentControl>()) {
+      if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
         current = control.Content().as<XamlView>();
       }
     }
 
     if (HasOuterBorder()) {
-      if (auto border = current.try_as<winrt::Border>()) {
+      if (auto border = current.try_as<xaml::Controls::Border>()) {
         current = border.Child().try_as<XamlView>();
       }
     }
@@ -185,14 +185,14 @@ class ViewShadowNode : public ShadowNodeBase {
     auto contentControl = winrt::make<winrt::react::uwp::implementation::ViewControl>();
 
     m_contentControlGotFocusRevoker = contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-      if (args.OriginalSource().try_as<winrt::UIElement>() == contentControl.as<winrt::UIElement>()) {
+      if (args.OriginalSource().try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
         auto tag = m_tag;
         DispatchEvent("topFocus", std::move(folly::dynamic::object("target", tag)));
       }
     });
 
     m_contentControlLostFocusRevoker = contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-      if (args.OriginalSource().try_as<winrt::UIElement>() == contentControl.as<winrt::UIElement>()) {
+      if (args.OriginalSource().try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
         auto tag = m_tag;
         DispatchEvent("topBlur", std::move(folly::dynamic::object("target", tag)));
       }
@@ -215,8 +215,8 @@ class ViewShadowNode : public ShadowNodeBase {
   bool m_onClick = false;
   int32_t m_tabIndex = -1;
 
-  winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
-  winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
+  xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
+  xaml::Controls::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
 };
 
 // ViewPanel uses a ViewBackground property, not Background, so need to
@@ -315,8 +315,8 @@ facebook::react::ShadowNode *ViewViewManager::createShadow() const {
 
 XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/) {
   auto panel = winrt::make<winrt::react::uwp::implementation::ViewPanel>();
-  panel.VerticalAlignment(winrt::VerticalAlignment::Stretch);
-  panel.HorizontalAlignment(winrt::HorizontalAlignment::Stretch);
+  panel.VerticalAlignment(xaml::VerticalAlignment::Stretch);
+  panel.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
 
   return panel.as<XamlView>();
 }
@@ -332,63 +332,57 @@ folly::dynamic ViewViewManager::GetNativeProps() const {
   return props;
 }
 
-void ViewViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool ViewViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
   bool shouldBeControl = pViewShadowNode->IsControl();
   bool finalizeBorderRadius{false};
 
   auto pPanel = pViewShadowNode->GetViewPanel();
-
+  bool ret = true;
   if (pPanel != nullptr) {
-    for (const auto &pair : reactDiffMap.items()) {
-      const std::string &propertyName = pair.first.getString();
-      const folly::dynamic &propertyValue = pair.second;
-
-      if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-        continue;
-      } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-        finalizeBorderRadius = true;
-        continue;
-      } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
-        continue;
-      } else if (propertyName == "onClick") {
-        pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
-      } else if (propertyName == "overflow") {
-        if (propertyValue.isString()) {
-          bool clipChildren = propertyValue.getString() == "hidden";
-          pPanel.ClipChildren(clipChildren);
-        }
-      } else if (propertyName == "pointerEvents") {
-        if (propertyValue.isString()) {
-          bool hitTestable = propertyValue.getString() != "none";
-          pPanel.IsHitTestVisible(hitTestable);
-        }
-      } else if (propertyName == "acceptsKeyboardFocus") {
-        if (propertyValue.isBool())
-          shouldBeControl = propertyValue.getBool();
-      } else if (propertyName == "enableFocusRing") {
-        if (propertyValue.isBool())
-          pViewShadowNode->EnableFocusRing(propertyValue.getBool());
-        else if (propertyValue.isNull())
-          pViewShadowNode->EnableFocusRing(false);
-      } else if (propertyName == "tabIndex") {
-        if (propertyValue.isNumber()) {
-          auto tabIndex = propertyValue.asDouble();
-          if (tabIndex == static_cast<int32_t>(tabIndex)) {
-            pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
-          }
-        } else if (propertyValue.isNull()) {
-          pViewShadowNode->TabIndex(-1);
-        }
+    if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
+    } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
+    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
+      finalizeBorderRadius = true;
+    } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
+    } else if (propertyName == "onClick") {
+      pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
+    } else if (propertyName == "overflow") {
+      if (propertyValue.isString()) {
+        bool clipChildren = propertyValue.getString() == "hidden";
+        pPanel.ClipChildren(clipChildren);
       }
+    } else if (propertyName == "pointerEvents") {
+      if (propertyValue.isString()) {
+        bool hitTestable = propertyValue.getString() != "none";
+        pPanel.IsHitTestVisible(hitTestable);
+      }
+    } else if (propertyName == "acceptsKeyboardFocus") {
+      if (propertyValue.isBool())
+        shouldBeControl = propertyValue.getBool();
+    } else if (propertyName == "enableFocusRing") {
+      if (propertyValue.isBool())
+        pViewShadowNode->EnableFocusRing(propertyValue.getBool());
+      else if (propertyValue.isNull())
+        pViewShadowNode->EnableFocusRing(false);
+    } else if (propertyName == "tabIndex") {
+      if (propertyValue.isNumber()) {
+        auto tabIndex = propertyValue.asDouble();
+        if (tabIndex == static_cast<int32_t>(tabIndex)) {
+          pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
+        }
+      } else if (propertyValue.isNull()) {
+        pViewShadowNode->TabIndex(-1);
+      }
+    } else {
+      ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
-
-  if (auto view = pViewShadowNode->GetView().try_as<winrt::UIElement>()) {
+  if (auto view = pViewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
     shouldBeControl = shouldBeControl || HasDynamicAutomationProperties(view);
@@ -400,6 +394,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
   pPanel.FinalizeProperties();
 
   TryUpdateView(pViewShadowNode, pPanel, shouldBeControl);
+  return ret;
 }
 
 void ViewViewManager::TryUpdateView(
@@ -502,12 +497,12 @@ void ViewViewManager::TryUpdateView(
   }
 
   // Ensure parenting is setup properly
-  auto visualRoot = pPanel.try_as<winrt::UIElement>();
+  auto visualRoot = pPanel.try_as<xaml::UIElement>();
 
   if (hasOuterBorder) {
-    winrt::Border outerBorder = pPanel.GetOuterBorder();
+    xaml::Controls::Border outerBorder = pPanel.GetOuterBorder();
     if (outerBorder.Child() == nullptr)
-      outerBorder.Child(pPanel.try_as<winrt::UIElement>());
+      outerBorder.Child(pPanel.try_as<xaml::UIElement>());
 
     visualRoot = outerBorder;
   }
@@ -518,7 +513,7 @@ void ViewViewManager::TryUpdateView(
 
 void ViewViewManager::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
+    const XamlView &viewToUpdate,
     float left,
     float top,
     float width,

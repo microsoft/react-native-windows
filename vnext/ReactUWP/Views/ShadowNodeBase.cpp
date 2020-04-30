@@ -33,9 +33,9 @@ void ShadowNodeBase::createView() {
   m_view = GetViewManager()->CreateView(this->m_tag);
 
   if (g_HasActualSizeProperty == TriBit::Undefined) {
-    if (auto uielement = m_view.try_as<winrt::UIElement>()) {
+    if (auto uielement = m_view.try_as<xaml::UIElement>()) {
       // ActualSize works on 19H1+ only
-      g_HasActualSizeProperty = (uielement.try_as<winrt::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
+      g_HasActualSizeProperty = (uielement.try_as<xaml::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
     }
   }
 }
@@ -44,7 +44,7 @@ bool ShadowNodeBase::NeedsForceLayout() {
   return false;
 }
 
-void ShadowNodeBase::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
+void ShadowNodeBase::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   GetViewManager()->DispatchCommand(GetView(), commandId, commandArgs);
 }
 
@@ -75,7 +75,7 @@ void ShadowNodeBase::ReplaceView(XamlView view) {
   }
 }
 
-void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView) {
+void ShadowNodeBase::ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) {
   GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
 }
 
@@ -92,11 +92,17 @@ void ShadowNodeBase::ReparentView(XamlView view) {
     }
   }
   ReplaceView(view);
+
+  // Let the UIManager know about this so it can update the yoga context.
+  if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
+    auto pNativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
+    pNativeUiManager->ReplaceView(*static_cast<ShadowNode *>(this));
+  }
 }
 
-winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTransformPS() {
+comp::CompositionPropertySet ShadowNodeBase::EnsureTransformPS() {
   if (m_transformPS == nullptr) {
-    m_transformPS = winrt::Window::Current().Compositor().CreatePropertySet();
+    m_transformPS = xaml::Window::Current().Compositor().CreatePropertySet();
     UpdateTransformPS();
   }
 
@@ -111,7 +117,7 @@ void ShadowNodeBase::UpdateTransformPS() {
     // First build up an ExpressionAnimation to compute the "center" property,
     // like so: The input to the expression is UIElement.ActualSize/2, output is
     // a vector3 with [cx, cy, 0].
-    auto uielement = m_view.try_as<winrt::UIElement>();
+    auto uielement = m_view.try_as<xaml::UIElement>();
     assert(uielement != nullptr);
     m_transformPS = EnsureTransformPS();
     m_transformPS.InsertVector3(L"center", {0, 0, 0});
@@ -129,8 +135,7 @@ void ShadowNodeBase::UpdateTransformPS() {
     // we will use this value in the scenario where a View changed its backing
     // XAML element, here we will just transfer existing value to a new backing
     // XAML element.
-    if (m_transformPS.TryGetMatrix4x4(L"transform", unused) ==
-        winrt::Windows::UI::Composition::CompositionGetValueStatus::NotFound) {
+    if (m_transformPS.TryGetMatrix4x4(L"transform", unused) == comp::CompositionGetValueStatus::NotFound) {
       m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
     }
   }
@@ -146,6 +151,13 @@ void ShadowNodeBase::EnsureHandledKeyboardEventHandler() {
     assert(m_view);
     m_handledKeyboardEventHandler = std::make_unique<HandledKeyboardEventHandler>();
     m_handledKeyboardEventHandler->hook(m_view);
+  }
+}
+
+void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
+  const auto instance = GetViewManager()->GetReactInstance().lock();
+  if (instance) {
+    instance->CallJsFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
   }
 }
 

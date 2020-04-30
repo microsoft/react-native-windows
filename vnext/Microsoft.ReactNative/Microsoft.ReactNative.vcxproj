@@ -80,6 +80,7 @@
   <Import Project="..\JSI\Shared\JSI.Shared.vcxitems" Label="Shared" />
   <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
+  <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -87,6 +88,9 @@
     <Import Project="PropertySheet.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(GeneratedFilesDir);$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -103,6 +107,7 @@
         $(FollyDir);
         $(JSI_SourcePath);
         $(ReactNativeDir)ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
@@ -168,6 +173,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h" />
@@ -196,8 +206,8 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\I18nModule.h" />
@@ -206,7 +216,6 @@
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\NativeUIManager.h" />
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h" />
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h" />
@@ -214,15 +223,15 @@
     <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h" />
-    <ClInclude Include="..\ReactUWP\Utils\Helpers.h" />
-    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h" />
-    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h" />
-    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h" />
-    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h" />
-    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h" />
-    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h" />
     <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\CheckboxViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\DatePickerViewManager.h" />
@@ -271,6 +280,7 @@
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h" />
+    <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
@@ -321,6 +331,7 @@
     </ClInclude>
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="TestHook.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
@@ -359,8 +370,8 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp" />
@@ -369,7 +380,6 @@
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NativeUIManager.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp" />
@@ -431,6 +441,7 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="Modules\AppStateData.cpp" />
+    <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
@@ -478,6 +489,7 @@
     </ClCompile>
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="TestHook.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
@@ -535,7 +547,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-      <ResourceCompile Include="Version.rc">
+    <ResourceCompile Include="Version.rc">
       <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
         RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
         RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);

@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Composition.h>
 #include "ViewManagerBase.h"
 
 namespace react {
@@ -16,28 +15,30 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   folly::dynamic GetNativeProps() const override;
-  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   // Helper functions related to setting/updating TransformMatrix
   void RefreshTransformMatrix(ShadowNodeBase *shadowNode);
-  void StartTransformAnimation(
-      winrt::UIElement uielement,
-      winrt::Windows::UI::Composition::CompositionPropertySet transformPS);
+  void StartTransformAnimation(xaml::UIElement uielement, comp::CompositionPropertySet transformPS);
 
-  virtual void TransferProperties(XamlView oldView, XamlView newView) override;
+  virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
  protected:
-  void TransferProperty(XamlView oldView, XamlView newView, winrt::Windows::UI::Xaml::DependencyProperty dp);
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
+  void TransferProperty(const XamlView &oldView, const XamlView &newView, xaml::DependencyProperty dp);
 
   void TransferProperty(
-      XamlView oldView,
-      XamlView newView,
-      winrt::DependencyProperty oldViewDP,
-      winrt::DependencyProperty newViewDP);
+      const XamlView &oldView,
+      const XamlView &newView,
+      xaml::DependencyProperty oldViewDP,
+      xaml::DependencyProperty newViewDP);
 
  private:
   void ApplyTransformMatrix(
-      winrt::UIElement uielement,
+      xaml::UIElement uielement,
       ShadowNodeBase *shadowNode,
       winrt::Windows::Foundation::Numerics::float4x4 transformMatrix);
 };

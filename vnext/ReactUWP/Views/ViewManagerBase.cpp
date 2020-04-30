@@ -6,18 +6,20 @@
 #include <Views/ViewManagerBase.h>
 
 #include "ViewPanel.h"
+#include "cdebug.h"
+#include "unicode.h"
 
 #include <Modules/NativeUIManager.h>
 
 #include <IReactInstance.h>
 #include <IXamlRootView.h>
+#include <TestHook.h>
 #include <Views/ShadowNodeBase.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 using namespace folly;
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 }
 
 namespace react {
@@ -45,7 +47,7 @@ YGSize DefaultYogaSelfMeasureFunc(
   // TODO: VEC context != nullptr, DefaultYogaSelfMeasureFunc expects a context.
 
   XamlView view = context->view;
-  auto element = view.as<winrt::UIElement>();
+  auto element = view.as<xaml::UIElement>();
 
   float constrainToWidth =
       widthMode == YGMeasureMode::YGMeasureModeUndefined ? std::numeric_limits<float>::max() : width;
@@ -56,8 +58,8 @@ YGSize DefaultYogaSelfMeasureFunc(
     winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
 
     // Clear out current size so it doesn't constrain the measurement
-    auto widthProp = winrt::FrameworkElement::WidthProperty();
-    auto heightProp = winrt::FrameworkElement::HeightProperty();
+    auto widthProp = xaml::FrameworkElement::WidthProperty();
+    auto heightProp = xaml::FrameworkElement::HeightProperty();
     auto origWidth = element.GetValue(widthProp);
     auto origHeight = element.GetValue(heightProp);
     element.ClearValue(widthProp);
@@ -182,7 +184,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   // In Debug, set the element name to the tag for convienent
   // searching within VisualStudio's Live Visual Tree pane
 #ifdef DEBUG
-  auto element = view.try_as<winrt::FrameworkElement>();
+  auto element = view.try_as<xaml::FrameworkElement>();
   if (element) {
     element.Name(L"<reacttag>: " + std::to_wstring(tag));
   }
@@ -195,19 +197,19 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   return view;
 }
 
-void ViewManagerBase::AddView(XamlView /*parent*/, XamlView /*child*/, int64_t /*index*/) {
+void ViewManagerBase::AddView(const XamlView & /*parent*/, const XamlView & /*child*/, int64_t /*index*/) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-void ViewManagerBase::RemoveChildAt(XamlView /*parent*/, int64_t /*index*/) {
+void ViewManagerBase::RemoveChildAt(const XamlView & /*parent*/, int64_t /*index*/) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-void ViewManagerBase::RemoveAllChildren(XamlView parent) {}
+void ViewManagerBase::RemoveAllChildren(const XamlView &parent) {}
 
-void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild) {
+void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
@@ -226,39 +228,67 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
-
-    if (propertyName == "onLayout") {
-      nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
-    } else if (propertyName == "keyDownEvents") {
-      nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
-    } else if (propertyName == "keyUpEvents") {
-      nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+    if (!UpdateProperty(nodeToUpdate, propertyName, propertyValue)) {
+      NotifyUnimplementedProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
 }
 
-void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newView*/) {}
+bool ViewManagerBase::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "onLayout") {
+    nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
+  } else if (propertyName == "keyDownEvents") {
+    nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else if (propertyName == "keyUpEvents") {
+    nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else {
+    return false;
+  }
+  return true;
+}
+
+void ViewManagerBase::TransferProperties(const XamlView & /*oldView*/, const XamlView & /*newView*/) {}
 
 void ViewManagerBase::DispatchCommand(
-    XamlView /*viewToUpdate*/,
-    int64_t /*commandId*/,
+    const XamlView & /*viewToUpdate*/,
+    const std::string & /*commandId*/,
     const folly::dynamic & /*commandArgs*/) {
   assert(false); // View did not handle its command
 }
 
+void ViewManagerBase::NotifyUnimplementedProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &value) {
+#ifdef DEBUG
+  auto viewManagerName = nodeToUpdate->GetViewManager()->GetName();
+  auto element(nodeToUpdate->GetView().as<winrt::IInspectable>());
+
+  if (element != nullptr) {
+    auto className = Microsoft::Common::Unicode::Utf16ToUtf8(winrt::get_class_name(element));
+    TestHook::NotifyUnimplementedProperty(viewManagerName, className, propertyName, value);
+  } else {
+    cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << std::endl;
+  }
+#endif // DEBUG
+}
+
 void ViewManagerBase::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
-    XamlView viewToUpdate,
+    const XamlView &viewToUpdate,
     float left,
     float top,
     float width,
     float height) {
-  auto element = viewToUpdate.as<winrt::UIElement>();
+  auto element = viewToUpdate.as<xaml::UIElement>();
   if (element == nullptr) {
     // TODO: Assert
     return;
   }
-  auto fe = element.as<winrt::FrameworkElement>();
+  auto fe = element.as<xaml::FrameworkElement>();
 
   // Set Position & Size Properties
   ViewPanel::SetLeft(element, left);

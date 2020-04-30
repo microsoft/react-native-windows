@@ -20,6 +20,7 @@ const {
   newWarn,
   newSpinner,
   commandWithProgress,
+  runPowerShellScriptFunction,
 } = require('./commandWithProgress');
 
 function pushd(pathArg) {
@@ -76,7 +77,7 @@ function getWindowsStoreAppUtils(options) {
   return windowsStoreAppUtilsPath;
 }
 
-function getAppxManifest(options) {
+function getAppxManifestPath(options) {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
@@ -90,7 +91,15 @@ function getAppxManifest(options) {
       }", using search path: "${appxManifestGlob}" `,
     );
   }
-  return parse(fs.readFileSync(appxPath, 'utf8'));
+  return appxPath;
+}
+
+function parseAppxManifest(appxManifestPath) {
+  return parse(fs.readFileSync(appxManifestPath, 'utf8'));
+}
+
+function getAppxManifest(options) {
+  return parseAppxManifest(getAppxManifestPath(options));
 }
 
 function handleResponseError(e) {
@@ -150,10 +159,17 @@ async function deployToDevice(options, verbose) {
   }
 }
 
-async function deployToDesktop(options, verbose) {
+async function hasDotNetProjects(slnFile) {
+  const contents = (await fs.promises.readFile(slnFile)).toString();
+  let r = /\"([^"]+\.(csproj|vbproj))\"/;
+  return r.test(contents);
+}
+
+async function deployToDesktop(options, verbose, slnFile) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
-  const appxManifest = getAppxManifest(options);
+  const appxManifestPath = getAppxManifestPath(options);
+  const appxManifest = parseAppxManifest(appxManifestPath);
   const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'Identity';
   })[0];
@@ -162,42 +178,53 @@ async function deployToDesktop(options, verbose) {
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
 
-  const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
+  let args = ['--remote-debugging', options.proxy ? 'true' : 'false'];
+
+  if (options.directDebugging) {
+    const port = parseInt(options.directDebugging, 10);
+    if (!isNaN(port) && port > 1024 && port < 65535) {
+      args.push('--direct-debugging', port.toString());
+    } else {
+      newError(
+        'Direct debugging port not specified, invalid or out of bounds.',
+      );
+      process.exit(1);
+    }
+  }
 
   const popd = pushd(options.root);
 
-  const removingText = 'Removing old version of the app';
-  await commandWithProgress(
-    newSpinner(removingText),
-    removingText,
-    'powershell',
-    `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`.split(
-      ' ',
-    ),
+  await runPowerShellScriptFunction(
+    'Removing old version of the app',
+    windowsStoreAppUtils,
+    `Uninstall-App ${appName}`,
     verbose,
   );
 
-  const devmodeText = 'Enabling Developer Mode';
-  const devmodeEnable = `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; EnableDevmode "${script}"`;
-
-  await commandWithProgress(
-    newSpinner(devmodeText),
-    devmodeText,
-    'powershell',
-    devmodeEnable.split(' '),
+  await runPowerShellScriptFunction(
+    'Enabling Developer Mode',
+    windowsStoreAppUtils,
+    `EnableDevMode "${script}"`,
     verbose,
   );
 
-  const installingText = 'Installing new version of the app';
-  const installApp = `-NoProfile -ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}" -Force`;
-
-  await commandWithProgress(
-    newSpinner(installingText),
-    installingText,
-    'powershell',
-    installApp.split(' '),
-    verbose,
-  );
+  // #4749 - need to deploy from appx for .net projects.
+  if (options.release || (await hasDotNetProjects(slnFile))) {
+    await runPowerShellScriptFunction(
+      'Installing new version of the app',
+      windowsStoreAppUtils,
+      `Install-App "${script}" -Force`,
+      verbose,
+    );
+  } else {
+    const realAppxManifestPath = fs.realpathSync(appxManifestPath);
+    await runPowerShellScriptFunction(
+      'Installing new version of the app from layout',
+      windowsStoreAppUtils,
+      `Install-AppFromDirectory "${realAppxManifestPath}"`,
+      verbose,
+    );
+  }
 
   const appFamilyName = execSync(
     `powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
@@ -223,14 +250,10 @@ async function deployToDesktop(options, verbose) {
   );
 
   if (shouldLaunchApp(options)) {
-    const startingText = 'Starting the app';
-    await commandWithProgress(
-      newSpinner(startingText),
-      startingText,
-      'powershell',
-      `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`.split(
-        ' ',
-      ),
+    await runPowerShellScriptFunction(
+      'Starting the app',
+      windowsStoreAppUtils,
+      `Start-Locally ${appName} ${args}`,
       verbose,
     );
   } else {

@@ -10,16 +10,13 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Controls::Primitives;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -60,31 +57,31 @@ folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
   return directEvents;
 }
 
-void HyperlinkViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool HyperlinkViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
-
-    if (propertyName == "disabled") {
-      if (propertyValue.isBool())
-        button.IsEnabled(!propertyValue.asBool());
-    } else if (propertyName == "tooltip") {
-      if (propertyValue.isString()) {
-        winrt::TextBlock tooltip = winrt::TextBlock();
-        tooltip.Text(asHstring(propertyValue));
-        winrt::ToolTipService::SetToolTip(button, tooltip);
-      }
-    } else if (propertyName == "url") {
-      winrt::Uri myUri(asHstring(propertyValue));
-      button.NavigateUri(myUri);
+  if (propertyName == "disabled") {
+    if (propertyValue.isBool())
+      button.IsEnabled(!propertyValue.asBool());
+  } else if (propertyName == "tooltip") {
+    if (propertyValue.isString()) {
+      winrt::TextBlock tooltip = winrt::TextBlock();
+      tooltip.Text(asHstring(propertyValue));
+      winrt::ToolTipService::SetToolTip(button, tooltip);
     }
+  } else if (propertyName == "url") {
+    winrt::Uri myUri(asHstring(propertyValue));
+    button.NavigateUri(myUri);
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
 }
 
 } // namespace polyester

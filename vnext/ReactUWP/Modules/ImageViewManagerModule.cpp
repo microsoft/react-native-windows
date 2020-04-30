@@ -10,8 +10,6 @@
 
 #include "ImageViewManagerModule.h"
 
-#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-
 #include <cxxreact/JsArgumentHelpers.h>
 
 #include <Views/Image/ReactImage.h>
@@ -26,7 +24,7 @@
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
-using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace xaml::Media::Imaging;
 } // namespace winrt
 
 namespace react {
@@ -36,26 +34,24 @@ namespace uwp {
 //
 class ImageViewManagerModule::ImageViewManagerModuleImpl {
  public:
-  ImageViewManagerModuleImpl(
-      ImageViewManagerModule *parent,
-      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-      : m_parent(parent), m_queueThread(defaultQueueThread) {}
+  ImageViewManagerModuleImpl(ImageViewManagerModule *parent) : m_parent(parent) {}
 
   void Disconnect() {
     m_parent = nullptr;
   }
 
   void getSize(std::string uri, Callback successCallback, Callback errorCallback);
+  void getSizeWithHeaders(std::string uri, folly::dynamic &headers, Callback successCallback, Callback errorCallback);
   void prefetchImage(std::string uri, Callback successCallback, Callback errorCallback);
   void queryCache(const folly::dynamic &requests, Callback successCallback, Callback errorCallback);
 
  private:
   ImageViewManagerModule *m_parent;
-  std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
 };
 
 winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,
+    folly::dynamic &headers,
     facebook::xplat::module::CxxModule::Callback successCallback,
     facebook::xplat::module::CxxModule::Callback errorCallback) {
   bool succeeded{false};
@@ -63,6 +59,7 @@ winrt::fire_and_forget GetImageSizeAsync(
   try {
     ReactImageSource source;
     source.uri = uriString;
+    source.headers = headers;
 
     winrt::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(uriString)};
     winrt::hstring scheme{uri.SchemeName()};
@@ -82,7 +79,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     }
 
     if (bitmap) {
-      successCallback({bitmap.PixelWidth(), bitmap.PixelHeight()});
+      successCallback({folly::dynamic::array(bitmap.PixelWidth(), bitmap.PixelHeight())});
       succeeded = true;
     }
   } catch (winrt::hresult_error const &) {
@@ -98,7 +95,16 @@ void ImageViewManagerModule::ImageViewManagerModuleImpl::getSize(
     std::string uri,
     Callback successCallback,
     Callback errorCallback) {
-  GetImageSizeAsync(uri, successCallback, errorCallback);
+  folly::dynamic headers{};
+  GetImageSizeAsync(uri, headers, successCallback, errorCallback);
+}
+
+void ImageViewManagerModule::ImageViewManagerModuleImpl::getSizeWithHeaders(
+    std::string uri,
+    folly::dynamic &headers,
+    Callback successCallback,
+    Callback errorCallback) {
+  GetImageSizeAsync(uri, headers, successCallback, errorCallback);
 }
 
 void ImageViewManagerModule::ImageViewManagerModuleImpl::prefetchImage(
@@ -120,11 +126,10 @@ void ImageViewManagerModule::ImageViewManagerModuleImpl::queryCache(
 //
 // ImageViewManagerModule
 //
-const char *ImageViewManagerModule::name = "ImageViewManager";
+const char *ImageViewManagerModule::name = "ImageLoader";
 
-ImageViewManagerModule::ImageViewManagerModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-    : m_imageViewManagerModule(std::make_shared<ImageViewManagerModuleImpl>(this, defaultQueueThread)) {}
+ImageViewManagerModule::ImageViewManagerModule()
+    : m_imageViewManagerModule(std::make_shared<ImageViewManagerModuleImpl>(this)) {}
 
 ImageViewManagerModule::~ImageViewManagerModule() {}
 
@@ -143,8 +148,16 @@ auto ImageViewManagerModule::getMethods() -> std::vector<Method> {
           "getSize",
           [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback) {
             imageViewManager->getSize(facebook::xplat::jsArgAsString(args, 0), successCallback, errorCallback);
-          },
-          AsyncTag),
+          }),
+      Method(
+          "getSizeWithHeaders",
+          [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback) {
+            imageViewManager->getSizeWithHeaders(
+                facebook::xplat::jsArgAsString(args, 0),
+                facebook::xplat::jsArgAsObject(args, 1),
+                successCallback,
+                errorCallback);
+          }),
       Method(
           "prefetchImage",
           [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback) {

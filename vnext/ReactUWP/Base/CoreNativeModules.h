@@ -3,9 +3,11 @@
 
 #pragma once
 
-#include <Modules/AppThemeModule.h>
+#include <ReactUWP/Modules/AppThemeModuleUwp.h>
+#include <ReactUWP/Modules/AppearanceModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/NativeModuleProvider.h>
+#include <smartPtr/cntPtr.h>
 #include <memory>
 #include <vector>
 
@@ -23,14 +25,13 @@ struct IReactInstance;
 struct ViewManagerProvider;
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
-    std::shared_ptr<facebook::react::IUIManager> uiManager,
+    const std::shared_ptr<facebook::react::IUIManager> &uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
-    std::shared_ptr<DeviceInfo> deviceInfo,
-    std::shared_ptr<facebook::react::DevSettings> devSettings,
-    const I18nModule::I18nInfo &&i18nInfo,
-    std::shared_ptr<facebook::react::AppState> appstate,
-    std::shared_ptr<react::windows::AppTheme> appTheme,
+    std::shared_ptr<DeviceInfo> &&deviceInfo,
+    std::shared_ptr<facebook::react::AppState> &&appstate,
+    std::shared_ptr<react::uwp::AppTheme> &&appTheme,
+    Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept;
 
 } // namespace react::uwp

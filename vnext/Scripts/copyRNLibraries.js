@@ -53,17 +53,19 @@ function copyDirectories(srcPath, targetPath, dirSpecs) {
     const curSrcPath = path.resolve(srcPath, dirSpec.src);
     const curTargetPath = path.resolve(targetPath, dirSpec.dest);
 
-    glob.sync('**/*.{js,png,gif,h}', {cwd: curSrcPath}).forEach(file => {
-      const dir = path.dirname(file);
-      const targetDir = path.resolve(curTargetPath, dir);
-      const targetFile = path.resolve(curTargetPath, file);
+    glob
+      .sync('**/*.{js,png,gif,jpg,html,h}', {cwd: curSrcPath})
+      .forEach(file => {
+        const dir = path.dirname(file);
+        const targetDir = path.resolve(curTargetPath, dir);
+        const targetFile = path.resolve(curTargetPath, file);
 
-      fs.mkdirSync(targetDir, {recursive: true});
-      fs.writeFileSync(
-        targetFile,
-        fs.readFileSync(path.join(curSrcPath, file)),
-      );
-    });
+        fs.mkdirSync(targetDir, {recursive: true});
+        fs.writeFileSync(
+          targetFile,
+          fs.readFileSync(path.join(curSrcPath, file)),
+        );
+      });
   });
 }
 
@@ -101,10 +103,6 @@ exports.copyRNLibraries = baseDir => {
       dest: 'flow',
     },
     {
-      src: 'flow-typed',
-      dest: 'flow-typed',
-    },
-    {
       src: 'jest',
       dest: 'jest',
     },
@@ -127,4 +125,6 @@ exports.copyRNLibraries = baseDir => {
   ]);
 
   copyFile(reactNativePath, baseDir, 'rn-get-polyfills.js');
+  copyFile(reactNativePath, baseDir, 'index.js');
+  copyFile(reactNativePath, baseDir, 'interface.js');
 };

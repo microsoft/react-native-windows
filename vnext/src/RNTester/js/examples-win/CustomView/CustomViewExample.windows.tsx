@@ -16,11 +16,6 @@ import {
   requireNativeComponent,
 } from 'react-native';
 
-// JS to wrap the custom element.
-// Typically you would export this class as the reusable component
-const RCTCustomFrameworkElement = requireNativeComponent(
-  'RCTCustomFrameworkElement',
-);
 export interface ICustomFrameworkElementProps extends ViewProps {
   disabled?: boolean;
   test: boolean;
@@ -32,6 +27,12 @@ export interface ICustomChangeEvent {
     value: boolean;
   };
 }
+
+// JS to wrap the custom element.
+// Typically you would export this class as the reusable component
+const RCTCustomFrameworkElement = requireNativeComponent<
+  ICustomFrameworkElementProps
+>('RCTCustomFrameworkElement');
 
 export class CustomFrameworkElement extends React.Component<
   ICustomFrameworkElementProps,

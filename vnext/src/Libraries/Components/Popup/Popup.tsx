@@ -20,7 +20,7 @@ export interface IPopupTargetState {
   targetRef?: React.ReactNode;
 }
 
-const RCTPopup = requireNativeComponent('RCTPopup');
+const RCTPopup = requireNativeComponent<IPopupProps>('RCTPopup');
 
 /**
  * Renders a popup component.

@@ -21,12 +21,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleMemberRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactContext.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactMemberInfo.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
   </ItemGroup>

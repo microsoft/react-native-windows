@@ -4,33 +4,33 @@
 #pragma once
 
 #include <IReactInstance.h>
-#include <Modules/AppThemeModule.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
-class AppTheme : public react::windows::AppTheme {
+class AppTheme {
  public:
+  static constexpr const char *Dark = "dark";
+  static constexpr const char *Light = "light";
+
   AppTheme(
       const std::shared_ptr<IReactInstance> &reactInstance,
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
-  virtual ~AppTheme();
 
-  const std::string getCurrentTheme() override;
-  bool getIsHighContrast() override;
+  std::string getCurrentTheme();
+  bool getIsHighContrast();
+  folly::dynamic getHighContrastColors();
 
  private:
-  // High Contrast Color helper methods
-  folly::dynamic getHighContrastColors();
+  // High Contrast Color helper method
   std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
   void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
-  winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{winrt::Windows::UI::Xaml::ApplicationTheme::Light};
+  xaml::ApplicationTheme m_currentTheme{xaml::ApplicationTheme::Light};
   bool m_isHighContrast;
   folly::dynamic m_highContrastColors;
 
@@ -40,5 +40,21 @@ class AppTheme : public react::windows::AppTheme {
   winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker m_colorValuesChangedRevoker{};
 };
 
-} // namespace uwp
-} // namespace react
+class AppThemeModule : public facebook::xplat::module::CxxModule {
+ public:
+  static constexpr const char *Name = "RTCAppTheme";
+
+  AppThemeModule(std::shared_ptr<AppTheme> &&appTheme);
+
+  // CxxModule
+  std::string getName() override {
+    return Name;
+  };
+  auto getConstants() -> std::map<std::string, folly::dynamic> override;
+  auto getMethods() -> std::vector<Method> override;
+
+ private:
+  std::shared_ptr<AppTheme> m_appTheme;
+};
+
+} // namespace react::uwp

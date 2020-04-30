@@ -8,8 +8,8 @@ namespace react {
 
 TurboModuleManager::TurboModuleManager(
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<JSCallInvoker> jsInvoker)
-    : m_turboModuleRegistry(std::move(turboModuleRegistry)), m_jsInvoker(std::move(jsInvoker)) {}
+    std::shared_ptr<CallInvoker> callInvoker)
+    : m_turboModuleRegistry(std::move(turboModuleRegistry)), m_callInvoker(std::move(callInvoker)) {}
 
 /**
  * Return the TurboModule instance that has that name `moduleName`. If the `moduleName`
@@ -23,14 +23,14 @@ std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &mo
     return it->second;
 
   if (m_turboModuleRegistry) {
-    if (auto module = m_turboModuleRegistry->getModule(moduleName, m_jsInvoker)) {
+    if (auto module = m_turboModuleRegistry->getModule(moduleName, m_callInvoker)) {
       m_modules.emplace(moduleName, module);
       return module;
     }
   }
 
   if (moduleName.compare("SampleTurboModule") == 0) {
-    return m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_jsInvoker)).first->second;
+    return m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_callInvoker)).first->second;
   }
   return nullptr;
 }

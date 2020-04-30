@@ -14,10 +14,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 namespace react {
 namespace uwp {
@@ -32,7 +28,7 @@ TouchEventHandler::~TouchEventHandler() {
 }
 
 void TouchEventHandler::AddTouchHandlers(XamlView xamlView) {
-  auto uiElement(xamlView.as<winrt::UIElement>());
+  auto uiElement(xamlView.as<xaml::UIElement>());
   if (uiElement == nullptr) {
     assert(false);
     return;
@@ -76,11 +72,18 @@ void TouchEventHandler::OnPointerPressed(
 
   // Only if the view has a Tag can we process this
   int64_t tag;
-  winrt::UIElement sourceElement(nullptr);
+  xaml::UIElement sourceElement(nullptr);
   if (!TagFromOriginalSource(args, &tag, &sourceElement))
     return;
 
-  if (m_xamlView.as<winrt::FrameworkElement>().CapturePointer(args.Pointer())) {
+  // If this was caused by the user pressing the "back" hardware button, fire that event instead
+  if (args.GetCurrentPoint(sourceElement).Properties().PointerUpdateKind() ==
+      winrt::Windows::UI::Input::PointerUpdateKind::XButton1Pressed) {
+    args.Handled(DispatchBackEvent());
+    return;
+  }
+
+  if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(instance, args, tag, sourceElement);
 
@@ -128,7 +131,7 @@ void TouchEventHandler::OnPointerMoved(
 
   // Only if the view has a Tag can we process this
   int64_t tag;
-  winrt::UIElement sourceElement(nullptr);
+  xaml::UIElement sourceElement(nullptr);
   if (!TagFromOriginalSource(args, &tag, &sourceElement))
     return;
 
@@ -157,7 +160,7 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   // if the view has a Tag, update the pointer info.
   // Regardless of that, ensure we Dispatch & cleanup the pointer
   int64_t tag;
-  winrt::UIElement sourceElement(nullptr);
+  xaml::UIElement sourceElement(nullptr);
   if (TagFromOriginalSource(args, &tag, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
@@ -167,13 +170,13 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (m_pointers.size() == 0)
     m_touchId = 0;
 
-  m_xamlView.as<winrt::FrameworkElement>().ReleasePointerCapture(args.Pointer());
+  m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
 }
 
 size_t TouchEventHandler::AddReactPointer(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::UIElement sourceElement) {
+    xaml::UIElement sourceElement) {
   ReactPointer pointer = CreateReactPointer(args, tag, sourceElement);
   m_pointers.emplace_back(std::move(pointer));
   return m_pointers.size() - 1;
@@ -182,7 +185,7 @@ size_t TouchEventHandler::AddReactPointer(
 TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::UIElement sourceElement) {
+    xaml::UIElement sourceElement) {
   auto point = args.GetCurrentPoint(sourceElement);
   auto props = point.Properties();
 
@@ -205,8 +208,8 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
 void TouchEventHandler::UpdateReactPointer(
     ReactPointer &pointer,
     const winrt::PointerRoutedEventArgs &args,
-    winrt::UIElement sourceElement) {
-  auto rootPoint = args.GetCurrentPoint(m_xamlView.as<winrt::FrameworkElement>());
+    xaml::UIElement sourceElement) {
+  auto rootPoint = args.GetCurrentPoint(m_xamlView.as<xaml::FrameworkElement>());
   auto point = args.GetCurrentPoint(sourceElement);
   auto props = point.Properties();
   auto keyModifiers = static_cast<uint32_t>(args.KeyModifiers());
@@ -234,7 +237,7 @@ void TouchEventHandler::UpdatePointersInViews(
     std::shared_ptr<IReactInstance> instance,
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    winrt::UIElement sourceElement) {
+    xaml::UIElement sourceElement) {
   auto nativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
   auto puiManagerHost = nativeUiManager->getHost();
   int32_t pointerId = args.Pointer().PointerId();
@@ -335,6 +338,16 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   instance->CallJsFunction("RCTEventEmitter", "receiveTouches", std::move(params));
 }
 
+bool TouchEventHandler::DispatchBackEvent() {
+  auto instance = m_wkReactInstance.lock();
+  if (instance != nullptr && !instance->IsInError()) {
+    instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+    return true;
+  }
+
+  return false;
+}
+
 const char *TouchEventHandler::GetPointerDeviceTypeName(
     winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept {
   const char *deviceTypeName = "unknown";
@@ -379,19 +392,19 @@ const char *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) n
 bool TouchEventHandler::TagFromOriginalSource(
     const winrt::PointerRoutedEventArgs &args,
     int64_t *pTag,
-    winrt::UIElement *pSourceElement) {
+    xaml::UIElement *pSourceElement) {
   assert(pTag != nullptr);
   assert(pSourceElement != nullptr);
 
   // Find the React element that triggered the input event
-  winrt::UIElement sourceElement = args.OriginalSource().try_as<winrt::UIElement>();
+  xaml::UIElement sourceElement = args.OriginalSource().try_as<xaml::UIElement>();
   winrt::IPropertyValue tag(nullptr);
   while (sourceElement) {
-    tag = sourceElement.GetValue(winrt::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+    tag = sourceElement.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
     if (tag) {
       break;
     }
-    sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<winrt::UIElement>();
+    sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
   }
 
   if (tag == nullptr) {

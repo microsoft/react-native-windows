@@ -6,10 +6,6 @@
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ViewPanel.h>
 
-namespace winrt {
-using ContentControl = winrt::Windows::UI::Xaml::Controls::ContentControl;
-}
-
 namespace react {
 namespace uwp {
 
@@ -27,18 +23,21 @@ class ViewViewManager : public FrameworkElementViewManager {
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   facebook::react::ShadowNode *createShadow() const override;
 
-  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
-
   // Yoga Layout
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
-      XamlView viewToUpdate,
+      const XamlView &viewToUpdate,
       float left,
       float top,
       float width,
       float height) override;
 
  protected:
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
   XamlView CreateViewCore(int64_t tag) override;
   void TryUpdateView(ViewShadowNode *viewShadowNode, winrt::react::uwp::ViewPanel &pPanel, bool useControl);
 };

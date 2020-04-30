@@ -87,12 +87,14 @@
     <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
+    <ClCompile Include="InstanceMocks.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
     <ClCompile Include="StringConversionTest_Desktop.cpp" />
     <ClCompile Include="UIManagerModuleTest.cpp" />
     <ClCompile Include="UtilsTest.cpp" />
     <ClCompile Include="WebSocketJSExecutorTest.cpp" />
+    <ClCompile Include="WebSocketMocks.cpp" />
     <ClCompile Include="WebSocketModuleTest.cpp" />
     <ClCompile Include="WebSocketTest.cpp" />
   </ItemGroup>
@@ -104,7 +106,9 @@
   <ItemGroup>
     <ClInclude Include="AsyncStorageTestClass.h" />
     <ClInclude Include="EmptyUIManagerModule.h" />
+    <ClInclude Include="InstanceMocks.h" />
     <ClInclude Include="UnicodeTestStrings.h" />
+    <ClInclude Include="WebSocketMocks.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Desktop\React.Windows.Desktop.vcxproj">

@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <Utils/ValueUtils.h>
-#include <winrt/Windows.UI.Xaml.Markup.h>
 #include "Unicode.h"
 
 #include <folly/dynamic.h>
@@ -18,9 +17,9 @@
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Input;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -47,10 +46,10 @@ struct ColorComp {
   }
 };
 
-winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
+xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
   winrt::hstring resourceName{winrt::to_hstring(d.find("windowsbrush")->second.asString())};
 
-  thread_local static std::map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>> accentColorMap = {
+  thread_local static std::map<winrt::hstring, winrt::weak_ref<xaml::Media::SolidColorBrush>> accentColorMap = {
       {L"SystemAccentColor", {nullptr}},
       {L"SystemAccentColorLight1", {nullptr}},
       {L"SystemAccentColorLight2", {nullptr}},
@@ -82,7 +81,7 @@ winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(const folly::dynamic
 
     auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(winrt::Markup::XamlReader::Load(xamlString))};
 
-    auto brush{winrt::unbox_value<winrt::SolidColorBrush>(dictionary.Lookup(winrt::box_value(resourceName)))};
+    auto brush{winrt::unbox_value<xaml::Media::SolidColorBrush>(dictionary.Lookup(winrt::box_value(resourceName)))};
 
     accentColorMap[resourceName] = winrt::make_weak(brush);
 
@@ -99,13 +98,14 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
-REACTWINDOWS_API_(winrt::SolidColorBrush)
+REACTWINDOWS_API_(xaml::Media::SolidColorBrush)
 SolidColorBrushFrom(const folly::dynamic &d) {
   if (d.isObject()) {
-    return BrushFromColorObject(d).as<winrt::SolidColorBrush>();
+    return BrushFromColorObject(d).as<xaml::Media::SolidColorBrush>();
   }
 
-  thread_local static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
+  thread_local static std::map<winrt::Color, winrt::weak_ref<xaml::Media::SolidColorBrush>, ColorComp>
+      solidColorBrushCache;
 
   const auto color = d.isNumber() ? ColorFrom(d) : winrt::Colors::Transparent();
   if (solidColorBrushCache.count(color) != 0) {
@@ -114,7 +114,7 @@ SolidColorBrushFrom(const folly::dynamic &d) {
     }
   }
 
-  winrt::SolidColorBrush brush(color);
+  xaml::Media::SolidColorBrush brush(color);
   solidColorBrushCache[color] = winrt::make_weak(brush);
   return brush;
 }
@@ -127,38 +127,38 @@ REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic &d) {
   return SolidColorBrushFrom(d);
 }
 
-REACTWINDOWS_API_(winrt::HorizontalAlignment)
+REACTWINDOWS_API_(xaml::HorizontalAlignment)
 HorizontalAlignmentFrom(const folly::dynamic &d) {
   auto valueString = d.asString();
   if (valueString == "center")
-    return winrt::HorizontalAlignment::Center;
+    return xaml::HorizontalAlignment::Center;
   else if (valueString == "left")
-    return winrt::HorizontalAlignment::Left;
+    return xaml::HorizontalAlignment::Left;
   else if (valueString == "right")
-    return winrt::HorizontalAlignment::Right;
+    return xaml::HorizontalAlignment::Right;
   else if (valueString == "stretch")
-    return winrt::HorizontalAlignment::Stretch;
+    return xaml::HorizontalAlignment::Stretch;
 
   // ASSERT: Invalid value for VerticalAlignment. Shouldn't get this far.
   assert(false);
-  return winrt::HorizontalAlignment::Stretch;
+  return xaml::HorizontalAlignment::Stretch;
 }
 
-REACTWINDOWS_API_(winrt::VerticalAlignment)
+REACTWINDOWS_API_(xaml::VerticalAlignment)
 VerticalAlignmentFrom(const folly::dynamic &d) {
   auto valueString = d.asString();
   if (valueString == "bottom")
-    return winrt::VerticalAlignment::Bottom;
+    return xaml::VerticalAlignment::Bottom;
   else if (valueString == "center")
-    return winrt::VerticalAlignment::Center;
+    return xaml::VerticalAlignment::Center;
   else if (valueString == "stretch")
-    return winrt::VerticalAlignment::Stretch;
+    return xaml::VerticalAlignment::Stretch;
   else if (valueString == "top")
-    return winrt::VerticalAlignment::Top;
+    return xaml::VerticalAlignment::Top;
 
   // ASSERT: Invalid value for VerticalAlignment. Shouldn't get this far.
   assert(false);
-  return winrt::VerticalAlignment::Stretch;
+  return xaml::VerticalAlignment::Stretch;
 }
 
 REACTWINDOWS_API_(winrt::DateTime)

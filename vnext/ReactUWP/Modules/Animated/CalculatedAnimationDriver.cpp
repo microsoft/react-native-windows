@@ -9,12 +9,12 @@
 namespace react {
 namespace uwp {
 
-std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
+std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation, easingFunction] = []() {
-    const auto compositor = winrt::Window::Current().Compositor();
+    const auto compositor = xaml::Window::Current().Compositor();
     return std::make_tuple(
-        compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations),
+        compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation(),
         compositor.CreateLinearEasingFunction());
   }();

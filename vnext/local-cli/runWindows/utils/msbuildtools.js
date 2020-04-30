@@ -51,17 +51,17 @@ class MSBuildTools {
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
 
-    //const verbosityOption = verbose ? 'normal' : 'quiet';
-    const verbosityOption = 'normal';
+    const verbosityOption = verbose ? 'normal' : 'minimal';
+    const errorLog = path.join(process.env.temp, `msbuild_${process.pid}.err`);
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
+      '/bl',
+      `/flp1:errorsonly;logfile=${errorLog}`,
     ];
-
-    args.push('/bl');
 
     if (msBuildProps) {
       Object.keys(msBuildProps).forEach(function(key) {
@@ -73,20 +73,38 @@ class MSBuildTools {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
       newError(e.message);
-      return;
+      throw e;
     }
 
-    console.log(`Running MSBuild with args ${args.join(' ')}`);
+    if (verbose) {
+      console.log(`Running MSBuild with args ${args.join(' ')}`);
+    }
 
     const progressName = 'Building Solution';
     const spinner = newSpinner(progressName);
-    await commandWithProgress(
-      spinner,
-      progressName,
-      path.join(this.path, 'msbuild.exe'),
-      [slnFile].concat(args),
-      verbose,
-    );
+    try {
+      await commandWithProgress(
+        spinner,
+        progressName,
+        path.join(this.path, 'msbuild.exe'),
+        [slnFile].concat(args),
+        verbose,
+      );
+    } catch (e) {
+      let error = e;
+      if (!e) {
+        const firstMessage = (await fs.promises.readFile(errorLog))
+          .toString()
+          .split(EOL)[0];
+        error = new Error(firstMessage);
+        error.logfile = errorLog;
+      }
+      throw error;
+    }
+    // If we have no errors, delete the error log when we're done
+    if ((await fs.promises.stat(errorLog)).size === 0) {
+      await fs.promises.unlink(errorLog);
+    }
   }
 }
 

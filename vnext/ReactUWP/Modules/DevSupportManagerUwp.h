@@ -7,8 +7,10 @@
 
 #include <DevServerHelper.h>
 
+#include <winrt/Windows.Networking.Sockets.h>
 #include <atomic>
 #include <functional>
+#include <future>
 #include <memory>
 #include <string>
 
@@ -39,8 +41,11 @@ class DevSupportManager : public facebook::react::IDevSupportManager {
 
  private:
   void LaunchDevTools(const facebook::react::DevSettings &settings);
+  std::future<void> CreatePackagerConnection(const facebook::react::DevSettings &settings);
 
  private:
+  winrt::Windows::Networking::Sockets::MessageWebSocket m_ws{nullptr};
+  winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_wsMessageRevoker;
   bool m_exceptionCaught = false;
   std::atomic_bool m_cancellation_token;
 };

@@ -12,16 +12,14 @@
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Documents;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Documents;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -38,35 +36,36 @@ XamlView RawTextViewManager::CreateViewCore(int64_t /*tag*/) {
   return run;
 }
 
-void RawTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool RawTextViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto run = nodeToUpdate->GetView().as<winrt::Run>();
   if (run == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  if (propertyName == "text") {
+    run.Text(asHstring(propertyValue));
 
-    if (propertyName == "text") {
-      run.Text(asHstring(propertyValue));
-      if (nodeToUpdate->GetParent() != -1) {
-        if (auto instance = this->m_wkReactInstance.lock()) {
-          const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
-              instance->NativeUIManager()->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
-          if (parent && parent->m_children.size() == 1) {
-            auto view = parent->GetView();
-            auto textBlock = view.try_as<winrt::TextBlock>();
-            if (textBlock != nullptr) {
-              textBlock.Text(run.Text());
-            }
+    if (nodeToUpdate->GetParent() != -1) {
+      if (auto instance = this->m_wkReactInstance.lock()) {
+        const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
+            instance->NativeUIManager()->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
+        if (parent && parent->m_children.size() == 1) {
+          auto view = parent->GetView();
+          auto textBlock = view.try_as<winrt::TextBlock>();
+          if (textBlock != nullptr) {
+            textBlock.Text(run.Text());
           }
-
-          NotifyAncestorsTextChanged(instance.operator->(), nodeToUpdate);
         }
+
+        NotifyAncestorsTextChanged(instance.operator->(), nodeToUpdate);
       }
     }
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
 }
 
 void RawTextViewManager::NotifyAncestorsTextChanged(IReactInstance *instance, ShadowNodeBase *nodeToUpdate) {
@@ -83,7 +82,7 @@ void RawTextViewManager::NotifyAncestorsTextChanged(IReactInstance *instance, Sh
 
 void RawTextViewManager::SetLayoutProps(
     ShadowNodeBase & /*nodeToUpdate*/,
-    XamlView /*viewToUpdate*/,
+    const XamlView & /*viewToUpdate*/,
     float /*left*/,
     float /*top*/,
     float /*width*/,

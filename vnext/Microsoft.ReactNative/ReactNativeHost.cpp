@@ -9,8 +9,8 @@
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -80,7 +80,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
-  reactOptions.DeveloperSettings.SourceBundlePath = legacySettings.DebugBundlePath;
+  reactOptions.DeveloperSettings.SourceBundleName = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
   reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
   reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;

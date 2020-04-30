@@ -13,12 +13,11 @@
 #endif
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 using namespace Windows::UI::ViewManagement;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 //
 // AppTheme
@@ -27,7 +26,7 @@ namespace uwp {
 AppTheme::AppTheme(
     const std::shared_ptr<IReactInstance> &reactInstance,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-    : react::windows::AppTheme(), m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
+    : m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
   m_currentTheme = winrt::Application::Current().RequestedTheme();
   m_isHighContrast = m_accessibilitySettings.HighContrast();
   m_highContrastColors = getHighContrastColors();
@@ -53,10 +52,8 @@ AppTheme::AppTheme(
   });
 }
 
-AppTheme::~AppTheme() = default;
-
-const std::string AppTheme::getCurrentTheme() {
-  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light : AppTheme::dark;
+std::string AppTheme::getCurrentTheme() {
+  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::Light : AppTheme::Dark;
 }
 
 bool AppTheme::getIsHighContrast() {
@@ -94,5 +91,17 @@ void AppTheme::fireEvent(std::string const &eventName, folly::dynamic &&eventDat
     instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
   }
 }
-} // namespace uwp
-} // namespace react
+
+AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme) : m_appTheme(std::move(appTheme)) {}
+
+auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic> {
+  return {{"initialAppTheme", folly::dynamic{m_appTheme->getCurrentTheme()}},
+          {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
+          {"initialHighContrastColors", folly::dynamic{m_appTheme->getHighContrastColors()}}};
+}
+
+auto AppThemeModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method> {
+  return {};
+}
+
+} // namespace react::uwp

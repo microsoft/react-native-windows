@@ -22,12 +22,12 @@ class ScrollViewManager : public ControlViewManager {
 
   facebook::react::ShadowNode *createShadow() const override;
 
-  void AddView(XamlView parent, XamlView child, int64_t index) override;
-  void RemoveAllChildren(XamlView parent) override;
-  void RemoveChildAt(XamlView parent, int64_t index) override;
+  void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
+  void RemoveAllChildren(const XamlView &parent) override;
+  void RemoveChildAt(const XamlView &parent, int64_t index) override;
 
-  void SnapToInterval(XamlView parent, float interval);
-  void SnapToOffsets(XamlView parent, const winrt::IVectorView<float> &offsets);
+  void SnapToInterval(const XamlView &parent, float interval);
+  void SnapToOffsets(const XamlView &parent, const winrt::IVectorView<float> &offsets);
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;

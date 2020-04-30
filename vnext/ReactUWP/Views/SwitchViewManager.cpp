@@ -7,13 +7,12 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
-#include <winrt/Windows.UI.Xaml.Shapes.h>
 #include "SwitchViewManager.h"
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Shapes;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Shapes;
 } // namespace winrt
 
 namespace react {
@@ -136,28 +135,40 @@ XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/) {
   return toggleSwitch;
 }
 
-void SwitchViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool SwitchViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto toggleSwitch = nodeToUpdate->GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
-
-    if (propertyName == "disabled") {
-      if (propertyValue.isBool())
-        toggleSwitch.IsEnabled(!propertyValue.asBool());
-      else if (pair.second.isNull())
-        toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
-    } else if (propertyName == "value") {
-      if (propertyValue.isBool())
-        toggleSwitch.IsOn(propertyValue.asBool());
-      else if (pair.second.isNull())
-        toggleSwitch.ClearValue(winrt::ToggleSwitch::IsOnProperty());
-    }
+  if (propertyName == "disabled") {
+    if (propertyValue.isBool())
+      toggleSwitch.IsEnabled(!propertyValue.asBool());
+    else if (propertyValue.isNull())
+      toggleSwitch.ClearValue(xaml::Controls::Control::IsEnabledProperty());
+  } else if (propertyName == "value") {
+    if (propertyValue.isBool())
+      toggleSwitch.IsOn(propertyValue.asBool());
+    else if (propertyValue.isNull())
+      toggleSwitch.ClearValue(winrt::ToggleSwitch::IsOnProperty());
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
+}
+
+void SwitchViewManager::DispatchCommand(
+    const XamlView &viewToUpdate,
+    const std::string &commandId,
+    const folly::dynamic &commandArgs) {
+  if (commandId == "setValue") {
+    auto value = commandArgs[0].asBool();
+    viewToUpdate.as<winrt::ToggleSwitch>().IsEnabled(value);
+  } else {
+    Super::DispatchCommand(viewToUpdate, commandId, commandArgs);
+  }
 }
 
 } // namespace uwp

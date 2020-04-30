@@ -43,7 +43,6 @@ node_modules
 /bots/node_modules/
 
 /flow
-/flow-typed
 /dist
 /IntegrationTests/*.js
 /IntegrationTests/*.png
@@ -53,6 +52,8 @@ node_modules
 /RNTester
 /RNTester.*
 /index.*
+/interface.*
+/typings-index.*
 
 # Visual Studio
 .vs/
@@ -84,3 +85,6 @@ temp
 /coverage
 /third-party
 /packages/
+
+# Copied from root as part of build
+/README.md

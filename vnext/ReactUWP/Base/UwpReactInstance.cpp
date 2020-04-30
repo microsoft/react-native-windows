@@ -14,6 +14,7 @@
 // Modules
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Threading/JSQueueThread.h>
 #include <Threading/UIMessageQueueThread.h>
@@ -111,9 +112,10 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   // Objects that must be created on the UI thread
   auto deviceInfo(std::make_shared<DeviceInfo>(spThis));
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
-  std::shared_ptr<react::windows::AppTheme> appTheme =
+  std::shared_ptr<react::uwp::AppTheme> appTheme =
       std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
-  std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
+  I18nHelper::Instance().setInfo(I18nModule::GetI18nInfo());
+  auto appearanceListener = Mso::Make<AppearanceChangeListener>(spThis);
 
   // TODO: Figure out threading. What thread should this really be on?
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
@@ -122,9 +124,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
                                 spThis,
                                 deviceInfo,
                                 settings,
-                                i18nInfo = std::move(i18nInfo),
                                 appstate = std::move(appstate),
-                                appTheme = std::move(appTheme)]() mutable {
+                                appTheme = std::move(appTheme),
+                                appearanceListener = std::move(appearanceListener)]() mutable {
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
     devSettings->debugBundlePath = settings.DebugBundlePath;
@@ -199,12 +201,14 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         m_uiManager,
         m_batchingNativeThread,
         m_defaultNativeThread,
-        deviceInfo,
-        devSettings,
-        std::move(i18nInfo),
+        std::move(deviceInfo),
         std::move(appstate),
         std::move(appTheme),
+        std::move(appearanceListener),
         spThis);
+
+    cxxModules.emplace_back(
+        ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, m_batchingNativeThread);
 
     cxxModules.emplace_back(
         DevSettingsModule::name, []() { return std::make_unique<DevSettingsModule>(); }, m_batchingNativeThread);

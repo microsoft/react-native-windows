@@ -2,34 +2,26 @@
   "overrides": [
     {
       "type": "patch",
-      "file": "ReactCommon\\cxxreact\\NativeToJsBridge.h",
-      "baseFile": "ReactCommon\\cxxreact\\NativeToJsBridge.h",
-      "baseVersion": "0.61.5",
-      "baseHash": "b499aa46b3ed91570f8cb0de60e3add6c48cdf12",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.cpp",
       "baseFile": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.cpp",
-      "baseVersion": "0.61.5",
-      "baseHash": "32ede21afc7337f33184e0ce267b6fde32a6dcc1",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "b8840ecbf1d0a61d5e13d6f9690722e41cacb7ab",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.h",
       "baseFile": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.h",
-      "baseVersion": "0.61.5",
-      "baseHash": "d4b1ccfd00c77d4a9dacf5f1e668119847895895",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "2e4e38798e5504d891342e46da17ef3b073123d8",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "ReactCommon\\yoga\\yoga\\Yoga.cpp",
       "baseFile": "ReactCommon\\yoga\\yoga\\Yoga.cpp",
-      "baseVersion": "0.61.5",
-      "baseHash": "73d61e0276175fd2c9649f4c4b390f6173d365ae",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "20b4e90cca3e5e5bfcaa5fda7bb322a7efee1fa9",
       "issue": 3994
     }
   ]

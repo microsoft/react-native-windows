@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#pragma once
 #include <cxxreact/CxxModule.h>
 
 namespace facebook {
@@ -13,7 +15,7 @@ namespace uwp {
 
 class ImageViewManagerModule : public facebook::xplat::module::CxxModule {
  public:
-  ImageViewManagerModule(const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
+  ImageViewManagerModule();
   virtual ~ImageViewManagerModule();
 
   // CxxModule

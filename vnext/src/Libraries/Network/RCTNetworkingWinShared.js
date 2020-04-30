@@ -59,4 +59,4 @@ class RCTNetworking extends NativeEventEmitter {
   }
 }
 
-module.exports = new RCTNetworking();
+module.exports = (new RCTNetworking(): RCTNetworking);

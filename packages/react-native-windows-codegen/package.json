@@ -1,0 +1,30 @@
+{
+  "name": "react-native-windows-codegen",
+  "version": "0.0.4",
+  "description": "Generators for react-native-codegen targeting react-native-windows",
+  "main": "index.js",
+  "repository": "https://github.com/microsoft/react-native-windows",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix"
+  },
+  "bin": {
+    "react-native-windows-codegen": "./bin.js"
+  },
+  "dependencies": {
+    "chalk": "^3",
+    "globby": "^9.2.0",
+    "react-native-tscodegen": "0.62.1",
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/globby": "^9.1.0",
+    "@types/yargs": "^15.0.3",
+    "just-scripts": "^0.36.1"
+  }
+}

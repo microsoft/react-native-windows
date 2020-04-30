@@ -13,14 +13,13 @@
 #include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Documents;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Documents;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -40,7 +39,7 @@ class IconShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
 
  private:
-  static void UpdateFontColorProps(winrt::Windows::UI::Xaml::Documents::Glyphs glyphs);
+  static void UpdateFontColorProps(xaml::Documents::Glyphs glyphs);
 
   std::optional<double> m_emSize;
   double m_height = 24;
@@ -66,9 +65,11 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
     if (propertyName == "color") {
       if (IsValidColorValue(propertyValue))
         glyphs.Fill(BrushFrom(propertyValue));
-#if FUTURE
-      else if (propertyValue.isNull())
-        ; // Log error, must have a color
+#ifdef DEBUG
+      else if (propertyValue.isNull()) {
+        // Log error, must have a color
+        YellowBox("IconShadowNode - color property must be non-null");
+      }
 #endif
     } else if (propertyName == "fontUri") {
       if (propertyValue.isString()) {
@@ -129,7 +130,7 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
   if (appDictionary.HasKey(winrt::box_value(L"SystemAccentColor")))
     color = winrt::unbox_value<winrt::Windows::UI::Color>(appDictionary.Lookup(winrt::box_value(L"SystemAccentColor")));
 
-  glyphs.Fill(winrt::SolidColorBrush(color));
+  glyphs.Fill(xaml::Media::SolidColorBrush(color));
 }
 
 //

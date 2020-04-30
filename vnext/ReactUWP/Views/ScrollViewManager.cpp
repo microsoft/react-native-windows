@@ -11,10 +11,10 @@
 namespace react {
 namespace uwp {
 
-enum class ScrollViewCommands {
-  ScrollTo = 1,
-  ScrollToEnd,
-};
+namespace ScrollViewCommands {
+constexpr const char *ScrollTo = "scrollTo";
+constexpr const char *ScrollToEnd = "scrollToEnd";
+}; // namespace ScrollViewCommands
 
 class ScrollViewShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -22,7 +22,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
  public:
   ScrollViewShadowNode();
   ~ScrollViewShadowNode();
-  void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) override;
+  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
 
@@ -50,13 +50,13 @@ class ScrollViewShadowNode : public ShadowNodeBase {
 
   std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
 
-  winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
-  winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
   winrt::ScrollViewer::ViewChanged_revoker m_scrollViewerViewChangedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
   winrt::ScrollViewer::DirectManipulationCompleted_revoker m_scrollViewerDirectManipulationCompletedRevoker{};
   winrt::ScrollViewer::DirectManipulationStarted_revoker m_scrollViewerDirectManipulationStartedRevoker{};
-  winrt::Control::Loaded_revoker m_controlLoadedRevoker{};
+  xaml::Controls::Control::Loaded_revoker m_controlLoadedRevoker{};
 };
 
 ScrollViewShadowNode::ScrollViewShadowNode() {}
@@ -65,28 +65,23 @@ ScrollViewShadowNode::~ScrollViewShadowNode() {
   m_SIPEventHandler.reset();
 }
 
-void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
+void ScrollViewShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
-  switch (commandId) {
-    case static_cast<int64_t>(ScrollViewCommands::ScrollTo): {
-      double x = commandArgs[0].asDouble();
-      double y = commandArgs[1].asDouble();
-      bool animated = commandArgs[2].asBool();
-      scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
-      break;
-    }
-    case static_cast<int64_t>(ScrollViewCommands::ScrollToEnd): {
-      bool animated = commandArgs[0].asBool();
-      bool horiz = scrollViewer.HorizontalScrollMode() == winrt::ScrollMode::Auto;
-      if (horiz)
-        scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
-      else
-        scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated /*disableAnimation*/);
-      break;
-    }
+  if (commandId == ScrollViewCommands::ScrollTo) {
+    double x = commandArgs[0].asDouble();
+    double y = commandArgs[1].asDouble();
+    bool animated = commandArgs[2].asBool();
+    scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
+  } else if (commandId == ScrollViewCommands::ScrollToEnd) {
+    bool animated = commandArgs[0].asBool();
+    bool horiz = scrollViewer.HorizontalScrollMode() == winrt::ScrollMode::Auto;
+    if (horiz)
+      scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
+    else
+      scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated /*disableAnimation*/);
   }
 }
 
@@ -413,11 +408,10 @@ const char *ScrollViewManager::GetName() const {
 }
 
 folly::dynamic ScrollViewManager::GetCommands() const {
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object(
-      "scrollTo", static_cast<std::underlying_type_t<ScrollViewCommands>>(ScrollViewCommands::ScrollTo))(
-      "scrollToEnd", static_cast<std::underlying_type_t<ScrollViewCommands>>(ScrollViewCommands::ScrollToEnd)));
-  return commands;
+  // Upstream JS will dispatch the string directly instead of ever actually calling this, but providing a real
+  // implementation is simple enough in case anything changes.
+  return folly::dynamic::object(ScrollViewCommands::ScrollTo, ScrollViewCommands::ScrollTo)(
+      ScrollViewCommands::ScrollToEnd, ScrollViewCommands::ScrollToEnd);
 }
 
 folly::dynamic ScrollViewManager::GetNativeProps() const {
@@ -462,7 +456,7 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
   return scrollViewer;
 }
 
-void ScrollViewManager::AddView(XamlView parent, XamlView child, [[maybe_unused]] int64_t index) {
+void ScrollViewManager::AddView(const XamlView &parent, const XamlView &child, [[maybe_unused]] int64_t index) {
   assert(index == 0);
 
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
@@ -470,18 +464,18 @@ void ScrollViewManager::AddView(XamlView parent, XamlView child, [[maybe_unused]
   snapPointManager->Content(child);
 }
 
-void ScrollViewManager::RemoveAllChildren(XamlView parent) {
+void ScrollViewManager::RemoveAllChildren(const XamlView &parent) {
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
   auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
   snapPointManager->Content(nullptr);
 }
 
-void ScrollViewManager::RemoveChildAt(XamlView parent, [[maybe_unused]] int64_t index) {
+void ScrollViewManager::RemoveChildAt(const XamlView &parent, [[maybe_unused]] int64_t index) {
   assert(index == 0);
   RemoveAllChildren(parent);
 }
 
-void ScrollViewManager::SnapToInterval(XamlView parent, float interval) {
+void ScrollViewManager::SnapToInterval(const XamlView &parent, float interval) {
   if (parent) {
     if (const auto scrollViewer = parent.as<winrt::ScrollViewer>()) {
       ScrollViewUWPImplementation(scrollViewer).SnapToInterval(interval);
@@ -489,7 +483,7 @@ void ScrollViewManager::SnapToInterval(XamlView parent, float interval) {
   }
 }
 
-void ScrollViewManager::SnapToOffsets(XamlView parent, const winrt::IVectorView<float> &offsets) {
+void ScrollViewManager::SnapToOffsets(const XamlView &parent, const winrt::IVectorView<float> &offsets) {
   if (parent) {
     if (const auto scrollViewer = parent.as<winrt::ScrollViewer>()) {
       ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);

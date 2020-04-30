@@ -65,7 +65,8 @@ namespace Microsoft.ReactNative.Managed
         module.CastTo(propertyInfo.DeclaringType).SetProperty(propertyInfo,
           AutoLambda(propertyInfo.PropertyType,
             Parameters(functionArgTypes, out var args),
-            reactContext.CallExt(CallJSFunctionOf(functionArgTypes), Constant(moduleName), Constant(functionName), args))));
+            New(ReactContextConstructor(), reactContext).Call(
+              CallJSFunctionOf(functionArgTypes), Constant(moduleName), Constant(functionName), args))));
     }
 
     private ReactFunctionImpl MakeFunction(FieldInfo fieldInfo, string moduleName, string functionName, Type[] functionArgTypes)
@@ -84,7 +85,8 @@ namespace Microsoft.ReactNative.Managed
         module.CastTo(fieldInfo.DeclaringType).SetField(fieldInfo,
           AutoLambda(fieldInfo.FieldType,
             Parameters(functionArgTypes, out var args),
-            reactContext.CallExt(CallJSFunctionOf(functionArgTypes), Constant(moduleName), Constant(functionName), args))));
+            New(ReactContextConstructor(), reactContext).Call(
+              CallJSFunctionOf(functionArgTypes), Constant(moduleName), Constant(functionName), args))));
     }
 
     public delegate void ReactFunctionImpl(object module, IReactContext reactContext);

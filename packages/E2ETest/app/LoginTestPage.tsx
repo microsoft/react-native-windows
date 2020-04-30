@@ -4,29 +4,42 @@
  */
 
 import React, { useState } from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import { USERNAME_ON_LOGIN, PASSWORD_ON_LOGIN, SUBMIT_ON_LOGIN, LOGINRESULT_ON_LOGIN, SHOWPASSWORD_ON_LOGIN } from './Consts';
+import {
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
+import {
+  USERNAME_ON_LOGIN,
+  PASSWORD_ON_LOGIN,
+  SUBMIT_ON_LOGIN,
+  LOGINRESULT_ON_LOGIN,
+  SHOWPASSWORD_ON_LOGIN,
+} from './Consts';
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
   },
   input: {
     height: 40,
     backgroundColor: 'rgba(225,225,225,0.2)',
     marginBottom: 10,
     padding: 10,
-    color: '#fff'
+    color: '#000000',
   },
   buttonContainer: {
     backgroundColor: '#2980b6',
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
-    fontWeight: '700'
-  }
+    fontWeight: '700',
+  },
 });
 
 export function LoginTestPage() {
@@ -36,9 +49,9 @@ export function LoginTestPage() {
   const [passwordHidden, setPasswordHidden] = useState(true);
 
   const onPressShowPassword = () => {
-      var previousState = passwordHidden;
-      setPasswordHidden(!previousState);
-   }
+    var previousState = passwordHidden;
+    setPasswordHidden(!previousState);
+  };
 
   const onPress = () => {
     if (userName === 'username' && password === 'password') {
@@ -49,29 +62,42 @@ export function LoginTestPage() {
   };
   return (
     <View>
-      <TextInput style={styles.input}
-        placeholder='Email or Mobile Num'
-        placeholderTextColor='rgba(225,225,225,0.7)'
+      <TextInput
+        style={styles.input}
+        placeholder="Email or Mobile Num"
+        placeholderTextColor="rgba(225,225,225,0.7)"
         testID={USERNAME_ON_LOGIN}
-        onChange={(text) => { setUserName(text.nativeEvent.text) }} />
+        onChange={text => {
+          setUserName(text.nativeEvent.text);
+        }}
+      />
 
-      <TextInput style={styles.input}
-        placeholder='Password'
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
         testID={PASSWORD_ON_LOGIN}
-        placeholderTextColor='rgba(225,225,225,0.7)'
-        secureTextEntry = {passwordHidden}
-        onChange={(text) => { setPassword(text.nativeEvent.text) }} />
+        placeholderTextColor="rgba(225,225,225,0.7)"
+        secureTextEntry={passwordHidden}
+        onChange={text => {
+          setPassword(text.nativeEvent.text);
+        }}
+      />
 
-      <Button title= {passwordHidden?"Show Password":"Hide Password"} 
-        onPress={onPressShowPassword} 
-        testID={SHOWPASSWORD_ON_LOGIN}/>
+      <Button
+        title={passwordHidden ? 'Show Password' : 'Hide Password'}
+        onPress={onPressShowPassword}
+        testID={SHOWPASSWORD_ON_LOGIN}
+      />
 
-      <TouchableOpacity style={styles.buttonContainer}
+      <TouchableOpacity
+        style={styles.buttonContainer}
         testID={SUBMIT_ON_LOGIN}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
 
       <Text testID={LOGINRESULT_ON_LOGIN}>{loginState}</Text>
-    </View >);
+    </View>
+  );
 }

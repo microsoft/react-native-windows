@@ -8,16 +8,13 @@
 #include <Modules/NativeUIManager.h>
 
 #include <ReactUWP/Utils/Helpers.h>
-#include <winrt/Windows.ApplicationModel.Core.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::ViewManagement::Core;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Media;
 } // namespace winrt
 namespace react {
 namespace uwp {
@@ -39,7 +36,7 @@ void SIPEventHandler::AttachView(XamlView xamlView, bool fireKeyboardEvents) {
   if (winrt::VisualTreeHelper::GetParent(xamlView)) {
     InitializeCoreInputView();
   } else {
-    m_loadedRevoker = xamlView.as<winrt::FrameworkElement>().Loaded(
+    m_loadedRevoker = xamlView.as<xaml::FrameworkElement>().Loaded(
         winrt::auto_revoke, [this](const auto & /*sender*/, const auto &) { InitializeCoreInputView(); });
   }
 }
@@ -52,7 +49,7 @@ void SIPEventHandler::InitializeCoreInputView() {
 
     if (Is19H1OrHigher()) {
       // 19H1 and higher supports island scenarios
-      auto uiElement(xamlView.as<winrt::UIElement>());
+      auto uiElement(xamlView.as<xaml::UIElement>());
       m_coreInputView = winrt::CoreInputView::GetForUIContext(uiElement.UIContext());
     } else {
       m_coreInputView = winrt::CoreInputView::GetForCurrentView();

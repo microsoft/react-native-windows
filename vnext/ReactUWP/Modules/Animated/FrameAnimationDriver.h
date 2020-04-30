@@ -17,7 +17,7 @@ class FrameAnimationDriver : public AnimationDriver {
       const folly::dynamic &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
-  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(
+  std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> MakeAnimation(
       const folly::dynamic &config) override;
 
   double ToValue() override;

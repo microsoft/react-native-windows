@@ -43,7 +43,7 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
   const auto [rawValueAnimation, offsetAnimation] = [this]() {
     if (const auto manager = m_manager.lock()) {
       if (const auto parent = manager->GetValueAnimatedNode(m_parentTag)) {
-        const auto compositor = winrt::Window::Current().Compositor();
+        const auto compositor = xaml::Window::Current().Compositor();
 
         const auto rawValueAnimation = CreateExpressionAnimation(compositor, *parent);
         rawValueAnimation.Expression(
@@ -60,7 +60,7 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
         return std::make_tuple(rawValueAnimation, offsetAnimation);
       }
     }
-    return std::tuple<winrt::ExpressionAnimation, winrt::ExpressionAnimation>(nullptr, nullptr);
+    return std::tuple<comp::ExpressionAnimation, comp::ExpressionAnimation>(nullptr, nullptr);
   }();
 
   m_propertySet.StartAnimation(s_valueName, rawValueAnimation);
@@ -70,7 +70,7 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
   m_offsetAnimation = offsetAnimation;
 }
 
-winrt::ExpressionAnimation InterpolationAnimatedNode::CreateExpressionAnimation(
+comp::ExpressionAnimation InterpolationAnimatedNode::CreateExpressionAnimation(
     const winrt::Compositor &compositor,
     ValueAnimatedNode &parent) {
   const auto animation = compositor.CreateExpressionAnimation();

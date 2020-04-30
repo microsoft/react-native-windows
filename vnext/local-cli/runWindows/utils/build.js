@@ -9,11 +9,13 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const {execSync} = require('child_process');
 const glob = require('glob');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
 const {commandWithProgress, newSpinner} = require('./commandWithProgress');
 const util = require('util');
+const chalk = require('chalk');
 const existsAsync = util.promisify(fs.exists);
 
 async function buildSolution(
@@ -42,7 +44,7 @@ async function buildSolution(
 }
 
 async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
-  const text = 'Restoring NuGets';
+  const text = 'Restoring NuGet packages ';
   const spinner = newSpinner(text);
   console.log(nugetPath);
   await commandWithProgress(
@@ -63,18 +65,24 @@ async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
 }
 
 async function restoreNuGetPackages(options, slnFile, verbose) {
-  const nugetPath =
+  let nugetPath =
     options.nugetPath || path.join(os.tmpdir(), 'nuget.4.9.2.exe');
 
-  const dlNugetText = 'Downloading NuGet Binary';
-  const ensureNugetSpinner = newSpinner(dlNugetText);
-  const exists = await existsAsync(nugetPath);
-  if (!exists) {
+  const ensureNugetSpinner = newSpinner('Locating NuGet executable');
+  if (!(await existsAsync(nugetPath))) {
+    try {
+      nugetPath = execSync('where nuget')
+        .toString()
+        .trim();
+    } catch {}
+  }
+
+  if (!(await existsAsync(nugetPath))) {
     await commandWithProgress(
       ensureNugetSpinner,
-      dlNugetText,
+      'Downloading NuGet Binary',
       'powershell',
-      `Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
+      `$progressPreference = [System.Management.Automation.ActionPreference]::SilentlyContinue; Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
         ' ',
       ),
       verbose,
@@ -82,30 +90,52 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   }
   ensureNugetSpinner.succeed('Found NuGet Binary');
 
+  if (verbose) {
+    console.log(`Using Nuget: ${nugetPath}`);
+  }
+
   const msbuildTools = MSBuildTools.findAvailableVersion('x86', verbose);
-  await nugetRestore(
-    nugetPath,
-    slnFile,
-    verbose,
-    msbuildTools.installationVersion,
-  );
+  try {
+    await nugetRestore(
+      nugetPath,
+      slnFile,
+      verbose,
+      msbuildTools.installationVersion,
+    );
+  } catch (e) {
+    if (!options.isRetryingNuget) {
+      const retryOptions = Object.assign({isRetryingNuget: true}, options);
+      fs.unlinkSync(nugetPath);
+      return restoreNuGetPackages(retryOptions, slnFile, verbose);
+    }
+    throw e;
+  }
 }
 
 function getSolutionFile(options) {
-  return glob.sync(path.join(options.root, 'windows/*.sln'))[0];
+  const solutions = glob.sync(path.join(options.root, 'windows/*.sln'));
+  if (solutions.length == 0) {
+    return null;
+  } else if (solutions.length == 1) {
+    return solutions[0];
+  } else {
+    console.log(chalk.red('More than one solution file found:'));
+    console.log(chalk.bold(solutions.map(x => fs.realpathSync(x)).join('\n')));
+    console.log('Use --sln {slnFile} to specify which one to build');
+    return null;
+  }
 }
 
 function parseMsBuildProps(options) {
+  let result = {};
   if (options.msbuildprops) {
-    var result = {};
-    var props = options.msbuildprops.split(',');
-    for (var i = 0; i < props.length; i++) {
-      var prop = props[i].split('=');
+    const props = options.msbuildprops.split(',');
+    for (let i = 0; i < props.length; i++) {
+      const prop = props[i].split('=');
       result[prop[0]] = prop[1];
     }
-    return result;
   }
-  return null;
+  return result;
 }
 
 module.exports = {

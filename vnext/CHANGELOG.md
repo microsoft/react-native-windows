@@ -1,8 +1,260 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Apr 2020 17:16:44 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2020 18:40:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.54
+
+Thu, 30 Apr 2020 18:40:40 GMT
+
+### Changes
+
+- Expose YellowBox functionality to native code (asklar@microsoft.com)
+- .net projects need more work to build a package layout (asklar@microsoft.com)
+- Package Fixes (ngerlem@microsoft.com)
+
+## 0.0.0-master.53
+
+Thu, 30 Apr 2020 00:04:27 GMT
+
+### Changes
+
+- auto-detect RTL and push into root view (kmelmon@microsoft.com)
+- Refactor TestHook out of ViewManagerBase and special case layout properties (asklar@microsoft.com)
+- Expose Debug macro for hresult_error. Start catching these... (asklar@microsoft.com)
+- Try uninstalling without elevation in case since it is not needed for layout installs (debug) (asklar@microsoft.com)
+
+## 0.0.0-master.52
+
+Wed, 29 Apr 2020 00:04:54 GMT
+
+### Changes
+
+- Start forking namespace and includes for WUX->MUX move (asklar@microsoft.com)
+- Update react version (kaigu@microsoft.com)
+- Exclude unittests and proposals from being published in the npm package (dannyvv@microsoft.com)
+
+## 0.0.0-master.51
+
+Tue, 28 Apr 2020 00:04:13 GMT
+
+### Changes
+
+- Added C# ReactContext for Module Initialize method (vmorozov@microsoft.com)
+- Use readme file from root of repo for react-native-windows (acoates@microsoft.com)
+
+## 0.0.0-master.50
+
+Mon, 27 Apr 2020 00:04:59 GMT
+
+### Changes
+
+- Added C++ ReactContext for Module Initialize method (vmorozov@microsoft.com)
+
+## 0.0.0-master.49
+
+Sun, 26 Apr 2020 00:04:59 GMT
+
+### Changes
+
+- Use separate brush for text control border (kaigu@microsoft.com)
+- Fix typo causing activity indicators to be sad and colorless (asklar@microsoft.com)
+- Disable copying V8 dll to target output; we need a clearer way to distinguish uwp vs. win32 in the build system but this will do for now to unblock #4475 (tudorm@microsoft.com)
+
+## 0.0.0-master.48
+
+Sat, 25 Apr 2020 00:05:26 GMT
+
+### Changes
+
+- Better error reporting and elevating if necessary in CLI (asklar@microsoft.com)
+- Detect when we have more than one SLN as it may not be obvious to the user. Add --sln option to CLI. (asklar@microsoft.com)
+- Install from layout in Debug builds (asklar@microsoft.com)
+
+## 0.0.0-master.47
+
+Fri, 24 Apr 2020 00:04:41 GMT
+
+### Changes
+
+- Pass XamlView's through ReactUwp View Managers by Const Ref (ngerlem@microsoft.com)
+- fix RTL (kmelmon@microsoft.com)
+- Use spec file for clipboard module (acoates@microsoft.com)
+- Fix Missing Include in DevSupportManagerUwp (ngerlem@microsoft.com)
+- Fixed .Net Native crash for custom struct deserialization (vmorozov@microsoft.com)
+
+## 0.0.0-master.46
+
+Thu, 23 Apr 2020 00:04:37 GMT
+
+### Changes
+
+- Hook up to packager websocket to allow 'r' to reload instance (acoates@microsoft.com)
+- Handle syntax errors in RedBox (asklar@microsoft.com)
+- Publish ship and debug bits in the nuget (acoates@microsoft.com)
+- Implement String ViewManager Command IDs (ngerlem@microsoft.com)
+
+## 0.0.0-master.45
+
+Wed, 22 Apr 2020 00:04:29 GMT
+
+### Changes
+
+- Make default template build non-dev bundle when not using debug configuration (acoates@microsoft.com)
+- Implemented C++ TurboModule compile time spec validation (vmorozov@microsoft.com)
+- Fix devtools connection to match RN0.62 (acoates@microsoft.com)
+
+## 0.0.0-master.44
+
+Sun, 19 Apr 2020 00:04:29 GMT
+
+### Changes
+
+- fix include paths (kmelmon@microsoft.com)
+
+## 0.0.0-master.43
+
+Sat, 18 Apr 2020 00:04:34 GMT
+
+### Changes
+
+- Allow enabling of direct debugging through the CLI. (12337821+nasadigital@users.noreply.github.com)
+- Implelent Shared StatusBarManagerModule and Do Module Cleanup (ngerlem@microsoft.com)
+- Implement AppearanceModule (ngerlem@microsoft.com)
+- Add support for React Native BackHandler API (jahiggin@microsoft.com)
+- remove AccessibilityStates (kmelmon@microsoft.com)
+- Fix issue with yoga layout in x64 release (acoates@microsoft.com)
+
+## 0.0.0-master.42
+
+Fri, 17 Apr 2020 00:04:27 GMT
+
+### Changes
+
+- run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now. (asklar@winse.microsoft.com)
+- Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows (acoates@microsoft.com)
+- implement accessibilityState (kmelmon@microsoft.com)
+
+## 0.0.0-master.41
+
+Wed, 15 Apr 2020 23:02:16 GMT
+
+### Changes
+
+- Fix PickerWindows (and DatePickerExample Page) (ngerlem@microsoft.com)
+
+## 0.0.0-master.40
+
+Wed, 15 Apr 2020 22:26:36 GMT
+
+### Changes
+
+- Use a custom resolver wrapper to allow metro to run for multiple platforms at once (acoates@microsoft.com)
+
+## 0.0.0-master.39
+
+Wed, 15 Apr 2020 19:18:34 GMT
+
+### Changes
+
+- Rename DeveloperSettings.SourceBundlePath -> SourceBundleName (rezha@microsoft.com)
+
+## 0.0.0-master.38
+
+Wed, 15 Apr 2020 07:53:39 GMT
+
+### Changes
+
+- fix bug where not specifying height on TextInput causes 0 height (kmelmon@microsoft.com)
+
+## 0.0.0-master.37
+
+Tue, 14 Apr 2020 19:34:42 GMT
+
+### Changes
+
+- [generator] Use `npx` for consistency (eloy.de.enige@gmail.com)
+
+## 0.0.0-master.36
+
+Tue, 14 Apr 2020 18:14:12 GMT
+
+### Changes
+
+- Elevate to install app certificate if necessary (asklar@microsoft.com)
+
+## 0.0.0-master.35
+
+Tue, 14 Apr 2020 14:59:17 GMT
+
+### Changes
+
+- Upgrade to React Native 0.62 (ngerlem@microsoft.com)
+
+## 0.0.0-master.34
+
+Tue, 14 Apr 2020 02:46:30 GMT
+
+### Changes
+
+- add missing headers to proj file (kmelmon@microsoft.com)
+
+## 0.0.0-master.33
+
+Mon, 13 Apr 2020 18:45:40 GMT
+
+### Changes
+
+- Remove Folly ContinueOnError (ngerlem@microsoft.com)
+
+## 0.0.0-master.32
+
+Mon, 13 Apr 2020 07:51:05 GMT
+
+### Changes
+
+- Refactor View managers to detect unimplemented props (asklar@microsoft.com)
+
+## 0.0.0-master.31
+
+Sat, 11 Apr 2020 02:36:32 GMT
+
+### Changes
+
+- Improve RedBox ux, and don't require elevation unless it's the first time running the build (and need to enable dev mode) (asklar@microsoft.com)
+
+## 0.0.0-master.30
+
+Fri, 10 Apr 2020 22:03:49 GMT
+
+### Changes
+
+- Simplified C++ macros and improved their comments (vmorozov@microsoft.com)
+
+## 0.0.0-master.29
+
+Fri, 10 Apr 2020 14:44:13 GMT
+
+### Changes
+
+- Don't set readyState on connection error (julio@rochsquadron.net)
+
+## 0.0.0-master.28
+
+Fri, 10 Apr 2020 06:15:31 GMT
+
+### Changes
+
+- Improve inner loop and error reporting (local CLI) (asklar@microsoft.com)
+
+## 0.0.0-master.27
+
+Thu, 09 Apr 2020 21:36:07 GMT
+
+### Changes
+
+- Enable managed unit tests (jthysell@microsoft.com)
 
 ## 0.0.0-master.26
 

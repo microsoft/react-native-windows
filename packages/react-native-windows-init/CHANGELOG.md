@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 07 Apr 2020 18:46:38 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Apr 2020 00:04:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.5
+
+Wed, 22 Apr 2020 00:04:29 GMT
+
+### Patches
+
+- Fix react-native-windows-init to work with tags (@master) (acoates@microsoft.com)
 
 ## 0.1.4
 

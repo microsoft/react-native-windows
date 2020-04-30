@@ -7,13 +7,12 @@
 #include "future/future.h"
 
 #include <functional>
+#include "../include/CppWinRTIncludes.h"
 #include "JSValue.h"
 
 #undef GetCurrentTime
-#include "Windows.UI.Xaml.h"
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -112,8 +111,8 @@ struct ReactModuleBuilderMock {
   std::vector<ConstantProviderDelegate> m_constantProviders;
   std::map<std::wstring, std::tuple<MethodReturnType, MethodDelegate>> m_methods;
   std::map<std::wstring, SyncMethodDelegate> m_syncMethods;
-  bool m_isResolveCallbackCalled;
-  bool m_isRejectCallbackCalled;
+  bool m_isResolveCallbackCalled{false};
+  bool m_isRejectCallbackCalled{false};
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsFunctionHandler;
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsEventHandler;
 };
@@ -122,7 +121,7 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
   void DispatchEvent(
-      FrameworkElement const & /*view*/,
+      xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,
       JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {}
 

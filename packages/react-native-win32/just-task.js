@@ -33,7 +33,7 @@ task('apiExtractorUpdate', apiExtractorUpdateTask());
 task('apiDocumenter', () => {
   require('child_process').execSync(
     'npx @microsoft/api-documenter markdown -i temp -o docs/api',
-    { stdio: 'inherit' },
+    {stdio: 'inherit'},
   );
 });
 
@@ -41,7 +41,7 @@ task('eslint', () => {
   return eslintTask();
 });
 task('eslint:fix', () => {
-  return eslintTask({ fix: true });
+  return eslintTask({fix: true});
 });
 task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
@@ -54,7 +54,7 @@ task('initRNLibraries', () => {
 });
 
 task('flow-check', () => {
-  require('child_process').execSync('npx flow check', { stdio: 'inherit' });
+  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
 });
 
 task('ts', () => {
@@ -70,8 +70,8 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['dist', 'flow', 'flow-typed', 'jest', 'Libraries', 'RNTester', 'lib'].map(
-      p => path.join(process.cwd(), p),
+    ['dist', 'flow', 'jest', 'Libraries', 'RNTester'].map(p =>
+      path.join(process.cwd(), p),
     ),
   );
 });

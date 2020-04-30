@@ -7,12 +7,23 @@
 
 #include "winrt/Microsoft.ReactNative.h"
 
-#define REACT_STRUCT(type)                                                           \
-  struct type;                                                                       \
-  winrt::Microsoft::ReactNative::FieldMap GetStructInfo(type *) noexcept {           \
-    winrt::Microsoft::ReactNative::FieldMap fieldMap{};                              \
-    winrt::Microsoft::ReactNative::CollectStructFields<type, __COUNTER__>(fieldMap); \
-    return fieldMap;                                                                 \
+// We implement optional parameter macros based on the StackOverflow discussion:
+// https://stackoverflow.com/questions/3046889/optional-parameters-with-c-macros
+// Please refer to it if you want to understand it works.
+#define INTERNAL_REACT_GET_ARG_3(arg1, arg2, arg3, ...) arg3
+#define INTERNAL_REACT_RECOMPOSER_3(argsWithParentheses) INTERNAL_REACT_GET_ARG_3 argsWithParentheses
+
+//
+// These macros are internal implementation details for REACT_STRUCT and REACT_FIELD macros.
+// Please skip below to read about REACT_STRUCT and REACT_FIELD macros.
+//
+
+#define INTERNAL_REACT_STRUCT(structType)                                                  \
+  struct structType;                                                                       \
+  inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(structType *) noexcept {    \
+    winrt::Microsoft::ReactNative::FieldMap fieldMap{};                                    \
+    winrt::Microsoft::ReactNative::CollectStructFields<structType, __COUNTER__>(fieldMap); \
+    return fieldMap;                                                                       \
   }
 
 #define INTERNAL_REACT_FIELD_2_ARGS(field, fieldName)                      \
@@ -23,12 +34,25 @@
     fieldMap.emplace(fieldName, &TClass::field);                           \
   }
 
-#define INTERNAL_REACT_FIELD_1_ARGS(field) INTERNAL_REACT_FIELD_2_ARGS(field, L## #field)
-#define INTERNAL_REACT_FIELD_3RD_ARG(arg1, arg2, arg3, ...) arg3
-#define INTERNAL_REACT_FIELD_RECOMPOSER2(argsWithParentheses) INTERNAL_REACT_FIELD_3RD_ARG argsWithParentheses
+#define INTERNAL_REACT_FIELD_1_ARG(field) INTERNAL_REACT_FIELD_2_ARGS(field, L## #field)
 #define INTERNAL_REACT_FIELD(...) \
-  INTERNAL_REACT_FIELD_RECOMPOSER2((__VA_ARGS__, INTERNAL_REACT_FIELD_2_ARGS, INTERNAL_REACT_FIELD_1_ARGS, ))
+  INTERNAL_REACT_RECOMPOSER_3((__VA_ARGS__, INTERNAL_REACT_FIELD_2_ARGS, INTERNAL_REACT_FIELD_1_ARG, ))
 
+// REACT_STRUCT(structType)
+// Arguments:
+// - structType (required) - the struct name the macro is attached to.
+//
+// REACT_STRUCT annotates a C++ struct that then can be serialized and deserialized with IJSValueReader and
+// IJSValueWriter. With the help of REACT_FIELD it generates FieldMap associated with the struct which then used by
+// ReactValue and ReactWrite methods.
+#define REACT_STRUCT(structType) INTERNAL_REACT_STRUCT(structType)
+
+// REACT_FIELD(field, [opt] fieldName)
+// Arguments:
+// - field (required) - the field the macro is attached to.
+// - fieldName (optional) - the field name visible to JavaScript. Default is the field name.
+//
+// REACT_FIELD annotates a field to be added to FieldMap which then used by ReactValue and ReactWrite methods.
 #define REACT_FIELD(/* field, [opt] fieldName */...) INTERNAL_REACT_FIELD(__VA_ARGS__)(__VA_ARGS__)
 
 namespace winrt::Microsoft::ReactNative {

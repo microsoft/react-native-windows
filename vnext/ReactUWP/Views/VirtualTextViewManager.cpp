@@ -9,14 +9,12 @@
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Documents;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Documents;
 } // namespace winrt
 
 namespace react {
@@ -33,43 +31,38 @@ XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/) {
   return winrt::Span();
 }
 
-void VirtualTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+bool VirtualTextViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   auto span = nodeToUpdate->GetView().as<winrt::Span>();
   if (span == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
-
-    // FUTURE: In the future cppwinrt will generate code where static methods on
-    // base types can be called.  For now we specify the base type explicitly
-    if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    }
+  // FUTURE: In the future cppwinrt will generate code where static methods on
+  // base types can be called.  For now we specify the base type explicitly
+  if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
 }
 
-void VirtualTextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
+void VirtualTextViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto span(parent.as<winrt::Span>());
   auto childInline(child.as<winrt::Inline>());
   span.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
 }
 
-void VirtualTextViewManager::RemoveAllChildren(XamlView parent) {
+void VirtualTextViewManager::RemoveAllChildren(const XamlView &parent) {
   auto span(parent.as<winrt::Span>());
   span.Inlines().Clear();
 }
 
-void VirtualTextViewManager::RemoveChildAt(XamlView parent, int64_t index) {
+void VirtualTextViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   auto span(parent.as<winrt::Span>());
   return span.Inlines().RemoveAt(static_cast<uint32_t>(index));
 }

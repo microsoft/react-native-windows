@@ -405,7 +405,7 @@ exports.examples = [
   {
     // [TODO(macOS ISS#2323203)
     title: 'ToolTip',
-    render() {
+    render(): React.Node {
       return (
         <View tooltip="Parent View">
           <Text style={{fontSize: 11}}>

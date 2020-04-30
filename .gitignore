@@ -122,6 +122,7 @@ packages/
 #Other files
 *.DotSettings
 .vs/
+.vscode/
 *project.lock.json
 jsconfig.json
 package-lock.json
@@ -155,3 +156,4 @@ bld/
 *_coverage.xml
 
 tsdoc-metadata.json
+*.dmp

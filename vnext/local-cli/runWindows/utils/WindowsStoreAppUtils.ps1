@@ -62,7 +62,13 @@ function Uninstall-App {
     $package = Get-AppxPackage $ID
 
     if($package) {
-        Remove-AppxPackage $package.PackageFullName
+        $pfn = $package.PackageFullName
+        $command = "Remove-AppxPackage $pfn -ErrorAction Stop"
+        try {
+            Invoke-Expression $command
+        } catch {
+            Invoke-Expression-MayElevate $command -ErrorAction Stop
+        }
     }
 }
 
@@ -81,6 +87,34 @@ function CheckIfNeedDeveloperLicense
     return $Result
 }
 
+function IsElevated {
+    return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
+}
+
+function RunElevatedPowerShellSync([string]$Command) {
+    $process = Start-Process Powershell -ArgumentList "$Command" -Verb RunAs -ErrorAction Stop -PassThru
+    if ($process -ne $null) {
+        $process.WaitForExit();
+        if ($process.ExitCode -ne 0) {
+            $code = $process.ExitCode;
+            throw "Command exited with code $code";
+        }
+    } else {
+        throw "Process creation failed for $Command";
+    }
+}
+
+function Invoke-Expression-MayElevate([string]$Command) {
+    if (!(IsElevated))
+    {
+        RunElevatedPowerShellSync($Command) -ErrorAction Stop
+    }
+    else
+    {
+        Invoke-Expression ("& $Command") -ErrorAction Stop
+    }
+}
+
 function EnableDevmode {
     $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
     
@@ -88,7 +122,10 @@ function EnableDevmode {
         New-Item -Path $RegistryKeyPath -ItemType Directory -Force
     }
 
-    Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1
+    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+    if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
+        Invoke-Expression-MayElevate("Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop") -ErrorAction Stop;
+    }
 }
 
 #
@@ -129,14 +166,16 @@ function Install-App {
         [string] $Path, <# Full path to Add-AppDevPackage.ps1 #>
         [switch] $Force = $false
     )
-    if (!$Force -and ((CheckIfNeedDeveloperLicense) -or (CheckIfNeedInstallCertificate (Join-Path $Path ".."))))
+    $needInstallCertificate = CheckIfNeedInstallCertificate (Join-Path $Path "..");
+    if (!$Force -and ((CheckIfNeedDeveloperLicense) -or ($needInstallCertificate)))
     {
         # we can't run the script with -force param if license/certificate installation step is required
         Invoke-Expression ("& `"$Path`"")
     }
     else
     {
-        Invoke-Expression ("& `"$Path`" -force")
+        $Path = [System.IO.Path]::GetFullPath($Path);
+        Invoke-Expression-MayElevate("`"$Path`" -force") -ErrorAction Stop;
     }
 }
 
@@ -166,15 +205,20 @@ function Start-Locally {
         [Parameter(Mandatory=$false, Position=1, ValueFromPipelineByPropertyName=$true)]
         [string[]] $argv
     )
-    
+
     $package = Get-AppxPackage $ID
     $manifest = Get-appxpackagemanifest $package
     $applicationUserModelId = $package.PackageFamilyName + "!" + $manifest.package.applications.application.id
 
-    Write-Host "ActivateApplication: " $applicationUserModelId
-
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $args = [system.String]::Join(",", $argv)
-    $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
+    $args = [system.String]::Join(" ", $argv)
+    try {
+        $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
+    } catch {
+        $log = Get-EventLog 'Application' -EntryType Error -Message "*$ID*" -Newest 1
+        if ($log -ne $null) {
+            Write-Error $log.Message
+        }
+    }
 }

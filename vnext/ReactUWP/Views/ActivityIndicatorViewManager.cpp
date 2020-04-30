@@ -27,28 +27,27 @@ folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const {
 }
 
 XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
-  auto progressRing = winrt::ProgressRing();
+  auto progressRing = xaml::Controls::ProgressRing();
   return progressRing;
 }
 
-void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
-  auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
+bool ActivityIndicatorViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  auto progressRing = nodeToUpdate->GetView().as<xaml::Controls::ProgressRing>();
   if (progressRing == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
-
-    if (propertyName == "animating") {
-      if (propertyValue.isBool())
-        progressRing.IsActive(propertyValue.asBool());
-      else if (pair.second.isNull())
-        progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
-    }
+  if (propertyName == "animating") {
+    if (propertyValue.isBool())
+      progressRing.IsActive(propertyValue.asBool());
+    else if (propertyValue.isNull())
+      progressRing.ClearValue(xaml::Controls::ProgressRing::IsActiveProperty());
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
 }
 
 } // namespace uwp

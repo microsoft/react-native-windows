@@ -19,6 +19,8 @@ const {
   apiExtractorUpdateTask,
   cleanTask,
 } = require('just-scripts');
+const {execSync} = require('child_process');
+const fs = require('fs');
 const libPath = path.resolve(process.cwd(), 'lib');
 const srcPath = path.resolve(process.cwd(), 'src');
 
@@ -33,6 +35,12 @@ task('apiDocumenter', () => {
   require('child_process').execSync(
     'npx @microsoft/api-documenter markdown -i temp -o ../docs/api',
     {stdio: 'inherit'},
+  );
+});
+
+task('codegen', () => {
+  execSync(
+    'npx react-native-windows-codegen --files Libraries/**/Native*.js --namespace Microsoft::ReactNativeSpecs',
   );
 });
 
@@ -54,6 +62,13 @@ task('initRNLibraries', () => {
   require('./Scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
 
+task('copyReadmeFromRoot', () => {
+  fs.copyFileSync(
+    path.resolve(__dirname, '../README.md'),
+    path.resolve(__dirname, 'README.md'),
+  );
+});
+
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -67,8 +82,8 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['dist', 'flow', 'flow-typed', 'jest', 'Libraries', 'RNTester', 'lib'].map(
-      p => path.join(process.cwd(), p),
+    ['dist', 'flow', 'jest', 'Libraries', 'RNTester'].map(p =>
+      path.join(process.cwd(), p),
     ),
   );
 });
@@ -79,7 +94,9 @@ task(
     condition('clean', () => true || argv().clean),
     'initRNLibraries',
     'copyFlowFiles',
+    'copyReadmeFromRoot',
     'ts',
+    'codegen',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );
