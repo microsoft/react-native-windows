@@ -45,7 +45,7 @@ function getAppPackage(options) {
     options.arch === 'x86'
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
       : `*_${options.arch}_${configuration}_*`;
-  const appPackageGlob = `windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+  const appPackageGlob = path.join(options.root, `windows/{*/AppPackages,AppPackages/*}/${packageFolder}`);
   let appPackage = glob.sync(appPackageGlob)[0];
 
   if (!appPackage && options.release) {
@@ -54,7 +54,7 @@ function getAppPackage(options) {
       'No package found in *_Release_* folder, remove _Release_ and check again',
     );
     appPackage = glob.sync(
-      `windows/{*/AppPackages,AppPackages/*}/*_${options.arch}_*`,
+      path.join(options.root, `windows/{*/AppPackages,AppPackages/*}/*_${options.arch}_*`),
     )[0];
   }
 
