@@ -20,14 +20,6 @@ steps:
 
   # Strip down the binaries from nuget because we may not have built all the flavours.
   - task: PowerShell@2
-    displayName: Strip slices from ReactUwp.nuspec
-    inputs:
-      targetType: filePath
-      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
-      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec -slices ("x64.Release", "x86.Debug", "ARM.Release")
-    condition: and(succeeded(), ${{ parameters.packUniversal }})
-
-  - task: PowerShell@2
     displayName: Strip slices from Microsoft.ReactNative.nuspec
     inputs:
       targetType: filePath
@@ -44,16 +36,6 @@ steps:
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.desktopId}};nugetroot=${{parameters.nugetroot}}
     condition: and(succeeded(), ${{ parameters.packDesktop }})
-
-  - task: NuGetCommand@2
-    displayName: 'NuGet pack Universal'
-    inputs:
-      command: pack
-      verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec
-      packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
-      buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.universalId}};nugetroot=${{parameters.nugetroot}}
-    condition: and(succeeded(), ${{ parameters.packUniversal }})
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack Microsoft.ReactNative'
