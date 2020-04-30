@@ -70,7 +70,11 @@
         WINRT_LEAN_AND_MEAN;
         %(UndefinePreprocessorDefinitions)
       </UndefinePreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(VCInstallDir)UnitTest\include;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /await</AdditionalOptions>
     </ClCompile>
     <Link>
       <!--
