@@ -319,7 +319,7 @@ void TextInputShadowNode::registerEvents() {
     HideCaretIfNeeded();
   });
 
-  if (control.try_as<xaml::IUIElement7>()) {
+  if (control.try_as<xaml::UIElement>()) {
     m_controlCharacterReceivedRevoker = control.CharacterReceived(
         winrt::auto_revoke, [=](auto &&, xaml::Input::CharacterReceivedRoutedEventArgs const &args) {
           auto instance = wkinstance.lock();

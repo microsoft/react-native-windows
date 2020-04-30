@@ -97,8 +97,8 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot() {
   if (m_host) {
     for (auto const tag : m_host->GetAllRootTags()) {
       if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
-        if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
-          if (auto xamlRoot = uiElement10.XamlRoot())
+        if (auto uiElement = shadowNode->GetView().try_as<xaml::UIElement>()) {
+          if (auto xamlRoot = uiElement.XamlRoot())
             return xamlRoot;
         }
       }

@@ -134,7 +134,7 @@ void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, co
   // set on the new View a bit later in RefreshProperties() (as we need data
   // from the ShadowNode not available here).
   auto oldElement = oldView.try_as<xaml::UIElement>();
-  if (oldElement && oldElement.try_as<xaml::IUIElement10>()) {
+  if (oldElement) {
     oldElement.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
   }
 }
@@ -173,7 +173,7 @@ bool FrameworkElementViewManager::UpdateProperty(
         element.ClearValue(xaml::UIElement::OpacityProperty());
       }
     } else if (propertyName == "transform") {
-      if (element.try_as<xaml::IUIElement10>()) // Works on 19H1+
+      if (element.try_as<xaml::UIElement>()) // Works on 19H1+
       {
         if (propertyValue.isArray()) {
           assert(propertyValue.size() == 16);

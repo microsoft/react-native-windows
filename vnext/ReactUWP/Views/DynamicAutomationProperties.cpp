@@ -10,11 +10,13 @@
 #include "DynamicAutomationProperties.g.cpp"
 #endif
 
+
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
 using namespace xaml;
 using namespace xaml::Interop;
+using namespace winrt::Windows::UI::Xaml::Interop;
 } // namespace winrt
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {

@@ -4,6 +4,7 @@
 #pragma once
 
 #include <winrt/Windows.Foundation.h>
+#include "../../include/CppWinRTIncludes.h"
 
 namespace react {
 namespace uwp {

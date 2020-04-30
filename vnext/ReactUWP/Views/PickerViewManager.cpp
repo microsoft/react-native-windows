@@ -5,7 +5,7 @@
 
 #include <Views/ShadowNodeBase.h>
 #include "PickerViewManager.h"
-
+#include "XamlFeatures.h"
 #include <Utils/ValueUtils.h>
 #include "Unicode.h"
 
@@ -38,15 +38,24 @@ class PickerShadowNode : public ShadowNodeBase {
   int32_t m_selectedIndex = -1;
 
   // FUTURE: remove when we can require RS5+
-  bool m_isEditableComboboxSupported;
+  static react::uwp::TriBit s_isEditableComboboxSupported;
 
   xaml::Controls::ComboBox::SelectionChanged_revoker m_comboBoxSelectionChangedRevoker{};
   xaml::Controls::ComboBox::DropDownClosed_revoker m_comboBoxDropDownClosedRevoker{};
 };
 
+react::uwp::TriBit PickerShadowNode::s_isEditableComboboxSupported = react::uwp::TriBit::Undefined;
+
 PickerShadowNode::PickerShadowNode() : Super() {
-  m_isEditableComboboxSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-      XAML_NAMESPACE_STR L".Controls.ComboBox", L"IsEditableProperty");
+  if (s_isEditableComboboxSupported == react::uwp::TriBit::Undefined) {
+    s_isEditableComboboxSupported =
+#ifdef NO_WINUI3_SUPPORT
+        winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
+            XAML_NAMESPACE_STR L".Controls.ComboBox", L"IsEditableProperty");
+#else
+        react::uwp::TriBit::Set;
+#endif
+  }
 }
 
 void PickerShadowNode::createView() {
@@ -65,7 +74,7 @@ void PickerShadowNode::createView() {
       if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
         value = m_items.at(index)["value"];
       folly::dynamic text;
-      if (m_isEditableComboboxSupported && index == -1)
+      if (s_isEditableComboboxSupported == react::uwp::TriBit::Set && index == -1)
         text = HstringToDynamic(combobox.Text());
       OnSelectionChanged(*instance, m_tag, std::move(value), index, std::move(text));
     }
@@ -89,14 +98,14 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
     const folly::dynamic &propertyValue = pair.second;
 
     if (propertyName == "editable") {
-      if (m_isEditableComboboxSupported) {
+      if (s_isEditableComboboxSupported == react::uwp::TriBit::Set) {
         if (propertyValue.isBool())
           combobox.IsEditable(propertyValue.asBool());
         else if (propertyValue.isNull())
           combobox.ClearValue(xaml::Controls::ComboBox::IsEditableProperty());
       }
     } else if (propertyName == "text") {
-      if (m_isEditableComboboxSupported) {
+      if (s_isEditableComboboxSupported == react::uwp::TriBit::Set) {
         if (propertyValue.isString())
           combobox.Text(asHstring(propertyValue));
         else if (propertyValue.isNull())

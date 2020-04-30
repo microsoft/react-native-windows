@@ -16,6 +16,7 @@ namespace winrt {
 using namespace xaml::Controls;
 using namespace xaml::Controls::Primitives;
 using namespace xaml::Interop;
+using namespace winrt::Windows::UI::Xaml::Interop;
 } // namespace winrt
 
 static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placementModeMinVersion = {
@@ -190,7 +191,7 @@ void FlyoutShadowNode::createView() {
         // z-index translation based on an elevation derived from the count
         // of open popups/flyouts. We apply this translation on open of the
         // flyout. (Translation is only supported on RS5+, eg. IUIElement9)
-        if (auto uiElement9 = GetView().try_as<xaml::IUIElement9>()) {
+        if (auto uiElement = GetView().try_as<xaml::UIElement>()) {
           auto numOpenPopups = CountOpenPopups();
           if (numOpenPopups > 0) {
             winrt::Numerics::float3 translation{0, 0, (float)16 * numOpenPopups};

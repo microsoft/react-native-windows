@@ -204,8 +204,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     } catch (...) {
       std::string doctype = "<!DOCTYPE HTML>";
       if (boost::istarts_with(plain, doctype)) {
-        auto webView = xaml::Controls::WebView(xaml::Controls::WebViewExecutionMode::SameThread);
-
+        auto webView = xaml::Controls::WebView2();
         winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
 
         webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
@@ -215,7 +214,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_stackPanel.Children().Clear();
         m_stackPanel.Children().Append(webView);
 
-        auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
+        auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
         // XAML doesn't currently provide a way to measure a WebView control,
         // So we're going to tell the WebView to measure itself by running some javascript,
         // and then we'll post a task back to XAML to set the XAML WebView minimum height.
@@ -228,13 +227,13 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         // Finally, it's important to note that JS expressions of that are not of string type
         // need to be manually converted to string for them to get marshaled properly back here.
         webView.NavigationCompleted(
-            [=](IInspectable const &, xaml::Controls::WebViewNavigationCompletedEventArgs const &) {
+            [=](IInspectable const &, xaml::Controls::WebView2NavigationCompletedEventArgs const &) {
               // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
-              std::vector<winrt::hstring> args{
-                  L"(document.body.style.setProperty('color', 'white'), "
+              const winrt::hstring js(
+                  L"eval((document.body.style.setProperty('color', 'white'), "
                   L"document.body.style.setProperty('background', '#be0000')) "
-                  L"|| document.documentElement.scrollHeight.toString()"};
-              auto async = webView.InvokeScriptAsync(L"eval", std::move(args));
+                  L"|| document.documentElement.scrollHeight.toString())");
+              auto async = webView.ExecuteScriptAsync(js);
 
               async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&state) {
                 auto result = op.GetResults();
