@@ -8,7 +8,6 @@ parameters:
   slices: '("x64.Release", "x64.Debug", "x86.Release", "x86.Debug", "ARM.Release", "ARM.Debug", "ARM64.Release", "ARM64.Debug")'
   packDesktop: true
   packMicrosoft: true
-  packUniversal: true
 
 steps:
   - task: DownloadBuildArtifacts@0
