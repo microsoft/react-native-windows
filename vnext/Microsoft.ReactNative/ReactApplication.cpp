@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
+
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
@@ -22,7 +23,16 @@ using namespace xaml::Navigation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactApplication::ReactApplication() noexcept {
+ReactApplication::ReactApplication() = default;
+
+ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactApplication{} {
+  // The factory is usually called in the base generated class. We call it here to pass correct
+  // 'outer' interface to enable inheritance from the ReactApplication class in user code.
+  impl::call_factory<xaml::Application, xaml::IApplicationFactory>([&](xaml::IApplicationFactory const &f) {
+    [[maybe_unused]] auto winrt_impl_discarded =
+        f.CreateInstance(outer ? outer : static_cast<IInspectable const &>(*this), this->m_inner);
+  });
+
   Suspending({this, &ReactApplication::OnSuspending});
 
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
@@ -111,7 +121,7 @@ void ReactApplication::OnActivated(IActivatedEventArgs const &e) {
 }
 
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
-  Super::OnLaunched(e);
+  base_type::OnLaunched(e);
   // auto args = std::wstring(e.Arguments().c_str());
   this->OnCreate(e);
 }
