@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Minor cleanup: Remove unused namespace from C# files",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-30T23:10:37.840Z"
+}
