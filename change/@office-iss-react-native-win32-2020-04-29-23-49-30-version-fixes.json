@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Package Fixes",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-30T06:49:27.467Z"
-}

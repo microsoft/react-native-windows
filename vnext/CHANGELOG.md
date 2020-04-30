@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Apr 2020 00:04:27 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2020 18:40:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.54
+
+Thu, 30 Apr 2020 18:40:40 GMT
+
+### Changes
+
+- Expose YellowBox functionality to native code (asklar@microsoft.com)
+- .net projects need more work to build a package layout (asklar@microsoft.com)
+- Package Fixes (ngerlem@microsoft.com)
 
 ## 0.0.0-master.53
 

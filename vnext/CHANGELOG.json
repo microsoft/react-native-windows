@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Apr 2020 18:40:40 GMT",
+      "tag": "react-native-windows_v0.0.0-master.54",
+      "version": "0.0.0-master.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose YellowBox functionality to native code",
+            "author": "asklar@microsoft.com",
+            "commit": "15ad43e230f3523beb3efead10d642e1eaab2b13",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": ".net projects need more work to build a package layout",
+            "author": "asklar@microsoft.com",
+            "commit": "1ec1663d3790ce33fb62db297d324c097d7f163b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Package Fixes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1ca0c2916ac29d3646a35d0e90c8bee8c6cda8d2",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Stop publishing ReactHwp NuGet Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0f2fca4c1a49288840fb640a530d0503e9c36ea3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2020 00:04:27 GMT",
       "tag": "react-native-windows_v0.0.0-master.53",
       "version": "0.0.0-master.53",
