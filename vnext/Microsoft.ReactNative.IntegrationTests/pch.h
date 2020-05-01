@@ -2,6 +2,8 @@
 
 #define NOMINMAX
 
-#include "gtest/gtest.h"
-#include "motifCpp/gTestAdapter.h"
+#include "functional/functor.h"
+#include <future>
 #include "motifCpp/testCheck.h"
+#include "NativeModules.h" 
+#include <winrt/Windows.Foundation.Collections.h> 
