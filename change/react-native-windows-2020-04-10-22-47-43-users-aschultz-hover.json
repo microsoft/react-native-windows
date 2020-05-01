@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "- Change MouseEnter/MouseLeave behavior to match web behavior - Improve performance of frequently-called mouse move handler",
+  "packageName": "react-native-windows",
+  "email": "aschultz@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-04-11T05:47:43.048Z"
+}
