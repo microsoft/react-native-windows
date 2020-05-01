@@ -79,12 +79,10 @@
     <Link>
       <!--
         comsuppw.lib  - _com_util::ConvertStringToBSTR
-        Winhttp.lib   - WebSocket resource implementation
       -->
       <AdditionalDependencies>
         comsuppw.lib;
         Shlwapi.lib;
-        Winhttp.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
     </Link>

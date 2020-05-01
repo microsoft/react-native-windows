@@ -16,6 +16,7 @@ using winrt::event_token;
 using winrt::param::hstring;
 
 using CertExceptions = std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>;
+using CloseCode = Microsoft::React::IWebSocketResource::CloseCode;
 using Error = Microsoft::React::IWebSocketResource::Error;
 
 namespace {
@@ -24,19 +25,23 @@ IAsyncAction DoNothingAsync() {
   co_return;
 }
 
+IAsyncAction ThrowAsync() {
+  throw winrt::hresult_error(winrt::hresult(E_FAIL), L"Expected Failure");
+}
+
 } // namespace <anonymous>
 
 namespace Microsoft::React::Test {
 
 TEST_CLASS (WinRTWebSocketResourceUnitTest) {
-  TEST_METHOD(ConnectSucceedsCloseSucceeds) {
+  TEST_METHOD(ConnectSucceeds) {
     bool connected = true;
     string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
 
+    // Set up mocks
     auto mws{imws.as<MockMessageWebSocket>()};
-    MessageWebSocket m;
-    mws->Mocks.Control = [&m]() -> MessageWebSocketControl { return m.Control(); };
+    //TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
     mws->Mocks.MessageReceivedToken =
         [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
@@ -44,23 +49,47 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     };
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
+    // Test APIs
     auto rc =
         make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
-
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = errorMessage; });
+    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
-    // Exercise resource methods
     rc->Connect({}, {});
+    rc->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
   }
 
   TEST_METHOD(ConnectFails) {
-    auto mws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
-    MockDataWriter dw;
-    Uri uri(L"ws://host:0");
+    bool connected = false;
+    string errorMessage = "NOERROR";
+    auto imws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
+
+    // Set up mocks
+    auto mws{imws.as<MockMessageWebSocket>()};
+    // TODO: Mock Control()
+    mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
+    mws->Mocks.MessageReceivedToken =
+        [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
+      return event_token{};
+    };
+    mws->Mocks.Close = [](uint16_t, const hstring &) {};
+
+    // Test APIs
+    auto rc =
+        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+    rc->SetOnConnect([&connected]() { connected = true; });
+    rc->SetOnError([&errorMessage](Error &&error) {
+      errorMessage = error.Message;
+    });
+
+    rc->Connect({}, {});
+    rc->Close(CloseCode::Normal, {});
+
+    Assert::AreNotEqual({"NOERROR"}, errorMessage); // TODO: Correctly construct error message.
+    Assert::IsFalse(connected);
   }
 };
 

@@ -72,7 +72,7 @@ MessageWebSocketControl MockMessageWebSocket::Control() const {
   if (Mocks.Control)
     return Mocks.Control();
 
-  throw exception("Not implemented");
+  return m_messageWebSocket.Control();
 };
 
 MessageWebSocketInformation MockMessageWebSocket::Information() const {
@@ -296,5 +296,62 @@ IOutputStream MockDataWriter::DetachStream() const {
 }
 
 #pragma endregion MockDataWriter
+
+//TODO: Work around linker error:
+// error LNK2019: unresolved external symbol
+// "public: __cdecl winrt::Windows::Security::Credentials::PasswordCredential::PasswordCredential(void)"
+// (??0PasswordCredential@Credentials@Security@Windows@winrt@@QEAA@XZ)
+// referenced in function
+// "public: struct winrt::Windows::Security::Credentials::PasswordCredential
+// __cdecl Microsoft::React::Test::MockMessageWebSocketControl::ProxyCredential(void)const "
+// (?ProxyCredential@MockMessageWebSocketControl@Test@React@Microsoft@@
+//  QEBA?AUPasswordCredential@Credentials@Security@Windows@winrt@@XZ)
+#if 0
+#pragma region MockMessageWebSocketControl
+
+// IWebSocketControl
+
+uint32_t MockMessageWebSocketControl::OutboundBufferSizeInBytes() const {
+  return 0;
+}
+
+void MockMessageWebSocketControl::OutboundBufferSizeInBytes(uint32_t value) const {}
+
+winrt::Windows::Security::Credentials::PasswordCredential MockMessageWebSocketControl::ServerCredential() const {
+  return {};
+}
+
+void MockMessageWebSocketControl::ServerCredential(
+    winrt::Windows::Security::Credentials::PasswordCredential const &value) const {}
+
+winrt::Windows::Security::Credentials::PasswordCredential MockMessageWebSocketControl::ProxyCredential() const {
+  return winrt::Windows::Security::Credentials::PasswordCredential();
+}
+
+void MockMessageWebSocketControl::ProxyCredential(
+    winrt::Windows::Security::Credentials::PasswordCredential const &value) const {}
+
+winrt::Windows::Foundation::Collections::IVector<winrt::hstring> MockMessageWebSocketControl::SupportedProtocols()
+    const {
+  return winrt::single_threaded_vector<winrt::hstring>();
+}
+
+// IMessageWebSocketControl
+
+uint32_t MockMessageWebSocketControl::MaxMessageSize() const {
+  return 0;
+}
+
+void MockMessageWebSocketControl::MaxMessageSize(std::uint32_t value) const {}
+
+SocketMessageType MockMessageWebSocketControl::MessageType() const {
+  return SocketMessageType::Utf8;
+}
+
+void MockMessageWebSocketControl::MessageType(SocketMessageType const &value) const {}
+
+#pragma endregion MockMessageWebsocketControl
+
+#endif // 0
 
 } // namespace Microsoft::React::Test

@@ -109,6 +109,11 @@ struct MockMessageWebSocket : public winrt::implements<
 
 #pragma endregion IMessageWebSocket overrides
 
+private:
+  // Used only for MessageWebSocketControl.
+  // Remove once MockMessageWebSocketControl is fully implemented.
+  winrt::Windows::Networking::Sockets::MessageWebSocket m_messageWebSocket;
+
 }; // MockMessageWebSocket
 
 struct MockDataWriter : public winrt::Windows::Storage::Streams::IDataWriter {
@@ -182,5 +187,32 @@ struct MockDataWriter : public winrt::Windows::Storage::Streams::IDataWriter {
 #pragma endregion IDataWriter overrides
 
 }; // MockDataWriter
+
+struct MockMessageWebSocketControl : winrt::implements<
+                                         MockMessageWebSocketControl,
+                                         winrt::Windows::Networking::Sockets::IMessageWebSocketControl,
+                                         winrt::Windows::Networking::Sockets::IWebSocketControl> {
+
+#pragma region IWebSocketControl
+
+  std::uint32_t OutboundBufferSizeInBytes() const;
+  void OutboundBufferSizeInBytes(std::uint32_t value) const;
+  winrt::Windows::Security::Credentials::PasswordCredential ServerCredential() const;
+  void ServerCredential(winrt::Windows::Security::Credentials::PasswordCredential const &value) const;
+  winrt::Windows::Security::Credentials::PasswordCredential ProxyCredential() const;
+  void ProxyCredential(winrt::Windows::Security::Credentials::PasswordCredential const &value) const;
+  winrt::Windows::Foundation::Collections::IVector<winrt::hstring> SupportedProtocols() const;
+
+#pragma endregion
+
+#pragma region IMessageWebSocketControl
+
+  uint32_t MaxMessageSize() const;
+  void MaxMessageSize(std::uint32_t value) const;
+  winrt::Windows::Networking::Sockets::SocketMessageType MessageType() const;
+  void MessageType(winrt::Windows::Networking::Sockets::SocketMessageType const &value) const;
+
+#pragma endregion
+};
 
 } // namespace Microsoft::React::Test
