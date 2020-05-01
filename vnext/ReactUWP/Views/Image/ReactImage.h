@@ -69,7 +69,6 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
   xaml::Media::Imaging::BitmapImage::ImageFailed_revoker m_bitmapImageFailed;
   xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;
-  xaml::Media::ImageBrush::ImageFailed_revoker m_imageBrushFailedRevoker;
   xaml::Media::Imaging::SvgImageSource::Opened_revoker m_svgImageSourceOpenedRevoker;
   xaml::Media::Imaging::SvgImageSource::OpenFailed_revoker m_svgImageSourceOpenFailedRevoker;
 };
