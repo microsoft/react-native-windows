@@ -283,6 +283,16 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
               });
 
+          strong_this->m_bitmapImageFailed = bitmapImage.ImageFailed(
+              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                imageBrush.Opacity(1);
+
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, false);
+                }
+              });
+
           imageBrush.ImageSource(bitmapImage);
         }
 
