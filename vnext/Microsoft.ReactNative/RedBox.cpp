@@ -151,6 +151,62 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 #define _MAKE_WIDE_STR(x) L##x
 #define MAKE_WIDE_STR(x) _MAKE_WIDE_STR(x)
 
+
+
+  void CreateWebView(xaml::Controls::Panel parent, const winrt::hstring &content) {
+#ifdef NO_WINUI3_SUPPORT
+    xaml::Controls::WebView webView;
+#else
+    xaml::Controls::WebView2 webView;
+#endif
+
+    webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
+    webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
+    webView.MinWidth(400);
+    auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
+    // XAML doesn't currently provide a way to measure a WebView control,
+    // So we're going to tell the WebView to measure itself by running some javascript,
+    // and then we'll post a task back to XAML to set the XAML WebView minimum height.
+    // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
+    // the fact that we're running javascript in the WebView, to set the
+    // foreground/background to match the rest of the RedBox.
+    // setProperty returns undefined so we continue the first expression with a comma
+    // whereas the height expression gets executed because of the ||
+    // (since the setProperty calls resulted in undefined).
+    // Finally, it's important to note that JS expressions of that are not of string type
+    // need to be manually converted to string for them to get marshaled properly back here.
+    webView.NavigationCompleted(
+        [=](IInspectable const &, auto const &) {
+          // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
+          std::wstring jsExpression =
+              L"(document.body.style.setProperty('color', 'white'), "
+              L"document.body.style.setProperty('background', '#be0000')) "
+              L"|| document.documentElement.scrollHeight.toString()";
+
+          #ifdef NO_WINUI3_SUPPORT
+          auto async = webView.InvokeScriptAsync(L"eval", std::vector<winrt::hstring>{winrt::hstring{jsExpression}});
+          #else
+          auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
+          #endif
+
+          async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&) {
+            auto result = op.GetResults();
+            int documentHeight = _wtoi(result.c_str());
+            dispatcher.TryEnqueue([=]() {
+              // Ensure the webview has a min height of the content it wants to show,
+              // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
+              constexpr int horizontalScrollbarHeight = 12;
+              webView.MinHeight(documentHeight + horizontalScrollbarHeight);
+            });
+          });
+        });
+
+    m_stackPanel.Children().Clear();
+    m_stackPanel.Children().Append(webView);
+
+    webView.NavigateToString(content);
+  }
+
   void UpdateErrorMessageUI() noexcept {
     const std::regex colorsRegex(
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
@@ -204,51 +260,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     } catch (...) {
       std::string doctype = "<!DOCTYPE HTML>";
       if (boost::istarts_with(plain, doctype)) {
-        auto webView = xaml::Controls::WebView2();
         winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
 
-        webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
-        webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
-        webView.MinWidth(400);
-
-        m_stackPanel.Children().Clear();
-        m_stackPanel.Children().Append(webView);
-
-        auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
-        // XAML doesn't currently provide a way to measure a WebView control,
-        // So we're going to tell the WebView to measure itself by running some javascript,
-        // and then we'll post a task back to XAML to set the XAML WebView minimum height.
-        // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
-        // the fact that we're running javascript in the WebView, to set the
-        // foreground/background to match the rest of the RedBox.
-        // setProperty returns undefined so we continue the first expression with a comma
-        // whereas the height expression gets executed because of the ||
-        // (since the setProperty calls resulted in undefined).
-        // Finally, it's important to note that JS expressions of that are not of string type
-        // need to be manually converted to string for them to get marshaled properly back here.
-        webView.NavigationCompleted(
-            [=](IInspectable const &, xaml::Controls::WebView2NavigationCompletedEventArgs const &) {
-              // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
-              const winrt::hstring js(
-                  L"eval((document.body.style.setProperty('color', 'white'), "
-                  L"document.body.style.setProperty('background', '#be0000')) "
-                  L"|| document.documentElement.scrollHeight.toString())");
-              auto async = webView.ExecuteScriptAsync(js);
-
-              async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&state) {
-                auto result = op.GetResults();
-                int documentHeight = _wtoi(result.c_str());
-                dispatcher.TryEnqueue([=]() {
-                  // Ensure the webview has a min height of the content it wants to show,
-                  // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
-                  constexpr int horizontalScrollbarHeight = 12;
-                  webView.MinHeight(documentHeight + horizontalScrollbarHeight);
-                });
-              });
-            });
-
-        webView.NavigateToString(content);
-
+        CreateWebView(m_stackPanel, content);
+        
         m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
         m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
 
