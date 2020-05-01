@@ -2,8 +2,8 @@
 
 #define NOMINMAX
 
-#include "functional/functor.h"
+#include <winrt/Windows.Foundation.Collections.h>
 #include <future>
+#include "NativeModules.h"
+#include "functional/functor.h"
 #include "motifCpp/testCheck.h"
-#include "NativeModules.h" 
-#include <winrt/Windows.Foundation.Collections.h> 
