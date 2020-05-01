@@ -64,7 +64,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
   TEST_METHOD(ConnectFails) {
     bool connected = false;
-    string errorMessage = "NOERROR";
+    string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>().as<IMessageWebSocket>()};
 
     // Set up mocks
@@ -88,7 +88,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     rc->Connect({}, {});
     rc->Close(CloseCode::Normal, {});
 
-    Assert::AreNotEqual({"NOERROR"}, errorMessage); // TODO: Correctly construct error message.
+    Assert::AreNotEqual({}, errorMessage);
     Assert::IsFalse(connected);
   }
 };

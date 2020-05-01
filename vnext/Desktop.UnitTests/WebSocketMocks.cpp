@@ -12,55 +12,55 @@ MockWebSocketResource::~MockWebSocketResource() {}
 
 void MockWebSocketResource::Connect(const Protocols &protocols, const Options &options) /*override*/
 {
-  if (ConnectMock)
-    return ConnectMock(protocols, options);
+  if (Mocks.Connect)
+    return Mocks.Connect(protocols, options);
 
-  m_connectHandler();
+  throw exception("Not implemented");
 }
 
 void MockWebSocketResource::Ping() /*override*/
 {
-  if (PingMock)
-    return PingMock();
+  if (Mocks.Connect)
+    return Mocks.Ping();
 
-  // m_pingHandler();
+  throw exception("Not implemented");
 }
 
 void MockWebSocketResource::Send(const string &message) /*override*/
 {
-  if (SendMock)
-    return SendMock(message);
+  if (Mocks.Send)
+    return Mocks.Send(message);
 
-  // m_writeHandler(message.length());
+  throw exception("Not implemented");
 }
 
 void MockWebSocketResource::SendBinary(const string &message) /*override*/
 {
-  if (SendBinaryMock)
-    return SendBinaryMock(message);
+  if (Mocks.SendBinary)
+    return Mocks.SendBinary(message);
 
-  // m_writeHandler(message.length());
+  throw exception("Not implemented");
 }
 
 void MockWebSocketResource::Close(CloseCode code, const string &reason) /*override*/
 {
-  if (CloseMock)
-    return CloseMock(code, reason);
+  if (Mocks.Close)
+    return Mocks.Close(code, reason);
 
-  // m_closeHandler(code, reason);
+  throw exception("Not implemented");
 }
 
 IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const /*override*/
 {
-  if (GetReadyStateMock)
-    return GetReadyStateMock();
+  if (Mocks.GetReadyState)
+    return Mocks.GetReadyState();
 
   throw exception("Not implemented");
 }
 
 void MockWebSocketResource::SetOnConnect(function<void()> &&handler) /*override*/
 {
-  if (SetOnConnectMock)
+  if (Mocks.SetOnConnect)
     return SetOnConnect(std::move(handler));
 
   m_connectHandler = std::move(handler);
@@ -68,40 +68,40 @@ void MockWebSocketResource::SetOnConnect(function<void()> &&handler) /*override*
 
 void MockWebSocketResource::SetOnPing(function<void()> &&handler) /*override*/
 {
-  if (SetOnPingMock)
-    return SetOnPingMock(std::move(handler));
+  if (Mocks.SetOnPing)
+    return Mocks.SetOnPing(std::move(handler));
 
   m_pingHandler = std::move(handler);
 }
 
 void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) /*override*/
 {
-  if (SetOnSendMock)
-    return SetOnSendMock(std::move(handler));
+  if (Mocks.SetOnSend)
+    return Mocks.SetOnSend(std::move(handler));
 
   m_writeHandler = std::move(handler);
 }
 
 void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> &&handler) /*override*/
 {
-  if (SetOnMessageMock)
-    return SetOnMessageMock(std::move(handler));
+  if (Mocks.SetOnMessage)
+    return Mocks.SetOnMessage(std::move(handler));
 
   m_readHandler = std::move(handler);
 }
 
 void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) /*override*/
 {
-  if (SetOnCloseMock)
-    return SetOnCloseMock(std::move(handler));
+  if (Mocks.SetOnClose)
+    return Mocks.SetOnClose(std::move(handler));
 
   m_closeHandler = std::move(handler);
 }
 
 void MockWebSocketResource::SetOnError(function<void(Error &&)> &&handler) /*override*/
 {
-  if (SetOnErrorMock)
-    return SetOnErrorMock(std::move(handler));
+  if (Mocks.SetOnError)
+    return Mocks.SetOnError(std::move(handler));
 
   m_errorHandler = std::move(handler);
 }

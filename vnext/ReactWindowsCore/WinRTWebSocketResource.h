@@ -64,11 +64,11 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
       winrt::Windows::Foundation::Uri &&uri,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions);
 
   WinRTWebSocketResource(
       const std::string &urlString,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions);
 
   ~WinRTWebSocketResource() override;
 

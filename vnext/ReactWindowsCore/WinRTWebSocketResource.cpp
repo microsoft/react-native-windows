@@ -83,7 +83,7 @@ namespace
 namespace Microsoft::React
 {
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions)
   : m_uri{ std::move(uri) }
   , m_socket{ std::move(socket) }
   , m_writer{ std::move(writer) }
@@ -97,12 +97,12 @@ WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IData
 }
 
 WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions)
-  : WinRTWebSocketResource(std::move(socket), DataWriter{ socket.OutputStream() }, std::move(uri), certExeptions)
+  : WinRTWebSocketResource(std::move(socket), DataWriter{ socket.OutputStream() }, std::move(uri), std::move(certExeptions))
 {
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> certExeptions)
-  : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions)
+  : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, std::move(certExeptions))
 {
 }
 

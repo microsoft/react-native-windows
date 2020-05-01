@@ -6,22 +6,22 @@ namespace Microsoft::React::Test {
 struct MockWebSocketResource : public IWebSocketResource {
   ~MockWebSocketResource();
 
-#pragma region Mocks
+  struct Mocks {
+    std::function<void(const Protocols &, const Options &)> Connect;
+    std::function<void()> Ping;
+    std::function<void(const std::string &)> Send;
+    std::function<void(const std::string &)> SendBinary;
+    std::function<void(CloseCode, const std::string &)> Close;
+    std::function<ReadyState() /*const*/> GetReadyState;
+    std::function<void(std::function<void()> &&)> SetOnConnect;
+    std::function<void(std::function<void()> &&)> SetOnPing;
+    std::function<void(std::function<void(std::size_t)> &&)> SetOnSend;
+    std::function<void(std::function<void(std::size_t, const std::string &)> &&)> SetOnMessage;
+    std::function<void(std::function<void(CloseCode, const std::string &)> &&)> SetOnClose;
+    std::function<void(std::function<void(Error &&)> &&)> SetOnError;
+  };
 
-  std::function<void(const Protocols &, const Options &)> ConnectMock;
-  std::function<void()> PingMock;
-  std::function<void(const std::string &)> SendMock;
-  std::function<void(const std::string &)> SendBinaryMock;
-  std::function<void(CloseCode, const std::string &)> CloseMock;
-  std::function<ReadyState() /*const*/> GetReadyStateMock;
-  std::function<void(std::function<void()> &&)> SetOnConnectMock;
-  std::function<void(std::function<void()> &&)> SetOnPingMock;
-  std::function<void(std::function<void(std::size_t)> &&)> SetOnSendMock;
-  std::function<void(std::function<void(std::size_t, const std::string &)> &&)> SetOnMessageMock;
-  std::function<void(std::function<void(CloseCode, const std::string &)> &&)> SetOnCloseMock;
-  std::function<void(std::function<void(Error &&)> &&)> SetOnErrorMock;
-
-#pragma endregion Mocks
+  Mocks Mocks;
 
 #pragma region IWebSocketResource overrides
 
