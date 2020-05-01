@@ -9,7 +9,6 @@
 #include "ImageViewManager.h"
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
@@ -19,7 +18,7 @@
 
 namespace winrt {
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml::Controls;
 } // namespace winrt
 
 // Such code is better to move to a seperate parser layer

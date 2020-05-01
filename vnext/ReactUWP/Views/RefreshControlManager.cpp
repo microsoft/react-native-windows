@@ -5,14 +5,12 @@
 
 #include "RefreshControlManager.h"
 
-#include <winrt/Windows.UI.Xaml.Shapes.h>
-
 #include <ReactUWP\Utils\Helpers.h>
 #include <Views/ShadowNodeBase.h>
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 using namespace Windows::Foundation;
 } // namespace winrt
 

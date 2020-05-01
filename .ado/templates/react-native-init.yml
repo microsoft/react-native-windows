@@ -143,3 +143,12 @@ steps:
     inputs:
       script: npx --no-install react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
       workingDirectory: $(Agent.BuildDirectory)\testcli
+  
+  # We are experiencing random package restore failures. Uploading the  vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
+  - task: PublishPipelineArtifact@1
+    displayName: Upload Verdaccio.log (on failure)
+    inputs:
+      targetPath: 'verdaccio.log'
+      artifact: 'Verdaccio.log'
+      publishLocation: 'pipeline'
+    condition: failed()

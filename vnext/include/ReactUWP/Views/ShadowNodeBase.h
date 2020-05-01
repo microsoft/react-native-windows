@@ -68,6 +68,8 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
     return false;
   }
 
+  void YellowBox(const std::string &message) const noexcept;
+
   ViewManagerBase *GetViewManager() const;
   XamlView GetView() const {
     return m_view;
@@ -92,13 +94,13 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   bool HasTransformPS() const {
     return m_transformPS != nullptr;
   }
-  winrt::Windows::UI::Composition::CompositionPropertySet EnsureTransformPS();
+  comp::CompositionPropertySet EnsureTransformPS();
   void UpdateTransformPS();
 
  protected:
   XamlView m_view;
   bool m_updating = false;
-  winrt::Windows::UI::Composition::CompositionPropertySet m_transformPS{nullptr};
+  comp::CompositionPropertySet m_transformPS{nullptr};
 
  public:
   double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;

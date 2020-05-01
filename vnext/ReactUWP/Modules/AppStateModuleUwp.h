@@ -8,7 +8,6 @@
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 namespace react {
 namespace uwp {
@@ -32,8 +31,8 @@ class AppState : public facebook::react::AppState {
 
   const char *m_lastState;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
-  winrt::Windows::UI::Xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
-  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
+  xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
+  xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
 };
 
 } // namespace uwp

@@ -29,7 +29,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
     std::shared_ptr<DeviceInfo> &&deviceInfo,
-    I18nModule::I18nInfo &&i18nInfo,
     std::shared_ptr<facebook::react::AppState> &&appstate,
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,

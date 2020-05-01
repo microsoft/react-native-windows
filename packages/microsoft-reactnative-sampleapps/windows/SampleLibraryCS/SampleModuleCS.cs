@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 using Windows.System.Threading;
 
@@ -25,7 +23,7 @@ namespace SampleLibraryCS
         #region Initializer
 
         [ReactInitializer]
-        public void Initialize(IReactContext _)
+        public void Initialize(ReactContext _)
         {
             _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
             {

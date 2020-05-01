@@ -32,18 +32,18 @@ class DatePickerShadowNode : public ShadowNodeBase {
       m_minTime; // These values are expected to be in milliseconds
   int64_t m_timeZoneOffsetInSeconds = 0; // Timezone offset is expected to be in seconds
 
-  winrt::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};
+  xaml::Controls::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};
 };
 
 void DatePickerShadowNode::createView() {
   Super::createView();
 
-  auto datePicker = GetView().as<winrt::CalendarDatePicker>();
+  auto datePicker = GetView().as<xaml::Controls::CalendarDatePicker>();
   auto wkinstance = GetViewManager()->GetReactInstance();
 
   m_dataPickerDateChangedRevoker = datePicker.DateChanged(
       winrt::auto_revoke,
-      [=](winrt::CalendarDatePicker /*picker*/, winrt::CalendarDatePickerDateChangedEventArgs args) {
+      [=](xaml::Controls::CalendarDatePicker /*picker*/, xaml::Controls::CalendarDatePickerDateChangedEventArgs args) {
         auto instance = wkinstance.lock();
         if (!m_updating && instance != nullptr && args.NewDate() != nullptr)
           OnDateChanged(*instance, m_tag, args.NewDate().Value());
@@ -53,7 +53,7 @@ void DatePickerShadowNode::createView() {
 void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
 
-  auto datePicker = GetView().as<winrt::CalendarDatePicker>();
+  auto datePicker = GetView().as<xaml::Controls::CalendarDatePicker>();
   if (datePicker == nullptr)
     return;
 
@@ -69,42 +69,42 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isString())
         datePicker.DayOfWeekFormat(asHstring(propertyValue));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(winrt::CalendarDatePicker::DayOfWeekFormatProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DayOfWeekFormatProperty());
     } else if (propertyName == "dateFormat") {
       if (propertyValue.isString())
         datePicker.DateFormat(asHstring(propertyValue));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(winrt::CalendarDatePicker::DateFormatProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DateFormatProperty());
     } else if (propertyName == "firstDayOfWeek") {
       if (propertyValue.isNumber())
         datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(static_cast<int64_t>(propertyValue.asDouble())));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(winrt::CalendarDatePicker::FirstDayOfWeekProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::FirstDayOfWeekProperty());
     } else if (propertyName == "maxDate") {
       if (propertyValue.isNumber()) {
         m_maxTime = static_cast<int64_t>(propertyValue.asDouble());
         updateMaxDate = true;
       } else if (propertyValue.isNull()) {
-        datePicker.ClearValue(winrt::CalendarDatePicker::MaxDateProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::MaxDateProperty());
       }
     } else if (propertyName == "minDate") {
       if (propertyValue.isNumber()) {
         m_minTime = static_cast<int64_t>(propertyValue.asDouble());
         updateMinDate = true;
       } else if (propertyValue.isNull()) {
-        datePicker.ClearValue(winrt::CalendarDatePicker::MinDateProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::MinDateProperty());
       }
     } else if (propertyName == "placeholderText") {
       if (propertyValue.isString())
         datePicker.PlaceholderText(asHstring(propertyValue));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(winrt::CalendarDatePicker::PlaceholderTextProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::PlaceholderTextProperty());
     } else if (propertyName == "selectedDate") {
       if (propertyValue.isNumber()) {
         m_selectedTime = static_cast<int64_t>(propertyValue.asDouble());
         updateSelectedDate = true;
       } else if (propertyValue.isNull()) {
-        datePicker.ClearValue(winrt::CalendarDatePicker::DateProperty());
+        datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DateProperty());
       }
     } else if (propertyName == "timeZoneOffsetInSeconds") {
       if (propertyValue.isNumber())
@@ -157,7 +157,7 @@ facebook::react::ShadowNode *DatePickerViewManager::createShadow() const {
 }
 
 XamlView DatePickerViewManager::CreateViewCore(int64_t /*tag*/) {
-  auto datePicker = winrt::CalendarDatePicker();
+  auto datePicker = xaml::Controls::CalendarDatePicker();
   return datePicker;
 }
 

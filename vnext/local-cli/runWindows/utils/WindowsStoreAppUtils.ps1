@@ -63,7 +63,12 @@ function Uninstall-App {
 
     if($package) {
         $pfn = $package.PackageFullName
-        Invoke-Expression-MayElevate "Remove-AppxPackage $pfn -ErrorAction Stop" -ErrorAction Stop
+        $command = "Remove-AppxPackage $pfn -ErrorAction Stop"
+        try {
+            Invoke-Expression $command
+        } catch {
+            Invoke-Expression-MayElevate $command -ErrorAction Stop
+        }
     }
 }
 

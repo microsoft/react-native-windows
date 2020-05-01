@@ -10,9 +10,6 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
 namespace react {
 namespace uwp {
 namespace polyester {

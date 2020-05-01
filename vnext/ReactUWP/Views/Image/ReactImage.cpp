@@ -10,14 +10,15 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include "Unicode.h"
+#include "cdebug.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace xaml;
+using namespace xaml::Media;
+using namespace xaml::Media::Imaging;
 using namespace Windows::Web::Http;
 } // namespace winrt
 
@@ -35,7 +36,7 @@ namespace uwp {
   auto reactImage = winrt::make_self<ReactImage>();
   // Grid inheirts the layout direction from parent and mirrors the background image in RTL mode.
   // Forcing the container to LTR mode to avoid the unexpected mirroring behavior.
-  reactImage->FlowDirection(winrt::FlowDirection::LeftToRight);
+  reactImage->FlowDirection(xaml::FlowDirection::LeftToRight);
   return reactImage;
 }
 
@@ -84,6 +85,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
     default: // ResizeMode::Center
       // This function should never be called for the 'repeat' resizeMode case.
       // That is handled by the shouldUseCompositionBrush/switchBrushes code path.
+      // #4691
       assert(value != ResizeMode::Repeat);
 
       if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
@@ -328,7 +330,8 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
 
       co_return memoryStream;
     }
-  } catch (winrt::hresult_error const &) {
+  } catch (winrt::hresult_error const &e) {
+    DEBUG_HRESULT_ERROR(e);
   }
 
   co_return nullptr;

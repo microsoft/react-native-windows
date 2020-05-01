@@ -9,12 +9,18 @@ build
 CMakeLists.txt
 /Desktop
 Desktop.Dll
+Desktop.ABITests
 Desktop.IntegrationTests
+Desktop.Test.DLL
 Desktop.UnitTests
 FollyWin32
 IntegrationTests
 IntegrationTestScripts
+JSI.Desktop.UnitTests
 /NuGet.Config
+Microsoft.ReactNative.Cxx.UnitTests
+Microsoft.ReactNative.IntegrationTests
+Microsoft.ReactNative.Managed.UnitTests
 package-deps.json
 packages
 react-native-windows.build.log
@@ -23,6 +29,8 @@ ReactWindows-Universal.sln
 ReactWindows-Desktop.sln
 RNTester.*
 RNTester/
+Mso.UnitTests
+proposals
 src/
 target
 temp

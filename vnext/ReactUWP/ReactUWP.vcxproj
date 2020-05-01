@@ -119,7 +119,8 @@
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)stubs;
         $(YogaDir);
-        %(AdditionalIncludeDirectories)
+        %(AdditionalIncludeDirectories);
+        $(ReactNativeWindowsDir)Microsoft.ReactNative;
       </AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
@@ -280,6 +281,7 @@
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="Modules\AppearanceModule.cpp" />
+    <ClCompile Include="TestHookMock.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />

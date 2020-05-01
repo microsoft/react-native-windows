@@ -13,7 +13,7 @@
 #endif
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 using namespace Windows::UI::ViewManagement;
 } // namespace winrt
 

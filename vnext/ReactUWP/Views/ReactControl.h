@@ -7,7 +7,6 @@
 #include <set>
 
 #include <IReactInstance.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 #include "IXamlRootView.h"
 #include "SIPEventHandler.h"
 #include "TouchEventHandler.h"
@@ -15,11 +14,11 @@
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Input;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
@@ -100,8 +99,8 @@ class ReactControl final : public std::enable_shared_from_this<ReactControl>, pu
   ErrorCallbackCookie m_errorCallbackCookie{0};
   DebuggerAttachCallbackCookie m_debuggerAttachCallbackCookie{0};
 
-  winrt::ContentControl m_focusSafeHarbor{nullptr};
-  winrt::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
+  xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
+  xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
   winrt::Grid m_redBoxGrid{nullptr};
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_errorTextBlock{nullptr};

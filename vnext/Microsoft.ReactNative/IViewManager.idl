@@ -4,6 +4,8 @@
 import "IReactModuleBuilder.idl";
 import "IReactContext.idl";
 
+#include "../Include/NamespaceRedirect.h"
+
 namespace Microsoft.ReactNative
 {
   [webhosthidden]
@@ -22,7 +24,7 @@ namespace Microsoft.ReactNative
   {
     String Name { get; };
 
-    Windows.UI.Xaml.FrameworkElement CreateView();
+    XAML_NAMESPACE.FrameworkElement CreateView();
   }
 
   [webhosthidden]
@@ -42,7 +44,7 @@ namespace Microsoft.ReactNative
   {
     IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
-    void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, IJSValueReader propertyMapReader);
+    void UpdateProperties(XAML_NAMESPACE.FrameworkElement view, IJSValueReader propertyMapReader);
   }
 
   [webhosthidden]
@@ -50,7 +52,7 @@ namespace Microsoft.ReactNative
   {
     IVectorView<String> Commands { get; };
 
-    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
+    void DispatchCommand(XAML_NAMESPACE.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
   }
 
   [webhosthidden]
@@ -64,12 +66,12 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithChildren
   {
-    void AddView(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement child, Int64 index);
+    void AddView(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement child, Int64 index);
 
-    void RemoveAllChildren(Windows.UI.Xaml.FrameworkElement parent);
+    void RemoveAllChildren(XAML_NAMESPACE.FrameworkElement parent);
 
-    void RemoveChildAt(Windows.UI.Xaml.FrameworkElement parent, Int64 index);
+    void RemoveChildAt(XAML_NAMESPACE.FrameworkElement parent, Int64 index);
 
-    void ReplaceChild(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement oldChild, Windows.UI.Xaml.UIElement newChild);
+    void ReplaceChild(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement oldChild, XAML_NAMESPACE.UIElement newChild);
   }
 } // namespace Microsoft.ReactNative

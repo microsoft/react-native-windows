@@ -12,16 +12,14 @@
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Documents;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Documents;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {

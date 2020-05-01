@@ -39,11 +39,6 @@ App::App() noexcept {
   PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());
 
   InitializeComponent();
-
-  // This works around a cpp/winrt bug with composable/aggregable types tracked
-  // by 22116519
-  AddRef();
-  m_inner.as<::IUnknown>()->Release();
 }
 
 } // namespace winrt::SampleAppCpp::implementation

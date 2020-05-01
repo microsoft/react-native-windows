@@ -20,7 +20,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
   class SimpleNativeModule
   {
     [ReactInitializer]
-    public void Initialize(IReactContext context)
+    public void Initialize(ReactContext context)
     {
       IsInitialized = true;
       Assert.IsNotNull(context);

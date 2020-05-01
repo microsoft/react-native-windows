@@ -29,11 +29,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Composition.h>
-#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
+#include "CppWinRTIncludes.h"
 
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/Instance.h>

@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 import "ReactApplication.idl";
+#include "../include/NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 
   [webhosthidden]
   unsealed runtimeclass ReactApplicationDelegate {
     ReactApplicationDelegate();
-    ReactApplicationDelegate(Windows.UI.Xaml.Application application);
+    ReactApplicationDelegate(XAML_NAMESPACE.Application application);
     void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs args);
-    Windows.UI.Xaml.UIElement OnCreate(String args);
+    XAML_NAMESPACE.UIElement OnCreate(String args);
   }
 }

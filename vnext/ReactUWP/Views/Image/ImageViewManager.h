@@ -18,7 +18,7 @@ class ImageViewManager : public FrameworkElementViewManager {
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   folly::dynamic GetNativeProps() const override;
   facebook::react::ShadowNode *createShadow() const override;
-  void EmitImageEvent(winrt::Windows::UI::Xaml::Controls::Grid grid, const char *eventName, ReactImageSource &source);
+  void EmitImageEvent(xaml::Controls::Grid grid, const char *eventName, ReactImageSource &source);
 
  protected:
   bool UpdateProperty(
@@ -29,7 +29,7 @@ class ImageViewManager : public FrameworkElementViewManager {
   XamlView CreateViewCore(int64_t tag) override;
 
  private:
-  void setSource(winrt::Windows::UI::Xaml::Controls::Grid grid, const folly::dynamic &sources);
+  void setSource(xaml::Controls::Grid grid, const folly::dynamic &sources);
 };
 } // namespace uwp
 } // namespace react

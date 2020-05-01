@@ -9,14 +9,12 @@
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Documents;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Documents;
 } // namespace winrt
 
 namespace react {

@@ -10,7 +10,7 @@ namespace winrt::Microsoft::ReactNative {
 ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context{std::move(context)} {}
 
 void ReactContext::DispatchEvent(
-    winrt::Windows::UI::Xaml::FrameworkElement const &view,
+    xaml::FrameworkElement const &view,
     hstring const &eventName,
     JSValueArgWriter const &eventDataArgWriter) noexcept {
   folly::dynamic eventData; // default to NULLT

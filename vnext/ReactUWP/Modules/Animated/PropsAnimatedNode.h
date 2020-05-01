@@ -29,21 +29,21 @@ class PropsAnimatedNode : public AnimatedNode {
  private:
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
   ShadowNodeBase *GetShadowNodeBase();
-  winrt::UIElement GetUIElement();
+  xaml::UIElement GetUIElement();
 
   std::weak_ptr<IReactInstance> m_instance{};
   std::map<std::string, int64_t> m_propMapping{};
   folly::dynamic m_propMap{};
 
   int64_t m_connectedViewTag{s_connectedViewTagUnset};
-  std::unordered_map<int64_t, winrt::Windows::UI::Composition::CompositionAnimation> m_expressionAnimations{};
+  std::unordered_map<int64_t, comp::CompositionAnimation> m_expressionAnimations{};
   std::vector<int64_t> m_suspendedExpressionAnimationTags{};
-  winrt::Windows::UI::Composition::ExpressionAnimation m_centerPointAnimation{nullptr};
+  comp::ExpressionAnimation m_centerPointAnimation{nullptr};
   winrt::Numerics::float3 m_rotationAxis{0, 0, 1};
   bool m_needsCenterPointAnimation{false};
-  winrt::CompositionPropertySet m_subchannelPropertySet{nullptr};
-  winrt::CompositionAnimation m_translationCombined{nullptr};
-  winrt::CompositionAnimation m_scaleCombined{nullptr};
+  comp::CompositionPropertySet m_subchannelPropertySet{nullptr};
+  comp::CompositionAnimation m_translationCombined{nullptr};
+  comp::CompositionAnimation m_scaleCombined{nullptr};
 
   static constexpr int64_t s_connectedViewTagUnset{-1};
 };

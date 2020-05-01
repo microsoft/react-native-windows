@@ -23,10 +23,9 @@
   },
   "dependencies": {
     "prompt-sync": "^4.2.0",
-    "react": "16.9.0",
+    "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-windows": "0.0.0-master.47",
-    "rnpm-plugin-windows": "^0.6.1"
+    "react-native-windows": "0.0.0-master.55"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
