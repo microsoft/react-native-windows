@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 May 2020 00:04:15 GMT",
+      "tag": "react-native-windows_v0.0.0-master.55",
+      "version": "0.0.0-master.55",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Removed the ref count work around from classes derived from ReactApplications",
+            "author": "vmorozov@microsoft.com",
+            "commit": "9d9a541aa40c4af2950cf784b5ba0ada935686c4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Minor cleanup: Remove unused namespace from C# files",
+            "author": "dannyvv@microsoft.com",
+            "commit": "518284b8bd22271f4a7813eb6b4e53cf864fc6a8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2020 18:40:40 GMT",
       "tag": "react-native-windows_v0.0.0-master.54",
       "version": "0.0.0-master.54",
