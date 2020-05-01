@@ -47,6 +47,7 @@ namespace comp = winrt::Windows::UI::Composition;
 namespace winrt {
 namespace system = winrt::Windows::System;
 using ColorHelper = winrt::Windows::UI::ColorHelper;
+using Colors = winrt::Windows::UI::Colors;
 }
 #else
 
@@ -99,6 +100,8 @@ namespace xaml = winrt::Microsoft::UI::Xaml;
 namespace comp = winrt::Microsoft::UI::Composition;
 namespace winrt {
 namespace system = winrt::Microsoft::System;
+using ColorHelper = winrt::Microsoft::UI::ColorHelper;
+using Colors = winrt::Microsoft::UI::Colors;
 }
 #endif
 
@@ -106,7 +109,6 @@ namespace winrt {
 using namespace Windows::UI::Core;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-using ColorHelper = winrt::Microsoft::UI::ColorHelper;
 } // namespace winrt
 
 #define _QUOTE(x) L#x
