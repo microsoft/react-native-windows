@@ -8,7 +8,7 @@ struct MainPage : MainPageT<MainPage> {
 
   void OnLoadClick(
       Windows::Foundation::IInspectable const & /*sender*/,
-      Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
+      xaml::RoutedEventArgs const & /*args*/);
 
  private:
   Microsoft::ReactNative::ReactNativeHost Host() noexcept;
@@ -25,7 +25,7 @@ struct MainPage : MainPageT<MainPage> {
  public:
   void x_entryPointCombo_SelectionChanged(
       winrt::Windows::Foundation::IInspectable const &sender,
-      winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const &e);
+      xaml::Controls::SelectionChangedEventArgs const &e);
 };
 
 } // namespace winrt::playground::implementation

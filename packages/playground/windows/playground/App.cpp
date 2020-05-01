@@ -7,9 +7,9 @@ using namespace winrt;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Navigation;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Navigation;
 using namespace playground;
 using namespace playground::implementation;
 
