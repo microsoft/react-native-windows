@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
 #include <CppUnitTest.h>
 #include <WinRTWebSocketResource.h>
 #include "WinRTNetworkingMocks.h"
@@ -17,6 +18,14 @@ using winrt::param::hstring;
 using CertExceptions = std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>;
 using Error = Microsoft::React::IWebSocketResource::Error;
 
+namespace {
+
+IAsyncAction DoNothingAsync() {
+  co_return;
+}
+
+} // namespace <anonymous>
+
 namespace Microsoft::React::Test {
 
 TEST_CLASS (WinRTWebSocketResourceUnitTest) {
@@ -28,7 +37,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto mws{imws.as<MockMessageWebSocket>()};
     MessageWebSocket m;
     mws->Mocks.Control = [&m]() -> MessageWebSocketControl { return m.Control(); };
-    mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return IAsyncAction(); };
+    mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
     mws->Mocks.MessageReceivedToken =
         [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
       return event_token{};
@@ -44,7 +53,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     // Exercise resource methods
     rc->Connect({}, {});
 
-    Assert::AreNotEqual({}, errorMessage);
+    Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
   }
 
