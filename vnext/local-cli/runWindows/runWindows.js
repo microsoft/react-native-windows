@@ -25,6 +25,7 @@ function ExitProcessWithError(loggingWasEnabled) {
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
+
   if (verbose) {
     newInfo('Verbose: ON');
   }
@@ -47,12 +48,12 @@ async function runWindows(config, args, options) {
 
   // Fix up options
   options.root = options.root || process.cwd();
+  const slnFile = options.sln || build.getSolutionFile(options);
 
   if (options.autolink) {
     autolink.updateAutoLink(verbose);
   }
   if (options.build) {
-    const slnFile = options.sln || build.getSolutionFile(options);
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
@@ -101,7 +102,7 @@ async function runWindows(config, args, options) {
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {
-        await deploy.deployToDesktop(options, verbose);
+        await deploy.deployToDesktop(options, verbose, slnFile);
       }
     } catch (e) {
       newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);

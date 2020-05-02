@@ -25,7 +25,7 @@ namespace SampleLibraryCS
         #region Initializer
 
         [ReactInitializer]
-        public void Initialize(IReactContext _)
+        public void Initialize(ReactContext _)
         {
             _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
             {

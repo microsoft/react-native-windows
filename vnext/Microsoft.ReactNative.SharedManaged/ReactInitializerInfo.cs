@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 using static Microsoft.ReactNative.Managed.JSValueGenerator;
+using static Microsoft.ReactNative.Managed.ReactContextGenerator;
 using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
@@ -14,7 +15,7 @@ namespace Microsoft.ReactNative.Managed
     public ReactInitializerInfo(MethodInfo methodInfo)
     {
       ParameterInfo[] parameters = methodInfo.GetParameters();
-      if (parameters.Length != 1 || parameters[0].ParameterType != typeof(IReactContext))
+      if (parameters.Length != 1 || parameters[0].ParameterType != typeof(ReactContext))
       {
         throw new ArgumentException($"Initializer method must have one parameter of IReactContext type."
           + $" Module: {methodInfo.DeclaringType.FullName} Method: {methodInfo.Name}");
@@ -29,13 +30,13 @@ namespace Microsoft.ReactNative.Managed
       //
       // (object module, IReactContext reactContext) =>
       // {
-      //   (module as MyModule).initializerMethod(reactContext);
+      //   (module as MyModule).initializerMethod(new ReactContext(reactContext));
       // });
 
       return CompileLambda<ReactInitializerImpl>(
         Parameter(typeof(object), out var module),
         Parameter(typeof(IReactContext), out var reactContext),
-        Call(module.CastTo(methodInfo.DeclaringType), methodInfo, reactContext));
+        Call(module.CastTo(methodInfo.DeclaringType), methodInfo, New(ReactContextConstructor(), reactContext)));
     }
 
     public delegate void ReactInitializerImpl(object module, IReactContext reactConext);

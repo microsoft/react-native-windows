@@ -53,16 +53,16 @@
     "flow-bin": "^0.113.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
-    "react": "16.9.0",
+    "react": "16.11.0",
     "react-native-windows-override-tools": "^0.0.1",
     "react-native": "0.62.2",
     "rimraf": "^3.0.0",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "react": "16.9.0",
+    "react": "16.11.0",
     "react-dom": "16.8.6",
-    "react-native": "0.62.2"
+    "react-native": "^0.62.0-0"
   },
   "beachball": {
     "defaultNpmTag": "preview",

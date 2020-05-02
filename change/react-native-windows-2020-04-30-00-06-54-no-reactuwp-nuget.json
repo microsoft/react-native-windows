@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Stop publishing ReactHwp NuGet Package",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-04-30T07:06:54.439Z"
+}

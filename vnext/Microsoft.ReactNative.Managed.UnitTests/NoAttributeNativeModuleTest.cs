@@ -687,43 +687,48 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void AddJSEvent(string eventEmitterName, string name, Action<TModule, Action> setEventHandler)
     {
       m_moduleBuilder.AddInitializer(reactContext => {
-        setEventHandler(m_module, () => reactContext.EmitJSEvent(eventEmitterName ?? EventEmitterName ?? "RCTDeviceEventEmitter", name));
+        setEventHandler(m_module, () => new ReactContext(reactContext).EmitJSEvent(
+          eventEmitterName ?? EventEmitterName ?? "RCTDeviceEventEmitter", name));
       });
     }
 
     public void AddJSEvent<T1>(string eventEmitterName, string name, Action<TModule, Action<T1>> setEventHandler)
     {
       m_moduleBuilder.AddInitializer(reactContext => {
-        setEventHandler(m_module, (T1 arg1) => reactContext.EmitJSEvent(eventEmitterName ?? EventEmitterName ?? "RCTDeviceEventEmitter", name, arg1));
+        setEventHandler(m_module, (T1 arg1) => new ReactContext(reactContext).EmitJSEvent(
+          eventEmitterName ?? EventEmitterName ?? "RCTDeviceEventEmitter", name, arg1));
       });
     }
 
     public void AddJSEvent<T1, T2>(string eventEmitterName, string name, Action<TModule, Action<T1, T2>> setEventHandler)
     {
       m_moduleBuilder.AddInitializer(reactContext => {
-        setEventHandler(m_module, (T1 arg1, T2 arg2) =>
-          reactContext.EmitJSEvent(eventEmitterName ?? EventEmitterName ?? "RCTDeviceEventEmitter", name, arg1, arg2));
+        setEventHandler(m_module, (T1 arg1, T2 arg2) => new ReactContext(reactContext).EmitJSEvent(
+          eventEmitterName ?? EventEmitterName ?? "RCTDeviceEventEmitter", name, arg1, arg2));
       });
     }
 
     public void AddJSFunction(string moduleName, string name, Action<TModule, Action> setFunctionHandler)
     {
       m_moduleBuilder.AddInitializer(reactContext => {
-        setFunctionHandler(m_module, () => reactContext.CallJSFunction(moduleName ?? ModuleName, name));
+        setFunctionHandler(m_module, () => new ReactContext(reactContext).CallJSFunction(
+          moduleName ?? ModuleName, name));
       });
     }
 
     public void AddJSFunction<T1>(string moduleName, string name, Action<TModule, Action<T1>> setFunctionHandler)
     {
       m_moduleBuilder.AddInitializer(reactContext => {
-        setFunctionHandler(m_module, (T1 arg1) => reactContext.CallJSFunction(moduleName ?? ModuleName, name, arg1));
+        setFunctionHandler(m_module, (T1 arg1) => new ReactContext(reactContext).CallJSFunction(
+          moduleName ?? ModuleName, name, arg1));
       });
     }
 
     public void AddJSFunction<T1, T2>(string moduleName, string name, Action<TModule, Action<T1, T2>> setFunctionHandler)
     {
       m_moduleBuilder.AddInitializer(reactContext => {
-        setFunctionHandler(m_module, (T1 arg1, T2 arg2) => reactContext.CallJSFunction(moduleName ?? ModuleName, name, arg1, arg2));
+        setFunctionHandler(m_module, (T1 arg1, T2 arg2) => new ReactContext(reactContext).CallJSFunction(
+          moduleName ?? ModuleName, name, arg1, arg2));
       });
     }
 
