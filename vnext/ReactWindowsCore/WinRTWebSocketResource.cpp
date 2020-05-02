@@ -30,15 +30,17 @@ using winrt::resume_background;
 using winrt::resume_on_signal;
 using winrt::Windows::Foundation::IAsyncAction;
 using winrt::Windows::Foundation::Uri;
+using winrt::Windows::Networking::Sockets::IMessageWebSocket;
+using winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs;
 using winrt::Windows::Networking::Sockets::IWebSocket;
 using winrt::Windows::Networking::Sockets::MessageWebSocket;
-using winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs;
 using winrt::Windows::Networking::Sockets::SocketMessageType;
 using winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs;
-using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
-using winrt::Windows::Storage::Streams::DataReader;
+using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
 using winrt::Windows::Storage::Streams::DataWriter;
+using winrt::Windows::Storage::Streams::IDataReader;
+using winrt::Windows::Storage::Streams::IDataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
 
 namespace
@@ -80,8 +82,11 @@ namespace
 
 namespace Microsoft::React
 {
-WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri, vector<ChainValidationResult> certExeptions)
+
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions)
   : m_uri{ std::move(uri) }
+  , m_socket{ std::move(socket) }
+  , m_writer{ std::move(writer) }
 {
   m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
 
@@ -91,8 +96,13 @@ WinRTWebSocketResource::WinRTWebSocketResource(Uri&& uri, vector<ChainValidation
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> certExeptions)
-  : WinRTWebSocketResource(Uri{ Utf8ToUtf16(urlString) }, certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions)
+  : WinRTWebSocketResource(std::move(socket), DataWriter{ socket.OutputStream() }, std::move(uri), std::move(certExeptions))
+{
+}
+
+WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions)
+  : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, std::move(certExeptions))
 {
 }
 
@@ -295,12 +305,12 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
   m_closePerformed.Set();
 }
 
-void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, MessageWebSocketMessageReceivedEventArgs const& args)
+void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessageWebSocketMessageReceivedEventArgs const& args)
 {
   try
   {
     string response;
-    DataReader reader = args.GetDataReader();
+    IDataReader reader = args.GetDataReader();
     auto len = reader.UnconsumedBufferLength();
     if (args.MessageType() == SocketMessageType::Utf8)
     {
