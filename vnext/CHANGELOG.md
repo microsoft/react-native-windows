@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 May 2020 00:04:15 GMT and should not be manually modified.
+This log was last generated on Sat, 02 May 2020 00:05:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.56
+
+Sat, 02 May 2020 00:05:12 GMT
+
+### Changes
+
+- - Change MouseEnter/MouseLeave behavior to match web behavior - Improve performance of frequently-called mouse move handler (aschultz@microsoft.com)
+- Delay load ChakraCore.dll (tudorm@microsoft.com)
 
 ## 0.0.0-master.55
 
