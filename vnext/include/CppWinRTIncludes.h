@@ -48,13 +48,13 @@ namespace winrt {
 namespace system = winrt::Windows::System;
 using ColorHelper = winrt::Windows::UI::ColorHelper;
 using Colors = winrt::Windows::UI::Colors;
-}
+} // namespace winrt
 #else
 
-#include <winrt/Windows.ApplicationModel.Activation.h>
-#include <winrt/Windows.System.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Text.h>
+#include <winrt/Windows.ApplicationModel.Activation.h>
+#include <winrt/Windows.System.h>
 
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
@@ -78,8 +78,8 @@ using Colors = winrt::Windows::UI::Colors;
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Interop.h>
 
-#include <winrt/Microsoft.UI.Xaml.h>
 #include <winrt/Microsoft.System.h>
+#include <winrt/Microsoft.UI.Xaml.h>
 
 ////////////////
 
@@ -90,11 +90,10 @@ using Colors = winrt::Windows::UI::Colors;
 #include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Hosting.h>
+#include <winrt/Microsoft.UI.Xaml.Media.Imaging.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Microsoft.UI.Xaml.h>
-#include <winrt/Microsoft.UI.Xaml.Media.Imaging.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
-
 
 namespace xaml = winrt::Microsoft::UI::Xaml;
 namespace comp = winrt::Microsoft::UI::Composition;
@@ -102,7 +101,7 @@ namespace winrt {
 namespace system = winrt::Microsoft::System;
 using ColorHelper = winrt::Microsoft::UI::ColorHelper;
 using Colors = winrt::Microsoft::UI::Colors;
-}
+} // namespace winrt
 #endif
 
 namespace winrt {
@@ -114,4 +113,3 @@ using namespace Windows::Foundation::Collections;
 #define _QUOTE(x) L#x
 #define QUOTE(x) _QUOTE(x)
 #define XAML_NAMESPACE_STR QUOTE(XAML_NAMESPACE)
-

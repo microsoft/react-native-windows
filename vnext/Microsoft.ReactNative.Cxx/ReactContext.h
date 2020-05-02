@@ -5,10 +5,10 @@
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
+#include <../include/CppWinRTIncludes.h>
 #include <string_view>
 #include "JSValueWriter.h"
 #include "winrt/Microsoft.ReactNative.h"
-#include <../include/CppWinRTIncludes.h>
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -39,10 +39,7 @@ struct ReactContext {
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
   template <class... TArgs>
-  void DispatchEvent(
-      xaml::FrameworkElement const &view,
-      std::wstring_view eventName,
-      TArgs &&... args) noexcept;
+  void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) noexcept;
 
   void DispatchEvent(
       xaml::FrameworkElement const &view,

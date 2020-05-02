@@ -6,9 +6,7 @@ namespace winrt::playground::implementation {
 struct MainPage : MainPageT<MainPage> {
   MainPage();
 
-  void OnLoadClick(
-      Windows::Foundation::IInspectable const & /*sender*/,
-      xaml::RoutedEventArgs const & /*args*/);
+  void OnLoadClick(Windows::Foundation::IInspectable const & /*sender*/, xaml::RoutedEventArgs const & /*args*/);
 
  private:
   Microsoft::ReactNative::ReactNativeHost Host() noexcept;

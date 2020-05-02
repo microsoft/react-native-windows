@@ -155,7 +155,6 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
   if (!m_effectBrush) {
-
     auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
 
     borderEffect.ExtendX(winrt::CanvasEdgeBehavior::Wrap);
@@ -169,7 +168,6 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
-
   }
 
   return m_effectBrush;

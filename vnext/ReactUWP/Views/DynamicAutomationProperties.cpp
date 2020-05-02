@@ -10,7 +10,6 @@
 #include "DynamicAutomationProperties.g.cpp"
 #endif
 
-
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;

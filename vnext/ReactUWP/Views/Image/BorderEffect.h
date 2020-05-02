@@ -14,7 +14,8 @@
 #include "Microsoft.UI.Composition.Effects_Impl.h"
 
 namespace BORDEREFFECT_NAMESPACE::implementation {
-class BorderEffect : public BorderEffectT<BorderEffect, winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
+class BorderEffect
+    : public BorderEffectT<BorderEffect, winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
  public:
   DECLARE_D2D_GUID(CLSID_D2D1Border);
   DECLARE_SINGLE_SOURCE(Source);

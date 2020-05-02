@@ -387,7 +387,7 @@ bool TryUpdateTextDecorationLine(
 #else
         true;
 #endif
-      if (!isTextDecorationsSupported)
+    if (!isTextDecorationsSupported)
       return true;
 
     if (propertyValue.isString()) {

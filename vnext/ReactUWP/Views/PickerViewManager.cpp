@@ -3,11 +3,11 @@
 
 #include "pch.h"
 
+#include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
 #include "PickerViewManager.h"
-#include "XamlFeatures.h"
-#include <Utils/ValueUtils.h>
 #include "Unicode.h"
+#include "XamlFeatures.h"
 
 #include <IReactInstance.h>
 
@@ -51,7 +51,9 @@ PickerShadowNode::PickerShadowNode() : Super() {
     s_isEditableComboboxSupported =
 #ifndef USE_WINUI3
         winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-            XAML_NAMESPACE_STR L".Controls.ComboBox", L"IsEditableProperty") ? react::uwp::TriBit::Set : react::uwp::TriBit::NotSet;
+            XAML_NAMESPACE_STR L".Controls.ComboBox", L"IsEditableProperty")
+        ? react::uwp::TriBit::Set
+        : react::uwp::TriBit::NotSet;
 #else
         react::uwp::TriBit::Set;
 #endif

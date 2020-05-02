@@ -151,8 +151,6 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 #define _MAKE_WIDE_STR(x) L##x
 #define MAKE_WIDE_STR(x) _MAKE_WIDE_STR(x)
 
-
-
   void CreateWebView(xaml::Controls::Panel parent, const winrt::hstring &content) {
 #ifndef USE_WINUI3
     xaml::Controls::WebView webView;
@@ -175,31 +173,30 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     // (since the setProperty calls resulted in undefined).
     // Finally, it's important to note that JS expressions of that are not of string type
     // need to be manually converted to string for them to get marshaled properly back here.
-    webView.NavigationCompleted(
-        [=](IInspectable const &, auto const &) {
-          // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
-          std::wstring jsExpression =
-              L"(document.body.style.setProperty('color', 'white'), "
-              L"document.body.style.setProperty('background', '#be0000')) "
-              L"|| document.documentElement.scrollHeight.toString()";
+    webView.NavigationCompleted([=](IInspectable const &, auto const &) {
+      // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
+      std::wstring jsExpression =
+          L"(document.body.style.setProperty('color', 'white'), "
+          L"document.body.style.setProperty('background', '#be0000')) "
+          L"|| document.documentElement.scrollHeight.toString()";
 
-          #ifndef USE_WINUI3
-          auto async = webView.InvokeScriptAsync(L"eval", std::vector<winrt::hstring>{winrt::hstring{jsExpression}});
-          #else
-          auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
-          #endif
+#ifndef USE_WINUI3
+      auto async = webView.InvokeScriptAsync(L"eval", std::vector<winrt::hstring>{winrt::hstring { jsExpression }});
+#else
+      auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
+#endif
 
-          async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&) {
-            auto result = op.GetResults();
-            int documentHeight = _wtoi(result.c_str());
-            dispatcher.TryEnqueue([=]() {
-              // Ensure the webview has a min height of the content it wants to show,
-              // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
-              constexpr int horizontalScrollbarHeight = 12;
-              webView.MinHeight(documentHeight + horizontalScrollbarHeight);
-            });
-          });
+      async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&) {
+        auto result = op.GetResults();
+        int documentHeight = _wtoi(result.c_str());
+        dispatcher.TryEnqueue([=]() {
+          // Ensure the webview has a min height of the content it wants to show,
+          // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
+          constexpr int horizontalScrollbarHeight = 12;
+          webView.MinHeight(documentHeight + horizontalScrollbarHeight);
         });
+      });
+    });
 
     m_stackPanel.Children().Clear();
     m_stackPanel.Children().Append(webView);
@@ -224,8 +221,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           xaml::Documents::Run linkRun;
 
           linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-          link.Foreground(
-              xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+          link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
           link.Inlines().Append(linkRun);
           xaml::Documents::Run normalRun;
           normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
@@ -263,7 +259,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
 
         CreateWebView(m_stackPanel, content);
-        
+
         m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
         m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
 
