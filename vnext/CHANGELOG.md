@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Apr 2020 06:53:05 GMT and should not be manually modified.
+This log was last generated on Sat, 02 May 2020 03:42:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.2
+
+Sat, 02 May 2020 03:42:13 GMT
+
+### Changes
+
+- Added C# ReactContext for Module Initialize method (vmorozov@microsoft.com)
+- Update react version (kaigu@microsoft.com)
+- .net projects need more work to build a package layout (asklar@microsoft.com)
+- Package Fixes (ngerlem@microsoft.com)
+- Delay load ChakraCore.dll (tudorm@microsoft.com)
 
 ## 0.62.0-preview.1
 

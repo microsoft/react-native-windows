@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 02 May 2020 03:42:13 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.2",
+      "version": "0.62.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added C# ReactContext for Module Initialize method",
+            "author": "vmorozov@microsoft.com",
+            "commit": "80ff55dcc9c77b5734b3c152c538af351c7e2dd2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update react version",
+            "author": "kaigu@microsoft.com",
+            "commit": "82d017d634c2324c19d911a98eec909f33a6edb6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": ".net projects need more work to build a package layout",
+            "author": "asklar@microsoft.com",
+            "commit": "fd42f7501c3fdff11923f76bf8205e525c6acdbe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Package Fixes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ecc73adcf6ca0a0539d2e57f46ea69552f431540",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Delay load ChakraCore.dll",
+            "author": "tudorm@microsoft.com",
+            "commit": "325946e094d8efa5bd6630e9ae937c086e08a651",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Stop publishing ReactHwp NuGet Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c994ef948ef114394e8e39698d82e167d3cfa473",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Apr 2020 06:53:05 GMT",
       "tag": "react-native-windows_v0.62.0-preview.1",
       "version": "0.62.0-preview.1",
