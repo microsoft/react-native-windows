@@ -156,11 +156,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
   if (!m_effectBrush) {
 
-#ifndef NO_WINUI3_SUPPORT
     auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
-#else
-    auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
-#endif
 
     borderEffect.ExtendX(winrt::CanvasEdgeBehavior::Wrap);
     borderEffect.ExtendY(winrt::CanvasEdgeBehavior::Wrap);

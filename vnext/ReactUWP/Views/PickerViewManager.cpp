@@ -49,7 +49,7 @@ react::uwp::TriBit PickerShadowNode::s_isEditableComboboxSupported = react::uwp:
 PickerShadowNode::PickerShadowNode() : Super() {
   if (s_isEditableComboboxSupported == react::uwp::TriBit::Undefined) {
     s_isEditableComboboxSupported =
-#ifdef NO_WINUI3_SUPPORT
+#ifndef USE_WINUI3
         winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
             XAML_NAMESPACE_STR L".Controls.ComboBox", L"IsEditableProperty") ? react::uwp::TriBit::Set : react::uwp::TriBit::NotSet;
 #else

@@ -14,7 +14,7 @@
 // xaml::Interop::TypeName does not exist, always use WUX
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
-#ifdef NO_WINUI3_SUPPORT
+#ifndef USE_WINUI3
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.System.h>

@@ -5,15 +5,15 @@
 //
 // If you modify this file, be sure to run buildcppwinrt.cmd in this folder
 // to generate new headers
-#include"../../../include/NamespaceRedirect.h"
+#include "../../../include/NamespaceRedirect.h"
 
-#ifdef NO_WINUI3_SUPPORT
+#ifndef USE_WINUI3
 namespace Microsoft.UI.Composition.Effects
 #else
 namespace Microsoft.ReactNative
 #endif
 {
-#ifdef NO_WINUI3_SUPPORT
+#ifndef USE_WINUI3
     [version(1)]
     typedef enum CanvasEdgeBehavior
     {
@@ -26,7 +26,7 @@ namespace Microsoft.ReactNative
     runtimeclass BorderEffect;
 
     [version(1)]
-#ifdef NO_WINUI3_SUPPORT
+#ifndef USE_WINUI3
     [uuid(31602441-15db-5b4a-98dd-ba4247548b40), exclusiveto(BorderEffect)]
 #else
     [uuid(d21ed48b-9d10-40d1-a6f6-e6bfca14a050), exclusiveto(BorderEffect)]

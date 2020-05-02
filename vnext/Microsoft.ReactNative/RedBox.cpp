@@ -154,7 +154,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
 
   void CreateWebView(xaml::Controls::Panel parent, const winrt::hstring &content) {
-#ifdef NO_WINUI3_SUPPORT
+#ifndef USE_WINUI3
     xaml::Controls::WebView webView;
 #else
     xaml::Controls::WebView2 webView;
@@ -183,7 +183,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
               L"document.body.style.setProperty('background', '#be0000')) "
               L"|| document.documentElement.scrollHeight.toString()";
 
-          #ifdef NO_WINUI3_SUPPORT
+          #ifndef USE_WINUI3
           auto async = webView.InvokeScriptAsync(L"eval", std::vector<winrt::hstring>{winrt::hstring{jsExpression}});
           #else
           auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
