@@ -1,0 +1,10 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
+	<Target
+		Name="MakeTestBundles"
+		BeforeTargets="PrepareForBuild"
+		Inputs="@(JsBundleEntry)"
+		Outputs="@(JsBundleEntry->'$(OutputPath)%(Filename).bundle')">
+		<Exec Command="$(BundleCliCommand) --platform windows --entry-file %(JsBundleEntry.FullPath) --bundle-output $(OutputPath)%(JsBundleEntry.Filename).bundle" ConsoleToMSBuild="true" />
+	</Target>
+</Project>
