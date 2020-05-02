@@ -109,7 +109,7 @@ struct MockMessageWebSocket : public winrt::implements<
 
 #pragma endregion IMessageWebSocket overrides
 
-private:
+ private:
   // Used only for MessageWebSocketControl.
   // Remove once MockMessageWebSocketControl is fully implemented.
   winrt::Windows::Networking::Sockets::MessageWebSocket m_messageWebSocket;
@@ -192,7 +192,6 @@ struct MockMessageWebSocketControl : winrt::implements<
                                          MockMessageWebSocketControl,
                                          winrt::Windows::Networking::Sockets::IMessageWebSocketControl,
                                          winrt::Windows::Networking::Sockets::IWebSocketControl> {
-
 #pragma region IWebSocketControl
 
   std::uint32_t OutboundBufferSizeInBytes() const;

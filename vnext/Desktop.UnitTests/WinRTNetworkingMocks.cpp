@@ -297,7 +297,7 @@ IOutputStream MockDataWriter::DetachStream() const {
 
 #pragma endregion MockDataWriter
 
-//TODO: Work around linker error:
+// TODO: Work around linker error:
 // error LNK2019: unresolved external symbol
 // "public: __cdecl winrt::Windows::Security::Credentials::PasswordCredential::PasswordCredential(void)"
 // (??0PasswordCredential@Credentials@Security@Windows@winrt@@QEAA@XZ)

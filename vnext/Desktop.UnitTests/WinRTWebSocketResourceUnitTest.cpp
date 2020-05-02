@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
 #include <CppUnitTest.h>
 #include <WinRTWebSocketResource.h>
+#include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
 #include "WinRTNetworkingMocks.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -29,7 +29,7 @@ IAsyncAction ThrowAsync() {
   throw winrt::hresult_error(winrt::hresult(E_FAIL), L"Expected Failure");
 }
 
-} // namespace <anonymous>
+} // namespace
 
 namespace Microsoft::React::Test {
 
@@ -41,7 +41,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     // Set up mocks
     auto mws{imws.as<MockMessageWebSocket>()};
-    //TODO: Mock Control()
+    // TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
     mws->Mocks.MessageReceivedToken =
         [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
@@ -62,7 +62,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Assert::IsTrue(connected);
   }
 
-  //TODO: Re-enable. Fails in x86|Release.
+  // TODO: Re-enable. Fails in x86|Release.
   //      Hangs due to exception not being caught within WinRTWebSocketResource::PerformConnect.
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectFails)
   TEST_IGNORE()
@@ -85,9 +85,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto rc =
         make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage](Error &&error) {
-      errorMessage = error.Message;
-    });
+    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
     rc->Connect({}, {});
     rc->Close(CloseCode::Normal, {});
