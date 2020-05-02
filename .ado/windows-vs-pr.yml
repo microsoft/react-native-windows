@@ -20,7 +20,7 @@ jobs:
         name: checkPayload
         displayName: "Check if build is required for this PR"
         inputs:
-          targetType: filePath
+z          targetType: filePath
           filePath: .ado/shouldSkipPRBuild.ps1
 
   - job: RNWUniversalPR
@@ -135,6 +135,52 @@ jobs:
           pathtoPublish: $(Build.StagingDirectory)/TestMSRNNuget
         condition: eq('true', variables['TestMSRNNuget'])
 
+  - job: RNW_WinUI3
+    displayName: WinUI3 Playground
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        X86:
+          BuildConfiguration: WinUI3
+          BuildPlatform: x86
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: VSBuild@1
+        displayName: VSBuild - Playground
+        inputs:
+          solution: packages/playground/windows/Playground.sln
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
+
+
   - job: RNWUniversalOtherProjectsPR
     displayName: Universal Other Projects PR
     dependsOn: Setup
@@ -205,51 +251,6 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-
-  - job: RNW_WinUI3
-    displayName: WinUI3 Playground
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86:
-          BuildConfiguration: WinUI3
-          BuildPlatform: x86
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 60
-    cancelTimeoutInMinutes: 5
-
-    steps:
-      - checkout: self
-        clean: false
-        submodules: false
-        
-      - template: templates/prepare-env.yml
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore - Playground
-        inputs:
-          command: restore
-          restoreSolution: packages/playground/windows/Playground.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: VSBuild@1
-        displayName: VSBuild - Playground
-        inputs:
-          solution: packages/playground/windows/Playground.sln
-          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          clean: true # Optional
-          maximumCpuCount: false # Optional
-          restoreNugetPackages: false # Optional
-          msbuildArgs:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:BaseIntDir=$(BaseIntDir)
-            /p:AppxPackageSigningEnabled=false
 
   - job: RNWSampleAppsPR
     displayName: Sample Apps PR
