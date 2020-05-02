@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 02 May 2020 03:42:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0-preview.2",
+      "version": "0.62.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Package Fixes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ecc73adcf6ca0a0539d2e57f46ea69552f431540",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Apr 2020 06:53:05 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0-preview.1",
       "version": "0.62.0-preview.1",
