@@ -637,4 +637,5 @@
            causes WinMD merge conflicts in user projects as they also reference the same files. -->
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
     </ItemGroup>
+  </Target>
 </Project>
