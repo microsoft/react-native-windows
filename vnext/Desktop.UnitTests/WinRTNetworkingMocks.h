@@ -13,8 +13,8 @@ namespace Microsoft::React::Test {
 /// </summary>
 struct MockMessageWebSocket : public winrt::implements<
                                   MockMessageWebSocket,
-                                  winrt::Windows::Networking::Sockets::IWebSocket,
-                                  winrt::Windows::Networking::Sockets::IMessageWebSocket> {
+                                  winrt::Windows::Networking::Sockets::IMessageWebSocket,
+                                  winrt::Windows::Networking::Sockets::IWebSocket> {
   struct Mocks {
     // IWebSocket
     std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
