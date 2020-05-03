@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 02 May 2020 00:05:12 GMT and should not be manually modified.
+This log was last generated on Sun, 03 May 2020 00:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.57
+
+Sun, 03 May 2020 00:04:42 GMT
+
+### Changes
+
+- Implement WinRTWebSocketResource unit tests (julio.rocha@microsoft.com)
 
 ## 0.0.0-master.56
 

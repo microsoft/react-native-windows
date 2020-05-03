@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 03 May 2020 00:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.57",
+      "version": "0.0.0-master.57",
+      "comments": {
+        "none": [
+          {
+            "comment": "test bundle build logic, JS function call test",
+            "author": "aeulitz@microsoft.com",
+            "commit": "56e08530db3e751a8813785bb51aeb728aad98b0",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Implement WinRTWebSocketResource unit tests",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a6d5ff43421d4fb450db47aaa753c767c5966ede",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 02 May 2020 00:05:12 GMT",
       "tag": "react-native-windows_v0.0.0-master.56",
       "version": "0.0.0-master.56",
