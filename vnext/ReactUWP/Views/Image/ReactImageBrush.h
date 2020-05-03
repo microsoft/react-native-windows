@@ -36,6 +36,8 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
 
   void Source(xaml::Media::LoadedImageSurface const &value);
 
+  static bool s_isWinUI3;
+
  private:
   void UpdateCompositionBrush();
   bool IsImageSmallerThanView();

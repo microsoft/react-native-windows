@@ -25,6 +25,13 @@ namespace uwp {
   return winrt::make_self<ReactImageBrush>();
 }
 
+bool ReactImageBrush::s_isWinUI3 =
+#ifdef USE_WINUI3
+    true;
+#else
+    false;
+#endif
+
 void ReactImageBrush::OnConnected() {
   UpdateCompositionBrush();
 }
