@@ -135,9 +135,9 @@ void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, co
   // set on the new View a bit later in RefreshProperties() (as we need data
   // from the ShadowNode not available here).
   auto oldElement = oldView.try_as<xaml::UIElement>();
-  if (oldElement && oldElement.try_as<xaml::IUIElement10>())) {
-      oldElement.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
-    }
+  if (oldElement && oldElement.try_as<xaml::IUIElement10>()) {
+    oldElement.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
+  }
 }
 
 static folly::dynamic GetAccessibilityStateProps() {
