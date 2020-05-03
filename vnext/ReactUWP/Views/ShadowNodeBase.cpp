@@ -35,8 +35,7 @@ void ShadowNodeBase::createView() {
   if (g_HasActualSizeProperty == TriBit::Undefined) {
     if (auto uielement = m_view.try_as<xaml::UIElement>()) {
       // ActualSize works on 19H1+ only
-      g_HasActualSizeProperty = TriBit::Set;
-      //(uielement.try_as<xaml::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
+      g_HasActualSizeProperty = (uielement.try_as<xaml::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
     }
   }
 }

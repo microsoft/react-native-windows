@@ -102,6 +102,13 @@ namespace system = winrt::Microsoft::System;
 using ColorHelper = winrt::Microsoft::UI::ColorHelper;
 using Colors = winrt::Microsoft::UI::Colors;
 } // namespace winrt
+
+namespace xaml {
+using IUIElement7 = UIElement;
+using IUIElement9 = UIElement;
+using IUIElement10 = UIElement;
+} // namespace xaml
+
 #endif
 
 namespace winrt {
