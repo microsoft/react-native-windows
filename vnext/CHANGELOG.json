@@ -2,6 +2,19 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 May 2020 18:28:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.164",
+      "version": "0.60.0-vnext.164",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Delay load ChakraCore.dll",
+            "author": "tudorm@microsoft.com"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2020 01:58:44 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.163",
       "version": "0.60.0-vnext.163",

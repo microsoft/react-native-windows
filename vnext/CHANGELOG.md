@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Apr 2020 01:58:44 GMT and should not be manually modified.
+This log was last generated on Mon, 04 May 2020 18:28:25 GMT and should not be manually modified.
 
+## 0.60.0-vnext.164
+Mon, 04 May 2020 18:28:25 GMT
+
+### Changes
+
+- Delay load ChakraCore.dll (tudorm@microsoft.com)
 ## 0.60.0-vnext.163
 Wed, 29 Apr 2020 01:58:44 GMT
 
