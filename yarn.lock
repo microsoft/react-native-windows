@@ -2408,9 +2408,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.7.19"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.7.19.tgz#c19bbf6659ecbf2f170f32b9cab53d432232532b"
-  integrity sha512-MjNSttuCj5Q2eAdUXKCZc3IUltHhU5HqyizIWayjduUgLrfNYYq0kX4S17NKKUYdfwNps/mDdmAzYIR3Uc94ow==
+  version "7.7.20"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.7.20.tgz#034fe4df720d62ebcc6af311168fdb0faf89da9c"
+  integrity sha512-B2gOOoYJDOqAn9iPg4Z9ay03MYtjmY2ldF3u1povTkzl5eJWERMDuuK5BLOdGdDTMr6TUd/FrhERFEeJNeQ3rg==
   dependencies:
     "@microsoft/api-extractor-model" "7.7.11"
     "@microsoft/tsdoc" "0.12.19"
@@ -2885,9 +2885,9 @@
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
 
 "@types/react-native@^0.62.2":
-  version "0.62.5"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.5.tgz#605c2d31485c515ee18b62e8b29ffdbba404a443"
-  integrity sha512-x6ZBbo752yAw5XUarOyh53oNgMuafL4EhWEbd4ARSMK6Y7nTRm2a1tBHy8Fp7h7ji0XXJrxNRTXGJRRP3+MWzg==
+  version "0.62.7"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.7.tgz#bfc5ed03ba576f288603daa3f67f0f67d9a8bf57"
+  integrity sha512-FGFEt9GcFVl//XxWmxkeBxAx0YnzyEhJpR8hOJrjfaFKZm0KjHzzyCmCksBAP2qHSTrcJCiBkIvYCX/kGiOgww==
   dependencies:
     "@types/react" "*"
 
@@ -4495,9 +4495,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.30.2"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.30.2.tgz#c0e645b783d74de23fea404ed220dac59aab651d"
-  integrity sha512-d/2+T5+vQD/32wAQAMY7hRVyVunjD0mRCVYLPYqfxBeYHMJeQ/Irwm8u1rhhjCf94oIdoVGn2dXtWLm99RcttA==
+  version "1.31.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.31.0.tgz#8909754fa62e4e3bda14a5f799aaacef53627e23"
+  integrity sha512-IQTpnItQPt9O5nZ3nVE4Gqxt4ipJ+zJTkKaAst0aDVAQSSVB90AOIUB/TAXx2CZaYCebt4DfnzPSNu09PTXU6g==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"
@@ -7858,9 +7858,9 @@ invert-kv@^2.0.0:
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
 io-ts@^2.1.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.1.tgz#d8cb21a23cf8fbe697d78445a65bab42c0eb467f"
-  integrity sha512-RufppkTV58MfDKF2gXlHVBvi+WIyL7nUcAQMkJ1O3SiQcqwlxf6dBOJP/LV19UxHRkGKJZ6ImSj7LqYcELIejQ==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.2.tgz#82b9ef96d95a3fb27a1abf5f29f59b07cc9b8cca"
+  integrity sha512-cXXIL4CR5/sWfKw/Ssc/cbZJGG13J4pJv9/RN6SlWJyh+foAPEUE0I9sWTX1kG24dvhiCM9fpO4F+2AsP+WzaQ==
 
 io.appium.settings@^2.10.0:
   version "2.14.1"

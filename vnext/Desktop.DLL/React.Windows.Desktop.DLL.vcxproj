@@ -79,22 +79,20 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
       <!--
-        comsuppw.lib  - _com_util::ConvertStringToBSTR
-        Winhttp.lib   - WebSocket resource implementation
+        comsuppw.lib              - _com_util::ConvertStringToBSTR
+        WindowsApp_downlevel.lib  - Replaces the WindowsApp.lib link reference in Microsoft.Windows.CppWinRT.props
+                                    until we have a better solution for handling the absence of WinRT string and
+                                    error DLLs on Win7.
       -->
       <AdditionalDependencies>
         comsuppw.lib;
         Shlwapi.lib;
         Version.lib;
-        Winhttp.lib;
+        WindowsApp_downlevel.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
-      <!--
-      Replaces the WindowsApp.lib link reference in Microsoft.Windows.CppWinRT.props until
-      we have a better solution for handling the absence of WinRT string and error DLLs on Win7.
-      -->
       <AdditionalDependencies>WindowsApp_downlevel.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>api-ms-win-core-winrt-error-l1-1-0.dll;api-ms-win-core-winrt-error-l1-1-1.dll;api-ms-win-core-winrt-string-l1-1-0.dll;ChakraCore.Debugger.DLL;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>api-ms-win-core-winrt-error-l1-1-0.dll;api-ms-win-core-winrt-error-l1-1-1.dll;api-ms-win-core-winrt-string-l1-1-0.dll;ChakraCore.Debugger.DLL;ChakraCore.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">

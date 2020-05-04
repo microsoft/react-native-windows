@@ -20,9 +20,10 @@ namespace Microsoft::React {
 
 class WinRTWebSocketResource : public IWebSocketResource, public std::enable_shared_from_this<WinRTWebSocketResource> {
   winrt::Windows::Foundation::Uri m_uri;
-  winrt::Windows::Networking::Sockets::MessageWebSocket m_socket;
-  winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_revoker;
-  winrt::Windows::Storage::Streams::DataWriter m_writer{m_socket.OutputStream()};
+  winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
+  // TODO: Use or remove.
+  winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker m_revoker;
+  winrt::Windows::Storage::Streams::IDataWriter m_writer;
 
   Mso::DispatchQueue m_dispatchQueue;
   Mso::ManualResetEvent m_closePerformed;
@@ -44,6 +45,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   std::function<void(Error &&)> m_errorHandler;
 
   WinRTWebSocketResource(
+      winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Foundation::Uri &&uri,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
 
@@ -54,13 +56,20 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IWebSocket const &sender,
-      winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs const &args);
+      winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &args);
   void Synchronize();
 
  public:
   WinRTWebSocketResource(
+      winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
+      winrt::Windows::Storage::Streams::IDataWriter &&writer,
+      winrt::Windows::Foundation::Uri &&uri,
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions);
+
+  WinRTWebSocketResource(
       const std::string &urlString,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions);
+
   ~WinRTWebSocketResource() override;
 
 #pragma region IWebSocketResource

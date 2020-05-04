@@ -74,14 +74,12 @@
       <!--
         comsuppw.lib  - _com_util::ConvertStringToBSTR
         delayimp.lib  -
-        Winhttp.lib   - WebSocket resource implementation
       -->
       <AdditionalDependencies>
         comsuppw.lib;
         delayimp.lib;
         Shlwapi.lib;
         Version.lib;
-        Winhttp.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
