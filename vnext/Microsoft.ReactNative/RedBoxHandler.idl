@@ -1,0 +1,42 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "ReactNativeHost.idl";
+
+namespace Microsoft.ReactNative.RedBox {
+
+  enum ErrorType {
+    JavaScriptFatal, // A JS Exception was thrown or otherwise fatal error
+    JavaScriptSoft, // An error coming from JS that isn't fatal, such as console.error
+    Native,
+  };
+
+  [webhosthidden] interface IErrorFrameInfo {
+    String File { get; };
+    String Method { get; };
+    UInt32 Line { get; };
+    UInt32 Column { get; };
+  }
+  
+  [webhosthidden] interface IErrorInfo {
+    String Message { get; };
+    UInt32 Id { get; };
+    IVectorView<IErrorFrameInfo> Callstack { get; };
+  }
+
+  [webhosthidden]
+  interface IRedBoxHandler 
+  {
+    void ShowNewError(IErrorInfo info, ErrorType type);
+    Boolean IsDevSupportEnabled { get; };
+    void UpdateError(IErrorInfo info);
+    void DismissRedBox();
+  }
+
+  [webhosthidden]
+  [default_interface]
+  runtimeclass RedBoxHandler : IRedBoxHandler {
+    RedBoxHandler(Microsoft.ReactNative.ReactNativeHost host);
+  }
+
+}

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "NoExceptionAttribute.idl";
+import "RedBoxHandler.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -28,5 +29,6 @@ namespace Microsoft.ReactNative {
     String DebugBundlePath { get; set; };
     String BundleRootPath { get; set; };
     UInt16 DebuggerPort { get; set; };
+    Microsoft.ReactNative.RedBox.IRedBoxHandler RedBoxHandler { get; set; };
   }
 }
