@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Delay load ChakraCore.dll",
   "packageName": "react-native-windows",
   "email": "tudorm@microsoft.com",
