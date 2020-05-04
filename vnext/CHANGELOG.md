@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 25 Apr 2020 04:46:21 GMT and should not be manually modified.
+This log was last generated on Mon, 04 May 2020 21:13:13 GMT and should not be manually modified.
 
+## 0.61.8
+Mon, 04 May 2020 21:13:13 GMT
+
+### Patches
+
+- Delay load ChakraCore.dll (tudorm@microsoft.com)
 ## 0.61.7
 Sat, 25 Apr 2020 04:46:21 GMT
 

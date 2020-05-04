@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 May 2020 21:13:13 GMT",
+      "tag": "react-native-windows_v0.61.8",
+      "version": "0.61.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Delay load ChakraCore.dll",
+            "author": "tudorm@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Apr 2020 04:46:21 GMT",
       "tag": "react-native-windows_v0.61.7",
       "version": "0.61.7",
