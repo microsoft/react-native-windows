@@ -19,13 +19,11 @@ RedBoxHandler::RedBoxHandler(ReactNativeHost const &host) noexcept {
   m_redBoxHandler = Mso::React::CreateDefaultRedBoxHandler(std::move(wkHost));
 }
 
-Mso::React::ErrorInfo CreateErrorInfo(IErrorInfo info)
-{
+Mso::React::ErrorInfo CreateErrorInfo(IErrorInfo info) {
   Mso::React::ErrorInfo ei;
   ei.Id = info.Id();
   ei.Message = ::Microsoft::Common::Unicode::Utf16ToUtf8(info.Message());
-  for (auto frame : info.Callstack())
-  {
+  for (auto frame : info.Callstack()) {
     Mso::React::ErrorFrameInfo efi;
     efi.Method = ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.Method());
     efi.File = ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.File());
@@ -36,8 +34,9 @@ Mso::React::ErrorInfo CreateErrorInfo(IErrorInfo info)
   return std::move(ei);
 }
 
-inline void RedBoxHandler::ShowNewError(IErrorInfo const & info, ErrorType type) noexcept {
-  m_redBoxHandler->showNewError(std::move(CreateErrorInfo(info)), static_cast<Mso::React::ErrorType>(static_cast<uint32_t>(type)));
+inline void RedBoxHandler::ShowNewError(IErrorInfo const &info, ErrorType type) noexcept {
+  m_redBoxHandler->showNewError(
+      std::move(CreateErrorInfo(info)), static_cast<Mso::React::ErrorType>(static_cast<uint32_t>(type)));
 }
 
 inline bool RedBoxHandler::IsDevSupportEnabled() noexcept {

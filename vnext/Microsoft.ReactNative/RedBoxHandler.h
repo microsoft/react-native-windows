@@ -18,7 +18,8 @@ struct RedBoxHandler : RedBoxHandlerT<RedBoxHandler> {
   bool IsDevSupportEnabled() noexcept;
   void UpdateError(IErrorInfo const &info) noexcept;
   void DismissRedBox() noexcept;
-private:
+
+ private:
   std::shared_ptr<Mso::React::IRedBoxHandler> m_redBoxHandler;
 };
 

@@ -470,18 +470,19 @@ struct RedBoxErrorFrameInfo
     : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::RedBox::IErrorFrameInfo> {
   RedBoxErrorFrameInfo(Mso::React::ErrorFrameInfo &&errorFrameInfo) : m_frame(std::move(errorFrameInfo)) {}
 
-  winrt::hstring File() noexcept {
+  winrt::hstring File() const noexcept {
     return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.File).c_str();
   }
 
-  winrt::hstring Method() noexcept {
+  winrt::hstring Method() const noexcept {
     return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.Method).c_str();
   }
 
-  uint32_t Line() noexcept {
+  uint32_t Line() const noexcept {
     return m_frame.Line;
   }
-  uint32_t Column() noexcept {
+
+  uint32_t Column() const noexcept {
     return m_frame.Column;
   }
 
@@ -492,11 +493,11 @@ struct RedBoxErrorFrameInfo
 struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::RedBox::IErrorInfo> {
   RedBoxErrorInfo(Mso::React::ErrorInfo &&errorInfo) : m_errorInfo(std::move(errorInfo)) {}
 
-  winrt::hstring Message() noexcept {
+  winrt::hstring Message() const noexcept {
     return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
   }
 
-  uint32_t Id() noexcept {
+  uint32_t Id() const noexcept {
     return m_errorInfo.Id;
   }
 
