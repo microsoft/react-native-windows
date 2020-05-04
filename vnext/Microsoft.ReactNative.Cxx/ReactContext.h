@@ -5,7 +5,7 @@
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
-#include <../include/CppWinRTIncludes.h>
+#include <CppWinRTIncludes.h>
 #include <string_view>
 #include "JSValueWriter.h"
 #include "winrt/Microsoft.ReactNative.h"
