@@ -46,11 +46,9 @@ function getAppPackage(options) {
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
       : `*_${options.arch}_${configuration}_*`;
 
-  const appPackageGlob = path.join(
-    options.root,
-    `windows/{*/AppPackages,AppPackages/*}/${packageFolder}`,
-  );
-
+  const appPackageGlob = `${
+    options.root
+  }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
   let appPackage = glob.sync(appPackageGlob)[0];
 
   if (!appPackage && options.release) {
@@ -60,10 +58,9 @@ function getAppPackage(options) {
     );
 
     appPackage = glob.sync(
-      path.join(
-        options.root,
-        `windows/{*/AppPackages,AppPackages/*}/*_${options.arch}_*`,
-      ),
+      `${options.root}/windows/{*/AppPackages,AppPackages/*}/*_${
+        options.arch
+      }_*`,
     )[0];
   }
 
