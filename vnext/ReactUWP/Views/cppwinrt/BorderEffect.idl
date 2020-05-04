@@ -5,7 +5,7 @@
 //
 // If you modify this file, be sure to run buildcppwinrt.cmd in this folder
 // to generate new headers
-#include "../../../include/NamespaceRedirect.h"
+#include "NamespaceRedirect.h"
 
 #ifndef USE_WINUI3
 namespace Microsoft.UI.Composition.Effects

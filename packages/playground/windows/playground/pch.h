@@ -18,7 +18,7 @@
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
 
-#include "../../../../vNext/include/CppWinRTIncludes.h"
+#include "CppWinRTIncludes.h"
 
 #include <winrt/Microsoft.ReactNative.h>
 

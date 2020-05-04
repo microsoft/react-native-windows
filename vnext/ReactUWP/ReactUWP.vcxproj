@@ -138,7 +138,7 @@
       <DelayLoadDLLs>winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl;$(ProjectDir)Views\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl;$(ProjectDir)Views\cppwinrt;$(ReactNativeWindowsDir)include</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />

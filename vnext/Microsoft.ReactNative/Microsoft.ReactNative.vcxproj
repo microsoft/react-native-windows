@@ -174,7 +174,7 @@
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP\Views\cppwinrt;%(AdditionalIncludeDirectories);$(ReactNativeWindowsDir)include</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
