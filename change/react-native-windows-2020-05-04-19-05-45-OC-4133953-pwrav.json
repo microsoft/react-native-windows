@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Promote awaitable DispatchQueue callback to member field",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-05T02:05:45.427Z"
+}
