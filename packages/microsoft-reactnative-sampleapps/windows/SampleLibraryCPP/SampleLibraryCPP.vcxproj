@@ -90,7 +90,6 @@
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <PreprocessorDefinitions>_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ReactNativeWindowsDir)include</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>

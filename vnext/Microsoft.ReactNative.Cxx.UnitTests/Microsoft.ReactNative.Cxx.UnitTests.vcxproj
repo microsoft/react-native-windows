@@ -68,7 +68,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <PreprocessorDefinitions>_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories);$(ReactNativeWindowsDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
@@ -78,7 +78,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;%(AdditionalIncludeDirectories);$(ReactNativeWindowsDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">

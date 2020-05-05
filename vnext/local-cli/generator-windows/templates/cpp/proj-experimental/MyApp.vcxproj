@@ -91,11 +91,7 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ReactNativeWindowsDir)include</AdditionalIncludeDirectories>
     </ClCompile>
-    <Midl>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
