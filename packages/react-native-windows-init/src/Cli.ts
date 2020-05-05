@@ -49,7 +49,6 @@ const argv = yargs.version(false).options({
   },
 }).argv;
 
-const EXITCODE_NO_MATCHING_RNW = 2;
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;
 const EXITCODE_NO_REACTNATIVE_FOUND = 5;
@@ -254,10 +253,11 @@ function isProjectUsingYarn(cwd: string) {
 
     if (!rnwResolvedVersion) {
       if (argv.version) {
-        console.error(
-          `Error: No version of react-native-windows@${argv.version} found`,
+        console.warn(
+          `Warning: Querying npm to find react-native-windows@${
+            argv.version
+          } failed.  Attempting to continue anyway...`,
         );
-        process.exit(EXITCODE_NO_MATCHING_RNW);
       } else {
         const rnwLatestVersion = await getLatestRNWVersion();
         console.error(
