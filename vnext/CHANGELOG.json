@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 May 2020 00:04:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.58",
+      "version": "0.0.0-master.58",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make generated msbuild project compile in parralel (/m)",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ccf291bb1de85a7fe68a385e587750f83da62978",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix appPackage path",
+            "author": "kaigu@microsoft.com",
+            "commit": "96c1c93fbf9ac314f6aaf5da151bc9365a1e75e6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 03 May 2020 00:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-master.57",
       "version": "0.0.0-master.57",
