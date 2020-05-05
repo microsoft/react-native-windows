@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Support --version file:<path> for running init against local changes",
+  "packageName": "react-native-windows-init",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-05T19:50:32.625Z"
+}
