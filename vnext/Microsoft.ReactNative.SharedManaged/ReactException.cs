@@ -5,7 +5,7 @@ using System;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactException : Exception
+  public class ReactException : Exception
   {
     public ReactException()
     {

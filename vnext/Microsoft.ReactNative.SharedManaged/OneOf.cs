@@ -7,7 +7,7 @@
 
 namespace Microsoft.ReactNative.Managed
 {
-  struct OneOf1<T1>
+  public struct OneOf1<T1>
   {
     public OneOf1(T1 value)
     {
@@ -26,7 +26,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  struct OneOf2<T1, T2>
+  public struct OneOf2<T1, T2>
   {
     public OneOf2(T1 value)
     {
@@ -51,7 +51,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  struct OneOf3<T1, T2, T3>
+  public struct OneOf3<T1, T2, T3>
   {
     public OneOf3(T1 value)
     {
@@ -82,7 +82,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  struct OneOf4<T1, T2, T3, T4>
+  public struct OneOf4<T1, T2, T3, T4>
   {
     public OneOf4(T1 value)
     {
@@ -119,7 +119,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  struct OneOf5<T1, T2, T3, T4, T5>
+  public struct OneOf5<T1, T2, T3, T4, T5>
   {
     public OneOf5(T1 value)
     {
@@ -162,7 +162,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  struct OneOf6<T1, T2, T3, T4, T5, T6>
+  public struct OneOf6<T1, T2, T3, T4, T5, T6>
   {
     public OneOf6(T1 value)
     {
@@ -211,7 +211,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  struct OneOf7<T1, T2, T3, T4, T5, T6, T7>
+  public struct OneOf7<T1, T2, T3, T4, T5, T6, T7>
   {
     public OneOf7(T1 value)
     {

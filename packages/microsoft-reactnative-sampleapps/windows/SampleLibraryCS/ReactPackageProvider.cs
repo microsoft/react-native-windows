@@ -10,8 +10,7 @@ namespace SampleLibraryCS
     {
         public void CreatePackage(IReactPackageBuilder packageBuilder)
         {
-            packageBuilder.AddAttributedModules();
-            packageBuilder.AddViewManagers();
+            packageBuilder.AddReflectionReactPackageProvider<ReactPackageProvider>();
         }
     }
 }

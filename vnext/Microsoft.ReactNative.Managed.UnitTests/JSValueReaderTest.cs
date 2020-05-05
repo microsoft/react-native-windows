@@ -168,6 +168,13 @@ namespace Microsoft.ReactNative.Managed.UnitTests
   [TestClass]
   public class JSValueReaderTest
   {
+    public JSValueReaderTest()
+    {
+      var assembly = typeof(RobotSerialization).Assembly;
+      JSValueReaderGenerator.RegisterAssembly(assembly);
+      JSValueWriterGenerator.RegisterAssembly(assembly);
+    }
+
     [TestMethod]
     public void TestReadCustomType()
     {
@@ -282,6 +289,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       Assert.AreEqual(90, jValue["Path"][1]["Y"]);
       Assert.AreEqual(15, jValue["Path"][2]["X"]);
       Assert.AreEqual(16, jValue["Path"][2]["Y"]);
+      Assert.AreEqual(1, jValue["Extra"]["Kind"]);
       Assert.AreEqual("Episode 2", jValue["Extra"]["MovieSeries"]);
     }
 

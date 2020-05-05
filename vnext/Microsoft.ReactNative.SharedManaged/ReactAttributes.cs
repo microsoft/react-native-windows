@@ -6,7 +6,7 @@ using System;
 namespace Microsoft.ReactNative.Managed
 {
   [AttributeUsage(AttributeTargets.Class)]
-  class ReactModuleAttribute : Attribute
+  public class ReactModuleAttribute : Attribute
   {
     public ReactModuleAttribute(string moduleName = null)
     {
@@ -19,12 +19,12 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Method)]
-  class ReactInitializerAttribute : Attribute
+  public class ReactInitializerAttribute : Attribute
   {
   }
 
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  class ReactConstantAttribute : Attribute
+  public class ReactConstantAttribute : Attribute
   {
     public ReactConstantAttribute(string constantName = null)
     {
@@ -36,12 +36,12 @@ namespace Microsoft.ReactNative.Managed
 
 
   [AttributeUsage(AttributeTargets.Method)]
-  class ReactConstantProviderAttribute : Attribute
+  public class ReactConstantProviderAttribute : Attribute
   {
   }
 
   [AttributeUsage(AttributeTargets.Method)]
-  class ReactMethodAttribute : Attribute
+  public class ReactMethodAttribute : Attribute
   {
     public ReactMethodAttribute(string methodName = null)
     {
@@ -52,7 +52,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Method)]
-  class ReactSyncMethodAttribute : Attribute
+  public class ReactSyncMethodAttribute : Attribute
   {
     public ReactSyncMethodAttribute(string methodName = null)
     {
@@ -63,7 +63,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-  class ReactEventAttribute : Attribute
+  public class ReactEventAttribute : Attribute
   {
     public ReactEventAttribute(string eventName = null)
     {
@@ -76,7 +76,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-  class ReactFunctionAttribute : Attribute
+  public class ReactFunctionAttribute : Attribute
   {
     public ReactFunctionAttribute(string functionName = null)
     {
