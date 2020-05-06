@@ -81,6 +81,25 @@ function copyProjectTemplateAndReplace(
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
+
+  const xamlNugetPkgName = options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml';
+  const xamlNugetPkgVersion = options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002';
+
+  const xamlProps30 = String.raw`<Import Project="..\packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.props" Condition="Exists('..\packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.props')" />
+  <ItemDefinitionGroup>
+  <ClCompile>
+    <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  </ClCompile>
+</ItemDefinitionGroup>
+`;
+
+  const xamlProps = options.useWinUI3 ? xamlProps30 : ''; // no props for Xaml 2.x
+
+  const xamlTargetsPath = `..\\packages\\${xamlNugetPkgName}.${xamlNugetPkgVersion}\\build\\native\\${xamlNugetPkgName}.targets`;
+  const xamlTargets = `<Import Project="${xamlTargetsPath}" Condition="Exists('${xamlTargetsPath}')" />`;
+  const xamlNugetErrors = `<Error Condition="!Exists('${xamlTargetsPath}')" Text="$([System.String]::Format('$(ErrorText)', '${xamlTargetsPath}'))" />`;
+  const xamlNamespace = options.useWinUI3 ? 'Microsoft.UI.Xaml' : 'Windows.UI.Xaml';
+
   const templateVars = {
     '// clang-format off': '',
     '// clang-format on': '',
@@ -92,6 +111,12 @@ function copyProjectTemplateAndReplace(
     '<%=packageGuid%>': packageGuid,
     '<%=currentUser%>': currentUser,
     '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',
+    '<%=XamlProps%>': xamlProps,
+    '<%=XamlTargets%>': xamlTargets,
+    '<%=XamlNugetErrors%>': xamlNugetErrors,
+    '<%=XamlNugetPkgName%>': xamlNugetPkgName,
+    '<%=XamlNugetPkgVersion%>': xamlNugetPkgVersion,
+    '<%=XamlNamespace%>': xamlNamespace,
   };
 
   [
@@ -101,6 +126,13 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+
+  const slnFilePath = path.join(windowsDir, newProjectName + '.sln');
+  const slnText = fs.readFileSync(slnFilePath).toString();
+  // Target Microsoft.ReactNative.Cxx to WinUI3
+  const regex = /({F7D32BD0-2749-483E-9A0D-1635EF7E3136}\..*\.\w+) = \w+\|([\w\d]+)/g;
+  const makeWinUI3 = '$1 = WinUI3|$2';
+  fs.writeFileSync(slnFilePath, slnText.replace(regex, makeWinUI3));
 
   if (language === 'cs') {
     [
