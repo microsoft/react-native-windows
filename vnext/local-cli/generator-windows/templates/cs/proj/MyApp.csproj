@@ -157,7 +157,7 @@
       <HintPath>..\packages\Microsoft.UI.Xaml.2.3.191129002\lib\uap10.0\Microsoft.UI.Xaml.winmd</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.UI.Xaml.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="Microsoft.UI.Xaml.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Platform)' == 'x86'">
       <HintPath>..\packages\Microsoft.UI.Xaml.2.3.191129002\lib\uap10.0\Design\Microsoft.UI.Xaml.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>

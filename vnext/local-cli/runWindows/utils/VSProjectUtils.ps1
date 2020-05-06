@@ -30,7 +30,7 @@ function Check-PackagesConfigXml {
     Write-Host " done."
 }
 
-# Creates a new pacakges.config file at $PackagesConfigPath
+# Creates a new packages.config file at $PackagesConfigPath
 # If $CheckConfig, check the file doesn't already exist first
 function Create-PackagesConfigXml {
     param(
