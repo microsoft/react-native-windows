@@ -133,9 +133,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PerfTests.cpp" />
+    <ClCompile Include="ReactNativeHostTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MessageQueueShim.h" />
+    <ClInclude Include="ActivationFactory.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

@@ -5,12 +5,13 @@
 #include <CppUnitTest.h>
 #include <winrt/facebook.react.h>
 #include <vector>
+#include "ActivationFactory.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 using namespace winrt;
 
-int32_t __stdcall WINRT_RoGetActivationFactory(void *classId, winrt::guid const &iid, void **factory) noexcept;
+// int32_t __stdcall WINRT_RoGetActivationFactory(void *classId, winrt::guid const &iid, void **factory) noexcept;
 
 namespace ABITests {
 

@@ -98,6 +98,7 @@
     <Midl Include="ABI\MessageQueue.idl" />
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
+    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
@@ -114,6 +115,10 @@
     </ClCompile>
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="ABI\ReactNativeHost.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
@@ -145,6 +150,10 @@
     </ClInclude>
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="ABI\ReactNativeHost.h">
+      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+      <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="Executors\WebSocketJSExecutor.h" />

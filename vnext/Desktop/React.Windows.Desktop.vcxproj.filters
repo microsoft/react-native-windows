@@ -42,6 +42,9 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl">
+      <Filter>ABI</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
