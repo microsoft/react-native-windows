@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 May 2020 00:04:31 GMT and should not be manually modified.
+This log was last generated on Wed, 06 May 2020 00:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.59
+
+Wed, 06 May 2020 00:05:03 GMT
+
+### Changes
+
+- WinUI 3 Alpha support in RNW (asklar@microsoft.com)
+- Treat yes the same as y in template overwrite prompt (acoates@microsoft.com)
 
 ## 0.0.0-master.58
 

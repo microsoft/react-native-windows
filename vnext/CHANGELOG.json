@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 May 2020 00:05:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.59",
+      "version": "0.0.0-master.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI 3 Alpha support in RNW",
+            "author": "asklar@microsoft.com",
+            "commit": "f467d8b06d481b6e36a7cd239608594017f4ebbf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Treat yes the same as y in template overwrite prompt",
+            "author": "acoates@microsoft.com",
+            "commit": "a20e950879c75f3dcd87be2624bbdb79664061cc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 May 2020 00:04:31 GMT",
       "tag": "react-native-windows_v0.0.0-master.58",
       "version": "0.0.0-master.58",
