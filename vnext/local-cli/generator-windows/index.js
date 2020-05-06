@@ -129,12 +129,14 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
-  const slnFilePath = path.join(windowsDir, newProjectName + '.sln');
-  const slnText = fs.readFileSync(slnFilePath).toString();
-  // Target Microsoft.ReactNative.Cxx to WinUI3
-  const regex = /({F7D32BD0-2749-483E-9A0D-1635EF7E3136}\..*\.\w+) = \w+\|([\w\d]+)/g;
-  const makeWinUI3 = '$1 = WinUI3|$2';
-  fs.writeFileSync(slnFilePath, slnText.replace(regex, makeWinUI3));
+  if (options.useWinUI3) {
+    const slnFilePath = path.join(windowsDir, newProjectName + '.sln');
+    const slnText = fs.readFileSync(slnFilePath).toString();
+    // Target Microsoft.ReactNative.Cxx to WinUI3
+    const regex = /({F7D32BD0-2749-483E-9A0D-1635EF7E3136}\..*\.\w+) = \w+\|([\w\d]+)/g;
+    const makeWinUI3 = '$1 = WinUI3|$2';
+    fs.writeFileSync(slnFilePath, slnText.replace(regex, makeWinUI3));
+  }
 
   if (language === 'cs') {
     [
