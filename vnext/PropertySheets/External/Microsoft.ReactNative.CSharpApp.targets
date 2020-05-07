@@ -4,9 +4,6 @@
  Licensed under the MIT License.. 
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)\..\..'))\</ReactNativeWindowsDir>
-  </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems" Label="Shared" />
   <ItemGroup>
     <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
@@ -14,6 +11,5 @@
       <Name>Microsoft.ReactNative</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
 </Project>

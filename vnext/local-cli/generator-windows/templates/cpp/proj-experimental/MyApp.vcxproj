@@ -146,18 +146,21 @@
     </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <PropertyGroup>
-    <UseExperimentalNuget>true</UseExperimentalNuget> <!-- This will eventually default to true and this property group should be removed -->
+  <PropertyGroup Label="ReactNativeWindowsNodeProps">
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+    <UseExperimentalNuget>true</UseExperimentalNuget> <!-- This will eventually default to true and this property should be removed -->
   </PropertyGroup>
   <ImportGroup Label="ReactNativeWindowsNodeTargets">
-    <Import Project="..\..\node_modules\react-native-windows\PropertySheets\External\Microsoft.ReactNative.CppApp.targets" Condition="Exists('..\..\node_modules\react-native-windows\PropertySheets\External\Microsoft.ReactNative.CppApp.targets')" />
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.props')" />
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.targets')" />
     <Import Project="AutolinkedNativeModules.g.targets" Condition="Exists('AutolinkedNativeModules.g.targets')" />
   </ImportGroup>
   <Target Name="EnsureReactNativeWindowsNodeTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\node_modules\react-native-windows\PropertySheets\External\Microsoft.ReactNative.CppApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\node_modules\react-native-windows\PropertySheets\External\Microsoft.ReactNative.CppApp.targets'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.props'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.targets'))" />
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
