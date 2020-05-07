@@ -137,44 +137,6 @@ struct PropertyBag {
     return m_content;
   }
 
-  template <class T>
-  static Windows::Foundation::IInspectable ToObject(T const &value) noexcept {
-    return winrt::box_value(value);
-  }
-
-  template <class T>
-  static Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
-    return value ? ToObject(*value) : nullptr;
-  }
-
-  template <class T>
-  static auto FromObject(Windows::Foundation::IInspectable const &obj) noexcept {
-    if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>) {
-      return obj.try_as<T>();
-    } else {
-      if (obj) {
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-        if constexpr (std::is_same_v<T, GUID>) {
-          if (auto temp = obj.try_as<Windows::Foundation::IReference<guid>>()) {
-            return std::optional<T>{temp.Value()};
-          }
-        }
-#endif
-        if (auto temp = obj.try_as<Windows::Foundation::IReference<T>>()) {
-          return std::optional<T>{temp.Value()};
-        }
-
-        if constexpr (std::is_enum_v<T>) {
-          if (auto temp = obj.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
-            return std::optional<T>{static_cast<T>(temp.Value())};
-          }
-        }
-      }
-
-      return std::optional<T>{};
-    }
-  }
-
   //! Get property value by property name.
   template <class T>
   ResultType<T> Get(PropertyName<T> const &propertyName) const noexcept {
@@ -238,6 +200,45 @@ struct PropertyBag {
   //! True if right PropertyBag content is not null.
   friend bool operator!=(std::nullptr_t, const PropertyBag &right) noexcept {
     return static_cast<bool>(right);
+  }
+
+ private:
+  template <class T>
+  static Windows::Foundation::IInspectable ToObject(T const &value) noexcept {
+    return winrt::box_value(value);
+  }
+
+  template <class T>
+  static Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
+    return value ? ToObject(*value) : nullptr;
+  }
+
+  template <class T>
+  static auto FromObject(Windows::Foundation::IInspectable const &obj) noexcept {
+    if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>) {
+      return obj.try_as<T>();
+    } else {
+      if (obj) {
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
+        if constexpr (std::is_same_v<T, GUID>) {
+          if (auto temp = obj.try_as<Windows::Foundation::IReference<guid>>()) {
+            return std::optional<T>{temp.Value()};
+          }
+        }
+#endif
+        if (auto temp = obj.try_as<Windows::Foundation::IReference<T>>()) {
+          return std::optional<T>{temp.Value()};
+        }
+
+        if constexpr (std::is_enum_v<T>) {
+          if (auto temp = obj.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
+            return std::optional<T>{static_cast<T>(temp.Value())};
+          }
+        }
+      }
+
+      return std::optional<T>{};
+    }
   }
 
  private:
