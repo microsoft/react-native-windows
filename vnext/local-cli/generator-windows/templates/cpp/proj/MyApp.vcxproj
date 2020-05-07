@@ -152,7 +152,6 @@
   <ImportGroup Label="ReactNativeWindowsNodeTargets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.props')" />
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppApp.targets')" />
-    <Import Project="AutolinkedNativeModules.g.targets" Condition="Exists('AutolinkedNativeModules.g.targets')" />
   </ImportGroup>
   <Target Name="EnsureReactNativeWindowsNodeTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
