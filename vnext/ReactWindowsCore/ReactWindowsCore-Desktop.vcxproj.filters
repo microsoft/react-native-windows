@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="etw">
@@ -116,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="Modules\StatusBarManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="V8JSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp">
       <Filter>Source Files</Filter>
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="Modules\StatusBarManagerModule.h">
       <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="V8JSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

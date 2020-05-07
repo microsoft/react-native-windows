@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603144}</ProjectGuid>
+    <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603145}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
     <RootNamespace>ReactWindowsCore</RootNamespace>
     <AppContainerApplication>true</AppContainerApplication>
