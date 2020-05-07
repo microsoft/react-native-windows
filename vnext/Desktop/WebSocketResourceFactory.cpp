@@ -24,7 +24,7 @@ IWebSocketResource::Make(const string &urlString, bool legacyImplementation, boo
       certExceptions.emplace_back(
           winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
     }
-    return make_shared<WinRTWebSocketResource>(urlString, certExceptions);
+    return make_shared<WinRTWebSocketResource>(urlString, std::move(certExceptions));
   } else {
     Url url(urlString);
 
