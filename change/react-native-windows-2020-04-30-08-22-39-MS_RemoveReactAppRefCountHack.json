@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed the ref count work around from classes derived from ReactApplications",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-04-30T15:22:39.524Z"
-}

@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 02 May 2020 03:42:13 GMT and should not be manually modified.
+This log was last generated on Thu, 07 May 2020 22:32:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.3
+
+Thu, 07 May 2020 22:32:51 GMT
+
+### Changes
+
+- Removed the ref count work around from classes derived from ReactApplications (vmorozov@microsoft.com)
+- Promote awaitable DispatchQueue callback to member field (julio.rocha@microsoft.com)
+- Treat yes the same as y in template overwrite prompt (acoates@microsoft.com)
+- Disable CxxFrameHandler4 (ngerlem@microsoft.com)
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
 
 ## 0.62.0-preview.2
 
