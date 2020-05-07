@@ -33,7 +33,13 @@ struct SampleModuleCppImpl {
 #pragma region Initialization
 
   REACT_INIT(Initialize)
-  void Initialize(ReactContext const & /*reactContext*/) noexcept {
+  void Initialize(ReactContext const &reactContext) noexcept {
+    PropertyName<int> myProp1{L"Prop1"};
+    PropertyName<winrt::hstring> myProp2{L"Prop2"};
+
+    DEBUG_OUTPUT("globalProps.Prop1:", *reactContext.GlobalProperties().Get(myProp1));
+    DEBUG_OUTPUT("instanceProps.Prop2:", winrt::to_string(*reactContext.InstanceProperties().Get(myProp2)));
+
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
         [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           TimedEvent(++m_timerCount);

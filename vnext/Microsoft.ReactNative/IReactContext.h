@@ -12,6 +12,8 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 
  public: // IReactContext
+  ReactPropertyBag GlobalProperties() noexcept;
+  ReactPropertyBag InstanceProperties() noexcept;
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       hstring const &eventName,

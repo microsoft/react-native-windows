@@ -79,6 +79,8 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
 
   Mso::React::ReactOptions reactOptions{};
+  reactOptions.GlobalProperties = m_instanceSettings.GlobalProperties();
+  reactOptions.InstanceProperties = m_instanceSettings.InstanceProperties();
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
   reactOptions.DeveloperSettings.SourceBundleName = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;

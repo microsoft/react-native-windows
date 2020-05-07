@@ -120,6 +120,14 @@ struct ReactModuleBuilderMock {
 struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
+  ReactPropertyBag GlobalProperties() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  ReactPropertyBag InstanceProperties() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   void DispatchEvent(
       xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,

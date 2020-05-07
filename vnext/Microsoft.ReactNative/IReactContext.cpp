@@ -9,6 +9,14 @@ namespace winrt::Microsoft::ReactNative {
 
 ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context{std::move(context)} {}
 
+ReactPropertyBag ReactContext::GlobalProperties() noexcept {
+  return m_context->GlobalProperties();
+}
+
+ReactPropertyBag ReactContext::InstanceProperties() noexcept {
+  return m_context->InstanceProperties();
+}
+
 void ReactContext::DispatchEvent(
     xaml::FrameworkElement const &view,
     hstring const &eventName,

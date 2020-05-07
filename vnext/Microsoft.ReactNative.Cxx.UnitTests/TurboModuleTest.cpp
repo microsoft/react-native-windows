@@ -1118,7 +1118,7 @@ TEST_CLASS (TurboModuleTest) {
     auto provider = winrt::Microsoft::ReactNative::MakeTurboModuleProvider<MyTurboModule, MyTurboModuleSpec>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
     auto reactModule = m_moduleObject.as<winrt::Microsoft::ReactNative::IBoxedValue>();
-    m_module = &winrt::Microsoft::ReactNative::BoxedValue<MyTurboModule>::GetImpl(reactModule);
+    m_module = &winrt::Microsoft::ReactNative::BoxedValue<MyTurboModule>::GetValueUnsafe(reactModule);
   }
 
   TEST_METHOD(TestMethodCall_Add) {

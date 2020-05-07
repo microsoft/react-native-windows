@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import "NoExceptionAttribute.idl";
+import "ReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -9,6 +9,12 @@ namespace Microsoft.ReactNative {
   runtimeclass ReactInstanceSettings 
   {
     ReactInstanceSettings();
+
+    // A singleton property bag global for the whole application.
+    ReactPropertyBag GlobalProperties { get; };
+
+    // Properties associated with the ReactNativeHost and instances it creates.
+    ReactPropertyBag InstanceProperties { get; };
 
     String MainComponentName { get; set; };
     Boolean UseDeveloperSupport { get; set; };
