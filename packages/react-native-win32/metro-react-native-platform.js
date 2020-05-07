@@ -38,4 +38,49 @@ function reactNativePlatformResolver(platformImplementations) {
   };
 }
 
-module.exports = {reactNativePlatformResolver};
+/**
+ * The CLI will get a more complete implementation of this in https://github.com/react-native-community/cli/pull/1115
+ * but until then, use a solution that supports having react-native-win32 and/or react-native-windows and/or react-native-macos
+ */
+const getModulesRunBeforeMainModule = () => {
+  const options = {
+    paths: [process.cwd()],
+  };
+  const modules = [
+    require.resolve('react-native/Libraries/Core/InitializeCore', options),
+  ];
+
+  try {
+    modules.push(
+      require.resolve(
+        '@office-iss/react-native-win32/Libraries/Core/InitializeCore',
+        options,
+      ),
+    );
+  } catch {}
+
+  try {
+    modules.push(
+      require.resolve(
+        'react-native-windows/Libraries/Core/InitializeCore',
+        options,
+      ),
+    );
+  } catch {}
+
+  try {
+    modules.push(
+      require.resolve(
+        'react-native-macos/Libraries/Core/InitializeCore',
+        options,
+      ),
+    );
+  } catch {}
+
+  return modules;
+};
+
+module.exports = {
+  getModulesRunBeforeMainModule,
+  reactNativePlatformResolver,
+};
