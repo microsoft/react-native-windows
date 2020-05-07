@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 May 2020 00:05:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.60",
+      "version": "0.0.0-master.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't delete nuget.exe if using locally-installed (e.g. chocolatey)",
+            "author": "asklar@microsoft.com",
+            "commit": "67781f6f00498216349c33716d451525e59229ca",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Only bundle when not running Intellisense builds",
+            "author": "asklar@microsoft.com",
+            "commit": "8940e5ee6ecce0fa1fc573d1cfa54be757bce431",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable CxxFrameHandler4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "80cef10818276ec17ad9683df1a9523b2b486fd0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Switch package layout to use `files` in `pacakge.json` rather than `.npmignore`",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c18e0c17fa6c2a2f778aa6607fb7e1601f6089da",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix typo",
+            "author": "rezha@microsoft.com",
+            "commit": "76b3478cb83004b5b6718af0381e8a3856ef893d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix issue 4792",
+            "author": "aeulitz@microsoft.com",
+            "commit": "608b98b46627d9c6a79bbe6a7f3f3ceb7aa8ff2a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 May 2020 00:05:03 GMT",
       "tag": "react-native-windows_v0.0.0-master.59",
       "version": "0.0.0-master.59",

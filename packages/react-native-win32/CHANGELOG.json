@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 07 May 2020 00:05:07 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.8",
+      "version": "0.0.0-master.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use inlineSourceMap and inlineSources to encode original TS into sourcemap",
+            "author": "rezha@microsoft.com",
+            "commit": "6398c2dc10d8c7093b3c6b108b5c541f067389b8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2020 18:40:40 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.7",
       "version": "0.0.0-master.7",

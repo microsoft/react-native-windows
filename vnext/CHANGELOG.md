@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 May 2020 00:05:03 GMT and should not be manually modified.
+This log was last generated on Thu, 07 May 2020 00:05:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.60
+
+Thu, 07 May 2020 00:05:07 GMT
+
+### Changes
+
+- Don't delete nuget.exe if using locally-installed (e.g. chocolatey) (asklar@microsoft.com)
+- Only bundle when not running Intellisense builds (asklar@microsoft.com)
+- Disable CxxFrameHandler4 (ngerlem@microsoft.com)
+- Switch package layout to use `files` in `pacakge.json` rather than `.npmignore` (dannyvv@microsoft.com)
 
 ## 0.0.0-master.59
 

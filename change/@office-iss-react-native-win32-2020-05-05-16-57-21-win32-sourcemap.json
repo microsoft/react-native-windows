@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use inlineSourceMap and inlineSources to encode original TS into sourcemap",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "rezha@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-05T23:57:21.665Z"
-}
