@@ -32,11 +32,9 @@ App::App() noexcept
     InstanceSettings().EnableDeveloperMenu(false);
 #endif
 
-    REGISTER_AUTOLINKED_NATIVE_MODULE_PACKAGES(); // Includes any autolinked modules
+    RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
     PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
 
     InitializeComponent();
 }
-
-
