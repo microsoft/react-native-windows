@@ -19,31 +19,35 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // It must be updated if the shape of generated ReactApplication_base is changed in future.
 // The only difference is that this class has no default constructor.
 template <typename D, typename... I>
-struct __declspec(empty_bases) NoDefaultCtorReactApplication_base
-    : implements<
-          D,
-          Microsoft::ReactNative::ReactApplication,
-          composable,
-          composing,
-          xaml::IApplicationOverrides,
-          xaml::IApplicationOverrides2,
-          I...>,
-      impl::require<D, xaml::IApplication, xaml::IApplication2, xaml::IApplication3>,
-      impl::base<D, xaml::Application>,
-      xaml::IApplicationOverridesT<D>,
-      xaml::IApplicationOverrides2T<D> {
+struct __declspec(empty_bases) NoDefaultCtorReactApplication_base : implements<
+                                                                        D,
+                                                                        Microsoft::ReactNative::ReactApplication,
+                                                                        composable,
+                                                                        composing,
+                                                                        Windows::UI::Xaml::IApplicationOverrides,
+                                                                        Windows::UI::Xaml::IApplicationOverrides2,
+                                                                        I...>,
+                                                                    impl::require<
+                                                                        D,
+                                                                        Windows::UI::Xaml::IApplication,
+                                                                        Windows::UI::Xaml::IApplication2,
+                                                                        Windows::UI::Xaml::IApplication3>,
+                                                                    impl::base<D, Windows::UI::Xaml::Application>,
+                                                                    Windows::UI::Xaml::IApplicationOverridesT<D>,
+                                                                    Windows::UI::Xaml::IApplicationOverrides2T<D> {
   using base_type = NoDefaultCtorReactApplication_base;
   using class_type = Microsoft::ReactNative::ReactApplication;
   using implements_type = typename NoDefaultCtorReactApplication_base::implements_type;
   using implements_type::implements_type;
-  using composable_base = xaml::Application;
+  using composable_base = Windows::UI::Xaml::Application;
 
   hstring GetRuntimeClassName() const {
     return L"Microsoft.ReactNative.ReactApplication";
   }
 
  protected:
-  using dispatch = impl::dispatch_to_overridable<D, xaml::IApplicationOverrides, xaml::IApplicationOverrides2>;
+  using dispatch = impl::
+      dispatch_to_overridable<D, Windows::UI::Xaml::IApplicationOverrides, Windows::UI::Xaml::IApplicationOverrides2>;
   auto overridable() noexcept {
     return dispatch::overridable(static_cast<D &>(*this));
   }

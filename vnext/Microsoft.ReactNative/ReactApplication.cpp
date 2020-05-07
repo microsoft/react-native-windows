@@ -29,10 +29,11 @@ ReactApplication::ReactApplication() = default;
 ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactApplication{} {
   // The factory is usually called in the base generated class. We call it here to pass correct
   // 'outer' interface to enable inheritance from the ReactApplication class in user code.
-  impl::call_factory<xaml::Application, xaml::IApplicationFactory>([&](xaml::IApplicationFactory const &f) {
-    [[maybe_unused]] auto winrt_impl_discarded =
-        f.CreateInstance(outer ? outer : static_cast<IInspectable const &>(*this), this->m_inner);
-  });
+  impl::call_factory<Windows::UI::Xaml::Application, Windows::UI::Xaml::IApplicationFactory>(
+      [&](Windows::UI::Xaml::IApplicationFactory const &f) {
+        [[maybe_unused]] auto winrt_impl_discarded =
+            f.CreateInstance(outer ? outer : static_cast<IInspectable const &>(*this), this->m_inner);
+      });
 
   Suspending({this, &ReactApplication::OnSuspending});
 
