@@ -10,6 +10,9 @@
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
       <Name>Microsoft.ReactNative</Name>
     </ProjectReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.3.191129002</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
 </Project>

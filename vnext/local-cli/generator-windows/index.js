@@ -100,7 +100,6 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, '.gitignore') },
     { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
-    { from: path.join(srcPath, projDir, 'packages.config'), to: path.join(windowsDir, newProjectName, 'packages.config') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
   if (language === 'cs') {
@@ -112,6 +111,7 @@ function copyProjectTemplateAndReplace(
     [
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj') },
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj.filters') },
+      { from: path.join(srcPath, projDir, 'packages.config'), to: path.join(windowsDir, newProjectName, 'packages.config') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
   // Once we are publishing to nuget.org, this shouldn't be needed anymore
