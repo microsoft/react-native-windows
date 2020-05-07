@@ -32,7 +32,7 @@ void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlV
   TransferProperty(oldView, newView, xaml::Controls::Control::ForegroundProperty());
   TransferProperty(oldView, newView, xaml::Controls::Control::TabIndexProperty());
   // Control.CornerRadius is only supported on >= RS5
-  if (oldView.try_as<xaml::Controls::IControl7>() && newView.try_as<xaml::Controls::IControl7>()) {
+  if (oldView.try_as<xaml::Controls::Control>() && newView.try_as<xaml::Controls::Control>()) {
     TransferProperty(oldView, newView, xaml::Controls::Control::CornerRadiusProperty());
   }
   Super::TransferProperties(oldView, newView);
@@ -75,7 +75,7 @@ bool ControlViewManager::UpdateProperty(
     }
   }
 
-  if (finalizeBorderRadius && control.try_as<xaml::Controls::IControl7>()) {
+  if (finalizeBorderRadius && control.try_as<xaml::Controls::Control>()) {
     // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
   }
@@ -85,7 +85,7 @@ bool ControlViewManager::UpdateProperty(
 void ControlViewManager::OnViewCreated(XamlView view) {
   // Set the default cornerRadius to 0 for Control: WinUI usually default cornerRadius to 2
   // Only works on >= RS5 becuase Control.CornerRadius is only supported >= RS5
-  if (auto control = view.try_as<xaml::Controls::IControl7>()) {
+  if (auto control = view.try_as<xaml::Controls::Control>()) {
     control.CornerRadius({0});
   }
 }

@@ -5,6 +5,7 @@
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
+#include <CppWinRTIncludes.h>
 #include <string_view>
 #include "JSValueWriter.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -38,13 +39,10 @@ struct ReactContext {
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
   template <class... TArgs>
-  void DispatchEvent(
-      winrt::Windows::UI::Xaml::FrameworkElement const &view,
-      std::wstring_view eventName,
-      TArgs &&... args) noexcept;
+  void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) noexcept;
 
   void DispatchEvent(
-      winrt::Windows::UI::Xaml::FrameworkElement const &view,
+      xaml::FrameworkElement const &view,
       std::wstring_view eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
@@ -94,14 +92,14 @@ inline void ReactContext::EmitJSEvent(
 
 template <class... TArgs>
 inline void ReactContext::DispatchEvent(
-    winrt::Windows::UI::Xaml::FrameworkElement const &view,
+    xaml::FrameworkElement const &view,
     std::wstring_view eventName,
     TArgs &&... args) noexcept {
   m_context.DispatchEvent(view, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
 }
 
 inline void ReactContext::DispatchEvent(
-    winrt::Windows::UI::Xaml::FrameworkElement const &view,
+    xaml::FrameworkElement const &view,
     std::wstring_view eventName,
     JSValueArgWriter const &paramsArgWriter) noexcept {
   m_context.DispatchEvent(view, eventName, paramsArgWriter);

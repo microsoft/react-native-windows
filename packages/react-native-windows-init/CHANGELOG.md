@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 22 Apr 2020 00:04:29 GMT and should not be manually modified.
+This log was last generated on Wed, 06 May 2020 00:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.6
+
+Wed, 06 May 2020 00:05:03 GMT
+
+### Patches
+
+- Support --version file:<path> for running init against local changes (acoates@microsoft.com)
 
 ## 0.1.5
 

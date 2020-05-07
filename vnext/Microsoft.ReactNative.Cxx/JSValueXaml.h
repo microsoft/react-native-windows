@@ -4,7 +4,7 @@
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_JSVALUEXAML
 #define MICROSOFT_REACTNATIVE_JSVALUEXAML
-#include "../include/CppWinRTIncludes.h"
+#include "CppWinRTIncludes.h"
 #include "JSValue.h"
 
 namespace winrt::Microsoft::ReactNative {

@@ -21,6 +21,7 @@
 #include "DynamicAutomationProperties.h"
 
 #include <Views/ViewPanel.h>
+#include "cdebug.h"
 
 namespace winrt {
 using namespace xaml;
@@ -199,6 +200,8 @@ bool FrameworkElementViewManager::UpdateProperty(
         } else if (propertyValue.isNull()) {
           element.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
         }
+      } else {
+        cdebug << "[Dim down] " << propertyName << std::endl;
       }
     } else if (propertyName == "width") {
       if (propertyValue.isNumber()) {

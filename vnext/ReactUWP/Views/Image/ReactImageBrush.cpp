@@ -7,6 +7,8 @@
 
 #include <sstream>
 
+#include <winrt/Microsoft.UI.Composition.Effects.h>
+#include <winrt/Windows.UI.Composition.Effects.h>
 #include "BorderEffect.h"
 
 namespace winrt {
@@ -14,6 +16,7 @@ using namespace winrt::Windows::Storage::Streams;
 using namespace comp;
 using namespace xaml;
 using namespace xaml::Media;
+using namespace comp::Effects;
 } // namespace winrt
 
 namespace react {
@@ -152,7 +155,8 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
   if (!m_effectBrush) {
-    auto borderEffect{winrt::make<winrt::implementation::BorderEffect>()};
+    auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
+
     borderEffect.ExtendX(winrt::CanvasEdgeBehavior::Wrap);
     borderEffect.ExtendY(winrt::CanvasEdgeBehavior::Wrap);
 

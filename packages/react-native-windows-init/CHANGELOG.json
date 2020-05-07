@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 06 May 2020 00:05:03 GMT",
+      "tag": "react-native-windows-init_v0.1.6",
+      "version": "0.1.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Support --version file:<path> for running init against local changes",
+            "author": "acoates@microsoft.com",
+            "commit": "9bce53ea8849bc462817cc09910266c0183b2cc8",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2020 00:04:29 GMT",
       "tag": "react-native-windows-init_v0.1.5",
       "version": "0.1.5",

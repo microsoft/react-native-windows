@@ -19,6 +19,7 @@ using namespace xaml;
 using namespace xaml::Automation::Peers;
 using namespace xaml::Controls;
 using namespace xaml::Interop;
+using namespace winrt::Windows::UI::Xaml::Interop;
 using namespace xaml::Media;
 using namespace Windows::Foundation;
 } // namespace winrt

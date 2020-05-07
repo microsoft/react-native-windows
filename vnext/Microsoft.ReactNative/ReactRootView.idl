@@ -3,7 +3,7 @@
 
 import "IJSValueWriter.idl";
 import "ReactNativeHost.idl";
-#include "../include/NamespaceRedirect.h"
+#include "NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 

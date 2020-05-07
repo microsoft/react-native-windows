@@ -6,9 +6,9 @@ using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Media;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Graphics::Imaging;
@@ -31,7 +31,7 @@ MainPage::MainPage() {
 
 void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
-    Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
+    xaml::RoutedEventArgs const & /*args*/) {
   auto host = Host();
   auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
@@ -56,7 +56,7 @@ void MainPage::OnLoadClick(
 
 void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionChanged(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,
-    winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const & /*e*/) {
+    xaml::Controls::SelectionChangedEventArgs const & /*e*/) {
   if (x_rootComponentNameCombo()) {
     auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
     if (std::wstring(bundleFile).compare(L"Samples\\rntester") == 0) {
