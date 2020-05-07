@@ -10,7 +10,7 @@ using static Microsoft.ReactNative.Managed.JSValueWriterGenerator;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactSyncMethodInfo
+  internal class ReactSyncMethodInfo
   {
     public ReactSyncMethodInfo(MethodInfo methodInfo, ReactSyncMethodAttribute methodAttribute)
     {

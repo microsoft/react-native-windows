@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactPackageBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactSyncMethodInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReflectionReactPackageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewManagerAttributes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewManagerEvent.cs" />
   </ItemGroup>

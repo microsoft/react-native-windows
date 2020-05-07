@@ -10,7 +10,7 @@ namespace TreeDumpLibrary
     {
         public void CreatePackage(IReactPackageBuilder packageBuilder)
         {
-            packageBuilder.AddViewManagers();
+            packageBuilder.AddReflectionReactPackageProvider<ReactPackageProvider>();
         }
     }
 }

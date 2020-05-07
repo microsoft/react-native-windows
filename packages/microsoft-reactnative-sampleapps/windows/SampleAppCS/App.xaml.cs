@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
+using Microsoft.ReactNative.Managed;
 
 namespace SampleAppCS
 {
@@ -37,6 +38,7 @@ namespace SampleAppCS
 #endif
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            PackageProviders.Add(new ReflectionReactPackageProvider<App>());
             PackageProviders.Add(new SampleLibraryCS.ReactPackageProvider());
             PackageProviders.Add(new SampleLibraryCpp.ReactPackageProvider());
 

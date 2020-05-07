@@ -20,7 +20,7 @@ namespace SampleLibraryCS
             {
                 if (obj is CustomUserControlCS c)
                 {
-                    LabelChanged(c, c.Label);
+                    LabelChanged?.Invoke(c, c.Label);
                 }
             });
 
