@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Promote PerformWrite queue await callback to member",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "fcb72e0b5e232b261623fd1c3f5266dc2c38d2b3",
+  "dependentChangeType": "patch",
+  "date": "2020-05-07T04:22:41.521Z"
+}
