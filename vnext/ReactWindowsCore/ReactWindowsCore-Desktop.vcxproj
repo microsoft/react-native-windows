@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <USE_V8 Condition="'$(Platform)' != 'ARM' AND '$(Platform)' != 'ARM64'">true</USE_V8>
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
+  </PropertyGroup>
   <Import Project="ReactWindowsCore.vcxitems" Label="Shared" />
 </Project>
