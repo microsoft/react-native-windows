@@ -23,6 +23,7 @@
     <ProjectGuid>{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}</ProjectGuid>
     <ProjectName>React.Windows.Desktop.IntegrationTests</ProjectName>
     <CppWinRTOptimized>true</CppWinRTOptimized>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
