@@ -544,7 +544,7 @@ struct RedBoxHandler : public Mso::React::IRedBoxHandler {
         winrt::make<RedBoxErrorInfo>(std::move(info)),
         static_cast<winrt::Microsoft::ReactNative::RedBoxErrorType>(static_cast<uint32_t>(errorType)));
   }
-  virtual bool isDevSupportEnabled() override {
+  virtual bool isDevSupportEnabled() const override {
     return m_redBoxHandler.IsDevSupportEnabled();
   }
   virtual void updateError(Mso::React::ErrorInfo &&info) override {
