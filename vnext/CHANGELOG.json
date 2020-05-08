@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 02:03:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.166",
+      "version": "0.60.0-vnext.166",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote PerformWrite queue await callback to member",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "fcb72e0b5e232b261623fd1c3f5266dc2c38d2b3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 May 2020 00:35:27 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.165",
       "version": "0.60.0-vnext.165",
