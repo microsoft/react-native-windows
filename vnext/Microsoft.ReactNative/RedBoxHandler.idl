@@ -3,40 +3,41 @@
 
 import "ReactNativeHost.idl";
 
-namespace Microsoft.ReactNative.RedBox {
+namespace Microsoft.ReactNative {
 
-  enum ErrorType {
+  enum RedBoxErrorType {
     JavaScriptFatal, // A JS Exception was thrown or otherwise fatal error
     JavaScriptSoft, // An error coming from JS that isn't fatal, such as console.error
     Native,
   };
 
-  [webhosthidden] interface IErrorFrameInfo {
+  [webhosthidden] interface IRedBoxErrorFrameInfo {
     String File { get; };
     String Method { get; };
     UInt32 Line { get; };
     UInt32 Column { get; };
   }
-  
-  [webhosthidden] interface IErrorInfo {
+
+  [webhosthidden] interface IRedBoxErrorInfo {
     String Message { get; };
     UInt32 Id { get; };
-    IVectorView<IErrorFrameInfo> Callstack { get; };
+    IVectorView<IRedBoxErrorFrameInfo> Callstack { get; };
   }
 
   [webhosthidden]
   interface IRedBoxHandler 
   {
-    void ShowNewError(IErrorInfo info, ErrorType type);
+    void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type);
     Boolean IsDevSupportEnabled { get; };
-    void UpdateError(IErrorInfo info);
+    void UpdateError(IRedBoxErrorInfo info);
     void DismissRedBox();
   }
 
   [webhosthidden]
   [default_interface]
-  runtimeclass RedBoxHandler : IRedBoxHandler {
-    RedBoxHandler(Microsoft.ReactNative.ReactNativeHost host);
+  runtimeclass RedBoxHelper {
+    RedBoxHelper();
+    static IRedBoxHandler CreateDefaultHandler(Microsoft.ReactNative.ReactNativeHost host);
   }
 
 }

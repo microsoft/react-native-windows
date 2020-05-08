@@ -78,8 +78,8 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t DebuggerPort() noexcept;
   void DebuggerPort(uint16_t value) noexcept;
 
-  RedBox::IRedBoxHandler RedBoxHandler() noexcept;
-  void RedBoxHandler(RedBox::IRedBoxHandler const &value) noexcept;
+  IRedBoxHandler RedBoxHandler() noexcept;
+  void RedBoxHandler(IRedBoxHandler const &value) noexcept;
 
  private:
   hstring m_mainComponentName{};
@@ -100,7 +100,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_debugBundlePath{};
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
-  RedBox::IRedBoxHandler m_redBoxHandler{nullptr};
+  IRedBoxHandler m_redBoxHandler{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -261,11 +261,11 @@ inline void ReactInstanceSettings::DebuggerPort(uint16_t value) noexcept {
   m_debuggerPort = value;
 }
 
-inline RedBox::IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {
+inline IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {
   return m_redBoxHandler;
 }
 
-inline void ReactInstanceSettings::RedBoxHandler(RedBox::IRedBoxHandler const &value) noexcept {
+inline void ReactInstanceSettings::RedBoxHandler(IRedBoxHandler const &value) noexcept {
   m_redBoxHandler = value;
 }
 

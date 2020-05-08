@@ -3,34 +3,24 @@
 
 #pragma once
 
-#include "RedBox.RedBoxHandler.g.h"
+#include "RedBoxHelper.g.h"
 
 namespace Mso::React {
 struct IRedBoxHandler;
 }
 
-namespace winrt::Microsoft::ReactNative::RedBox::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
-struct RedBoxHandler : RedBoxHandlerT<RedBoxHandler> {
-  RedBoxHandler(ReactNativeHost const &host) noexcept;
+struct RedBoxHelper : RedBoxHelperT<RedBoxHelper> {
+  RedBoxHelper() = default;
 
-  void ShowNewError(IErrorInfo const &info, ErrorType type) noexcept;
-  bool IsDevSupportEnabled() noexcept;
-  void UpdateError(IErrorInfo const &info) noexcept;
-  void DismissRedBox() noexcept;
-
- private:
-  std::shared_ptr<Mso::React::IRedBoxHandler> m_redBoxHandler;
+  static IRedBoxHandler CreateDefaultHandler(winrt::Microsoft::ReactNative::ReactNativeHost const &host) noexcept;
 };
 
-} // namespace winrt::Microsoft::ReactNative::RedBox::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
-namespace winrt::Microsoft::ReactNative::RedBox::factory_implementation {
+namespace winrt::Microsoft::ReactNative::factory_implementation {
 
-struct RedBoxHandler : RedBoxHandlerT<RedBoxHandler, implementation::RedBoxHandler> {};
+struct RedBoxHelper : RedBoxHelperT<RedBoxHelper, implementation::RedBoxHelper> {};
 
-} // namespace winrt::Microsoft::ReactNative::RedBox::factory_implementation
-
-namespace winrt::Microsoft::ReactNative::RedBox::implementation {
-
-} // namespace winrt::Microsoft::ReactNative::RedBox::implementation
+} // namespace winrt::Microsoft::ReactNative::factory_implementation

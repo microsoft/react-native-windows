@@ -34,7 +34,7 @@
     <file src="$nugetroot$\inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWindowsCore\RedBoxHandler.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IRedBoxHandler.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\IUIManager.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\IWebSocketResource.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>

@@ -5,7 +5,7 @@
 #include "Logging.h"
 #include "MemoryTracker.h"
 
-#include <RedBoxHandler.h>
+#include <IRedBoxHandler.h>
 #include <functional>
 #include <map>
 #include <memory>

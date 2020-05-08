@@ -349,8 +349,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
  */
 struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
   DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost) noexcept
-      : m_weakReactHost(std::move(weakReactHost)),
-        m_uiDispatcher(winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher()) {}
+      : m_weakReactHost(std::move(weakReactHost)) {}
 
   ~DefaultRedBoxHandler() {
     // Hide any currently showing redboxes
@@ -359,12 +358,11 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       std::scoped_lock lock{m_lockRedBox};
       std::swap(m_redboxes, redboxes);
     }
-    m_uiDispatcher.TryRunAsync(
-        winrt::Windows::UI::Core::CoreDispatcherPriority::Low, [redboxes = std::move(redboxes)]() {
-          for (const auto redbox : redboxes) {
-            redbox->Dismiss();
-          }
-        });
+    Mso::DispatchQueue::MainUIQueue().Post([redboxes = std::move(redboxes)]() {
+      for (const auto redbox : redboxes) {
+        redbox->Dismiss();
+      }
+    });
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
@@ -403,19 +401,19 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       }
     }
     if (redbox) {
-      m_uiDispatcher.TryRunAsync(
-          winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-          [redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
-            redboxCaptured->UpdateError(std::move(errorInfo));
-          });
+      Mso::DispatchQueue::MainUIQueue().Post([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
+        redboxCaptured->UpdateError(std::move(errorInfo));
+      });
     }
   }
 
   virtual void dismissRedbox() override {
-    m_uiDispatcher.TryRunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [&]() {
-      std::scoped_lock lock{m_lockRedBox};
-      if (!m_redboxes.empty())
-        m_redboxes[0]->Dismiss();
+    Mso::DispatchQueue::MainUIQueue().Post([wkthis = std::weak_ptr(shared_from_this())]() {
+      if (auto pthis = wkthis.lock()) {
+        std::scoped_lock lock{pthis->m_lockRedBox};
+        if (!pthis->m_redboxes.empty())
+          pthis->m_redboxes[0]->Dismiss();
+      }
     });
   }
 
@@ -454,8 +452,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       return;
     m_showingRedBox = true;
 
-    m_uiDispatcher.TryRunAsync(
-        winrt::Windows::UI::Core::CoreDispatcherPriority::Low,
+    Mso::DispatchQueue::MainUIQueue().Post(
         [redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
   }
 
@@ -463,11 +460,10 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   std::mutex m_lockRedBox;
   std::vector<std::shared_ptr<RedBox>> m_redboxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
-  const winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher;
 };
 
 struct RedBoxErrorFrameInfo
-    : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::RedBox::IErrorFrameInfo> {
+    : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
   RedBoxErrorFrameInfo(Mso::React::ErrorFrameInfo &&errorFrameInfo) : m_frame(std::move(errorFrameInfo)) {}
 
   winrt::hstring File() const noexcept {
@@ -490,7 +486,7 @@ struct RedBoxErrorFrameInfo
   Mso::React::ErrorFrameInfo m_frame;
 };
 
-struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::RedBox::IErrorInfo> {
+struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::IRedBoxErrorInfo> {
   RedBoxErrorInfo(Mso::React::ErrorInfo &&errorInfo) : m_errorInfo(std::move(errorInfo)) {}
 
   winrt::hstring Message() const noexcept {
@@ -501,10 +497,10 @@ struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Micros
     return m_errorInfo.Id;
   }
 
-  winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::RedBox::IErrorFrameInfo>
+  winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>
   Callstack() noexcept {
     if (!m_callstack) {
-      m_callstack = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::RedBox::IErrorFrameInfo>();
+      m_callstack = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>();
       for (auto frame : m_errorInfo.Callstack) {
         m_callstack.Append(winrt::make<RedBoxErrorFrameInfo>(std::move(frame)));
       }
@@ -514,30 +510,29 @@ struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Micros
   }
 
  private:
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::RedBox::IErrorFrameInfo> m_callstack{
+  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> m_callstack{
       nullptr};
 
   Mso::React::ErrorInfo m_errorInfo;
 };
 
 struct RedBoxHandler : public Mso::React::IRedBoxHandler {
-  RedBoxHandler(winrt::Microsoft::ReactNative::RedBox::IRedBoxHandler const &redBoxHandler)
-      : m_redBoxHandler(redBoxHandler) {}
+  RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
 
   static_assert(
       static_cast<uint32_t>(Mso::React::ErrorType::JSFatal) ==
-      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBox::ErrorType::JavaScriptFatal));
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal));
   static_assert(
       static_cast<uint32_t>(Mso::React::ErrorType::JSSoft) ==
-      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBox::ErrorType::JavaScriptSoft));
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft));
   static_assert(
       static_cast<uint32_t>(Mso::React::ErrorType::Native) ==
-      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBox::ErrorType::Native));
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::Native));
 
   virtual void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType errorType) override {
     m_redBoxHandler.ShowNewError(
         winrt::make<RedBoxErrorInfo>(std::move(info)),
-        static_cast<winrt::Microsoft::ReactNative::RedBox::ErrorType>(static_cast<uint32_t>(errorType)));
+        static_cast<winrt::Microsoft::ReactNative::RedBoxErrorType>(static_cast<uint32_t>(errorType)));
   }
   virtual bool isDevSupportEnabled() override {
     return m_redBoxHandler.IsDevSupportEnabled();
@@ -551,11 +546,11 @@ struct RedBoxHandler : public Mso::React::IRedBoxHandler {
   }
 
  private:
-  winrt::Microsoft::ReactNative::RedBox::IRedBoxHandler m_redBoxHandler;
+  winrt::Microsoft::ReactNative::IRedBoxHandler m_redBoxHandler;
 };
 
 std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
-    winrt::Microsoft::ReactNative::RedBox::IRedBoxHandler const &redBoxHandler) noexcept {
+    winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) noexcept {
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
