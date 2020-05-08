@@ -134,10 +134,13 @@ const ReactNativeViewConfig = {
   validAttributes: {
     ...ReactNativeViewViewConfigAndroid.validAttributes,
     accessibilityActions: true,
+    accessibilityDescribedBy: true,
+    accessibilityDescription: true,
     accessibilityElementsHidden: true,
     accessibilityHint: true,
     accessibilityIgnoresInvertColors: true,
     accessibilityLabel: true,
+    accessibilityLabeledBy: true,
     accessibilityLiveRegion: true,
     accessibilityRole: true,
     accessibilityStates: true, // TODO: Can be removed after next release

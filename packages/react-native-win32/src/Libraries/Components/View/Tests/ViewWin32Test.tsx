@@ -1,6 +1,6 @@
 'use strict';
 import * as React from 'react';
-import { StyleSheet, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { ViewWin32 } from '../ViewWin32';
 import { IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
 
@@ -31,17 +31,20 @@ interface IFocusableComponentState {
 
 class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentState> {
   private _focusTarget: ViewWin32 = null;
+  private _labeledBy: React.RefObject<View>;
+
   public constructor(props) {
     super(props);
     this.state = {
       hasFocus: false,
     };
+    this._labeledBy = React.createRef<View>();
   }
   public render() {
     return (
-      <ViewWin32 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
+      <View ref={this._labeledBy} accessibilityLabel="separate label for test" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
         <TouchableHighlight onPress={this._onPress}>
-          <ViewWin32 style={styles.blackbox} />
+          <ViewWin32 accessibilityLabeledBy={this._labeledBy} style={styles.blackbox} />
         </TouchableHighlight>
         <ViewWin32
           ref={this._setRef}
@@ -52,7 +55,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
         >
           <Text>{this.state.hasFocus ? 'Focus: Yes' : 'Focus: No'}</Text>
         </ViewWin32>
-      </ViewWin32>
+      </View>
     );
   }
 
