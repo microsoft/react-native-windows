@@ -5,6 +5,7 @@
 
 #include "App.h"
 #include "ReactPackageProvider.h"
+#include "ReactPropertyBag.h"
 #include "winrt/SampleLibraryCS.h"
 #include "winrt/SampleLibraryCpp.h"
 
@@ -33,6 +34,9 @@ App::App() noexcept {
 #else
   InstanceSettings().EnableDeveloperMenu(false);
 #endif
+
+  ReactPropertyBag::Set(InstanceSettings().Properties(), ReactPropertyId<int>{L"Prop1"}, 42);
+  ReactPropertyBag::Set(InstanceSettings().Properties(), ReactPropertyId<hstring>{L"Prop2"}, L"Hello World!");
 
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
   PackageProviders().Append(winrt::SampleLibraryCpp::ReactPackageProvider());
