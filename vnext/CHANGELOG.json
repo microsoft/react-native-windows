@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 00:35:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.165",
+      "version": "0.60.0-vnext.165",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Handle rename of react-native-macos repo",
+            "author": "acoates@microsoft.com",
+            "commit": "bba1032d0bf1a6cbb3806488efdf757f5056ff42"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2020 18:28:25 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.164",
       "version": "0.60.0-vnext.164",

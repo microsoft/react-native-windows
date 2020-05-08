@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 30 Jan 2020 23:29:21 GMT and should not be manually modified.
+This log was last generated on Fri, 08 May 2020 00:35:27 GMT and should not be manually modified.
 
+## 0.60.69-47
+Fri, 08 May 2020 00:35:27 GMT
+
+### Changes
+
+- Handle rename of react-native-macos repo (acoates@microsoft.com)
 ## 0.60.69-11
 Thu, 30 Jan 2020 23:29:21 GMT
 

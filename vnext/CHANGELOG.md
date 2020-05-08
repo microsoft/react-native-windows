@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 04 May 2020 18:28:25 GMT and should not be manually modified.
+This log was last generated on Fri, 08 May 2020 00:35:27 GMT and should not be manually modified.
 
+## 0.60.0-vnext.165
+Fri, 08 May 2020 00:35:27 GMT
+
+### Changes
+
+- Handle rename of react-native-macos repo (acoates@microsoft.com)
 ## 0.60.0-vnext.164
 Mon, 04 May 2020 18:28:25 GMT
 
