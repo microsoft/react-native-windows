@@ -64,9 +64,6 @@
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
-      <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControllableMessageQueueThread.cpp" />

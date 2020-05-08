@@ -90,7 +90,6 @@
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)Shared;
-        $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\callinvoker;
@@ -215,12 +214,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
-      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

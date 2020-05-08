@@ -71,10 +71,8 @@
         _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
-        REACTNATIVEWIN32_EXPORTS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        GLOG_NO_ABBREVIATED_SEVERITIES;
         _HAS_AUTO_PTR_ETC;
         CHAKRACORE;
         RN_PLATFORM=win32;
