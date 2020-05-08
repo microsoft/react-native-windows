@@ -27,7 +27,7 @@
     <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.1.6</HERMES_Version>
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
 
-    <USE_V8 Condition="'$(USE_V8)' == '' AND '$(Platform)' != 'ARM' AND '$(Platform)' != 'ARM64'">true</USE_V8>
+    <USE_V8 Condition="('$(USE_V8)' == '') Or ('$(Platform)' != 'ARM' AND '$(Platform)' != 'ARM64')">false</USE_V8>
     <V8_Version Condition="'$(V8_Version)' == ''">0.2.7</V8_Version>
     <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
 
