@@ -8,7 +8,7 @@
 #include <CppWinRTIncludes.h>
 #include <string_view>
 #include "JSValueWriter.h"
-#include "PropertyBag.h"
+#include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -22,9 +22,7 @@ struct ReactContext {
 
   explicit operator bool() const noexcept;
 
-  PropertyBag GlobalProperties() const noexcept;
-
-  PropertyBag InstanceProperties() const noexcept;
+  ReactPropertyBag Properties() const noexcept;
 
   template <class... TArgs>
   void CallJSFunction(std::wstring_view moduleName, std::wstring_view methodName, TArgs &&... args) const noexcept;
@@ -68,12 +66,8 @@ inline ReactContext::operator bool() const noexcept {
   return m_context != nullptr;
 }
 
-inline PropertyBag ReactContext::GlobalProperties() const noexcept {
-  return PropertyBag{m_context.GlobalProperties()};
-}
-
-inline PropertyBag ReactContext::InstanceProperties() const noexcept {
-  return PropertyBag{m_context.InstanceProperties()};
+inline ReactPropertyBag ReactContext::Properties() const noexcept {
+  return ReactPropertyBag{m_context.Properties()};
 }
 
 template <class... TArgs>

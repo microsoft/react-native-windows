@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "ReactPropertyBag.h"
-#include "ReactPropertyBag.g.cpp"
+#include "IReactPropertyBag.h"
+#include "ReactPropertyBagHelper.g.cpp"
 #include <functional/functorRef.h>
 #include <object/refCountedObject.h>
 #include <shared_mutex>
+
+using namespace winrt;
+using namespace Windows::Foundation;
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -132,7 +135,7 @@ struct ReactPropertyName : winrt::implements<ReactPropertyName, IReactPropertyNa
 
 com_ptr<ReactPropertyName> ReactPropertyNamespace::GetLocalName(hstring const &localName) noexcept {
   // Implement outside of class because we need the ReactPropertyName definition.
-  return m_localNames->GetOrCreate(localName, [ this, &localName ]() noexcept {
+  return m_localNames->GetOrCreate(localName, [this, &localName]() noexcept {
     IReactPropertyNamespace x = *this;
     return make_self<ReactPropertyName>(x, localName);
   });
@@ -142,28 +145,7 @@ com_ptr<ReactPropertyName> ReactPropertyNamespace::GetLocalName(hstring const &l
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-Microsoft::ReactNative::IReactPropertyNamespace ReactPropertyBag::GlobalNamespace() noexcept {
-  return ReactPropertyNamespace::GlobalNamespace().as<Microsoft::ReactNative::IReactPropertyNamespace>();
-}
-
-Microsoft::ReactNative::IReactPropertyNamespace ReactPropertyBag::GetNamespace(hstring const &namespaceName) noexcept {
-  return ReactPropertyNamespace::GetNamespace(namespaceName).as<Microsoft::ReactNative::IReactPropertyNamespace>();
-}
-
-Microsoft::ReactNative::IReactPropertyName ReactPropertyBag::GetName(
-    Microsoft::ReactNative::IReactPropertyNamespace const &ns,
-    hstring const &localName) noexcept {
-  if (!ns) {
-    return ReactPropertyNamespace::GlobalNamespace()
-        ->GetLocalName(localName)
-        .as<Microsoft::ReactNative::IReactPropertyName>();
-  }
-
-  return get_self<ReactPropertyNamespace>(ns)->GetLocalName(localName).as<Microsoft::ReactNative::IReactPropertyName>();
-}
-
-Windows::Foundation::IInspectable ReactPropertyBag::GetProperty(
-    Microsoft::ReactNative::IReactPropertyName const &propertyName) noexcept {
+IInspectable ReactPropertyBag::Get(IReactPropertyName const &propertyName) noexcept {
   std::scoped_lock lock{m_mutex};
   auto it = m_entries.find(propertyName);
   if (it != m_entries.end()) {
@@ -173,12 +155,12 @@ Windows::Foundation::IInspectable ReactPropertyBag::GetProperty(
   return {nullptr};
 }
 
-Windows::Foundation::IInspectable ReactPropertyBag::GetOrCreateProperty(
-    Microsoft::ReactNative::IReactPropertyName const &propertyName,
-    Microsoft::ReactNative::ReactCreatePropertyValue const &createValue) noexcept {
-  Windows::Foundation::IInspectable result{GetProperty(propertyName)};
+IInspectable ReactPropertyBag::GetOrCreate(
+    IReactPropertyName const &propertyName,
+    ReactCreatePropertyValue const &createValue) noexcept {
+  IInspectable result{Get(propertyName)};
   if (!result) {
-    Windows::Foundation::IInspectable newValue = createValue();
+    IInspectable newValue = createValue();
     std::scoped_lock lock{m_mutex};
     auto &entry = m_entries[propertyName];
     if (!entry) {
@@ -191,32 +173,44 @@ Windows::Foundation::IInspectable ReactPropertyBag::GetOrCreateProperty(
   return result;
 }
 
-Windows::Foundation::IInspectable ReactPropertyBag::SetProperty(
-    Microsoft::ReactNative::IReactPropertyName const &propertyName,
-    Windows::Foundation::IInspectable const &value) noexcept {
-  if (!value) {
-    return RemoveProperty(propertyName);
+IInspectable ReactPropertyBag::Exchange(IReactPropertyName const &propertyName, IInspectable const &value) noexcept {
+  IInspectable result{nullptr};
+  std::scoped_lock lock{m_mutex};
+  if (value) {
+    auto &entry = m_entries[propertyName];
+    result = std::move(entry);
+    entry = value;
+  } else {
+    auto it = m_entries.find(propertyName);
+    if (it != m_entries.end()) {
+      result = std::move(it->second);
+      m_entries.erase(it);
+    }
   }
 
-  Windows::Foundation::IInspectable result{nullptr};
-  std::scoped_lock lock{m_mutex};
-  auto &entry = m_entries[propertyName];
-  result = std::move(entry);
-  entry = value;
   return result;
 }
 
-Windows::Foundation::IInspectable ReactPropertyBag::RemoveProperty(
-    Microsoft::ReactNative::IReactPropertyName const &propertyName) noexcept {
-  Windows::Foundation::IInspectable result{nullptr};
-  std::scoped_lock lock{m_mutex};
-  auto it = m_entries.find(propertyName);
-  if (it != m_entries.end()) {
-    result = std::move(it->second);
-    m_entries.erase(it);
+/*static*/ IReactPropertyNamespace ReactPropertyBagHelper::GlobalNamespace() noexcept {
+  return ReactPropertyNamespace::GlobalNamespace().as<IReactPropertyNamespace>();
+}
+
+/*static*/ IReactPropertyNamespace ReactPropertyBagHelper::GetNamespace(hstring const &namespaceName) noexcept {
+  return ReactPropertyNamespace::GetNamespace(namespaceName).as<IReactPropertyNamespace>();
+}
+
+/*static*/ IReactPropertyName ReactPropertyBagHelper::GetName(
+    IReactPropertyNamespace const &ns,
+    hstring const &localName) noexcept {
+  if (!ns) {
+    return ReactPropertyNamespace::GlobalNamespace()->GetLocalName(localName).as<IReactPropertyName>();
   }
 
-  return result;
+  return get_self<ReactPropertyNamespace>(ns)->GetLocalName(localName).as<IReactPropertyName>();
+}
+
+/*static*/ IReactPropertyBag ReactPropertyBagHelper::CreatePropertyBag() noexcept {
+  return make<ReactPropertyBag>();
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

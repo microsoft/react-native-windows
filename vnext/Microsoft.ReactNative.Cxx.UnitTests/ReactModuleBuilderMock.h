@@ -120,11 +120,7 @@ struct ReactModuleBuilderMock {
 struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
-  ReactPropertyBag GlobalProperties() noexcept {
-    VerifyElseCrashSz(false, "Not implemented");
-  }
-
-  ReactPropertyBag InstanceProperties() noexcept {
+  IReactPropertyBag Properties() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

@@ -65,18 +65,12 @@ namespace Mso::React {
 
 ReactContext::ReactContext(
     Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
-    winrt::Microsoft::ReactNative::ReactPropertyBag const &globalProperties,
-    winrt::Microsoft::ReactNative::ReactPropertyBag const &instanceProperties) noexcept
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept
     : m_reactInstance{std::move(reactInstance)},
-      m_globalProperties{globalProperties},
-      m_instanceProperties{instanceProperties} {}
+      m_properties{properties} {}
 
-winrt::Microsoft::ReactNative::ReactPropertyBag ReactContext::GlobalProperties() noexcept {
-  return m_globalProperties;
-}
-
-winrt::Microsoft::ReactNative::ReactPropertyBag ReactContext::InstanceProperties() noexcept {
-  return m_instanceProperties;
+winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() noexcept {
+  return m_properties;
 }
 
 void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
@@ -138,7 +132,7 @@ ReactInstanceWin::ReactInstanceWin(
       m_whenCreated{std::move(whenCreated)},
       m_whenLoaded{std::move(whenLoaded)},
       m_updateUI{std::move(updateUI)},
-      m_reactContext{Mso::Make<ReactContext>(this, options.GlobalProperties, options.InstanceProperties)},
+      m_reactContext{Mso::Make<ReactContext>(this, options.Properties)},
       m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(
           Mso::WeakPtr<Mso::React::IReactInstance>{this},
           Mso::Copy(options.LegacySettings))} {

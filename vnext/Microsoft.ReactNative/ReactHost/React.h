@@ -64,8 +64,7 @@ struct IReactInstance : IUnknown {
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
-  virtual winrt::Microsoft::ReactNative::ReactPropertyBag GlobalProperties() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::ReactPropertyBag InstanceProperties() noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
 };
@@ -148,8 +147,7 @@ struct ViewManagerProvider2 {
 struct ReactOptions {
   react::uwp::ReactInstanceSettings LegacySettings;
 
-  winrt::Microsoft::ReactNative::ReactPropertyBag GlobalProperties;
-  winrt::Microsoft::ReactNative::ReactPropertyBag InstanceProperties;
+  winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;

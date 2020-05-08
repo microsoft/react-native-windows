@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import "IJSValueWriter.idl";
-import "ReactPropertyBag.idl";
+import "IReactPropertyBag.idl";
 
 #include "NamespaceRedirect.h"
 
@@ -10,12 +10,7 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   interface IReactContext {
-    // A singleton property bag global for the whole application.
-    ReactPropertyBag GlobalProperties { get; };
-
-    // Properties associated with the ReactNativeHost and instances it creates.
-    ReactPropertyBag InstanceProperties { get; };
-
+    IReactPropertyBag Properties { get; };
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
     void CallJSFunction(String moduleName, String methodName, JSValueArgWriter paramsArgWriter);
     void EmitJSEvent(String eventEmitterName, String eventName, JSValueArgWriter paramsArgWriter);

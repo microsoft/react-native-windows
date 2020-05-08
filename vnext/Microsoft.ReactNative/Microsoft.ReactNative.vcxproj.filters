@@ -690,6 +690,7 @@
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
+    <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
@@ -697,7 +698,6 @@
     <Midl Include="ReactInstance.idl" />
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />
-    <Midl Include="ReactPropertyBag.idl" />
     <Midl Include="ReactRootView.idl" />
     <Midl Include="XamlHelper.idl" />
   </ItemGroup>

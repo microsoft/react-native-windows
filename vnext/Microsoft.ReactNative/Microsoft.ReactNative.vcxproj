@@ -349,8 +349,8 @@
     <ClInclude Include="ReactPackageBuilder.h">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="ReactPropertyBag.h">
-      <DependentUpon>ReactPropertyBag.idl</DependentUpon>
+    <ClInclude Include="IReactPropertyBag.h">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactRootView.h">
@@ -510,8 +510,8 @@
     <ClCompile Include="ReactPackageBuilder.cpp">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="ReactPropertyBag.cpp">
-      <DependentUpon>ReactPropertyBag.idl</DependentUpon>
+    <ClCompile Include="IReactPropertyBag.cpp">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
@@ -541,7 +541,7 @@
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
-    <Midl Include="ReactPropertyBag.idl" />
+    <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />

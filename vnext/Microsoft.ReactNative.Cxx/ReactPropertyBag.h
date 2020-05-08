@@ -6,36 +6,36 @@
 #define MICROSOFT_REACTNATIVE_PROPERTYBAG
 
 //!
-//! PropertyBag is a thread-safe storage of property values.
+//! ReactPropertyBag is a thread-safe storage of property values.
 //! Internally the value is IInspectable and the key is a name object that represents an
 //! atomized string name. Each name object is defined in the context of a namespace object.
 //! The null or empty namespace object is a global namespace object.
 //! The property name is unique for the same namespace object.
 //! Different namespaces may have properties with the same local names.
 //!
-//! The PropertyBag struct is a wrapper around the ABI-safe IReactPropertyBag interface.
+//! The ReactPropertyBag struct is a wrapper around the ABI-safe IReactPropertyBag interface.
 //! The IReactPropertyBag represents all values as IInspectable object which can wrap any type.
-//! On top of the untyped IReactPropertyBag values, the PropertyBag offers a set of typed property accessors:
-//! Get, GetOrCreate, Remove, and Set.
+//! On top of the untyped IReactPropertyBag values, the ReactPropertyBag offers a set of typed
+//! property accessors: Get, GetOrCreate, Remove, and Set.
 //!
-//! To simplify access to properties we offer PropertyName type that helps to
+//! To simplify access to properties we offer ReactPropertyId type that helps to
 //! wrap up property name and type into one variable.
 //!
 //! For example, we can define a property to access an integer value:
 //!
-//!     const React::PropertyName<int> MyIntProperty{"MyInt"};
+//!     const React::ReactPropertyId<int> MyIntProperty{"MyInt"};
 //!
-//! then we can use it to set property in application settings during initialization:
+//! then we can use it to set property in settings properties during initialization:
 //!
-//!     settings.ApplicationProperties().Set(MyIntProperty, 42);
+//!     settings.Properties().Set(MyIntProperty, 42);
 //!
 //! The property can be accessed later in a native modules:
 //!
-//!     std::optional<int> myInt = context.ApplicationProperties().Get(MyIntProperty);
+//!     std::optional<int> myInt = context.Properties().Get(MyIntProperty);
 //!
-//! Note that types inherited from winrt::Windows::Framework::IInspectable are returned
+//! Note that types inherited from IInspectable are returned
 //! directly because their null value may indicated absent property value.
-//! For other types we return std::optional<T>. It has std::nullopt in case if
+//! For other types we return std::optional<T>. It has std::nullopt value in case if
 //! no property value is found or if it has a wrong type.
 //! To avoid compilation errors the non-IInspectable types must be WinRT types which are described here:
 //! https://docs.microsoft.com/en-us/uwp/api/windows.foundation.propertytype?view=winrt-18362
@@ -47,15 +47,15 @@
 namespace winrt::Microsoft::ReactNative {
 
 //! Encapsulates the IReactPropertyNamespace
-struct PropertyNamespace {
-  PropertyNamespace(std::nullptr_t = nullptr) noexcept {}
+struct ReactPropertyNamespace {
+  ReactPropertyNamespace(std::nullptr_t = nullptr) noexcept {}
 
-  explicit PropertyNamespace(IReactPropertyNamespace const &ns) noexcept : m_namespace{ns} {}
+  explicit ReactPropertyNamespace(IReactPropertyNamespace const &ns) noexcept : m_namespace{ns} {}
 
-  explicit PropertyNamespace(param::hstring const &ns) noexcept : m_namespace{ReactPropertyBag::GetNamespace(ns)} {}
+  explicit ReactPropertyNamespace(param::hstring const &ns) noexcept : m_namespace{ReactPropertyBagHelper::GetNamespace(ns)} {}
 
-  static PropertyNamespace Global() noexcept {
-    return PropertyNamespace{ReactPropertyBag::GlobalNamespace()};
+  static ReactPropertyNamespace Global() noexcept {
+    return ReactPropertyNamespace{ReactPropertyBagHelper::GlobalNamespace()};
   }
 
   hstring NamespaceName() const noexcept {
@@ -76,20 +76,20 @@ struct PropertyNamespace {
 
 //! Encapsulates the IReactPropertyName and the property type
 template <class T>
-struct PropertyName {
+struct ReactPropertyId {
   using PropertyType = T;
 
-  PropertyName(std::nullptr_t = nullptr) noexcept {}
+  ReactPropertyId(std::nullptr_t = nullptr) noexcept {}
 
-  explicit PropertyName(IReactPropertyName const &name) noexcept : m_name{name} {}
+  explicit ReactPropertyId(IReactPropertyName const &name) noexcept : m_name{name} {}
 
-  explicit PropertyName(hstring const &localName) noexcept : m_name{ReactPropertyBag::GetName(nullptr, localName)} {}
+  explicit ReactPropertyId(hstring const &localName) noexcept : m_name{ReactPropertyBagHelper::GetName(nullptr, localName)} {}
 
-  PropertyName(PropertyNamespace const &ns, hstring const &localName) noexcept
-      : m_name{ReactPropertyBag::GetName(ns.Get(), localName)} {}
+  ReactPropertyId(ReactPropertyNamespace const &ns, hstring const &localName) noexcept
+      : m_name{ReactPropertyBagHelper::GetName(ns.Get(), localName)} {}
 
-  PropertyName(hstring const &ns, hstring const &localName) noexcept
-      : m_name{ReactPropertyBag::GetName(ReactPropertyBag::GetNamespace(ns), localName)} {}
+  ReactPropertyId(hstring const &ns, hstring const &localName) noexcept
+      : m_name{ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(ns), localName)} {}
 
   hstring NamespaceName() const noexcept {
     return m_name ? m_name.Namespace().NamespaceName() : hstring{};
@@ -111,45 +111,45 @@ struct PropertyName {
   IReactPropertyName m_name;
 };
 
-//! PropertyBag is a wrapper for IReactPropertyBag that stores strongly-typed properties in a thread-safe way.
+//! ReactPropertyBag is a wrapper for IReactPropertyBag that stores strongly-typed properties in a thread-safe way.
 //! Types inherited from IInspectable are stored directly.
 //! Values of other types are boxed with help of winrt::box_value.
-struct PropertyBag {
+struct ReactPropertyBag {
   //! Property return type is either T or std::optional<T>.
   //! T is returned for types inherited from IInspectable.
   //! The std::optional<T> is returned for all other types.
   template <class T>
   using ResultType = std::conditional_t<std::is_base_of_v<Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
 
-  //! Create a new empty instance of PropertyBag.
-  PropertyBag(std::nullptr_t = nullptr) noexcept {}
+  //! Create a new empty instance of ReactPropertyBag.
+  ReactPropertyBag(std::nullptr_t = nullptr) noexcept {}
 
-  //! Creates a new instance of PropertyBag with the provided content.
-  explicit PropertyBag(IReactPropertyBag const &content) noexcept : m_content{content} {}
+  //! Creates a new instance of ReactPropertyBag with the provided content.
+  explicit ReactPropertyBag(IReactPropertyBag const &content) noexcept : m_content{content} {}
 
   //! True if content is not null.
   explicit operator bool() const noexcept {
     return static_cast<bool>(m_content);
   }
 
-  //! Get content from the PropertyBag.
+  //! Get content from the ReactPropertyBag.
   IReactPropertyBag const &Get() const noexcept {
     return m_content;
   }
 
   //! Get property value by property name.
   template <class T>
-  ResultType<T> Get(PropertyName<T> const &propertyName) const noexcept {
-    Windows::Foundation::IInspectable propertyValue = m_content ? m_content.GetProperty(propertyName.Get()) : nullptr;
+  ResultType<T> Get(ReactPropertyId<T> const &propertyName) const noexcept {
+    Windows::Foundation::IInspectable propertyValue = m_content ? m_content.Get(propertyName.Get()) : nullptr;
     return FromObject<T>(propertyValue);
   }
 
   //! Ensure that property is created by calling valueCreator if needed, and return value by property name.
   //! The TCreateValue must return either T or std::optional<T>. It must have no parameters.
   template <class T, class TCreateValue>
-  ResultType<T> GetOrCreate(PropertyName<T> const &propertyName, TCreateValue const &createValue) const noexcept {
+  ResultType<T> GetOrCreate(ReactPropertyId<T> const &propertyName, TCreateValue const &createValue) const noexcept {
     Windows::Foundation::IInspectable propertyValue = m_content
-        ? m_content.GetOrCreateProperty(
+        ? m_content.GetOrCreate(
               propertyName.Get(), [&createValue]() noexcept { return ToObject<T>(createValue()); })
         : nullptr;
     return FromObject<T>(propertyValue);
@@ -157,49 +157,49 @@ struct PropertyBag {
 
   //! Removes property value by property name.
   template <class T>
-  void Remove(PropertyName<T> const &propertyName) const noexcept {
+  void Remove(ReactPropertyId<T> const &propertyName) const noexcept {
     if (m_content) {
-      m_content.RemoveProperty(propertyName.Get());
+      m_content.Exchange(propertyName.Get(), nullptr);
     }
   }
 
   //! Set property value by property name.
   template <class T, class TValue>
-  void Set(PropertyName<T> const &propertyName, TValue const &value) const noexcept {
+  void Set(ReactPropertyId<T> const &propertyName, TValue const &value) const noexcept {
     if (m_content) {
       auto propertyValue = ToObject<T>(value);
-      m_content.SetProperty(propertyName.Get(), propertyValue);
+      m_content.Exchange(propertyName.Get(), propertyValue);
     }
   }
 
-  //! True if two PropertyBags have the same content object instance.
-  friend bool operator==(const PropertyBag &left, const PropertyBag &right) noexcept {
-    return left.Get() == right.Get();
+  //! True if two ReactPropertyBags have the same content object instance.
+  friend bool operator==(const ReactPropertyBag &left, const ReactPropertyBag &right) noexcept {
+    return left.m_content == right.m_content;
   }
 
-  //! True if two PropertyBags have different content object instances.
-  friend bool operator!=(const PropertyBag &left, const PropertyBag &right) noexcept {
-    return left.Get() != right.Get();
+  //! True if two ReactPropertyBags have different content object instances.
+  friend bool operator!=(const ReactPropertyBag &left, const ReactPropertyBag &right) noexcept {
+    return left.m_content != right.m_content;
   }
 
-  //! True if left PropertyBag content is null.
-  friend bool operator==(const PropertyBag &left, std::nullptr_t) noexcept {
-    return !static_cast<bool>(left);
+  //! True if left ReactPropertyBag content is null.
+  friend bool operator==(const ReactPropertyBag &left, std::nullptr_t) noexcept {
+    return !static_cast<bool>(left.m_content);
   }
 
-  //! True if left PropertyBag content is not null.
-  friend bool operator!=(const PropertyBag &left, std::nullptr_t) noexcept {
-    return static_cast<bool>(left);
+  //! True if left ReactPropertyBag content is not null.
+  friend bool operator!=(const ReactPropertyBag &left, std::nullptr_t) noexcept {
+    return static_cast<bool>(left.m_content);
   }
 
-  //! True if right PropertyBag content is null.
-  friend bool operator==(std::nullptr_t, const PropertyBag &right) noexcept {
-    return !static_cast<bool>(right);
+  //! True if right ReactPropertyBag content is null.
+  friend bool operator==(std::nullptr_t, const ReactPropertyBag &right) noexcept {
+    return !static_cast<bool>(right.m_content);
   }
 
-  //! True if right PropertyBag content is not null.
-  friend bool operator!=(std::nullptr_t, const PropertyBag &right) noexcept {
-    return static_cast<bool>(right);
+  //! True if right ReactPropertyBag content is not null.
+  friend bool operator!=(std::nullptr_t, const ReactPropertyBag &right) noexcept {
+    return static_cast<bool>(right.m_content);
   }
 
  private:
