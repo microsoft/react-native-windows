@@ -56,8 +56,7 @@ struct DefaultRedBoxHandler : winrt::implements<DefaultRedBoxHandler, IRedBoxHan
   std::shared_ptr<Mso::React::IRedBoxHandler> m_redBoxHandler;
 };
 
-IRedBoxHandler RedBoxHelper::CreateDefaultHandler(
-    winrt::Microsoft::ReactNative::ReactNativeHost const &host) noexcept {
+IRedBoxHandler RedBoxHelper::CreateDefaultHandler(winrt::Microsoft::ReactNative::ReactNativeHost const &host) noexcept {
   return winrt::make<DefaultRedBoxHandler>(host);
 }
 
