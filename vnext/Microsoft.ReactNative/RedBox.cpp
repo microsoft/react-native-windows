@@ -391,7 +391,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
     showTopJSError();
   }
 
-  virtual bool isDevSupportEnabled() override {
+  virtual bool isDevSupportEnabled() const override {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
       return reactHost->Options().DeveloperSettings.IsDevModeEnabled;
     }
