@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "JSBundle.h"
-#include "PropertyBag.h"
 #include "RedBoxHandler.h"
 #include "dispatchQueue/dispatchQueue.h"
 #include "errorCode/errorCode.h"
@@ -18,6 +17,7 @@
 #include <NativeModuleProvider.h>
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ViewManagerProvider.h>
+#include <winrt/Microsoft.ReactNative.h>
 
 namespace Mso::React {
 
@@ -43,13 +43,6 @@ using OnReactInstanceDestroyedCallback = Mso::Functor<void(IReactInstance &)>;
 //! Returns default OnError handler.
 LIBLET_PUBLICAPI OnErrorCallback GetDefaultOnErrorHandler() noexcept;
 
-//! PropertyBag named property for JavaScript dispatch queue.
-constexpr const Mso::JSHost::NamedProperty<Mso::IDispatchQueueService> JSDispatchQueueProperty{"JSDispatchQueue"};
-
-//! PropertyBag named property for Native dispatch queue.
-constexpr const Mso::JSHost::NamedProperty<Mso::IDispatchQueueService> NativeDispatchQueueProperty{
-    "NativeDispatchQueue"};
-
 enum class ReactInstanceState {
   Loading,
   WaitingForDebugger,
@@ -71,6 +64,7 @@ struct IReactInstance : IUnknown {
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
+  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
 };
@@ -153,6 +147,8 @@ struct ViewManagerProvider2 {
 struct ReactOptions {
   react::uwp::ReactInstanceSettings LegacySettings;
 
+  winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
+
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
 
@@ -218,9 +214,6 @@ struct ReactOptions {
   bool EnableNativePerformanceNow{true};
 
   ReactDevOptions DeveloperSettings = {};
-
-  //! Additional properties associated with the ReactOptions.
-  Mso::JSHost::PropertyBag Properties;
 
   //! Adds registered JS bundle to JSBundles.
   LIBLET_PUBLICAPI ReactOptions &AddRegisteredJSBundle(std::string_view jsBundleId) noexcept;

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
@@ -23,8 +24,11 @@ namespace SampleLibraryCS
         #region Initializer
 
         [ReactInitializer]
-        public void Initialize(ReactContext _)
+        public void Initialize(ReactContext reactContext)
         {
+            Debug.WriteLine($"C# globalProps.Prop1: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop1"))}");
+            Debug.WriteLine($"C# instanceProps.Prop2: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop2"))}");
+
             _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
             {
                 TimedEvent?.Invoke(++_timerCount);
