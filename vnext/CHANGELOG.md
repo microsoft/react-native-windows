@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 May 2020 22:32:51 GMT and should not be manually modified.
+This log was last generated on Fri, 08 May 2020 10:11:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.4
+
+Fri, 08 May 2020 10:11:52 GMT
+
+### Changes
+
+- Correct binary message tagging (julio.rocha@microsoft.com)
 
 ## 0.62.0-preview.3
 
