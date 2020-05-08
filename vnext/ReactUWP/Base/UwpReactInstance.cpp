@@ -51,7 +51,7 @@
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
-#include <ReactWindowsCore/RedBoxHandler.h>
+#include <ReactWindowsCore/IRedBoxHandler.h>
 #include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
 
