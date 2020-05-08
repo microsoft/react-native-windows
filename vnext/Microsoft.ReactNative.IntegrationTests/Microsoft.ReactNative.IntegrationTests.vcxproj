@@ -47,6 +47,7 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
+    <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
     <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -107,6 +108,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ReactPropertyBagTests.cpp" />
     <ClCompile Include="ReactNativeHostTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">

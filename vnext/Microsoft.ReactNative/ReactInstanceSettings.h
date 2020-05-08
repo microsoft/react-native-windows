@@ -24,6 +24,8 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   ReactInstanceSettings() = default;
 
+  IReactPropertyBag Properties() noexcept;
+
   hstring MainComponentName() noexcept;
   void MainComponentName(hstring const &value) noexcept;
 
@@ -79,6 +81,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void DebuggerPort(uint16_t value) noexcept;
 
  private:
+  IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   hstring m_mainComponentName{};
   bool m_useDeveloperSupport{REACT_DEFAULT_USE_DEVELOPER_SUPPORT};
   hstring m_javaScriptMainModuleName{};
@@ -112,6 +115,10 @@ namespace winrt::Microsoft::ReactNative::implementation {
 //=============================================================================================
 // ReactInstanceSettings inline implementation
 //=============================================================================================
+
+inline IReactPropertyBag ReactInstanceSettings::Properties() noexcept {
+  return m_properties;
+}
 
 inline hstring ReactInstanceSettings::MainComponentName() noexcept {
   return m_mainComponentName;

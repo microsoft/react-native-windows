@@ -36,6 +36,9 @@ namespace SampleAppCS
             InstanceSettings.EnableDeveloperMenu = false;
 #endif
 
+            InstanceSettings.Properties.Set(ReactPropertyBagHelper.GetName(null, "Prop1"), 43);
+            InstanceSettings.Properties.Set(ReactPropertyBagHelper.GetName(null, "Prop2"), "Hello RNW!");
+
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
             PackageProviders.Add(new SampleLibraryCS.ReactPackageProvider());
             PackageProviders.Add(new SampleLibraryCpp.ReactPackageProvider());

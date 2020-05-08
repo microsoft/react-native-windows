@@ -3,7 +3,7 @@
 
 namespace Windows.Foundation.Metadata {
 
-  // A temporary substitution for the [noexcept] attrbute that is
+  // A temporary substitution for the [noexcept] attribute that is
   // going to be implemented in future versions of Windows SDK
   // This attribute allows generation of noexcept methods.
   [attributeusage(target_method, target_property)]

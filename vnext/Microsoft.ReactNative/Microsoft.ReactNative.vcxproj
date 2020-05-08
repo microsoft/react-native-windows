@@ -301,8 +301,6 @@
     <ClInclude Include="ReactHost\JSBundle.h" />
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
-    <ClInclude Include="ReactHost\PropertyBag.h" />
-    <ClInclude Include="ReactHost\PropertyBag_internal.h" />
     <ClInclude Include="ReactHost\React.h" />
     <ClInclude Include="ReactHost\ReactErrorProvider.h" />
     <ClInclude Include="ReactHost\ReactHost.h" />
@@ -324,6 +322,10 @@
     </ClInclude>
     <ClInclude Include="ReactPackageBuilder.h">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="IReactPropertyBag.h">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
+      <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactRootView.h">
       <DependentUpon>ReactRootView.idl</DependentUpon>
@@ -462,7 +464,6 @@
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\PropertyBag.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
@@ -481,6 +482,10 @@
     </ClCompile>
     <ClCompile Include="ReactPackageBuilder.cpp">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="IReactPropertyBag.cpp">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
+      <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
@@ -508,6 +513,7 @@
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
+    <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
