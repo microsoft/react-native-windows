@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 00:35:27 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.3",
+      "version": "0.27.3",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Handle rename of react-native-macos repo",
+            "author": "acoates@microsoft.com",
+            "commit": "bba1032d0bf1a6cbb3806488efdf757f5056ff42"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2020 21:47:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.27.3",
       "version": "0.27.3",

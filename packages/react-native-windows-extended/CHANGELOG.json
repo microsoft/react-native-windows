@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 00:35:27 GMT",
+      "tag": "react-native-windows-extended_v0.60.69-47",
+      "version": "0.60.69-47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Handle rename of react-native-macos repo",
+            "author": "acoates@microsoft.com",
+            "commit": "bba1032d0bf1a6cbb3806488efdf757f5056ff42"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 23:29:21 GMT",
       "tag": "react-native-windows-extended_v0.60.69-11",
       "version": "0.60.69-11",
