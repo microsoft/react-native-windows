@@ -55,13 +55,15 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) {
     void await_resume() const noexcept {}
 
     void await_suspend(std::experimental::coroutine_handle<> resume) {
-      m_queue.Post([context = resume.address()]() noexcept {
+      m_callback = [context = resume.address()]() noexcept {
         std::experimental::coroutine_handle<>::from_address(context)();
-      });
+      };
+      m_queue.Post(std::move(m_callback));
     }
 
    private:
     Mso::DispatchQueue m_queue;
+    Mso::VoidFunctor m_callback;
   };
 
   return awaitable{queue};
@@ -312,7 +314,7 @@ void WinRTWebSocketResource::Send(const string &message) {
 }
 
 void WinRTWebSocketResource::SendBinary(const string &base64String) {
-  m_writeQueue.push({base64String, false});
+  m_writeQueue.push({base64String, true});
 
   PerformWrite();
 }
