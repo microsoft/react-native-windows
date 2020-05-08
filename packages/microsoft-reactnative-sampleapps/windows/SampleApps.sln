@@ -50,6 +50,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
+		..\..\..\vnext\ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603144}*SharedItemsImports = 4
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{47eec7f3-40d3-49ba-82c1-eaf103b54215}*SharedItemsImports = 4
 		..\..\..\vnext\Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
