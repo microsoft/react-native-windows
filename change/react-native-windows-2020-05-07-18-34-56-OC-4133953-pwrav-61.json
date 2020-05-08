@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Ensure WebSocket write lifetime",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-08T01:34:56.237Z"
+}
