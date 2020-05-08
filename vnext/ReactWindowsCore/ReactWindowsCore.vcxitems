@@ -2,11 +2,6 @@
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603145}</ProjectGuid>
-    <Keyword>StaticLibrary</Keyword>
-    <RootNamespace>ReactWindowsCore</RootNamespace>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -58,18 +53,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
-  <PropertyGroup Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -107,7 +90,6 @@
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)Shared;
-        $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\callinvoker;
@@ -231,12 +213,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
-      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
