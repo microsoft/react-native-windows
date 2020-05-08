@@ -48,7 +48,7 @@ namespace Microsoft.ReactNative {
     // It returns previously stored property value.
     // It returns null if property did not exist.
     // If the new value is null, then the property is removed.
-    Object Exchange(IReactPropertyName name, Object value);
+    Object Set(IReactPropertyName name, Object value);
   }
 
   // Helper methods for the property bag implementation.

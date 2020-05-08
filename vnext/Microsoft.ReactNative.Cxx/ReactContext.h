@@ -16,99 +16,59 @@ namespace winrt::Microsoft::ReactNative {
 // It wraps up the IReactContext and adds convenience methods for
 // working with C++ types.
 struct ReactContext {
-  ReactContext(IReactContext const &context) noexcept;
+  ReactContext(IReactContext const &handle) noexcept : m_handle{handle} {}
 
-  IReactContext const &ContextAbi() const noexcept;
+  IReactContext const &Handle() const noexcept {
+    return m_handle;
+  }
 
-  explicit operator bool() const noexcept;
+  explicit operator bool() const noexcept {
+    return static_cast<bool>(m_handle);
+  }
 
-  ReactPropertyBag Properties() const noexcept;
+  ReactPropertyBag Properties() const noexcept {
+    return ReactPropertyBag{m_handle.Properties()};
+  }
 
   template <class... TArgs>
-  void CallJSFunction(std::wstring_view moduleName, std::wstring_view methodName, TArgs &&... args) const noexcept;
+  void CallJSFunction(std::wstring_view moduleName, std::wstring_view methodName, TArgs &&... args) const noexcept {
+    m_handle.CallJSFunction(moduleName, methodName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
+  }
 
   void CallJSFunction(
       std::wstring_view moduleName,
       std::wstring_view methodName,
-      JSValueArgWriter const &paramsArgWriter) const noexcept;
+      JSValueArgWriter const &paramsArgWriter) const noexcept {
+    m_handle.CallJSFunction(moduleName, methodName, paramsArgWriter);
+  }
 
   template <class... TArgs>
-  void EmitJSEvent(std::wstring_view eventEmitterName, std::wstring_view eventName, TArgs &&... args) const noexcept;
+  void EmitJSEvent(std::wstring_view eventEmitterName, std::wstring_view eventName, TArgs &&... args) const noexcept {
+    m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
+  }
 
   void EmitJSEvent(
       std::wstring_view eventEmitterName,
       std::wstring_view eventName,
-      JSValueArgWriter const &paramsArgWriter) const noexcept;
+      JSValueArgWriter const &paramsArgWriter) const noexcept {
+    m_handle.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
+  }
 
   template <class... TArgs>
-  void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) const noexcept;
+  void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) const noexcept {
+    m_handle.DispatchEvent(view, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
+  }
 
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       std::wstring_view eventName,
-      JSValueArgWriter const &paramsArgWriter) const noexcept;
+      JSValueArgWriter const &paramsArgWriter) const noexcept {
+    m_handle.DispatchEvent(view, eventName, paramsArgWriter);
+  }
 
  private:
-  const IReactContext m_context;
+  const IReactContext m_handle;
 };
-
-//==============================================================================
-// ReactContext inline implementation
-//==============================================================================
-
-inline ReactContext::ReactContext(IReactContext const &context) noexcept : m_context{context} {}
-
-inline IReactContext const &ReactContext::ContextAbi() const noexcept {
-  return m_context;
-}
-
-inline ReactContext::operator bool() const noexcept {
-  return m_context != nullptr;
-}
-
-inline ReactPropertyBag ReactContext::Properties() const noexcept {
-  return ReactPropertyBag{m_context.Properties()};
-}
-
-template <class... TArgs>
-inline void ReactContext::CallJSFunction(std::wstring_view moduleName, std::wstring_view methodName, TArgs &&... args)
-    const noexcept {
-  m_context.CallJSFunction(moduleName, methodName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
-}
-
-inline void ReactContext::CallJSFunction(
-    std::wstring_view moduleName,
-    std::wstring_view methodName,
-    JSValueArgWriter const &paramsArgWriter) const noexcept {
-  m_context.CallJSFunction(moduleName, methodName, paramsArgWriter);
-}
-
-template <class... TArgs>
-inline void ReactContext::EmitJSEvent(std::wstring_view eventEmitterName, std::wstring_view eventName, TArgs &&... args)
-    const noexcept {
-  m_context.EmitJSEvent(eventEmitterName, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
-}
-
-inline void ReactContext::EmitJSEvent(
-    std::wstring_view eventEmitterName,
-    std::wstring_view eventName,
-    JSValueArgWriter const &paramsArgWriter) const noexcept {
-  m_context.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
-}
-
-template <class... TArgs>
-inline void
-ReactContext::DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) const
-    noexcept {
-  m_context.DispatchEvent(view, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
-}
-
-inline void ReactContext::DispatchEvent(
-    xaml::FrameworkElement const &view,
-    std::wstring_view eventName,
-    JSValueArgWriter const &paramsArgWriter) const noexcept {
-  m_context.DispatchEvent(view, eventName, paramsArgWriter);
-}
 
 } // namespace winrt::Microsoft::ReactNative
 

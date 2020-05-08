@@ -7,5 +7,4 @@
 #include "ReactInstanceSettings.g.cpp"
 #endif
 
-namespace winrt::Microsoft::ReactNative::implementation {
-} // namespace winrt::Microsoft::ReactNative::implementation
+namespace winrt::Microsoft::ReactNative::implementation {} // namespace winrt::Microsoft::ReactNative::implementation

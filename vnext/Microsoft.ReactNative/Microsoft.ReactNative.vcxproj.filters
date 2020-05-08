@@ -269,7 +269,6 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\ClipboardModule.cpp" />
-    <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -604,7 +603,6 @@
     <ClInclude Include="Modules\AppStateData.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>

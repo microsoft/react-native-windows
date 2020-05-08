@@ -116,7 +116,7 @@ TEST_CLASS (ReactPropertyBagTests) {
   TEST_METHOD(GetProperty_Int) {
     auto fooName = ReactPropertyBagHelper::GetName(nullptr, L"Foo");
     IReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
-    pb.Exchange(fooName, box_value(5));
+    pb.Set(fooName, box_value(5));
     auto value = pb.Get(fooName);
     TestCheck(value);
     TestCheckEqual(5, unbox_value<int>(value));
@@ -137,17 +137,17 @@ TEST_CLASS (ReactPropertyBagTests) {
     auto value1 = pb.Get(fooName);
     TestCheck(!value1);
 
-    pb.Exchange(fooName, box_value(5));
+    pb.Set(fooName, box_value(5));
     auto value2 = pb.Get(fooName);
     TestCheck(value2);
     TestCheckEqual(5, unbox_value<int>(value2));
 
-    pb.Exchange(fooName, box_value(10));
+    pb.Set(fooName, box_value(10));
     auto value3 = pb.Get(fooName);
     TestCheck(value3);
     TestCheckEqual(10, unbox_value<int>(value3));
 
-    pb.Exchange(fooName, nullptr);
+    pb.Set(fooName, nullptr);
     auto value4 = pb.Get(fooName);
     TestCheck(!value4);
   }
@@ -157,8 +157,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     auto barName = ReactPropertyBagHelper::GetName(nullptr, L"Bar");
     IReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
 
-    pb.Exchange(fooName, box_value(5));
-    pb.Exchange(barName, box_value(L"Hello"));
+    pb.Set(fooName, box_value(5));
+    pb.Set(barName, box_value(L"Hello"));
 
     auto value1 = pb.Get(fooName);
     TestCheck(value1);
@@ -173,12 +173,12 @@ TEST_CLASS (ReactPropertyBagTests) {
     auto fooName = ReactPropertyBagHelper::GetName(nullptr, L"Foo");
     IReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
 
-    pb.Exchange(fooName, box_value(5));
+    pb.Set(fooName, box_value(5));
     auto value1 = pb.Get(fooName);
     TestCheck(value1);
     TestCheckEqual(5, unbox_value<int>(value1));
 
-    pb.Exchange(fooName, nullptr);
+    pb.Set(fooName, nullptr);
     auto value2 = pb.Get(fooName);
     TestCheck(!value2);
   }
@@ -187,32 +187,32 @@ TEST_CLASS (ReactPropertyBagTests) {
     ReactPropertyNamespace ns1;
     TestCheck(!ns1);
     TestCheckEqual(L"", ns1.NamespaceName());
-    TestCheckEqual(nullptr, ns1.Get());
+    TestCheckEqual(nullptr, ns1.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_ctor_nullptr) {
     ReactPropertyNamespace ns1{nullptr};
     TestCheck(!ns1);
     TestCheckEqual(L"", ns1.NamespaceName());
-    TestCheckEqual(nullptr, ns1.Get());
+    TestCheckEqual(nullptr, ns1.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_ctor_IReactPropertyNamespace) {
     ReactPropertyNamespace ns1{ReactPropertyBagHelper::GetNamespace(L"Foo")};
     TestCheck(ns1);
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Get());
-    TestCheckEqual(L"Foo", ns1.Get().NamespaceName());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Handle());
+    TestCheckEqual(L"Foo", ns1.Handle().NamespaceName());
     TestCheckEqual(L"Foo", ns1.NamespaceName());
-    TestCheck(ReactPropertyBagHelper::GetNamespace(L"Bar") != ns1.Get());
+    TestCheck(ReactPropertyBagHelper::GetNamespace(L"Bar") != ns1.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_ctor_hstring) {
     ReactPropertyNamespace ns1{L"Foo"};
     TestCheck(ns1);
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Get());
-    TestCheckEqual(L"Foo", ns1.Get().NamespaceName());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Handle());
+    TestCheckEqual(L"Foo", ns1.Handle().NamespaceName());
     TestCheckEqual(L"Foo", ns1.NamespaceName());
-    TestCheck(ReactPropertyBagHelper::GetNamespace(L"Bar") != ns1.Get());
+    TestCheck(ReactPropertyBagHelper::GetNamespace(L"Bar") != ns1.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_ctor_copy) {
@@ -220,8 +220,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     ReactPropertyNamespace ns2{ns1};
     TestCheck(ns1);
     TestCheck(ns2);
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Get());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_ctor_move) {
@@ -229,8 +229,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     ReactPropertyNamespace ns2{std::move(ns1)};
     TestCheck(!ns1);
     TestCheck(ns2);
-    TestCheckEqual(nullptr, ns1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Get());
+    TestCheckEqual(nullptr, ns1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_assign_copy) {
@@ -239,8 +239,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     ns2 = ns1;
     TestCheck(ns1);
     TestCheck(ns2);
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Get());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_assign_move) {
@@ -249,112 +249,114 @@ TEST_CLASS (ReactPropertyBagTests) {
     ns2 = std::move(ns1);
     TestCheck(!ns1);
     TestCheck(ns2);
-    TestCheckEqual(nullptr, ns1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Get());
+    TestCheckEqual(nullptr, ns1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetNamespace(L"Foo"), ns2.Handle());
   }
 
   TEST_METHOD(PropertyNamespace_Global) {
     ReactPropertyNamespace ns1{L""};
-    TestCheckEqual(ReactPropertyBagHelper::GlobalNamespace(), ns1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GlobalNamespace(), ReactPropertyNamespace::Global().Get());
+    TestCheckEqual(ReactPropertyBagHelper::GlobalNamespace(), ns1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GlobalNamespace(), ReactPropertyNamespace::Global().Handle());
   }
 
-  TEST_METHOD(PropertyName_ctor_default) {
+  TEST_METHOD(PropertyId_ctor_default) {
     ReactPropertyId<int> name1;
     TestCheck(!name1);
     TestCheckEqual(L"", name1.NamespaceName());
     TestCheckEqual(L"", name1.LocalName());
-    TestCheckEqual(nullptr, name1.Get());
+    TestCheckEqual(nullptr, name1.Handle());
   }
 
-  TEST_METHOD(PropertyName_ctor_nullptr) {
+  TEST_METHOD(PropertyId_ctor_nullptr) {
     ReactPropertyId<int> name1{nullptr};
     TestCheck(!name1);
     TestCheckEqual(L"", name1.NamespaceName());
     TestCheckEqual(L"", name1.LocalName());
-    TestCheckEqual(nullptr, name1.Get());
+    TestCheckEqual(nullptr, name1.Handle());
   }
 
-  TEST_METHOD(PropertyName_ctor_IReactPropertyName) {
+  TEST_METHOD(PropertyId_ctor_IReactPropertyName) {
     ReactPropertyId<int> name1{ReactPropertyBagHelper::GetName(nullptr, L"Foo")};
     TestCheck(name1);
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Get());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Handle());
     TestCheckEqual(L"", name1.NamespaceName());
     TestCheckEqual(L"Foo", name1.LocalName());
-    TestCheckEqual(L"Foo", name1.Get().LocalName());
-    TestCheck(ReactPropertyBagHelper::GetName(nullptr, L"Bar") != name1.Get());
+    TestCheckEqual(L"Foo", name1.Handle().LocalName());
+    TestCheck(ReactPropertyBagHelper::GetName(nullptr, L"Bar") != name1.Handle());
   }
 
-  TEST_METHOD(PropertyName_ctor_hstring) {
+  TEST_METHOD(PropertyId_ctor_hstring) {
     ReactPropertyId<int> name1{L"Foo"};
     TestCheck(name1);
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Get());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Handle());
     TestCheckEqual(L"", name1.NamespaceName());
     TestCheckEqual(L"Foo", name1.LocalName());
-    TestCheckEqual(L"Foo", name1.Get().LocalName());
+    TestCheckEqual(L"Foo", name1.Handle().LocalName());
   }
 
-  TEST_METHOD(PropertyName_ctor_ns_hstring) {
+  TEST_METHOD(PropertyId_ctor_ns_hstring) {
     ReactPropertyNamespace ns1{L"Foo"};
     ReactPropertyId<int> name1{ns1, L"Bar"};
     TestCheck(name1);
-    TestCheckEqual(ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"Foo"), L"Bar"), name1.Get());
+    TestCheckEqual(
+        ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"Foo"), L"Bar"), name1.Handle());
     TestCheckEqual(L"Foo", name1.NamespaceName());
     TestCheckEqual(L"Bar", name1.LocalName());
-    TestCheckEqual(L"Bar", name1.Get().LocalName());
+    TestCheckEqual(L"Bar", name1.Handle().LocalName());
   }
 
-  TEST_METHOD(PropertyName_ctor_hstring_hstring) {
+  TEST_METHOD(PropertyId_ctor_hstring_hstring) {
     ReactPropertyId<int> name1{L"Foo", L"Bar"};
     TestCheck(name1);
-    TestCheckEqual(ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"Foo"), L"Bar"), name1.Get());
+    TestCheckEqual(
+        ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"Foo"), L"Bar"), name1.Handle());
     TestCheckEqual(L"Foo", name1.NamespaceName());
     TestCheckEqual(L"Bar", name1.LocalName());
-    TestCheckEqual(L"Bar", name1.Get().LocalName());
+    TestCheckEqual(L"Bar", name1.Handle().LocalName());
   }
 
-  TEST_METHOD(PropertyName_ctor_copy) {
+  TEST_METHOD(PropertyId_ctor_copy) {
     ReactPropertyId<int> name1{L"Foo"};
     ReactPropertyId<int> name2{name1};
     TestCheck(name1);
     TestCheck(name2);
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Get());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Handle());
   }
 
-  TEST_METHOD(PropertyName_ctor_move) {
+  TEST_METHOD(PropertyId_ctor_move) {
     ReactPropertyId<int> name1{L"Foo"};
     ReactPropertyId<int> name2{std::move(name1)};
     TestCheck(!name1);
     TestCheck(name2);
-    TestCheckEqual(nullptr, name1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Get());
+    TestCheckEqual(nullptr, name1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Handle());
   }
 
-  TEST_METHOD(PropertyName_assign_copy) {
+  TEST_METHOD(PropertyId_assign_copy) {
     ReactPropertyId<int> name1{L"Foo"};
     ReactPropertyId<int> name2;
     name2 = name1;
     TestCheck(name1);
     TestCheck(name2);
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Get());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Handle());
   }
 
-  TEST_METHOD(PropertyName_assign_move) {
+  TEST_METHOD(PropertyId_assign_move) {
     ReactPropertyId<int> name1{L"Foo"};
     ReactPropertyId<int> name2;
     name2 = std::move(name1);
     TestCheck(!name1);
     TestCheck(name2);
-    TestCheckEqual(nullptr, name1.Get());
-    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Get());
+    TestCheckEqual(nullptr, name1.Handle());
+    TestCheckEqual(ReactPropertyBagHelper::GetName(nullptr, L"Foo"), name2.Handle());
   }
 
   TEST_METHOD(PropertyBag_ctor_default) {
     ReactPropertyBag pb1;
     TestCheck(!pb1);
-    TestCheckEqual(nullptr, pb1.Get());
+    TestCheckEqual(nullptr, pb1.Handle());
     TestCheck(nullptr == pb1);
     TestCheck(pb1 == nullptr);
   }
@@ -362,17 +364,17 @@ TEST_CLASS (ReactPropertyBagTests) {
   TEST_METHOD(PropertyBag_ctor_nullptr) {
     ReactPropertyBag pb1{nullptr};
     TestCheck(!pb1);
-    TestCheckEqual(nullptr, pb1.Get());
+    TestCheckEqual(nullptr, pb1.Handle());
     TestCheck(nullptr == pb1);
     TestCheck(pb1 == nullptr);
   }
 
-  TEST_METHOD(PropertyName_ctor_IReactPropertyBag) {
+  TEST_METHOD(PropertyId_ctor_IReactPropertyBag) {
     IReactPropertyBag ipb1{ReactPropertyBagHelper::CreatePropertyBag()};
     ReactPropertyBag pb1{ipb1};
     TestCheck(pb1);
-    TestCheckEqual(ipb1, pb1.Get());
-    TestCheck(pb1.Get());
+    TestCheckEqual(ipb1, pb1.Handle());
+    TestCheck(pb1.Handle());
     TestCheck(nullptr != pb1);
     TestCheck(pb1 != nullptr);
   }
@@ -383,8 +385,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     ReactPropertyBag pb2{pb1};
     TestCheck(pb1);
     TestCheck(pb2);
-    TestCheckEqual(ipb1, pb1.Get());
-    TestCheckEqual(ipb1, pb2.Get());
+    TestCheckEqual(ipb1, pb1.Handle());
+    TestCheckEqual(ipb1, pb2.Handle());
   }
 
   TEST_METHOD(PropertyBag_ctor_move) {
@@ -393,8 +395,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     ReactPropertyBag pb2{std::move(pb1)};
     TestCheck(!pb1);
     TestCheck(pb2);
-    TestCheckEqual(nullptr, pb1.Get());
-    TestCheckEqual(ipb1, pb2.Get());
+    TestCheckEqual(nullptr, pb1.Handle());
+    TestCheckEqual(ipb1, pb2.Handle());
   }
 
   TEST_METHOD(PropertyBag_assign_copy) {
@@ -404,8 +406,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     pb2 = pb1;
     TestCheck(pb1);
     TestCheck(pb2);
-    TestCheckEqual(ipb1, pb1.Get());
-    TestCheckEqual(ipb1, pb2.Get());
+    TestCheckEqual(ipb1, pb1.Handle());
+    TestCheckEqual(ipb1, pb2.Handle());
   }
 
   TEST_METHOD(PropertyBag_assign_move) {
@@ -415,8 +417,8 @@ TEST_CLASS (ReactPropertyBagTests) {
     pb2 = std::move(pb1);
     TestCheck(!pb1);
     TestCheck(pb2);
-    TestCheckEqual(nullptr, pb1.Get());
-    TestCheckEqual(ipb1, pb2.Get());
+    TestCheckEqual(nullptr, pb1.Handle());
+    TestCheckEqual(ipb1, pb2.Handle());
   }
 
   TEST_METHOD(PropertyBag_equal) {

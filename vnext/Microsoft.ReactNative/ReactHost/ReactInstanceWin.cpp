@@ -66,8 +66,7 @@ namespace Mso::React {
 ReactContext::ReactContext(
     Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept
-    : m_reactInstance{std::move(reactInstance)},
-      m_properties{properties} {}
+    : m_reactInstance{std::move(reactInstance)}, m_properties{properties} {}
 
 winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() noexcept {
   return m_properties;

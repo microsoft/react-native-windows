@@ -11,7 +11,7 @@ struct ReactPropertyBag : implements<ReactPropertyBag, IReactPropertyBag> {
 
   IInspectable Get(IReactPropertyName const &name) noexcept;
   IInspectable GetOrCreate(IReactPropertyName const &name, ReactCreatePropertyValue const &createValue) noexcept;
-  IInspectable Exchange(IReactPropertyName const &name, IInspectable const &value) noexcept;
+  IInspectable Set(IReactPropertyName const &name, IInspectable const &value) noexcept;
 
  private:
   std::mutex m_mutex;
