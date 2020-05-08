@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 10:11:33 GMT",
+      "tag": "react-native-windows_v0.61.9",
+      "version": "0.61.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Ensure WebSocket write lifetime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2020 21:13:13 GMT",
       "tag": "react-native-windows_v0.61.8",
       "version": "0.61.8",

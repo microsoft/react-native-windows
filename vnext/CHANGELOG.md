@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 04 May 2020 21:13:13 GMT and should not be manually modified.
+This log was last generated on Fri, 08 May 2020 10:11:33 GMT and should not be manually modified.
 
+## 0.61.9
+Fri, 08 May 2020 10:11:33 GMT
+
+### Patches
+
+- Ensure WebSocket write lifetime (julio.rocha@microsoft.com)
 ## 0.61.8
 Mon, 04 May 2020 21:13:13 GMT
 
