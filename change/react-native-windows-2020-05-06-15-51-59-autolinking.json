@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Autolinking",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-06T22:51:59.672Z"
-}
