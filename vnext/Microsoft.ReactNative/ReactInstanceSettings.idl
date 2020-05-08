@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import "NoExceptionAttribute.idl";
 import "RedBoxHandler.idl";
+import "IReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -11,6 +11,7 @@ namespace Microsoft.ReactNative {
   {
     ReactInstanceSettings();
 
+    IReactPropertyBag Properties { get; };
     String MainComponentName { get; set; };
     Boolean UseDeveloperSupport { get; set; };
     String JavaScriptMainModuleName { get; set; };

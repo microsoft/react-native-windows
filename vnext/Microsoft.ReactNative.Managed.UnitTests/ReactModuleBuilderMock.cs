@@ -283,6 +283,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_builder = builder;
     }
 
+    public IReactPropertyBag Properties { get; } = ReactPropertyBagHelper.CreatePropertyBag();
+
     public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
     {
       throw new NotImplementedException();
