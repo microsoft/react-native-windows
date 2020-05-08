@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 May 2020 00:05:07 GMT and should not be manually modified.
+This log was last generated on Fri, 08 May 2020 00:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.61
+
+Fri, 08 May 2020 00:05:16 GMT
+
+### Changes
+
+- Promote awaitable DispatchQueue callback to member field (julio.rocha@microsoft.com)
+- Upgrade the shared managed project to a proper csharp library. (dannyvv@microsoft.com)
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
 
 ## 0.0.0-master.60
 

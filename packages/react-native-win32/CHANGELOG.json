@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 00:05:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.9",
+      "version": "0.0.0-master.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "6088cb0d6b9291e7877d5b0aefd6f18cb1bace3c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 May 2020 00:05:07 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.8",
       "version": "0.0.0-master.8",

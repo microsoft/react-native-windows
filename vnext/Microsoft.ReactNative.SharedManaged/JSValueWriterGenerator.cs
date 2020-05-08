@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,14 +13,38 @@ using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  static class JSValueWriterGenerator
+  public static class JSValueWriterGenerator
   {
+    // The current assembly to ensure we always register the basic type readers
+    private static readonly Assembly s_currentAssembly = typeof(JSValueReaderGenerator).Assembly;
+
+    private static readonly ConcurrentDictionary<Assembly, bool> m_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
+
     private static readonly Lazy<KeyValuePair<Type, MethodInfo>[]> s_allMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, MethodInfo>> s_nonGenericMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, SortedList<Type, MethodInfo>>> s_genericMethods;
 
+    public static void RegisterAssembly(Assembly assembly)
+    {
+      // UnitTests re-register over and over, safe to skip if already added.
+      if (m_registerdAssemblies.ContainsKey(assembly))
+      {
+        return;
+      }
+
+      m_registerdAssemblies.GetOrAdd(assembly, true);
+
+      // Fail programs that register after we started serializing values.
+      if (s_allMethods.IsValueCreated)
+      {
+        throw new InvalidOperationException("Cannot register assemblies dynamically after the first value is serialized.");
+      }
+    }
+
     static JSValueWriterGenerator()
     {
+      m_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
+
       // Get all extension WriteValue methods for IJSValueWriter.
       // The first parameter must be IJSValueWriter.
       // The second parameter must be not a generic parameter T.
@@ -28,7 +53,8 @@ namespace Microsoft.ReactNative.Managed
       s_allMethods = new Lazy<KeyValuePair<Type, MethodInfo>[]>(() =>
       {
         var extensionMethods =
-          from type in typeof(JSValueWriter).GetTypeInfo().Assembly.GetTypes()
+          from assembly in m_registerdAssemblies.Keys
+          from type in assembly.GetTypes()
           let typeInfo = type.GetTypeInfo()
           where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested
           from member in type.GetMember(nameof(JSValueWriter.WriteValue), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
@@ -223,7 +249,7 @@ namespace Microsoft.ReactNative.Managed
         var properties =
           from property in valueType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
           let propertySetter = property.SetMethod
-          where propertySetter.IsPublic
+          where propertySetter != null && propertySetter.IsPublic
           select new { property.Name, Type = property.PropertyType };
         var members = fields.Concat(properties).ToArray();
 
