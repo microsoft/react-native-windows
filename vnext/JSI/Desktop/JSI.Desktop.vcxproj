@@ -21,13 +21,12 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{17DD1B17-3094-40DD-9373-AC2497932ECA}</ProjectGuid>
     <ProjectName>JSI.Desktop</ProjectName>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <!-- This property needs to be overwritten after the inclusion of React.Cpp.props -->
-    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->

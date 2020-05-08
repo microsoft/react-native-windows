@@ -23,13 +23,12 @@
     <ProjectGuid>{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}</ProjectGuid>
     <ProjectName>React.Windows.Desktop.DLL</ProjectName>
     <TargetName>react-native-win32</TargetName>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <!-- This property needs to be overwritten after the inclusion of React.Cpp.props -->
-    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
