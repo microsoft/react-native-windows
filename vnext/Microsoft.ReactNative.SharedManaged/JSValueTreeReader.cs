@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class JSValueTreeReader : IJSValueReader, IJSValueTreeReader
+  public class JSValueTreeReader : IJSValueReader, IJSValueTreeReader
   {
     private bool m_isIterating = false;
     private readonly Stack<StackEntry> m_stack = new Stack<StackEntry>();

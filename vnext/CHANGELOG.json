@@ -2,6 +2,122 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 00:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.61",
+      "version": "0.0.0-master.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote awaitable DispatchQueue callback to member field",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "04583378bd66c2d473a804c5e7cb663596e1a4be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade the shared managed project to a proper csharp library.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "605e3f8dc651706cfafbb4f21931bcbc03a9f140",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "6088cb0d6b9291e7877d5b0aefd6f18cb1bace3c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 May 2020 00:05:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.60",
+      "version": "0.0.0-master.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't delete nuget.exe if using locally-installed (e.g. chocolatey)",
+            "author": "asklar@microsoft.com",
+            "commit": "67781f6f00498216349c33716d451525e59229ca",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Only bundle when not running Intellisense builds",
+            "author": "asklar@microsoft.com",
+            "commit": "8940e5ee6ecce0fa1fc573d1cfa54be757bce431",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable CxxFrameHandler4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "80cef10818276ec17ad9683df1a9523b2b486fd0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Switch package layout to use `files` in `pacakge.json` rather than `.npmignore`",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c18e0c17fa6c2a2f778aa6607fb7e1601f6089da",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix typo",
+            "author": "rezha@microsoft.com",
+            "commit": "76b3478cb83004b5b6718af0381e8a3856ef893d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix issue 4792",
+            "author": "aeulitz@microsoft.com",
+            "commit": "608b98b46627d9c6a79bbe6a7f3f3ceb7aa8ff2a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 May 2020 00:05:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.59",
+      "version": "0.0.0-master.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI 3 Alpha support in RNW",
+            "author": "asklar@microsoft.com",
+            "commit": "f467d8b06d481b6e36a7cd239608594017f4ebbf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Treat yes the same as y in template overwrite prompt",
+            "author": "acoates@microsoft.com",
+            "commit": "a20e950879c75f3dcd87be2624bbdb79664061cc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 05 May 2020 00:04:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.58",
+      "version": "0.0.0-master.58",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make generated msbuild project compile in parralel (/m)",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ccf291bb1de85a7fe68a385e587750f83da62978",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix appPackage path",
+            "author": "kaigu@microsoft.com",
+            "commit": "96c1c93fbf9ac314f6aaf5da151bc9365a1e75e6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 03 May 2020 00:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-master.57",
       "version": "0.0.0-master.57",

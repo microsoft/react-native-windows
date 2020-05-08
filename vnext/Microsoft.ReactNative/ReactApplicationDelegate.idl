@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import "ReactApplication.idl";
-#include "../include/NamespaceRedirect.h"
+#include "NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 

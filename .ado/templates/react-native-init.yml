@@ -21,7 +21,7 @@ steps:
   - task: CmdLine@2
     displayName: yarn install (local react-native-windows)
     inputs:
-      script: yarn install --frozen-lockfile
+      script: yarn install --frozen-lockfile 
 
   - task: CmdLine@2
     displayName: yarn build
@@ -144,11 +144,22 @@ steps:
       script: npx --no-install react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
       workingDirectory: $(Agent.BuildDirectory)\testcli
   
-  # We are experiencing random package restore failures. Uploading the  vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
+  # We are experiencing random package restore failures. 
+  # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
+  # To do so we have to kill the existing server because it keeps a file-lock on the log file
+  - task: PowerShell@2
+    displayName: Stop test npm server (verdaccio) to upload it's logs (on failure)
+    inputs:
+      targetType: inline
+      script: |
+        stop-process -name node
+    condition: failed()
+
+
   - task: PublishPipelineArtifact@1
     displayName: Upload Verdaccio.log (on failure)
     inputs:
       targetPath: 'verdaccio.log'
-      artifact: 'Verdaccio.log'
+      artifact: '$(Agent.JobName).Verdaccio.log'
       publishLocation: 'pipeline'
     condition: failed()

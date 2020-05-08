@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Microsoft.ReactNative.Managed
 {
-  struct ReactContext
+  public struct ReactContext
   {
     public ReactContext(IReactContext context)
     {

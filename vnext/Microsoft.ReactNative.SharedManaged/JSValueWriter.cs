@@ -8,9 +8,9 @@ using System.Threading;
 
 namespace Microsoft.ReactNative.Managed
 {
-  delegate void WriteValueDelegate<T>(IJSValueWriter writer, T value);
+  public delegate void WriteValueDelegate<T>(IJSValueWriter writer, T value);
 
-  static class JSValueWriter
+  public static class JSValueWriter
   {
     private static IReadOnlyDictionary<Type, Delegate> s_writerDelegates = new Dictionary<Type, Delegate>();
 

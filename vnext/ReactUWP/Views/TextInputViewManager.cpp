@@ -365,7 +365,7 @@ void TextInputShadowNode::HideCaretIfNeeded() {
     auto control = GetView().as<xaml::Controls::Control>();
     if (auto caret = FindCaret(control)) {
       caret.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
-      xaml::Media::SolidColorBrush transparentColor(winrt::Windows::UI::Colors::Transparent());
+      xaml::Media::SolidColorBrush transparentColor(winrt::Colors::Transparent());
       caret.Fill(transparentColor);
     }
   }

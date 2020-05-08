@@ -9,9 +9,12 @@
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.Text.h>
 
-#ifndef WINUI3_SUPPORT
+// xaml::Interop::TypeName does not exist, always use WUX
+#include <winrt/Windows.UI.Xaml.Interop.h>
+
+#ifndef USE_WINUI3
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.System.h>
@@ -37,13 +40,48 @@
 #include <winrt/Windows.UI.Xaml.Automation.Provider.h>
 #include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.h>
 
 namespace xaml = winrt::Windows::UI::Xaml;
 namespace comp = winrt::Windows::UI::Composition;
-
+namespace winrt {
+namespace system = winrt::Windows::System;
+using ColorHelper = winrt::Windows::UI::ColorHelper;
+using Colors = winrt::Windows::UI::Colors;
+} // namespace winrt
 #else
+
+#include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Microsoft.UI.Text.h>
+#include <winrt/Windows.ApplicationModel.Activation.h>
+#include <winrt/Windows.System.h>
+
+#include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
+#include <winrt/Microsoft.UI.Xaml.Automation.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.Documents.h>
+#include <winrt/Microsoft.UI.Xaml.Hosting.h>
+#include <winrt/Microsoft.UI.Xaml.Markup.h>
+#include <winrt/Microsoft.UI.Xaml.Media.Imaging.h>
+#include <winrt/Microsoft.UI.Xaml.Media.Media3D.h>
+#include <winrt/Microsoft.UI.Xaml.Media.h>
+#include <winrt/Microsoft.UI.Xaml.Navigation.h>
+#include <winrt/Microsoft.UI.Xaml.Shapes.h>
+#include <winrt/Microsoft.UI.Xaml.h>
+
+#include <winrt/Microsoft.UI.Xaml.Input.h>
+
+#include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
+#include <winrt/Microsoft.UI.Xaml.Automation.Provider.h>
+#include <winrt/Microsoft.UI.Xaml.Automation.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.Interop.h>
+
+#include <winrt/Microsoft.System.h>
+#include <winrt/Microsoft.UI.Xaml.h>
+
+////////////////
 
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Text.h>
@@ -52,13 +90,25 @@ namespace comp = winrt::Windows::UI::Composition;
 #include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Hosting.h>
+#include <winrt/Microsoft.UI.Xaml.Media.Imaging.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Microsoft.UI.Xaml.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
-#include <winrt/Windows.System.h>
 
 namespace xaml = winrt::Microsoft::UI::Xaml;
 namespace comp = winrt::Microsoft::UI::Composition;
+namespace winrt {
+namespace system = winrt::Microsoft::System;
+using ColorHelper = winrt::Microsoft::UI::ColorHelper;
+using Colors = winrt::Microsoft::UI::Colors;
+} // namespace winrt
+
+namespace winrt::Microsoft::UI::Xaml {
+using IUIElement7 = UIElement;
+using IUIElement9 = UIElement;
+using IUIElement10 = UIElement;
+} // namespace winrt::Microsoft::UI::Xaml
+
 #endif
 
 namespace winrt {

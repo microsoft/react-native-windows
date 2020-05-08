@@ -10,7 +10,7 @@ using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactInitializerInfo
+  internal class ReactInitializerInfo
   {
     public ReactInitializerInfo(MethodInfo methodInfo)
     {

@@ -5,6 +5,7 @@
 		BeforeTargets="PrepareForBuild"
 		Inputs="@(JsBundleEntry)"
 		Outputs="@(JsBundleEntry->'$(OutputPath)%(Filename).bundle')">
+		<MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')" />
 		<Exec Command="$(BundleCliCommand) --platform windows --entry-file %(JsBundleEntry.FullPath) --bundle-output $(OutputPath)%(JsBundleEntry.Filename).bundle" ConsoleToMSBuild="true" />
 	</Target>
 </Project>

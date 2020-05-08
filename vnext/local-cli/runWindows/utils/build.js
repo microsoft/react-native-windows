@@ -68,6 +68,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   let nugetPath =
     options.nugetPath || path.join(os.tmpdir(), 'nuget.4.9.2.exe');
 
+  let downloadedNuget = false;
   const ensureNugetSpinner = newSpinner('Locating NuGet executable');
   if (!(await existsAsync(nugetPath))) {
     try {
@@ -87,6 +88,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
       ),
       verbose,
     );
+    downloadedNuget = true;
   }
   ensureNugetSpinner.succeed('Found NuGet Binary');
 
@@ -105,7 +107,9 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   } catch (e) {
     if (!options.isRetryingNuget) {
       const retryOptions = Object.assign({isRetryingNuget: true}, options);
-      fs.unlinkSync(nugetPath);
+      if (downloadedNuget) {
+        fs.unlinkSync(nugetPath);
+      }
       return restoreNuGetPackages(retryOptions, slnFile, verbose);
     }
     throw e;

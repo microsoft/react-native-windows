@@ -12,7 +12,7 @@ using static Microsoft.ReactNative.Managed.ReactContextGenerator;
 
 namespace Microsoft.ReactNative.Managed
 {
-  internal abstract class AttributedViewManager<TFrameworkElement> :
+  public abstract class AttributedViewManager<TFrameworkElement> :
     IViewManager,
     IViewManagerWithReactContext,
     IViewManagerWithExportedViewConstants,
@@ -139,7 +139,7 @@ namespace Microsoft.ReactNative.Managed
     }
     private Dictionary<string, ViewManagerProperty<TFrameworkElement>> _properties;
 
-    internal struct ViewManagerProperty<U> where U : TFrameworkElement
+    public struct ViewManagerProperty<U> where U : TFrameworkElement
     {
       public string Name;
       public ViewManagerPropertyType Type;

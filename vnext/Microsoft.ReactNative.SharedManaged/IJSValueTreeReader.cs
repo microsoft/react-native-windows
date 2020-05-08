@@ -3,7 +3,7 @@
 
 namespace Microsoft.ReactNative.Managed
 {
-  interface IJSValueTreeReader
+  public interface IJSValueTreeReader
   {
     JSValue Current { get; }
 

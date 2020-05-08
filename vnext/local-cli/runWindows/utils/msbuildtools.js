@@ -216,7 +216,7 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   );
 
   if (verbose) {
-    console.log('Looking for MSBuilt at: ' + msBuildPath);
+    console.log('Looking for MSBuild at: ' + msBuildPath);
   }
 
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;

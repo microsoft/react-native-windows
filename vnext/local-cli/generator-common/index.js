@@ -76,14 +76,17 @@ function upgradeFileContentChangedCallback(
     console.log(
       `${chalk.bold(relativeDestPath)} ` +
       `has changed in the new version.\nDo you want to keep your ${relativeDestPath} or replace it with the ` +
-      'latest version?\nIf you ever made any changes ' +
-      'to this file, you\'ll probably want to keep it.\n' +
+      'latest version?\nMake sure you have any changes you made to this file saved somewhere.\n' +
       `You can see the new version here: ${absoluteSrcFilePath}\n` +
       `Do you want to replace ${relativeDestPath}? ` +
       'Answer y to replace, n to keep your version: '
     );
-    const answer = prompt();
-    if (answer === 'y') {
+    let answer;
+    while (!answer) {
+       answer = prompt();
+    }
+
+    if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
       console.log(`Replacing ${relativeDestPath}`);
       return 'overwrite';
     }
