@@ -85,15 +85,17 @@ function copyProjectTemplateAndReplace(
   const xamlNugetPkgName = options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml';
   const xamlNugetPkgVersion = options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002';
 
-  const xamlProps30 = String.raw`<Import Project="..\packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.props" Condition="Exists('..\packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.props')" />
-  <ItemDefinitionGroup>
+  const xamlPropsFile = `..\\packages\\${xamlNugetPkgName}.${xamlNugetPkgVersion}\\build\\native\\${xamlNugetPkgName}.props`;
+  const xamlPropsImport  = `<Import Project="${xamlPropsFile}" Condition="Exists('${xamlPropsFile}')" />`;
+  const xamlProps30 = String.raw`${xamlPropsImport}
+<ItemDefinitionGroup>
   <ClCompile>
     <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
   </ClCompile>
 </ItemDefinitionGroup>
 `;
-
-  const xamlProps = options.useWinUI3 ? xamlProps30 : ''; // no props for Xaml 2.x
+  const xamlProps2x = xamlPropsImport;
+  const xamlProps = options.useWinUI3 ? xamlProps30 : xamlProps2x;
 
   const xamlTargetsPath = `..\\packages\\${xamlNugetPkgName}.${xamlNugetPkgVersion}\\build\\native\\${xamlNugetPkgName}.targets`;
   const xamlTargets = `<Import Project="${xamlTargetsPath}" Condition="Exists('${xamlTargetsPath}')" />`;
