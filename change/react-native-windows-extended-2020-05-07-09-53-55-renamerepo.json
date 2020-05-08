@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Handle rename of react-native-macos repo",
+  "packageName": "react-native-windows-extended",
+  "email": "acoates@microsoft.com",
+  "commit": "bba1032d0bf1a6cbb3806488efdf757f5056ff42",
+  "dependentChangeType": "patch",
+  "date": "2020-05-07T16:53:54.491Z"
+}
