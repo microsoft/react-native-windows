@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 00:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.61",
+      "version": "0.0.0-master.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote awaitable DispatchQueue callback to member field",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "04583378bd66c2d473a804c5e7cb663596e1a4be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade the shared managed project to a proper csharp library.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "605e3f8dc651706cfafbb4f21931bcbc03a9f140",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "6088cb0d6b9291e7877d5b0aefd6f18cb1bace3c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 May 2020 00:05:07 GMT",
       "tag": "react-native-windows_v0.0.0-master.60",
       "version": "0.0.0-master.60",

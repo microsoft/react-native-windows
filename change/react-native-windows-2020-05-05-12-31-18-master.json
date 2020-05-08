@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade the shared managed project to a proper csharp library.",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-05T19:31:18.766Z"
-}
