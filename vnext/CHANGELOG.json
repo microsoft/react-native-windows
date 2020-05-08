@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2020 19:30:45 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.5",
+      "version": "0.62.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "afdbad501a0d2ec0ea0d2892a98edb03a202d327",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 May 2020 10:11:52 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.4",
+      "version": "0.62.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Correct binary message tagging",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "150e6e9877d86377785ddaa4e4d361a726296dd3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 May 2020 22:32:51 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.3",
+      "version": "0.62.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Removed the ref count work around from classes derived from ReactApplications",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a7cbd081a780731979d20dd7693210b69a2270c4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Promote awaitable DispatchQueue callback to member field",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "cd2a3a9a6e2fcc5d56a23353bade7d567902abd6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Treat yes the same as y in template overwrite prompt",
+            "author": "acoates@microsoft.com",
+            "commit": "1ef8caf149480950b6e4c73f96635079d80acdb0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable CxxFrameHandler4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d3a37578df69ecf6b665c929ee30832964929947",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "3e084881c4c6bc9a649d89a7b2d1599fc6869481",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 02 May 2020 03:42:13 GMT",
       "tag": "react-native-windows_v0.62.0-preview.2",
       "version": "0.62.0-preview.2",

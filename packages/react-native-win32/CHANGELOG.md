@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 02 May 2020 03:42:13 GMT and should not be manually modified.
+This log was last generated on Thu, 07 May 2020 22:32:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.3
+
+Thu, 07 May 2020 22:32:51 GMT
+
+### Changes
+
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
 
 ## 0.62.0-preview.2
 

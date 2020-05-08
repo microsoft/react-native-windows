@@ -3,30 +3,32 @@
 namespace <%=ns%>
 {
     sealed partial class App : ReactApplication
-{
-    public App()
     {
-        MainComponentName = "<%=name%>";
+        public App()
+        {
+            MainComponentName = "<%=name%>";
 
 #if BUNDLE
-        JavaScriptBundleFile = "index.windows";
-        InstanceSettings.UseWebDebugger = false;
-        InstanceSettings.UseFastRefresh = false;
+            JavaScriptBundleFile = "index.windows";
+            InstanceSettings.UseWebDebugger = false;
+            InstanceSettings.UseFastRefresh = false;
 #else
-        JavaScriptMainModuleName = "index";
-        InstanceSettings.UseWebDebugger = true;
-        InstanceSettings.UseFastRefresh = true;
+            JavaScriptMainModuleName = "index";
+            InstanceSettings.UseWebDebugger = true;
+            InstanceSettings.UseFastRefresh = true;
 #endif
 
 #if DEBUG
-        InstanceSettings.EnableDeveloperMenu = true;
+            InstanceSettings.EnableDeveloperMenu = true;
 #else
-        InstanceSettings.EnableDeveloperMenu = false;
+            InstanceSettings.EnableDeveloperMenu = false;
 #endif
 
-        PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
+            
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
 
-        InitializeComponent();
+            InitializeComponent();
+        }
     }
-}
 }
