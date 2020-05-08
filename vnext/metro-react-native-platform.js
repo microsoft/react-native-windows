@@ -29,13 +29,49 @@ function reactNativePlatformResolver(platformImplementations) {
         }
       }
       let result = resolve(context, modifiedModuleName, platform);
-      context.resolveRequest = backupResolveRequest;
       return result;
     } catch (e) {
-      context.resolveRequest = backupResolveRequest;
       throw e;
+    } finally {
+      context.resolveRequest = backupResolveRequest;
     }
   };
 }
 
-module.exports = {reactNativePlatformResolver};
+/**
+ * The CLI will get a more complete implementation of this in https://github.com/react-native-community/cli/pull/1115
+ * but until then, use a solution that supports having react-native-windows and/or react-native-macos
+ */
+const getModulesRunBeforeMainModule = () => {
+  const options = {
+    paths: [process.cwd()],
+  };
+  const modules = [
+    require.resolve('react-native/Libraries/Core/InitializeCore', options),
+  ];
+
+  try {
+    modules.push(
+      require.resolve(
+        'react-native-windows/Libraries/Core/InitializeCore',
+        options,
+      ),
+    );
+  } catch {}
+
+  try {
+    modules.push(
+      require.resolve(
+        'react-native-macos/Libraries/Core/InitializeCore',
+        options,
+      ),
+    );
+  } catch {}
+
+  return modules;
+};
+
+module.exports = {
+  getModulesRunBeforeMainModule,
+  reactNativePlatformResolver,
+};

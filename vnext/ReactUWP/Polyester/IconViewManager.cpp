@@ -16,7 +16,6 @@
 
 namespace winrt {
 using namespace Windows::Foundation;
-using namespace Windows::UI;
 using namespace xaml;
 using namespace xaml::Documents;
 using namespace xaml::Media;
@@ -119,14 +118,14 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
   glyphs.IsColorFontEnabled(false);
 
   auto application = winrt::Application::Current();
-  if (!winrt::ViewManagement::AccessibilitySettings().HighContrast()) {
+  if (!winrt::Windows::UI::ViewManagement::AccessibilitySettings().HighContrast()) {
     // 0 - Light, 1 - Light Disabled, 2 - Dark, 3 - Dark Disabled
     glyphs.ColorFontPaletteIndex(application.RequestedTheme() == winrt::ApplicationTheme::Light ? 0 : 2);
   }
 
   // Set default Fill color
   auto appDictionary = application.Resources();
-  auto color = winrt::Windows::UI::Colors::Black();
+  auto color = winrt::Colors::Black();
   if (appDictionary.HasKey(winrt::box_value(L"SystemAccentColor")))
     color = winrt::unbox_value<winrt::Windows::UI::Color>(appDictionary.Lookup(winrt::box_value(L"SystemAccentColor")));
 

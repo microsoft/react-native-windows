@@ -16,6 +16,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}</ProjectGuid>
     <ProjectName>JSI.Desktop.UnitTests</ProjectName>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />

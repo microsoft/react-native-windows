@@ -16,6 +16,7 @@ namespace winrt {
 using namespace xaml::Controls;
 using namespace xaml::Controls::Primitives;
 using namespace xaml::Interop;
+using namespace winrt::Windows::UI::Xaml::Interop;
 } // namespace winrt
 
 static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placementModeMinVersion = {

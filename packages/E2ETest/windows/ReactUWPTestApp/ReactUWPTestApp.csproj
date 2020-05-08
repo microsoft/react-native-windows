@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" DefaultTargets="Build" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -164,12 +165,15 @@
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
       <Name>Microsoft.ReactNative</Name>
     </ProjectReference>
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj">
+      <Project>{F2824844-CE15-4242-9420-308923CD76C3}</Project>
+      <Name>Microsoft.ReactNative.Managed</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreeDumpLibrary\TreeDumpLibrary.csproj">
       <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
       <Name>TreeDumpLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>

@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactModuleInfo
+  public class ReactModuleInfo
   {
     private static readonly object s_moduleInfoMutex = new object();
     private static Dictionary<Type, ReactModuleInfo> s_moduleInfos;

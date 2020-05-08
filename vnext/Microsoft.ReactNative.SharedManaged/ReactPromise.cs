@@ -21,7 +21,7 @@ namespace Microsoft.ReactNative.Managed
   //
   // Methods with ReactMethodAttribute that use an IReactPromise as the last parameter
   // will be marked as "promise" and will return a promise when invoked from JavaScript.
-  class ReactPromise<T> : IReactPromise<T>
+  public class ReactPromise<T> : IReactPromise<T>
   {
     private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
     private static readonly string ErrorDefaultMessage = "Error not specified.";

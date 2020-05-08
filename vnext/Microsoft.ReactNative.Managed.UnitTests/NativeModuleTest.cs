@@ -22,6 +22,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactInitializer]
     public void Initialize(ReactContext context)
     {
+      var assembly = typeof(Point).Assembly;
+      JSValueReaderGenerator.RegisterAssembly(assembly);
+      JSValueWriterGenerator.RegisterAssembly(assembly);
+
       IsInitialized = true;
       Assert.IsNotNull(context);
 
@@ -568,6 +572,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestInitialize]
     public void Initialize()
     {
+      JSValueReaderGenerator.RegisterAssembly(typeof(Point).Assembly);
+      JSValueWriterGenerator.RegisterAssembly(typeof(Point).Assembly);
+
       m_moduleBuilderMock = new ReactModuleBuilderMock();
       m_moduleInfo = new ReactModuleInfo(typeof(SimpleNativeModule));
       m_module = m_moduleBuilderMock.CreateModule<SimpleNativeModule>(m_moduleInfo);

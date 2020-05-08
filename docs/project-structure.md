@@ -20,6 +20,7 @@ Sample applications are not covered.
 - [JSI.Desktop.UnitTests\JSI.Desktop.UnitTests](#JSI.Desktop.UnitTests)
 - **[Microsoft.ReactNative\Microsoft.ReactNative.vcxproj](#Microsoft.ReactNative)**
 - [Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems](#Microsoft.ReactNative.Cxx)
+- [Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj](#Microsoft.ReactNative.Managed)
 - [Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems](#Microsoft.ReactNative.SharedManaged)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
 - [ReactUWP\ReactUWP.vcxproj](#ReactUWP)
@@ -66,9 +67,14 @@ Code shared between [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop) and [JSI\Uni
 *Shared Items (no build artifact)*<br/>
 Contains helpers to simplify authoring C++/WinRT native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
-### Microsoft.ReactNative.SharedManaged
+### Microsoft.ReactNative.Managed
 *Shared Items (no build artifact)*<br/>
 Contains helpers to simplify authoring C# native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
+
+### Microsoft.ReactNative.SharedManaged
+*Shared Items (no build artifact)*<br/>
+This shared project is to be deprecated in some time in favor of the library [Microsoft.ReactNative.Managed](#Microsoft.ReactNative.Managed).
+For now it contaisn the same code as the library.
 
 ### React.Windows.IntegrationTests
 *Static Library*<br/>

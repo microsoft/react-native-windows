@@ -112,7 +112,6 @@ function copyProjectTemplateAndReplace(
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj') },
       { from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj.filters') },
       { from: path.join(srcPath, projDir, 'packages.config'), to: path.join(windowsDir, newProjectName, 'packages.config') },
-      { from: path.join(srcPath, projDir, 'packages.config'), to: 'packages.config' },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
   // Once we are publishing to nuget.org, this shouldn't be needed anymore

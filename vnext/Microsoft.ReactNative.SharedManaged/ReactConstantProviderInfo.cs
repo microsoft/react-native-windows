@@ -9,7 +9,7 @@ using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactConstantProviderInfo
+  internal class ReactConstantProviderInfo
   {
     public ReactConstantProviderInfo(MethodInfo methodInfo)
     {

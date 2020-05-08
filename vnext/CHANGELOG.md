@@ -1,8 +1,64 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 May 2020 00:04:15 GMT and should not be manually modified.
+This log was last generated on Fri, 08 May 2020 00:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.61
+
+Fri, 08 May 2020 00:05:16 GMT
+
+### Changes
+
+- Promote awaitable DispatchQueue callback to member field (julio.rocha@microsoft.com)
+- Upgrade the shared managed project to a proper csharp library. (dannyvv@microsoft.com)
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
+
+## 0.0.0-master.60
+
+Thu, 07 May 2020 00:05:07 GMT
+
+### Changes
+
+- Don't delete nuget.exe if using locally-installed (e.g. chocolatey) (asklar@microsoft.com)
+- Only bundle when not running Intellisense builds (asklar@microsoft.com)
+- Disable CxxFrameHandler4 (ngerlem@microsoft.com)
+- Switch package layout to use `files` in `pacakge.json` rather than `.npmignore` (dannyvv@microsoft.com)
+
+## 0.0.0-master.59
+
+Wed, 06 May 2020 00:05:03 GMT
+
+### Changes
+
+- WinUI 3 Alpha support in RNW (asklar@microsoft.com)
+- Treat yes the same as y in template overwrite prompt (acoates@microsoft.com)
+
+## 0.0.0-master.58
+
+Tue, 05 May 2020 00:04:31 GMT
+
+### Changes
+
+- Make generated msbuild project compile in parralel (/m) (dannyvv@microsoft.com)
+- fix appPackage path (kaigu@microsoft.com)
+
+## 0.0.0-master.57
+
+Sun, 03 May 2020 00:04:42 GMT
+
+### Changes
+
+- Implement WinRTWebSocketResource unit tests (julio.rocha@microsoft.com)
+
+## 0.0.0-master.56
+
+Sat, 02 May 2020 00:05:12 GMT
+
+### Changes
+
+- - Change MouseEnter/MouseLeave behavior to match web behavior - Improve performance of frequently-called mouse move handler (aschultz@microsoft.com)
+- Delay load ChakraCore.dll (tudorm@microsoft.com)
 
 ## 0.0.0-master.55
 

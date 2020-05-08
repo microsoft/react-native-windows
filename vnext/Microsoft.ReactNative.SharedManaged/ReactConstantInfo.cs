@@ -10,7 +10,7 @@ using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactConstantInfo
+  internal class ReactConstantInfo
   {
     public ReactConstantInfo(PropertyInfo propertyInfo, ReactConstantAttribute constantAttribute)
     {

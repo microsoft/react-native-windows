@@ -8,7 +8,7 @@
 
 import "DynamicAutomationPeer.idl";
 
-#include "../../../include/NamespaceRedirect.h"
+#include "NamespaceRedirect.h"
 
 // The ViewPanel must be in the project namespace to be
 // usable by Xaml dependency properties.

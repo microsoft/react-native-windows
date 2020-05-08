@@ -3,7 +3,7 @@
 
 namespace Microsoft.ReactNative.Managed
 {
-  struct ReactConstantProvider
+  public struct ReactConstantProvider
   {
     public ReactConstantProvider(IJSValueWriter writer)
     {
