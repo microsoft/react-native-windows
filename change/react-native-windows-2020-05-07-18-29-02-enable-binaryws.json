@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Correct binary message tagging",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-08T01:29:02.376Z"
+}
