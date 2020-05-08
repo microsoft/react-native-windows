@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603145}</ProjectGuid>
@@ -82,6 +82,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
+    <ItemsProjectGuid>{11C084A3-A57C-4296-A679-CAC17B603145}</ItemsProjectGuid>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
