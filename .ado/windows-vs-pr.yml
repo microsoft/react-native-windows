@@ -112,7 +112,7 @@ jobs:
             Microsoft.ReactNative\**
 
       - script: |
-          npx --no-install beachball bump
+          npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch)
         displayName: Bump package versions to align nuget version with npm version
         condition: eq('true', variables['TestMSRNNuget'])
 
