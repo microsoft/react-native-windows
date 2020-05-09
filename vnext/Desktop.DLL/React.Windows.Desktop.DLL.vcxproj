@@ -63,10 +63,8 @@
         WIN32;
         _WINDOWS;
         _USRDLL;
-        REACTNATIVEWIN32_EXPORTS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        GLOG_NO_ABBREVIATED_SEVERITIES;
         _HAS_AUTO_PTR_ETC;
         CHAKRACORE;
         RN_EXPORT=;
@@ -122,21 +120,6 @@
     <None Include="react-native-win32.x86.def" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
-      <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
-      <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore-Desktop.vcxproj">
-      <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Desktop\React.Windows.Desktop.vcxproj">
       <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
     </ProjectReference>
@@ -169,6 +152,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Warning Condition="'$(USE_V8)' != 'true'" Text="Building desktop project without USE_V8 (value is '$(USE_V8)')" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
