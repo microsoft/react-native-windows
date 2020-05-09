@@ -3,10 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Media;
 
 namespace TreeDumpLibrary
@@ -51,12 +56,15 @@ namespace TreeDumpLibrary
 
             public bool ShouldVisitPropertiesForNode(DependencyObject node)
             {
-                return (node as UIElement) != null;
+                var fe = node as FrameworkElement;
+                string[] excludedNames = new string[] { "VerticalScrollBar", "HorizontalScrollBar", "ScrollBarSeparator" };
+                if (fe != null && excludedNames.Contains(fe.Name)) { return false; }
+                return true;
             }
 
-            public bool ShouldVisitProperty(PropertyInfo propertyInfo)
+            public bool ShouldVisitProperty(string propertyName)
             {
-                return _filter.ShouldVisitProperty(propertyInfo.Name);
+                return _filter.ShouldVisitProperty(propertyName);
             }
 
             public void VisitProperty(string propertyName, object value, bool isLast)
@@ -88,6 +96,50 @@ namespace TreeDumpLibrary
             }
         }
 
+        private static JsonObject FindElementByAutomationId(JsonObject obj, string automationId)
+        {
+            if (obj.Keys.Contains("AutomationId") && obj["AutomationId"].GetString() == automationId)
+            {
+                return obj;
+            }
+            if (obj.Keys.Contains("children"))
+            {
+                var array = obj.GetNamedArray("children");
+                foreach (var i in array)
+                {
+                    var element = FindElementByAutomationId(i.GetObject(), automationId);
+                    if (element != null)
+                    {
+                        return element;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static IAsyncOperation<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
+        {
+            string json = DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
+            try
+            {
+                var obj = JsonValue.Parse(json).GetObject();
+                var element = FindElementByAutomationId(obj, "PageHeader");
+                if (element == null)
+                {
+                    return Task.Run(() => false).AsAsyncOperation();
+                }
+                var value = element.GetNamedString("Text");
+                var pageName = new Regex(@"[<|>]").Replace(value, "");
+                var match = TreeDumpHelper.MatchDump(json, pageName);
+                return match.AsAsyncOperation();
+            }
+            catch
+            {
+                Debug.WriteLine("JSON ERROR:\n" + json);
+                throw;
+            }
+        }
+
         public static string DumpTree(DependencyObject root, DependencyObject excludedNode, IList<string> additionalProperties, DumpTreeMode mode)
         {
             var propertyFilter = new DefaultFilter();
@@ -111,19 +163,25 @@ namespace TreeDumpLibrary
             if (visitor.ShouldVisitPropertiesForNode(node))
             {
                 var properties = (from property in node.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                  where visitor.ShouldVisitProperty(property) &&
+                                  where visitor.ShouldVisitProperty(property.Name) &&
                                         visitor.ShouldVisitPropertyValue(property.Name,
                                             GetObjectProperty(node, property))
                                   orderby property.Name
                                   select property).ToArray();
+                var automationId = node.GetValue(AutomationProperties.AutomationIdProperty);
 
                 for (int i = 0; i < properties.Length; i++)
                 {
                     var property = properties[i];
                     object value = null;
                     value = GetObjectProperty(node, property);
-                    bool isLast = (i == properties.Length - 1) && !hasChildren;
+                    bool isLast = (i == properties.Length - 1) && !hasChildren && (automationId == null);
                     visitor.VisitProperty(property.Name, value, isLast);
+                }
+
+                if (automationId != null)
+                {
+                    visitor.VisitProperty("AutomationId", automationId, !hasChildren);
                 }
             }
         }
@@ -143,24 +201,36 @@ namespace TreeDumpLibrary
             return value;
         }
 
+        private static DependencyObject[] GetChildren(DependencyObject node, Visitor visitor)
+        {
+            DependencyObject[] dos = new DependencyObject[VisualTreeHelper.GetChildrenCount(node)];
+            for (int i = 0; i < dos.Length; i++)
+            {
+                dos[i] = VisualTreeHelper.GetChild(node, i);
+            }
+            return dos.Where((n) => visitor.ShouldVisitPropertiesForNode(n)).ToArray();
+        }
+
         private static void WalkThroughTree(DependencyObject node, DependencyObject excludedNode, Visitor visitor, bool isLast = true)
         {
-            if (node != null)
+            if (node != null && visitor.ShouldVisitPropertiesForNode(node))
             {
                 // Assume that if we have a UIElement, we'll have some properties
-                visitor.BeginVisitNode(node, node is UIElement);
+                var children = GetChildren(node, visitor);
+                bool hasProperties = node is UIElement || (children.Length > 0);
 
-                var childrenCount = VisualTreeHelper.GetChildrenCount(node);
-                WalkThroughProperties(node, visitor, childrenCount != 0);
-                if (childrenCount != 0)
+                visitor.BeginVisitNode(node, hasProperties);
+
+                WalkThroughProperties(node, visitor, children.Length != 0);
+                if (children.Length != 0)
                 {
                     visitor.BeginChildren();
-                    for (int i = 0; i < childrenCount; i++)
+                    for (int i = 0; i < children.Length; i++)
                     {
-                        var child = VisualTreeHelper.GetChild(node, i);
+                        var child = children[i];
                         if (child != excludedNode)
                         {
-                            bool isLastChild = (i == childrenCount - 1);
+                            bool isLastChild = (i == children.Length - 1);
                             WalkThroughTree(child, excludedNode, visitor, isLastChild);
                         }
                     }
@@ -194,6 +264,7 @@ namespace TreeDumpLibrary
                 "Clip",
                 "FlowDirection",
                 "Name",
+                "Text"
                 /*"ActualOffset" 19h1*/
             };
         }
@@ -258,6 +329,8 @@ namespace TreeDumpLibrary
 
         public static string Quote(string s)
         {
+            s = s.Replace('\t', ' ').Replace("\n", @"\n");
+            s = Regex.Replace(s, @"\p{Cs}", ""); // remove surrogate pairs e.g. emojis
             return '"' + s.Replace("\"", "\\\"") + '"';
         }
     }
