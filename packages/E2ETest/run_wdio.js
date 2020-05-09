@@ -92,12 +92,13 @@ function parseLog(logfile) {
               failures[name].testcase = testcases[j].ATTR.name;
               failures[name].error = testcases[j].error[0].ATTR.message;
               const systemErr = testcases[j]['system-err'][0];
-              const stack = systemErr.substr(systemErr.indexOf('\n    at ') + 1);
+              const stack = systemErr.substr(
+                systemErr.indexOf('\n    at ') + 1
+              );
               failures[name].stack = stack;
             }
           }
         }
-
       }
     }
   });
@@ -117,7 +118,11 @@ function PrintFailedTests(ft) {
   for (let i = 0; i < Object.keys(ft).length; i++) {
     const key = Object.keys(ft)[i];
     console.log(chalk.redBright(key));
-    console.log('  ', chalk.underline('testcase'), chalk.bold(ft[key].testcase));
+    console.log(
+      '  ',
+      chalk.underline('testcase'),
+      chalk.bold(ft[key].testcase)
+    );
     console.log('  ', chalk.underline('error'), chalk.bold(ft[key].error));
     console.log('  ', chalk.underline('stack'));
     console.log(ft[key].stack);
