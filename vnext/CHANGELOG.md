@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 May 2020 00:05:16 GMT and should not be manually modified.
+This log was last generated on Sat, 09 May 2020 00:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.62
+
+Sat, 09 May 2020 00:04:42 GMT
+
+### Changes
+
+- Autolinking (jthysell@microsoft.com)
+- Implemented PropertyBag for ReactContext and ReactInstanceSettings (vmorozov@microsoft.com)
+- Align local metro config with future CLI changes (acoates@microsoft.com)
+- separate desktop from uwp ReactWindowsCore since desktop uses V8 (asklar@microsoft.com)
+- Set C# langversion of templates back to 7.3 from 8.0 (dannyvv@microsoft.com)
+- Correct binary message tagging (julio.rocha@microsoft.com)
+- Added Microsoft.ReactNative.IntegrationTests project to Microsoft.ReactNative.sln (vmorozov@microsoft.com)
 
 ## 0.0.0-master.61
 

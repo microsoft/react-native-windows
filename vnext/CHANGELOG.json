@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 May 2020 00:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.62",
+      "version": "0.0.0-master.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "4cfd393e489017ae619663782e37cfdafa004e53",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implemented PropertyBag for ReactContext and ReactInstanceSettings",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b590fffb4df3433111f917a2a71e9cad31fb1042",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Align local metro config with future CLI changes",
+            "author": "acoates@microsoft.com",
+            "commit": "e4a5f453b6d1d85e19b6e7ae7350d92db81f3aaf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "separate desktop from uwp ReactWindowsCore since desktop uses V8",
+            "author": "asklar@microsoft.com",
+            "commit": "951333f6e1bb811daafffc624b740ac7f1d3566f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set C# langversion of templates back to 7.3 from 8.0",
+            "author": "dannyvv@microsoft.com",
+            "commit": "082b57fe338378d03d00134d0628caa4d944fe4d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Correct binary message tagging",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c51c3ad85dd7bce29c47ecffc861106b97f0d6f8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Added Microsoft.ReactNative.IntegrationTests project to Microsoft.ReactNative.sln",
+            "author": "vmorozov@microsoft.com",
+            "commit": "ccce48832687e4f09f8343508e21d4272a1a0afc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 May 2020 00:05:16 GMT",
       "tag": "react-native-windows_v0.0.0-master.61",
       "version": "0.0.0-master.61",
