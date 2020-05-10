@@ -13,6 +13,7 @@
     "VerticalAlignment": "Stretch",
     "Visibility": "Visible",
     "Width": 800,
+    "AutomationId": "ControlStyleView",
     "children": [
     {
         "XamlType": "Windows.UI.Xaml.Controls.CheckBox",
@@ -113,6 +114,7 @@
                             "Margin": "0,0,0,0",
                             "Padding": "0,0,0,0",
                             "RenderSize": [20, 16],
+                            "Text": "",
                             "VerticalAlignment": "Center",
                             "Visibility": "Visible"
                         }
@@ -157,6 +159,7 @@
         "Margin": "0,0,0,0",
         "Padding": "10,10,10,10",
         "RenderSize": [800, 50],
+        "Text": "",
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible",
         "Width": 800,
@@ -283,56 +286,6 @@
                             "RenderSize": [780, 30],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible"
-                        },
-                        {
-                            "XamlType": "Windows.UI.Xaml.Controls.Primitives.ScrollBar",
-                            "Background": "#00FFFFFF",
-                            "BorderBrush": "#00FFFFFF",
-                            "BorderThickness": "0,0,0,0",
-                            "Clip": null,
-                            "CornerRadius": "2,2,2,2",
-                            "FlowDirection": "LeftToRight",
-                            "Foreground": "#00FFFFFF",
-                            "HorizontalAlignment": "Right",
-                            "Margin": "0,0,0,0",
-                            "Name": "VerticalScrollBar",
-                            "Padding": "0,0,0,0",
-                            "RenderSize": [0, 0],
-                            "VerticalAlignment": "Stretch",
-                            "Visibility": "Collapsed"
-                        },
-                        {
-                            "XamlType": "Windows.UI.Xaml.Controls.Primitives.ScrollBar",
-                            "Background": "#00FFFFFF",
-                            "BorderBrush": "#00FFFFFF",
-                            "BorderThickness": "0,0,0,0",
-                            "Clip": null,
-                            "CornerRadius": "2,2,2,2",
-                            "FlowDirection": "LeftToRight",
-                            "Foreground": "#00FFFFFF",
-                            "HorizontalAlignment": "Stretch",
-                            "Margin": "0,0,0,0",
-                            "Name": "HorizontalScrollBar",
-                            "Padding": "0,0,0,0",
-                            "RenderSize": [0, 0],
-                            "VerticalAlignment": "Stretch",
-                            "Visibility": "Collapsed"
-                        },
-                        {
-                            "XamlType": "Windows.UI.Xaml.Controls.Border",
-                            "Background": "#FFE6E6E6",
-                            "BorderBrush": null,
-                            "BorderThickness": "0,0,0,0",
-                            "Clip": null,
-                            "CornerRadius": "0,0,0,0",
-                            "FlowDirection": "LeftToRight",
-                            "HorizontalAlignment": "Stretch",
-                            "Margin": "0,0,0,0",
-                            "Name": "ScrollBarSeparator",
-                            "Padding": "0,0,0,0",
-                            "RenderSize": [0, 0],
-                            "VerticalAlignment": "Stretch",
-                            "Visibility": "Collapsed"
                         }
                         ]
                     }
@@ -350,6 +303,7 @@
                 "Name": "PlaceholderTextContentPresenter",
                 "Padding": "10,10,10,10",
                 "RenderSize": [780, 39],
+                "Text": "TextBox",
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -531,56 +485,6 @@
                             "RenderSize": [780, 30],
                             "VerticalAlignment": "Stretch",
                             "Visibility": "Visible"
-                        },
-                        {
-                            "XamlType": "Windows.UI.Xaml.Controls.Primitives.ScrollBar",
-                            "Background": "#00FFFFFF",
-                            "BorderBrush": "#00FFFFFF",
-                            "BorderThickness": "0,0,0,0",
-                            "Clip": null,
-                            "CornerRadius": "2,2,2,2",
-                            "FlowDirection": "LeftToRight",
-                            "Foreground": "#00FFFFFF",
-                            "HorizontalAlignment": "Right",
-                            "Margin": "0,0,0,0",
-                            "Name": "VerticalScrollBar",
-                            "Padding": "0,0,0,0",
-                            "RenderSize": [0, 0],
-                            "VerticalAlignment": "Stretch",
-                            "Visibility": "Collapsed"
-                        },
-                        {
-                            "XamlType": "Windows.UI.Xaml.Controls.Primitives.ScrollBar",
-                            "Background": "#00FFFFFF",
-                            "BorderBrush": "#00FFFFFF",
-                            "BorderThickness": "0,0,0,0",
-                            "Clip": null,
-                            "CornerRadius": "2,2,2,2",
-                            "FlowDirection": "LeftToRight",
-                            "Foreground": "#00FFFFFF",
-                            "HorizontalAlignment": "Stretch",
-                            "Margin": "0,0,0,0",
-                            "Name": "HorizontalScrollBar",
-                            "Padding": "0,0,0,0",
-                            "RenderSize": [0, 0],
-                            "VerticalAlignment": "Stretch",
-                            "Visibility": "Collapsed"
-                        },
-                        {
-                            "XamlType": "Windows.UI.Xaml.Controls.Border",
-                            "Background": "#FFE6E6E6",
-                            "BorderBrush": null,
-                            "BorderThickness": "0,0,0,0",
-                            "Clip": null,
-                            "CornerRadius": "0,0,0,0",
-                            "FlowDirection": "LeftToRight",
-                            "HorizontalAlignment": "Stretch",
-                            "Margin": "0,0,0,0",
-                            "Name": "ScrollBarSeparator",
-                            "Padding": "0,0,0,0",
-                            "RenderSize": [0, 0],
-                            "VerticalAlignment": "Stretch",
-                            "Visibility": "Collapsed"
                         }
                         ]
                     }
@@ -598,6 +502,7 @@
                 "Name": "PlaceholderTextContentPresenter",
                 "Padding": "10,10,10,10",
                 "RenderSize": [780, 39],
+                "Text": "Password",
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
             },
@@ -699,6 +604,7 @@
                 "Name": "DateText",
                 "Padding": "12,0,0,2",
                 "RenderSize": [90, 21],
+                "Text": "select a date",
                 "VerticalAlignment": "Center",
                 "Visibility": "Visible"
             },
@@ -738,6 +644,7 @@
                         "Margin": "0,0,0,0",
                         "Padding": "0,0,0,0",
                         "RenderSize": [12, 12],
+                        "Text": "",
                         "VerticalAlignment": "Center",
                         "Visibility": "Visible"
                     }
@@ -780,6 +687,7 @@
         "Margin": "0,0,0,0",
         "Padding": "12,5,0,7",
         "RenderSize": [800, 50],
+        "Text": "",
         "VerticalAlignment": "Top",
         "Visibility": "Visible",
         "Width": 800,
@@ -859,6 +767,7 @@
                     "Name": "PlaceholderTextBlock",
                     "Padding": "0,0,0,0",
                     "RenderSize": [756, 19],
+                    "Text": "",
                     "VerticalAlignment": "Stretch",
                     "Visibility": "Visible"
                 }
@@ -878,6 +787,7 @@
                 "Name": "EditableText",
                 "Padding": "11,5,32,6",
                 "RenderSize": [0, 0],
+                "Text": "",
                 "VerticalAlignment": "Center",
                 "Visibility": "Collapsed"
             },
@@ -934,6 +844,7 @@
                         "Margin": "0,0,0,0",
                         "Padding": "0,0,0,0",
                         "RenderSize": [12, 12],
+                        "Text": "",
                         "VerticalAlignment": "Center",
                         "Visibility": "Visible"
                     }
