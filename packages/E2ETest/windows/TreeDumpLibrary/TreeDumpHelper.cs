@@ -103,9 +103,7 @@ namespace TreeDumpLibrary
 
         private static bool JsonComparesEqual(IJsonValue expected, IJsonValue actual, string keyName)
         {
-            //const string anything = "‎<ANYTHING>";
             const string Anything = "<ANYTHING>";
-            //System.Diagnostics.Debug.Assert(anything == Anything);
             if (expected.ValueType == JsonValueType.String && Regex.Replace(expected.GetString(), @"\p{C}", "") == Anything)
             {
                 Debug.WriteLine($"Skipping ignored value: {actual.ValueType} {actual}");
