@@ -8,7 +8,7 @@ const chalk = require('chalk');
 
 const specFolder = 'wdio/test';
 
-function GetMetadata(specPath) {
+function getMetadata(specPath) {
   const contents = fs.readFileSync(specPath);
   const metadataTag = '// @metadata ';
   const metadataStart = contents.indexOf(metadataTag);
@@ -30,31 +30,31 @@ const filters = {
 
 // Returns true if the spec is to run.
 // Specs marked SkipCI are excluded from CI (identified by environment variables in the ADO lab)
-function FilterSpec(specPath) {
-  const metadata = GetMetadata(specPath);
-  for (let i = 0; i < metadata.length; i++) {
-    if (filters[metadata[i]](specPath)) {
+function filterSpec(specPath) {
+  const metadata = getMetadata(specPath);
+  for (const metadataElement of metadata) {
+    if (filters[metadataElement](specPath)) {
       return false;
     }
   }
   return true;
 }
 
-function SelectSpecs(folder) {
+function selectSpecs(folder) {
   let specs = [];
   if (process.argv.length > 2) {
     specs = process.argv.splice(2).map(spec => spec + '.spec.ts');
   } else {
     specs = fs.readdirSync(folder).filter(x => x.endsWith('.spec.ts'));
   }
-  specs = specs.map(spec => path.join(folder, spec)).filter(FilterSpec);
+  specs = specs.map(spec => path.join(folder, spec)).filter(filterSpec);
   return specs;
 }
 
-let opts = SelectSpecs(specFolder);
+let opts = selectSpecs(specFolder);
 console.log(`Selected tests: ${opts}`);
 
-function EnsureRunningInHyperV() {
+function ensureRunningInHyperV() {
   const baseboardMfr = child_process
     .execSync('powershell.exe (gwmi Win32_BaseBoard).Manufacturer')
     .toString()
@@ -79,19 +79,20 @@ function parseLog(logfile) {
   let failures = {};
   parser.parseString(xmlString, (err, res) => {
     if (!res.testsuites) {
-      failures = 'something went wrong';
+      console.error(`Something went wrong processing file ${logfile}`);
     } else {
-      for (let i = 0; i < res.testsuites.testsuite.length; i++) {
-        const attr = res.testsuites.testsuite[i].ATTR;
+      for (const testsuite of res.testsuites.testsuite) {
+        const attr = testsuite.ATTR;
+
         if (attr.errors > 0 || attr.failures > 0) {
-          let name = attr.name;
+          const name = attr.name;
           failures[name] = {};
-          const testcases = res.testsuites.testsuite[i].testcase;
-          for (let j = 0; j < testcases.length; j++) {
-            if (testcases[j].error && testcases[j].error[0].ATTR) {
-              failures[name].testcase = testcases[j].ATTR.name;
-              failures[name].error = testcases[j].error[0].ATTR.message;
-              const systemErr = testcases[j]['system-err'][0];
+
+          for (const testcase of testsuite.testcases) {
+            if (testcase.error && testcase.error[0].ATTR) {
+              failures[name].testcase = testcase.ATTR.name;
+              failures[name].error = testcase.error[0].ATTR.message;
+              const systemErr = testcase['system-err'][0];
               const stack = systemErr.substr(
                 systemErr.indexOf('\n    at ') + 1
               );
@@ -102,6 +103,7 @@ function parseLog(logfile) {
       }
     }
   });
+
   return failures;
 }
 
@@ -114,9 +116,8 @@ function parseLogs() {
   return names;
 }
 
-function PrintFailedTests(ft) {
-  for (let i = 0; i < Object.keys(ft).length; i++) {
-    const key = Object.keys(ft)[i];
+function printFailedTests(ft) {
+  for (const key in ft) {
     console.log(chalk.redBright(key));
     console.log(
       '  ',
@@ -129,21 +130,21 @@ function PrintFailedTests(ft) {
   }
 }
 
-function Process(code) {
+function doProcess(code) {
   const failedTests = parseLogs();
-  for (let i = 0; i < failedTests.length; i++) {
+  for (const failedTest of failedTests) {
     console.log('Failed tests: ');
-    PrintFailedTests(failedTests[i]);
+    printFailedTests(failedTest);
   }
   process.exit(code);
 }
 
-function RunWdio() {
-  EnsureRunningInHyperV();
+function runWdio() {
+  ensureRunningInHyperV();
 
   wdio.run().then(
     code => {
-      Process(code);
+      doProcess(code);
     },
     error => {
       console.error('Launcher failed to start the test', error.stacktrace);
@@ -152,4 +153,4 @@ function RunWdio() {
   );
 }
 
-RunWdio();
+runWdio();
