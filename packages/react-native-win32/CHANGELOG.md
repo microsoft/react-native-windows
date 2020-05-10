@@ -1,8 +1,32 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 30 Apr 2020 18:40:40 GMT and should not be manually modified.
+This log was last generated on Sat, 09 May 2020 00:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.10
+
+Sat, 09 May 2020 00:04:42 GMT
+
+### Changes
+
+- Align local metro config with future CLI changes (acoates@microsoft.com)
+
+## 0.0.0-master.9
+
+Fri, 08 May 2020 00:05:16 GMT
+
+### Changes
+
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
+
+## 0.0.0-master.8
+
+Thu, 07 May 2020 00:05:07 GMT
+
+### Changes
+
+- Use inlineSourceMap and inlineSources to encode original TS into sourcemap (rezha@microsoft.com)
 
 ## 0.0.0-master.7
 

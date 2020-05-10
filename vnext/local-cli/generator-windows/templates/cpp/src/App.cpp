@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "ReactPackageProvider.h"
+
 // clang-format off
 using namespace winrt::<%=ns%>;
 using namespace winrt::<%=ns%>::implementation;
@@ -31,11 +32,9 @@ App::App() noexcept
     InstanceSettings().EnableDeveloperMenu(false);
 #endif
 
-    PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
+    RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
-    REACT_REGISTER_NATIVE_MODULE_PACKAGES(); //code-gen macro from autolink
+    PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
 
     InitializeComponent();
 }
-
-

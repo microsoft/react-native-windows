@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.59",
+  "version": "0.0.0-master.63",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -95,7 +95,6 @@
     "/Scripts",
     "/Shared",
     "/stubs",
-
     "/.flowconfig",
     "/Directory.Build.props",
     "/Directory.Build.targets",

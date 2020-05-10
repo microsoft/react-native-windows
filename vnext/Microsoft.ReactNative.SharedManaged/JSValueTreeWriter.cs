@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class JSValueTreeWriter : IJSValueWriter
+  public class JSValueTreeWriter : IJSValueWriter
   {
     private State m_state = State.Start;
     private readonly Stack<StackEntry> m_stack = new Stack<StackEntry>();
@@ -166,7 +166,7 @@ namespace Microsoft.ReactNative.Managed
 
     private enum State { Start, PropertyName, PropertyValue, Array, Finish };
 
-    class StackEntry
+    private class StackEntry
     {
       public State State;
       public object Dynamic;

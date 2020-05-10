@@ -5,5 +5,5 @@ using Windows.UI.Xaml;
 
 namespace Microsoft.ReactNative.Managed
 {
-  internal delegate void ViewManagerEvent<TFrameworkElement, TEventData>(TFrameworkElement view, TEventData eventData) where TFrameworkElement : FrameworkElement;
+  public delegate void ViewManagerEvent<TFrameworkElement, TEventData>(TFrameworkElement view, TEventData eventData) where TFrameworkElement : FrameworkElement;
 }

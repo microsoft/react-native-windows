@@ -33,6 +33,7 @@
     <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
     <CppWinRTUsePrefixes>true</CppWinRTUsePrefixes>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>
@@ -71,10 +72,8 @@
         _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
-        REACTNATIVEWIN32_EXPORTS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        GLOG_NO_ABBREVIATED_SEVERITIES;
         _HAS_AUTO_PTR_ETC;
         CHAKRACORE;
         RN_PLATFORM=win32;
@@ -198,7 +197,7 @@
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
+    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore-Desktop.vcxproj">
       <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
     </ProjectReference>
   </ItemGroup>
@@ -215,6 +214,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Warning Condition="'$(USE_V8)' != 'true'" Text="Building desktop project without USE_V8 (value is '$(USE_V8)')" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />

@@ -2,6 +2,146 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 10 May 2020 00:05:02 GMT",
+      "tag": "react-native-windows_v0.0.0-master.63",
+      "version": "0.0.0-master.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reenable V8 for desktop projects",
+            "author": "tudorm@microsoft.com",
+            "commit": "858fdce423bb4a0eac46dd4eca97adb3b6b042e9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 May 2020 00:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.62",
+      "version": "0.0.0-master.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "4cfd393e489017ae619663782e37cfdafa004e53",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implemented PropertyBag for ReactContext and ReactInstanceSettings",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b590fffb4df3433111f917a2a71e9cad31fb1042",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Align local metro config with future CLI changes",
+            "author": "acoates@microsoft.com",
+            "commit": "e4a5f453b6d1d85e19b6e7ae7350d92db81f3aaf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "separate desktop from uwp ReactWindowsCore since desktop uses V8",
+            "author": "asklar@microsoft.com",
+            "commit": "951333f6e1bb811daafffc624b740ac7f1d3566f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set C# langversion of templates back to 7.3 from 8.0",
+            "author": "dannyvv@microsoft.com",
+            "commit": "082b57fe338378d03d00134d0628caa4d944fe4d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Correct binary message tagging",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c51c3ad85dd7bce29c47ecffc861106b97f0d6f8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Added Microsoft.ReactNative.IntegrationTests project to Microsoft.ReactNative.sln",
+            "author": "vmorozov@microsoft.com",
+            "commit": "ccce48832687e4f09f8343508e21d4272a1a0afc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 May 2020 00:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.61",
+      "version": "0.0.0-master.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote awaitable DispatchQueue callback to member field",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "04583378bd66c2d473a804c5e7cb663596e1a4be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade the shared managed project to a proper csharp library.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "605e3f8dc651706cfafbb4f21931bcbc03a9f140",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "6088cb0d6b9291e7877d5b0aefd6f18cb1bace3c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 May 2020 00:05:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.60",
+      "version": "0.0.0-master.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't delete nuget.exe if using locally-installed (e.g. chocolatey)",
+            "author": "asklar@microsoft.com",
+            "commit": "67781f6f00498216349c33716d451525e59229ca",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Only bundle when not running Intellisense builds",
+            "author": "asklar@microsoft.com",
+            "commit": "8940e5ee6ecce0fa1fc573d1cfa54be757bce431",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable CxxFrameHandler4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "80cef10818276ec17ad9683df1a9523b2b486fd0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Switch package layout to use `files` in `pacakge.json` rather than `.npmignore`",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c18e0c17fa6c2a2f778aa6607fb7e1601f6089da",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix typo",
+            "author": "rezha@microsoft.com",
+            "commit": "76b3478cb83004b5b6718af0381e8a3856ef893d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix issue 4792",
+            "author": "aeulitz@microsoft.com",
+            "commit": "608b98b46627d9c6a79bbe6a7f3f3ceb7aa8ff2a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 May 2020 00:05:03 GMT",
       "tag": "react-native-windows_v0.0.0-master.59",
       "version": "0.0.0-master.59",

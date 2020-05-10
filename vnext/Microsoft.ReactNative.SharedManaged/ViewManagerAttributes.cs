@@ -6,7 +6,7 @@ using System;
 namespace Microsoft.ReactNative.Managed
 {
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  internal class ViewManagerExportedViewConstantAttribute : Attribute
+  public class ViewManagerExportedViewConstantAttribute : Attribute
   {
     public string ConstantName { get; set; }
 
@@ -19,7 +19,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Method)]
-  internal class ViewManagerPropertyAttribute : Attribute
+  public class ViewManagerPropertyAttribute : Attribute
   {
     public string PropertyName { get; set; }
 
@@ -39,7 +39,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Method)]
-  internal class ViewManagerCommandAttribute : Attribute
+  public class ViewManagerCommandAttribute : Attribute
   {
     public string CommandName { get; set; }
 
@@ -51,7 +51,7 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  internal class ViewManagerExportedDirectEventTypeConstantAttribute : Attribute
+  public class ViewManagerExportedDirectEventTypeConstantAttribute : Attribute
   {
     public string EventName { get; private set; }
 
@@ -67,7 +67,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  internal class ViewManagerExportedBubblingEventTypeConstantAttribute : Attribute
+  public class ViewManagerExportedBubblingEventTypeConstantAttribute : Attribute
   {
     public string EventName { get; private set; }
 

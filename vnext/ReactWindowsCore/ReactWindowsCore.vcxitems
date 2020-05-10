@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{11c084a3-a57c-4296-a679-cac17b603145}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <RootNamespace>ReactWindowsCore</RootNamespace>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|Win32">
+      <Configuration>WinUI3</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|x64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <!-- TODO: Figure out the right long-term way to integrate the Hermes and V8 dependencies -->
+    <VcpkgTriplet Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">x86-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='x64'">x64-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM'">arm-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM64'">arm64-windows</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+    <ItemsProjectGuid>{11C084A3-A57C-4296-A679-CAC17B603145}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <!--
+        REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
+      -->
+      <PreprocessorDefinitions>
+        REACTWINDOWS_BUILD;
+        NOMINMAX;
+        FOLLY_NO_CONFIG;
+        WIN32=0;
+        RN_EXPORT=;
+        CHAKRACORE;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        $(ReactNativeWindowsDir);
+        $(ReactNativeWindowsDir)Common;
+        $(ReactNativeWindowsDir)Shared;
+        $(ReactNativeWindowsDir)include\ReactWindowsCore;
+        $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(JSI_Source);
+        $(ReactNativeWindowsDir)JSI\Shared;
+        $(ReactNativeWindowsDir)stubs;
+        $(FollyDir);
+        $(ReactNativeWindowsDir)\ReactWindowsCore\pch;
+        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)\Mso;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessToFile>false</PreprocessToFile>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(USE_HERMES)'=='true'">hermes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <ItemGroup>
+    <ClInclude Include="..\include\ReactWindowsCore\AsyncStorageModuleWin32Config.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
+    <ClInclude Include="AbiSafe.h" />
+    <ClInclude Include="AsyncStorageModule.h" />
+    <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
+    <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
+    <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="BaseScriptStoreImpl.h" />
+    <ClInclude Include="BatchingMessageQueueThread.h" />
+    <ClInclude Include="CreateModules.h" />
+    <ClInclude Include="CxxMessageQueue.h" />
+    <ClInclude Include="DevServerHelper.h" />
+    <ClInclude Include="DevSettings.h" />
+    <ClInclude Include="etw\react_native_windows.h" />
+    <ClInclude Include="IDevSupportManager.h" />
+    <ClInclude Include="INativeUIManager.h" />
+    <ClInclude Include="InstanceManager.h" />
+    <ClInclude Include="IReactRootView.h" />
+    <ClInclude Include="IUIManager.h" />
+    <ClInclude Include="IWebSocketResource.h" />
+    <ClInclude Include="IHttpResource.h" />
+    <ClInclude Include="JSBigAbiString.h" />
+    <ClInclude Include="LayoutAnimation.h" />
+    <ClInclude Include="Logging.h" />
+    <ClInclude Include="MemoryMappedBuffer.h" />
+    <ClInclude Include="MemoryTracker.h" />
+    <ClInclude Include="Modules\AppStateModule.h" />
+    <ClInclude Include="Modules\AsyncStorageModuleWin32.h" />
+    <ClInclude Include="Modules\ExceptionsManagerModule.h" />
+    <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\PlatformConstantsModule.h" />
+    <ClInclude Include="Modules\SourceCodeModule.h" />
+    <ClInclude Include="Modules\StatusBarManagerModule.h" />
+    <ClInclude Include="Modules\UIManagerModule.h" />
+    <ClInclude Include="Modules\WebSocketModule.h" />
+    <ClInclude Include="NativeModuleProvider.h" />
+    <ClInclude Include="OInstance.h" />
+    <ClInclude Include="Pch\pch.h" />
+    <ClInclude Include="RedBoxHandler.h" />
+    <ClInclude Include="ShadowNode.h" />
+    <ClInclude Include="ShadowNodeRegistry.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="tracing\fbsystrace.h" />
+    <ClInclude Include="Tracing.h" />
+    <ClInclude Include="TurboModuleManager.h" />
+    <ClInclude Include="TurboModuleRegistry.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="WebSocketJSExecutorFactory.h" />
+    <ClInclude Include="ChakraRuntimeHolder.h" />
+    <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(USE_HERMES)' == 'true'" />
+    <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(USE_V8)' == 'true'" />
+    <ClInclude Include="WinRTWebSocketResource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cdebug.cpp" />
+    <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
+    <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
+    <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
+    <ClCompile Include="BaseScriptStoreImpl.cpp" />
+    <ClCompile Include="CxxMessageQueue.cpp" />
+    <ClCompile Include="JSBigAbiString.cpp" />
+    <ClCompile Include="LayoutAnimation.cpp" />
+    <ClCompile Include="MemoryTracker.cpp" />
+    <ClCompile Include="Modules\AppStateModule.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModule.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp" />
+    <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
+    <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
+    <ClCompile Include="Modules\SourceCodeModule.cpp" />
+    <ClCompile Include="Modules\StatusBarManagerModule.cpp" />
+    <ClCompile Include="Modules\UIManagerModule.cpp" />
+    <ClCompile Include="Pch\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ShadowNode.cpp" />
+    <ClCompile Include="ShadowNodeRegistry.cpp" />
+    <ClCompile Include="tracing\tracing.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="ViewManager.cpp" />
+    <ClCompile Include="TurboModuleManager.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" />
+    <ClCompile Include="ChakraRuntimeHolder.cpp" />
+    <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(USE_HERMES)' == 'true'" />
+    <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(USE_V8)' == 'true'" />
+    <ClCompile Include="WinRTWebSocketResource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="etw\react_native_windows.man" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(USE_HERMES)' == 'true'" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
+  </Target>
+  <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'" Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.&#xD;&#xA;     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />
+  </Target>
+</Project>

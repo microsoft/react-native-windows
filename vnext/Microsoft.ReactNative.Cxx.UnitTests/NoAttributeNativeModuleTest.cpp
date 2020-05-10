@@ -604,7 +604,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     auto provider = React::MakeModuleProvider<SimpleNativeModule2>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
     auto reactModule = m_moduleObject.as<React::IBoxedValue>();
-    m_module = &React::BoxedValue<SimpleNativeModule2>::GetImpl(reactModule);
+    m_module = &React::BoxedValue<SimpleNativeModule2>::GetValueUnsafe(reactModule);
   }
 
   TEST_METHOD(TestMethodCall_Add) {

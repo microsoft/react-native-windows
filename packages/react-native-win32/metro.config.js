@@ -3,6 +3,10 @@
  */
 const fs = require('fs');
 const path = require('path');
+const {
+  getModulesRunBeforeMainModule,
+  reactNativePlatformResolver,
+} = require('./metro-react-native-platform');
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -12,9 +16,12 @@ module.exports = {
   ],
 
   resolver: {
-    resolveRequest: require('./metro-react-native-platform').reactNativePlatformResolver(
-      {win32: '@office-iss/react-native-win32'},
-    ),
+    resolveRequest: reactNativePlatformResolver({
+      win32: '@office-iss/react-native-win32',
+    }),
+  },
+  serializer: {
+    getModulesRunBeforeMainModule,
   },
   transformer: {
     // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
