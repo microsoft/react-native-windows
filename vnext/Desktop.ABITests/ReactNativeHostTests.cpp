@@ -1,7 +1,9 @@
 #include "pch.h"
 #include <CppUnitTest.h>
-
+#include <winrt/Microsoft.ReactNative.h>
 #include "ActivationFactory.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ABITests {
 
@@ -14,13 +16,9 @@ TEST_CLASS (ReactNativeHostTests) {
   TEST_METHOD(Activation_Succeeds) {
     try {
       winrt::Microsoft::ReactNative::ReactNativeHost host{};
-
-      // TODO: success primitive?
       Assert::IsTrue(true);
-      Asser
     } catch (...) {
-      // TODO: failure primitive?
-      Assert::IsTrue(false);
+      Assert::Fail();
     }
   }
 };

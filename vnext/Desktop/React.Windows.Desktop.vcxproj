@@ -91,6 +91,9 @@
       <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
+    </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
@@ -99,6 +102,14 @@
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl" />
+    <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactPackageBuilder.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactModuleBuilder.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IJSValueWriter.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactContext.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IViewManager.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">

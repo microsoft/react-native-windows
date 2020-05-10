@@ -10,11 +10,11 @@
 #include "ActivationFactory.h"
 #include "MessageQueueShim.h"
 
+#include "ActivationFactory.h"
+
 using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
-
-// int32_t __stdcall WINRT_RoGetActivationFactory(void *classId, winrt::guid const &iid, void **factory) noexcept;
 
 namespace ABITests {
 
