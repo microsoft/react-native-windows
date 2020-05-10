@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 09 May 2020 00:04:42 GMT and should not be manually modified.
+This log was last generated on Sun, 10 May 2020 00:05:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.63
+
+Sun, 10 May 2020 00:05:02 GMT
+
+### Changes
+
+- Reenable V8 for desktop projects (tudorm@microsoft.com)
 
 ## 0.0.0-master.62
 

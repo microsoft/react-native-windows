@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 10 May 2020 00:05:02 GMT",
+      "tag": "react-native-windows_v0.0.0-master.63",
+      "version": "0.0.0-master.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reenable V8 for desktop projects",
+            "author": "tudorm@microsoft.com",
+            "commit": "858fdce423bb4a0eac46dd4eca97adb3b6b042e9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 May 2020 00:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-master.62",
       "version": "0.0.0-master.62",
