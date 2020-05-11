@@ -242,7 +242,7 @@
     <ClInclude Include="Pch\pch.h">
       <Filter>Header Files\Pch</Filter>
     </ClInclude>
-    <ClInclude Include="RedBoxHandler.h">
+    <ClInclude Include="IRedBoxHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShadowNode.h">
