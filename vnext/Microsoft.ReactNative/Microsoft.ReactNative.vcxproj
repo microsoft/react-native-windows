@@ -340,6 +340,10 @@
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="RedBoxHandler.h">
+      <DependentUpon>RedBoxHandler.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactNativeHost.h">
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -501,6 +505,10 @@
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="RedBoxHandler.cpp">
+      <DependentUpon>RedBoxHandler.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ReactNativeHost.cpp">
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -556,6 +564,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstanceSettings.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="RedBoxHandler.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactNativeHost.idl">
