@@ -1,102 +1,117 @@
-const fs = require('fs');
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
+// @ts-check
+
 const path = require('path');
-const glob = require('glob');
-const xmldoc = require('xmldoc');
+
+const configUtils = require('./configUtils.js');
+
+/*
+
+Schema for dependencies:
+
+{
+  folder: '', // absolute path to the module root, ex: c:\path\to\node_modules\module-name
+  sourceDir: '', // relative path to the windows implementation folder, ex: windows
+  solutionFile: '', // relative path to the solution, ex: ModuleName.sln
+  projects: [ // array of projects to be built that include modules
+    {
+      projectFile: '', // relative path to the project, ex: ProjectName\ProjectName.vcxproj
+      projectName: '', // name of the project
+      projectLang: '', // language of the project, cpp or cs
+      projectGuid: '', // project identifier
+      cppHeaders: [], // array of cpp header include lines, ie: 'winrt/ModuleName.h', to be transformed into '#include <winrt/ModuleName.h>'
+      cppPackageProviders: [], // array of fully qualified cpp IReactPackageProviders, ie: 'ModuleName::ReactPackageProvider'
+      csNamespaces: [], // array of cs namespaces, ie: 'ModuleName', to be transformed into 'using ModuleName;'
+      csPackageProviders: [], // array of fully qualified cs IReactPackageProviders, ie: 'ModuleName.ReactPackageProvider'
+    },
+  ],
+  additionalProjects: [ // array of (dependency) projects that must be built, but do not contain modules
+    {
+      projectFile: '', // relative path to the project, ex: ProjectName\ProjectName.vcxproj
+      projectName: '', // name of the project
+      projectLang: '', // language of the project, cpp or cs
+      projectGuid: '', // project identifier
+    },
+  ],
+  packages: [ // array of nuget packages that include modules
+    {
+      packageName: '', // name of the nuget package to install
+      packageVersion: '', // version of the nuget package to install
+      cppHeaders: [], // array of cpp header include lines, ie: 'winrt/ModuleName.h', to be transformed into '#include <winrt/ModuleName.h>'
+      cppPackageProviders: [], // array of fully qualified cpp IReactPackageProviders, ie: 'ModuleName::ReactPackageProvider'
+      csNamespaces: [], // array of cs namespaces, ie: 'ModuleName', to be transformed into 'using ModuleName;'
+      csPackageProviders: [], // array of fully qualified cs IReactPackageProviders, ie: 'ModuleName.ReactPackageProvider'
+    },
+  ],
+}
+
+*/
 
 function dependencyConfigWindows(folder, userConfig = {}) {
-  const sourceDir = userConfig.sourceDir || findWindowsAppFolder(folder);
+  if (userConfig.sourceDir) {
+    return {
+      folder,
+      sourceDir: userConfig.sourceDir,
+      solutionFile: userConfig.solutionFile,
+      projects: userConfig.projects || [],
+      additionalProjects: userConfig.additionalProjects || [],
+      packages: userConfig.packages || [],
+    };
+  }
+
+  const sourceDir = configUtils.findWindowsFolder(folder);
 
   if (!sourceDir) {
     return null;
   }
 
-  var packageName = null;
-  const packageIDL = findPackageProviderIDL(sourceDir);
-  if (packageIDL){
-    packageName = parsePackageIDLFile(packageIDL);
-  }
-  var cppProjFile = null;
-  var csProjectFile = null;
-  if (packageName)
-  {
-    cppProjFile = findCppProject(sourceDir, packageName);
-    csProjectFile = findCSProject(sourceDir,packageName);
-  }
+  const packageJson = require(path.join(folder, 'package.json'));
 
-  var projGUID = null;
-  if (cppProjFile)
-  {
-    const proj = readProject(cppProjFile);
-    var groupNode = proj.childNamed('PropertyGroup');
-    if (groupNode){
-      var nameNode = groupNode.childNamed('ProjectGuid');
-      if (nameNode){
-        projGUID = nameNode.val;
-      }
-    }
-  }
+  const solutionFile = configUtils.findSolutionFile(sourceDir, packageJson);
+
+  const projectFile = configUtils.findProjectFile(sourceDir, packageJson);
+
+  const projectLang = configUtils.getProjectLanguage(projectFile);
+
+  const projectXml = configUtils.readProjectFile(projectFile);
+
+  const projectName = configUtils.getProjectName(projectXml);
+
+  const projectGuid = configUtils.getProjectGuid(projectXml);
+
+  const projectNamespace = configUtils.getProjectNamespace(projectXml);
+
+  const cppNamespace = projectNamespace.replace('.', '::');
+  const csNamespace = projectNamespace.replace('::', '.');
+
+  var cppHeaders = [`winrt/${csNamespace}.h`];
+  var cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
+  var csNamespaces = [`${csNamespace}`];
+  var csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
 
   return {
-    sourceDir,
-    packageIDL,
-    packageName,
-    cppProjFile,
-    csProjectFile,
-    projGUID,
+    folder,
+    sourceDir: sourceDir.substr(folder.length + 1),
+    solutionFile: solutionFile.substr(sourceDir.length + 1),
+    projects: [
+      {
+        projectFile: projectFile.substr(sourceDir.length + 1),
+        projectName,
+        projectLang,
+        projectGuid,
+        cppHeaders,
+        cppPackageProviders,
+        csNamespaces,
+        csPackageProviders,
+      },
+    ],
+    additionalProjects: [],
+    packages: [],
   };
-}
-
-function findWindowsAppFolder(folder) {
-  const winDir = 'windows';
-  const joinedDir = path.join(folder, winDir);
-  if (fs.existsSync(joinedDir)) {
-    return joinedDir;
-  }
-
-  return null;
-}
-
-// assumption is every cpp native module will have a ReactPackageProvider.idl defined
-function findPackageProviderIDL(folder) {
-  const PackageIDLPath = glob.sync(path.join('**', 'ReactPackageProvider.idl'), {
-    cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', 'Generated Files'],
-  })[0];
-
-  return PackageIDLPath ? path.join(folder, PackageIDLPath) : null;
-}
-
-// look for packagename 'XYZ' in string 'namesapce XYZ {'
-function parsePackageIDLFile(packageIDL) {
-  const buf = fs.readFileSync(packageIDL, 'utf8');
-  const indexofNameSpace = buf.indexOf('namespace') + 9;
-  const indexofBracket = buf.indexOf('{');
-  const packageName = buf.substring(indexofNameSpace, indexofBracket).replace(/\s+/g, ' ').trim();
-
-  return packageName;
-}
-
-// read visual studio project file which is actually a XML doc
-function readProject(projectPath) {
-  return new (xmldoc.XmlDocument)(fs.readFileSync(projectPath, 'utf8'));
-}
-
-function findCppProject(folder, projectName) {
-  const cppProj = glob.sync(path.join('**', projectName + '.vcxproj'), {
-    cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**'],
-  })[0];
-
-  return cppProj ? path.join(folder, cppProj) : null;
-}
-
-function findCSProject(folder, projectName) {
-  const cppProj = glob.sync(path.join('**', projectName + '.csproj'), {
-    cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**'],
-  })[0];
-
-  return cppProj ? path.join(folder, cppProj) : null;
 }
 
 module.exports = {

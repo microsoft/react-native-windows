@@ -124,7 +124,7 @@ function Add-PackagesConfigXml {
         [bool] $CheckConfig = $True
     )
 
-    $packageXml = Load-PackagesConfigXml -PackagesConfigPath $PackagesConfigPath
+    $packageXml = Load-PackagesConfigXml -PackagesConfigPath $PackagesConfigPath -CheckConfig $CheckConfig
 
     $existingPackageNode = $packageXml.selectSingleNode("packages/package[@id=""$PackageName""]")
 

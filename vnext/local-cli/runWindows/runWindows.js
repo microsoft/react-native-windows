@@ -12,6 +12,7 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
+
 const chalk = require('chalk');
 
 function ExitProcessWithError(loggingWasEnabled) {
@@ -51,8 +52,9 @@ async function runWindows(config, args, options) {
   const slnFile = options.sln || build.getSolutionFile(options);
 
   if (options.autolink) {
-    autolink.updateAutoLink(verbose);
+    await autolink.func(null, null, {logging: options.logging});
   }
+
   if (options.build) {
     if (!slnFile) {
       newError(
@@ -201,6 +203,11 @@ module.exports = {
       default: false,
     },
     {
+      command: '--no-autolink',
+      description: 'Do not run autolinking',
+      default: false,
+    },
+    {
       command: '--no-build',
       description: 'Do not build the solution',
       default: false,
@@ -223,11 +230,6 @@ module.exports = {
     {
       command: '--info',
       description: 'Dump environment information',
-      default: false,
-    },
-    {
-      command: '--autolink',
-      description: 'Auto link native modules',
       default: false,
     },
     {

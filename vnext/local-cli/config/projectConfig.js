@@ -1,66 +1,73 @@
-const fs = require('fs');
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
+// @ts-check
+
 const path = require('path');
-const glob = require('glob');
+
+const configUtils = require('./configUtils.js');
+
+/*
+
+Schema for app projects:
+
+{
+  folder: '', // absolute path to the project root, ex: c:\path\project
+  sourceDir: '', // relative path to the windows implementation folder, ex: windows
+  solutionFile: '', // relative path to the solution, ex: ProjectName.sln
+  project: {
+    projectFile: '', // relative path to the project, ex: ProjectName\ProjectName.vcxproj
+    projectName: '', // name of the project
+    projectLang: '', // language of the project, cpp or cs
+    projectGuid: '', // project identifier
+  },
+}
+
+*/
 
 function projectConfigWindows(folder, userConfig = {}) {
-  const sourceDir = userConfig.sourceDir || findWindowsAppFolder(folder);
+  if (userConfig.sourceDir) {
+    return {
+      folder,
+      sourceDir: userConfig.sourceDir,
+      solutionFile: userConfig.solutionFile,
+      project: userConfig.project,
+    };
+  }
+
+  const sourceDir = configUtils.findWindowsFolder(folder);
 
   if (!sourceDir) {
     return null;
   }
 
-  const projectSolution = findSolution(sourceDir);
-  if (projectSolution){
-    var extension = path.extname(projectSolution);
-    var projectName = path.basename(projectSolution, extension);
-  }
-  const cppProjFile = findCppProject(sourceDir, projectName);
-  const csProjectFile = findCSProject(sourceDir,projectName);
+  const packageJson = require(path.join(folder, 'package.json'));
+
+  const solutionFile = configUtils.findSolutionFile(sourceDir, packageJson);
+
+  const projectFile = configUtils.findProjectFile(sourceDir, packageJson);
+
+  const projectLang = configUtils.getProjectLanguage(projectFile);
+
+  const projectXml = configUtils.readProjectFile(projectFile);
+
+  const projectName = configUtils.getProjectName(projectXml);
+
+  const projectGuid = configUtils.getProjectGuid(projectXml);
 
   return {
-    sourceDir,
-    projectSolution,
-    projectName,
-    cppProjFile,
-    csProjectFile,
+    folder,
+    sourceDir: sourceDir.substr(folder.length + 1),
+    solutionFile: solutionFile.substr(sourceDir.length + 1),
+    project: {
+      projectFile: projectFile.substr(sourceDir.length + 1),
+      projectName,
+      projectLang,
+      projectGuid,
+    },
   };
-}
-
-function findWindowsAppFolder(folder) {
-  const winDir = 'windows';
-  const joinedDir = path.join(folder, winDir);
-  if (fs.existsSync(joinedDir)) {
-    return joinedDir;
-  }
-
-  return null;
-}
-
-function findSolution(folder) {
-  const solutionPath = glob.sync(path.join('**', '*.sln'), {
-    cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', 'Generated Files'],
-  })[0];
-
-  return solutionPath ? path.join(folder, solutionPath) : null;
-}
-
-function findCppProject(folder, projectName) {
-  const cppProj = glob.sync(path.join('**', projectName + '.vcxproj'), {
-    cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**'],
-  })[0];
-
-  return cppProj ? path.join(folder, cppProj) : null;
-}
-
-function findCSProject(folder, projectName) {
-  const cppProj = glob.sync(path.join('**', projectName + '.csproj'), {
-    cwd: folder,
-    ignore: ['node_modules/**', '**/Debug/**', '**/Release/**', '**/Generated Files/**', '**/packages/**'],
-  })[0];
-
-  return cppProj ? path.join(folder, cppProj) : null;
 }
 
 module.exports = {

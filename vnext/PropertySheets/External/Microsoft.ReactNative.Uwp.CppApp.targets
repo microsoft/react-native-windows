@@ -13,6 +13,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.targets" />
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
   <Import Project="$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
