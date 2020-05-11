@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 #pragma once
 #include <DevSettings.h>
+#include "IRedBoxHandler.h"
 #include "ReactHost/React.h"
-#include "RedBoxHandler.h"
 
 namespace Mso::React {
 
 std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
-    Mso::WeakPtr<IReactHost> &&weakReactHost,
-    std::shared_ptr<facebook::react::MessageQueueThread> &&uiMessageQueue) noexcept;
+    winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) noexcept;
+
+std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(Mso::WeakPtr<IReactHost> &&weakReactHost) noexcept;
 
 } // namespace Mso::React

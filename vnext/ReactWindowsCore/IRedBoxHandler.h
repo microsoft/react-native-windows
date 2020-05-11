@@ -28,7 +28,7 @@ struct ErrorInfo {
 
 struct IRedBoxHandler {
   virtual void showNewError(ErrorInfo &&, ErrorType) = 0;
-  virtual bool isDevSupportEnabled() = 0;
+  virtual bool isDevSupportEnabled() const = 0;
   virtual void updateError(ErrorInfo &&) = 0;
   virtual void dismissRedbox() = 0;
 };
