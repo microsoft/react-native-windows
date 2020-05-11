@@ -87,7 +87,7 @@ struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
         Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
     dlg.ShowAsync();
   }
-  virtual bool isDevSupportEnabled() override {
+  virtual bool isDevSupportEnabled() const override {
     return true;
   }
   virtual void updateError(Mso::React::ErrorInfo &&) override {}
