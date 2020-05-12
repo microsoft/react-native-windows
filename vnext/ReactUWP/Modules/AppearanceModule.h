@@ -24,7 +24,6 @@ class AppearanceChangeListener final : public Mso::ActiveObject<> {
   static const char *ToString(ApplicationTheme theme) noexcept;
   void OnColorValuesChanged() noexcept;
 
- private:
   UISettings m_uiSettings;
   UISettings::ColorValuesChanged_revoker m_revoker;
   std::atomic<ApplicationTheme> m_currentTheme;
