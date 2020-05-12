@@ -26,7 +26,7 @@ int32_t __stdcall WINRT_RoGetActivationFactory(void *classId, guid const &iid, v
   std::wstring_view const name{*reinterpret_cast<winrt::hstring *>(&classId)};
   HMODULE library{nullptr};
 
-  if (starts_with(name, L"facebook.react.")) {
+  if (starts_with(name, L"facebook.react.") || starts_with(name, L"Microsoft.React")) {
     library = LoadLibraryExW(RNDLLPATH, NULL, LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
   } else {
     return OS_RoGetActivationFactory(classId, iid, factory);
