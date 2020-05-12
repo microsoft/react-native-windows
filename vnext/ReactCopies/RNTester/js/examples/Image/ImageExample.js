@@ -26,7 +26,7 @@ const base64Icon =
 
 const ImageCapInsetsExample = require('./ImageCapInsetsExample');
 const IMAGE_PREFETCH_URL =
-  'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now();
+  'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now();
 const prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
 
 type ImageSource = $ReadOnly<{|
@@ -312,17 +312,18 @@ class MultipleSourcesExample extends React.Component<
             style={{flex: 1}}
             source={[
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: 'https://facebook.github.io/react-native/img/favicon.png',
                 width: 38,
                 height: 38,
               },
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: 'https://facebook.github.io/react-native/img/favicon.png',
                 width: 76,
                 height: 76,
               },
               {
-                uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                uri:
+                  'https://facebook.github.io/react-native/img/opengraph.png',
                 width: 400,
                 height: 400,
               },
@@ -335,10 +336,10 @@ class MultipleSourcesExample extends React.Component<
 }
 
 const fullImage = {
-  uri: 'https://www.facebook.com/ads/pics/successstories.png',
+  uri: 'https://facebook.github.io/react-native/img/opengraph.png',
 };
 const smallImage = {
-  uri: 'https://www.facebook.com/favicon.ico',
+  uri: 'https://facebook.github.io/react-native/img/favicon.png',
 };
 
 const styles = StyleSheet.create({
@@ -447,7 +448,9 @@ exports.examples = [
       return (
         <NetworkImageCallbackExample
           source={{
-            uri: 'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now(),
+            uri:
+              'http://origami.design/public/images/bird-logo.png?r=1&t=' +
+              Date.now(),
           }}
           prefetchedSource={{uri: IMAGE_PREFETCH_URL}}
         />
@@ -460,7 +463,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: 'https://www.facebook.com/favicon_TYPO.ico',
+            uri: 'https://TYPO_ERROR_facebook.github.io/react/logo-og.png',
           }}
         />
       );
@@ -473,7 +476,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: 'https://www.facebook.com/favicon.ico?r=1',
+            uri: 'http://origami.design/public/images/bird-logo.png?r=1',
           }}
         />
       );
@@ -488,7 +491,7 @@ exports.examples = [
         <Image
           defaultSource={require('../../assets/bunny.png')}
           source={{
-            uri: 'https://origami.design/public/images/bird-logo.png',
+            uri: 'https://facebook.github.io/origami/public/images/birds.jpg',
           }}
           style={styles.base}
         />
@@ -780,9 +783,6 @@ exports.examples = [
                       source={image}
                     />
                   </View>
-                  {/* $FlowFixMe(>=0.115.0 site=react_native_fb) This comment
-                   * suppresses an error found when Flow v0.115 was deployed.
-                   * To see the error, delete this comment and run Flow. */}
                   <View style={styles.leftMargin}>
                     <Text style={[styles.resizeModeText]}>Cover</Text>
                     <Image
@@ -801,9 +801,6 @@ exports.examples = [
                       source={image}
                     />
                   </View>
-                  {/* $FlowFixMe(>=0.115.0 site=react_native_fb) This comment
-                   * suppresses an error found when Flow v0.115 was deployed.
-                   * To see the error, delete this comment and run Flow. */}
                   <View style={styles.leftMargin}>
                     <Text style={[styles.resizeModeText]}>Repeat</Text>
                     <Image
@@ -812,9 +809,6 @@ exports.examples = [
                       source={image}
                     />
                   </View>
-                  {/* $FlowFixMe(>=0.115.0 site=react_native_fb) This comment
-                   * suppresses an error found when Flow v0.115 was deployed.
-                   * To see the error, delete this comment and run Flow. */}
                   <View style={styles.leftMargin}>
                     <Text style={[styles.resizeModeText]}>Center</Text>
                     <Image
@@ -866,9 +860,6 @@ exports.examples = [
   {
     title: 'Image Size',
     render: function(): React.Node {
-      /* $FlowFixMe(>=0.115.0 site=react_native_fb) This comment suppresses an
-       * error found when Flow v0.115 was deployed. To see the error, delete
-       * this comment and run Flow. */
       return <ImageSizeExample source={fullImage} />;
     },
   },
