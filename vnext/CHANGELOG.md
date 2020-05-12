@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 10 May 2020 00:05:02 GMT and should not be manually modified.
+This log was last generated on Tue, 12 May 2020 00:04:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.64
+
+Tue, 12 May 2020 00:04:39 GMT
+
+### Changes
+
+- Fire onLoad event when a bitmap image is opeed (lamdoan@microsoft.com)
+- Expose ability for apps to provide their own RedBox implementation (acoates@microsoft.com)
 
 ## 0.0.0-master.63
 

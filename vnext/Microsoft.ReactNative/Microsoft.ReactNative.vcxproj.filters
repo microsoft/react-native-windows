@@ -688,6 +688,7 @@
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
+    <Midl Include="IRedBoxHandler.idl" />
     <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="NoExceptionAttribute.idl" />

@@ -5,8 +5,9 @@
 #ifndef MICROSOFT_REACTNATIVE_JSVALUEWRITER
 #define MICROSOFT_REACTNATIVE_JSVALUEWRITER
 
+#include <winrt/Microsoft.ReactNative.h>
+#include "JSValue.h"
 #include "StructInfo.h"
-#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
 

@@ -6,6 +6,7 @@
 #include "ReactNativeHost.g.cpp"
 
 #include "ReactPackageBuilder.h"
+#include "RedBox.h"
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
@@ -78,6 +79,10 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
   legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
 
+  if (m_instanceSettings.RedBoxHandler()) {
+    legacySettings.RedBoxHandler = std::move(Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler()));
+  }
+
   Mso::React::ReactOptions reactOptions{};
   reactOptions.Properties = m_instanceSettings.Properties();
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
@@ -91,6 +96,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
   reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
+  reactOptions.RedBoxHandler = legacySettings.RedBoxHandler;
 
   reactOptions.LegacySettings = std::move(legacySettings);
 
