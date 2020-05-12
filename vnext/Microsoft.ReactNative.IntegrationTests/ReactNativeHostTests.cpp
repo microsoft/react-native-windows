@@ -1,6 +1,8 @@
 #include "pch.h"
 
-#include <winrt/Microsoft.ReactNative.h>
+#include <NativeModules.h>
+
+using namespace React;
 
 namespace ReactNativeIntegrationTests {
 
