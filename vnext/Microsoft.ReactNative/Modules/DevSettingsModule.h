@@ -28,7 +28,7 @@ struct DevSettings {
 
  private:
   static winrt::Microsoft::ReactNative::IReactPropertyName ReloadProperty() noexcept;
-  winrt::Microsoft::ReactNative::IReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative

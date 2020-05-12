@@ -7,7 +7,7 @@
 namespace Microsoft::ReactNative {
 
 void DevSettings::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  m_context = reactContext.Handle();
+  m_context = reactContext;
 }
 
 struct ReloadFunctor
@@ -32,7 +32,8 @@ struct ReloadFunctor
 }
 
 void DevSettings::reload() noexcept {
-  (*winrt::get_self<ReloadFunctor>(m_context.Properties().Get(ReloadProperty())))();
+  (*winrt::get_self<ReloadFunctor>(m_context.Properties().Get(
+      winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::Foundation::IInspectable>(ReloadProperty()))))();
 }
 
 void DevSettings::reloadWithReason(std::string /*reason*/) noexcept {
