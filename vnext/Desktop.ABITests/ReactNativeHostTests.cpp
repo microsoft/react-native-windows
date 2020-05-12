@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include <CppUnitTest.h>
 #include <winrt/Microsoft.ReactNative.h>

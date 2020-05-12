@@ -10,8 +10,6 @@
 #include "ActivationFactory.h"
 #include "MessageQueueShim.h"
 
-#include "ActivationFactory.h"
-
 using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;

@@ -110,6 +110,7 @@
     <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
+    <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
