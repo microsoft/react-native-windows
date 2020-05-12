@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Handle HTTP connect exceptions in DevSupportManager",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-05-12T21:18:36.538Z"
+}
