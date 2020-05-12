@@ -16,6 +16,8 @@ namespace winrt::Microsoft::ReactNative {
 // It wraps up the IReactContext and adds convenience methods for
 // working with C++ types.
 struct ReactContext {
+  ReactContext(std::nullptr_t = nullptr) noexcept {}
+
   ReactContext(IReactContext const &handle) noexcept : m_handle{handle} {}
 
   IReactContext const &Handle() const noexcept {
@@ -66,8 +68,32 @@ struct ReactContext {
     m_handle.DispatchEvent(view, eventName, paramsArgWriter);
   }
 
+  friend bool operator==(ReactContext const &left, ReactContext const &right) noexcept {
+    return left.m_handle == right.m_handle;
+  }
+
+  friend bool operator!=(ReactContext const &left, ReactContext const &right) noexcept {
+    return left.m_handle != right.m_handle;
+  }
+
+  friend bool operator==(ReactContext const &left, std::nullptr_t) noexcept {
+    return !static_cast<bool>(left.m_handle);
+  }
+
+  friend bool operator!=(ReactContext const &left, std::nullptr_t) noexcept {
+    return static_cast<bool>(left.m_handle);
+  }
+
+  friend bool operator==(std::nullptr_t, ReactContext const &right) noexcept {
+    return !static_cast<bool>(right.m_handle);
+  }
+
+  friend bool operator!=(std::nullptr_t, ReactContext const &right) noexcept {
+    return static_cast<bool>(right.m_handle);
+  }
+
  private:
-  const IReactContext m_handle;
+  IReactContext m_handle;
 };
 
 } // namespace winrt::Microsoft::ReactNative
