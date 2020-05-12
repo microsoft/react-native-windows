@@ -14,6 +14,7 @@
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
 #include "../../codegen/NativeClipboardSpec.g.h"
+#include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -218,20 +219,22 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::Clipboard,
                   ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
 
+          ::Microsoft::ReactNative::DevSettings::SetReload(
+              strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
+                if (auto reactHost = weakReactHost.GetStrongPtr()) {
+                  reactHost->ReloadInstance();
+                }
+              });
+
+          nmp->AddModuleProvider(
+              L"DevSettings",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::DevSettings,
+                  ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+
           auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
           cxxModules.insert(
               cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
-
-          cxxModules.emplace_back(
-              Microsoft::ReactNative::DevSettingsModule::name,
-              [weakReactHost = strongThis->m_weakReactHost]() {
-                return std::make_unique<Microsoft::ReactNative::DevSettingsModule>([weakReactHost]() noexcept {
-                  if (auto reactHost = weakReactHost.GetStrongPtr()) {
-                    reactHost->ReloadInstance();
-                  }
-                });
-              },
-              m_batchingUIThread);
 
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
