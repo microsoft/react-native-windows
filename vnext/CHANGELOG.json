@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 May 2020 00:04:39 GMT",
+      "tag": "react-native-windows_v0.0.0-master.64",
+      "version": "0.0.0-master.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fire onLoad event when a bitmap image is opeed",
+            "author": "lamdoan@microsoft.com",
+            "commit": "c40cc0ea1de8b4acb830939ba79146739f438111",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Expose ability for apps to provide their own RedBox implementation",
+            "author": "acoates@microsoft.com",
+            "commit": "55091b9447d741fc0e9c23acb8dfdee53ad11598",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 10 May 2020 00:05:02 GMT",
       "tag": "react-native-windows_v0.0.0-master.63",
       "version": "0.0.0-master.63",
