@@ -19,8 +19,8 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
   static Mso::DispatchQueue GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept;
 
   static IReactDispatcher UIThreadDispatcher() noexcept;
-  static ReactPropertyId<IReactDispatcher> UIThreadDispatcherProperty() noexcept;
-  static IReactDispatcher GetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept;
+  static ReactPropertyId<IReactDispatcher> UIDispatcherProperty() noexcept;
+  static IReactDispatcher GetUIDispatcher(IReactPropertyBag const &properties) noexcept;
   static void SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept;
 
  private:
@@ -38,8 +38,8 @@ struct ReactDispatcherHelper {
     return ReactDispatcher::UIThreadDispatcher();
   }
 
-  static IReactPropertyName UIThreadDispatcherProperty() noexcept {
-    return ReactDispatcher::UIThreadDispatcherProperty().Handle();
+  static IReactPropertyName UIDispatcherProperty() noexcept {
+    return ReactDispatcher::UIDispatcherProperty().Handle();
   }
 };
 

@@ -21,24 +21,24 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
 }
 
 /*static*/ Mso::DispatchQueue ReactDispatcher::GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept {
-  return GetUIThreadDispatcher(properties).as<ReactDispatcher>()->m_queue;
+  return GetUIDispatcher(properties).as<ReactDispatcher>()->m_queue;
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::UIThreadDispatcher() noexcept {
   return make<ReactDispatcher>(Mso::DispatchQueue::MakeCurrentThreadUIQueue());
 }
 
-/*static*/ ReactPropertyId<IReactDispatcher> ReactDispatcher::UIThreadDispatcherProperty() noexcept {
-  static ReactPropertyId<IReactDispatcher> uiThreadDispatcherProperty{L"ReactNative", L"UIThreadDispatcher"};
+/*static*/ ReactPropertyId<IReactDispatcher> ReactDispatcher::UIDispatcherProperty() noexcept {
+  static ReactPropertyId<IReactDispatcher> uiThreadDispatcherProperty{L"ReactNative.Dispatcher", L"UIDispatcher"};
   return uiThreadDispatcherProperty;
 }
 
-/*static*/ IReactDispatcher ReactDispatcher::GetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept {
-  return ReactPropertyBag{properties}.Get(UIThreadDispatcherProperty());
+/*static*/ IReactDispatcher ReactDispatcher::GetUIDispatcher(IReactPropertyBag const &properties) noexcept {
+  return ReactPropertyBag{properties}.Get(UIDispatcherProperty());
 }
 
 /*static*/ void ReactDispatcher::SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept {
-  ReactPropertyBag{properties}.Set(UIThreadDispatcherProperty(), UIThreadDispatcher());
+  ReactPropertyBag{properties}.Set(UIDispatcherProperty(), UIThreadDispatcher());
 }
 
 } // namespace winrt::Microsoft::ReactNative
