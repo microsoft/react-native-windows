@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fire onLoad event when a bitmap image is opeed",
-  "packageName": "react-native-windows",
-  "email": "lamdoan@microsoft.com",
-  "commit": "22edad7ea69232ae7636424c237df4eee7577f54",
-  "dependentChangeType": "patch",
-  "date": "2020-04-29T22:37:41.642Z"
-}
