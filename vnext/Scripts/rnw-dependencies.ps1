@@ -5,6 +5,7 @@ $vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Compone
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
     $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive
+    Write-Output Using Drive from $env:Agent_BuildDirectory ($drive)
 } else {
     $drive = (Resolve-Path $PSCommandPath).Drive
 }
@@ -55,7 +56,8 @@ $requiredFreeSpaceGB = 15;
 $requirements = @(
     @{
         Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
-        Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB
+        Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB;
+        Optional = $true # this requirement is fuzzy 
     },
     @{
         Name = 'Windows version > 10.0.16299.0';
