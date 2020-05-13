@@ -3,7 +3,13 @@ param([switch]$Install = $false, [switch]$NoPrompt = $false)
 $vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', 'Microsoft.VisualStudio.ComponentGroup.UWP.Support');
 
 $v = [System.Environment]::OSVersion.Version;
-$drive = (Resolve-Path $PSCommandPath).Drive
+if ($env:Agent_BuildDirectory) {
+    $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive
+} else {
+    $drive = (Resolve-Path $PSCommandPath).Drive
+}
+
+
 
 function CheckVS {
     $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -100,7 +106,7 @@ $requirements = @(
     @{
         Name = 'WinAppDriver';
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe");
-        Install = { choco install -y WinAppDriver }
+        Install = { choco install -y WinAppDriver };
     }
 
     );
@@ -137,6 +143,6 @@ if ($NeedsRerun) {
     Write-Output "Some dependencies are not met. Re-run with -Install to install them.";
     exit 1;
 } else {
-    Write-Output "All requirements met";
+    Write-Output "All mandatory requirements met";
     exit 0;
 }
