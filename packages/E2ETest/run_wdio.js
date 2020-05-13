@@ -144,7 +144,13 @@ function runWdio() {
 
   wdio.run().then(
     code => {
-      doProcess(code);
+      try {
+        doProcess(code);
+      } catch (e) {
+        console.log(e);
+        // any exception that isn't handled is an error
+        process.exit(3);
+      }
     },
     error => {
       console.error('Launcher failed to start the test', error.stacktrace);
