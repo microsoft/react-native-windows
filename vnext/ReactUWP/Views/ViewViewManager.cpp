@@ -87,15 +87,8 @@ class ViewShadowNode : public ShadowNodeBase {
   void TabIndex(int32_t tabIndex) {
     m_tabIndex = tabIndex;
 
-    if (IsControl()) {
-      if (tabIndex < 0) {
-        GetControl().IsTabStop(false);
-        GetControl().ClearValue(winrt::Control::TabIndexProperty());
-      } else {
-        GetControl().IsTabStop(true);
-        GetControl().TabIndex(tabIndex);
-      }
-    }
+    if (IsControl())
+      GetControl().TabIndex(m_tabIndex);
   }
 
   bool OnClick() {
@@ -213,7 +206,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   bool m_enableFocusRing = true;
   bool m_onClick = false;
-  int32_t m_tabIndex = -1;
+  int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
@@ -375,7 +368,7 @@ bool ViewViewManager::UpdateProperty(
           pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
         }
       } else if (propertyValue.isNull()) {
-        pViewShadowNode->TabIndex(-1);
+        pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
     } else {
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
