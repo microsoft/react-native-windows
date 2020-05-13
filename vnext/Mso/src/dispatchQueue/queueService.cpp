@@ -269,11 +269,6 @@ DispatchQueue const &DispatchQueueStatic::ConcurrentQueue() noexcept {
   return *static_cast<DispatchQueue *>(static_cast<void *>(&concurrentQueue));
 }
 
-DispatchQueue const &DispatchQueueStatic::MainUIQueue() noexcept {
-  static auto mainUIQueue{Mso::Make<QueueService, IDispatchQueueService>(MakeMainUIScheduler())};
-  return *static_cast<DispatchQueue *>(static_cast<void *>(&mainUIQueue));
-}
-
 DispatchQueue DispatchQueueStatic::MakeSerialQueue() noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeThreadPoolScheduler(/*maxThreads:*/ 1));
 }

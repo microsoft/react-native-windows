@@ -268,6 +268,7 @@
     </ClCompile>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
+    <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="Modules\AppStateData.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -301,7 +302,6 @@
     <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
-    <ClCompile Include="ReactPropertyBag.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
@@ -605,6 +605,7 @@
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="HResult.h" />
+    <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h">
       <Filter>Modules</Filter>
@@ -654,7 +655,6 @@
     <ClInclude Include="ReactHost\UwpReactInstanceProxy.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
-    <ClInclude Include="ReactPropertyBag.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
@@ -691,6 +691,7 @@
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactContext.idl" />
+    <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
