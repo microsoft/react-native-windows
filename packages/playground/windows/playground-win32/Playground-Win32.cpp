@@ -22,71 +22,51 @@
 
 #pragma pop_macro("GetCurrentTime")
 
-/*
-namespace {
-std::string GetAsyncLocalStorageDBPath() {
-  winrt::com_array<WCHAR> localAppData;
-  winrt::check_hresult(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, put_abi(localAppData)));
-
-  std::filesystem::path asyncLocalStorageDBDir{localAppData.data()};
-  asyncLocalStorageDBDir /= LR"(Microsoft\React Native Playground (Win32))";
-
-  if (!CreateDirectoryW(asyncLocalStorageDBDir.wstring().data(), nullptr)) {
-    if (::GetLastError() != ERROR_ALREADY_EXISTS)
-      winrt::throw_last_error();
-  }
-
-  auto asyncLocalStoragePath = asyncLocalStorageDBDir / L"AsyncStorage.sqlite3";
-  return Microsoft::Common::Unicode::Utf16ToUtf8(asyncLocalStoragePath.wstring());
-}
-
-} // namespace
-*/
-
 namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
 namespace WUXH = WUX::Hosting;
 
-/*
-struct PlaygroundNativeModuleProvider final : facebook::react::NativeModuleProvider {
-  virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
-      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread) override {
-    std::vector<facebook::react::NativeModuleDescription> modules;
-    return modules;
+
+struct SimpleRedBoxHandler : winrt::implements<SimpleRedBoxHandler, winrt::Microsoft::ReactNative::IRedBoxHandler> {
+  SimpleRedBoxHandler() noexcept {
+  }
+
+  void ShowNewError(
+      winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info,
+      winrt::Microsoft::ReactNative::RedBoxErrorType type) noexcept {
+
+      OutputDebugStringA("----- Begin RedBox -----\n");
+
+      switch (type)
+      {
+      case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal:
+          OutputDebugStringA("Fatal Error: ");
+        break;
+      case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft:
+        OutputDebugStringA("JavaScript Error: ");
+        break;
+      case winrt::Microsoft::ReactNative::RedBoxErrorType::Native:
+        OutputDebugStringA("Native Error: ");
+        break;
+      }
+
+      OutputDebugString(info.Message().c_str());
+      OutputDebugStringA("\n-----  End RedBox  -----\n");
+
+  }
+
+  bool IsDevSupportEnabled() noexcept {
+    return true;
+  }
+
+  void UpdateError(winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info) noexcept {
+    // noop
+  }
+
+  void DismissRedBox() noexcept {
+    // noop
   }
 };
-
-class PlaygroundViewManagerProvider final : public react::uwp::ViewManagerProvider {
- public:
-  virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
-      const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
-    std::vector<react::uwp::NativeViewManager> viewManagers;
-
-    return viewManagers;
-  }
-};
-
-
-struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
-  HwndReactInstanceCreator(HWND hwnd) {
-    m_hwnd = hwnd;
-  }
-
-  void detach() {
-    m_hwnd = nullptr;
-  }
-
-  std::shared_ptr<::react::uwp::IReactInstance> getInstance() override;
-  void markAsNeedsReload() override;
-  void persistUseWebDebugger(bool useWebDebugger) override;
-  void persistUseLiveReload(bool useLiveReload) override;
-  void persistUseDirectDebugger(bool useDirectDebugger) override;
-  void persistBreakOnNextLine(bool breakOnNextLine) override;
-
- private:
-  HWND m_hwnd;
-};
-*/
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -100,18 +80,12 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
 
-  //std::shared_ptr<react::uwp::IReactInstance> m_instance;
-  //std::shared_ptr<react::uwp::IXamlRootView> m_rootView;
-  //std::shared_ptr<HwndReactInstanceCreator> m_instanceCreator;
-
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
   bool m_reuseInstance{true};
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
-
-  //react::uwp::JSIEngine m_jsEngine{react::uwp::JSIEngine::Chakra};
 
   WindowData(const WUXH::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
@@ -159,22 +133,6 @@ struct WindowData {
         DialogBox(s_instance, MAKEINTRESOURCE(IDD_OPENJSBUNDLEBOX), hwnd, &Bundle);
 
         if (!m_bundleFile.empty()) {
-          /*
-          facebook::react::InitializeLogging(
-              [](facebook::react::RCTLogLevel logLevel, const char *message) { OutputDebugStringA(message); });
-              */
-
-          // Create NativeModuleProvider
-          /*
-            std::shared_ptr<facebook::react::NativeModuleProvider> moduleLoader =
-              std::make_shared<PlaygroundNativeModuleProvider>();
-          std::shared_ptr<react::uwp::ViewManagerProvider> viewManagerProvider =
-              std::make_shared<PlaygroundViewManagerProvider>();
-
-
-          m_instance = react::uwp::CreateReactInstance(moduleLoader, viewManagerProvider);
-          */
-
           PCWSTR appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
 
           auto host = Host();
@@ -185,6 +143,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
+          host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
           host.InstanceSettings().Properties().Set(
               winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty(),
               winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIThreadDispatcher());
@@ -200,40 +159,6 @@ struct WindowData {
           auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
           rootElement.Children().Clear();
           rootElement.Children().Append(m_reactRootView);
-
-          /*
-
-
-          react::uwp::ReactInstanceSettings settings;
-          settings.UseWebDebugger = m_useWebDebugger;
-          settings.UseLiveReload = m_liveReloadEnabled;
-          settings.DebuggerBreakOnNextLine = m_breakOnNextLine;
-          settings.UseDirectDebugger = m_useDirectDebugger;
-          settings.DebuggerPort = m_debuggerPort;
-          settings.jsiEngine = m_jsEngine;
-
-          settings.EnableDeveloperMenu = true;
-
-          settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
-            OutputDebugStringA("In LoggingCallback");
-            OutputDebugStringA(message);
-          };
-
-          m_instance->Start(m_instance, settings);
-          m_instance->loadBundle(Microsoft::Common::Unicode::Utf16ToUtf8(m_bundleFile));
-
-          folly::dynamic initialProps = folly::dynamic::object();
-
-
-          
-
-          // Create the root view
-          m_rootView = react::uwp::CreateReactRootView(rootElement, appName, m_instanceCreator);
-
-          m_rootView->SetInitialProps(std::move(initialProps));
-          m_rootView->SetInstanceCreator(m_instanceCreator);
-          m_rootView->AttachRoot();
-          */
         }
 
         break;
@@ -263,14 +188,6 @@ struct WindowData {
     winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
 
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
-
-    /*
-    try {
-      m_instanceCreator = std::make_shared<HwndReactInstanceCreator>(hwnd);
-    } catch (...) {
-      return -1;
-    }
-    */
 
     return 0;
   }
@@ -414,53 +331,6 @@ struct WindowData {
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
-/*
-std::shared_ptr<::react::uwp::IReactInstance> HwndReactInstanceCreator::getInstance() {
-  if (!m_hwnd)
-    return nullptr;
-
-  return WindowData::GetFromWindow(m_hwnd)->m_instance;
-}
-
-void HwndReactInstanceCreator::markAsNeedsReload() {
-  if (!m_hwnd)
-    return;
-
-  auto instance = WindowData::GetFromWindow(m_hwnd)->m_instance;
-  if (instance)
-    instance->SetAsNeedsReload();
-}
-
-void HwndReactInstanceCreator::persistUseWebDebugger(bool useWebDebugger) {
-  if (!m_hwnd)
-    return;
-
-  WindowData::GetFromWindow(m_hwnd)->m_useWebDebugger = useWebDebugger;
-}
-
-void HwndReactInstanceCreator::persistUseLiveReload(bool useLiveReload) {
-  if (!m_hwnd)
-    return;
-
-  WindowData::GetFromWindow(m_hwnd)->m_liveReloadEnabled = useLiveReload;
-}
-
-void HwndReactInstanceCreator::persistUseDirectDebugger(bool useDirectDebugger) {
-  if (!m_hwnd)
-    return;
-
-  WindowData::GetFromWindow(m_hwnd)->m_useDirectDebugger = useDirectDebugger;
-}
-
-void HwndReactInstanceCreator::persistBreakOnNextLine(bool breakOnNextLine) {
-  if (!m_hwnd)
-    return;
-
-  WindowData::GetFromWindow(m_hwnd)->m_breakOnNextLine = breakOnNextLine;
-}
-
-*/
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   switch (message) {
     case WM_CREATE: {
@@ -496,8 +366,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   constexpr PCWSTR windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
-
-  // react::windows::SetAsyncStorageDBPath(GetAsyncLocalStorageDBPath());
 
   WUXH::DesktopWindowXamlSource desktopXamlSource;
 
