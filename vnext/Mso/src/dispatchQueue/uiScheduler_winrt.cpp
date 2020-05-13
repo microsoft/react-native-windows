@@ -68,6 +68,7 @@ struct UISchedulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDi
   uint32_t m_handlerRefCount{0};
   uint32_t m_taskCount{0};
   bool m_isShutdown{false};
+  std::thread::id m_threadId{std::this_thread::get_id()};
 };
 
 //=============================================================================
@@ -174,7 +175,9 @@ void UISchedulerWinRT::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&
 }
 
 bool UISchedulerWinRT::HasThreadAccess() noexcept {
-  return m_dispatcher.HasThreadAccess();
+  // m_dispatcher.HasThreadAccess() is implemented only in Windows 19H1.
+  // We must use an alternative implementation.
+  return m_threadId == std::this_thread::get_id();
 }
 
 bool UISchedulerWinRT::IsSerial() noexcept {
