@@ -3,8 +3,7 @@
  * Licensed under the MIT License.
  */
 
- // Bug:4596 Switch
-import { /* Switch, */ CheckBox, TextInput, View, StyleSheet, Button } from 'react-native';
+ import { Switch, CheckBox, TextInput, View, StyleSheet, Button } from 'react-native';
 import { DatePicker, Picker } from 'react-native-windows';
 import React, { useState } from 'react';
 import { SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT } from './Consts';
@@ -58,10 +57,8 @@ export function ControlStyleTestPage() {
     <View>
       <View testID={'ControlStyleView'}>
         {
-        /*
-        // Bug:4596 Switch
         <Switch style={showRoundBorder? styles.roundBorder :styles.regularBorder} thumbColor='blue'/> 
-        */}
+        }
         <CheckBox style={showRoundBorder? styles.roundBorder :styles.regularBorder} />
         <TextInput style={showRoundBorder? styles.roundBorder :styles.regularBorder}
           placeholder='TextBox'
