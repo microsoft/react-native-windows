@@ -14,7 +14,7 @@ struct BoxedValue : implements<BoxedValue<T>, IBoxedValue> {
   template <class... TArgs>
   BoxedValue(TArgs &&... args) noexcept : m_value(std::forward<TArgs>(args)...) {}
 
-  int64_t GetPtr() noexcept {
+  int64_t GetPtr() const noexcept {
     return reinterpret_cast<int64_t>(&m_value);
   }
 

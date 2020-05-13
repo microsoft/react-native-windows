@@ -118,7 +118,7 @@ struct ReactPropertyId {
 // ReactPropertyBag is a wrapper for IReactPropertyBag to store strongly-typed properties in a thread-safe way.
 // Types inherited from IInspectable are stored directly.
 // Values of other types are boxed with help of winrt::box_value.
-// Non-WinRT types are wrapped with help of BoxedValue template.
+// Non-WinRT types are wrapped with the help of BoxedValue template.
 struct ReactPropertyBag {
   // Property result type is either T or std::optional<T>.
   // T is returned for types inherited from IInspectable.
