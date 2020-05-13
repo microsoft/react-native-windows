@@ -65,6 +65,13 @@ jobs:
         clean: false
         submodules: false
 
+      - task: PowerShell@2
+        displayName: "Check if this environment meets the development dependencies"
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+          arguments: -NoPrompt
+
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build

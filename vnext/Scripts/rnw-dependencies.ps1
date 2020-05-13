@@ -1,8 +1,9 @@
 # Troubleshoot RNW dependencies
-param([switch]$Install = $false)
+param([switch]$Install = $false, [switch]$NoPrompt = $false)
 $vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', 'Microsoft.VisualStudio.ComponentGroup.UWP.Support');
 
 $v = [System.Environment]::OSVersion.Version;
+$drive = (Resolve-Path $PSCommandPath).Drive
 
 function CheckVS {
     $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -43,10 +44,12 @@ function GetChocoPkgVersion{
     return $version;
 }
 
+$requiredFreeSpaceGB = 15;
+
 $requirements = @(
     @{
-        Name = 'Disk space > 15 GB';
-        Valid = (Get-PSDrive -PSProvider FileSystem -Name 'C').Free/1GB -gt 15
+        Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
+        Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB
     },
     @{
         Name = 'Windows version > 10.0.16299.0';
@@ -56,6 +59,10 @@ $requirements = @(
         Name = 'Developer mode is on';
         Valid = try { (Get-WindowsDeveloperLicense).IsValid } catch { $false }
     },
+    @{
+        Name = 'git';
+        Valid = try { (Get-Command git.exe) -ne $null } catch { $false }
+    }
     @{
         Name = 'Choco';
         Valid = try { (Get-Command choco) -ne $null } catch { $false };
@@ -112,16 +119,21 @@ foreach ($req in $requirements)
     if (!($req.Valid)) {
         Write-Output "Requirement failed: $($req.Name)"
         if ($req.Install) {
-            if ($Install -or ((Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
+            if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
                 Invoke-Command $req.Install -ErrorAction Stop
                 if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
             } else {
-                $NeedsRerun = $true
+                $NeedsRerun = $true;
             }
+        } else {
+            $NeedsRerun = $true;
         }
     }
 }
 
 if ($NeedsRerun) {
     Write-Output "Some dependencies are not met. Re-run with -Install to install them.";
+    exit 1;
+} else {
+    exit 0;
 }
