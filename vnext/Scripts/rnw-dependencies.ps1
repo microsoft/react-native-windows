@@ -136,7 +136,7 @@ foreach ($req in $requirements)
                 $NeedsRerun = $true;
             }
         } else {
-            $NeedsRerun = $true;
+            $NeedsRerun = !($req.Optional);
         }
     }
 }
