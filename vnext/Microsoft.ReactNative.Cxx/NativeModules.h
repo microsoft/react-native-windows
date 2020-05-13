@@ -4,6 +4,7 @@
 #pragma once
 #include "winrt/Microsoft.ReactNative.h"
 
+#include "BoxedValue.h"
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
@@ -1103,23 +1104,6 @@ struct TurboModuleSpec {
     return CheckMethodsHelper<TModule, TModuleSpec>(
         std::make_index_sequence<std::tuple_size_v<decltype(TModuleSpec::methods)>>{});
   }
-};
-
-template <class T>
-struct BoxedValue : implements<BoxedValue<T>, IBoxedValue> {
-  template <class... TArgs>
-  BoxedValue(TArgs &&... args) noexcept : m_value(std::forward<TArgs>(args)...) {}
-
-  int64_t GetPtr() noexcept {
-    return reinterpret_cast<int64_t>(&m_value);
-  }
-
-  static T &GetValueUnsafe(IBoxedValue const &boxedValue) noexcept {
-    return *reinterpret_cast<T *>(boxedValue.GetPtr());
-  }
-
- private:
-  T m_value{};
 };
 
 template <class TModule>

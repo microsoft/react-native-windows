@@ -6,6 +6,7 @@
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
+using namespace Windows::Foundation;
 
 namespace ReactNativeIntegrationTests {
 
@@ -515,6 +516,27 @@ TEST_CLASS (ReactPropertyBagTests) {
     TestCheckEqual(5, winrt::unbox_value<int>((*pb.Get(fooName))()));
 
     ReactCreatePropertyValue createValue2 = []() { return winrt::box_value(10); };
+    pb.Set(fooName, createValue2);
+    TestCheckEqual(createValue2, *pb.Get(fooName));
+    TestCheckEqual(10, winrt::unbox_value<int>((*pb.Get(fooName))()));
+    TestCheck(createValue1 != *pb.Get(fooName));
+    pb.Remove(fooName);
+    TestCheck(!pb.Get(fooName));
+  }
+
+  TEST_METHOD(PropertyBag_Property_Functor) {
+    ReactPropertyId<Mso::Functor<IInspectable()>> fooName{L"Foo"};
+    ReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
+
+    TestCheck(!pb.Get(fooName));
+    Mso::Functor<IInspectable()> createValue1 = []() noexcept {
+      return winrt::box_value(5);
+    };
+    TestCheckEqual(createValue1, *pb.GetOrCreate(fooName, [&createValue1]() { return createValue1; }));
+    TestCheckEqual(createValue1, *pb.Get(fooName));
+    TestCheckEqual(5, winrt::unbox_value<int>((*pb.Get(fooName))()));
+
+    Mso::Functor<IInspectable()> createValue2 = []() { return winrt::box_value(10); };
     pb.Set(fooName, createValue2);
     TestCheckEqual(createValue2, *pb.Get(fooName));
     TestCheckEqual(10, winrt::unbox_value<int>((*pb.Get(fooName))()));

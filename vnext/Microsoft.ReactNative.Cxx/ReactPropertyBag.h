@@ -37,12 +37,14 @@
 // directly because their null value may indicated absent property value.
 // For other types we return std::optional<T>. It has std::nullopt value in case if
 // no property value is found or if it has a wrong type.
-// To avoid compilation errors the non-IInspectable types must be WinRT types which are described here:
+// To pass values through the ABI boundary the non-IInspectable types must be WinRT types
+// which are described here:
 // https://docs.microsoft.com/en-us/uwp/api/windows.foundation.propertytype?view=winrt-18362
 //
 
 #include <winrt/Microsoft.ReactNative.h>
 #include <optional>
+#include "BoxedValue.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -113,10 +115,10 @@ struct ReactPropertyId {
   IReactPropertyName m_handle;
 };
 
-// ReactPropertyBag is a wrapper for IReactPropertyBag to stores strongly-typed properties in a thread-safe way.
+// ReactPropertyBag is a wrapper for IReactPropertyBag to store strongly-typed properties in a thread-safe way.
 // Types inherited from IInspectable are stored directly.
 // Values of other types are boxed with help of winrt::box_value.
-// Only WinRT types can be stored.
+// Non-WinRT types are wrapped with help of BoxedValue template.
 struct ReactPropertyBag {
   // Property result type is either T or std::optional<T>.
   // T is returned for types inherited from IInspectable.
@@ -235,7 +237,11 @@ struct ReactPropertyBag {
  private:
   template <class T>
   static Windows::Foundation::IInspectable ToObject(T const &value) noexcept {
-    return winrt::box_value(value);
+    if constexpr (impl::has_category_v<T>) {
+      return box_value(value);
+    } else {
+      return make<BoxedValue<T>>(value);
+    }
   }
 
   template <class T>
@@ -247,7 +253,7 @@ struct ReactPropertyBag {
   static auto FromObject(Windows::Foundation::IInspectable const &obj) noexcept {
     if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>) {
       return obj.try_as<T>();
-    } else {
+    } else if constexpr (impl::has_category_v<T>) {
       if (obj) {
 #ifdef WINRT_IMPL_IUNKNOWN_DEFINED
         if constexpr (std::is_same_v<T, GUID>) {
@@ -264,6 +270,14 @@ struct ReactPropertyBag {
           if (auto temp = obj.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
             return std::optional<T>{static_cast<T>(temp.Value())};
           }
+        }
+      }
+
+      return std::optional<T>{};
+    } else {
+      if (obj) {
+        if (auto temp = obj.try_as<IBoxedValue>()) {
+          return std::optional<T>{BoxedValue<T>::GetValueUnsafe(temp)};
         }
       }
 
