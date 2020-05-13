@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 12 May 2020 00:04:39 GMT and should not be manually modified.
+This log was last generated on Wed, 13 May 2020 00:04:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.65
+
+Wed, 13 May 2020 00:04:21 GMT
+
+### Changes
+
+- add ReactNativeHost to Win32 C++/WinRT ABI (aeulitz@microsoft.com)
+- Fixed ReactContext copy/move semantic (vmorozov@microsoft.com)
+- Use spec file for DevSettings NativeModule (acoates@microsoft.com)
 
 ## 0.0.0-master.64
 
