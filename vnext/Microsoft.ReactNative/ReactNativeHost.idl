@@ -3,6 +3,7 @@
 
 import "IReactPackageProvider.idl";
 import "ReactInstanceSettings.idl";
+import "ILifecycleEventListener.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -24,5 +25,8 @@ namespace Microsoft.ReactNative {
     void OnLeavingBackground();
     void OnResume(OnResumeAction action);
     void OnBackPressed();
+
+    void AddLifecycleEventListener(ILifecycleEventListener listener);
+    void RemoveLifecycleEventListener(ILifecycleEventListener listener);
   }
 } // namespace Microsoft.ReactNative

@@ -34,16 +34,27 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   void OnResume(OnResumeAction const &action) noexcept;
   void OnBackPressed() noexcept;
 
+  void AddLifecycleEventListener(ILifecycleEventListener const& listener);
+  void RemoveLifecycleEventListener(ILifecycleEventListener const& listener);
+
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
 
  private:
+  void RegisterLifecycleEvents();
+
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;
 
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   ReactNative::ReactInstance m_reactInstance{nullptr};
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders;
   ReactNative::IReactPackageBuilder m_packageBuilder;
+
+  Windows::Foundation::Collections::IVector<ILifecycleEventListener> m_lifecycleEventListeners;
+  xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
+  xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
+  xaml::Application::Suspending_revoker m_suspendingRevoker;
+  xaml::Application::Resuming_revoker m_resumingRevoker;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
