@@ -185,6 +185,9 @@ struct WindowData {
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
+          host.InstanceSettings().Properties().Set(
+              winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty(),
+              winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIThreadDispatcher());
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();

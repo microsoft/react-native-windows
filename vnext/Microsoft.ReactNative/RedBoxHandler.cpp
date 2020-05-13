@@ -7,6 +7,7 @@
 #include "RedBoxHelper.g.cpp"
 #endif
 
+#include <IReactDispatcher.h>
 #include <ReactNativeHost.h>
 #include <RedBox.h>
 #include <unicode.h>
@@ -32,7 +33,8 @@ struct DefaultRedBoxHandler : winrt::implements<DefaultRedBoxHandler, IRedBoxHan
   DefaultRedBoxHandler(winrt::Microsoft::ReactNative::ReactNativeHost const &host) noexcept {
     auto hostImpl = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeHost>(host);
     Mso::WeakPtr<Mso::React::IReactHost> wkHost(hostImpl->ReactHost());
-    m_redBoxHandler = Mso::React::CreateDefaultRedBoxHandler(std::move(wkHost));
+    m_redBoxHandler = Mso::React::CreateDefaultRedBoxHandler(
+        std::move(wkHost), ReactDispatcher::GetUIDispatchQueue(host.InstanceSettings().Properties()));
   }
 
   void ShowNewError(IRedBoxErrorInfo const &info, RedBoxErrorType type) noexcept {

@@ -11,8 +11,8 @@ using namespace xaml;
 
 namespace react::uwp {
 
-AppStateData::AppStateData(Mso::React::IReactContext &reactContext) noexcept
-    : Super(Mso::DispatchQueue::MainUIQueue()), m_lastState{"active"}, m_reactContext{&reactContext} {}
+AppStateData::AppStateData(Mso::React::IReactContext &reactContext, Mso::DispatchQueue const &uiQueue) noexcept
+    : Super(uiQueue), m_lastState{"active"}, m_reactContext{&reactContext} {}
 
 AppStateData::~AppStateData() = default;
 
@@ -59,8 +59,8 @@ void AppStateData::RaiseEvent(char const *newState) noexcept {
       "RCTDeviceEventEmitter", "emit", folly::dynamic::array("appStateDidChange", std::move(parameters)));
 }
 
-AppState2::AppState2(Mso::React::IReactContext &reactContext) noexcept
-    : m_data{Mso::Make<AppStateData>(reactContext)} {}
+AppState2::AppState2(Mso::React::IReactContext &reactContext, Mso::DispatchQueue const &uiQueue) noexcept
+    : m_data{Mso::Make<AppStateData>(reactContext, uiQueue)} {}
 
 AppState2::~AppState2() = default;
 

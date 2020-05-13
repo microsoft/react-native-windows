@@ -115,7 +115,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   std::shared_ptr<react::uwp::AppTheme> appTheme =
       std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
   I18nHelper::Instance().setInfo(I18nModule::GetI18nInfo());
-  auto appearanceListener = Mso::Make<AppearanceChangeListener>(spThis);
+  auto appearanceListener = Mso::Make<AppearanceChangeListener>(spThis, Mso::DispatchQueue::MakeCurrentThreadUIQueue());
 
   // TODO: Figure out threading. What thread should this really be on?
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();

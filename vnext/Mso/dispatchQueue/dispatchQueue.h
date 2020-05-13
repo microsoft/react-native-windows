@@ -113,9 +113,6 @@ struct DispatchQueue {
   //! demand.
   static DispatchQueue const &ConcurrentQueue() noexcept;
 
-  //! Get DispatchQueue associated with the main UI thread. It is created on demand.
-  static DispatchQueue const &MainUIQueue() noexcept;
-
   //! Create new serial DispatchQueue on top of platform specific thread pool.
   static DispatchQueue MakeSerialQueue() noexcept;
 
@@ -158,8 +155,7 @@ struct DispatchQueue {
   //! True if tasks are invoked in a serial order by the queue.
   bool IsSerial() const noexcept;
 
-  //! True if queue is running on current thread or associated with it. E.g. MainUIQueue always returns true for the
-  //! main UI thread.
+  //! True if queue is running on current thread or associated with it.
   bool HasThreadAccess() const noexcept;
 
   //! Check if a long running task should yield.
@@ -416,9 +412,6 @@ struct IDispatchQueueStatic : IUnknown {
   //! demand.
   virtual DispatchQueue const &ConcurrentQueue() noexcept = 0;
 
-  //! Get DispatchQueue associated with the main UI thread. It is created on demand.
-  virtual DispatchQueue const &MainUIQueue() noexcept = 0;
-
   //! Create new serial DispatchQueue on top of platform specific thread pool.
   virtual DispatchQueue MakeSerialQueue() noexcept = 0;
 
@@ -543,10 +536,6 @@ inline /*static*/ DispatchQueue DispatchQueue::CurrentQueue() noexcept {
 
 inline /*static*/ DispatchQueue const &DispatchQueue::ConcurrentQueue() noexcept {
   return IDispatchQueueStatic::Instance()->ConcurrentQueue();
-}
-
-inline /*static*/ DispatchQueue const &DispatchQueue::MainUIQueue() noexcept {
-  return IDispatchQueueStatic::Instance()->MainUIQueue();
 }
 
 inline /*static*/ DispatchQueue DispatchQueue::MakeSerialQueue() noexcept {
