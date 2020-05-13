@@ -116,8 +116,9 @@ if (!(IsElevated)) {
 $NeedsRerun = $false
 foreach ($req in $requirements)
 {
+    Write-Output "Checking $($req.Name)";
     if (!($req.Valid)) {
-        Write-Output "Requirement failed: $($req.Name)"
+        Write-Output "Requirement failed: $($req.Name)";
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
                 Invoke-Command $req.Install -ErrorAction Stop
@@ -135,5 +136,6 @@ if ($NeedsRerun) {
     Write-Output "Some dependencies are not met. Re-run with -Install to install them.";
     exit 1;
 } else {
+    Write-Output "All requirements met";
     exit 0;
 }
