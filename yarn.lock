@@ -2885,9 +2885,9 @@
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
 
 "@types/react-native@^0.62.2":
-  version "0.62.7"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.7.tgz#bfc5ed03ba576f288603daa3f67f0f67d9a8bf57"
-  integrity sha512-FGFEt9GcFVl//XxWmxkeBxAx0YnzyEhJpR8hOJrjfaFKZm0KjHzzyCmCksBAP2qHSTrcJCiBkIvYCX/kGiOgww==
+  version "0.62.8"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.8.tgz#224602561f75b838ed6e3b5ea37093bb84cffd74"
+  integrity sha512-YEf0tH3xYJpQB12Vvzoy7cqPY3mvbbulTnG3G7ToKOuJuqigAN3K9NNAaxNAAm1zCj+UtObhzcaJtPRwX1z6Fw==
   dependencies:
     "@types/react" "*"
 
@@ -6307,9 +6307,9 @@ eslint-plugin-react-native@3.8.1:
     eslint-plugin-react-native-globals "^0.1.1"
 
 eslint-plugin-react@7.19.0, eslint-plugin-react@^7.14.1:
-  version "7.19.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.19.0.tgz#6d08f9673628aa69c5559d33489e855d83551666"
-  integrity sha512-SPT8j72CGuAP+JFbT0sJHOB80TX/pu44gQ4vXH/cq+hQTiY2PuZ6IHkqXJV6x1b28GDdo1lbInjKUrrdUf0LOQ==
+  version "7.20.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.0.tgz#f98712f0a5e57dfd3e5542ef0604b8739cd47be3"
+  integrity sha512-rqe1abd0vxMjmbPngo4NaYxTcR3Y4Hrmc/jg4T+sYz63yqlmJRknpEQfmWY+eDWPuMmix6iUIK+mv0zExjeLgA==
   dependencies:
     array-includes "^3.1.1"
     doctrine "^2.1.0"
@@ -6320,7 +6320,6 @@ eslint-plugin-react@7.19.0, eslint-plugin-react@^7.14.1:
     object.values "^1.1.1"
     prop-types "^15.7.2"
     resolve "^1.15.1"
-    semver "^6.3.0"
     string.prototype.matchall "^4.0.2"
     xregexp "^4.3.0"
 
