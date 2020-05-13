@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "add rnw-dependencies.ps1",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-12T00:22:16.000Z"
+}
