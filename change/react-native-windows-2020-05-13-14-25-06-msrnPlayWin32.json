@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Added comment about needing to detect XamlIslands for BackHandler",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-05-13T21:25:06.608Z"
+}
