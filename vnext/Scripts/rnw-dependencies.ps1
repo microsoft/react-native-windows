@@ -94,7 +94,8 @@ $requirements = @(
     @{
         Name = 'Appium';
         Valid = (Test-Path "${env:ProgramFiles}\Appium\Appium.exe");
-        Install = { choco install -y Appium-desktop }
+        Install = { choco install -y Appium-desktop };
+        Optional = $true
     },
     @{
         Name = 'WinAppDriver';
@@ -123,7 +124,7 @@ foreach ($req in $requirements)
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
                 Invoke-Command $req.Install -ErrorAction Stop
                 if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
-            } else {
+            } elseif (!$req.Optional) {
                 $NeedsRerun = $true;
             }
         } else {
