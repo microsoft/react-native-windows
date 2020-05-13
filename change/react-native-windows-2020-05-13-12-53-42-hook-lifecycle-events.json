@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Hook up life cycle events in ReactNativeHost",
+  "packageName": "react-native-windows",
+  "email": "kaigu@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-13T19:53:42.358Z"
+}
