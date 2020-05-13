@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Hook up life cycle events in ReactNativeHost",
+  "comment": "Remove unused lifecycle events in ReactNativeHost",
   "packageName": "react-native-windows",
   "email": "kaigu@microsoft.com",
   "dependentChangeType": "patch",
