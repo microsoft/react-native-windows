@@ -6,7 +6,11 @@ $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
     $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive
 } else {
-    $drive = (Resolve-Path $PSCommandPath).Drive
+    if ($PSCommandPath) {
+        $drive = (Resolve-Path $PSCommandPath).Drive
+    } else {
+        $drive = (Resolve-Path $env:SystemDrive).Drive
+    }
 }
 
 function CheckVS {
@@ -122,9 +126,9 @@ if (!(IsElevated)) {
 $NeedsRerun = $false
 foreach ($req in $requirements)
 {
-    Write-Output "Checking $($req.Name)";
+    Write-Host -NoNewline "Checking $($req.Name)    ";
     if (!($req.Valid)) {
-        Write-Output "Requirement failed: $($req.Name)";
+        Write-Host -ForegroundColor Red " Failed";
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
                 Invoke-Command $req.Install -ErrorAction Stop
@@ -135,6 +139,8 @@ foreach ($req in $requirements)
         } else {
             $NeedsRerun = !($req.Optional);
         }
+    } else {
+        Write-Host -ForegroundColor Green " OK";
     }
 }
 
