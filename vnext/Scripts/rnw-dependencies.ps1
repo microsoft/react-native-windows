@@ -5,12 +5,9 @@ $vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Compone
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
     $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive
-    Write-Output Using Drive from $env:Agent_BuildDirectory ($drive)
 } else {
     $drive = (Resolve-Path $PSCommandPath).Drive
 }
-
-
 
 function CheckVS {
     $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
