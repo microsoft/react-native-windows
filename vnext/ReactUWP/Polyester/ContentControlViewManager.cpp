@@ -6,6 +6,7 @@
 #include <Views/ShadowNodeBase.h>
 #include "ContentControlViewManager.h"
 
+#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 namespace winrt {

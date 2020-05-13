@@ -5,10 +5,9 @@
 
 #include "ReactImageBrush.h"
 
+#include <UI.Composition.Effects.h>
 #include <sstream>
 
-#include <winrt/Microsoft.UI.Composition.Effects.h>
-#include <winrt/Windows.UI.Composition.Effects.h>
 #include "BorderEffect.h"
 
 namespace winrt {

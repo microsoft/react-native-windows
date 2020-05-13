@@ -4,7 +4,7 @@
 
 #include "UniversalTestInstance.h"
 
-#include <Windows.UI.Xaml.h> // C++/CX
+#include <Windows.UI.Xaml.h>
 #include <wrl.h>
 
 namespace cx {

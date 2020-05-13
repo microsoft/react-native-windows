@@ -7,6 +7,10 @@
 
 #include <Views/ShadowNodeBase.h>
 
+#include <UI.Xaml.Automation.Peers.h>
+#include <UI.Xaml.Automation.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 

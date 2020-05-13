@@ -14,8 +14,9 @@
 
 #include <WindowsNumerics.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Composition.h>
 
+#include <UI.Xaml.Automation.h>
+#include <UI.Xaml.Controls.h>
 #include "Utils/PropertyHandlerUtils.h"
 
 #include "DynamicAutomationProperties.h"

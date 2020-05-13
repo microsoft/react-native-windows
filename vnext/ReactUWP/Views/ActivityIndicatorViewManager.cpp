@@ -5,6 +5,7 @@
 
 #include "ActivityIndicatorViewManager.h"
 
+#include <UI.Xaml.Controls.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 

@@ -8,6 +8,9 @@
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Navigation.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.UI.Core.h>
 

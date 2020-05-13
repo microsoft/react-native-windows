@@ -17,11 +17,16 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.System.h>
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Navigation.h>
 #include "CppWinRTIncludes.h"
 
 #include <winrt/Microsoft.ReactNative.h>
 
+#include <winrt/Microsoft.System.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>

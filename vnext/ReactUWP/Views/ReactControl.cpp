@@ -14,11 +14,14 @@
 #include <Views/KeyboardEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.Media3D.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Input.h>
 
 namespace react {
 namespace uwp {

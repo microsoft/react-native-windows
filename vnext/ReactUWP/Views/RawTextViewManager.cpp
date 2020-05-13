@@ -11,6 +11,8 @@
 #include <INativeUIManager.h>
 #include <Utils/ValueUtils.h>
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <winrt/Windows.Foundation.h>
 
 namespace winrt {

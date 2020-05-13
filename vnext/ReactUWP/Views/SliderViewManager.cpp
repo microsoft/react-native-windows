@@ -9,6 +9,9 @@
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
+#include <UI.Composition.h>
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
 
 namespace winrt {
 using ToggleButton = xaml::Controls::Primitives::ToggleButton;

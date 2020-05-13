@@ -5,6 +5,8 @@
 
 #include "DynamicAutomationProperties.h"
 
+#include <winrt/Windows.UI.Xaml.Interop.h>
+
 // Needed for latest versions of C++/WinRT
 #if __has_include("DynamicAutomationProperties.g.cpp")
 #include "DynamicAutomationProperties.g.cpp"

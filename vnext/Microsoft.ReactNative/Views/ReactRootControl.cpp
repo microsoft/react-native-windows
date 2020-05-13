@@ -20,7 +20,6 @@
 #include <winrt/Windows.Devices.Input.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Input.h>
 
 #include <ReactHost/React.h>
 #include <ReactHost/React_Win.h>
@@ -28,6 +27,12 @@
 #include <object/unknownObject.h>
 
 #include <ReactHost/MsoUtils.h>
+
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.Media3D.h>
 
 namespace react::uwp {
 

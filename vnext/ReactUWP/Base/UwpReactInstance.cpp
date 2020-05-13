@@ -52,9 +52,9 @@
 #endif // USE_V8
 
 #include <ReactWindowsCore/RedBoxHandler.h>
-#include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
 
+#include <UI.Popups.h>
 #include <tuple>
 
 namespace react {

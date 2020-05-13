@@ -6,11 +6,18 @@
 #include <functional/functor.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.Web.Http.h>
 #include <regex>
 #include "CppWinRTIncludes.h"
 #include "Unicode.h"
+
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Markup.h>
 
 using namespace winrt::Windows::Foundation;
 

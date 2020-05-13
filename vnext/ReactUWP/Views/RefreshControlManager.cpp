@@ -6,6 +6,7 @@
 #include "RefreshControlManager.h"
 
 #include <ReactUWP\Utils\Helpers.h>
+#include <UI.Xaml.Controls.h>
 #include <Views/ShadowNodeBase.h>
 
 namespace winrt {

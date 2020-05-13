@@ -5,10 +5,10 @@
 
 #include "VirtualTextViewManager.h"
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
-
-#include <winrt/Windows.UI.Text.h>
 
 namespace winrt {
 using namespace Windows::UI;

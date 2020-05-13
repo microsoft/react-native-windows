@@ -6,6 +6,8 @@
 #include <Views/ShadowNodeBase.h>
 #include "CheckboxViewManager.h"
 
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>

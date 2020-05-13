@@ -1,5 +1,6 @@
 #include "pch.h"
 
+#include <UI.Xaml.Controls.h>
 #include "ScrollViewUWPImplementation.h"
 
 namespace react {
