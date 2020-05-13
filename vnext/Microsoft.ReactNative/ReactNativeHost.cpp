@@ -9,7 +9,6 @@
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::ApplicationModel;
 using namespace xaml;
 using namespace xaml::Controls;
 
@@ -22,31 +21,6 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
     OutputDebugStringA(str.c_str());
   });
 #endif
-  RegisterLifecycleEvents();
-}
-
-void ReactNativeHost::RegisterLifecycleEvents() {
-  m_lifecycleEventListeners = single_threaded_vector<ILifecycleEventListener>();
-
-  m_enteredBackgroundRevoker = Application::Current().EnteredBackground(
-      winrt::auto_revoke, [&](IInspectable const&, EnteredBackgroundEventArgs const&) {
-      OnEnteredBackground();
-    });
-
-   m_leavingBackgroundRevoker = Application::Current().LeavingBackground(
-      winrt::auto_revoke, [&](IInspectable const&, LeavingBackgroundEventArgs const&) {
-      OnLeavingBackground();
-     });
-
-   m_suspendingRevoker = Application::Current().Suspending(
-       winrt::auto_revoke, [&](IInspectable const&, SuspendingEventArgs const&) {
-       OnSuspend();
-     });
-
-   m_resumingRevoker = Application::Current().Resuming(
-       winrt::auto_revoke, [&](IInspectable const&, IInspectable const&) {
-       OnResume(nullptr);
-     });
 }
 
 IVector<IReactPackageProvider> ReactNativeHost::PackageProviders() noexcept {
@@ -140,64 +114,6 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {
   return m_reactHost.Get();
-}
-
-// TODO: Create a LifeCycleStateMachine in constructor to raise events in response
-// to events from the application and associate it with the ReactContext.
-// Define the ILifecycleEventListener and add support to ReactContext to
-// register a lifecycle listener. Define the IBackgroundEventListener and add
-// support to ReactContext to register modules as background event listeners.
-
-void ReactNativeHost::OnSuspend() noexcept {
-  for (auto const &listener : m_lifecycleEventListeners) {
-    listener.OnSuspend();
-  }
-}
-
-void ReactNativeHost::OnEnteredBackground() noexcept {
-  for (auto const &listener : m_lifecycleEventListeners) {
-    listener.OnSuspend();
-  }
-}
-
-void ReactNativeHost::OnLeavingBackground() noexcept {
-  for (auto const &listener : m_lifecycleEventListeners) {
-    listener.OnResume();
-  }
-}
-
-void ReactNativeHost::OnResume(OnResumeAction const & /*action*/) noexcept {
-  for (auto const &listener : m_lifecycleEventListeners) {
-    listener.OnResume();
-  }
-}
-
-void ReactNativeHost::OnBackPressed() noexcept {
-  OutputDebugStringW(L"TODO: ReactNativeHost::OnBackPressed not implemented");
-
-  // DispatcherHelpers.AssertOnDispatcher();
-  // var reactContext = _currentReactContext;
-  // if (reactContext == null)
-  //{
-  //	RnLog.Warn(ReactConstants.RNW, $"ReactInstanceManager: OnBackPressed:
-  // Instance detached from instance manager.");
-  // InvokeDefaultOnBackPressed();
-  //}
-  // else
-  //{
-  //	reactContext.GetNativeModule<DeviceEventManagerModule>().EmitHardwareBackPressed();
-  //}
-}
-
-void ReactNativeHost::AddLifecycleEventListener(ILifecycleEventListener const& listener) {
-  m_lifecycleEventListeners.Append(listener);
-}
-
-void ReactNativeHost::RemoveLifecycleEventListener(ILifecycleEventListener const& listener) {
-  uint32_t index = 0;
-  if (m_lifecycleEventListeners.IndexOf(listener, index)) {
-    m_lifecycleEventListeners.RemoveAt(index);
-  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
