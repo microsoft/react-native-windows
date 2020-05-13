@@ -20,6 +20,7 @@ const {
   cleanTask,
 } = require('just-scripts');
 const {execSync} = require('child_process');
+const fs = require('fs');
 const libPath = path.resolve(process.cwd(), 'lib');
 const srcPath = path.resolve(process.cwd(), 'src');
 
@@ -61,6 +62,13 @@ task('initRNLibraries', () => {
   require('./Scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
 
+task('copyReadmeFromRoot', () => {
+  fs.copyFileSync(
+    path.resolve(__dirname, '../README.md'),
+    path.resolve(__dirname, 'README.md'),
+  );
+});
+
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -86,6 +94,7 @@ task(
     condition('clean', () => true || argv().clean),
     'initRNLibraries',
     'copyFlowFiles',
+    'copyReadmeFromRoot',
     'ts',
     'codegen',
     condition('apiExtractorVerify', () => argv().ci),

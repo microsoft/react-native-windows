@@ -59,7 +59,12 @@ string DevSupportManager::GetJavaScriptFromServer(
   Url url(bundleUrl);
   auto const resolveResult = m_resolver.resolve(url.host, url.port);
   tcp::socket socket{m_context};
-  connect(socket, resolveResult);
+  boost::system::error_code ec;
+  connect(socket, resolveResult, ec);
+  if (ec) {
+    m_exceptionCaught = true;
+    return R"({"error:")"s + ec.message() + R"("})"s;
+  }
 
   request<string_body> request{verb::get, url.Target(), 11};
   request.set(field::host, url.host);
@@ -119,7 +124,12 @@ task<void> DevSupportManager::LaunchDevToolsAsync(const string &debugHost, const
     Url url(DevServerHelper::get_LaunchDevToolsCommandUrl(debugHost));
     auto const resolveResult = m_resolver.resolve(url.host, url.port);
     tcp::socket socket{m_context};
-    connect(socket, resolveResult);
+    boost::system::error_code ec;
+    connect(socket, resolveResult, ec);
+    if (ec) {
+      m_exceptionCaught = true;
+      return;
+    }
 
     request<string_body> request{verb::get, url.Target(), 11};
     request.set(field::host, url.host);

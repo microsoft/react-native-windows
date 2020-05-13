@@ -9,6 +9,7 @@
 #define VERSION 1.0
 
 import "AccessibilityAction.idl";
+#include "NamespaceRedirect.h"
 
 // The DynamicAutomationProperties must be in the project namespace to be
 // usable by Xaml dependency properties.
@@ -19,116 +20,116 @@ import "AccessibilityAction.idl";
 
 namespace PROJECT_ROOT_NAMESPACE
 {
-	enum AccessibilityRoles
-	{
-		None = 0,
-		Button,
-		Link,
-		Search,
-		Image,
-		KeyboardKey,
-		Text,
-		Adjustable,
-		ImageButton,
-		Header,
-		Summary,
-		Alert,
-		CheckBox,
-		ComboBox,
-		Menu,
-		MenuBar,
-		MenuItem,
-		ProgressBar,
-		Radio,
-		RadioGroup,
-		ScrollBar,
-		SpinButton,
-		Switch,
-		Tab,
-		TabList,
-		Timer,
-		ToolBar,
-		List, // RNW extension
-		ListItem, // RNW extension
-		Unknown, // Catch-all
-		CountRoles
-	};
+  enum AccessibilityRoles
+  {
+    None = 0,
+    Button,
+    Link,
+    Search,
+    Image,
+    KeyboardKey,
+    Text,
+    Adjustable,
+    ImageButton,
+    Header,
+    Summary,
+    Alert,
+    CheckBox,
+    ComboBox,
+    Menu,
+    MenuBar,
+    MenuItem,
+    ProgressBar,
+    Radio,
+    RadioGroup,
+    ScrollBar,
+    SpinButton,
+    Switch,
+    Tab,
+    TabList,
+    Timer,
+    ToolBar,
+    List, // RNW extension
+    ListItem, // RNW extension
+    Unknown, // Catch-all
+    CountRoles
+  };
 
-	enum AccessibilityStates
-	{
-		Selected = 0,
-		Disabled,
-		Checked,
-		Unchecked,
-		Busy,
-		Expanded,
-		Collapsed,
-		CountStates
-	};
+  enum AccessibilityStates
+  {
+    Selected = 0,
+    Disabled,
+    Checked,
+    Unchecked,
+    Busy,
+    Expanded,
+    Collapsed,
+    CountStates
+  };
 
-	delegate void AccessibilityInvokeEventHandler();
-	delegate void AccessibilityActionEventHandler(AccessibilityAction action);
+  delegate void AccessibilityInvokeEventHandler();
+  delegate void AccessibilityActionEventHandler(AccessibilityAction action);
 
-	[default_interface]
-	[webhosthidden]
-	runtimeclass DynamicAutomationProperties
-	{
-		// Attached Properties
-		static Windows.UI.Xaml.DependencyProperty AccessibilityRoleProperty { get; };
-		static void SetAccessibilityRole(Windows.UI.Xaml.UIElement element, AccessibilityRoles value);
-		static AccessibilityRoles GetAccessibilityRole(Windows.UI.Xaml.UIElement element);
+  [default_interface]
+  [webhosthidden]
+  runtimeclass DynamicAutomationProperties
+  {
+    // Attached Properties
+    static XAML_NAMESPACE.DependencyProperty AccessibilityRoleProperty { get; };
+    static void SetAccessibilityRole(XAML_NAMESPACE.UIElement element, AccessibilityRoles value);
+    static AccessibilityRoles GetAccessibilityRole(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateSelectedProperty { get; };
-		static void SetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateSelectedProperty { get; };
+    static void SetAccessibilityStateSelected(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateSelected(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateDisabledProperty { get; };
-		static void SetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateDisabledProperty { get; };
+    static void SetAccessibilityStateDisabled(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateDisabled(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateCheckedProperty { get; };
-		static void SetAccessibilityStateChecked(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateChecked(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateCheckedProperty { get; };
+    static void SetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateUncheckedProperty { get; };
-		static void SetAccessibilityStateUnchecked(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateUnchecked(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateUncheckedProperty { get; };
+    static void SetAccessibilityStateUnchecked(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateUnchecked(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateBusyProperty { get; };
-		static void SetAccessibilityStateBusy(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateBusy(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateBusyProperty { get; };
+    static void SetAccessibilityStateBusy(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateBusy(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateExpandedProperty { get; };
-		static void SetAccessibilityStateExpanded(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateExpanded(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateExpandedProperty { get; };
+    static void SetAccessibilityStateExpanded(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateExpanded(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateCollapsedProperty { get; };
-		static void SetAccessibilityStateCollapsed(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateCollapsed(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateCollapsedProperty { get; };
+    static void SetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
-		static void SetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityInvokeEventHandler value);
-		static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
+    static void SetAccessibilityInvokeEventHandler(XAML_NAMESPACE.UIElement element, AccessibilityInvokeEventHandler value);
+    static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityActionsProperty { get; };
-		static void SetAccessibilityActions(Windows.UI.Xaml.UIElement element, Windows.Foundation.Collections.IVector<PROJECT_ROOT_NAMESPACE.AccessibilityAction> value);
-		static Windows.Foundation.Collections.IVector<PROJECT_ROOT_NAMESPACE.AccessibilityAction> GetAccessibilityActions(Windows.UI.Xaml.UIElement element);
+    static XAML_NAMESPACE.DependencyProperty AccessibilityActionsProperty { get; };
+    static void SetAccessibilityActions(XAML_NAMESPACE.UIElement element, Windows.Foundation.Collections.IVector<PROJECT_ROOT_NAMESPACE.AccessibilityAction> value);
+    static Windows.Foundation.Collections.IVector<PROJECT_ROOT_NAMESPACE.AccessibilityAction> GetAccessibilityActions(XAML_NAMESPACE.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityActionEventHandlerProperty { get; };
-		static void SetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityActionEventHandler value);
-		static AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element);
-	}
+    static XAML_NAMESPACE.DependencyProperty AccessibilityActionEventHandlerProperty { get; };
+    static void SetAccessibilityActionEventHandler(XAML_NAMESPACE.UIElement element, AccessibilityActionEventHandler value);
+    static AccessibilityActionEventHandler GetAccessibilityActionEventHandler(XAML_NAMESPACE.UIElement element);
+  }
 
-	[default_interface]
-	[webhosthidden]
-	runtimeclass DynamicAutomationPeer :
-		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
-		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,
-		Windows.UI.Xaml.Automation.Provider.ISelectionProvider,
-		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider,
-		Windows.UI.Xaml.Automation.Provider.IToggleProvider,
-		Windows.UI.Xaml.Automation.Provider.IExpandCollapseProvider
-	{
-		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
-	}
+  [default_interface]
+  [webhosthidden]
+  runtimeclass DynamicAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.IInvokeProvider,
+    XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
+    XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider,
+    XAML_NAMESPACE.Automation.Provider.IToggleProvider,
+    XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider
+  {
+    DynamicAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
 }

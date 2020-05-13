@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Composition.h>
-
 namespace react {
 namespace uwp {
 
@@ -16,14 +14,14 @@ namespace uwp {
 // resolved, so they can be reused.
 class ExpressionAnimationStore {
  public:
-  winrt::Windows::UI::Composition::ExpressionAnimation GetElementCenterPointExpression();
-  winrt::Windows::UI::Composition::ExpressionAnimation GetTransformCenteringExpression();
+  comp::ExpressionAnimation GetElementCenterPointExpression();
+  comp::ExpressionAnimation GetTransformCenteringExpression();
 
  private:
   // Compositor bug, see notes in GetElementCenterPointExpression()
-  //  winrt::Windows::UI::Composition::ExpressionAnimation
+  //  comp::ExpressionAnimation
   //      m_elementCenterPointExpression{nullptr};
-  winrt::Windows::UI::Composition::ExpressionAnimation m_transformCenteringExpression{nullptr};
+  comp::ExpressionAnimation m_transformCenteringExpression{nullptr};
 };
 
 } // namespace uwp

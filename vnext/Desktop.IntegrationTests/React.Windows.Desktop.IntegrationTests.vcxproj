@@ -23,6 +23,7 @@
     <ProjectGuid>{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}</ProjectGuid>
     <ProjectName>React.Windows.Desktop.IntegrationTests</ProjectName>
     <CppWinRTOptimized>true</CppWinRTOptimized>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -54,10 +55,8 @@
         _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
-        REACTNATIVEWIN32_EXPORTS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        GLOG_NO_ABBREVIATED_SEVERITIES;
         _HAS_AUTO_PTR_ETC;
         CHAKRACORE;
         RN_PLATFORM=windesktop;
@@ -74,14 +73,12 @@
       <!--
         comsuppw.lib  - _com_util::ConvertStringToBSTR
         delayimp.lib  -
-        Winhttp.lib   - WebSocket resource implementation
       -->
       <AdditionalDependencies>
         comsuppw.lib;
         delayimp.lib;
         Shlwapi.lib;
         Version.lib;
-        Winhttp.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -103,20 +100,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
-      <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
-      <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
-      <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
     </ProjectReference>
     <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
       <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>

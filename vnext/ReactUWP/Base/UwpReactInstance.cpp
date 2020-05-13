@@ -51,7 +51,7 @@
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
-#include <ReactWindowsCore/RedBoxHandler.h>
+#include <ReactWindowsCore/IRedBoxHandler.h>
 #include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
 
@@ -87,7 +87,7 @@ struct UwpReactRedBoxHandler : Mso::React::IRedBoxHandler {
         Microsoft::Common::Unicode::Utf8ToUtf16(ss.str().c_str()), L"RedBox Error");
     dlg.ShowAsync();
   }
-  virtual bool isDevSupportEnabled() override {
+  virtual bool isDevSupportEnabled() const override {
     return true;
   }
   virtual void updateError(Mso::React::ErrorInfo &&) override {}
@@ -114,7 +114,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
   std::shared_ptr<react::uwp::AppTheme> appTheme =
       std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
-  std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
+  I18nHelper::Instance().setInfo(I18nModule::GetI18nInfo());
   auto appearanceListener = Mso::Make<AppearanceChangeListener>(spThis);
 
   // TODO: Figure out threading. What thread should this really be on?
@@ -124,7 +124,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
                                 spThis,
                                 deviceInfo,
                                 settings,
-                                i18nInfo = std::move(i18nInfo),
                                 appstate = std::move(appstate),
                                 appTheme = std::move(appTheme),
                                 appearanceListener = std::move(appearanceListener)]() mutable {
@@ -203,7 +202,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         m_batchingNativeThread,
         m_defaultNativeThread,
         std::move(deviceInfo),
-        std::move(i18nInfo),
         std::move(appstate),
         std::move(appTheme),
         std::move(appearanceListener),

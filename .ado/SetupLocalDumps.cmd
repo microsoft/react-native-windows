@@ -8,4 +8,6 @@ if not exist %CRASHDUMPS_FOLDER% (
 ) else (
     del %CRASHDUMPS_FOLDER%\* /s /q
 )
+
+regedit /S %~dp0%\ReactUWPTestApp.reg
 endlocal

@@ -11,7 +11,7 @@ using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactEventInfo
+  internal class ReactEventInfo
   {
     public ReactEventInfo(PropertyInfo propertyInfo, ReactEventAttribute eventAttribute, string eventEmitterName)
     {

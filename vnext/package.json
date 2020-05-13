@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.50",
+  "version": "0.0.0-master.65",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -52,15 +52,15 @@
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
-    "react": "16.9.0",
-    "react-native-windows-codegen": "0.0.3",
+    "react": "16.11.0",
+    "react-native-windows-codegen": "0.0.4",
     "react-native-windows-override-tools": "^0.0.1",
     "react-native": "0.62.2",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "react": "16.9.0",
-    "react-native": "0.62.2"
+    "react": "16.11.0",
+    "react-native": "^0.62.0-0"
   },
   "beachball": {
     "defaultNpmTag": "master",
@@ -69,5 +69,50 @@
       "minor",
       "patch"
     ]
-  }
+  },
+  "files": [
+    "/codegen",
+    "/Chakra",
+    "/Common",
+    "/DeforkingPatches",
+    "/etc",
+    "/flow",
+    "/Folly",
+    "/include",
+    "/JSI",
+    "/Libraries",
+    "!/Libraries/**/*.windesktop.*",
+    "/local-cli",
+    "/Microsoft.ReactNative",
+    "/Microsoft.ReactNative.Cxx",
+    "/Microsoft.ReactNative.Managed",
+    "/Microsoft.ReactNative.SharedManaged",
+    "/Mso",
+    "/PropertySheets",
+    "/ReactCommon",
+    "/ReactUWP",
+    "/ReactWindowsCore",
+    "/Scripts",
+    "/Shared",
+    "/stubs",
+    "/.flowconfig",
+    "/Directory.Build.props",
+    "/Directory.Build.targets",
+    "/index.js",
+    "/index.windows.d.ts",
+    "/index.windows.d.ts.map",
+    "/index.windows.js",
+    "/index.windows.js.map",
+    "/interface.js",
+    "/just-task.js",
+    "/layoutFilesForNuget.bat",
+    "/metro-react-native-platform.js",
+    "/metro.config.js",
+    "/react-native.config.js",
+    "/typings-index.d.ts",
+    "/typings-index.d.ts.map",
+    "/typings-index.js",
+    "/typings-index.js.map",
+    "/rn-get-polyfills.js"
+  ]
 }

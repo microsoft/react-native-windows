@@ -22,7 +22,7 @@ namespace Microsoft.ReactNative.Managed
   //
   // Methods annotated with ReactMethodAttribute that use a IReactPromise as the last parameter
   // will be marked as "promise" and will return a promise when invoked from JavaScript.
-  interface IReactPromise<T>
+  public interface IReactPromise<T>
   {
     // Successfully resolve the IReactPromise with an optional value.
     void Resolve(T value = default(T));
@@ -31,7 +31,7 @@ namespace Microsoft.ReactNative.Managed
     void Reject(ReactError error);
   }
 
-  class ReactError
+  public class ReactError
   {
     public string Code = null;
     public string Message = null;

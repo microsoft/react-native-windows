@@ -2,6 +2,9 @@
 
 #define NOMINMAX
 
-#include "gtest/gtest.h"
-#include "motifCpp/gTestAdapter.h"
+#include <future>
+#include "functional/functor.h"
 #include "motifCpp/testCheck.h"
+
+#undef GetCurrentTime
+#include <winrt/Windows.Foundation.Collections.h>

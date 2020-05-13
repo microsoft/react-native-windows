@@ -12,7 +12,7 @@ namespace Microsoft.ReactNative.Managed
 {
   // JSValueObject is based on Dictionary<string, JSValue> and can be used to initialize Object value in JSValue.
   // It is possible to write: JSValueObject{{"X", 4}, {"Y", 5}} or JSValueObject{["X"] = 4, ["Y"] = 5} and assign it to JSValue.
-  class JSValueObject : Dictionary<string, JSValue>, IEquatable<JSValueObject>
+  public class JSValueObject : Dictionary<string, JSValue>, IEquatable<JSValueObject>
   {
     // Default constructor
     public JSValueObject() { }
@@ -129,7 +129,7 @@ namespace Microsoft.ReactNative.Managed
 
   // JSValueObject is based on List<JSValue> and can be used to initialize Array value in JSValue.
   // It is possible to write: JSValueArray{"X", 42, JSValue.Null, true} and assign it to JSValue.
-  class JSValueArray : List<JSValue>, IEquatable<JSValueArray>
+  public class JSValueArray : List<JSValue>, IEquatable<JSValueArray>
   {
     // Default constructor
     public JSValueArray() { }
@@ -252,7 +252,7 @@ namespace Microsoft.ReactNative.Managed
   // - It avoids boxing simple values by using a union type to store them.
   // The JSValue is an immutable and is safe to be used from multiple threads.
   // It does not implement GetHashCode() and must not be used as a key in a dictionary.
-  struct JSValue : IEquatable<JSValue>
+  public struct JSValue : IEquatable<JSValue>
   {
     public static readonly JSValue Null = new JSValue();
     public static readonly JSValue EmptyObject = new JSValueObject();

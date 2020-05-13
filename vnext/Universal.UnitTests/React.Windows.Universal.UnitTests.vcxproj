@@ -8,6 +8,7 @@
     <UnitTestPlatformVersion>15.0</UnitTestPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <BuildMSRNCxx>false</BuildMSRNCxx>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -34,6 +35,9 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -116,9 +120,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
-      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactUWP\ReactUWP.vcxproj">
       <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>

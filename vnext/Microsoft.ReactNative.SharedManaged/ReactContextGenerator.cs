@@ -4,12 +4,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 
 namespace Microsoft.ReactNative.Managed
 {
-  static class ReactContextGenerator
+  public static class ReactContextGenerator
   {
     private static MethodInfo GetMethod(string methodName, Type[] typeArgs, params Type[] requiredArgTypes)
     {

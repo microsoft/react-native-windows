@@ -39,14 +39,18 @@ class ReactInstanceWin;
 
 class ReactContext final : public Mso::UnknownObject<IReactContext> {
  public:
-  ReactContext(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept;
+  ReactContext(
+      Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
  public: // IReactContext
+  winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept override;
   void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
 
  private:
   Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
+  winrt::Microsoft::ReactNative::IReactPropertyBag m_properties;
 };
 
 //! ReactInstance implementation for Windows that is managed by ReactHost.
@@ -79,7 +83,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   //    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
   ReactInstanceWin(
       IReactHost &reactHost,
-      ReactOptions &&options,
+      ReactOptions const &options,
       Mso::Promise<void> &&whenCreated,
       Mso::Promise<void> &&whenLoaded,
       Mso::VoidFunctor &&updateUI) noexcept;
@@ -155,7 +159,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::shared_ptr<facebook::react::AppState> m_appState;
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
-  std::pair<std::string, bool> m_i18nInfo{};
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
   std::string m_bundleRootPath;
 };

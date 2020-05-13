@@ -37,16 +37,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactNative", "ReactNative"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj", "{F7D32BD0-2749-483E-9A0D-1635EF7E3136}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeDumpLibrary", "TreeDumpLibrary\TreeDumpLibrary.csproj", "{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed", "..\..\..\vnext\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj", "{F2824844-CE15-4242-9420-308923CD76C3}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{67a1076f-7790-4203-86ea-4402ccb5e782}*SharedItemsImports = 13
+		..\..\..\vnext\ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603144}*SharedItemsImports = 4
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{a62d504a-16b8-41d2-9f19-e2e86019e5e4}*SharedItemsImports = 4
-		..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{abbb0407-0e82-486f-94ce-710900fcaadc}*SharedItemsImports = 4
-		..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}*SharedItemsImports = 4
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 		..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
@@ -200,6 +198,22 @@ Global
 		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x64.Build.0 = Release|x64
 		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x86.ActiveCfg = Release|x86
 		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x86.Build.0 = Release|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM.Build.0 = Debug|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.ActiveCfg = Debug|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.Build.0 = Debug|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.ActiveCfg = Debug|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.Build.0 = Debug|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM.ActiveCfg = Release|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM.Build.0 = Release|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.Build.0 = Release|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.ActiveCfg = Release|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.Build.0 = Release|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.ActiveCfg = Release|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,7 +225,7 @@ Global
 		{A62D504A-16B8-41D2-9F19-E2E86019E5E4} = {AB7DB37D-898C-4BBC-9F2A-E043EC90C8F3}
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D} = {AB7DB37D-898C-4BBC-9F2A-E043EC90C8F3}
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {AB7DB37D-898C-4BBC-9F2A-E043EC90C8F3}
-		{67A1076F-7790-4203-86EA-4402CCB5E782} = {AB7DB37D-898C-4BBC-9F2A-E043EC90C8F3}
+		{F2824844-CE15-4242-9420-308923CD76C3} = {AB7DB37D-898C-4BBC-9F2A-E043EC90C8F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5EAF3BA-6B6F-4E81-B5C6-49B30EC0A32E}

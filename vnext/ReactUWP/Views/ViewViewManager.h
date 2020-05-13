@@ -6,10 +6,6 @@
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ViewPanel.h>
 
-namespace winrt {
-using ContentControl = winrt::Windows::UI::Xaml::Controls::ContentControl;
-}
-
 namespace react {
 namespace uwp {
 

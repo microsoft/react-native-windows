@@ -21,7 +21,7 @@ DeviceInfo::DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance) : m
 
 void DeviceInfo::listenToUpdates() {
   auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
+  auto const &window = xaml::Window::Current().CoreWindow();
 
   m_sizeChangedRevoker = window.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
     update();
@@ -40,7 +40,7 @@ void DeviceInfo::update() {
 
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
-  auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
+  auto const &window = xaml::Window::Current().CoreWindow();
 
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",

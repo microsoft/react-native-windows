@@ -11,7 +11,7 @@ using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactFunctionInfo
+  internal class ReactFunctionInfo
   {
     public ReactFunctionInfo(PropertyInfo propertyInfo, ReactFunctionAttribute functionAttribute, string moduleName)
     {

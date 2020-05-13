@@ -9,11 +9,16 @@
     <ClCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BoxedValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
@@ -22,13 +27,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactPropertyBag.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactContext.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />

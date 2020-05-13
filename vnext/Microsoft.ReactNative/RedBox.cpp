@@ -2,32 +2,27 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "RedBox.h"
+#include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.Web.Http.h>
-
-#include <boost/algorithm/string.hpp>
 #include <regex>
+#include "CppWinRTIncludes.h"
 #include "Unicode.h"
 
-namespace xaml = winrt::Windows::UI::Xaml;
 using namespace winrt::Windows::Foundation;
 
 namespace Mso::React {
 
 struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
-      Mso::WeakPtr<IReactHost> weakReactHost,
+      const Mso::WeakPtr<IReactHost> &weakReactHost,
       Mso::Functor<void(uint32_t)> &&onClosedCallback,
       ErrorInfo &&errorInfo) noexcept
-      : m_weakReactHost(std::move(weakReactHost)),
+      : m_weakReactHost(weakReactHost),
         m_onClosedCallback(std::move(onClosedCallback)),
         m_errorInfo(std::move(errorInfo)) {}
 
@@ -157,6 +152,59 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 #define _MAKE_WIDE_STR(x) L##x
 #define MAKE_WIDE_STR(x) _MAKE_WIDE_STR(x)
 
+  void CreateWebView(xaml::Controls::Panel parent, const winrt::hstring &content) {
+#ifndef USE_WINUI3
+    xaml::Controls::WebView webView;
+#else
+    xaml::Controls::WebView2 webView;
+#endif
+
+    webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
+    webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
+    webView.MinWidth(400);
+    auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
+    // XAML doesn't currently provide a way to measure a WebView control,
+    // So we're going to tell the WebView to measure itself by running some javascript,
+    // and then we'll post a task back to XAML to set the XAML WebView minimum height.
+    // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
+    // the fact that we're running javascript in the WebView, to set the
+    // foreground/background to match the rest of the RedBox.
+    // setProperty returns undefined so we continue the first expression with a comma
+    // whereas the height expression gets executed because of the ||
+    // (since the setProperty calls resulted in undefined).
+    // Finally, it's important to note that JS expressions of that are not of string type
+    // need to be manually converted to string for them to get marshaled properly back here.
+    webView.NavigationCompleted([=](IInspectable const &, auto const &) {
+      // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
+      std::wstring jsExpression =
+          L"(document.body.style.setProperty('color', 'white'), "
+          L"document.body.style.setProperty('background', '#be0000')) "
+          L"|| document.documentElement.scrollHeight.toString()";
+
+#ifndef USE_WINUI3
+      auto async = webView.InvokeScriptAsync(L"eval", std::vector<winrt::hstring>{winrt::hstring { jsExpression }});
+#else
+      auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
+#endif
+
+      async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&) {
+        auto result = op.GetResults();
+        int documentHeight = _wtoi(result.c_str());
+        dispatcher.TryEnqueue([=]() {
+          // Ensure the webview has a min height of the content it wants to show,
+          // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
+          constexpr int horizontalScrollbarHeight = 12;
+          webView.MinHeight(documentHeight + horizontalScrollbarHeight);
+        });
+      });
+    });
+
+    m_stackPanel.Children().Clear();
+    m_stackPanel.Children().Append(webView);
+
+    webView.NavigateToString(content);
+  }
+
   void UpdateErrorMessageUI() noexcept {
     const std::regex colorsRegex(
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
@@ -174,8 +222,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           xaml::Documents::Run linkRun;
 
           linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-          link.Foreground(
-              xaml::Media::SolidColorBrush(winrt::Windows::UI::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+          link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
           link.Inlines().Append(linkRun);
           xaml::Documents::Run normalRun;
           normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
@@ -210,51 +257,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     } catch (...) {
       std::string doctype = "<!DOCTYPE HTML>";
       if (boost::istarts_with(plain, doctype)) {
-        auto webView = xaml::Controls::WebView(xaml::Controls::WebViewExecutionMode::SameThread);
-
         winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
 
-        webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
-        webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
-        webView.MinWidth(400);
-
-        m_stackPanel.Children().Clear();
-        m_stackPanel.Children().Append(webView);
-
-        auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
-        // XAML doesn't currently provide a way to measure a WebView control,
-        // So we're going to tell the WebView to measure itself by running some javascript,
-        // and then we'll post a task back to XAML to set the XAML WebView minimum height.
-        // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
-        // the fact that we're running javascript in the WebView, to set the
-        // foreground/background to match the rest of the RedBox.
-        // setProperty returns undefined so we continue the first expression with a comma
-        // whereas the height expression gets executed because of the ||
-        // (since the setProperty calls resulted in undefined).
-        // Finally, it's important to note that JS expressions of that are not of string type
-        // need to be manually converted to string for them to get marshaled properly back here.
-        webView.NavigationCompleted(
-            [=](IInspectable const &, xaml::Controls::WebViewNavigationCompletedEventArgs const &) {
-              // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
-              std::vector<winrt::hstring> args{
-                  L"(document.body.style.setProperty('color', 'white'), "
-                  L"document.body.style.setProperty('background', '#be0000')) "
-                  L"|| document.documentElement.scrollHeight.toString()"};
-              auto async = webView.InvokeScriptAsync(L"eval", std::move(args));
-
-              async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&state) {
-                auto result = op.GetResults();
-                int documentHeight = _wtoi(result.c_str());
-                dispatcher.TryEnqueue([=]() {
-                  // Ensure the webview has a min height of the content it wants to show,
-                  // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
-                  constexpr int horizontalScrollbarHeight = 12;
-                  webView.MinHeight(documentHeight + horizontalScrollbarHeight);
-                });
-              });
-            });
-
-        webView.NavigateToString(content);
+        CreateWebView(m_stackPanel, content);
 
         m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
         m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
@@ -352,26 +357,22 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 /*
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
-struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedBoxHandler {
-  RedBoxHandler(
-      Mso::WeakPtr<Mso::React::IReactHost> weakReactHost,
-      std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue) noexcept
-      : m_weakReactHost(std::move(weakReactHost)), m_wkUIMessageQueue(std::move(uiMessageQueue)) {}
+struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
+  DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost) noexcept
+      : m_weakReactHost(std::move(weakReactHost)) {}
 
-  ~RedBoxHandler() {
+  ~DefaultRedBoxHandler() {
     // Hide any currently showing redboxes
     std::vector<std::shared_ptr<RedBox>> redboxes;
     {
       std::scoped_lock lock{m_lockRedBox};
       std::swap(m_redboxes, redboxes);
     }
-    if (auto uiQueue = m_wkUIMessageQueue.lock()) {
-      uiQueue->runOnQueue([redboxes = std::move(redboxes)]() {
-        for (const auto redbox : redboxes) {
-          redbox->Dismiss();
-        }
-      });
-    }
+    Mso::DispatchQueue::MainUIQueue().Post([redboxes = std::move(redboxes)]() {
+      for (const auto redbox : redboxes) {
+        redbox->Dismiss();
+      }
+    });
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
@@ -390,7 +391,7 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
     showTopJSError();
   }
 
-  virtual bool isDevSupportEnabled() override {
+  virtual bool isDevSupportEnabled() const override {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
       return reactHost->Options().DeveloperSettings.IsDevModeEnabled;
     }
@@ -410,28 +411,26 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
       }
     }
     if (redbox) {
-      if (auto uiQueue = m_wkUIMessageQueue.lock()) {
-        uiQueue->runOnQueue([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
-          redboxCaptured->UpdateError(std::move(errorInfo));
-        });
-      }
+      Mso::DispatchQueue::MainUIQueue().Post([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
+        redboxCaptured->UpdateError(std::move(errorInfo));
+      });
     }
   }
 
   virtual void dismissRedbox() override {
-    if (auto uiQueue = m_wkUIMessageQueue.lock()) {
-      uiQueue->runOnQueue([&]() {
-        std::scoped_lock lock{m_lockRedBox};
-        if (!m_redboxes.empty())
-          m_redboxes[0]->Dismiss();
-      });
-    }
+    Mso::DispatchQueue::MainUIQueue().Post([wkthis = std::weak_ptr(shared_from_this())]() {
+      if (auto pthis = wkthis.lock()) {
+        std::scoped_lock lock{pthis->m_lockRedBox};
+        if (!pthis->m_redboxes.empty())
+          pthis->m_redboxes[0]->Dismiss();
+      }
+    });
   }
 
  private:
   // When notified by a redbox that its been dismisssed
   void onDismissedCallback(uint32_t id) noexcept {
-    // Save a local ref, so if we are removing the last redbox which could hold the last ref to the RedBoxHandler
+    // Save a local ref, so if we are removing the last redbox which could hold the last ref to the DefaultRedBoxHandler
     // We ensure that we exit the mutex before the handler is destroyed.
     std::shared_ptr<RedBox> redbox;
     {
@@ -459,25 +458,114 @@ struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedB
       }
     }
 
-    if (auto uiQueue = m_wkUIMessageQueue.lock()) {
-      if (m_showingRedBox || !redbox) // Only show one redbox at a time
-        return;
-      m_showingRedBox = true;
-      uiQueue->runOnQueue([redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
-    }
+    if (m_showingRedBox || !redbox) // Only show one redbox at a time
+      return;
+    m_showingRedBox = true;
+
+    Mso::DispatchQueue::MainUIQueue().Post(
+        [redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
   }
 
   bool m_showingRedBox = false; // Access from UI Thread only
   std::mutex m_lockRedBox;
   std::vector<std::shared_ptr<RedBox>> m_redboxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
-  const std::weak_ptr<facebook::react::MessageQueueThread> m_wkUIMessageQueue;
+};
+
+struct RedBoxErrorFrameInfo
+    : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
+  RedBoxErrorFrameInfo(Mso::React::ErrorFrameInfo &&errorFrameInfo) : m_frame(std::move(errorFrameInfo)) {}
+
+  winrt::hstring File() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.File).c_str();
+  }
+
+  winrt::hstring Method() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.Method).c_str();
+  }
+
+  uint32_t Line() const noexcept {
+    return m_frame.Line;
+  }
+
+  uint32_t Column() const noexcept {
+    return m_frame.Column;
+  }
+
+ private:
+  Mso::React::ErrorFrameInfo m_frame;
+};
+
+struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::IRedBoxErrorInfo> {
+  RedBoxErrorInfo(Mso::React::ErrorInfo &&errorInfo) : m_errorInfo(std::move(errorInfo)) {}
+
+  winrt::hstring Message() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
+  }
+
+  uint32_t Id() const noexcept {
+    return m_errorInfo.Id;
+  }
+
+  winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>
+  Callstack() noexcept {
+    if (!m_callstack) {
+      m_callstack = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>();
+      for (auto frame : m_errorInfo.Callstack) {
+        m_callstack.Append(winrt::make<RedBoxErrorFrameInfo>(std::move(frame)));
+      }
+    }
+
+    return m_callstack.GetView();
+  }
+
+ private:
+  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> m_callstack{
+      nullptr};
+
+  Mso::React::ErrorInfo m_errorInfo;
+};
+
+struct RedBoxHandler : public Mso::React::IRedBoxHandler {
+  RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
+
+  static_assert(
+      static_cast<uint32_t>(Mso::React::ErrorType::JSFatal) ==
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal));
+  static_assert(
+      static_cast<uint32_t>(Mso::React::ErrorType::JSSoft) ==
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft));
+  static_assert(
+      static_cast<uint32_t>(Mso::React::ErrorType::Native) ==
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::Native));
+
+  virtual void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType errorType) override {
+    m_redBoxHandler.ShowNewError(
+        winrt::make<RedBoxErrorInfo>(std::move(info)),
+        static_cast<winrt::Microsoft::ReactNative::RedBoxErrorType>(static_cast<uint32_t>(errorType)));
+  }
+  virtual bool isDevSupportEnabled() const override {
+    return m_redBoxHandler.IsDevSupportEnabled();
+  }
+  virtual void updateError(Mso::React::ErrorInfo &&info) override {
+    m_redBoxHandler.UpdateError(winrt::make<RedBoxErrorInfo>(std::move(info)));
+  }
+
+  virtual void dismissRedbox() override {
+    m_redBoxHandler.DismissRedBox();
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::IRedBoxHandler m_redBoxHandler;
 };
 
 std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
-    Mso::WeakPtr<IReactHost> &&weakReactHost,
-    std::shared_ptr<facebook::react::MessageQueueThread> &&uiMessageQueue) noexcept {
-  return std::make_shared<RedBoxHandler>(std::move(weakReactHost), std::move(uiMessageQueue));
+    winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) noexcept {
+  return std::make_shared<RedBoxHandler>(redBoxHandler);
+}
+
+std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(Mso::WeakPtr<IReactHost> &&weakReactHost) noexcept {
+  return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost));
 }
 
 } // namespace Mso::React

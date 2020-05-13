@@ -45,7 +45,10 @@ function getAppPackage(options) {
     options.arch === 'x86'
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
       : `*_${options.arch}_${configuration}_*`;
-  const appPackageGlob = `windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+
+  const appPackageGlob = `${
+    options.root
+  }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
   let appPackage = glob.sync(appPackageGlob)[0];
 
   if (!appPackage && options.release) {
@@ -53,8 +56,11 @@ function getAppPackage(options) {
     newWarn(
       'No package found in *_Release_* folder, remove _Release_ and check again',
     );
+
     appPackage = glob.sync(
-      `windows/{*/AppPackages,AppPackages/*}/*_${options.arch}_*`,
+      `${options.root}/windows/{*/AppPackages,AppPackages/*}/*_${
+        options.arch
+      }_*`,
     )[0];
   }
 
@@ -159,7 +165,13 @@ async function deployToDevice(options, verbose) {
   }
 }
 
-async function deployToDesktop(options, verbose) {
+async function hasDotNetProjects(slnFile) {
+  const contents = (await fs.promises.readFile(slnFile)).toString();
+  let r = /\"([^"]+\.(csproj|vbproj))\"/;
+  return r.test(contents);
+}
+
+async function deployToDesktop(options, verbose, slnFile) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options);
@@ -186,8 +198,6 @@ async function deployToDesktop(options, verbose) {
     }
   }
 
-  const popd = pushd(options.root);
-
   await runPowerShellScriptFunction(
     'Removing old version of the app',
     windowsStoreAppUtils,
@@ -202,7 +212,8 @@ async function deployToDesktop(options, verbose) {
     verbose,
   );
 
-  if (options.release) {
+  // #4749 - need to deploy from appx for .net projects.
+  if (options.release || (await hasDotNetProjects(slnFile))) {
     await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
@@ -252,8 +263,6 @@ async function deployToDesktop(options, verbose) {
   } else {
     newInfo('Skip the step to start the app');
   }
-
-  popd();
 }
 
 function startServerInNewWindow(options, verbose) {

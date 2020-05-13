@@ -7,29 +7,24 @@
 
 #include <Views\DynamicAutomationProperties.h>
 
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Automation;
-using namespace Windows::UI::Xaml::Automation::Peers;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 
 REACTWINDOWS_API_(void)
-AnnounceLiveRegionChangedIfNeeded(const winrt::FrameworkElement &element) {
-  if (winrt::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
-      !winrt::AutomationProperties::GetName(element).empty()) {
-    auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element);
+AnnounceLiveRegionChangedIfNeeded(const xaml::FrameworkElement &element) {
+  if (xaml::Automation::AutomationProperties::GetLiveSetting(element) !=
+          xaml::Automation::Peers::AutomationLiveSetting::Off &&
+      !xaml::Automation::AutomationProperties::GetName(element).empty()) {
+    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
     if (nullptr != peer) {
-      peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
+      peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::LiveRegionChanged);
     }
   }
 }
 
 REACTWINDOWS_API_(bool)
-HasDynamicAutomationProperties(const winrt::Windows::UI::Xaml::UIElement &element) {
-  static auto unsetValue = winrt::DependencyProperty::UnsetValue();
+HasDynamicAutomationProperties(const xaml::UIElement &element) {
+  static auto unsetValue = xaml::DependencyProperty::UnsetValue();
 
   if (element) {
     return (unsetValue != element.ReadLocalValue(DynamicAutomationProperties::AccessibilityRoleProperty()));

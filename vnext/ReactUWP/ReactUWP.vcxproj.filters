@@ -323,6 +323,7 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Modules\AppearanceModule.cpp" />
+    <ClCompile Include="TestHookMock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h">

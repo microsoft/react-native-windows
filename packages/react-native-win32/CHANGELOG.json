@@ -2,6 +2,81 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 09 May 2020 00:04:42 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.10",
+      "version": "0.0.0-master.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Align local metro config with future CLI changes",
+            "author": "acoates@microsoft.com",
+            "commit": "e4a5f453b6d1d85e19b6e7ae7350d92db81f3aaf",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 May 2020 00:05:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.9",
+      "version": "0.0.0-master.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "6088cb0d6b9291e7877d5b0aefd6f18cb1bace3c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 May 2020 00:05:07 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.8",
+      "version": "0.0.0-master.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use inlineSourceMap and inlineSources to encode original TS into sourcemap",
+            "author": "rezha@microsoft.com",
+            "commit": "6398c2dc10d8c7093b3c6b108b5c541f067389b8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Apr 2020 18:40:40 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.7",
+      "version": "0.0.0-master.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Package Fixes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1ca0c2916ac29d3646a35d0e90c8bee8c6cda8d2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Apr 2020 00:04:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update rex-win32 version to something more recent",
+            "author": "acoates@microsoft.com",
+            "commit": "fc72e04428dff1c31acdb9183f3ce95a0a5a53c1",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 Apr 2020 00:04:34 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
       "version": "0.0.0-master.6",

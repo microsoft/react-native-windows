@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "AlertModuleUwp.h"
-#include <winrt/Windows.UI.Xaml.Controls.h>
 
 #include <Utils\ValueUtils.h>
 
@@ -11,8 +10,8 @@
 #include <cxxreact/JsArgumentHelpers.h>
 #pragma warning(pop)
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 } // namespace winrt
 
 #if _MSC_VER <= 1913

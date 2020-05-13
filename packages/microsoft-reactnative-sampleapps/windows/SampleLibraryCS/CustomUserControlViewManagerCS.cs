@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
 
 using Windows.UI.Xaml;
@@ -21,7 +20,7 @@ namespace SampleLibraryCS
             {
                 if (obj is CustomUserControlCS c)
                 {
-                    LabelChanged(c, c.Label);
+                    LabelChanged?.Invoke(c, c.Label);
                 }
             });
 

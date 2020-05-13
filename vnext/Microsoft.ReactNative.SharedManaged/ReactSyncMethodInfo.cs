@@ -7,11 +7,10 @@ using System.Threading;
 using static Microsoft.ReactNative.Managed.JSValueGenerator;
 using static Microsoft.ReactNative.Managed.JSValueReaderGenerator;
 using static Microsoft.ReactNative.Managed.JSValueWriterGenerator;
-using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactSyncMethodInfo
+  internal class ReactSyncMethodInfo
   {
     public ReactSyncMethodInfo(MethodInfo methodInfo, ReactSyncMethodAttribute methodAttribute)
     {

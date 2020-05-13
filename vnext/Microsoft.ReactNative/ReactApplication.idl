@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 import "ReactNativeHost.idl";
+#include "NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass ReactApplication : Windows.UI.Xaml.Application {
+  unsealed runtimeclass ReactApplication : XAML_NAMESPACE.Application {
     ReactApplication();
 
     ReactInstanceSettings InstanceSettings { get; set; };

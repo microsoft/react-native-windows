@@ -4,11 +4,12 @@
 
 #include "UniversalTestInstance.h"
 
-#include <Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Xaml.h>
+#include <Windows.UI.Xaml.h> // C++/CX
 #include <wrl.h>
 
-namespace xaml = Windows::UI::Xaml;
+namespace cx {
+namespace xaml = ::Windows::UI::Xaml;
+}
 
 using namespace react::uwp;
 
@@ -53,17 +54,16 @@ void UniversalTestInstance::AttachMeasuredRootView(std::string &&appName) noexce
   // Instantiate root view.
   auto action = Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
       Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
-        auto frame = xaml::Window::Current->Content;
-        auto presenter = xaml::Media::VisualTreeHelper::GetChild(frame, 0);
-        auto page = xaml::Media::VisualTreeHelper::GetChild(presenter, 0);
-        auto mainGrid = static_cast<xaml::Controls::Grid ^>(xaml::Media::VisualTreeHelper::GetChild(page, 0));
+        auto frame = cx::xaml::Window::Current->Content;
+        auto presenter = cx::xaml::Media::VisualTreeHelper::GetChild(frame, 0);
+        auto page = cx::xaml::Media::VisualTreeHelper::GetChild(presenter, 0);
+        auto mainGrid = static_cast<cx::xaml::Controls::Grid ^>(cx::xaml::Media::VisualTreeHelper::GetChild(page, 0));
 
-        xaml::IFrameworkElement ^ rootFrameworkElement = mainGrid;
+        cx::xaml::IFrameworkElement ^ rootFrameworkElement = mainGrid;
         Microsoft::WRL::ComPtr<::ABI::Windows::UI::Xaml::IFrameworkElement> spFrameworkElementABI =
-            reinterpret_cast<ABI::Windows::UI::Xaml::IFrameworkElement *>(rootFrameworkElement);
+            reinterpret_cast<::ABI::Windows::UI::Xaml::IFrameworkElement *>(rootFrameworkElement);
         // Create C++/WinRT pointer from ABI pointer.
-        ::react::uwp::XamlView xamlView =
-            reinterpret_cast<const winrt::Windows::UI::Xaml::FrameworkElement &>(spFrameworkElementABI);
+        ::react::uwp::XamlView xamlView = reinterpret_cast<const xaml::FrameworkElement &>(spFrameworkElementABI);
 
         m_rootView = ::react::uwp::CreateReactRootView(xamlView, L"DummyTest", m_instanceCreator);
 

@@ -5,31 +5,31 @@ using Windows.UI.Xaml;
 
 namespace Microsoft.ReactNative.Managed
 {
-  struct ReactContext
+  public struct ReactContext
   {
-    public ReactContext(IReactContext context)
+    public ReactContext(IReactContext handle)
     {
-      ContextAbi = context;
+      Handle = handle;
     }
 
-    public IReactContext ContextAbi { get; }
+    public IReactContext Handle { get; }
 
     public void DispatchEvent<T>(FrameworkElement view, string eventName, T arg)
     {
       var argWriter = arg as JSValueArgWriter;
       if (argWriter != null)
       {
-        ContextAbi.DispatchEvent(view, eventName, argWriter);
+        Handle.DispatchEvent(view, eventName, argWriter);
       }
       else
       {
-        ContextAbi.DispatchEvent(view, eventName, (IJSValueWriter writer) => writer.WriteValue(arg));
+        Handle.DispatchEvent(view, eventName, (IJSValueWriter writer) => writer.WriteValue(arg));
       }
     }
 
     public void CallJSFunction(string moduleName, string methodName)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs());
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs());
     }
 
     public void CallJSFunction<T1>(string moduleName, string methodName, T1 arg1)
@@ -37,51 +37,51 @@ namespace Microsoft.ReactNative.Managed
       var argWriter = arg1 as JSValueArgWriter;
       if (argWriter != null)
       {
-        ContextAbi.CallJSFunction(moduleName, methodName, argWriter);
+        Handle.CallJSFunction(moduleName, methodName, argWriter);
       }
       else
       {
-        ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1));
+        Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1));
       }
     }
 
     public void CallJSFunction<T1, T2>(string moduleName, string methodName, T1 arg1, T2 arg2)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2));
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2));
     }
 
     public void CallJSFunction<T1, T2, T3>(string moduleName, string methodName, T1 arg1, T2 arg2, T3 arg3)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3));
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3));
     }
 
     public void CallJSFunction<T1, T2, T3, T4>(
       string moduleName, string methodName, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4));
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4));
     }
 
     public void CallJSFunction<T1, T2, T3, T4, T5>(
       string moduleName, string methodName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4, arg5));
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4, arg5));
     }
 
     public void CallJSFunction<T1, T2, T3, T4, T5, T6>(
       string moduleName, string methodName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4, arg5, arg6));
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4, arg5, arg6));
     }
 
     public void CallJSFunction<T1, T2, T3, T4, T5, T6, T7>(
       string moduleName, string methodName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
     {
-      ContextAbi.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4, arg5, arg6, arg7));
+      Handle.CallJSFunction(moduleName, methodName, (IJSValueWriter writer) => writer.WriteArgs(arg1, arg2, arg3, arg4, arg5, arg6, arg7));
     }
 
     public void EmitJSEvent(string eventEmitterName, string eventName)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter _) => { });
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter _) => { });
     }
 
     public void EmitJSEvent<T1>(string eventEmitterName, string eventName, T1 arg1)
@@ -89,11 +89,11 @@ namespace Microsoft.ReactNative.Managed
       var argWriter = arg1 as JSValueArgWriter;
       if (argWriter != null)
       {
-        ContextAbi.EmitJSEvent(eventEmitterName, eventName, argWriter);
+        Handle.EmitJSEvent(eventEmitterName, eventName, argWriter);
       }
       else
       {
-        ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+        Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
         {
           writer.WriteValue(arg1);
         });
@@ -102,7 +102,7 @@ namespace Microsoft.ReactNative.Managed
 
     public void EmitJSEvent<T1, T2>(string eventEmitterName, string eventName, T1 arg1, T2 arg2)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
       {
         writer.WriteValue(arg1);
         writer.WriteValue(arg2);
@@ -111,7 +111,7 @@ namespace Microsoft.ReactNative.Managed
 
     public void EmitJSEvent<T1, T2, T3>(string eventEmitterName, string eventName, T1 arg1, T2 arg2, T3 arg3)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
       {
         writer.WriteValue(arg1);
         writer.WriteValue(arg2);
@@ -122,7 +122,7 @@ namespace Microsoft.ReactNative.Managed
     public void EmitJSEvent<T1, T2, T3, T4>(
       string eventEmitterName, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
       {
         writer.WriteValue(arg1);
         writer.WriteValue(arg2);
@@ -134,7 +134,7 @@ namespace Microsoft.ReactNative.Managed
     public void EmitJSEvent<T1, T2, T3, T4, T5>(
       string eventEmitterName, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
       {
         writer.WriteValue(arg1);
         writer.WriteValue(arg2);
@@ -147,7 +147,7 @@ namespace Microsoft.ReactNative.Managed
     public void EmitJSEvent<T1, T2, T3, T4, T5, T6>(
       string eventEmitterName, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
       {
         writer.WriteValue(arg1);
         writer.WriteValue(arg2);
@@ -161,7 +161,7 @@ namespace Microsoft.ReactNative.Managed
     public void EmitJSEvent<T1, T2, T3, T4, T5, T6, T7>(
       string eventEmitterName, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
     {
-      ContextAbi.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
+      Handle.EmitJSEvent(eventEmitterName, eventName, (IJSValueWriter writer) =>
       {
         writer.WriteValue(arg1);
         writer.WriteValue(arg2);

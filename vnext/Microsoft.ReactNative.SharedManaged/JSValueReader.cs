@@ -9,12 +9,12 @@ using Windows.UI.Xaml.Media;
 
 namespace Microsoft.ReactNative.Managed
 {
-  delegate void ReadValueDelegate<T>(IJSValueReader reader, out T value);
+  public delegate void ReadValueDelegate<T>(IJSValueReader reader, out T value);
 
   // A value can be read from IJSValueReader in one of two ways:
   // 1. There is a ReadValue extension for IJSValueReader interface that matches the type.
   // 2. We can auto-generate the read method for the type.
-  static class JSValueReader
+  public static class JSValueReader
   {
     private static IReadOnlyDictionary<Type, Delegate> s_readerDelegates = new Dictionary<Type, Delegate>();
 

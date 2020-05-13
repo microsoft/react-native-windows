@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,14 +13,37 @@ using static Microsoft.ReactNative.Managed.JSValueGenerator;
 
 namespace Microsoft.ReactNative.Managed
 {
-  static class JSValueReaderGenerator
+  public static class JSValueReaderGenerator
   {
+    // The current assembly to ensure we always register the basic type readers
+    private static readonly Assembly s_currentAssembly = typeof(JSValueReaderGenerator).Assembly;
+
+    private static readonly ConcurrentDictionary<Assembly, bool> m_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
     private static readonly Lazy<KeyValuePair<Type, MethodInfo>[]> s_allMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, MethodInfo>> s_nonGenericMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, SortedList<Type, MethodInfo>>> s_genericMethods;
 
+    public static void RegisterAssembly(Assembly assembly)
+    {
+      // UnitTests re-register over and over, safe to skip if already added.
+      if (m_registerdAssemblies.ContainsKey(assembly))
+      {
+        return;
+      }
+
+      m_registerdAssemblies.GetOrAdd(assembly, true);
+
+      // Fail programs that register after we started serializing values.
+      if (s_allMethods.IsValueCreated)
+      {
+        throw new InvalidOperationException("Cannot register assemblies dynamically after the first value is serialized.");
+      }
+    }
+
     static JSValueReaderGenerator()
     {
+      m_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
+
       // Get all extension ReadValue methods for IJSValueReader and JSValue.
       // The first parameter must be IJSValueReader or JSValue.
       // The second parameter must be an 'out' parameter and must not be a generic parameter T.
@@ -28,20 +52,21 @@ namespace Microsoft.ReactNative.Managed
       s_allMethods = new Lazy<KeyValuePair<Type, MethodInfo>[]>(() =>
       {
         var extensionMethods =
-          from type in typeof(JSValueReader).GetTypeInfo().Assembly.GetTypes()
-          let typeInfo = type.GetTypeInfo()
-          where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested
-          from member in type.GetMember(nameof(JSValueReader.ReadValue), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
-          let method = member as MethodInfo
-          where (method != null) && method.IsDefined(typeof(ExtensionAttribute), inherit: false)
-          let parameters = method.GetParameters()
-          where parameters.Length == 2
-            && (parameters[0].ParameterType == typeof(IJSValueReader)
-             || parameters[0].ParameterType == typeof(JSValue))
-            && parameters[1].IsOut
-          let dataType = parameters[1].ParameterType.GetElementType()
-          where !dataType.IsGenericParameter
-          select new KeyValuePair<Type, MethodInfo>(dataType, method);
+          from assembly in m_registerdAssemblies.Keys
+      from type in assembly.GetTypes()
+      let typeInfo = type.GetTypeInfo()
+      where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested
+      from member in type.GetMember(nameof(JSValueReader.ReadValue), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+      let method = member as MethodInfo
+      where (method != null) && method.IsDefined(typeof(ExtensionAttribute), inherit: false)
+      let parameters = method.GetParameters()
+      where parameters.Length == 2
+        && (parameters[0].ParameterType == typeof(IJSValueReader)
+         || parameters[0].ParameterType == typeof(JSValue))
+        && parameters[1].IsOut
+      let dataType = parameters[1].ParameterType.GetElementType()
+      where !dataType.IsGenericParameter
+      select new KeyValuePair<Type, MethodInfo>(dataType, method);
         return extensionMethods.ToArray();
       });
 
@@ -59,15 +84,15 @@ namespace Microsoft.ReactNative.Managed
       {
         var genericMethods =
           from pair in s_allMethods.Value
-          where pair.Value.IsGenericMethod
-          let type = pair.Key
-          let keyType = type.GetTypeInfo().IsGenericType ? type.GetGenericTypeDefinition()
-            : type.IsArray ? typeof(Array)
-            : throw new InvalidOperationException($"Unsupported argument type {type}")
-          group pair by keyType into g
-          select new KeyValuePair<Type, SortedList<Type, MethodInfo>>(
-            g.Key, new SortedList<Type, MethodInfo>(
-              g.ToDictionary(p => p.Key, p => p.Value), GenericTypeComparer.Default));
+      where pair.Value.IsGenericMethod
+      let type = pair.Key
+      let keyType = type.GetTypeInfo().IsGenericType ? type.GetGenericTypeDefinition()
+        : type.IsArray ? typeof(Array)
+        : throw new InvalidOperationException($"Unsupported argument type {type}")
+      group pair by keyType into g
+      select new KeyValuePair<Type, SortedList<Type, MethodInfo>>(
+        g.Key, new SortedList<Type, MethodInfo>(
+          g.ToDictionary(p => p.Key, p => p.Value), GenericTypeComparer.Default));
         return genericMethods.ToDictionary(p => p.Key, p => p.Value);
       });
     }

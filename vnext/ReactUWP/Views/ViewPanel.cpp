@@ -7,7 +7,6 @@
 #include "ViewPanel.h"
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Interop.h>
 
 // Needed for latest versions of C++/WinRT
 #if __has_include("ViewPanel.g.cpp")
@@ -16,11 +15,12 @@
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Automation::Peers;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Interop;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Automation::Peers;
+using namespace xaml::Controls;
+using namespace xaml::Interop;
+using namespace winrt::Windows::UI::Xaml::Interop;
+using namespace xaml::Media;
 using namespace Windows::Foundation;
 } // namespace winrt
 
@@ -36,33 +36,33 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 }
 
 /*static*/ void ViewPanel::VisualPropertyChanged(
-    winrt::DependencyObject sender,
-    winrt::DependencyPropertyChangedEventArgs e) {
+    xaml::DependencyObject sender,
+    xaml::DependencyPropertyChangedEventArgs e) {
   auto panel{sender.as<ViewPanel>()};
   if (panel.get() != nullptr)
     panel->m_propertiesChanged = true;
 }
 
 /*static*/ void ViewPanel::PositionPropertyChanged(
-    winrt::DependencyObject sender,
-    winrt::DependencyPropertyChangedEventArgs e) {
-  auto element{sender.as<winrt::UIElement>()};
+    xaml::DependencyObject sender,
+    xaml::DependencyPropertyChangedEventArgs e) {
+  auto element{sender.as<xaml::UIElement>()};
   if (element != nullptr)
     element.InvalidateArrange();
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::ViewBackgroundProperty() {
-  static winrt::DependencyProperty s_viewBackgroundProperty = winrt::DependencyProperty::Register(
+/*static*/ xaml::DependencyProperty ViewPanel::ViewBackgroundProperty() {
+  static xaml::DependencyProperty s_viewBackgroundProperty = xaml::DependencyProperty::Register(
       L"ViewBackground",
       winrt::xaml_typename<winrt::Brush>(),
       viewPanelTypeName,
-      winrt::PropertyMetadata(winrt::SolidColorBrush(), ViewPanel::VisualPropertyChanged));
+      winrt::PropertyMetadata(xaml::Media::SolidColorBrush(), ViewPanel::VisualPropertyChanged));
 
   return s_viewBackgroundProperty;
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::BorderThicknessProperty() {
-  static winrt::DependencyProperty s_borderThicknessProperty = winrt::DependencyProperty::Register(
+/*static*/ xaml::DependencyProperty ViewPanel::BorderThicknessProperty() {
+  static xaml::DependencyProperty s_borderThicknessProperty = xaml::DependencyProperty::Register(
       L"BorderThickness",
       winrt::xaml_typename<winrt::Thickness>(),
       viewPanelTypeName,
@@ -71,28 +71,28 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   return s_borderThicknessProperty;
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::BorderBrushProperty() {
-  static winrt::DependencyProperty s_borderBrushProperty = winrt::DependencyProperty::Register(
+/*static*/ xaml::DependencyProperty ViewPanel::BorderBrushProperty() {
+  static xaml::DependencyProperty s_borderBrushProperty = xaml::DependencyProperty::Register(
       L"BorderBrush",
       winrt::xaml_typename<winrt::Brush>(),
       viewPanelTypeName,
-      winrt::PropertyMetadata(winrt::SolidColorBrush(), ViewPanel::VisualPropertyChanged));
+      winrt::PropertyMetadata(xaml::Media::SolidColorBrush(), ViewPanel::VisualPropertyChanged));
 
   return s_borderBrushProperty;
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::CornerRadiusProperty() {
-  static winrt::DependencyProperty s_cornerRadiusProperty = winrt::DependencyProperty::Register(
+/*static*/ xaml::DependencyProperty ViewPanel::CornerRadiusProperty() {
+  static xaml::DependencyProperty s_cornerRadiusProperty = xaml::DependencyProperty::Register(
       L"CornerRadius",
-      winrt::xaml_typename<winrt::CornerRadius>(),
+      winrt::xaml_typename<xaml::CornerRadius>(),
       viewPanelTypeName,
-      winrt::PropertyMetadata(winrt::box_value(winrt::CornerRadius()), ViewPanel::VisualPropertyChanged));
+      winrt::PropertyMetadata(winrt::box_value(xaml::CornerRadius()), ViewPanel::VisualPropertyChanged));
 
   return s_cornerRadiusProperty;
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::TopProperty() {
-  static winrt::DependencyProperty s_topProperty = winrt::DependencyProperty::RegisterAttached(
+/*static*/ xaml::DependencyProperty ViewPanel::TopProperty() {
+  static xaml::DependencyProperty s_topProperty = xaml::DependencyProperty::RegisterAttached(
       L"Top",
       winrt::xaml_typename<double>(),
       viewPanelTypeName,
@@ -101,8 +101,8 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   return s_topProperty;
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::LeftProperty() {
-  static winrt::DependencyProperty s_LeftProperty = winrt::DependencyProperty::RegisterAttached(
+/*static*/ xaml::DependencyProperty ViewPanel::LeftProperty() {
+  static xaml::DependencyProperty s_LeftProperty = xaml::DependencyProperty::RegisterAttached(
       L"Left",
       winrt::xaml_typename<double>(),
       viewPanelTypeName,
@@ -111,8 +111,8 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   return s_LeftProperty;
 }
 
-/*static*/ winrt::DependencyProperty ViewPanel::ClipChildrenProperty() {
-  static winrt::DependencyProperty s_clipChildrenProperty = winrt::DependencyProperty::Register(
+/*static*/ xaml::DependencyProperty ViewPanel::ClipChildrenProperty() {
+  static xaml::DependencyProperty s_clipChildrenProperty = xaml::DependencyProperty::Register(
       L"ClipChildren",
       winrt::xaml_typename<bool>(),
       viewPanelTypeName,
@@ -121,12 +121,12 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   return s_clipChildrenProperty;
 }
 
-/*static*/ void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement const &element, double value) {
+/*static*/ void ViewPanel::SetTop(xaml::UIElement const &element, double value) {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
 }
 
-/*static*/ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement const &element, double value) {
+/*static*/ void ViewPanel::SetLeft(xaml::UIElement const &element, double value) {
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
 }
@@ -135,7 +135,7 @@ winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
   // All children are given as much size as they'd like
   winrt::Size childConstraint(INFINITY, INFINITY);
 
-  for (winrt::UIElement child : Children())
+  for (xaml::UIElement child : Children())
     child.Measure(childConstraint);
 
   // ViewPanels never choose their size, that is completely up to the parent -
@@ -154,7 +154,7 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
     outerBorderLeft = static_cast<float>(borderThickness.Left);
     outerBorderTop = static_cast<float>(borderThickness.Top);
   }
-  for (winrt::UIElement child : Children()) {
+  for (xaml::UIElement child : Children()) {
     double childHeight = 0.0;
     double childWidth = 0.0;
 
@@ -165,7 +165,7 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
     } else {
       // We expect elements to have been arranged by yoga which means their
       // Width & Height are set
-      winrt::FrameworkElement fe = child.try_as<winrt::FrameworkElement>();
+      xaml::FrameworkElement fe = child.try_as<xaml::FrameworkElement>();
       if (fe != nullptr) {
         childWidth = fe.Width();
         childHeight = fe.Height();
@@ -193,7 +193,7 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
   return finalSize;
 }
 
-void ViewPanel::InsertAt(uint32_t const index, winrt::UIElement const &value) const {
+void ViewPanel::InsertAt(uint32_t const index, xaml::UIElement const &value) const {
   Children().InsertAt(index, value);
 }
 
@@ -201,7 +201,7 @@ void ViewPanel::RemoveAt(uint32_t const index) const {
   Children().RemoveAt(index);
 }
 
-void ViewPanel::Remove(winrt::UIElement element) const {
+void ViewPanel::Remove(xaml::UIElement element) const {
   uint32_t index;
 
   if (Children().IndexOf(element, index))
@@ -224,7 +224,7 @@ void ViewPanel::BorderBrush(winrt::Brush const &value) {
   SetValue(BorderBrushProperty(), winrt::box_value(value));
 }
 
-void ViewPanel::CornerRadius(winrt::CornerRadius const &value) {
+void ViewPanel::CornerRadius(xaml::CornerRadius const &value) {
   SetValue(CornerRadiusProperty(), winrt::box_value(value));
 }
 
@@ -253,7 +253,7 @@ void ViewPanel::FinalizeProperties() {
   //      this ViewPanel
   //      >> Border* properties and Background applied to Border
 
-  const auto unsetValue = winrt::DependencyProperty::UnsetValue();
+  const auto unsetValue = xaml::DependencyProperty::UnsetValue();
   const Thickness emptyThickness = ThicknessHelper::FromUniformLength(0.0);
 
   bool hasBackground = ReadLocalValue(ViewBackgroundProperty()) != unsetValue;
@@ -287,7 +287,7 @@ void ViewPanel::FinalizeProperties() {
   if (scenario != Scenario::NoBorder) {
     // Ensure Border is created
     if (m_border == nullptr) {
-      m_border = winrt::Border();
+      m_border = xaml::Controls::Border();
 
       // Add border as the top child if using as inner border
       if (scenario == Scenario::InnerBorder)
@@ -298,17 +298,17 @@ void ViewPanel::FinalizeProperties() {
     if (hasBorderBrush)
       m_border.BorderBrush(BorderBrush());
     else
-      m_border.ClearValue(winrt::Border::BorderBrushProperty());
+      m_border.ClearValue(xaml::Controls::Border::BorderBrushProperty());
 
     if (hasBorderThickness)
       m_border.BorderThickness(BorderThickness());
     else
-      m_border.ClearValue(winrt::Border::BorderThicknessProperty());
+      m_border.ClearValue(xaml::Controls::Border::BorderThicknessProperty());
 
     if (hasCornerRadius)
       m_border.CornerRadius(CornerRadius());
     else
-      m_border.ClearValue(winrt::Border::CornerRadiusProperty());
+      m_border.ClearValue(xaml::Controls::Border::CornerRadiusProperty());
   } else if (m_border != nullptr) {
     // Clean up and remove the Border element
     m_border.Child(nullptr);
@@ -320,7 +320,7 @@ void ViewPanel::FinalizeProperties() {
     if (hasBackground)
       m_border.Background(ViewBackground());
     else
-      m_border.ClearValue(winrt::Border::BackgroundProperty());
+      m_border.ClearValue(xaml::Controls::Border::BackgroundProperty());
 
     ClearValue(winrt::Panel::BackgroundProperty());
 
@@ -337,11 +337,11 @@ void ViewPanel::FinalizeProperties() {
   m_propertiesChanged = false;
 }
 
-winrt::Border ViewPanel::GetOuterBorder() {
+xaml::Controls::Border ViewPanel::GetOuterBorder() {
   if (m_hasOuterBorder && (m_border != nullptr))
     return m_border;
   else
-    return winrt::Border(nullptr);
+    return xaml::Controls::Border(nullptr);
 }
 
 void ViewPanel::UpdateClip(winrt::Size &finalSize) {

@@ -4,16 +4,15 @@
 #pragma once
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
+#include "CppWinRTIncludes.h"
 
 namespace react {
 namespace uwp {
 
 enum class ResizeMode { Cover = 0, Contain = 1, Stretch = 2, Repeat = 3, Center = 4 };
 
-struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush> {
-  using Super = winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>;
+struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush> {
+  using Super = xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>;
 
   ReactImageBrush() = default;
 
@@ -35,20 +34,19 @@ struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBa
   }
   void AvailableSize(winrt::Windows::Foundation::Size const &value);
 
-  void Source(winrt::Windows::UI::Xaml::Media::LoadedImageSurface const &value);
+  void Source(xaml::Media::LoadedImageSurface const &value);
 
  private:
   void UpdateCompositionBrush();
   bool IsImageSmallerThanView();
-  winrt::Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
-  winrt::Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
-  winrt::Windows::UI::Composition::CompositionEffectBrush GetOrCreateEffectBrush(
-      winrt::Windows::UI::Composition::CompositionSurfaceBrush const &surfaceBrush);
+  comp::CompositionStretch ResizeModeToStretch();
+  comp::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
+  comp::CompositionEffectBrush GetOrCreateEffectBrush(comp::CompositionSurfaceBrush const &surfaceBrush);
 
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::Foundation::Size m_availableSize{};
-  winrt::Windows::UI::Xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
-  winrt::Windows::UI::Composition::CompositionEffectBrush m_effectBrush{nullptr};
+  xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
+  comp::CompositionEffectBrush m_effectBrush{nullptr};
 };
 } // namespace uwp
 } // namespace react

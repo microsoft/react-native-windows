@@ -45,4 +45,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\SourceCodeModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ViewManager.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />
+  </ItemGroup>
 </Project>

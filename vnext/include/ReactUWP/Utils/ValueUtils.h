@@ -3,13 +3,10 @@
 
 #pragma once
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.h>
 #include <string>
 
 #include <ReactWindowsCore/ReactWindowsAPI.h>
+#include "CppWinRTIncludes.h"
 
 namespace folly {
 struct dynamic;
@@ -18,16 +15,16 @@ struct dynamic;
 namespace react {
 namespace uwp {
 
-winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
+xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 
 REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const folly::dynamic &d);
-REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::Brush)
+REACTWINDOWS_API_(xaml::Media::Brush)
 BrushFrom(const folly::dynamic &d);
-REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::SolidColorBrush)
+REACTWINDOWS_API_(xaml::Media::SolidColorBrush)
 SolidColorBrushFrom(const folly::dynamic &d);
-REACTWINDOWS_API_(winrt::Windows::UI::Xaml::VerticalAlignment)
+REACTWINDOWS_API_(xaml::VerticalAlignment)
 VerticalAlignmentFrom(const folly::dynamic &d);
-REACTWINDOWS_API_(winrt::Windows::UI::Xaml::HorizontalAlignment)
+REACTWINDOWS_API_(xaml::HorizontalAlignment)
 HorizontalAlignmentFrom(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::Windows::Foundation::DateTime)
 DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds);

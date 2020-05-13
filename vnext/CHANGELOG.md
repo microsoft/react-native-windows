@@ -1,8 +1,154 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Apr 2020 00:04:59 GMT and should not be manually modified.
+This log was last generated on Wed, 13 May 2020 00:04:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.65
+
+Wed, 13 May 2020 00:04:21 GMT
+
+### Changes
+
+- add ReactNativeHost to Win32 C++/WinRT ABI (aeulitz@microsoft.com)
+- Fixed ReactContext copy/move semantic (vmorozov@microsoft.com)
+- Use spec file for DevSettings NativeModule (acoates@microsoft.com)
+
+## 0.0.0-master.64
+
+Tue, 12 May 2020 00:04:39 GMT
+
+### Changes
+
+- Fire onLoad event when a bitmap image is opeed (lamdoan@microsoft.com)
+- Expose ability for apps to provide their own RedBox implementation (acoates@microsoft.com)
+
+## 0.0.0-master.63
+
+Sun, 10 May 2020 00:05:02 GMT
+
+### Changes
+
+- Reenable V8 for desktop projects (tudorm@microsoft.com)
+
+## 0.0.0-master.62
+
+Sat, 09 May 2020 00:04:42 GMT
+
+### Changes
+
+- Autolinking (jthysell@microsoft.com)
+- Implemented PropertyBag for ReactContext and ReactInstanceSettings (vmorozov@microsoft.com)
+- Align local metro config with future CLI changes (acoates@microsoft.com)
+- separate desktop from uwp ReactWindowsCore since desktop uses V8 (asklar@microsoft.com)
+- Set C# langversion of templates back to 7.3 from 8.0 (dannyvv@microsoft.com)
+- Correct binary message tagging (julio.rocha@microsoft.com)
+- Added Microsoft.ReactNative.IntegrationTests project to Microsoft.ReactNative.sln (vmorozov@microsoft.com)
+
+## 0.0.0-master.61
+
+Fri, 08 May 2020 00:05:16 GMT
+
+### Changes
+
+- Promote awaitable DispatchQueue callback to member field (julio.rocha@microsoft.com)
+- Upgrade the shared managed project to a proper csharp library. (dannyvv@microsoft.com)
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
+
+## 0.0.0-master.60
+
+Thu, 07 May 2020 00:05:07 GMT
+
+### Changes
+
+- Don't delete nuget.exe if using locally-installed (e.g. chocolatey) (asklar@microsoft.com)
+- Only bundle when not running Intellisense builds (asklar@microsoft.com)
+- Disable CxxFrameHandler4 (ngerlem@microsoft.com)
+- Switch package layout to use `files` in `pacakge.json` rather than `.npmignore` (dannyvv@microsoft.com)
+
+## 0.0.0-master.59
+
+Wed, 06 May 2020 00:05:03 GMT
+
+### Changes
+
+- WinUI 3 Alpha support in RNW (asklar@microsoft.com)
+- Treat yes the same as y in template overwrite prompt (acoates@microsoft.com)
+
+## 0.0.0-master.58
+
+Tue, 05 May 2020 00:04:31 GMT
+
+### Changes
+
+- Make generated msbuild project compile in parralel (/m) (dannyvv@microsoft.com)
+- fix appPackage path (kaigu@microsoft.com)
+
+## 0.0.0-master.57
+
+Sun, 03 May 2020 00:04:42 GMT
+
+### Changes
+
+- Implement WinRTWebSocketResource unit tests (julio.rocha@microsoft.com)
+
+## 0.0.0-master.56
+
+Sat, 02 May 2020 00:05:12 GMT
+
+### Changes
+
+- - Change MouseEnter/MouseLeave behavior to match web behavior - Improve performance of frequently-called mouse move handler (aschultz@microsoft.com)
+- Delay load ChakraCore.dll (tudorm@microsoft.com)
+
+## 0.0.0-master.55
+
+Fri, 01 May 2020 00:04:15 GMT
+
+### Changes
+
+- Removed the ref count work around from classes derived from ReactApplications (vmorozov@microsoft.com)
+- Minor cleanup: Remove unused namespace from C# files (dannyvv@microsoft.com)
+
+## 0.0.0-master.54
+
+Thu, 30 Apr 2020 18:40:40 GMT
+
+### Changes
+
+- Expose YellowBox functionality to native code (asklar@microsoft.com)
+- .net projects need more work to build a package layout (asklar@microsoft.com)
+- Package Fixes (ngerlem@microsoft.com)
+
+## 0.0.0-master.53
+
+Thu, 30 Apr 2020 00:04:27 GMT
+
+### Changes
+
+- auto-detect RTL and push into root view (kmelmon@microsoft.com)
+- Refactor TestHook out of ViewManagerBase and special case layout properties (asklar@microsoft.com)
+- Expose Debug macro for hresult_error. Start catching these... (asklar@microsoft.com)
+- Try uninstalling without elevation in case since it is not needed for layout installs (debug) (asklar@microsoft.com)
+
+## 0.0.0-master.52
+
+Wed, 29 Apr 2020 00:04:54 GMT
+
+### Changes
+
+- Start forking namespace and includes for WUX->MUX move (asklar@microsoft.com)
+- Update react version (kaigu@microsoft.com)
+- Exclude unittests and proposals from being published in the npm package (dannyvv@microsoft.com)
+
+## 0.0.0-master.51
+
+Tue, 28 Apr 2020 00:04:13 GMT
+
+### Changes
+
+- Added C# ReactContext for Module Initialize method (vmorozov@microsoft.com)
+- Use readme file from root of repo for react-native-windows (acoates@microsoft.com)
 
 ## 0.0.0-master.50
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. -->
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
@@ -15,7 +15,7 @@
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
@@ -55,6 +55,22 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|Win32">
+      <Configuration>WinUI3</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|x64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -65,11 +81,17 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='WinUI3'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+    <UseWinUI3>true</UseWinUI3>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.props" Condition="'$(UseWinUI3)'=='true' And Exists('$(SolutionDir)packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.props')" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
@@ -125,8 +147,6 @@
       -->
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
@@ -158,7 +178,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessToFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='WinUI3'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -169,7 +193,7 @@
   <ItemDefinitionGroup>
     <Midl>
       <!-- Custom XAML types must be in the project namespace to be usable by XAML -->
-      <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -301,8 +325,6 @@
     <ClInclude Include="ReactHost\JSBundle.h" />
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
-    <ClInclude Include="ReactHost\PropertyBag.h" />
-    <ClInclude Include="ReactHost\PropertyBag_internal.h" />
     <ClInclude Include="ReactHost\React.h" />
     <ClInclude Include="ReactHost\ReactErrorProvider.h" />
     <ClInclude Include="ReactHost\ReactHost.h" />
@@ -318,6 +340,10 @@
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="RedBoxHandler.h">
+      <DependentUpon>RedBoxHandler.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactNativeHost.h">
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -325,12 +351,17 @@
     <ClInclude Include="ReactPackageBuilder.h">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="IReactPropertyBag.h">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactRootView.h">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="TestHook.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
@@ -462,7 +493,6 @@
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\PropertyBag.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
@@ -475,6 +505,10 @@
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="RedBoxHandler.cpp">
+      <DependentUpon>RedBoxHandler.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ReactNativeHost.cpp">
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -482,12 +516,17 @@
     <ClCompile Include="ReactPackageBuilder.cpp">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="IReactPropertyBag.cpp">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="TestHook.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
@@ -508,6 +547,7 @@
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
+    <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
@@ -524,6 +564,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstanceSettings.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="RedBoxHandler.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactNativeHost.idl">
@@ -581,8 +624,11 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="'$(UseWinUI3)'!='true' And Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.targets" Condition="'$(UseWinUI3)'=='true' And Exists('$(SolutionDir)packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.0.8.355\build\native\Microsoft.Web.WebView2.targets" Condition="'$(UseWinUI3)'=='true' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.0.8.355\build\native\Microsoft.Web.WebView2.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
+    <Import Project="$(MSBuildThisFileDirectory)\ReactNative.V8JSI.Windows.WinUI3.targets" Condition="'$(USE_V8)' == 'true' And '$(Configuration)'=='WinUI3'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -591,7 +637,8 @@
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="'$(UseWinUI3)'!='true' And !Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="'$(UseWinUI3)'=='true' And !Exists('$(SolutionDir)packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.WinUI.3.0.0-alpha.200210.0\build\native\Microsoft.WinUI.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
   <Target Name="AfterCppClean">

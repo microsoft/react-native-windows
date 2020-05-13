@@ -3,11 +3,6 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
-
 #include "ViewPanel.g.h"
 
 #ifndef PROJECT_ROOT_NAMESPACE
@@ -31,40 +26,40 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   // Constructors
   ViewPanel();
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
+  xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   // Overrides
   virtual winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
   virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
 
   // Public Methods
-  void InsertAt(uint32_t const index, winrt::Windows::UI::Xaml::UIElement const &value) const;
+  void InsertAt(uint32_t const index, xaml::UIElement const &value) const;
   void RemoveAt(uint32_t const index) const;
   void Clear() const;
 
   void FinalizeProperties();
-  winrt::Windows::UI::Xaml::Controls::Border GetOuterBorder();
+  xaml::Controls::Border GetOuterBorder();
 
   // Public Properties
-  winrt::Windows::UI::Xaml::Media::Brush ViewBackground() {
-    return GetValue(ViewBackgroundProperty()).as<winrt::Windows::UI::Xaml::Media::Brush>();
+  xaml::Media::Brush ViewBackground() {
+    return GetValue(ViewBackgroundProperty()).as<xaml::Media::Brush>();
   }
-  void ViewBackground(winrt::Windows::UI::Xaml::Media::Brush const &value);
+  void ViewBackground(xaml::Media::Brush const &value);
 
-  winrt::Windows::UI::Xaml::Thickness BorderThickness() {
-    return winrt::unbox_value<winrt::Windows::UI::Xaml::Thickness>(GetValue(BorderThicknessProperty()));
+  xaml::Thickness BorderThickness() {
+    return winrt::unbox_value<xaml::Thickness>(GetValue(BorderThicknessProperty()));
   }
-  void BorderThickness(winrt::Windows::UI::Xaml::Thickness const &value);
+  void BorderThickness(xaml::Thickness const &value);
 
-  winrt::Windows::UI::Xaml::Media::Brush BorderBrush() {
-    return GetValue(BorderBrushProperty()).as<winrt::Windows::UI::Xaml::Media::Brush>();
+  xaml::Media::Brush BorderBrush() {
+    return GetValue(BorderBrushProperty()).as<xaml::Media::Brush>();
   }
-  void BorderBrush(winrt::Windows::UI::Xaml::Media::Brush const &value);
+  void BorderBrush(xaml::Media::Brush const &value);
 
-  winrt::Windows::UI::Xaml::CornerRadius CornerRadius() {
-    return winrt::unbox_value<winrt::Windows::UI::Xaml::CornerRadius>(GetValue(CornerRadiusProperty()));
+  xaml::CornerRadius CornerRadius() {
+    return winrt::unbox_value<xaml::CornerRadius>(GetValue(CornerRadiusProperty()));
   }
-  void CornerRadius(winrt::Windows::UI::Xaml::CornerRadius const &value);
+  void CornerRadius(xaml::CornerRadius const &value);
 
   bool ClipChildren() {
     return winrt::unbox_value<bool>(GetValue(ClipChildrenProperty()));
@@ -72,27 +67,27 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   void ClipChildren(bool value);
 
   // ViewPanel Properties
-  static winrt::Windows::UI::Xaml::DependencyProperty ViewBackgroundProperty();
-  static winrt::Windows::UI::Xaml::DependencyProperty BorderThicknessProperty();
-  static winrt::Windows::UI::Xaml::DependencyProperty BorderBrushProperty();
-  static winrt::Windows::UI::Xaml::DependencyProperty CornerRadiusProperty();
-  static winrt::Windows::UI::Xaml::DependencyProperty ClipChildrenProperty();
+  static xaml::DependencyProperty ViewBackgroundProperty();
+  static xaml::DependencyProperty BorderThicknessProperty();
+  static xaml::DependencyProperty BorderBrushProperty();
+  static xaml::DependencyProperty CornerRadiusProperty();
+  static xaml::DependencyProperty ClipChildrenProperty();
 
   // Attached Properties
-  static winrt::Windows::UI::Xaml::DependencyProperty TopProperty();
-  static void SetTop(winrt::Windows::UI::Xaml::UIElement const &element, double value);
-  static double GetTop(winrt::Windows::UI::Xaml::UIElement const &element) {
+  static xaml::DependencyProperty TopProperty();
+  static void SetTop(xaml::UIElement const &element, double value);
+  static double GetTop(xaml::UIElement const &element) {
     return winrt::unbox_value<double>(element.GetValue(TopProperty()));
   }
 
-  static winrt::Windows::UI::Xaml::DependencyProperty LeftProperty();
-  static void SetLeft(winrt::Windows::UI::Xaml::UIElement const &element, double value);
-  static double GetLeft(winrt::Windows::UI::Xaml::UIElement const &element) {
+  static xaml::DependencyProperty LeftProperty();
+  static void SetLeft(xaml::UIElement const &element, double value);
+  static double GetLeft(xaml::UIElement const &element) {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
   }
 
  private:
-  void Remove(winrt::Windows::UI::Xaml::UIElement element) const;
+  void Remove(xaml::UIElement element) const;
 
   void UpdateClip(winrt::Windows::Foundation::Size &finalSize);
 
@@ -100,16 +95,12 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   bool m_propertiesChanged{false};
 
   // Child Elements
-  winrt::Windows::UI::Xaml::Controls::Border m_border{nullptr};
+  xaml::Controls::Border m_border{nullptr};
   bool m_hasOuterBorder;
 
  private:
-  static void VisualPropertyChanged(
-      winrt::Windows::UI::Xaml::DependencyObject sender,
-      winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
-  static void PositionPropertyChanged(
-      winrt::Windows::UI::Xaml::DependencyObject sender,
-      winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
+  static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
+  static void PositionPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
 };
 
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation

@@ -7,10 +7,6 @@
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 #include <folly/dynamic.h>
 
@@ -31,8 +27,8 @@ struct ReactImageSource {
   ImageSourceType sourceType = ImageSourceType::Uri;
 };
 
-struct ReactImage : winrt::Windows::UI::Xaml::Controls::GridT<ReactImage> {
-  using Super = winrt::Windows::UI::Xaml::Controls::GridT<ReactImage>;
+struct ReactImage : xaml::Controls::GridT<ReactImage> {
+  using Super = xaml::Controls::GridT<ReactImage>;
 
   ReactImage() = default;
 
@@ -58,7 +54,7 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::GridT<ReactImage> {
   void ResizeMode(react::uwp::ResizeMode value);
 
  private:
-  winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
+  xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
@@ -68,13 +64,13 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::GridT<ReactImage> {
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
-  winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
-  winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
-  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
-  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;
-  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageFailed_revoker m_imageBrushFailedRevoker;
-  winrt::Windows::UI::Xaml::Media::Imaging::SvgImageSource::Opened_revoker m_svgImageSourceOpenedRevoker;
-  winrt::Windows::UI::Xaml::Media::Imaging::SvgImageSource::OpenFailed_revoker m_svgImageSourceOpenFailedRevoker;
+  xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
+  xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
+  xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
+  xaml::Media::Imaging::BitmapImage::ImageFailed_revoker m_bitmapImageFailed;
+  xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;
+  xaml::Media::Imaging::SvgImageSource::Opened_revoker m_svgImageSourceOpenedRevoker;
+  xaml::Media::Imaging::SvgImageSource::OpenFailed_revoker m_svgImageSourceOpenFailedRevoker;
 };
 
 // Helper functions

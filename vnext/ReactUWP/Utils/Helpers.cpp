@@ -6,11 +6,10 @@
 #include <Modules/NativeUIManager.h>
 #include <Utils/Helpers.h>
 #include <winrt/Windows.Foundation.Metadata.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
 
 namespace winrt {
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Controls::Primitives;
+using namespace xaml::Media;
 using namespace Windows::Foundation::Metadata;
 } // namespace winrt
 
@@ -27,7 +26,7 @@ namespace uwp {
 // </NavigationView>
 // Instead of deduce view id directly from FrameworkElement.Tag, this do
 // additional check by uimanager.
-ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const &fe) {
+ReactId getViewId(_In_ IReactInstance *instance, xaml::FrameworkElement const &fe) {
   ReactId reactId;
   if (auto uiManager = static_cast<NativeUIManager *>(instance->NativeUIManager())) {
     if (auto peer = uiManager->reactPeerOrContainerFrom(fe)) {
@@ -41,8 +40,8 @@ ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const &
 std::int32_t CountOpenPopups() {
   // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against
   // RS6
-  winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups =
-      winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
+  winrt::Windows::Foundation::Collections::IVectorView<xaml::Controls::Primitives::Popup> popups =
+      xaml::Media::VisualTreeHelper::GetOpenPopups(xaml::Window::Current());
   return (int32_t)popups.Size();
 }
 

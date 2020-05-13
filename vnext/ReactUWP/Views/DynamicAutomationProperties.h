@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Xaml.h>
-
 #include "DynamicAutomationProperties.g.h"
 
 #ifndef PROJECT_ROOT_NAMESPACE
@@ -31,66 +29,64 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
 
   // Attached Properties
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityRoleProperty();
+  static xaml::DependencyProperty AccessibilityRoleProperty();
   static void SetAccessibilityRole(
-      winrt::Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles const &value);
-  static AccessibilityRoles GetAccessibilityRole(winrt::Windows::UI::Xaml::UIElement const &element);
+  static AccessibilityRoles GetAccessibilityRole(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty();
-  static void SetAccessibilityStateSelected(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateSelected(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateSelectedProperty();
+  static void SetAccessibilityStateSelected(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateSelected(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateDisabledProperty();
-  static void SetAccessibilityStateDisabled(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateDisabled(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateDisabledProperty();
+  static void SetAccessibilityStateDisabled(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateDisabled(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateCheckedProperty();
-  static void SetAccessibilityStateChecked(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateChecked(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateCheckedProperty();
+  static void SetAccessibilityStateChecked(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateChecked(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateUncheckedProperty();
-  static void SetAccessibilityStateUnchecked(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateUnchecked(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateUncheckedProperty();
+  static void SetAccessibilityStateUnchecked(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateUnchecked(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateBusyProperty();
-  static void SetAccessibilityStateBusy(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateBusy(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateBusyProperty();
+  static void SetAccessibilityStateBusy(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateBusy(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateExpandedProperty();
-  static void SetAccessibilityStateExpanded(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateExpanded(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateExpandedProperty();
+  static void SetAccessibilityStateExpanded(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateExpanded(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateCollapsedProperty();
-  static void SetAccessibilityStateCollapsed(winrt::Windows::UI::Xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateCollapsed(winrt::Windows::UI::Xaml::UIElement const &element);
+  static xaml::DependencyProperty AccessibilityStateCollapsedProperty();
+  static void SetAccessibilityStateCollapsed(xaml::UIElement const &element, bool value);
+  static bool GetAccessibilityStateCollapsed(xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
+  static xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
   static void SetAccessibilityInvokeEventHandler(
-      Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler const &value);
   static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(
-      winrt::Windows::UI::Xaml::UIElement const &element);
+      xaml::UIElement const &element);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty();
+  static xaml::DependencyProperty AccessibilityActionsProperty();
 
   static void SetAccessibilityActions(
-      Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value);
 
   static Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> GetAccessibilityActions(
-      Windows::UI::Xaml::UIElement const &element);
+      xaml::UIElement const &element);
 
-  static void DispatchAccessibilityAction(
-      Windows::UI::Xaml::UIElement const &element,
-      std::wstring_view const &actionName);
+  static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
 
-  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
+  static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(
-      Windows::UI::Xaml::UIElement const &element,
+      xaml::UIElement const &element,
       winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value);
   static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
-      winrt::Windows::UI::Xaml::UIElement const &element);
+      xaml::UIElement const &element);
 };
 
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation

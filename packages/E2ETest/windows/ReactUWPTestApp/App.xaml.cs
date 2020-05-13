@@ -8,6 +8,7 @@ using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Microsoft.ReactNative.Managed;
 
 namespace ReactUWPTestApp
 {
@@ -40,7 +41,8 @@ namespace ReactUWPTestApp
             InstanceSettings.EnableDeveloperMenu = false;
 #endif
 
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
+            PackageProviders.Add(new ReflectionReactPackageProvider<App>());
             PackageProviders.Add(new TreeDumpLibrary.ReactPackageProvider());
 
             this.InitializeComponent();

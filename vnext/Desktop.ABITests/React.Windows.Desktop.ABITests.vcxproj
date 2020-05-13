@@ -103,6 +103,9 @@
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
     </ItemGroup>
   </Target>
   <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
@@ -133,9 +136,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PerfTests.cpp" />
+    <ClCompile Include="ReactNativeHostTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MessageQueueShim.h" />
+    <ClInclude Include="ActivationFactory.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

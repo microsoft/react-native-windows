@@ -27,7 +27,7 @@ folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const {
 }
 
 XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
-  auto progressRing = winrt::ProgressRing();
+  auto progressRing = xaml::Controls::ProgressRing();
   return progressRing;
 }
 
@@ -35,7 +35,7 @@ bool ActivityIndicatorViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-  auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
+  auto progressRing = nodeToUpdate->GetView().as<xaml::Controls::ProgressRing>();
   if (progressRing == nullptr)
     return true;
 
@@ -43,7 +43,7 @@ bool ActivityIndicatorViewManager::UpdateProperty(
     if (propertyValue.isBool())
       progressRing.IsActive(propertyValue.asBool());
     else if (propertyValue.isNull())
-      progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
+      progressRing.ClearValue(xaml::Controls::ProgressRing::IsActiveProperty());
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }

@@ -9,7 +9,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct XamlHelper : XamlHelperT<XamlHelper> {
   XamlHelper() = default;
 
-  static Windows::UI::Xaml::Media::Brush BrushFrom(JSValueArgWriter const &valueProvider) noexcept;
+  static xaml::Media::Brush BrushFrom(JSValueArgWriter const &valueProvider) noexcept;
   static Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
 
   static folly::dynamic GetFollyDynamicFromValueProvider(JSValueArgWriter const &valueProvider) noexcept;

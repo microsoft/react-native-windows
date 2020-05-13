@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "Added C# ReactContext for Module Initialize method",
+  "comment": "Allow storing non-WinRT types in ReactPropertyBag",
   "packageName": "react-native-windows",
   "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-04-27T04:09:42.583Z"
+  "date": "2020-05-13T01:57:59.370Z"
 }
