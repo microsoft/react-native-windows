@@ -83,7 +83,7 @@ export const ViewWin32 = React.forwardRef(
         {
           localRef.focus = () => {
             NativeModules.UIManager.dispatchViewManagerCommand(
-              findNodeHandle(focusRef.current),
+              findNodeHandle(localRef),
               NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.focus,
               null
               );
