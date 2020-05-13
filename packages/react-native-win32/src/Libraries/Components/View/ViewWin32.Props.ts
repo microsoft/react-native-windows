@@ -156,7 +156,6 @@ export type BasePropsWin32 = {
   * The reference will be converted to a native reference (tag) before passing to the native platform.
   */
  accessibilityDescribedBy?: React.RefObject<any>;
- accessibilityDescription?: string;
  accessibilityLabeledBy?: React.RefObject<any>;
 };
 
