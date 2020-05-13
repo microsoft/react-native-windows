@@ -117,9 +117,6 @@
     <ClCompile Include="Modules\StatusBarManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp">
       <Filter>Source Files</Filter>
     </CLCompile>
@@ -242,7 +239,7 @@
     <ClInclude Include="Pch\pch.h">
       <Filter>Header Files\Pch</Filter>
     </ClInclude>
-    <ClInclude Include="RedBoxHandler.h">
+    <ClInclude Include="IRedBoxHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShadowNode.h">
@@ -280,9 +277,6 @@
     </ClInclude>
     <ClInclude Include="Modules\StatusBarManagerModule.h">
       <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="V8JSIRuntimeHolder.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

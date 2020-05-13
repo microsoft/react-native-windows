@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 May 2020 00:05:07 GMT and should not be manually modified.
+This log was last generated on Wed, 13 May 2020 00:04:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.65
+
+Wed, 13 May 2020 00:04:21 GMT
+
+### Changes
+
+- add ReactNativeHost to Win32 C++/WinRT ABI (aeulitz@microsoft.com)
+- Fixed ReactContext copy/move semantic (vmorozov@microsoft.com)
+- Use spec file for DevSettings NativeModule (acoates@microsoft.com)
+
+## 0.0.0-master.64
+
+Tue, 12 May 2020 00:04:39 GMT
+
+### Changes
+
+- Fire onLoad event when a bitmap image is opeed (lamdoan@microsoft.com)
+- Expose ability for apps to provide their own RedBox implementation (acoates@microsoft.com)
+
+## 0.0.0-master.63
+
+Sun, 10 May 2020 00:05:02 GMT
+
+### Changes
+
+- Reenable V8 for desktop projects (tudorm@microsoft.com)
+
+## 0.0.0-master.62
+
+Sat, 09 May 2020 00:04:42 GMT
+
+### Changes
+
+- Autolinking (jthysell@microsoft.com)
+- Implemented PropertyBag for ReactContext and ReactInstanceSettings (vmorozov@microsoft.com)
+- Align local metro config with future CLI changes (acoates@microsoft.com)
+- separate desktop from uwp ReactWindowsCore since desktop uses V8 (asklar@microsoft.com)
+- Set C# langversion of templates back to 7.3 from 8.0 (dannyvv@microsoft.com)
+- Correct binary message tagging (julio.rocha@microsoft.com)
+- Added Microsoft.ReactNative.IntegrationTests project to Microsoft.ReactNative.sln (vmorozov@microsoft.com)
+
+## 0.0.0-master.61
+
+Fri, 08 May 2020 00:05:16 GMT
+
+### Changes
+
+- Promote awaitable DispatchQueue callback to member field (julio.rocha@microsoft.com)
+- Upgrade the shared managed project to a proper csharp library. (dannyvv@microsoft.com)
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
 
 ## 0.0.0-master.60
 

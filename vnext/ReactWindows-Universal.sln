@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "ReactCommon\
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore", "ReactWindowsCore\ReactWindowsCore.vcxitems", "{11C084A3-A57C-4296-A679-CAC17B603145}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore", "ReactWindowsCore\ReactWindowsCore.vcxproj", "{11C084A3-A57C-4296-A679-CAC17B603144}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
@@ -111,6 +113,8 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{069986c5-80f3-4a56-af79-f24ebb05941f}*SharedItemsImports = 4
 		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
+		ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603144}*SharedItemsImports = 4
+		ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603145}*SharedItemsImports = 9
 		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{14fa0516-e6d7-4e4d-b097-1470198c5072}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{14fa0516-e6d7-4e4d-b097-1470198c5072}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{1958ceaa-fbe0-44e3-8a99-90ad85531ffe}*SharedItemsImports = 4
@@ -324,6 +328,22 @@ Global
 		{1958CEAA-FBE0-44E3-8A99-90AD85531FFE}.Release|x64.Build.0 = Release|x64
 		{1958CEAA-FBE0-44E3-8A99-90AD85531FFE}.Release|x86.ActiveCfg = Release|Win32
 		{1958CEAA-FBE0-44E3-8A99-90AD85531FFE}.Release|x86.Build.0 = Release|Win32
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM.Build.0 = Debug|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.ActiveCfg = Debug|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.Build.0 = Debug|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.ActiveCfg = Debug|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.Build.0 = Debug|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM.ActiveCfg = Release|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM.Build.0 = Release|ARM
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.Build.0 = Release|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.ActiveCfg = Release|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.Build.0 = Release|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.ActiveCfg = Release|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.Build.0 = Release|x86
 		{46D76F7A-8FD9-4A7D-8102-2857E5DA6B84}.Debug|ARM.ActiveCfg = Debug|ARM
 		{46D76F7A-8FD9-4A7D-8102-2857E5DA6B84}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{46D76F7A-8FD9-4A7D-8102-2857E5DA6B84}.Debug|x64.ActiveCfg = Debug|x64
@@ -352,22 +372,6 @@ Global
 		{14FA0516-E6D7-4E4D-B097-1470198C5072}.Release|x64.Build.0 = Release|x64
 		{14FA0516-E6D7-4E4D-B097-1470198C5072}.Release|x86.ActiveCfg = Release|Win32
 		{14FA0516-E6D7-4E4D-B097-1470198C5072}.Release|x86.Build.0 = Release|Win32
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM.ActiveCfg = Debug|ARM
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM.Build.0 = Debug|ARM
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.Build.0 = Debug|ARM64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.ActiveCfg = Debug|x64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.Build.0 = Debug|x64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.ActiveCfg = Debug|x86
-		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.Build.0 = Debug|x86
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM.ActiveCfg = Release|ARM
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM.Build.0 = Release|ARM
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.ActiveCfg = Release|ARM64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.Build.0 = Release|ARM64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.ActiveCfg = Release|x64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.Build.0 = Release|x64
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.ActiveCfg = Release|x86
-		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,6 +14,7 @@
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
 #include "../../codegen/NativeClipboardSpec.g.h"
+#include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -63,8 +64,14 @@ namespace Mso::React {
 // ReactContext implementation
 //=============================================================================================
 
-ReactContext::ReactContext(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept
-    : m_reactInstance{std::move(reactInstance)} {}
+ReactContext::ReactContext(
+    Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept
+    : m_reactInstance{std::move(reactInstance)}, m_properties{properties} {}
+
+winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() noexcept {
+  return m_properties;
+}
 
 void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
@@ -115,17 +122,17 @@ struct LoadedCallbackGuard {
 
 ReactInstanceWin::ReactInstanceWin(
     IReactHost &reactHost,
-    ReactOptions &&options,
+    ReactOptions const &options,
     Mso::Promise<void> &&whenCreated,
     Mso::Promise<void> &&whenLoaded,
     Mso::VoidFunctor &&updateUI) noexcept
     : Super{reactHost.NativeQueue()},
       m_weakReactHost{&reactHost},
-      m_options{std::move(options)},
+      m_options{options},
       m_whenCreated{std::move(whenCreated)},
       m_whenLoaded{std::move(whenLoaded)},
       m_updateUI{std::move(updateUI)},
-      m_reactContext{Mso::Make<ReactContext>(this)},
+      m_reactContext{Mso::Make<ReactContext>(this, options.Properties)},
       m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(
           Mso::WeakPtr<Mso::React::IReactInstance>{this},
           Mso::Copy(options.LegacySettings))} {
@@ -212,20 +219,22 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::Clipboard,
                   ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
 
+          ::Microsoft::ReactNative::DevSettings::SetReload(
+              strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
+                if (auto reactHost = weakReactHost.GetStrongPtr()) {
+                  reactHost->ReloadInstance();
+                }
+              });
+
+          nmp->AddModuleProvider(
+              L"DevSettings",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::DevSettings,
+                  ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+
           auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
           cxxModules.insert(
               cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
-
-          cxxModules.emplace_back(
-              Microsoft::ReactNative::DevSettingsModule::name,
-              [weakReactHost = strongThis->m_weakReactHost]() {
-                return std::make_unique<Microsoft::ReactNative::DevSettingsModule>([weakReactHost]() noexcept {
-                  if (auto reactHost = weakReactHost.GetStrongPtr()) {
-                    reactHost->ReloadInstance();
-                  }
-                });
-              },
-              m_batchingUIThread);
 
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
@@ -431,15 +440,7 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 }
 
 void ReactInstanceWin::InitJSMessageThread() noexcept {
-  // Use the explicit JSQueue if it is provided.
-  const auto &properties = m_options.Properties;
-  auto jsDispatchQueue = Mso::DispatchQueue{properties.Get(JSDispatchQueueProperty)};
-  if (jsDispatchQueue) {
-    VerifyElseCrashSz(jsDispatchQueue.IsSerial(), "JS Queue must be sequential");
-  } else {
-    // Currently we have to use Looper DispatchQueue because our JS Engine based on Chakra uses thread local storage.
-    jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
-  }
+  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
 
   // Create MessageQueueThread for the DispatchQueue
   VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
@@ -519,7 +520,7 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
     return m_options.RedBoxHandler;
   } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
     auto localWkReactHost = m_weakReactHost;
-    return CreateRedBoxHandler(std::move(localWkReactHost), m_uiMessageThread.LoadWithLock());
+    return CreateDefaultRedBoxHandler(std::move(localWkReactHost));
   } else {
     return {};
   }

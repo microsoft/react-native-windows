@@ -126,6 +126,7 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ReactContextTest.cpp" />
     <ClCompile Include="ReactModuleBuilderMock.cpp" />
     <ClCompile Include="TurboModuleTest.cpp" />
   </ItemGroup>
@@ -144,6 +145,7 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactModuleBuilder.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilder.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IViewManager.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\NoExceptionAttribute.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "NativeModules.h"
 
+#include <NativeModules.h>
+
 using namespace React;
 
 namespace ReactNativeIntegrationTests {

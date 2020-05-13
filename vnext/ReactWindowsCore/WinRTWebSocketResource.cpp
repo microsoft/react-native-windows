@@ -391,7 +391,7 @@ void WinRTWebSocketResource::Send(const string& message)
 
 void WinRTWebSocketResource::SendBinary(const string& base64String)
 {
-  m_writeQueue.push({ base64String, false });
+  m_writeQueue.push({ base64String, true });
 
   PerformWrite();
 }

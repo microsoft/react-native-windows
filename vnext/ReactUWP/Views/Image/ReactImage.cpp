@@ -211,10 +211,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       if (createImageBrush) {
         imageBrush = winrt::ImageBrush{};
 
-        // ImageOpened and ImageFailed are mutually exclusive. One event of the other will
-        // always fire whenever an ImageBrush has the ImageSource value set or reset.
-        strong_this->m_imageBrushOpenedRevoker = imageBrush.ImageOpened(
-            winrt::auto_revoke, [weak_this, imageBrush, fireLoadEndEvent](const auto &, const auto &) {
+        strong_this->m_imageBrushOpenedRevoker =
+            imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
               if (auto strong_this{weak_this.get()}) {
                 if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
                   strong_this->m_imageSource.height = bitmap.PixelHeight();
@@ -222,18 +220,6 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
 
                 imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
-
-                if (fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, true);
-                }
-              }
-            });
-
-        strong_this->m_imageBrushFailedRevoker =
-            imageBrush.ImageFailed(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
-              const auto strong_this{weak_this.get()};
-              if (strong_this && fireLoadEndEvent) {
-                strong_this->m_onLoadEndEvent(*strong_this, false);
               }
             });
       }
@@ -272,7 +258,24 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           bitmapImage = winrt::BitmapImage{};
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
-              winrt::auto_revoke, [imageBrush](const auto &, const auto &) { imageBrush.Opacity(1); });
+              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                imageBrush.Opacity(1);
+
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                }
+              });
+
+          strong_this->m_bitmapImageFailed = bitmapImage.ImageFailed(
+              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                imageBrush.Opacity(1);
+
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, false);
+                }
+              });
 
           imageBrush.ImageSource(bitmapImage);
         }
