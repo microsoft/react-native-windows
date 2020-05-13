@@ -145,9 +145,11 @@ foreach ($req in $requirements)
 }
 
 if ($NeedsRerun) {
-    Write-Output "Some dependencies are not met. Re-run with -Install to install them.";
-    exit 1;
+    Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
+    if (!$NoPrompt) {
+        [System.Console]::ReadKey();
+    }
+    throw;
 } else {
     Write-Output "All mandatory requirements met";
-    exit 0;
 }
