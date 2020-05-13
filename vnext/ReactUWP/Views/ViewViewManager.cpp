@@ -206,7 +206,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   bool m_enableFocusRing = true;
   bool m_onClick = false;
-  int32_t m_tabIndex = -1;
+  int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   xaml::Controls::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
@@ -368,7 +368,7 @@ bool ViewViewManager::UpdateProperty(
           pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
         }
       } else if (propertyValue.isNull()) {
-        pViewShadowNode->TabIndex(-1);
+        pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
     } else {
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
