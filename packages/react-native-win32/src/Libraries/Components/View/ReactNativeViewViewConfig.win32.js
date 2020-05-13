@@ -134,13 +134,10 @@ const ReactNativeViewConfig = {
   validAttributes: {
     ...ReactNativeViewViewConfigAndroid.validAttributes,
     accessibilityActions: true,
-    accessibilityDescription: true,
-    accessibilityDescribedBy: true,
     accessibilityElementsHidden: true,
     accessibilityHint: true,
     accessibilityIgnoresInvertColors: true,
     accessibilityLabel: true,
-    accessibilityLabeledBy: true,
     accessibilityLiveRegion: true,
     accessibilityRole: true,
     accessibilityStates: true, // TODO: Can be removed after next release
@@ -378,6 +375,9 @@ const ReactNativeViewConfig = {
     onMouseLeave: true,
     tooltip: true,
     cursor: true,
+    accessibilityDescription: true,
+    accessibilityDescribedBy: true,
+    accessibilityLabeledBy: true,
     // Windows]
   },
 };
