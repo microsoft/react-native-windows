@@ -5,6 +5,7 @@
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
 
+#include "IReactDispatcher.h"
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
@@ -48,6 +49,7 @@ ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactAp
 ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
+    ReactDispatcher::SetUIThreadDispatcher(m_instanceSettings.Properties());
   }
 
   return m_instanceSettings;
