@@ -58,9 +58,9 @@ bool ControlViewManager::UpdateProperty(
     } else if (propertyName == "tabIndex") {
       if (propertyValue.isNumber()) {
         auto tabIndex = propertyValue.asDouble();
-          if (tabIndex == static_cast<int32_t>(tabIndex))
-              control.ClearValue(xaml::Controls::Control::TabIndexProperty());
-            control.TabIndex(static_cast<int32_t>(tabIndex));
+        if (tabIndex == static_cast<int32_t>(tabIndex))
+          control.ClearValue(xaml::Controls::Control::TabIndexProperty());
+        control.TabIndex(static_cast<int32_t>(tabIndex));
       } else if (propertyValue.isNull()) {
         control.ClearValue(xaml::Controls::Control::TabIndexProperty());
       }
