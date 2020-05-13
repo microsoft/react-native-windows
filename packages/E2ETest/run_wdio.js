@@ -153,4 +153,10 @@ function runWdio() {
   );
 }
 
-runWdio();
+try {
+  runWdio();
+} catch (e) {
+  console.log(e);
+  // any exception that isn't handled is an error
+  process.exit(2);
+}
