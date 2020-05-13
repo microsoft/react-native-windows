@@ -26,21 +26,17 @@ namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
 namespace WUXH = WUX::Hosting;
 
-
 struct SimpleRedBoxHandler : winrt::implements<SimpleRedBoxHandler, winrt::Microsoft::ReactNative::IRedBoxHandler> {
-  SimpleRedBoxHandler() noexcept {
-  }
+  SimpleRedBoxHandler() noexcept {}
 
   void ShowNewError(
       winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info,
       winrt::Microsoft::ReactNative::RedBoxErrorType type) noexcept {
+    OutputDebugStringA("----- Begin RedBox -----\n");
 
-      OutputDebugStringA("----- Begin RedBox -----\n");
-
-      switch (type)
-      {
+    switch (type) {
       case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal:
-          OutputDebugStringA("Fatal Error: ");
+        OutputDebugStringA("Fatal Error: ");
         break;
       case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft:
         OutputDebugStringA("JavaScript Error: ");
@@ -48,11 +44,10 @@ struct SimpleRedBoxHandler : winrt::implements<SimpleRedBoxHandler, winrt::Micro
       case winrt::Microsoft::ReactNative::RedBoxErrorType::Native:
         OutputDebugStringA("Native Error: ");
         break;
-      }
+    }
 
-      OutputDebugString(info.Message().c_str());
-      OutputDebugStringA("\n-----  End RedBox  -----\n");
-
+    OutputDebugString(info.Message().c_str());
+    OutputDebugStringA("\n-----  End RedBox  -----\n");
   }
 
   bool IsDevSupportEnabled() noexcept {
@@ -78,7 +73,8 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
+  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
+      m_packageProviders;
 
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
@@ -94,8 +90,7 @@ struct WindowData {
     return reinterpret_cast<WindowData *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
   }
 
-  winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept
-  {
+  winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept {
     if (!m_host) {
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
@@ -104,30 +99,24 @@ struct WindowData {
 
     return m_host;
   }
-  winrt::Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept
-  {
+  winrt::Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
     if (!m_instanceSettings) {
       m_instanceSettings = winrt::Microsoft::ReactNative::ReactInstanceSettings();
     }
 
     return m_instanceSettings;
-
   }
-
 
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-      PackageProviders() noexcept
-  {
-      if (!m_packageProviders) {
-        m_packageProviders = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>();
-      }
+  PackageProviders() noexcept {
+    if (!m_packageProviders) {
+      m_packageProviders = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>();
+    }
 
-      return m_packageProviders;
-
+    return m_packageProviders;
   }
 
-
-  LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/ , UINT) {
+  LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
     switch (id) {
       case IDM_OPENJSFILE: {
         DialogBox(s_instance, MAKEINTRESOURCE(IDD_OPENJSBUNDLEBOX), hwnd, &Bundle);

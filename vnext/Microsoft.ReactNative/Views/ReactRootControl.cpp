@@ -615,9 +615,8 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   /*
   // If we are running in a Xaml Island or some other environment where the SystemNavigationManager is unavailable,
   // we should just skip hooking up the BackButton handler.
-  // Unfortunately SystemNavigationManager->GetForCurrentView seems to crash with XamlIslands, not sure how to detect this right now
-  auto fact = winrt::get_activation_factory<
-      winrt::Windows::UI::Core::SystemNavigationManager,
+  // Unfortunately SystemNavigationManager->GetForCurrentView seems to crash with XamlIslands, not sure how to detect
+  // this right now auto fact = winrt::get_activation_factory< winrt::Windows::UI::Core::SystemNavigationManager,
       winrt::Windows::UI::Core::ISystemNavigationManagerStatics>();
   auto abi = fact.as<ABI::Windows::UI::Core::ISystemNavigationManagerStatics>();
   ABI::Windows::UI::Core::ISystemNavigationManager* sysNavMgr;

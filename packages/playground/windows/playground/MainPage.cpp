@@ -46,7 +46,6 @@ void MainPage::OnLoadClick(
       winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty(),
       winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIThreadDispatcher());
 
-
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
 
