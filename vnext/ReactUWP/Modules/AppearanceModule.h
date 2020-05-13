@@ -17,7 +17,7 @@ class AppearanceChangeListener final : public Mso::ActiveObject<> {
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
  public:
-  AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance) noexcept;
+  AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance, Mso::DispatchQueue const &uiQueue) noexcept;
   const char *GetColorScheme() const noexcept;
 
  private:

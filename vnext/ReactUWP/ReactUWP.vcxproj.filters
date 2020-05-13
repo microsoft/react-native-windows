@@ -106,6 +106,9 @@
     <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AppearanceModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -166,6 +169,7 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
+    <ClCompile Include="TestHookMock.cpp" />
     <ClCompile Include="Threading\AsyncWorkQueue.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -481,6 +485,9 @@
     <ClInclude Include="Modules\Animated\ValueAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\AppearanceModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\AppStateModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -656,7 +663,6 @@
     <ClInclude Include="Views\VirtualTextViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\AppearanceModule.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">

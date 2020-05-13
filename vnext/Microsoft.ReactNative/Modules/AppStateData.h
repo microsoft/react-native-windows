@@ -16,7 +16,7 @@ namespace react::uwp {
 struct AppStateData : Mso::ActiveObject<> {
   using Super = ActiveObjectType;
 
-  AppStateData(Mso::React::IReactContext &reactContext) noexcept;
+  AppStateData(Mso::React::IReactContext &reactContext, Mso::DispatchQueue const &uiQueue) noexcept;
   ~AppStateData() override;
   void Initialize() noexcept override;
   void Finalize() noexcept override;
@@ -37,7 +37,7 @@ struct AppStateData : Mso::ActiveObject<> {
 // It is a temporary class that we need to keep until we remove ReactUWP
 class AppState2 : public facebook::react::AppState {
  public:
-  AppState2(Mso::React::IReactContext &reactContext) noexcept;
+  AppState2(Mso::React::IReactContext &reactContext, Mso::DispatchQueue const &uiQueue) noexcept;
 
  public: // facebook::react::AppState
   ~AppState2() override;

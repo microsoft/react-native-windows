@@ -275,6 +275,9 @@
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="HResult.h" />
+    <ClInclude Include="IReactDispatcher.h">
+      <DependentUpon>IReactDispatcher.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="IReactModuleBuilder.h">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
@@ -442,6 +445,9 @@
     <ClCompile Include="DynamicWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="IReactDispatcher.cpp">
+      <DependentUpon>IReactDispatcher.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="IReactModuleBuilder.cpp">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
@@ -521,6 +527,7 @@
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
+    <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
