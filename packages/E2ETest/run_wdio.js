@@ -112,7 +112,7 @@ function parseLogs() {
   const logs = fs.readdirSync(reportsDir).filter(x => x.endsWith('.log'));
   const names = logs
     .map(x => parseLog(path.join(reportsDir, x)))
-    .filter(x => x != null);
+    .filter(x => x != null && x != '');
   return names;
 }
 

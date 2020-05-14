@@ -322,7 +322,9 @@ namespace TreeDumpLibrary
             {
                 // comparing doubles is numerically unstable so just compare their integer parts
                 Size size = (Size)propertyObject;
-                return $"[{(int)size.Width}, {(int)size.Height}]";
+                int width = (int)size.Width;
+                int height = (int)size.Height;
+                return $"[{width}, {height}]";
             }
             return Quote(propertyObject.ToString());
         }

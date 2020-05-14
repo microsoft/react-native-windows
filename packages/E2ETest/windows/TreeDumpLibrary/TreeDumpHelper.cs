@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Json;
@@ -162,15 +163,18 @@ namespace TreeDumpLibrary
 
         private static bool JsonCompareArray(JsonArray ea, JsonArray aa)
         {
-            if (ea.Count != aa.Count)
+            var efiltered = ea.Where(x => IsNonCollapsed(x)).ToArray();
+            var afiltered = aa.Where(x => IsNonCollapsed(x)).ToArray();
+
+            if (efiltered.Length != afiltered.Length)
             {
                 Debug.WriteLine($"Array count expected {ea.Count} got {aa.Count}");
                 return false;
             }
-            for (int i = 0; i < ea.Count; i++)
+            for (int i = 0; i < efiltered.Length; i++)
             {
-                var _e = ea[i];
-                var _a = aa[i];
+                var _e = efiltered[i];
+                var _a = afiltered[i];
                 if (!JsonComparesEqual(_e, _a, "array element"))
                 {
                     Debug.WriteLine($"Array element {i} expected {_e.ValueType} got {_a.ValueType}");
@@ -180,19 +184,28 @@ namespace TreeDumpLibrary
             return true;
         }
 
+        private const string visibilityProperty = "Visibility";
+        private const string visibilityPropertyVisible = "Visible";
+
+        private static bool IsNonCollapsed(IJsonValue x)
+        {
+            return x.ValueType != JsonValueType.Object ||
+                            !x.GetObject().ContainsKey(visibilityProperty) ||
+                            x.GetObject().GetNamedString(visibilityProperty) == visibilityPropertyVisible;
+        }
+
         private static bool JsonCompareObject(JsonObject eo, JsonObject ao)
         {
             var evisible = true;
-            const string visibilityProperty = "Visibility";
             if (eo.Keys.Contains(visibilityProperty))
             {
-                evisible = eo[visibilityProperty].GetString() == "Visible";
-                eo.Remove("Visibility");
+                evisible = eo[visibilityProperty].GetString() == visibilityPropertyVisible;
+                eo.Remove(visibilityProperty);
             }
             var avisible = true;
             if (ao.Keys.Contains(visibilityProperty))
             {
-                avisible = ao[visibilityProperty].GetString() == "Visible";
+                avisible = ao[visibilityProperty].GetString() == visibilityPropertyVisible;
                 ao.Remove(visibilityProperty);
             }
             if (avisible != evisible) { return false; }
