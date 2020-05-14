@@ -28,6 +28,21 @@
 #include <object/unknownObject.h>
 
 #include <ReactHost/MsoUtils.h>
+//#include <appmodel.h>
+
+extern "C" {
+
+typedef enum AppPolicyWindowingModel {
+  AppPolicyWindowingModel_None = 0,
+  AppPolicyWindowingModel_Universal = 1,
+  AppPolicyWindowingModel_ClassicDesktop = 2,
+  AppPolicyWindowingModel_ClassicPhone = 3
+} AppPolicyWindowingModel;
+
+WINBASEAPI
+_Check_return_ _Success_(return == ERROR_SUCCESS) LONG WINAPI
+    AppPolicyGetWindowingModel(_In_ HANDLE processToken, _Out_ AppPolicyWindowingModel *policy);
+}
 
 namespace react::uwp {
 
@@ -612,16 +627,19 @@ void ReactRootControl::ReloadViewHost() noexcept {
 }
 
 void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
+
   /*
-  // If we are running in a Xaml Island or some other environment where the SystemNavigationManager is unavailable,
-  // we should just skip hooking up the BackButton handler.
-  // Unfortunately SystemNavigationManager->GetForCurrentView seems to crash with XamlIslands, not sure how to detect
-  // this right now auto fact = winrt::get_activation_factory< winrt::Windows::UI::Core::SystemNavigationManager,
-      winrt::Windows::UI::Core::ISystemNavigationManagerStatics>();
-  auto abi = fact.as<ABI::Windows::UI::Core::ISystemNavigationManagerStatics>();
-  ABI::Windows::UI::Core::ISystemNavigationManager* sysNavMgr;
-  auto hr = abi->GetForCurrentView(&sysNavMgr);
-  */
+   * If we are running in a Xaml Island or some other environment where the SystemNavigationManager is unavailable,
+   * we should just skip hooking up the BackButton handler.
+   * SystemNavigationManager->GetForCurrentView seems to crash with XamlIslands, so we detect if we are
+   * running in the desktop windowing model before calling it.
+   */
+  AppPolicyWindowingModel e;
+  if (FAILED(AppPolicyGetWindowingModel((HANDLE)-6 /*GetCurrentThreadEffectiveToken()*/, &e)) ||
+      e == AppPolicyWindowingModel_ClassicDesktop) {
+    return;
+  }
+
   auto weakThis = weak_from_this();
   m_backRequestedRevoker = winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
       winrt::auto_revoke,
