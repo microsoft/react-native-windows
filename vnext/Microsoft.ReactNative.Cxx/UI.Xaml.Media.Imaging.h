@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Xaml.Media.Imaging.h>
 #else
 #include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

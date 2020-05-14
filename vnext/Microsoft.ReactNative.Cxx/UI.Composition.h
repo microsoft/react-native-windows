@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Composition.h>
 #else
 #include <winrt/Windows.UI.Composition.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

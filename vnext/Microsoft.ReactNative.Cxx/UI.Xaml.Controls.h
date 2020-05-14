@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #else
 #include <winrt/Windows.UI.Xaml.Controls.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

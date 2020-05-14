@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Xaml.Markup.h>
 #else
 #include <winrt/Windows.UI.Xaml.Markup.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Popups.h>
 #else
 #include <winrt/Windows.UI.Popups.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

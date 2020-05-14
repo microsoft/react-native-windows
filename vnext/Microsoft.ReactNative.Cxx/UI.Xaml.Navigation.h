@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Xaml.Navigation.h>
 #else
 #include <winrt/Windows.UI.Xaml.Navigation.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

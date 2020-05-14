@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Input.h>
 #else
 #include <winrt/Windows.UI.Input.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

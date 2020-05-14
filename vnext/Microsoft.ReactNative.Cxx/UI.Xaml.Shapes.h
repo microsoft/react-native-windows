@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Xaml.Shapes.h>
 #else
 #include <winrt/Windows.UI.Xaml.Shapes.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3

@@ -7,4 +7,4 @@
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 #else
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#endif //  WINUI3
+#endif //  USE_WINUI3
