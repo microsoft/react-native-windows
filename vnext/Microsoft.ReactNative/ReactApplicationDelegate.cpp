@@ -83,7 +83,6 @@ void ReactApplicationDelegate::OnActivated(IActivatedEventArgs const &args) noex
 // Create the root view for the ReactNative app
 UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) noexcept {
   auto host = m_reactApplication.Host();
-  host.OnResume([=]() { m_application.Exit(); });
 
   ApplyArguments(host, arguments.c_str());
 
@@ -106,28 +105,23 @@ UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) noexcept 
 }
 
 void ReactApplicationDelegate::OnResuming(IInspectable const & /*sender*/, IInspectable const & /*args*/) noexcept {
-  m_reactApplication.Host().OnResume([=]() { m_application.Exit(); });
-
   OutputDebugStringW(L"ReactApplicationDelegate::OnResuming");
 }
 
 void ReactApplicationDelegate::OnSuspending(IInspectable const & /*sender*/, IInspectable const & /*args*/) noexcept {
   OutputDebugStringW(L"ReactApplicationDelegate::OnSuspending");
-  m_reactApplication.Host().OnSuspend();
 }
 
 void ReactApplicationDelegate::OnLeavingBackground(
     IInspectable const & /*sender*/,
     LeavingBackgroundEventArgs const & /*args*/) noexcept {
   OutputDebugStringW(L"ReactApplicationDelegate::OnLeavingBackground");
-  m_reactApplication.Host().OnLeavingBackground();
 }
 
 void ReactApplicationDelegate::OnEnteredBackground(
     IInspectable const & /*sender*/,
     EnteredBackgroundEventArgs const & /*args*/) noexcept {
   OutputDebugStringW(L"ReactApplicationDelegate::OnEnteredBackground");
-  m_reactApplication.Host().OnEnteredBackground();
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

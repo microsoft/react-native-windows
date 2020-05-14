@@ -18,11 +18,5 @@ namespace Microsoft.ReactNative {
     ReactInstanceSettings InstanceSettings { get; set; };
 
     void ReloadInstance();
-
-    void OnSuspend();
-    void OnEnteredBackground();
-    void OnLeavingBackground();
-    void OnResume(OnResumeAction action);
-    void OnBackPressed();
   }
 } // namespace Microsoft.ReactNative
