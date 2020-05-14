@@ -124,11 +124,15 @@ struct WindowData {
         if (!m_bundleFile.empty()) {
           PCWSTR appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
 
+          WCHAR workingDir[MAX_PATH];
+          GetCurrentDirectory(MAX_PATH, workingDir);
+
           auto host = Host();
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
           host.InstanceSettings().MainComponentName(appName);
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
           host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
+          host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);

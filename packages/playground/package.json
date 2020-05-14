@@ -3,6 +3,7 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
+    "bundle-win32":"just-scripts prepareBundleWin32 && npx react-native bundle --entry-file Samples\\rntester.tsx --bundle-output windows\\playground-win32\\Bundle\\Samples\\rntester.bundle --platform windows",
     "start": "react-native start",
     "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
