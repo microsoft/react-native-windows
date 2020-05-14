@@ -64,16 +64,16 @@ class TouchEventHandler {
     bool ctrlKey = false;
     bool altKey = false;
   };
-  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::UIElement sourceElement);
   ReactPointer
-  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
-  void UpdateReactPointer(
-      ReactPointer &pointer,
-      const winrt::PointerRoutedEventArgs &args,
-      winrt::FrameworkElement sourceElement);
+  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::UIElement sourceElement);
   void
-  UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
-  void SendPointerMove(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, winrt::UIElement sourceElement);
+  void UpdatePointersInViews(
+      std::shared_ptr<IReactInstance> instance,
+      const winrt::PointerRoutedEventArgs &args,
+      int64_t tag,
+      winrt::UIElement sourceElement);
 
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
@@ -84,15 +84,18 @@ class TouchEventHandler {
 
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
   folly::dynamic GetPointerJson(const ReactPointer &pointer, int64_t target);
+
+  struct TagSet {
+    std::unordered_set<int64_t> tags;
+    std::vector<int64_t> orderedTags;
+  };
+
   std::vector<ReactPointer> m_pointers;
-  std::unordered_map<uint32_t /*pointerId*/, std::set<int64_t> /*tags*/> m_pointersInViews;
+  std::unordered_map<uint32_t /*pointerId*/, TagSet /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
-  bool TagFromOriginalSource(
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t *pTag,
-      winrt::FrameworkElement *pSourceElement);
-  std::set<int64_t> GetTagsAtPoint(const winrt::PointerRoutedEventArgs &e);
+  bool
+  TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, winrt::UIElement *pSourceElement);
 
   XamlView m_xamlView;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
