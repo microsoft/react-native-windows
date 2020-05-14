@@ -7,6 +7,9 @@
 #include "NativeUIManager.h"
 
 #include <ReactRootView.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
 
 #include "CppWinRTIncludes.h"

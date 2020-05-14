@@ -34,6 +34,23 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.Effects.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Documents.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Markup.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Imaging.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Media3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Navigation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
