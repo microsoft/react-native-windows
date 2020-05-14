@@ -7,7 +7,6 @@
 
 #include <windows.graphics.effects.interop.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.h>
 
 #define CATCH_RETURN               \
   return S_OK;                     \

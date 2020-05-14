@@ -5,6 +5,7 @@
 
 #include "ReactImageBrush.h"
 
+#include <winrt/Windows.UI.Composition.Effects.h>
 #include <sstream>
 
 #include <winrt/Windows.UI.Composition.h>

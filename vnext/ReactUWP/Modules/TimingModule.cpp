@@ -8,6 +8,7 @@
 
 #include <InstanceManager.h>
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/Instance.h>

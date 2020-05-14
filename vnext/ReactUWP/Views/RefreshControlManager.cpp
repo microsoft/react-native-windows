@@ -9,6 +9,7 @@
 
 #include <ReactUWP\Utils\Helpers.h>
 #include <Views/ShadowNodeBase.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;

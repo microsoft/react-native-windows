@@ -10,6 +10,9 @@
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
+#include <winrt/Windows.UI.Xaml.Shapes.h>
 
 #include <IReactInstance.h>
 #include <winrt/Windows.UI.Xaml.Shapes.h>

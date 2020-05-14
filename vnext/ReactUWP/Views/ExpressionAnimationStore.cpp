@@ -11,6 +11,8 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Composition;
 } // namespace winrt
 
+#include <winrt/Windows.UI.Composition.h>
+
 namespace react {
 namespace uwp {
 
@@ -43,8 +45,8 @@ winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpres
   // This means Rotate animations would rotate around the top left corner instead of around the center of the element
   // In order to fix that we need a transform (see GetTransformCenteringExpression)
   // The way we obtain the center of an element is by using the ActualSize façade. However this was only added in 19h1
-  // An expression animation that refers to a non-existent property (e.g. in RS5) will crash, so use the CenterPoint as
-  // a fallback. This might be wrong but at least we won't crash.
+  // An expression animation that refers to a non-existent property (e.g. in RS5) will crash, so use the CenterPoint
+  // as a fallback. This might be wrong but at least we won't crash.
   return winrt::Window::Current().Compositor().CreateExpressionAnimation(
       g_HasActualSizeProperty == TriBit::Set
           ? L"vector3(0.5 * uielement.ActualSize.x, 0.5 * uielement.ActualSize.y, 0)"

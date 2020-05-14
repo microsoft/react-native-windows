@@ -7,6 +7,7 @@
 #include "DatePickerViewManager.h"
 
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 
 #include <IReactInstance.h>
 

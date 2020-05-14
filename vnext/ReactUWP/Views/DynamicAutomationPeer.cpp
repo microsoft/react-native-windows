@@ -6,6 +6,7 @@
 #include "DynamicAutomationPeer.h"
 #include "DynamicAutomationProperties.h"
 
+#include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 

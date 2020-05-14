@@ -3,7 +3,9 @@
 
 #include "pch.h"
 
+#include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 #include "Utils/Helpers.h"
 #include "Utils/PropertyHandlerUtils.h"
 #include "Views/KeyboardEventHandler.h"

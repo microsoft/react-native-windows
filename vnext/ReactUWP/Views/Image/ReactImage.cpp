@@ -5,7 +5,10 @@
 
 #include "ReactImage.h"
 
+#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
+
 #include <winrt/Windows.Security.Cryptography.h>
+#include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
@@ -22,11 +25,6 @@ using namespace Windows::Web::Http;
 } // namespace winrt
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
-
-#if _MSC_VER <= 1913
-// VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
-#pragma optimize("", off)
-#endif
 
 namespace react {
 namespace uwp {

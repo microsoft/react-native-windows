@@ -5,7 +5,6 @@
 #include "UniversalTestInstance.h"
 
 #include <Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include <wrl.h>
 
 namespace xaml = Windows::UI::Xaml;
@@ -59,7 +58,7 @@ void UniversalTestInstance::AttachMeasuredRootView(std::string &&appName) noexce
         auto mainGrid = static_cast<xaml::Controls::Grid ^>(xaml::Media::VisualTreeHelper::GetChild(page, 0));
 
         xaml::IFrameworkElement ^ rootFrameworkElement = mainGrid;
-        Microsoft::WRL::ComPtr<::ABI::Windows::UI::Xaml::IFrameworkElement> spFrameworkElementABI =
+        Microsoft::WRL::ComPtr<ABI::Windows::UI::Xaml::IFrameworkElement> spFrameworkElementABI =
             reinterpret_cast<ABI::Windows::UI::Xaml::IFrameworkElement *>(rootFrameworkElement);
         // Create C++/WinRT pointer from ABI pointer.
         ::react::uwp::XamlView xamlView =

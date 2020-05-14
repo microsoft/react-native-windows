@@ -3,6 +3,7 @@
 
 #pragma once
 #include <folly/dynamic.h>
+#include <winrt/Windows.UI.Composition.h>
 #include "AnimatedNode.h"
 
 namespace winrt {

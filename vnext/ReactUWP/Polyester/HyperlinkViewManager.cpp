@@ -7,6 +7,8 @@
 
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 
 #include <IReactInstance.h>
 

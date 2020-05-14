@@ -6,6 +6,7 @@
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
@@ -18,8 +19,17 @@
 #include <regex>
 #include "Unicode.h"
 
-namespace xaml = winrt::Windows::UI::Xaml;
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Documents.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
+#include <winrt/Windows.UI.Xaml.Markup.h>
+
 using namespace winrt::Windows::Foundation;
+
+namespace xaml {
+using namespace winrt::Windows::UI::Xaml;
+}
 
 namespace Mso::React {
 

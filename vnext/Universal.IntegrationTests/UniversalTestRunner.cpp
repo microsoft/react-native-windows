@@ -9,7 +9,6 @@
 #include <cxxreact/ReactMarker.h>
 #include "UniversalTestInstance.h"
 
-#include <Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <wrl.h>
 

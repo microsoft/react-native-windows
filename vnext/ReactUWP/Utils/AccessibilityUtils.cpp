@@ -5,7 +5,9 @@
 
 #include <Utils/AccessibilityUtils.h>
 
-#include <Views\DynamicAutomationProperties.h>
+#include <Views/DynamicAutomationProperties.h>
+#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;
