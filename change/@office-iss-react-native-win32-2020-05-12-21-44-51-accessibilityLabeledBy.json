@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add win32-specific accessibility props Description, DescribedBy, and LabeledBy",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ppatboyd@outlook.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-13T04:44:51.679Z"
+}
