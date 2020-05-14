@@ -6,6 +6,8 @@
 
 #include <Utils\ValueUtils.h>
 
+#include <winrt/Windows.UI.Xaml.Controls.h>
+
 #pragma warning(push)
 #pragma warning(disable : 4146)
 #include <cxxreact/JsArgumentHelpers.h>

@@ -11,6 +11,7 @@
 
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include <winrt/Windows.UI.Xaml.Documents.h>
 
 #include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>

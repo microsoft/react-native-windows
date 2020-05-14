@@ -8,6 +8,7 @@
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 
 // Needed for latest versions of C++/WinRT
 #if __has_include("ViewPanel.g.cpp")

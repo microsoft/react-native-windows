@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <winrt/Windows.UI.Composition.h>
 #include "AdditionAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 

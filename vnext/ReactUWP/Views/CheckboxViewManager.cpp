@@ -7,6 +7,8 @@
 #include "CheckboxViewManager.h"
 
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 
 #include <IReactInstance.h>
 

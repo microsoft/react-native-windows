@@ -7,6 +7,8 @@
 #include <cxxreact/CxxModule.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 
+#include <winrt/Windows.UI.ViewManagement.h>
+
 #include "IReactInstance.h"
 
 namespace react::uwp {

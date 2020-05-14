@@ -5,7 +5,7 @@
 
 #include <Windows.Foundation.h>
 #include <folly/json.h>
-#include <windows.ui.xaml.controls.h>
+#include <winrt/Windows.UI.xaml.controls.h>
 #include "HStringHelper.h"
 #include "Instance_rt.h"
 #include "ReactControl_rt.h"

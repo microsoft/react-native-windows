@@ -3,7 +3,11 @@
 
 #include "pch.h"
 
+#include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 #include "PickerViewManager.h"
 
 #include <Utils/ValueUtils.h>

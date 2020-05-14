@@ -12,6 +12,10 @@
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Documents.h>
 
 #include <winrt/Windows.UI.Xaml.Documents.h>
 
