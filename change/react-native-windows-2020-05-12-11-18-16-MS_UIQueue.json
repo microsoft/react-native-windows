@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use DispatcherQueue instead of CoreDispatcher for Mso::DispatchQueue",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-12T18:18:15.956Z"
-}
