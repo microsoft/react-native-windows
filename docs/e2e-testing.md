@@ -446,6 +446,8 @@ E2E tests can be summarized as follows:
 
 So you've added or updated some tests: great! you get a cookie*. But now you probably need to update the masters, or the tests will fail and break the CI.
 
+\* void where prohibited, prizes and participation may vary.
+
 ![testFail](img/e2e-testfail.png)
 
 The best way to do this is by letting the CI run and fail, then downloading the generated tree dump output files, and comparing to the masters. Make sure the differences are expected, copy over them and check them in. The reason is that the masters will include things like the size elements rendered at, which can be dependent on DPI, scale factor, resolution, and in some cases (due to bugs) even differ based on bitness (see #4628).
@@ -471,6 +473,17 @@ Sometimes you'll have an element in your test that produces output that should n
 }
 ...
 ```
+
+## run_wdio
+
+WDIO is not really built to be run within Azure DevOps, so I wrote a utility called `run_wdio` to adapt it to something that can run in ADO.
+It can be found in [\packages\e2etest\run_wdio.js](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/run_wdio.js)
+Its main features (which WDIO lacks) are:
+
+* reports success/failure to ADO so that test failures will break the CI
+* supports test selection on the command line
+* supports test metadata and filtering (e.g. you can mark a test as "do not run in the lab")
+* prints out the list of tests and test cases that failed in the CI console
 
 
 ## Debugging E2E Tests in CI
