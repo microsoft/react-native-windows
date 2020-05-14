@@ -14,10 +14,12 @@ using Method = facebook::xplat::module::CxxModule::Method;
 
 namespace react::uwp {
 
-AppearanceChangeListener::AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance) noexcept
-    : Mso::ActiveObject<>(Mso::DispatchQueue::MainUIQueue()), m_weakReactInstance(std::move(reactInstance)) {
+AppearanceChangeListener::AppearanceChangeListener(
+    std::weak_ptr<IReactInstance> &&reactInstance,
+    Mso::DispatchQueue const &uiQueue) noexcept
+    : Mso::ActiveObject<>(uiQueue), m_weakReactInstance(std::move(reactInstance)) {
   // Ensure we're constructed on the UI thread
-  VerifyIsInQueueElseCrash();
+  VerifyElseCrash(uiQueue.HasThreadAccess());
 
   m_currentTheme = Application::Current().RequestedTheme();
 

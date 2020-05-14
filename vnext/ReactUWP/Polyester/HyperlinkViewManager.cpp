@@ -5,6 +5,8 @@
 
 #include "HyperlinkViewManager.h"
 
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
 

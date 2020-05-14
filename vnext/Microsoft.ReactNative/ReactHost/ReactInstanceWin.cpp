@@ -14,12 +14,14 @@
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
 #include "../../codegen/NativeClipboardSpec.g.h"
+#include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "IReactDispatcher.h"
 #include "Modules/AppStateData.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
@@ -153,7 +155,7 @@ void ReactInstanceWin::Initialize() noexcept {
   InitUIManager();
 
   Mso::PostFuture(
-      Mso::DispatchQueue::MainUIQueue(),
+      m_uiQueue,
       [weakThis = Mso::WeakPtr{this}]() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
@@ -162,7 +164,8 @@ void ReactInstanceWin::Initialize() noexcept {
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           react::uwp::I18nHelper().Instance().setInfo(react::uwp::I18nModule::GetI18nInfo());
-          strongThis->m_appearanceListener = Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance);
+          strongThis->m_appearanceListener =
+              Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance, strongThis->m_uiQueue);
         }
       })
       .Then(Queue(), [ this, weakThis = Mso::WeakPtr{this} ]() noexcept {
@@ -198,7 +201,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
-          m_appState = std::make_shared<react::uwp::AppState2>(*m_reactContext);
+          m_appState = std::make_shared<react::uwp::AppState2>(*m_reactContext, m_uiQueue);
 
           // Acquire default modules and then populate with custom modules
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
@@ -218,20 +221,22 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::Clipboard,
                   ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
 
+          ::Microsoft::ReactNative::DevSettings::SetReload(
+              strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
+                if (auto reactHost = weakReactHost.GetStrongPtr()) {
+                  reactHost->ReloadInstance();
+                }
+              });
+
+          nmp->AddModuleProvider(
+              L"DevSettings",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::DevSettings,
+                  ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+
           auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
           cxxModules.insert(
               cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
-
-          cxxModules.emplace_back(
-              Microsoft::ReactNative::DevSettingsModule::name,
-              [weakReactHost = strongThis->m_weakReactHost]() {
-                return std::make_unique<Microsoft::ReactNative::DevSettingsModule>([weakReactHost]() noexcept {
-                  if (auto reactHost = weakReactHost.GetStrongPtr()) {
-                    reactHost->ReloadInstance();
-                  }
-                });
-              },
-              m_batchingUIThread);
 
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
@@ -454,8 +459,9 @@ void ReactInstanceWin::InitNativeMessageThread() noexcept {
 
 void ReactInstanceWin::InitUIMessageThread() noexcept {
   // Native queue was already given us in constructor.
-  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
-      Mso::DispatchQueue::MainUIQueue(), Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
+  m_uiQueue = winrt::Microsoft::ReactNative::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
+  m_uiMessageThread.Exchange(
+      std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
   m_batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
 }
@@ -517,7 +523,7 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
     return m_options.RedBoxHandler;
   } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
     auto localWkReactHost = m_weakReactHost;
-    return CreateDefaultRedBoxHandler(std::move(localWkReactHost));
+    return CreateDefaultRedBoxHandler(std::move(localWkReactHost), Mso::Copy(m_uiQueue));
   } else {
     return {};
   }

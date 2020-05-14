@@ -36,12 +36,6 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
   void ReloadInstance() noexcept;
 
-  void OnSuspend() noexcept;
-  void OnEnteredBackground() noexcept;
-  void OnLeavingBackground() noexcept;
-  void OnResume(OnResumeAction const &action) noexcept;
-  void OnBackPressed() noexcept;
-
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
 

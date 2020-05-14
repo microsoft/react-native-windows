@@ -5,7 +5,9 @@
 
 #include <Utils/AccessibilityUtils.h>
 
-#include <Views\DynamicAutomationProperties.h>
+#include <UI.Xaml.Automation.Peers.h>
+#include <UI.Xaml.Automation.h>
+#include <Views/DynamicAutomationProperties.h>
 
 namespace react {
 namespace uwp {

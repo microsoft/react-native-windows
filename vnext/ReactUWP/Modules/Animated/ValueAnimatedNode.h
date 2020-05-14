@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <UI.Composition.h>
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
 

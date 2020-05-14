@@ -9,6 +9,7 @@
 
 #include "IconViewManager.h"
 
+#include <UI.Xaml.Documents.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
 

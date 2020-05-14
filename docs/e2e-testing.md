@@ -436,3 +436,72 @@ this.submitButton.click();
 You can easily to use By(string) to locate a element which associated with testID in the app.
 
 It's recommended to define a `get` for each locator like above.
+
+## E2E Tests and masters
+
+E2E tests can be summarized as follows:
+- they are tests that run the ReactUWPTestApp
+- use UI Automation to navigate between pages, query the state of elements, click on them, etc.
+- the ReactUWPTestApp has code to produce a dump of the its own visual tree ("tree dump output") and compares it with a checked in copy ("tree dump masters") to make sure nothing has regressed. The tree dumps are produced in Json format (there is also an option to produce them in a custom text format of key=value, but that is deprecated now).
+
+So you've added or updated some tests: great! you get a cookie*. But now you probably need to update the masters, or the tests will fail and break the CI.
+
+\* void where prohibited, prizes and participation may vary.
+
+![testFail](img/e2e-testfail.png)
+
+The best way to do this is by letting the CI run and fail, then downloading the generated tree dump output files, and comparing to the masters. Make sure the differences are expected, copy over them and check them in. The reason is that the masters will include things like the size elements rendered at, which can be dependent on DPI, scale factor, resolution, and in some cases (due to bugs) even differ based on bitness (see #4628).
+
+When an output doesn't match its master, a file with `.err` extension will be produced under the `TreeDump` folder in the `ReactUWPTestAppTreeDump` artifact. The content of the `.err` file will usually just say:
+
+```txt
+Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__kc2bncckyf4ap\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\AppData\Local\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState\TreeDump\ControlStyleRoundBorder.json
+```
+
+![Errors](img/e2e-errors.png)
+
+Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/E2ETest/windows/ReactUWPTestApp/Assets/TreeDump/masters).
+
+Sometimes you'll have an element in your test that produces output that should not be used for comparison. You can manually edit the generated json and set the output that you want to ignore to the `<ANYTHING>` value:
+
+```json
+...
+"Windows.UI.Xaml.Button":
+{
+  "Text": "<ANYTHING>",
+  ...
+}
+...
+```
+
+## run_wdio
+
+WDIO is not really built to be run within Azure DevOps, so I wrote a utility called `run_wdio` to adapt it to something that can run in ADO.
+It can be found in [\packages\e2etest\run_wdio.js](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/run_wdio.js)
+Its main features (which WDIO lacks) are:
+
+* reports success/failure to ADO so that test failures will break the CI
+* supports test selection on the command line
+* supports test metadata and filtering (e.g. you can mark a test as "do not run in the lab")
+* prints out the list of tests and test cases that failed in the CI console
+
+
+## Debugging E2E Tests in CI
+If you have access to the AzureDevOps pipeline you'll be able to see test failures and debug crashes.
+Here are the artifacts that are produced during the build:
+- error screenshots of the app when a test failed
+- test run XML - this contains some information like the name of the wdio test that failed and the JS stack
+- tree dump outputs - you can compare these to the masters to see if there is a the difference responsible for the test failing. 
+- crash dumps of the e2e test app (ReactUWPTestApp)
+
+You can access these by going to the AzureDevOps run for your PR and clicking on the artifacts link:
+
+![Artifacts](img/e2e-artifacts.png)
+
+Then you can access crash dumps under the `ReactUWPTestAppTreeDump\CrashDumps` folder.
+![CrashDumps](img/e2e-crashdumps.png)
+
+You can get the symbols from the `appxsym` (just download it and rename it to `.zip`):
+![SymbolsPackage](img/e2e-syms.png)
+
+ The `ReactUWPTestAppTreeDump` folder will also contain any tree dump outputs that were produced that did not match the masters.

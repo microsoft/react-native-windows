@@ -6,6 +6,7 @@
 #include <Views/ShadowNodeBase.h>
 #include "DatePickerViewManager.h"
 
+#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>

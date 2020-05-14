@@ -5,9 +5,13 @@
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
 
+#include "IReactDispatcher.h"
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Navigation.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.UI.Core.h>
 
@@ -48,6 +52,7 @@ ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactAp
 ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
+    ReactDispatcher::SetUIThreadDispatcher(m_instanceSettings.Properties());
   }
 
   return m_instanceSettings;

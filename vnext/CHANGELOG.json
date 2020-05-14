@@ -2,6 +2,86 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 14 May 2020 00:04:37 GMT",
+      "tag": "react-native-windows_v0.0.0-master.66",
+      "version": "0.0.0-master.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add rnw-dependencies.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "64aede7aedb329e97df0f6d4f8c946e6454b573c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use DispatcherQueue instead of CoreDispatcher for Mso::DispatchQueue",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e6337047f6085b32951eeff4f5063d21e5c7da2f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow storing non-WinRT types in ReactPropertyBag",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d1abb363bfcd8dc7f84fec768f32525002109919",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "revert dfc57fcf2504f57baab20f550b36a618eaa99e56",
+            "author": "kmelmon@microsoft.com",
+            "commit": "904f7c0080511f264274b1db48b0774f813cb163",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "don't exit the powershell session and pause for keyboard input if interactive",
+            "author": "asklar@microsoft.com",
+            "commit": "525bbe2667b4ed5f98d5fdd937768f24a84e3548",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 May 2020 00:04:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.65",
+      "version": "0.0.0-master.65",
+      "comments": {
+        "none": [
+          {
+            "comment": "test bundle build logic, JS function call test",
+            "author": "aeulitz@microsoft.com",
+            "commit": "56e08530db3e751a8813785bb51aeb728aad98b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Handle HTTP connect exceptions in DevSupportManager",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "dbe875f5f1445d4a3967b466ad83d0c33d76a53c",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "add ReactNativeHost to Win32 C++/WinRT ABI",
+            "author": "aeulitz@microsoft.com",
+            "commit": "49e65479d70ab1df738cb7bf21e915e9453eaf13",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed ReactContext copy/move semantic",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d5e8bdcbf63a8ee2e9221bfa344faa227ef892e3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use spec file for DevSettings NativeModule",
+            "author": "acoates@microsoft.com",
+            "commit": "8033b548f81e48d904b4dd1b1f81df33dbb232c4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 May 2020 00:04:39 GMT",
       "tag": "react-native-windows_v0.0.0-master.64",
       "version": "0.0.0-master.64",

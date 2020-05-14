@@ -7,6 +7,7 @@
 #include "TimingModule.h"
 
 #include <InstanceManager.h>
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 
 #include <cxxreact/CxxModule.h>

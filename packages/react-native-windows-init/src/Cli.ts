@@ -47,6 +47,13 @@ const argv = yargs.version(false).options({
       'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
     hidden: true,
   },
+  useWinUI3: {
+    type: 'boolean',
+    describe:
+    '[Experimental] Use WinUI3',
+    hidden: true,
+    default: false,
+  }
 }).argv;
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
@@ -354,6 +361,7 @@ You can either downgrade your version of ${chalk.green(
       overwrite: argv.overwrite,
       verbose: argv.verbose,
       experimentalNugetDependency: argv.experimentalNugetDependency,
+      useWinUI3: argv.useWinUI3,
     });
   } catch (error) {
     console.error(chalk.red(error.message));

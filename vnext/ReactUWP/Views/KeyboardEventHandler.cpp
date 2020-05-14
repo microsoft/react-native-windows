@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <UI.Xaml.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
 #include "Utils/Helpers.h"

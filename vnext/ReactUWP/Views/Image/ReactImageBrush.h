@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <UI.Xaml.Media.h>
 #include <winrt/Windows.Foundation.h>
 #include "CppWinRTIncludes.h"
 

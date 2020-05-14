@@ -6,6 +6,7 @@
 #include <IReactInstance.h>
 
 #include <ReactUWP\Modules\NativeUIManager.h>
+#include <UI.Composition.h>
 #include <ViewManager.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>

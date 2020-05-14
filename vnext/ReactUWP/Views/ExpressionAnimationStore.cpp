@@ -6,6 +6,8 @@
 #include "ExpressionAnimationStore.h"
 #include "XamlFeatures.h"
 
+#include <UI.Composition.h>
+
 namespace react {
 namespace uwp {
 

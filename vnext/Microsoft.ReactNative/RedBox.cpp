@@ -7,11 +7,18 @@
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.Web.Http.h>
 #include <regex>
 #include "CppWinRTIncludes.h"
 #include "Unicode.h"
+
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Markup.h>
 
 using namespace winrt::Windows::Foundation;
 
@@ -358,19 +365,19 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
 struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
-  DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost) noexcept
-      : m_weakReactHost(std::move(weakReactHost)) {}
+  DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
+      : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
 
   ~DefaultRedBoxHandler() {
-    // Hide any currently showing redboxes
-    std::vector<std::shared_ptr<RedBox>> redboxes;
+    // Hide any currently showing redBoxes
+    std::vector<std::shared_ptr<RedBox>> redBoxes;
     {
       std::scoped_lock lock{m_lockRedBox};
-      std::swap(m_redboxes, redboxes);
+      std::swap(m_redBoxes, redBoxes);
     }
-    Mso::DispatchQueue::MainUIQueue().Post([redboxes = std::move(redboxes)]() {
-      for (const auto redbox : redboxes) {
-        redbox->Dismiss();
+    m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
+      for (const auto redBox : redBoxes) {
+        redBox->Dismiss();
       }
     });
   }
@@ -386,7 +393,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
         std::move(info)));
     {
       std::scoped_lock lock{m_lockRedBox};
-      m_redboxes.push_back(std::move(redbox));
+      m_redBoxes.push_back(std::move(redbox));
     }
     showTopJSError();
   }
@@ -403,32 +410,33 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
     std::shared_ptr<RedBox> redbox;
     {
       std::scoped_lock lock{m_lockRedBox};
-      for (auto it = m_redboxes.begin(); it != m_redboxes.end(); ++it) {
+      for (auto it = m_redBoxes.begin(); it != m_redBoxes.end(); ++it) {
         if ((*it)->GetId() == info.Id) {
           redbox = *it;
           break;
         }
       }
     }
+
     if (redbox) {
-      Mso::DispatchQueue::MainUIQueue().Post([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
+      m_uiQueue.Post([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
         redboxCaptured->UpdateError(std::move(errorInfo));
       });
     }
   }
 
   virtual void dismissRedbox() override {
-    Mso::DispatchQueue::MainUIQueue().Post([wkthis = std::weak_ptr(shared_from_this())]() {
+    m_uiQueue.Post([wkthis = std::weak_ptr(shared_from_this())]() {
       if (auto pthis = wkthis.lock()) {
         std::scoped_lock lock{pthis->m_lockRedBox};
-        if (!pthis->m_redboxes.empty())
-          pthis->m_redboxes[0]->Dismiss();
+        if (!pthis->m_redBoxes.empty())
+          pthis->m_redBoxes[0]->Dismiss();
       }
     });
   }
 
  private:
-  // When notified by a redbox that its been dismisssed
+  // When notified by a redbox that its been dismissed
   void onDismissedCallback(uint32_t id) noexcept {
     // Save a local ref, so if we are removing the last redbox which could hold the last ref to the DefaultRedBoxHandler
     // We ensure that we exit the mutex before the handler is destroyed.
@@ -436,10 +444,10 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
     {
       {
         std::scoped_lock lock{m_lockRedBox};
-        for (auto it = m_redboxes.begin(); it != m_redboxes.end(); ++it) {
+        for (auto it = m_redBoxes.begin(); it != m_redBoxes.end(); ++it) {
           if ((*it)->GetId() == id) {
             redbox = *it;
-            it = m_redboxes.erase(it);
+            it = m_redBoxes.erase(it);
             break;
           }
         }
@@ -453,8 +461,8 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
     std::shared_ptr<RedBox> redbox;
     {
       std::scoped_lock lock{m_lockRedBox};
-      if (!m_redboxes.empty()) {
-        redbox = m_redboxes[0];
+      if (!m_redBoxes.empty()) {
+        redbox = m_redBoxes[0];
       }
     }
 
@@ -462,13 +470,14 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       return;
     m_showingRedBox = true;
 
-    Mso::DispatchQueue::MainUIQueue().Post(
-        [redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
+    m_uiQueue.Post([redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
   }
 
-  bool m_showingRedBox = false; // Access from UI Thread only
+ private:
+  const Mso::DispatchQueue m_uiQueue;
+  bool m_showingRedBox{false}; // Access from UI Thread only
   std::mutex m_lockRedBox;
-  std::vector<std::shared_ptr<RedBox>> m_redboxes; // Protected by m_lockRedBox
+  std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
 
@@ -564,8 +573,10 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
-std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(Mso::WeakPtr<IReactHost> &&weakReactHost) noexcept {
-  return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost));
+std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
+    Mso::WeakPtr<IReactHost> &&weakReactHost,
+    Mso::DispatchQueue &&uiQueue) noexcept {
+  return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
 }
 
 } // namespace Mso::React

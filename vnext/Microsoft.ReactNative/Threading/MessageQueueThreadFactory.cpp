@@ -12,7 +12,8 @@ std::shared_ptr<facebook::react::MessageQueueThread> MakeJSQueueThread() noexcep
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeUIQueueThread() noexcept {
-  return std::make_shared<Mso::React::MessageDispatchQueue>(Mso::DispatchQueue::MainUIQueue(), nullptr, nullptr);
+  return std::make_shared<Mso::React::MessageDispatchQueue>(
+      Mso::DispatchQueue::MakeCurrentThreadUIQueue(), nullptr, nullptr);
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeSerialQueueThread() noexcept {

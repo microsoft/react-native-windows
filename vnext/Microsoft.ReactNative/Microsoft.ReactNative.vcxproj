@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. -->
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
@@ -123,6 +123,7 @@
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj /showIncludes</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
         $(ReactNativeWindowsDir)ReactUWP;
         $(ReactNativeWindowsDir)ReactUWP\Views;
@@ -299,6 +300,9 @@
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="HResult.h" />
+    <ClInclude Include="IReactDispatcher.h">
+      <DependentUpon>IReactDispatcher.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="IReactModuleBuilder.h">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
@@ -307,7 +311,7 @@
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClInclude>
@@ -467,6 +471,9 @@
     <ClCompile Include="DynamicWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="IReactDispatcher.cpp">
+      <DependentUpon>IReactDispatcher.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="IReactModuleBuilder.cpp">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
@@ -474,7 +481,7 @@
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ReactApplication.cpp">
@@ -547,6 +554,7 @@
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
+    <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />

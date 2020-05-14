@@ -161,6 +161,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
   std::string m_bundleRootPath;
+  Mso::DispatchQueue m_uiQueue;
 };
 
 } // namespace Mso::React

@@ -265,15 +265,20 @@
     </ClCompile>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
+    <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="Modules\AppStateData.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="Modules\ClipboardModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Pch\pch.cpp">
+      <Filter>Pch</Filter>
+    </ClCompile>
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
@@ -298,7 +303,6 @@
     <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
-    <ClCompile Include="ReactPropertyBag.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
@@ -599,16 +603,21 @@
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="HResult.h" />
+    <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateData.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\ClipboardModule.h" />
+    <ClInclude Include="Modules\ClipboardModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Pch\pch.h">
+      <Filter>Pch</Filter>
+    </ClInclude>
     <ClInclude Include="ReactHost\AsyncActionQueue.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
@@ -648,7 +657,6 @@
     <ClInclude Include="ReactHost\UwpReactInstanceProxy.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
-    <ClInclude Include="ReactPropertyBag.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
@@ -685,10 +693,10 @@
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactContext.idl" />
+    <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
-    <Midl Include="IRedBoxHandler.idl" />
     <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="NoExceptionAttribute.idl" />
@@ -698,6 +706,7 @@
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
+    <Midl Include="RedBoxHandler.idl" />
     <Midl Include="XamlHelper.idl" />
   </ItemGroup>
   <ItemGroup>
@@ -723,6 +732,9 @@
     </Filter>
     <Filter Include="Modules\Animated">
       <UniqueIdentifier>{1fe62423-356b-44a9-a97c-79950d299afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pch">
+      <UniqueIdentifier>{cabb286d-fae0-4cfa-b793-79d13f559b41}</UniqueIdentifier>
     </Filter>
     <Filter Include="Polyester">
       <UniqueIdentifier>{c7bc39da-51b4-4410-846f-ffc20dfa57cc}</UniqueIdentifier>

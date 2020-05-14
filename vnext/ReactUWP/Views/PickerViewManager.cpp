@@ -3,6 +3,9 @@
 
 #include "pch.h"
 
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
 #include "PickerViewManager.h"

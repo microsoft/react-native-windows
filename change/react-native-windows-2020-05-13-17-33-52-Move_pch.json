@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "Fixed ReactContext copy/move semantic",
+  "comment": "Move pch files into a Pch subfolder.",
   "packageName": "react-native-windows",
   "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-05-11T18:06:42.425Z"
+  "date": "2020-05-14T00:33:52.732Z"
 }

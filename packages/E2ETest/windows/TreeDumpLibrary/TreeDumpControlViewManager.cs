@@ -5,11 +5,8 @@ using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Data.Json;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -126,178 +123,23 @@ namespace TreeDumpLibrary
             m_timer.Stop();
             if (VisualTreeHelper.GetParent(m_textBlock) != null)
             {
-                await MatchTreeDumpFromLayoutUpdateAsync();
-            }
-        }
-        private DependencyObject FindChildWithMatchingUIAID(DependencyObject element)
-        {
-            string automationId = (string)element.GetValue(Windows.UI.Xaml.Automation.AutomationProperties.AutomationIdProperty);
-            if (automationId == m_uiaID)
-            {
-                return element;
-            }
-            int childrenCount = VisualTreeHelper.GetChildrenCount(element);
-            for (int i = 0; i < childrenCount; i++)
-            {
-                var result = FindChildWithMatchingUIAID(VisualTreeHelper.GetChild(element, i));
-                if (result != null)
+                var matchSuccessful = await TreeDumpHelper.MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, DumpTreeMode.Json, m_dumpExpectedText);
+                if (!matchSuccessful)
                 {
-                    return result;
-                }
-            }
-
-            return null;
-        }
-
-        private async Task MatchTreeDumpFromLayoutUpdateAsync()
-        {
-            // First find root
-            DependencyObject current = m_textBlock;
-            DependencyObject parent = VisualTreeHelper.GetParent(current);
-            while (parent != null)
-            {
-                current = parent;
-                parent = VisualTreeHelper.GetParent(current);
-            }
-
-            DependencyObject dumpRoot = current;
-            // if UIAID is passed in from test, find the matching child as the root to dump
-            if (m_uiaID != null)
-            {
-                var matchingNode = FindChildWithMatchingUIAID(current);
-                if (matchingNode != null)
-                {
-                    dumpRoot = matchingNode;
-                }
-            }
-
-            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */ , m_additionalProperties, mode);
-            if (dumpText != m_dumpExpectedText)
-            {
-                await MatchDump(dumpText);
-            }
-        }
-
-        private readonly DumpTreeMode mode = DumpTreeMode.Json;
-
-        private async Task MatchDump(string dumpText)
-        {
-            StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{GetMasterFile()}");
-            if (m_dumpExpectedText == null)
-            {
-                try
-                {
-                    m_dumpExpectedText = await FileIO.ReadTextAsync(masterFile);
-
                     StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                    string copyFileName = GetMasterFile();
-                    var copyDumpFile = await storageFolder.CreateFileAsync(copyFileName, CreationCollisionOption.ReplaceExisting);
-                    await FileIO.WriteTextAsync(copyDumpFile, m_dumpExpectedText);
-                }
-                catch (IOException)
-                {
-                    UpdateResult(false /*matchDump*/ , "Tree dump master file not found in testapp package!");
-                }
-            }
+                    StorageFile outFile = await storageFolder.GetFileAsync(TreeDumpHelper.GetOutputFile(m_dumpID));
+                    StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{TreeDumpHelper.GetMasterFile(m_dumpID)}");
 
-            if (!DumpsAreEqual(m_dumpExpectedText, dumpText))
-            {
-                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                string fileName = GetOutputFile();
-                try
-                {
-                    StorageFile outFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-                    await FileIO.WriteTextAsync(outFile, dumpText);
                     UpdateResult(false /*matchDump*/ ,
                         $"Tree dump file does not match master at {masterFile.Path} - See output at {outFile.Path}",
                         GetInlines(masterFile, outFile, m_textBlock));
                 }
-                catch (IOException)
+                else
                 {
-                    UpdateResult(false /*matchDump*/ , "Can't write dump output file:" + fileName);
+                    UpdateResult(true /*matchDump*/ , "");
                 }
-            }
-            else
-            {
-                UpdateResult(true /*matchDump*/ , "");
-            }
-        }
 
-        private bool DumpsAreEqual(string dumpExpectedText, string dumpText)
-        {
-            if (mode == DumpTreeMode.Default)
-            {
-                return dumpExpectedText == dumpText;
             }
-            else
-            {
-                JsonValue expected = JsonValue.Parse(dumpExpectedText);
-                JsonValue actual = JsonValue.Parse(dumpText);
-                return JsonComparesEqual(expected, actual);
-            }
-        }
-
-        private bool JsonComparesEqual(IJsonValue expected, IJsonValue actual)
-        {
-            if (expected.ValueType != actual.ValueType)
-            {
-                return false;
-            }
-            switch (expected.ValueType)
-            {
-                case JsonValueType.String:
-                    if (expected.GetString() == actual.GetString())
-                    {
-                        return true;
-                    }
-                    else { Debug.WriteLine($"Expected {expected.GetString()} got {actual.GetString()}"); return false; }
-                case JsonValueType.Number:
-                    return expected.GetNumber() == actual.GetNumber();
-                case JsonValueType.Boolean:
-                    return expected.GetBoolean() == actual.GetBoolean();
-                case JsonValueType.Null:
-                    return true;
-                case JsonValueType.Array:
-                    {
-                        var ea = expected.GetArray();
-                        var aa = actual.GetArray();
-                        if (ea.Count != aa.Count) { return false; }
-                        for (uint i = 0; i < ea.Count; i++)
-                        {
-                            if (!JsonComparesEqual(ea[(int)i], aa[(int)i]))
-                            {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                case JsonValueType.Object:
-                    {
-                        var eo = expected.GetObject();
-                        var ao = actual.GetObject();
-                        if (eo.Keys.Count != ao.Keys.Count) { return false; }
-                        foreach (var key in eo.Keys)
-                        {
-                            if (!JsonComparesEqual(eo.GetNamedValue(key), ao.GetNamedValue(key)))
-                            {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                default:
-                    throw new ArgumentException();
-            }
-        }
-
-        private string GetOutputFile()
-        {
-            return "TreeDump\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".json" : ".out");
-        }
-
-        private string GetMasterFile()
-        {
-            return "TreeDump\\masters\\" + m_dumpID + (mode == DumpTreeMode.Json ? ".json" : ".txt");
         }
 
         private static IList<Inline> GetInlines(StorageFile masterFile, StorageFile outFile, UIElement anchor)

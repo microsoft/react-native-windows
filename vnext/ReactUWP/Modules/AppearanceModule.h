@@ -7,6 +7,8 @@
 #include <cxxreact/CxxModule.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 
+#include <winrt/Windows.UI.ViewManagement.h>
+
 #include "IReactInstance.h"
 
 namespace react::uwp {
@@ -17,7 +19,7 @@ class AppearanceChangeListener final : public Mso::ActiveObject<> {
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
  public:
-  AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance) noexcept;
+  AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance, Mso::DispatchQueue const &uiQueue) noexcept;
   const char *GetColorScheme() const noexcept;
 
  private:

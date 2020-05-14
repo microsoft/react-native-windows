@@ -5,8 +5,7 @@
 
 #include "ReactImageBrush.h"
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Storage.Streams.h>
+#include <UI.Xaml.Controls.h>
 
 #include <folly/dynamic.h>
 
