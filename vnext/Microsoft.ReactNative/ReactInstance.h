@@ -5,7 +5,12 @@
 
 #include "ReactInstance.g.h"
 
+#ifndef CORE_ABI
 #include <ReactUWP/IReactInstance.h>
+#endif
+
+#include "HResult.h"
+
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {

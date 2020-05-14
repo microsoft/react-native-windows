@@ -15,7 +15,13 @@
 #include "future/future.h"
 
 #include <NativeModuleProvider.h>
+
+#ifndef CORE_ABI
 #include <ReactUWP/IReactInstance.h>
+#else
+#include <folly/dynamic.h>
+#endif
+
 #include <ReactUWP/ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
 
@@ -145,7 +151,10 @@ struct ViewManagerProvider2 {
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
+
+#ifndef CORE_ABI
   react::uwp::ReactInstanceSettings LegacySettings;
+#endif
 
   winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
 
