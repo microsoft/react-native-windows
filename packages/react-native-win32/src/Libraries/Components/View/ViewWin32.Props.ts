@@ -110,7 +110,7 @@ export type AccessibilityActionName =
   export type Cursor =
   | 'auto'
   | 'pointer'
-  
+
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
   label?: string;
@@ -148,6 +148,15 @@ export type BasePropsWin32 = {
   accessibilityRole?: RN.AccessibilityRole | ARIARole;
   accessibilityStates?: AccessibilityStates[];
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
+
+  /**
+  * Windows Accessibility extensions for allowing other DOM elements to label or describe a given element.
+  *
+  * Defined as a reference to another DOM element inheriting from the primary base classes of React-Native elements.
+  * The reference will be converted to a native reference (tag) before passing to the native platform.
+  */
+ accessibilityDescribedBy?: React.RefObject<any>;
+ accessibilityLabeledBy?: React.RefObject<any>;
 };
 
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
