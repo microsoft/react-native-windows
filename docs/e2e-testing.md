@@ -437,6 +437,39 @@ You can easily to use By(string) to locate a element which associated with testI
 
 It's recommended to define a `get` for each locator like above.
 
+## E2E Tests and masters
+
+E2E tests can be summarized as follows:
+- they are tests that run the ReactUWPTestApp
+- use UI Automation to navigate between pages, query the state of elements, click on them, etc.
+- the ReactUWPTestApp has code to produce a dump of the its own visual tree ("tree dump output") and compares it with a checked in copy ("tree dump masters") to make sure nothing has regressed. The tree dumps are produced in Json format (there is also an option to produce them in a custom text format of key=value, but that is deprecated now).
+
+So you've added or updated some tests: great! you get a cookie*. But now you probably need to update the masters, or the tests will fail and break the CI.
+The best way to do this is by letting the CI run and fail, then downloading the generated tree dump output files, and comparing to the masters. Make sure the differences are expected, copy over them and check them in. The reason is that the masters will include things like the size elements rendered at, which can be dependent on DPI, scale factor, resolution, and in some cases (due to bugs) even differ based on bitness (see #4628).
+
+When an output doesn't match its master, a file with `.err` extension will be produced under the `TreeDump` folder in the `ReactUWPTestAppTreeDump` artifact. The content of the `.err` file will usually just say:
+
+```txt
+Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__kc2bncckyf4ap\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\AppData\Local\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState\TreeDump\ControlStyleRoundBorder.json
+```
+
+![Errors](img/e2e-errors.png)
+
+Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/E2ETest/windows/ReactUWPTestApp/Assets/TreeDump/masters).
+
+Sometimes you'll have an element in your test that produces output that should not be used for comparison. You can manually edit the generated json and set the output that you want to ignore to the `<ANYTHING>` value:
+
+```json
+...
+"Windows.UI.Xaml.Button":
+{
+  "Text": "<ANYTHING>",
+  ...
+}
+...
+```
+
+
 ## Debugging E2E Tests in CI
 If you have access to the AzureDevOps pipeline you'll be able to see test failures and debug crashes.
 Here are the artifacts that are produced during the build:
