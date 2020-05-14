@@ -9,13 +9,13 @@
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Data.h>
-#include <winrt/Windows.UI.Xaml.Interop.h>
-#include <winrt/Windows.UI.Xaml.Markup.h>
-#include <winrt/Windows.UI.Xaml.Navigation.h>
-#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/<%=XamlNamespace%>.Controls.Primitives.h>
+#include <winrt/<%=XamlNamespace%>.Controls.h>
+#include <winrt/<%=XamlNamespace%>.Data.h>
+#include <winrt/<%=XamlNamespace%>.Interop.h>
+#include <winrt/<%=XamlNamespace%>.Markup.h>
+#include <winrt/<%=XamlNamespace%>.Navigation.h>
+#include <winrt/<%=XamlNamespace%>.h>
 
 #include <winrt/Microsoft.ReactNative.h>
 
