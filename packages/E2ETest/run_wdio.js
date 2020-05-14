@@ -88,7 +88,7 @@ function parseLog(logfile) {
           const name = attr.name;
           failures[name] = {};
 
-          for (const testcase of testsuite.testcases) {
+          for (const testcase of testsuite.testcase) {
             if (testcase.error && testcase.error[0].ATTR) {
               failures[name].testcase = testcase.ATTR.name;
               failures[name].error = testcase.error[0].ATTR.message;

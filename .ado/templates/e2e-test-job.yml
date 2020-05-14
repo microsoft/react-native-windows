@@ -92,6 +92,13 @@ jobs:
           workingDirectory: packages/E2ETest
 
       - task: CopyFiles@2
+        displayName: Copy test report
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)\packages\E2ETest\reports
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump/reports
+        condition: succeededOrFailed()
+
+      - task: CopyFiles@2
         displayName: Copy tree dump output files
         inputs:
           sourceFolder: $(LocalAppData)\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState
