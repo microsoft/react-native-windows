@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implemented PropertyBag for ReactContext and ReactInstanceSettings",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-07T03:33:40.086Z"
-}

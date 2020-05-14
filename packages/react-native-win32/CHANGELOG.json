@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 14 May 2020 04:30:14 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0-preview.4",
+      "version": "0.62.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add win32-specific accessibility props Description, DescribedBy, and LabeledBy",
+            "author": "ppatboyd@outlook.com",
+            "commit": "33c24f34fc33be9a28d70555769d1468e82e4938",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 May 2020 22:32:51 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0-preview.3",
       "version": "0.62.0-preview.3",

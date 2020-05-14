@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 14 May 2020 04:30:14 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.6",
+      "version": "0.62.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "auto-detect RTL and push into root view",
+            "author": "kmelmon@microsoft.com",
+            "commit": "283b06cd15047e42c20b5f158a1de73861aa3995",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix appPackage path",
+            "author": "kaigu@microsoft.com",
+            "commit": "a42964e77ea9e23595c2913cd1759a8335176a63",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Expose ability for apps to provide their own RedBox implementation",
+            "author": "acoates@microsoft.com",
+            "commit": "c6c71f79c2be6357fd479943a5e1bdf556df42e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implemented PropertyBag for ReactContext and ReactInstanceSettings",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e73a55e2625f86e2789c12e9d2b069e8dd45615c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed ReactContext copy/move semantic",
+            "author": "vmorozov@microsoft.com",
+            "commit": "aa96215bd22caf8b62b88ed4b14ce748f2f4ac18",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use DispatcherQueue instead of CoreDispatcher for Mso::DispatchQueue",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f72b3bd1f6b5c3ca110ab5154769337154296fc1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow storing non-WinRT types in ReactPropertyBag",
+            "author": "vmorozov@microsoft.com",
+            "commit": "27cb46e3254aaf3317dee7596cd5624897895713",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce PCH Sizes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d6c1119c06b117905ac33e10e35496dbbcfa1835",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "revert dfc57fcf2504f57baab20f550b36a618eaa99e56",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5b026318116d8ead60a8aac2bdee9cdfb97b533b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused lifecycle events in ReactNativeHost",
+            "author": "kaigu@microsoft.com",
+            "commit": "614d03c9395854dcfa9cd3b3e6731ece2e7c915f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "- Change MouseEnter/MouseLeave behavior to match web behavior - Improve performance of frequently-called mouse move handler",
+            "author": "aschultz@microsoft.com",
+            "commit": "d3dc0273e78c654ec28be876a88e0d3289622634",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 May 2020 19:30:45 GMT",
       "tag": "react-native-windows_v0.62.0-preview.5",
       "version": "0.62.0-preview.5",

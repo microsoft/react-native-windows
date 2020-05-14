@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 May 2020 19:30:45 GMT and should not be manually modified.
+This log was last generated on Thu, 14 May 2020 04:30:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.6
+
+Thu, 14 May 2020 04:30:14 GMT
+
+### Changes
+
+- auto-detect RTL and push into root view (kmelmon@microsoft.com)
+- fix appPackage path (kaigu@microsoft.com)
+- Expose ability for apps to provide their own RedBox implementation (acoates@microsoft.com)
+- Implemented PropertyBag for ReactContext and ReactInstanceSettings (vmorozov@microsoft.com)
+- Fixed ReactContext copy/move semantic (vmorozov@microsoft.com)
+- Use DispatcherQueue instead of CoreDispatcher for Mso::DispatchQueue (vmorozov@microsoft.com)
+- Allow storing non-WinRT types in ReactPropertyBag (vmorozov@microsoft.com)
+- Reduce PCH Sizes (ngerlem@microsoft.com)
+- revert dfc57fcf2504f57baab20f550b36a618eaa99e56 (kmelmon@microsoft.com)
+- Remove unused lifecycle events in ReactNativeHost (kaigu@microsoft.com)
+- - Change MouseEnter/MouseLeave behavior to match web behavior - Improve performance of frequently-called mouse move handler (aschultz@microsoft.com)
 
 ## 0.62.0-preview.5
 
