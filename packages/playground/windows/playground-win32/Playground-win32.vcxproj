@@ -40,6 +40,7 @@
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -47,9 +48,6 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
@@ -122,12 +120,6 @@
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
     </ProjectReference>
   </ItemGroup>
-  <!--
-  <PropertyGroup>
-    <CppWinRTEnabled>false</CppWinRTEnabled>
-    <CppWinRTPackage>true</CppWinRTPackage>
-  </PropertyGroup>
-  -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
@@ -152,10 +144,4 @@
     <Error Condition="!Exists('..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
-  <Target Name="TestBuildArgs" BeforeTargets="PrepareForBuild">
-    <Message Importance="High" Text="CppWinRTEnabled -> $(CppWinRTEnabled)"/>
-    <Message Importance="High" Text="CppWinRTPackage -> $(CppWinRTPackage)"/>
-    <Message Importance="High" Text="CppWinRTPath -> $(CppWinRTPath)"/>
-  </Target>
-
 </Project>
