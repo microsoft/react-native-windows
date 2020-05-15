@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <UI.Xaml.Markup.h>
 #include <Utils/ValueUtils.h>
 #include "Unicode.h"
 

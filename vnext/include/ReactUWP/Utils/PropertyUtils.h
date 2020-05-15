@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Text.h>
 
 #include <Views/ShadowNodeBase.h>
 

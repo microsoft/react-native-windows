@@ -55,6 +55,7 @@
 #include <winrt/Windows.UI.Popups.h>
 #include "ChakraRuntimeHolder.h"
 
+#include <UI.Popups.h>
 #include <tuple>
 
 namespace react {

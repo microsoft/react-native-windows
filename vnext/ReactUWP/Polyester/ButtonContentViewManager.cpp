@@ -5,6 +5,7 @@
 
 #include "ButtonContentViewManager.h"
 
+#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 namespace react {

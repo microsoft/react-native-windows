@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 May 2020 00:04:21 GMT and should not be manually modified.
+This log was last generated on Fri, 15 May 2020 00:04:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.67
+
+Fri, 15 May 2020 00:04:44 GMT
+
+### Changes
+
+- winui3 option for app project template (asklar@microsoft.com)
+- Reduce PCH Sizes (ngerlem@microsoft.com)
+- Remove unused lifecycle events in ReactNativeHost (kaigu@microsoft.com)
+- Move pch files into a Pch subfolder. (vmorozov@microsoft.com)
+- exact match of WinAppDriver required (asklar@microsoft.com)
+
+## 0.0.0-master.66
+
+Thu, 14 May 2020 00:04:37 GMT
+
+### Changes
+
+- add rnw-dependencies.ps1 (asklar@microsoft.com)
+- Use DispatcherQueue instead of CoreDispatcher for Mso::DispatchQueue (vmorozov@microsoft.com)
+- Allow storing non-WinRT types in ReactPropertyBag (vmorozov@microsoft.com)
+- revert dfc57fcf2504f57baab20f550b36a618eaa99e56 (kmelmon@microsoft.com)
+- don't exit the powershell session and pause for keyboard input if interactive (asklar@microsoft.com)
 
 ## 0.0.0-master.65
 

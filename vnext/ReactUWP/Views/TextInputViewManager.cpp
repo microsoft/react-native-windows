@@ -7,12 +7,14 @@
 
 #include "Unicode.h"
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Shapes.h>
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
-#include "CppWinRTIncludes.h"
 
 namespace winrt {
 using namespace xaml;

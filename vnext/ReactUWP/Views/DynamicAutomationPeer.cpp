@@ -6,6 +6,8 @@
 #include "DynamicAutomationPeer.h"
 #include "DynamicAutomationProperties.h"
 
+#include <UI.Xaml.Controls.h>
+
 // Needed for latest versions of C++/WinRT
 #if __has_include("DynamicAutomationPeer.g.cpp")
 #include "DynamicAutomationPeer.g.cpp"

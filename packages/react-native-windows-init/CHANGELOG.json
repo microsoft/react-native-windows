@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 15 May 2020 00:04:44 GMT",
+      "tag": "react-native-windows-init_v0.1.7",
+      "version": "0.1.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "winui3 option for app project template",
+            "author": "asklar@microsoft.com",
+            "commit": "7de1f3843a9754c7fbf744bf3e556fdca78472c1",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 May 2020 00:05:03 GMT",
       "tag": "react-native-windows-init_v0.1.6",
       "version": "0.1.6",

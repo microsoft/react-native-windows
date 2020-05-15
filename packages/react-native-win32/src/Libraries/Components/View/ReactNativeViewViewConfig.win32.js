@@ -375,6 +375,8 @@ const ReactNativeViewConfig = {
     onMouseLeave: true,
     tooltip: true,
     cursor: true,
+    accessibilityDescribedBy: true,
+    accessibilityLabeledBy: true,
     // Windows]
   },
 };

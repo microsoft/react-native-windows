@@ -8,7 +8,6 @@
 #include <IReactInstance.h>
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
 
 namespace winrt {
 using namespace Windows::Foundation;

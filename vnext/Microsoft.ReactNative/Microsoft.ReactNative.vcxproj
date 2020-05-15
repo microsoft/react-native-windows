@@ -123,6 +123,7 @@
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
         $(ReactNativeWindowsDir)ReactUWP;
         $(ReactNativeWindowsDir)ReactUWP\Views;
@@ -310,7 +311,7 @@
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClInclude>
@@ -480,7 +481,7 @@
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ReactApplication.cpp">

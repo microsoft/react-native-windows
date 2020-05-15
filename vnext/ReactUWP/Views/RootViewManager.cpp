@@ -6,6 +6,7 @@
 #include "RootViewManager.h"
 
 #include <IXamlRootView.h>
+#include <UI.Xaml.Controls.h>
 
 namespace winrt {
 using namespace Windows::UI;

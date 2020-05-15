@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <UI.Composition.h>
 #include "AnimationDriver.h"
 
 namespace react {

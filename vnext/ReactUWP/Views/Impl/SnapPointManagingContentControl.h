@@ -1,7 +1,9 @@
 #pragma once
 
-#include "winrt/Windows.Foundation.Collections.h"
-#include "winrt/Windows.Foundation.h"
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 
 namespace winrt {
 using namespace Windows::Foundation;

@@ -88,7 +88,7 @@ function parseLog(logfile) {
           const name = attr.name;
           failures[name] = {};
 
-          for (const testcase of testsuite.testcases) {
+          for (const testcase of testsuite.testcase) {
             if (testcase.error && testcase.error[0].ATTR) {
               failures[name].testcase = testcase.ATTR.name;
               failures[name].error = testcase.error[0].ATTR.message;
@@ -112,7 +112,7 @@ function parseLogs() {
   const logs = fs.readdirSync(reportsDir).filter(x => x.endsWith('.log'));
   const names = logs
     .map(x => parseLog(path.join(reportsDir, x)))
-    .filter(x => x != null);
+    .filter(x => x != null && x != '');
   return names;
 }
 
@@ -144,7 +144,13 @@ function runWdio() {
 
   wdio.run().then(
     code => {
-      doProcess(code);
+      try {
+        doProcess(code);
+      } catch (e) {
+        console.log(e);
+        // any exception that isn't handled is an error
+        process.exit(3);
+      }
     },
     error => {
       console.error('Launcher failed to start the test', error.stacktrace);
@@ -153,4 +159,10 @@ function runWdio() {
   );
 }
 
-runWdio();
+try {
+  runWdio();
+} catch (e) {
+  console.log(e);
+  // any exception that isn't handled is an error
+  process.exit(2);
+}

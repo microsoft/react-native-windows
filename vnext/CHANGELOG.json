@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 May 2020 00:04:44 GMT",
+      "tag": "react-native-windows_v0.0.0-master.67",
+      "version": "0.0.0-master.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "winui3 option for app project template",
+            "author": "asklar@microsoft.com",
+            "commit": "7de1f3843a9754c7fbf744bf3e556fdca78472c1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce PCH Sizes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6f43e1d51a67cbe27cab77684bab6cce3869c03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused lifecycle events in ReactNativeHost",
+            "author": "kaigu@microsoft.com",
+            "commit": "a8cf72c8ce76c2b140c860990a9cdfd753085325",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move pch files into a Pch subfolder.",
+            "author": "vmorozov@microsoft.com",
+            "commit": "204bc9e292a9889111f72e143555c3be57bf5a99",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "exact match of WinAppDriver required",
+            "author": "asklar@microsoft.com",
+            "commit": "178583fbf015ecfaecb00a7e81d53d9699b5d2ce",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 May 2020 00:04:37 GMT",
+      "tag": "react-native-windows_v0.0.0-master.66",
+      "version": "0.0.0-master.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add rnw-dependencies.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "64aede7aedb329e97df0f6d4f8c946e6454b573c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use DispatcherQueue instead of CoreDispatcher for Mso::DispatchQueue",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e6337047f6085b32951eeff4f5063d21e5c7da2f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow storing non-WinRT types in ReactPropertyBag",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d1abb363bfcd8dc7f84fec768f32525002109919",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "revert dfc57fcf2504f57baab20f550b36a618eaa99e56",
+            "author": "kmelmon@microsoft.com",
+            "commit": "904f7c0080511f264274b1db48b0774f813cb163",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "don't exit the powershell session and pause for keyboard input if interactive",
+            "author": "asklar@microsoft.com",
+            "commit": "525bbe2667b4ed5f98d5fdd937768f24a84e3548",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2020 00:04:21 GMT",
       "tag": "react-native-windows_v0.0.0-master.65",
       "version": "0.0.0-master.65",

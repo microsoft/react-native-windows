@@ -5,7 +5,6 @@
 #include <wrl.h>
 
 #include <ReactUWPABI.h>
-#include <windows.ui.xaml.h>
 
 #include <wrl\client.h>
 #include <wrl\wrappers\corewrappers.h>

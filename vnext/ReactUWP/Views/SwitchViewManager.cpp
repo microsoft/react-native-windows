@@ -4,6 +4,8 @@
 #include "pch.h"
 
 #include <IReactInstance.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Shapes.h>
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>

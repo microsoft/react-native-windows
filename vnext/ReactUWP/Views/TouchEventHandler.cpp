@@ -7,6 +7,9 @@
 #include "TouchEventHandler.h"
 
 #include <Modules/NativeUIManager.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.ApplicationModel.Core.h>
