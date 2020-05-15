@@ -87,7 +87,9 @@ function getAppxManifestPath(options) {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
-  }/${configuration},${configuration}/*}/AppxManifest.xml`;
+  }/${configuration},${configuration}/*,target/${
+    options.arch
+  }/${configuration}}/AppxManifest.xml`;
   const appxPath = glob.sync(path.join(options.root, appxManifestGlob))[0];
 
   if (!appxPath) {
