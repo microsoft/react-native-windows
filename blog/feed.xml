@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>React Native for Windows + Mac Blog</title>
+        <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
-        <description>The best place to stay up-to-date with the latest React Native for Windows + Mac news and events.</description>
+        <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
         <lastBuildDate>Thu, 01 Jan 1970 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
-            <title>React Native for Windows + Mac Blog</title>
+            <title>React Native for Windows + macOS Blog</title>
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
