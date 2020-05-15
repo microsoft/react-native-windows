@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 14 May 2020 00:04:37 GMT and should not be manually modified.
+This log was last generated on Fri, 15 May 2020 00:04:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.67
+
+Fri, 15 May 2020 00:04:44 GMT
+
+### Changes
+
+- winui3 option for app project template (asklar@microsoft.com)
+- Reduce PCH Sizes (ngerlem@microsoft.com)
+- Remove unused lifecycle events in ReactNativeHost (kaigu@microsoft.com)
+- Move pch files into a Pch subfolder. (vmorozov@microsoft.com)
+- exact match of WinAppDriver required (asklar@microsoft.com)
 
 ## 0.0.0-master.66
 

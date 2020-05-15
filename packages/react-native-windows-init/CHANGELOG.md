@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 06 May 2020 00:05:03 GMT and should not be manually modified.
+This log was last generated on Fri, 15 May 2020 00:04:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.7
+
+Fri, 15 May 2020 00:04:44 GMT
+
+### Patches
+
+- winui3 option for app project template (asklar@microsoft.com)
 
 ## 0.1.6
 

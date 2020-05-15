@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 May 2020 00:04:44 GMT",
+      "tag": "react-native-windows_v0.0.0-master.67",
+      "version": "0.0.0-master.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "winui3 option for app project template",
+            "author": "asklar@microsoft.com",
+            "commit": "7de1f3843a9754c7fbf744bf3e556fdca78472c1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce PCH Sizes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6f43e1d51a67cbe27cab77684bab6cce3869c03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused lifecycle events in ReactNativeHost",
+            "author": "kaigu@microsoft.com",
+            "commit": "a8cf72c8ce76c2b140c860990a9cdfd753085325",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move pch files into a Pch subfolder.",
+            "author": "vmorozov@microsoft.com",
+            "commit": "204bc9e292a9889111f72e143555c3be57bf5a99",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "exact match of WinAppDriver required",
+            "author": "asklar@microsoft.com",
+            "commit": "178583fbf015ecfaecb00a7e81d53d9699b5d2ce",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 May 2020 00:04:37 GMT",
       "tag": "react-native-windows_v0.0.0-master.66",
       "version": "0.0.0-master.66",
