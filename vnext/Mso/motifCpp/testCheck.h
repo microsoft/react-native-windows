@@ -11,9 +11,9 @@
 // It allows to write more compact code because we do not need to add comment
 // for every TestAssert.
 //
-// All macros have a form with suffix "L" that accept line number as a parameter.
-// It is done to enable creation of custom check macros that internally
-// use the macros we provide.
+// All macros have a form with suffix "At" that accepts file and line number
+// as parameters. It is done to enable creation of custom check macros that
+// internally use these macros.
 //=============================================================================
 
 #include "motifCpp/assert_motifApi.h"
