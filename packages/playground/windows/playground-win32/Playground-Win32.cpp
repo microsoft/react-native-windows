@@ -132,7 +132,8 @@ struct WindowData {
           host.InstanceSettings().MainComponentName(appName);
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
           host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
-          host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
+          host.InstanceSettings().BundleRootPath(
+              std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
