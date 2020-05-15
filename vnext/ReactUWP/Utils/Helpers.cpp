@@ -8,8 +8,8 @@
 #include <Utils/Helpers.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 
-#include <processthreadsapi.h>
 #include <appmodel.h>
+#include <processthreadsapi.h>
 
 namespace winrt {
 using namespace xaml::Controls::Primitives;
