@@ -8,27 +8,13 @@
 #include <winrt/Windows.Foundation.Metadata.h>
 
 #include <processthreadsapi.h>
+#include <appmodel.h>
 
 namespace winrt {
 using namespace xaml::Controls::Primitives;
 using namespace xaml::Media;
 using namespace Windows::Foundation::Metadata;
 } // namespace winrt
-
-// These are declared in appmodel.h, but only for WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)  They work in UWP
-// too though.
-extern "C" {
-typedef enum AppPolicyWindowingModel {
-  AppPolicyWindowingModel_None = 0,
-  AppPolicyWindowingModel_Universal = 1,
-  AppPolicyWindowingModel_ClassicDesktop = 2,
-  AppPolicyWindowingModel_ClassicPhone = 3
-} AppPolicyWindowingModel;
-
-WINBASEAPI
-_Check_return_ _Success_(return == ERROR_SUCCESS) LONG WINAPI
-    AppPolicyGetWindowingModel(_In_ HANDLE processToken, _Out_ AppPolicyWindowingModel *policy);
-}
 
 namespace react {
 namespace uwp {
@@ -109,7 +95,7 @@ bool Is19H1OrHigher() {
 
 bool IsXamlIsland() {
   AppPolicyWindowingModel e;
-  if (FAILED(AppPolicyGetWindowingModel((HANDLE)-6 /*GetCurrentThreadEffectiveToken()*/, &e)) ||
+  if (FAILED(AppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
       e == AppPolicyWindowingModel_ClassicDesktop) {
     return true;
   }
