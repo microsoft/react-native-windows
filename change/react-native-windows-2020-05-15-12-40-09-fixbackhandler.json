@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes for bundle loading and back handler crash using xaml islands",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-15T19:40:09.796Z"
+}
