@@ -33,7 +33,7 @@
 // It will be shown as macro usage rather than macro being expanded.
 //=============================================================================
 #define TestCheckAtInternal(file, line, expr, exprStr, ...) \
-  TestAssert::IsTrueAt(file, line, expr, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
+  TestAssert::IsTrueAt(file, line, !!(expr), exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
 #define TestCheckAt(file, line, expr, ...) TestCheckAtInternal(file, line, expr, #expr, __VA_ARGS__)
 #define TestCheck(expr, ...) TestCheckAtInternal(__FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 

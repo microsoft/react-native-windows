@@ -44,7 +44,7 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 #include <optional>
-#include "BoxedValue.h"
+#include "ReactNonAbiValue.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -235,18 +235,19 @@ struct ReactPropertyBag {
   }
 
  private:
-  template <class T>
-  static Windows::Foundation::IInspectable ToObject(T const &value) noexcept {
-    if constexpr (impl::has_category_v<T>) {
-      return box_value(value);
-    } else {
-      return make<BoxedValue<T>>(value);
-    }
+  template <class T, class TValue, std::enable_if_t<!IsReactNonAbiValueV<T> || std::is_same_v<T, TValue>, int> = 0>
+  static Windows::Foundation::IInspectable ToObject(TValue const &value) noexcept {
+    return box_value(value);
+  }
+
+  template <class T, class TValue, std::enable_if_t<IsReactNonAbiValueV<T> && !std::is_same_v<T, TValue>, int> = 0>
+  static Windows::Foundation::IInspectable ToObject(TValue &&value) noexcept {
+    return box_value(T{std::in_place, std::forward<TValue>(value)});
   }
 
   template <class T>
   static Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
-    return value ? ToObject(*value) : nullptr;
+    return value ? ToObject<T>(*value) : nullptr;
   }
 
   template <class T>
@@ -270,14 +271,6 @@ struct ReactPropertyBag {
           if (auto temp = obj.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
             return std::optional<T>{static_cast<T>(temp.Value())};
           }
-        }
-      }
-
-      return std::optional<T>{};
-    } else {
-      if (obj) {
-        if (auto temp = obj.try_as<IBoxedValue>()) {
-          return std::optional<T>{BoxedValue<T>::GetValueUnsafe(temp)};
         }
       }
 

@@ -1117,8 +1117,7 @@ TEST_CLASS (TurboModuleTest) {
     m_moduleBuilder = winrt::make<winrt::Microsoft::ReactNative::ReactModuleBuilderImpl>(m_builderMock);
     auto provider = winrt::Microsoft::ReactNative::MakeTurboModuleProvider<MyTurboModule, MyTurboModuleSpec>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
-    auto reactModule = m_moduleObject.as<winrt::Microsoft::ReactNative::IBoxedValue>();
-    m_module = &winrt::Microsoft::ReactNative::BoxedValue<MyTurboModule>::GetValueUnsafe(reactModule);
+    m_module = winrt::Microsoft::ReactNative::ReactNonAbiValue<MyTurboModule>::GetPtrUnsafe(m_moduleObject);
   }
 
   TEST_METHOD(TestMethodCall_Add) {
