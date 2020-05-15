@@ -5,18 +5,15 @@
 
 #include "IReactInstanceInternal.h"
 #include "ReactNativeHeaders.h"
-
-#ifndef CORE_ABI
 #include "React_win.h"
+#include "activeObject/activeObject.h"
+
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <Modules/DeviceInfoModule.h>
-#include "UwpReactInstanceProxy.h"
-#endif
-
-#include "activeObject/activeObject.h"
 #include <ReactUWP/Modules/I18nModule.h>
+#include "UwpReactInstanceProxy.h"
 
 #include <tuple>
 
@@ -56,7 +53,6 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   winrt::Microsoft::ReactNative::IReactPropertyBag m_properties;
 };
 
-#ifndef CORE_ABI
 //! ReactInstance implementation for Windows that is managed by ReactHost.
 class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, ILegacyReactInstance> {
   using Super = ActiveObjectType;
@@ -167,5 +163,4 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::string m_bundleRootPath;
   Mso::DispatchQueue m_uiQueue;
 };
-#endif
 } // namespace Mso::React

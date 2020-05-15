@@ -156,6 +156,7 @@ Mso::Future<void> ReactHost::LoadInQueue(ReactOptions &&options) noexcept {
   Mso::Promise<void> whenLoaded;
 
 #ifndef CORE_ABI
+  // Requires MakeReactInstance which incurs platform-specific dependencies.
   m_reactInstance.Exchange(
       MakeReactInstance(*this, std::move(options), Mso::Copy(whenCreated), Mso::Copy(whenLoaded), [this]() noexcept {
         InvokeInQueue([this]() noexcept {

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <pch.h>
+#include "pch.h"
 #include "ReactNativeHost.h"
 #include "ReactNativeHost.g.cpp"
 
@@ -70,43 +70,6 @@ void ReactNativeHost::ReloadInstance() noexcept {
     }
   }
 
-  std::shared_ptr<Mso::React::IRedBoxHandler> redBoxHandler =
-      m_instanceSettings.RedBoxHandler() ?
-      Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler()) :
-      nullptr;
-#endif
-
-  std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
-  std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
-  if (jsBundleFile.empty()) {
-    if (!jsMainModuleName.empty()) {
-      jsBundleFile = jsMainModuleName;
-    } else {
-      jsBundleFile = "index.windows";
-    }
-  }
-
-  Mso::React::ReactOptions reactOptions{};
-  reactOptions.Properties = m_instanceSettings.Properties();
-  reactOptions.DeveloperSettings.IsDevModeEnabled = m_instanceSettings.EnableDeveloperMenu();
-  reactOptions.DeveloperSettings.SourceBundleName = to_string(m_instanceSettings.DebugBundlePath());
-  reactOptions.DeveloperSettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
-  reactOptions.DeveloperSettings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
-  reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = m_instanceSettings.DebuggerBreakOnNextLine();
-  reactOptions.DeveloperSettings.UseFastRefresh = m_instanceSettings.UseFastRefresh();
-  reactOptions.DeveloperSettings.UseLiveReload = m_instanceSettings.UseLiveReload();
-  reactOptions.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
-  reactOptions.DeveloperSettings.DebugHost = to_string(m_instanceSettings.DebugHost());
-  reactOptions.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
-  reactOptions.DeveloperSettings.DebuggerPort = m_instanceSettings.DebuggerPort();
-#ifndef CORE_ABI
-  reactOptions.ModuleProvider = modulesProvider;
-  reactOptions.RedBoxHandler = redBoxHandler;
-  reactOptions.ViewManagerProvider = viewManagersProvider;
-#endif
-  reactOptions.Identity = jsBundleFile;
-
-#ifndef CORE_ABI
   react::uwp::ReactInstanceSettings legacySettings{};
   legacySettings.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
   legacySettings.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
@@ -122,13 +85,50 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseLiveReload = m_instanceSettings.UseLiveReload();
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
   legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
-  legacySettings.RedBoxHandler = redBoxHandler;
- 
+
+  if (m_instanceSettings.RedBoxHandler()) {
+    legacySettings.RedBoxHandler = std::move(Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler()));
+  }
+
+  Mso::React::ReactOptions reactOptions{};
+  reactOptions.Properties = m_instanceSettings.Properties();
+  reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
+  reactOptions.DeveloperSettings.SourceBundleName = legacySettings.DebugBundlePath;
+  reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
+  reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
+  reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;
+  reactOptions.DeveloperSettings.UseFastRefresh = legacySettings.UseFastRefresh;
+  reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
+  reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
+  reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
+  reactOptions.BundleRootPath = legacySettings.BundleRootPath;
+  reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
+  reactOptions.RedBoxHandler = legacySettings.RedBoxHandler;
+
   reactOptions.LegacySettings = std::move(legacySettings);
-#endif
+
+  reactOptions.ModuleProvider = modulesProvider;
+  reactOptions.ViewManagerProvider = viewManagersProvider;
+
+  std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
+  std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
+  if (jsBundleFile.empty()) {
+    if (!jsMainModuleName.empty()) {
+      jsBundleFile = jsMainModuleName;
+    } else {
+      jsBundleFile = "index.windows";
+    }
+  }
+
+  reactOptions.Identity = jsBundleFile;
 
   m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions));
+#else
+  // Core ABI work needed
+  assert(false);
+#endif
 }
+
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {
   return m_reactHost.Get();

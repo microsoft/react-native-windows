@@ -5,19 +5,11 @@
 
 #include "ReactNativeHost.g.h"
 
-#ifndef CORE_ABI
 #include "NativeModulesProvider.h"
+#include "ReactHost/React.h"
+#include "ReactInstance.h"
 #include "ReactInstanceSettings.h"
 #include "ViewManagersProvider.h"
-#endif
-
-#include "ReactHost/React.h"
-    // needed for:
-    // - Mso::React::IReactHost
-
-#include "ReactInstance.h"
-    // needed for:
-    // - ReactNative::ReactInstance
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

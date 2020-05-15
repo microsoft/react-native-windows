@@ -16,10 +16,12 @@
 
 #include <NativeModuleProvider.h>
 
-#ifndef CORE_ABI
-#include <ReactUWP/IReactInstance.h>
-#else
+#ifdef CORE_ABI
 #include <folly/dynamic.h>
+#else
+// When building Desktop, the include below results in
+// fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
+#include <ReactUWP/IReactInstance.h>
 #endif
 
 #include <ReactUWP/ViewManagerProvider.h>
