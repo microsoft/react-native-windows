@@ -154,12 +154,17 @@ Mso::Future<void> ReactHost::LoadInQueue(ReactOptions &&options) noexcept {
 
   Mso::Promise<void> whenCreated;
   Mso::Promise<void> whenLoaded;
+
+#ifndef CORE_ABI
   m_reactInstance.Exchange(
       MakeReactInstance(*this, std::move(options), Mso::Copy(whenCreated), Mso::Copy(whenLoaded), [this]() noexcept {
         InvokeInQueue([this]() noexcept {
           ForEachViewHost([](auto &viewHost) noexcept { viewHost.UpdateViewInstanceInQueue(); });
         });
       }));
+#else
+  assert(false);
+#endif
 
   return whenCreated.AsFuture().Then(Mso::Executors::Inline{}, [ this, whenLoaded ]() noexcept {
     std::vector<Mso::Future<void>> initCompletionList;

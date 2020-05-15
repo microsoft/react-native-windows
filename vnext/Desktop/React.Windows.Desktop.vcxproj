@@ -141,6 +141,16 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp">
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp">
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp">
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp">
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />

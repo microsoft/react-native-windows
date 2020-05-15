@@ -6,4 +6,7 @@
 #ifndef NOGDI
 #define NOGDI
 #endif
+
+#include <mutex>
+
 #include <windows.h>

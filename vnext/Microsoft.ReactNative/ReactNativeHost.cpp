@@ -55,6 +55,7 @@ void ReactNativeHost::InstanceSettings(ReactNative::ReactInstanceSettings const 
 }
 
 void ReactNativeHost::ReloadInstance() noexcept {
+#ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
@@ -73,6 +74,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
       m_instanceSettings.RedBoxHandler() ?
       Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler()) :
       nullptr;
+#endif
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
@@ -97,9 +99,11 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.DeveloperSettings.DebugHost = to_string(m_instanceSettings.DebugHost());
   reactOptions.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
   reactOptions.DeveloperSettings.DebuggerPort = m_instanceSettings.DebuggerPort();
-  reactOptions.RedBoxHandler = redBoxHandler;
+#ifndef CORE_ABI
   reactOptions.ModuleProvider = modulesProvider;
+  reactOptions.RedBoxHandler = redBoxHandler;
   reactOptions.ViewManagerProvider = viewManagersProvider;
+#endif
   reactOptions.Identity = jsBundleFile;
 
 #ifndef CORE_ABI
