@@ -18,18 +18,11 @@ namespace uwp {
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
   winrt::hstring str(Microsoft::Common::Unicode::Utf8ToUtf16(bundleUri));
+  winrt::Windows::Foundation::Uri uri(str);
 
   co_await winrt::resume_background();
 
-  winrt::Windows::Storage::StorageFile file{nullptr};
-
-  // Supports "ms-appx://" or "ms-appdata://"
-  if (bundleUri._Starts_with("ms-app")) {
-    winrt::Windows::Foundation::Uri uri(str);
-    file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-  } else {
-    file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(str);
-  }
+  auto file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
 
   // Read the buffer manually to avoid a Utf8 -> Utf16 -> Utf8 encoding
   // roundtrip.

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix bundle loading logic to handle non-ms-app paths",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-13T21:25:06.608Z"
-}

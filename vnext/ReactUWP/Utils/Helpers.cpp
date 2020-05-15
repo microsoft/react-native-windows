@@ -8,9 +8,6 @@
 #include <Utils/Helpers.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 
-#include <appmodel.h>
-#include <processthreadsapi.h>
-
 namespace winrt {
 using namespace xaml::Controls::Primitives;
 using namespace xaml::Media;
@@ -92,15 +89,6 @@ bool IsRS5OrHigher() {
 
 bool Is19H1OrHigher() {
   return IsAPIContractV8Available();
-}
-
-bool IsXamlIsland() {
-  AppPolicyWindowingModel e;
-  if (FAILED(AppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
-      e == AppPolicyWindowingModel_ClassicDesktop) {
-    return true;
-  }
-  return false;
 }
 
 } // namespace uwp

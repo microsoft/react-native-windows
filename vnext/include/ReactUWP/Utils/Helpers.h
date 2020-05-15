@@ -29,7 +29,5 @@ bool IsRS3OrHigher();
 bool IsRS4OrHigher();
 bool IsRS5OrHigher();
 bool Is19H1OrHigher();
-
-bool IsXamlIsland();
 } // namespace uwp
 } // namespace react
