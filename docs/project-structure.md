@@ -23,11 +23,8 @@ Sample applications are not covered.
 - [Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj](#Microsoft.ReactNative.Managed)
 - [Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems](#Microsoft.ReactNative.SharedManaged)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
-- [ReactUWP\ReactUWP.vcxproj](#ReactUWP)
 - [ReactWindowsCore\ReactWindowsCore.vcxproj](#ReactWindowsCore)
 - [Shared\Shared.vcxitems](#Shared)
-- [Universal.IntegrationTests\React.Windows.Universal.IntegrationTests.vcxproj](#React.Windows.Universal.IntegrationTests)
-- [Universal.UnitTests\React.Windows.Universal.UnitTests.vcxproj](#React.Windows.Universal.UnitTests)
 
 ## Common Projects
 
@@ -124,22 +121,8 @@ Sources provided as part of the `react-native` Node dependency. Not part of this
 
 ### Microsoft.ReactNative
 *Windows Runtime Component*</br>
-The primary Windows Universal entry point and public API surface for React Native Windows. Currently depends on the implementation details in [ReactUWP](#ReactUWP).<br/>
+The primary Windows Universal entry point and public API surface for React Native Windows.<br/>
 **Main artifact to use in Windows Universal applications.**
-
-### ReactUWP
-*Dynamic Library*<br/>
-Set of Native Modules, View Managers and Executors for Windows Universal. Formerly the entry point and ABI surface for React Native Windows, it will eventually be subsumed by [Microsoft.ReactNative](#Microsoft.ReactNative).
-
-### React.Windows.Universal.UnitTests
-*VSTest Dynamic Library*
-Set of isolated (mocked) tests for types defined in [ReactUWP](#ReactUWP).
-
-### React.Windows.Universal.IntegrationTests
-*VSTest Dynamic Library*
-Set of component tests that validate functionality against external runtime components
-(i.e. networking servers, file system, React Native applications, external processes).<br/>
-Validates [ReactUWP](#ReactUWP).
 
 ### JSI.Universal
 *Static Library*<br/>

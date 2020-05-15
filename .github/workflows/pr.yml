@@ -405,8 +405,5 @@ jobs:
           echo This makes errorlevel 0
           dir c:\
 
-      - name: NuGet Pack ReactUwp
-        run: nuget pack ${{ runner.temp }}\NugetRoot\ReactUwp.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
-
       - name: NuGet Pack ReactWin32
         run: nuget pack ${{ runner.temp }}\NugetRoot\ReactWin32.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
