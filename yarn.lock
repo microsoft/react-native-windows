@@ -2761,9 +2761,9 @@
   integrity sha512-bPYT5ECFiblzsVzyURaNhljBH2Gh1t9LowgUwciMrNAhFewLkHT2H0Mto07Y4/3KCOGZHRQll3CTtQZ0X11D/A==
 
 "@types/es6-collections@^0.5.29":
-  version "0.5.31"
-  resolved "https://registry.yarnpkg.com/@types/es6-collections/-/es6-collections-0.5.31.tgz#faad21c930cd0ea7f71f51b9e5b555796c5ab23f"
-  integrity sha512-djEvbdTH5Uw7V0WqdMQLG4NK3+iu/FMZy/ylyhWEFnW5xOsXEWpivo/dhP+cR43Az+ipytza7dTSnpsWCxKYAw==
+  version "0.5.32"
+  resolved "https://registry.yarnpkg.com/@types/es6-collections/-/es6-collections-0.5.32.tgz#62edb3942849951b6025d42af9da97d7b837f31b"
+  integrity sha512-aOOGt8ivRTqSWDzrHoNorP/o/YXgVK0oA7SP3jke3W4zZDSFAbWhYWjPG0qnGq6B/QOsx76FnmC3bUFSvleOLA==
 
 "@types/es6-promise@0.0.32":
   version "0.0.32"
