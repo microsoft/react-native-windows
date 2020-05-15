@@ -110,9 +110,7 @@
     <Compile Include="IPropertyValueTranslator.cs" />
     <Compile Include="IVisualTreeLogger.cs" />
     <Compile Include="JsonVisualTreeLogger.cs" />
-    <Compile Include="TreeDumpControlViewManager.cs" />
     <Compile Include="TreeDumpHelper.cs" />
-    <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="VisualTreeDumper.cs" />
   </ItemGroup>
   <ItemGroup>

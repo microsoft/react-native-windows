@@ -96,7 +96,7 @@ namespace TreeDumpLibrary
             }
         }
 
-        private static JsonObject FindElementByAutomationId(JsonObject obj, string automationId)
+        public static JsonObject FindElementByAutomationId(JsonObject obj, string automationId)
         {
             if (obj.Keys.Contains("AutomationId") && obj["AutomationId"].GetString() == automationId)
             {
@@ -115,29 +115,6 @@ namespace TreeDumpLibrary
                 }
             }
             return null;
-        }
-
-        public static IAsyncOperation<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
-        {
-            string json = DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
-            try
-            {
-                var obj = JsonValue.Parse(json).GetObject();
-                var element = FindElementByAutomationId(obj, "PageHeader");
-                if (element == null)
-                {
-                    return Task.Run(() => false).AsAsyncOperation();
-                }
-                var value = element.GetNamedString("Text");
-                var pageName = new Regex(@"[<|>]").Replace(value, "");
-                var match = TreeDumpHelper.MatchDump(json, pageName);
-                return match.AsAsyncOperation();
-            }
-            catch
-            {
-                Debug.WriteLine("JSON ERROR:\n" + json);
-                throw;
-            }
         }
 
         public static string DumpTree(DependencyObject root, DependencyObject excludedNode, IList<string> additionalProperties, DumpTreeMode mode)

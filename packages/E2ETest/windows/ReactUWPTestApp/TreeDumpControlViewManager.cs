@@ -5,8 +5,13 @@ using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.ConversationalAgent;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Data.Json;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -87,6 +92,41 @@ namespace TreeDumpLibrary
             { "additionalProperties", ViewManagerPropertyType.Array }
         };
 
+
+        private static string GetOutputFile(string dumpID)
+        {
+            return "TreeDump\\" + dumpID + ".json";
+        }
+
+        private static string GetMasterFile(string dumpID)
+        {
+            return "TreeDump\\masters\\" + dumpID + ".json";
+        }
+
+        public async static Task<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
+        {
+            string json = VisualTreeDumper.DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
+            try
+            {
+                var obj = JsonValue.Parse(json).GetObject();
+                var element = VisualTreeDumper.FindElementByAutomationId(obj, "PageHeader");
+                if (element == null)
+                {
+                    return false;
+                }
+                var value = element.GetNamedString("Text");
+                var pageName = new Regex(@"[<|>]").Replace(value, "");
+                var match = await MatchDump(json, GetMasterFile(pageName), GetOutputFile(pageName));
+                return match;
+            }
+            catch
+            {
+                Debug.WriteLine("JSON ERROR:\n" + json);
+                throw;
+            }
+        }
+
+
         public void SetDumpID(TextBlock view, string value)
         {
             m_dumpID = value;
@@ -118,17 +158,70 @@ namespace TreeDumpLibrary
             }
         }
 
+        public static async Task<bool> MatchDump(string outputJson, string masterFileRelativePath, string outputFileRelativePath)
+        {
+            Debug.WriteLine($"master file = {Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\{masterFileRelativePath}");
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            Debug.WriteLine($"output file = {storageFolder.Path + "\\" + outputFileRelativePath}");
+
+            StorageFile outFile = await storageFolder.CreateFileAsync(outputFileRelativePath, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(outFile, outputJson);
+
+            StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{masterFileRelativePath}");
+
+            string masterJson = await FileIO.ReadTextAsync(masterFile);
+
+            if (!TreeDumpHelper.DumpsAreEqual(masterJson, outputJson))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        internal static async Task<bool> MatchTreeDumpFromLayoutUpdateAsync(string dumpID, string uiaId, TextBlock textBlock, IList<string> additionalProperties, DumpTreeMode mode, string dumpExpectedText)
+        {
+            // First find root
+            DependencyObject current = textBlock;
+            DependencyObject parent = VisualTreeHelper.GetParent(current);
+            while (parent != null)
+            {
+                current = parent;
+                parent = VisualTreeHelper.GetParent(current);
+            }
+
+            DependencyObject dumpRoot = current;
+            // if UIAID is passed in from test, find the matching child as the root to dump
+            if (uiaId != null)
+            {
+                var matchingNode = TreeDumpHelper.FindChildWithMatchingUIAID(current, uiaId);
+                if (matchingNode != null)
+                {
+                    dumpRoot = matchingNode;
+                }
+            }
+
+            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, textBlock, additionalProperties, mode);
+            if (dumpText != dumpExpectedText)
+            {
+                return await MatchDump(dumpText, GetMasterFile(dumpID), GetOutputFile(dumpID));
+            }
+            return true;
+        }
+
         private async void dispatcherTimer_Tick(object sender, object e)
         {
             m_timer.Stop();
             if (VisualTreeHelper.GetParent(m_textBlock) != null)
             {
-                var matchSuccessful = await TreeDumpHelper.MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, DumpTreeMode.Json, m_dumpExpectedText);
+                var matchSuccessful = await MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, DumpTreeMode.Json, m_dumpExpectedText);
                 if (!matchSuccessful)
                 {
                     StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                    StorageFile outFile = await storageFolder.GetFileAsync(TreeDumpHelper.GetOutputFile(m_dumpID));
-                    StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{TreeDumpHelper.GetMasterFile(m_dumpID)}");
+                    StorageFile outFile = await storageFolder.GetFileAsync(GetOutputFile(m_dumpID));
+                    StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{GetMasterFile(m_dumpID)}");
 
                     UpdateResult(false /*matchDump*/ ,
                         $"Tree dump file does not match master at {masterFile.Path} - See output at {outFile.Path}",
