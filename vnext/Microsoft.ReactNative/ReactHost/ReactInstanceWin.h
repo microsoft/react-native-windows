@@ -163,4 +163,5 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::string m_bundleRootPath;
   Mso::DispatchQueue m_uiQueue;
 };
+
 } // namespace Mso::React
