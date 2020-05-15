@@ -625,7 +625,7 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
    */
   if (react::uwp::IsXamlIsland())
     return;
-    
+
   auto weakThis = weak_from_this();
   m_backRequestedRevoker = winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
       winrt::auto_revoke,
