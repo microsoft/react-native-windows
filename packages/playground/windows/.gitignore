@@ -92,3 +92,4 @@ packages/
 **/Generated Files/**
 
 playground/Bundle
+playground-win32/Bundle
