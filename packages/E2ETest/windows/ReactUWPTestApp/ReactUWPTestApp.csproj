@@ -21,6 +21,7 @@
     <PackageCertificateKeyFile>ReactUWPTestApp_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
+    <RestorePackagesPath>..\packages</RestorePackagesPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -157,6 +158,9 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.3.191129002</Version>
     </PackageReference>
+    <PackageReference Include="XamlTreeDump">
+      <Version>1.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\" />
@@ -169,10 +173,6 @@
     <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj">
       <Project>{F2824844-CE15-4242-9420-308923CD76C3}</Project>
       <Name>Microsoft.ReactNative.Managed</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TreeDumpLibrary\TreeDumpLibrary.csproj">
-      <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
-      <Name>TreeDumpLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
