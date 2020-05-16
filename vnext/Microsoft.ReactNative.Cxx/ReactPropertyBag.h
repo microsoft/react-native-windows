@@ -23,7 +23,7 @@
 //
 // For example, we can define a property to access an integer value:
 //
-//     const React::ReactPropertyId<int> MyIntProperty{"MyInt"};
+//     const React::ReactPropertyId<int> MyIntProperty{L"MyInt"};
 //
 // then we can use it to set property in settings properties during initialization:
 //
@@ -37,14 +37,39 @@
 // directly because their null value may indicated absent property value.
 // For other types we return std::optional<T>. It has std::nullopt value in case if
 // no property value is found or if it has a wrong type.
+//
 // To pass values through the ABI boundary the non-IInspectable types must be WinRT types
 // which are described here:
 // https://docs.microsoft.com/en-us/uwp/api/windows.foundation.propertytype?view=winrt-18362
 //
+// In case if we do not have a requirement to pass values across the DLL/EXE boundary,
+// we can use the ReactNonAbiValue<T> wrapper to store non-ABI safe values.
+// The type ReactNonAbiValue<T> is a smart pointer similar to winrt::com_ptr
+// or winrt::Windows::Foundation::IInspactable. It is treated as IInspectable type and
+// **is not** wrapped in std::optional. It can be casted to bool to check if it is null.
+//
+// For example, we can define a property to use in our DLL or EXE to store std::string:
+//
+//     const React::ReactPropertyId<React::ReactNonAbValue<std::string>> MyStringProperty{L"MyString"};
+//
+// then we can use it to set and get property value:
+//
+//     context.Properties().Set(MyStringProperty, "Hello");
+//     assert("Hello" == context.Properties().Get(MyStringProperty);
+//
+// The first line above creates a new React::ReactNonAbValue<std::string> value that internally.
+// allocates a ref-counted wrapper React::implementation::ReactNonAbValue<std::string> in the heap.
+// Then this value is stored in the IReactPropertyBag and can be safely retrieved in the
+// same DLL or EXE module. Using it from a different module may cause a security bug or a crash.
+//
+// Note that for passing the ABI-safe strings we must use the winrt::hstring:
+//
+//     const React::ReactPropertyId<winrt::hstring> MyAbiSafeStringProperty{L"MyAbiSafeString"};
+//
 
 #include <winrt/Microsoft.ReactNative.h>
 #include <optional>
-#include "BoxedValue.h"
+#include "ReactNonAbiValue.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -235,22 +260,30 @@ struct ReactPropertyBag {
   }
 
  private:
-  template <class T>
-  static Windows::Foundation::IInspectable ToObject(T const &value) noexcept {
-    if constexpr (impl::has_category_v<T>) {
-      return box_value(value);
-    } else {
-      return make<BoxedValue<T>>(value);
-    }
+  template <class T, class TValue, std::enable_if_t<!IsReactNonAbiValueV<T> || std::is_same_v<T, TValue>, int> = 0>
+  static Windows::Foundation::IInspectable ToObject(TValue const &value) noexcept {
+    // We box WinRT types and return IInspectable-inherited values as-is.
+    // The ReactNonAbiValue<U> is treated as IInspectable-inherited value if TValue=='ReactNonAbiValue<U>'.
+    return box_value(value);
+  }
+
+  template <class T, class TValue, std::enable_if_t<IsReactNonAbiValueV<T> && !std::is_same_v<T, TValue>, int> = 0>
+  static Windows::Foundation::IInspectable ToObject(TValue &&value) noexcept {
+    // Create ReactNonAbiValue<U> with newly allocated wrapper for U and pass TValue as an argument to the U
+    // constructor. For example, we can pass TValue=='const char*' to U=='std::string' where
+    // T=='ReactNonAbiValue<std::string>'.
+    return T{std::in_place, std::forward<TValue>(value)};
   }
 
   template <class T>
   static Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
-    return value ? ToObject(*value) : nullptr;
+    return value ? ToObject<T>(*value) : nullptr;
   }
 
   template <class T>
   static auto FromObject(Windows::Foundation::IInspectable const &obj) noexcept {
+    // The code mostly borrowed from the winrt::unbox_value_or implementation to return
+    // empty std::optional in case if obj is null or has a wrong type.
     if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>) {
       return obj.try_as<T>();
     } else if constexpr (impl::has_category_v<T>) {
@@ -270,14 +303,6 @@ struct ReactPropertyBag {
           if (auto temp = obj.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
             return std::optional<T>{static_cast<T>(temp.Value())};
           }
-        }
-      }
-
-      return std::optional<T>{};
-    } else {
-      if (obj) {
-        if (auto temp = obj.try_as<IBoxedValue>()) {
-          return std::optional<T>{BoxedValue<T>::GetValueUnsafe(temp)};
         }
       }
 

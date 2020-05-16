@@ -2,6 +2,8 @@
 
 #define NOMINMAX
 
+#include <functional/functor.h>
+#include <motifCpp/testCheck.h>
 #include <future>
 #include "functional/functor.h"
 #include "gtest/gtest.h"

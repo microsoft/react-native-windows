@@ -34,20 +34,19 @@ TEST_CLASS (JSValueTest) {
     TestCheckEqual(JSValueType::Int64, jsValue["IntValue"].Type());
     TestCheckEqual(JSValueType::Double, jsValue["DoubleValue"].Type());
 
-    JSValueObject const *objValue = nullptr;
-    JSValueArray const *arrayValue = nullptr;
-    std::string const *stringValue = nullptr;
-    bool const *boolValue = nullptr;
-    int64_t const *intValue = nullptr;
-    double const *doubleValue = nullptr;
-
     TestCheck(jsValue["NullValue"].IsNull());
-    TestCheck(objValue = jsValue["ObjValue"].TryGetObject());
-    TestCheck(arrayValue = jsValue["ArrayValue"].TryGetArray());
-    TestCheck(stringValue = jsValue["StringValue"].TryGetString());
-    TestCheck(boolValue = jsValue["BoolValue"].TryGetBoolean());
-    TestCheck(intValue = jsValue["IntValue"].TryGetInt64());
-    TestCheck(doubleValue = jsValue["DoubleValue"].TryGetDouble());
+    JSValueObject const *objValue = jsValue["ObjValue"].TryGetObject();
+    JSValueArray const *arrayValue = jsValue["ArrayValue"].TryGetArray();
+    std::string const *stringValue = jsValue["StringValue"].TryGetString();
+    bool const *boolValue = jsValue["BoolValue"].TryGetBoolean();
+    int64_t const *intValue = jsValue["IntValue"].TryGetInt64();
+    double const *doubleValue = jsValue["DoubleValue"].TryGetDouble();
+    TestCheck(objValue);
+    TestCheck(arrayValue);
+    TestCheck(stringValue);
+    TestCheck(boolValue);
+    TestCheck(intValue);
+    TestCheck(doubleValue);
 
     TestCheckEqual(1, objValue->size());
     TestCheckEqual(1, jsValue["ObjValue"].PropertyCount());
