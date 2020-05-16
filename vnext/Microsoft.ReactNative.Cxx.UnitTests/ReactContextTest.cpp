@@ -133,24 +133,27 @@ TEST_CLASS (ReactContextTest) {
     TestCheckEqual(1u, reactContextMock->Args.AsArray().size());
     TestCheckEqual(5, reactContextMock->Args[0]);
 
-    context.CallJSFunction(L"module1", L"method1", 14, 17);
+    context.CallJSFunction(L"module1", L"method1", 14, 17u);
     TestCheckEqual(2u, reactContextMock->Args.AsArray().size());
     TestCheckEqual(14, reactContextMock->Args[0]);
-    TestCheckEqual(17, reactContextMock->Args[1]);
+    TestCheckEqual(17u, reactContextMock->Args[1]);
 
-    context.CallJSFunction(L"module1", L"method1", JSValueArray{12, 18});
+    context.CallJSFunction(L"module1", L"method1", JSValueArray{12, 18u});
     TestCheckEqual(12, reactContextMock->Args[0][0]);
-    TestCheckEqual(18, reactContextMock->Args[0][1]);
+    TestCheckEqual(18u, reactContextMock->Args[0][1]);
 
-    context.CallJSFunction(L"module1", L"method1", JSValueObject{{"prop", 42}});
-    TestCheckEqual(42, reactContextMock->Args[0]["prop"]);
+    context.CallJSFunction(L"module1", L"method1", JSValueObject{{"prop1", 42}, {"prop2", 77u}});
+    TestCheckEqual(42, reactContextMock->Args[0]["prop1"]);
+    TestCheckEqual(77u, reactContextMock->Args[0]["prop2"]);
 
     context.CallJSFunction(L"module1", L"method1", [](IJSValueWriter const &writer) {
       writer.WriteArrayBegin();
-      WriteValue(writer, 10);
+      WriteValue(writer, 10u);
+      WriteValue(writer, 19);
       writer.WriteArrayEnd();
     });
-    TestCheckEqual(10, reactContextMock->Args[0]);
+    TestCheckEqual(10u, reactContextMock->Args[0]);
+    TestCheckEqual(19, reactContextMock->Args[1]);
   }
 
   TEST_METHOD(Test_EmitJSEvent) {
@@ -165,24 +168,27 @@ TEST_CLASS (ReactContextTest) {
     TestCheckEqual(1u, reactContextMock->Args.AsArray().size());
     TestCheckEqual(5, reactContextMock->Args[0]);
 
-    context.EmitJSEvent(L"module1", L"event1", 14, 17);
+    context.EmitJSEvent(L"module1", L"event1", 14, 17u);
     TestCheckEqual(2u, reactContextMock->Args.AsArray().size());
     TestCheckEqual(14, reactContextMock->Args[0]);
-    TestCheckEqual(17, reactContextMock->Args[1]);
+    TestCheckEqual(17u, reactContextMock->Args[1]);
 
-    context.EmitJSEvent(L"module1", L"event1", JSValueArray{12, 18});
+    context.EmitJSEvent(L"module1", L"event1", JSValueArray{12, 18u});
     TestCheckEqual(12, reactContextMock->Args[0][0]);
-    TestCheckEqual(18, reactContextMock->Args[0][1]);
+    TestCheckEqual(18u, reactContextMock->Args[0][1]);
 
-    context.EmitJSEvent(L"module1", L"event1", JSValueObject{{"prop", 42}});
-    TestCheckEqual(42, reactContextMock->Args[0]["prop"]);
+    context.EmitJSEvent(L"module1", L"event1", JSValueObject{{"prop1", 42}, {"prop2", 77u}});
+    TestCheckEqual(42, reactContextMock->Args[0]["prop1"]);
+    TestCheckEqual(77u, reactContextMock->Args[0]["prop2"]);
 
     context.EmitJSEvent(L"module1", L"event1", [](IJSValueWriter const &writer) {
       writer.WriteArrayBegin();
-      WriteValue(writer, 10);
+      WriteValue(writer, 10u);
+      WriteValue(writer, 19);
       writer.WriteArrayEnd();
     });
-    TestCheckEqual(10, reactContextMock->Args[0]);
+    TestCheckEqual(10u, reactContextMock->Args[0]);
+    TestCheckEqual(19, reactContextMock->Args[1]);
   }
 };
 
