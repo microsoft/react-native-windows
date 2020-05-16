@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Prevent hard crash on invalid jsx (button inside text e.g.)",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-15T21:54:00.551Z"
+}

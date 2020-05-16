@@ -14,6 +14,8 @@ using namespace std;
 #include "UIManagerModule.h"
 
 #include <IReactRootView.h>
+#include <cdebug.h>
+#include <winrt/base.h>
 
 using namespace folly;
 using namespace facebook::xplat;
@@ -271,11 +273,18 @@ void UIManager::setChildren(int64_t viewTag, folly::dynamic &&childrenTags) {
     auto &childNode = m_nodeRegistry.getNode(tag);
     childNode.m_parent = parent.m_tag;
     parent.m_children.push_back(tag);
-    if (!parent.m_zombie)
-      parent.AddView(childNode, index);
+    try {
+      if (!parent.m_zombie)
+        parent.AddView(childNode, index);
 
-    m_nativeUIManager->AddView(parent, childNode, index);
-
+      m_nativeUIManager->AddView(parent, childNode, index);
+    } catch (const winrt::hresult_error &e) {
+      if (e.code() == E_NOINTERFACE) {
+        DEBUG_HRESULT_ERROR(e);
+      } else {
+        throw;
+      }
+    }
     ++index;
   }
 }

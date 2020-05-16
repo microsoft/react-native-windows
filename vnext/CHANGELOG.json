@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 16 May 2020 00:04:28 GMT",
+      "tag": "react-native-windows_v0.0.0-master.68",
+      "version": "0.0.0-master.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "some projects have target instead of bin folders",
+            "author": "asklar@microsoft.com",
+            "commit": "e0f591e8aaca01c7a52ac2825d8476920880bfed",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": ".\\JustMyXaml.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "2d85b6a94f1a9e629c2e124f4f0951ff75829bad",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 May 2020 00:04:44 GMT",
       "tag": "react-native-windows_v0.0.0-master.67",
       "version": "0.0.0-master.67",

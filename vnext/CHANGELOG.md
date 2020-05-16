@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 15 May 2020 00:04:44 GMT and should not be manually modified.
+This log was last generated on Sat, 16 May 2020 00:04:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.68
+
+Sat, 16 May 2020 00:04:28 GMT
+
+### Changes
+
+- some projects have target instead of bin folders (asklar@microsoft.com)
+- .\JustMyXaml.ps1 (asklar@microsoft.com)
 
 ## 0.0.0-master.67
 
