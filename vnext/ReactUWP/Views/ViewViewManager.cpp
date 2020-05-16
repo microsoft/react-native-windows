@@ -16,7 +16,9 @@
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
 
+#include <unicode.h>
 #include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
@@ -99,8 +101,16 @@ class ViewShadowNode : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
-    GetViewPanel().InsertAt(
-        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>());
+    const auto &view = static_cast<ShadowNodeBase &>(child).GetView();
+    if (view.try_as<xaml::UIElement>() == nullptr) {
+      const auto &ii = view.as<winrt::IInspectable>();
+      auto name = winrt::get_class_name(ii);
+      YellowBox(
+          std::string("ViewViewManager::AddView expected a UIElement but got a ") +
+          Microsoft::Common::Unicode::Utf16ToUtf8(name.c_str()));
+    }
+
+    GetViewPanel().InsertAt(static_cast<uint32_t>(index), view.as<xaml::UIElement>());
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
