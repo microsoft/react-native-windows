@@ -257,9 +257,14 @@ inline void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexc
   writer.WriteArrayEnd();
 }
 
+template <class T, std::enable_if_t<std::is_invocable_v<T, IJSValueWriter const &>, int> = 0>
+inline JSValueArgWriter MakeJSValueArgWriter(T &&argWriter) noexcept {
+  return std::forward<T>(argWriter);
+}
+
 template <class... TArgs>
 inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
-  return [args...](IJSValueWriter const &writer) noexcept {
+  return [&args...](IJSValueWriter const &writer) noexcept {
     WriteArgs(writer, args...);
   };
 }

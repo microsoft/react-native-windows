@@ -20,18 +20,30 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
   }
 
   void CallJSFunction(
-      hstring const & /*moduleName*/,
-      hstring const & /*functionName*/,
-      JSValueArgWriter const & /*paramsArgWriter*/) noexcept {
-    VerifyElseCrashSz(false, "Not implemented");
+      hstring const &moduleName,
+      hstring const &functionName,
+      JSValueArgWriter const &paramsArgWriter) noexcept {
+    Module = moduleName;
+    Method = functionName;
+    auto writer = MakeJSValueTreeWriter();
+    paramsArgWriter(writer);
+    Args = TakeJSValue(writer);
   }
 
   void EmitJSEvent(
-      hstring const & /*eventEmitterName*/,
-      hstring const & /*eventName*/,
-      JSValueArgWriter const & /*paramsArgWriter*/) noexcept {
-    VerifyElseCrashSz(false, "Not implemented");
+      hstring const &eventEmitterName,
+      hstring const &eventName,
+      JSValueArgWriter const &paramsArgWriter) noexcept {
+    Module = eventEmitterName;
+    Method = eventName;
+    auto writer = MakeJSValueTreeWriter();
+    paramsArgWriter(writer);
+    Args = TakeJSValue(writer);
   }
+
+  std::wstring Module;
+  std::wstring Method;
+  JSValue Args;
 };
 
 namespace ReactNativeTests {
@@ -107,6 +119,70 @@ TEST_CLASS (ReactContextTest) {
     TestCheck(nullptr == context3);
     TestCheck(context11 != nullptr);
     TestCheck(nullptr != context11);
+  }
+
+  TEST_METHOD(Test_CallJSFunction) {
+    auto reactContextMock = winrt::make_self<ReactContextStub>();
+    ReactContext context{reactContextMock.as<IReactContext>()};
+    context.CallJSFunction(L"module1", L"method1");
+    TestCheckEqual(L"module1", reactContextMock->Module);
+    TestCheckEqual(L"method1", reactContextMock->Method);
+    TestCheckEqual(0u, reactContextMock->Args.AsArray().size());
+
+    context.CallJSFunction(L"module1", L"method1", 5);
+    TestCheckEqual(1u, reactContextMock->Args.AsArray().size());
+    TestCheckEqual(5, reactContextMock->Args[0]);
+
+    context.CallJSFunction(L"module1", L"method1", 14, 17);
+    TestCheckEqual(2u, reactContextMock->Args.AsArray().size());
+    TestCheckEqual(14, reactContextMock->Args[0]);
+    TestCheckEqual(17, reactContextMock->Args[1]);
+
+    context.CallJSFunction(L"module1", L"method1", JSValueArray{12, 18});
+    TestCheckEqual(12, reactContextMock->Args[0][0]);
+    TestCheckEqual(18, reactContextMock->Args[0][1]);
+
+    context.CallJSFunction(L"module1", L"method1", JSValueObject{{"prop", 42}});
+    TestCheckEqual(42, reactContextMock->Args[0]["prop"]);
+
+    context.CallJSFunction(L"module1", L"method1", [](IJSValueWriter const &writer) {
+      writer.WriteArrayBegin();
+      WriteValue(writer, 10);
+      writer.WriteArrayEnd();
+    });
+    TestCheckEqual(10, reactContextMock->Args[0]);
+  }
+
+  TEST_METHOD(Test_EmitJSEvent) {
+    auto reactContextMock = winrt::make_self<ReactContextStub>();
+    ReactContext context{reactContextMock.as<IReactContext>()};
+    context.EmitJSEvent(L"module1", L"event1");
+    TestCheckEqual(L"module1", reactContextMock->Module);
+    TestCheckEqual(L"event1", reactContextMock->Method);
+    TestCheckEqual(0u, reactContextMock->Args.AsArray().size());
+
+    context.EmitJSEvent(L"module1", L"event1", 5);
+    TestCheckEqual(1u, reactContextMock->Args.AsArray().size());
+    TestCheckEqual(5, reactContextMock->Args[0]);
+
+    context.EmitJSEvent(L"module1", L"event1", 14, 17);
+    TestCheckEqual(2u, reactContextMock->Args.AsArray().size());
+    TestCheckEqual(14, reactContextMock->Args[0]);
+    TestCheckEqual(17, reactContextMock->Args[1]);
+
+    context.EmitJSEvent(L"module1", L"event1", JSValueArray{12, 18});
+    TestCheckEqual(12, reactContextMock->Args[0][0]);
+    TestCheckEqual(18, reactContextMock->Args[0][1]);
+
+    context.EmitJSEvent(L"module1", L"event1", JSValueObject{{"prop", 42}});
+    TestCheckEqual(42, reactContextMock->Args[0]["prop"]);
+
+    context.EmitJSEvent(L"module1", L"event1", [](IJSValueWriter const &writer) {
+      writer.WriteArrayBegin();
+      WriteValue(writer, 10);
+      writer.WriteArrayEnd();
+    });
+    TestCheckEqual(10, reactContextMock->Args[0]);
   }
 };
 
