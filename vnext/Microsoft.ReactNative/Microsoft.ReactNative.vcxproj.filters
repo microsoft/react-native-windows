@@ -688,13 +688,13 @@
       <Filter>Views\cppwinrt</Filter>
     </Midl>
     <Midl Include="IBackgroundEventListener.idl" />
-    <Midl Include="IBoxedValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactContext.idl" />
     <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
+    <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IReactPropertyBag.idl" />
