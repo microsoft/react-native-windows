@@ -574,9 +574,9 @@ export default class Pressability {
         ) {
           const {onPressOut, onPress} = this._config;
 
-          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of pasing KeyEvents instead
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressOut && onPressOut(event);
-          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of pasing KeyEvents instead
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPress && onPress(event);
         }
       },
@@ -588,7 +588,7 @@ export default class Pressability {
         ) {
           const {onPressIn} = this._config;
 
-          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of pasing KeyEvents instead
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressIn && onPressIn(event);
         }
       },
