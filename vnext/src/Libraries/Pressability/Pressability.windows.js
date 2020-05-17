@@ -19,6 +19,7 @@ import type {
   FocusEvent,
   PressEvent,
   MouseEvent,
+  KeyEvent, // [Windows]
 } from '../Types/CoreEventTypes.js';
 import Platform from '../Utilities/Platform';
 import UIManager from '../ReactNative/UIManager';
@@ -572,7 +573,10 @@ export default class Pressability {
           event.nativeEvent.code === 'GamepadA'
         ) {
           const {onPressOut, onPress} = this._config;
+
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of pasing KeyEvents instead
           onPressOut && onPressOut(event);
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of pasing KeyEvents instead
           onPress && onPress(event);
         }
       },
@@ -583,6 +587,8 @@ export default class Pressability {
           event.nativeEvent.code === 'GamepadA'
         ) {
           const {onPressIn} = this._config;
+
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of pasing KeyEvents instead
           onPressIn && onPressIn(event);
         }
       },
