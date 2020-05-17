@@ -157,6 +157,24 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [ReactMethod]
+    public void CallbackZeroArgs(Action resolve)
+    {
+      resolve();
+    }
+
+    [ReactMethod]
+    public void CallbackTwoArgs(Action<int, int> resolve)
+    {
+      resolve(1, 2);
+    }
+
+    [ReactMethod]
+    public void CallbackThreeArgs(Action<int, int, string> resolve)
+    {
+      resolve(1, 2, "Hello");
+    }
+
+    [ReactMethod]
     public void DivideCallbacks(int x, int y, Action<int> resolve, Action<string> reject)
     {
       if (y != 0)
@@ -260,6 +278,42 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public static void StaticRejectSayHelloCallbacks(Action<string> _, Action<string> reject)
     {
       reject("Goodbye");
+    }
+
+    [ReactMethod]
+    public void TwoCallbacksZeroArgs1(Action resolve, Action _)
+    {
+      resolve();
+    }
+
+    [ReactMethod]
+    public void TwoCallbacksZeroArgs2(Action _, Action reject)
+    {
+      reject();
+    }
+
+    [ReactMethod]
+    public void TwoCallbacksTwoArgs1(Action<int, int> resolve, Action<int, int> _)
+    {
+      resolve(1, 2);
+    }
+
+    [ReactMethod]
+    public void TwoCallbacksTwoArgs2(Action<int, int> _, Action<int, int> reject)
+    {
+      reject(1, 2);
+    }
+
+    [ReactMethod]
+    public void TwoCallbacksThreeArgs1(Action<int, int, string> resolve, Action<int, int, string> _)
+    {
+      resolve(1, 2, "Hello");
+    }
+
+    [ReactMethod]
+    public void TwoCallbacksThreeArgs2(Action<int, int, string> _, Action<int, int, string> reject)
+    {
+      reject(1, 2, "Hello");
     }
 
     [ReactMethod]
@@ -583,42 +637,42 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_Add()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.Add), 3, 5, (int result) => Assert.AreEqual(8, result));
+      m_moduleBuilderMock.Call1<int, int, Action<int>>(nameof(SimpleNativeModule.Add), 3, 5, (int result) => Assert.AreEqual(8, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_Negate()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.Negate), 3, (int result) => Assert.AreEqual(-3, result));
+      m_moduleBuilderMock.Call1<int, Action<int>>(nameof(SimpleNativeModule.Negate), 3, (int result) => Assert.AreEqual(-3, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_SayHello()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.SayHello), (string result) => Assert.AreEqual("Hello", result));
+      m_moduleBuilderMock.Call1<Action<string>>(nameof(SimpleNativeModule.SayHello), (string result) => Assert.AreEqual("Hello", result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticAdd()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticAdd), 3, 5, (int result) => Assert.AreEqual(8, result));
+      m_moduleBuilderMock.Call1<int, int, Action<int>>(nameof(SimpleNativeModule.StaticAdd), 3, 5, (int result) => Assert.AreEqual(8, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegate()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticNegate), 3, (int result) => Assert.AreEqual(-3, result));
+      m_moduleBuilderMock.Call1<int, Action<int>>(nameof(SimpleNativeModule.StaticNegate), 3, (int result) => Assert.AreEqual(-3, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticSayHello()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticSayHello), (string result) => Assert.AreEqual("Hello", result));
+      m_moduleBuilderMock.Call1<Action<string>>(nameof(SimpleNativeModule.StaticSayHello), (string result) => Assert.AreEqual("Hello", result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
@@ -668,63 +722,93 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_AddCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.AddCallback), 7, -8, (int result) => Assert.AreEqual(-1, result));
+      m_moduleBuilderMock.Call1<int, int, Action<int>>(nameof(SimpleNativeModule.AddCallback), 7, -8, (int result) => Assert.AreEqual(-1, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.NegateCallback), 3, (int result) => Assert.AreEqual(-3, result));
+      m_moduleBuilderMock.Call1<int, Action<int>>(nameof(SimpleNativeModule.NegateCallback), 3, (int result) => Assert.AreEqual(-3, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_NegateAyncCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.NegateAsyncCallback), 3, (int result) => Assert.AreEqual(-3, result)).Wait();
+      m_moduleBuilderMock.Call1<int, Action<int>>(nameof(SimpleNativeModule.NegateAsyncCallback), 3, (int result) => Assert.AreEqual(-3, result)).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_SayHelloCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.SayHelloCallback), (string result) => Assert.AreEqual("Hello_2", result));
+      m_moduleBuilderMock.Call1<Action<string>>(nameof(SimpleNativeModule.SayHelloCallback), (string result) => Assert.AreEqual("Hello_2", result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticAddCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticAddCallback), 4, 56, (int result) => Assert.AreEqual(60, result));
+      m_moduleBuilderMock.Call1<int, int, Action<int>>(nameof(SimpleNativeModule.StaticAddCallback), 4, 56, (int result) => Assert.AreEqual(60, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticNegateCallback), 33, (int result) => Assert.AreEqual(-33, result));
+      m_moduleBuilderMock.Call1<int, Action<int>>(nameof(SimpleNativeModule.StaticNegateCallback), 33, (int result) => Assert.AreEqual(-33, result));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticNegateAsyncCallback), 33, (int result) => Assert.AreEqual(-33, result)).Wait();
+      m_moduleBuilderMock.Call1<int, Action<int>>(nameof(SimpleNativeModule.StaticNegateAsyncCallback), 33, (int result) => Assert.AreEqual(-33, result)).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_StaticSayHelloCallback()
     {
-      m_moduleBuilderMock.Call1(nameof(SimpleNativeModule.StaticSayHelloCallback), (string result) => Assert.AreEqual("Static Hello_2", result));
+      m_moduleBuilderMock.Call1<Action<string>>(nameof(SimpleNativeModule.StaticSayHelloCallback), (string result) => Assert.AreEqual("Static Hello_2", result));
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_CallbackZeroArgs()
+    {
+      m_moduleBuilderMock.Call1<Action>(nameof(SimpleNativeModule.CallbackZeroArgs), () => { });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_CallbackTwoArgs()
+    {
+      m_moduleBuilderMock.Call1<Action<int, int>>(nameof(SimpleNativeModule.CallbackTwoArgs), (int p1, int p2) =>
+      {
+        Assert.AreEqual(1, p1);
+        Assert.AreEqual(2, p2);
+      });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_CallbackThreeArgs()
+    {
+      m_moduleBuilderMock.Call1<Action<int, int, string>>(nameof(SimpleNativeModule.CallbackThreeArgs), (int p1, int p2, string p3) =>
+      {
+        Assert.AreEqual(1, p1);
+        Assert.AreEqual(2, p2);
+        Assert.AreEqual("Hello", p3);
+      });
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_DivideCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DivideCallbacks), 6, 2,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<string>>(nameof(SimpleNativeModule.DivideCallbacks), 6, 2,
           (int result) => Assert.AreEqual(3, result),
           (string error) => Assert.AreEqual("Division by 0", error));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -733,7 +817,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_DivideCallbacksError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DivideCallbacks), 6, 0,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<string>>(nameof(SimpleNativeModule.DivideCallbacks), 6, 0,
           (int result) => Assert.AreEqual(3, result),
           (string error) => Assert.AreEqual("Division by 0", error));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -742,7 +826,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegateCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateCallbacks), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.NegateCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
           (string error) => Assert.AreEqual("Already negative", error));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -751,7 +835,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegateCallbacksError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateCallbacks), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.NegateCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
           (string error) => Assert.AreEqual("Already negative", error));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -760,7 +844,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegateAsyncCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.NegateAsyncCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
           (string error) => Assert.AreEqual("Already negative", error)).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -769,7 +853,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegateAsyncCallbacksError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncCallbacks), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.NegateAsyncCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
           (string error) => Assert.AreEqual("Already negative", error)).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -778,7 +862,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_ResolveSayHelloCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.ResolveSayHelloCallbacks),
+      m_moduleBuilderMock.Call2<Action<string>, Action<string>>(nameof(SimpleNativeModule.ResolveSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
           (string error) => Assert.AreEqual("Goodbye", error));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -787,7 +871,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_RejectSayHelloCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.RejectSayHelloCallbacks),
+      m_moduleBuilderMock.Call2<Action<string>, Action<string>>(nameof(SimpleNativeModule.RejectSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
           (string error) => Assert.AreEqual("Goodbye", error));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -796,7 +880,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticDivideCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 2,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<string>>(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 2,
           (int result) => Assert.AreEqual(3, result),
           (string error) => Assert.AreEqual("Division by 0", error));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -805,7 +889,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticDivideCallbacksError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 0,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<string>>(nameof(SimpleNativeModule.StaticDivideCallbacks), 6, 0,
           (int result) => Assert.AreEqual(3, result),
           (string error) => Assert.AreEqual("Division by 0", error));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -814,7 +898,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegateCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateCallbacks), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.StaticNegateCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
           (string error) => Assert.AreEqual("Already negative", error));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -823,7 +907,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegateCallbacksError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateCallbacks), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.StaticNegateCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
           (string error) => Assert.AreEqual("Already negative", error));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -832,7 +916,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), 5,
           (int result) => Assert.AreEqual(-5, result),
           (string error) => Assert.AreEqual("Already negative", error)).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -841,7 +925,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncCallbacksError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<string>>(nameof(SimpleNativeModule.StaticNegateAsyncCallbacks), -5,
           (int result) => Assert.AreEqual(5, result),
           (string error) => Assert.AreEqual("Already negative", error)).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -850,7 +934,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloCallbacks),
+      m_moduleBuilderMock.Call2<Action<string>, Action<string>>(nameof(SimpleNativeModule.StaticResolveSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
           (string error) => Assert.AreEqual("Goodbye", error));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -859,16 +943,91 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticRejectSayHelloCallbacks()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloCallbacks),
+      m_moduleBuilderMock.Call2<Action<string>, Action<string>>(nameof(SimpleNativeModule.StaticRejectSayHelloCallbacks),
           (string result) => Assert.AreEqual("Hello_3", result),
           (string error) => Assert.AreEqual("Goodbye", error));
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
+    }
+
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksZeroArgs1()
+    {
+      m_moduleBuilderMock.Call2<Action, Action>(nameof(SimpleNativeModule.TwoCallbacksZeroArgs1),
+        () => { }, () => { Assert.Fail(); });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksZeroArgs2()
+    {
+      m_moduleBuilderMock.Call2<Action, Action>(nameof(SimpleNativeModule.TwoCallbacksZeroArgs2),
+        () => { Assert.Fail(); }, () => { });
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksTwoArgs1()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int>, Action<int, int>>(
+        nameof(SimpleNativeModule.TwoCallbacksTwoArgs1),
+        (int p1, int p2) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+        },
+        (int p1, int p2) => { Assert.Fail(); });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksTwoArgs2()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int>, Action<int, int>>(
+        nameof(SimpleNativeModule.TwoCallbacksTwoArgs2),
+        (int p1, int p2) => { Assert.Fail(); },
+        (int p1, int p2) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+        });
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksThreeArgs1()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int, string>, Action<int, int, string>>(
+        nameof(SimpleNativeModule.TwoCallbacksThreeArgs1),
+        (int p1, int p2, string p3) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+          Assert.AreEqual("Hello", p3);
+        },
+        (int p1, int p2, string p3) => { Assert.Fail(); });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksThreeArgs2()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int, string>, Action<int, int, string>>(
+        nameof(SimpleNativeModule.TwoCallbacksThreeArgs2),
+        (int p1, int p2, string p3) => { Assert.Fail(); },
+        (int p1, int p2, string p3) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+          Assert.AreEqual("Hello", p3);
+        });
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
     [TestMethod]
     public void TestMethodCall_DividePromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 2,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.DividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
           (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -877,7 +1036,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_DividePromiseError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.DividePromise), 6, 0,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.DividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
           (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -886,7 +1045,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegatePromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.NegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -895,7 +1054,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegatePromiseError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegatePromise), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.NegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -904,7 +1063,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegateAsyncPromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.NegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -913,7 +1072,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_NegateAsyncPromiseError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.NegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -922,7 +1081,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_VoidPromise()
     {
-      m_moduleBuilderMock.Call2("voidPromise", 2,
+      m_moduleBuilderMock.Call2<int, Action<JSValue.Void>, Action<JSValue>>("voidPromise", 2,
           (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -931,7 +1090,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_VoidPromiseError()
     {
-      m_moduleBuilderMock.Call2("voidPromise", 3,
+      m_moduleBuilderMock.Call2<int, Action<JSValue.Void>, Action<JSValue>>("voidPromise", 3,
           (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -940,7 +1099,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_ResolveSayHelloPromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.ResolveSayHelloPromise),
+      m_moduleBuilderMock.Call2<Action<string>, Action<JSValue>>(nameof(SimpleNativeModule.ResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
           (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -949,7 +1108,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_RejectSayHelloPromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.RejectSayHelloPromise),
+      m_moduleBuilderMock.Call2<Action<string>, Action<JSValue>>(nameof(SimpleNativeModule.RejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
           (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -958,7 +1117,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticDividePromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 2,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.StaticDividePromise), 6, 2,
           (int result) => Assert.AreEqual(3, result),
           (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -967,7 +1126,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticDividePromiseError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticDividePromise), 6, 0,
+      m_moduleBuilderMock.Call2<int, int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.StaticDividePromise), 6, 0,
           (int result) => Assert.AreEqual(3, result),
           (JSValue error) => Assert.AreEqual("Division by 0", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -976,7 +1135,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegatePromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.StaticNegatePromise), 5,
           (int result) => Assert.AreEqual(-5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -985,7 +1144,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegatePromiseError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegatePromise), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.StaticNegatePromise), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -994,7 +1153,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncPromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.StaticNegateAsyncPromise), 5,
           (int result) => Assert.AreEqual(-5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -1003,7 +1162,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticNegateAsyncPromiseError()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
+      m_moduleBuilderMock.Call2<int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.StaticNegateAsyncPromise), -5,
           (int result) => Assert.AreEqual(5, result),
           (JSValue error) => Assert.AreEqual("Already negative", error["message"])).Wait();
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -1012,7 +1171,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticVoidPromise()
     {
-      m_moduleBuilderMock.Call2("staticVoidPromise", 2,
+      m_moduleBuilderMock.Call2<int, Action<JSValue.Void>, Action<JSValue>>("staticVoidPromise", 2,
           (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -1021,7 +1180,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticVoidPromiseError()
     {
-      m_moduleBuilderMock.Call2("staticVoidPromise", 3,
+      m_moduleBuilderMock.Call2<int, Action<JSValue.Void>, Action<JSValue>>("staticVoidPromise", 3,
           (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
@@ -1031,7 +1190,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticResolveSayHelloPromise),
+      m_moduleBuilderMock.Call2<Action<string>, Action<JSValue>>(nameof(SimpleNativeModule.StaticResolveSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
           (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
@@ -1040,7 +1199,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestMethod]
     public void TestMethodCall_StaticRejectSayHelloPromise()
     {
-      m_moduleBuilderMock.Call2(nameof(SimpleNativeModule.StaticRejectSayHelloPromise),
+      m_moduleBuilderMock.Call2<Action<string>, Action<JSValue>>(nameof(SimpleNativeModule.StaticRejectSayHelloPromise),
           (string result) => Assert.AreEqual("Hello_3", result),
           (JSValue error) => Assert.AreEqual("Promise rejected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);

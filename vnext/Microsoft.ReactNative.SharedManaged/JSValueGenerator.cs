@@ -447,12 +447,12 @@ namespace Microsoft.ReactNative.Managed
       out Type[] argTypes,
       out VariableWrapper[] args,
       out Type resolveCallbackType,
-      out Type resolveArgType)
+      out Type[] resolveArgTypes)
     {
       argTypes = parameters.Take(parameters.Length - 1).Select(p => p.ParameterType).ToArray();
       args = argTypes.Select(t => Variable(t, out _)).ToArray();
       resolveCallbackType = parameters[parameters.Length - 1].ParameterType;
-      resolveArgType = resolveCallbackType.GetMethod("Invoke").GetParameters()[0].ParameterType;
+      resolveArgTypes = resolveCallbackType.GetMethod("Invoke").GetParameters().Select(p => p.ParameterType).ToArray();
       return args;
     }
 
@@ -461,16 +461,16 @@ namespace Microsoft.ReactNative.Managed
       out Type[] argTypes,
       out VariableWrapper[] args,
       out Type resolveCallbackType,
-      out Type resolveArgType,
+      out Type[] resolveArgTypes,
       out Type rejectCallbackType,
-      out Type rejectArgType)
+      out Type[] rejectArgTypes)
     {
       argTypes = parameters.Take(parameters.Length - 2).Select(p => p.ParameterType).ToArray();
       args = argTypes.Select(t => Variable(t, out _)).ToArray();
       resolveCallbackType = parameters[parameters.Length - 2].ParameterType;
-      resolveArgType = resolveCallbackType.GetMethod("Invoke").GetParameters()[0].ParameterType;
+      resolveArgTypes = resolveCallbackType.GetMethod("Invoke").GetParameters().Select(p => p.ParameterType).ToArray();
       rejectCallbackType = parameters[parameters.Length - 1].ParameterType;
-      rejectArgType = rejectCallbackType.GetMethod("Invoke").GetParameters()[0].ParameterType;
+      rejectArgTypes = rejectCallbackType.GetMethod("Invoke").GetParameters().Select(p => p.ParameterType).ToArray();
       return args;
     }
 
