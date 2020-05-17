@@ -6,6 +6,7 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include "ActivationFactory.h"
+#include "MockReactPackageProvider.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Microsoft::ReactNative;
@@ -27,29 +28,28 @@ TEST_CLASS (ReactNativeHostTests) {
     }
   }
 
-  // Functions under test:
-  // IVector<IReactPackageProvider> PackageProviders { get; set; };
-  // ReactInstanceSettings InstanceSettings { get; set; };
-
   TEST_METHOD(PackageProviders_AsConstructed_IsEmpty) {
     ReactNativeHost host{};
     Assert::AreEqual(0u, host.PackageProviders().Size());
   }
 
-  class MockPackageProvider
-      : public winrt::implements<MockPackageProvider, ::winrt::Microsoft::ReactNative::IReactPackageProvider> {
-   public:
-    MockPackageProvider(){};
-    void CreatePackage(IReactPackageBuilder const &packageBuilder){};
-  };
-
   TEST_METHOD(PackageProviders_Append_ReflectsAddition) {
-    winrt::Microsoft::ReactNative::ReactNativeHost host{};
-
-    IReactPackageProvider packageProvider = ::winrt::make<MockPackageProvider>();
-
+    ReactNativeHost host{};
+    IReactPackageProvider packageProvider = ::winrt::make<MockReactPackageProvider>();
     host.PackageProviders().Append(packageProvider);
     Assert::AreEqual(1u, host.PackageProviders().Size());
+  }
+
+  TEST_METHOD(InstanceSettings_BundleRootPathAsConstructed_IsEmpty) {
+    ReactNativeHost host{};
+    Assert::IsTrue(host.InstanceSettings().BundleRootPath().empty());
+  }
+
+  TEST_METHOD(InstanceSettings_BundleRootPathAsAssigned_MatchesAssignedValue) {
+    const wchar_t *path = L"a/b/c";
+    ReactNativeHost host{};
+    host.InstanceSettings().BundleRootPath(path);
+    Assert::AreEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
   }
 };
 

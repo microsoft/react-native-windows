@@ -7,5 +7,5 @@
 #define NOGDI
 #endif
 
-#include <mutex>
 #include <windows.h>
+#include <mutex>

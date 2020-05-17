@@ -129,7 +129,6 @@ void ReactNativeHost::ReloadInstance() noexcept {
 #endif
 }
 
-
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {
   return m_reactHost.Get();
 }

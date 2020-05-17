@@ -153,7 +153,6 @@ struct ViewManagerProvider2 {
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
-
 #ifndef CORE_ABI
   react::uwp::ReactInstanceSettings LegacySettings;
 #endif
