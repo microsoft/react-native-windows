@@ -1,12 +1,17 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 
 #include <ReactPropertyBag.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
+#include <string>
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
 using namespace Windows::Foundation;
+using namespace std::string_literals;
 
 namespace ReactNativeIntegrationTests {
 
@@ -525,21 +530,21 @@ TEST_CLASS (ReactPropertyBagTests) {
   }
 
   TEST_METHOD(PropertyBag_Property_Functor) {
-    ReactPropertyId<Mso::Functor<IInspectable()>> fooName{L"Foo"};
+    ReactPropertyId<ReactNonAbiValue<Mso::Functor<std::string()>>> fooName{L"Foo"};
     ReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
 
     TestCheck(!pb.Get(fooName));
-    Mso::Functor<IInspectable()> createValue1 = []() noexcept {
-      return winrt::box_value(5);
+    Mso::Functor<std::string()> createValue1 = []() noexcept {
+      return "Hello world!"s;
     };
     TestCheckEqual(createValue1, *pb.GetOrCreate(fooName, [&createValue1]() { return createValue1; }));
     TestCheckEqual(createValue1, *pb.Get(fooName));
-    TestCheckEqual(5, winrt::unbox_value<int>((*pb.Get(fooName))()));
+    TestCheckEqual("Hello world!"s, pb.Get(fooName)());
 
-    Mso::Functor<IInspectable()> createValue2 = []() { return winrt::box_value(10); };
+    Mso::Functor<std::string()> createValue2 = []() { return "Hello ReactNative!"s; };
     pb.Set(fooName, createValue2);
     TestCheckEqual(createValue2, *pb.Get(fooName));
-    TestCheckEqual(10, winrt::unbox_value<int>((*pb.Get(fooName))()));
+    TestCheckEqual("Hello ReactNative!"s, pb.Get(fooName)());
     TestCheck(createValue1 != *pb.Get(fooName));
     pb.Remove(fooName);
     TestCheck(!pb.Get(fooName));

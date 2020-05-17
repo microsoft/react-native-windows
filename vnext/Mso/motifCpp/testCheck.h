@@ -11,9 +11,9 @@
 // It allows to write more compact code because we do not need to add comment
 // for every TestAssert.
 //
-// All macros have a form with suffix "L" that accept line number as a parameter.
-// It is done to enable creation of custom check macros that internally
-// use the macros we provide.
+// All macros have a form with suffix "At" that accepts file and line number
+// as parameters. It is done to enable creation of custom check macros that
+// internally use these macros.
 //=============================================================================
 
 #include "motifCpp/assert_motifApi.h"
@@ -33,7 +33,7 @@
 // It will be shown as macro usage rather than macro being expanded.
 //=============================================================================
 #define TestCheckAtInternal(file, line, expr, exprStr, ...) \
-  TestAssert::IsTrueAt(file, line, expr, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
+  TestAssert::IsTrueAt(file, line, !!(expr), exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
 #define TestCheckAt(file, line, expr, ...) TestCheckAtInternal(file, line, expr, #expr, __VA_ARGS__)
 #define TestCheck(expr, ...) TestCheckAtInternal(__FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 

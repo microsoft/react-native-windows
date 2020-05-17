@@ -1,8 +1,39 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 14 May 2020 00:04:37 GMT and should not be manually modified.
+This log was last generated on Sun, 17 May 2020 00:04:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.69
+
+Sun, 17 May 2020 00:04:22 GMT
+
+### Changes
+
+- ReactNonAbiValue for IReactPropertyBag non-ABI values (vmorozov@microsoft.com)
+- Prevent hard crash on invalid jsx (button inside text e.g.) (asklar@microsoft.com)
+- Fixed ReactContext CallJSFunction and EmitJSEvent (vmorozov@microsoft.com)
+
+## 0.0.0-master.68
+
+Sat, 16 May 2020 00:04:28 GMT
+
+### Changes
+
+- some projects have target instead of bin folders (asklar@microsoft.com)
+- .\JustMyXaml.ps1 (asklar@microsoft.com)
+
+## 0.0.0-master.67
+
+Fri, 15 May 2020 00:04:44 GMT
+
+### Changes
+
+- winui3 option for app project template (asklar@microsoft.com)
+- Reduce PCH Sizes (ngerlem@microsoft.com)
+- Remove unused lifecycle events in ReactNativeHost (kaigu@microsoft.com)
+- Move pch files into a Pch subfolder. (vmorozov@microsoft.com)
+- exact match of WinAppDriver required (asklar@microsoft.com)
 
 ## 0.0.0-master.66
 

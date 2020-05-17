@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 17 May 2020 00:04:22 GMT",
+      "tag": "react-native-windows_v0.0.0-master.69",
+      "version": "0.0.0-master.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "ReactNonAbiValue for IReactPropertyBag non-ABI values",
+            "author": "vmorozov@microsoft.com",
+            "commit": "251f5205dc5cb98797b9f1c31c3d5a537321c0f1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Prevent hard crash on invalid jsx (button inside text e.g.)",
+            "author": "asklar@microsoft.com",
+            "commit": "ce937eb0cef0812aa0b79d7017c7ae53fb566961",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed ReactContext CallJSFunction and EmitJSEvent",
+            "author": "vmorozov@microsoft.com",
+            "commit": "06921271e82e07b7eb94d5808103367b85a76a7d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 May 2020 00:04:28 GMT",
+      "tag": "react-native-windows_v0.0.0-master.68",
+      "version": "0.0.0-master.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "some projects have target instead of bin folders",
+            "author": "asklar@microsoft.com",
+            "commit": "e0f591e8aaca01c7a52ac2825d8476920880bfed",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": ".\\JustMyXaml.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "2d85b6a94f1a9e629c2e124f4f0951ff75829bad",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 May 2020 00:04:44 GMT",
+      "tag": "react-native-windows_v0.0.0-master.67",
+      "version": "0.0.0-master.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "winui3 option for app project template",
+            "author": "asklar@microsoft.com",
+            "commit": "7de1f3843a9754c7fbf744bf3e556fdca78472c1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce PCH Sizes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6f43e1d51a67cbe27cab77684bab6cce3869c03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused lifecycle events in ReactNativeHost",
+            "author": "kaigu@microsoft.com",
+            "commit": "a8cf72c8ce76c2b140c860990a9cdfd753085325",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move pch files into a Pch subfolder.",
+            "author": "vmorozov@microsoft.com",
+            "commit": "204bc9e292a9889111f72e143555c3be57bf5a99",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "exact match of WinAppDriver required",
+            "author": "asklar@microsoft.com",
+            "commit": "178583fbf015ecfaecb00a7e81d53d9699b5d2ce",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 May 2020 00:04:37 GMT",
       "tag": "react-native-windows_v0.0.0-master.66",
       "version": "0.0.0-master.66",

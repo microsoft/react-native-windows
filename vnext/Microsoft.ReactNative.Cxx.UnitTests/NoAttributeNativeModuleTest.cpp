@@ -603,8 +603,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_moduleBuilder = winrt::make<React::ReactModuleBuilderImpl>(m_builderMock);
     auto provider = React::MakeModuleProvider<SimpleNativeModule2>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
-    auto reactModule = m_moduleObject.as<React::IBoxedValue>();
-    m_module = &React::BoxedValue<SimpleNativeModule2>::GetValueUnsafe(reactModule);
+    auto reactModule = m_moduleObject.as<React::IReactNonAbiValue>();
+    m_module = React::ReactNonAbiValue<SimpleNativeModule2>::GetPtrUnsafe(m_moduleObject);
   }
 
   TEST_METHOD(TestMethodCall_Add) {

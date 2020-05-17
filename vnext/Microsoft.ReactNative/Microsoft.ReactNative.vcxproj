@@ -550,7 +550,7 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl" />
     <Midl Include="IBackgroundEventListener.idl" />
-    <Midl Include="IBoxedValue.idl" />
+    <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
