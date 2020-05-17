@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 16 May 2020 00:04:28 GMT and should not be manually modified.
+This log was last generated on Sun, 17 May 2020 00:04:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.69
+
+Sun, 17 May 2020 00:04:22 GMT
+
+### Changes
+
+- ReactNonAbiValue for IReactPropertyBag non-ABI values (vmorozov@microsoft.com)
+- Prevent hard crash on invalid jsx (button inside text e.g.) (asklar@microsoft.com)
+- Fixed ReactContext CallJSFunction and EmitJSEvent (vmorozov@microsoft.com)
 
 ## 0.0.0-master.68
 
