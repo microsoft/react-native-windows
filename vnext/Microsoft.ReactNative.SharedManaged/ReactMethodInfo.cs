@@ -118,18 +118,18 @@ namespace Microsoft.ReactNative.Managed
       // {
       //   inputReader.ReadArgs(out ArgType0 arg0, out ArgType1 arg1);
       //   (module as ModuleType).Method(arg0, arg1,
-      //     result => resolve(outputWriter.WriteArgs(result)));
+      //     (result1, result2) => resolve(outputWriter.WriteArgs(result1, result2)));
       // }
 
       // The last parameter in parameters is a 'resolve' delegate
       return CompileLambda<ReactMethodImpl>(
         MethodParameters(out var module, out var inputReader, out var outputWriter, out var resolve, out _),
         MethodArgs(parameters, out var argTypes, out var args,
-          out var resolveCallbackType, out var resolveArgType),
+          out var resolveCallbackType, out var resolveArgTypes),
         inputReader.CallExt(ReadArgsOf(argTypes), args),
         module.CastTo(methodInfo.DeclaringType).Call(methodInfo, args,
-          AutoLambda(resolveCallbackType, Parameter(resolveArgType, out var result),
-            resolve.Invoke(outputWriter.CallExt(WriteArgsOf(resolveArgType), result)))));
+          AutoLambda(resolveCallbackType, Parameters(resolveArgTypes, out var results),
+            resolve.Invoke(outputWriter.CallExt(WriteArgsOf(resolveArgTypes), results)))));
     }
 
     private ReactMethodImpl MakeTwoCallbacksMethod(MethodInfo methodInfo, ParameterInfo[] parameters)
@@ -144,24 +144,23 @@ namespace Microsoft.ReactNative.Managed
       // {
       //   inputReader.ReadArgs(out ArgType0 arg0, out ArgType1 arg1);
       //   (module as ModuleType).Method(arg0, arg1,
-      //     value1 => resolve(outputWriter.WriteArgs(value1)),
-      //     value2 => reject(outputWriter.WriteArgs(value2)));
+      //     (result1, result2) => resolve(outputWriter.WriteArgs(result1, result2)),
+      //     (error1, error2) => reject(outputWriter.WriteArgs(error1, error2)));
       // }
 
       // The last two parameters in parameters are resolve and reject delegates
       return CompileLambda<ReactMethodImpl>(
         MethodParameters(out var module, out var inputReader, out var outputWriter, out var resolve, out var reject),
         MethodArgs(parameters, out var argTypes, out var args,
-          out var resolveCallbackType, out var resolveArgType,
-          out var rejectCallbackType, out var rejectArgType),
+          out var resolveCallbackType, out var resolveArgTypes,
+          out var rejectCallbackType, out var rejectArgTypes),
         inputReader.CallExt(ReadArgsOf(argTypes), args),
         module.CastTo(methodInfo.DeclaringType).Call(methodInfo, args,
-          AutoLambda(resolveCallbackType, Parameter(resolveArgType, out var value1),
-            resolve.Invoke(outputWriter.CallExt(WriteArgsOf(resolveArgType), value1))),
-          AutoLambda(rejectCallbackType, Parameter(rejectArgType, out var value2),
-            reject.Invoke(outputWriter.CallExt(WriteArgsOf(rejectArgType), value2)))));
+          AutoLambda(resolveCallbackType, Parameters(resolveArgTypes, out var results),
+            resolve.Invoke(outputWriter.CallExt(WriteArgsOf(resolveArgTypes), results))),
+          AutoLambda(rejectCallbackType, Parameters(rejectArgTypes, out var errors),
+            reject.Invoke(outputWriter.CallExt(WriteArgsOf(rejectArgTypes), errors)))));
     }
-
 
     private ReactMethodImpl MakePromiseMethod(MethodInfo methodInfo, ParameterInfo[] parameters)
     {

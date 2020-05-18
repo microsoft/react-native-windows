@@ -205,6 +205,7 @@ struct GetCallbackSignatureImpl<TCallback<void(TArgs...) noexcept>> {
 template <class T>
 struct CallbackCreator;
 
+// Callback signature without noexcept
 template <template <class> class TCallback, class... TArgs>
 struct CallbackCreator<TCallback<void(TArgs...)>> {
   static TCallback<void(TArgs...)> Create(
@@ -217,6 +218,7 @@ struct CallbackCreator<TCallback<void(TArgs...)>> {
   }
 };
 
+// Callback signature with noexcept
 template <template <class> class TCallback, class... TArgs>
 struct CallbackCreator<TCallback<void(TArgs...) noexcept>> {
   static TCallback<void(TArgs...)> Create(

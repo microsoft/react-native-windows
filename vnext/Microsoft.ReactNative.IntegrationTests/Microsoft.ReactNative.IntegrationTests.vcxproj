@@ -2,7 +2,6 @@
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
-    <CppWinRTVerbosity>high</CppWinRTVerbosity>
     <MinimalCoreWin>true</MinimalCoreWin>
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{14FA0516-E6D7-4E4D-B097-1470198C5072}</ProjectGuid>
