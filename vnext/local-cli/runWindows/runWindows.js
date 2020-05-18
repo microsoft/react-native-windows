@@ -79,6 +79,7 @@ async function runWindows(config, args, options) {
         options.arch,
         msBuildProps,
         verbose,
+        undefined, // build the default target
       );
     } catch (e) {
       newError(
