@@ -4,6 +4,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
@@ -76,35 +77,36 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void Call0<T1, T2, T3>(string methodName, T1 arg1, T2 arg2, T3 arg3) =>
         GetMethod0(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), null, null);
 
-    public Task<bool> Call1<TResult>(string methodName, Action<TResult> resolve)
+    public Task<bool> Call1<TResolve>(string methodName, TResolve resolve) where TResolve : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod1(methodName)?.Invoke(ArgReader(), ArgWriter(), ResolveCallback(resolve, promise), null);
       return promise.Task;
     }
 
-    public Task<bool> Call1<T1, TResult>(string methodName, T1 arg1, Action<TResult> resolve)
+    public Task<bool> Call1<T1, TResolve>(string methodName, T1 arg1, TResolve resolve) where TResolve : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod1(methodName)?.Invoke(ArgReader(arg1), ArgWriter(), ResolveCallback(resolve, promise), null);
       return promise.Task;
     }
 
-    public Task<bool> Call1<T1, T2, TResult>(string methodName, T1 arg1, T2 arg2, Action<TResult> resolve)
+    public Task<bool> Call1<T1, T2, TResolve>(string methodName, T1 arg1, T2 arg2, TResolve resolve) where TResolve : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(), ResolveCallback(resolve, promise), null);
       return promise.Task;
     }
 
-    public Task<bool> Call1<T1, T2, T3, TResult>(string methodName, T1 arg1, T2 arg2, T3 arg3, Action<TResult> resolve)
+    public Task<bool> Call1<T1, T2, T3, TResolve>(string methodName, T1 arg1, T2 arg2, T3 arg3, TResolve resolve) where TResolve : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod1(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(), ResolveCallback(resolve, promise), null);
       return promise.Task;
     }
 
-    public Task<bool> Call2<TResult, TError>(string methodName, Action<TResult> resolve, Action<TError> reject)
+    public Task<bool> Call2<TResolve, TReject>(string methodName, TResolve resolve, TReject reject)
+      where TResolve : Delegate where TReject : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod2(methodName)?.Invoke(ArgReader(), ArgWriter(),
@@ -112,8 +114,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       return promise.Task;
     }
 
-    public Task<bool> Call2<T1, TResult, TError>(string methodName, T1 arg1,
-        Action<TResult> resolve, Action<TError> reject)
+    public Task<bool> Call2<T1, TResolve, TReject>(string methodName, T1 arg1,
+        TResolve resolve, TReject reject) where TResolve : Delegate where TReject : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod2(methodName)?.Invoke(ArgReader(arg1), ArgWriter(),
@@ -121,8 +123,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       return promise.Task;
     }
 
-    public Task<bool> Call2<T1, T2, TResult, TError>(string methodName, T1 arg1, T2 arg2,
-        Action<TResult> resolve, Action<TError> reject)
+    public Task<bool> Call2<T1, T2, TResolve, TReject>(string methodName, T1 arg1, T2 arg2,
+        TResolve resolve, TReject reject) where TResolve : Delegate where TReject : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(),
@@ -130,8 +132,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       return promise.Task;
     }
 
-    public Task<bool> Call2<T1, T2, T3, TResult, TError>(string methodName, T1 arg1, T2 arg2, T3 arg3,
-        Action<TResult> resolve, Action<TError> reject)
+    public Task<bool> Call2<T1, T2, T3, TResolve, TReject>(string methodName, T1 arg1, T2 arg2, T3 arg3,
+        TResolve resolve, TReject reject) where TResolve : Delegate where TReject : Delegate
     {
       var promise = new TaskCompletionSource<bool>();
       GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
@@ -180,24 +182,44 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     private SyncMethodDelegate GetSyncMethod(string methodName) =>
         m_syncMethods.TryGetValue(methodName, out var syncMethod) ? syncMethod : null;
 
-    private MethodResultCallback ResolveCallback<T>(Action<T> resolve, TaskCompletionSource<bool> promise = null)
+    private MethodResultCallback ResolveCallback<T>(T resolve, TaskCompletionSource<bool> promise = null) where T : Delegate
     {
       return (IJSValueWriter writer) =>
       {
-        resolve(GetResult<T>(writer));
+        CallCallback(resolve, writer);
         IsResolveCallbackCalled = true;
         promise?.SetResult(true);
       };
     }
 
-    private MethodResultCallback RejectCallback<T>(Action<T> reject, TaskCompletionSource<bool> promise = null)
+    private MethodResultCallback RejectCallback<T>(T reject, TaskCompletionSource<bool> promise = null) where T : Delegate
     {
       return (IJSValueWriter writer) =>
       {
-        reject(GetResult<T>(writer));
+        CallCallback(reject, writer);
         IsRejectCallbackCalled = true;
         promise?.SetResult(false);
       };
+    }
+
+    private static void CallCallback<T>(T callback, IJSValueWriter writer) where T : Delegate
+    {
+      var resulReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
+      var delegateInvoke = typeof(T).GetMethod("Invoke");
+      var parameters = delegateInvoke.GetParameters();
+      var paramTypes = parameters.Select(p => p.ParameterType).ToArray();
+      if (paramTypes.Length == 0)
+      {
+        delegateInvoke.Invoke(callback, new object[] { });
+      }
+      else
+      {
+        object[] args = new object[paramTypes.Length + 1];
+        args[0] = resulReader;
+        var readArgsMethod = JSValueReaderGenerator.ReadArgsOf(paramTypes);
+        readArgsMethod.Invoke(null, args);
+        delegateInvoke.Invoke(callback, args.Skip(1).ToArray());
+      }
     }
 
     private static T GetResult<T>(IJSValueWriter writer)
