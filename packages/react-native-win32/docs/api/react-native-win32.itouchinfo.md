@@ -16,14 +16,14 @@ export interface ITouchInfo
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [currentPageX](./react-native-win32.itouchinfo.currentpagex.md) | <code>number</code> |  |
-|  [currentPageY](./react-native-win32.itouchinfo.currentpagey.md) | <code>number</code> |  |
-|  [currentTimeStamp](./react-native-win32.itouchinfo.currenttimestamp.md) | <code>number</code> |  |
-|  [previousPageX](./react-native-win32.itouchinfo.previouspagex.md) | <code>number</code> |  |
-|  [previousPageY](./react-native-win32.itouchinfo.previouspagey.md) | <code>number</code> |  |
-|  [previousTimeStamp](./react-native-win32.itouchinfo.previoustimestamp.md) | <code>number</code> |  |
-|  [startPageX](./react-native-win32.itouchinfo.startpagex.md) | <code>number</code> |  |
-|  [startPageY](./react-native-win32.itouchinfo.startpagey.md) | <code>number</code> |  |
-|  [startTimeStamp](./react-native-win32.itouchinfo.starttimestamp.md) | <code>number</code> |  |
-|  [touchActive](./react-native-win32.itouchinfo.touchactive.md) | <code>boolean</code> |  |
+|  [currentPageX](./react-native-win32.itouchinfo.currentpagex.md) | number |  |
+|  [currentPageY](./react-native-win32.itouchinfo.currentpagey.md) | number |  |
+|  [currentTimeStamp](./react-native-win32.itouchinfo.currenttimestamp.md) | number |  |
+|  [previousPageX](./react-native-win32.itouchinfo.previouspagex.md) | number |  |
+|  [previousPageY](./react-native-win32.itouchinfo.previouspagey.md) | number |  |
+|  [previousTimeStamp](./react-native-win32.itouchinfo.previoustimestamp.md) | number |  |
+|  [startPageX](./react-native-win32.itouchinfo.startpagex.md) | number |  |
+|  [startPageY](./react-native-win32.itouchinfo.startpagey.md) | number |  |
+|  [startTimeStamp](./react-native-win32.itouchinfo.starttimestamp.md) | number |  |
+|  [touchActive](./react-native-win32.itouchinfo.touchactive.md) | boolean |  |
 

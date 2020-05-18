@@ -37,7 +37,10 @@ export type AccessibilityAnnotationInfo = Readonly<{
 }>;
 
 // @public (undocumented)
-export type AccessibilityStates = RN.AccessibilityStates | 'multiselectable' | 'required';
+export type AccessibilityState = RN.AccessibilityState & {
+    multiselectable?: boolean;
+    required?: boolean;
+};
 
 // @public (undocumented)
 export type AnnotationType = 'AdvanceProofingIssue' | 'Author' | 'CircularReferenceError' | 'Comment' | 'ConflictingChange' | 'DataValidationError' | 'DeletionChange' | 'EditingLockedChange' | 'Endnote' | 'ExternalChange' | 'Footer' | 'Footnote' | 'FormatChange' | 'FormulaError' | 'GrammarError' | 'Header' | 'Highlighted' | 'InsertionChange' | 'Mathematics' | 'MoveChange' | 'SpellingError' | 'TrackChanges' | 'Unknown' | 'UnsyncedChange';
@@ -48,7 +51,7 @@ export type ARIARole = 'alert' | 'alertdialog' | 'application' | 'button' | 'che
 // @public (undocumented)
 export type BasePropsWin32 = {
     accessibilityRole?: RN.AccessibilityRole | ARIARole;
-    accessibilityStates?: AccessibilityStates[];
+    accessibilityState?: AccessibilityState;
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
     accessibilityDescribedBy?: React_2.RefObject<any>;
     accessibilityLabeledBy?: React_2.RefObject<any>;
@@ -368,7 +371,7 @@ export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes
 export type OmittedAccessibilityPropsWin32 = {
     accessibilityActions?: ReadonlyArray<RN.AccessibilityActionInfo>;
     accessibilityRole?: RN.AccessibilityRole;
-    accessibilityStates?: RN.AccessibilityState[];
+    accessibilityState?: RN.AccessibilityState;
 };
 
 // @public (undocumented)

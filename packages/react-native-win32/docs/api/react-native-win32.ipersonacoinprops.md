@@ -14,15 +14,15 @@ export interface IPersonaCoinProps extends ViewProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [brandIconSource](./react-native-win32.ipersonacoinprops.brandiconsource.md) | <code>string &#124; IImageSourceProps</code> |  |
-|  [color](./react-native-win32.ipersonacoinprops.color.md) | <code>number</code> |  |
-|  [disabled](./react-native-win32.ipersonacoinprops.disabled.md) | <code>boolean</code> |  |
-|  [displayName](./react-native-win32.ipersonacoinprops.displayname.md) | <code>string</code> |  |
-|  [emailAddress](./react-native-win32.ipersonacoinprops.emailaddress.md) | <code>string</code> |  |
-|  [initials](./react-native-win32.ipersonacoinprops.initials.md) | <code>string</code> |  |
-|  [onError](./react-native-win32.ipersonacoinprops.onerror.md) | <code>() =&gt; void</code> |  |
-|  [onLoad](./react-native-win32.ipersonacoinprops.onload.md) | <code>() =&gt; void</code> |  |
-|  [presence](./react-native-win32.ipersonacoinprops.presence.md) | <code>PersonaCoinPresence</code> |  |
-|  [size](./react-native-win32.ipersonacoinprops.size.md) | <code>PersonaCoinSize</code> |  |
-|  [source](./react-native-win32.ipersonacoinprops.source.md) | <code>string &#124; IImageSourceProps</code> |  |
+|  [brandIconSource](./react-native-win32.ipersonacoinprops.brandiconsource.md) | string \| IImageSourceProps |  |
+|  [color](./react-native-win32.ipersonacoinprops.color.md) | number |  |
+|  [disabled](./react-native-win32.ipersonacoinprops.disabled.md) | boolean |  |
+|  [displayName](./react-native-win32.ipersonacoinprops.displayname.md) | string |  |
+|  [emailAddress](./react-native-win32.ipersonacoinprops.emailaddress.md) | string |  |
+|  [initials](./react-native-win32.ipersonacoinprops.initials.md) | string |  |
+|  [onError](./react-native-win32.ipersonacoinprops.onerror.md) | () =&gt; void |  |
+|  [onLoad](./react-native-win32.ipersonacoinprops.onload.md) | () =&gt; void |  |
+|  [presence](./react-native-win32.ipersonacoinprops.presence.md) | [PersonaCoinPresence](./react-native-win32.personacoinpresence.md) |  |
+|  [size](./react-native-win32.ipersonacoinprops.size.md) | [PersonaCoinSize](./react-native-win32.personacoinsize.md) |  |
+|  [source](./react-native-win32.ipersonacoinprops.source.md) | string \| IImageSourceProps |  |
 
