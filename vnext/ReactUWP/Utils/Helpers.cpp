@@ -8,6 +8,9 @@
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
+#include <appmodel.h>
+#include <processthreadsapi.h>
+
 namespace winrt {
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Media;
@@ -89,6 +92,15 @@ bool IsRS5OrHigher() {
 
 bool Is19H1OrHigher() {
   return IsAPIContractV8Available();
+}
+
+bool IsXamlIsland() {
+  AppPolicyWindowingModel e;
+  if (FAILED(AppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
+      e == AppPolicyWindowingModel_ClassicDesktop) {
+    return true;
+  }
+  return false;
 }
 
 } // namespace uwp

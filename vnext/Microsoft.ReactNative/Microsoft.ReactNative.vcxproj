@@ -144,7 +144,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
