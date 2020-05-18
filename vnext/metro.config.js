@@ -4,11 +4,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const {
-  getModulesRunBeforeMainModule,
-  reactNativePlatformResolver,
-} = require('react-native-windows/metro-react-native-platform');
-
 const rnwPath = __dirname;
 
 module.exports = {
@@ -19,24 +14,13 @@ module.exports = {
   ],
 
   resolver: {
-    resolveRequest: reactNativePlatformResolver({
-      windesktop: 'react-native-windows',
-      windows: 'react-native-windows',
-    }),
     extraNodeModules: {
       // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
     },
   },
 
-  serializer: {
-    getModulesRunBeforeMainModule,
-  },
-
   transformer: {
-    // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
-    // Hopefully we can fix the default in the future
-    assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
