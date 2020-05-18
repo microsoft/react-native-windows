@@ -16,6 +16,6 @@ export interface IDimensions
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [height](./react-native-win32.idimensions.height.md) | <code>number</code> |  |
-|  [width](./react-native-win32.idimensions.width.md) | <code>number</code> |  |
+|  [height](./react-native-win32.idimensions.height.md) | number |  |
+|  [width](./react-native-win32.idimensions.width.md) | number |  |
 

@@ -14,22 +14,22 @@ export interface ITouchableWin32Props extends IViewWin32Props
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [children](./react-native-win32.itouchablewin32props.children.md) | <code>IRenderChild&lt;ITouchableWin32State&gt;</code> |  |
-|  [disabled](./react-native-win32.itouchablewin32props.disabled.md) | <code>boolean</code> |  |
-|  [filterKeys](./react-native-win32.itouchablewin32props.filterkeys.md) | <code>(str: string) =&gt; boolean</code> | Filters keys for touchableHandleKeyPress / touchableHandleKeyPressDown events. Space and Enter keys result in touchableHandleKeyPress(Down) in the event that no filterKeys function is provided as a callback. All keyboard events will result in onKeyUp and onKeyDown getting fired regardless of filterKeys. |
-|  [onLongPress](./react-native-win32.itouchablewin32props.onlongpress.md) | <code>() =&gt; void</code> |  |
-|  [rejectResponderTermination](./react-native-win32.itouchablewin32props.rejectrespondertermination.md) | <code>boolean</code> |  |
-|  [renderStyle](./react-native-win32.itouchablewin32props.renderstyle.md) | <code>IRenderStyle&lt;ITouchableWin32State, ViewStyle&gt;</code> |  |
-|  [touchableGetHighlightDelayMS](./react-native-win32.itouchablewin32props.touchablegethighlightdelayms.md) | <code>() =&gt; number</code> |  |
-|  [touchableGetHitSlop](./react-native-win32.itouchablewin32props.touchablegethitslop.md) | <code>() =&gt; Insets</code> |  |
-|  [touchableGetLongPressDelayMS](./react-native-win32.itouchablewin32props.touchablegetlongpressdelayms.md) | <code>() =&gt; number</code> |  |
-|  [touchableGetPressOutDelayMS](./react-native-win32.itouchablewin32props.touchablegetpressoutdelayms.md) | <code>() =&gt; number</code> |  |
-|  [touchableGetPressRectOffset](./react-native-win32.itouchablewin32props.touchablegetpressrectoffset.md) | <code>() =&gt; Insets</code> |  |
-|  [touchableHandleActivePressIn](./react-native-win32.itouchablewin32props.touchablehandleactivepressin.md) | <code>(e: IPressEvent) =&gt; void</code> |  |
-|  [touchableHandleActivePressOut](./react-native-win32.itouchablewin32props.touchablehandleactivepressout.md) | <code>(e: IPressEvent) =&gt; void</code> |  |
-|  [touchableHandleKeyPress](./react-native-win32.itouchablewin32props.touchablehandlekeypress.md) | <code>(e: IKeyboardEvent) =&gt; void</code> |  |
-|  [touchableHandleKeyPressDown](./react-native-win32.itouchablewin32props.touchablehandlekeypressdown.md) | <code>(e: IKeyboardEvent) =&gt; void</code> |  |
-|  [touchableHandleLongPress](./react-native-win32.itouchablewin32props.touchablehandlelongpress.md) | <code>(e: IPressEvent) =&gt; void</code> |  |
-|  [touchableHandlePress](./react-native-win32.itouchablewin32props.touchablehandlepress.md) | <code>(e: IPressEvent) =&gt; void</code> |  |
-|  [touchSoundDisabled](./react-native-win32.itouchablewin32props.touchsounddisabled.md) | <code>boolean</code> |  |
+|  [children](./react-native-win32.itouchablewin32props.children.md) | [IRenderChild](./react-native-win32.irenderchild.md)<!-- -->&lt;[ITouchableWin32State](./react-native-win32.itouchablewin32state.md)<!-- -->&gt; |  |
+|  [disabled](./react-native-win32.itouchablewin32props.disabled.md) | boolean |  |
+|  [filterKeys](./react-native-win32.itouchablewin32props.filterkeys.md) | (str: string) =&gt; boolean | Filters keys for touchableHandleKeyPress / touchableHandleKeyPressDown events. Space and Enter keys result in touchableHandleKeyPress(Down) in the event that no filterKeys function is provided as a callback. All keyboard events will result in onKeyUp and onKeyDown getting fired regardless of filterKeys. |
+|  [onLongPress](./react-native-win32.itouchablewin32props.onlongpress.md) | () =&gt; void |  |
+|  [rejectResponderTermination](./react-native-win32.itouchablewin32props.rejectrespondertermination.md) | boolean |  |
+|  [renderStyle](./react-native-win32.itouchablewin32props.renderstyle.md) | [IRenderStyle](./react-native-win32.irenderstyle.md)<!-- -->&lt;[ITouchableWin32State](./react-native-win32.itouchablewin32state.md)<!-- -->, ViewStyle&gt; |  |
+|  [touchableGetHighlightDelayMS](./react-native-win32.itouchablewin32props.touchablegethighlightdelayms.md) | () =&gt; number |  |
+|  [touchableGetHitSlop](./react-native-win32.itouchablewin32props.touchablegethitslop.md) | () =&gt; Insets |  |
+|  [touchableGetLongPressDelayMS](./react-native-win32.itouchablewin32props.touchablegetlongpressdelayms.md) | () =&gt; number |  |
+|  [touchableGetPressOutDelayMS](./react-native-win32.itouchablewin32props.touchablegetpressoutdelayms.md) | () =&gt; number |  |
+|  [touchableGetPressRectOffset](./react-native-win32.itouchablewin32props.touchablegetpressrectoffset.md) | () =&gt; Insets |  |
+|  [touchableHandleActivePressIn](./react-native-win32.itouchablewin32props.touchablehandleactivepressin.md) | (e: [IPressEvent](./react-native-win32.ipressevent.md)<!-- -->) =&gt; void |  |
+|  [touchableHandleActivePressOut](./react-native-win32.itouchablewin32props.touchablehandleactivepressout.md) | (e: [IPressEvent](./react-native-win32.ipressevent.md)<!-- -->) =&gt; void |  |
+|  [touchableHandleKeyPress](./react-native-win32.itouchablewin32props.touchablehandlekeypress.md) | (e: [IKeyboardEvent](./react-native-win32.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [touchableHandleKeyPressDown](./react-native-win32.itouchablewin32props.touchablehandlekeypressdown.md) | (e: [IKeyboardEvent](./react-native-win32.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [touchableHandleLongPress](./react-native-win32.itouchablewin32props.touchablehandlelongpress.md) | (e: [IPressEvent](./react-native-win32.ipressevent.md)<!-- -->) =&gt; void |  |
+|  [touchableHandlePress](./react-native-win32.itouchablewin32props.touchablehandlepress.md) | (e: [IPressEvent](./react-native-win32.ipressevent.md)<!-- -->) =&gt; void |  |
+|  [touchSoundDisabled](./react-native-win32.itouchablewin32props.touchsounddisabled.md) | boolean |  |
 

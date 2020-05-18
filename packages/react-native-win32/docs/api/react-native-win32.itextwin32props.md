@@ -14,6 +14,6 @@ export interface ITextWin32Props extends Omit<RN.TextProps, TextWin32OmitTypes>,
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [textStyle](./react-native-win32.itextwin32props.textstyle.md) | <code>TextStyle</code> | Role-based styling of the text control. The styles applied include font face, size, weight and color. These styles take precedence over the <code>style</code> property. |
-|  [tooltip](./react-native-win32.itextwin32props.tooltip.md) | <code>string</code> | Tooltip displayed on mouse hover of this element |
+|  [textStyle](./react-native-win32.itextwin32props.textstyle.md) | [TextStyle](./react-native-win32.textstyle.md) | Role-based styling of the text control. The styles applied include font face, size, weight and color. These styles take precedence over the <code>style</code> property. |
+|  [tooltip](./react-native-win32.itextwin32props.tooltip.md) | string | Tooltip displayed on mouse hover of this element |
 
