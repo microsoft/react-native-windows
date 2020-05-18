@@ -15,7 +15,7 @@ const setAndForwardRef = require('../../Utilities/setAndForwardRef');
  */
 
 type InnerViewWin32Props = UseFrom<IViewWin32Props, RN.ViewProps, 'accessibilityRole'> &
-  UseFrom<IViewWin32Props, RN.ViewProps, 'accessibilityStates'> &
+  UseFrom<IViewWin32Props, RN.ViewProps, 'accessibilityState'> &
   UseFrom<IViewWin32Props, RN.ViewProps, 'accessibilityActions'> &
   UseFrom<IViewWin32Props, RN.ViewProps, 'onAccessibilityAction'>;
 

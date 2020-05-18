@@ -16,6 +16,6 @@ export interface IPosition
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [left](./react-native-win32.iposition.left.md) | <code>number</code> |  |
-|  [top](./react-native-win32.iposition.top.md) | <code>number</code> |  |
+|  [left](./react-native-win32.iposition.left.md) | number |  |
+|  [top](./react-native-win32.iposition.top.md) | number |  |
 
