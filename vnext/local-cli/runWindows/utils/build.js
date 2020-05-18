@@ -24,6 +24,7 @@ async function buildSolution(
   buildArch,
   msBuildProps,
   verbose,
+  target,
 ) {
   const minVersion = new Version(10, 0, 18362, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
@@ -40,6 +41,7 @@ async function buildSolution(
     buildArch,
     msBuildProps,
     verbose,
+    target,
   );
 }
 
