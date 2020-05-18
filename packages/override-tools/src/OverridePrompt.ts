@@ -82,7 +82,7 @@ async function promptDerivedDetails(): Promise<Details> {
         message: 'Github Issue Number:',
       },
     ]);
-    issue = issueResponse.issue;
+    issue = Number.parseInt(issueResponse.issue, 10);
   }
 
   const baseFileResponse = await inquirer.prompt([
@@ -110,11 +110,12 @@ async function promptPatchDetails(overrideFile: string): Promise<Details> {
   ]);
 
   const baseFile = overrideFile.replace(WIN_PLATFORM_EXT, '.js');
-  return {type: 'patch', baseFile, issue: response.issue};
+  return {type: 'patch', baseFile, issue: Number.parseInt(response.issue, 10)};
 }
 
 function validateIssueNumber(answer: string): boolean | string {
   return (
-    Number.isInteger(Number.parseInt(answer)) || 'Github issue must be a number'
+    Number.isInteger(Number.parseInt(answer, 10)) ||
+    'Github issue must be a number'
   );
 }
