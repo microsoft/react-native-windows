@@ -3,8 +3,34 @@
  */
 const fs = require('fs');
 const path = require('path');
-
 const rnwPath = __dirname;
+const {resolve} = require('metro-resolver');
+
+function reactNativePlatformResolver(platformImplementations) {
+  return (context, _realModuleName, platform, moduleName) => {
+    let backupResolveRequest = context.resolveRequest;
+    delete context.resolveRequest;
+
+    try {
+      let modifiedModuleName = moduleName;
+      if (platformImplementations[platform]) {
+        if (moduleName === 'react-native') {
+          modifiedModuleName = platformImplementations[platform];
+        } else if (moduleName.startsWith('react-native/')) {
+          modifiedModuleName = `${
+            platformImplementations[platform]
+          }/${modifiedModuleName.slice('react-native/'.length)}`;
+        }
+      }
+      let result = resolve(context, modifiedModuleName, platform);
+      return result;
+    } catch (e) {
+      throw e;
+    } finally {
+      context.resolveRequest = backupResolveRequest;
+    }
+  };
+}
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -14,6 +40,11 @@ module.exports = {
   ],
 
   resolver: {
+    // We need a custom resolveRequest right now since our integration tests use a "windesktop" platform thats specific to integration tests.
+    resolveRequest: reactNativePlatformResolver({
+      windesktop: 'react-native-windows',
+      windows: 'react-native-windows',
+    }),
     extraNodeModules: {
       // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
