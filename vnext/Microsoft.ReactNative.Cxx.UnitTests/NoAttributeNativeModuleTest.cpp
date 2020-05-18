@@ -135,6 +135,18 @@ struct SimpleNativeModule2 {
     resolve("Static Hello_2");
   }
 
+  void CallbackZeroArgs(std::function<void()> const &resolve) noexcept {
+    resolve();
+  }
+
+  void CallbackTwoArgs(std::function<void(int, int)> const &resolve) noexcept {
+    resolve(1, 2);
+  }
+
+  void CallbackThreeArgs(std::function<void(int, int, std::string const &)> const &resolve) noexcept {
+    resolve(1, 2, "Hello");
+  }
+
   void DivideCallbacks(
       int x,
       int y,
@@ -279,6 +291,38 @@ struct SimpleNativeModule2 {
       std::function<void(std::string const &)> const & /*resolve*/,
       std::function<void(std::string const &)> const &reject) noexcept {
     reject("Goodbye");
+  }
+
+  void TwoCallbacksZeroArgs1(std::function<void()> const &resolve, std::function<void()> const & /*reject*/) noexcept {
+    resolve();
+  }
+
+  void TwoCallbacksZeroArgs2(std::function<void()> const & /*resolve*/, std::function<void()> const &reject) noexcept {
+    reject();
+  }
+
+  void TwoCallbacksTwoArgs1(
+      std::function<void(int, int)> const &resolve,
+      std::function<void(int, int)> const & /*reject*/) noexcept {
+    resolve(1, 2);
+  }
+
+  void TwoCallbacksTwoArgs2(
+      std::function<void(int, int)> const & /*resolve*/,
+      std::function<void(int, int)> const &reject) noexcept {
+    reject(1, 2);
+  }
+
+  void TwoCallbacksThreeArgs1(
+      std::function<void(int, int, std::string const &)> const &resolve,
+      std::function<void(int, int, std::string const &)> const & /*reject*/) noexcept {
+    resolve(1, 2, "Hello");
+  }
+
+  void TwoCallbacksThreeArgs2(
+      std::function<void(int, int, std::string const &)> const & /*resolve*/,
+      std::function<void(int, int, std::string const &)> const &reject) noexcept {
+    reject(1, 2, "Hello");
   }
 
   void DividePromise(int x, int y, React::ReactPromise<int> const &result) noexcept {
@@ -535,6 +579,9 @@ void GetReactModuleInfo(SimpleNativeModule2 *, React::ReactModuleBuilder<SimpleN
       &SimpleNativeModule2::StaticNegateDispatchQueueCallback, L"StaticNegateDispatchQueueCallback");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateFutureCallback, L"StaticNegateFutureCallback");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticSayHelloCallback, L"StaticSayHelloCallback");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::CallbackZeroArgs, L"CallbackZeroArgs");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::CallbackTwoArgs, L"CallbackTwoArgs");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::CallbackThreeArgs, L"CallbackThreeArgs");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::DivideCallbacks, L"DivideCallbacks");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateCallbacks, L"NegateCallbacks");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateAsyncCallbacks, L"NegateAsyncCallbacks");
@@ -550,6 +597,12 @@ void GetReactModuleInfo(SimpleNativeModule2 *, React::ReactModuleBuilder<SimpleN
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticNegateFutureCallbacks, L"StaticNegateFutureCallbacks");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticResolveSayHelloCallbacks, L"StaticResolveSayHelloCallbacks");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::StaticRejectSayHelloCallbacks, L"StaticRejectSayHelloCallbacks");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::TwoCallbacksZeroArgs1, L"TwoCallbacksZeroArgs1");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::TwoCallbacksZeroArgs2, L"TwoCallbacksZeroArgs2");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::TwoCallbacksTwoArgs1, L"TwoCallbacksTwoArgs1");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::TwoCallbacksTwoArgs2, L"TwoCallbacksTwoArgs2");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::TwoCallbacksThreeArgs1, L"TwoCallbacksThreeArgs1");
+  moduleBuilder.RegisterMethod(&SimpleNativeModule2::TwoCallbacksThreeArgs2, L"TwoCallbacksThreeArgs2");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::DividePromise, L"DividePromise");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegatePromise, L"NegatePromise");
   moduleBuilder.RegisterMethod(&SimpleNativeModule2::NegateAsyncPromise, L"NegateAsyncPromise");
@@ -603,8 +656,8 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     m_moduleBuilder = winrt::make<React::ReactModuleBuilderImpl>(m_builderMock);
     auto provider = React::MakeModuleProvider<SimpleNativeModule2>();
     m_moduleObject = m_builderMock.CreateModule(provider, m_moduleBuilder);
-    auto reactModule = m_moduleObject.as<React::IBoxedValue>();
-    m_module = &React::BoxedValue<SimpleNativeModule2>::GetValueUnsafe(reactModule);
+    auto reactModule = m_moduleObject.as<React::IReactNonAbiValue>();
+    m_module = React::ReactNonAbiValue<SimpleNativeModule2>::GetPtrUnsafe(m_moduleObject);
   }
 
   TEST_METHOD(TestMethodCall_Add) {
@@ -750,6 +803,30 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   TEST_METHOD(TestMethodCall_StaticSayHelloCallback) {
     m_builderMock.Call1(L"StaticSayHelloCallback", std::function<void(const std::string &)>([
                         ](const std::string &result) noexcept { TestCheck(result == "Static Hello_2"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_CallbackZeroArgs) {
+    m_builderMock.Call1(L"CallbackZeroArgs", std::function<void()>([]() noexcept {}));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_CallbackTwoArgs) {
+    m_builderMock.Call1(L"CallbackTwoArgs", std::function<void(int, int)>([](int p1, int p2) noexcept {
+                          TestCheckEqual(1, p1);
+                          TestCheckEqual(2, p2);
+                        }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_CallbackThreeArgs) {
+    m_builderMock.Call1(
+        L"CallbackThreeArgs",
+        std::function<void(int, int, std::string const &)>([](int p1, int p2, std::string const &p3) noexcept {
+          TestCheckEqual(1, p1);
+          TestCheckEqual(2, p2);
+          TestCheckEqual("Hello", p3);
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -994,6 +1071,68 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
             [](const std::string &result) noexcept { TestCheck(result == "Hello_3"); }),
         std::function<void(std::string const &)>(
             [](std::string const &error) noexcept { TestCheck(error == "Goodbye"); }));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_TwoCallbacksZeroArgs1) {
+    m_builderMock.Call2(L"TwoCallbacksZeroArgs1", std::function<void()>([]() noexcept {}), std::function<void()>([
+                        ]() noexcept { TestCheckFail(); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_TwoCallbacksZeroArgs2) {
+    m_builderMock.Call2(
+        L"TwoCallbacksZeroArgs2",
+        std::function<void()>([]() noexcept { TestCheckFail(); }),
+        std::function<void()>([]() noexcept {}));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_TwoCallbacksTwoArgs1) {
+    m_builderMock.Call2(
+        L"TwoCallbacksTwoArgs1",
+        std::function<void(int, int)>([](int p1, int p2) noexcept {
+          TestCheckEqual(1, p1);
+          TestCheckEqual(2, p2);
+        }),
+        std::function<void(int, int)>([](int /*p1*/, int /*p2*/) noexcept { TestCheckFail(); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_TwoCallbacksTwoArgs2) {
+    m_builderMock.Call2(
+        L"TwoCallbacksTwoArgs2",
+        std::function<void(int, int)>([](int /*p1*/, int /*p2*/) noexcept { TestCheckFail(); }),
+        std::function<void(int, int)>([](int p1, int p2) noexcept {
+          TestCheckEqual(1, p1);
+          TestCheckEqual(2, p2);
+        }));
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_TwoCallbacksThreeArgs1) {
+    m_builderMock.Call2(
+        L"TwoCallbacksThreeArgs1",
+        std::function<void(int, int, const std::string &)>([](int p1, int p2, std::string const &p3) noexcept {
+          TestCheckEqual(1, p1);
+          TestCheckEqual(2, p2);
+          TestCheckEqual("Hello", p3);
+        }),
+        std::function<void(int, int, const std::string &)>(
+            [](int /*p1*/, int /*p2*/, std::string const & /*p3*/) noexcept { TestCheckFail(); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_TwoCallbacksThreeArgs2) {
+    m_builderMock.Call2(
+        L"TwoCallbacksThreeArgs2",
+        std::function<void(int, int, const std::string &)>(
+            [](int /*p1*/, int /*p2*/, std::string const & /*p3*/) noexcept { TestCheckFail(); }),
+        std::function<void(int, int, const std::string &)>([](int p1, int p2, std::string const &p3) noexcept {
+          TestCheckEqual(1, p1);
+          TestCheckEqual(2, p2);
+          TestCheckEqual("Hello", p3);
+        }));
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
 

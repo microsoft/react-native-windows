@@ -2429,14 +2429,14 @@
     "@rushstack/node-core-library" "3.19.7"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.8.0.tgz#fea68e4f21c1bf18020560fd5728b15fe44f0976"
-  integrity sha512-H9dI7dCw005XuGa1dPAdZLQWEUu+B4yiF2v7NZ3p70mKo2iAZcd9LwmDTZ5OFALsNiHnJk1I5JZjcsj8dtB73g==
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.8.1.tgz#29b473ef85273b6b28974f89f1ccd46329297bc3"
+  integrity sha512-jS1B1E7kQK8yrCM6SwwYFdtXTHb0/xLrF/kbHJoRnNQYKz2c1hwHMK35JKTTDiWTwpBMpkbzCR5Fj+6Up3yy0A==
   dependencies:
     "@microsoft/api-extractor-model" "7.8.0"
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.19.7"
-    "@rushstack/ts-command-line" "4.3.14"
+    "@rushstack/ts-command-line" "4.4.0"
     colors "~1.2.1"
     lodash "~4.17.15"
     resolve "1.8.1"
@@ -2691,10 +2691,24 @@
     argparse "~1.0.9"
     colors "~1.2.1"
 
+"@rushstack/ts-command-line@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.4.0.tgz#796f24681fdcbd01d463278c9e80a51ea5f73b2b"
+  integrity sha512-AYRICJg9Cwz+IBo1+leG0MtHx2uVScEs5P5ZNW3oocKekN6oLZvM1SNxghB7EXJzmYHnEMvCGhQx0Ll4oEkIyQ==
+  dependencies:
+    "@types/argparse" "1.0.38"
+    argparse "~1.0.9"
+    colors "~1.2.1"
+
 "@types/argparse@1.0.33":
   version "1.0.33"
   resolved "https://registry.yarnpkg.com/@types/argparse/-/argparse-1.0.33.tgz#2728669427cdd74a99e53c9f457ca2866a37c52d"
   integrity sha512-VQgHxyPMTj3hIlq9SY1mctqx+Jj8kpQfoLvDlVSDNOyuYs8JYfkuY3OW/4+dO657yPmNhHpePRx0/Tje5ImNVQ==
+
+"@types/argparse@1.0.38":
+  version "1.0.38"
+  resolved "https://registry.yarnpkg.com/@types/argparse/-/argparse-1.0.38.tgz#a81fd8606d481f873a3800c6ebae4f1d768a56a9"
+  integrity sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==
 
 "@types/babel__core@^7.1.0":
   version "7.1.4"
@@ -2747,9 +2761,9 @@
   integrity sha512-bPYT5ECFiblzsVzyURaNhljBH2Gh1t9LowgUwciMrNAhFewLkHT2H0Mto07Y4/3KCOGZHRQll3CTtQZ0X11D/A==
 
 "@types/es6-collections@^0.5.29":
-  version "0.5.31"
-  resolved "https://registry.yarnpkg.com/@types/es6-collections/-/es6-collections-0.5.31.tgz#faad21c930cd0ea7f71f51b9e5b555796c5ab23f"
-  integrity sha512-djEvbdTH5Uw7V0WqdMQLG4NK3+iu/FMZy/ylyhWEFnW5xOsXEWpivo/dhP+cR43Az+ipytza7dTSnpsWCxKYAw==
+  version "0.5.32"
+  resolved "https://registry.yarnpkg.com/@types/es6-collections/-/es6-collections-0.5.32.tgz#62edb3942849951b6025d42af9da97d7b837f31b"
+  integrity sha512-aOOGt8ivRTqSWDzrHoNorP/o/YXgVK0oA7SP3jke3W4zZDSFAbWhYWjPG0qnGq6B/QOsx76FnmC3bUFSvleOLA==
 
 "@types/es6-promise@0.0.32":
   version "0.0.32"
@@ -2944,9 +2958,9 @@
     "@types/yargs-parser" "*"
 
 "@types/yargs@^15.0.0", "@types/yargs@^15.0.3":
-  version "15.0.4"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.4.tgz#7e5d0f8ca25e9d5849f2ea443cf7c402decd8299"
-  integrity sha512-9T1auFmbPZoxHz0enUFlUuKRy3it01R+hlggyVUMtnCTQRunsQYifnSGb8hET4Xo8yiC0o0r1paW3ud5+rbURg==
+  version "15.0.5"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.5.tgz#947e9a6561483bdee9adffc983e91a6902af8b79"
+  integrity sha512-Dk/IDOPtOgubt/IaevIUbTgV7doaKkoorvOyYM2CMwuDyP89bekI7H4xLIwunNYiK9jhCkmc6pUrJk3cj2AB9w==
   dependencies:
     "@types/yargs-parser" "*"
 

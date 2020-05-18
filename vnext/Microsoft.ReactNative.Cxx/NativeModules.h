@@ -4,11 +4,11 @@
 #pragma once
 #include "winrt/Microsoft.ReactNative.h"
 
-#include "BoxedValue.h"
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
 #include "ReactContext.h"
+#include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
 
 #include <functional>
@@ -205,6 +205,7 @@ struct GetCallbackSignatureImpl<TCallback<void(TArgs...) noexcept>> {
 template <class T>
 struct CallbackCreator;
 
+// Callback signature without noexcept
 template <template <class> class TCallback, class... TArgs>
 struct CallbackCreator<TCallback<void(TArgs...)>> {
   static TCallback<void(TArgs...)> Create(
@@ -217,6 +218,7 @@ struct CallbackCreator<TCallback<void(TArgs...)>> {
   }
 };
 
+// Callback signature with noexcept
 template <template <class> class TCallback, class... TArgs>
 struct CallbackCreator<TCallback<void(TArgs...) noexcept>> {
   static TCallback<void(TArgs...)> Create(
@@ -1109,8 +1111,8 @@ struct TurboModuleSpec {
 template <class TModule>
 inline ReactModuleProvider MakeModuleProvider() noexcept {
   return [](IReactModuleBuilder const &moduleBuilder) noexcept {
-    auto moduleObject = make<BoxedValue<TModule>>();
-    auto module = &BoxedValue<TModule>::GetValueUnsafe(moduleObject);
+    ReactNonAbiValue<TModule> moduleObject{std::in_place};
+    TModule *module = moduleObject.GetPtr();
     ReactModuleBuilder builder{module, moduleBuilder};
     GetReactModuleInfo(module, builder);
     builder.CompleteRegistration();
@@ -1122,8 +1124,8 @@ template <class TModule, class TModuleSpec>
 inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
   TModuleSpec::template ValidateModule<TModule>();
   return [](IReactModuleBuilder const &moduleBuilder) noexcept {
-    auto moduleObject = make<BoxedValue<TModule>>();
-    auto module = &BoxedValue<TModule>::GetValueUnsafe(moduleObject);
+    ReactNonAbiValue<TModule> moduleObject{std::in_place};
+    TModule *module = moduleObject.GetPtr();
     ReactModuleBuilder builder{module, moduleBuilder};
     GetReactModuleInfo(module, builder);
     builder.CompleteRegistration();
