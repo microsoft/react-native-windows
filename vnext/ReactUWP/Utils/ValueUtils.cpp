@@ -198,7 +198,7 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d) {
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   std::chrono::milliseconds dur((int64_t)ms);
-  return winrt::TimeSpan(dur);
+  return winrt::TimeSpan::duration(dur);
 }
 
 } // namespace uwp
