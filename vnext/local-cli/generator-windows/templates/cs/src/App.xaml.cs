@@ -25,8 +25,9 @@ namespace <%=ns%>
 #endif
 
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
-            
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReflectionReactPackageProvider<App>());
 
             InitializeComponent();
         }
