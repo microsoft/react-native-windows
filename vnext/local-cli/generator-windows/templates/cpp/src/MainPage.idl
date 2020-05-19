@@ -1,0 +1,9 @@
+namespace <%=ns%>
+{
+    [default_interface]
+    runtimeclass MainPage : <%=XamlNamespace%>.Controls.Page
+    {
+        MainPage();
+        Microsoft.ReactNative.ReactRootView ReactRootView;
+    }
+}
