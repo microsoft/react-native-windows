@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Mon, 18 May 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 19 May 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -14,9 +14,9 @@
         </image>
         <item>
             <title><![CDATA[Announcing React Native for macOS and more]]></title>
-            <link>https://microsoft.github.io/react-native-windows/blog/2020/05/18/rn4mupdadates.html</link>
-            <guid>https://microsoft.github.io/react-native-windows/blog/2020/05/18/rn4mupdadates.html</guid>
-            <pubDate>Mon, 18 May 2020 06:00:00 GMT</pubDate>
+            <link>https://microsoft.github.io/react-native-windows/blog/2020/05/19/rn4mupdadates.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2020/05/19/rn4mupdadates.html</guid>
+            <pubDate>Tue, 19 May 2020 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>We're excited to announce our first preview release aligning with <a href="https://reactnative.dev/blog/2020/03/26/version-0.62">React Native 0.62</a>!</p>
 ]]></description>
         </item>
