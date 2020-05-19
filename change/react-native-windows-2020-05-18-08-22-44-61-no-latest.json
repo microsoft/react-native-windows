@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Publish 0.61 as \"v0.61-stable\" instead of \"latest\"",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-05-18T15:22:44.140Z"
-}
