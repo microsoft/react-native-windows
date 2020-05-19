@@ -2,6 +2,71 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 May 2020 23:08:54 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.7",
+      "version": "0.62.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "some projects have target instead of bin folders",
+            "author": "asklar@microsoft.com",
+            "commit": "e6f779c2e043a8449cb65fae7a8c8e5789dbe639",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNonAbiValue for IReactPropertyBag non-ABI values",
+            "author": "vmorozov@microsoft.com",
+            "commit": "82d78b9e3f0b4650e702929b4ce36ae3a1edf7f8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes for bundle loading and back handler crash using xaml islands",
+            "author": "acoates@microsoft.com",
+            "commit": "38eb1f786c449754a54e03574b9093fbbe057cf6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed ReactContext CallJSFunction and EmitJSEvent",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c33c7b5ce9d96d22063567c7902ee91a22f8233f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Support 0..n args in native module callbacks",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4b2d45150f24cd166afdeb5f6c769712fe3b57c4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement Keybpoarding/Gamepad Activation for Pressability",
+            "author": "ngerlem@microsoft.com",
+            "commit": "bc0a50b1d4e92abe739ec07a71d8412aebfc3bc6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adapt ViewWin32, etc to \"accessibilityState\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8a65e83690a373f61029ba32ae7db5034c5a6624",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce need for custom metro configs",
+            "author": "acoates@microsoft.com",
+            "commit": "8d0d5de250ed105730f74e2054c7174ef2e7f4c3",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix compile errors with Clang 10.0.0",
+            "author": "christophpurrer@gmail.com",
+            "commit": "08ec22c943db7a2ab283dbd944e028f2d0c150f4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 May 2020 04:30:14 GMT",
       "tag": "react-native-windows_v0.62.0-preview.6",
       "version": "0.62.0-preview.6",

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adapt ViewWin32, etc to \"accessibilityState\"",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-17T18:50:27.817Z"
-}

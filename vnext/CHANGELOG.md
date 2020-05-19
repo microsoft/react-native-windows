@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 14 May 2020 04:30:14 GMT and should not be manually modified.
+This log was last generated on Tue, 19 May 2020 23:08:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.7
+
+Tue, 19 May 2020 23:08:54 GMT
+
+### Changes
+
+- some projects have target instead of bin folders (asklar@microsoft.com)
+- ReactNonAbiValue for IReactPropertyBag non-ABI values (vmorozov@microsoft.com)
+- Fixes for bundle loading and back handler crash using xaml islands (acoates@microsoft.com)
+- Fixed ReactContext CallJSFunction and EmitJSEvent (vmorozov@microsoft.com)
+- Support 0..n args in native module callbacks (vmorozov@microsoft.com)
+- Implement Keybpoarding/Gamepad Activation for Pressability (ngerlem@microsoft.com)
+- Adapt ViewWin32, etc to "accessibilityState" (ngerlem@microsoft.com)
+- Reduce need for custom metro configs (acoates@microsoft.com)
 
 ## 0.62.0-preview.6
 

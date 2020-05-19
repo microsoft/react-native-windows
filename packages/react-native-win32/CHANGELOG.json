@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 19 May 2020 23:08:54 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0-preview.5",
+      "version": "0.62.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adapt ViewWin32, etc to \"accessibilityState\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8a65e83690a373f61029ba32ae7db5034c5a6624",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Reduce need for custom metro configs",
+            "author": "acoates@microsoft.com",
+            "commit": "8d0d5de250ed105730f74e2054c7174ef2e7f4c3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 May 2020 04:30:14 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0-preview.4",
       "version": "0.62.0-preview.4",
