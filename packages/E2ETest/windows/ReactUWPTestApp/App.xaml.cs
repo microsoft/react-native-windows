@@ -25,8 +25,6 @@ namespace ReactUWPTestApp
         /// </summary>
         public App()
         {
-            MainComponentName = "ReactUWPTestApp";
-
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;

@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace ReactUWPTestApp
+namespace <%=ns%>
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -27,7 +27,7 @@ namespace ReactUWPTestApp
         {
             this.InitializeComponent();
             var app = Application.Current as App;
-            myRootView.ReactNativeHost = app.Host;
+            reactRootView.ReactNativeHost = app.Host;
         }
     }
 }

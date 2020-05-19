@@ -704,7 +704,6 @@
     <Midl Include="IViewManager.idl" />
     <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl" />
     <Midl Include="ReactInstance.idl" />
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />

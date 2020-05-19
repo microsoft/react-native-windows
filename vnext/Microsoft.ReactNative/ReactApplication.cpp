@@ -86,14 +86,6 @@ ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   return m_host;
 }
 
-hstring ReactApplication::MainComponentName() noexcept {
-  return InstanceSettings().MainComponentName();
-}
-
-void ReactApplication::MainComponentName(hstring const &value) noexcept {
-  InstanceSettings().MainComponentName(value);
-}
-
 bool ReactApplication::UseDeveloperSupport() noexcept {
   return InstanceSettings().UseDeveloperSupport();
 }
@@ -132,7 +124,33 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
   this->OnCreate(e);
 }
 
-void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept;
+void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
+  Microsoft::ReactNative::implementation::ReactNativeHost *hostImpl{
+      get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
+  if (!arguments.empty() /*&& host.HasInstance()*/) {
+    constexpr wchar_t delimiter = L' ';
+    std::wistringstream argumentStream(arguments);
+    std::wstring token;
+    while (std::getline(argumentStream, token, delimiter)) {
+      if (token == L"-?") {
+        std::cout << "Options:" << std::endl
+                  << "  --direct-debugging <port>    Enable direct debugging on specified port." << std::endl;
+      } else if (token == L"--direct-debugging") {
+        if (std::getline(argumentStream, token, delimiter)) {
+          const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
+          hostImpl->InstanceSettings().UseWebDebugger(false);
+          hostImpl->InstanceSettings().UseDirectDebugger(true);
+          hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
+          hostImpl->InstanceSettings().DebuggerPort(port);
+        }
+      }
+    }
+    // TODO: check for 'remoteDebugging'.  Return if not found.  Otherwise,
+    // validate a value is provided and then parse it to set the
+    // ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled flag
+  }
+}
+
 
 /// <summary>
 /// Invoked when the application is launched normally by the end user.  Other

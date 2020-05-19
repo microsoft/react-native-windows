@@ -62,9 +62,6 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
 
   ReactNative::ReactNativeHost Host() noexcept;
 
-  hstring MainComponentName() noexcept;
-  void MainComponentName(hstring const &value) noexcept;
-
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;
 

@@ -6,8 +6,6 @@ namespace <%=ns%>
     {
         public App()
         {
-            MainComponentName = "<%=name%>";
-
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
@@ -30,6 +28,24 @@ namespace <%=ns%>
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReflectionReactPackageProvider<App>());
 
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Invoked when the application is launched normally by the end user.  Other entry points
+        /// will be used such as when the application is launched to open a specific file.
+        /// </summary>
+        /// <param name="e">Details about the launch request and process.</param>
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            base.OnLaunched(e);
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                frame = new Frame();
+                Window.Current.Content = frame;
+            }
+            frame.Navigate(typeof(MainPage));
+            Window.Current.Activate();
         }
     }
 }
