@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Reduce need for custom metro configs",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-18T16:46:03.284Z"
+}
