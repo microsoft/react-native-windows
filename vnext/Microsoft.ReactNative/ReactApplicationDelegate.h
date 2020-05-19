@@ -7,7 +7,7 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-  void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept;
+void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept;
 
 struct ReactApplicationDelegate : ReactApplicationDelegateT<ReactApplicationDelegate> {
   ReactApplicationDelegate() = default;

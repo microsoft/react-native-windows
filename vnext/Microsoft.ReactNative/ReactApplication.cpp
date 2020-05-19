@@ -141,10 +141,10 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
-  //Resuming({this, &ReactApplicationDelegate::OnResuming});
-  //Suspending({this, &ReactApplicationDelegate::OnSuspending});
-  //LeavingBackground({this, &ReactApplicationDelegate::OnLeavingBackground});
-  //EnteredBackground({this, &ReactApplicationDelegate::OnEnteredBackground});
+  // Resuming({this, &ReactApplicationDelegate::OnResuming});
+  // Suspending({this, &ReactApplicationDelegate::OnSuspending});
+  // LeavingBackground({this, &ReactApplicationDelegate::OnLeavingBackground});
+  // EnteredBackground({this, &ReactApplicationDelegate::OnEnteredBackground});
 
 #if defined _DEBUG
   if (IsDebuggerPresent()) {

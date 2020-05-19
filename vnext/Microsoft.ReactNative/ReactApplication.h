@@ -81,7 +81,6 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
  protected:
-
  private:
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{nullptr};
