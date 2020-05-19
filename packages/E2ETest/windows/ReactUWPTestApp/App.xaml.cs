@@ -9,6 +9,8 @@ using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Microsoft.ReactNative.Managed;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace ReactUWPTestApp
 {
@@ -56,11 +58,20 @@ namespace ReactUWPTestApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                frame = new Frame();
+                Window.Current.Content = frame;
+            }
+            frame.Navigate(typeof(MainPage));
+            Window.Current.Activate();
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
             if (DisplayInformation.GetForCurrentView().ResolutionScale != ResolutionScale.Scale100Percent)
             {
-                throw new Exception("A bug requires this app to run at 100% for accurate results - See https://github.com/microsoft/react-native-windows/issues/4619");
+                //throw new Exception("A bug requires this app to run at 100% for accurate results - See https://github.com/microsoft/react-native-windows/issues/4619");
             }
         }
     }

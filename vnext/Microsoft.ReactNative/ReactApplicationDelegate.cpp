@@ -20,7 +20,7 @@ using namespace Windows::ApplicationModel::Activation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
+void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
   Microsoft::ReactNative::implementation::ReactNativeHost *hostImpl{
       get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
   if (!arguments.empty() /*&& host.HasInstance()*/) {

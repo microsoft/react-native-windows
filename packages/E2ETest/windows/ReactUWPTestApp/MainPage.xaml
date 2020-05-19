@@ -1,0 +1,24 @@
+<Page
+    x:Class="ReactUWPTestApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ReactUWPTestApp"
+    xmlns:RNW="using:Microsoft.ReactNative"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel>
+        <TextBlock Text="Some text that is right aligned" HorizontalAlignment="Right" />
+        <!-- would need to make ReactNativeHost a DependencyProperty for this to work properly i.e. to get updated when set
+            ReactNativeHost="{x:Bind ((local:App)local:App.Current).Host }"
+            -->
+        <Button Content="This is a button"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Image Source="https://microsoft.github.io/react-native-windows/img/header_logo.svg" Width="40" Height="40" />
+            <Image Source="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4pkvE?ver=d8fc" Width="40" Height="40" />
+        </StackPanel>
+        <RNW:ReactRootView x:Name="myRootView" ComponentName="ReactUWPTestApp"
+                           Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="500"/>
+    </StackPanel>
+</Page>

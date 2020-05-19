@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
+#include "winrt/Microsoft.ReactNative.h"
 
 #include "IReactDispatcher.h"
 #include "Modules/LinkingManagerModule.h"
@@ -131,6 +132,8 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
   this->OnCreate(e);
 }
 
+void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept;
+
 /// <summary>
 /// Invoked when the application is launched normally by the end user.  Other
 /// entry points will be used such as when the application is launched to open a
@@ -138,9 +141,10 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
-  if (!m_delegate) {
-    m_delegate = CreateReactApplicationDelegate();
-  }
+  //Resuming({this, &ReactApplicationDelegate::OnResuming});
+  //Suspending({this, &ReactApplicationDelegate::OnSuspending});
+  //LeavingBackground({this, &ReactApplicationDelegate::OnLeavingBackground});
+  //EnteredBackground({this, &ReactApplicationDelegate::OnEnteredBackground});
 
 #if defined _DEBUG
   if (IsDebuggerPresent()) {
@@ -179,34 +183,13 @@ void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
       // Restore the saved session state only when appropriate, scheduling the
       // final launch steps after the restore is complete
     }
-
-    if (!isPrelaunchActivated) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a
-        // navigation parameter
-        content = m_delegate.OnCreate(args);
-        rootFrame.Content(content);
-      }
-
-      // Place the frame in the current Window
-      Window::Current().Content(rootFrame);
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
-  } else {
-    if (!isPrelaunchActivated) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a
-        // navigation parameter
-        content = m_delegate.OnCreate(args);
-        rootFrame.Content(content);
-      }
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
   }
+  //
+  //
+  ApplyArguments(Host(), args.c_str());
+
+  // Nudge the ReactNativeHost to create the instance and wrapping context
+  Host().ReloadInstance();
 }
 
 /// <summary>
@@ -229,10 +212,6 @@ void ReactApplication::OnSuspending(
 /// <param name="e">Details about the navigation failure</param>
 void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
   throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
-}
-
-ReactApplicationDelegate __stdcall ReactApplication::CreateReactApplicationDelegate() {
-  return ReactApplicationDelegate(*this);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

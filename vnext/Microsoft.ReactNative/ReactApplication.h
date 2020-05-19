@@ -81,14 +81,11 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
  protected:
-  virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();
 
  private:
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{nullptr};
   ReactNative::ReactNativeHost m_host{nullptr};
-
-  ReactApplicationDelegate m_delegate{nullptr};
 
   void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
 };
