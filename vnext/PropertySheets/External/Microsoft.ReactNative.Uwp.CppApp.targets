@@ -26,7 +26,7 @@
     <Copy SourceFiles="%(AppXManifest.Identity)" 
           DestinationFiles="$(OutputPath)Appx\%(AppxManifest.PackagePath)" 
           Condition="'%(AppxManifest.SubType)'!='Designer'"/>
-    <Exec Command="powershell -Command Add-AppxPackage -Register $(OutputPath)Appx\AppxManifest.xml" 
+    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(OutputPath)Appx\AppxManifest.xml" 
           ContinueOnError="false" />
   </Target>
 </Project>
