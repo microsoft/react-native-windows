@@ -7,16 +7,8 @@
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
 
-const {
-  getModulesRunBeforeMainModule,
-  reactNativePlatformResolver,
-} = require('react-native-windows/metro-react-native-platform');
-
 module.exports = {
   resolver: {
-    resolveRequest: reactNativePlatformResolver({
-      windows: 'react-native-windows',
-    }),
     blacklistRE: blacklist([
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
@@ -30,13 +22,7 @@ module.exports = {
       ),
     ]),
   },
-  serializer: {
-    getModulesRunBeforeMainModule,
-  },
   transformer: {
-    // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
-    // Hopefully we can fix the default in the future
-    assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

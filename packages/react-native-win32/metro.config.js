@@ -3,10 +3,6 @@
  */
 const fs = require('fs');
 const path = require('path');
-const {
-  getModulesRunBeforeMainModule,
-  reactNativePlatformResolver,
-} = require('./metro-react-native-platform');
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -15,18 +11,7 @@ module.exports = {
     path.resolve(__dirname, '../../node_modules'),
   ],
 
-  resolver: {
-    resolveRequest: reactNativePlatformResolver({
-      win32: '@office-iss/react-native-win32',
-    }),
-  },
-  serializer: {
-    getModulesRunBeforeMainModule,
-  },
   transformer: {
-    // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
-    // Hopefully we can fix the default in the future
-    assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

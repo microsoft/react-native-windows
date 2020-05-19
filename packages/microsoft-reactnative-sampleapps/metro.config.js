@@ -6,11 +6,6 @@
  */
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
-const {
-  getModulesRunBeforeMainModule,
-  reactNativePlatformResolver,
-} = require('react-native-windows/metro-react-native-platform');
-
 const rnwPath = path.resolve(__dirname, '../../vnext');
 
 module.exports = {
@@ -23,9 +18,6 @@ module.exports = {
   ],
 
   resolver: {
-    resolveRequest: reactNativePlatformResolver({
-      windows: 'react-native-windows',
-    }),
     extraNodeModules: {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
       'react-native-windows': rnwPath,
@@ -40,13 +32,7 @@ module.exports = {
       ),
     ]),
   },
-  serializer: {
-    getModulesRunBeforeMainModule,
-  },
   transformer: {
-    // The cli defaults this to a full path to react-native, which bypasses the reactNativePlatformResolver above
-    // Hopefully we can fix the default in the future
-    assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
