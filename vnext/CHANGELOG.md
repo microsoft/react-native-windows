@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 17 May 2020 00:04:22 GMT and should not be manually modified.
+This log was last generated on Tue, 19 May 2020 00:05:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.70
+
+Tue, 19 May 2020 00:05:07 GMT
+
+### Changes
+
+- Fixes for bundle loading and back handler crash using xaml islands (acoates@microsoft.com)
+- Remove legacy ReactUWP (acoates@microsoft.com)
+- Support 0..n args in native module callbacks (vmorozov@microsoft.com)
+- Adapt ViewWin32, etc to "accessibilityState" (ngerlem@microsoft.com)
 
 ## 0.0.0-master.69
 

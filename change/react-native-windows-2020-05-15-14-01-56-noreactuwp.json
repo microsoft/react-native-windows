@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove legacy ReactUWP",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-15T21:01:56.042Z"
-}

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 15 May 2020 00:04:44 GMT and should not be manually modified.
+This log was last generated on Tue, 19 May 2020 00:05:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.12
+
+Tue, 19 May 2020 00:05:07 GMT
+
+### Changes
+
+- Adapt ViewWin32, etc to "accessibilityState" (ngerlem@microsoft.com)
 
 ## 0.0.0-master.11
 

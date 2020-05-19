@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 May 2020 00:05:07 GMT",
+      "tag": "react-native-windows_v0.0.0-master.70",
+      "version": "0.0.0-master.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixes for bundle loading and back handler crash using xaml islands",
+            "author": "acoates@microsoft.com",
+            "commit": "8fd9bf809aebd172e0a3aba1d908b4661fae8c4b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove legacy ReactUWP",
+            "author": "acoates@microsoft.com",
+            "commit": "c46c5dd8dde2afcb54fda268a8567717ceef4fae",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Support 0..n args in native module callbacks",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c9d9d5c9fa59e28fe0c33c203feb2e5716c5fb6a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adapt ViewWin32, etc to \"accessibilityState\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba50b6050e9c2aa0e09cbb69549816014d381a2",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix compile errors with Clang 10.0.0",
+            "author": "christophpurrer@gmail.com",
+            "commit": "bf95c146a88d6ba04334526d0bd593ac5b18b24b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 17 May 2020 00:04:22 GMT",
       "tag": "react-native-windows_v0.0.0-master.69",
       "version": "0.0.0-master.69",

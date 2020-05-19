@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 19 May 2020 00:05:07 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.12",
+      "version": "0.0.0-master.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adapt ViewWin32, etc to \"accessibilityState\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba50b6050e9c2aa0e09cbb69549816014d381a2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 May 2020 00:04:44 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.11",
       "version": "0.0.0-master.11",
