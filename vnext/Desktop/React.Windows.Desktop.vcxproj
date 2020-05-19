@@ -24,6 +24,17 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters>
+
+    <!--
+    Cppwinrt.exe derives the names of the source files it generates from the $(RootNamespace)
+    property. Currently, the value of this property differs between the 'Microsoft.ReactNative' and
+    this project which - through mismatching include file names - would prevent sharing ABI
+    implementations between the two projects. The $(CppWinRTRootNamespace) property and the
+    associated 'CppWinRTSetRootNamespace' and 'CppWinRTRestoreRootNamespace' targets below
+    homogenize the root namespace for C++/WinRT code generation.
+    -->
+    <CppWinRTRootNamespace>Microsoft.ReactNative</CppWinRTRootNamespace>
+
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
     <ProjectName>React.Windows.Desktop</ProjectName>
@@ -71,6 +82,7 @@
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
         WIN32;
+        CORE_ABI;
         _WINDOWS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
@@ -81,6 +93,7 @@
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -111,6 +124,7 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
+    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
@@ -129,10 +143,16 @@
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="ABI\ReactNativeHost.cpp">
+    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
@@ -163,7 +183,7 @@
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="ABI\ReactNativeHost.h">
+    <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
@@ -212,6 +232,23 @@
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
+
+  <!-- See $(CppWinRTRootNamespace) comments above. -->
+  <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
+    <PropertyGroup>
+      <_CppWinRTOriginalRootNamespace>$(RootNamespace)</_CppWinRTOriginalRootNamespace>
+      <RootNamespace>$(CppWinRTRootNamespace)</RootNamespace>
+    </PropertyGroup>
+  </Target>
+
+  <!-- See $(CppWinRTRootNamespace) comments above. -->
+  <Target Name="CppWinRTRestoreRootNamespace" AfterTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
+    <PropertyGroup>
+      <RootNamespace>$(_CppWinRTOriginalRootNamespace)</RootNamespace>
+      <_CppWinRTOriginalRootNamespace/>
+    </PropertyGroup>
+  </Target>
+
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
