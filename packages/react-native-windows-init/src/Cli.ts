@@ -57,6 +57,12 @@ const argv = yargs.version(false).options({
     hidden: true,
     default: false,
   },
+  useDevMode: {
+    type: 'boolean',
+    describe:
+      'Link rather than Add/Install the react-native-windows package. This option is for the developement workflow of the developers working on react-native-windows.',
+    hidden: true,
+  },
 }).argv;
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
@@ -251,6 +257,7 @@ function isProjectUsingYarn(cwd: string) {
     const name = getReactNativeAppName();
     const ns = argv.namespace || name;
     let version = argv.version;
+    let useDevMode = argv.useDevMode;
 
     if (!version) {
       const rnVersion = getReactNativeVersion();
@@ -339,7 +346,11 @@ You can either downgrade your version of ${chalk.green(
     }
 
     const pkgmgr = isProjectUsingYarn(process.cwd())
-      ? 'yarn add'
+      ? useDevMode
+        ? 'yarn link'
+        : 'yarn add'
+      : useDevMode
+      ? 'npm link'
       : 'npm install --save';
     const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
     console.log(
@@ -347,7 +358,10 @@ You can either downgrade your version of ${chalk.green(
         version,
       )}...`,
     );
-    execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
+    const pkgIdentity = useDevMode
+      ? 'react-native-windows'
+      : `react-native-windows@${version}`;
+    execSync(`${pkgmgr} ${pkgIdentity}`, execOptions);
     console.log(
       chalk.green(
         `react-native-windows@${chalk.cyan(
