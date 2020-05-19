@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <functional>
 #include <winrt/Microsoft.ReactNative.h>
+#include <functional>
 
 using namespace winrt::Microsoft::ReactNative;
 
