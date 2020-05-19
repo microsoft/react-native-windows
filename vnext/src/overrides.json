@@ -590,6 +590,14 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\Pressability\\Pressability.windows.js",
+      "baseFile": "Libraries\\Pressability\\Pressability.js",
+      "baseVersion": "0.62.2",
+      "baseHash": "acf1c23e6f39d8fb201a06bca850760efe295057",
+      "issue": 4379
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\Pressability\\PressabilityDebug.windows.js",
       "baseFile": "Libraries\\Pressability\\PressabilityDebug.js",
       "baseVersion": "0.62.0-rc.3",
