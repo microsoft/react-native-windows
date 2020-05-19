@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, TouchableHighlight, View, ViewStyle} from 'react-native';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import {Picker} from '@react-native-community/picker';
 
 class TabStopExample extends React.Component {
   public render() {
@@ -57,13 +57,13 @@ class TabStopExample extends React.Component {
             justifyContent: 'space-between',
           }}>
           <Picker style={pickerStyle} {...{tabIndex: 11}}>
-            <Picker.Item label="tabIndex 11" />
+            <Picker.Item label="tabIndex 11" value="tabIndex 11"/>
           </Picker>
           <Picker style={pickerStyle} {...{tabIndex: 13}}>
-            <Picker.Item label="tabIndex 13" />
+            <Picker.Item label="tabIndex 13" value="tabIndex 13"/>
           </Picker>
           <Picker style={pickerStyle} {...{tabIndex: 12}}>
-            <Picker.Item label="tabIndex 12" />
+            <Picker.Item label="tabIndex 12" value="tabIndex 12"/>
           </Picker>
         </View>
       </View>

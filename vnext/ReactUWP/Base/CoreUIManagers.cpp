@@ -14,7 +14,6 @@
 #include <Views/DatePickerViewManager.h>
 #include <Views/FlyoutViewManager.h>
 #include <Views/Image/ImageViewManager.h>
-#include <Views/PickerViewManager.h>
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/RefreshControlManager.h>
@@ -45,7 +44,6 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
-  viewManagers.push_back(std::make_unique<PickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
   viewManagers.push_back(std::make_unique<RootViewManager>(instance));

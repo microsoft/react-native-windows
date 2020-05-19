@@ -2669,6 +2669,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
+"@react-native-community/picker@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/picker/-/picker-1.5.1.tgz#41dc805480648271859fd0f03f53980e620973a1"
+  integrity sha512-2rUX0k9dvPLxftN1sujzK0HXhWaPI9gYfeetMcIXWrWgKeitaJ1aHtotTraJmqEZkGoTF2OBPx82RX0j1t2YKw==
+
 "@rushstack/node-core-library@3.19.7":
   version "3.19.7"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.19.7.tgz#8d8a193fd6f99536c92dd797ab50fd5fcb7630ea"

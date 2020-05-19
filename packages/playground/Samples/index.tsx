@@ -25,7 +25,8 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {DatePicker, Popup, Picker} from 'react-native-windows';
+import {DatePicker, Popup} from 'react-native-windows';
+import {Picker} from '@react-native-community/picker';
 
 class TicTacButton extends React.Component<{}, {text: string}> {
   constructor(props: {}) {

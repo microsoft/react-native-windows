@@ -76,14 +76,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/NewAppScreen/NewAppScreenExample'),
   },
   {
-    key: 'PickerExample',
-    module: require('react-native/RNTester/js/examples/Picker/PickerExample'),
-  },
-  {
-    key: 'PickerWindowsExample',
-    module: require('./../examples-win/Picker/PickerWindowsExample'),
-  },
-  {
     key: 'PopupExample',
     module: require('./../examples-win/Popup/PopupExample'),
   },

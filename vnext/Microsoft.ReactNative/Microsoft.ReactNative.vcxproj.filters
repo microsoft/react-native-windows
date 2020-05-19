@@ -203,9 +203,6 @@
     <ClCompile Include="..\ReactUWP\Views\KeyboardEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\PickerViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\PopupViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -539,9 +536,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.h">
       <Filter>Views\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\PickerViewManager.h">
-      <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\PopupViewManager.h">
       <Filter>Views</Filter>

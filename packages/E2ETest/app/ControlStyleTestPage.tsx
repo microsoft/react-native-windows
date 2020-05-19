@@ -4,7 +4,7 @@
  */
 
  import { Switch, CheckBox, TextInput, View, StyleSheet, Button } from 'react-native';
-import { DatePicker, Picker } from 'react-native-windows';
+import { DatePicker } from 'react-native-windows';
 import React, { useState } from 'react';
 import { SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT } from './Consts';
 import { TreeDumpControl } from './TreeDumpControl'
@@ -71,7 +71,6 @@ export function ControlStyleTestPage() {
           secureTextEntry = {true}
           editable={false}/>
         <DatePicker style={showRoundBorder? styles.roundBorder :styles.regularBorder}/>
-        <Picker style={showRoundBorder? styles.roundBorder :styles.regularBorder}/>
       </View>
       
       <Button title= {showRoundBorder?"Hide Round Border":"Show Round Border"} 

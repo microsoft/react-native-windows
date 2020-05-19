@@ -13,8 +13,6 @@
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
 <PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
-<PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js

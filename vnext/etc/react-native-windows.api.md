@@ -278,24 +278,6 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
     children?: any;
 }
 
-// Warning: (ae-forgotten-export) The symbol "IPickerProps" needs to be exported by the entry point typings-index.d.ts
-// Warning: (ae-forgotten-export) The symbol "State" needs to be exported by the entry point typings-index.d.ts
-//
-// @public
-export class Picker extends React_2.Component<IPickerProps, State> {
-    constructor(props: IPickerProps);
-    // Warning: (ae-forgotten-export) The symbol "PickerPropsWithChildren" needs to be exported by the entry point typings-index.d.ts
-    //
-    // (undocumented)
-    static getDerivedStateFromProps(props: PickerPropsWithChildren): State;
-    // Warning: (ae-forgotten-export) The symbol "PickerItem" needs to be exported by the entry point typings-index.d.ts
-    //
-    // (undocumented)
-    static Item: typeof PickerItem;
-    // (undocumented)
-    render(): JSX.Element;
-    }
-
 // @public (undocumented)
 export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'full' | 'top-edge-aligned-left' | 'top-edge-aligned-right' | 'bottom-edge-aligned-left' | 'bottom-edge-aligned-right' | 'left-edge-aligned-top' | 'right-edge-aligned-top' | 'left-edge-aligned-bottom' | 'right-edge-aligned-bottom';
 

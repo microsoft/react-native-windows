@@ -271,7 +271,6 @@
     <ClInclude Include="..\ReactUWP\Views\Image\ReactImageBrush.h" />
     <ClInclude Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.h" />
-    <ClInclude Include="..\ReactUWP\Views\PickerViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\PopupViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\RawTextViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\RefreshControlManager.h" />
@@ -443,7 +442,6 @@
     <ClCompile Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="..\ReactUWP\Views\KeyboardEventHandler.cpp" />
-    <ClCompile Include="..\ReactUWP\Views\PickerViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\PopupViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\RawTextViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\RefreshControlManager.cpp" />

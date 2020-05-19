@@ -4,7 +4,7 @@
  * @format
  */
 import * as React from 'react';
-import {Picker} from 'react-native-windows';
+import {Picker} from '@react-native-community/picker';
 import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
 
 const largeImageUri =
@@ -61,7 +61,14 @@ export default class Bootstrap extends React.Component<
           <Picker
             style={{width: 125}}
             selectedValue={this.state.selectedResizeMode}
-            onValueChange={value => this.setState({selectedResizeMode: value})}>
+            onValueChange={value => this.setState({
+              selectedResizeMode: value as | 'center'
+                | 'stretch'
+                | 'cover'
+                | 'contain'
+                | 'repeat'
+                | undefined
+            })}>
             <Picker.Item label="cover" value="cover" />
             <Picker.Item label="contain" value="contain" />
             <Picker.Item label="stretch" value="stretch" />

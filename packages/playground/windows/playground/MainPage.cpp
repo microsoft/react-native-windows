@@ -74,6 +74,7 @@ Microsoft::ReactNative::ReactNativeHost MainPage::Host() noexcept {
   if (!m_host) {
     m_host = Microsoft::ReactNative::ReactNativeHost();
     m_host.InstanceSettings(InstanceSettings());
+    PackageProviders().Append(winrt::ReactNativePicker::ReactPackageProvider());
     m_host.PackageProviders(PackageProviders());
   }
 

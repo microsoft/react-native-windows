@@ -11,7 +11,6 @@
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/StatusBar/NativeStatusBarManagerAndroid.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js

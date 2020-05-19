@@ -14,7 +14,8 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {DatePicker, Picker} from 'react-native-windows';
+import { DatePicker } from 'react-native-windows';
+import { Picker } from '@react-native-community/picker';
 
 export default class Bootstrap extends React.Component<
   {},

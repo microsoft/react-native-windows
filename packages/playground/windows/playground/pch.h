@@ -33,3 +33,4 @@
 #include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
 
 #include "nativeModules.g.h"
+#include "winrt/ReactNativePicker.h"

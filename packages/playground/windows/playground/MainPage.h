@@ -14,7 +14,7 @@ struct MainPage : MainPageT<MainPage> {
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> PackageProviders() noexcept;
 
   Microsoft::ReactNative::ReactRootView m_reactRootView;
-  Microsoft::ReactNative::ReactNativeHost m_host;
+  Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
 

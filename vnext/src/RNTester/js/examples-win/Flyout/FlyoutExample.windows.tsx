@@ -7,9 +7,9 @@
 import React = require('react');
 import {Button, CheckBox, Text, TextInput, View} from 'react-native';
 import {Flyout} from '../../../../Libraries/Components/Flyout/Flyout';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
 import {Popup} from '../../../../Libraries/Components/Popup/Popup';
 import {Placement} from '../../../../Libraries/Components/Flyout/FlyoutProps';
+import { Picker } from '@react-native-community/picker';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;
@@ -71,7 +71,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           <Picker
             style={{width: 200, height: 35}}
             selectedValue={this.state.placementOptions}
-            onValueChange={value => this.setState({placementOptions: value})}>
+            onValueChange={value => this.setState({ placementOptions: value as Placement })}>
             {placementValues.map(item => (
               <Picker.Item key={item} label={item} value={item} />
             ))}
@@ -150,7 +150,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 }}
                 selectedValue={this.state.placementOptions}
                 onValueChange={value =>
-                  this.setState({placementOptions: value})
+                  this.setState({ placementOptions: value as Placement })
                 }>
                 {placementValues.map(item => (
                   <Picker.Item key={item} label={item} value={item} />

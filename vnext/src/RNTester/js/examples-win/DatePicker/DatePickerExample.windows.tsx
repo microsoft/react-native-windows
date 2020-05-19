@@ -8,7 +8,7 @@ import React = require('react');
 import {Text, View} from 'react-native';
 import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
 import {DayOfWeek} from '../../../../Libraries/Components/DatePicker/DatePickerProps';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import {Picker} from '@react-native-community/picker';
 
 interface IDatePickerExampleState {
   dateFormat:
@@ -47,7 +47,12 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
           <Picker
             style={{width: 200, height: 35}}
             selectedValue={this.state.dateFormat}
-            onValueChange={value => this.setState({dateFormat: value})}>
+            onValueChange={value => this.setState({
+              dateFormat: value as 'day month year'
+                | 'dayofweek day month'
+                | 'longdate'
+                | 'shortdate'
+            })}>
             <Picker.Item label="day month year" value="day month year" />
             <Picker.Item
               label="dayofweek day month"
@@ -62,7 +67,11 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
           <Picker
             style={{width: 200, height: 35}}
             selectedValue={this.state.dayOfWeekFormat}
-            onValueChange={value => this.setState({dayOfWeekFormat: value})}>
+            onValueChange={value => this.setState({
+              dayOfWeekFormat: value as '{dayofweek.abbreviated(2)}'
+                | '{dayofweek.abbreviated(3)}'
+                | '{dayofweek.full}'
+            })}>
             <Picker.Item
               label="abbreviated(2)"
               value="{dayofweek.abbreviated(2)}"
@@ -79,7 +88,7 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
           <Picker
             style={{width: 200, height: 35}}
             selectedValue={this.state.firstDayOfWeek}
-            onValueChange={value => this.setState({firstDayOfWeek: value})}>
+            onValueChange={value => this.setState({ firstDayOfWeek: value as DayOfWeek })}>
             <Picker.Item label="Sunday" value={DayOfWeek.Sunday} />
             <Picker.Item label="Monday" value={DayOfWeek.Monday} />
             <Picker.Item label="Tuesday" value={DayOfWeek.Tuesday} />

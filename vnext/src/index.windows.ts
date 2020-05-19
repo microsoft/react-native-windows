@@ -38,13 +38,6 @@ Object.defineProperty(Index, 'Glyph', {
   },
 });
 
-Object.defineProperty(Index, 'PickerWindows', {
-  get: () => {
-    return require('./Libraries/Components/Picker/PickerWindows')
-      .Picker as ReactNativeWindows.Picker;
-  },
-});
-
 Object.defineProperty(Index, 'Popup', {
   get: () => {
     return require('./Libraries/Components/Popup/Popup')

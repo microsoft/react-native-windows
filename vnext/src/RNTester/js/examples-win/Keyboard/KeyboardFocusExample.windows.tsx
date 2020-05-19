@@ -16,9 +16,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {IKeyboardEvent} from '../../../../Libraries/Components/Keyboard/KeyboardExtProps';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
 import {supportKeyboard} from '../../../../Libraries/Components/Keyboard/KeyboardExt';
 import {ViewWindows} from '../../../../Libraries/Components/View/ViewWindows';
+import { Picker } from '@react-native-community/picker';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);
@@ -115,7 +115,7 @@ class KeyboardFocusExample extends React.Component<
 
         <View>
           <Picker ref={pickerRef}>
-            <Picker.Item label="Picker accept focus" />
+            <Picker.Item label="Picker accept focus" value="Picker accept focus" />
           </Picker>
         </View>
         <View>
@@ -183,10 +183,10 @@ class KeyboardFocusExample extends React.Component<
   }
 
   private _textInputKeyDown = (ev: IKeyboardEvent) => {
-    this.setState({keyOnKeyDown: ev.nativeEvent.key});
+    this.setState({ keyOnKeyDown: ev.nativeEvent.key });
   };
 
-  private _selectionChanged = (selected: string) => {
+  private _selectionChanged = (selected: string | number) => {
     switch (selected) {
       case 'View':
         viewWindowsRef.current && viewWindowsRef.current.focus();
