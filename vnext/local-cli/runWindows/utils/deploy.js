@@ -22,6 +22,7 @@ const {
   commandWithProgress,
   runPowerShellScriptFunction,
 } = require('./commandWithProgress');
+const build = require('./build');
 
 function pushd(pathArg) {
   const cwd = process.cwd();
@@ -167,12 +168,6 @@ async function deployToDevice(options, verbose) {
   }
 }
 
-async function hasDotNetProjects(slnFile) {
-  const contents = (await fs.promises.readFile(slnFile)).toString();
-  let r = /\"([^"]+\.(csproj|vbproj))\"/;
-  return r.test(contents);
-}
-
 async function deployToDesktop(options, verbose, slnFile) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
@@ -214,8 +209,7 @@ async function deployToDesktop(options, verbose, slnFile) {
     verbose,
   );
 
-  // #4749 - need to deploy from appx for .net projects.
-  if (options.release || (await hasDotNetProjects(slnFile))) {
+  if (options.release) {
     await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
@@ -223,12 +217,13 @@ async function deployToDesktop(options, verbose, slnFile) {
       verbose,
     );
   } else {
-    const realAppxManifestPath = fs.realpathSync(appxManifestPath);
-    await runPowerShellScriptFunction(
-      'Installing new version of the app from layout',
-      windowsStoreAppUtils,
-      `Install-AppFromDirectory "${realAppxManifestPath}"`,
-      verbose,
+    await build.buildSolution(
+      slnFile,
+      options.release ? 'Release' : 'Debug',
+      options.arch,
+      null,
+      options.verbose,
+      'Deploy',
     );
   }
 

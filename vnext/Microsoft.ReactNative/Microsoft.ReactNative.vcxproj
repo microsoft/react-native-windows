@@ -669,4 +669,5 @@
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
     </ItemGroup>
   </Target>
+  <Target Name="Deploy" />
 </Project>
