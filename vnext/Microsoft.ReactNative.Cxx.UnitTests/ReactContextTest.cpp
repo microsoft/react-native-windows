@@ -12,6 +12,10 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+  IReactNotificationService Notifications() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   void DispatchEvent(
       xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,

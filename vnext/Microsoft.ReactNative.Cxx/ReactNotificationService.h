@@ -102,7 +102,7 @@ struct ReactNotificationArgsBase {
   }
 
  protected:
-  ReactNotificationArgsBase(std::nullptr_t = nullptr) noexcept {}
+  ReactNotificationArgsBase() = default;
 
   explicit ReactNotificationArgsBase(IReactNotificationArgs const &handle) noexcept : m_handle{handle} {}
 
@@ -112,7 +112,9 @@ struct ReactNotificationArgsBase {
 
 template <class T>
 struct ReactNotificationArgs : ReactNotificationArgsBase {
-  using ReactNotificationArgsBase::ReactNotificationArgsBase;
+  ReactNotificationArgs(std::nullptr_t = nullptr) noexcept {}
+
+  explicit ReactNotificationArgs(IReactNotificationArgs const &handle) noexcept : ReactNotificationArgsBase{handle} {}
 
   auto Data() const noexcept {
     return ReactPropertyBag::FromObject<T>(Handle() ? Handle().Data() : nullptr);

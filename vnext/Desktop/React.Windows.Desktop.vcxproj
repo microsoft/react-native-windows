@@ -96,6 +96,8 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
+    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
     <Midl Include="ABI\MemoryTracker.idl" />
     <Midl Include="ABI\MessageQueue.idl" />
     <Midl Include="ABI\NativeLogging.idl" />
