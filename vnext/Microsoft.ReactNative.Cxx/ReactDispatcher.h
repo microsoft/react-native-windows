@@ -23,7 +23,7 @@ struct ReactDispatcher {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   void Post(ReactDispatcherCallback const &callback) const noexcept {

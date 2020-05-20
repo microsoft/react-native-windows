@@ -89,7 +89,7 @@ struct ReactPropertyNamespace {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   static ReactPropertyNamespace Global() noexcept {
@@ -126,7 +126,7 @@ struct ReactPropertyName {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   ReactPropertyNamespace Namespace() const noexcept {
@@ -171,7 +171,7 @@ struct ReactPropertyBag {
 
   // True if handle is not null.
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   // Get ReactPropertyBag handle.

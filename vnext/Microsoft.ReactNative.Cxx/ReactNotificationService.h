@@ -31,7 +31,7 @@ struct ReactNotificationSubscription {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   ReactDispatcher Dispatcher() const noexcept {
@@ -89,21 +89,22 @@ struct ReactNotificationSubscriptionRevoker : ReactNotificationSubscription {
 };
 
 struct ReactNotificationArgsBase {
-  ReactNotificationArgsBase(std::nullptr_t = nullptr) noexcept {}
-
-  explicit ReactNotificationArgsBase(IReactNotificationArgs const &handle) noexcept : m_handle{handle} {}
-
   IReactNotificationArgs const &Handle() const noexcept {
     return m_handle;
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   ReactNotificationSubscription Subscription() const noexcept {
     return ReactNotificationSubscription{m_handle ? m_handle.Subscription() : nullptr};
   }
+
+ protected:
+  ReactNotificationArgsBase(std::nullptr_t = nullptr) noexcept {}
+
+  explicit ReactNotificationArgsBase(IReactNotificationArgs const &handle) noexcept : m_handle{handle} {}
 
  private:
   IReactNotificationArgs m_handle;
@@ -140,7 +141,7 @@ struct ReactNotificationService {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   template <class TData, class THandler, std::enable_if_t<IsValidHandlerV<THandler, TData>, int> = 0>

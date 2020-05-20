@@ -35,7 +35,7 @@ inline bool operator==(T const &left, T const &right) noexcept {
 // True if two types with Handle() have different handles.
 template <class T, std::enable_if_t<HasHandleV<T>, int> = 0>
 inline bool operator!=(T const &left, T const &right) noexcept {
-  return left.Handle() != right.Handle();
+  return !(left.Handle() == right.Handle());
 }
 
 // True if handle of left is null.

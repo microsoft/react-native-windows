@@ -26,7 +26,7 @@ struct ReactContext {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   ReactPropertyBag Properties() const noexcept {
