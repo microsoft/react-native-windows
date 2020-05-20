@@ -16,5 +16,5 @@ constructor(props: any);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>any</code> |  |
+|  props | any |  |
 

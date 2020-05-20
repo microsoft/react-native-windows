@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-master.11",
+  "version": "0.0.0-master.13",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -49,7 +49,7 @@
     "@types/node": "^12.11.2",
     "@types/prop-types": "15.5.1",
     "@types/react": "16.9.0",
-    "@types/react-native": "^0.62.2",
+    "@types/react-native": "^0.62.10",
     "flow-bin": "^0.113.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",

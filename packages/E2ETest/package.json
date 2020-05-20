@@ -25,7 +25,7 @@
     "prompt-sync": "^4.2.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-windows": "0.0.0-master.69"
+    "react-native-windows": "0.0.0-master.71"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -33,7 +33,7 @@
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
-    "@types/react-native": "^0.62.2",
+    "@types/react-native": "^0.62.10",
     "@wdio/appium-service": "5.12.1",
     "@wdio/cli": "5.12.1",
     "@wdio/dot-reporter": "5.12.1",

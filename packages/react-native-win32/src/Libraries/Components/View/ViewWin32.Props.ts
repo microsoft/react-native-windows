@@ -122,7 +122,7 @@ export type AccessibilityActionEvent = RN.NativeSyntheticEvent<
   }>
   >;
 
-export type AccessibilityStates = RN.AccessibilityStates | 'multiselectable' | 'required';
+export type AccessibilityState = RN.AccessibilityState & {multiselectable?: boolean, required?: boolean};
 
 export type SharedAccessibilityPropsIOSandWin32 = {
   onAccessibilityTap?: () => void;
@@ -131,7 +131,7 @@ export type SharedAccessibilityPropsIOSandWin32 = {
 export type OmittedAccessibilityPropsWin32 = {
   accessibilityActions?: ReadonlyArray<RN.AccessibilityActionInfo>;
   accessibilityRole?: RN.AccessibilityRole;
-  accessibilityStates?: RN.AccessibilityState[];
+  accessibilityState?: RN.AccessibilityState;
 };
 
 export type BasePropsWin32 = {
@@ -146,7 +146,7 @@ export type BasePropsWin32 = {
    * timer, toolbar, tree, and treeitem.
    */
   accessibilityRole?: RN.AccessibilityRole | ARIARole;
-  accessibilityStates?: AccessibilityStates[];
+  accessibilityState?: AccessibilityState;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
 
   /**

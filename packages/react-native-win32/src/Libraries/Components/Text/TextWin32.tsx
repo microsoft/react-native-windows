@@ -8,7 +8,7 @@ import { UseFrom } from '../View/ViewWin32.Props';
  */
 
 type InnerViewProps = UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityRole'> &
-  UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityStates'> &
+  UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityState'> &
   UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityActions'>;
 export class TextWin32 extends React.Component<ITextWin32Props, {}> {
   constructor(props: ITextWin32Props) {

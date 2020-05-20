@@ -2,24 +2,10 @@
 
 [Home](./index.md) &gt; [@office-iss/react-native-win32](./react-native-win32.md) &gt; [ViewWin32](./react-native-win32.viewwin32.md)
 
-## ViewWin32 class
+## ViewWin32 variable
 
 <b>Signature:</b>
 
 ```typescript
-export declare class ViewWin32 extends React.Component<IViewWin32Props, {}> implements IViewWin32 
+ViewWin32: React.ForwardRefExoticComponent<IViewWin32Props & React.RefAttributes<any>>
 ```
-
-## Constructors
-
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(props)](./react-native-win32.viewwin32._constructor_.md) |  | Constructs a new instance of the <code>ViewWin32</code> class |
-
-## Methods
-
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [focus()](./react-native-win32.viewwin32.focus.md) |  | Moves focus to this view |
-|  [render()](./react-native-win32.viewwin32.render.md) |  |  |
-

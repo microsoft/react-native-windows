@@ -27,6 +27,7 @@
 #include <object/unknownObject.h>
 
 #include <ReactHost/MsoUtils.h>
+#include <Utils/Helpers.h>
 
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
@@ -617,6 +618,14 @@ void ReactRootControl::ReloadViewHost() noexcept {
 }
 
 void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
+  /*
+   * If we are running in a Xaml Island or some other environment where the SystemNavigationManager is unavailable,
+   * we should just skip hooking up the BackButton handler. SystemNavigationManager->GetForCurrentView seems to
+   * crash with XamlIslands so we can't just bail if that call fails.
+   */
+  if (react::uwp::IsXamlIsland())
+    return;
+
   auto weakThis = weak_from_this();
   m_backRequestedRevoker = winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
       winrt::auto_revoke,

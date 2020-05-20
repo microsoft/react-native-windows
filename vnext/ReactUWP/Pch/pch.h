@@ -17,11 +17,16 @@
 #define NOGDI
 #endif
 
+#undef WINAPI_FAMILY
+#define WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
+
 #include <combaseapi.h>
 #include <guiddef.h>
 #include <intrin.h>
 #include <unknwn.h>
 #include <windows.h>
+// When WINAPI_FAMILY is DESKTOP_APP, windows.h creates a macro for GetCurrentTime, which conflicts with other headers
+#undef GetCurrentTime
 
 #include "CppWinRTIncludes.h"
 
