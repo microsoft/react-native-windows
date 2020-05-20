@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 20 May 2020 00:04:49 GMT",
+      "tag": "react-native-windows_v0.0.0-master.71",
+      "version": "0.0.0-master.71",
+      "comments": {
+        "none": [
+          {
+            "comment": "Win32 ReactNativeHost implementation from shared sources",
+            "author": "aeulitz@microsoft.com",
+            "commit": "1a7d27a56573509b3591eba2bfb873f5ebda2771",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Implement Keybpoarding/Gamepad Activation for Pressability",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1e55356f5147cc3ec94e86b8d0510a2e1c9cc367",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce need for custom metro configs",
+            "author": "acoates@microsoft.com",
+            "commit": "60afde987aa23f2755ea69a14e4809c242374895",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update the react-native-windows-init template to use the managed library the default (instead of the shared csproj file).",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7e3e7375a431e792902d235d434475aed8a00613",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 May 2020 00:05:07 GMT",
       "tag": "react-native-windows_v0.0.0-master.70",
       "version": "0.0.0-master.70",

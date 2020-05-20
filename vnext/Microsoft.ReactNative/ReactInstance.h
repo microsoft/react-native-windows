@@ -5,7 +5,14 @@
 
 #include "ReactInstance.g.h"
 
+#ifndef CORE_ABI
+// When building Desktop, the include below results in
+// fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
 #include <ReactUWP/IReactInstance.h>
+#endif
+
+#include "HResult.h"
+
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {

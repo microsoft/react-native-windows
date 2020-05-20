@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="MessageQueueShim.h" />
     <ClInclude Include="ActivationFactory.h" />
+    <ClInclude Include="MockReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

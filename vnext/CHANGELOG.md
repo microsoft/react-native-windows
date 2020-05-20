@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 19 May 2020 00:05:07 GMT and should not be manually modified.
+This log was last generated on Wed, 20 May 2020 00:04:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.71
+
+Wed, 20 May 2020 00:04:49 GMT
+
+### Changes
+
+- Implement Keybpoarding/Gamepad Activation for Pressability (ngerlem@microsoft.com)
+- Reduce need for custom metro configs (acoates@microsoft.com)
+- Update the react-native-windows-init template to use the managed library the default (instead of the shared csproj file). (dannyvv@microsoft.com)
 
 ## 0.0.0-master.70
 
