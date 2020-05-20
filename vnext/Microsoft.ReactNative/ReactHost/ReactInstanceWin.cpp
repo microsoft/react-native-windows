@@ -461,7 +461,7 @@ void ReactInstanceWin::InitNativeMessageThread() noexcept {
 
 void ReactInstanceWin::InitUIMessageThread() noexcept {
   // Native queue was already given us in constructor.
-  m_uiQueue = winrt::Microsoft::ReactNative::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
+  m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 

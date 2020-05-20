@@ -265,6 +265,21 @@ TEST_CLASS (ReactPropertyBagTests) {
     TestCheckEqual(ReactPropertyBagHelper::GlobalNamespace(), ReactPropertyNamespace::Global().Handle());
   }
 
+  TEST_METHOD(PropertyNamespace_Equality) {
+    ReactPropertyNamespace ns11{L"Foo"};
+    ReactPropertyNamespace ns12{ns11};
+    ReactPropertyNamespace ns2{L"Bar"};
+    ReactPropertyNamespace ns3;
+    TestCheckEqual(ns11, ns12);
+    TestCheckEqual(ns12, ns11);
+    TestCheck(ns11 != ns2);
+    TestCheck(ns2 != ns11);
+    TestCheck(ns2 != nullptr);
+    TestCheck(nullptr != ns2);
+    TestCheck(ns3 == nullptr);
+    TestCheck(nullptr == ns3);
+  }
+
   TEST_METHOD(PropertyId_ctor_default) {
     ReactPropertyId<int> name1;
     TestCheck(!name1);
