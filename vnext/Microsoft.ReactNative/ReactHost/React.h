@@ -72,6 +72,7 @@ struct IReactInstance : IUnknown {
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
+  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept = 0;
   virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
@@ -158,6 +159,8 @@ struct ReactOptions {
 #endif
 
   winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
+
+  winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;

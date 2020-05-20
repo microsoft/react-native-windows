@@ -122,6 +122,8 @@
     <Midl Include="..\Microsoft.ReactNative\IReactContext.idl" />
     <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
@@ -147,6 +149,7 @@
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />

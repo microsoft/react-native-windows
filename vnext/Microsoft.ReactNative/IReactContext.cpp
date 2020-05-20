@@ -13,6 +13,10 @@ IReactPropertyBag ReactContext::Properties() noexcept {
   return m_context->Properties();
 }
 
+IReactNotificationService ReactContext::Notifications() noexcept {
+  return m_context->Notifications();
+}
+
 void ReactContext::DispatchEvent(
     xaml::FrameworkElement const &view,
     hstring const &eventName,

@@ -13,6 +13,7 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
 
  public: // IReactContext
   IReactPropertyBag Properties() noexcept;
+  IReactNotificationService Notifications() noexcept;
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       hstring const &eventName,
