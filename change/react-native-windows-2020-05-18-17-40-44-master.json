@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update the react-native-windows-init template to use the managed library the default (instead of the shared csproj file).",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-19T00:40:44.179Z"
-}
