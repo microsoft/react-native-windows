@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 20 May 2020 00:04:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reduce need for custom metro configs",
+            "author": "acoates@microsoft.com",
+            "commit": "60afde987aa23f2755ea69a14e4809c242374895",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 May 2020 00:05:07 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.12",
       "version": "0.0.0-master.12",
