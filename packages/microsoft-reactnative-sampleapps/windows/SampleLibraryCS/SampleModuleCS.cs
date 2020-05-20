@@ -29,8 +29,15 @@ namespace SampleLibraryCS
             Debug.WriteLine($"C# Properties.Prop1: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop1"))}");
             Debug.WriteLine($"C# Properties.Prop2: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop2"))}");
 
+            var cppTimerNotification = ReactPropertyBagHelper.GetName(ReactPropertyBagHelper.GetNamespace("SampleModuleCppImpl"), "TimerNotification");
+            var csTimerNotification = ReactPropertyBagHelper.GetName(ReactPropertyBagHelper.GetNamespace("SampleModuleCS"), "TimerNotification");
+
+            reactContext.Handle.Notifications.Subscribe(cppTimerNotification, null,
+                (object sender, IReactNotificationArgs args) => Debug.WriteLine($"C# module, C++ timer:: {args.Data}"));
+
             _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
             {
+                reactContext.Handle.Notifications.SendNotification(csTimerNotification, null, _timerCount);
                 TimedEvent?.Invoke(++_timerCount);
                 if (_timerCount == 5)
                 {

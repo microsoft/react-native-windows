@@ -39,8 +39,18 @@ struct SampleModuleCppImpl {
     DEBUG_OUTPUT("C++ Properties.Prop1:", *reactContext.Properties().Get(myProp1));
     DEBUG_OUTPUT("C++ Properties.Prop2:", winrt::to_string(*reactContext.Properties().Get(myProp2)));
 
+    const ReactNotificationId<int> cppTimerNotification{L"SampleModuleCppImpl", L"TimerNotification"};
+    const ReactNotificationId<int> csTimerNotification{L"SampleModuleCS", L"TimerNotification"};
+
+    reactContext.Notifications().Subscribe(csTimerNotification, [
+    ](winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+      DEBUG_OUTPUT("C++ module, C# timer:", *args.Data());
+    });
+
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
-        [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+        [ this, cppTimerNotification, notifications = reactContext.Notifications() ](
+            const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+          notifications.SendNotification(cppTimerNotification, m_timerCount);
           TimedEvent(++m_timerCount);
           if (m_timer && m_timerCount == 5) {
             m_timer.Cancel();
