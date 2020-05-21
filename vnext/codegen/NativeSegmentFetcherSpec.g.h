@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct SegmentFetcherSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(double, JSValueObject, Callback<JSValue>) noexcept>{0, L"fetchSegment"},
-      Method<void(double, JSValueObject, Callback<JSValue>) noexcept>{1, L"getSegment"},
+      Method<void(double, React::JSValueObject, Callback<React::JSValue>) noexcept>{0, L"fetchSegment"},
+      Method<void(double, React::JSValueObject, Callback<React::JSValue>) noexcept>{1, L"getSegment"},
   };
 
   template <class TModule>

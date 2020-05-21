@@ -193,7 +193,6 @@
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
-    <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />

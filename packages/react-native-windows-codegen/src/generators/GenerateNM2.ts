@@ -64,17 +64,17 @@ function translateSpecFunctionParam(
     case 'FunctionTypeAnnotation': {
       // Ideally we'd get more information about the expected parameters of the callback
       // But the current schema doesn't seem to provide the necessary information.
-      return 'Callback<JSValue>';
+      return 'Callback<React::JSValue>';
     }
     case 'ArrayTypeAnnotation':
       // Ideally we'd get more information about the expected type of the array
       // But the current schema doesn't seem to provide the necessary information.
-      return 'JSValueArray';
+      return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
-      return 'JSValueObject';
+      return 'React::JSValueObject';
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
-      return 'JSValueObject';
+      return 'React::JSValueObject';
     default:
       throw new Error(
         `Unhandled type in translateSpecFunctionParam: ${
@@ -140,9 +140,9 @@ function translateSpecReturnType(
     case 'ArrayTypeAnnotation':
       // Ideally we'd get more information about the expected type of the array
       // But the current schema doesn't seem to provide the necessary information.
-      return 'JSValueArray';
+      return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
-      return 'JSValueObject';
+      return 'React::JSValueObject';
     default:
       throw new Error(`Unhandled type: ${type.type}`);
   }

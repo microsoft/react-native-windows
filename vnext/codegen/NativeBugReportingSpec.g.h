@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct BugReportingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"startReportAProblemFlow"},
-      Method<void(JSValueObject, JSValueObject) noexcept>{1, L"setExtraData"},
+      Method<void(React::JSValueObject, React::JSValueObject) noexcept>{1, L"setExtraData"},
       Method<void(std::string) noexcept>{2, L"setCategoryID"},
   };
 

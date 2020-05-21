@@ -12,7 +12,6 @@
 #include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
 
 // Modules
-#include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
@@ -32,7 +31,6 @@
 #include "Unicode.h"
 
 #include <Modules/DevSettingsModule.h>
-#include <Modules/DeviceInfoModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
@@ -111,8 +109,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   m_batchingNativeThread = std::make_shared<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
-  auto deviceInfo(std::make_shared<DeviceInfo>(spThis));
-  std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
   std::shared_ptr<react::uwp::AppTheme> appTheme =
       std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
   I18nHelper::Instance().setInfo(I18nModule::GetI18nInfo());
@@ -123,9 +119,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
-                                deviceInfo,
                                 settings,
-                                appstate = std::move(appstate),
                                 appTheme = std::move(appTheme),
                                 appearanceListener = std::move(appearanceListener)]() mutable {
     // Setup DevSettings based on our own internal structure
@@ -202,8 +196,6 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
         m_uiManager,
         m_batchingNativeThread,
         m_defaultNativeThread,
-        std::move(deviceInfo),
-        std::move(appstate),
         std::move(appTheme),
         std::move(appearanceListener),
         spThis);

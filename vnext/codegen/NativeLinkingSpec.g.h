@@ -19,7 +19,7 @@ struct LinkingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"canOpenURL"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"openURL"},
       Method<void(Promise<React::JSValue>) noexcept>{3, L"openSettings"},
-      Method<void(std::string, JSValueArray, Promise<React::JSValue>) noexcept>{4, L"sendIntent"},
+      Method<void(std::string, React::JSValueArray, Promise<React::JSValue>) noexcept>{4, L"sendIntent"},
       Method<void(std::string) noexcept>{5, L"addListener"},
       Method<void(double) noexcept>{6, L"removeListeners"},
   };

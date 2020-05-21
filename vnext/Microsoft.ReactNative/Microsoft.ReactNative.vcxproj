@@ -307,8 +307,9 @@
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
-    <ClInclude Include="Modules\AppStateData.h" />
+    <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
+    <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
@@ -406,7 +407,6 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp" />
@@ -477,8 +477,9 @@
     <ClCompile Include="IReactModuleBuilder.cpp">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="Modules\AppStateData.cpp" />
+    <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">

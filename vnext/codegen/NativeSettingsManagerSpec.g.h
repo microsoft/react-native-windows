@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject) noexcept>{0, L"setValues"},
-      Method<void(JSValueArray) noexcept>{1, L"deleteValues"},
+      Method<void(React::JSValueObject) noexcept>{0, L"setValues"},
+      Method<void(React::JSValueArray) noexcept>{1, L"deleteValues"},
   };
 
   template <class TModule>
