@@ -168,8 +168,8 @@
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'lerna.json'))vnext\</ReactNativeWindowsDir>
   </PropertyGroup>
   <ImportGroup Label="ReactNativeWindowsNodeTargets">
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets" Condition="Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" />
   </ImportGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

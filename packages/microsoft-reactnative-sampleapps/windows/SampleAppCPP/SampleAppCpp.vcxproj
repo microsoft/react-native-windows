@@ -172,8 +172,11 @@
       <DeploymentContent>false</DeploymentContent>
     </Text>
   </ItemGroup>
+  <PropertyGroup Label="ReactNativeWindowsNodeProps">
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'lerna.json'))vnext\</ReactNativeWindowsDir>
+  </PropertyGroup>
   <ItemGroup>
-    <Natvis Include="$(ReactNativeWindowsDir)\Folly\Folly.natvis" />
+    <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SampleLibraryCpp\SampleLibraryCpp.vcxproj">
@@ -184,19 +187,16 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <PropertyGroup Label="ReactNativeWindowsNodeProps">
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'lerna.json'))vnext\</ReactNativeWindowsDir>
-  </PropertyGroup>
   <ImportGroup Label="ReactNativeWindowsNodeTargets">
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props')" />
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" Condition="Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props')" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
   </ImportGroup>
   <Target Name="EnsureReactNativeWindowsNodeTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props'))" />
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets'))" />
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
