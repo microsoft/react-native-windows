@@ -57,9 +57,14 @@ class MSBuildTools {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
-
+    if (target) {
+      newInfo(`Build target: ${target}`);
+    }
     const verbosityOption = verbose ? 'normal' : 'minimal';
-    const errorLog = path.join(process.env.temp, `msbuild_${process.pid}.err`);
+    const errorLog = path.join(
+      process.env.temp,
+      `msbuild_${process.pid}${target ? '_' + target : ''}.err`,
+    );
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -67,7 +72,7 @@ class MSBuildTools {
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
-      '/bl',
+      `/bl${target ? `:${target}.binlog` : ''}`,
       `/flp1:errorsonly;logfile=${errorLog}`,
     ];
 
