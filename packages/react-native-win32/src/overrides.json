@@ -102,7 +102,7 @@
     },
     {
       "type": "copy",
-      "file": "Libraries\\Components\\Picker\\PickerIOS.tsx",
+      "file": "Libraries\\Components\\Picker\\PickerIOS.js",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6",
