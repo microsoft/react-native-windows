@@ -160,15 +160,15 @@
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
   </PropertyGroup>
   <ImportGroup Label="ReactNativeWindowsNodeTargets">
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets" Condition="Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" />
   </ImportGroup>
   <Target Name="EnsureReactNativeWindowsNodeTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props'))" />
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets'))" />
   </Target>
   <PropertyGroup>
     <PreBuildEvent>

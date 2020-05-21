@@ -4,7 +4,7 @@
   Licensed under the MIT License.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildThisFileDirectory)\Bundle.Common.targets"/>
+  <Import Project="$(MSBuildThisFileDirectory)Bundle.Common.targets"/>
 
   <Target Name="InjectBundleContent" BeforeTargets="PrepareForBuild" AfterTargets="MakeBundle">
     <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != ''">

@@ -15,31 +15,31 @@
 
   <Target Name="EvaluateReactPatchInputs" BeforeTargets="CopyReactPatches">
     <PropertyGroup>
-      <ReactCommonSrcPath>$(ReactNativePackageDir)\ReactCommon\</ReactCommonSrcPath>
-      <ReactCommonDestPath>$(ReactNativeDir)\ReactCommon\</ReactCommonDestPath>
-      <DeforkingPatchCommonPath>$(ReactNativeWindowsDir)\DeforkingPatches\ReactCommon\</DeforkingPatchCommonPath>
+      <ReactCommonSrcPath>$(ReactNativePackageDir)ReactCommon\</ReactCommonSrcPath>
+      <ReactCommonDestPath>$(ReactNativeDir)ReactCommon\</ReactCommonDestPath>
+      <DeforkingPatchCommonPath>$(ReactNativeWindowsDir)DeforkingPatches\ReactCommon\</DeforkingPatchCommonPath>
     </PropertyGroup>
 
     <ItemGroup>
       <DeforkingPatchCommonFiles Include="$(DeforkingPatchCommonPath)\**" />
-      <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)\**\*.cpp;$(ReactCommonSrcPath)\**\*.h" />
+      <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)**\*.cpp;$(ReactCommonSrcPath)**\*.h" />
       <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="!Exists('$(DeforkingPatchCommonPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
 
       <!-- Special case to recreate custom header exports in Facebook BUCK logic -->
-      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
+      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)ReactCommon\turbomodule\core\*.h" />
     </ItemGroup>
   </Target>
 
 
   <Target Name="CopyReactPatches" BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="@(UnpatchedReactCommonSrcFiles)"
-          DestinationFiles="@(UnpatchedReactCommonSrcFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          DestinationFiles="@(UnpatchedReactCommonSrcFiles->'$(ReactCommonDestPath)%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(DeforkingPatchCommonFiles)"
-          DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\ReactCommon\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)ReactCommon\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

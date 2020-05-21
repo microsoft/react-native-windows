@@ -50,7 +50,7 @@
 
   <Target Name="_ComputePrecompToCleanUp">
     <ItemGroup>
-      <PCHFileToClean Include="$(IntDir)\**\*.pch" />
+      <PCHFileToClean Include="$(IntDir)**\*.pch" />
       <_PCHFileToCleanWithTimestamp Include="@(PCHFileToClean)" Condition="'%(Identity)' != ''">
         <LastWriteTime>$([System.IO.File]::GetLastWriteTime('%(Identity)'))</LastWriteTime>
       </_PCHFileToCleanWithTimestamp>

@@ -67,7 +67,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(ReactNativeDir)\ReactCommon\callinvoker;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)ReactCommon;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(ReactNativeDir)ReactCommon\callinvoker;$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -102,10 +102,10 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;$(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <Midl Include="ABI\MemoryTracker.idl" />
     <Midl Include="ABI\MessageQueue.idl" />

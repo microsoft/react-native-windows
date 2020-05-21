@@ -130,7 +130,7 @@
         $(FollyDir);
         $(JSI_SourcePath);
         $(ReactNativeDir)ReactCommon;
-        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)ReactCommon\callinvoker;
         $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
@@ -176,7 +176,7 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

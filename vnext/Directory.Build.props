@@ -16,6 +16,6 @@
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)\PropertySheets\ReactDirectories.props" />
+  <Import Project="$(MSBuildThisFileDirectory)PropertySheets\ReactDirectories.props" />
 
 </Project>

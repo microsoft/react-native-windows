@@ -78,19 +78,19 @@
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
-        $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)ReactCommon;
         $(JSI_SourcePath);$(JSI_Source);
-        $(ReactNativeDir)\ReactCommon\callinvoker;
-        $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)ReactCommon\callinvoker;
+        $(ReactNativeDir)ReactCommon\jsiexecutor;
         $(FollyDir);$(ReactNativeWindowsDir)stubs;
-        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -113,53 +113,53 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Executor.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorToken.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorTokenFactory.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers-inl.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBigString.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSModulesUnbundle.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MessageQueueThread.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModuleProvider.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\oss-compat-util.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\CxxModule.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\CxxNativeModule.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\Executor.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\ExecutorToken.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\ExecutorTokenFactory.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\Instance.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\JsArgumentHelpers-inl.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\JsArgumentHelpers.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\JSBigString.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\JSBundleType.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\JSIndexedRAMBundle.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\JSModulesUnbundle.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\MessageQueueThread.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\MethodCall.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\ModuleRegistry.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\NativeModule.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\NativeModuleProvider.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\NativeToJsBridge.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\oss-compat-util.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\Platform.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\ReactMarker.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\RecoverableError.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\cxxreact\SystraceSection.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\privatedata\PrivateDataBase.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\CxxNativeModule.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\Instance.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\JSBundleType.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\JSExecutor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\JSIndexedRAMBundle.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\MethodCall.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\ModuleRegistry.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\NativeToJsBridge.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\cxxreact\ReactMarker.cpp" />
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
     <ClCompile Include="$(JSI_Source)\jsi\JSIDynamic.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\log.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
@@ -175,20 +175,20 @@
     <ClCompile Condition="'$(Platform)' == 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" FloatingPointModel="Strict" />
     <ClCompile Condition="'$(Platform)' != 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\turbomodule\core\LongLivedObject.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboCxxModule.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboModule.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboModuleBinding.h" />
+    <ClInclude Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboModuleUtils.h" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\turbomodule\core\LongLivedObject.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
     <!-- Forced include only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" ForcedIncludeFiles="stdexcept" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboModuleBinding.cpp" ForcedIncludeFiles="stdexcept" />
+    <ClCompile Include="$(ReactNativeDir)ReactCommon\turbomodule\core\TurboModuleUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

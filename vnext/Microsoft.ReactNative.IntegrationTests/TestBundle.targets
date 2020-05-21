@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
+	<Import Project="$(ReactNativeWindowsDir)PropertySheets\Bundle.props" />
 	<Target
 		Name="MakeTestBundles"
 		BeforeTargets="PrepareForBuild"

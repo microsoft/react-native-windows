@@ -35,10 +35,10 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(FollyDir)\folly\portability\SysMman.cpp" />
+    <ClCompile Include="$(FollyDir)folly\portability\SysMman.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(FollyDir)\folly\portability\SysMman.h" />
+    <ClInclude Include="$(FollyDir)folly\portability\SysMman.h" />
   </ItemGroup>
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>

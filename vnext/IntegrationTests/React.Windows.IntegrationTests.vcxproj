@@ -47,7 +47,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(FollyDir)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath);$(ReactNativeDir)ReactCommon;$(JSI_Source);$(FollyDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -59,7 +59,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>

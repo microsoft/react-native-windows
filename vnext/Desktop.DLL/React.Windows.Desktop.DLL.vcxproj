@@ -41,7 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(IncludePath)</IncludePath>
+    <IncludePath>$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeDir)ReactCommon;$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
     <!--
     Prevents Microsoft.Windows.CppWinRT.props from adding WindowsApp.lib reference, see
