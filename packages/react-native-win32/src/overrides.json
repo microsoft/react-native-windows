@@ -53,18 +53,20 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Components\\DatePicker\\DatePickerIOS.win32.js",
       "baseFile": "Libraries\\Components\\DatePicker\\DatePickerIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
+      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea",
+      "issue": 4378
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.win32.js",
       "baseFile": "Libraries\\Components\\DatePickerAndroid\\DatePickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
+      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc",
+      "issue": 4378
     },
     {
       "type": "copy",
@@ -79,29 +81,32 @@
       "file": "Libraries\\Components\\EnterString.win32.tsx"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Components\\MaskedView\\MaskedViewIOS.win32.js",
       "baseFile": "Libraries\\Components\\MaskedView\\MaskedViewIOS.android.js",
       "baseVersion": "0.62.0-rc.3",
-      "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
+      "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b",
+      "issue": 4378
     },
     {
       "type": "platform",
       "file": "Libraries\\Components\\Picker\\Picker.win32.tsx"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\Picker\\PickerAndroid.tsx",
+      "type": "copy",
+      "file": "Libraries\\Components\\Picker\\PickerAndroid.js",
       "baseFile": "Libraries\\Components\\Picker\\PickerAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
+      "issue": 4378
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "Libraries\\Components\\Picker\\PickerIOS.tsx",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.android.js",
       "baseVersion": "0.62.0-rc.3",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
+      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6",
+      "issue": 4378
     },
     {
       "type": "copy",
@@ -192,11 +197,12 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\ToastAndroid\\ToastAndroid.win32.ts",
+      "type": "copy",
+      "file": "Libraries\\Components\\ToastAndroid\\ToastAndroid.win32.js",
       "baseFile": "Libraries\\Components\\ToastAndroid\\ToastAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0"
+      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0",
+      "issue": 4378
     },
     {
       "type": "platform",
