@@ -47,7 +47,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
 ];
 
-const APIExamples: Array<IRNTesterExample> = [
+const APIExamples: Array<RNTesterExample> = [
   {
     key: 'AccessibilityExampleWin32',
     module: require('../../APIExamples/AccessibilityExampleWin32'),
