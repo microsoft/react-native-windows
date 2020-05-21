@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed Microsoft.ReactNative build in VS 16.6.0",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-21T04:06:49.892Z"
+}
