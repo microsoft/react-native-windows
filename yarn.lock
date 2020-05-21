@@ -2418,13 +2418,13 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.8.2"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.2.tgz#71da18ba6249620625a3d20fd6d5c33743b05d7b"
-  integrity sha512-yCx8AY8b6SkafFhjyAR+g+DURBDRiy1+973FZXgpSO5bjTt3x3DJplsJsfWTbco3rb2UFwWnvwTVS9NpFbZYsQ==
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.3.tgz#26684f79905b451f908fbb8c4fa6f1a39c2e2df5"
+  integrity sha512-bBh7b8FYZSlPBrVvQYXCycG9ZRJqT8U5jfppFhsrlc2c9flFU0A6GJJux6JmEI/QhJ0Oi0p2D8GIPqRwWkQsOw==
   dependencies:
-    "@microsoft/api-extractor-model" "7.8.0"
+    "@microsoft/api-extractor-model" "7.8.1"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.19.7"
+    "@rushstack/node-core-library" "3.20.0"
     "@rushstack/ts-command-line" "4.4.0"
     colors "~1.2.1"
     js-yaml "~3.13.1"
@@ -2437,6 +2437,14 @@
   dependencies:
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.19.7"
+
+"@microsoft/api-extractor-model@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.1.tgz#fbabe95c20a26f4091caffd3ab841107c1ce38fe"
+  integrity sha512-tncmZU6O4dbNCMDqJR4ApIooWRkpMS72aT5+Agm2ztlKbLrtNZ2IUhr5qjnSdcN552q5IoOHdTBvnj/DM1wPhg==
+  dependencies:
+    "@microsoft/tsdoc" "0.12.19"
+    "@rushstack/node-core-library" "3.20.0"
 
 "@microsoft/api-extractor@^7.3.8":
   version "7.8.2"
@@ -2695,6 +2703,19 @@
   version "3.19.7"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.19.7.tgz#8d8a193fd6f99536c92dd797ab50fd5fcb7630ea"
   integrity sha512-gKE/OXH5GAj8yJ1kEyRW68UekJernilZ3QTRgmQ0MUHBCQmtZ9Q6T5PQ1sVbcL4teH8BMdpZeFy1DKnHs8h3PA==
+  dependencies:
+    "@types/node" "10.17.13"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    semver "~5.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
+"@rushstack/node-core-library@3.20.0":
+  version "3.20.0"
+  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.20.0.tgz#70edd0c992748a408a6dedff1721496539732a40"
+  integrity sha512-9QmJs8QYxESTz42CicNS9Im+4AWxXuow3Wej/FuDjBlNBt6jt99ZQL2RYgt+E20D3yBJ6OkzyBelBsMsj98ZdQ==
   dependencies:
     "@types/node" "10.17.13"
     colors "~1.2.1"
