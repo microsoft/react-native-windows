@@ -80,7 +80,6 @@ string DevSupportManager::GetJavaScriptFromServer(
     result = stream.str();
   }
 
-  //return jsStringStream.str();
   return result;
 }
 
