@@ -57,14 +57,21 @@ function getAppPackage(options) {
   if (!appPackage && options.release) {
     // in the latest vs, Release is removed
     newWarn(
-      'No package found in *_Release_* folder, remove _Release_ and check again',
+      'No package found in *_Release_* folder, removing the _Release_ prefix and checking again',
     );
 
-    appPackage = glob.sync(
-      `${options.root}/windows/{*/AppPackages,AppPackages/*}/*_${
-        options.arch
-      }_*`,
-    )[0];
+    const rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
+    const newGlob = `${rootGlob}/*_${
+      options.arch === 'x86' ? 'Win32' : options.arch
+    }_${options.release ? '' : 'Debug_'}Test`;
+
+    const result = glob.sync(newGlob);
+    if (result.length > 1) {
+      newWarn(`More than one app package found: ${result}`);
+    } else if (result.length === 1) {
+      // we're good
+    }
+    appPackage = glob.sync(newGlob)[0];
   }
 
   if (!appPackage) {
@@ -200,6 +207,9 @@ async function deployToDesktop(options, verbose, slnFile) {
     // VS 16.5 and 16.6 introduced a regression in packaging where the certificates created in the UI will render the package uninstallable.
     // This will be fixed in 16.7. In the meantime we need to copy the Add-AppDevPackage that has the fix for this EKU issue:
     // https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html
+    if (verbose) {
+      newWarn('Applying Add-AppDevPackage.ps1 workaround for VS 16.5-16.6 bug - see https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html');
+    }
     fs.copyFileSync(
       path.join(path.resolve(__dirname), 'Add-AppDevPackage.ps1'),
       script,
