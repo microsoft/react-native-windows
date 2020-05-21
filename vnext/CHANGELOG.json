@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 21 May 2020 00:04:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.72",
+      "version": "0.0.0-master.72",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "deploy from layout",
+            "author": "asklar@microsoft.com",
+            "commit": "b3fc68fd8ea6f85dbc3bfdc92dc8063dc9edbc17",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNotificationService to allow communications between native modules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "baba475929e6d32eadd3302252fe7ea77788c5fa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 May 2020 00:04:49 GMT",
       "tag": "react-native-windows_v0.0.0-master.71",
       "version": "0.0.0-master.71",
