@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Use separate brush for text control border",
   "packageName": "react-native-windows",
   "email": "kaigu@microsoft.com",
