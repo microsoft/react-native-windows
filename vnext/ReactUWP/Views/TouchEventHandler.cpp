@@ -95,7 +95,7 @@ void TouchEventHandler::OnPointerPressed(
     // For now, when using the mouse we only want to send click events for the left button.
     // Finger and pen taps will also set isLeftButton.
     if (m_pointers[pointerIndex].isLeftButton) {
-        DispatchTouchEvent(TouchEventType::Start, pointerIndex);
+      DispatchTouchEvent(TouchEventType::Start, pointerIndex);
     }
   }
 }
