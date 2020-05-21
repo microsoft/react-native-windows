@@ -208,7 +208,9 @@ async function deployToDesktop(options, verbose, slnFile) {
     // This will be fixed in 16.7. In the meantime we need to copy the Add-AppDevPackage that has the fix for this EKU issue:
     // https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html
     if (verbose) {
-      newWarn('Applying Add-AppDevPackage.ps1 workaround for VS 16.5-16.6 bug - see https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html');
+      newWarn(
+        'Applying Add-AppDevPackage.ps1 workaround for VS 16.5-16.6 bug - see https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html',
+      );
     }
     fs.copyFileSync(
       path.join(path.resolve(__dirname), 'Add-AppDevPackage.ps1'),
@@ -240,7 +242,7 @@ async function deployToDesktop(options, verbose, slnFile) {
   await runPowerShellScriptFunction(
     'Enabling Developer Mode',
     windowsStoreAppUtils,
-    `EnableDevMode`,
+    'EnableDevMode',
     verbose,
   );
 
