@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <CppUnitTest.h>
 #include <IntegrationTests/ControllableMessageQueueThread.h>
 #include <winrt/base.h>
 #include <winrt/facebook.react.h>
@@ -11,7 +10,6 @@
 #include "MessageQueueShim.h"
 
 using namespace Microsoft::React::Test;
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 
 namespace ABITests {
@@ -35,7 +33,7 @@ TEST_CLASS(MemoryTrackerTests) {
         /* threshold */ 100,
         /* minCallbackIntervalInMilliseconds */ 100,
         [](uint64_t currentUsage) {});
-    Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
+    TestCheck(tracker.RemoveThresholdHandler(registrationToken));
   }
 
   TEST_METHOD(CurrentMemoryUsage_ReturnsInitialValue) {
@@ -44,8 +42,8 @@ TEST_CLASS(MemoryTrackerTests) {
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(1000);
-    Assert::AreEqual(
-        1000ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
+    TestCheckEqual(
+        1000ull, tracker.CurrentMemoryUsage(), "CurrentMemoryUsage");
   }
 
   TEST_METHOD(PeakMemoryUsage_ReturnsInitialValue) {
@@ -54,7 +52,7 @@ TEST_CLASS(MemoryTrackerTests) {
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(1000);
-    Assert::AreEqual(1000ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
+    TestCheckEqual(1000ull, tracker.PeakMemoryUsage(), "PeakMemoryUsage");
   }
 
   TEST_METHOD(ThresholdHandler_Called) {
@@ -84,20 +82,20 @@ TEST_CLASS(MemoryTrackerTests) {
     tracker.OnAllocation(1000);
 
     // allow the callback to get dispatched
-    Assert::IsTrue(
+    TestCheck(
         manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
-    Assert::IsTrue(manualMessageQueue->IsEmpty());
+    TestCheck(manualMessageQueue->IsEmpty());
 
-    Assert::AreEqual(
-        1500ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
-    Assert::AreEqual(1500ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
+    TestCheckEqual(
+        1500ull, tracker.CurrentMemoryUsage(), "CurrentMemoryUsage");
+    TestCheckEqual(1500ull, tracker.PeakMemoryUsage(), "PeakMemoryUsage");
 
-    Assert::AreEqual(static_cast<size_t>(1), actualCallbacks.size());
-    Assert::AreEqual(1500ull, actualCallbacks[0]);
+    TestCheckEqual(static_cast<size_t>(1), actualCallbacks.size());
+    TestCheckEqual(1500ull, actualCallbacks[0]);
 
-    Assert::AreNotEqual(testThreadId, callbackThreadId);
+    TestCheck(testThreadId != callbackThreadId);
 
-    Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
+    TestCheck(tracker.RemoveThresholdHandler(registrationToken));
   }
 };
 

@@ -18,6 +18,9 @@
     <ClCompile Include="ActivationFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="MemoryTrackerTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
