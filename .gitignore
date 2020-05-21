@@ -157,3 +157,4 @@ bld/
 
 tsdoc-metadata.json
 *.dmp
+*.pp
