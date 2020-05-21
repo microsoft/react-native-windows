@@ -126,6 +126,20 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
     <Midl Include="..\Microsoft.ReactNative\NoExceptionAttribute.idl" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\DynamicReader.h">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\DynamicWriter.h">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\DynamicReader.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\DynamicWriter.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
