@@ -92,7 +92,8 @@ void TouchEventHandler::OnPointerPressed(
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
-    // For now, we only want to send click events for the left mouse button.
+    // For now, when using the mouse we only want to send click events for the left button.
+    // Finger and pen taps will also set isLeftButton.
     if (m_pointers[pointerIndex].isLeftButton) {
         DispatchTouchEvent(TouchEventType::Start, pointerIndex);
     }
