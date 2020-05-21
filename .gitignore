@@ -148,6 +148,7 @@ x64/
 x86/
 bld/
 [Ll]og/
+*.binlog
 
 # Certificates
 *.pfx
