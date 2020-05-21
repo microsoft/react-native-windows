@@ -2,6 +2,19 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 21 May 2020 04:06:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.167",
+      "version": "0.60.0-vnext.167",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use separate brush for text control border",
+            "author": "kaigu@microsoft.com"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 May 2020 02:03:52 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.166",
       "version": "0.60.0-vnext.166",

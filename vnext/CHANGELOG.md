@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 May 2020 02:03:52 GMT and should not be manually modified.
+This log was last generated on Thu, 21 May 2020 04:06:07 GMT and should not be manually modified.
 
+## 0.60.0-vnext.167
+Thu, 21 May 2020 04:06:07 GMT
+
+### Changes
+
+- Use separate brush for text control border (kaigu@microsoft.com)
 ## 0.60.0-vnext.166
 Fri, 08 May 2020 02:03:52 GMT
 
