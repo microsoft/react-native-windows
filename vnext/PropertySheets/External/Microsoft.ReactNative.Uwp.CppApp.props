@@ -6,7 +6,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)\..\..'))\</ReactNativeWindowsDir>
-    <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''" >false</UseExperimentalNuget>
+    <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''">false</UseExperimentalNuget>
+    <_ThisProjectIsALibary Condition="'$(ConfigurationType)' == 'DynamicLibrary'">true</_ThisProjectIsALibary>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
 </Project>

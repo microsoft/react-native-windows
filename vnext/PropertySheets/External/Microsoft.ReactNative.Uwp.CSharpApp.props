@@ -6,6 +6,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)\..\..'))\</ReactNativeWindowsDir>
+    <_ThisProjectIsALibary Condition="'$(OutputType)' == 'winmdobj'">true</_ThisProjectIsALibary>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
 </Project>

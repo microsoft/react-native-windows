@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
@@ -67,9 +68,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-    <Import Project="..\..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -151,17 +149,25 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
-      <Private>false</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Themes\Generic.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Label="ReactNativeWindowsNodeProps">
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'lerna.json'))vnext\</ReactNativeWindowsDir>
+  </PropertyGroup>
+  <ImportGroup Label="ReactNativeWindowsNodeTargets">
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props')" />
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureReactNativeWindowsNodeTargets" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets'))" />
+  </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
