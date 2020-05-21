@@ -15,8 +15,6 @@ using JSECreator = std::function<std::unique_ptr<facebook::react::JSExecutor>(
     std::shared_ptr<facebook::react::ExecutorDelegate>,
     std::shared_ptr<facebook::react::MessageQueueThread>)>;
 
-//struct DevSettings;
-
 class DevSupportManager : public facebook::react::IDevSupportManager {
  public:
   DevSupportManager();
