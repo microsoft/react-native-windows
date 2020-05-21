@@ -11,20 +11,24 @@
       <!-- Ensure we don't copy this binary to the output folder for libraries, or else apps referring to this library will double-import the .winmd files giving mdmerge errors -->
       <Private Condition="'$(OutputType)' == 'winmdobj'">false</Private>
     </ProjectReference>
+
     <ProjectReference Include="$(ReactNativeWindowsDir)Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj">
       <Project>{F2824844-CE15-4242-9420-308923CD76C3}</Project>
       <Name>Microsoft.ReactNative.Managed</Name>
       <!-- Ensure we don't copy this binary to the output folder for libraries, or else apps referring to this library will double-import the .winmd files giving mdmerge errors -->
       <Private Condition="'$(_ThisProjectIsALibary)' == 'true'">false</Private>
     </ProjectReference>
+
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.3.191129002</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Bundle.targets" Condition="'$(_ThisProjectIsALibary)' == 'true'" />
+
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Bundle.targets" Condition="'$(_ThisProjectIsALibary)' != 'true'" />
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
   <Import Project="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe" Condition="Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe')" />
+
   <Target Name="Deploy">
     <Error Condition="!Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe')" Text="You must first build the project before deploying it" />
     <Copy SourceFiles="%(AppxPackagedFile.Identity)" DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
