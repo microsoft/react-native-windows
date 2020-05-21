@@ -2438,14 +2438,22 @@
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.19.7"
 
-"@microsoft/api-extractor@^7.3.8":
-  version "7.8.2"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.8.2.tgz#6e4665adf45d84fe388b6280455c56b6eabe7520"
-  integrity sha512-KPszZ6LLSZyUy0cyGkOhnrJgTedcuFdhYJ6MDF9qrjBGDsHViUb3XuYE2ne+uVARQf9EReEWdU2a5OHSO5GDmA==
+"@microsoft/api-extractor-model@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.1.tgz#fbabe95c20a26f4091caffd3ab841107c1ce38fe"
+  integrity sha512-tncmZU6O4dbNCMDqJR4ApIooWRkpMS72aT5+Agm2ztlKbLrtNZ2IUhr5qjnSdcN552q5IoOHdTBvnj/DM1wPhg==
   dependencies:
-    "@microsoft/api-extractor-model" "7.8.0"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.19.7"
+    "@rushstack/node-core-library" "3.20.0"
+
+"@microsoft/api-extractor@^7.3.8":
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.8.3.tgz#8c22504ffe23d3145883fd7b64b014dc08d60e18"
+  integrity sha512-IthBBkLcqbYobhNtn/6L6z/jACO06HvsYGC6saFWwxx5Fbiro6xaQApg0x9JFoM/aMnLHZ+ra8wgQC10BNSJow==
+  dependencies:
+    "@microsoft/api-extractor-model" "7.8.1"
+    "@microsoft/tsdoc" "0.12.19"
+    "@rushstack/node-core-library" "3.20.0"
     "@rushstack/ts-command-line" "4.4.0"
     colors "~1.2.1"
     lodash "~4.17.15"
@@ -2695,6 +2703,19 @@
   version "3.19.7"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.19.7.tgz#8d8a193fd6f99536c92dd797ab50fd5fcb7630ea"
   integrity sha512-gKE/OXH5GAj8yJ1kEyRW68UekJernilZ3QTRgmQ0MUHBCQmtZ9Q6T5PQ1sVbcL4teH8BMdpZeFy1DKnHs8h3PA==
+  dependencies:
+    "@types/node" "10.17.13"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    semver "~5.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
+"@rushstack/node-core-library@3.20.0":
+  version "3.20.0"
+  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.20.0.tgz#70edd0c992748a408a6dedff1721496539732a40"
+  integrity sha512-9QmJs8QYxESTz42CicNS9Im+4AWxXuow3Wej/FuDjBlNBt6jt99ZQL2RYgt+E20D3yBJ6OkzyBelBsMsj98ZdQ==
   dependencies:
     "@types/node" "10.17.13"
     colors "~1.2.1"
