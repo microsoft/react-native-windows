@@ -46,7 +46,7 @@
     },
     {
       "type": "derived",
-      "file": "Libraries\\Components\\CheckBox\\CheckBox.win32.tsx",
+      "file": "Libraries\\Components\\CheckBox\\CheckBox.win32.js",
       "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "7006aba4ecdfd27a213172ca92d1877b55729292",
@@ -67,11 +67,12 @@
       "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.tsx",
+      "type": "copy",
+      "file": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.js",
       "baseFile": "Libraries\\Components\\DrawerAndroid\\DrawerLayoutAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
+      "issue": 4378
     },
     {
       "type": "platform",
@@ -103,11 +104,12 @@
       "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.tsx",
+      "type": "copy",
+      "file": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.js",
       "baseFile": "Libraries\\Components\\ProgressBarAndroid\\ProgressBarAndroid.ios.js",
       "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
+      "issue": 4378
     },
     {
       "type": "derived",
@@ -125,10 +127,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "platform",
-      "file": "Libraries\\Components\\ScrollView\\RecyclerViewBackedScrollView.win32.tsx"
-    },
-    {
       "type": "patch",
       "file": "Libraries\\Components\\ScrollView\\ScrollView.win32.js",
       "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
@@ -137,11 +135,12 @@
       "issue": 4362
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.tsx",
+      "type": "copy",
+      "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.js",
       "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
       "baseVersion": "0.61.5",
-      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18"
+      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
+      "issue": 4378
     },
     {
       "type": "patch",
@@ -549,7 +548,7 @@
     },
     {
       "type": "derived",
-      "file": "RNTester\\js\\utils\\RNTesterList.win32.ts",
+      "file": "RNTester\\js\\utils\\RNTesterList.win32.js",
       "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "f1e77952c292fe2898645f81f280b64f8ea17b90",
