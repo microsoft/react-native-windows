@@ -97,9 +97,25 @@ void PropsAnimatedNode::UpdateView() {
   StartAnimations();
 }
 
+static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
+  auto compositeMode = uiElement.CompositeMode();
+  switch (compositeMode) {
+    case xaml::Media::ElementCompositeMode::SourceOver:
+    case xaml::Media::ElementCompositeMode::MinBlend:
+      uiElement.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
+      break;
+    default:
+      uiElement.CompositeMode(xaml::Media::ElementCompositeMode::SourceOver);
+      break;
+  }
+  uiElement.CompositeMode(compositeMode);
+}
+
 void PropsAnimatedNode::StartAnimations() {
   if (m_expressionAnimations.size()) {
     if (const auto uiElement = GetUIElement()) {
+      // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
+      EnsureUIElementDirtyForRender(uiElement);
       uiElement.RotationAxis(m_rotationAxis);
       for (const auto anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
