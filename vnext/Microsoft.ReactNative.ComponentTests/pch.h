@@ -18,6 +18,8 @@
 #include "motifCpp/gTestAdapter.h"
 #include "motifCpp/testCheck.h"
 
+#include "../Microsoft.ReactNative/Base//FollyIncludes.h"
+
 #ifndef CXXUNITTESTS
 #define CXXUNITTESTS
 #endif // CXXUNITTESTS
