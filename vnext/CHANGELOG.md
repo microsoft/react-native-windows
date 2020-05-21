@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 20 May 2020 00:04:49 GMT and should not be manually modified.
+This log was last generated on Thu, 21 May 2020 00:04:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.72
+
+Thu, 21 May 2020 00:04:53 GMT
+
+### Changes
+
+- deploy from layout (asklar@microsoft.com)
+- ReactNotificationService to allow communications between native modules (vmorozov@microsoft.com)
 
 ## 0.0.0-master.71
 
