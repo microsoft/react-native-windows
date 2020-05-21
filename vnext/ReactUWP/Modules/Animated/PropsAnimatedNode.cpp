@@ -114,6 +114,7 @@ static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
 void PropsAnimatedNode::StartAnimations() {
   if (m_expressionAnimations.size()) {
     if (const auto uiElement = GetUIElement()) {
+      // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
       EnsureUIElementDirtyForRender(uiElement);
       uiElement.RotationAxis(m_rotationAxis);
       for (const auto anim : m_expressionAnimations) {
