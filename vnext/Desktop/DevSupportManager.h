@@ -6,27 +6,23 @@
 #include <ppltasks.h>
 #undef U
 
+#include <cxxreact/JSExecutor.h>
 #include <IDevSupportManager.h>
 
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/system/error_code.hpp>
-#include <cxxreact/JSExecutor.h>
+namespace Microsoft::React {
 
-namespace facebook {
-namespace react {
+using JSECreator = std::function<std::unique_ptr<facebook::react::JSExecutor>(
+    std::shared_ptr<facebook::react::ExecutorDelegate>,
+    std::shared_ptr<facebook::react::MessageQueueThread>)>;
 
-using JSECreator =
-    std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>;
+//struct DevSettings;
 
-struct DevSettings;
-
-class DevSupportManager : public IDevSupportManager {
+class DevSupportManager : public facebook::react::IDevSupportManager {
  public:
   DevSupportManager();
   ~DevSupportManager();
 
-  virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) override;
+  virtual facebook::react::JSECreator LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) override;
   virtual std::string GetJavaScriptFromServer(
       const std::string &debugHost,
       const std::string &jsBundleName,
@@ -43,10 +39,7 @@ class DevSupportManager : public IDevSupportManager {
       const Concurrency::cancellation_token &token = Concurrency::cancellation_token::none());
 
   bool m_exceptionCaught = false;
-  boost::asio::io_context m_context;
-  boost::asio::ip::tcp::resolver m_resolver;
   Concurrency::cancellation_token_source m_liveReloadCts;
 };
 
-} // namespace react
-} // namespace facebook
+} // Microsoft::React
