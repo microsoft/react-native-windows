@@ -671,4 +671,9 @@
     </ItemGroup>
   </Target>
   <Target Name="Deploy" />
+  <Target Name="Preprocess">
+    <Message Condition="'$(Source)'!=''" Text="Preprocessing: $(Source)" />
+    <Error Condition="'$(Source)'==''" Text="To generate a pre-processed file, please specify a source file with msbuild /p:Source=nameOfTheSource.cpp" />
+    <CL PreprocessToFile="true" Sources="$(Source)" AdditionalIncludeDirectories="%(ClCompile.AdditionalIncludeDirectories)" PreprocessorDefinitions="%(ClCompile.PreprocessorDefinitions)" AdditionalOptions="%(ClCompile.AdditionalOptions) /d1PP" PreprocessKeepComments="true" PreprocessOutputPath="$(Source.Replace('.cpp', '.pp'))" />
+  </Target>
 </Project>
