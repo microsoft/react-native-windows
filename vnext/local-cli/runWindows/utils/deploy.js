@@ -258,7 +258,7 @@ async function deployToDesktop(options, verbose, slnFile) {
       slnFile,
       options.release ? 'Release' : 'Debug',
       options.arch,
-      null,
+      {DeployLayout: true},
       options.verbose,
       'Deploy',
     );
