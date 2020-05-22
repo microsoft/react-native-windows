@@ -21,8 +21,8 @@
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
   <Import Project="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
-          Condition="Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe')" />
-  <Target Name="Deploy">
+          Condition="Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
+  <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
     <Error Condition="!Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe')" 
            Text="You must first build the project before deploying it" />
     <Copy SourceFiles="%(AppxPackagedFile.Identity)" 
