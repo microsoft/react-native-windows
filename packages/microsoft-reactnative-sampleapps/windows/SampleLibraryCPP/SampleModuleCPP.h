@@ -10,7 +10,7 @@
 #include "DebugHelpers.h"
 #include "NativeModules.h"
 
-#define DEBUG_OUTPUT(...) DebugWriteLine("SampleModuleCppImpl", ##__VA_ARGS__);
+#define DEBUG_OUTPUT(...) DebugWriteLine("SampleLibraryCpp", ##__VA_ARGS__);
 
 namespace SampleLibraryCpp {
 
@@ -42,6 +42,7 @@ struct SampleModuleCppImpl {
     const ReactNotificationId<int> cppTimerNotification{L"SampleModuleCppImpl", L"TimerNotification"};
     const ReactNotificationId<int> csTimerNotification{L"SampleModuleCS", L"TimerNotification"};
 
+    // Note that all notification subscriptions are removed automatically when React instance is unloaded.
     reactContext.Notifications().Subscribe(csTimerNotification, [
     ](winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
       DEBUG_OUTPUT("C++ module, C# timer:", *args.Data());
@@ -254,6 +255,52 @@ struct SampleModuleCppImpl {
   winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};
   int m_timerCount{0};
   static constexpr std::chrono::milliseconds TimedEventInterval{5000};
+};
+
+// SampleSharedCppModule shows how to inherited native modules from std::enable_shared_from_this
+// to use weak_from_this() in event handlers. In this example we use notifications instead
+// of events just to show case the std::weak_ptr use.
+REACT_MODULE(SampleSharedCppModule);
+struct SampleSharedCppModule : std::enable_shared_from_this<SampleSharedCppModule> {
+  using IInspectable = winrt::Windows::Foundation::IInspectable;
+
+  // The Initialize method is called when React instance loaded JavaScript and the module is ready to use.
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const &reactContext) noexcept {
+    const ReactNotificationId<int> cppTimerNotification{L"SampleModuleCppImpl", L"TimerNotification"};
+    const ReactNotificationId<int> csTimerNotification{L"SampleModuleCS", L"TimerNotification"};
+
+    // Note that all notification subscriptions are removed automatically when React instance is unloaded.
+    reactContext.Notifications().Subscribe(
+        csTimerNotification,
+        [weakSelf = weak_from_this()](IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+          if (auto strongSelf = weakSelf.lock()) {
+            strongSelf->ReportCSTimer(*args.Data());
+          }
+        });
+
+    reactContext.Notifications().Subscribe(
+        csTimerNotification,
+        [weakSelf = weak_from_this()](IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+          if (auto strongSelf = weakSelf.lock()) {
+            strongSelf->ReportCppTimer(*args.Data());
+          }
+        });
+  }
+
+  void ReportCSTimer(int timerCount) noexcept {
+    DEBUG_OUTPUT("SampleSharedCppModule, C# timer:", timerCount);
+  }
+
+  void ReportCppTimer(int timerCount) noexcept {
+    DEBUG_OUTPUT("SampleSharedCppModule, C++ timer:", timerCount);
+  }
+
+  REACT_METHOD(SayHello)
+  std::string SayHello() noexcept {
+    // This method is currently unused
+    return "Hello";
+  }
 };
 
 } // namespace SampleLibraryCpp
