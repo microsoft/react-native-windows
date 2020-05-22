@@ -2430,14 +2430,6 @@
     js-yaml "~3.13.1"
     resolve "1.8.1"
 
-"@microsoft/api-extractor-model@7.8.1":
-  version "7.8.1"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.1.tgz#fbabe95c20a26f4091caffd3ab841107c1ce38fe"
-  integrity sha512-tncmZU6O4dbNCMDqJR4ApIooWRkpMS72aT5+Agm2ztlKbLrtNZ2IUhr5qjnSdcN552q5IoOHdTBvnj/DM1wPhg==
-  dependencies:
-    "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.20.0"
-
 "@microsoft/api-extractor-model@7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.3.tgz#6b2f92107bb8d10de478dda40f5bab0acae03a1b"
@@ -2447,13 +2439,13 @@
     "@rushstack/node-core-library" "3.22.0"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.8.3.tgz#8c22504ffe23d3145883fd7b64b014dc08d60e18"
-  integrity sha512-IthBBkLcqbYobhNtn/6L6z/jACO06HvsYGC6saFWwxx5Fbiro6xaQApg0x9JFoM/aMnLHZ+ra8wgQC10BNSJow==
+  version "7.8.5"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.8.5.tgz#e266ec9fc57682cdafaf14d3bf9aaf9e140d6101"
+  integrity sha512-7XOAg2/ZTEoHeUP2BR8qr9oRNQqNSBeIBwyAfuY+uVCG9uOaTEh4fN/jrrCgCg3O1yeCTljNfzsixEiveRLppg==
   dependencies:
-    "@microsoft/api-extractor-model" "7.8.1"
+    "@microsoft/api-extractor-model" "7.8.3"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.20.0"
+    "@rushstack/node-core-library" "3.22.0"
     "@rushstack/ts-command-line" "4.4.0"
     colors "~1.2.1"
     lodash "~4.17.15"
@@ -2698,19 +2690,6 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
-
-"@rushstack/node-core-library@3.20.0":
-  version "3.20.0"
-  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.20.0.tgz#70edd0c992748a408a6dedff1721496539732a40"
-  integrity sha512-9QmJs8QYxESTz42CicNS9Im+4AWxXuow3Wej/FuDjBlNBt6jt99ZQL2RYgt+E20D3yBJ6OkzyBelBsMsj98ZdQ==
-  dependencies:
-    "@types/node" "10.17.13"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~5.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
 
 "@rushstack/node-core-library@3.22.0":
   version "3.22.0"
