@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <winrt/facebook.react.h>
 #include <vector>
-#include "ActivationFactory.h"
 
 using namespace winrt::facebook::react;
 using namespace winrt;

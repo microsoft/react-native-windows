@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#include "ActivationFactory.h"
 #include "MockReactPackageProvider.h"
 
 using namespace winrt::Microsoft::ReactNative;

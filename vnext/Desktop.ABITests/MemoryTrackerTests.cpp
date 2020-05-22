@@ -5,7 +5,6 @@
 #include <winrt/base.h>
 #include <winrt/facebook.react.h>
 
-#include "ActivationFactory.h"
 #include "SimpleMessageQueue.h"
 
 using namespace winrt::facebook::react;
