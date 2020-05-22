@@ -387,7 +387,12 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
       if (auto strongThis = weakThis.GetStrongPtr()) {
         if (!strongThis->m_isLoaded) {
           strongThis->m_isLoaded = true;
-          strongThis->m_state = ReactInstanceState::Loaded;
+          if (!errorCode) {
+            strongThis->m_state = ReactInstanceState::Loaded;
+          } else {
+            strongThis->m_state = ReactInstanceState::HasError;
+          }
+
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
             onLoaded->Invoke(*strongThis, errorCode);
           }
