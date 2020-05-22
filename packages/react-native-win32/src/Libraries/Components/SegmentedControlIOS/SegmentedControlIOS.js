@@ -14,12 +14,12 @@ const StyleSheet = require('../../StyleSheet/StyleSheet');
 const Text = require('../../Text/Text');
 const View = require('../View/View');
 
-class DummyDatePickerIOS extends React.Component {
+class DummySegmentedControlIOS extends React.Component {
   render() {
     return (
-      <View style={[styles.dummyDatePickerIOS, this.props.style]}>
-        <Text style={styles.datePickerText}>
-          DatePickerIOS is not supported on this platform!
+      <View style={[styles.dummy, this.props.style]}>
+        <Text style={styles.text}>
+          SegmentedControlIOS is not supported on this platform!
         </Text>
       </View>
     );
@@ -27,20 +27,20 @@ class DummyDatePickerIOS extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  dummyDatePickerIOS: {
-    height: 100,
-    width: 300,
+  dummy: {
+    width: 120,
+    height: 50,
     backgroundColor: '#ffbcbc',
     borderWidth: 1,
     borderColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
   },
-  datePickerText: {
+  text: {
     color: '#333333',
-    margin: 20,
+    margin: 5,
+    fontSize: 10,
   },
 });
 
-module.exports = DummyDatePickerIOS;
+module.exports = DummySegmentedControlIOS;

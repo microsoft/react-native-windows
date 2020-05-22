@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @format
- * @flow strict-local
  */
+
+// This is a controlled component version of RCTPickerIOS.
 
 'use strict';
 
