@@ -64,8 +64,8 @@ string DevSupportManager::GetJavaScriptFromServer(
   HttpRequestMessage request(HttpMethod::Get(), uri);
   HttpResponseMessage response = client.SendRequestAsync(request).get();
 
-  IBuffer buffer0 = response.Content().ReadAsBufferAsync().get();
-  auto reader = DataReader::FromBuffer(buffer0);
+  IBuffer buffer = response.Content().ReadAsBufferAsync().get();
+  auto reader = DataReader::FromBuffer(buffer);
   reader.UnicodeEncoding(UnicodeEncoding::Utf8);
   auto length = reader.UnconsumedBufferLength();
   string result;
