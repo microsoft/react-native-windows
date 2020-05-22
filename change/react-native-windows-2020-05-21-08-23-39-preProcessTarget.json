@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "dont overwrite msbuild log when deploying",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-21T15:23:39.938Z"
-}

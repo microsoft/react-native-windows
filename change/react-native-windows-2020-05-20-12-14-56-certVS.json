@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Work around regression in app packaging in VS 16.5-16.6",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-20T19:14:55.769Z"
-}
