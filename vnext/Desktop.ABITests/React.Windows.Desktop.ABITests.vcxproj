@@ -90,6 +90,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.vcxproj">
+      <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
       <Project>{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}</Project>
     </ProjectReference>
@@ -132,12 +135,14 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
+    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll"/>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
     <ClCompile Include="MessageQueueShim.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
-    <ClCompile Include="ActivationFactory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -151,6 +156,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <Manifest Include="Application.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

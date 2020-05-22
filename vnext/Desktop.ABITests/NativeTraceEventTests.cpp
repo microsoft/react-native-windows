@@ -81,10 +81,6 @@ TEST_CLASS (NativeTraceEventTests) {
   };
 
  public:
-  NativeTraceEventTests() noexcept {
-    winrt_activation_handler = WINRT_RoGetActivationFactory;
-  }
-
   TEST_METHOD(NativeTraceEventHandler_Registered) {
     init_apartment(winrt::apartment_type::single_threaded);
 
