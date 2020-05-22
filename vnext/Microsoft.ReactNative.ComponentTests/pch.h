@@ -4,7 +4,6 @@
 #pragma once
 
 #define NOGDI
-#define NOMINMAX
 
 #include <unknwn.h>
 
@@ -18,7 +17,7 @@
 #include "motifCpp/gTestAdapter.h"
 #include "motifCpp/testCheck.h"
 
-#include "../Microsoft.ReactNative/Base//FollyIncludes.h"
+#include "../Microsoft.ReactNative/Base/FollyIncludes.h"
 
 #ifndef CXXUNITTESTS
 #define CXXUNITTESTS
