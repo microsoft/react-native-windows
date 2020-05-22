@@ -5,7 +5,6 @@
 #include <winrt/facebook.react.h>
 #include <functional>
 #include <stack>
-#include "ActivationFactory.h"
 
 using namespace winrt::facebook::react;
 using namespace winrt;

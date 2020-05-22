@@ -90,9 +90,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.vcxproj">
-      <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
       <Project>{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}</Project>
     </ProjectReference>
@@ -116,25 +113,11 @@
       </CppWinRTDynamicProjectWinMDReferences>
     </ItemGroup>
   </Target>
-  <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
-    <!--
-    During test execution, we need to find react-native-win32.dll which has been built into a
-    different target folder. The 'GetRNDllPath' build target passes the path to the DLL as a macro
-    (RNDLLPATH) into the test code where it is intended to be used in a LoadLibrary call.
-    -->
-    <MSBuild Projects="%(ProjectReference.Identity)" Targets="GetTargetFileName" Condition="$([System.String]::Copy('%(ProjectReference.Filename)').Contains('React.Windows.Desktop.DLL'))">
-      <Output TaskParameter="TargetOutputs" PropertyName="_RNDllPath" />
-    </MSBuild>
-    <!-- It seems that the CL task takes preprocessor definitions only from ClCompile.PreprocessorDefinitions item metadata. -->
-    <ItemGroup>
-      <_ClCompileTemp Include="@(ClCompile)" />
-      <ClCompile Remove="@(ClCompile)" />
-      <ClCompile Include="@(_ClCompileTemp)">
-        <PreprocessorDefinitions>RNDLLPATH=LR"($(_RNDllPath))";%(_ClCompileTemp.PreprocessorDefinitions)</PreprocessorDefinitions>
-      </ClCompile>
-    </ItemGroup>
-  </Target>
   <ItemGroup>
+    <!--
+    Used by the 'CopyFilesToOutputDirectory' target (more specifically, its '_CopyFilesMarkedCopyLocal' dependency')
+    to co-locate dependencies with the test binary.
+     -->
     <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll"/>
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MessageQueueShim.h" />
-    <ClInclude Include="ActivationFactory.h" />
     <ClInclude Include="MockReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

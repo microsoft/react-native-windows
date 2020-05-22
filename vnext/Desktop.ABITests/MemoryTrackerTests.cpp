@@ -6,7 +6,6 @@
 #include <winrt/base.h>
 #include <winrt/facebook.react.h>
 
-#include "ActivationFactory.h"
 #include "MessageQueueShim.h"
 
 using namespace Microsoft::React::Test;
