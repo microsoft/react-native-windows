@@ -1,5 +1,5 @@
 {
-  "name": "react-native-windows-override-tools",
+  "name": "react-native-windows-override",
   "version": "0.0.1",
   "description": "Tooling to manage Javascript file overrides in React Native Windows",
   "private": true,
@@ -7,7 +7,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
-    "directory": "packages/override-tools"
+    "directory": "packages/react-native-windows-override"
   },
   "scripts": {
     "build": "just-scripts build",
@@ -18,7 +18,7 @@
     "watch": "tsc -w"
   },
   "bin": {
-    "override": "./bin.js"
+    "react-native-windows-override": "./bin.js"
   },
   "dependencies": {
     "chalk": "^3.0.0",

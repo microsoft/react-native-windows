@@ -122,10 +122,16 @@ packages/
 #Other files
 *.DotSettings
 .vs/
-.vscode/
 *project.lock.json
 jsconfig.json
 package-lock.json
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 #JavaScript files
 *.jsbundle
