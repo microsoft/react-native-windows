@@ -1,31 +1,18 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @format
+ * @flow
  */
+
 'use strict';
-import React = require('react');
 
-interface IRNTesterExample {
-  key: string;
-  // tslint:disable-next-line no-reserved-keywords
-  module: IRNTesterModule;
-}
+import type {RNTesterExample} from '../types/RNTesterTypes';
 
-interface IRNTesterModule {
-  title: string;
-  description: string;
-  external: boolean;
-  examples: [IRNTesterModuleExample];
-}
-
-interface IRNTesterModuleExample {
-  title: string;
-  description: string;
-  render(): React.Component;
-}
-
-const ComponentExamples: Array<IRNTesterExample> = [
+const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'TouchableWin32Example',
     module: require('../../../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
@@ -57,10 +44,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'PickerExample',
     module: require('react-native/RNTester/js/examples/Picker/PickerExample'),
-  }
+  },
 ];
 
-const APIExamples: Array<IRNTesterExample> = [
+const APIExamples: Array<RNTesterExample> = [
   {
     key: 'AccessibilityExampleWin32',
     module: require('../../APIExamples/AccessibilityExampleWin32'),
@@ -87,9 +74,9 @@ const APIExamples: Array<IRNTesterExample> = [
   },
 ];
 
-const Modules: {[key: string]: IRNTesterModule} = {};
+const Modules: {...} = {};
 
-APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
+APIExamples.concat(ComponentExamples).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 
@@ -99,4 +86,4 @@ const RNTesterList = {
   Modules,
 };
 
-export = RNTesterList;
+module.exports = RNTesterList;
