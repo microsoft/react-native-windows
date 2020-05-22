@@ -24,7 +24,6 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters>
-
     <!--
     Cppwinrt.exe derives the names of the source files it generates from the $(RootNamespace)
     property. Currently, the value of this property differs between the 'Microsoft.ReactNative' and
@@ -34,7 +33,6 @@
     homogenize the root namespace for C++/WinRT code generation.
     -->
     <CppWinRTRootNamespace>Microsoft.ReactNative</CppWinRTRootNamespace>
-
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
     <ProjectName>React.Windows.Desktop</ProjectName>
@@ -122,6 +120,8 @@
     <Midl Include="..\Microsoft.ReactNative\IReactContext.idl" />
     <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
@@ -147,6 +147,7 @@
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
@@ -158,7 +159,6 @@
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
-    <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
@@ -189,7 +189,6 @@
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="Executors\WebSocketJSExecutor.h" />
-    <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
@@ -232,7 +231,6 @@
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
-
   <!-- See $(CppWinRTRootNamespace) comments above. -->
   <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
     <PropertyGroup>
@@ -240,15 +238,13 @@
       <RootNamespace>$(CppWinRTRootNamespace)</RootNamespace>
     </PropertyGroup>
   </Target>
-
   <!-- See $(CppWinRTRootNamespace) comments above. -->
   <Target Name="CppWinRTRestoreRootNamespace" AfterTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
     <PropertyGroup>
       <RootNamespace>$(_CppWinRTOriginalRootNamespace)</RootNamespace>
-      <_CppWinRTOriginalRootNamespace/>
+      <_CppWinRTOriginalRootNamespace />
     </PropertyGroup>
   </Target>
-
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

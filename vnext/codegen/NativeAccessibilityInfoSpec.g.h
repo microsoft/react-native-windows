@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<JSValue>) noexcept>{0, L"isReduceMotionEnabled"},
-      Method<void(Callback<JSValue>) noexcept>{1, L"isTouchExplorationEnabled"},
+      Method<void(Callback<React::JSValue>) noexcept>{0, L"isReduceMotionEnabled"},
+      Method<void(Callback<React::JSValue>) noexcept>{1, L"isTouchExplorationEnabled"},
       Method<void(double) noexcept>{2, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{3, L"announceForAccessibility"},
   };

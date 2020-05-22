@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Copyright (c) Microsoft Corporation. All rights reserved.
- Licensed under the MIT License.. 
+  Licensed under the MIT License.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
@@ -19,4 +19,18 @@
   </ItemGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
+
+  <Import Project="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
+          Condition="Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
+  <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
+    <Error Condition="!Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe')" 
+           Text="You must first build the project before deploying it" />
+    <Copy SourceFiles="%(AppxPackagedFile.Identity)" 
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
+    <Copy SourceFiles="%(AppXManifest.Identity)" 
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxManifest.PackagePath)" 
+          Condition="'%(AppxManifest.SubType)'!='Designer'"/>
+    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)\$(OutputPath)Appx\AppxManifest.xml" 
+          ContinueOnError="false" />
+  </Target>
 </Project>

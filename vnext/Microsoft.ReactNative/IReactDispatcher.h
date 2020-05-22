@@ -7,7 +7,7 @@
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Microsoft.ReactNative.h>
 
-namespace winrt::Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
   ReactDispatcher() = default;
@@ -15,6 +15,8 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
 
   bool HasThreadAccess() noexcept;
   void Post(ReactDispatcherCallback const &callback) noexcept;
+
+  static IReactDispatcher CreateSerialDispatcher() noexcept;
 
   static Mso::DispatchQueue GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept;
 
@@ -27,12 +29,12 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
   Mso::DispatchQueue m_queue;
 };
 
-} // namespace winrt::Microsoft::ReactNative
-
-namespace winrt::Microsoft::ReactNative::implementation {
-
 struct ReactDispatcherHelper {
   ReactDispatcherHelper() = default;
+
+  static IReactDispatcher CreateSerialDispatcher() noexcept {
+    return ReactDispatcher::CreateSerialDispatcher();
+  }
 
   static IReactDispatcher UIThreadDispatcher() noexcept {
     return ReactDispatcher::UIThreadDispatcher();

@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 20 May 2020 00:04:49 GMT and should not be manually modified.
+This log was last generated on Fri, 22 May 2020 00:05:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.73
+
+Fri, 22 May 2020 00:05:31 GMT
+
+### Changes
+
+- Work around regression in app packaging in VS 16.5-16.6 (asklar@microsoft.com)
+- Do not emit click events for buttons other than left. (igklemen@microsoft.com)
+- Fixed Microsoft.ReactNative build in VS 16.6.0 (vmorozov@microsoft.com)
+- fix for animation bug (kmelmon@microsoft.com)
+- dont overwrite msbuild log when deploying (asklar@microsoft.com)
+- Fix spacing and extra dot in copyright of the property sheets (dannyvv@microsoft.com)
+- Standardize version of Microsoft.NETCore.UniversalWindowsPlatform to 6.2.9 (dannyvv@microsoft.com)
+- Remove unneeded reference form Microsoft.ReactNative.Managed (dannyvv@microsoft.com)
+
+## 0.0.0-master.72
+
+Thu, 21 May 2020 00:04:53 GMT
+
+### Changes
+
+- deploy from layout (asklar@microsoft.com)
+- ReactNotificationService to allow communications between native modules (vmorozov@microsoft.com)
 
 ## 0.0.0-master.71
 

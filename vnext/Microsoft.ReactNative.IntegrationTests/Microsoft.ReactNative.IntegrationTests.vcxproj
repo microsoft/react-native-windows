@@ -108,6 +108,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ReactNonAbiValueTests.cpp" />
+    <ClCompile Include="ReactNotificationServiceTests.cpp" />
     <ClCompile Include="ReactPropertyBagTests.cpp" />
     <ClCompile Include="ReactNativeHostTests.cpp" />
     <ClCompile Include="main.cpp" />

@@ -307,6 +307,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public IReactPropertyBag Properties { get; } = ReactPropertyBagHelper.CreatePropertyBag();
 
+    public IReactNotificationService Notifications { get; } = ReactNotificationServiceHelper.CreateNotificationService();
+
     public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
     {
       throw new NotImplementedException();

@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 May 2020 00:05:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.73",
+      "version": "0.0.0-master.73",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Work around regression in app packaging in VS 16.5-16.6",
+            "author": "asklar@microsoft.com",
+            "commit": "8253a685dec0915fd60f169975be45891df00660",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Do not emit click events for buttons other than left.",
+            "author": "igklemen@microsoft.com",
+            "commit": "2ce41cfb5ac8c3c0e5f283b5df5a31524440d840",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed Microsoft.ReactNative build in VS 16.6.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "70baa5fd803a08c6fb2b673d78f18cecf953f146",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix for animation bug",
+            "author": "kmelmon@microsoft.com",
+            "commit": "1fe030aa07bb6c7eb901b345358c5f1666b9eddf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "dont overwrite msbuild log when deploying",
+            "author": "asklar@microsoft.com",
+            "commit": "7df439c40edf1bcf81a3a1246cd6afbf027f12d9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix spacing and extra dot in copyright of the property sheets",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1ffc221165ebdf97b17ad9244c1f82488fbd385e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Standardize version of Microsoft.NETCore.UniversalWindowsPlatform to 6.2.9",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7da2d4e4d29a1475a8912565b9746114e85555ae",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unneeded reference form Microsoft.ReactNative.Managed",
+            "author": "dannyvv@microsoft.com",
+            "commit": "68b39682fd0d636ee8a1be676e9541173ce633ee",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 May 2020 00:04:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.72",
+      "version": "0.0.0-master.72",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "deploy from layout",
+            "author": "asklar@microsoft.com",
+            "commit": "b3fc68fd8ea6f85dbc3bfdc92dc8063dc9edbc17",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNotificationService to allow communications between native modules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "baba475929e6d32eadd3302252fe7ea77788c5fa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 May 2020 00:04:49 GMT",
       "tag": "react-native-windows_v0.0.0-master.71",
       "version": "0.0.0-master.71",

@@ -10,7 +10,8 @@ namespace Microsoft.ReactNative {
   // Namespace for the property name.
   // Use ReactPropertyBagHelper.GetNamespace to get atomic property namespace for a string.
   [webhosthidden]
-  interface IReactPropertyNamespace {
+  interface IReactPropertyNamespace
+  {
     // Get String name representation of the property namespace.
     String NamespaceName { get; };
   }
@@ -18,7 +19,8 @@ namespace Microsoft.ReactNative {
   // Name of a property.
   // Use ReactPropertyBagHelper.GetName to get atomic property name for a string.
   [webhosthidden]
-  interface IReactPropertyName {
+  interface IReactPropertyName
+  {
     // The local property name String in context of the property namespace.
     String LocalName { get; };
 
@@ -53,7 +55,8 @@ namespace Microsoft.ReactNative {
 
   // Helper methods for the property bag implementation.
   [webhosthidden]
-  static runtimeclass ReactPropertyBagHelper {
+  static runtimeclass ReactPropertyBagHelper
+  {
     // Return a global namespace that corresponds to an empty string.
     static IReactPropertyNamespace GlobalNamespace { get; };
 

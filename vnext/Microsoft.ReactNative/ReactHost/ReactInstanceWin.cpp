@@ -11,10 +11,13 @@
 #include <Threading/MessageDispatchQueue.h>
 #include "ReactErrorProvider.h"
 
+#include "Microsoft.ReactNative/IReactNotificationService.h"
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
+#include "../../codegen/NativeAppStateSpec.g.h"
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
+#include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -22,9 +25,10 @@
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "IReactDispatcher.h"
-#include "Modules/AppStateData.h"
+#include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
+#include "Modules/DeviceInfoModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -59,6 +63,8 @@ std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
 
 } // namespace react::uwp
 
+using namespace winrt::Microsoft::ReactNative;
+
 namespace Mso::React {
 
 //=============================================================================================
@@ -67,11 +73,22 @@ namespace Mso::React {
 
 ReactContext::ReactContext(
     Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept
-    : m_reactInstance{std::move(reactInstance)}, m_properties{properties} {}
+    IReactPropertyBag const &properties,
+    IReactNotificationService const &notifications) noexcept
+    : m_reactInstance{std::move(reactInstance)}, m_properties{properties}, m_notifications{notifications} {}
 
-winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() noexcept {
+void ReactContext::Destroy() noexcept {
+  if (auto notificationService = winrt::get_self<implementation::ReactNotificationService>(m_notifications)) {
+    notificationService->UnsubscribeAll();
+  }
+}
+
+IReactPropertyBag ReactContext::Properties() noexcept {
   return m_properties;
+}
+
+IReactNotificationService ReactContext::Notifications() noexcept {
+  return m_notifications;
 }
 
 void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
@@ -133,7 +150,10 @@ ReactInstanceWin::ReactInstanceWin(
       m_whenCreated{std::move(whenCreated)},
       m_whenLoaded{std::move(whenLoaded)},
       m_updateUI{std::move(updateUI)},
-      m_reactContext{Mso::Make<ReactContext>(this, options.Properties)},
+      m_reactContext{Mso::Make<ReactContext>(
+          this,
+          options.Properties,
+          winrt::make<implementation::ReactNotificationService>(options.Notifications))},
       m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(
           Mso::WeakPtr<Mso::React::IReactInstance>{this},
           Mso::Copy(options.LegacySettings))} {
@@ -160,12 +180,13 @@ void ReactInstanceWin::Initialize() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto const &legacyInstance = strongThis->m_legacyReactInstance;
-          strongThis->m_deviceInfo = std::make_shared<react::uwp::DeviceInfo>(legacyInstance);
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           react::uwp::I18nHelper().Instance().setInfo(react::uwp::I18nModule::GetI18nInfo());
           strongThis->m_appearanceListener =
               Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance, strongThis->m_uiQueue);
+          ::Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
+              winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
         }
       })
       .Then(Queue(), [ this, weakThis = Mso::WeakPtr{this} ]() noexcept {
@@ -201,20 +222,22 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
-          m_appState = std::make_shared<react::uwp::AppState2>(*m_reactContext, m_uiQueue);
-
           // Acquire default modules and then populate with custom modules
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
-              std::move(m_deviceInfo),
-              std::move(m_appState),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
               m_legacyReactInstance);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
+          nmp->AddModuleProvider(
+              L"AppState",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::AppState,
+                  ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
           nmp->AddModuleProvider(
               L"Clipboard",
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
@@ -227,6 +250,12 @@ void ReactInstanceWin::Initialize() noexcept {
                   reactHost->ReloadInstance();
                 }
               });
+
+          nmp->AddModuleProvider(
+              L"DeviceInfo",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::DeviceInfo,
+                  ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
 
           nmp->AddModuleProvider(
               L"DevSettings",
@@ -390,7 +419,12 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
       if (auto strongThis = weakThis.GetStrongPtr()) {
         if (!strongThis->m_isLoaded) {
           strongThis->m_isLoaded = true;
-          strongThis->m_state = ReactInstanceState::Loaded;
+          if (!errorCode) {
+            strongThis->m_state = ReactInstanceState::Loaded;
+          } else {
+            strongThis->m_state = ReactInstanceState::HasError;
+          }
+
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
             onLoaded->Invoke(*strongThis, errorCode);
           }
@@ -459,7 +493,7 @@ void ReactInstanceWin::InitNativeMessageThread() noexcept {
 
 void ReactInstanceWin::InitUIMessageThread() noexcept {
   // Native queue was already given us in constructor.
-  m_uiQueue = winrt::Microsoft::ReactNative::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
+  m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
