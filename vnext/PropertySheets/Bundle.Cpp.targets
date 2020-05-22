@@ -10,10 +10,10 @@
     <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != '' and '$(BundleContentRoot)' != '' ">
       <BundleContentToBePackaged Include="$(BundleContent)" />
       <None Include="@(BundleContentToBePackaged)">
-        <Link>$([MSBuild]::MakeRelative($(ProjectDir),'$(BundleContentRoot)\%(RecursiveDir)%(Filename)%(Extension)'))</Link>
+        <Link>$([MSBuild]::MakeRelative($(ProjectDir),'$(BundleContentRoot)%(RecursiveDir)%(Filename)%(Extension)'))</Link>
         <DeploymentContent>true</DeploymentContent>
       </None>
-   </ItemGroup>
+    </ItemGroup>
   </Target>
 
   <ItemDefinitionGroup Condition=" '$(UseBundle)' == 'true' ">

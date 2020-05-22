@@ -15,16 +15,16 @@
     <UseBundle Condition=" '$(Configuration)' == 'Release' and '$(UseBundle)' == '' ">true</UseBundle>
 
     <!-- Root directory where bundle assets will be copied to, be sure to update BundleContent if you change this -->
-    <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">$([MSBuild]::NormalizeDirectory('$(ProjectDir)\Bundle'))</BundleContentRoot>
+    <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">$([MSBuild]::NormalizeDirectory('$(ProjectDir)Bundle'))</BundleContentRoot>
 
     <!-- Files included in BundleContent will be included in the application install - by default this includes the bundle file, and assets from the bundler  -->
-    <BundleContent Condition=" '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)\**\*</BundleContent>
+    <BundleContent Condition=" '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)**\*</BundleContent>
 
     <!-- The name of the JS bundle assert to be placed in $(BundleOutputPath)-->
     <BundleAssetName Condition="'$(BundleAssetName)' == ''">index.windows.bundle</BundleAssetName>
 
     <!-- Where should be final JS bundle be written to -->
-    <BundleOutputPath Condition="'$(BundleOutputPath)' == ''">$([MSBuild]::NormalizeDirectory('$(ProjectDir)\Bundle'))</BundleOutputPath>
+    <BundleOutputPath Condition="'$(BundleOutputPath)' == ''">$([MSBuild]::NormalizeDirectory('$(ProjectDir)Bundle'))</BundleOutputPath>
 
     <!-- Should the bundle created be a dev bundle -->
     <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' == 'Debug'">true</UseDevBundle>
@@ -40,14 +40,14 @@
     <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</BundleCommandWorkingDir>
 
     <!-- Entry file of the JS bundle. Defaults to use index.windows.js if it exists, otherwise index.js -->
-    <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
+    <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)index.windows.js')">index.windows.js</BundleEntryFile>
     <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
 
     <!-- Optional config file for the bundle command (metro will use metro.config.js by default) -->
     <BundleConfigFile Condition="'$(BundleConfigFile)' == ''"></BundleConfigFile>
 
     <!-- Location where source map file for the JS bundle will be created -->
-    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$(OutDir)\sourcemaps\react</BundleSourceMapDir>
+    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$(OutDir)sourcemaps\react</BundleSourceMapDir>
 
   </PropertyGroup>
 

@@ -77,18 +77,14 @@
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
-        _WINSOCK_DEPRECATED_NO_WARNINGS;
-        _WIN32_WINNT=$(WinVer);
+        _WINSOCK_DEPRECATED_NO_WARNINGS; _WIN32_WINNT=$(WinVer);
         WIN32;
         CORE_ABI;
         _WINDOWS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
-        RN_PLATFORM=win32;
-        RN_EXPORT=;
-        JSI_EXPORT=;
+        CHAKRACORE; RN_PLATFORM=win32; RN_EXPORT=; JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories>
@@ -129,23 +125,23 @@
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
       <DependentUpon>ABI\MemoryTracker.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+      <ObjectFileName>$(IntDir)ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+      <ObjectFileName>$(IntDir)ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\NativeLogEventSource.cpp">
       <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+      <ObjectFileName>$(IntDir)ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+      <ObjectFileName>$(IntDir)ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+      <ObjectFileName>$(IntDir)ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />

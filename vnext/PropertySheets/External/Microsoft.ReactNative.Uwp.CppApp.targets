@@ -13,19 +13,14 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Bundle.Cpp.targets"/>
-  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
+  <Import Project="$(ProjectDir)AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)AutolinkedNativeModules.g.targets')" />
 
-  <Import Project="$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
-          Condition="Exists('$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
-  <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
-    <Error Condition="!Exists('$(OutputPath)\$(AssemblyName).Build.appxrecipe')" 
-           Text="You must first build the project before deploying it" />
-    <Copy SourceFiles="%(AppxPackagedFile.Identity)" 
-          DestinationFiles="$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
-    <Copy SourceFiles="%(AppXManifest.Identity)" 
-          DestinationFiles="$(OutputPath)Appx\%(AppxManifest.PackagePath)" 
-          Condition="'%(AppxManifest.SubType)'!='Designer'"/>
-    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(OutputPath)Appx\AppxManifest.xml" 
-          ContinueOnError="false" />
+  <Import Project="$(OutputPath)$(AssemblyName).Build.appxrecipe" Condition="Exists('$(OutputPath)$(AssemblyName).Build.appxrecipe')" />
+  <Target Name="Deploy">
+    <Message Text="OutputPath=$(OutputPath)" />
+    <Error Condition="!Exists('$(OutputPath)$(AssemblyName).Build.appxrecipe')" Text="You must first build the project before deploying it" />
+    <Copy SourceFiles="%(AppxPackagedFile.Identity)" DestinationFiles="$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
+    <Copy SourceFiles="%(AppXManifest.Identity)" DestinationFiles="$(OutputPath)Appx\%(AppxManifest.PackagePath)" Condition="'%(AppxManifest.SubType)'!='Designer'"/>
+    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(OutputPath)Appx\AppxManifest.xml" ContinueOnError="false" />
   </Target>
 </Project>

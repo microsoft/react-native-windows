@@ -73,7 +73,7 @@
     <ClCompile Include="$(FollyDir)folly\container\detail\F14Table.cpp" />
     <ClCompile Include="$(FollyDir)folly\Conv.cpp" />
     <ClCompile Include="$(FollyDir)folly\portability\string.cpp">
-      <ObjectFileName>$(IntDir)\potabilityString.obj</ObjectFileName>
+      <ObjectFileName>$(IntDir)potabilityString.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(FollyDir)folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)folly\dynamic.cpp" />

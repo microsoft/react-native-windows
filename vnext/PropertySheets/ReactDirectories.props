@@ -16,16 +16,16 @@
     <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
 
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
-    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
-    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)\</BaseIntDir>
+    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\</BaseOutDir>
+    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)\</BaseOutDir>
 
-    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <IntDir>$(BaseIntDir)$(ProjectName)\</IntDir>
+    <OutDir>$(BaseOutDir)$(ProjectName)\</OutDir>
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)\react-native-patched\</ReactNativeDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)react-native-patched\</ReactNativeDir>
 
     <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)ReactCommon\yoga</YogaDir>
 
