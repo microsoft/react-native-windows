@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct DevLoadingViewSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, JSValueObject, JSValueObject) noexcept>{0, L"showMessage"},
+      Method<void(std::string, React::JSValueObject, React::JSValueObject) noexcept>{0, L"showMessage"},
       Method<void() noexcept>{1, L"hide"},
   };
 

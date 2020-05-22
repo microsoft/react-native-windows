@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Move DeviceInfo and AppState to new native module impl",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-22T18:23:29.688Z"
+}
