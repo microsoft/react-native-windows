@@ -80,7 +80,7 @@ string DevSupportManager::GetJavaScriptFromServer(
   } else {
     m_exceptionCaught = true;
     ostringstream stream;
-    stream << R"({"error":)" << static_cast<int>(response.StatusCode()) << " downloading " << bundleUrl << R"("})";
+    stream << R"({"error":")" << static_cast<int>(response.StatusCode()) << " downloading " << bundleUrl << R"("})";
     result = stream.str();
   }
 
