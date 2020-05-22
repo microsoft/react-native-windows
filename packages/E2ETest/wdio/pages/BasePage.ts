@@ -9,6 +9,7 @@ import {
 } from '../../app/Consts';
 
 export function By(testId: string): WebdriverIO.Element {
+  // eslint-disable-next-line no-undef
   return $('~' + testId);
 }
 
@@ -24,6 +25,7 @@ export class BasePage {
   }
 
   waitForPageLoaded(timeout?: number) {
+    // eslint-disable-next-line no-undef
     browser.waitUntil(
       () => {
         return this.isPagedLoadedOrLoadBundleError();
@@ -56,7 +58,9 @@ export class BasePage {
   }
 
   protected timeoutForPageLoaded(currentTimeout?: number) {
-    if (currentTimeout) return currentTimeout;
+    if (currentTimeout) {
+      return currentTimeout;
+    }
     return this.waitforPageTimeout;
   }
 
