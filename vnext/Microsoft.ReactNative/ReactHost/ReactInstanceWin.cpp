@@ -15,8 +15,8 @@
 
 #include "../../codegen/NativeAppStateSpec.g.h"
 #include "../../codegen/NativeClipboardSpec.g.h"
-#include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
+#include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -26,8 +26,8 @@
 #include "IReactDispatcher.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
-#include "Modules/DeviceInfoModule.h"
 #include "Modules/DevSettingsModule.h"
+#include "Modules/DeviceInfoModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -168,6 +168,8 @@ void ReactInstanceWin::Initialize() noexcept {
           react::uwp::I18nHelper().Instance().setInfo(react::uwp::I18nModule::GetI18nInfo());
           strongThis->m_appearanceListener =
               Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance, strongThis->m_uiQueue);
+          ::Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
+              winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
         }
       })
       .Then(Queue(), [ this, weakThis = Mso::WeakPtr{this} ]() noexcept {

@@ -9,20 +9,48 @@
 
 namespace Microsoft::ReactNative {
 
+// Since DeviceInfo provides constants that require the UI thread, we need to initialize it before the module creation
+// (module creation can happen on background thread)
+// DeviceInfoHolder is created on the UI thread and stored in the PropertyBag so that the DeviceInfo module can return
+// the constants synchronously.
+struct DeviceInfoHolder {
+  DeviceInfoHolder();
+
+  static void SetCallback(
+      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
+      Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
+  static void InitDeviceInfoHolder(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
+  static React::JSValueObject GetDimensions(
+      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
+
+ private:
+  React::JSValueObject getDimensions() noexcept;
+  void updateDeviceInfo() noexcept;
+  void notifyChanged() noexcept;
+
+  float m_windowWidth = 0;
+  float m_windowHeight = 0;
+  float m_scale = 0;
+  double m_textScaleFactor = 0;
+  float m_dpi = 0;
+  uint32_t m_screenWidth = 0;
+  uint32_t m_screenHeight = 0;
+
+  winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
+  winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
+  Mso::Functor<void(React::JSValueObject &&)> m_notifyCallback;
+};
+
 REACT_MODULE(DeviceInfo)
-struct DeviceInfo: public std::enable_shared_from_this<DeviceInfo> {
+struct DeviceInfo : public std::enable_shared_from_this<DeviceInfo> {
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_CONSTANT_PROVIDER(getConstants)
   void getConstants(React::ReactConstantProvider &provider) noexcept;
 
-private:
-  void emitUpdate() noexcept;
-
+ private:
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
-  winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
 };
 
 } // namespace Microsoft::ReactNative

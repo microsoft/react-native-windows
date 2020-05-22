@@ -9,12 +9,14 @@
 namespace Microsoft::ReactNative {
 
 REACT_MODULE(AppState)
-struct AppState: public std::enable_shared_from_this<AppState> {
+struct AppState : public std::enable_shared_from_this<AppState> {
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(getCurrentAppState)
-  void getCurrentAppState(std::function<void(React::JSValue const &)> const & success, std::function<void(React::JSValue const &)> const & error) noexcept;
+  void getCurrentAppState(
+      std::function<void(React::JSValue const &)> const &success,
+      std::function<void(React::JSValue const &)> const &error) noexcept;
 
   REACT_METHOD(addListener)
   void addListener(std::string eventName) noexcept;
@@ -25,7 +27,7 @@ struct AppState: public std::enable_shared_from_this<AppState> {
   REACT_CONSTANT(initialAppState)
   const std::string initialAppState{"active"};
 
-private:
+ private:
   void SetActive(bool active) noexcept;
 
   std::mutex m_stateMutex;

@@ -16,8 +16,9 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
 
   m_enteredBackgroundRevoker = currentApp.EnteredBackground(
       winrt::auto_revoke,
-      [weakThis = std::weak_ptr(shared_from_this())](
-          winrt::IInspectable const & /*sender*/, winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs const & /*e*/) noexcept {
+      [weakThis = weak_from_this()](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs const & /*e*/) noexcept {
         if (auto strongThis = weakThis.lock()) {
           strongThis->SetActive(false);
         }
@@ -25,7 +26,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
 
   m_leavingBackgroundRevoker = currentApp.LeavingBackground(
       winrt::auto_revoke,
-      [weakThis = std::weak_ptr(shared_from_this())](
+      [weakThis = weak_from_this()](
           winrt::IInspectable const & /*sender*/,
           winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const & /*e*/) noexcept {
         if (auto strongThis = weakThis.lock()) {
@@ -34,24 +35,27 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
       });
 }
 
-  void AppState::getCurrentAppState(std::function<void(React::JSValue const &)> const & success, std::function<void(React::JSValue const &)> const & error) noexcept {
-    success(m_active ? "active" : "background");
-  }
+void AppState::getCurrentAppState(
+    std::function<void(React::JSValue const &)> const &success,
+    std::function<void(React::JSValue const &)> const &error) noexcept {
+  success(m_active ? "active" : "background");
+}
 
-  void AppState::addListener(std::string eventName) noexcept {
-    // noop
-  }
+void AppState::addListener(std::string eventName) noexcept {
+  // noop
+}
 
-  void AppState::removeListeners(double count) noexcept {
-    // noop
-  }
-
+void AppState::removeListeners(double count) noexcept {
+  // noop
+}
 
 void AppState::SetActive(bool active) noexcept {
   m_active = active;
 
   m_context.EmitJSEvent(
-      L"RCTDeviceEventEmitter", L"appStateDidChange", React::JSValueObject{{"app_state", m_active ? "active" : "background"}});
+      L"RCTDeviceEventEmitter",
+      L"appStateDidChange",
+      React::JSValueObject{{"app_state", m_active ? "active" : "background"}});
 }
 
 } // namespace Microsoft::ReactNative

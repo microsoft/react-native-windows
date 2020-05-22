@@ -3,55 +3,114 @@
 
 #include "pch.h"
 #include "DeviceInfoModule.h"
+#include <IReactDispatcher.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
 namespace Microsoft::ReactNative {
 
-React::JSValueObject GetDimensionsConstants() {
-  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
-  auto const &window = xaml::Window::Current().CoreWindow();
-  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+DeviceInfoHolder::DeviceInfoHolder() {
+  updateDeviceInfo();
+}
 
+void DeviceInfoHolder::InitDeviceInfoHolder(
+    const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
+  auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>();
+  deviceInfoHolder->updateDeviceInfo();
+
+  propertyBag.Set(
+      winrt::Microsoft::ReactNative::ReactPropertyId<
+          winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>(
+          L"DeviceInfo", L"DeviceInfoHolder"),
+      std::move(deviceInfoHolder));
+
+  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  auto const &window = xaml::Window::Current().CoreWindow();
+
+  deviceInfoHolder->m_sizeChangedRevoker =
+      window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
+        if (auto strongHolder = weakHolder.lock()) {
+          strongHolder->updateDeviceInfo();
+        }
+      });
+
+  deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
+      winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
+        if (auto strongHolder = weakHolder.lock()) {
+          strongHolder->updateDeviceInfo();
+        }
+      });
+}
+
+void DeviceInfoHolder::notifyChanged() noexcept {
+  if (m_notifyCallback) {
+    m_notifyCallback(getDimensions());
+  }
+}
+
+React::JSValueObject DeviceInfoHolder::GetDimensions(
+    const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
+  auto holder = propertyBag.Get(winrt::Microsoft::ReactNative::ReactPropertyId<
+                                winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>(
+      L"DeviceInfo", L"DeviceInfoHolder"));
+
+  return (*holder)->getDimensions();
+}
+
+React::JSValueObject DeviceInfoHolder::getDimensions() noexcept {
   return React::JSValueObject{
       {"windowPhysicalPixels",
-       React::JSValueObject{{"width", window.Bounds().Width * scale},
-        {"height", window.Bounds().Height * scale},
-        {"scale", scale},
-        {"fontScale", uiSettings.TextScaleFactor()},
-        {"densityDpi", displayInfo.LogicalDpi()}}},
+       React::JSValueObject{{"width", m_windowWidth * m_scale},
+                            {"height", m_windowHeight * m_scale},
+                            {"scale", m_scale},
+                            {"fontScale", m_textScaleFactor},
+                            {"densityDpi", m_dpi}}},
       {"screenPhysicalPixels",
-       React::JSValueObject{{"width", displayInfo.ScreenWidthInRawPixels()},
-        {"height", displayInfo.ScreenHeightInRawPixels()},
-        {"scale", scale},
-        {"fontScale", uiSettings.TextScaleFactor()},
-        {"densityDpi", displayInfo.LogicalDpi()}}},
+       React::JSValueObject{{"width", m_screenWidth},
+                            {"height", m_screenHeight},
+                            {"scale", m_scale},
+                            {"fontScale", m_textScaleFactor},
+                            {"densityDpi", m_dpi}}},
   };
 }
 
+void DeviceInfoHolder::SetCallback(
+    const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
+    Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept {
+  auto holder = propertyBag.Get(winrt::Microsoft::ReactNative::ReactPropertyId<
+                                winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>(
+      L"DeviceInfo", L"DeviceInfoHolder"));
+
+  (*holder)->m_notifyCallback = std::move(callback);
+}
+
+void DeviceInfoHolder::updateDeviceInfo() noexcept {
+  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  auto const &window = xaml::Window::Current().CoreWindow();
+  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+
+  m_windowWidth = window.Bounds().Width;
+  m_windowHeight = window.Bounds().Height;
+  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+  m_textScaleFactor = uiSettings.TextScaleFactor();
+  m_dpi = displayInfo.LogicalDpi();
+  m_screenWidth = displayInfo.ScreenWidthInRawPixels();
+  m_screenHeight = displayInfo.ScreenHeightInRawPixels();
+}
+
 void DeviceInfo::getConstants(React::ReactConstantProvider &provider) noexcept {
-  provider.Add(L"Dimensions", std::move(GetDimensionsConstants()));
+  provider.Add(L"Dimensions", std::move(DeviceInfoHolder::GetDimensions(m_context.Properties())));
 }
 
 void DeviceInfo::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 
-  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto const &window = xaml::Window::Current().CoreWindow();
-
-  m_sizeChangedRevoker = window.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
-    emitUpdate();
-  });
-
-  m_dpiChangedRevoker = displayInfo.DpiChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
-    emitUpdate();
-  });
-}
-
-void DeviceInfo::emitUpdate() noexcept {
-  m_context.EmitJSEvent(
-      L"RCTDeviceEventEmitter", L"didUpdateDimensions", GetDimensionsConstants());
+  DeviceInfoHolder::SetCallback(
+      m_context.Properties(), [weakThis = weak_from_this()](React::JSValueObject &&dimensions) {
+        if (auto strongThis = weakThis.lock()) {
+          strongThis->m_context.EmitJSEvent(L"RCTDeviceEventEmitter", L"didUpdateDimensions", dimensions);
+        }
+      });
 }
 
 } // namespace Microsoft::ReactNative
