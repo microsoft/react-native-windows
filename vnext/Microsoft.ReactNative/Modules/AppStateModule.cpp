@@ -41,7 +41,7 @@ void AppState::GetCurrentAppState(
   success(m_active ? "active" : "background");
 }
 
-void AppState::AddListener(std::string&& /*eventName*/) noexcept {
+void AppState::AddListener(std::string && /*eventName*/) noexcept {
   // noop
 }
 
@@ -52,6 +52,6 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
 void AppState::SetActive(bool active) noexcept {
   m_active = active;
   AppStateDidChange({m_active ? "active" : "background"});
-  }
+}
 
 } // namespace Microsoft::ReactNative

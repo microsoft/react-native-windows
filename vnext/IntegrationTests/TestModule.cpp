@@ -84,7 +84,6 @@ auto TestDeviceInfoModule::getMethods() -> vector<Method> {
 
 #pragma endregion TestDeviceInfoModule members
 
-
 #pragma region TestAppStateModule members
 
 /*static*/ string TestAppStateModule::name = "AppState";
@@ -104,6 +103,5 @@ auto TestAppStateModule::getMethods() -> vector<Method> {
 }
 
 #pragma endregion TestAppStateModule members
-
 
 } // namespace Microsoft::React::Test

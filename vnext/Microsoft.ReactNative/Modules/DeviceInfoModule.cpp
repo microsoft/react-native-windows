@@ -51,8 +51,7 @@ void DeviceInfoHolder::notifyChanged() noexcept {
   }
 }
 
-React::JSValueObject DeviceInfoHolder::GetDimensions(
-  const React::ReactPropertyBag &propertyBag) noexcept {
+React::JSValueObject DeviceInfoHolder::GetDimensions(const React::ReactPropertyBag &propertyBag) noexcept {
   auto holder = propertyBag.Get(DeviceInfoHolderPropertyId());
 
   return (*holder)->getDimensions();

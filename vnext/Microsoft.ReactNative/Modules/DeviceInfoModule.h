@@ -20,8 +20,7 @@ struct DeviceInfoHolder {
       const React::ReactPropertyBag &propertyBag,
       Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
   static void InitDeviceInfoHolder(const React::ReactPropertyBag &propertyBag) noexcept;
-  static React::JSValueObject GetDimensions(
-      const React::ReactPropertyBag &propertyBag) noexcept;
+  static React::JSValueObject GetDimensions(const React::ReactPropertyBag &propertyBag) noexcept;
 
  private:
   React::JSValueObject getDimensions() noexcept;

@@ -25,7 +25,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
       std::function<void(React::JSValue const &)> const &error) noexcept;
 
   REACT_METHOD(AddListener, L"addListener")
-  void AddListener(std::string&& eventName) noexcept;
+  void AddListener(std::string &&eventName) noexcept;
 
   REACT_METHOD(RemoveListeners, L"removeListeners")
   void RemoveListeners(double count) noexcept;
