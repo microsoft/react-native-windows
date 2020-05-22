@@ -5,7 +5,6 @@
 
 #include <CreateModules.h>
 #include <IUIManager.h>
-#include <Modules/AppStateModule.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <NativeModuleFactories.h>
@@ -61,8 +60,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
           "Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue),
       // Apparently mandatory for /IntegrationTests
       make_tuple(
-          AppStateModule::name,
-          []() -> unique_ptr<CxxModule> { return make_unique<AppStateModule>(make_unique<AppState>()); },
+          TestAppStateModule::name,
+          []() -> unique_ptr<CxxModule> { return make_unique<TestAppStateModule>(); },
           nativeQueue),
       // Apparently mandatory for /IntegrationTests
       make_tuple(

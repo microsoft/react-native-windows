@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -9,6 +9,13 @@
 
 namespace Microsoft::ReactNative {
 
+static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>
+    &DeviceInfoHolderPropertyId() noexcept {
+  static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>> prop{
+      L"DeviceInfo", L"DeviceInfoHolder"};
+  return prop;
+}
+
 DeviceInfoHolder::DeviceInfoHolder() {
   updateDeviceInfo();
 }
@@ -18,11 +25,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
   auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>();
   deviceInfoHolder->updateDeviceInfo();
 
-  propertyBag.Set(
-      winrt::Microsoft::ReactNative::ReactPropertyId<
-          winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>(
-          L"DeviceInfo", L"DeviceInfoHolder"),
-      std::move(deviceInfoHolder));
+  propertyBag.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
   auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
   auto const &window = xaml::Window::Current().CoreWindow();
@@ -49,10 +52,8 @@ void DeviceInfoHolder::notifyChanged() noexcept {
 }
 
 React::JSValueObject DeviceInfoHolder::GetDimensions(
-    const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  auto holder = propertyBag.Get(winrt::Microsoft::ReactNative::ReactPropertyId<
-                                winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>(
-      L"DeviceInfo", L"DeviceInfoHolder"));
+  const React::ReactPropertyBag &propertyBag) noexcept {
+  auto holder = propertyBag.Get(DeviceInfoHolderPropertyId());
 
   return (*holder)->getDimensions();
 }
@@ -75,18 +76,16 @@ React::JSValueObject DeviceInfoHolder::getDimensions() noexcept {
 }
 
 void DeviceInfoHolder::SetCallback(
-    const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
+    const React::ReactPropertyBag &propertyBag,
     Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept {
-  auto holder = propertyBag.Get(winrt::Microsoft::ReactNative::ReactPropertyId<
-                                winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>(
-      L"DeviceInfo", L"DeviceInfoHolder"));
+  auto holder = propertyBag.Get(DeviceInfoHolderPropertyId());
 
   (*holder)->m_notifyCallback = std::move(callback);
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
-  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto const &window = xaml::Window::Current().CoreWindow();
+  auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  auto const window = xaml::Window::Current().CoreWindow();
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
   m_windowWidth = window.Bounds().Width;
@@ -98,11 +97,11 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   m_screenHeight = displayInfo.ScreenHeightInRawPixels();
 }
 
-void DeviceInfo::getConstants(React::ReactConstantProvider &provider) noexcept {
-  provider.Add(L"Dimensions", std::move(DeviceInfoHolder::GetDimensions(m_context.Properties())));
+void DeviceInfo::GetConstants(React::ReactConstantProvider &provider) noexcept {
+  provider.Add(L"Dimensions", DeviceInfoHolder::GetDimensions(m_context.Properties()));
 }
 
-void DeviceInfo::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+void DeviceInfo::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 
   DeviceInfoHolder::SetCallback(

@@ -17,24 +17,24 @@ struct DeviceInfoHolder {
   DeviceInfoHolder();
 
   static void SetCallback(
-      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
+      const React::ReactPropertyBag &propertyBag,
       Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
-  static void InitDeviceInfoHolder(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
+  static void InitDeviceInfoHolder(const React::ReactPropertyBag &propertyBag) noexcept;
   static React::JSValueObject GetDimensions(
-      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
+      const React::ReactPropertyBag &propertyBag) noexcept;
 
  private:
   React::JSValueObject getDimensions() noexcept;
   void updateDeviceInfo() noexcept;
   void notifyChanged() noexcept;
 
-  float m_windowWidth = 0;
-  float m_windowHeight = 0;
-  float m_scale = 0;
-  double m_textScaleFactor = 0;
-  float m_dpi = 0;
-  uint32_t m_screenWidth = 0;
-  uint32_t m_screenHeight = 0;
+  float m_windowWidth{0};
+  float m_windowHeight{0};
+  float m_scale{0};
+  double m_textScaleFactor{0};
+  float m_dpi{0};
+  uint32_t m_screenWidth{0};
+  uint32_t m_screenHeight{0};
 
   winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
@@ -44,10 +44,10 @@ struct DeviceInfoHolder {
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo : public std::enable_shared_from_this<DeviceInfo> {
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+  void Initialize(React::ReactContext const &reactContext) noexcept;
 
-  REACT_CONSTANT_PROVIDER(getConstants)
-  void getConstants(React::ReactConstantProvider &provider) noexcept;
+  REACT_CONSTANT_PROVIDER(GetConstants)
+  void GetConstants(React::ReactConstantProvider &provider) noexcept;
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_context;

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -35,27 +35,23 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
       });
 }
 
-void AppState::getCurrentAppState(
+void AppState::GetCurrentAppState(
     std::function<void(React::JSValue const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
   success(m_active ? "active" : "background");
 }
 
-void AppState::addListener(std::string eventName) noexcept {
+void AppState::AddListener(std::string&& /*eventName*/) noexcept {
   // noop
 }
 
-void AppState::removeListeners(double count) noexcept {
+void AppState::RemoveListeners(double /*count*/) noexcept {
   // noop
 }
 
 void AppState::SetActive(bool active) noexcept {
   m_active = active;
-
-  m_context.EmitJSEvent(
-      L"RCTDeviceEventEmitter",
-      L"appStateDidChange",
-      React::JSValueObject{{"app_state", m_active ? "active" : "background"}});
-}
+  AppStateDidChange({m_active ? "active" : "background"});
+  }
 
 } // namespace Microsoft::ReactNative

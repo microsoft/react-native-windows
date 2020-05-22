@@ -54,4 +54,17 @@ class TestDeviceInfoModule : public facebook::xplat::module::CxxModule {
   auto getMethods() -> std::vector<Method> override;
 };
 
+class TestAppStateModule : public facebook::xplat::module::CxxModule {
+ public:
+  static std::string name;
+
+  TestAppStateModule();
+
+  std::string getName() override;
+
+  auto getConstants() -> std::map<std::string, folly::dynamic> override;
+
+  auto getMethods() -> std::vector<Method> override;
+};
+
 } // namespace Microsoft::React::Test
