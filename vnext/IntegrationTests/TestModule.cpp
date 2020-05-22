@@ -99,7 +99,12 @@ auto TestAppStateModule::getConstants() -> map<string, dynamic> {
 }
 
 auto TestAppStateModule::getMethods() -> vector<Method> {
-  return {};
+  return {Method(
+      "getCurrentAppState",
+      [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/) {
+        cbSuccess({folly::dynamic::object("app_state", "active")});
+      },
+      AsyncTag)};
 }
 
 #pragma endregion TestAppStateModule members
