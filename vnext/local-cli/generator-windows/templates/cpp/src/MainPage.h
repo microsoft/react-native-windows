@@ -1,25 +1,21 @@
-#pragma once
-
-#include "MainPage.g.h"
+﻿#pragma once
 #include <winrt/Microsoft.ReactNative.h>
+#include "MainPage.g.h"
 
-namespace winrt::<%=name%>::implementation
+// clang-format off
+namespace winrt::<%=ns%>::implementation
 {
     struct MainPage : MainPageT<MainPage>
     {
         MainPage();
-
-        winrt::Microsoft::ReactNative::ReactRootView MainPage::ReactRootView();
-        void MainPage::ReactRootView(const winrt::Microsoft::ReactNative::ReactRootView &);
-
-        private:
-            winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
     };
 }
 
-namespace winrt::<%=name%>::factory_implementation
+namespace winrt::testcpp::factory_implementation
 {
     struct MainPage : MainPageT<MainPage, implementation::MainPage>
     {
     };
 }
+
+// clang-format on

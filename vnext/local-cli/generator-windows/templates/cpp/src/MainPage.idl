@@ -4,6 +4,5 @@ namespace <%=ns%>
     runtimeclass MainPage : <%=XamlNamespace%>.Controls.Page
     {
         MainPage();
-        Microsoft.ReactNative.ReactRootView ReactRootView;
     }
 }

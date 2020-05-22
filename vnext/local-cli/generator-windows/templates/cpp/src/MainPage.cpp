@@ -1,22 +1,24 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MainPage.h"
+#if __has_include("MainPage.g.cpp")
 #include "MainPage.g.cpp"
-#include <winrt/Microsoft.ReactNative.h>
+#endif
+
+#include "App.h"
+
+// clang-format off
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 
-namespace winrt::<%= name %>::implementation {
-  MainPage::MainPage() {
-    InitializeComponent();
-    ReactRootView().ReactNativeHost();
-  }
+namespace winrt::<%=ns%>::implementation
+{
+    MainPage::MainPage()
+    {
+        InitializeComponent();
+        const auto& app = Application::Current().as<App>();
+        ReactRootView().ReactNativeHost(app->Host());
+    }
+}
 
-  winrt::Microsoft::ReactNative::ReactRootView MainPage::ReactRootView() {
-    return m_reactRootView;
-  }
-
-  void MainPage::ReactRootView(const winrt::Microsoft::ReactNative::ReactRootView &reactRootView) {
-    m_reactRootView = reactRootView;
-  }
-} // namespace winrt::<%=name%>::implementation
+// clang-format on

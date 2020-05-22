@@ -1,5 +1,5 @@
-<Page
-    x:Class="ReactUWPTestApp.MainPage"
+﻿<Page
+    x:Class="<%=name%>.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:<%=ns%>"
@@ -8,6 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <react:ReactRootView x:Name="reactRootView" ComponentName="<%=name%>"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="500"/>
+    <react:ReactRootView x:Name="ReactRootView" ComponentName="<%=name%>"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" MinHeight="400"/>
 </Page>
