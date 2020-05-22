@@ -18,10 +18,6 @@ namespace ABITests {
 
 TEST_CLASS(MemoryTrackerTests) {
  public:
-  MemoryTrackerTests() noexcept {
-    winrt_activation_handler = WINRT_RoGetActivationFactory;
-  }
-
   TEST_METHOD(Handler_AddedAndRemoved){
     init_apartment(winrt::apartment_type::single_threaded);
     IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
