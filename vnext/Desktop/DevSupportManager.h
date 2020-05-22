@@ -6,8 +6,8 @@
 #include <ppltasks.h>
 #undef U
 
-#include <cxxreact/JSExecutor.h>
 #include <IDevSupportManager.h>
+#include <cxxreact/JSExecutor.h>
 
 namespace Microsoft::React {
 
@@ -40,4 +40,4 @@ class DevSupportManager : public facebook::react::IDevSupportManager {
   Concurrency::cancellation_token_source m_liveReloadCts;
 };
 
-} // Microsoft::React
+} // namespace Microsoft::React
