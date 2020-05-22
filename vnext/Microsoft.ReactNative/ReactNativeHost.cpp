@@ -8,10 +8,16 @@
 #include "ReactPackageBuilder.h"
 #include "RedBox.h"
 
+#include <winrt/Windows.Foundation.Collections.h>
+#include "ReactInstanceSettings.h"
+
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
+
+#ifndef CORE_ABI
 using namespace xaml;
 using namespace xaml::Controls;
+#endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -49,6 +55,7 @@ void ReactNativeHost::InstanceSettings(ReactNative::ReactInstanceSettings const 
 }
 
 void ReactNativeHost::ReloadInstance() noexcept {
+#ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
@@ -85,6 +92,7 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.Properties = m_instanceSettings.Properties();
+  reactOptions.Notifications = m_instanceSettings.Notifications();
   reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
   reactOptions.DeveloperSettings.SourceBundleName = legacySettings.DebugBundlePath;
   reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
@@ -116,6 +124,10 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.Identity = jsBundleFile;
 
   m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions));
+#else
+  // Core ABI work needed
+  assert(false);
+#endif
 }
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {

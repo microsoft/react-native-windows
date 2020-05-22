@@ -26,6 +26,8 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   IReactPropertyBag Properties() noexcept;
 
+  IReactNotificationService Notifications() noexcept;
+
   hstring MainComponentName() noexcept;
   void MainComponentName(hstring const &value) noexcept;
 
@@ -85,6 +87,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
+  IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
   hstring m_mainComponentName{};
   bool m_useDeveloperSupport{REACT_DEFAULT_USE_DEVELOPER_SUPPORT};
   hstring m_javaScriptMainModuleName{};
@@ -122,6 +125,10 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 inline IReactPropertyBag ReactInstanceSettings::Properties() noexcept {
   return m_properties;
+}
+
+inline IReactNotificationService ReactInstanceSettings::Notifications() noexcept {
+  return m_notifications;
 }
 
 inline hstring ReactInstanceSettings::MainComponentName() noexcept {

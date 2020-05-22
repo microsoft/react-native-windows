@@ -23,6 +23,9 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   static runtimeclass ReactDispatcherHelper
   {
+    // Creates a new serial dispatcher that uses thread pool to run tasks.
+    static IReactDispatcher CreateSerialDispatcher();
+
     // Get or create IReactDispatcher for the current UI thread.
     static IReactDispatcher UIThreadDispatcher{ get; };
 

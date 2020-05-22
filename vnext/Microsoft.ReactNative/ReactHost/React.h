@@ -15,7 +15,15 @@
 #include "future/future.h"
 
 #include <NativeModuleProvider.h>
+
+#ifdef CORE_ABI
+#include <folly/dynamic.h>
+#else
+// When building Desktop, the include below results in
+// fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
 #include <ReactUWP/IReactInstance.h>
+#endif
+
 #include <ReactUWP/ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
 
@@ -64,6 +72,7 @@ struct IReactInstance : IUnknown {
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
+  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept = 0;
   virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
@@ -145,9 +154,13 @@ struct ViewManagerProvider2 {
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
+#ifndef CORE_ABI
   react::uwp::ReactInstanceSettings LegacySettings;
+#endif
 
   winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
+
+  winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;

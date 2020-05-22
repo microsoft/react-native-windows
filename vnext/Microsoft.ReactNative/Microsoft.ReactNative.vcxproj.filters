@@ -266,6 +266,7 @@
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp" />
+    <ClCompile Include="IReactNotificationService.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -607,6 +608,7 @@
     </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
+    <ClInclude Include="IReactNotificationService.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
@@ -701,6 +703,7 @@
     <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactNonAbiValue.idl" />
+    <Midl Include="IReactNotificationService.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IReactPropertyBag.idl" />

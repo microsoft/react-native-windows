@@ -8,6 +8,7 @@
 #include <CppWinRTIncludes.h>
 #include <string_view>
 #include "JSValueWriter.h"
+#include "ReactNotificationService.h"
 #include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative {
@@ -25,11 +26,15 @@ struct ReactContext {
   }
 
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   ReactPropertyBag Properties() const noexcept {
     return ReactPropertyBag{m_handle.Properties()};
+  }
+
+  ReactNotificationService Notifications() const noexcept {
+    return ReactNotificationService{m_handle.Notifications()};
   }
 
   // Call methodName JS function of module with moduleName.

@@ -8,7 +8,7 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 
-namespace winrt::Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 ReactDispatcher::ReactDispatcher(Mso::DispatchQueue &&queue) noexcept : m_queue{std::move(queue)} {}
 
@@ -18,6 +18,10 @@ bool ReactDispatcher::HasThreadAccess() noexcept {
 
 void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
   return m_queue.Post([callback]() noexcept { callback(); });
+}
+
+/*static*/ IReactDispatcher ReactDispatcher::CreateSerialDispatcher() noexcept {
+  return make<ReactDispatcher>(Mso::DispatchQueue{});
 }
 
 /*static*/ Mso::DispatchQueue ReactDispatcher::GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept {
@@ -41,4 +45,4 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
   ReactPropertyBag{properties}.Set(UIDispatcherProperty(), UIThreadDispatcher());
 }
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::implementation

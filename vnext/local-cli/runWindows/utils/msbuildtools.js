@@ -46,13 +46,25 @@ class MSBuildTools {
     results.forEach(result => console.log(chalk.white(result)));
   }
 
-  async buildProject(slnFile, buildType, buildArch, msBuildProps, verbose) {
+  async buildProject(
+    slnFile,
+    buildType,
+    buildArch,
+    msBuildProps,
+    verbose,
+    target,
+  ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
-
+    if (target) {
+      newInfo(`Build target: ${target}`);
+    }
     const verbosityOption = verbose ? 'normal' : 'minimal';
-    const errorLog = path.join(process.env.temp, `msbuild_${process.pid}.err`);
+    const errorLog = path.join(
+      process.env.temp,
+      `msbuild_${process.pid}${target ? '_' + target : ''}.err`,
+    );
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -60,9 +72,13 @@ class MSBuildTools {
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
-      '/bl',
+      `/bl${target ? `:${target}.binlog` : ''}`,
       `/flp1:errorsonly;logfile=${errorLog}`,
     ];
+
+    if (target) {
+      args.push(`/t:${target}`);
+    }
 
     if (msBuildProps) {
       Object.keys(msBuildProps).forEach(function(key) {

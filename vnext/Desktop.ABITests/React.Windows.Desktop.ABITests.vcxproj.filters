@@ -50,6 +50,9 @@
     <ClInclude Include="ActivationFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MockReactPackageProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

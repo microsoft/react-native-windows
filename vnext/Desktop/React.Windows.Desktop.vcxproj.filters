@@ -30,6 +30,45 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IJSValueWriter.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactContext.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactModuleBuilder.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactPackageBuilder.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IViewManager.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
+      <Filter>ABI</Filter>
+    </Midl>
     <Midl Include="ABI\MemoryTracker.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -42,39 +81,7 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactPackageBuilder.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactModuleBuilder.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IJSValueWriter.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactContext.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IViewManager.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
-      <Filter>ABI</Filter>
-    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
@@ -110,14 +117,8 @@
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LazyDevSupportManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocketResourceFactory.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Modules\NetworkingModule.cpp">
       <Filter>Source Files\Modules</Filter>
@@ -129,6 +130,16 @@
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="WebSocketResourceFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -158,9 +169,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LazyDevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Modules\NetworkingModule.h">

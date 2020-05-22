@@ -1,5 +1,5 @@
 #pragma once
-#include "MemoryTracker.g.h"
+#include "facebook.react.MemoryTracker.g.h"
 
 #include <ReactWindowsCore/MemoryTracker.h>
 

@@ -12,6 +12,7 @@ module.exports = {
         linkConfig: () => null,
         projectConfig: projectConfig.projectConfigWindows,
         dependencyConfig: dependencyConfig.dependencyConfigWindows,
+        npmPackageName: 'react-native-windows',
       },
     },
   };

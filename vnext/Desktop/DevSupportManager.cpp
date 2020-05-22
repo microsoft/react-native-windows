@@ -7,28 +7,32 @@
 
 #include <DevSettings.h>
 #include <InstanceManager.h>
+#include <unicode.h>
 
-#include <boost/asio/connect.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/beast/version.hpp>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Networking.h>
+#include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Web.Http.Filters.h>
+#include <winrt/Windows.Web.Http.Headers.h>
+#include <winrt/Windows.Web.Http.h>
 #include "Executors/WebSocketJSExecutor.h"
 #include "Utils.h"
 
-using namespace boost::asio;
-using namespace boost::asio::ip;
-using namespace boost::beast;
-using namespace boost::beast::http;
 using namespace Concurrency;
-using namespace std;
+using namespace winrt::Windows::Storage::Streams;
+using namespace winrt::Windows::Web::Http;
 
-using Microsoft::React::WebSocketJSExecutor;
+using std::make_unique;
+using std::ostringstream;
+using std::shared_ptr;
+using std::string;
+using std::vector;
+using winrt::Windows::Foundation::Uri;
+using winrt::Windows::Networking::HostName;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
-DevSupportManager::DevSupportManager() : m_resolver{m_context} {}
+DevSupportManager::DevSupportManager() {}
 
 DevSupportManager::~DevSupportManager() {
   StopPollingLiveReload();
@@ -55,36 +59,32 @@ string DevSupportManager::GetJavaScriptFromServer(
     const string &platform) {
   auto bundleUrl =
       DevServerHelper::get_BundleUrl(debugHost, jsBundleName, platform /*platform*/, "true" /*dev*/, "false" /*hot*/);
+  Uri uri(Common::Unicode::Utf8ToUtf16(bundleUrl));
+  Filters::HttpBaseProtocolFilter filter;
+  filter.CacheControl().ReadBehavior(Filters::HttpCacheReadBehavior::NoCache);
+  HttpClient client(filter);
+  client.DefaultRequestHeaders().Host(HostName(uri.Host().c_str()));
 
-  Url url(bundleUrl);
-  auto const resolveResult = m_resolver.resolve(url.host, url.port);
-  tcp::socket socket{m_context};
-  boost::system::error_code ec;
-  connect(socket, resolveResult, ec);
-  if (ec) {
+  HttpRequestMessage request(HttpMethod::Get(), uri);
+  HttpResponseMessage response = client.SendRequestAsync(request).get();
+
+  IBuffer buffer = response.Content().ReadAsBufferAsync().get();
+  auto reader = DataReader::FromBuffer(buffer);
+  reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+  auto length = reader.UnconsumedBufferLength();
+  string result;
+  if (length > 0 || response.IsSuccessStatusCode()) {
+    vector<uint8_t> data(length);
+    reader.ReadBytes(data);
+    result = string(reinterpret_cast<char *>(data.data()), data.size());
+  } else {
     m_exceptionCaught = true;
-    return R"({"error:")"s + ec.message() + R"("})"s;
+    ostringstream stream;
+    stream << R"({"error":")" << static_cast<int>(response.StatusCode()) << " downloading " << bundleUrl << R"("})";
+    result = stream.str();
   }
 
-  request<string_body> request{verb::get, url.Target(), 11};
-  request.set(field::host, url.host);
-  request.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
-
-  write(socket, request);
-
-  flat_buffer buffer;
-  response<string_body> response;
-
-  parser<false, string_body> p{std::move(response)};
-  p.body_limit(25 * 1024 * 1024); // 25MB (boost default of 1MB is too small for dev bundles)
-
-  read(socket, buffer, p.base());
-  response = p.release();
-  std::stringstream jsStringStream;
-  jsStringStream << response.body();
-  // TODO: Check if UTF-8 processing is required.
-
-  return jsStringStream.str();
+  return result;
 }
 
 void DevSupportManager::StartPollingLiveReload(const string &debugHost, std::function<void()> onChangeCallback) {
@@ -92,23 +92,16 @@ void DevSupportManager::StartPollingLiveReload(const string &debugHost, std::fun
     cancellation_token token = m_liveReloadCts.get_token();
     while (!token.is_canceled()) {
       try {
-        Url url(DevServerHelper::get_OnChangeEndpointUrl(debugHost));
-        auto const resolveResult = m_resolver.resolve(url.host, url.port);
-        tcp::socket socket{m_context};
-        connect(socket, resolveResult);
+        Uri uri(Common::Unicode::Utf8ToUtf16(DevServerHelper::get_OnChangeEndpointUrl(debugHost)));
+        HttpClient client;
+        client.DefaultRequestHeaders().Host(HostName(uri.Host().c_str()));
+        client.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
 
-        request<string_body> request{verb::get, url.Target(), 11 /*HTTP 1.1*/};
-        request.set(field::host, url.host);
-        request.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
-        request.set(field::connection, "keep-alive");
+        HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption::ResponseHeadersRead).get();
 
-        write(socket, request);
-        flat_buffer buffer;
-        response<dynamic_body> response;
-        read(socket, buffer, response);
-
-        if (response.result_int() == 205 /*ResetContent*/ && !token.is_canceled())
+        if (response.StatusCode() == HttpStatusCode::ResetContent /*ResetContent*/ && !token.is_canceled())
           onChangeCallback();
+
       } catch (const std::exception & /*e*/) {
         // Just let the live reload stop working when the connection fails,
         // rather than bringing down the app.
@@ -121,28 +114,19 @@ task<void> DevSupportManager::LaunchDevToolsAsync(const string &debugHost, const
   auto t = task_from_result();
 
   return t.then([=]() {
-    Url url(DevServerHelper::get_LaunchDevToolsCommandUrl(debugHost));
-    auto const resolveResult = m_resolver.resolve(url.host, url.port);
-    tcp::socket socket{m_context};
-    boost::system::error_code ec;
-    connect(socket, resolveResult, ec);
-    if (ec) {
-      m_exceptionCaught = true;
-      return;
-    }
-
-    request<string_body> request{verb::get, url.Target(), 11};
-    request.set(field::host, url.host);
-    request.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
-
-    write(socket, request);
-
-    flat_buffer buffer;
-    response<dynamic_body> response;
-
-    read(socket, buffer, response);
+    Uri uri(Common::Unicode::Utf8ToUtf16(DevServerHelper::get_LaunchDevToolsCommandUrl(debugHost)));
+    HttpClient client;
+    client.DefaultRequestHeaders().Host(HostName(uri.Host().c_str()));
+    HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption::ResponseHeadersRead).get();
   });
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React
+
+namespace facebook::react {
+
+shared_ptr<IDevSupportManager> CreateDevSupportManager() {
+  return std::make_shared<Microsoft::React::DevSupportManager>();
+}
+
+} // namespace facebook::react
