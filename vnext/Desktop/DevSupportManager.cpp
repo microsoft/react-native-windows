@@ -19,10 +19,14 @@
 #include "Utils.h"
 
 using namespace Concurrency;
-using namespace std;
 using namespace winrt::Windows::Storage::Streams;
 using namespace winrt::Windows::Web::Http;
 
+using std::make_unique;
+using std::ostringstream;
+using std::shared_ptr;
+using std::string;
+using std::vector;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::HostName;
 
@@ -76,7 +80,7 @@ string DevSupportManager::GetJavaScriptFromServer(
   } else {
     m_exceptionCaught = true;
     ostringstream stream;
-    stream << R"({"error:")"s << static_cast<int>(response.StatusCode()) << " downloading " << bundleUrl << R"("})"s;
+    stream << R"({"error":)" << static_cast<int>(response.StatusCode()) << " downloading " << bundleUrl << R"("})";
     result = stream.str();
   }
 
