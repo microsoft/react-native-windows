@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include <winrt/Microsoft.ReactNative.h>
 #include "MainPage.g.h"
+#include <winrt/Microsoft.ReactNative.h>
 
 // clang-format off
 namespace winrt::<%=ns%>::implementation
