@@ -3,6 +3,9 @@
 
 using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace SampleAppCS
 {
@@ -19,7 +22,6 @@ namespace SampleAppCS
         /// </summary>
         public App()
         {
-            MainComponentName = "SampleApp";
 
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
@@ -46,6 +48,19 @@ namespace SampleAppCS
             PackageProviders.Add(new SampleLibraryCpp.ReactPackageProvider());
 
             InitializeComponent();
+        }
+
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            base.OnLaunched(e);
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                frame = new Frame();
+                Window.Current.Content = frame;
+            }
+            frame.Navigate(typeof(MainPage));
+            Window.Current.Activate();
         }
     }
 }
