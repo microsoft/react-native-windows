@@ -1,4 +1,5 @@
 ﻿using Microsoft.ReactNative;
+using Windows.ApplicationModel.Activation;
 
 namespace <%=ns%>
 {
