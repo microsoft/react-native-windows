@@ -10,10 +10,10 @@
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
 
+#include <ReactHost/React.h>
 #include <map>
 #include <memory>
 #include <vector>
-#include <ReactHost/React.h>
 
 namespace react {
 namespace uwp {
@@ -30,7 +30,7 @@ typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager : public facebook::react::INativeUIManager {
  public:
-  NativeUIManager(Mso::React::IReactContext* reactContext);
+  NativeUIManager(Mso::React::IReactContext *reactContext);
 
   // INativeUIManager
   facebook::react::ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;

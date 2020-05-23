@@ -10,60 +10,50 @@
 
 namespace Microsoft::ReactNative {
 
-static const React::ReactPropertyId<bool>
-    &SystemIsRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{
-      L"I18n", L"SystemIsRTL"};
+static const React::ReactPropertyId<bool> &SystemIsRTLPropertyId() noexcept {
+  static const React::ReactPropertyId<bool> prop{L"I18n", L"SystemIsRTL"};
   return prop;
 }
 
-static const React::ReactPropertyId<bool>
-    &AllowRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{
-      L"I18n", L"AllowRTL"};
+static const React::ReactPropertyId<bool> &AllowRTLPropertyId() noexcept {
+  static const React::ReactPropertyId<bool> prop{L"I18n", L"AllowRTL"};
   return prop;
 }
 
-static const React::ReactPropertyId<bool>
-    &ForceRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{
-      L"I18n", L"ForceRTL"};
+static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
+  static const React::ReactPropertyId<bool> prop{L"I18n", L"ForceRTL"};
   return prop;
 }
 
-void I18nManager::InitI18nInfo(
-    const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-    auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
-                               .GetForCurrentView()
-                               .QualifierValues()
-                               .Lookup(L"LayoutDirection");
+void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
+  auto layoutDirection =
+      winrt::Windows::ApplicationModel::Resources::Core::ResourceContext().GetForCurrentView().QualifierValues().Lookup(
+          L"LayoutDirection");
 
-    propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+  propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
 }
 
-/*static*/ bool I18nManager::IsRTL(
-    const React::ReactPropertyBag &propertyBag) noexcept {
-    if (propertyBag.Get(ForceRTLPropertyId()))
-      return true;
+/*static*/ bool I18nManager::IsRTL(const React::ReactPropertyBag &propertyBag) noexcept {
+  if (propertyBag.Get(ForceRTLPropertyId()))
+    return true;
 
-    if (!propertyBag.Get(AllowRTLPropertyId()))
-      return false;
+  if (!propertyBag.Get(AllowRTLPropertyId()))
+    return false;
 
-    return !!propertyBag.Get(SystemIsRTLPropertyId());
+  return !!propertyBag.Get(SystemIsRTLPropertyId());
 }
 
-  void I18nManager::AllowRTL(bool allowRTL) noexcept {
-    m_context.Properties().Set(AllowRTLPropertyId(), allowRTL);
+void I18nManager::AllowRTL(bool allowRTL) noexcept {
+  m_context.Properties().Set(AllowRTLPropertyId(), allowRTL);
+}
 
-  }
+void I18nManager::ForceRTL(bool forceRTL) noexcept {
+  m_context.Properties().Set(ForceRTLPropertyId(), forceRTL);
+}
 
-  void I18nManager::ForceRTL(bool forceRTL) noexcept {
-    m_context.Properties().Set(ForceRTLPropertyId(), forceRTL);
-  }
-
-  void I18nManager::SwapLeftAndRightInRTL(bool /*flipStyles*/) noexcept {
-    // TODO - https://github.com/microsoft/react-native-windows/issues/4662
-  }
+void I18nManager::SwapLeftAndRightInRTL(bool /*flipStyles*/) noexcept {
+  // TODO - https://github.com/microsoft/react-native-windows/issues/4662
+}
 
 void I18nManager::GetConstants(React::ReactConstantProvider &provider) noexcept {
   std::string locale = "en-us";

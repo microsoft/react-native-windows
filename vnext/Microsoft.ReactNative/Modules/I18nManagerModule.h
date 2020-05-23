@@ -9,9 +9,9 @@
 
 namespace Microsoft::ReactNative {
 
-// Since I18nModule provides constants that require the UI thread, we need to initialize those constants before module creation
-// (module creation can happen on background thread)
-// InitI18nInfo will store the required information in the PropertyBag so that the I18nModule can return the constants synchronously.
+// Since I18nModule provides constants that require the UI thread, we need to initialize those constants before module
+// creation (module creation can happen on background thread) InitI18nInfo will store the required information in the
+// PropertyBag so that the I18nModule can return the constants synchronously.
 REACT_MODULE(I18nManager)
 struct I18nManager {
   static void InitI18nInfo(const React::ReactPropertyBag &propertyBag) noexcept;
@@ -32,7 +32,7 @@ struct I18nManager {
   REACT_METHOD(SwapLeftAndRightInRTL, L"swapLeftAndRightInRTL")
   void SwapLeftAndRightInRTL(bool flipStyles) noexcept;
 
-private:
+ private:
   bool IsRTL() noexcept;
 
   React::ReactContext m_context;
