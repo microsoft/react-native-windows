@@ -134,7 +134,7 @@ function printFailedTests(ft) {
 function doProcess(code) {
   const failedTests = parseLogs();
   for (const failedTest of failedTests) {
-    if (Object.keys(failedTest)) {
+    if (Object.keys(failedTest).length > 0) {
       printFailedTests(failedTest);
     }
   }
