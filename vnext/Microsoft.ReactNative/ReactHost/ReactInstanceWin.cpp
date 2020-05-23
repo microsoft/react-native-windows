@@ -6,8 +6,7 @@
 #include "MsoUtils.h"
 
 #include <Base/CoreNativeModules.h>
-#include <ReactUWP/CreateUwpModules.h>
-#include <ReactUWP/Modules/I18nModule.h>
+#include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
 #include "ReactErrorProvider.h"
 
@@ -18,6 +17,7 @@
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
+#include "../../codegen/NativeI18nManagerSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -29,6 +29,7 @@
 #include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
 #include "Modules/DeviceInfoModule.h"
+#include "Modules/I18nManagerModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -59,6 +60,7 @@ void AddPolyesterViewManagers(
     std::shared_ptr<IReactInstance> const &instance) noexcept;
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
+    Mso::React::IReactContext *context,
     std::vector<react::uwp::NativeViewManager> &&viewManagers) noexcept;
 
 } // namespace react::uwp
@@ -182,10 +184,11 @@ void ReactInstanceWin::Initialize() noexcept {
           auto const &legacyInstance = strongThis->m_legacyReactInstance;
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
-          react::uwp::I18nHelper().Instance().setInfo(react::uwp::I18nModule::GetI18nInfo());
+          Microsoft::ReactNative::I18nManager::InitI18nInfo(
+              winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
           strongThis->m_appearanceListener =
               Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance, strongThis->m_uiQueue);
-          ::Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
+          Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
               winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
         }
       })
@@ -262,6 +265,12 @@ void ReactInstanceWin::Initialize() noexcept {
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
                   ::Microsoft::ReactNative::DevSettings,
                   ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+
+          nmp->AddModuleProvider(
+              L"I18nManager",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::I18nManager,
+                  ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
 
           auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
           cxxModules.insert(
@@ -511,7 +520,7 @@ void ReactInstanceWin::InitUIManager() noexcept {
   react::uwp::AddStandardViewManagers(viewManagers, m_legacyReactInstance);
   react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyReactInstance);
 
-  auto uiManager = react::uwp::CreateUIManager2(std::move(viewManagers));
+  auto uiManager = react::uwp::CreateUIManager2(m_reactContext.Get(), std::move(viewManagers));
   m_uiManager.Exchange(std::move(uiManager));
 }
 

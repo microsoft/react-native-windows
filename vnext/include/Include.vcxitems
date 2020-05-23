@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\CreateUwpModules.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\InstanceFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IReactInstance.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IXamlRootView.h" />

@@ -13,6 +13,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <ReactHost/React.h>
 
 namespace react {
 namespace uwp {
@@ -29,7 +30,7 @@ typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager : public facebook::react::INativeUIManager {
  public:
-  NativeUIManager();
+  NativeUIManager(Mso::React::IReactContext* reactContext);
 
   // INativeUIManager
   facebook::react::ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
@@ -98,6 +99,7 @@ class NativeUIManager : public facebook::react::INativeUIManager {
 
  private:
   facebook::react::INativeUIManagerHost *m_host = nullptr;
+  Mso::CntPtr<Mso::React::IReactContext> m_context;
   bool m_inBatch = false;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
