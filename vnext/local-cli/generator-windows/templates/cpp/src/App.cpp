@@ -50,6 +50,8 @@ App::App() noexcept
 /// <param name="e">Details about the launch request and process.</param>
 void App::OnLaunched(LaunchActivatedEventArgs const& e)
 {
+    __super::OnLaunched(e);
+
     Frame rootFrame{ nullptr };
     auto content = Window::Current().Content();
     if (content)

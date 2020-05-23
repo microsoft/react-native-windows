@@ -11,7 +11,7 @@ namespace winrt::<%=ns%>::implementation
     };
 }
 
-namespace winrt::testcpp::factory_implementation
+namespace winrt::<%=ns%>::factory_implementation
 {
     struct MainPage : MainPageT<MainPage, implementation::MainPage>
     {
