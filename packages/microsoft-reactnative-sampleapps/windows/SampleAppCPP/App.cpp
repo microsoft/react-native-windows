@@ -17,7 +17,6 @@ namespace winrt::SampleAppCpp::implementation {
 /// WinMain().
 /// </summary>
 App::App() noexcept {
-
 #if BUNDLE
   JavaScriptBundleFile(L"index.windows");
   InstanceSettings().UseWebDebugger(false);

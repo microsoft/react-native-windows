@@ -4,18 +4,16 @@
 #include "MainPage.g.cpp"
 #endif
 
-#include <winrt/Microsoft.ReactNative.h>
 #include <App.h>
+#include <winrt/Microsoft.ReactNative.h>
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 
-namespace winrt::SampleAppCpp::implementation
-{
-    MainPage::MainPage()
-    {
-        InitializeComponent();
-        ReactRootView().ReactNativeHost(Application::Current().as<App>()->Host());
-    }
-
+namespace winrt::SampleAppCpp::implementation {
+MainPage::MainPage() {
+  InitializeComponent();
+  ReactRootView().ReactNativeHost(Application::Current().as<App>()->Host());
 }
+
+} // namespace winrt::SampleAppCpp::implementation
