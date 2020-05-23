@@ -8,9 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <StackPanel>
-        <TextBlock x:Name="textBlock" Text="TreeDump text goes here" />
-        <react:ReactRootView x:Name="myRootView" ComponentName="ReactUWPTestApp"
-                           Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="500"/>
-    </StackPanel>
+    <react:ReactRootView x:Name="myRootView" ComponentName="ReactUWPTestApp"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="500"/>
 </Page>
