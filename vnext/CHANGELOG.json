@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 23 May 2020 10:40:41 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.8",
+      "version": "0.62.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Cherry-pick \"Remove V8 and Hermes by default\"",
+            "author": "tudorm@microsoft.com",
+            "commit": "6367e4b3b86f99e000a6ad36e8ff4c73357c1cbe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 May 2020 23:08:54 GMT",
       "tag": "react-native-windows_v0.62.0-preview.7",
       "version": "0.62.0-preview.7",

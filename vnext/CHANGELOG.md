@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 19 May 2020 23:08:54 GMT and should not be manually modified.
+This log was last generated on Sat, 23 May 2020 10:40:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.8
+
+Sat, 23 May 2020 10:40:41 GMT
+
+### Changes
+
+- Cherry-pick "Remove V8 and Hermes by default" (tudorm@microsoft.com)
 
 ## 0.62.0-preview.7
 
