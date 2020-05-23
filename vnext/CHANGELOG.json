@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 23 May 2020 00:04:45 GMT",
+      "tag": "react-native-windows_v0.0.0-master.74",
+      "version": "0.0.0-master.74",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented support for native module std::weak_ptr",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c23d3de53f16d39df07f2b19591cacc5336e6ac4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix deploy issue causing 2nd+ builds to break due to bug in appxrecipe which gets imported",
+            "author": "asklar@microsoft.com",
+            "commit": "cd9206e1a5f8912e1c9a78f1594178c2fe66cf9f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Drop LazySupportManager",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ed7ee2de98d64c1002c8bafa7eacd1e4d8317fb2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactInstance error state to avoid crashes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "05779f28e8f734bd1aa7e1814d888be4eb179366",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move DeviceInfo and AppState to new native module impl",
+            "author": "acoates@microsoft.com",
+            "commit": "8dcf516f91d33a1a54818363f84e91b1b0da5e9b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 May 2020 00:05:31 GMT",
       "tag": "react-native-windows_v0.0.0-master.73",
       "version": "0.0.0-master.73",

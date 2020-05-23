@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 20 May 2020 00:04:49 GMT and should not be manually modified.
+This log was last generated on Sat, 23 May 2020 00:04:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.14
+
+Sat, 23 May 2020 00:04:45 GMT
+
+### Changes
+
+- Move several stubs from TS to flow (acoates@microsoft.com)
 
 ## 0.0.0-master.13
 
