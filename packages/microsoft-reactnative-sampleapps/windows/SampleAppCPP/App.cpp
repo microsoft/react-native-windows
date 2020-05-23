@@ -17,7 +17,6 @@ namespace winrt::SampleAppCpp::implementation {
 /// WinMain().
 /// </summary>
 App::App() noexcept {
-  MainComponentName(L"SampleApp");
 
 #if BUNDLE
   JavaScriptBundleFile(L"index.windows");
