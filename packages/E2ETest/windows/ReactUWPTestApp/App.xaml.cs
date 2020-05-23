@@ -67,10 +67,6 @@ namespace ReactUWPTestApp
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
-            if (DisplayInformation.GetForCurrentView().ResolutionScale != ResolutionScale.Scale100Percent)
-            {
-                //throw new Exception("A bug requires this app to run at 100% for accurate results - See https://github.com/microsoft/react-native-windows/issues/4619");
-            }
         }
     }
 }
