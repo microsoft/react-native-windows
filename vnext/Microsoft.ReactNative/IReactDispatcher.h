@@ -9,7 +9,7 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
+struct ReactDispatcher : implements<ReactDispatcher, winrt::default_interface<IReactDispatcher>> {
   ReactDispatcher() = default;
   ReactDispatcher(Mso::DispatchQueue &&queue) noexcept;
 

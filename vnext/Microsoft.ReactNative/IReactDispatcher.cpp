@@ -29,7 +29,21 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::UIThreadDispatcher() noexcept {
-  return make<ReactDispatcher>(Mso::DispatchQueue::MakeCurrentThreadUIQueue());
+  static thread_local weak_ref<IReactDispatcher> *tlsWeakDispatcher{nullptr};
+  IReactDispatcher dispatcher;
+  auto queue = Mso::DispatchQueue::GetCurrentUIThreadQueue();
+  if (queue) {
+    queue.InvokeElsePost([&queue, &dispatcher ]() noexcept {
+      auto tlsGuard{queue.LockLocalValue(&tlsWeakDispatcher)};
+      dispatcher = tlsWeakDispatcher->get();
+      if (!dispatcher) {
+        dispatcher = winrt::make<ReactDispatcher>(std::move(queue));
+        *tlsWeakDispatcher = dispatcher;
+      }
+    });
+  }
+
+  return dispatcher;
 }
 
 /*static*/ ReactPropertyId<IReactDispatcher> ReactDispatcher::UIDispatcherProperty() noexcept {
