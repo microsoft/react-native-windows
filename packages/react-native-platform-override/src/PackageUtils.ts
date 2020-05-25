@@ -5,8 +5,6 @@
  * @format
  */
 
-import * as FileSearch from './FileSearch';
-import * as fs from 'fs';
 import * as path from 'path';
 
 /**
@@ -14,9 +12,8 @@ import * as path from 'path';
  * reading it's package.json.
  */
 export async function getInstalledRNVersion(): Promise<string> {
-  const packagePath = await FileSearch.findReactPackage();
-  const packageJson = (await fs.promises.readFile(packagePath)).toString();
-  const version = JSON.parse(packageJson).version;
+  const rnPackage = require('react-native/package.json');
+  const version = rnPackage.version;
 
   if (typeof version !== 'string') {
     throw new Error('Unexpected formt of React Native package.json');

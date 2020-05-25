@@ -9,13 +9,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Try to find the path to React Native's package.json
- */
-export async function findReactPackage(): Promise<string> {
-  return require.resolve('react-native/package.json');
-}
-
-/**
  * Search for a manifest above an override file and return its path
  */
 export async function findManifest(overridePath: string): Promise<string> {
