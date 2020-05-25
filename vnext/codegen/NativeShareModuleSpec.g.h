@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ShareModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject, std::string, Promise<React::JSValue>) noexcept>{0, L"share"},
+      Method<void(React::JSValueObject, std::string, Promise<React::JSValue>) noexcept>{0, L"share"},
   };
 
   template <class TModule>

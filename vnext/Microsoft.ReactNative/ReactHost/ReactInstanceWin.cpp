@@ -14,8 +14,10 @@
 #include "Microsoft.ReactNative/IReactNotificationService.h"
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
+#include "../../codegen/NativeAppStateSpec.g.h"
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
+#include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -23,9 +25,10 @@
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "IReactDispatcher.h"
-#include "Modules/AppStateData.h"
+#include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
+#include "Modules/DeviceInfoModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -177,12 +180,13 @@ void ReactInstanceWin::Initialize() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto const &legacyInstance = strongThis->m_legacyReactInstance;
-          strongThis->m_deviceInfo = std::make_shared<react::uwp::DeviceInfo>(legacyInstance);
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           react::uwp::I18nHelper().Instance().setInfo(react::uwp::I18nModule::GetI18nInfo());
           strongThis->m_appearanceListener =
               Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance, strongThis->m_uiQueue);
+          ::Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
+              winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
         }
       })
       .Then(Queue(), [ this, weakThis = Mso::WeakPtr{this} ]() noexcept {
@@ -218,20 +222,22 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
-          m_appState = std::make_shared<react::uwp::AppState2>(*m_reactContext, m_uiQueue);
-
           // Acquire default modules and then populate with custom modules
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
-              std::move(m_deviceInfo),
-              std::move(m_appState),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
               m_legacyReactInstance);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
+          nmp->AddModuleProvider(
+              L"AppState",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::AppState,
+                  ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
           nmp->AddModuleProvider(
               L"Clipboard",
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
@@ -244,6 +250,12 @@ void ReactInstanceWin::Initialize() noexcept {
                   reactHost->ReloadInstance();
                 }
               });
+
+          nmp->AddModuleProvider(
+              L"DeviceInfo",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::DeviceInfo,
+                  ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
 
           nmp->AddModuleProvider(
               L"DevSettings",

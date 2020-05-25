@@ -19,10 +19,10 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<bool(bool) noexcept>{1, L"getBool"},
       SyncMethod<double(double) noexcept>{2, L"getNumber"},
       SyncMethod<std::string(std::string) noexcept>{3, L"getString"},
-      SyncMethod<JSValueArray(JSValueArray) noexcept>{4, L"getArray"},
-      SyncMethod<JSValueObject(JSValueObject) noexcept>{5, L"getObject"},
-      SyncMethod<JSValueObject(double, std::string, JSValueObject) noexcept>{6, L"getValue"},
-      Method<void(Callback<JSValue>) noexcept>{7, L"getValueWithCallback"},
+      SyncMethod<React::JSValueArray(React::JSValueArray) noexcept>{4, L"getArray"},
+      SyncMethod<React::JSValueObject(React::JSValueObject) noexcept>{5, L"getObject"},
+      SyncMethod<React::JSValueObject(double, std::string, React::JSValueObject) noexcept>{6, L"getValue"},
+      Method<void(Callback<React::JSValue>) noexcept>{7, L"getValueWithCallback"},
       Method<void(bool, Promise<React::JSValue>) noexcept>{8, L"getValueWithPromise"},
   };
 

@@ -8,12 +8,10 @@
 #include <AsyncStorageModule.h>
 #include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
-#include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
-#include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/LocationObserverModule.h>
@@ -52,8 +50,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::IUIManager> &uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
-    std::shared_ptr<DeviceInfo> &&deviceInfo,
-    std::shared_ptr<facebook::react::AppState> &&appstate,
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
@@ -79,9 +75,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);
 
   modules.emplace_back(
-      DeviceInfoModule::name, [deviceInfo]() { return std::make_unique<DeviceInfoModule>(deviceInfo); }, messageQueue);
-
-  modules.emplace_back(
       LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, messageQueue);
 
   modules.emplace_back(
@@ -93,13 +86,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       LocationObserverModule::name,
       [messageQueue]() { return std::make_unique<LocationObserverModule>(messageQueue); },
       MakeSerialQueueThread()); // TODO: figure out threading
-
-  modules.emplace_back(
-      facebook::react::AppStateModule::name,
-      [appstate = std::move(appstate)]() mutable {
-        return std::make_unique<facebook::react::AppStateModule>(std::move(appstate));
-      },
-      MakeSerialQueueThread());
 
   modules.emplace_back(
       react::uwp::AppThemeModule::Name,

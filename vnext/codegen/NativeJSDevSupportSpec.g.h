@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct JSDevSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject) noexcept>{0, L"onSuccess"},
+      Method<void(React::JSValueObject) noexcept>{0, L"onSuccess"},
       Method<void(double, std::string) noexcept>{1, L"onFailure"},
   };
 

@@ -267,10 +267,13 @@
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="IReactNotificationService.cpp" />
-    <ClCompile Include="Modules\AppStateData.cpp">
+    <ClCompile Include="Modules\AppStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\ClipboardModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DeviceStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
@@ -607,10 +610,13 @@
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
     <ClInclude Include="LifecycleState.h" />
-    <ClInclude Include="Modules\AppStateData.h">
+    <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\ClipboardModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DeviceStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSettingsModule.h">

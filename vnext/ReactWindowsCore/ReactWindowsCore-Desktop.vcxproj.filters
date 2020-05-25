@@ -63,9 +63,6 @@
     <ClCompile Include="MemoryTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\AppStateModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>

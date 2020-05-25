@@ -2,6 +2,21 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Sat, 23 May 2020 00:04:45 GMT",
+      "tag": "react-native-windows-codegen_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Include React namespace in more places",
+            "author": "acoates@microsoft.com",
+            "commit": "8dcf516f91d33a1a54818363f84e91b1b0da5e9b",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2020 00:04:27 GMT",
       "tag": "react-native-windows-codegen_v0.0.4",
       "version": "0.0.4",

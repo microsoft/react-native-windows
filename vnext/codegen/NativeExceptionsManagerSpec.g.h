@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, JSValueArray, double) noexcept>{0, L"reportFatalException"},
-      Method<void(std::string, JSValueArray, double) noexcept>{1, L"reportSoftException"},
-      Method<void(JSValueObject) noexcept>{2, L"reportException"},
-      Method<void(std::string, JSValueArray, double) noexcept>{3, L"updateExceptionMessage"},
+      Method<void(std::string, React::JSValueArray, double) noexcept>{0, L"reportFatalException"},
+      Method<void(std::string, React::JSValueArray, double) noexcept>{1, L"reportSoftException"},
+      Method<void(React::JSValueObject) noexcept>{2, L"reportException"},
+      Method<void(std::string, React::JSValueArray, double) noexcept>{3, L"updateExceptionMessage"},
       Method<void() noexcept>{4, L"dismissRedbox"},
   };
 
