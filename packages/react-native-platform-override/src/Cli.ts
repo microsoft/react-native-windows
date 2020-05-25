@@ -23,16 +23,13 @@ import {
 } from './FileRepository';
 import OverrideUpgrader, {UpgradeResult} from './OverrideUpgrader';
 
+import {getInstalledRNVersion, getNpmPackage} from './PackageUtils';
+
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
-import {getInstalledRNVersion} from './ReactVersion';
 
-const npmPackageDir = path.join(
-  path.dirname(require.main.filename),
-  'package.json',
-);
-const npmPackage = require(npmPackageDir);
+const npmPackage = getNpmPackage();
 
 doMain(() => {
   return new Promise((resolve, _) => {
@@ -333,32 +330,38 @@ function printValidationErrors(errors: Array<ValidationError>) {
   });
 
   if (filesMissing.length > 0) {
-    const errorMessage =
-      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx react-native-platform-override add <override>':";
+    const errorMessage = `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${
+      npmPackage.name
+    } add <override>':`;
     console.error(chalk.red(errorMessage));
     filesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
 
   if (overridesMissing.length > 0) {
-    const errorMessage =
-      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx react-native-platform-override remove <override>':";
+    const errorMessage = `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${
+      npmPackage.name
+    } remove <override>':`;
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
 
   if (baseFilesNotFound.length > 0) {
-    const errorMessage =
-      "Found overrides whose original files do not exist. Remove existing overrides using 'npx react-native-platform-override remove <override>':";
+    const errorMessage = `Found overrides whose original files do not exist. Remove existing overrides using 'npx ${
+      npmPackage.name
+    } remove <override>':`;
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
 
   if (outOfDateFiles.length > 0) {
-    const errorMessage =
-      "Found overrides whose original files have changed. Upgrade overrides using 'npx react-native-platform-override auto-upgrade <manifest>' and 'npx react-native-platform-override manual-upgrade <manifest>':";
+    const errorMessage = `Found overrides whose original files have changed. Upgrade overrides using 'npx ${
+      npmPackage.name
+    } auto-upgrade <manifest>' and 'npx ${
+      npmPackage.name
+    } manual-upgrade <manifest>':`;
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -435,7 +438,7 @@ async function spinnerGuard<T>(
  * accessing the same local Git repo at the same time.
  */
 async function doMain(fn: () => Promise<void>): Promise<void> {
-  const lock = new CrossProcessLock('react-native-platform-override-cli-lock');
+  const lock = new CrossProcessLock('${npmPackage.name}-cli-lock');
 
   if (!(await lock.tryLock())) {
     const spinner = ora(
