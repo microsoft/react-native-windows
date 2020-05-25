@@ -30,7 +30,7 @@ const WHITESPACE_PATTERN = /\s/g;
   const spinner = ora();
   spinner.start('Creating manifest');
 
-  const version = await getInstalledRNVersion(ovrPath);
+  const version = await getInstalledRNVersion();
   const [overrides, reactSources] = await getFileRepos(ovrPath, version);
   const manifest: ManifestData.Manifest = {overrides: []};
   const overrideFiles = await overrides.listFiles();

@@ -11,9 +11,8 @@ import * as path from 'path';
 /**
  * Try to find the path to React Native's package.json
  */
-export async function findReactPackage(targetPath: string): Promise<string> {
-  const relativeRnPackage = 'node_modules\\react-native\\package.json';
-  return findFileAbove(targetPath, relativeRnPackage);
+export async function findReactPackage(): Promise<string> {
+  return require.resolve('react-native/package.json');
 }
 
 /**

@@ -13,10 +13,8 @@ import * as path from 'path';
  * Try to find the currently installed React Native version by searching for and
  * reading it's package.json.
  */
-export async function getInstalledRNVersion(
-  searchPath: string,
-): Promise<string> {
-  const packagePath = await FileSearch.findReactPackage(searchPath);
+export async function getInstalledRNVersion(): Promise<string> {
+  const packagePath = await FileSearch.findReactPackage();
   const packageJson = (await fs.promises.readFile(packagePath)).toString();
   const version = JSON.parse(packageJson).version;
 

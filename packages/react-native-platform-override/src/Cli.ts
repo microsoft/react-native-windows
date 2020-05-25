@@ -408,7 +408,7 @@ async function readManifestUsingRepos(
     throw new Error('Could not parse manifest. Is it valid?');
   }
 
-  const rnVersion = version || (await getInstalledRNVersion(file));
+  const rnVersion = version || (await getInstalledRNVersion());
   const reactRepo = bindVersion(versionedReactRepo, rnVersion);
 
   return new Manifest(data, ovrRepo, reactRepo);
