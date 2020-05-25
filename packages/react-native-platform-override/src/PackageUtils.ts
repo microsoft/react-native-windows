@@ -9,13 +9,6 @@ import * as FileSearch from './FileSearch';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const npmPackageDir = path.join(
-  path.dirname(require.main.filename),
-  'package.json',
-);
-
-const npmPackage = require(npmPackageDir);
-
 /**
  * Try to find the currently installed React Native version by searching for and
  * reading it's package.json.
@@ -38,5 +31,10 @@ export async function getInstalledRNVersion(
  * Return an object representing the package.json of this package
  */
 export function getNpmPackage(): any {
-  return npmPackage;
+  const npmPackageDir = path.join(
+    path.dirname(require.main.filename),
+    'package.json',
+  );
+
+  return require(npmPackageDir);
 }
