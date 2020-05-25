@@ -28,6 +28,12 @@ import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 import {getInstalledRNVersion} from './ReactVersion';
 
+const npmPackageDir = path.join(
+  path.dirname(require.main.filename),
+  'package.json',
+);
+const npmPackage = require(npmPackageDir);
+
 doMain(() => {
   return new Promise((resolve, _) => {
     yargs
@@ -97,9 +103,7 @@ doMain(() => {
           }),
         cmdArgv => manualUpgrade(cmdArgv.manifest, cmdArgv.version),
       )
-      .epilogue(
-        'This tool allows managing JavaScript overrides for React Native Windows',
-      )
+      .epilogue(npmPackage.description)
       .option('color', {hidden: true})
       .demandCommand()
       .recommendCommands()
@@ -107,7 +111,7 @@ doMain(() => {
       .showHelpOnFail(false)
       .wrap(yargs.terminalWidth())
       .version(false)
-      .scriptName('override')
+      .scriptName(npmPackage.name)
       .onFinishCommand(resolve).argv;
   });
 });

@@ -1,7 +1,7 @@
 {
   "name": "react-native-platform-override",
   "version": "0.0.1",
-  "description": "Tooling to manage Javascript file overrides in React Native Windows",
+  "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "repository": {
     "type": "git",
