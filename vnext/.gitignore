@@ -55,9 +55,15 @@ node_modules
 /interface.*
 /typings-index.*
 
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
 # Visual Studio
 .vs/
-.vscode/
 Generated Files/
 /obj/
 /AppPackages/

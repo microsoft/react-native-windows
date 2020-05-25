@@ -1,16 +1,16 @@
 {
-  "name": "react-native-windows-override-tools",
+  "name": "react-native-platform-override",
   "version": "0.0.1",
-  "description": "Tooling to manage Javascript file overrides in React Native Windows",
-  "private": true,
+  "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
-    "directory": "packages/override-tools"
+    "directory": "packages/react-native-platform-override"
   },
   "scripts": {
     "build": "just-scripts build",
+    "change": "beachball change",
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
@@ -18,7 +18,7 @@
     "watch": "tsc -w"
   },
   "bin": {
-    "override": "./bin.js"
+    "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
     "chalk": "^3.0.0",
@@ -50,5 +50,10 @@
   },
   "engines": {
     "node": ">=10"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major"
+    ]
   }
 }

@@ -16,7 +16,7 @@ import Manifest from '../Manifest';
 import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';
 
 import {diff_match_patch} from 'diff-match-patch';
-import {getInstalledRNVersion} from '../ReactVersion';
+import {getInstalledRNVersion} from '../PackageUtils';
 
 const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
 const WHITESPACE_PATTERN = /\s/g;
@@ -30,7 +30,7 @@ const WHITESPACE_PATTERN = /\s/g;
   const spinner = ora();
   spinner.start('Creating manifest');
 
-  const version = await getInstalledRNVersion(ovrPath);
+  const version = await getInstalledRNVersion();
   const [overrides, reactSources] = await getFileRepos(ovrPath, version);
   const manifest: ManifestData.Manifest = {overrides: []};
   const overrideFiles = await overrides.listFiles();

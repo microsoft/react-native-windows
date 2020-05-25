@@ -9,14 +9,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Try to find the path to React Native's package.json
- */
-export async function findReactPackage(targetPath: string): Promise<string> {
-  const relativeRnPackage = 'node_modules\\react-native\\package.json';
-  return findFileAbove(targetPath, relativeRnPackage);
-}
-
-/**
  * Search for a manifest above an override file and return its path
  */
 export async function findManifest(overridePath: string): Promise<string> {
