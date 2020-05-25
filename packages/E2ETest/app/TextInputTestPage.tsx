@@ -5,9 +5,15 @@
  */
 
 import React from 'react';
-import {Text, TextInput, View} from 'react-native';
-import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT, CURTEXT_ON_TEXTINPUT,
-  PREVTEXT_ON_TEXTINPUT, PREV2TEXT_ON_TEXTINPUT, CAP_TEXTINPUT_ON_TEXTINPUT} from './Consts';
+import { Text, TextInput, View } from 'react-native';
+import {
+  TEXTINPUT_ON_TEXTINPUT,
+  ML_TEXTINPUT_ON_TEXTINPUT,
+  CURTEXT_ON_TEXTINPUT,
+  PREVTEXT_ON_TEXTINPUT,
+  PREV2TEXT_ON_TEXTINPUT,
+  CAP_TEXTINPUT_ON_TEXTINPUT,
+} from './Consts';
 
 interface ITextInputTestPageState {
   curText: string;
@@ -42,7 +48,7 @@ export class TextInputTestPage extends React.Component<
     return (
       <View>
         <TextInput
-          style={{height: 32}}
+          style={{ height: 32 }}
           testID={TEXTINPUT_ON_TEXTINPUT}
           placeholder="Enter text to see events"
           onFocus={() => this.updateText('onFocus')}
@@ -61,7 +67,7 @@ export class TextInputTestPage extends React.Component<
               'onSelectionChange range: ' +
                 event.nativeEvent.selection.start +
                 ',' +
-                event.nativeEvent.selection.end,
+                event.nativeEvent.selection.end
             );
           }}
           onKeyPress={event => {
@@ -70,20 +76,26 @@ export class TextInputTestPage extends React.Component<
         />
         <TextInput
           testID={ML_TEXTINPUT_ON_TEXTINPUT}
-          style={{height: 80}}
+          style={{ height: 80 }}
           placeholder="MultiLine"
           multiline={true}
         />
         <TextInput
           testID={CAP_TEXTINPUT_ON_TEXTINPUT}
-          style={{height: 80}}
+          style={{ height: 80 }}
           placeholder="autoCapitalize"
           autoCapitalize="characters"
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text testID={CURTEXT_ON_TEXTINPUT}>curText: {this.state.curText}</Text>
-          <Text testID={PREVTEXT_ON_TEXTINPUT}>prev: {this.state.prevText}</Text>
-          <Text testID={PREV2TEXT_ON_TEXTINPUT}>prev2: {this.state.prev2Text})</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text testID={CURTEXT_ON_TEXTINPUT}>
+            curText: {this.state.curText}
+          </Text>
+          <Text testID={PREVTEXT_ON_TEXTINPUT}>
+            prev: {this.state.prevText}
+          </Text>
+          <Text testID={PREV2TEXT_ON_TEXTINPUT}>
+            prev2: {this.state.prev2Text})
+          </Text>
           <Text testID="Prev3Text">prev3: {this.state.prev3Text}</Text>
         </View>
       </View>

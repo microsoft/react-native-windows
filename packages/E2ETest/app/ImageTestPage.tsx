@@ -3,32 +3,37 @@
  * Licensed under the MIT License.
  */
 
-import { StyleSheet, View, Image, Button } from 'react-native'
+import { StyleSheet, View, Image, Button } from 'react-native';
 import React, { useState } from 'react';
-import { SHOW_IMAGE_BORDER, SET_RTL_MODE, IMAGE_CONTAINER, TREE_DUMP_RESULT } from './Consts';
-import { TreeDumpControl } from './TreeDumpControl'
+import {
+  SHOW_IMAGE_BORDER,
+  SET_RTL_MODE,
+  IMAGE_CONTAINER,
+  TREE_DUMP_RESULT,
+} from './Consts';
+import { TreeDumpControl } from './TreeDumpControl';
 
 const styles = StyleSheet.create({
   container: {
-    height:300,
-    width:500,
+    height: 300,
+    width: 500,
     backgroundColor: 'yellow',
-    alignItems:'center',
+    alignItems: 'center',
   },
   containerWithBorder: {
-    height:300,
-    width:500,
+    height: 300,
+    width: 500,
     borderRadius: 10.0,
-    borderWidth:10,
+    borderWidth: 10,
     borderColor: '#00ff0055',
     backgroundColor: 'yellow',
-    alignItems:'center',
+    alignItems: 'center',
   },
   imageWithBorder: {
     height: '100%',
     width: '100%',
     borderRadius: 10.0,
-    borderWidth:10,
+    borderWidth: 10,
     borderColor: '#0000ff55',
     backgroundColor: 'red',
   },
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'red',
-    direction: 'rtl'
+    direction: 'rtl',
   },
   treeDumpControl: {
     height: 150,
@@ -58,42 +63,64 @@ export function ImageTestPage() {
     var previousImageBorderState = imageWithBorder;
     setImageBorder(!previousImageBorderState);
     var previousClickCount = clickCount;
-    setClickCount(previousClickCount+1);
- }
+    setClickCount(previousClickCount + 1);
+  };
 
   const imageStyle = () => {
-    if(rltMode) return styles.rtlImage;
-    if(imageWithBorder) return styles.imageWithBorder;
+    if (rltMode) {
+      return styles.rtlImage;
+    }
+    if (imageWithBorder) {
+      return styles.imageWithBorder;
+    }
     return styles.image;
-  }
+  };
 
   const dumpId = () => {
-    if(rltMode) return 'ImageRTL';
-    if(imageWithBorder) return 'ImageWithBorder';
-    if(clickCount == 0) return 'ImageWithoutBorder';
+    if (rltMode) {
+      return 'ImageRTL';
+    }
+    if (imageWithBorder) {
+      return 'ImageWithBorder';
+    }
+    if (clickCount == 0) {
+      return 'ImageWithoutBorder';
+    }
     return 'ImageWithoutBorder-Subsequent';
-  }
+  };
 
-  return(
-  <View>
-    <View testID={IMAGE_CONTAINER} style={imageWithBorder?styles.containerWithBorder:styles.container}>
-      <Image
-        style={imageStyle()}
-        resizeMode={'center'}
-        source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=='}}        
-      />      
-    </View >
-    <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
-          onPress={onPressBorder} 
-          testID={SHOW_IMAGE_BORDER}/> 
-    <Button title= {rltMode?"Set image to LTR":"Set image to RTL"} 
-          onPress={()=>setRtlMode(!rltMode)} 
-          testID={SET_RTL_MODE}/> 
-    <TreeDumpControl
-      style={styles.treeDumpControl}
-      dumpID={dumpId()}
-      uiaID={IMAGE_CONTAINER}
-      additionalProperties={rltMode ? ['FlowDirection'] : []}
-      testID={TREE_DUMP_RESULT} />
-  </View>);
+  return (
+    <View>
+      <View
+        testID={IMAGE_CONTAINER}
+        style={imageWithBorder ? styles.containerWithBorder : styles.container}
+      >
+        <Image
+          style={imageStyle()}
+          resizeMode={'center'}
+          source={{
+            uri:
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+          }}
+        />
+      </View>
+      <Button
+        title={imageWithBorder ? 'Hide Border' : 'Show Border'}
+        onPress={onPressBorder}
+        testID={SHOW_IMAGE_BORDER}
+      />
+      <Button
+        title={rltMode ? 'Set image to LTR' : 'Set image to RTL'}
+        onPress={() => setRtlMode(!rltMode)}
+        testID={SET_RTL_MODE}
+      />
+      <TreeDumpControl
+        style={styles.treeDumpControl}
+        dumpID={dumpId()}
+        uiaID={IMAGE_CONTAINER}
+        additionalProperties={rltMode ? ['FlowDirection'] : []}
+        testID={TREE_DUMP_RESULT}
+      />
+    </View>
+  );
 }

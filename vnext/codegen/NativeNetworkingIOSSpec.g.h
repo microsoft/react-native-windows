@@ -15,9 +15,9 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct NetworkingIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject, Callback<JSValue>) noexcept>{0, L"sendRequest"},
+      Method<void(React::JSValueObject, Callback<React::JSValue>) noexcept>{0, L"sendRequest"},
       Method<void(double) noexcept>{1, L"abortRequest"},
-      Method<void(Callback<JSValue>) noexcept>{2, L"clearCookies"},
+      Method<void(Callback<React::JSValue>) noexcept>{2, L"clearCookies"},
       Method<void(std::string) noexcept>{3, L"addListener"},
       Method<void(double) noexcept>{4, L"removeListeners"},
   };

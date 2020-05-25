@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ImagePickerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<JSValue>) noexcept>{0, L"canRecordVideos"},
-      Method<void(Callback<JSValue>) noexcept>{1, L"canUseCamera"},
-      Method<void(JSValueObject, Callback<JSValue>, Callback<JSValue>) noexcept>{2, L"openCameraDialog"},
-      Method<void(JSValueObject, Callback<JSValue>, Callback<JSValue>) noexcept>{3, L"openSelectDialog"},
+      Method<void(Callback<React::JSValue>) noexcept>{0, L"canRecordVideos"},
+      Method<void(Callback<React::JSValue>) noexcept>{1, L"canUseCamera"},
+      Method<void(React::JSValueObject, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{2, L"openCameraDialog"},
+      Method<void(React::JSValueObject, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{3, L"openSelectDialog"},
       Method<void() noexcept>{4, L"clearAllPendingVideos"},
       Method<void(std::string) noexcept>{5, L"removePendingVideo"},
   };

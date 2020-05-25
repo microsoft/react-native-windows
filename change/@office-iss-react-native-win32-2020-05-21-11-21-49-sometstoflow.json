@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move several stubs from TS to flow",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-21T18:21:49.412Z"
-}

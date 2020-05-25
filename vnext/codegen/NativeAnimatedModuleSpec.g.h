@@ -15,12 +15,12 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(double, JSValueObject) noexcept>{0, L"createAnimatedNode"},
+      Method<void(double, React::JSValueObject) noexcept>{0, L"createAnimatedNode"},
       Method<void(double) noexcept>{1, L"startListeningToAnimatedNodeValue"},
       Method<void(double) noexcept>{2, L"stopListeningToAnimatedNodeValue"},
       Method<void(double, double) noexcept>{3, L"connectAnimatedNodes"},
       Method<void(double, double) noexcept>{4, L"disconnectAnimatedNodes"},
-      Method<void(double, double, JSValueObject, Callback<JSValue>) noexcept>{5, L"startAnimatingNode"},
+      Method<void(double, double, React::JSValueObject, Callback<React::JSValue>) noexcept>{5, L"startAnimatingNode"},
       Method<void(double) noexcept>{6, L"stopAnimation"},
       Method<void(double, double) noexcept>{7, L"setAnimatedNodeValue"},
       Method<void(double, double) noexcept>{8, L"setAnimatedNodeOffset"},
@@ -30,7 +30,7 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(double, double) noexcept>{12, L"disconnectAnimatedNodeFromView"},
       Method<void(double) noexcept>{13, L"restoreDefaultValues"},
       Method<void(double) noexcept>{14, L"dropAnimatedNode"},
-      Method<void(double, std::string, JSValueObject) noexcept>{15, L"addAnimatedEventToView"},
+      Method<void(double, std::string, React::JSValueObject) noexcept>{15, L"addAnimatedEventToView"},
       Method<void(double, std::string, double) noexcept>{16, L"removeAnimatedEventFromView"},
       Method<void(std::string) noexcept>{17, L"addListener"},
       Method<void(double) noexcept>{18, L"removeListeners"},
