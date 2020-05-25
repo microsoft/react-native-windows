@@ -438,7 +438,7 @@ async function spinnerGuard<T>(
  * accessing the same local Git repo at the same time.
  */
 async function doMain(fn: () => Promise<void>): Promise<void> {
-  const lock = new CrossProcessLock('${npmPackage.name}-cli-lock');
+  const lock = new CrossProcessLock(`${npmPackage.name}-cli-lock`);
 
   if (!(await lock.tryLock())) {
     const spinner = ora(
