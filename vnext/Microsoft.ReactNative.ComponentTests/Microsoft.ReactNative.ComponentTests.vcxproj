@@ -89,6 +89,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
@@ -106,10 +110,13 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj /await</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)pch;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -151,7 +158,7 @@
   <ItemGroup>
     <ClCompile Include="DynamicReaderTest.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="pch/pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
@@ -162,7 +169,7 @@
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-    <Midl Include="..\Microsoft.ReactNative\NoExceptionAttribute.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\NoExceptionAttribute.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Base\FollyIncludes.h" />
@@ -178,7 +185,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\DynamicWriter.cpp">
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClCompile>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="pch/pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">

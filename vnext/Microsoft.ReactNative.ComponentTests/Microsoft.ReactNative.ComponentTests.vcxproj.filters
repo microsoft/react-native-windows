@@ -32,7 +32,7 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl">
       <Filter>Source Files</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\NoExceptionAttribute.idl">
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\NoExceptionAttribute.idl">
       <Filter>Source Files</Filter>
     </Midl>
   </ItemGroup>
