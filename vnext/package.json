@@ -20,7 +20,7 @@
     "lint": "just-scripts lint",
     "start": "react-native start",
     "watch": "tsc -w",
-    "validate-overrides": "react-native-windows-override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
+    "validate-overrides": "react-native-platform-override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",

@@ -14,7 +14,10 @@ import ActionQueue from './ActionQueue';
 import {VersionedReactFileRepository} from './FileRepository';
 
 const REACT_NATIVE_GITHUB_URL = 'https://github.com/facebook/react-native.git';
-const DEFAULT_DIR = path.join(os.tmpdir(), 'react-native-windows-override-git');
+const DEFAULT_DIR = path.join(
+  os.tmpdir(),
+  'react-native-platform-override-git',
+);
 
 /**
  * Retrives React Native files using the React Native Github repo. Switching

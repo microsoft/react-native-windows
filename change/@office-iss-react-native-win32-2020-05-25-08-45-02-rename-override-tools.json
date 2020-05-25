@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Rename override-tools to react-native-platform-override",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-05-25T15:44:40.322Z"
+}

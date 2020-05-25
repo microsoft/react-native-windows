@@ -330,7 +330,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (filesMissing.length > 0) {
     const errorMessage =
-      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx react-native-windows-override add <override>':";
+      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx react-native-platform-override add <override>':";
     console.error(chalk.red(errorMessage));
     filesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -338,7 +338,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (overridesMissing.length > 0) {
     const errorMessage =
-      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx react-native-windows-override remove <override>':";
+      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx react-native-platform-override remove <override>':";
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -346,7 +346,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (baseFilesNotFound.length > 0) {
     const errorMessage =
-      "Found overrides whose original files do not exist. Remove existing overrides using 'npx react-native-windows-override remove <override>':";
+      "Found overrides whose original files do not exist. Remove existing overrides using 'npx react-native-platform-override remove <override>':";
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -354,7 +354,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
 
   if (outOfDateFiles.length > 0) {
     const errorMessage =
-      "Found overrides whose original files have changed. Upgrade overrides using 'npx react-native-windows-override auto-upgrade <manifest>' and 'npx react-native-windows-override manual-upgrade <manifest>':";
+      "Found overrides whose original files have changed. Upgrade overrides using 'npx react-native-platform-override auto-upgrade <manifest>' and 'npx react-native-platform-override manual-upgrade <manifest>':";
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -431,7 +431,7 @@ async function spinnerGuard<T>(
  * accessing the same local Git repo at the same time.
  */
 async function doMain(fn: () => Promise<void>): Promise<void> {
-  const lock = new CrossProcessLock('react-native-windows-override-cli-lock');
+  const lock = new CrossProcessLock('react-native-platform-override-cli-lock');
 
   if (!(await lock.tryLock())) {
     const spinner = ora(
