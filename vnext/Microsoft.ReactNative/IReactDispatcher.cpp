@@ -46,17 +46,18 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
   return dispatcher;
 }
 
-/*static*/ ReactPropertyId<IReactDispatcher> ReactDispatcher::UIDispatcherProperty() noexcept {
-  static ReactPropertyId<IReactDispatcher> uiThreadDispatcherProperty{L"ReactNative.Dispatcher", L"UIDispatcher"};
+/*static*/ IReactPropertyName ReactDispatcher::UIDispatcherProperty() noexcept {
+  static IReactPropertyName uiThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"UIDispatcher")};
   return uiThreadDispatcherProperty;
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::GetUIDispatcher(IReactPropertyBag const &properties) noexcept {
-  return ReactPropertyBag{properties}.Get(UIDispatcherProperty());
+  return properties.Get(UIDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
 /*static*/ void ReactDispatcher::SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept {
-  ReactPropertyBag{properties}.Set(UIDispatcherProperty(), UIThreadDispatcher());
+  properties.Set(UIDispatcherProperty(), UIThreadDispatcher());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

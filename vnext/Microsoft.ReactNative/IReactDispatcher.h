@@ -3,7 +3,6 @@
 
 #pragma once
 #include "ReactDispatcherHelper.g.h"
-#include <ReactPropertyBag.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Microsoft.ReactNative.h>
 
@@ -21,7 +20,7 @@ struct ReactDispatcher : implements<ReactDispatcher, winrt::default_interface<IR
   static Mso::DispatchQueue GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept;
 
   static IReactDispatcher UIThreadDispatcher() noexcept;
-  static ReactPropertyId<IReactDispatcher> UIDispatcherProperty() noexcept;
+  static IReactPropertyName UIDispatcherProperty() noexcept;
   static IReactDispatcher GetUIDispatcher(IReactPropertyBag const &properties) noexcept;
   static void SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept;
 
@@ -41,7 +40,7 @@ struct ReactDispatcherHelper {
   }
 
   static IReactPropertyName UIDispatcherProperty() noexcept {
-    return ReactDispatcher::UIDispatcherProperty().Handle();
+    return ReactDispatcher::UIDispatcherProperty();
   }
 };
 
