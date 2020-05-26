@@ -21,35 +21,29 @@ struct JsiReader : implements<JsiReader, IJSValueReader> {
   double GetDouble() noexcept;
 
  private:
-  enum class ContinuationAction {
-    MoveToNextObjectProperty,
-    MoveToNextArrayElement,
+  enum class ContainerType {
+    Object,
+    Array,
   };
 
-  struct Continuation {
-    ContinuationAction Action;
+  struct Container {
+    ContainerType Type;
     std::optional<facebook::jsi::Object> CurrentObject; // valid for object
     std::optional<facebook::jsi::Array> PropertyNames; // valid for object
     std::optional<facebook::jsi::Array> CurrentArray; // valid for array
     int Index = -1;
 
-    Continuation(facebook::jsi::Runtime &runtime, facebook::jsi::Object &&value) noexcept
-        : Action(ContinuationAction::MoveToNextObjectProperty),
-          CurrentObject(std::make_optional<facebook::jsi::Object>(std::move(value))) {
+    Container(facebook::jsi::Runtime &runtime, facebook::jsi::Object &&value) noexcept
+        : Type(ContainerType::Object), CurrentObject(std::make_optional<facebook::jsi::Object>(std::move(value))) {
       PropertyNames = CurrentObject.value().getPropertyNames(runtime);
     }
 
-    Continuation(facebook::jsi::Array &&value) noexcept
-        : Action(ContinuationAction::MoveToNextArrayElement),
-          CurrentArray(std::make_optional<facebook::jsi::Array>(std::move(value))) {}
+    Container(facebook::jsi::Array &&value) noexcept
+        : Type(ContainerType::Array), CurrentArray(std::make_optional<facebook::jsi::Array>(std::move(value))) {}
 
-    Continuation(const Continuation &) = delete;
-    Continuation(Continuation &&) = default;
+    Container(const Container &) = delete;
+    Container(Container &&) = default;
   };
-
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER
-  static const int64_t MinSafeInteger = -9007199254740991L;
-  static const int64_t MaxSafeInteger = 9007199254740991L;
 
  private:
   void SetValue(const facebook::jsi::Value &value) noexcept;
@@ -61,7 +55,7 @@ struct JsiReader : implements<JsiReader, IJSValueReader> {
   // when m_currentPrimitiveValue is not null, the current value is a primitive value
   // when m_currentPrimitiveValue is null, the current value is the top value of m_nonPrimitiveValues
   std::optional<facebook::jsi::Value> m_currentPrimitiveValue;
-  std::vector<Continuation> m_nonPrimitiveValues;
+  std::vector<Container> m_containers;
 };
 
 } // namespace winrt::Microsoft::ReactNative

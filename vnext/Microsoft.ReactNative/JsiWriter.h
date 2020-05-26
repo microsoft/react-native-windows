@@ -10,7 +10,6 @@ namespace winrt::Microsoft::ReactNative {
 struct JsiWriter : winrt::implements<JsiWriter, IJSValueWriter> {
   JsiWriter(facebook::jsi::Runtime &runtime) noexcept;
   facebook::jsi::Value MoveResult() noexcept;
-  facebook::jsi::Value CopyResult() noexcept;
 
  public: // IJSValueWriter
   void WriteNull() noexcept;
@@ -28,41 +27,37 @@ struct JsiWriter : winrt::implements<JsiWriter, IJSValueWriter> {
   static facebook::jsi::Value ToJsiValue(facebook::jsi::Runtime &runtime, JSValueArgWriter const &argWriter) noexcept;
 
  private:
-  enum class ContinuationAction {
+  enum class ContainerState {
     AcceptValueAndFinish,
     AcceptArrayElement,
     AcceptPropertyName,
     AcceptPropertyValue,
   };
 
-  struct Continuation {
-    ContinuationAction Action;
-    std::vector<facebook::jsi::Value> Values;
+  struct Container {
+    ContainerState State;
+    std::optional<facebook::jsi::Object> CurrentObject;
+    std::vector<facebook::jsi::Value> CurrentArrayElements;
     std::string PropertyName;
 
-    Continuation(ContinuationAction action) noexcept : Action(action) {}
-    Continuation(ContinuationAction action, facebook::jsi::Value &&value) noexcept : Action(action) {
-      Values.push_back(std::move(value));
-    }
+    Container(ContainerState state) noexcept : State(state) {}
+    Container(ContainerState state, facebook::jsi::Object &&value) noexcept
+        : State(state), CurrentObject(std::move(value)) {}
 
-    Continuation(const Continuation &) = delete;
-    Continuation(Continuation &&) = default;
+    Container(const Container &) = delete;
+    Container(Container &&) = default;
   };
-
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER
-  static const int64_t MinSafeInteger = -9007199254740991L;
-  static const int64_t MaxSafeInteger = 9007199254740991L;
 
  private:
   void WriteValue(facebook::jsi::Value &&value) noexcept;
-  Continuation &Top() noexcept;
-  Continuation Pop() noexcept;
-  void Push(Continuation &&continuation) noexcept;
+  Container &Top() noexcept;
+  Container Pop() noexcept;
+  void Push(Container &&container) noexcept;
 
  private:
   facebook::jsi::Runtime &m_runtime;
   facebook::jsi::Value m_result;
-  std::vector<Continuation> m_continuations;
+  std::vector<Container> m_containers;
 };
 
 } // namespace winrt::Microsoft::ReactNative

@@ -12,17 +12,12 @@ namespace winrt::Microsoft::ReactNative {
 //===========================================================================
 
 JsiWriter::JsiWriter(facebook::jsi::Runtime &runtime) noexcept : m_runtime(runtime) {
-  Push({ContinuationAction::AcceptValueAndFinish});
+  Push({ContainerState::AcceptValueAndFinish});
 }
 
 facebook::jsi::Value JsiWriter::MoveResult() noexcept {
-  VerifyElseCrash(m_continuations.size() == 0);
+  VerifyElseCrash(m_containers.size() == 0);
   return std::move(m_result);
-}
-
-facebook::jsi::Value JsiWriter::CopyResult() noexcept {
-  VerifyElseCrash(m_continuations.size() == 0);
-  return {m_runtime, m_result};
 }
 
 void JsiWriter::WriteNull() noexcept {
@@ -34,14 +29,7 @@ void JsiWriter::WriteBoolean(bool value) noexcept {
 }
 
 void JsiWriter::WriteInt64(int64_t value) noexcept {
-  // JavaScript's integer is not int64_t, need to ensure that the value is in range
-  VerifyElseCrash(MinSafeInteger <= value && value <= MaxSafeInteger);
-
-  // unfortunately JSI only supports int and double for number, choose double here
-  // make sure that doing type conversion in C++ makes no data loss
-  double d = static_cast<double>(value);
-  VerifyElseCrash(floor(d) == d);
-  WriteValue(d);
+  WriteValue({static_cast<double>(value)});
 }
 
 void JsiWriter::WriteDouble(double value) noexcept {
@@ -54,38 +42,38 @@ void JsiWriter::WriteString(const winrt::hstring &value) noexcept {
 
 void JsiWriter::WriteObjectBegin() noexcept {
   // legal to create an object when it is accepting a value
-  VerifyElseCrash(Top().Action != ContinuationAction::AcceptPropertyName);
-  Push({ContinuationAction::AcceptPropertyName, {m_runtime, facebook::jsi::Object(m_runtime)}});
+  VerifyElseCrash(Top().State != ContainerState::AcceptPropertyName);
+  Push({ContainerState::AcceptPropertyName, facebook::jsi::Object(m_runtime)});
 }
 
 void JsiWriter::WritePropertyName(const winrt::hstring &name) noexcept {
   // legal to set a property name only when AcceptPropertyName
   auto &top = Top();
-  VerifyElseCrash(top.Action == ContinuationAction::AcceptPropertyName);
-  top.Action = ContinuationAction::AcceptPropertyValue;
+  VerifyElseCrash(top.State == ContainerState::AcceptPropertyName);
+  top.State = ContainerState::AcceptPropertyValue;
   top.PropertyName = winrt::to_string(name);
 }
 
 void JsiWriter::WriteObjectEnd() noexcept {
   // legal to finish an object only when AcceptPropertyName
-  VerifyElseCrash(Top().Action == ContinuationAction::AcceptPropertyName);
-  auto createdObject = std::move(Pop().Values.at(0));
-  WriteValue(std::move(createdObject));
+  VerifyElseCrash(Top().State == ContainerState::AcceptPropertyName);
+  WriteValue(Pop().CurrentObject.value());
 }
 
 void JsiWriter::WriteArrayBegin() noexcept {
   // legal to create an array only when it is accepting a value
-  VerifyElseCrash(Top().Action != ContinuationAction::AcceptPropertyName);
-  Push({ContinuationAction::AcceptArrayElement});
+  VerifyElseCrash(Top().State != ContainerState::AcceptPropertyName);
+  Push({ContainerState::AcceptArrayElement});
 }
 
 void JsiWriter::WriteArrayEnd() noexcept {
   // legal to finish an array only when AcceptArrayElement
   auto &top = Top();
-  VerifyElseCrash(top.Action == ContinuationAction::AcceptArrayElement);
-  facebook::jsi::Array createdArray(m_runtime, top.Values.size());
-  for (size_t i = 0; i < top.Values.size(); i++) {
-    createdArray.setValueAtIndex(m_runtime, i, std::move(top.Values.at(i)));
+  VerifyElseCrash(top.State == ContainerState::AcceptArrayElement);
+
+  facebook::jsi::Array createdArray(m_runtime, top.CurrentArrayElements.size());
+  for (size_t i = 0; i < top.CurrentArrayElements.size(); i++) {
+    createdArray.setValueAtIndex(m_runtime, i, std::move(top.CurrentArrayElements.at(i)));
   }
   Pop();
   WriteValue({m_runtime, createdArray});
@@ -93,21 +81,21 @@ void JsiWriter::WriteArrayEnd() noexcept {
 
 void JsiWriter::WriteValue(facebook::jsi::Value &&value) noexcept {
   auto &top = Top();
-  switch (top.Action) {
-    case ContinuationAction::AcceptValueAndFinish: {
+  switch (top.State) {
+    case ContainerState::AcceptValueAndFinish: {
       m_result = std::move(value);
       Pop();
-      VerifyElseCrash(m_continuations.size() == 0);
+      VerifyElseCrash(m_containers.size() == 0);
       break;
     }
-    case ContinuationAction::AcceptArrayElement: {
-      top.Values.push_back(std::move(value));
+    case ContainerState::AcceptArrayElement: {
+      top.CurrentArrayElements.push_back(std::move(value));
       break;
     }
-    case ContinuationAction::AcceptPropertyValue: {
-      auto createdObject = top.Values.at(0).getObject(m_runtime);
+    case ContainerState::AcceptPropertyValue: {
+      auto &createdObject = top.CurrentObject.value();
       createdObject.setProperty(m_runtime, top.PropertyName.c_str(), std::move(value));
-      top.Action = ContinuationAction::AcceptPropertyName;
+      top.State = ContainerState::AcceptPropertyName;
       top.PropertyName = {};
       break;
     }
@@ -116,19 +104,19 @@ void JsiWriter::WriteValue(facebook::jsi::Value &&value) noexcept {
   }
 }
 
-JsiWriter::Continuation &JsiWriter::Top() noexcept {
-  VerifyElseCrash(m_continuations.size() > 0);
-  return m_continuations[m_continuations.size() - 1];
+JsiWriter::Container &JsiWriter::Top() noexcept {
+  VerifyElseCrash(m_containers.size() > 0);
+  return m_containers[m_containers.size() - 1];
 }
 
-JsiWriter::Continuation JsiWriter::Pop() noexcept {
+JsiWriter::Container JsiWriter::Pop() noexcept {
   auto top = std::move(Top());
-  m_continuations.pop_back();
+  m_containers.pop_back();
   return top;
 }
 
-void JsiWriter::Push(Continuation &&continuation) noexcept {
-  m_continuations.push_back(std::move(continuation));
+void JsiWriter::Push(Container &&container) noexcept {
+  m_containers.push_back(std::move(container));
 }
 
 /*static*/ facebook::jsi::Value JsiWriter::ToJsiValue(

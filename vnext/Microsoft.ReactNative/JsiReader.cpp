@@ -29,27 +29,26 @@ JSValueType JsiReader::ValueType() noexcept {
       // here we test if the double value can be converted to int without data loss
       // treat it like an int if we succeeded
 
-      if (floor(number) == number && MinSafeInteger <= number && number <= MaxSafeInteger) {
+      if (floor(number) == number) {
         return JSValueType::Int64;
       } else {
         return JSValueType::Double;
       }
     }
-  } else if (m_nonPrimitiveValues.size() > 0) {
-    return m_nonPrimitiveValues[m_nonPrimitiveValues.size() - 1].Action == ContinuationAction::MoveToNextObjectProperty
-        ? JSValueType::Object
-        : JSValueType::Array;
+  } else if (m_containers.size() > 0) {
+    return m_containers[m_containers.size() - 1].Type == ContainerType::Object ? JSValueType::Object
+                                                                               : JSValueType::Array;
   }
   return JSValueType::Null;
 }
 
 bool JsiReader::GetNextObjectProperty(hstring &propertyName) noexcept {
-  if (m_nonPrimitiveValues.size() == 0) {
+  if (m_containers.size() == 0) {
     return false;
   }
 
-  auto &top = m_nonPrimitiveValues[m_nonPrimitiveValues.size() - 1];
-  if (top.Action != ContinuationAction::MoveToNextObjectProperty) {
+  auto &top = m_containers[m_containers.size() - 1];
+  if (top.Type != ContainerType::Object) {
     return false;
   }
 
@@ -61,18 +60,18 @@ bool JsiReader::GetNextObjectProperty(hstring &propertyName) noexcept {
     SetValue(top.CurrentObject.value().getProperty(m_runtime, propertyId));
     return true;
   } else {
-    m_nonPrimitiveValues.pop_back();
+    m_containers.pop_back();
     return false;
   }
 }
 
 bool JsiReader::GetNextArrayItem() noexcept {
-  if (m_nonPrimitiveValues.size() == 0) {
+  if (m_containers.size() == 0) {
     return false;
   }
 
-  auto &top = m_nonPrimitiveValues[m_nonPrimitiveValues.size() - 1];
-  if (top.Action != ContinuationAction::MoveToNextArrayElement) {
+  auto &top = m_containers[m_containers.size() - 1];
+  if (top.Type != ContainerType::Array) {
     return false;
   }
 
@@ -81,7 +80,7 @@ bool JsiReader::GetNextArrayItem() noexcept {
     SetValue(top.CurrentArray.value().getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)));
     return true;
   } else {
-    m_nonPrimitiveValues.pop_back();
+    m_containers.pop_back();
     return false;
   }
 }
@@ -119,9 +118,9 @@ void JsiReader::SetValue(const facebook::jsi::Value &value) noexcept {
   if (value.isObject()) {
     auto obj = value.getObject(m_runtime);
     if (obj.isArray(m_runtime)) {
-      m_nonPrimitiveValues.push_back(obj.getArray(m_runtime));
+      m_containers.push_back(obj.getArray(m_runtime));
     } else {
-      m_nonPrimitiveValues.push_back({m_runtime, std::move(obj)});
+      m_containers.push_back({m_runtime, std::move(obj)});
     }
     m_currentPrimitiveValue = std::nullopt;
   } else if (value.isString() || value.isBool() || value.isNumber()) {
