@@ -7,12 +7,12 @@
 #include <winrt/Microsoft.React.h>
 
 namespace ABITests {
-class MessageQueueShim : public winrt::implements<MessageQueueShim, ::winrt::facebook::react::IMessageQueue> {
+class MessageQueueShim : public winrt::implements<MessageQueueShim, ::winrt::Microsoft::React::IMessageQueue> {
  public:
   MessageQueueShim();
   MessageQueueShim(std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread);
-  void Run(::winrt::facebook::react::QueueItem const &item) const;
-  void RunSync(::winrt::facebook::react::QueueItem const &item) const;
+  void Run(::winrt::Microsoft::React::QueueItem const &item) const;
+  void RunSync(::winrt::Microsoft::React::QueueItem const &item) const;
   void QuitSync() const;
 
  private:

@@ -2,12 +2,12 @@
 
 #include "MemoryTracker.h"
 
-#include "facebook.react.MemoryTracker.g.cpp"
+#include "Microsoft.React.MemoryTracker.g.cpp"
 
 #include "MessageQueueShim.h"
 
-namespace winrt::facebook::react::implementation {
-MemoryTracker::MemoryTracker(facebook::react::IMessageQueue const &callbackMessageQueue) {
+namespace winrt::Microsoft::React::implementation {
+MemoryTracker::MemoryTracker(Microsoft::React::IMessageQueue const &callbackMessageQueue) {
   m_internalMemoryTracker = ::facebook::react::CreateMemoryTracker(
       std::make_shared<::Microsoft::React::MessageQueueShim>(callbackMessageQueue));
 }
@@ -20,18 +20,18 @@ uint64_t MemoryTracker::PeakMemoryUsage() {
   return m_internalMemoryTracker->GetPeakMemoryUsage();
 }
 
-facebook::react::IMessageQueue MemoryTracker::CallbackMessageQueue() {
+Microsoft::React::IMessageQueue MemoryTracker::CallbackMessageQueue() {
   return m_abiCallbackMessageQueue;
 }
 
-void MemoryTracker::CallbackMessageQueue(facebook::react::IMessageQueue value) {
+void MemoryTracker::CallbackMessageQueue(Microsoft::React::IMessageQueue value) {
   m_internalMemoryTracker->SetCallbackMessageQueueThread(std::make_shared<::Microsoft::React::MessageQueueShim>(value));
 }
 
 uint32_t MemoryTracker::AddThresholdHandler(
     uint64_t threshold,
     uint32_t minCallbackIntervalInMilliseconds,
-    facebook::react::MemoryThresholdHandler const &handler) {
+    Microsoft::React::MemoryThresholdHandler const &handler) {
   return static_cast<uint32_t>(m_internalMemoryTracker->AddThresholdCallback(
       static_cast<size_t>(threshold), std::chrono::milliseconds(minCallbackIntervalInMilliseconds), handler));
 }
@@ -55,4 +55,4 @@ void MemoryTracker::OnDeallocation(uint64_t size) {
 }
 
 #pragma endregion IMemoryTrackerTester
-} // namespace winrt::facebook::react::implementation
+} // namespace winrt::Microsoft::React::implementation
