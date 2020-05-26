@@ -5,7 +5,6 @@
 
 #include <ReactUWP/Modules/AppThemeModuleUwp.h>
 #include <ReactUWP/Modules/AppearanceModule.h>
-#include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/NativeModuleProvider.h>
 #include <smartPtr/cntPtr.h>
 #include <memory>
