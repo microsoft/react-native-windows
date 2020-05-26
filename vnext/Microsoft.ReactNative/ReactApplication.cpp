@@ -120,7 +120,6 @@ void ReactApplication::OnActivated(IActivatedEventArgs const &e) {
 
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
   base_type::OnLaunched(e);
-  // auto args = std::wstring(e.Arguments().c_str());
   this->OnCreate(e);
 }
 
@@ -158,11 +157,6 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
-  // Resuming({this, &ReactApplicationDelegate::OnResuming});
-  // Suspending({this, &ReactApplicationDelegate::OnSuspending});
-  // LeavingBackground({this, &ReactApplicationDelegate::OnLeavingBackground});
-  // EnteredBackground({this, &ReactApplicationDelegate::OnEnteredBackground});
-
 #if defined _DEBUG
   if (IsDebuggerPresent()) {
     this->DebugSettings().EnableFrameRateCounter(TRUE);
@@ -200,13 +194,15 @@ void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
       // Restore the saved session state only when appropriate, scheduling the
       // final launch steps after the restore is complete
     }
+    Window::Current().Content(rootFrame);
   }
-  //
-  //
+
   ApplyArguments(Host(), args.c_str());
 
   // Nudge the ReactNativeHost to create the instance and wrapping context
   Host().ReloadInstance();
+
+  Window::Current().Activate();
 }
 
 /// <summary>

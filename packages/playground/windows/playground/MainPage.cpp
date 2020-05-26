@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+#include <App.h>
 
 using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
@@ -35,8 +36,11 @@ void MainPage::OnLoadClick(
   auto host = Host();
   auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
+
   auto mainComponentName = unbox_value<hstring>(x_rootComponentNameCombo().SelectedItem().as<ComboBoxItem>().Content());
-  host.InstanceSettings().MainComponentName(mainComponentName);
+  ReactRootView().ComponentName(mainComponentName);
+  ReactRootView().ReactNativeHost(host);
+
   host.InstanceSettings().UseWebDebugger(x_UseWebDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseDirectDebugger(x_UseDirectDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
@@ -48,13 +52,6 @@ void MainPage::OnLoadClick(
 
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
-
-  m_reactRootView = Microsoft::ReactNative::ReactRootView();
-  m_reactRootView.ComponentName(host.InstanceSettings().MainComponentName());
-  m_reactRootView.ReactNativeHost(host);
-
-  x_rootElement().Children().Clear();
-  x_rootElement().Children().Append(m_reactRootView);
 }
 
 void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionChanged(
@@ -71,13 +68,7 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
 }
 
 Microsoft::ReactNative::ReactNativeHost MainPage::Host() noexcept {
-  if (!m_host) {
-    m_host = Microsoft::ReactNative::ReactNativeHost();
-    m_host.InstanceSettings(InstanceSettings());
-    m_host.PackageProviders(PackageProviders());
-  }
-
-  return m_host;
+  return Application::Current().as<App>()->Host();
 }
 
 Microsoft::ReactNative::ReactInstanceSettings MainPage::InstanceSettings() noexcept {
