@@ -9,9 +9,9 @@
 
 using namespace ::Microsoft::Common::Unicode;
 
-namespace winrt::facebook::react::implementation {
+namespace winrt::Microsoft::React::implementation {
 namespace {
-::winrt::facebook::react::INativeTraceHandler g_abiHandler;
+::winrt::Microsoft::React::INativeTraceHandler g_abiHandler;
 std::atomic<uint32_t> g_abiHandlerRegistrationCookie = 0;
 
 class InternalHandler : public ::facebook::react::INativeTraceHandler{
@@ -45,11 +45,11 @@ NativeEndSection(const char *profileName, const char *args, std::chrono::nanosec
 }
 
 private:
-} // namespace winrt::facebook::react::implementation
+} // namespace winrt::Microsoft::React::implementation
 g_internalHandler;
 }
 
-uint32_t NativeTraceEventSource::InitializeTracing(::winrt::facebook::react::INativeTraceHandler const &handler) {
+uint32_t NativeTraceEventSource::InitializeTracing(::winrt::Microsoft::React::INativeTraceHandler const &handler) {
   g_abiHandler = handler;
   ::facebook::react::InitializeTracing(&g_internalHandler);
   return ++g_abiHandlerRegistrationCookie;

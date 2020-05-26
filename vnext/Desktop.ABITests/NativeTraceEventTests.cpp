@@ -10,12 +10,13 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
+using namespace winrt::Microsoft::React;
 using namespace winrt;
 
 namespace ABITests {
 
 TEST_CLASS (NativeTraceEventTests) {
-  struct TestTraceHandler : public winrt::implements<TestTraceHandler, ::winrt::facebook::react::INativeTraceHandler> {
+  struct TestTraceHandler : public winrt::implements<TestTraceHandler, ::winrt::Microsoft::React::INativeTraceHandler> {
     void JSBeginSection(param::hstring const &profileName, param::hstring const &args) const {
       if (this->OnJSBeginSection) {
         this->OnJSBeginSection(((hstring)profileName).c_str(), ((hstring)args).c_str());
@@ -70,7 +71,7 @@ TEST_CLASS (NativeTraceEventTests) {
 
   // RAII helper to ensure trace handlers get unregistered
   struct NativeTraceInitializationGuard {
-    NativeTraceInitializationGuard(const ::winrt::facebook::react::INativeTraceHandler &handler) noexcept {
+    NativeTraceInitializationGuard(const ::winrt::Microsoft::React::INativeTraceHandler &handler) noexcept {
       m_registrationCookie = NativeTraceEventSource::InitializeTracing(handler);
     }
 
@@ -90,7 +91,7 @@ TEST_CLASS (NativeTraceEventTests) {
   TEST_METHOD(NativeTraceEventHandler_Registered) {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    ::winrt::facebook::react::INativeTraceHandler handler = winrt::make<TestTraceHandler>();
+    ::winrt::Microsoft::React::INativeTraceHandler handler = winrt::make<TestTraceHandler>();
 
     // anticipatory, see TODO below
     std::stack<std::pair<std::wstring, std::wstring>> jsSections;
