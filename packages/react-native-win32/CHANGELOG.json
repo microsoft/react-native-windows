@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 26 May 2020 00:06:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.15",
+      "version": "0.0.0-master.15",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename override-tools to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85b01cb32e4b6c46aebb38bdcc5f612a616c856a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 May 2020 00:04:45 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.14",
       "version": "0.0.0-master.14",
