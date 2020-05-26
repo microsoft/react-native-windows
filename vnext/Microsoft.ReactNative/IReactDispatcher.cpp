@@ -30,10 +30,15 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
 
 /*static*/ IReactDispatcher ReactDispatcher::UIThreadDispatcher() noexcept {
   static thread_local weak_ref<IReactDispatcher> *tlsWeakDispatcher{nullptr};
-  IReactDispatcher dispatcher;
+  IReactDispatcher dispatcher{nullptr};
   auto queue = Mso::DispatchQueue::GetCurrentUIThreadQueue();
-  if (queue) {
+  if (queue && queue.HasThreadAccess()) {
     queue.InvokeElsePost([&queue, &dispatcher ]() noexcept {
+      // This code runs synchronously, but we want it to be run the queue context to
+      // access the queue local value where we store the weak_ref to the dispatcher.
+      // The queue local values are destroyed along with the queue.
+      // To access queue local value we temporary swap it with the thread local value.
+      // It must be a TLS value to ensure proper indexing of the queue local value entry.
       auto tlsGuard{queue.LockLocalValue(&tlsWeakDispatcher)};
       dispatcher = tlsWeakDispatcher->get();
       if (!dispatcher) {
