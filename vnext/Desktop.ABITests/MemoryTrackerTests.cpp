@@ -5,7 +5,7 @@
 #include <CppUnitTest.h>
 #include <IntegrationTests/ControllableMessageQueueThread.h>
 #include <winrt/base.h>
-#include <winrt/facebook.react.h>
+#include <winrt/Microsoft.React.h>
 
 #include "ActivationFactory.h"
 #include "MessageQueueShim.h"

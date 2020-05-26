@@ -2,7 +2,7 @@
 
 #include "NativeLogEventSource.h"
 
-#include "facebook.react.NativeLogEventSource.g.cpp"
+#include "Microsoft.React.NativeLogEventSource.g.cpp"
 
 #include <Logging.h>
 #include <Unicode.h>

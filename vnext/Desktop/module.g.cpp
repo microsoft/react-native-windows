@@ -33,17 +33,17 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
         return winrt_make_Microsoft_ReactNative_ReactNativeHost();
     }
 
-    if (requal(name, L"facebook.react.MemoryTracker"))
+    if (requal(name, L"Microsoft.React.MemoryTracker"))
     {
         return winrt_make_facebook_react_MemoryTracker();
     }
 
-    if (requal(name, L"facebook.react.NativeLogEventSource"))
+    if (requal(name, L"Microsoft.React.NativeLogEventSource"))
     {
         return winrt_make_facebook_react_NativeLogEventSource();
     }
 
-    if (requal(name, L"facebook.react.NativeTraceEventSource"))
+    if (requal(name, L"Microsoft.React.NativeTraceEventSource"))
     {
         return winrt_make_facebook_react_NativeTraceEventSource();
     }

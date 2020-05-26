@@ -4,7 +4,7 @@
 #pragma once
 
 #include <cxxreact/MessageQueueThread.h>
-#include <winrt/facebook.react.h>
+#include <winrt/Microsoft.React.h>
 
 namespace ABITests {
 class MessageQueueShim : public winrt::implements<MessageQueueShim, ::winrt::facebook::react::IMessageQueue> {

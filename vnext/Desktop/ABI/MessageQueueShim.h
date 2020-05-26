@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cxxreact/MessageQueueThread.h>
-#include <winrt/facebook.react.h>
+#include <winrt/Microsoft.React.h>
 
 namespace facebook::react {
 class MessageQueueShim : public MessageQueueThread {

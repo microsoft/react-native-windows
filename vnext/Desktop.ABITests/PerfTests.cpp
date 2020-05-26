@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <CppUnitTest.h>
-#include <winrt/facebook.react.h>
+#include <winrt/Microsoft.React.h>
 
 #include <ReactWindowsCore/Logging.h>
 

@@ -36,7 +36,7 @@
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
     <ProjectName>React.Windows.Desktop</ProjectName>
-    <RootNamespace>facebook.react</RootNamespace>
+    <RootNamespace>Microsoft.React</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>

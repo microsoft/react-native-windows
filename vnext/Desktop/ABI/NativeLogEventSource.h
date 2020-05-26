@@ -1,5 +1,5 @@
 #pragma once
-#include "facebook.react.NativeLogEventSource.g.h"
+#include "Microsoft.React.NativeLogEventSource.g.h"
 
 namespace winrt::facebook::react::implementation {
 struct NativeLogEventSource {
