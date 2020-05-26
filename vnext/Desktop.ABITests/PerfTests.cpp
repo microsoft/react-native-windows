@@ -9,6 +9,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
+using namespace winrt::Microsoft::React;
 using namespace winrt;
 
 namespace ABITests {

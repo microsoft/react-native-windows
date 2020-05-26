@@ -9,13 +9,13 @@
 
 using namespace Microsoft::Common::Unicode;
 
-namespace winrt::facebook::react::implementation {
+namespace winrt::Microsoft::React::implementation {
 namespace {
-::winrt::facebook::react::NativeLogHandler g_abiHandler;
+::winrt::Microsoft::React::NativeLogHandler g_abiHandler;
 std::atomic<uint32_t> g_abiHandlerRegistrationCookie = 0;
 } // namespace
 
-uint32_t NativeLogEventSource::InitializeLogging(::winrt::facebook::react::NativeLogHandler const &handler) {
+uint32_t NativeLogEventSource::InitializeLogging(::winrt::Microsoft::React::NativeLogHandler const &handler) {
   g_abiHandler = handler;
 
   std::function<void(::facebook::react::RCTLogLevel, const char *)> internalHandler =
