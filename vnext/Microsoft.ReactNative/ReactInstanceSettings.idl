@@ -35,5 +35,7 @@ namespace Microsoft.ReactNative {
     UInt16 DebuggerPort { get; set; };
     IRedBoxHandler RedBoxHandler { get; set; };
     IReactDispatcher UIDispatcher { get; set; };
+    String SourceBundleHost { get; set; };
+    UInt16 SourceBundlePort { get; set; };
   }
 }
