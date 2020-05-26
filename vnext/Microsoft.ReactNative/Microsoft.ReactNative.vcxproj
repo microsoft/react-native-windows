@@ -237,9 +237,7 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
     <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\I18nModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\LinkingManagerModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
@@ -319,6 +317,7 @@
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
+    <ClInclude Include="Modules\I18nManagerModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -416,7 +415,6 @@
     <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />
@@ -493,6 +491,7 @@
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
+    <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
