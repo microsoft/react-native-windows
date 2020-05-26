@@ -34,13 +34,13 @@ void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropert
 }
 
 /*static*/ bool I18nManager::IsRTL(const React::ReactPropertyBag &propertyBag) noexcept {
-  if (propertyBag.Get(ForceRTLPropertyId()))
+  if (propertyBag.Get(ForceRTLPropertyId()).value_or(false))
     return true;
 
-  if (!propertyBag.Get(AllowRTLPropertyId()))
+  if (!propertyBag.Get(AllowRTLPropertyId()).value_or(false))
     return false;
 
-  return !!propertyBag.Get(SystemIsRTLPropertyId());
+  return propertyBag.Get(SystemIsRTLPropertyId()).value_or(false);
 }
 
 void I18nManager::AllowRTL(bool allowRTL) noexcept {
