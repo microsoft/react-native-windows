@@ -9,7 +9,7 @@
 namespace winrt::facebook::react::implementation {
 MemoryTracker::MemoryTracker(facebook::react::IMessageQueue const &callbackMessageQueue) {
   m_internalMemoryTracker = ::facebook::react::CreateMemoryTracker(
-      std::make_shared<::facebook::react::MessageQueueShim>(callbackMessageQueue));
+      std::make_shared<::Microsoft::React::MessageQueueShim>(callbackMessageQueue));
 }
 
 uint64_t MemoryTracker::CurrentMemoryUsage() {
@@ -25,7 +25,7 @@ facebook::react::IMessageQueue MemoryTracker::CallbackMessageQueue() {
 }
 
 void MemoryTracker::CallbackMessageQueue(facebook::react::IMessageQueue value) {
-  m_internalMemoryTracker->SetCallbackMessageQueueThread(std::make_shared<::facebook::react::MessageQueueShim>(value));
+  m_internalMemoryTracker->SetCallbackMessageQueueThread(std::make_shared<::Microsoft::React::MessageQueueShim>(value));
 }
 
 uint32_t MemoryTracker::AddThresholdHandler(
