@@ -2,6 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="etw\build.bat">
+      <Filter>Source Files\etw</Filter>
+    </None>
+    <None Include="etw\react_native_windows.man">
+      <Filter>Source Files\etw</Filter>
+    </None>
+    <None Include="etw\react_native_windows_etw_res.dll">
+      <Filter>Source Files\etw</Filter>
+    </None>
+    <None Include="etw\register.bat">
+      <Filter>Source Files\etw</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -13,10 +25,117 @@
     <Filter Include="Source Files\Pch">
       <UniqueIdentifier>{3c118f1c-a23a-4cb1-9104-de7cfaa4a98e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AsyncStorage">
+      <UniqueIdentifier>{ff877a08-95e8-4169-b795-2f94171268d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AsyncStorage">
+      <UniqueIdentifier>{d290d606-a201-43a4-b495-05c6b71976f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\etw">
+      <UniqueIdentifier>{5b5ff9db-d99c-46b2-843e-1ce3cb0d84b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\etw">
+      <UniqueIdentifier>{70ddd865-a745-4c99-9fd5-9b52b824710b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Modules">
+      <UniqueIdentifier>{4c7cb432-9569-4af6-9da8-b1630db496fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Modules">
+      <UniqueIdentifier>{f530aebd-19f2-4400-be7d-140a0abb136f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tracing">
+      <UniqueIdentifier>{2e1cdfdf-f099-4e05-b0af-ac71f61f63ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tracing">
+      <UniqueIdentifier>{20798c96-77ba-460d-be48-5bb2d9337371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pch">
+      <UniqueIdentifier>{3fd9e345-176f-4508-bed4-28c4014bb6dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Source Files\Pch</Filter>
     </ClCompile>
+    <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AsyncStorageModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\I18nModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\SourceCodeModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\StatusBarManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\UIManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="tracing\tracing.cpp">
+      <Filter>Source Files\tracing</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsyncStorage\AsyncStorageManager.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorage\FollyDynamicConverter.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorage\KeyValueStorage.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="etw\react_native_windows.h">
+      <Filter>Header Files\etw</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AsyncStorageModuleWin32.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ExceptionsManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\I18nModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\SourceCodeModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\StatusBarManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\UIManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\WebSocketModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="tracing\fbsystrace.h">
+      <Filter>Header Files\tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Pch\pch.h">
+      <Filter>Header Files\Pch</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

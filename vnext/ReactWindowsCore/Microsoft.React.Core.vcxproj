@@ -112,6 +112,10 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
+    <None Include="etw\build.bat" />
+    <None Include="etw\react_native_windows.man" />
+    <None Include="etw\react_native_windows_etw_res.dll" />
+    <None Include="etw\register.bat" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -128,7 +132,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
+    <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
+    <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModule.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp" />
+    <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
+    <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp" />
+    <ClCompile Include="Modules\SourceCodeModule.cpp" />
+    <ClCompile Include="Modules\StatusBarManagerModule.cpp" />
+    <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="Pch\pch.cpp" />
+    <ClCompile Include="tracing\tracing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
+    <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
+    <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="etw\react_native_windows.h" />
+    <ClInclude Include="Modules\AsyncStorageModuleWin32.h" />
+    <ClInclude Include="Modules\ExceptionsManagerModule.h" />
+    <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\PlatformConstantsModule.h" />
+    <ClInclude Include="Modules\SourceCodeModule.h" />
+    <ClInclude Include="Modules\StatusBarManagerModule.h" />
+    <ClInclude Include="Modules\UIManagerModule.h" />
+    <ClInclude Include="Modules\WebSocketModule.h" />
+    <ClInclude Include="Pch\pch.h" />
+    <ClInclude Include="tracing\fbsystrace.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
