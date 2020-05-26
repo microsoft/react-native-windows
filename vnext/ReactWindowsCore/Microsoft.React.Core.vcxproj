@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <!-- <CppWinRTOptimized>true</CppWinRTOptimized> -->
+    <!-- <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge> -->
+    <!-- <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata> -->
+    <!-- <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters> -->
+    <!--
+    Cppwinrt.exe derives the names of the source files it generates from the $(RootNamespace)
+    property. Currently, the value of this property differs between the 'Microsoft.ReactNative' and
+    this project which - through mismatching include file names - would prevent sharing ABI
+    implementations between the two projects. The $(CppWinRTRootNamespace) property and the
+    associated 'CppWinRTSetRootNamespace' and 'CppWinRTRestoreRootNamespace' targets below
+    homogenize the root namespace for C++/WinRT code generation.
+    -->
+    <!-- <CppWinRTRootNamespace>Microsoft.ReactNative</CppWinRTRootNamespace> -->
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <ProjectGuid>{3A1BE021-6877-481A-9C03-7C5A1224E897}</ProjectGuid>
+    <ProjectName>Microsoft.React.Core</ProjectName>
+    <!-- <RootNamespace>Microsoft.React</RootNamespace> -->
+    <!-- <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>
+    <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <CppWinRTUsePrefixes>true</CppWinRTUsePrefixes> -->
+  </PropertyGroup>
+  <!-- <PropertyGroup Label="Permissive">
+    <ENABLEPermissive>true</ENABLEPermissive>
+  </PropertyGroup> -->
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+    <!-- <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
+    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" /> -->
+    <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(ReactNativeDir)\ReactCommon\callinvoker;$(IncludePath)</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!--
+        BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
+      -->
+      <!-- <PreprocessorDefinitions>
+        BOOST_ASIO_HAS_IOCP;
+        _WINSOCK_DEPRECATED_NO_WARNINGS;
+        _WIN32_WINNT=$(WinVer);
+        WIN32;
+        CORE_ABI;
+        _WINDOWS;
+        FOLLY_NO_CONFIG;
+        NOMINMAX;
+        _HAS_AUTO_PTR_ETC;
+        CHAKRACORE;
+        RN_PLATFORM=win32;
+        RN_EXPORT=;
+        JSI_EXPORT=;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions> -->
+      <!-- <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories> -->
+      <!-- <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions> -->
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <!-- <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies> -->
+      <!-- <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions> -->
+    </Link>
+    <Midl>
+      <!-- <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories> -->
+    </Midl>
+  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Folly\Folly.vcxproj">
+      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
+      <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pch\pch.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <!-- <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" /> -->
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <!-- <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" /> -->
+    <!-- <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" /> -->
+    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
+  </ImportGroup>
+  <!-- See $(CppWinRTRootNamespace) comments above. -->
+  <!-- <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
+    <PropertyGroup>
+      <_CppWinRTOriginalRootNamespace>$(RootNamespace)</_CppWinRTOriginalRootNamespace>
+      <RootNamespace>$(CppWinRTRootNamespace)</RootNamespace>
+    </PropertyGroup>
+  </Target> -->
+  <!-- See $(CppWinRTRootNamespace) comments above. -->
+  <!-- <Target Name="CppWinRTRestoreRootNamespace" AfterTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
+    <PropertyGroup>
+      <RootNamespace>$(_CppWinRTOriginalRootNamespace)</RootNamespace>
+      <_CppWinRTOriginalRootNamespace />
+    </PropertyGroup>
+  </Target> -->
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <!-- <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" /> -->
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <!-- <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" /> -->
+    <!-- <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets'))" /> -->
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+  </Target>
+</Project>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{43517427-5ece-43e3-9dda-865bdb40bcc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{d7ad5f7c-2bcc-4454-86ff-b92813a229df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pch">
+      <UniqueIdentifier>{3c118f1c-a23a-4cb1-9104-de7cfaa4a98e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pch\pch.cpp">
+      <Filter>Source Files\Pch</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
