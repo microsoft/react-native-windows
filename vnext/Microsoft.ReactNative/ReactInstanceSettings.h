@@ -85,6 +85,12 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   IRedBoxHandler RedBoxHandler() noexcept;
   void RedBoxHandler(IRedBoxHandler const &value) noexcept;
 
+  hstring SourceBundleHost() noexcept;
+  void SourceBundleHost(hstring const &value) noexcept;
+
+  uint16_t SourceBundlePort() noexcept;
+  void SourceBundlePort(uint16_t value) noexcept;
+
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
@@ -107,6 +113,8 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
   IRedBoxHandler m_redBoxHandler{nullptr};
+  hstring m_sourceBundleHost{};
+  uint16_t m_sourceBundlePort{0};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -281,6 +289,22 @@ inline IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {
 
 inline void ReactInstanceSettings::RedBoxHandler(IRedBoxHandler const &value) noexcept {
   m_redBoxHandler = value;
+}
+
+inline hstring ReactInstanceSettings::SourceBundleHost() noexcept {
+  return m_sourceBundleHost;
+}
+
+inline void ReactInstanceSettings::SourceBundleHost(hstring const &value) noexcept {
+  m_sourceBundleHost = value;
+}
+
+inline uint16_t ReactInstanceSettings::SourceBundlePort() noexcept {
+  return m_sourceBundlePort;
+}
+
+inline void ReactInstanceSettings::SourceBundlePort(uint16_t value) noexcept {
+  m_sourceBundlePort = value;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
