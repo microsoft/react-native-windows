@@ -42,7 +42,8 @@ namespace react::uwp {
 //===========================================================================
 
 ReactRootControl::ReactRootControl(XamlView const &rootView) noexcept
-    : m_weakRootView{rootView}, m_uiQueue(Mso::DispatchQueue::MakeCurrentThreadUIQueue()) {
+    : m_weakRootView{rootView}, m_uiQueue(Mso::DispatchQueue::GetCurrentUIThreadQueue()) {
+  VerifyElseCrashSz(m_uiQueue, "Cannot get UI dispatch queue for the current thread");
   PrepareXamlRootView(rootView);
 }
 

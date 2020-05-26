@@ -309,6 +309,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public IReactNotificationService Notifications { get; } = ReactNotificationServiceHelper.CreateNotificationService();
 
+    public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
+
     public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
     {
       throw new NotImplementedException();

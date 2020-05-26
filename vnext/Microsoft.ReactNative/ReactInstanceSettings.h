@@ -22,7 +22,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
-  ReactInstanceSettings() = default;
+  ReactInstanceSettings() noexcept;
 
   IReactPropertyBag Properties() noexcept;
 
@@ -84,6 +84,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   IRedBoxHandler RedBoxHandler() noexcept;
   void RedBoxHandler(IRedBoxHandler const &value) noexcept;
+
+  IReactDispatcher UIDispatcher() noexcept;
+  void UIDispatcher(IReactDispatcher const &value) noexcept;
 
   hstring SourceBundleHost() noexcept;
   void SourceBundleHost(hstring const &value) noexcept;

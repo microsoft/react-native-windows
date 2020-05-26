@@ -37,6 +37,10 @@ struct ReactContext {
     return ReactNotificationService{m_handle.Notifications()};
   }
 
+  ReactDispatcher UIDispatcher() const noexcept {
+    return ReactDispatcher{m_handle.UIDispatcher()};
+  }
+
   // Call methodName JS function of module with moduleName.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
