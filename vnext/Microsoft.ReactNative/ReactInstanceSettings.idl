@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import "RedBoxHandler.idl";
+import "IReactDispatcher.idl";
 import "IReactPropertyBag.idl";
+import "RedBoxHandler.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -31,5 +32,6 @@ namespace Microsoft.ReactNative {
     String BundleRootPath { get; set; };
     UInt16 DebuggerPort { get; set; };
     IRedBoxHandler RedBoxHandler { get; set; };
+    IReactDispatcher UIDispatcher { get; set; };
   }
 }
