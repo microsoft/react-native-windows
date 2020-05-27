@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <queue>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/facebook.react.h>
+#include <queue>
 
 namespace ABITests {
 
