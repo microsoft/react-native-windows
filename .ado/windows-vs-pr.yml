@@ -17,6 +17,7 @@ jobs:
   - job: Setup
     steps:
       - powershell: |
+          Get-Volume
           Write-Host "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
           $googleTestAdapterPath = $(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
           Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;isOutput=true]$googleTestAdapterPath
