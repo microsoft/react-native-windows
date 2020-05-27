@@ -80,12 +80,8 @@ jobs:
           project: vnext/Microsoft.ReactNative.sln
 
       - powershell: |
-          Write-Host "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          # $googleTestAdapterPath = $(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
-          # Write-Host "obtained $googleTestAdapterPath"
-          $googleTestAdapterPath = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\qlbscfin.1er'
-          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath;isOutput=true]$googleTestAdapterPath"
-          Write-Host "Set environment variable to UC ($env:GOOGLETESTADAPTERPATH)"
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
         displayName: Set GoogleTestAdapterPath
 
@@ -391,11 +387,8 @@ jobs:
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
 
       - powershell: |
-          Write-Host "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          $googleTestAdapterPath = $(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
-          Write-Host "obtained $googleTestAdapterPath"
-          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$googleTestAdapterPath"
-          Write-Host "Set environment variable to UC ($env:GOOGLETESTADAPTERPATH)"
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
         displayName: Set GoogleTestAdapterPath
 
