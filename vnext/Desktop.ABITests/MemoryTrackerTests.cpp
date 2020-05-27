@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <CppUnitTest.h>
 #include <IntegrationTests/ControllableMessageQueueThread.h>
-#include <winrt/base.h>
 #include <winrt/Microsoft.React.h>
+#include <winrt/base.h>
 
 #include "ActivationFactory.h"
 #include "MessageQueueShim.h"

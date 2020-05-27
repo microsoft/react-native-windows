@@ -33,4 +33,4 @@ void NativeLogEventSource::UninitializeLogging(uint32_t cookie) {
   assert(cookie == g_abiHandlerRegistrationCookie);
   g_abiHandler = nullptr;
 }
-} // namespace winrt::facebook::react::implementation
+} // namespace winrt::Microsoft::React::implementation
