@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <CppUnitTest.h>
 #include <winrt/facebook.react.h>
 #include <vector>
 #include "ActivationFactory.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 using namespace winrt;
 
