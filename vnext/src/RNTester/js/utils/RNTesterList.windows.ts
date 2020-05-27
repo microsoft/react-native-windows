@@ -84,6 +84,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Picker/PickerWindowsExample'),
   },
   {
+    key: 'PressableExample',
+    module: require('../examples/Pressable/PressableExample'),
+  },
+  {
     key: 'PopupExample',
     module: require('./../examples-win/Popup/PopupExample'),
   },
@@ -210,6 +214,10 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'PanResponderExample',
     module: require('react-native/RNTester/js/examples/PanResponder/PanResponderExample'),
+  },
+  {
+    key: 'PlatformColorExample',
+    module: require('../examples/PlatformColor/PlatformColorExample'),
   },
   {
     key: 'PointerEventsExample',
