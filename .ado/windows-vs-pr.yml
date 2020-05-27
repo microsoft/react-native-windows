@@ -16,10 +16,11 @@ variables:
 jobs:
   - job: Setup
     steps:
-      #TODO: Remove! Only used to test the PR.
       - powershell: |
           Write-Host "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
+          $googleTestAdapterPath = $(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
+          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;isOutput=true]$googleTestAdapterPath
+          Write-Host "Set environment variable to UC ($env:GOOGLETESTADAPTERPATH)"
           Write-Host "Set environment variable to ($env:GOOGLETESTADAPTERPATH)"
         displayName: Set GoogleTestAdapterPath
 
@@ -83,12 +84,6 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
-
-      - powershell: |
-          Write-Host "Using expression ($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
-          Write-Host "Set environment variable to ($env:GOOGLETESTADAPTERPATH)"
-        displayName: Set GoogleTestAdapterPath
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests (Native)
@@ -390,12 +385,6 @@ jobs:
           script: yarn bundle
           workingDirectory: packages/react-native-win32
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
-
-      - powershell: |
-          Write-Host "Using expression ($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
-          Write-Host "Set environment variable to ($env:GOOGLETESTADAPTERPATH)"
-        displayName: Set GoogleTestAdapterPath
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
