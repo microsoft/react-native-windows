@@ -24,6 +24,7 @@
     <Message Text="=> LastBuildUnsuccessful   [$(LastBuildUnsuccessful)]" />
     <Message Text="=> LastBuildState          [$(LastBuildState)]" />
     <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
+    <Message Text="=> WinVer                  [$(WinVer)]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
@@ -34,6 +35,7 @@
     <Message Text="=> XMLDocumentationFileName    [@(CLCompile->Metadata('XMLDocumentationFileName')->DirectoryName()->Distinct())]" />
     <Message Text="=> BrowseInformationFile       [@(CLCompile->Metadata('BrowseInformationFile')->DirectoryName()->Distinct())]" />
     <Message Text="=> PreprocessOutputPath        [@(CLCompile->Metadata('PreprocessOutputPath')->DirectoryName()->Distinct())]" />
+    <Message Text="=> PreprocessorDefinitions     [@(CLCompile->Metadata('PreprocessorDefinitions')->Distinct())]" />
     <Message Text="=> ClDirsToMake                [@(ClDirsToMake)]" />
 
     <Message Text="%0A" />

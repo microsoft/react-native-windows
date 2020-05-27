@@ -10,6 +10,7 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
+#include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
@@ -20,6 +21,7 @@
 #include <Modules/WebSocketModuleUwp.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
+// ReactWindowsCore
 #include <CreateModules.h>
 
 namespace react::uwp {
@@ -115,7 +117,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         if (HasPackageIdentity()) {
           return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
         } else {
-          return nullptr;
+          return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
         }
       },
       MakeSerialQueueThread());
