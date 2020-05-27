@@ -18,8 +18,8 @@ jobs:
     steps:
       #TODO: Remove! Only used to test the PR.
       - powershell: |
-          Write-Host "Using expression ($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;](Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
+          Write-Host "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
           Write-Host "Set environment variable to ($env:GOOGLETESTADAPTERPATH)"
         displayName: Set GoogleTestAdapterPath
 
@@ -86,7 +86,7 @@ jobs:
 
       - powershell: |
           Write-Host "Using expression ($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;](Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
+          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
           Write-Host "Set environment variable to ($env:GOOGLETESTADAPTERPATH)"
         displayName: Set GoogleTestAdapterPath
 
@@ -393,7 +393,7 @@ jobs:
 
       - powershell: |
           Write-Host "Using expression ($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;](Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
+          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
           Write-Host "Set environment variable to ($env:GOOGLETESTADAPTERPATH)"
         displayName: Set GoogleTestAdapterPath
 
