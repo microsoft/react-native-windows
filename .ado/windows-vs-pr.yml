@@ -19,9 +19,7 @@ jobs:
       vmImage: $(VmImage)
     steps:
       - powershell: |
-          Get-childItem "C:\Program Files*"
           Write-Host "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\"
           $googleTestAdapterPath = $(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
           Write-Host "obtained $googleTestAdapterPath"
           Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath;isOutput=true]$googleTestAdapterPath"
