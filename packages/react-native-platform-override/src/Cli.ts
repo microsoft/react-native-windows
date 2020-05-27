@@ -30,8 +30,6 @@ import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 import PackageReactFileRepository from './PackageReactFileRepository';
 
-const UPGRADE_LOCK = 'upgrade-overrides';
-
 const npmPackage = getNpmPackage();
 
 yargs
@@ -123,7 +121,13 @@ async function validateManifests(
     if (typeof manifestPath !== 'string') {
       throw new Error('manifest arguments must be strings');
     }
-    await validateManifest(manifestPath, version);
+    if (versionRequiresGitRepo(version)) {
+      await ensureSingleGitUser(() => {
+        return validateManifest(manifestPath, version);
+      });
+    } else {
+      await validateManifest(manifestPath, version);
+    }
   }
 }
 
@@ -209,7 +213,7 @@ async function removeOverride(overridePath: string) {
  * out-of-date overrides.
  */
 async function autoUpgrade(manifestPath: string, version?: string) {
-  return ensureSingleInstance(UPGRADE_LOCK, () => {
+  return ensureSingleGitUser(() => {
     return doUpgrade(manifestPath, false /*isManual*/, version);
   });
 }
@@ -219,7 +223,7 @@ async function autoUpgrade(manifestPath: string, version?: string) {
  * automatically merged.
  */
 async function manualUpgrade(manifestPath: string, version?: string) {
-  return ensureSingleInstance(UPGRADE_LOCK, () => {
+  return ensureSingleGitUser(() => {
     return doUpgrade(manifestPath, true /*isManual*/, version);
   });
 }
@@ -384,7 +388,7 @@ async function checkFileExists(friendlyName: string, filePath: string) {
 async function readManifest(file: string, version?: string): Promise<Manifest> {
   let reactRepo: ReactFileRepository;
 
-  if (version && version !== getInstalledRNVersion()) {
+  if (versionRequiresGitRepo(version)) {
     const gitRepo = await GitReactFileRepository.createAndInit();
     reactRepo = bindVersion(gitRepo, version);
   } else {
@@ -417,6 +421,13 @@ async function readManifestUsingRepos(
 }
 
 /**
+ * Should we use a scratch Git repo for the requested version
+ */
+function versionRequiresGitRepo(version?: string) {
+  return version && version !== getInstalledRNVersion();
+}
+
+/**
  * Wraps the function in a try/catch, failing the spinner if an exception is
  * thrown to allow unmangled output
  */
@@ -435,14 +446,10 @@ async function spinnerGuard<T>(
 }
 
 /**
- * Ensure that only a single instance of the application is holding a lock to
- * the named resource.
+ * Ensure that only a single instance of the application can use the scratch Git Repo
  */
-async function ensureSingleInstance(
-  namedLock: string,
-  fn: () => Promise<void>,
-): Promise<void> {
-  const lock = new CrossProcessLock(`${npmPackage.name}/${namedLock}`);
+async function ensureSingleGitUser(fn: () => Promise<void>): Promise<void> {
+  const lock = new CrossProcessLock(`${npmPackage.name}/scratch-git.lock`);
 
   if (!(await lock.tryLock())) {
     const spinner = ora(
