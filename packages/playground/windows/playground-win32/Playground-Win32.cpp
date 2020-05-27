@@ -138,9 +138,6 @@ struct WindowData {
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
-          host.InstanceSettings().Properties().Set(
-              winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty(),
-              winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIThreadDispatcher());
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();

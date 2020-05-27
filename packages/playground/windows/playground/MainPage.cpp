@@ -42,9 +42,6 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
-  host.InstanceSettings().Properties().Set(
-      winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty(),
-      winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIThreadDispatcher());
 
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();

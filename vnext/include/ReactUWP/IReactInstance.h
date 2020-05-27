@@ -45,11 +45,13 @@ struct ReactInstanceSettings {
   bool EnableByteCodeCaching{false};
   bool EnableDeveloperMenu{false};
   uint16_t DebuggerPort{9229};
+  uint16_t SourceBundlePort{0};
 
   std::string ByteCodeFileUri;
   std::string DebugHost;
   std::string DebugBundlePath;
   std::string BundleRootPath;
+  std::string SourceBundleHost;
   facebook::react::NativeLoggingHook LoggingCallback;
   std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
   JSIEngine jsiEngine{JSIEngine::Chakra};

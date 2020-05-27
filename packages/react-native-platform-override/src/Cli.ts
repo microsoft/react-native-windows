@@ -23,10 +23,13 @@ import {
 } from './FileRepository';
 import OverrideUpgrader, {UpgradeResult} from './OverrideUpgrader';
 
+import {getInstalledRNVersion, getNpmPackage} from './PackageUtils';
+
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
-import {getInstalledRNVersion} from './ReactVersion';
+
+const npmPackage = getNpmPackage();
 
 doMain(() => {
   return new Promise((resolve, _) => {
@@ -97,9 +100,7 @@ doMain(() => {
           }),
         cmdArgv => manualUpgrade(cmdArgv.manifest, cmdArgv.version),
       )
-      .epilogue(
-        'This tool allows managing JavaScript overrides for React Native Windows',
-      )
+      .epilogue(npmPackage.description)
       .option('color', {hidden: true})
       .demandCommand()
       .recommendCommands()
@@ -107,7 +108,7 @@ doMain(() => {
       .showHelpOnFail(false)
       .wrap(yargs.terminalWidth())
       .version(false)
-      .scriptName('override')
+      .scriptName(npmPackage.name)
       .onFinishCommand(resolve).argv;
   });
 });
@@ -329,32 +330,38 @@ function printValidationErrors(errors: Array<ValidationError>) {
   });
 
   if (filesMissing.length > 0) {
-    const errorMessage =
-      "Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'yarn override add <override>' (where override is package relative):";
+    const errorMessage = `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${
+      npmPackage.name
+    } add <override>':`;
     console.error(chalk.red(errorMessage));
     filesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
 
   if (overridesMissing.length > 0) {
-    const errorMessage =
-      "Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'yarn override remove <override>' (where override is package relative):";
+    const errorMessage = `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${
+      npmPackage.name
+    } remove <override>':`;
     console.error(chalk.red(errorMessage));
     overridesMissing.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
 
   if (baseFilesNotFound.length > 0) {
-    const errorMessage =
-      "Found overrides whose original files do not exist. Remove existing overrides using 'yarn override remove <override>' (where override is package relative):";
+    const errorMessage = `Found overrides whose original files do not exist. Remove existing overrides using 'npx ${
+      npmPackage.name
+    } remove <override>':`;
     console.error(chalk.red(errorMessage));
     baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
     console.error();
   }
 
   if (outOfDateFiles.length > 0) {
-    const errorMessage =
-      "Found overrides whose original files have changed. Upgrade overrides using 'yarn override auto-upgrade <manifest>' and 'yarn override manual-upgrade <manifest>' (where manifest is package relative):";
+    const errorMessage = `Found overrides whose original files have changed. Upgrade overrides using 'npx ${
+      npmPackage.name
+    } auto-upgrade <manifest>' and 'npx ${
+      npmPackage.name
+    } manual-upgrade <manifest>':`;
     console.error(chalk.red(errorMessage));
     outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
     console.error();
@@ -401,7 +408,7 @@ async function readManifestUsingRepos(
     throw new Error('Could not parse manifest. Is it valid?');
   }
 
-  const rnVersion = version || (await getInstalledRNVersion(file));
+  const rnVersion = version || (await getInstalledRNVersion());
   const reactRepo = bindVersion(versionedReactRepo, rnVersion);
 
   return new Manifest(data, ovrRepo, reactRepo);
@@ -431,7 +438,7 @@ async function spinnerGuard<T>(
  * accessing the same local Git repo at the same time.
  */
 async function doMain(fn: () => Promise<void>): Promise<void> {
-  const lock = new CrossProcessLock('react-native-windows-override-cli-lock');
+  const lock = new CrossProcessLock(`${npmPackage.name}-cli-lock`);
 
   if (!(await lock.tryLock())) {
     const spinner = ora(
