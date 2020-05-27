@@ -10,7 +10,6 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
-#include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
@@ -116,7 +115,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         if (HasPackageIdentity()) {
           return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
         } else {
-          return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
+          return nullptr;
         }
       },
       MakeSerialQueueThread());
