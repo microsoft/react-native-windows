@@ -25,6 +25,7 @@
     "@types/chalk": "^2.2.0",
     "@types/globby": "^9.1.0",
     "@types/yargs": "^15.0.3",
+    "eslint": "5.1.0",
     "just-scripts": "^0.36.1"
   }
 }

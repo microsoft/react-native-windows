@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "clang-format": "1.2.4",
+    "eslint": "5.1.0",
     "just-scripts": "^0.36.1"
   }
 }

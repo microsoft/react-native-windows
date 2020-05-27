@@ -29,6 +29,7 @@
     "@types/semver": "^7.1.0",
     "@types/valid-url": "^1.0.2",
     "@types/yargs": "^15.0.3",
+    "eslint": "5.1.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },
