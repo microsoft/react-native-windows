@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <winrt/Microsoft.React.h>
+#include <winrt/facebook.react.h>
 
 #include <ReactWindowsCore/Logging.h>
 
-using namespace winrt::Microsoft::React;
+using namespace winrt::facebook::react;
 using namespace winrt;
 
 namespace ABITests {
@@ -16,7 +16,7 @@ namespace ABITests {
 TEST_CLASS (PerfTests) {
   static const uint32_t iterations = 100000000;
 
-  static void HandleLogEvents(::winrt::Microsoft::React::LogLevel l, hstring const &m) {}
+  static void HandleLogEvents(::winrt::facebook::react::LogLevel l, hstring const &m) {}
 
   TEST_METHOD(TimeNewAbiInitializeLogging) {
     // ensure the DLL has been loaded before starting perf measurements

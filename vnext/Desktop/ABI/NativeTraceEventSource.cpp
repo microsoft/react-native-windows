@@ -2,16 +2,16 @@
 
 #include "NativeTraceEventSource.h"
 
-#include "Microsoft.React.NativeTraceEventSource.g.cpp"
+#include "facebook.react.NativeTraceEventSource.g.cpp"
 
 #include <Tracing.h>
 #include <Unicode.h>
 
 using namespace ::Microsoft::Common::Unicode;
 
-namespace winrt::Microsoft::React::implementation {
+namespace winrt::facebook::react::implementation {
 namespace {
-::winrt::Microsoft::React::INativeTraceHandler g_abiHandler;
+::winrt::facebook::react::INativeTraceHandler g_abiHandler;
 std::atomic<uint32_t> g_abiHandlerRegistrationCookie = 0;
 
 class InternalHandler : public ::facebook::react::INativeTraceHandler{
@@ -45,11 +45,11 @@ NativeEndSection(const char *profileName, const char *args, std::chrono::nanosec
 }
 
 private:
-} // namespace winrt::Microsoft::React::implementation
+} // namespace winrt::facebook::react::implementation
 g_internalHandler;
 }
 
-uint32_t NativeTraceEventSource::InitializeTracing(::winrt::Microsoft::React::INativeTraceHandler const &handler) {
+uint32_t NativeTraceEventSource::InitializeTracing(::winrt::facebook::react::INativeTraceHandler const &handler) {
   g_abiHandler = handler;
   ::facebook::react::InitializeTracing(&g_internalHandler);
   return ++g_abiHandlerRegistrationCookie;

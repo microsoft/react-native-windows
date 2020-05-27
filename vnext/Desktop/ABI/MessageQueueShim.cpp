@@ -2,9 +2,9 @@
 
 #include "MessageQueueShim.h"
 
-namespace Microsoft::React {
+namespace facebook::react {
 
-MessageQueueShim::MessageQueueShim(const ::winrt::Microsoft::React::IMessageQueue &abiMessageQueue)
+MessageQueueShim::MessageQueueShim(const ::winrt::facebook::react::IMessageQueue &abiMessageQueue)
     : m_abiMessageQueue{abiMessageQueue} {}
 
 void MessageQueueShim::runOnQueue(std::function<void()> &&item) {
@@ -19,4 +19,4 @@ void MessageQueueShim::quitSynchronous() {
   m_abiMessageQueue.QuitSync();
 }
 
-} // namespace Microsoft::React
+} // namespace facebook::react

@@ -6,9 +6,9 @@
 #include "pch.h"
 #include "winrt/base.h"
 void* winrt_make_Microsoft_ReactNative_ReactNativeHost();
-void* winrt_make_Microsoft_React_MemoryTracker();
-void* winrt_make_Microsoft_React_NativeLogEventSource();
-void* winrt_make_Microsoft_React_NativeTraceEventSource();
+void* winrt_make_facebook_react_MemoryTracker();
+void* winrt_make_facebook_react_NativeLogEventSource();
+void* winrt_make_facebook_react_NativeTraceEventSource();
 
 bool __stdcall winrt_can_unload_now() noexcept
 {
@@ -33,19 +33,19 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
         return winrt_make_Microsoft_ReactNative_ReactNativeHost();
     }
 
-    if (requal(name, L"Microsoft.React.MemoryTracker"))
+    if (requal(name, L"facebook.react.MemoryTracker"))
     {
-        return winrt_make_Microsoft_React_MemoryTracker();
+        return winrt_make_facebook_react_MemoryTracker();
     }
 
-    if (requal(name, L"Microsoft.React.NativeLogEventSource"))
+    if (requal(name, L"facebook.react.NativeLogEventSource"))
     {
-        return winrt_make_Microsoft_React_NativeLogEventSource();
+        return winrt_make_facebook_react_NativeLogEventSource();
     }
 
-    if (requal(name, L"Microsoft.React.NativeTraceEventSource"))
+    if (requal(name, L"facebook.react.NativeTraceEventSource"))
     {
-        return winrt_make_Microsoft_React_NativeTraceEventSource();
+        return winrt_make_facebook_react_NativeTraceEventSource();
     }
 
     return nullptr;

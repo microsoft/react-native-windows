@@ -6,7 +6,7 @@
 
 #include "SimpleMessageQueue.h"
 
-using namespace winrt::Microsoft::React;
+using namespace winrt::facebook::react;
 
 namespace ABITests {
 

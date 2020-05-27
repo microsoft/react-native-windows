@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <winrt/Microsoft.React.h>
+#include <winrt/facebook.react.h>
 #include <vector>
 
-using namespace winrt::Microsoft::React;
+using namespace winrt::facebook::react;
 using namespace winrt;
 
 namespace ABITests {
@@ -13,7 +13,7 @@ namespace ABITests {
 TEST_CLASS (NativeLogEventTests) {
   // RAII helper to ensure log handlers get unregistered
   struct NativeLogInitializationGuard {
-    NativeLogInitializationGuard(::winrt::Microsoft::React::NativeLogHandler const &handler) noexcept {
+    NativeLogInitializationGuard(::winrt::facebook::react::NativeLogHandler const &handler) noexcept {
       m_registrationCookie = NativeLogEventSource::InitializeLogging(handler);
     }
 
@@ -30,9 +30,9 @@ TEST_CLASS (NativeLogEventTests) {
     init_apartment(winrt::apartment_type::single_threaded);
 
     // anticipatory, see TODO below
-    std::vector<std::pair<::winrt::Microsoft::React::LogLevel, std::wstring>> logMessages;
+    std::vector<std::pair<::winrt::facebook::react::LogLevel, std::wstring>> logMessages;
 
-    NativeLogHandler handler{[&logMessages](::winrt::Microsoft::React::LogLevel l, hstring const &m) {
+    NativeLogHandler handler{[&logMessages](::winrt::facebook::react::LogLevel l, hstring const &m) {
       logMessages.emplace_back(l, m.c_str());
     }};
 

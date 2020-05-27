@@ -1,14 +1,14 @@
 #pragma once
-#include "Microsoft.React.NativeLogEventSource.g.h"
+#include "facebook.react.NativeLogEventSource.g.h"
 
-namespace winrt::Microsoft::React::implementation {
+namespace winrt::facebook::react::implementation {
 struct NativeLogEventSource {
   NativeLogEventSource() = default;
 
-  static uint32_t InitializeLogging(Microsoft::React::NativeLogHandler const &handler);
+  static uint32_t InitializeLogging(facebook::react::NativeLogHandler const &handler);
   static void UninitializeLogging(uint32_t cookie);
 };
-} // namespace winrt::Microsoft::React::implementation
-namespace winrt::Microsoft::React::factory_implementation {
+} // namespace winrt::facebook::react::implementation
+namespace winrt::facebook::react::factory_implementation {
 struct NativeLogEventSource : NativeLogEventSourceT<NativeLogEventSource, implementation::NativeLogEventSource> {};
-} // namespace winrt::Microsoft::React::factory_implementation
+} // namespace winrt::facebook::react::factory_implementation

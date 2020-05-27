@@ -1,21 +1,21 @@
 #pragma once
-#include "Microsoft.React.MemoryTracker.g.h"
+#include "facebook.react.MemoryTracker.g.h"
 
 #include <ReactWindowsCore/MemoryTracker.h>
 
-namespace winrt::Microsoft::React::implementation {
+namespace winrt::facebook::react::implementation {
 struct MemoryTracker : MemoryTrackerT<MemoryTracker> {
   MemoryTracker() = default;
 
-  MemoryTracker(Microsoft::React::IMessageQueue const &callbackMessageQueue);
+  MemoryTracker(facebook::react::IMessageQueue const &callbackMessageQueue);
   uint64_t CurrentMemoryUsage();
   uint64_t PeakMemoryUsage();
-  Microsoft::React::IMessageQueue CallbackMessageQueue();
-  void CallbackMessageQueue(Microsoft::React::IMessageQueue value);
+  facebook::react::IMessageQueue CallbackMessageQueue();
+  void CallbackMessageQueue(facebook::react::IMessageQueue value);
   uint32_t AddThresholdHandler(
       uint64_t threshold,
       uint32_t minCallbackIntervalInMilliseconds,
-      Microsoft::React::MemoryThresholdHandler const &handler);
+      facebook::react::MemoryThresholdHandler const &handler);
   bool RemoveThresholdHandler(uint32_t token);
 
 #pragma region IMemoryTrackerTester
@@ -28,9 +28,9 @@ struct MemoryTracker : MemoryTrackerT<MemoryTracker> {
 
  private:
   std::shared_ptr<::facebook::react::MemoryTracker> m_internalMemoryTracker;
-  ::winrt::Microsoft::React::IMessageQueue m_abiCallbackMessageQueue;
+  ::winrt::facebook::react::IMessageQueue m_abiCallbackMessageQueue;
 };
-} // namespace winrt::Microsoft::React::implementation
-namespace winrt::Microsoft::React::factory_implementation {
+} // namespace winrt::facebook::react::implementation
+namespace winrt::facebook::react::factory_implementation {
 struct MemoryTracker : MemoryTrackerT<MemoryTracker, implementation::MemoryTracker> {};
-} // namespace winrt::Microsoft::React::factory_implementation
+} // namespace winrt::facebook::react::factory_implementation

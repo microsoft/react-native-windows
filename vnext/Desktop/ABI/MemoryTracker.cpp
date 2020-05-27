@@ -2,14 +2,14 @@
 
 #include "MemoryTracker.h"
 
-#include "Microsoft.React.MemoryTracker.g.cpp"
+#include "facebook.react.MemoryTracker.g.cpp"
 
 #include "MessageQueueShim.h"
 
-namespace winrt::Microsoft::React::implementation {
-MemoryTracker::MemoryTracker(Microsoft::React::IMessageQueue const &callbackMessageQueue) {
+namespace winrt::facebook::react::implementation {
+MemoryTracker::MemoryTracker(facebook::react::IMessageQueue const &callbackMessageQueue) {
   m_internalMemoryTracker = ::facebook::react::CreateMemoryTracker(
-      std::make_shared<::Microsoft::React::MessageQueueShim>(callbackMessageQueue));
+      std::make_shared<::facebook::react::MessageQueueShim>(callbackMessageQueue));
 }
 
 uint64_t MemoryTracker::CurrentMemoryUsage() {
@@ -20,18 +20,18 @@ uint64_t MemoryTracker::PeakMemoryUsage() {
   return m_internalMemoryTracker->GetPeakMemoryUsage();
 }
 
-Microsoft::React::IMessageQueue MemoryTracker::CallbackMessageQueue() {
+facebook::react::IMessageQueue MemoryTracker::CallbackMessageQueue() {
   return m_abiCallbackMessageQueue;
 }
 
-void MemoryTracker::CallbackMessageQueue(Microsoft::React::IMessageQueue value) {
-  m_internalMemoryTracker->SetCallbackMessageQueueThread(std::make_shared<::Microsoft::React::MessageQueueShim>(value));
+void MemoryTracker::CallbackMessageQueue(facebook::react::IMessageQueue value) {
+  m_internalMemoryTracker->SetCallbackMessageQueueThread(std::make_shared<::facebook::react::MessageQueueShim>(value));
 }
 
 uint32_t MemoryTracker::AddThresholdHandler(
     uint64_t threshold,
     uint32_t minCallbackIntervalInMilliseconds,
-    Microsoft::React::MemoryThresholdHandler const &handler) {
+    facebook::react::MemoryThresholdHandler const &handler) {
   return static_cast<uint32_t>(m_internalMemoryTracker->AddThresholdCallback(
       static_cast<size_t>(threshold), std::chrono::milliseconds(minCallbackIntervalInMilliseconds), handler));
 }
@@ -55,4 +55,4 @@ void MemoryTracker::OnDeallocation(uint64_t size) {
 }
 
 #pragma endregion IMemoryTrackerTester
-} // namespace winrt::Microsoft::React::implementation
+} // namespace winrt::facebook::react::implementation

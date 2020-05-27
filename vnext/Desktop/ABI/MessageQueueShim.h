@@ -1,17 +1,17 @@
 #pragma once
 
 #include <cxxreact/MessageQueueThread.h>
-#include <winrt/Microsoft.React.h>
+#include <winrt/facebook.react.h>
 
-namespace Microsoft::React {
+namespace facebook::react {
 class MessageQueueShim : public facebook::react::MessageQueueThread {
  public:
-  MessageQueueShim(const ::winrt::Microsoft::React::IMessageQueue &abiMessageQueue);
+  MessageQueueShim(const ::winrt::facebook::react::IMessageQueue &abiMessageQueue);
   virtual void runOnQueue(std::function<void()> &&item) override;
   virtual void runOnQueueSync(std::function<void()> &&item) override;
   virtual void quitSynchronous() override;
 
  private:
-  ::winrt::Microsoft::React::IMessageQueue m_abiMessageQueue;
+  ::winrt::facebook::react::IMessageQueue m_abiMessageQueue;
 };
-} // namespace Microsoft::React
+} // namespace facebook::react

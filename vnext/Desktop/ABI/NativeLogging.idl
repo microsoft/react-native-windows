@@ -12,8 +12,8 @@
 
 // ABI_REVIEW:
 // Given this is a new API without usage legacy, should we use the chance to introduce a different
-// namespace, e.g. "Microsoft.React"?
-namespace Microsoft.React {
+// namespace, e.g. "facebook.react"?
+namespace facebook.react {
 
 // ABI_REVIEW:
 // representing

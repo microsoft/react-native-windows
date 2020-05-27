@@ -2,20 +2,20 @@
 
 #include "NativeLogEventSource.h"
 
-#include "Microsoft.React.NativeLogEventSource.g.cpp"
+#include "facebook.react.NativeLogEventSource.g.cpp"
 
 #include <Logging.h>
 #include <Unicode.h>
 
 using namespace Microsoft::Common::Unicode;
 
-namespace winrt::Microsoft::React::implementation {
+namespace winrt::facebook::react::implementation {
 namespace {
-::winrt::Microsoft::React::NativeLogHandler g_abiHandler;
+::winrt::facebook::react::NativeLogHandler g_abiHandler;
 std::atomic<uint32_t> g_abiHandlerRegistrationCookie = 0;
 } // namespace
 
-uint32_t NativeLogEventSource::InitializeLogging(::winrt::Microsoft::React::NativeLogHandler const &handler) {
+uint32_t NativeLogEventSource::InitializeLogging(::winrt::facebook::react::NativeLogHandler const &handler) {
   g_abiHandler = handler;
 
   std::function<void(::facebook::react::RCTLogLevel, const char *)> internalHandler =
@@ -33,4 +33,4 @@ void NativeLogEventSource::UninitializeLogging(uint32_t cookie) {
   assert(cookie == g_abiHandlerRegistrationCookie);
   g_abiHandler = nullptr;
 }
-} // namespace winrt::Microsoft::React::implementation
+} // namespace winrt::facebook::react::implementation
