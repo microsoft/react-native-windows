@@ -18,7 +18,7 @@ import * as yargs from 'yargs';
 import Manifest, {ValidationError} from './Manifest';
 import {
   OverrideFileRepository,
-  VersionedReactFileRepository,
+  ReactFileRepository,
   bindVersion,
 } from './FileRepository';
 import OverrideUpgrader, {UpgradeResult} from './OverrideUpgrader';
@@ -240,8 +240,7 @@ async function doUpgrade(
     const manifest = await readManifestUsingRepos(
       manifestPath,
       ovrRepo,
-      reactRepo,
-      version,
+      bindVersion(reactRepo, version || getInstalledRNVersion()),
     );
 
     const outOfDateOverrides = (await manifest.validate())
@@ -383,10 +382,17 @@ async function checkFileExists(friendlyName: string, filePath: string) {
  * Read a manifest and print a pretty error if we can't
  */
 async function readManifest(file: string, version?: string): Promise<Manifest> {
-  const packageReactRepo = new PackageReactFileRepository();
-  const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(file));
+  let reactRepo: ReactFileRepository;
 
-  return readManifestUsingRepos(file, ovrRepo, packageReactRepo, version);
+  if (version && version !== getInstalledRNVersion()) {
+    const gitRepo = await GitReactFileRepository.createAndInit();
+    reactRepo = bindVersion(gitRepo, version);
+  } else {
+    reactRepo = new PackageReactFileRepository();
+  }
+
+  const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(file));
+  return readManifestUsingRepos(file, ovrRepo, reactRepo);
 }
 
 /**
@@ -395,8 +401,7 @@ async function readManifest(file: string, version?: string): Promise<Manifest> {
 async function readManifestUsingRepos(
   file: string,
   ovrRepo: OverrideFileRepository,
-  versionedReactRepo: VersionedReactFileRepository,
-  version?: string,
+  reactRepo: ReactFileRepository,
 ): Promise<Manifest> {
   await checkFileExists('manifest', file);
 
@@ -407,9 +412,6 @@ async function readManifestUsingRepos(
   } catch (ex) {
     throw new Error('Could not parse manifest. Is it valid?');
   }
-
-  const rnVersion = version || getInstalledRNVersion();
-  const reactRepo = bindVersion(versionedReactRepo, rnVersion);
 
   return new Manifest(data, ovrRepo, reactRepo);
 }
@@ -444,7 +446,7 @@ async function ensureSingleInstance(
 
   if (!(await lock.tryLock())) {
     const spinner = ora(
-      'Waiting for other instances of the override CLI to finish',
+      `Waiting for another instance of ${npmPackage.name} to finish`,
     ).start();
     await lock.lock();
     spinner.stop();
