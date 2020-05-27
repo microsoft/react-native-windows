@@ -3,10 +3,10 @@
 
 #include "pch.h"
 
+#include <IUIManager.h>
 #include <Modules/NativeUIManager.h>
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ViewManagerProvider.h>
-#include <IUIManager.h>
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
