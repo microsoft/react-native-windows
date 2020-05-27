@@ -28,9 +28,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   IReactNotificationService Notifications() noexcept;
 
-  hstring MainComponentName() noexcept;
-  void MainComponentName(hstring const &value) noexcept;
-
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;
 
@@ -97,7 +94,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
-  hstring m_mainComponentName{};
   bool m_useDeveloperSupport{REACT_DEFAULT_USE_DEVELOPER_SUPPORT};
   hstring m_javaScriptMainModuleName{};
   hstring m_javaScriptBundleFile{};
@@ -140,14 +136,6 @@ inline IReactPropertyBag ReactInstanceSettings::Properties() noexcept {
 
 inline IReactNotificationService ReactInstanceSettings::Notifications() noexcept {
   return m_notifications;
-}
-
-inline hstring ReactInstanceSettings::MainComponentName() noexcept {
-  return m_mainComponentName;
-}
-
-inline void ReactInstanceSettings::MainComponentName(hstring const &value) noexcept {
-  m_mainComponentName = value;
 }
 
 inline bool ReactInstanceSettings::UseDeveloperSupport() noexcept {

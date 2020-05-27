@@ -15,7 +15,6 @@ namespace Microsoft.ReactNative {
 
     IReactPropertyBag Properties { get; };
     IReactNotificationService Notifications { get; };
-    String MainComponentName { get; set; };
     Boolean UseDeveloperSupport { get; set; };
     String JavaScriptMainModuleName { get; set; };
     String JavaScriptBundleFile { get; set; };

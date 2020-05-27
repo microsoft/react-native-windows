@@ -311,6 +311,12 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="JsiReader.h">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="JsiWriter.h">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
@@ -321,10 +327,6 @@
     <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ReactApplicationDelegate.h">
-      <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="IReactContext.h">
       <DependentUpon>IReactContext.idl</DependentUpon>
@@ -486,6 +488,12 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="JsiReader.cpp">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="JsiWriter.cpp">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
@@ -499,10 +507,6 @@
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="ReactApplicationDelegate.cpp">
-      <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="IReactContext.cpp">
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -574,9 +578,6 @@
     <Midl Include="IViewManager.idl" />
     <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="IReactContext.idl">
       <SubType>Designer</SubType>
     </Midl>

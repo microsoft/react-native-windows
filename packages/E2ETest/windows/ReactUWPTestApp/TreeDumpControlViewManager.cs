@@ -32,11 +32,12 @@ namespace TreeDumpLibrary
             m_textBlock.IsTextSelectionEnabled = false;
             m_textBlock.LayoutUpdated += (source, e) =>
             {
+                ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 800 || bounds.Height != 600)
                 {
                     // Dump disabled when window size is not 800x600!
-                    UpdateResult(false /*matchDump*/ , "Window has been resized, dump comparison is only valid at default launch size: 800x600!, current size:" + bounds.ToString());
+                    UpdateResult(false /*matchDump*/ , $"Window has been resized, dump comparison is only valid at default launch size: 800x600!, current size: {bounds.Width}x{bounds.Height}");
                 }
                 else
                 {
