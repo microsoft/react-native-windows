@@ -81,7 +81,7 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)ReactWindowsCore;$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>

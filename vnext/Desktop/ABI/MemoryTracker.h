@@ -1,7 +1,7 @@
 #pragma once
 #include "Microsoft.React.MemoryTracker.g.h"
 
-#include <MemoryTracker.h>
+#include <ReactWindowsCore/MemoryTracker.h>
 
 namespace winrt::Microsoft::React::implementation {
 struct MemoryTracker : MemoryTrackerT<MemoryTracker> {

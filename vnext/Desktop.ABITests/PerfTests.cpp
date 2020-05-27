@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <winrt/Microsoft.React.h>
 
-#include <Shared/Logging.h>
+#include <ReactWindowsCore/Logging.h>
 
 using namespace winrt::Microsoft::React;
 using namespace winrt;

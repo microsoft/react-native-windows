@@ -92,6 +92,9 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -265,6 +268,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\ClipboardModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DeviceStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
@@ -673,9 +679,6 @@
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\I18nManagerModule.h">
-      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

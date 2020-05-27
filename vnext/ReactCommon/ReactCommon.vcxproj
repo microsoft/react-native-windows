@@ -90,7 +90,7 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
         $(FollyDir);$(ReactNativeWindowsDir)stubs;
-        $(ReactNativeWindowsDir)\Shared\tracing;
+        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>

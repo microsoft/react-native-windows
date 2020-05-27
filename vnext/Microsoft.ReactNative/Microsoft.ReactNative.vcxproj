@@ -136,7 +136,8 @@
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)include;
-        $(ReactNativeWindowsDir)Shared\tracing;
+        $(ReactNativeWindowsDir)ReactWindowsCore;
+        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(YogaDir);
         %(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

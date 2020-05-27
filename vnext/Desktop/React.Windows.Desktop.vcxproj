@@ -68,7 +68,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(ReactNativeDir)\ReactCommon\callinvoker;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(ReactNativeDir)\ReactCommon\callinvoker;$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -93,13 +93,13 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj /await</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);Shlwapi.lib;winsqlite3.lib</AdditionalDependencies>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
     <Midl>
@@ -220,6 +220,9 @@
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore-Desktop.vcxproj">
+      <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
