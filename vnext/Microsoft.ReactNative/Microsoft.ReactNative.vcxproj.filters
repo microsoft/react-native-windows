@@ -92,9 +92,6 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -273,9 +270,6 @@
     <ClCompile Include="Modules\ClipboardModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\DeviceStateModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -322,6 +316,10 @@
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -616,9 +614,6 @@
     <ClInclude Include="Modules\ClipboardModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\DeviceStateModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -680,6 +675,10 @@
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DeviceInfoModule.h" />
+    <ClInclude Include="Modules\AsyncStorageModuleWin32.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

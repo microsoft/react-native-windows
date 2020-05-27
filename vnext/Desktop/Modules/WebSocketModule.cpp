@@ -7,7 +7,7 @@
 
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#include "../ReactWindowsCore/Utils.h"
+#include <Utils.h>
 #include "Unicode.h"
 
 using namespace facebook::xplat;

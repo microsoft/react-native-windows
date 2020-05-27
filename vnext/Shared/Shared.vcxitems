@@ -15,13 +15,97 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)cdebug.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
+      <ExcludedFromBuild Condition="'$(USE_HERMES)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryTracker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
+      <ExcludedFromBuild Condition="'$(USE_V8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ViewManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorageModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)etw\react_native_windows.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IHttpResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)INativeUIManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IUIManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSBigAbiString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryTracker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\I18nModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)etw\build.bat" />
+    <None Include="$(MSBuildThisFileDirectory)etw\react_native_windows.man" />
+    <None Include="$(MSBuildThisFileDirectory)etw\react_native_windows_etw_res.dll" />
+    <None Include="$(MSBuildThisFileDirectory)etw\register.bat" />
   </ItemGroup>
 </Project>

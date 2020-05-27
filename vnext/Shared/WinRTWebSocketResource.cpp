@@ -8,6 +8,7 @@
 #include <Utilities.h>
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <RestrictedErrorInfo.h>
 
