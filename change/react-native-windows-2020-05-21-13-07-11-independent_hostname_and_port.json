@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow developers to independently set hostname and port.",
-  "packageName": "react-native-windows",
-  "email": "12337821+nasadigital@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-21T20:07:11.042Z"
-}

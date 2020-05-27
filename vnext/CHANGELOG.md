@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 May 2020 00:04:45 GMT and should not be manually modified.
+This log was last generated on Wed, 27 May 2020 00:05:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.76
+
+Wed, 27 May 2020 00:05:42 GMT
+
+### Changes
+
+- Allow developers to independently set hostname and port. (12337821+nasadigital@users.noreply.github.com)
+- Move I18nManager to spec based native module (acoates@microsoft.com)
+- Add UIDispatcher property to ReactInstanceSettings and IReactContext (vmorozov@microsoft.com)
 
 ## 0.0.0-master.74
 
