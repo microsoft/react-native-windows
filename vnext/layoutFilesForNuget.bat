@@ -56,7 +56,6 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %RNROOT%\ReactCommon\jsi                                       %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\stubs                                                %DESTROOT%\inc\stubs
 %COPYCMD%  %SRCROOT%\Desktop\*.h                                          %DESTROOT%\inc\ReactWin32
-%COPYCMD%  %SRCROOT%\ReactWindowsCore\*.h                                 %DESTROOT%\inc\ReactWindowsCore
 %COPYCMD%  %SRCROOT%\ReactUWP\*.h                                         %DESTROOT%\inc\ReactUWP
 %COPYCMD%  %SRCROOT%\include                                              %DESTROOT%\inc\include
 %COPYCMD%  %SRCROOT%\Test\*.h                                             %DESTROOT%\inc\Test
