@@ -8,14 +8,18 @@
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+import * as semver from 'semver';
 import * as simplegit from 'simple-git/promise';
 
 import ActionQueue from './ActionQueue';
 import {VersionedReactFileRepository} from './FileRepository';
+import fetch from 'node-fetch';
 import {getNpmPackage} from './PackageUtils';
 
-const REACT_NATIVE_GITHUB_URL = 'https://github.com/facebook/react-native.git';
-const DEFAULT_DIR = path.join(os.tmpdir(), getNpmPackage().name, 'git');
+const RN_COMMIT_ENDPOINT =
+  'https://api.github.com/repos/facebook/react-native/commits';
+const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
+const DEFAULT_DIR = path.join(os.tmpdir(), getNpmPackage().name, 'git2');
 
 /**
  * Retrives React Native files using the React Native Github repo. Switching
@@ -48,7 +52,6 @@ export default class GitReactFileRepository
 
     if (!(await repo.gitClient.checkIsRepo())) {
       await repo.gitClient.init();
-      await repo.gitClient.addRemote('origin', REACT_NATIVE_GITHUB_URL);
     }
 
     return repo;
@@ -137,19 +140,48 @@ export default class GitReactFileRepository
 
   private async checkoutVersion(reactNativeVersion: string) {
     if (reactNativeVersion !== this.checkedOutVersion) {
+      const gitRef = await this.refFromVersion(reactNativeVersion);
+
       try {
-        await this.gitClient.fetch(
-          'origin',
-          `refs/tags/v${reactNativeVersion}`,
-        );
+        await this.gitClient.fetch([RN_GITHUB_URL, gitRef, '--depth=1']);
         await this.gitClient.checkout('FETCH_HEAD');
         await this.gitClient.reset('hard');
         this.checkedOutVersion = reactNativeVersion;
       } catch (ex) {
-        throw new Error(
-          `Failed to checkout tag 'v${reactNativeVersion}'. Does it exist?`,
-        );
+        throw new Error(`Failed to fetch '${gitRef}'. Does it exist?`);
       }
+    }
+  }
+
+  private async refFromVersion(reactNativeVersion: string): Promise<string> {
+    if (!semver.valid(reactNativeVersion)) {
+      throw new Error(`${reactNativeVersion} is not a valid semver version`);
+    }
+
+    // Stable releases of React Native use a tag where nightly releases embed
+    // a commit hash into the prerelease tag of 0.0.0 versions
+    if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
+      // We cannot do a shallow fetch of an abbreviated commit hash
+      const shortHash = semver.prerelease(reactNativeVersion)[0];
+      return this.longCommitHash(shortHash);
+    } else {
+      return `refs/tags/v${reactNativeVersion}`;
+    }
+  }
+
+  private async longCommitHash(shortHash: string): Promise<string> {
+    try {
+      // Try to get the hash if we've already fetched it locally
+      return await this.gitClient.revparse([shortHash]);
+    } catch {
+      // We likely haven't fetched enough yet. We cannot get long hash directly
+      // from a remote, so query Github's API for it.
+      const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`);
+      if (!commitInfo.ok) {
+        throw new Error(`Unable to query Github for commit '${shortHash}`);
+      }
+
+      return (await commitInfo.json()).sha;
     }
   }
 }
