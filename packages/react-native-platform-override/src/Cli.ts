@@ -28,90 +28,88 @@ import {getInstalledRNVersion, getNpmPackage} from './PackageUtils';
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
+import {PackageReactFileRepository} from './PackageReactFileRepository';
+
+const UPGRADE_LOCK = 'upgrade-overrides';
 
 const npmPackage = getNpmPackage();
 
-doMain(() => {
-  return new Promise((resolve, _) => {
-    yargs
-      .command(
-        'validate <manifests...>',
-        'Verify that overrides are recorded and up-to-date',
-        cmdYargs =>
-          cmdYargs.options({
-            manifests: {
-              type: 'array',
-              describe: 'Paths to the override manifests to validate',
-            },
-            version: {
-              type: 'string',
-              describe: 'Optional React Native version to check against',
-            },
-          }),
-        cmdArgv => validateManifests(cmdArgv.manifests, cmdArgv.version),
-      )
-      .command(
-        'add <override>',
-        'Add an override to the manifest',
-        cmdYargs =>
-          cmdYargs.options({
-            override: {type: 'string', describe: 'The override to add'},
-          }),
-        cmdArgv => addOverride(cmdArgv.override),
-      )
-      .command(
-        'remove <override>',
-        'Remove an override from the manifest',
-        cmdYargs =>
-          cmdYargs.options({
-            override: {type: 'string', describe: 'The override to remove'},
-          }),
-        cmdArgv => removeOverride(cmdArgv.override),
-      )
-      .command(
-        'auto-upgrade <manifest>',
-        'Attempts to automatically merge new changes into out-of-date overrides',
-        cmdYargs =>
-          cmdYargs.options({
-            manifest: {
-              type: 'string',
-              describe: 'Path to an override manifest',
-            },
-            version: {
-              type: 'string',
-              describe: 'Optional React Native version to check against',
-            },
-          }),
-        cmdArgv => autoUpgrade(cmdArgv.manifest, cmdArgv.version),
-      )
-      .command(
-        'manual-upgrade <manifest>',
-        'Similar to auto-upgrade, but places conflict markers in files that cannot be automatically merged',
-        cmdYargs =>
-          cmdYargs.options({
-            manifest: {
-              type: 'string',
-              describe: 'Path to an override manifest',
-            },
-            version: {
-              type: 'string',
-              describe: 'Optional React Native version to check against',
-            },
-          }),
-        cmdArgv => manualUpgrade(cmdArgv.manifest, cmdArgv.version),
-      )
-      .epilogue(npmPackage.description)
-      .option('color', {hidden: true})
-      .demandCommand()
-      .recommendCommands()
-      .strict()
-      .showHelpOnFail(false)
-      .wrap(yargs.terminalWidth())
-      .version(false)
-      .scriptName(npmPackage.name)
-      .onFinishCommand(resolve).argv;
-  });
-});
+yargs
+  .command(
+    'validate <manifests...>',
+    'Verify that overrides are recorded and up-to-date',
+    cmdYargs =>
+      cmdYargs.options({
+        manifests: {
+          type: 'array',
+          describe: 'Paths to the override manifests to validate',
+        },
+        version: {
+          type: 'string',
+          describe: 'Optional React Native version to check against',
+        },
+      }),
+    cmdArgv => validateManifests(cmdArgv.manifests, cmdArgv.version),
+  )
+  .command(
+    'add <override>',
+    'Add an override to the manifest',
+    cmdYargs =>
+      cmdYargs.options({
+        override: {type: 'string', describe: 'The override to add'},
+      }),
+    cmdArgv => addOverride(cmdArgv.override),
+  )
+  .command(
+    'remove <override>',
+    'Remove an override from the manifest',
+    cmdYargs =>
+      cmdYargs.options({
+        override: {type: 'string', describe: 'The override to remove'},
+      }),
+    cmdArgv => removeOverride(cmdArgv.override),
+  )
+  .command(
+    'auto-upgrade <manifest>',
+    'Attempts to automatically merge new changes into out-of-date overrides',
+    cmdYargs =>
+      cmdYargs.options({
+        manifest: {
+          type: 'string',
+          describe: 'Path to an override manifest',
+        },
+        version: {
+          type: 'string',
+          describe: 'Optional React Native version to check against',
+        },
+      }),
+    cmdArgv => autoUpgrade(cmdArgv.manifest, cmdArgv.version),
+  )
+  .command(
+    'manual-upgrade <manifest>',
+    'Similar to auto-upgrade, but places conflict markers in files that cannot be automatically merged',
+    cmdYargs =>
+      cmdYargs.options({
+        manifest: {
+          type: 'string',
+          describe: 'Path to an override manifest',
+        },
+        version: {
+          type: 'string',
+          describe: 'Optional React Native version to check against',
+        },
+      }),
+    cmdArgv => manualUpgrade(cmdArgv.manifest, cmdArgv.version),
+  )
+  .epilogue(npmPackage.description)
+  .option('color', {hidden: true})
+  .demandCommand()
+  .recommendCommands()
+  .strict()
+  .showHelpOnFail(false)
+  .wrap(yargs.terminalWidth())
+  .version(false)
+  .scriptName(npmPackage.name).argv;
 
 /**
  * Check that the given manifests correctly describe overrides and that all
@@ -170,9 +168,7 @@ async function addOverride(overridePath: string) {
 
   const overrideDetails = await OverridePrompt.askForDetails(relOverride);
 
-  const spinner = ora(
-    'Adding override (This may take a while on first run)',
-  ).start();
+  const spinner = ora('Adding override').start();
   await spinnerGuard(spinner, async () => {
     await manifest.addOverride(
       overrideDetails.type,
@@ -213,7 +209,9 @@ async function removeOverride(overridePath: string) {
  * out-of-date overrides.
  */
 async function autoUpgrade(manifestPath: string, version?: string) {
-  return doUpgrade(manifestPath, false /*isManual*/, version);
+  return ensureSingleInstance(UPGRADE_LOCK, () => {
+    return doUpgrade(manifestPath, false /*isManual*/, version);
+  });
 }
 
 /**
@@ -221,7 +219,9 @@ async function autoUpgrade(manifestPath: string, version?: string) {
  * automatically merged.
  */
 async function manualUpgrade(manifestPath: string, version?: string) {
-  return doUpgrade(manifestPath, true /*isManual*/, version);
+  return ensureSingleInstance(UPGRADE_LOCK, () => {
+    return doUpgrade(manifestPath, true /*isManual*/, version);
+  });
 }
 
 /**
@@ -383,10 +383,10 @@ async function checkFileExists(friendlyName: string, filePath: string) {
  * Read a manifest and print a pretty error if we can't
  */
 async function readManifest(file: string, version?: string): Promise<Manifest> {
-  const gitReactRepo = await GitReactFileRepository.createAndInit();
+  const packageReactRepo = new PackageReactFileRepository();
   const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(file));
 
-  return readManifestUsingRepos(file, ovrRepo, gitReactRepo, version);
+  return readManifestUsingRepos(file, ovrRepo, packageReactRepo, version);
 }
 
 /**
@@ -408,7 +408,7 @@ async function readManifestUsingRepos(
     throw new Error('Could not parse manifest. Is it valid?');
   }
 
-  const rnVersion = version || (await getInstalledRNVersion());
+  const rnVersion = version || getInstalledRNVersion();
   const reactRepo = bindVersion(versionedReactRepo, rnVersion);
 
   return new Manifest(data, ovrRepo, reactRepo);
@@ -433,12 +433,14 @@ async function spinnerGuard<T>(
 }
 
 /**
- * Wrap the main function around a barrier to ensure only one copy of the
- * override tool is running at once. This is needed to avoid multiple tools
- * accessing the same local Git repo at the same time.
+ * Ensure that only a single instance of the application is holding a lock to
+ * the named resource.
  */
-async function doMain(fn: () => Promise<void>): Promise<void> {
-  const lock = new CrossProcessLock(`${npmPackage.name}-cli-lock`);
+async function ensureSingleInstance(
+  namedLock: string,
+  fn: () => Promise<void>,
+): Promise<void> {
+  const lock = new CrossProcessLock(`${npmPackage.name}/${namedLock}`);
 
   if (!(await lock.tryLock())) {
     const spinner = ora(

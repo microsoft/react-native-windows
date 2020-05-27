@@ -11,7 +11,7 @@ import * as path from 'path';
  * Try to find the currently installed React Native version by searching for and
  * reading it's package.json.
  */
-export async function getInstalledRNVersion(): Promise<string> {
+export function getInstalledRNVersion(): string {
   const rnPackage = require('react-native/package.json');
   const version = rnPackage.version;
 
@@ -26,10 +26,10 @@ export async function getInstalledRNVersion(): Promise<string> {
  * Return an object representing the package.json of this package
  */
 export function getNpmPackage(): any {
-  const npmPackageDir = path.join(
+  const npmPackageFile = path.join(
     path.dirname(require.main.filename),
     'package.json',
   );
 
-  return require(npmPackageDir);
+  return require(npmPackageFile);
 }
