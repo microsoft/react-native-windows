@@ -91,6 +91,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
@@ -107,6 +108,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
@@ -392,6 +394,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
 
@@ -415,6 +418,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
@@ -431,6 +435,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: false
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
           otherConsoleOptions: '/ListTests'
@@ -447,6 +452,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
