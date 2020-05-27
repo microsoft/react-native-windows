@@ -598,7 +598,6 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
-    <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
