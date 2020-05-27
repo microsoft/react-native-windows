@@ -364,7 +364,7 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          testPlatformVersion: 16.5.0
+          versionSelector: latestStable
 
       - template: templates/build-rnw.yml
         parameters:
