@@ -101,7 +101,7 @@ function copyProjectTemplateAndReplace(
   const xamlTargets = `<Import Project="${xamlTargetsPath}" Condition="Exists('${xamlTargetsPath}')" />`;
   const xamlNugetErrors = `<Error Condition="!Exists('${xamlTargetsPath}')" Text="$([System.String]::Format('$(ErrorText)', '${xamlTargetsPath}'))" />`;
   const xamlNamespace = options.useWinUI3 ? 'Microsoft.UI.Xaml' : 'Windows.UI.Xaml';
-  const xamlNamespaceCpp = xamlNamespace.replace('.', '::');
+  const xamlNamespaceCpp = xamlNamespace.replace(/\./g, '::',);
 
   const templateVars = {
     '// clang-format off': '',
