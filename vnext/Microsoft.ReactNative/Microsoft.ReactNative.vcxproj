@@ -313,7 +313,6 @@
     </ClInclude>
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
-    <ClInclude Include="Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
@@ -488,7 +487,6 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Modules\AppStateModule.cpp" />
-    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />

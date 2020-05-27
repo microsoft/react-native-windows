@@ -314,7 +314,6 @@
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DeviceInfoModule.cpp">
@@ -675,7 +674,6 @@
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\AsyncStorageModuleWin32.h">
     <ClInclude Include="Modules\I18nManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>

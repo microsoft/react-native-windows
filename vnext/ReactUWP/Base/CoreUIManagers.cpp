@@ -6,7 +6,7 @@
 #include <Modules/NativeUIManager.h>
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ViewManagerProvider.h>
-#include <Shared/IUIManager.h>
+#include <IUIManager.h>
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
