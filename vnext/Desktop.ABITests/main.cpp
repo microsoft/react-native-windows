@@ -6,7 +6,7 @@
 #include "gtest/gtest.h"
 #include "motifCpp/gTestAdapter.h"
 
-int __cdecl main(int argc, char **argv) {
+int main(int argc, char **argv) {
   Mso::UnitTests::GTest::RegisterUnitTests();
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

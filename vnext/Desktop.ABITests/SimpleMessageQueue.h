@@ -2,20 +2,23 @@
 // Licensed under the MIT License.
 
 #pragma once
-
+#include <queue>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/facebook.react.h>
 
 namespace ABITests {
-class MessageQueueShim : public winrt::implements<MessageQueueShim, ::winrt::facebook::react::IMessageQueue> {
+
+class SimpleMessageQueue : public winrt::implements<SimpleMessageQueue, ::winrt::facebook::react::IMessageQueue> {
  public:
-  MessageQueueShim();
-  MessageQueueShim(std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread);
   void Run(::winrt::facebook::react::QueueItem const &item) const;
   void RunSync(::winrt::facebook::react::QueueItem const &item) const;
   void QuitSync() const;
 
+  bool IsEmpty() const noexcept;
+  bool DispatchOne();
+
  private:
-  std::shared_ptr<::facebook::react::MessageQueueThread> m_messageQueueThread;
+  mutable std::queue<::winrt::facebook::react::QueueItem> m_items;
 };
+
 } // namespace ABITests
