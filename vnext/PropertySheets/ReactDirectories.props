@@ -15,14 +15,17 @@
 
     <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
 
+    <RootDir>$(ReactNativeWindowsDir)</RootDir>
+    <RootIntDir>$([MSBuild]::NormalizeDirectory($(RootDir)\build))</RootIntDir>
+    <RootOutDir>$([MSBuild]::NormalizeDirectory($(RootDir)\target))</RootOutDir>
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
-    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
-    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(RootIntDir)\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(RootIntDir)\x86\$(Configuration)</BaseIntDir>
+    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
+    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
 
-    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <IntDir>$([MSBuild]::NormalizeDirectory($(BaseIntDir)\$(ProjectName)\))</IntDir>
+    <OutDir>$([MSBuild]::NormalizeDirectory($(BaseOutDir)\$(ProjectName)\))</OutDir>
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)\react-native-patched\</ReactNativeDir>
