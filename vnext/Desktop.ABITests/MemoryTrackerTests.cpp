@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <winrt/base.h>
+#include <winrt/facebook.react.h>
 
 #include "SimpleMessageQueue.h"
 
@@ -48,7 +49,7 @@ TEST_CLASS(MemoryTrackerTests) {
     TestCheckEqual(1000ull, tracker.PeakMemoryUsage(), "PeakMemoryUsage");
   }
 
-
+ 
   TEST_METHOD(ThresholdHandler_Called) {
     init_apartment(winrt::apartment_type::single_threaded);
 
