@@ -346,10 +346,6 @@
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
     <ClInclude Include="ReactHost\UwpReactInstanceProxy.h" />
-    <ClInclude Include="ReactInstance.h">
-      <DependentUpon>ReactInstance.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="ReactInstanceSettings.h">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -520,10 +516,6 @@
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
     <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp" />
-    <ClCompile Include="ReactInstance.cpp">
-      <DependentUpon>ReactInstance.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ReactInstanceSettings.cpp">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -565,11 +557,9 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\BorderEffect.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl" />
-    <Midl Include="IBackgroundEventListener.idl" />
     <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactNotificationService.idl" />
     <Midl Include="IReactPropertyBag.idl" />
@@ -577,12 +567,8 @@
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
-    <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
     <Midl Include="IReactContext.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactInstance.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstanceSettings.idl">

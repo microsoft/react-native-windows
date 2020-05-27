@@ -124,7 +124,6 @@
     <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
-    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />

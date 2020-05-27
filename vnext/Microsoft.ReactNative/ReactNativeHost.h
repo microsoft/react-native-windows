@@ -7,7 +7,6 @@
 
 #include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
-#include "ReactInstance.h"
 #include "ReactInstanceSettings.h"
 #include "ViewManagersProvider.h"
 
@@ -35,7 +34,6 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;
 
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  ReactNative::ReactInstance m_reactInstance{nullptr};
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders;
   ReactNative::IReactPackageBuilder m_packageBuilder;
 };
