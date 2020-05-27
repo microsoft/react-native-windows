@@ -1,6 +1,6 @@
 variables:
   VmImage: windows-2019
   MSBuildVersion: 16.0
-  GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\ked32bft.vu0'
+  GoogleTestAdapterPathExpression: '(Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\" -Recurse -Include GoogleTestAdapter.Core.dll).Directory.FullName'
   BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir # redirect to C:
   runCodesignValidationInjection: false
