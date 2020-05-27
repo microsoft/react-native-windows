@@ -28,7 +28,7 @@ import {getInstalledRNVersion, getNpmPackage} from './PackageUtils';
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
-import {PackageReactFileRepository} from './PackageReactFileRepository';
+import PackageReactFileRepository from './PackageReactFileRepository';
 
 const UPGRADE_LOCK = 'upgrade-overrides';
 
