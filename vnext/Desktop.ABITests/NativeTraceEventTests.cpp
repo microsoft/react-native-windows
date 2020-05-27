@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <CppUnitTest.h>
 #include <winrt/Microsoft.React.h>
 #include <functional>
 #include <stack>
 #include "ActivationFactory.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Microsoft::React;
 using namespace winrt;
 
