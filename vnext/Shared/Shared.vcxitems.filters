@@ -4,7 +4,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\MemoryMappedBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
@@ -86,6 +85,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\WinRTWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
