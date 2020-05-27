@@ -129,7 +129,7 @@ struct WindowData {
 
           auto host = Host();
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
-          host.InstanceSettings().MainComponentName(appName);
+
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
           host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
           host.InstanceSettings().BundleRootPath(
@@ -143,7 +143,7 @@ struct WindowData {
           host.ReloadInstance();
 
           m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
-          m_reactRootView.ComponentName(host.InstanceSettings().MainComponentName());
+          m_reactRootView.ComponentName(appName);
           m_reactRootView.ReactNativeHost(host);
 
           // Retrieve ABI pointer from C++/CX pointer

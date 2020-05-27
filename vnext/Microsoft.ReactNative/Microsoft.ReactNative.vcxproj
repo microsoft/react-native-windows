@@ -323,10 +323,6 @@
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="ReactApplicationDelegate.h">
-      <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="IReactContext.h">
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -500,10 +496,6 @@
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="ReactApplicationDelegate.cpp">
-      <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="IReactContext.cpp">
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -575,9 +567,6 @@
     <Midl Include="IViewManager.idl" />
     <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="IReactContext.idl">
       <SubType>Designer</SubType>
     </Midl>

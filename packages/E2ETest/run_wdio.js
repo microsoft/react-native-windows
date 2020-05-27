@@ -117,6 +117,7 @@ function parseLogs() {
 }
 
 function printFailedTests(ft) {
+  console.log('Failed test cases: ');
   for (const key in ft) {
     console.log(chalk.redBright(key));
     console.log(
@@ -133,8 +134,9 @@ function printFailedTests(ft) {
 function doProcess(code) {
   const failedTests = parseLogs();
   for (const failedTest of failedTests) {
-    console.log('Failed tests: ');
-    printFailedTests(failedTest);
+    if (Object.keys(failedTest).length > 0) {
+      printFailedTests(failedTest);
+    }
   }
   process.exit(code);
 }
