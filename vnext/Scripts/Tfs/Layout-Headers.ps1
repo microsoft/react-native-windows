@@ -57,9 +57,9 @@ Get-ChildItem -Path $ReactWindowsRoot\stubs -Name -Recurse -Include $patterns | 
 }
 
 # React.Windows.Core headers
-Get-ChildItem -Path $ReactWindowsRoot\ReactWindowsCore -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
-	-Path        $ReactWindowsRoot\ReactWindowsCore\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ReactWindowsCore\$(Split-Path $_) -Force) `
+Get-ChildItem -Path $ReactWindowsRoot\Shared -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactWindowsRoot\Shared\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Shared\$(Split-Path $_) -Force) `
 	-Force
 }
 
