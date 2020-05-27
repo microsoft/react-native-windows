@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Create JSI implementation for IJSValueReader and IJSValueWriter",
+  "packageName": "react-native-windows",
+  "email": "zihanc@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-05-26T20:47:12.811Z"
+}
