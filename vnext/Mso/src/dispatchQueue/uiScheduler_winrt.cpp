@@ -5,12 +5,60 @@
 #include "object/refCountedObject.h"
 #include "queueService.h"
 #include "taskQueue.h"
+#include "winrt/Windows.Foundation.h"
 #include "winrt/Windows.System.h"
 
 using namespace winrt;
+using namespace Windows::Foundation;
 using namespace Windows::System;
 
 namespace Mso {
+
+namespace {
+
+// TODO: consider to move it into its own liblet
+template <class TKey, class TValue>
+struct ThreadSafeMap {
+  ThreadSafeMap(std::recursive_mutex &mutex) noexcept : m_mutex{mutex} {}
+
+  std::optional<TValue> Get(TKey const &key) noexcept {
+    std::scoped_lock lock{m_mutex};
+    auto it = m_map.find(key);
+    if (it != m_map.end()) {
+      return std::optional<TValue>{it->second};
+    } else {
+      return std::optional<TValue>{};
+    }
+  }
+
+  void Set(TKey const &key, TValue &&value) noexcept {
+    TValue oldValue; // to destroy outside of lock
+    {
+      std::scoped_lock lock{m_mutex};
+      auto &valueRef = m_map[key];
+      oldValue = std::move(valueRef);
+      valueRef = std::move(value);
+    }
+  }
+
+  void Remove(TKey const &key) noexcept {
+    TValue value; // to destroy outside of lock
+    {
+      std::scoped_lock lock{m_mutex};
+      auto it = m_map.find(key);
+      if (it != m_map.end()) {
+        value = std::move(it->second);
+        m_map.erase(it);
+      }
+    }
+  }
+
+ private:
+  std::recursive_mutex &m_mutex;
+  std::map<TKey, TValue, std::less<>> m_map;
+};
+
+} // namespace
 
 struct UISchedulerWinRT;
 
@@ -37,6 +85,10 @@ struct UISchedulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDi
   DispatcherQueueHandler MakeDispatcherQueueHandler() noexcept;
   bool TryTakeTask(Mso::CntPtr<IDispatchQueueService> &queue, DispatchTask &task) noexcept;
 
+  static DispatchQueue GetOrCreateUIThreadQueue() noexcept;
+  using DispatchQueueRegistry = ThreadSafeMap<std::thread::id, Mso::WeakPtr<IDispatchQueueService>>;
+  static DispatchQueueRegistry &GetDispatchQueueRegistry() noexcept;
+
  public: // IDispatchQueueScheduler
   void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
   bool HasThreadAccess() noexcept override;
@@ -46,6 +98,8 @@ struct UISchedulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDi
   void AwaitTermination() noexcept override;
 
  private:
+  friend DispatchQueueStatic;
+
   struct CleanupContext {
     CleanupContext(UISchedulerWinRT *scheduler) noexcept;
     ~CleanupContext() noexcept;
@@ -69,6 +123,7 @@ struct UISchedulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDi
   uint32_t m_taskCount{0};
   bool m_isShutdown{false};
   std::thread::id m_threadId{std::this_thread::get_id()};
+  DispatcherQueue::ShutdownCompleted_revoker m_shutdownCompletedRevoker;
 };
 
 //=============================================================================
@@ -115,9 +170,15 @@ int32_t __stdcall TaskDispatcherHandler::Invoke() noexcept {
 // UISchedulerWinRT implementation
 //=============================================================================
 
-UISchedulerWinRT::UISchedulerWinRT(DispatcherQueue &&dispatcher) noexcept : m_dispatcher{std::move(dispatcher)} {}
+UISchedulerWinRT::UISchedulerWinRT(DispatcherQueue &&dispatcher) noexcept : m_dispatcher{std::move(dispatcher)} {
+  m_shutdownCompletedRevoker =
+      m_dispatcher.ShutdownCompleted(winrt::auto_revoke, [](DispatcherQueue const &, IInspectable const &) noexcept {
+        GetDispatchQueueRegistry().Remove(std::this_thread::get_id());
+      });
+}
 
 UISchedulerWinRT::~UISchedulerWinRT() noexcept {
+  GetDispatchQueueRegistry().Remove(m_threadId);
   AwaitTermination();
 }
 
@@ -213,6 +274,31 @@ void UISchedulerWinRT::AwaitTermination() noexcept {
   m_terminationEvent.Wait();
 }
 
+/*static*/ DispatchQueue UISchedulerWinRT::GetOrCreateUIThreadQueue() noexcept {
+  std::thread::id threadId{std::this_thread::get_id()};
+  std::optional<Mso::WeakPtr<IDispatchQueueService>> weakQueue = GetDispatchQueueRegistry().Get(threadId);
+  DispatchQueue queue{weakQueue.value_or(nullptr).GetStrongPtr()};
+  if (queue) {
+    return queue;
+  }
+
+  auto dispatcher = DispatcherQueue::GetForCurrentThread();
+  if (!dispatcher) {
+    return queue;
+  }
+
+  queue =
+      DispatchQueue(Mso::Make<QueueService, IDispatchQueueService>(Mso::Make<UISchedulerWinRT>(std::move(dispatcher))));
+  GetDispatchQueueRegistry().Set(threadId, Mso::WeakPtr{*GetRawState(queue)});
+  return queue;
+}
+
+/*static*/ UISchedulerWinRT::DispatchQueueRegistry &UISchedulerWinRT::GetDispatchQueueRegistry() noexcept {
+  static std::recursive_mutex mutex;
+  static DispatchQueueRegistry registry{mutex};
+  return registry;
+}
+
 //=============================================================================
 // UISchedulerWinRT::CleanupContext implementation
 //=============================================================================
@@ -248,8 +334,8 @@ void UISchedulerWinRT::CleanupContext::CheckTermination() noexcept {
 // DispatchQueueStatic::MakeCurrentThreadUIScheduler implementation
 //=============================================================================
 
-/*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeCurrentThreadUIScheduler() noexcept {
-  return Mso::Make<UISchedulerWinRT, IDispatchQueueScheduler>(DispatcherQueue::GetForCurrentThread());
+DispatchQueue DispatchQueueStatic::GetCurrentUIThreadQueue() noexcept {
+  return UISchedulerWinRT::GetOrCreateUIThreadQueue();
 }
 
 } // namespace Mso

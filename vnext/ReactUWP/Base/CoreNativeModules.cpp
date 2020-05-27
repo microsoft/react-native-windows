@@ -19,7 +19,6 @@
 #include <Modules/NetworkingModule.h>
 #include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
-#include <ReactUWP/Modules/I18nModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // ReactWindowsCore
@@ -102,9 +101,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance));
       },
       messageQueue);
-
-  modules.emplace_back(
-      "I18nManager", []() mutable { return createI18nModule(std::make_unique<I18nModule>()); }, messageQueue);
 
   modules.emplace_back(
       AppearanceModule::Name,

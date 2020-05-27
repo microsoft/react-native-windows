@@ -85,6 +85,8 @@ void ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.UseLiveReload = m_instanceSettings.UseLiveReload();
   legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
   legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
+  legacySettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
+  legacySettings.SourceBundlePort = m_instanceSettings.SourceBundlePort();
 
   if (m_instanceSettings.RedBoxHandler()) {
     legacySettings.RedBoxHandler = std::move(Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler()));
@@ -105,6 +107,9 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
   reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
   reactOptions.RedBoxHandler = legacySettings.RedBoxHandler;
+  reactOptions.DeveloperSettings.SourceBundleHost = legacySettings.SourceBundleHost;
+  reactOptions.DeveloperSettings.SourceBundlePort =
+      legacySettings.SourceBundlePort != 0 ? std::to_string(legacySettings.SourceBundlePort) : "";
 
   reactOptions.LegacySettings = std::move(legacySettings);
 

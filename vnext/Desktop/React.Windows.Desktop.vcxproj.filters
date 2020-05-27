@@ -60,6 +60,7 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -81,9 +82,17 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp" />
     <ClCompile Include="ABI\MemoryTracker.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -133,13 +142,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">

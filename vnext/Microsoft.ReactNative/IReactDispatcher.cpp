@@ -29,20 +29,40 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::UIThreadDispatcher() noexcept {
-  return make<ReactDispatcher>(Mso::DispatchQueue::MakeCurrentThreadUIQueue());
+  static thread_local weak_ref<IReactDispatcher> *tlsWeakDispatcher{nullptr};
+  IReactDispatcher dispatcher{nullptr};
+  auto queue = Mso::DispatchQueue::GetCurrentUIThreadQueue();
+  if (queue && queue.HasThreadAccess()) {
+    queue.InvokeElsePost([&queue, &dispatcher ]() noexcept {
+      // This code runs synchronously, but we want it to be run the queue context to
+      // access the queue local value where we store the weak_ref to the dispatcher.
+      // The queue local values are destroyed along with the queue.
+      // To access queue local value we temporary swap it with the thread local value.
+      // It must be a TLS value to ensure proper indexing of the queue local value entry.
+      auto tlsGuard{queue.LockLocalValue(&tlsWeakDispatcher)};
+      dispatcher = tlsWeakDispatcher->get();
+      if (!dispatcher) {
+        dispatcher = winrt::make<ReactDispatcher>(std::move(queue));
+        *tlsWeakDispatcher = dispatcher;
+      }
+    });
+  }
+
+  return dispatcher;
 }
 
-/*static*/ ReactPropertyId<IReactDispatcher> ReactDispatcher::UIDispatcherProperty() noexcept {
-  static ReactPropertyId<IReactDispatcher> uiThreadDispatcherProperty{L"ReactNative.Dispatcher", L"UIDispatcher"};
+/*static*/ IReactPropertyName ReactDispatcher::UIDispatcherProperty() noexcept {
+  static IReactPropertyName uiThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"UIDispatcher")};
   return uiThreadDispatcherProperty;
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::GetUIDispatcher(IReactPropertyBag const &properties) noexcept {
-  return ReactPropertyBag{properties}.Get(UIDispatcherProperty());
+  return properties.Get(UIDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
 /*static*/ void ReactDispatcher::SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept {
-  ReactPropertyBag{properties}.Set(UIDispatcherProperty(), UIThreadDispatcher());
+  properties.Set(UIDispatcherProperty(), UIThreadDispatcher());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 May 2020 00:05:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.76",
+      "version": "0.0.0-master.76",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow developers to independently set hostname and port.",
+            "author": "12337821+nasadigital@users.noreply.github.com",
+            "commit": "96f7e821bbdba952dff5261c26c0f965da20a567",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move I18nManager to spec based native module",
+            "author": "acoates@microsoft.com",
+            "commit": "f2fffbd85bd62c1fab24982d7394343dc41932ff",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add UIDispatcher property to ReactInstanceSettings and IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "7236d61e5736083eec1992df73183c400c787306",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Create Microsoft.ReactNative.ComponentTests.vcxproj",
+            "author": "zihanc@microsoft.com",
+            "commit": "35137fbbbfebf1ebba557cd7a8bdde909627ce3c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2020 00:06:43 GMT",
       "tag": "react-native-windows_v0.0.0-master.75",
       "version": "0.0.0-master.75",
