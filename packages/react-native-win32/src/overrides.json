@@ -24,8 +24,8 @@
       "type": "derived",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.win32.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "840be6f49fe36a3bcfb568eb285bf860f0dd441d",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -292,8 +292,8 @@
       "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.win32.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d09be2d9fc8c621538c2262947580a03ff47177f",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "dac10e7b4ec4b65b658f26aeeedc05cc975a53cd",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -308,8 +308,8 @@
       "type": "derived",
       "file": "Libraries\\Image\\Image.win32.js",
       "baseFile": "Libraries\\Image\\Image.ios.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "26acff268b815c7b3c5da0d6c9c009073b202ea8",
       "issue": 4320
     },
     {
@@ -352,8 +352,8 @@
       "type": "patch",
       "file": "Libraries\\Inspector\\InspectorOverlay.win32.js",
       "baseFile": "Libraries\\Inspector\\InspectorOverlay.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "a8cb0b3e6bd7334214a37db8bb1bb91510a5e838",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b8535e8c605e6c0e940aae6c04f0d573eaa4788e",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -440,8 +440,8 @@
       "type": "patch",
       "file": "Libraries\\StyleSheet\\StyleSheet.win32.js",
       "baseFile": "Libraries\\StyleSheet\\StyleSheet.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "87b211c7221c858271123d6d306ffb51f881e512",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "073367bc043b5e7e9db6ec046da088e750d3693c",
       "issue": "LEGACY_FIXME"
     },
     {

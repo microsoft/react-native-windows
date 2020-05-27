@@ -20,8 +20,8 @@
       "type": "patch",
       "file": "ReactCommon\\yoga\\yoga\\Yoga.cpp",
       "baseFile": "ReactCommon\\yoga\\yoga\\Yoga.cpp",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "20b4e90cca3e5e5bfcaa5fda7bb322a7efee1fa9",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "99b23af03df9e59e1c42cd9e026ebb4c4df75cb4",
       "issue": 3994
     }
   ]
