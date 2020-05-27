@@ -24,7 +24,7 @@ jobs:
           ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\"
           $googleTestAdapterPath = $(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)
           Write-Host "obtained $googleTestAdapterPath"
-          Write-Host ##vso[task.setvariable variable=GoogleTestAdapterPath;isOutput=true]$googleTestAdapterPath
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath;isOutput=true]$googleTestAdapterPath"
           Write-Host "Set environment variable to UC ($env:GOOGLETESTADAPTERPATH)"
           Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
         displayName: Set GoogleTestAdapterPath
