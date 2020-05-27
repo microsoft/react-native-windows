@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "reg-free WinRT, remove activation factory",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-05-27T02:49:45.781Z"
+}

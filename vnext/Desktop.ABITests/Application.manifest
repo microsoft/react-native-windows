@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity name="React.Windows.Desktop.ABITests" type="win32" version="1.0.0.0" />
+
+  <file name="react-native-win32.dll">
+    <activatableClass
+        name="facebook.react.MemoryTracker"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+        name="facebook.react.NativeLogEventSource"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+        name="facebook.react.NativeTraceEventSource"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+        name="Microsoft.ReactNative.ReactNativeHost"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+  </file>
+
+</assembly>
