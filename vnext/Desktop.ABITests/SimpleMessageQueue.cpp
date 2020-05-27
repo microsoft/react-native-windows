@@ -6,11 +6,11 @@
 
 namespace ABITests {
 
-void SimpleMessageQueue::Run(::winrt::facebook::react::QueueItem const &item) const {
+void SimpleMessageQueue::Run(::winrt::Microsoft::React::QueueItem const &item) const {
   m_items.push(item);
 }
 
-void SimpleMessageQueue::RunSync(::winrt::facebook::react::QueueItem const &item) const {
+void SimpleMessageQueue::RunSync(::winrt::Microsoft::React::QueueItem const &item) const {
   item();
 }
 
