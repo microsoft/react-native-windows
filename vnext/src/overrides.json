@@ -48,14 +48,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.windows.js",
-      "baseFile": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "e5e0e4e6c1b20844ec1deecc34ffa9452360ba03",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "platform",
       "file": "Libraries\\AppTheme\\AppTheme.ts"
     },
@@ -317,22 +309,6 @@
       "baseFile": "Libraries\\Components\\SafeAreaView\\SafeAreaView.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "59dabb86baedb0088e110f8cdeb914fa3271dfd9",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\Components\\ScrollView\\ScrollView.windesktop.js",
-      "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "ad1f9e693d11926daf324f992de3741def01e35e",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Components\\ScrollView\\ScrollView.windows.js",
-      "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "ad1f9e693d11926daf324f992de3741def01e35e",
       "issue": "LEGACY_FIXME"
     },
     {

@@ -60,11 +60,11 @@ const Platform = {
     return false;
   },
   select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
-  'win32' in spec
-    ? spec.win32
-    : 'native' in spec
-    ? spec.native
-    : spec.default,
+    'win32' in spec
+      ? spec.win32
+      : 'native' in spec
+      ? spec.native
+      : spec.default,
 };
 
 module.exports = Platform;
