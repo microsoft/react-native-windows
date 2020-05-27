@@ -4,7 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}</ItemsProjectGuid>
-    <ItemsProjectName>Microsoft.React.Shared</ItemsProjectName>
+    <ItemsProjectName>Microsoft.ReactNative.Shared</ItemsProjectName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

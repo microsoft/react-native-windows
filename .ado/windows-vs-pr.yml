@@ -160,7 +160,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -209,7 +209,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -298,7 +298,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -364,7 +364,7 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          testPlatformVersion: 16.3.0
+          testPlatformVersion: 16.5.0
 
       - template: templates/build-rnw.yml
         parameters:
