@@ -136,8 +136,7 @@
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)include;
-        $(ReactNativeWindowsDir)ReactWindowsCore;
-        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(YogaDir);
         %(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -414,7 +413,7 @@
     <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp" />
+    <ClCompile Include="..\ReactUWP\Modules\I18nModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />

@@ -7,8 +7,8 @@
 
 #include "DevSupportManagerUwp.h"
 
-#include <ReactWindowsCore/DevServerHelper.h>
-#include <ReactWindowsCore/DevSettings.h>
+#include <Shared/DevServerHelper.h>
+#include <Shared/DevSettings.h>
 
 #include <Executors/WebSocketJSExecutorUwp.h>
 

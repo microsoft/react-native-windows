@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ReactWindowsCore/BatchingMessageQueueThread.h>
+#include <Shared/BatchingMessageQueueThread.h>
 #include <cxxreact/MessageQueueThread.h>
 
 namespace react::uwp {

@@ -95,9 +95,6 @@
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -319,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModuleWin32.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Modules\I18nModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
