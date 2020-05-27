@@ -54,11 +54,6 @@ namespace SampleAppCS
         {
             base.OnLaunched(e);
             var frame = Window.Current.Content as Frame;
-            if (frame == null)
-            {
-                frame = new Frame();
-                Window.Current.Content = frame;
-            }
             frame.Navigate(typeof(MainPage));
             Window.Current.Activate();
         }

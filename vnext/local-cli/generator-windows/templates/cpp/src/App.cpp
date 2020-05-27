@@ -7,9 +7,9 @@
 using namespace winrt::<%=ns%>;
 using namespace winrt::<%=ns%>::implementation;
 using namespace winrt;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Navigation;
+using namespace <%=XamlNamespaceCpp%>;
+using namespace <%=XamlNamespaceCpp%>::Controls;
+using namespace <%=XamlNamespaceCpp%>::Navigation;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 
@@ -50,7 +50,6 @@ App::App() noexcept
 /// <param name="e">Details about the launch request and process.</param>
 void App::OnLaunched(LaunchActivatedEventArgs const& e)
 {
-    using super = AppT<App>;
     super::OnLaunched(e);
 
     Frame rootFrame = Window::Current().Content().as<Frame>();

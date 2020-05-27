@@ -10,7 +10,9 @@ namespace winrt::<%=ns%>::implementation
         App() noexcept;
         void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const&);
         void OnSuspending(IInspectable const&, Windows::ApplicationModel::SuspendingEventArgs const&);
-        void OnNavigationFailed(IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const&);
+        void OnNavigationFailed(IInspectable const&, <%=XamlNamespaceCpp%>::Navigation::NavigationFailedEventArgs const&);
+      private:
+        using super = AppT<App>;
     };
 } // namespace winrt::<%=ns%>::implementation
 

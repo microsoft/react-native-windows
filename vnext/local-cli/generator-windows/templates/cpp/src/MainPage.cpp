@@ -9,14 +9,14 @@
 // clang-format off
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
+using namespace <%=XamlNamespaceCpp%>;
 
 namespace winrt::<%=ns%>::implementation
 {
     MainPage::MainPage()
     {
         InitializeComponent();
-        const auto& app = Application::Current().as<App>();
+        auto app = Application::Current().as<App>();
         ReactRootView().ReactNativeHost(app->Host());
     }
 }
