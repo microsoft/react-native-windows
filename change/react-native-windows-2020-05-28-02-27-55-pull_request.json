@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Build ChakraRuntime in ComponentTests with one test case",
+  "packageName": "react-native-windows",
+  "email": "zihanc@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-05-28T09:27:55.654Z"
+}
