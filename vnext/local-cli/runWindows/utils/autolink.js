@@ -357,7 +357,7 @@ module.exports = {
     },
     {
       command: '--check',
-      description: 'Check (only) if any autolinked files need to change',
+      description: 'Only check whether any autolinked files need to change',
       default: false,
     },
   ],
