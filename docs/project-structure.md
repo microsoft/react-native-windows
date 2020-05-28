@@ -40,7 +40,7 @@ Holds sources common to both Windows variants, that require different build conf
 *Static Library*<br/>
 React Native core, cross-platform C++ types and interfaces.<br/>
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.<br/>
-See https://github.com/facebook/react-native/tree/v0.60.0/ReactCommon.
+See https://github.com/facebook/react-native/tree/v0.62.0/ReactCommon.
 
 ### Folly
 *Static Library*<br/>
@@ -74,9 +74,9 @@ Common framework for running out of process and/or full React instance testing.
 
 ### IntegrationTests (Node Project)
 *MSBuild Node project. For reading/editing purposes only (no build artifact)*<br/>
-Set of JavaScript component tests for [RNTester](https://github.com/facebook/react-native/tree/v0.60.0/RNTester).
+Set of JavaScript component tests for [RNTester](https://github.com/facebook/react-native/tree/v0.62.0/RNTester).
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.<br/>
-See https://github.com/facebook/react-native/tree/v0.60.0/IntegrationTests.
+See https://github.com/facebook/react-native/tree/v0.62.0/IntegrationTests.
 
 ## Windows Desktop Projects
 
