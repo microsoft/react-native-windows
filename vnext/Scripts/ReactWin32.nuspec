@@ -29,23 +29,23 @@
     <file src="$nugetroot$\inc\folly\**\*.*" target="inc" />
     <file src="$nugetroot$\inc\stubs\**\*.*" target="inc" />
 
-    <file src="$nugetroot$\inc\Shared\AbiSafe.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\INativeUIManager.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\IUIManager.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\IWebSocketResource.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\JSBigAbiString.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\Logging.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\MemoryMappedBuffer.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\MemoryTracker.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\ShadowNode.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\Tracing.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\AbiSafe.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\DevSettings.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IRedBoxHandler.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IUIManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IWebSocketResource.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\LayoutAnimation.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Logging.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\MemoryMappedBuffer.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\MemoryTracker.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\NativeModuleProvider.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Tracing.h" target="inc"/>
 
     <!-- Test DLL -->
     <file src="$nugetroot$\inc\Test\WebSocketServer.h" target="inc\Test" />
@@ -54,7 +54,7 @@
     <file src="$nugetroot$\inc\React.Windows.Desktop.Test.x86.def" target="inc\Test" />
 
     <!-- Required for win32 -->
-    <file src="$nugetroot$\inc\Shared\DevServerHelper.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\DevServerHelper.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWin32\JSBigStringResourceDll.h" target="inc"/>
     <file src="$nugetroot$\inc\react-native-win32.x64.def" target="inc"/>
     <file src="$nugetroot$\inc\react-native-win32.x86.def" target="inc"/>

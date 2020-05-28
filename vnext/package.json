@@ -91,6 +91,7 @@
     "/PropertySheets",
     "/ReactCommon",
     "/ReactUWP",
+    "/ReactWindowsCore",
     "/Scripts",
     "/Shared",
     "/stubs",
