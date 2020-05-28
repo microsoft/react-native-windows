@@ -26,6 +26,16 @@ describe('First', () => {
   it('Type abc on TextInput', () => {
     TextInputTestPage.clearAndTypeOnTextInput('abc');
     assert.equal(TextInputTestPage.getTextInputText(), 'abc');
+
+    // We should really develop a proper mechanism of waiting for idle, or detecting when the JS + bridge has had a chance of completing
+    // But this test is causing a large itermittent failure rate on CI, so adding this polling timeout for now.
+    // eslint-disable-next-line no-undef
+    browser.waitUntil(
+      () => TextInputTestPage.getTextInputPrev2Text().includes('onKeyPress'),
+      1000,
+      'Wait for text to be updated'
+    );
+
     assert.ok(TextInputTestPage.getTextInputPrev2Text().includes('onKeyPress'));
   });
 
