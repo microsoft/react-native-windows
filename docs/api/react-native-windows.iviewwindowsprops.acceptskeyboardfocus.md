@@ -9,3 +9,4 @@
 ```typescript
 acceptsKeyboardFocus?: boolean;
 ```
+Deprecated, use `focusable` instead.

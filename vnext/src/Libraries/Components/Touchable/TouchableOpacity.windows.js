@@ -260,17 +260,15 @@ class TouchableOpacity extends React.Component<Props, State> {
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         hitSlop={this.props.hitSlop}
         focusable={
-          this.props.focusable !== false && this.props.onPress !== undefined
+          (this.props.focusable !== false && this.props.onPress !== undefined) ||
+          (this.props.acceptsKeyboardFocus === undefined ||
+            this.props.acceptsKeyboardFocus === true) &&
+          !this.props.disabled
         }
         ref={this.props.hostRef}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
         onAccessibilityTap={this.props.onAccessibilityTap} // [Windows]
-        acceptsKeyboardFocus={
-          (this.props.acceptsKeyboardFocus === undefined ||
-            this.props.acceptsKeyboardFocus === true) &&
-          !this.props.disabled
-        } // [Windows]
         tabIndex={this.props.tabIndex} // [Windows]
         tooltip={this.props.tooltip} // [Windows]
         onMouseEnter={this.props.onMouseEnter} // [Windows]

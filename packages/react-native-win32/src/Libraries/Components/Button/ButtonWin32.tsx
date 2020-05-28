@@ -26,11 +26,11 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
 
   public render() {
     const viewProps: IViewWin32Props = {
-      acceptsKeyboardFocus: true,
       accessible: true,
       accessibilityLabel: this.props.accessibilityLabel || this.props.title,
       accessibilityRole: 'button',
       accessibilityState: this.state.accessibilityState,
+      focusable: true,
       onFocus: this._onFocus,
       onBlur: this._onBlur,
       onMouseEnter: this.props.onMouseEnter,

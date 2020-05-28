@@ -330,7 +330,8 @@ folly::dynamic ViewViewManager::GetNativeProps() const {
   props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
       "onMouseLeave", "function")
                //("onMouseMove", "function")
-               ("acceptsKeyboardFocus", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
+               ("acceptsKeyboardFocus", "boolean") // deprecated in 63, remove in 64.
+               ("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
 
   return props;
 }
@@ -363,7 +364,7 @@ bool ViewViewManager::UpdateProperty(
         bool hitTestable = propertyValue.getString() != "none";
         pPanel.IsHitTestVisible(hitTestable);
       }
-    } else if (propertyName == "acceptsKeyboardFocus") {
+    } else if (propertyName == "focusable" || propertyName == "acceptsKeyboardFocus") {
       if (propertyValue.isBool())
         shouldBeControl = propertyValue.getBool();
     } else if (propertyName == "enableFocusRing") {
