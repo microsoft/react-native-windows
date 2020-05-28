@@ -362,6 +362,10 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="XamlUIService.h">
+      <DependentUpon>XamlUIService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactPackageBuilder.h">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClInclude>
@@ -536,6 +540,10 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="XamlUIService.cpp">
+      <DependentUpon>XamlUIService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ReactPackageBuilder.cpp">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClCompile>
@@ -592,6 +600,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactNativeHost.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="XamlUIService.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">

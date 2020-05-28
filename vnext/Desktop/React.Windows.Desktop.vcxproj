@@ -125,6 +125,7 @@
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
+    <Midl Include="..\Microsoft.ReactNative\XamlUIService.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
@@ -147,6 +148,10 @@
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\XamlUIService.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\XamlUIService.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
@@ -187,6 +192,10 @@
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\XamlUIService.h">
+      <DependentUpon>..\Microsoft.ReactNative\XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />

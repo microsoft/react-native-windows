@@ -8,6 +8,7 @@
 #include <Base/CoreNativeModules.h>
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
@@ -522,6 +523,10 @@ void ReactInstanceWin::InitUIManager() noexcept {
   react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyReactInstance);
 
   auto uiManager = react::uwp::CreateUIManager2(m_reactContext.Get(), std::move(viewManagers));
+  auto wkUIManger = std::weak_ptr<facebook::react::IUIManager>(uiManager);
+  m_reactContext->Properties().Set(
+      implementation::XamlUIService::XamlUIServiceProperty().Handle(),
+      winrt::make<implementation::XamlUIService>(std::move(wkUIManger), m_reactContext));
   m_uiManager.Exchange(std::move(uiManager));
 }
 
