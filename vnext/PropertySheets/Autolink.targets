@@ -5,6 +5,6 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="RunAutolink" BeforeTargets="PrepareForBuild">
-    <Exec Command="$(AutolinkCommand) $(AutolinkCommandArgs)" ConsoleToMSBuild="true" WorkingDirectory="$(AutolinkCommandWorkingDir)" CustomWarningRegularExpression="Warning: " CustomErrorRegularExpression="Error: " />
+    <Exec Command="$(AutolinkCommand) $(AutolinkCommandArgs)" WorkingDirectory="$(AutolinkCommandWorkingDir)" CustomWarningRegularExpression="Warning: " CustomErrorRegularExpression="Error: " />
   </Target>
 </Project>
