@@ -13,9 +13,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="ExternalFiles">
+      <UniqueIdentifier>{30c8bc49-7d35-4463-9108-81e677149098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalFiles\Microsoft.ReactNative">
+      <UniqueIdentifier>{ce42696f-7ea0-4e64-ae56-4bdaf86e73c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalFiles\ReactWindowsCore">
+      <UniqueIdentifier>{29f908a2-84b5-43af-b690-b33a68e426db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DynamicReaderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsiReaderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -24,13 +36,16 @@
     <ClCompile Include="pch/pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\tracing.cpp">
+      <Filter>ExternalFiles\ReactWindowsCore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl">
-      <Filter>Source Files</Filter>
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
     </Midl>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl">
-      <Filter>Source Files</Filter>
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="pch/pch.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h">
+      <Filter>ExternalFiles\ReactWindowsCore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

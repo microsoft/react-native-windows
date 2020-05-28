@@ -128,6 +128,8 @@ Global
 		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{6c60e295-c8ca-4dc5-b8be-09888f58b249}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{6c60e295-c8ca-4dc5-b8be-09888f58b249}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
+		Chakra\Chakra.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
+		JSI\Shared\JSI.Shared.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
 		JSI\Shared\JSI.Shared.vcxitems*{a62d504a-16b8-41d2-9f19-e2e86019e5e4}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
