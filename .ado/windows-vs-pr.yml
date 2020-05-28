@@ -70,6 +70,12 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
+      - powershell: |
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+        displayName: Set GoogleTestAdapterPath
+
       - task: VSTest@2
         displayName: Run Universal Unit Tests (Native)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -156,7 +162,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -245,7 +251,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -311,7 +317,7 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          testPlatformVersion: 16.3.0
+          testPlatformVersion: 16.5.0
 
       - template: templates/build-rnw.yml
         parameters:
@@ -324,6 +330,12 @@ jobs:
           script: yarn bundle
           workingDirectory: packages/react-native-win32
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
+
+      - powershell: |
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+        displayName: Set GoogleTestAdapterPath
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
