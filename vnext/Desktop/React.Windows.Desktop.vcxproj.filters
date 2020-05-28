@@ -67,9 +67,6 @@
     <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\XamlUIService.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
       <Filter>ABI</Filter>
     </Midl>
