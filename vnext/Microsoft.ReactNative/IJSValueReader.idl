@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import "NoExceptionAttribute.idl";
-
 namespace Microsoft.ReactNative {
 
   // Type of value read from JavaScript by IJSValueReader

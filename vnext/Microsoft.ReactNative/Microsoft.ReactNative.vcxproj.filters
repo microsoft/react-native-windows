@@ -270,10 +270,13 @@
     <ClCompile Include="Modules\ClipboardModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\DeviceStateModule.cpp">
+    <ClCompile Include="Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\I18nManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
@@ -319,14 +322,6 @@
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
-    </ClCompile>
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\I18nManagerModule.cpp">
-      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -608,7 +603,6 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
-    <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -619,6 +613,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSettingsModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\I18nManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
@@ -694,10 +691,8 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="IBackgroundEventListener.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactContext.idl" />
     <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
@@ -707,9 +702,7 @@
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
-    <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactInstance.idl" />
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
