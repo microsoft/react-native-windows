@@ -21,7 +21,7 @@ steps:
   - task: CmdLine@2
     displayName: yarn install (local react-native-windows)
     inputs:
-      script: yarn install --frozen-lockfile 
+      script: yarn install --frozen-lockfile
 
   - task: CmdLine@2
     displayName: yarn build
@@ -99,10 +99,6 @@ steps:
 
     condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
-  - template: install-SDK.yml
-    parameters:
-      sdkVersion: $(Win10Version)
-
   - task: PowerShell@2
     displayName: List Visual Studio Components
     inputs:
@@ -143,8 +139,8 @@ steps:
     inputs:
       script: npx --no-install react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
       workingDirectory: $(Agent.BuildDirectory)\testcli
-  
-  # We are experiencing random package restore failures. 
+
+  # We are experiencing random package restore failures.
   # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
   # To do so we have to kill the existing server because it keeps a file-lock on the log file
   - task: PowerShell@2
