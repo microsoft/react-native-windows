@@ -67,6 +67,14 @@ namespace PROJECT_ROOT_NAMESPACE
     CountStates
   };
 
+  enum AccessibilityValue
+  {
+    Min = 0,
+    Max,
+    Now,
+    Text
+  };
+
   delegate void AccessibilityInvokeEventHandler();
   delegate void AccessibilityActionEventHandler(AccessibilityAction action);
 
@@ -107,6 +115,22 @@ namespace PROJECT_ROOT_NAMESPACE
     static void SetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element, Boolean value);
     static Boolean GetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element);
 
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueMinProperty { get; };
+    static void SetAccessibilityValueMin(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetAccessibilityValueMin(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueMaxProperty { get; };
+    static void SetAccessibilityValueMax(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetAccessibilityValueMax(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueNowProperty { get; };
+    static void SetAccessibilityValueNow(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetAccessibilityValueNow(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueTextProperty { get; };
+    static void SetAccessibilityValueText(XAML_NAMESPACE.UIElement element, String value);
+    static String GetAccessibilityValueText(XAML_NAMESPACE.UIElement element);
+
     static XAML_NAMESPACE.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
     static void SetAccessibilityInvokeEventHandler(XAML_NAMESPACE.UIElement element, AccessibilityInvokeEventHandler value);
     static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(XAML_NAMESPACE.UIElement element);
@@ -125,6 +149,8 @@ namespace PROJECT_ROOT_NAMESPACE
   runtimeclass DynamicAutomationPeer :
     XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
     XAML_NAMESPACE.Automation.Provider.IInvokeProvider,
+    //XAML_NAMESPACE.Automation.Provider.IValueProvider,
+    XAML_NAMESPACE.Automation.Provider.IRangeValueProvider,
     XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
     XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider,
     XAML_NAMESPACE.Automation.Provider.IToggleProvider,

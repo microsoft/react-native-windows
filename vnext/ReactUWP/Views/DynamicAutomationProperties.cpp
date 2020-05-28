@@ -173,6 +173,78 @@ bool DynamicAutomationProperties::GetAccessibilityStateCollapsed(xaml::UIElement
   return winrt::unbox_value<bool>(element.GetValue(AccessibilityStateCollapsedProperty()));
 }
 
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueMinProperty() {
+  static xaml::DependencyProperty s_AccessibilityValueMinProperty = xaml::DependencyProperty::RegisterAttached(
+      L"AccessibilityValueMin",
+      winrt::xaml_typename<double>(),
+      dynamicAutomationTypeName,
+      winrt::PropertyMetadata(winrt::box_value(0))); // TODO default value ok?
+
+  return s_AccessibilityValueMinProperty;
+}
+
+void DynamicAutomationProperties::SetAccessibilityValueMin(xaml::UIElement const &element, double value) {
+  element.SetValue(AccessibilityValueMinProperty(), winrt::box_value<double>(value));
+}
+
+double DynamicAutomationProperties::GetAccessibilityValueMin(xaml::UIElement const &element) {
+  return winrt::unbox_value<double>(element.GetValue(AccessibilityValueMinProperty()));
+}
+
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueMaxProperty() {
+  static xaml::DependencyProperty s_AccessibilityValueMaxProperty = xaml::DependencyProperty::RegisterAttached(
+      L"AccessibilityValueMax",
+      winrt::xaml_typename<double>(),
+      dynamicAutomationTypeName,
+      winrt::PropertyMetadata(winrt::box_value(0))); // TODO default value ok?
+
+  return s_AccessibilityValueMaxProperty;
+}
+
+void DynamicAutomationProperties::SetAccessibilityValueMax(xaml::UIElement const &element, double value) {
+  element.SetValue(AccessibilityValueMaxProperty(), winrt::box_value<double>(value));
+}
+
+double DynamicAutomationProperties::GetAccessibilityValueMax(xaml::UIElement const &element) {
+  return winrt::unbox_value<double>(element.GetValue(AccessibilityValueMaxProperty()));
+}
+
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueNowProperty() {
+  static xaml::DependencyProperty s_AccessibilityValueNowProperty = xaml::DependencyProperty::RegisterAttached(
+      L"AccessibilityValueNow",
+      winrt::xaml_typename<double>(),
+      dynamicAutomationTypeName,
+      winrt::PropertyMetadata(winrt::box_value(0))); // TODO default value ok?
+
+  return s_AccessibilityValueNowProperty;
+}
+
+void DynamicAutomationProperties::SetAccessibilityValueNow(xaml::UIElement const &element, double value) {
+  element.SetValue(AccessibilityValueNowProperty(), winrt::box_value<double>(value));
+}
+
+double DynamicAutomationProperties::GetAccessibilityValueNow(xaml::UIElement const &element) {
+  return winrt::unbox_value<double>(element.GetValue(AccessibilityValueNowProperty()));
+}
+
+xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueTextProperty() {
+  static xaml::DependencyProperty s_AccessibilityValueTextProperty = xaml::DependencyProperty::RegisterAttached(
+      L"AccessibilityValueText",
+      winrt::xaml_typename<winrt::hstring>(),
+      dynamicAutomationTypeName,
+      winrt::PropertyMetadata(winrt::box_value(L""))); // TODO default value ok?
+
+  return s_AccessibilityValueTextProperty;
+}
+
+void DynamicAutomationProperties::SetAccessibilityValueText(xaml::UIElement const &element, winrt::hstring value) {
+  element.SetValue(AccessibilityValueTextProperty(), winrt::box_value(value));
+}
+
+winrt::hstring DynamicAutomationProperties::GetAccessibilityValueText(xaml::UIElement const &element) {
+  return winrt::unbox_value<winrt::hstring>(element.GetValue(AccessibilityValueTextProperty()));
+}
+
 xaml::DependencyProperty DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty() {
   static xaml::DependencyProperty s_AccessibilityInvokeEventHandlerProperty =
       xaml::DependencyProperty::RegisterAttached(

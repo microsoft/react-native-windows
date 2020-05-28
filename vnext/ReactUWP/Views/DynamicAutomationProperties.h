@@ -63,6 +63,22 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static void SetAccessibilityStateCollapsed(xaml::UIElement const &element, bool value);
   static bool GetAccessibilityStateCollapsed(xaml::UIElement const &element);
 
+  static xaml::DependencyProperty AccessibilityValueMinProperty();
+  static void SetAccessibilityValueMin(xaml::UIElement const &element, double value);
+  static double GetAccessibilityValueMin(xaml::UIElement const &element);
+
+  static xaml::DependencyProperty AccessibilityValueMaxProperty();
+  static void SetAccessibilityValueMax(xaml::UIElement const &element, double value);
+  static double GetAccessibilityValueMax(xaml::UIElement const &element);
+
+  static xaml::DependencyProperty AccessibilityValueNowProperty();
+  static void SetAccessibilityValueNow(xaml::UIElement const &element, double value);
+  static double GetAccessibilityValueNow(xaml::UIElement const &element);
+
+  static xaml::DependencyProperty AccessibilityValueTextProperty();
+  static void SetAccessibilityValueText(xaml::UIElement const &element, winrt::hstring value);
+  static winrt::hstring GetAccessibilityValueText(xaml::UIElement const &element);
+
   static xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
   static void SetAccessibilityInvokeEventHandler(
       xaml::UIElement const &element,

@@ -23,6 +23,7 @@
 
 #include <Views/ViewPanel.h>
 #include "cdebug.h"
+#include "Unicode.h"
 
 namespace winrt {
 using namespace xaml;
@@ -124,6 +125,10 @@ void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, co
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateBusyProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateExpandedProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueMinProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueMaxProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueNowProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueTextProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityActionEventHandlerProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityActionsProperty());
@@ -149,12 +154,21 @@ static folly::dynamic GetAccessibilityStateProps() {
   return props;
 }
 
+static folly::dynamic GetAccessibilityValueProps() {
+  folly::dynamic props = folly::dynamic::object();
+  // TODO number ok?
+  props.update(folly::dynamic::object("min", "number")("max", "number")("now", "number")(
+      "text", "string"));
+  return props;
+}
+
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
   props.update(folly::dynamic::object("accessible", "boolean")("accessibilityRole", "string")(
       "accessibilityState", GetAccessibilityStateProps())("accessibilityHint", "string")(
       "accessibilityLabel", "string")("accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
-      "testID", "string")("tooltip", "string")("accessibilityActions", "array")("accessibilityLiveRegion", "string"));
+      "testID", "string")("tooltip", "string")("accessibilityActions", "array")("accessibilityLiveRegion", "string")(
+      "accessibilityValue", GetAccessibilityValueProps()));
   return props;
 }
 
@@ -438,6 +452,28 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)]);
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)]);
+    } else if (propertyName == "accessibilityValue") {
+      
+      // TODO handle else error
+      if (propertyValue.isObject()) {
+        for (const auto &pair : propertyValue.items()) {
+          const std::string &innerName = pair.first.getString();
+          const folly::dynamic &innerValue = pair.second;
+          // TODO override min/max/now if text present
+          // TODO enforce required min/max if now present
+          
+          if (innerName == "min" && innerValue.isNumber()) {
+            DynamicAutomationProperties::SetAccessibilityValueMin(element, static_cast<double>(innerValue.getDouble()));
+          } else if (innerName == "max" && innerValue.isNumber()) {
+            DynamicAutomationProperties::SetAccessibilityValueMax(element, static_cast<double>(innerValue.getDouble()));
+          } else if (innerName == "now" && innerValue.isNumber()) {
+            DynamicAutomationProperties::SetAccessibilityValueNow(element, static_cast<double>(innerValue.getDouble()));
+          } else if (innerName == "text" && innerValue.isString()) {
+            DynamicAutomationProperties::SetAccessibilityValueText(element, 
+                Microsoft::Common::Unicode::Utf8ToUtf16(innerValue.getString()).c_str());
+          } 
+        }
+      } 
     } else if (propertyName == "testID") {
       if (propertyValue.isString()) {
         auto value = react::uwp::asHstring(propertyValue);
