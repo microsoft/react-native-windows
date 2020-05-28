@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 28 May 2020 00:05:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.77",
+      "version": "0.0.0-master.77",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "set up react application to use an app's reactrootview",
+            "author": "asklar@microsoft.com",
+            "commit": "a85f4c8938849faa1f28a561b93229148f43fba3",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "change ABITest project to GoogleTest executable",
+            "author": "aeulitz@microsoft.com",
+            "commit": "c99549b8edacc750d6efa328ea978304daf615e1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create JSI implementation for IJSValueReader and IJSValueWriter",
+            "author": "zihanc@microsoft.com",
+            "commit": "ed809a428f0bace2dc5bfbe9ce86ffe60af03660",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "reg-free WinRT, remove activation factory",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2df8edb4cdfadead41bfcb5d793ba6e1435b11b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "reg-free WinRT, remove activation factory",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2df8edb4cdfadead41bfcb5d793ba6e1435b11b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 May 2020 00:05:42 GMT",
       "tag": "react-native-windows_v0.0.0-master.76",
       "version": "0.0.0-master.76",

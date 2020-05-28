@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 May 2020 00:05:42 GMT and should not be manually modified.
+This log was last generated on Thu, 28 May 2020 00:05:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.77
+
+Thu, 28 May 2020 00:05:30 GMT
+
+### Changes
+
+- set up react application to use an app's reactrootview (asklar@microsoft.com)
 
 ## 0.0.0-master.76
 

@@ -5,7 +5,6 @@
 #include <winrt/base.h>
 #include <winrt/facebook.react.h>
 
-#include "ActivationFactory.h"
 #include "SimpleMessageQueue.h"
 
 using namespace winrt::facebook::react;
@@ -18,10 +17,6 @@ namespace ABITests {
 
 TEST_CLASS(MemoryTrackerTests) {
  public:
-  MemoryTrackerTests() noexcept {
-    winrt_activation_handler = WINRT_RoGetActivationFactory;
-  }
-
   TEST_METHOD(Handler_AddedAndRemoved){
     init_apartment(winrt::apartment_type::single_threaded);
     IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();

@@ -111,31 +111,19 @@
       </CppWinRTDynamicProjectWinMDReferences>
     </ItemGroup>
   </Target>
-  <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
+  <ItemGroup>
     <!--
-    During test execution, we need to find react-native-win32.dll which has been built into a
-    different target folder. The 'GetRNDllPath' build target passes the path to the DLL as a macro
-    (RNDLLPATH) into the test code where it is intended to be used in a LoadLibrary call.
-    -->
-    <MSBuild Projects="%(ProjectReference.Identity)" Targets="GetTargetFileName" Condition="$([System.String]::Copy('%(ProjectReference.Filename)').Contains('React.Windows.Desktop.DLL'))">
-      <Output TaskParameter="TargetOutputs" PropertyName="_RNDllPath" />
-    </MSBuild>
-    <!-- It seems that the CL task takes preprocessor definitions only from ClCompile.PreprocessorDefinitions item metadata. -->
-    <ItemGroup>
-      <_ClCompileTemp Include="@(ClCompile)" />
-      <ClCompile Remove="@(ClCompile)" />
-      <ClCompile Include="@(_ClCompileTemp)">
-        <PreprocessorDefinitions>RNDLLPATH=LR"($(_RNDllPath))";%(_ClCompileTemp.PreprocessorDefinitions)</PreprocessorDefinitions>
-      </ClCompile>
-    </ItemGroup>
-  </Target>
+    Used by the 'CopyFilesToOutputDirectory' target (more specifically, its '_CopyFilesMarkedCopyLocal' dependency')
+    to co-locate dependencies with the test binary.
+     -->
+    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll"/>
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
-    <ClCompile Include="ActivationFactory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -144,11 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleMessageQueue.h" />
-    <ClInclude Include="ActivationFactory.h" />
     <ClInclude Include="MockReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <Manifest Include="Application.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
