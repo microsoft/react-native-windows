@@ -902,9 +902,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.4.3", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
-  integrity sha512-64AF1xY3OAkFHqOb9s4jpgk1Mm5vDZ4L3acHvAml+53nO1XbXLuDodsVpO4OIUsmemlUHMxNdYMNJmsvOwLrvQ==
+  version "7.10.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.1.tgz#b6eb75cac279588d3100baecd1b9894ea2840822"
+  integrity sha512-nQbbCbQc9u/rpg1XCxoMYQTbSMVZjCDxErQ1ClCn9Pvcmv1lGads19ep0a2VsEiIJeHqjZley6EQGEC3Yo1xMA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
