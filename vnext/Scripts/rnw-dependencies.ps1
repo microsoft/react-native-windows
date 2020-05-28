@@ -69,6 +69,11 @@ $requirements = @(
         Valid = try { (Get-WindowsDeveloperLicense).IsValid } catch { $false }
     },
     @{
+        Name = 'Long path support is enabled';
+        Valid = try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1} catch { $false };
+        Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord };
+    }
+    @{
         Name = 'git';
         Valid = try { (Get-Command git.exe) -ne $null } catch { $false }
     }
