@@ -4,8 +4,8 @@
 #include "pch.h"
 #include "XamlUIService.h"
 #include "XamlUIService.g.cpp"
-#include "Views/ShadowNodeBase.h"
 #include "DynamicWriter.h"
+#include "Views/ShadowNodeBase.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -15,7 +15,6 @@ XamlUIService::XamlUIService(
     : m_wkUIManager(uimanager), m_context(context) {}
 
 xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noexcept {
-
   if (auto strongUIManager = m_wkUIManager.lock()) {
     auto shadowNode = strongUIManager->FindShadowNodeForTag(reactTag);
     if (!shadowNode)
@@ -28,8 +27,8 @@ xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noex
 
 /*static*/ winrt::Microsoft::ReactNative::XamlUIService XamlUIService::FromContext(IReactContext context) {
   return context.Properties()
-                 .Get(XamlUIService::XamlUIServiceProperty().Handle())
-                 .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
+      .Get(XamlUIService::XamlUIServiceProperty().Handle())
+      .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
 }
 
 void XamlUIService::DispatchEvent(

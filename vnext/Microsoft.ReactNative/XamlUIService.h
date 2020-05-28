@@ -7,8 +7,8 @@
 #include "IUIManager.h"
 
 #include "ReactHost/React.h"
-#include "winrt/Microsoft.ReactNative.h"
 #include "ReactPropertyBag.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

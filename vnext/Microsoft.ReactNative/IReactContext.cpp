@@ -27,14 +27,13 @@ void ReactContext::DispatchEvent(
     xaml::FrameworkElement const &view,
     hstring const &eventName,
     JSValueArgWriter const &eventDataArgWriter) noexcept {
+  auto xamlUIService = Properties()
+                           .Get(XamlUIService::XamlUIServiceProperty().Handle())
+                           .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
 
-   auto xamlUIService = Properties()
-      .Get(XamlUIService::XamlUIServiceProperty().Handle())
-      .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
-
-   if (xamlUIService) {
-     xamlUIService.DispatchEvent(view, eventName, eventDataArgWriter);
-   }
+  if (xamlUIService) {
+    xamlUIService.DispatchEvent(view, eventName, eventDataArgWriter);
+  }
 }
 
 void ReactContext::CallJSFunction(
