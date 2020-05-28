@@ -47,9 +47,6 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl">
       <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
     </Midl>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\NoExceptionAttribute.idl">
-      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
-    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -34,10 +34,7 @@ jobs:
 
       - template: templates/configure-git.yml
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
+      - template: templates/yarn-install.yml
 
       - task: CmdLine@2
         displayName: yarn build
