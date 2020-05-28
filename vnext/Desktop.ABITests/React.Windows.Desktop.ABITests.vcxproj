@@ -65,6 +65,7 @@
       <PreprocessorDefinitions>_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UseFullPaths>true</UseFullPaths>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -93,9 +94,6 @@
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
       <Project>{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
-      <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Target Name="SetCppWinRTReferences" AfterTargets="GetCppWinRTProjectWinMDReferences" BeforeTargets="CppWinRTMakeReferenceProjection" Returns="@(CppWinRTDynamicProjectWinMDReferences)">
     <ItemGroup>
@@ -123,7 +121,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
-    <ClCompile Include="MessageQueueShim.cpp" />
+    <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="pch.cpp">
@@ -133,7 +131,7 @@
     <ClCompile Include="ReactNativeHostTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MessageQueueShim.h" />
+    <ClInclude Include="SimpleMessageQueue.h" />
     <ClInclude Include="MockReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

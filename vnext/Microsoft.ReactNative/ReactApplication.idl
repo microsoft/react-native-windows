@@ -15,7 +15,6 @@ namespace Microsoft.ReactNative {
     IVector<IReactPackageProvider> PackageProviders { get; set; };
     ReactNativeHost Host { get; };
 
-    String MainComponentName { get; set; };
     Boolean UseDeveloperSupport { get; set; };
     String JavaScriptMainModuleName { get; set; };
     String JavaScriptBundleFile { get; set; };

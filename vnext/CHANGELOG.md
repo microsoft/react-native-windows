@@ -1,8 +1,38 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 May 2020 00:05:31 GMT and should not be manually modified.
+This log was last generated on Thu, 28 May 2020 00:05:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.77
+
+Thu, 28 May 2020 00:05:30 GMT
+
+### Changes
+
+- set up react application to use an app's reactrootview (asklar@microsoft.com)
+
+## 0.0.0-master.76
+
+Wed, 27 May 2020 00:05:42 GMT
+
+### Changes
+
+- Allow developers to independently set hostname and port. (12337821+nasadigital@users.noreply.github.com)
+- Move I18nManager to spec based native module (acoates@microsoft.com)
+- Add UIDispatcher property to ReactInstanceSettings and IReactContext (vmorozov@microsoft.com)
+
+## 0.0.0-master.74
+
+Sat, 23 May 2020 00:04:45 GMT
+
+### Changes
+
+- Implemented support for native module std::weak_ptr (vmorozov@microsoft.com)
+- Fix deploy issue causing 2nd+ builds to break due to bug in appxrecipe which gets imported (asklar@microsoft.com)
+- Drop LazySupportManager (julio.rocha@microsoft.com)
+- Fix ReactInstance error state to avoid crashes (vmorozov@microsoft.com)
+- Move DeviceInfo and AppState to new native module impl (acoates@microsoft.com)
 
 ## 0.0.0-master.73
 

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include "I18nModule.h"
+#include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
 #include <ReactRootView.h>
@@ -129,7 +129,8 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
-NativeUIManager::NativeUIManager() {
+NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
+  m_context = reactContext;
 #if defined(_DEBUG)
   YGConfigSetLogger(YGConfigGetDefault(), &YogaLog);
 
@@ -191,7 +192,10 @@ void NativeUIManager::AddRootView(
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
-      I18nHelper::Instance().getIsRTL() ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
+      Microsoft::ReactNative::I18nManager::IsRTL(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
+          ? xaml::FlowDirection::RightToLeft
+          : xaml::FlowDirection::LeftToRight);
 
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
 

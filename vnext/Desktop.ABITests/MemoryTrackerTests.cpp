@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <IntegrationTests/ControllableMessageQueueThread.h>
 #include <winrt/base.h>
 #include <winrt/facebook.react.h>
 
-#include "MessageQueueShim.h"
+#include "SimpleMessageQueue.h"
 
-using namespace Microsoft::React::Test;
 using namespace winrt::facebook::react;
 
 namespace ABITests {
@@ -21,7 +19,7 @@ TEST_CLASS(MemoryTrackerTests) {
  public:
   TEST_METHOD(Handler_AddedAndRemoved){
     init_apartment(winrt::apartment_type::single_threaded);
-    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     uint32_t registrationToken = tracker.AddThresholdHandler(
@@ -31,9 +29,10 @@ TEST_CLASS(MemoryTrackerTests) {
     TestCheck(tracker.RemoveThresholdHandler(registrationToken));
   }
 
+
   TEST_METHOD(CurrentMemoryUsage_ReturnsInitialValue) {
     init_apartment(winrt::apartment_type::single_threaded);
-    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(1000);
@@ -43,43 +42,36 @@ TEST_CLASS(MemoryTrackerTests) {
 
   TEST_METHOD(PeakMemoryUsage_ReturnsInitialValue) {
     init_apartment(winrt::apartment_type::single_threaded);
-    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(1000);
     TestCheckEqual(1000ull, tracker.PeakMemoryUsage(), "PeakMemoryUsage");
   }
 
+ 
   TEST_METHOD(ThresholdHandler_Called) {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    DWORD testThreadId = GetCurrentThreadId();
-
-    auto manualMessageQueue = std::make_shared<ControllableMessageQueueThread>(
-        ControllableMessageQueueThread::Mode::ManualDispatch);
-
-    IMessageQueue callbackMessageQueue =
-        ::winrt::make<MessageQueueShim>(manualMessageQueue);
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(500);
 
     std::vector<uint64_t> actualCallbacks;
-    DWORD callbackThreadId;
+
     uint32_t registrationToken = tracker.AddThresholdHandler(
-        /* threshold */ 1000,
-        /* minCallbackIntervalInMilliseconds */ 100,
-        [&actualCallbacks, &callbackThreadId](uint64_t currentUsage) {
+         1000,
+         100,
+        [&actualCallbacks](uint64_t currentUsage) {
           actualCallbacks.push_back(currentUsage);
-          callbackThreadId = GetCurrentThreadId();
         });
 
     tracker.OnAllocation(1000);
 
     // allow the callback to get dispatched
-    TestCheck(
-        manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
-    TestCheck(manualMessageQueue->IsEmpty());
+    TestCheck(callbackMessageQueue.as<SimpleMessageQueue>()->DispatchOne());
+    TestCheck(callbackMessageQueue.as<SimpleMessageQueue>()->IsEmpty());
 
     TestCheckEqual(
         1500ull, tracker.CurrentMemoryUsage(), "CurrentMemoryUsage");
@@ -88,10 +80,9 @@ TEST_CLASS(MemoryTrackerTests) {
     TestCheckEqual(static_cast<size_t>(1), actualCallbacks.size());
     TestCheckEqual(1500ull, actualCallbacks[0]);
 
-    TestCheck(testThreadId != callbackThreadId);
-
     TestCheck(tracker.RemoveThresholdHandler(registrationToken));
   }
+
 };
 
 // clange-format on

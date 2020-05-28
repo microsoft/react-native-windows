@@ -6,7 +6,7 @@
 #include "ReactHost/React.h"
 #include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
@@ -14,6 +14,7 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
  public: // IReactContext
   IReactPropertyBag Properties() noexcept;
   IReactNotificationService Notifications() noexcept;
+  IReactDispatcher UIDispatcher() noexcept;
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       hstring const &eventName,
@@ -31,4 +32,4 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::implementation

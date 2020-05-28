@@ -2,6 +2,136 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 28 May 2020 00:05:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.77",
+      "version": "0.0.0-master.77",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "set up react application to use an app's reactrootview",
+            "author": "asklar@microsoft.com",
+            "commit": "a85f4c8938849faa1f28a561b93229148f43fba3",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "change ABITest project to GoogleTest executable",
+            "author": "aeulitz@microsoft.com",
+            "commit": "c99549b8edacc750d6efa328ea978304daf615e1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create JSI implementation for IJSValueReader and IJSValueWriter",
+            "author": "zihanc@microsoft.com",
+            "commit": "ed809a428f0bace2dc5bfbe9ce86ffe60af03660",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "reg-free WinRT, remove activation factory",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2df8edb4cdfadead41bfcb5d793ba6e1435b11b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "reg-free WinRT, remove activation factory",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2df8edb4cdfadead41bfcb5d793ba6e1435b11b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 May 2020 00:05:42 GMT",
+      "tag": "react-native-windows_v0.0.0-master.76",
+      "version": "0.0.0-master.76",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow developers to independently set hostname and port.",
+            "author": "12337821+nasadigital@users.noreply.github.com",
+            "commit": "96f7e821bbdba952dff5261c26c0f965da20a567",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move I18nManager to spec based native module",
+            "author": "acoates@microsoft.com",
+            "commit": "f2fffbd85bd62c1fab24982d7394343dc41932ff",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add UIDispatcher property to ReactInstanceSettings and IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "7236d61e5736083eec1992df73183c400c787306",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Create Microsoft.ReactNative.ComponentTests.vcxproj",
+            "author": "zihanc@microsoft.com",
+            "commit": "35137fbbbfebf1ebba557cd7a8bdde909627ce3c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 May 2020 00:06:43 GMT",
+      "tag": "react-native-windows_v0.0.0-master.75",
+      "version": "0.0.0-master.75",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename override-tools to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85b01cb32e4b6c46aebb38bdcc5f612a616c856a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 May 2020 00:04:45 GMT",
+      "tag": "react-native-windows_v0.0.0-master.74",
+      "version": "0.0.0-master.74",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented support for native module std::weak_ptr",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c23d3de53f16d39df07f2b19591cacc5336e6ac4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix deploy issue causing 2nd+ builds to break due to bug in appxrecipe which gets imported",
+            "author": "asklar@microsoft.com",
+            "commit": "cd9206e1a5f8912e1c9a78f1594178c2fe66cf9f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Drop LazySupportManager",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ed7ee2de98d64c1002c8bafa7eacd1e4d8317fb2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactInstance error state to avoid crashes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "05779f28e8f734bd1aa7e1814d888be4eb179366",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move DeviceInfo and AppState to new native module impl",
+            "author": "acoates@microsoft.com",
+            "commit": "8dcf516f91d33a1a54818363f84e91b1b0da5e9b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 May 2020 00:05:31 GMT",
       "tag": "react-native-windows_v0.0.0-master.73",
       "version": "0.0.0-master.73",
