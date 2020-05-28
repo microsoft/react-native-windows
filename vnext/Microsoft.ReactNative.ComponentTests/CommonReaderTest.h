@@ -7,13 +7,13 @@ namespace winrt::Microsoft::ReactNative::ReaderTestCases {
 
 // a construction to assert JSValueType::Object without hard-coded property order
 
-inline void TestCheckObject(std::map<hstring, std::function<void()>> props, IJSValueReader &reader) {
+inline void TestCheckObject(const std::map<hstring, std::function<void()>> &props, IJSValueReader &reader) {
   std::set<hstring> propNames;
   hstring propertyName;
 
-  for (int i = 0; i < props.size(); i++) {
+  for (size_t i = 0; i < props.size(); i++) {
     // ensure that we succeeded in reading a property name
-    TestCheckEqual(true, reader.GetNextObjectProperty(propertyName));
+    TestCheck(reader.GetNextObjectProperty(propertyName));
 
     // ensure that we don't get duplicated property names from the reader
     TestCheckEqual(propNames.end(), propNames.find(propertyName));
@@ -21,12 +21,12 @@ inline void TestCheckObject(std::map<hstring, std::function<void()>> props, IJSV
 
     // ensure that the property value is expected
     auto it = props.find(propertyName);
-    TestCheckEqual(true, it != props.end());
+    TestCheck(it != props.end());
     it->second();
   }
 
   // ensure that we read all properties as expected
-  TestCheckEqual(false, reader.GetNextObjectProperty(propertyName));
+  TestCheck(!reader.GetNextObjectProperty(propertyName));
   TestCheckEqual(props.size(), propNames.size());
 }
 
@@ -49,7 +49,7 @@ struct PrimitiveBoolean {
 
   static void Read(IJSValueReader &reader) {
     TestCheckEqual(JSValueType::Boolean, reader.ValueType());
-    TestCheckEqual(false, reader.GetBoolean());
+    TestCheck(!reader.GetBoolean());
   }
 };
 
@@ -98,7 +98,7 @@ struct EmptyArray {
 
   static void Read(IJSValueReader &reader) {
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
   }
 };
 
@@ -112,10 +112,10 @@ struct ArrayWitnOneElement {
 
   static void Read(IJSValueReader &reader) {
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Boolean, reader.ValueType());
-    TestCheckEqual(true, reader.GetBoolean());
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(reader.GetBoolean());
+    TestCheck(!reader.GetNextArrayItem());
   }
 };
 
@@ -132,11 +132,11 @@ struct ArrayWitnMultipleElement {
   static void Read(IJSValueReader &reader) {
     TestCheckEqual(JSValueType::Array, reader.ValueType());
     for (int i = 0; i < 5; i++) {
-      TestCheckEqual(true, reader.GetNextArrayItem());
+      TestCheck(reader.GetNextArrayItem());
       TestCheckEqual(JSValueType::Int64, reader.ValueType());
       TestCheckEqual(i, reader.GetInt64());
     }
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
   }
 };
 
@@ -153,13 +153,13 @@ struct EmptyNestedArray {
 
   static void Read(IJSValueReader &reader) {
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(false, reader.GetNextArrayItem());
-    TestCheckEqual(false, reader.GetNextArrayItem());
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
   }
 };
 
@@ -186,27 +186,27 @@ struct NestedArrayWithPrimitiveValues {
   static void Read(IJSValueReader &reader) {
     TestCheckEqual(JSValueType::Array, reader.ValueType());
 
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Null, reader.ValueType());
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
 
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Boolean, reader.ValueType());
-    TestCheckEqual(true, reader.GetBoolean());
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(reader.GetBoolean());
+    TestCheck(!reader.GetNextArrayItem());
 
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Array, reader.ValueType());
-    TestCheckEqual(true, reader.GetNextArrayItem());
+    TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::Int64, reader.ValueType());
     TestCheckEqual(12345, reader.GetInt64());
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
 
-    TestCheckEqual(false, reader.GetNextArrayItem());
+    TestCheck(!reader.GetNextArrayItem());
   }
 };
 
@@ -220,7 +220,7 @@ struct EmptyObject {
   static void Read(IJSValueReader &reader) {
     hstring propertyName;
     TestCheckEqual(JSValueType::Object, reader.ValueType());
-    TestCheckEqual(false, reader.GetNextObjectProperty(propertyName));
+    TestCheck(!reader.GetNextObjectProperty(propertyName));
   }
 };
 
@@ -244,7 +244,7 @@ struct SimpleObject {
          {L"b",
           [&]() {
             TestCheckEqual(JSValueType::Boolean, reader.ValueType());
-            TestCheckEqual(true, reader.GetBoolean());
+            TestCheck(reader.GetBoolean());
           }},
          {L"c",
           [&]() {
@@ -282,11 +282,11 @@ struct NestedObjectWithPrimitiveValues {
       ++index;
       assertions.insert({prop, [&, index]() {
                            TestCheckEqual(JSValueType::Object, reader.ValueType());
-                           TestCheckEqual(true, reader.GetNextObjectProperty(propertyName));
+                           TestCheck(reader.GetNextObjectProperty(propertyName));
                            TestCheckEqual(L"x", propertyName);
                            TestCheckEqual(JSValueType::Int64, reader.ValueType());
                            TestCheckEqual(index, reader.GetInt64());
-                           TestCheckEqual(false, reader.GetNextObjectProperty(propertyName));
+                           TestCheck(!reader.GetNextObjectProperty(propertyName));
                          }});
     }
 
@@ -303,9 +303,9 @@ struct NestedObjectWithPrimitiveValues {
 // on DynamicReader+DynamicWriter and JsiReader+JsiWriter
 // in this way we ensure that two implementation behaves exactly the same
 
-#define IMPORT_READER_TEST_CASE(NAME)       \
-  TEST_METHOD(NAME) {                       \
-    RunReaderTest<ReaderTestCases::NAME>(); \
+#define IMPORT_READER_TEST_CASE(name)       \
+  TEST_METHOD(name) {                       \
+    RunReaderTest<ReaderTestCases::name>(); \
   }
 
 #define IMPORT_READER_TEST_CASES                          \
