@@ -18,10 +18,7 @@ steps:
     persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
   # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
-  - task: CmdLine@2
-    displayName: yarn install (local react-native-windows)
-    inputs:
-      script: yarn install --frozen-lockfile
+  - template: yarn-install.yml
 
   - task: CmdLine@2
     displayName: yarn build
