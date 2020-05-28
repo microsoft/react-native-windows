@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Auto-linking for native modules (source-based) * Updated `npx react-native config` to create the needed json for auto-linking * New `npx react-native autolink-windows` command to perform auto-linking * Auto-linking occurs automatically during `npx react-native run-windows` * New Auto-linking targets and props so CLI apps throw a warning if auto-linking should be run * New targets and props for native modules to consume",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-28T20:42:40.417Z"
+}
