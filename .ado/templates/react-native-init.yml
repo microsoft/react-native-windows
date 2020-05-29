@@ -64,10 +64,11 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
+  # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: react-native init testcli --version ${{ parameters.version }}
+      script: react-native init testcli --npm --version ${{ parameters.version }}
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
