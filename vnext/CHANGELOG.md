@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 28 May 2020 00:05:30 GMT and should not be manually modified.
+This log was last generated on Fri, 29 May 2020 00:09:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.78
+
+Fri, 29 May 2020 00:09:08 GMT
+
+### Changes
+
+- Remove unused ABI definitions (vmorozov@microsoft.com)
+- Update shared props to have csc emit absolute paths on errors and warnings (dannyvv@microsoft.com)
+- add support for long paths to rnw-dependencies.ps1 (asklar@microsoft.com)
 
 ## 0.0.0-master.77
 
