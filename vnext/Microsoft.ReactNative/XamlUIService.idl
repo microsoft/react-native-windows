@@ -1,0 +1,19 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+
+namespace Microsoft.ReactNative {
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass XamlUIService {
+    static XamlUIService FromContext(IReactContext context);
+
+    Windows.UI.Xaml.DependencyObject ElementFromReactTag(Int64 reactTag);
+
+    // Dispatch UI event. This method is to be moved to IReactViewContext.
+    void DispatchEvent(Windows.UI.Xaml.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
+  }
+
+} // namespace Microsoft.ReactNative

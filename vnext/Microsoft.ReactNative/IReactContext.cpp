@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "IReactContext.h"
 #include "DynamicWriter.h"
+#include "XamlUIService.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -17,18 +18,18 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
+// Deprecated: Use XamlUIService directly.
 void ReactContext::DispatchEvent(
     winrt::Windows::UI::Xaml::FrameworkElement const &view,
     hstring const &eventName,
     JSValueArgWriter const &eventDataArgWriter) noexcept {
-  folly::dynamic eventData; // default to NULLT
-  if (eventDataArgWriter != nullptr) {
-    auto eventDataWriter = winrt::make_self<DynamicWriter>();
-    eventDataArgWriter(*eventDataWriter);
-    eventData = eventDataWriter->TakeValue();
-  }
+  auto xamlUIService = Properties()
+                           .Get(XamlUIService::XamlUIServiceProperty().Handle())
+                           .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
 
-  m_context->DispatchEvent(unbox_value<int64_t>(view.Tag()), to_string(eventName), std::move(eventData));
+  if (xamlUIService) {
+    xamlUIService.DispatchEvent(view, eventName, eventDataArgWriter);
+  }
 }
 
 void ReactContext::CallJSFunction(
