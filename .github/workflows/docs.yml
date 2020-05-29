@@ -23,4 +23,4 @@ jobs:
     # Runs a single command using the runners shell
     - name: run unbroken
       run: |
-        npx unbroken -q -l
+        npx unbroken -q
