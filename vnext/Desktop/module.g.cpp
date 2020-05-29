@@ -5,7 +5,9 @@
 
 #include "pch.h"
 #include "winrt/base.h"
+
 void* winrt_make_Microsoft_ReactNative_ReactNativeHost();
+void* winrt_make_Microsoft_ReactNative_ReactPropertyBagHelper();
 void* winrt_make_facebook_react_MemoryTracker();
 void* winrt_make_facebook_react_NativeLogEventSource();
 void* winrt_make_facebook_react_NativeTraceEventSource();
@@ -31,6 +33,11 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     if (requal(name, L"Microsoft.ReactNative.ReactNativeHost"))
     {
         return winrt_make_Microsoft_ReactNative_ReactNativeHost();
+    }
+
+    if (requal(name, L"Microsoft.ReactNative.ReactPropertyBagHelper"))
+    {
+        return winrt_make_Microsoft_ReactNative_ReactPropertyBagHelper();
     }
 
     if (requal(name, L"facebook.react.MemoryTracker"))
