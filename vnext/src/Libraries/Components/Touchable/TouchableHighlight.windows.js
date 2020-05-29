@@ -324,11 +324,7 @@ class TouchableHighlight extends React.Component<Props, State> {
         nextFocusRight={this.props.nextFocusRight}
         nextFocusUp={this.props.nextFocusUp}
         focusable={
-          (this.props.focusable !== false &&
-            this.props.onPress !== undefined) ||
-          ((this.props.acceptsKeyboardFocus === undefined ||
-            this.props.acceptsKeyboardFocus === true) &&
-            !this.props.disabled)
+          this.props.focusable !== false && this.props.onPress !== undefined
         }
         nativeID={this.props.nativeID}
         testID={this.props.testID}
@@ -336,6 +332,11 @@ class TouchableHighlight extends React.Component<Props, State> {
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
         onAccessibilityTap={this.props.onAccessibilityTap} // [Windows]
+        acceptsKeyboardFocus={
+          (this.props.acceptsKeyboardFocus === undefined ||
+            this.props.acceptsKeyboardFocus === true) &&
+          !this.props.disabled
+        } // [Windows]
         tabIndex={this.props.tabIndex} // [Windows]
         tooltip={this.props.tooltip} // [Windows]
         onMouseEnter={this.props.onMouseEnter} // [Windows]

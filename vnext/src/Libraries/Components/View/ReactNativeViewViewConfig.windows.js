@@ -282,7 +282,6 @@ const ReactNativeViewConfig = {
       flexGrow: true,
       flexShrink: true,
       flexWrap: true,
-      focusable: true,
       fontFamily: true,
       fontSize: true,
       fontStyle: true,
