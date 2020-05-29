@@ -47,7 +47,7 @@ function updateFile(filePath, expectedContents, verbose, checkMode) {
   return contentsChanged;
 }
 
-function ExitProcessWithStatusCode(statusCode, loggingWasEnabled) {
+function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
   if (!loggingWasEnabled && statusCode !== 0) {
     console.log(
       `Error: Re-run the command with ${chalk.bold(
@@ -332,17 +332,15 @@ static void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::C
           "'npx react-native autolink-windows'",
         )} to apply the changes.`,
       );
-      ExitProcessWithStatusCode(0, verbose);
+      exitProcessWithStatusCode(0, verbose);
     } else {
       console.log(`${chalk.green('Success:')} Auto-linking changes completed.`);
     }
   } catch (e) {
     spinner.fail();
     console.log(chalk.red('Error:') + ' ' + e.toString());
-    ExitProcessWithStatusCode(1, verbose);
+    exitProcessWithStatusCode(1, verbose);
   }
-
-  return;
 }
 
 module.exports = {
