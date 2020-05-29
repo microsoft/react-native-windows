@@ -276,14 +276,8 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that ran
    */
-  afterSession: async function(config, capabilities, specs) {
-    console.log('Giving extra time for app to shutdown completely...');
-    try {
-      // eslint-disable-next-line no-undef
-      await browser.waitUntil(() => false, 3000, 'Expected timeout', 100);
-    } catch (e) {}
-    console.log('Wait complete');
-  },
+  // afterSession: async function(config, capabilities, specs) {
+  // },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
    * @param {Object} exitCode 0 - success, 1 - fail

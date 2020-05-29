@@ -68,7 +68,7 @@ jobs:
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
-        displayName: Wait for app to launch
+        displayName: Pre-warm test app
         inputs:
           targetType: inline # filePath | inline
           script: |
@@ -78,7 +78,15 @@ jobs:
         displayName: 'Check TestApp'
         inputs:
           targetType: 'inline'
-          script: 'if ((Get-Process React*) -eq $Null) { echo "TestApp is not running"; exit 1}'
+          script: 'if ((Get-Process ReactUwpTestApp) -eq $Null) { echo "TestApp is not running"; exit 1}'
+
+      - task: PowerShell@2
+        displayName: 'Shutdown TestApp'
+        inputs:
+          targetType: 'inline'
+          script: |
+            Get-Process ReactUwpTestApp | % { $_.CloseMainWindow() }
+            Start-Sleep -Seconds 10
 
       - task: CmdLine@2
         displayName: run e2etest
