@@ -12,6 +12,8 @@ import {
   CURTEXT_ON_TEXTINPUT,
   PREVTEXT_ON_TEXTINPUT,
   PREV2TEXT_ON_TEXTINPUT,
+  PREV3TEXT_ON_TEXTINPUT,
+  PREV4TEXT_ON_TEXTINPUT,
   CAP_TEXTINPUT_ON_TEXTINPUT,
 } from './Consts';
 
@@ -97,10 +99,14 @@ export class TextInputTestPage extends React.Component<
             prev: {this.state.prevText}
           </Text>
           <Text testID={PREV2TEXT_ON_TEXTINPUT}>
-            prev2: {this.state.prev2Text})
+            prev2: {this.state.prev2Text}
           </Text>
-          <Text testID="Prev3Text">prev3: {this.state.prev3Text}</Text>
-          <Text testID="Prev4Text">prev4: {this.state.prev4Text}</Text>
+          <Text testID={PREV3TEXT_ON_TEXTINPUT}>
+            prev3: {this.state.prev3Text}
+          </Text>
+          <Text testID={PREV4TEXT_ON_TEXTINPUT}>
+            prev4: {this.state.prev4Text}
+          </Text>
         </View>
       </View>
     );
