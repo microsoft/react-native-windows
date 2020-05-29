@@ -60,7 +60,6 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -80,6 +79,12 @@
       <Filter>ABI</Filter>
     </Midl>
     <Midl Include="ABI\NativeTracing.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
       <Filter>ABI</Filter>
     </Midl>
   </ItemGroup>
