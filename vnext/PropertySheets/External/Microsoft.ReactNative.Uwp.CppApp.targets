@@ -5,20 +5,27 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="Shared">
-    <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
+    <Import Project="$(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>
+
   <ItemGroup Condition="'$(UseExperimentalNuget)' == 'false'">
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+    <ProjectReference Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets"/>
-  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
-  <Import Project="$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
-          Condition="Exists('$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
+   <!-- The props file for bundeling is not set up to be jsut defaults, it assumes to be run at the end of the project. -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Bundle.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Bundle.Cpp.targets"/>
+
+  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets"
+          Condition="Exists('$(ProjectDir)AutolinkedNativeModules.g.targets')" />
+
+  <Import Project="$(OutputPath)$(AssemblyName).Build.appxrecipe"  
+          Condition="Exists('$(OutputPath)$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
+
   <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
-    <Error Condition="!Exists('$(OutputPath)\$(AssemblyName).Build.appxrecipe')" 
+    <Error Condition="!Exists('$(OutputPath)$(AssemblyName).Build.appxrecipe')" 
            Text="You must first build the project before deploying it" />
     <Copy SourceFiles="%(AppxPackagedFile.Identity)" 
           DestinationFiles="$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
