@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 29 May 2020 00:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.78",
+      "version": "0.0.0-master.78",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove unused ABI definitions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "7a7488d3018c0c502ab716967bae1d91ef994109",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update shared props to have csc emit absolute paths on errors and warnings",
+            "author": "dannyvv@microsoft.com",
+            "commit": "74da80803b5229d4456b02ac9ca922b6e69dc9b4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add support for long paths to rnw-dependencies.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "77dea410d745029e451cc5fc087238bdaee549e4",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Build ChakraRuntime in ComponentTests with one test case",
+            "author": "zihanc@microsoft.com",
+            "commit": "77bbf454e4546ec63e6b698846a1da26ca0fd352",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 May 2020 00:05:30 GMT",
       "tag": "react-native-windows_v0.0.0-master.77",
       "version": "0.0.0-master.77",

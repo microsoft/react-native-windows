@@ -77,6 +77,12 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
+      - powershell: |
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+        displayName: Set GoogleTestAdapterPath
+
       - task: VSTest@2
         displayName: Run Universal Unit Tests (Native)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -160,7 +166,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -209,7 +215,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -298,7 +304,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -362,10 +368,6 @@ jobs:
         clean: false
         submodules: false
 
-      - task: VisualStudioTestPlatformInstaller@1
-        inputs:
-          testPlatformVersion: 16.3.0
-
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
@@ -377,6 +379,12 @@ jobs:
           script: yarn bundle
           workingDirectory: packages/react-native-win32
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
+
+      - powershell: |
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+        displayName: Set GoogleTestAdapterPath
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -393,7 +401,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
 
       - template: templates/stop-packagers.yml
 
@@ -416,7 +424,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
@@ -432,7 +440,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: false
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/ListTests'
         condition: failed()
 
@@ -448,7 +456,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: failed()
 
@@ -586,10 +594,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
+      - template: templates/yarn-install.yml
 
       - task: CmdLine@2
         displayName: Check for change files
