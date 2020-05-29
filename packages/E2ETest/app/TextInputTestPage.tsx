@@ -20,6 +20,7 @@ interface ITextInputTestPageState {
   prevText: string;
   prev2Text: string;
   prev3Text: string;
+  prev4Text: string;
 }
 
 export class TextInputTestPage extends React.Component<
@@ -31,6 +32,7 @@ export class TextInputTestPage extends React.Component<
     prevText: '<No Event>',
     prev2Text: '<No Event>',
     prev3Text: '<No Event>',
+    prev4Text: '<No Event>',
   };
 
   public updateText = (text: string) => {
@@ -40,6 +42,7 @@ export class TextInputTestPage extends React.Component<
         prevText: state.curText,
         prev2Text: state.prevText,
         prev3Text: state.prev2Text,
+        prev4Text: state.prev3Text,
       };
     });
   };
@@ -97,6 +100,7 @@ export class TextInputTestPage extends React.Component<
             prev2: {this.state.prev2Text})
           </Text>
           <Text testID="Prev3Text">prev3: {this.state.prev3Text}</Text>
+          <Text testID="Prev4Text">prev4: {this.state.prev4Text}</Text>
         </View>
       </View>
     );
