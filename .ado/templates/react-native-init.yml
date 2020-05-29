@@ -63,7 +63,7 @@ steps:
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: react-native init testcli --npm --version ${{ parameters.version }}
+      script: npx react-native init testcli --npm --version ${{ parameters.version }}
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
