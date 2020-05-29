@@ -1,5 +1,11 @@
 steps:
+
+  # midgard-yarn is a temporary fork of yarn that contains this change for perf optimiation:
+  # https://github.com/yarnpkg/yarn/pull/7920
+  - powershell: '$yarnVersion=If ( Get-Command midgard-yarn -errorAction SilentlyContinue ) { midgard-yarn -v }; If ( -NOT( $yarnVersion -eq "1.23.2" ) ) { npm install --userconfig .npmrc --global midgard-yarn@1.23.2 } Else { echo "midgard-yarn version already up to date" }'
+    displayName: "Install Midgard-Yarn"
+
   - task: CmdLine@2
     displayName: Yarn install
     inputs:
-      script: yarn --frozen-lockfile --network-timeout 100000 || yarn --frozen-lockfile --network-timeout 100000 || yarn --frozen-lockfile --network-timeout 150000 || yarn --frozen-lockfile --network-timeout 150000 --network-concurrency 1 || yarn --frozen-lockfile --network-timeout 150000 --network-concurrency 1
+      script: midgard-yarn --frozen-lockfile || midgard-yarn --frozen-lockfile || midgard-yarn --frozen-lockfile || midgard-yarn --frozen-lockfile || midgard-yarn --frozen-lockfile
