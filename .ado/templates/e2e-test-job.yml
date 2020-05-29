@@ -81,11 +81,6 @@ jobs:
           script: 'if ((Get-Process React*) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
-        displayName: mkdir errorShots
-        inputs:
-          script: mkdir $(Build.SourcesDirectory)\packages\E2ETest\errorShots
-
-      - task: CmdLine@2
         displayName: run e2etest
         inputs:
           script: yarn run e2etest
