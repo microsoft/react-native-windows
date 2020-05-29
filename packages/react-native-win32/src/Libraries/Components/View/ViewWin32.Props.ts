@@ -172,7 +172,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   // tslint:disable-next-line no-reserved-keywords -- type name matching facebook implementation
   type?: React.ElementType;
   children?: React.ReactNode;
-  /** @Deprecated */
+  /** @Deprecated Use focusable instead.*/
   acceptsKeyboardFocus?: boolean;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
   /**

@@ -4,9 +4,13 @@
 
 ## IViewWindowsProps.acceptsKeyboardFocus property
 
+> Warning: This API is now obsolete.
+> 
+> Use focusable instead.
+> 
+
 <b>Signature:</b>
 
 ```typescript
 acceptsKeyboardFocus?: boolean;
 ```
-Deprecated, use `focusable` instead.
