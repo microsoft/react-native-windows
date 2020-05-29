@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Remove react-native-community/cli dependency from template",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-29T21:39:39.452Z"
+}
