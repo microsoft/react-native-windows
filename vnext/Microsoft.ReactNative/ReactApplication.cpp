@@ -142,11 +142,12 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
           hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
           hostImpl->InstanceSettings().DebuggerPort(port);
         }
+      } else if (token == L"--proxy") {
+        hostImpl->InstanceSettings().UseWebDebugger(true);
+        hostImpl->InstanceSettings().UseDirectDebugger(false);
+        hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
       }
     }
-    // TODO: check for 'remoteDebugging'.  Return if not found.  Otherwise,
-    // validate a value is provided and then parse it to set the
-    // ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled flag
   }
 }
 
