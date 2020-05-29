@@ -9,6 +9,11 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 
+const projectTypeGuidsByLanguage = {
+  cpp: '{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}',
+  cs: '{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}',
+};
+
 function hasBlock(lines, block) {
   var startIndex = lines.indexOf(block[0]);
 
@@ -69,10 +74,7 @@ function addProjectToSolution(
   const slnDir = path.dirname(slnFile);
   const relProjectFile = path.relative(slnDir, project.projectFile);
 
-  const projectTypeGuid =
-    project.projectLang === 'cpp'
-      ? '{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}'
-      : '{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}';
+  const projectTypeGuid = projectTypeGuidsByLanguage[project.projectLang];
 
   const projectGuid = project.projectGuid.toUpperCase();
 
