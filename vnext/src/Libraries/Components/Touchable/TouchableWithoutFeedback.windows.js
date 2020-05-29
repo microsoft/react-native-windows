@@ -187,9 +187,9 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
       accessible: this.props.accessible !== false,
       focusable:
         (this.props.focusable !== false && this.props.onPress !== undefined) ||
-        (this.props.acceptsKeyboardFocus === undefined ||
+        ((this.props.acceptsKeyboardFocus === undefined ||
           this.props.acceptsKeyboardFocus === true) &&
-        !this.props.disabled,
+          !this.props.disabled),
     };
     for (const prop of PASSTHROUGH_PROPS) {
       if (this.props[prop] !== undefined) {
