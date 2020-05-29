@@ -44,6 +44,7 @@ function prompt(
     process.stdin.setRawMode(true);
   }
 
+  // eslint-disable-next-line no-undef
   let buf = Buffer.alloc(3);
   let str = '';
 
@@ -65,6 +66,7 @@ function prompt(
         insert = str.length;
         process.stdout.write(`\u001b[2K\u001b[0G${ask}${str}`);
         process.stdout.write(`\u001b[${insert + ask.length + 1}G`);
+        // eslint-disable-next-line no-undef
         buf = Buffer.alloc(3);
       }
       continue; // any other 3 character sequence is ignored
@@ -198,6 +200,7 @@ function copyAndReplace(
       let contentChanged/*: ContentChangedCallbackOption*/ = 'identical';
       try {
         const origContentBuffer = fs.readFileSync(destPath);
+        // eslint-disable-next-line no-undef
         if (Buffer.compare(origContentBuffer, newContentBuffer) !== 0) {
           contentChanged = 'changed';
         }
