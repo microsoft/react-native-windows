@@ -276,7 +276,7 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that ran
    */
-  // afterSession: function(config, capabilities, specs) {
+  // afterSession: function (config, capabilities, specs) {
   // },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
