@@ -52,7 +52,10 @@ async function runWindows(config, args, options) {
   const slnFile = options.sln || build.getSolutionFile(options);
 
   if (options.autolink) {
-    await autolink.func(null, null, {logging: options.logging});
+    const autolinkConfig = config;
+    const autolinkArgs = [];
+    const autoLinkOptions = {logging: options.logging};
+    await autolink.func(autolinkConfig, autolinkArgs, autoLinkOptions);
   }
 
   if (options.build) {
