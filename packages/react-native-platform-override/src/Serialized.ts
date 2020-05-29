@@ -15,7 +15,7 @@ import {ThrowReporter} from 'io-ts/lib/ThrowReporter';
  * Manifest entry type class for "platform" overrides. I.e. overrides not
  * patching shared code, or derived from existing code.
  */
-const PlatformEntryType = t.type({
+const PlatformOverrideType = t.type({
   type: t.literal('platform'),
   file: t.string,
 });
@@ -23,7 +23,7 @@ const PlatformEntryType = t.type({
 /**
  * Manifest entry type class for overrides that patch shared upstream code.
  */
-const PatchEntryType = t.type({
+const PatchOverrideType = t.type({
   type: t.literal('patch'),
   file: t.string,
   baseFile: t.string,
@@ -37,7 +37,7 @@ const PatchEntryType = t.type({
 /**
  * Manifest entry type class for overrides that mimic existing upstream code.
  */
-const DerivedEntryType = t.type({
+const DerivedOverrideType = t.type({
   type: t.literal('derived'),
   file: t.string,
   baseFile: t.string,
@@ -51,7 +51,7 @@ const DerivedEntryType = t.type({
 /**
  * Manifest entry type class for direct copies of upstream code
  */
-const CopyEntryType = t.type({
+const CopyOverrideType = t.type({
   type: t.literal('copy'),
   file: t.string,
   baseFile: t.string,
@@ -60,21 +60,20 @@ const CopyEntryType = t.type({
   issue: t.number,
 });
 
-const NonPlatformEntryType = t.union([
-  PatchEntryType,
-  DerivedEntryType,
-  CopyEntryType,
+const OverrideType = t.union([
+  PlatformOverrideType,
+  PatchOverrideType,
+  DerivedOverrideType,
+  CopyOverrideType,
 ]);
-const EntryType = t.union([PlatformEntryType, NonPlatformEntryType]);
 
-const ManifestType = t.type({overrides: t.array(EntryType)});
+const ManifestType = t.type({overrides: t.array(OverrideType)});
 
-export type PlatformEntry = t.TypeOf<typeof PlatformEntryType>;
-export type PatchEntry = t.TypeOf<typeof PatchEntryType>;
-export type DerivedEntry = t.TypeOf<typeof DerivedEntryType>;
-export type CopyEntry = t.TypeOf<typeof CopyEntryType>;
-export type NonPlatformEntry = t.TypeOf<typeof NonPlatformEntryType>;
-export type Entry = t.TypeOf<typeof EntryType>;
+export type PlatformOverride = t.TypeOf<typeof PlatformOverrideType>;
+export type PatchOverride = t.TypeOf<typeof PatchOverrideType>;
+export type DerivedOverride = t.TypeOf<typeof DerivedOverrideType>;
+export type CopyOverride = t.TypeOf<typeof CopyOverrideType>;
+export type Override = t.TypeOf<typeof OverrideType>;
 export type Manifest = t.TypeOf<typeof ManifestType>;
 
 /**
@@ -82,9 +81,11 @@ export type Manifest = t.TypeOf<typeof ManifestType>;
  *
  * @throws if the file is invalid or cannot be found
  */
-export async function readFromFile(filePath: string): Promise<Manifest> {
+export async function readManifestFromFile(
+  filePath: string,
+): Promise<Manifest> {
   const json = (await fs.promises.readFile(filePath)).toString();
-  return this.parse(json);
+  return parseManifest(json);
 }
 
 /**
@@ -92,7 +93,7 @@ export async function readFromFile(filePath: string): Promise<Manifest> {
  *
  * @throws if the JSON doesn't describe a valid manifest
  */
-export function parse(json: string): Manifest {
+export function parseManifest(json: string): Manifest {
   const parsed = JSON.parse(json);
   ThrowReporter.report(ManifestType.decode(parsed));
 
@@ -111,7 +112,10 @@ export function parse(json: string): Manifest {
  * Writes the manifest to a JSON file. Does not validate correctness of the
  * manifest.
  */
-export async function writeToFile(manifest: Manifest, filePath: string) {
+export async function writeManifestToFile(
+  manifest: Manifest,
+  filePath: string,
+) {
   manifest.overrides.sort((a, b) => a.file.localeCompare(b.file));
 
   const json = JSON.stringify(manifest, null /*replacer*/, 2 /*space*/);

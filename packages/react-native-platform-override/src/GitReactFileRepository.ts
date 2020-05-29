@@ -25,33 +25,33 @@ export default class GitReactFileRepository
   implements VersionedReactFileRepository {
   private gitClient: simplegit.SimpleGit;
   private gitDirectory: string;
-  private checkedOutVersion: string;
+  private checkedOutVersion?: string;
 
   // We have a potential race condition where one call to getFileContents
   // could checkout out a new tag while an existing call is rading a file.
   // Queue items to ensure the read operation is performed atomically
   private actionQueue: ActionQueue;
 
-  private constructor() {}
+  private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
+    this.actionQueue = new ActionQueue();
+    this.gitDirectory = gitDirectory;
+    this.gitClient = gitClient;
+  }
 
   static async createAndInit(
-    gitDirectory?: string,
+    gitDirectory: string = DEFAULT_DIR,
   ): Promise<GitReactFileRepository> {
-    let repo = new GitReactFileRepository();
-    repo.actionQueue = new ActionQueue();
+    await fs.promises.mkdir(gitDirectory, {recursive: true});
 
-    repo.gitDirectory = gitDirectory || DEFAULT_DIR;
-    await fs.promises.mkdir(repo.gitDirectory, {recursive: true});
+    const gitClient = simplegit(gitDirectory);
+    gitClient.silent(true);
 
-    repo.gitClient = simplegit(repo.gitDirectory);
-    repo.gitClient.silent(true);
-
-    if (!(await repo.gitClient.checkIsRepo())) {
-      await repo.gitClient.init();
-      await repo.gitClient.addRemote('origin', REACT_NATIVE_GITHUB_URL);
+    if (!(await gitClient.checkIsRepo())) {
+      await gitClient.init();
+      await gitClient.addRemote('origin', REACT_NATIVE_GITHUB_URL);
     }
 
-    return repo;
+    return new GitReactFileRepository(gitDirectory, gitClient);
   }
 
   async getFileContents(

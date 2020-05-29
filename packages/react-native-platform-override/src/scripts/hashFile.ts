@@ -6,9 +6,9 @@
  */
 
 import * as fs from 'fs';
-import Manifest from '../Manifest';
+import {hashContent} from '../Hash';
 
 (async function() {
   const content = await fs.promises.readFile(process.argv[2]);
-  console.log(Manifest.hashContent(content.toString()));
+  console.log(hashContent(content.toString()));
 })();

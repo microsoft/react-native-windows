@@ -26,6 +26,10 @@ export async function getInstalledRNVersion(): Promise<string> {
  * Return an object representing the package.json of this package
  */
 export function getNpmPackage(): any {
+  if (!require.main) {
+    throw new Error('Unable to determine main script');
+  }
+
   const npmPackageDir = path.join(
     path.dirname(require.main.filename),
     'package.json',

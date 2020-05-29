@@ -3,7 +3,7 @@
         "baseUrl": ".",
         "target": "es6",
         "sourceMap": true,
-        "noImplicitAny": true,
+        "strict": true,
         "preserveConstEnums": true,
         "moduleResolution": "node",
         "noUnusedLocals": true,

@@ -5,19 +5,21 @@
  * @format
  */
 
-import * as ManifestData from '../ManifestData';
+import * as Serialized from '../Serialized';
 import * as path from 'path';
 
 test('EmptyManifestInvalid', () => {
-  expect(() => ManifestData.parse('{}')).toThrow();
+  expect(() => Serialized.parseManifest('{}')).toThrow();
 });
 
 test('WellFormedNoOverrides', () => {
-  expect(ManifestData.parse('{"overrides": []}')).toEqual({overrides: []});
+  expect(Serialized.parseManifest('{"overrides": []}')).toEqual({
+    overrides: [],
+  });
 });
 
 test('WellFormedPlatform', () => {
-  const manifest: ManifestData.Manifest = {
+  const manifest: Serialized.Manifest = {
     overrides: [
       {
         type: 'platform',
@@ -26,11 +28,11 @@ test('WellFormedPlatform', () => {
     ],
   };
 
-  expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
 test('WellFormedPatch', () => {
-  const manifest: ManifestData.Manifest = {
+  const manifest: Serialized.Manifest = {
     overrides: [
       {
         type: 'patch',
@@ -43,11 +45,11 @@ test('WellFormedPatch', () => {
     ],
   };
 
-  expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
 test('WellFormedDerived', () => {
-  const manifest: ManifestData.Manifest = {
+  const manifest: Serialized.Manifest = {
     overrides: [
       {
         type: 'derived',
@@ -60,11 +62,11 @@ test('WellFormedDerived', () => {
     ],
   };
 
-  expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
 test('WellFormedCopy', () => {
-  const manifest: ManifestData.Manifest = {
+  const manifest: Serialized.Manifest = {
     overrides: [
       {
         type: 'copy',
@@ -77,11 +79,11 @@ test('WellFormedCopy', () => {
     ],
   };
 
-  expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
 test('FixmeAllowedAsIssue', () => {
-  const manifest: ManifestData.Manifest = {
+  const manifest: Serialized.Manifest = {
     overrides: [
       {
         type: 'patch',
@@ -94,7 +96,7 @@ test('FixmeAllowedAsIssue', () => {
     ],
   };
 
-  expect(ManifestData.parse(JSON.stringify(manifest))).toEqual(manifest);
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
 test('PathShouldUsePlatformSlashes', () => {
@@ -111,8 +113,8 @@ test('PathShouldUsePlatformSlashes', () => {
     ],
   };
 
-  const parsed = ManifestData.parse(JSON.stringify(manifest));
-  const override = parsed.overrides[0] as ManifestData.PatchEntry;
+  const parsed = Serialized.parseManifest(JSON.stringify(manifest));
+  const override = parsed.overrides[0] as Serialized.PatchOverride;
   expect(override.file).toBe(`foo${path.sep}foo.win32.js`);
   expect(override.baseFile).toBe(`bar${path.sep}foo.js`);
 });
@@ -130,7 +132,7 @@ test('IssueMustBePresentForPatch', () => {
     ],
   };
 
-  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
 test('IssueMustBePresentForCopy', () => {
@@ -146,7 +148,7 @@ test('IssueMustBePresentForCopy', () => {
     ],
   };
 
-  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
 test('IssueCannotBeArbitraryString', () => {
@@ -163,7 +165,7 @@ test('IssueCannotBeArbitraryString', () => {
     ],
   };
 
-  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
 test('WellFormedPatchMustHaveMetadata', () => {
@@ -176,7 +178,7 @@ test('WellFormedPatchMustHaveMetadata', () => {
     ],
   };
 
-  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
 test('WellFormedDerivedMustHaveMetadata', () => {
@@ -189,7 +191,7 @@ test('WellFormedDerivedMustHaveMetadata', () => {
     ],
   };
 
-  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
 test('WellFormedCopyMustHaveMetadata', () => {
@@ -202,5 +204,5 @@ test('WellFormedCopyMustHaveMetadata', () => {
     ],
   };
 
-  expect(() => ManifestData.parse(JSON.stringify(manifest))).toThrow();
+  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
