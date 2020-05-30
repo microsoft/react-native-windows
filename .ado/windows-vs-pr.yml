@@ -87,8 +87,8 @@ jobs:
         displayName: Set LocalDumps Universal
         inputs:
           script: |
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Microsoft.ReactNative.Cxx.UnitTests
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Mso.UnitTests
+            call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Microsoft.ReactNative.Cxx.UnitTests
+            call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Mso.UnitTests
           workingDirectory: $(Build.SourcesDirectory)
         condition: succeededOrFailed()
 
@@ -406,9 +406,9 @@ jobs:
         displayName: Set LocalDumps Desktop
         inputs:
           script: |
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd DTAExecutionHost
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
+            call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd DTAExecutionHost
+            call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
+            call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
           workingDirectory: $(Build.SourcesDirectory)
         condition: succeededOrFailed()
 

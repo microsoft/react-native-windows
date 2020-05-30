@@ -33,3 +33,4 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image F
 
 
 endlocal
+exit /b 0
