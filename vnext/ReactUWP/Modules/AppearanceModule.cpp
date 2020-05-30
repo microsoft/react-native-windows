@@ -21,16 +21,18 @@ AppearanceChangeListener::AppearanceChangeListener(
   // Ensure we're constructed on the UI thread
   VerifyElseCrash(uiQueue.HasThreadAccess());
 
-  m_currentTheme = Application::Current().RequestedTheme();
+  if (auto currentApp = Application::Current()) {
+    m_currentTheme = Application::Current().RequestedTheme();
 
-  // UISettings will notify us on a background thread regardless of where we construct it or register for events.
-  // Redirect callbacks to the UI thread where we can check app theme.
-  m_revoker = m_uiSettings.ColorValuesChanged(
-      winrt::auto_revoke, [weakThis{Mso::WeakPtr(this)}](const auto & /*sender*/, const auto & /*args*/) noexcept {
-        if (auto strongThis = weakThis.GetStrongPtr()) {
-          strongThis->InvokeInQueueStrong([strongThis]() noexcept { strongThis->OnColorValuesChanged(); });
-        }
-      });
+    // UISettings will notify us on a background thread regardless of where we construct it or register for events.
+    // Redirect callbacks to the UI thread where we can check app theme.
+    m_revoker = m_uiSettings.ColorValuesChanged(
+        winrt::auto_revoke, [weakThis{Mso::WeakPtr(this)}](const auto & /*sender*/, const auto & /*args*/) noexcept {
+          if (auto strongThis = weakThis.GetStrongPtr()) {
+            strongThis->InvokeInQueueStrong([strongThis]() noexcept { strongThis->OnColorValuesChanged(); });
+          }
+        });
+  }
 }
 
 const char *AppearanceChangeListener::GetColorScheme() const noexcept {

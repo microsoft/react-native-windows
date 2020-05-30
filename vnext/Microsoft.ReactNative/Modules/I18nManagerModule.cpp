@@ -26,11 +26,14 @@ static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
 }
 
 void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  auto layoutDirection =
-      winrt::Windows::ApplicationModel::Resources::Core::ResourceContext().GetForCurrentView().QualifierValues().Lookup(
-          L"LayoutDirection");
+  if (xaml::Application::Current()) {
+    auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
+                               .GetForCurrentView()
+                               .QualifierValues()
+                               .Lookup(L"LayoutDirection");
 
-  propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+    propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+  }
 }
 
 /*static*/ bool I18nManager::IsRTL(const React::ReactPropertyBag &propertyBag) noexcept {

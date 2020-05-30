@@ -22,27 +22,29 @@ DeviceInfoHolder::DeviceInfoHolder() {
 
 void DeviceInfoHolder::InitDeviceInfoHolder(
     const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>();
-  deviceInfoHolder->updateDeviceInfo();
+  if (xaml::Application::Current()) {
+    auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>();
+    deviceInfoHolder->updateDeviceInfo();
 
-  propertyBag.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
+    propertyBag.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
-  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto const &window = xaml::Window::Current().CoreWindow();
+    auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+    auto const &window = xaml::Window::Current().CoreWindow();
 
-  deviceInfoHolder->m_sizeChangedRevoker =
-      window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
-        if (auto strongHolder = weakHolder.lock()) {
-          strongHolder->updateDeviceInfo();
-        }
-      });
+    deviceInfoHolder->m_sizeChangedRevoker =
+        window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
+          if (auto strongHolder = weakHolder.lock()) {
+            strongHolder->updateDeviceInfo();
+          }
+        });
 
-  deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
-      winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
-        if (auto strongHolder = weakHolder.lock()) {
-          strongHolder->updateDeviceInfo();
-        }
-      });
+    deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
+        winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
+          if (auto strongHolder = weakHolder.lock()) {
+            strongHolder->updateDeviceInfo();
+          }
+        });
+  }
 }
 
 void DeviceInfoHolder::notifyChanged() noexcept {
