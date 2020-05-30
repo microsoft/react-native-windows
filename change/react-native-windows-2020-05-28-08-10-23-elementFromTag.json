@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add XamlUIService with ElementFromReactTag",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-28T15:10:23.674Z"
-}

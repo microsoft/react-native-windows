@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 30 May 2020 00:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-master.79",
+      "version": "0.0.0-master.79",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove references to ReactWindowsCore projects",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ff72d1b4acc9cc82771b5b58a625c987c93d1f8f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add XamlUIService with ElementFromReactTag",
+            "author": "acoates@microsoft.com",
+            "commit": "2809c9a14a68cdbaa4b735b189197b5692af0d53",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes CLI C# app not deploying",
+            "author": "jthysell@microsoft.com",
+            "commit": "22993f9c07e63832b556577778f6d4d935fc84c9",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add test cases for (Dynamic|Jsi)(Reader|Writer)",
+            "author": "zihanc@microsoft.com",
+            "commit": "8bbd689455dbcfd1a2f987952affac71d911cafa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 29 May 2020 00:09:08 GMT",
       "tag": "react-native-windows_v0.0.0-master.78",
       "version": "0.0.0-master.78",
