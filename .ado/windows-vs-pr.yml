@@ -90,6 +90,7 @@ jobs:
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Microsoft.ReactNative.Cxx.UnitTests
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Mso.UnitTests
           workingDirectory: $(Build.SourcesDirectory)
+        condition: succeededOrFailed()
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests (Native)
@@ -402,12 +403,14 @@ jobs:
         displayName: Set GoogleTestAdapterPath
         
       - task: CmdLine@2
-        displayName: Set LocalDumps Desktop 1/2
+        displayName: Set LocalDumps Desktop
         inputs:
           script: |
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd DTAExecutionHost
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
           workingDirectory: $(Build.SourcesDirectory)
+        condition: succeededOrFailed()
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -434,13 +437,6 @@ jobs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
-      
-      - task: CmdLine@2
-        displayName: Set LocalDumps Desktop 2/2
-        inputs:
-          script: |
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
-          workingDirectory: $(Build.SourcesDirectory)
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
