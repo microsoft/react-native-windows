@@ -84,7 +84,7 @@ jobs:
         displayName: Set GoogleTestAdapterPath
       
       - task: CmdLine@2
-        displayName: Set LocalDumps
+        displayName: Set LocalDumps Universal
         inputs:
           script: |
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Microsoft.ReactNative.Cxx.UnitTests
@@ -155,6 +155,13 @@ jobs:
           artifactName: TestMSRNNuget.$(BuildPlatform).$(BuildConfiguration)
           pathtoPublish: $(Build.StagingDirectory)/TestMSRNNuget
         condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: CrashDumps Universal"
+        inputs:
+          artifactName: CrashDumps_Universal
+          pathtoPublish: $(Build.StagingDirectory)/CrashDumps
+        condition: succeededOrFailed()
 
   - job: RNW_WinUI3
     displayName: WinUI3 Playground
@@ -395,7 +402,7 @@ jobs:
         displayName: Set GoogleTestAdapterPath
         
       - task: CmdLine@2
-        displayName: Set LocalDumps
+        displayName: Set LocalDumps Desktop 1/2
         inputs:
           script: |
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
@@ -429,7 +436,7 @@ jobs:
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
       
       - task: CmdLine@2
-        displayName: Set LocalDumps
+        displayName: Set LocalDumps Desktop 2/2
         inputs:
           script: |
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
@@ -498,6 +505,13 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: CrashDumps Desktop"
+        inputs:
+          artifactName: CrashDumps_Desktop
+          pathtoPublish: $(Build.StagingDirectory)/CrashDumps
+        condition: succeededOrFailed()
 
   - job: CliInit
     displayName: Verify react-native init
@@ -684,9 +698,3 @@ jobs:
           slices: '("x64.Release", "x86.Debug", "ARM.Debug")'
           packUniversal: false
 
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: CrashDumps"
-    inputs:
-      artifactName: CrashDumps
-      pathtoPublish: $(Build.StagingDirectory)/CrashDumps
-    condition: succeededOrFailed()
