@@ -6,6 +6,8 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\L
 if not exist %CRASHDUMPS_FOLDER% ( 
     md %CRASHDUMPS_FOLDER%
 )
+echo LocalDumps settings:
+reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /s
 
 rem AppVerifier flags
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\%1.exe" /f /v "DelayFreeSizeMB" /t REG_DWORD /d 0x00000040

@@ -134,6 +134,13 @@ jobs:
           pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: CrashDumps E2E"
+        inputs:
+          artifactName: CrashDumps_E2E
+          pathtoPublish: $(Build.StagingDirectory)/CrashDumps
+        condition: succeededOrFailed()
+
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: "JUnit"
