@@ -683,3 +683,10 @@ jobs:
         parameters:
           slices: '("x64.Release", "x86.Debug", "ARM.Debug")'
           packUniversal: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: CrashDumps"
+    inputs:
+      artifactName: CrashDumps
+      pathtoPublish: $(Build.StagingDirectory)/CrashDumps
+    condition: succeededOrFailed()
