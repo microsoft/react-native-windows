@@ -83,6 +83,16 @@ jobs:
           Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
         displayName: Set GoogleTestAdapterPath
 
+      - task: CmdLine@2
+        displayName: Set LocalDumps
+        inputs:
+          script: |
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Microsoft.ReactNative.Cxx.UnitTests
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Mso.UnitTests
+          workingDirectory: $(Build.SourcesDirectory)
+
       - task: VSTest@2
         displayName: Run Universal Unit Tests (Native)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
