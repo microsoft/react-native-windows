@@ -245,7 +245,7 @@ Option 2 is for advance user only. Each time we release a new WinAppDriver, we a
 
 If `yarn install` is run as admin privilege, WinAppDriver would be installed automatically, otherwise you need to install WinAppDriver manually.
 
-For the Azure pipeline, WinAppDriver is already installed on  [HostedVS2019](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2019-Server2019-Readme.md) and [HostedVS2017](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2017-Server2016-Readme.md)
+For the Azure pipeline, WinAppDriver is already installed on  [HostedVS2019](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md) and [HostedVS2017](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2016-Readme.md)
 
 
 ## Bundle
