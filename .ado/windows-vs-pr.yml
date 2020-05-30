@@ -449,7 +449,8 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: onAbortOnly
+          collectDumpOn: always
+          diagnosticsEnabled: true
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
