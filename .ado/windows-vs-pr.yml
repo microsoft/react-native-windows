@@ -82,13 +82,11 @@ jobs:
           Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
         displayName: Set GoogleTestAdapterPath
-
+      
       - task: CmdLine@2
         displayName: Set LocalDumps
         inputs:
           script: |
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
-            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Microsoft.ReactNative.Cxx.UnitTests
             $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd Mso.UnitTests
           workingDirectory: $(Build.SourcesDirectory)
@@ -395,6 +393,14 @@ jobs:
           Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
         displayName: Set GoogleTestAdapterPath
+        
+      - task: CmdLine@2
+        displayName: Set LocalDumps
+        inputs:
+          script: |
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
+          workingDirectory: $(Build.SourcesDirectory)
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -421,6 +427,13 @@ jobs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+      
+      - task: CmdLine@2
+        displayName: Set LocalDumps
+        inputs:
+          script: |
+            $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
+          workingDirectory: $(Build.SourcesDirectory)
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
