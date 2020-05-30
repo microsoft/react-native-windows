@@ -16,5 +16,5 @@
 #endif
 
 #include <windows.h>
-#include <mutex>
 #include <winrt/base.h>
+#include <mutex>
