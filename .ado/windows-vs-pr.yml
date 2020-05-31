@@ -410,6 +410,7 @@ jobs:
           script: |
             call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd DTAExecutionHost
             call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost
+            call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd testhost.x86
             call $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd JSI.Desktop.UnitTests
           workingDirectory: $(Build.SourcesDirectory)
         condition: succeededOrFailed()
