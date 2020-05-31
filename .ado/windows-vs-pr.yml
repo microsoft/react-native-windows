@@ -106,7 +106,8 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: onAbortOnly
+          collectDumpOn: always
+          diagnosticsEnabled: true
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
@@ -122,7 +123,8 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: onAbortOnly
+          collectDumpOn: always
+          diagnosticsEnabled: true
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
@@ -426,7 +428,8 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: onAbortOnly
+          collectDumpOn: always
+          diagnosticsEnabled: true
           vsTestVersion: latest
 
       - template: templates/stop-packagers.yml
@@ -466,7 +469,8 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: false
-          collectDumpOn: onAbortOnly
+          collectDumpOn: always
+          diagnosticsEnabled: true
           vsTestVersion: latest
           otherConsoleOptions: '/ListTests'
         condition: failed()
@@ -482,7 +486,8 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: onAbortOnly
+          collectDumpOn: always
+          diagnosticsEnabled: true
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: failed()
