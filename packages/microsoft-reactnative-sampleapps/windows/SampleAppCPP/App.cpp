@@ -3,13 +3,13 @@
 
 #include "pch.h"
 
+#include <CppWinRTIncludes.h>
+#include <UI.Xaml.Controls.h>
 #include "App.h"
 #include "ReactPackageProvider.h"
 #include "ReactPropertyBag.h"
 #include "winrt/SampleLibraryCS.h"
 #include "winrt/SampleLibraryCpp.h"
-#include <CppWinRTIncludes.h>
-#include <UI.Xaml.Controls.h>
 
 namespace winrt::SampleAppCpp::implementation {
 
@@ -49,7 +49,6 @@ void App::OnLaunched(winrt::Windows::ApplicationModel::Activation::LaunchActivat
   base::OnLaunched(e);
   auto window = xaml::Window::Current();
   window.Activate();
-  window.Content().as<xaml::Controls::Frame>().Navigate(
-      winrt::xaml_typename<MainPage>(), box_value(e.Arguments()));
+  window.Content().as<xaml::Controls::Frame>().Navigate(winrt::xaml_typename<MainPage>(), box_value(e.Arguments()));
 }
 } // namespace winrt::SampleAppCpp::implementation

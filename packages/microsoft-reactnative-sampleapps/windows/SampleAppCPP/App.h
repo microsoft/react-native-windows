@@ -12,7 +12,7 @@ struct App : AppT<App> {
   void OnLaunched(winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs);
 
  private:
-     using base = AppT;
+  using base = AppT;
 };
 
 } // namespace winrt::SampleAppCpp::implementation
