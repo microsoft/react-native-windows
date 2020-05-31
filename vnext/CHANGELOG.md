@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 30 May 2020 00:04:58 GMT and should not be manually modified.
+This log was last generated on Sun, 31 May 2020 00:05:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.80
+
+Sun, 31 May 2020 00:05:21 GMT
+
+### Changes
+
+- blacklist all ProjectImports.zip (asklar@microsoft.com)
+- docs CI (asklar@microsoft.com)
 
 ## 0.0.0-master.79
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 31 May 2020 00:05:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.80",
+      "version": "0.0.0-master.80",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "blacklist all ProjectImports.zip",
+            "author": "asklar@microsoft.com",
+            "commit": "e2d328a545a2520f760dbd0c782e2da20f0eb355",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "docs CI",
+            "author": "asklar@microsoft.com",
+            "commit": "268025f4161a38eaa4d6fab23304199c188fd3db",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 30 May 2020 00:04:58 GMT",
       "tag": "react-native-windows_v0.0.0-master.79",
       "version": "0.0.0-master.79",

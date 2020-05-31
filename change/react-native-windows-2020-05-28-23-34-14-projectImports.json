@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "blacklist all ProjectImports.zip",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-29T06:34:13.953Z"
-}
