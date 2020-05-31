@@ -8,6 +8,8 @@
 #include "ReactPropertyBag.h"
 #include "winrt/SampleLibraryCS.h"
 #include "winrt/SampleLibraryCpp.h"
+#include <CppWinRTIncludes.h>
+#include <UI.Xaml.Controls.h>
 
 namespace winrt::SampleAppCpp::implementation {
 
@@ -43,4 +45,11 @@ App::App() noexcept {
   InitializeComponent();
 }
 
+void App::OnLaunched(winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs e) {
+  base::OnLaunched(e);
+  auto window = xaml::Window::Current();
+  window.Activate();
+  window.Content().as<xaml::Controls::Frame>().Navigate(
+      winrt::xaml_typename<MainPage>(), box_value(e.Arguments()));
+}
 } // namespace winrt::SampleAppCpp::implementation
