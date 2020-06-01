@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Jun 2020 00:05:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.81",
+      "version": "0.0.0-master.81",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update projects to use shared props/targets",
+            "author": "dannyvv@microsoft.com",
+            "commit": "79a931cc32ebd8adad1a1a5270e3bf1380e9fa22",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 31 May 2020 00:05:21 GMT",
       "tag": "react-native-windows_v0.0.0-master.80",
       "version": "0.0.0-master.80",

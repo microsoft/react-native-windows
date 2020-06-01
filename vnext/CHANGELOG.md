@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 31 May 2020 00:05:21 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Jun 2020 00:05:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.81
+
+Mon, 01 Jun 2020 00:05:31 GMT
+
+### Changes
+
+- Update projects to use shared props/targets (dannyvv@microsoft.com)
 
 ## 0.0.0-master.80
 
