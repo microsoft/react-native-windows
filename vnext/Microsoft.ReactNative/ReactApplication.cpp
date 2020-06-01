@@ -142,11 +142,13 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
           hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
           hostImpl->InstanceSettings().DebuggerPort(port);
         }
-      } else if (token == L"--proxy") {
+      } 
+#if defined _DEBUG
+      else if (token == L"--proxy") {
         hostImpl->InstanceSettings().UseWebDebugger(true);
         hostImpl->InstanceSettings().UseDirectDebugger(false);
-        hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
       }
+#endif
     }
   }
 }
