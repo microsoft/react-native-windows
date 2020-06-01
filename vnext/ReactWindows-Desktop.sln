@@ -9,13 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "ReactCommon\
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore", "ReactWindowsCore\ReactWindowsCore.vcxitems", "{11C084A3-A57C-4296-A679-CAC17B603145}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore-Desktop", "ReactWindowsCore\ReactWindowsCore-Desktop.vcxproj", "{11C084A3-A57C-4296-A679-CAC17B603144}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.DLL", "Desktop.DLL\React.Windows.Desktop.DLL.vcxproj", "{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953} = {74085F13-2DDE-45E5-A0CA-927AC9D0B953}
@@ -25,7 +18,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.DLL",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.UnitTests", "Desktop.UnitTests\React.Windows.Desktop.UnitTests.vcxproj", "{96CD24DC-91C2-480A-BC26-EE2250DA80D7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{11C084A3-A57C-4296-A679-CAC17B603144} = {11C084A3-A57C-4296-A679-CAC17B603144}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EEE39425-10FD-4DB3-924E-D31CDA3DCC73}"
@@ -41,7 +33,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FollyWin32", "FollyWin32\Fo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertySheets", "{6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}"
 	ProjectSection(SolutionItems) = preProject
-		PropertySheets\ARM.props = PropertySheets\ARM.props
 		PropertySheets\Debug.props = PropertySheets\Debug.props
 		PropertySheets\React.Cpp.props = PropertySheets\React.Cpp.props
 		PropertySheets\Release.props = PropertySheets\Release.props
@@ -53,7 +44,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertyS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticLibrary", "StaticLibrary", "{43A78B84-278B-4B99-8887-4029D551173E}"
 	ProjectSection(SolutionItems) = preProject
-		PropertySheets\StaticLibrary\ARM.props = PropertySheets\StaticLibrary\ARM.props
 		PropertySheets\StaticLibrary\Debug.props = PropertySheets\StaticLibrary\Debug.props
 		PropertySheets\StaticLibrary\Release.props = PropertySheets\StaticLibrary\Release.props
 		PropertySheets\StaticLibrary\Win32.props = PropertySheets\StaticLibrary\Win32.props
@@ -63,7 +53,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticLibrary", "StaticLibr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{102E37B8-4BE5-4DC1-A650-16706EFB3306}"
 	ProjectSection(SolutionItems) = preProject
-		PropertySheets\Application\ARM.props = PropertySheets\Application\ARM.props
 		PropertySheets\Application\Debug.props = PropertySheets\Application\Debug.props
 		PropertySheets\Application\Release.props = PropertySheets\Application\Release.props
 		PropertySheets\Application\Win32.props = PropertySheets\Application\Win32.props
@@ -73,7 +62,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamicLibrary", "DynamicLibrary", "{2EB5E646-7EB4-4FED-B1A8-0AEEF2D32268}"
 	ProjectSection(SolutionItems) = preProject
-		PropertySheets\DynamicLibrary\ARM.props = PropertySheets\DynamicLibrary\ARM.props
 		PropertySheets\DynamicLibrary\Debug.props = PropertySheets\DynamicLibrary\Debug.props
 		PropertySheets\DynamicLibrary\Release.props = PropertySheets\DynamicLibrary\Release.props
 		PropertySheets\DynamicLibrary\Win32.props = PropertySheets\DynamicLibrary\Win32.props
@@ -81,7 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamicLibrary", "DynamicLi
 		PropertySheets\DynamicLibrary\x86.props = PropertySheets\DynamicLibrary\x86.props
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared", "Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Shared", "Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop", "Desktop\React.Windows.Desktop.vcxproj", "{95048601-C3DC-475F-ADF8-7C0C764C10D5}"
 EndProject
@@ -122,11 +110,10 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
-		ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603144}*SharedItemsImports = 4
-		ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603145}*SharedItemsImports = 9
 		JSI\Shared\JSI.Shared.vcxitems*{17dd1b17-3094-40dd-9373-ac2497932eca}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{1958ceaa-fbe0-44e3-8a99-90ad85531ffe}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
+		Mso\Mso.vcxitems*{44dced9b-9c4c-48fe-8545-0930192bbc16}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
@@ -158,14 +145,6 @@ Global
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x64.Build.0 = Release|x64
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.ActiveCfg = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.Build.0 = Release|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x64.ActiveCfg = Debug|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x64.Build.0 = Debug|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x86.ActiveCfg = Debug|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x86.Build.0 = Debug|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x64.ActiveCfg = Release|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x64.Build.0 = Release|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.ActiveCfg = Release|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.Build.0 = Release|Win32
 		{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}.Debug|x64.ActiveCfg = Debug|x64
 		{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}.Debug|x64.Build.0 = Debug|x64
 		{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}.Debug|x86.ActiveCfg = Debug|Win32
@@ -268,6 +247,14 @@ Global
 		{1958CEAA-FBE0-44E3-8A99-90AD85531FFE}.Release|x64.Build.0 = Release|x64
 		{1958CEAA-FBE0-44E3-8A99-90AD85531FFE}.Release|x86.ActiveCfg = Release|Win32
 		{1958CEAA-FBE0-44E3-8A99-90AD85531FFE}.Release|x86.Build.0 = Release|Win32
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Debug|x64.ActiveCfg = Debug|x64
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Debug|x64.Build.0 = Debug|x64
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Debug|x86.Build.0 = Debug|Win32
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Release|x64.ActiveCfg = Release|x64
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Release|x64.Build.0 = Release|x64
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Release|x86.ActiveCfg = Release|Win32
+		{3A1BE021-6877-481A-9C03-7C5A1224E897}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

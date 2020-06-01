@@ -27,6 +27,9 @@ module.exports = {
       'react-native-windows': rnwPath,
     },
     blacklistRE: blacklist([
+      // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\playground\msbuild.ProjectImports.zip' in pipeline
+      /.*\.ProjectImports\.zip/,
+
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,

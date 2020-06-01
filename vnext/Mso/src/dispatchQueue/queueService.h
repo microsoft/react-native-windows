@@ -40,8 +40,8 @@ struct QueueService : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispat
   void BeginTaskBatching() noexcept override;
   DispatchTask EndTaskBatching() noexcept override;
   bool HasTaskBatching() noexcept override;
-  bool TryLockQueueLocalValue(SwapDispatchLocalValueCallback swapLocalValue, void *tlsValue) noexcept override;
-  void UnlockLocalValue(void *tlsValue) noexcept override;
+  bool TryLockQueueLocalValue(SwapDispatchLocalValueCallback swapLocalValue, void **tlsValue) noexcept override;
+  void UnlockLocalValue(void **tlsValue) noexcept override;
   void Suspend() noexcept override;
   void Resume() noexcept override;
   void Shutdown(PendingTaskAction pendingTaskAction) noexcept override;
@@ -54,7 +54,7 @@ struct QueueService : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispat
  private:
   bool TrySwapLocalValue(
       SwapDispatchLocalValueCallback swapLocalValue,
-      void *tlsValue,
+      void **tlsValue,
       LocalValueSwapAction action) noexcept;
 
  private:
@@ -71,7 +71,7 @@ struct QueueService : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispat
 struct QueueLocalValueEntry {
   QueueLocalValueEntry(SwapDispatchLocalValueCallback swapLocalValue) noexcept;
   ~QueueLocalValueEntry() noexcept;
-  bool TrySwapLocalValue(void *tlsValue, LocalValueSwapAction action) noexcept;
+  bool TrySwapLocalValue(void **tlsValue, LocalValueSwapAction action) noexcept;
 
  private:
   const SwapDispatchLocalValueCallback m_swapLocalValue;
@@ -82,7 +82,6 @@ struct QueueLocalValueEntry {
 struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCount, IDispatchQueueStatic> {
   static DispatchQueueStatic *Instance() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeLooperScheduler() noexcept;
-  static Mso::CntPtr<IDispatchQueueScheduler> MakeCurrentThreadUIScheduler() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeThreadPoolScheduler(uint32_t maxThreads) noexcept;
 
  public: // IDispatchQueueStatic
@@ -90,7 +89,7 @@ struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCoun
   DispatchQueue const &ConcurrentQueue() noexcept override;
   DispatchQueue MakeSerialQueue() noexcept override;
   DispatchQueue MakeLooperQueue() noexcept override;
-  DispatchQueue MakeCurrentThreadUIQueue() noexcept override;
+  DispatchQueue GetCurrentUIThreadQueue() noexcept override;
   DispatchQueue MakeConcurrentQueue(uint32_t maxThreads) noexcept override;
   DispatchQueue MakeCustomQueue(Mso::CntPtr<IDispatchQueueScheduler> &&scheduler) noexcept override;
 };

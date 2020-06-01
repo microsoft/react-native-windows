@@ -1,8 +1,63 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 May 2020 00:04:45 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Jun 2020 00:05:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.81
+
+Mon, 01 Jun 2020 00:05:31 GMT
+
+### Changes
+
+- Update projects to use shared props/targets (dannyvv@microsoft.com)
+
+## 0.0.0-master.80
+
+Sun, 31 May 2020 00:05:21 GMT
+
+### Changes
+
+- blacklist all ProjectImports.zip (asklar@microsoft.com)
+- docs CI (asklar@microsoft.com)
+
+## 0.0.0-master.79
+
+Sat, 30 May 2020 00:04:58 GMT
+
+### Changes
+
+- Remove references to ReactWindowsCore projects (julio.rocha@microsoft.com)
+- Add XamlUIService with ElementFromReactTag (acoates@microsoft.com)
+- Fixes CLI C# app not deploying (jthysell@microsoft.com)
+
+## 0.0.0-master.78
+
+Fri, 29 May 2020 00:09:08 GMT
+
+### Changes
+
+- Remove unused ABI definitions (vmorozov@microsoft.com)
+- Update shared props to have csc emit absolute paths on errors and warnings (dannyvv@microsoft.com)
+- add support for long paths to rnw-dependencies.ps1 (asklar@microsoft.com)
+
+## 0.0.0-master.77
+
+Thu, 28 May 2020 00:05:30 GMT
+
+### Changes
+
+- set up react application to use an app's reactrootview (asklar@microsoft.com)
+
+## 0.0.0-master.76
+
+Wed, 27 May 2020 00:05:42 GMT
+
+### Changes
+
+- Allow developers to independently set hostname and port. (12337821+nasadigital@users.noreply.github.com)
+- Move I18nManager to spec based native module (acoates@microsoft.com)
+- Add UIDispatcher property to ReactInstanceSettings and IReactContext (vmorozov@microsoft.com)
 
 ## 0.0.0-master.74
 

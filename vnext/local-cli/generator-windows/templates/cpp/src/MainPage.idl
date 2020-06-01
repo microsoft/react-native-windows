@@ -1,0 +1,8 @@
+namespace <%=ns%>
+{
+    [default_interface]
+    runtimeclass MainPage : <%=XamlNamespace%>.Controls.Page
+    {
+        MainPage();
+    }
+}

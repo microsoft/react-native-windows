@@ -1,0 +1,21 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative {
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass XamlUIService {
+    static XamlUIService FromContext(IReactContext context);
+
+    XAML_NAMESPACE.DependencyObject ElementFromReactTag(Int64 reactTag);
+
+    // Dispatch UI event. This method is to be moved to IReactViewContext.
+    void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
+  }
+
+} // namespace Microsoft.ReactNative

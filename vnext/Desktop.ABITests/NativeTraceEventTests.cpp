@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <CppUnitTest.h>
 #include <winrt/facebook.react.h>
 #include <functional>
 #include <stack>
-#include "ActivationFactory.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 using namespace winrt;
 
@@ -83,10 +80,6 @@ TEST_CLASS (NativeTraceEventTests) {
   };
 
  public:
-  NativeTraceEventTests() noexcept {
-    winrt_activation_handler = WINRT_RoGetActivationFactory;
-  }
-
   TEST_METHOD(NativeTraceEventHandler_Registered) {
     init_apartment(winrt::apartment_type::single_threaded);
 

@@ -4,9 +4,5 @@
   Licensed under the MIT License.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)\..\..'))\</ReactNativeWindowsDir>
-    <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''" >false</UseExperimentalNuget>
-  </PropertyGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Common.props" />
 </Project>

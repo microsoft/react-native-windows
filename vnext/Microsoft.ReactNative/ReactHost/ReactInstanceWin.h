@@ -10,7 +10,7 @@
 
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
-#include <ReactUWP/Modules/I18nModule.h>
+#include <Modules/I18nManagerModule.h>
 #include "UwpReactInstanceProxy.h"
 
 #include <tuple>
