@@ -81,6 +81,12 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
+      <Filter>ABI</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
