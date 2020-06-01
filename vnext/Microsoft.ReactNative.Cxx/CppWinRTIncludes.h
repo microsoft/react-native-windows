@@ -9,11 +9,10 @@
 
 #ifndef USE_WINUI3
 
-#pragma include_alias("winrt/impl/Windows.UI.Xaml.2.h", "UI.Xaml.impl.override.h")
-
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.h>
 
+#define XAML_CPPWINRT_NAMESPACE winrt::Windows::UI::Xaml
 namespace xaml = winrt::Windows::UI::Xaml;
 namespace comp = winrt::Windows::UI::Composition;
 namespace winrt {
@@ -23,11 +22,10 @@ using Colors = winrt::Windows::UI::Colors;
 } // namespace winrt
 #else
 
-#pragma include_alias("winrt/impl/Microsoft.UI.Xaml.2.h", "UI.Xaml.impl.override.h")
-
 #include <winrt/Microsoft.System.h>
 #include <winrt/Microsoft.UI.Xaml.h>
 
+#define XAML_CPPWINRT_NAMESPACE winrt::Microsoft::UI::Xaml
 namespace xaml = winrt::Microsoft::UI::Xaml;
 namespace comp = winrt::Microsoft::UI::Composition;
 namespace winrt {

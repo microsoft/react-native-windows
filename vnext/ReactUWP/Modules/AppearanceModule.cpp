@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "AppearanceModule.h"
-
+#include <XamlUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
 using Application = xaml::Application;
@@ -21,8 +21,8 @@ AppearanceChangeListener::AppearanceChangeListener(
   // Ensure we're constructed on the UI thread
   VerifyElseCrash(uiQueue.HasThreadAccess());
 
-  if (auto currentApp = Application::Current()) {
-    m_currentTheme = Application::Current().RequestedTheme();
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
+    m_currentTheme = currentApp.RequestedTheme();
 
     // UISettings will notify us on a background thread regardless of where we construct it or register for events.
     // Redirect callbacks to the UI thread where we can check app theme.

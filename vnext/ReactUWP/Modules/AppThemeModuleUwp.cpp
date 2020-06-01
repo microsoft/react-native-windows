@@ -5,7 +5,8 @@
 
 #include "AppThemeModuleUwp.h"
 
-#include <Utils\ValueUtils.h>
+#include <Utils/ValueUtils.h>
+#include <XamlUtils.h>
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -27,7 +28,7 @@ AppTheme::AppTheme(
     const std::shared_ptr<IReactInstance> &reactInstance,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
     : m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
-  if (auto currentApp = winrt::Application::Current()) {
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
     m_currentTheme = currentApp.RequestedTheme();
     m_isHighContrast = m_accessibilitySettings.HighContrast();
     m_highContrastColors = getHighContrastColors();

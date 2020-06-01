@@ -5,6 +5,7 @@
 #include "AppStateModule.h"
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "Unicode.h"
+#include <XamlUtils.h>
 
 namespace Microsoft::ReactNative {
 
@@ -12,7 +13,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   m_context = reactContext;
   m_active = true;
 
-  if (auto currentApp = xaml::Application::Current()) {
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
     m_enteredBackgroundRevoker = currentApp.EnteredBackground(
         winrt::auto_revoke,
         [weakThis = weak_from_this()](

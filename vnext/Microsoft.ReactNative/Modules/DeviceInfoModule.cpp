@@ -6,6 +6,7 @@
 #include <IReactDispatcher.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
+#include <XamlUtils.h>
 
 namespace Microsoft::ReactNative {
 
@@ -22,7 +23,7 @@ DeviceInfoHolder::DeviceInfoHolder() {
 
 void DeviceInfoHolder::InitDeviceInfoHolder(
     const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  if (xaml::Application::Current()) {
+  if (xaml::TryGetCurrentApplication()) {
     auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>();
     deviceInfoHolder->updateDeviceInfo();
 

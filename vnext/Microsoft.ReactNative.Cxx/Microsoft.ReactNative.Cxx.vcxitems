@@ -42,7 +42,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.impl.override.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XamlHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />
