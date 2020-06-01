@@ -3,14 +3,15 @@
 
 #include "pch.h"
 #include "App.h"
-#include "ReactPackageProvider.h"
-#include "ReactPropertyBag.h"
-#include "winrt/SampleLibraryCS.h"
-#include "winrt/SampleLibraryCpp.h"
+#include <CppWinRTIncludes.h>
+#include <ReactPackageProvider.h>
+#include <ReactPropertyBag.h>
+#include <winrt/SampleLibraryCS.h>
+#include <winrt/SampleLibraryCpp.h>
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 

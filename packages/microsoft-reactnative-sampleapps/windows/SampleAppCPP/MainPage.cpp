@@ -4,11 +4,12 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+#include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include "App.h"
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 
 namespace winrt::SampleAppCpp::implementation {
 MainPage::MainPage() {
