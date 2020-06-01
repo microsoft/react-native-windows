@@ -131,15 +131,17 @@ async function updateAutoLink(config, args, options) {
 
       for (const dependencyName in windowsDependencies) {
         windowsDependencies[dependencyName].projects.forEach(project => {
-          csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
-          project.csNamespaces.forEach(namespace => {
-            csUsingNamespaces += `\nusing ${namespace};`;
-          });
+          if (project.directDependency) {
+            csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
+            project.csNamespaces.forEach(namespace => {
+              csUsingNamespaces += `\nusing ${namespace};`;
+            });
 
-          csReactPacakgeProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
-          project.csPackageProviders.forEach(packageProvider => {
-            csReactPacakgeProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
-          });
+            csReactPacakgeProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
+            project.csPackageProviders.forEach(packageProvider => {
+              csReactPacakgeProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
+            });
+          }
         });
       }
 
@@ -166,23 +168,25 @@ namespace Microsoft.ReactNative.Managed
 `;
 
       changesNecessary =
-        changesNecessary ||
-        updateFile(csFile, '\uFEFF' + csContents, verbose, checkMode);
+        updateFile(csFile, '\uFEFF' + csContents, verbose, checkMode) ||
+        changesNecessary;
     } else if (projectLang === 'cpp') {
       let cppIncludes = '';
       let cppPackageProviders = '';
 
       for (const dependencyName in windowsDependencies) {
         windowsDependencies[dependencyName].projects.forEach(project => {
-          cppIncludes += `\n\n// Includes from ${dependencyName}`;
-          project.cppHeaders.forEach(header => {
-            cppIncludes += `\n#include <${header}>`;
-          });
+          if (project.directDependency) {
+            cppIncludes += `\n\n// Includes from ${dependencyName}`;
+            project.cppHeaders.forEach(header => {
+              cppIncludes += `\n#include <${header}>`;
+            });
 
-          cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
-          project.cppPackageProviders.forEach(packageProvider => {
-            cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
-          });
+            cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
+            project.cppPackageProviders.forEach(packageProvider => {
+              cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
+            });
+          }
         });
       }
 
@@ -222,21 +226,23 @@ static void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::C
 
     for (const dependencyName in windowsDependencies) {
       windowsDependencies[dependencyName].projects.forEach(project => {
-        const dependencyProjectFile = path.join(
-          windowsDependencies[dependencyName].folder,
-          windowsDependencies[dependencyName].sourceDir,
-          project.projectFile,
-        );
+        if (project.directDependency) {
+          const dependencyProjectFile = path.join(
+            windowsDependencies[dependencyName].folder,
+            windowsDependencies[dependencyName].sourceDir,
+            project.projectFile,
+          );
 
-        const relDependencyProjectFile = path.relative(
-          projectDir,
-          dependencyProjectFile,
-        );
+          const relDependencyProjectFile = path.relative(
+            projectDir,
+            dependencyProjectFile,
+          );
 
-        projectReferencesForTargets += `\n    <!-- Projects from ${dependencyName} -->`;
-        projectReferencesForTargets += `\n    <ProjectReference Include="$(ProjectDir)${relDependencyProjectFile}">
+          projectReferencesForTargets += `\n    <!-- Projects from ${dependencyName} -->`;
+          projectReferencesForTargets += `\n    <ProjectReference Include="$(ProjectDir)${relDependencyProjectFile}">
       <Project>${project.projectGuid}</Project>
     </ProjectReference>`;
+        }
       });
     }
 
@@ -281,24 +287,6 @@ static void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::C
           projectGuid: project.projectGuid,
         });
       });
-
-      // Process additional projects
-      windowsDependencies[dependencyName].additionalProjects.forEach(
-        project => {
-          const dependencyProjectFile = path.join(
-            windowsDependencies[dependencyName].folder,
-            windowsDependencies[dependencyName].sourceDir,
-            project.projectFile,
-          );
-
-          projectsForSolution.push({
-            projectFile: dependencyProjectFile,
-            projectName: project.projectName,
-            projectLang: project.projectLang,
-            projectGuid: project.projectGuid,
-          });
-        },
-      );
     }
 
     verboseMessage(

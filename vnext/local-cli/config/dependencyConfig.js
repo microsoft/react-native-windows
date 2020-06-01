@@ -11,40 +11,43 @@ const configUtils = require('./configUtils.js');
 
 /*
 
+react-native config will generate the following JSON for each native module dependency
+under node_modules that has a windows implementation, in order to support auto-linking.
+This is done heurestically, so if the result isn't quite correct, native module developers
+can provide a manual override file: react-native.config.
+
 Schema for dependencies:
 
+Tags:
+auto - Item is always calculated by config. An override file should NEVER provide it.
+req  - Item is required. If an override file exists, it MUST provide it. If no override file exists, config will try to calculate it.
+opt  - Item is optional. If an override file exists, it MAY provide it. If no override file exists, config may try to calculate it.
+
 {
-  folder: '', // absolute path to the module root, ex: c:\path\to\node_modules\module-name
-  sourceDir: '', // relative path to the windows implementation folder, ex: windows
-  solutionFile: '', // relative path to the solution, ex: ModuleName.sln
-  projects: [ // array of projects to be built that include modules
+  folder: string,       // (auto) Absolute path to the module root folder, determined by react-native config, ex: 'c:\path\to\app-name\node_modules\module-name'
+  sourceDir: string,    // (req) Relative path to the windows implementation under folder, ex: 'windows'
+  solutionFile: string, // (req) Relative path to the module's VS solution file under sourceDir, ex: 'ModuleName.sln'
+  projects: [ // (opt) Array of VS projects that must be added to the consuming app's solution file, so they are built
     {
-      projectFile: '', // relative path to the project, ex: ProjectName\ProjectName.vcxproj
-      projectName: '', // name of the project
-      projectLang: '', // language of the project, cpp or cs
-      projectGuid: '', // project identifier
-      cppHeaders: [], // array of cpp header include lines, ie: 'winrt/ModuleName.h', to be transformed into '#include <winrt/ModuleName.h>'
-      cppPackageProviders: [], // array of fully qualified cpp IReactPackageProviders, ie: 'ModuleName::ReactPackageProvider'
-      csNamespaces: [], // array of cs namespaces, ie: 'ModuleName', to be transformed into 'using ModuleName;'
-      csPackageProviders: [], // array of fully qualified cs IReactPackageProviders, ie: 'ModuleName.ReactPackageProvider'
+      projectFile: string,     // (req) Relative path to the VS project file under sourceDir, ex: 'ProjectName\ProjectName.vcxproj' for 'c:\path\to\app-name\node_modules\module-name\windows\ProjectName\ProjectName.vcxproj'
+      projectName: string,     // (auto) Name of the project, determined from projectFile, ex: 'ProjectName'
+      projectLang: string,     // (auto) Language of the project, cpp or cs, determined from projectFile
+      projectGuid: string,     // (auto) Project identifier, determined from projectFile
+      directDependency: bool,  // (req) Whether to add the project file as a dependency to the consuming app's project file. true for projects that provide native modules
+      cppHeaders: [],          // (opt, but req if directDependency) Array of cpp header include lines, ie: 'winrt/ModuleName.h', to be transformed into '#include <winrt/ModuleName.h>'
+      cppPackageProviders: [], // (opt, but req if directDependency) Array of fully qualified cpp IReactPackageProviders, ie: 'ModuleName::ReactPackageProvider'
+      csNamespaces: [],        // (opt, but req if directDependency) Array of cs namespaces, ie: 'ModuleName', to be transformed into 'using ModuleName;'
+      csPackageProviders: [],  // (opt, but req if directDependency) Array of fully qualified cs IReactPackageProviders, ie: 'ModuleName.ReactPackageProvider'
     },
   ],
-  additionalProjects: [ // array of (dependency) projects that must be built, but do not contain modules
+  nugetPackages: [ // (opt) Array of nuget packages including native modules that must be added as a dependency to the consuming app. It can be empty, but by its nature it can't be calculated
     {
-      projectFile: '', // relative path to the project, ex: ProjectName\ProjectName.vcxproj
-      projectName: '', // name of the project
-      projectLang: '', // language of the project, cpp or cs
-      projectGuid: '', // project identifier
-    },
-  ],
-  packages: [ // array of nuget packages that include modules
-    {
-      packageName: '', // name of the nuget package to install
-      packageVersion: '', // version of the nuget package to install
-      cppHeaders: [], // array of cpp header include lines, ie: 'winrt/ModuleName.h', to be transformed into '#include <winrt/ModuleName.h>'
-      cppPackageProviders: [], // array of fully qualified cpp IReactPackageProviders, ie: 'ModuleName::ReactPackageProvider'
-      csNamespaces: [], // array of cs namespaces, ie: 'ModuleName', to be transformed into 'using ModuleName;'
-      csPackageProviders: [], // array of fully qualified cs IReactPackageProviders, ie: 'ModuleName.ReactPackageProvider'
+      packageName: string,     // (req) Name of the nuget package to install
+      packageVersion: string,  // (req) Version of the nuget package to install
+      cppHeaders: [],          // (req) Array of cpp header include lines, ie: 'winrt/ModuleName.h', to be transformed into '#include <winrt/ModuleName.h>'
+      cppPackageProviders: [], // (req) Array of fully qualified cpp IReactPackageProviders, ie: 'ModuleName::ReactPackageProvider'
+      csNamespaces: [],        // (req) Array of cs namespaces, ie: 'ModuleName', to be transformed into 'using ModuleName;'
+      csPackageProviders: [],  // (req) Array of fully qualified cs IReactPackageProviders, ie: 'ModuleName.ReactPackageProvider'
     },
   ],
 }
@@ -52,65 +55,112 @@ Schema for dependencies:
 */
 
 function dependencyConfigWindows(folder, userConfig = {}) {
-  if (userConfig.sourceDir) {
-    return {
-      folder,
-      sourceDir: userConfig.sourceDir,
-      solutionFile: userConfig.solutionFile,
-      projects: userConfig.projects || [],
-      additionalProjects: userConfig.additionalProjects || [],
-      packages: userConfig.packages || [],
-    };
+  const usingManualOverride = 'sourceDir' in userConfig;
+
+  const sourceDir = usingManualOverride
+    ? path.join(folder, userConfig.sourceDir)
+    : configUtils.findWindowsFolder(folder);
+
+  if (sourceDir === null) {
+    return null;
   }
 
-  const sourceDir = configUtils.findWindowsFolder(folder);
-
-  if (!sourceDir) {
-    return null;
+  if (usingManualOverride && !('solutionFile' in userConfig)) {
+    throw 'solutionFile is required but not specified in react-native.config';
   }
 
   const packageJson = require(path.join(folder, 'package.json'));
 
-  const solutionFile = configUtils.findSolutionFile(sourceDir, packageJson);
+  const solutionFile = usingManualOverride
+    ? userConfig.solutionFile
+    : configUtils.findSolutionFile(sourceDir, packageJson);
 
-  const projectFile = configUtils.findProjectFile(sourceDir, packageJson);
+  var projects = usingManualOverride ? userConfig.projects || [] : [];
+  var nugetPackages = usingManualOverride ? userConfig.nugetPackages || [] : [];
 
-  const projectLang = configUtils.getProjectLanguage(projectFile);
+  if (usingManualOverride) {
+    // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
 
-  const projectXml = configUtils.readProjectFile(projectFile);
+    const alwaysRequired = ['projectFile', 'directDependency'];
 
-  const projectName = configUtils.getProjectName(projectXml);
+    const requiredForDirectDepenencies = [
+      'cppHeaders',
+      'cppPackageProviders',
+      'csNamespaces',
+      'csPackageProviders',
+    ];
 
-  const projectGuid = configUtils.getProjectGuid(projectXml);
+    for (let i = 0; i < projects.length; i++) {
+      // Verifying (req) items
+      alwaysRequired.forEach(item => {
+        if (!(item in projects[i])) {
+          throw `${item} is required for each project in react-native.config`;
+        }
+      });
 
-  const projectNamespace = configUtils.getProjectNamespace(projectXml);
+      const projectFile = path.join(sourceDir, projects[i].projectFile);
 
-  const cppNamespace = projectNamespace.replace('.', '::');
-  const csNamespace = projectNamespace.replace('::', '.');
+      const projectXml = configUtils.readProjectFile(projectFile);
 
-  var cppHeaders = [`winrt/${csNamespace}.h`];
-  var cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
-  var csNamespaces = [`${csNamespace}`];
-  var csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
+      // Calculating (auto) items
+
+      projects[i].projectName = configUtils.getProjectName(projectXml);
+      projects[i].projectLang = configUtils.getProjectLanguage(projectFile);
+      projects[i].projectGuid = configUtils.getProjectGuid(projectXml);
+
+      if (projects[i].directDependency) {
+        // Verifying (req) items
+        requiredForDirectDepenencies.forEach(item => {
+          if (!(item in projects[i])) {
+            throw `${item} is required for each project in react-native.config`;
+          }
+        });
+      }
+    }
+  } else {
+    // No react-native.config, try to heurestically find the correct project
+
+    const projectFile = configUtils.findProjectFile(sourceDir, packageJson);
+
+    const projectLang = configUtils.getProjectLanguage(projectFile);
+
+    const projectXml = configUtils.readProjectFile(projectFile);
+
+    const projectName = configUtils.getProjectName(projectXml);
+
+    const projectGuid = configUtils.getProjectGuid(projectXml);
+
+    const projectNamespace = configUtils.getProjectNamespace(projectXml);
+
+    const directDependency = true;
+
+    const cppNamespace = projectNamespace.replace('.', '::');
+    const csNamespace = projectNamespace.replace('::', '.');
+
+    const cppHeaders = [`winrt/${csNamespace}.h`];
+    const cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
+    const csNamespaces = [`${csNamespace}`];
+    const csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
+
+    projects.push({
+      projectFile: projectFile.substr(sourceDir.length + 1),
+      projectName,
+      projectLang,
+      projectGuid,
+      directDependency,
+      cppHeaders,
+      cppPackageProviders,
+      csNamespaces,
+      csPackageProviders,
+    });
+  }
 
   return {
     folder,
     sourceDir: sourceDir.substr(folder.length + 1),
     solutionFile: solutionFile.substr(sourceDir.length + 1),
-    projects: [
-      {
-        projectFile: projectFile.substr(sourceDir.length + 1),
-        projectName,
-        projectLang,
-        projectGuid,
-        cppHeaders,
-        cppPackageProviders,
-        csNamespaces,
-        csPackageProviders,
-      },
-    ],
-    additionalProjects: [],
-    packages: [],
+    projects,
+    nugetPackages,
   };
 }
 
