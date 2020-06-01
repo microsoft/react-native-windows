@@ -4,9 +4,9 @@
 #include "pch.h"
 #include "DeviceInfoModule.h"
 #include <IReactDispatcher.h>
+#include <XamlUtils.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <XamlUtils.h>
 
 namespace Microsoft::ReactNative {
 

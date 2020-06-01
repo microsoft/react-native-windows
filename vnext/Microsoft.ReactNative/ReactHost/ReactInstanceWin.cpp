@@ -680,7 +680,7 @@ void ReactInstanceWin::OnDebuggerAttach() noexcept {
 void ReactInstanceWin::DrainJSCallQueue() noexcept {
   // Handle all items in the queue one by one.
   for (;;) {
-    JSCallEntry entry;
+    JSCallEntry entry; // To avoid callJSFunction under the lock
     {
       std::scoped_lock lock{m_mutex};
       if (m_state == ReactInstanceState::Loaded && !m_jsCallQueue.empty()) {
@@ -698,7 +698,7 @@ void ReactInstanceWin::DrainJSCallQueue() noexcept {
 }
 
 void ReactInstanceWin::AbandonJSCallQueue() noexcept {
-  std::deque<JSCallEntry> jsCallQueue;
+  std::deque<JSCallEntry> jsCallQueue; // To avoid destruction under the lock
   {
     std::scoped_lock lock{m_mutex};
     if (m_state == ReactInstanceState::HasError || m_state == ReactInstanceState::Unloaded) {
@@ -711,7 +711,7 @@ void ReactInstanceWin::CallJsFunction(
     std::string &&moduleName,
     std::string &&method,
     folly::dynamic &&params) noexcept {
-  bool shouldCall{false};
+  bool shouldCall{false}; // To call callJSFunction outside of lock
   {
     std::scoped_lock lock{m_mutex};
     if (m_state == ReactInstanceState::Loaded && m_jsCallQueue.empty()) {
