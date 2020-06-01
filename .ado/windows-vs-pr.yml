@@ -368,10 +368,6 @@ jobs:
         clean: false
         submodules: false
 
-      - task: VisualStudioTestPlatformInstaller@1
-        inputs:
-          testPlatformVersion: 16.5.0
-
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: build
@@ -405,7 +401,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
 
       - template: templates/stop-packagers.yml
 
@@ -428,7 +424,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
@@ -444,7 +440,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: false
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/ListTests'
         condition: failed()
 
@@ -460,7 +456,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: failed()
 

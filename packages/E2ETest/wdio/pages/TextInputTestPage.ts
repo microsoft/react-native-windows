@@ -10,6 +10,8 @@ import {
   CAP_TEXTINPUT_ON_TEXTINPUT,
   PREVTEXT_ON_TEXTINPUT,
   PREV2TEXT_ON_TEXTINPUT,
+  PREV3TEXT_ON_TEXTINPUT,
+  PREV4TEXT_ON_TEXTINPUT,
   CURTEXT_ON_TEXTINPUT,
 } from '../../app/Consts';
 
@@ -61,6 +63,14 @@ class TextInputTestPage extends BasePage {
     return this.prev2TextInput.getText();
   }
 
+  getTextInputPrev3Text() {
+    return this.prev3TextInput.getText();
+  }
+
+  getTextInputPrev4Text() {
+    return this.prev4TextInput.getText();
+  }
+
   getTextInputText() {
     return this.textInput.getText();
   }
@@ -87,6 +97,14 @@ class TextInputTestPage extends BasePage {
 
   private get prev2TextInput() {
     return By(PREV2TEXT_ON_TEXTINPUT);
+  }
+
+  private get prev3TextInput() {
+    return By(PREV3TEXT_ON_TEXTINPUT);
+  }
+
+  private get prev4TextInput() {
+    return By(PREV4TEXT_ON_TEXTINPUT);
   }
 
   private get multiLineTextInput() {

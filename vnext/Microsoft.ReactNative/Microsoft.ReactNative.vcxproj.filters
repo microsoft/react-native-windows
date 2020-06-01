@@ -92,6 +92,9 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -267,7 +270,9 @@
     <ClCompile Include="Modules\ClipboardModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="Modules\DeviceInfoModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -703,6 +708,7 @@
     <Midl Include="ReactRootView.idl" />
     <Midl Include="RedBoxHandler.idl" />
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="XamlUIService.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
