@@ -12,11 +12,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "..\..\..\vne
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore", "..\..\..\vnext\ReactWindowsCore\ReactWindowsCore.vcxproj", "{11C084A3-A57C-4296-A679-CAC17B603144}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "..\..\..\vnext\Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj", "{F7D32BD0-2749-483E-9A0D-1635EF7E3136}"
@@ -38,7 +33,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
-		..\..\..\vnext\ReactWindowsCore\ReactWindowsCore.vcxitems*{11c084a3-a57c-4296-a679-cac17b603144}*SharedItemsImports = 4
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		..\..\..\vnext\Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{8b88ffae-4dbc-49a2-afa5-d2477d4ad189}*SharedItemsImports = 4
@@ -102,18 +96,6 @@ Global
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x64.Build.0 = Release|x64
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.ActiveCfg = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.Build.0 = Release|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|ARM.ActiveCfg = Debug|ARM
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|ARM.Build.0 = Debug|ARM
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x64.ActiveCfg = Debug|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x64.Build.0 = Debug|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x86.ActiveCfg = Debug|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x86.Build.0 = Debug|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|ARM.ActiveCfg = Release|ARM
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|ARM.Build.0 = Release|ARM
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x64.ActiveCfg = Release|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x64.Build.0 = Release|x64
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.ActiveCfg = Release|Win32
-		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.Build.0 = Release|Win32
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|ARM.ActiveCfg = Debug|ARM
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|ARM.Build.0 = Debug|ARM
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|x64.ActiveCfg = Debug|x64
@@ -157,7 +139,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
-		{11C084A3-A57C-4296-A679-CAC17B603144} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{C38970C0-5FBF-4D69-90D8-CBAC225AE895} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{0CC28589-39E4-4288-B162-97B959F8B843} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}

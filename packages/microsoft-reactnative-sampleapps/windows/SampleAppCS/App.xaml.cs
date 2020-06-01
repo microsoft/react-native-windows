@@ -42,7 +42,9 @@ namespace SampleAppCS
             InstanceSettings.Properties.Set(ReactPropertyBagHelper.GetName(null, "Prop1"), 43);
             InstanceSettings.Properties.Set(ReactPropertyBagHelper.GetName(null, "Prop2"), "Hello RNW!");
 
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
+
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
             PackageProviders.Add(new ReflectionReactPackageProvider<App>());
             PackageProviders.Add(new SampleLibraryCS.ReactPackageProvider());
             PackageProviders.Add(new SampleLibraryCpp.ReactPackageProvider());
@@ -53,9 +55,8 @@ namespace SampleAppCS
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
-            var frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainPage));
-            Window.Current.Activate();
+            var frame = (Frame)Window.Current.Content;
+            frame.Navigate(typeof(MainPage), e.Arguments);
         }
     }
 }

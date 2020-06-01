@@ -32,4 +32,4 @@
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
 
-#include "nativeModules.g.h"
+#include "AutolinkedNativeModules.g.h"

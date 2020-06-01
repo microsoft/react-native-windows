@@ -8,4 +8,5 @@
 #endif
 
 #include <windows.h>
+#include <winrt/base.h>
 #include <mutex>

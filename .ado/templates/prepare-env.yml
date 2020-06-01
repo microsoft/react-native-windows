@@ -39,10 +39,6 @@ steps:
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}
 
-  - template: install-SDK.yml
-    parameters:
-      sdkVersion: $(Win10Version)
-
   - task: PowerShell@2
     displayName: List Visual Studio Components
     inputs:

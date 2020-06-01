@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "Remove unused ABI definitions",
+  "comment": "Enable ReactNativeHost integration test",
   "packageName": "react-native-windows",
   "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-05-27T22:53:06.265Z"
+  "date": "2020-05-30T23:12:14.971Z"
 }

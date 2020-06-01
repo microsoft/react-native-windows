@@ -62,7 +62,7 @@ function projectConfigWindows(folder, userConfig = {}) {
   const packageJson = require(path.join(folder, 'package.json'));
 
   const solutionFile = usingManualOverride
-    ? userConfig.solutionFile
+    ? path.join(sourceDir, userConfig.solutionFile)
     : configUtils.findSolutionFile(sourceDir, packageJson);
 
   if (usingManualOverride && !('projectFile' in userConfig.project)) {
