@@ -9,6 +9,9 @@ parameters:
   listVsComponents: false
   installVsComponents: false
 
+variables:
+  BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\BuildLogs
+
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
     clean: true # whether to fetch clean each time
@@ -120,16 +123,25 @@ steps:
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --release
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(BuildLogDirectory) --release
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(BuildLogDirectory)
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
+
+  - task: PublishBuildArtifacts@1
+    displayName: Upload build logs
+    condition:  succeededOrFailed()
+    timeoutInMinutes: 10
+    inputs:    
+      targetPath: '$(BuildLogDirectory)'
+      artifactName: 'Build logs - $(Agent.JobName)' 
+      publishLocation: 'Container'
 
   - task: CmdLine@2
     displayName: Create bundle testcli
@@ -148,7 +160,6 @@ steps:
         stop-process -name node
     condition: failed()
 
-
   - task: PublishPipelineArtifact@1
     displayName: Upload Verdaccio.log (on failure)
     inputs:
@@ -157,10 +168,3 @@ steps:
       publishLocation: 'pipeline'
     condition: failed()
 
-  - task: PublishPipelineArtifact@1
-    displayName: Upload msbuild.binlog (on failure)
-    inputs:
-      targetPath: '$(Agent.BuildDirectory)\testcli\*.binlog'
-      artifact: '$(Agent.JobName).msbuild.binlog'
-      publishLocation: 'pipeline'
-    condition: failed()

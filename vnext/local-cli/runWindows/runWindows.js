@@ -8,7 +8,7 @@
 
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
-const {newError, newInfo} = require('./utils/commandWithProgress');
+const { newError, newInfo } = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
@@ -80,11 +80,12 @@ async function runWindows(config, args, options) {
         msBuildProps,
         verbose,
         undefined, // build the default target
+        options.buildLogDirectory,
       );
     } catch (e) {
       newError(
         `Build failed with message ${
-          e.message
+        e.message
         }. Check your build configuration.`,
       );
       if (e.logfile) {
@@ -219,6 +220,11 @@ module.exports = {
       command: '--msbuildprops [string]',
       description:
         'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
+    },
+    {
+      command: '--buildLogDirectory [string]',
+      description:
+        'Optional directory where msbuild log files should be stored',
     },
     {
       command: '--info',

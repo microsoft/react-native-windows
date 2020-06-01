@@ -53,6 +53,7 @@ class MSBuildTools {
     msBuildProps,
     verbose,
     target,
+    buildLogDirectory,
   ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
@@ -61,10 +62,19 @@ class MSBuildTools {
       newInfo(`Build target: ${target}`);
     }
     const verbosityOption = verbose ? 'normal' : 'minimal';
-    const errorLog = path.join(
-      process.env.temp,
-      `msbuild_${process.pid}${target ? '_' + target : ''}.err`,
+    const logPrefix = path.join(
+      buildLogDirectory || process.env.temp,
+      `msbuild_${process.pid}${target ? '_' + target : ''}`,
     );
+
+    const errorLog = logPrefix + '.err';
+    const warnLog = logPrefix + '.wrn';
+    const binlog = buildLogDirectory
+      ? ':' + logPrefix + '.binlog'
+      : target
+        ? `:${target}.binlog`
+        : '';
+
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -72,8 +82,9 @@ class MSBuildTools {
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
-      `/bl${target ? `:${target}.binlog` : ''}`,
+      `/bl${binlog}`,
       `/flp1:errorsonly;logfile=${errorLog}`,
+      `/flp2:warningsonly;logfile=${warnLog}`,
     ];
 
     if (target) {
@@ -81,7 +92,7 @@ class MSBuildTools {
     }
 
     if (msBuildProps) {
-      Object.keys(msBuildProps).forEach(function(key) {
+      Object.keys(msBuildProps).forEach(function (key) {
         args.push(`/p:${key}=${msBuildProps[key]}`);
       });
     }
@@ -144,7 +155,7 @@ function VSWhere(requires, version, property, verbose) {
     const propertyValue = child_process
       .execSync(
         `"${vsWherePath}" -version [${version},${Number(version) +
-          1}) -products * -requires ${requires} -property ${property}`,
+        1}) -products * -requires ${requires} -property ${property}`,
       )
       .toString()
       .split(EOL)[0];
@@ -248,26 +259,26 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 }
 
-module.exports.findAvailableVersion = function(buildArch, verbose) {
+module.exports.findAvailableVersion = function (buildArch, verbose) {
   const versions =
     process.env.VisualStudioVersion != null
       ? [
-          checkMSBuildVersion(
-            process.env.VisualStudioVersion,
-            buildArch,
-            verbose,
-          ),
-        ]
-      : MSBUILD_VERSIONS.map(function(value) {
-          return checkMSBuildVersion(value, buildArch, verbose);
-        });
+        checkMSBuildVersion(
+          process.env.VisualStudioVersion,
+          buildArch,
+          verbose,
+        ),
+      ]
+      : MSBUILD_VERSIONS.map(function (value) {
+        return checkMSBuildVersion(value, buildArch, verbose);
+      });
   const msbuildTools = versions.find(Boolean);
 
   if (!msbuildTools) {
     if (process.env.VisualStudioVersion != null) {
       throw new Error(
         `MSBuild tools not found for version ${
-          process.env.VisualStudioVersion
+        process.env.VisualStudioVersion
         } (from environment). Make sure all required components have been installed`,
       );
     } else {
@@ -300,7 +311,7 @@ function getSDK10InstallationFolder() {
   return folder;
 }
 
-module.exports.getAllAvailableUAPVersions = function() {
+module.exports.getAllAvailableUAPVersions = function () {
   const results = [];
 
   const programFilesFolder =

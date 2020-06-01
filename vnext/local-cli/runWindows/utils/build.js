@@ -9,11 +9,11 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const {execSync} = require('child_process');
+const { execSync } = require('child_process');
 const glob = require('glob');
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
-const {commandWithProgress, newSpinner} = require('./commandWithProgress');
+const { commandWithProgress, newSpinner } = require('./commandWithProgress');
 const util = require('util');
 const chalk = require('chalk');
 const existsAsync = util.promisify(fs.exists);
@@ -25,6 +25,7 @@ async function buildSolution(
   msBuildProps,
   verbose,
   target,
+  buildLogDirectory,
 ) {
   const minVersion = new Version(10, 0, 18362, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
@@ -42,6 +43,7 @@ async function buildSolution(
     msBuildProps,
     verbose,
     target,
+    buildLogDirectory,
   );
 }
 
@@ -77,7 +79,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
       nugetPath = execSync('where nuget')
         .toString()
         .trim();
-    } catch {}
+    } catch { }
   }
 
   if (!(await existsAsync(nugetPath))) {
@@ -108,7 +110,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
     );
   } catch (e) {
     if (!options.isRetryingNuget) {
-      const retryOptions = Object.assign({isRetryingNuget: true}, options);
+      const retryOptions = Object.assign({ isRetryingNuget: true }, options);
       if (downloadedNuget) {
         fs.unlinkSync(nugetPath);
       }
