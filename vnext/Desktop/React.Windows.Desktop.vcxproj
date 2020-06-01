@@ -200,10 +200,6 @@
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="..\Microsoft.ReactNative\IReactPropertyBag.h">
-      <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
