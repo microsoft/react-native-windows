@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -56,6 +56,7 @@ enum class ReactInstanceState {
   WaitingForDebugger,
   Loaded,
   HasError,
+  Unloaded,
 };
 
 /**An Office wrapper that extends FB's React Instance and makes it a 1:1 relationship with the bundle,

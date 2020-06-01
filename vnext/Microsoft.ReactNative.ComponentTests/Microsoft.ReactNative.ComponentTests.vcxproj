@@ -185,6 +185,7 @@
     <ClCompile Include="pch/pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClInclude Include="CommonReaderTest.h" />
     <ClInclude Include="pch/pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -196,8 +197,8 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h"/>
-    <ClCompile Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\tracing.cpp"/>
+    <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h" />
+    <ClCompile Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\tracing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Base\FollyIncludes.h" />

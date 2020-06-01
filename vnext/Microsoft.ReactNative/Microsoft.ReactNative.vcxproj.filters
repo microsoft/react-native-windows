@@ -92,9 +92,6 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>

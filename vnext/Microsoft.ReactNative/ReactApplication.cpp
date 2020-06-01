@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -64,23 +64,13 @@ void ReactApplication::InstanceSettings(ReactNative::ReactInstanceSettings const
 }
 
 IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
-  if (!m_packageProviders) {
-    m_packageProviders = single_threaded_vector<IReactPackageProvider>();
-  }
-
-  return m_packageProviders;
-}
-
-void ReactApplication::PackageProviders(
-    Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept {
-  m_packageProviders = value;
+  return InstanceSettings().PackageProviders();
 }
 
 ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   if (!m_host) {
     m_host = make<ReactNativeHost>();
     m_host.InstanceSettings(InstanceSettings());
-    m_host.PackageProviders(PackageProviders());
   }
 
   return m_host;

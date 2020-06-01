@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 import {
@@ -35,7 +35,7 @@ export class BasePage {
     );
   }
 
-  getTreeDumpResult() {
+  getTreeDumpResult(): boolean {
     var testResult = false;
     const maxWait = 20;
     var waitCount = 1;

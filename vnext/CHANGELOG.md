@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 29 May 2020 00:09:08 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Jun 2020 00:05:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.81
+
+Mon, 01 Jun 2020 00:05:31 GMT
+
+### Changes
+
+- Update projects to use shared props/targets (dannyvv@microsoft.com)
+
+## 0.0.0-master.80
+
+Sun, 31 May 2020 00:05:21 GMT
+
+### Changes
+
+- blacklist all ProjectImports.zip (asklar@microsoft.com)
+- docs CI (asklar@microsoft.com)
+
+## 0.0.0-master.79
+
+Sat, 30 May 2020 00:04:58 GMT
+
+### Changes
+
+- Remove references to ReactWindowsCore projects (julio.rocha@microsoft.com)
+- Add XamlUIService with ElementFromReactTag (acoates@microsoft.com)
+- Fixes CLI C# app not deploying (jthysell@microsoft.com)
 
 ## 0.0.0-master.78
 
