@@ -27,7 +27,7 @@ describe('ImageWithoutBorderTest', () => {
   });
 
   /* Test case #3: Click button one more, remove border from view and image but tree sturcture is different from #1*/
-  it('ImageWithoutBorderTest', () => {
+  it('ImageWithoutBorderTestOneMoreClick', () => {
     ImageTestPage.toggleImageBorder();
     const result = ImageTestPage.getTreeDumpResult();
     assert(result, '#3. Second dump comparison for image without border!');

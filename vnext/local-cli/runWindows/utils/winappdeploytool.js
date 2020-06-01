@@ -85,7 +85,7 @@ class WinAppDeployTool {
     //  maps to
     // [(line), '127.0.0.1', '00000015-b21e-0da9-0000-000000000000', 'Lumia 1520 (RM-940)']
     // The expansion is: IP address, spaces, GUID, spaces, text name
-    const LINE_TEST = /^([\d\.]+?)\s+([\da-fA-F\-]+?)\s+(.+)$/m;
+    const LINE_TEST = /^([\d\.]+?)\s+([\da-fA-F\-]+?)\s+(.+)$/m; // eslint-disable-line no-useless-escape
 
     const result = execSync(`"${this.path}" devices`).toString();
     const lines = result.split('\r\n');

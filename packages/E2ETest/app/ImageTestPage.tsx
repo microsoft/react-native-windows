@@ -83,7 +83,7 @@ export function ImageTestPage() {
     if (imageWithBorder) {
       return 'ImageWithBorder';
     }
-    if (clickCount == 0) {
+    if (clickCount === 0) {
       return 'ImageWithoutBorder';
     }
     return 'ImageWithoutBorder-Subsequent';

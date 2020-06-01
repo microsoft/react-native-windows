@@ -12,7 +12,7 @@ function getMetadata(specPath) {
   const contents = fs.readFileSync(specPath);
   const metadataTag = '// @metadata ';
   const metadataStart = contents.indexOf(metadataTag);
-  if (metadataStart != -1) {
+  if (metadataStart !== -1) {
     let metadata = contents
       .toString()
       .substr(metadataStart + metadataTag.length)
@@ -24,7 +24,7 @@ function getMetadata(specPath) {
 
 const filters = {
   SkipCI: specPath => {
-    return process.env.BUILD_QUEUEDBY == 'GitHub';
+    return process.env.BUILD_QUEUEDBY === 'GitHub';
   },
 };
 
@@ -64,7 +64,7 @@ function ensureRunningInHyperV() {
     const answer = prompt(
       'E2ETest is meant to be run in a HyperV VM. Continue? (Y/N)'
     );
-    if (answer.toUpperCase() != 'Y') {
+    if (answer.toUpperCase() !== 'Y') {
       process.exit(0);
     }
   }
@@ -77,6 +77,7 @@ const wdio = new Launcher('wdio.conf.js', { specs: opts });
 function parseLog(logfile) {
   const xmlString = fs.readFileSync(logfile);
   let failures = {};
+  // eslint-disable-next-line handle-callback-err
   parser.parseString(xmlString, (err, res) => {
     if (!res.testsuites) {
       console.error(`Something went wrong processing file ${logfile}`);
@@ -112,7 +113,7 @@ function parseLogs() {
   const logs = fs.readdirSync(reportsDir).filter(x => x.endsWith('.log'));
   const names = logs
     .map(x => parseLog(path.join(reportsDir, x)))
-    .filter(x => x != null && x != '');
+    .filter(x => x !== null && x !== '');
   return names;
 }
 

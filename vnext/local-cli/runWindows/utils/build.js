@@ -120,9 +120,9 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
 
 function getSolutionFile(options) {
   const solutions = glob.sync(path.join(options.root, 'windows/*.sln'));
-  if (solutions.length == 0) {
+  if (solutions.length === 0) {
     return null;
-  } else if (solutions.length == 1) {
+  } else if (solutions.length === 1) {
     return solutions[0];
   } else {
     console.log(chalk.red('More than one solution file found:'));
