@@ -4,7 +4,7 @@ Playground is a sample standalone application that allows testing of various JS 
 
 ## Launching the app
 
-1. Make sure your development machine has been set up with all the system requirements and dependencies mentioned [here](https://github.com/microsoft/react-native-windows/blob/master/vnext/docs/GettingStarted.md). Make sure a browser is launched and running.
+1. Make sure your development machine has been set up with all the system requirements and dependencies mentioned [here](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies). Make sure a browser is launched and running.
 
 1. Install Packages with-in the repo
 

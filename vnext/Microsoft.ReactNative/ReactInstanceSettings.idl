@@ -3,6 +3,7 @@
 
 import "IReactDispatcher.idl";
 import "IReactNotificationService.idl";
+import "IReactPackageProvider.idl";
 import "IReactPropertyBag.idl";
 import "RedBoxHandler.idl";
 
@@ -15,6 +16,7 @@ namespace Microsoft.ReactNative {
 
     IReactPropertyBag Properties { get; };
     IReactNotificationService Notifications { get; };
+    IVector<IReactPackageProvider> PackageProviders { get; };
     Boolean UseDeveloperSupport { get; set; };
     String JavaScriptMainModuleName { get; set; };
     String JavaScriptBundleFile { get; set; };

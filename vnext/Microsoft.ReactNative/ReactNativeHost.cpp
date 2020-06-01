@@ -8,10 +8,12 @@
 #include "ReactPackageBuilder.h"
 #include "RedBox.h"
 
+#include <future/futureWinRT.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include "ReactInstanceSettings.h"
 
 using namespace winrt;
+using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 #ifndef CORE_ABI
@@ -31,15 +33,7 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
 }
 
 IVector<IReactPackageProvider> ReactNativeHost::PackageProviders() noexcept {
-  if (!m_packageProviders) {
-    m_packageProviders = single_threaded_vector<IReactPackageProvider>();
-  }
-
-  return m_packageProviders;
-}
-
-void ReactNativeHost::PackageProviders(IVector<IReactPackageProvider> const &value) noexcept {
-  m_packageProviders = value;
+  return InstanceSettings().PackageProviders();
 }
 
 ReactNative::ReactInstanceSettings ReactNativeHost::InstanceSettings() noexcept {
@@ -54,7 +48,11 @@ void ReactNativeHost::InstanceSettings(ReactNative::ReactInstanceSettings const 
   m_instanceSettings = value;
 }
 
-void ReactNativeHost::ReloadInstance() noexcept {
+IAsyncAction ReactNativeHost::LoadInstance() noexcept {
+  return ReloadInstance();
+}
+
+IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
@@ -63,8 +61,8 @@ void ReactNativeHost::ReloadInstance() noexcept {
   if (!m_packageBuilder) {
     m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
 
-    if (m_packageProviders) {
-      for (auto const &packageProvider : m_packageProviders) {
+    if (auto packageProviders = InstanceSettings().PackageProviders()) {
+      for (auto const &packageProvider : packageProviders) {
         packageProvider.CreatePackage(m_packageBuilder);
       }
     }
@@ -128,11 +126,15 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.Identity = jsBundleFile;
 
-  m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions));
+  return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
 #else
   // Core ABI work needed
-  assert(false);
+  VerifyElseCrash(false);
 #endif
+}
+
+IAsyncAction ReactNativeHost::UnloadInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_reactHost->UnloadInstance());
 }
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {

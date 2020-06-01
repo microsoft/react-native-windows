@@ -14,9 +14,11 @@ namespace Microsoft.ReactNative {
   runtimeclass ReactNativeHost {
     ReactNativeHost();
 
-    IVector<IReactPackageProvider> PackageProviders { get; set; };
+    IVector<IReactPackageProvider> PackageProviders { get; };
     ReactInstanceSettings InstanceSettings { get; set; };
 
-    void ReloadInstance();
+    Windows.Foundation.IAsyncAction LoadInstance();
+    Windows.Foundation.IAsyncAction ReloadInstance();
+    Windows.Foundation.IAsyncAction UnloadInstance();
   }
 } // namespace Microsoft.ReactNative

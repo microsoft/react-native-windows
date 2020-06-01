@@ -19,6 +19,8 @@ using std::move;
 using std::string;
 using std::unique_ptr;
 
+// None of these tests are runnable
+#if 0
 TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncSucceeds) END_TEST_METHOD_ATTRIBUTE() TEST_METHOD(ConnectAsyncSucceeds) {
     auto jsThread = make_shared<TestMessageQueueThread>();
@@ -117,3 +119,4 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
     Assert::AreNotEqual({}, errorMessage);
   }
 };
+#endif
