@@ -66,7 +66,8 @@ export async function promptForOverrideDetails(): Promise<
           short: 'Patch',
         },
         {
-          name: 'Independent platform logic       (E.g. Windows-specific modules)',
+          name:
+            'Independent platform logic       (E.g. Windows-specific modules)',
           value: 'platform',
           short: 'Platform',
         },
@@ -111,7 +112,6 @@ function filterIssueNumber(answer: string): number | string {
 
 function validateIssueNumber(answer: string): boolean | string {
   return (
-    Number.isInteger(Number.parseInt(answer, 10)) ||
-    'Issue must be a number'
+    Number.isInteger(Number.parseInt(answer, 10)) || 'Issue must be a number'
   );
 }
