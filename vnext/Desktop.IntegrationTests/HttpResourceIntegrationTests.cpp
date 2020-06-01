@@ -18,7 +18,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   // This test always fails because the requested resource does not exist.
-  //TEST_METHOD(RequestGetSucceeds) {
+  // TEST_METHOD(RequestGetSucceeds) {
   void Disable_RequestGetSucceeds() {
     auto rc = IHttpResource::Make();
     bool sent = false;
