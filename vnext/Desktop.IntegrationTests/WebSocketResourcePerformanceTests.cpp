@@ -23,6 +23,8 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
+// None of these tests are runnable
+#if 0
 TEST_CLASS (WebSocketResourcePerformanceTest) {
   // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
   int32_t GetCurrentThreadCount() {
@@ -128,3 +130,4 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
   }
 };
+#endif

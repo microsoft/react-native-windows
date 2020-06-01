@@ -11,6 +11,7 @@
 #include <cxxreact/ReactMarker.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
+#include <filesystem>
 #include "OInstance.h"
 #include "Unicode.h"
 
@@ -58,6 +59,8 @@
 // Type only available in Desktop.
 using Microsoft::React::WebSocketModule;
 #endif
+
+namespace fs = std::filesystem;
 
 // forward declaration.
 namespace facebook::react::tracing {
@@ -544,7 +547,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
 
 #else
-      std::string bundlePath = m_devSettings->bundleRootPath + jsBundleRelativePath + ".bundle";
+      std::string bundlePath =
+          (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
 
       auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);

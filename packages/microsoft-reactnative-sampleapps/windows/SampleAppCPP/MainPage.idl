@@ -1,5 +1,7 @@
-namespace SampleAppCpp
-{
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace SampleAppCpp {
     [default_interface]
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
     {

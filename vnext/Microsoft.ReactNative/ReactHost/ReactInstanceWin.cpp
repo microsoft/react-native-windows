@@ -96,19 +96,13 @@ IReactNotificationService ReactContext::Notifications() noexcept {
 
 void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
-    if (instance->State() == ReactInstanceState::Loaded) {
-      if (auto fbInstance = instance->GetInnerInstance()) {
-        fbInstance->callJSFunction(std::move(module), std::move(method), std::move(params));
-      }
-    }
+    instance->CallJsFunction(std::move(module), std::move(method), std::move(params));
   }
 }
 
 void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
-    if (instance->State() == ReactInstanceState::Loaded) {
-      instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
-    }
+    instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
   }
 }
 
@@ -412,6 +406,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
           instanceWrapper->loadBundleSync(Mso::Copy(options.Identity));
         } catch (...) {
           strongThis->m_state = ReactInstanceState::HasError;
+          strongThis->AbandonJSCallQueue();
           strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
           return;
         }
@@ -431,8 +426,10 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
           strongThis->m_isLoaded = true;
           if (!errorCode) {
             strongThis->m_state = ReactInstanceState::Loaded;
+            strongThis->DrainJSCallQueue();
           } else {
             strongThis->m_state = ReactInstanceState::HasError;
+            strongThis->AbandonJSCallQueue();
           }
 
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
@@ -455,6 +452,8 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   }
 
   m_isDestroyed = true;
+  m_state = ReactInstanceState::Unloaded;
+  AbandonJSCallQueue();
 
   if (!m_isLoaded) {
     OnReactInstanceLoaded(Mso::CancellationErrorProvider().MakeErrorCode(true));
@@ -624,6 +623,7 @@ std::function<void(std::string)> ReactInstanceWin::GetErrorCallback() noexcept {
 
 void ReactInstanceWin::OnErrorWithMessage(const std::string &errorMessage) noexcept {
   m_state = ReactInstanceState::HasError;
+  AbandonJSCallQueue();
 
   if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
     ErrorInfo errorInfo;
@@ -677,12 +677,54 @@ void ReactInstanceWin::OnDebuggerAttach() noexcept {
   m_updateUI();
 }
 
+void ReactInstanceWin::DrainJSCallQueue() noexcept {
+  // Handle all items in the queue one by one.
+  for (;;) {
+    JSCallEntry entry; // To avoid callJSFunction under the lock
+    {
+      std::scoped_lock lock{m_mutex};
+      if (m_state == ReactInstanceState::Loaded && !m_jsCallQueue.empty()) {
+        entry = std::move(m_jsCallQueue.front());
+        m_jsCallQueue.pop_front();
+      } else {
+        break;
+      }
+    }
+
+    if (auto instance = m_instance.LoadWithLock()) {
+      instance->callJSFunction(std::move(entry.ModuleName), std::move(entry.MethodName), std::move(entry.Args));
+    }
+  }
+}
+
+void ReactInstanceWin::AbandonJSCallQueue() noexcept {
+  std::deque<JSCallEntry> jsCallQueue; // To avoid destruction under the lock
+  {
+    std::scoped_lock lock{m_mutex};
+    if (m_state == ReactInstanceState::HasError || m_state == ReactInstanceState::Unloaded) {
+      jsCallQueue = std::move(m_jsCallQueue);
+    }
+  }
+}
+
 void ReactInstanceWin::CallJsFunction(
     std::string &&moduleName,
     std::string &&method,
     folly::dynamic &&params) noexcept {
-  // callJSFunction can be called from any thread. The native bridge will post the call to the right queue internally.
-  if (m_state == ReactInstanceState::Loaded) {
+  bool shouldCall{false}; // To call callJSFunction outside of lock
+  {
+    std::scoped_lock lock{m_mutex};
+    if (m_state == ReactInstanceState::Loaded && m_jsCallQueue.empty()) {
+      shouldCall = true;
+    } else if (
+        m_state == ReactInstanceState::Loading || m_state == ReactInstanceState::WaitingForDebugger ||
+        (m_state == ReactInstanceState::Loaded && !m_jsCallQueue.empty())) {
+      m_jsCallQueue.push_back(JSCallEntry{std::move(moduleName), std::move(method), std::move(params)});
+    }
+    // otherwise ignore the call
+  }
+
+  if (shouldCall) {
     if (auto instance = m_instance.LoadWithLock()) {
       instance->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
     }
@@ -690,11 +732,8 @@ void ReactInstanceWin::CallJsFunction(
 }
 
 void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
-  if (m_state == ReactInstanceState::Loaded) {
-    if (auto instance = m_instanceWrapper.LoadWithLock()) {
-      instance->DispatchEvent(viewTag, eventName, std::move(eventData));
-    }
-  }
+  folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
+  CallJsFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }
 
 facebook::react::INativeUIManager *ReactInstanceWin::NativeUIManager() noexcept {

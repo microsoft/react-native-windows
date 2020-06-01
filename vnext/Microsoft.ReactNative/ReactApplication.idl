@@ -12,7 +12,7 @@ namespace Microsoft.ReactNative {
     ReactApplication();
 
     ReactInstanceSettings InstanceSettings { get; set; };
-    IVector<IReactPackageProvider> PackageProviders { get; set; };
+    IVector<IReactPackageProvider> PackageProviders { get; };
     ReactNativeHost Host { get; };
 
     Boolean UseDeveloperSupport { get; set; };
