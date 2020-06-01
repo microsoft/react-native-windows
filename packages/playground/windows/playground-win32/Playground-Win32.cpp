@@ -73,8 +73,6 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-      m_packageProviders;
 
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
@@ -94,7 +92,6 @@ struct WindowData {
     if (!m_host) {
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
-      m_host.PackageProviders(PackageProviders());
     }
 
     return m_host;
@@ -105,15 +102,6 @@ struct WindowData {
     }
 
     return m_instanceSettings;
-  }
-
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-  PackageProviders() noexcept {
-    if (!m_packageProviders) {
-      m_packageProviders = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>();
-    }
-
-    return m_packageProviders;
   }
 
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {

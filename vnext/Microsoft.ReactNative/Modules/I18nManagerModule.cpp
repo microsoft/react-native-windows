@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "I18nManagerModule.h"
 #include <IReactDispatcher.h>
+#include <XamlUtils.h>
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <winrt/Windows.Globalization.h>
 #include "Unicode.h"
@@ -26,11 +27,14 @@ static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
 }
 
 void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  auto layoutDirection =
-      winrt::Windows::ApplicationModel::Resources::Core::ResourceContext().GetForCurrentView().QualifierValues().Lookup(
-          L"LayoutDirection");
+  if (xaml::TryGetCurrentApplication()) {
+    auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
+                               .GetForCurrentView()
+                               .QualifierValues()
+                               .Lookup(L"LayoutDirection");
 
-  propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+    propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+  }
 }
 
 /*static*/ bool I18nManager::IsRTL(const React::ReactPropertyBag &propertyBag) noexcept {

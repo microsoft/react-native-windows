@@ -2,12 +2,18 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
 #include "App.h"
-#include "ReactPackageProvider.h"
-#include "ReactPropertyBag.h"
-#include "winrt/SampleLibraryCS.h"
-#include "winrt/SampleLibraryCpp.h"
+#include <CppWinRTIncludes.h>
+#include <ReactPackageProvider.h>
+#include <ReactPropertyBag.h>
+#include <winrt/SampleLibraryCS.h>
+#include <winrt/SampleLibraryCpp.h>
+
+using namespace winrt;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace Windows::ApplicationModel;
+using namespace Windows::ApplicationModel::Activation;
 
 namespace winrt::SampleAppCpp::implementation {
 
@@ -41,6 +47,17 @@ App::App() noexcept {
   PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());
 
   InitializeComponent();
+}
+
+/// <summary>
+/// Invoked when the application is launched normally by the end user.  Other entry points
+/// will be used such as when the application is launched to open a specific file.
+/// </summary>
+/// <param name="e">Details about the launch request and process.</param>
+void App::OnLaunched(LaunchActivatedEventArgs const &e) {
+  super::OnLaunched(e);
+  Frame rootFrame = Window::Current().Content().as<Frame>();
+  rootFrame.Navigate(xaml_typename<MainPage>(), box_value(e.Arguments()));
 }
 
 } // namespace winrt::SampleAppCpp::implementation

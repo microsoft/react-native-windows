@@ -35,7 +35,7 @@ export class BasePage {
     );
   }
 
-  getTreeDumpResult() {
+  getTreeDumpResult(): boolean {
     var testResult = false;
     const maxWait = 20;
     var waitCount = 1;

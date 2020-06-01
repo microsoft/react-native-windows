@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes CLI C# app not deploying",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-28T20:03:51.458Z"
-}
