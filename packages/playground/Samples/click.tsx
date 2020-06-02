@@ -31,14 +31,14 @@ export default class Bootstrap extends React.Component {
         {...{
           // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
           onClick: this.onLargeIncrement,
-          acceptsKeyboardFocus: true,
+          focusable: true,
         }}>
         <TouchableHighlight
           style={{backgroundColor: 'orange', margin: 15}}
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             onPress: this.onMediumIncrement,
-            acceptsKeyboardFocus: true,
+            focusable: true,
           }}>
           <TouchableHighlight
             style={{backgroundColor: 'azure', margin: 15}}

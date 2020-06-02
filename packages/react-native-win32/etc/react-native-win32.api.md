@@ -325,7 +325,7 @@ export interface IViewWin32 {
 //
 // @public
 export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
-    // (undocumented)
+    // @deprecated (undocumented)
     acceptsKeyboardFocus?: boolean;
     // (undocumented)
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
@@ -342,6 +342,8 @@ export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes
     children?: React_2.ReactNode;
     // (undocumented)
     cursor?: Cursor;
+    // (undocumented)
+    focusable?: boolean;
     // (undocumented)
     keyDownEvents?: IHandledKeyboardEvent[];
     // (undocumented)

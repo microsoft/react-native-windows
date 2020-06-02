@@ -42,10 +42,10 @@ const AnnotationExample: React.FunctionComponent = props => {
   return (
     <ViewWin32
       accessible
-      acceptsKeyboardFocus
       accessibilityAnnotation={{ typeID: 'Comment', author: 'Krystal Siler', dateTime: '7/19/2019 1:03 PM' }}
       accessibilityLabel="Test accessibility label"
       accessibilityHint="Test accessibility hint"
+      focusable
       style={styles.box}
     >
       <Text>Comment.</Text>
@@ -68,11 +68,11 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
         <TouchableHighlight onPress={this._onPress} underlayColor={'transparent'}>
           <ViewWin32
             accessible
-            acceptsKeyboardFocus
             accessibilityLabel={'Test accessibility label'}
             accessibilityRole="button"
             accessibilityActions={[{ name: 'Expand' }, { name: 'Collapse' }]}
             accessibilityState={{expanded: this.state.expanded}}
+            focusable
             onAccessibilityAction={this._onAccessibilityAction}
             style={this.state.hasFocus ? [styles.box, styles.border] : styles.box}
             onFocus={this._onFocus}
@@ -213,13 +213,13 @@ const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentPro
     <TouchableHighlight onPress={_onPress} underlayColor={'transparent'}>
       <ViewWin32
         accessible
-        acceptsKeyboardFocus
         accessibilityLevel={props.level}
         accessibilityPositionInSet={props.position}
         accessibilitySetSize={props.size}
         accessibilityActions={[{ name: 'AddToSelection' }, { name: 'RemoveFromSelection' }]}
         accessibilityRole="tab"
         accessibilityState={{selected: props.isSelected}}
+        focusable
         style={props.isSelected ? [styles.box, { backgroundColor: props.color }] : styles.box}
         onAccessibilityAction={_onAccessibilityAction}
         onAccessibilityTap={_onPress}
@@ -272,12 +272,12 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
     return (
       <ViewWin32
         accessible
-        acceptsKeyboardFocus
         accessibilityLabel={this.props.label}
         accessibilityRole="treeitem"
         accessibilityLevel={this.props.level}
         accessibilitySetSize={this.props.setSize}
         accessibilityPositionInSet={this.props.positionInSet}
+        focusable
         style={this.state.hasFocus ? [styles.box, styles.border] : styles.box}
         onFocus={this._onFocus}
         onBlur={this._onBlur}
@@ -323,7 +323,7 @@ interface IFlatListProps {
 
 const FlatListExample: React.FunctionComponent<IFlatListProps> = props => {
   return (
-    <ViewWin32 accessible acceptsKeyboardFocus accessibilityRole="tree">
+    <ViewWin32 accessible accessibilityRole="tree" focusable>
       <FlatList data={generateList(4)} renderItem={props.renderItem} keyExtractor={props.keyExtractor} />
     </ViewWin32>
   );

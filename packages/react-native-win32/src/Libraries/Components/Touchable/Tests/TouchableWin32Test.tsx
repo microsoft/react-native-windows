@@ -93,7 +93,7 @@ class TouchableWin32WithoutFeedback extends React.Component<ITouchableWin32Witho
   public render() {
     return (
       <TouchableWin32
-        acceptsKeyboardFocus
+        focusable
         rejectResponderTermination={true}
         disabled={false}
         touchableHandleActivePressIn={this._touchableHandleActivePressIn}
@@ -197,7 +197,7 @@ class TouchableWin32Highlight extends React.Component<ITouchableWin32HighlightPr
   public render() {
     return (
       <TouchableWin32
-        acceptsKeyboardFocus
+        focusable
         rejectResponderTermination={this.props.rejectResponderTermination}
         disabled={false}
         touchableHandleActivePressIn={this._touchableHandleActivePressIn}
