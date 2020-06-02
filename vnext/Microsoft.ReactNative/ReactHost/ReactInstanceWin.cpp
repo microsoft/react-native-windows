@@ -752,7 +752,7 @@ std::shared_ptr<react::uwp::IReactInstance> ReactInstanceWin::UwpReactInstance()
   return m_legacyInstance;
 }
 
-bool ReactInstanceWin::IsLoaded() noexcept {
+bool ReactInstanceWin::IsLoaded() const noexcept {
   return m_state == ReactInstanceState::Loaded;
 }
 

@@ -114,7 +114,7 @@ struct IReactInstance {
 
   virtual const ReactInstanceSettings &GetReactInstanceSettings() const = 0;
 
-  virtual bool IsLoaded() noexcept = 0;
+  virtual bool IsLoaded() const noexcept = 0;
 };
 
 } // namespace uwp

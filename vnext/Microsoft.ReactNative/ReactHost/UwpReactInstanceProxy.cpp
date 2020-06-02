@@ -144,7 +144,7 @@ std::string UwpReactInstanceProxy::GetBundleRootPath() const noexcept {
   return "";
 }
 
-bool UwpReactInstanceProxy::IsLoaded() noexcept {
+bool UwpReactInstanceProxy::IsLoaded() const noexcept {
   if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
     return query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance).IsLoaded();
   }

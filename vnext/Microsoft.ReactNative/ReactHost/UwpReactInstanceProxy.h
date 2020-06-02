@@ -51,7 +51,7 @@ struct UwpReactInstanceProxy : IReactInstance, std::enable_shared_from_this<UwpR
   ExpressionAnimationStore &GetExpressionAnimationStore() override;
   const ReactInstanceSettings &GetReactInstanceSettings() const override;
   std::string GetBundleRootPath() const noexcept override;
-  bool IsLoaded() noexcept override;
+  bool IsLoaded() const noexcept override;
 
   // Test hooks
   void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
