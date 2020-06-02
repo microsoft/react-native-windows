@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "App.h"
+#include "AutolinkedNativeModules.g.h"
 #include "ReactPackageProvider.h"
 
 // clang-format off
