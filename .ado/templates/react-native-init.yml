@@ -52,11 +52,6 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
-  - task: CmdLine@2
-    displayName: Install react-native cli
-    inputs:
-      script: npm install -g react-native-cli
-
   - task: DownloadBuildArtifacts@0
     displayName: 'Download TestMSRNNuget Artifact'
     inputs:
@@ -64,10 +59,11 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
+  # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: react-native init testcli --version ${{ parameters.version }}
+      script: npx react-native init testcli --npm --version ${{ parameters.version }}
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
