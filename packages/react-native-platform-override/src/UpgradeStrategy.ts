@@ -12,7 +12,7 @@ export interface UpgradeResult {
   hasConflicts: boolean;
 }
 
-export interface UpgradeStrategy {
+export default interface UpgradeStrategy {
   upgrade(
     reactRepo: GitReactFileRepository,
     overrideRepo: OverrideFileRepository,

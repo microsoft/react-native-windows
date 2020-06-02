@@ -8,18 +8,18 @@
 import * as Serialized from './Serialized';
 import * as path from 'path';
 
-import {UpgradeStrategies, UpgradeStrategy} from './UpgradeStrategy';
-import {ValidationStrategies, ValidationStrategy} from './ValidationStrategy';
+import UpgradeStrategy, {UpgradeStrategies} from './UpgradeStrategy';
+import ValidationStrategy, {ValidationStrategies} from './ValidationStrategy';
 import OverrideFactory from './OverrideFactory';
 
 export default interface Override {
   name(): string;
-  includesOverrideFile(filename: string): boolean;
+  includesFile(filename: string): boolean;
   serialize(): Serialized.Override;
   createUpdated(factory: OverrideFactory): Promise<Override>;
   upgradeStrategy(): UpgradeStrategy;
   validationStrategies(): ValidationStrategy[];
-};
+}
 
 export class PlatformOverride implements Override {
   private overrideFile: string;
@@ -42,7 +42,7 @@ export class PlatformOverride implements Override {
     return this.overrideFile;
   }
 
-  includesOverrideFile(filename: string): boolean {
+  includesFile(filename: string): boolean {
     return filename === this.overrideFile;
   }
 
@@ -84,7 +84,7 @@ abstract class BaseFileOverride implements Override {
     return this.overrideFile;
   }
 
-  includesOverrideFile(filename: string): boolean {
+  includesFile(filename: string): boolean {
     return filename === this.overrideFile;
   }
 

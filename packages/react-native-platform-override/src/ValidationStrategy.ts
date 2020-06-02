@@ -25,7 +25,7 @@ export interface ValidationError {
   overrideName: string;
 }
 
-export interface ValidationStrategy {
+export default interface ValidationStrategy {
   validate(
     overrideRepo: OverrideFileRepository,
     reactRepo: ReactFileRepository,

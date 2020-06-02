@@ -19,7 +19,8 @@ import {getNpmPackage} from './PackageUtils';
 const RN_COMMIT_ENDPOINT =
   'https://api.github.com/repos/facebook/react-native/commits';
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
-const DEFAULT_DIR = path.join(os.tmpdir(), getNpmPackage().name, 'git');
+
+const defaultDir = path.join(os.tmpdir(), getNpmPackage().name, 'git');
 
 /**
  * Retrives React Native files using the React Native Github repo. Switching
@@ -43,7 +44,7 @@ export default class GitReactFileRepository
   }
 
   static async createAndInit(
-    gitDirectory: string = DEFAULT_DIR,
+    gitDirectory: string = defaultDir,
   ): Promise<GitReactFileRepository> {
     await fs.promises.mkdir(gitDirectory, {recursive: true});
 

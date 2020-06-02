@@ -22,6 +22,11 @@ export default class Manifest {
   private overrides: Array<Override>;
 
   constructor(overrides: Array<Override>) {
+    const uniquelyNamed = _.uniqBy(overrides, ovr => ovr.name());
+    if (uniquelyNamed.length !== overrides.length) {
+      throw new Error('Cannot construct a manifest with duplicate overrides');
+    }
+
     this.overrides = _.cloneDeep(overrides);
   }
 
@@ -43,18 +48,18 @@ export default class Manifest {
 
     const overrideFiles = await overrideRepo.listFiles();
     const missingFromManifest = overrideFiles.filter(
-      file => !this.overrides.some(manOvr => manOvr.includesOverrideFile(file)),
+      file => !this.overrides.some(manOvr => manOvr.includesFile(file)),
     );
 
     for (const missingFile of missingFromManifest) {
       errors.push({type: 'missingFromManifest', overrideName: missingFile});
     }
 
-    const overrideValidationStrats = _.flatMap(this.overrides, ovr =>
+    const validationTasks = _.flatMap(this.overrides, ovr =>
       ovr.validationStrategies(),
     );
 
-    for (const strat of overrideValidationStrats) {
+    for (const strat of validationTasks) {
       errors.push(...(await strat.validate(overrideRepo, reactRepo)));
     }
 
@@ -65,6 +70,10 @@ export default class Manifest {
    * Add an override to the manifest
    */
   addOverride(override: Override) {
+    if (this.hasOverride(override.name())) {
+      throw new Error(`Trying to add duplicate override '${override.name()}'`);
+    }
+
     this.overrides.push(override);
   }
 

@@ -37,7 +37,7 @@ export default interface OverrideFactory {
     baseFile: string,
     issue: number | 'LEGACY_FIXME',
   ): Promise<PatchOverride>;
-};
+}
 
 export class OverrideFactoryImpl implements OverrideFactory {
   private reactRepo: ReactFileRepository;
