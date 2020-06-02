@@ -8,7 +8,7 @@
 
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
-const { newError, newInfo } = require('./utils/commandWithProgress');
+const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
@@ -85,7 +85,7 @@ async function runWindows(config, args, options) {
     } catch (e) {
       newError(
         `Build failed with message ${
-        e.message
+          e.message
         }. Check your build configuration.`,
       );
       if (e.logfile) {

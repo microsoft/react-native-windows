@@ -341,11 +341,9 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: Upload build logs
         condition:  succeededOrFailed()
-        timeoutInMinutes: 10
         inputs:    
-          targetPath: '$(BuildLogDirectory)'
+          pathtoPublish: '$(BuildLogDirectory)'
           artifactName: 'Build logs - $(Agent.JobName)' 
-          publishLocation: 'Container'
 
   - job: RNWDesktopPR
     displayName: Desktop PR

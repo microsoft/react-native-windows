@@ -6,7 +6,7 @@
 // @ts-check
 'use strict';
 
-const { spawn, execSync } = require('child_process');
+const {spawn, execSync} = require('child_process');
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
@@ -51,7 +51,7 @@ function getAppPackage(options) {
 
   const appPackageGlob = `${
     options.root
-    }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+  }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
   let appPackage = glob.sync(appPackageGlob)[0];
 
   if (!appPackage && options.release) {
@@ -63,7 +63,7 @@ function getAppPackage(options) {
     const rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
     const newGlob = `${rootGlob}/*_${
       options.arch === 'x86' ? 'Win32' : options.arch
-      }_${options.release ? '' : 'Debug_'}Test`;
+    }_${options.release ? '' : 'Debug_'}Test`;
 
     const result = glob.sync(newGlob);
     if (result.length > 1) {
@@ -97,15 +97,15 @@ function getAppxManifestPath(options) {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
-    }/${configuration},${configuration}/*,target/${
+  }/${configuration},${configuration}/*,target/${
     options.arch
-    }/${configuration}}/AppxManifest.xml`;
+  }/${configuration}}/AppxManifest.xml`;
   const appxPath = glob.sync(path.join(options.root, appxManifestGlob))[0];
 
   if (!appxPath) {
     throw new Error(
       `Unable to find AppxManifest from "${
-      options.root
+        options.root
       }", using search path: "${appxManifestGlob}" `,
     );
   }
@@ -135,12 +135,12 @@ async function deployToDevice(options, verbose) {
   const deployTarget = options.target
     ? options.target
     : options.emulator
-      ? 'emulator'
-      : 'device';
+    ? 'emulator'
+    : 'device';
   const deployTool = new WinAppDeployTool();
   const appxManifest = getAppxManifest(options);
   const shouldLaunch = shouldLaunchApp(options);
-  const identity = appxManifest.root.children.filter(function (x) {
+  const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'mp:PhoneIdentity';
   })[0];
   const appName = identity.attributes.PhoneProductId;
@@ -182,7 +182,7 @@ async function deployToDesktop(options, verbose, slnFile) {
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options);
   const appxManifest = parseAppxManifest(appxManifestPath);
-  const identity = appxManifest.root.children.filter(function (x) {
+  const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'Identity';
   })[0];
   const appName = identity.attributes.Name;
@@ -258,7 +258,7 @@ async function deployToDesktop(options, verbose, slnFile) {
       slnFile,
       options.release ? 'Release' : 'Debug',
       options.arch,
-      { DeployLayout: true },
+      {DeployLayout: true},
       options.verbose,
       'Deploy',
       options.buildLogDirectory,

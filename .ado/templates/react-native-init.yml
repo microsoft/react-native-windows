@@ -8,7 +8,6 @@ parameters:
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
-  BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -121,25 +120,23 @@ steps:
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(BuildLogDirectory) --release
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs --release
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(BuildLogDirectory)
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - task: PublishBuildArtifacts@1
     displayName: Upload build logs
     condition:  succeededOrFailed()
-    timeoutInMinutes: 10
     inputs:    
-      targetPath: '$(BuildLogDirectory)'
+      pathtoPublish: '$(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs'
       artifactName: 'Build logs - $(Agent.JobName)' 
-      publishLocation: 'Container'
 
   - task: CmdLine@2
     displayName: Create bundle testcli
