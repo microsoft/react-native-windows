@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.82",
+      "version": "0.0.0-master.82",
+      "comments": {
+        "none": [
+          {
+            "comment": "Share property bag ABI implementation and tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "84a6ba464303f7f4eef1877c248959d90cb7bf62",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Latest CELA open source policy is to not include All right reserved",
+            "author": "acoates@microsoft.com",
+            "commit": "3f17d742ee5045994fda3f10d2a489bde71659e3",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enable ReactNativeHost integration test",
+            "author": "vmorozov@microsoft.com",
+            "commit": "80d1a4064b3eaf5ba1125b0d28cd3b7a292bb43c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Jun 2020 00:05:31 GMT",
       "tag": "react-native-windows_v0.0.0-master.81",
       "version": "0.0.0-master.81",

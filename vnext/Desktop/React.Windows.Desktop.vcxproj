@@ -123,6 +123,7 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManager.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
+    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
@@ -151,7 +152,10 @@
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
@@ -191,6 +195,10 @@
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactInstanceSettings.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactPropertyBag.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
+      <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="Executors\WebSocketJSExecutor.h" />

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -261,6 +261,7 @@ async function deployToDesktop(options, verbose, slnFile) {
       {DeployLayout: true},
       options.verbose,
       'Deploy',
+      options.buildLogDirectory,
     );
   }
 

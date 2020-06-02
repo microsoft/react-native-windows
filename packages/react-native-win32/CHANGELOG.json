@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.16",
+      "version": "0.0.0-master.16",
+      "comments": {
+        "none": [
+          {
+            "comment": "Latest CELA open source policy is to not include All right reserved",
+            "author": "acoates@microsoft.com",
+            "commit": "3f17d742ee5045994fda3f10d2a489bde71659e3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2020 00:06:43 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.15",
       "version": "0.0.0-master.15",
