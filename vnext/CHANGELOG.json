@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Jun 2020 03:06:06 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.9",
+      "version": "0.62.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Work around regression in app packaging in VS 16.5-16.6",
+            "author": "asklar@microsoft.com",
+            "commit": "be634f759b32e6cb25b5cd9c3ea01aa7a45bacb1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed Microsoft.ReactNative build in VS 16.6.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "01495ec79e26db7a29bcde91d53f730bcdb93aea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 May 2020 10:40:41 GMT",
       "tag": "react-native-windows_v0.62.0-preview.8",
       "version": "0.62.0-preview.8",

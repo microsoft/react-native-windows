@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 May 2020 10:40:41 GMT and should not be manually modified.
+This log was last generated on Tue, 02 Jun 2020 03:06:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.9
+
+Tue, 02 Jun 2020 03:06:06 GMT
+
+### Changes
+
+- Work around regression in app packaging in VS 16.5-16.6 (asklar@microsoft.com)
+- Fixed Microsoft.ReactNative build in VS 16.6.0 (vmorozov@microsoft.com)
 
 ## 0.62.0-preview.8
 
