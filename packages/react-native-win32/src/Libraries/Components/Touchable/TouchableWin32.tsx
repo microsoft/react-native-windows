@@ -206,7 +206,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   }
 
   public render() {
-    const { children, style, renderStyle, ...rest } = this.props;
+    const { children, focusRef, style, renderStyle, ...rest } = this.props;
 
     // The React Native touchables generally clone the child component
     // to apply additional styles to it. This approach allows children
@@ -249,6 +249,8 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
         // Key press interactions
         onKeyDown={this._onKeyDown}
         onKeyUp={this._onKeyUp}
+        // Ref
+        ref={focusRef}
         // Style
         style={computedStyle}
       >
@@ -337,11 +339,11 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     const pressRectOffset = this.props.touchableGetPressRectOffset
       ? this.props.touchableGetPressRectOffset()
       : {
-          left: PRESS_EXPAND_DIPS,
-          right: PRESS_EXPAND_DIPS,
-          top: PRESS_EXPAND_DIPS,
-          bottom: PRESS_EXPAND_DIPS,
-        };
+        left: PRESS_EXPAND_DIPS,
+        right: PRESS_EXPAND_DIPS,
+        top: PRESS_EXPAND_DIPS,
+        bottom: PRESS_EXPAND_DIPS,
+      };
 
     let pressExpandLeft = pressRectOffset.left;
     let pressExpandTop = pressRectOffset.top;
@@ -576,7 +578,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
 
   private _onKeyDown = (ev: IKeyboardEvent) => {
     if (this._filterOnKey(ev)) {
-      this.setState({isKeyPressed: true});
+      this.setState({ isKeyPressed: true });
       this.props.touchableHandleKeyPressDown && this.props.touchableHandleKeyPressDown(ev);
     }
 
@@ -585,7 +587,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
 
   private _onKeyUp = (ev: IKeyboardEvent) => {
     if (this._filterOnKey(ev)) {
-      this.setState({isKeyPressed: false});
+      this.setState({ isKeyPressed: false });
       this.props.touchableHandleKeyPress && this.props.touchableHandleKeyPress(ev);
     }
 

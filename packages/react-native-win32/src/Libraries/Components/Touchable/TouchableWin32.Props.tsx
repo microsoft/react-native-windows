@@ -1,6 +1,7 @@
 import { Insets, ViewStyle } from 'react-native';
 
 import { IPressEvent, IRenderChild, IRenderStyle } from './TouchableWin32.Types';
+import { ViewWin32 } from '../View/ViewWin32'
 import { IViewWin32Props, IKeyboardEvent } from '../View/ViewWin32.Props';
 
 export interface ITouchableWin32State {
@@ -40,4 +41,9 @@ export interface ITouchableWin32Props extends IViewWin32Props {
    * will result in onKeyUp and onKeyDown getting fired regardless of filterKeys.
    */
   filterKeys?: (str: string) => boolean;
+  /**
+   * A ref to the internal View.
+   * This allows for imperative focusing of a Touchable
+   */
+  focusRef?: React.RefObject<ViewWin32>
 }
