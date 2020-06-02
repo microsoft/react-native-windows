@@ -459,24 +459,31 @@ namespace Microsoft.ReactNative.Managed
 
     public static void ReadValue<T>(this IJSValueReader reader, out T value)
     {
-      JSValueReaderOf<T>.ReadValue(reader, out value);
+      if (JSValueReaderCodeGen<T>.ReadValue != null)
+      {
+        JSValueReaderCodeGen<T>.ReadValue(reader, out value);
+      }
+      else
+      {
+        JSValueReaderOf<T>.ReadValue(reader, out value);
+      }
     }
 
     public static T ReadValue<T>(this IJSValueReader reader)
     {
-      JSValueReaderOf<T>.ReadValue(reader, out T value);
+      ReadValue<T>(reader, out T value);
+
       return value;
     }
 
     public static void ReadValue<T>(this JSValue jsValue, out T value)
     {
-      JSValueReaderOf<T>.ReadValue(new JSValueTreeReader(jsValue), out value);
+      ReadValue<T>(new JSValueTreeReader(jsValue), out value);
     }
 
     public static T ReadValue<T>(this JSValue jsValue)
     {
-      JSValueReaderOf<T>.ReadValue(new JSValueTreeReader(jsValue), out T value);
-      return value;
+      return ReadValue<T>(new JSValueTreeReader(jsValue));
     }
 
     public static ReadValueDelegate<T> GetReadValueDelegate<T>()
@@ -523,5 +530,10 @@ namespace Microsoft.ReactNative.Managed
   static class JSValueReaderOf<T>
   {
     public static ReadValueDelegate<T> ReadValue = JSValueReader.GetReadValueDelegate<T>();
+  }
+
+  public static class JSValueReaderCodeGen<T>
+  {
+    public static ReadValueDelegate<T> ReadValue { get; set; }
   }
 }

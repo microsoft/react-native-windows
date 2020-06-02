@@ -1,0 +1,1 @@
+moduleBuilder.AddInitializer((global::Microsoft.ReactNative.IReactContext reactContext) => module.MyEvent = (int arg0) => reactContext.EmitJSEvent("MyEmitter", "MyNamedEvent", (writer) => global::Microsoft.ReactNative.Managed.JSValueWriter.WriteArgs(writer, arg0)));

@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- 
+      We have to work around an issue where nugets restore when this project is mixed with uap projects will chose the default version.
+      But when msbuild runs it will chose the LatestVersion resulting in the following error:
+          vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj : error : NETSDK1061: The project was restored using Microsoft.NETCore.App version 2.2.0, but with current settings, version 2.2.8 would be used instead. To resolve this issue, make sure the same settings are used for restore and for subsequent operations such as build or publish. Typically this issue can occur if the RuntimeIdentifier property is set during build or publish but not during restore. For more information, see https://aka.ms/dotnet-runtime-patch-selection.
+      
+      Attemting add an explicit PacakgeReference forcing version 2.2.8 resuls in the following warning that is not suppressable:
+        Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.DefaultItems.targets(257,5): warning NETSDK1023: A PackageReference for 'Microsoft.NETCore.App' was included in your project. This package is implicitly referenced by the .NET SDK and you do not typically need to reference it from your project. For more information, see https://aka.ms/sdkimplicitrefs [Z:\src\r1\vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj]
+
+      This seems to make nuget and msbuild agree with one another on the right version..
+    -->
+    <ImplicitPackageReferenceVersion Remove="Microsoft.NETCore.App" TargetFrameworkVersion="2.2" DefaultVersion="2.2.0" LatestVersion="2.2.8"/>
+    <ImplicitPackageReferenceVersion Include="Microsoft.NETCore.App" TargetFrameworkVersion="2.2" DefaultVersion="2.2.8" LatestVersion="2.2.8"/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Platforms>x64;x86;ARM;ARM64</Platforms>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+
+    <Platform>x64</Platform>
+    <!-- We are a tool, so on all platforms force win-x64 -->
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+    <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      This file is linked because we want to use this to esnure the names of the code we parse line up and gives us compile errors if not.
+      But we don't want to actually link against the Microsfot.ReactNative.Managed assembly becuase then we would have a cyclic dependency
+      to compile-time generate the state for that assembly.
+    -->
+    <Compile Include="..\Microsoft.ReactNative.SharedManaged\ReactAttributes.cs" Link="ReactAttributes.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Humanizer" Version="2.8.11" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.5.0" />
+    <PackageReference Include="RuntimeContracts" Version="0.3.0" />
+  </ItemGroup>
+
+  <!-- 
+    This target is used to ensure the tool is deployed and can be used from source.
+    It will return all deployed files so the caller can implement incrementality properly
+   -->
+  <Target Name="PublishTool" DependsOnTargets="Build;Publish" Returns="@(_PublishToolAllFiles)">
+    <ItemGroup>
+      <_PublishToolAllRelativePaths Include="$(PublishDir)\**" />
+      <_PublishToolAllFiles Include="@(_PublishToolAllRelativePaths->'%(fullpath)')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+    This target returns the location of the deployed executable.
+  -->
+  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="$(_PublishedToolExecutable)">
+    <PropertyGroup>
+      <_PublishedToolExecutable>$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)</_PublishedToolExecutable>
+    </PropertyGroup>
+  </Target>
+
+
+   <!-- Override -->
+  <Target Name="_CheckForMismatchingPlatform">
+
+  </Target>
+
+</Project>
