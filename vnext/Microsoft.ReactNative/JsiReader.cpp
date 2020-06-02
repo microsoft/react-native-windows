@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -61,6 +61,7 @@ bool JsiReader::GetNextObjectProperty(hstring &propertyName) noexcept {
     return true;
   } else {
     m_containers.pop_back();
+    m_currentPrimitiveValue.reset();
     return false;
   }
 }
@@ -81,6 +82,7 @@ bool JsiReader::GetNextArrayItem() noexcept {
     return true;
   } else {
     m_containers.pop_back();
+    m_currentPrimitiveValue.reset();
     return false;
   }
 }

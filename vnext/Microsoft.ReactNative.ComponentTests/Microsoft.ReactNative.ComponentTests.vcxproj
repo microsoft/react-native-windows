@@ -61,6 +61,8 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
+    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\JSI\Shared\JSI.Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -97,13 +99,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
+        USE_EDGEMODE_JSRT;
+        WINRT;
         _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
         RN_PLATFORM=windesktop;
         RN_EXPORT=;
         JSI_EXPORT=;
@@ -111,7 +114,25 @@
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)pch;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(ProjectDir)pch;
+        $(VCInstallDir)UnitTest\include;
+        $(FollyDir);
+        $(JSI_SourcePath);
+        $(ReactNativeDir)ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)ReactCommon\jsi;
+        $(ReactNativeWindowsDir);
+        $(ReactNativeWindowsDir)Common;
+        $(ReactNativeWindowsDir)stubs;
+        $(ReactNativeWindowsDir)include;
+        $(ReactNativeWindowsDir)ReactWindowsCore;
+        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)include\ReactWindowsCore;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(YogaDir);
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
@@ -127,6 +148,7 @@
       -->
       <AdditionalDependencies>
         comsuppw.lib;
+        ChakraRT.lib;
         delayimp.lib;
         Shlwapi.lib;
         Version.lib;
@@ -158,10 +180,13 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ClCompile Include="DynamicReaderTest.cpp" />
+    <ClCompile Include="JsiReaderTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch/pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClInclude Include="CommonReaderTest.h" />
+    <ClInclude Include="pch/pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -170,7 +195,10 @@
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\NoExceptionAttribute.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h" />
+    <ClCompile Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\tracing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Base\FollyIncludes.h" />
@@ -186,9 +214,23 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\DynamicWriter.cpp">
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClCompile>
-    <ClInclude Include="pch/pch.h" />
+    <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiReader.h">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiWriter.h">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiReader.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiWriter.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
     </ProjectReference>

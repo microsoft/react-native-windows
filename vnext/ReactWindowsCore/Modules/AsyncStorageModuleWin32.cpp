@@ -242,7 +242,7 @@ AsyncStorageModuleWin32::~AsyncStorageModuleWin32() {
     // condition_variable for the async task to acknowledge cancellation by
     // nulling out m_action. Once m_action is null, it is safe to proceed
     // wth closing the DB connection
-    winrt::slim_shared_lock_guard guard{m_lock};
+    winrt::slim_lock_guard guard{m_lock};
     swap(tasks, m_tasks);
     if (m_action) {
       m_action.Cancel();

@@ -1,0 +1,5 @@
+steps:
+  - task: CmdLine@2
+    displayName: Yarn install
+    inputs:
+      script: yarn --frozen-lockfile --network-timeout 100000 || yarn --frozen-lockfile --network-timeout 100000 || yarn --frozen-lockfile --network-timeout 150000 || yarn --frozen-lockfile --network-timeout 150000 --network-concurrency 1 || yarn --frozen-lockfile --network-timeout 150000 --network-concurrency 1

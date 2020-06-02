@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -80,6 +80,7 @@ async function runWindows(config, args, options) {
         msBuildProps,
         verbose,
         undefined, // build the default target
+        options.buildLogDirectory,
       );
     } catch (e) {
       newError(
@@ -219,6 +220,11 @@ module.exports = {
       command: '--msbuildprops [string]',
       description:
         'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
+    },
+    {
+      command: '--buildLogDirectory [string]',
+      description:
+        'Optional directory where msbuild log files should be stored',
     },
     {
       command: '--info',

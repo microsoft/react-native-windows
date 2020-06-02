@@ -1,3 +1,5 @@
+<!-- Copyright (c) Microsoft Corporation.
+     Licensed under the MIT License. -->
 <Page
     x:Class="SampleAppCpp.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

@@ -1,12 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
+#include <IUIManager.h>
 #include <Modules/NativeUIManager.h>
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ViewManagerProvider.h>
-#include <ReactWindowsCore/IUIManager.h>
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>

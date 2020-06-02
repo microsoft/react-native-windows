@@ -1,10 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#include "ActivationFactory.h"
 #include "MockReactPackageProvider.h"
 
 using namespace winrt::Microsoft::ReactNative;
@@ -13,10 +12,6 @@ namespace ABITests {
 
 TEST_CLASS (ReactNativeHostTests) {
  public:
-  ReactNativeHostTests() noexcept {
-    winrt_activation_handler = WINRT_RoGetActivationFactory;
-  }
-
   TEST_METHOD(Activation_Succeeds) {
     TestCheckNoThrow(ReactNativeHost{});
   }

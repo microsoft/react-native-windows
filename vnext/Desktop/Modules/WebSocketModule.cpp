@@ -1,13 +1,13 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
 #include <Modules/WebSocketModule.h>
 
+#include <Utils.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#include "../ReactWindowsCore/Utils.h"
 #include "Unicode.h"
 
 using namespace facebook::xplat;

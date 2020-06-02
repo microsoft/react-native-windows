@@ -2,6 +2,182 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.82",
+      "version": "0.0.0-master.82",
+      "comments": {
+        "none": [
+          {
+            "comment": "Share property bag ABI implementation and tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "84a6ba464303f7f4eef1877c248959d90cb7bf62",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Latest CELA open source policy is to not include All right reserved",
+            "author": "acoates@microsoft.com",
+            "commit": "3f17d742ee5045994fda3f10d2a489bde71659e3",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enable ReactNativeHost integration test",
+            "author": "vmorozov@microsoft.com",
+            "commit": "80d1a4064b3eaf5ba1125b0d28cd3b7a292bb43c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Jun 2020 00:05:31 GMT",
+      "tag": "react-native-windows_v0.0.0-master.81",
+      "version": "0.0.0-master.81",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update projects to use shared props/targets",
+            "author": "dannyvv@microsoft.com",
+            "commit": "79a931cc32ebd8adad1a1a5270e3bf1380e9fa22",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 31 May 2020 00:05:21 GMT",
+      "tag": "react-native-windows_v0.0.0-master.80",
+      "version": "0.0.0-master.80",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "blacklist all ProjectImports.zip",
+            "author": "asklar@microsoft.com",
+            "commit": "e2d328a545a2520f760dbd0c782e2da20f0eb355",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "docs CI",
+            "author": "asklar@microsoft.com",
+            "commit": "268025f4161a38eaa4d6fab23304199c188fd3db",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 30 May 2020 00:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-master.79",
+      "version": "0.0.0-master.79",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove references to ReactWindowsCore projects",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ff72d1b4acc9cc82771b5b58a625c987c93d1f8f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add XamlUIService with ElementFromReactTag",
+            "author": "acoates@microsoft.com",
+            "commit": "2809c9a14a68cdbaa4b735b189197b5692af0d53",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes CLI C# app not deploying",
+            "author": "jthysell@microsoft.com",
+            "commit": "22993f9c07e63832b556577778f6d4d935fc84c9",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add test cases for (Dynamic|Jsi)(Reader|Writer)",
+            "author": "zihanc@microsoft.com",
+            "commit": "8bbd689455dbcfd1a2f987952affac71d911cafa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 29 May 2020 00:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-master.78",
+      "version": "0.0.0-master.78",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove unused ABI definitions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "7a7488d3018c0c502ab716967bae1d91ef994109",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update shared props to have csc emit absolute paths on errors and warnings",
+            "author": "dannyvv@microsoft.com",
+            "commit": "74da80803b5229d4456b02ac9ca922b6e69dc9b4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add support for long paths to rnw-dependencies.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "77dea410d745029e451cc5fc087238bdaee549e4",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Build ChakraRuntime in ComponentTests with one test case",
+            "author": "zihanc@microsoft.com",
+            "commit": "77bbf454e4546ec63e6b698846a1da26ca0fd352",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 May 2020 00:05:30 GMT",
+      "tag": "react-native-windows_v0.0.0-master.77",
+      "version": "0.0.0-master.77",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "set up react application to use an app's reactrootview",
+            "author": "asklar@microsoft.com",
+            "commit": "a85f4c8938849faa1f28a561b93229148f43fba3",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "change ABITest project to GoogleTest executable",
+            "author": "aeulitz@microsoft.com",
+            "commit": "c99549b8edacc750d6efa328ea978304daf615e1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create JSI implementation for IJSValueReader and IJSValueWriter",
+            "author": "zihanc@microsoft.com",
+            "commit": "ed809a428f0bace2dc5bfbe9ce86ffe60af03660",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "reg-free WinRT, remove activation factory",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2df8edb4cdfadead41bfcb5d793ba6e1435b11b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "reg-free WinRT, remove activation factory",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2df8edb4cdfadead41bfcb5d793ba6e1435b11b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 May 2020 00:05:42 GMT",
       "tag": "react-native-windows_v0.0.0-master.76",
       "version": "0.0.0-master.76",
