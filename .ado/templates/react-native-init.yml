@@ -8,8 +8,6 @@ parameters:
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
-
-variables:
   BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\BuildLogs
 
 steps:
