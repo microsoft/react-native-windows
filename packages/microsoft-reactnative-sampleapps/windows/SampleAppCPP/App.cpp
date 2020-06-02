@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "App.h"
+
+#include "AutolinkedNativeModules.g.h"
 #include <CppWinRTIncludes.h>
 #include <ReactPackageProvider.h>
 #include <ReactPropertyBag.h>

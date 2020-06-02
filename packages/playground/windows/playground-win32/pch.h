@@ -16,6 +16,4 @@
 
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
-#include "AutolinkedNativeModules.g.h"
-
 #pragma pop_macro("GetCurrentTime")
