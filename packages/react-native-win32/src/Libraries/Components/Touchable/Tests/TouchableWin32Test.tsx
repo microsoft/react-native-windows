@@ -199,6 +199,9 @@ class TouchableWin32Highlight extends React.Component<ITouchableWin32HighlightPr
     return (
       <TouchableWin32
         focusable
+        // there are versions of rex-win32 that do not seem to respect focusable
+        // using the deprecated acceptsKeyboardFocus is a workaround
+        acceptsKeyboardFocus
         rejectResponderTermination={this.props.rejectResponderTermination}
         disabled={false}
         touchableHandleActivePressIn={this._touchableHandleActivePressIn}
@@ -218,6 +221,7 @@ class TouchableWin32Highlight extends React.Component<ITouchableWin32HighlightPr
         onMouseLeave={this._mouseLeave}
         renderStyle={this._generateStyle}
         children={this.props.children}
+        focusRef={this.props.innerRef}
       />
     );
   }
@@ -428,16 +432,20 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
 const TouchableFocusExample = () => {
   const [focused, setFocused] = React.useState(false);
   let focusableRef = React.useRef<ViewWin32>(null);
+
+  // onPress callback
   const focusOnPress = React.useCallback(() => {
     focusableRef.current.focus();
     focused || setFocused(true);
-  }, []);
+  }, [focused]);
+
+  // onFocus and onBlur callbacks
   const onFocus = React.useCallback(() => {
     setFocused(true);
-  }, [])
+  }, []);
   const onBlur = React.useCallback(() => {
     setFocused(false);
-  }, [])
+  }, []);
 
   return (
     <ViewWin32 style={styles.largeContainer}>
