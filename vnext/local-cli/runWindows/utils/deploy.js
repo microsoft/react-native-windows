@@ -261,6 +261,7 @@ async function deployToDesktop(options, verbose, slnFile) {
       {DeployLayout: true},
       options.verbose,
       'Deploy',
+      options.buildLogDirectory,
     );
   }
 
