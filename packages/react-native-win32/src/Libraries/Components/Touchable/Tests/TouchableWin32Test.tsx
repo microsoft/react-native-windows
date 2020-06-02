@@ -1,7 +1,7 @@
 'use strict';
 
 import * as React from 'react';
-import { Insets, NativeSyntheticEvent, StyleSheet, ViewStyle } from 'react-native';
+import { Insets, NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
 
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
@@ -184,6 +184,7 @@ interface ITouchableWin32HighlightProps extends IViewWin32Props {
   rejectResponderTermination?: boolean;
   underlayColor?: string;
   children?: IRenderChild<ITouchableWin32State>;
+  innerRef?: React.RefObject<ViewWin32>
 }
 
 /**
@@ -424,23 +425,61 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
   };
 }
 
+const TouchableFocusExample = () => {
+  const [focused, setFocused] = React.useState(false);
+  let focusableRef = React.useRef<ViewWin32>(null);
+  const focusOnPress = React.useCallback(() => {
+    focusableRef.current.focus();
+    focused || setFocused(true);
+  }, []);
+  const onFocus = React.useCallback(() => {
+    setFocused(true);
+  }, [])
+  const onBlur = React.useCallback(() => {
+    setFocused(false);
+  }, [])
+
+  return (
+    <ViewWin32 style={styles.largeContainer}>
+      <TouchableWin32Highlight onPress={focusOnPress}>
+        <Text>Press me to focus my friend</Text>
+      </TouchableWin32Highlight>
+
+      <TouchableWin32Highlight
+        innerRef={focusableRef}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      >
+        <Text>{'Focused: ' + focused}</Text>
+      </TouchableWin32Highlight>
+    </ViewWin32>
+  );
+}
+
 export const displayName = 'TouchableWin32 Examples';
 export const title = '<TouchableWin32>';
 export const description = 'Demonstration of touchable + focus + hover behavior all in one component';
 
 export const examples = [
-    {
-      title: 'TouchableWithoutFeedback Example',
-      description: 'A simple example implementation of without feedback behavior',
-      render(): JSX.Element {
-        return <TouchableWithoutFeedbackExample />;
-      },
+  {
+    title: 'TouchableWithoutFeedback Example',
+    description: 'A simple example implementation of without feedback behavior',
+    render(): JSX.Element {
+      return <TouchableWithoutFeedbackExample />;
     },
-    {
-      title: 'TouchableHighlight Example',
-      description: 'A simple example implementation of highlight behavior',
-      render(): JSX.Element {
-        return <TouchableHighlightExample />;
-      },
+  },
+  {
+    title: 'TouchableHighlight Example',
+    description: 'A simple example implementation of highlight behavior',
+    render(): JSX.Element {
+      return <TouchableHighlightExample />;
     },
-  ];
+  },
+  {
+    title: 'Imperative Focus on TouchableWin32 Example',
+    description: 'A simple example implementation of imperative focus behavior',
+    render(): JSX.Element {
+      return <TouchableFocusExample />;
+    },
+  }
+];
