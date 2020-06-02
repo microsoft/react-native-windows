@@ -752,6 +752,10 @@ std::shared_ptr<react::uwp::IReactInstance> ReactInstanceWin::UwpReactInstance()
   return m_legacyInstance;
 }
 
+bool ReactInstanceWin::IsLoaded() noexcept {
+  return m_state == ReactInstanceState::Loaded;
+}
+
 void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
     folly::dynamic &&initialProps) noexcept {
