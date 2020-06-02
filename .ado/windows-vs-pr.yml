@@ -300,7 +300,7 @@ jobs:
     pool:
       vmImage: $(VmImage)
     variables:
-      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\BuildLogs
+      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
     steps:
       - checkout: self

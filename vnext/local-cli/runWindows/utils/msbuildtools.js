@@ -69,11 +69,11 @@ class MSBuildTools {
 
     const errorLog = logPrefix + '.err';
     const warnLog = logPrefix + '.wrn';
+
+    const localBinLog = target ? `:${target}.binlog` : '';
     const binlog = buildLogDirectory
-      ? ':' + logPrefix + '.binlog'
-      : target
-        ? `:${target}.binlog`
-        : '';
+      ? `:${logPrefix}.binlog`
+      : localBinLog;
 
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,

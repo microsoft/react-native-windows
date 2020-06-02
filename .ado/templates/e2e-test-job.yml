@@ -13,7 +13,7 @@ jobs:
       vmImage: $(VmImage)
 
     variables:
-      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\BuildLogs
+      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them

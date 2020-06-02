@@ -8,7 +8,7 @@ parameters:
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
-  BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\BuildLogs
+  BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
