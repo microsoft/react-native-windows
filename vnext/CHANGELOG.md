@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 May 2020 10:11:33 GMT and should not be manually modified.
+This log was last generated on Fri, 22 May 2020 01:31:29 GMT and should not be manually modified.
 
+## 0.61.10
+Fri, 22 May 2020 01:31:29 GMT
+
+### Patches
+
+- Use separate brush for text control border (kaigu@microsoft.com)
 ## 0.61.9
 Fri, 08 May 2020 10:11:33 GMT
 
