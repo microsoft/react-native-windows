@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
         {
         }
         ",
-        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] {symbol}); }
+        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] { symbol }); }
       );
     }
 
@@ -36,7 +36,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
           private int B2 { get; set; }
         }
         ",
-        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] {symbol}); }
+        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] { symbol }); }
       );
     }
 
@@ -54,7 +54,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
           private int B2;
         }
         ",
-        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] {symbol}); }
+        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] { symbol }); }
       );
     }
 
@@ -68,10 +68,10 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
           public static int Field;
         }
         ",
-        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] {symbol}); }
+        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] { symbol }); }
       );
     }
-    
+
     [TestMethod]
     public void NoExtern()
     {
@@ -81,7 +81,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
           public extern static int Prop {get;set;}
         }
         ",
-        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] {symbol}); }
+        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] { symbol }); }
       );
     }
   }

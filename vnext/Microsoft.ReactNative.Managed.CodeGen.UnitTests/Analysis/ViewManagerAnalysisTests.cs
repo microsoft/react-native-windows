@@ -5,14 +5,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
 {
-    [TestClass]
-    public class ViewManagerAnalysisTests : AnalysisTestBase
-    {
+  [TestClass]
+  public class ViewManagerAnalysisTests : AnalysisTestBase
+  {
 
-        [TestMethod]
-        public void DirectInherit()
-        {
-            var (codeAnalyzer, type) = AnalyzeFile(@"
+    [TestMethod]
+    public void DirectInherit()
+    {
+      var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;
         using Windows.UI.Xaml;
 
@@ -25,13 +25,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
           }
         }");
 
-            Assert.IsTrue(codeAnalyzer.IsViewManager(type));
-        }
+      Assert.IsTrue(codeAnalyzer.IsViewManager(type));
+    }
 
-        [TestMethod]
-        public void InsideNiestedClass()
-        {
-            var (codeAnalyzer, type) = AnalyzeFile(@"
+    [TestMethod]
+    public void InsideNiestedClass()
+    {
+      var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;
         using Windows.UI.Xaml;
 
@@ -46,13 +46,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
           }
         }");
 
-            Assert.IsTrue(codeAnalyzer.IsViewManager(type));
-        }
+      Assert.IsTrue(codeAnalyzer.IsViewManager(type));
+    }
 
-        [TestMethod]
-        public void MultiLevelInterfaceInherit()
-        {
-            var (codeAnalyzer, type) = AnalyzeFile(@"
+    [TestMethod]
+    public void MultiLevelInterfaceInherit()
+    {
+      var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;
         using Windows.UI.Xaml;
 
@@ -69,13 +69,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
           }
         }");
 
-            Assert.IsTrue(codeAnalyzer.IsViewManager(type));
-        }
+      Assert.IsTrue(codeAnalyzer.IsViewManager(type));
+    }
 
-        [TestMethod]
-        public void AbstractIsNot()
-        {
-            var (codeAnalyzer, type) = AnalyzeFile(@"
+    [TestMethod]
+    public void AbstractIsNot()
+    {
+      var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;
         using Windows.UI.Xaml;
 
@@ -88,13 +88,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
           }
         }");
 
-            Assert.IsFalse(codeAnalyzer.IsViewManager(type));
-        }
+      Assert.IsFalse(codeAnalyzer.IsViewManager(type));
+    }
 
-        [TestMethod]
-        public void InherittedAbstractIs()
-        {
-            var (codeAnalyzer, type) = AnalyzeFile(@"
+    [TestMethod]
+    public void InherittedAbstractIs()
+    {
+      var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;
         using Windows.UI.Xaml;
 
@@ -111,7 +111,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
         }
         ");
 
-            Assert.IsTrue(codeAnalyzer.IsViewManager(type));
-        }
+      Assert.IsTrue(codeAnalyzer.IsViewManager(type));
     }
+  }
 }
