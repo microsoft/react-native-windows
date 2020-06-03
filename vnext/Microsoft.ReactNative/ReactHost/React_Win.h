@@ -24,6 +24,8 @@ struct ILegacyReactInstance : IUnknown {
   virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept = 0;
   virtual std::string GetBundleRootPath() noexcept = 0;
 
+  virtual bool IsLoaded() const noexcept = 0;
+
   virtual std::shared_ptr<react::uwp::IReactInstance> UwpReactInstance() noexcept = 0;
 
   virtual void AttachMeasuredRootView(
