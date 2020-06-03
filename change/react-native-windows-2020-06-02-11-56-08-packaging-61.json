@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "work around VS16.5-16.6 regression in UWP packaging",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-02T18:56:08.254Z"
-}

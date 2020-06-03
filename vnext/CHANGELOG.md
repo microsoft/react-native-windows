@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 May 2020 01:31:29 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Jun 2020 05:03:30 GMT and should not be manually modified.
 
+## 0.61.11
+Wed, 03 Jun 2020 05:03:30 GMT
+
+### Patches
+
+- work around VS16.5-16.6 regression in UWP packaging (asklar@microsoft.com)
 ## 0.61.10
 Fri, 22 May 2020 01:31:29 GMT
 

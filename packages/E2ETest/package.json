@@ -24,7 +24,7 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-windows": "0.61.10",
+    "react-native-windows": "0.61.11",
     "rnpm-plugin-windows": "^0.5.1-0"
   },
   "devDependencies": {

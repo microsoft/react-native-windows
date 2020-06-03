@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 03 Jun 2020 05:03:30 GMT",
+      "tag": "react-native-windows_v0.61.11",
+      "version": "0.61.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "work around VS16.5-16.6 regression in UWP packaging",
+            "author": "asklar@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 May 2020 01:31:29 GMT",
       "tag": "react-native-windows_v0.61.10",
       "version": "0.61.10",
