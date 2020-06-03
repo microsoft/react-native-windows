@@ -219,8 +219,8 @@ async function deployToDesktop(options, verbose, slnFile) {
   }
 
   let args = [];
-  if (options.proxy) {
-    args.push('--proxy');
+  if (options.remoteDebugging) {
+    args.push('--remote-debugging');
   }
 
   if (options.directDebugging) {
