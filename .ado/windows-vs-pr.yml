@@ -370,6 +370,7 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
+      #5059 Disable failing or intermittent tests.
       Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
 
     steps:
