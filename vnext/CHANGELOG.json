@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 03 Jun 2020 00:05:25 GMT",
+      "tag": "react-native-windows_v0.0.0-master.83",
+      "version": "0.0.0-master.83",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Deprecate acceptsKeyboardFocus",
+            "author": "kaigu@microsoft.com",
+            "commit": "45d01a7db005595af39030904acff616eed5400f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove react-native-community/cli dependency from template",
+            "author": "acoates@microsoft.com",
+            "commit": "57b07e28712d5595729d3d79a36249e075778576",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Code Cleanup: Some low haning fruit lint fixes",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7361c32af8cce87267be33c1d1cfc9fb6368274c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow paremeterization of buildLogDirectory for msbuild task when using run-windows",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0001477e23d825e6a2a610e9c41b9bde6330bbf6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Minor autolinking template update prep",
+            "author": "jthysell@microsoft.com",
+            "commit": "c3ace8a77dbe6eab7e2f3fd213a1062163a06431",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Jun 2020 00:07:29 GMT",
       "tag": "react-native-windows_v0.0.0-master.82",
       "version": "0.0.0-master.82",
