@@ -2519,25 +2519,17 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.8.8"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.8.tgz#55b5d7a3a4cb44f30918415b8307a1deaafd79dd"
-  integrity sha512-LpUJrVLcdL90LYG92ef7aBTfqAey0nw0RW8hQzbhcluAT7ZX1R1Bsi7Otft//3iJOJrgwHhrjpXymL8I6uM51Q==
+  version "7.8.10"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.10.tgz#1ae62a7a42462f67efb339cee9e20a2eb994ede1"
+  integrity sha512-XaxoomVIx8F/c06vYgO+ITmdHUA2Ii2iX4xxWQQO96pe5NuxfTo0AgtoHg8rkqyfnz0so8BjoyW7DD1HqpnE3g==
   dependencies:
-    "@microsoft/api-extractor-model" "7.8.6"
+    "@microsoft/api-extractor-model" "7.8.7"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.23.1"
-    "@rushstack/ts-command-line" "4.4.1"
+    "@rushstack/node-core-library" "3.24.0"
+    "@rushstack/ts-command-line" "4.4.2"
     colors "~1.2.1"
     js-yaml "~3.13.1"
-    resolve "1.8.1"
-
-"@microsoft/api-extractor-model@7.8.6":
-  version "7.8.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.6.tgz#925660a2d621eec47b2a29d857e146f1a45312cf"
-  integrity sha512-FU+mz4RkNTn9wNIN4TAnW4WG3ZXTk7sW4HkYEih29tzWhNn0RvfLQB2N/9573DNHuY/W0yfEMoDA2hfsdWgOtQ==
-  dependencies:
-    "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.23.1"
+    resolve "~1.17.0"
 
 "@microsoft/api-extractor-model@7.8.7":
   version "7.8.7"
@@ -2800,19 +2792,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
-"@rushstack/node-core-library@3.23.1":
-  version "3.23.1"
-  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.23.1.tgz#f9963c9a1978b6085c899329b770a1591d20c36b"
-  integrity sha512-M4TTtdfG+U0DUfhZfKS3KNBI6meN8RKFVTzflUCjh3HFIfKhuON02UyE1p5XpZxxpe7/Qp1WSk7Boweva5yQXA==
-  dependencies:
-    "@types/node" "10.17.13"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~5.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
-
 "@rushstack/node-core-library@3.24.0":
   version "3.24.0"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.24.0.tgz#8a22612a2dd3805049027427384c6f1a123a6610"
@@ -2825,15 +2804,6 @@
     semver "~5.3.0"
     timsort "~0.3.0"
     z-schema "~3.18.3"
-
-"@rushstack/ts-command-line@4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.4.1.tgz#092562455fbc2e382c2ac9ebd12310dee6d75109"
-  integrity sha512-lDvxPZB+iO9yIG3Foo3xFa06zKHaRdEB+aXSw+RWx/8TN8EvzxAXST7PERNNNX9SJ4yublAKWBjWsR6dDsrdrQ==
-  dependencies:
-    "@types/argparse" "1.0.38"
-    argparse "~1.0.9"
-    colors "~1.2.1"
 
 "@rushstack/ts-command-line@4.4.2":
   version "4.4.2"
@@ -11200,7 +11170,7 @@ path-key@^2.0.0, path-key@^2.0.1:
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
   integrity sha1-QRyttXTFoUDTpLGRDUDYDMn0C0A=
 
-path-parse@^1.0.5, path-parse@^1.0.6:
+path-parse@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
   integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
@@ -12162,13 +12132,6 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
   integrity sha1-IDEU2CrSxe2ejgQRs5ModeiJ6Xs=
-
-resolve@1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.8.1.tgz#82f1ec19a423ac1fbd080b0bab06ba36e84a7a26"
-  integrity sha512-AicPrAC7Qu1JxPCZ9ZgCZlY35QgFnNqc+0LtbRNxnVw4TXvjQ72wnuL9JQcEBgXkI9JM8MsT9kaQoHcpCRJOYA==
-  dependencies:
-    path-parse "^1.0.5"
 
 resolve@^1.1.6, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.15.1, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.8.1, resolve@~1.17.0:
   version "1.17.0"
