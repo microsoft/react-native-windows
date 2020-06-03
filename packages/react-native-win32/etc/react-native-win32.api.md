@@ -242,6 +242,7 @@ export interface ITouchableWin32Props extends IViewWin32Props {
     // (undocumented)
     disabled?: boolean;
     filterKeys?: (str: string) => boolean;
+    focusRef?: React.RefObject<ViewWin32>;
     // (undocumented)
     onLongPress?: () => void;
     // (undocumented)

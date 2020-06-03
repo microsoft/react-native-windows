@@ -14,6 +14,6 @@ export interface IPopupTargetState
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [target](./react-native-windows.ipopuptargetstate.target.md) | <code>number &#124; null</code> |  |
-|  [targetRef](./react-native-windows.ipopuptargetstate.targetref.md) | <code>React.ReactNode</code> |  |
+|  [target](./react-native-windows.ipopuptargetstate.target.md) | number \| null |  |
+|  [targetRef](./react-native-windows.ipopuptargetstate.targetref.md) | React.ReactNode |  |
 
