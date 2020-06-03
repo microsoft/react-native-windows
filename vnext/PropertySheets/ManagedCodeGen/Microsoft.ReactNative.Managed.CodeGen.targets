@@ -30,9 +30,7 @@
     It will set the property groups for the path of the deployment as well as listing all the dependent files of the tool for incrementality
     When this is moved to a nuget package, this is no longer needed.
   -->
-  <Target 
-    Name="_ReactNativeManagedCodeGenPublishTool" 
-    Condition="'$(DesignTimeBuild)' != 'true'">
+  <Target Name="_ReactNativeManagedCodeGenPublishTool" Condition="'$(DesignTimeBuild)' != 'true'">
 
     <Error Condition="'$(ReactNativeWindowsDir)' == ''" Text="CodeGen is only supported when property ReactNativeWindowsDir is set." />
 
@@ -64,12 +62,7 @@
 
   </Target>
 
-  <Target 
-    Name="ReactNativeManagedCodeGen" 
-    DependsOnTargets="_ReactNativeManagedCodeGenPublishTool" 
-    Inputs="$(MSBuildProjectFullPath);@(Compile);@(_ReactNativeCodeGenToolFiles)" 
-    Outputs="$(ReactNativeCodeGenFile);$(_ReactNativeCodeGenResponseFile)"
-    Condition="'$(DesignTimeBuild)' != 'true'">
+  <Target Name="ReactNativeManagedCodeGen" DependsOnTargets="_ReactNativeManagedCodeGenPublishTool" Inputs="$(MSBuildProjectFullPath);@(Compile);@(_ReactNativeCodeGenToolFiles)" Outputs="$(ReactNativeCodeGenFile);$(_ReactNativeCodeGenResponseFile)" Condition="'$(DesignTimeBuild)' != 'true'">
 
     <ItemGroup>
       <_ReactNativeCodeGenDefineConstatnsAsItem Include="$(DefineConstants)" />
@@ -93,7 +86,7 @@
     <MakeDir Directories="$(XamlGeneratedOutputPath)intermediatexaml\" />
 
     <!-- Write the response file -->
-    <WriteLinesToFile File="$(_ReactNativeCodeGenResponseFile)" Lines="@(_ReactNativeCodeGenResponseFileLines)" Overwrite="true" Encoding="Unicode"/>
+    <WriteLinesToFile File="$(_ReactNativeCodeGenResponseFile)" Lines="@(_ReactNativeCodeGenResponseFileLines)" WriteOnlyWhenDifferent="true" Encoding="Unicode"/>
 
     <!-- Execute teh code generation /> -->
     <Exec Command="$(_ReactNativeCodeGenToolExecutable) @$(_ReactNativeCodeGenResponseFile)" />
