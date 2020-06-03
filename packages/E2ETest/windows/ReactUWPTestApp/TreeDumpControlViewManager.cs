@@ -117,6 +117,7 @@ namespace TreeDumpLibrary
                 }
                 var value = element.GetNamedString("Text");
                 var pageName = new Regex(@"[<|>]").Replace(value, "");
+                Debug.WriteLine($"Page name {pageName}");
                 var match = await MatchDump(json, GetMasterFile(pageName), GetOutputFile(pageName));
                 return match;
             }

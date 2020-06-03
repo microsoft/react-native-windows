@@ -30,7 +30,8 @@ namespace ReactUWPTestApp
             InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseFastRefresh = false;
 #else
-            JavaScriptMainModuleName = "app/index";
+            //JavaScriptMainModuleName = "app/index";
+            JavaScriptMainModuleName = @"Samples\rntester";
             InstanceSettings.UseWebDebugger = true;
             InstanceSettings.UseFastRefresh = true;
 #endif
@@ -62,6 +63,13 @@ namespace ReactUWPTestApp
                 frame = new Frame();
                 Window.Current.Content = frame;
             }
+            if (e.Arguments == "UseRNTester")
+            {
+                MainPage.UseRNTester = true;
+                this.InstanceSettings.JavaScriptBundleFile = @"Samples\rntester";
+                this.JavaScriptBundleFile = this.InstanceSettings.JavaScriptBundleFile;
+            }
+
             frame.Navigate(typeof(MainPage));
             Window.Current.Activate();
 
