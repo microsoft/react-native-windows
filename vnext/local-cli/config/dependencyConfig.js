@@ -134,8 +134,8 @@ function dependencyConfigWindows(folder, userConfig = {}) {
 
     const directDependency = true;
 
-    const cppNamespace = projectNamespace.replace('.', '::');
-    const csNamespace = projectNamespace.replace('::', '.');
+    const cppNamespace = projectNamespace.replace(/\./g, '::');
+    const csNamespace = projectNamespace.replace(/::/g, '.');
 
     const cppHeaders = [`winrt/${csNamespace}.h`];
     const cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
