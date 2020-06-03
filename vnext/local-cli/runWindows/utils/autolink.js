@@ -9,6 +9,7 @@ const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const performance = require('perf_hooks').performance;
 
 const {newSpinner} = require('./commandWithProgress');
 const vstools = require('./vstools');
@@ -68,6 +69,8 @@ function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
 }
 
 async function updateAutoLink(config, args, options) {
+  const startTime = performance.now();
+
   const verbose = options.logging;
 
   const checkMode = options.check;
@@ -305,10 +308,15 @@ async function updateAutoLink(config, args, options) {
     });
 
     spinner.succeed();
+    var endTime = performance.now();
 
     if (!changesNecessary) {
       console.log(
-        `${chalk.green('Success:')} No auto-linking changes necessary.`,
+        `${chalk.green(
+          'Success:',
+        )} No auto-linking changes necessary. (${Math.round(
+          endTime - startTime,
+        )}ms)`,
       );
     } else if (checkMode) {
       console.log(
@@ -318,15 +326,26 @@ async function updateAutoLink(config, args, options) {
           '--check',
         )} specified. Run ${chalk.bold(
           "'npx react-native autolink-windows'",
-        )} to apply the changes.`,
+        )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
       exitProcessWithStatusCode(0, verbose);
     } else {
-      console.log(`${chalk.green('Success:')} Auto-linking changes completed.`);
+      console.log(
+        `${chalk.green(
+          'Success:',
+        )} Auto-linking changes completed. (${Math.round(
+          endTime - startTime,
+        )}ms)`,
+      );
     }
   } catch (e) {
     spinner.fail();
-    console.log(chalk.red('Error:') + ' ' + e.toString());
+    var endTime = performance.now();
+    console.log(
+      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
+        endTime - startTime,
+      )}ms)`,
+    );
     exitProcessWithStatusCode(1, verbose);
   }
 }
