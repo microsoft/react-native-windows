@@ -1,6 +1,6 @@
 module.exports = {
   reactNativePath: '../../vnext',
-  // Uncomment the below when running autolink-windows for SampleAppCS
+  // Uncomment the below then run `npx react-native autolink-windows` to run autolink for SampleAppCS
   // project: {
   //   windows: {
   //     sourceDir: 'windows',

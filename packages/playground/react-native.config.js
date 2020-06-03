@@ -1,5 +1,5 @@
 module.exports = {
-  // Uncomment the below when running autolink-windows for playground-win32
+  // Uncomment the below then run `npx react-native autolink-windows` to run autolink for playground-win32
   // project: {
   //   windows: {
   //     sourceDir: 'windows',

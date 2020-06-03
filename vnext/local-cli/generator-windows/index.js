@@ -121,6 +121,11 @@ function copyProjectTemplateAndReplace(
     '<%=XamlNugetPkgVersion%>': xamlNugetPkgVersion,
     '<%=XamlNamespace%>': xamlNamespace,
     '<%=XamlNamespaceCpp%>': xamlNamespaceCpp,
+    '<%=AutolinkProjectReferencesForTargets%>': '',
+    '<%=AutolinkCsUsingNamespaces%>': '',
+    '<%=AutolinkCsReactPacakgeProviders%>': '',
+    '<%=AutolinkCppIncludes%>': '',
+    '<%=AutolinkCppPackageProviders%>': '',
   };
 
   [

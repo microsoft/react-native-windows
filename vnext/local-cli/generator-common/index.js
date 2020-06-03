@@ -155,6 +155,20 @@ function walk(current/*: string*/)/*: string[]*/ {
   return result.concat.apply([current], files);
 }
 
+/**
+ * Get a source file and replace parts of its contents.
+ * @param {string} srcPath Path to the source file.
+ * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
+ * @return The contents of the file with the replacements applied.
+ */
+function resolveContents(srcPath, replacements) {
+  let content = fs.readFileSync(srcPath, 'utf8');
+  Object.keys(replacements).forEach(regex => {
+    content = content.replace(new RegExp(regex, 'g'), replacements[regex]);
+  });
+  return content;
+}
+
 // Binary files, don't process these (avoid decoding as utf8)
 const binaryExtensions = ['.png', '.jar', '.keystore'];
 
@@ -223,10 +237,7 @@ function copyAndReplace(
   } else {
     // Text file
     const srcPermissions = fs.statSync(srcPath).mode;
-    let content = fs.readFileSync(srcPath, 'utf8');
-    Object.keys(replacements).forEach(regex => {
-      content = content.replace(new RegExp(regex, 'g'), replacements[regex]);
-    });
+    let content = resolveContents(srcPath, replacements);
 
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
@@ -385,5 +396,5 @@ function upgradeFileContentChangedCallback(
 }
 
 module.exports = {
-  createDir, copyAndReplaceWithChangedCallback, copyAndReplaceAll,
+  createDir, resolveContents, copyAndReplaceWithChangedCallback, copyAndReplaceAll,
 };
