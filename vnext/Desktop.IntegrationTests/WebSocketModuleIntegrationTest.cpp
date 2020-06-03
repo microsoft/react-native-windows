@@ -14,7 +14,6 @@ using std::unique_ptr;
 using std::vector;
 
 // None of these tests are runnable
-#if 0
 TEST_CLASS (WebSocketModuleIntegrationTest) {
   TEST_METHOD(WebSocketModule_Ping) {
     auto module = make_unique<WebSocketModule>();
@@ -56,4 +55,3 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
     close.func(dynamic::array(0, "closing", /*id*/ 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
   }
 };
-#endif
