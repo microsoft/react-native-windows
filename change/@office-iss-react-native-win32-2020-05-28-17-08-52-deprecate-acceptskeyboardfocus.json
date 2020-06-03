@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Deprecate acceptsKeyboardFocus",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "kaigu@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-29T00:08:47.129Z"
-}

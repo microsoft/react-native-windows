@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 03 Jun 2020 00:05:25 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.17",
+      "version": "0.0.0-master.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Deprecate acceptsKeyboardFocus",
+            "author": "kaigu@microsoft.com",
+            "commit": "45d01a7db005595af39030904acff616eed5400f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Jun 2020 00:07:29 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.16",
       "version": "0.0.0-master.16",
