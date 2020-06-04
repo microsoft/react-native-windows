@@ -12,8 +12,7 @@ import * as t from 'io-ts';
 import {ThrowReporter} from 'io-ts/lib/ThrowReporter';
 
 /**
- * Manifest entry type class for "platform" overrides. I.e. overrides not
- * patching shared code, or derived from existing code.
+ * Serialized form of {@see PlatformOverride}
  */
 const PlatformOverrideType = t.type({
   type: t.literal('platform'),
@@ -21,7 +20,7 @@ const PlatformOverrideType = t.type({
 });
 
 /**
- * Manifest entry type class for overrides that patch shared upstream code.
+ * Serialized form of {@see PatchOverride}
  */
 const PatchOverrideType = t.type({
   type: t.literal('patch'),
@@ -35,7 +34,7 @@ const PatchOverrideType = t.type({
 });
 
 /**
- * Manifest entry type class for overrides that mimic existing upstream code.
+ * Serialized form of {@see DerivedOverride}
  */
 const DerivedOverrideType = t.type({
   type: t.literal('derived'),
@@ -49,7 +48,7 @@ const DerivedOverrideType = t.type({
 });
 
 /**
- * Manifest entry type class for direct copies of upstream code
+ * Serialized form of {@see CopyOverride}
  */
 const CopyOverrideType = t.type({
   type: t.literal('copy'),
@@ -60,6 +59,9 @@ const CopyOverrideType = t.type({
   issue: t.number,
 });
 
+/**
+ * Union of all serialized override types
+ */
 const OverrideType = t.union([
   PlatformOverrideType,
   PatchOverrideType,

@@ -12,15 +12,47 @@ import UpgradeStrategy, {UpgradeStrategies} from './UpgradeStrategy';
 import ValidationStrategy, {ValidationStrategies} from './ValidationStrategy';
 import OverrideFactory from './OverrideFactory';
 
+/**
+ * Immmutable programatic representation of an override. This should remain
+ * generic to files vs directories, different representations, different
+ * validation rules, etc.
+ */
 export default interface Override {
+  /**
+   * Identifer of the override (e.g. filename or directory name)
+   */
   name(): string;
+
+  /**
+   * Does the override include the given file?
+   */
   includesFile(filename: string): boolean;
+
+  /**
+   * Convert to a serialized representation
+   */
   serialize(): Serialized.Override;
+
+  /**
+   * Create a copy of the override which is considered "up to date" in regards
+   * to the current React source tree. This does not change underlying content.
+   */
   createUpdated(factory: OverrideFactory): Promise<Override>;
+
+  /**
+   * Specifies how the override should be modified to integrate new changes.
+   */
   upgradeStrategy(): UpgradeStrategy;
+
+  /**
+   * Specifies how to check if the override contents are valid and up to date.
+   */
   validationStrategies(): ValidationStrategy[];
 }
 
+/**
+ * Platform overrides represent logic not derived from upstream sources.
+ */
 export class PlatformOverride implements Override {
   private overrideFile: string;
 
@@ -59,6 +91,9 @@ export class PlatformOverride implements Override {
   }
 }
 
+/**
+ * Base class for overrides which derive from an upstream file
+ */
 abstract class BaseFileOverride implements Override {
   protected overrideFile: string;
   protected baseFile: string;
@@ -114,6 +149,9 @@ abstract class BaseFileOverride implements Override {
   }
 }
 
+/**
+ * Copy overrides enforce that an override file is an exact copy of a base file
+ */
 export class CopyOverride extends BaseFileOverride {
   constructor(args: {
     file: string;
@@ -157,6 +195,10 @@ export class CopyOverride extends BaseFileOverride {
   }
 }
 
+/**
+ * Derived overrides represent files which are based off of an existing file in
+ * the React Native source tree.
+ */
 export class DerivedOverride extends BaseFileOverride {
   constructor(args: {
     file: string;
@@ -199,6 +241,10 @@ export class DerivedOverride extends BaseFileOverride {
   }
 }
 
+/**
+ * Patch overrides represent files which make minor modifications to existing
+ * upstream sources.
+ */
 export class PatchOverride extends BaseFileOverride {
   constructor(args: {
     file: string;

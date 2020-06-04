@@ -126,11 +126,13 @@ export default class Manifest {
       overrideFactory,
     );
 
+    // Be careful not to rely on the saved index which may no longer be
+    // accurate after resuming. Modify the original retrieved object instead.
     Object.assign(currentOverride, upToDateOverride);
   }
 
   /**
-   * Return a copy of the manifest as raw data
+   * Return a serialized representation of the manifest
    */
   serialize(): Serialized.Manifest {
     return {

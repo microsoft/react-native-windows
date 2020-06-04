@@ -12,6 +12,10 @@ export interface UpgradeResult {
   hasConflicts: boolean;
 }
 
+/**
+ * An UpgradeStrategy describes the process to upgrade an individual override
+ * to a new version of the React Native source tree.
+ */
 export default interface UpgradeStrategy {
   upgrade(
     reactRepo: GitReactFileRepository,
@@ -30,7 +34,8 @@ export const UpgradeStrategies = {
   }),
 
   /**
-   * Perform a three way merge of override changes
+   * Perform a three way merge of the original base file, the overriden version
+   * of it, and the base file from a newwer version of React Native.
    */
   threeWayMerge: (
     override: string,

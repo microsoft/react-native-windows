@@ -360,7 +360,7 @@ function printValidationErrors(errors: Array<ValidationError>) {
   printErrorType(
     'overrideDifferentFromBase',
     errors,
-    "Found overrides whose content should match base files but doesn't. Ensure overrides are up to date or revert changes.",
+    'The following overrides should be an exact copy of their base files. Ensure overrides are up to date or revert changes:',
   );
 }
 

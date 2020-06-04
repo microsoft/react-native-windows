@@ -39,6 +39,9 @@ export default interface OverrideFactory {
   ): Promise<PatchOverride>;
 }
 
+/**
+ * Conrete implementation of an OverrideFactory
+ */
 export class OverrideFactoryImpl implements OverrideFactory {
   private reactRepo: ReactFileRepository;
   private overrideRepo: OverrideFileRepository;

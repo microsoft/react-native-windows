@@ -25,6 +25,11 @@ export interface ValidationError {
   overrideName: string;
 }
 
+/**
+ * A ValidationStrategy allows describing a process to ensure a specific
+ * override meets constraints such as ensuring file existence, preventing
+ * content modification, or being up to date.
+ */
 export default interface ValidationStrategy {
   validate(
     overrideRepo: OverrideFileRepository,

@@ -23,7 +23,7 @@ export async function getInstalledRNVersion(): Promise<string> {
 }
 
 /**
- * Return an object representing the package.json of this package
+ * Return an object representing the package.json of our current package
  */
 export function getNpmPackage(): any {
   if (!require.main) {
