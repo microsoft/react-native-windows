@@ -87,8 +87,14 @@ export const ValidationStrategies = {
     baseFile: string,
   ): ValidationStrategy => ({
     validate: async (overrideRepo, reactRepo) => {
-      return (await overrideRepo.getFileContents(overrideName)) ===
-        (await reactRepo.getFileContents(baseFile))
+      const overrideContent = await overrideRepo.getFileContents(overrideName);
+      const baseContent = await reactRepo.getFileContents(baseFile);
+      if (overrideContent === null || baseContent === null) {
+        return [];
+      }
+
+      // Run through hash to account for line-endings, etc
+      return hashContent(overrideContent) === hashContent(baseContent)
         ? []
         : [{type: 'overrideDifferentFromBase', overrideName}];
     },

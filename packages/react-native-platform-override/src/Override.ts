@@ -43,7 +43,7 @@ export class PlatformOverride implements Override {
   }
 
   includesFile(filename: string): boolean {
-    return filename === this.overrideFile;
+    return path.normalize(filename) === this.overrideFile;
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -85,7 +85,7 @@ abstract class BaseFileOverride implements Override {
   }
 
   includesFile(filename: string): boolean {
-    return filename === this.overrideFile;
+    return path.normalize(filename) === this.overrideFile;
   }
 
   abstract serialize(): Serialized.Override;
@@ -132,8 +132,8 @@ export class CopyOverride extends BaseFileOverride {
   serialize(): Serialized.CopyOverride {
     return {
       type: 'copy',
-      issue: this.issueNumber as number,
       ...this.serialzeBase(),
+      issue: this.issueNumber as number,
     };
   }
 
@@ -177,8 +177,8 @@ export class DerivedOverride extends BaseFileOverride {
   serialize(): Serialized.DerivedOverride {
     return {
       type: 'derived',
-      issue: this.issueNumber || undefined,
       ...this.serialzeBase(),
+      issue: this.issueNumber || undefined,
     };
   }
 
@@ -217,8 +217,8 @@ export class PatchOverride extends BaseFileOverride {
   serialize(): Serialized.PatchOverride {
     return {
       type: 'patch',
-      issue: this.issueNumber as number,
       ...this.serialzeBase(),
+      issue: this.issueNumber as number,
     };
   }
 

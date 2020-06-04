@@ -1,191 +1,185 @@
-// /**
-//  * Copyright (c) Microsoft Corporation.
-//  * Licensed under the MIT License.
-//  *
-//  * @format
-//  */
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ *
+ * @format
+ */
 
-// import * as Serialized from '../Serialized';
-// import * as _ from 'lodash';
-// import Manifest, {ValidationError} from '../Manifest';
+import * as Serialized from '../Serialized';
+import * as _ from 'lodash';
 
-// import {
-//   MockFile,
-//   MockOverrideFileRepository,
-//   MockReactFileRepository,
-// } from './MockFileRepository';
+import {
+  CopyOverride,
+  DerivedOverride,
+  PatchOverride,
+  PlatformOverride,
+} from '../Override';
 
-// const reactFiles: Array<MockFile> = [
-//   {
-//     filename: 'aaa\\aaa.js',
-//     content:
-//       'I want your love, and I want your revenge;You and me could write a bad romance',
-//   },
-//   {
-//     filename: 'aaa\\bbb.android.js',
-//     content:
-//       "Gimme, gimme, gimme a man after midnight. Won't somebody help me chase the shadows away",
-//   },
-//   {
-//     filename: 'bbb\\ccc.ios.js',
-//     content:
-//       "Cause honey I'll come get my things, but I can't let go I'm waiting for it, that green light, I want it",
-//   },
-// ];
+import {
+  MockFile,
+  MockOverrideFileRepository,
+  MockReactFileRepository,
+} from './MockFileRepository';
 
-// const overrideFiles: Array<MockFile> = [
-//   {
-//     filename: 'aaa\\aaa.windows.js',
-//     content:
-//       'I want your love, and I want your mashed potatoes;You and me could make more mashed potatoes I guess',
-//   },
-//   {
-//     filename: 'aaa\\bbb.windows.js',
-//     content:
-//       "Gimme, gimme, gimme 500 live bees after midnight. Won't somebody help me chase the bees out of my house, this is actually quite frightening",
-//   },
-//   {
-//     filename: 'bbb\\ccc.win32.js',
-//     content:
-//       "Cause honey I'll come get my things, but I can't let go I'm waiting for it, the fall of civilization as we know it",
-//   },
-// ];
+import Manifest from '../Manifest';
+import {hashContent} from '../Hash';
 
-// const reactRepo = new MockReactFileRepository(reactFiles);
-// const ovrRepo = new MockOverrideFileRepository(overrideFiles);
+const reactFiles: Array<MockFile> = [
+  {
+    filename: 'aaa\\aaa.js',
+    content:
+      'I want your love, and I want your revenge;You and me could write a bad romance',
+  },
+  {
+    filename: 'aaa\\bbb.android.js',
+    content:
+      "Gimme, gimme, gimme a man after midnight. Won't somebody help me chase the shadows away",
+  },
+  {
+    filename: 'bbb\\ccc.ios.js',
+    content:
+      "Cause honey I'll come get my things, but I can't let go I'm waiting for it, that green light, I want it",
+  },
+];
 
-// test('AllListedInManifest', async () => {
-//   const manifest: Serialized.Manifest = {
-//     overrides: [
-//       {type: 'platform', file: 'aaa\\aaa.windows.js'},
-//       {type: 'platform', file: 'aaa\\bbb.windows.js'},
-//       {type: 'platform', file: 'bbb\\ccc.win32.js'},
-//     ],
-//   };
+const overrideFiles: Array<MockFile> = [
+  {
+    filename: 'aaa\\aaa.windows.js',
+    content:
+      'I want your love, and I want your mashed potatoes;You and me could make more mashed potatoes I guess',
+  },
+  {
+    filename: 'aaa\\bbb.windows.js',
+    content:
+      "Gimme, gimme, gimme 500 live bees after midnight. Won't somebody help me chase the bees out of my house, this is actually quite frightening",
+  },
+  {
+    filename: 'bbb\\ccc.win32.js',
+    content:
+      "Cause honey I'll come get my things, but I can't let go I'm waiting for it, the fall of civilization as we know it",
+  },
+];
 
-//   const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
-//   expect(errors).toEqual([]);
-// });
+const reactRepo = new MockReactFileRepository(reactFiles);
+const ovrRepo = new MockOverrideFileRepository(overrideFiles);
 
-// test('ManifestMissingFile', async () => {
-//   const manifest: Serialized.Manifest = {
-//     overrides: [
-//       {type: 'platform', file: 'aaa\\aaa.windows.js'},
-//       {type: 'platform', file: 'aaa\\bbb.windows.js'},
-//     ],
-//   };
+test('constructor - Duplicate Override Names', async () => {
+  expect(
+    () =>
+      new Manifest([
+        new PlatformOverride({file: 'aaa.windows.js'}),
+        new PlatformOverride({file: 'aaa.windows.js'}),
+      ]),
+  ).toThrow();
+});
 
-//   const expectedError: ValidationError = {
-//     type: 'fileMissingFromManifest',
-//     file: 'bbb\\ccc.win32.js',
-//   };
+test('validate - Empty Manifest', async () => {
+  const manifest = new Manifest([]);
 
-//   const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
-//   expect(errors).toEqual([expectedError]);
-// });
+  const errors = await manifest.validate(
+    new MockOverrideFileRepository([]),
+    reactRepo,
+  );
+  expect(errors).toEqual([]);
+});
 
-// test('ManifestExtraFile', async () => {
-//   const manifest: Serialized.Manifest = {
-//     overrides: [
-//       {type: 'platform', file: 'aaa\\aaa.windows.js'},
-//       {type: 'platform', file: 'aaa\\bbb.windows.js'},
-//       {type: 'platform', file: 'bbb\\ccc.win32.js'},
-//       {type: 'platform', file: 'bbb\\ddd.win32.js'},
-//     ],
-//   };
+test('validate - All Overrides Listed', async () => {
+  const manifest = new Manifest([
+    new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+    new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+    new PlatformOverride({file: 'bbb\\ccc.win32.js'}),
+  ]);
 
-//   const expectedError: ValidationError = {
-//     type: 'overrideFileNotFound',
-//     file: 'bbb\\ddd.win32.js',
-//   };
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
 
-//   const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
-//   expect(errors).toEqual([expectedError]);
-// });
+test('validate - Missing Override', async () => {
+  const manifest = new Manifest([
+    new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+    new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+  ]);
 
-// const testSerialized: Serialized.Manifest = {
-//   overrides: [
-//     {
-//       type: 'patch',
-//       file: overrideFiles[0].filename,
-//       baseFile: reactFiles[0].filename,
-//       baseVersion: '0.61.5',
-//       baseHash: Manifest.hashContent(reactFiles[0].content),
-//       issue: 4567,
-//     },
-//     {
-//       type: 'derived',
-//       file: overrideFiles[1].filename,
-//       baseFile: reactFiles[1].filename,
-//       baseVersion: '0.60.6',
-//       baseHash: Manifest.hashContent(reactFiles[1].content),
-//       issue: 4568,
-//     },
-//     {
-//       type: 'platform',
-//       file: overrideFiles[2].filename,
-//     },
-//   ],
-// };
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([
+    {type: 'missingFromManifest', overrideName: 'bbb\\ccc.win32.js'},
+  ]);
+});
 
-// test('FullManifestValid', async () => {
-//   const testManifest = new Manifest(testSerialized, ovrRepo, reactRepo);
-//   const errors = await testManifest.validate();
-//   expect(errors).toEqual([]);
-// });
+test('validate - Extra Override', async () => {
+  const manifest = new Manifest([
+    new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+    new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+    new PlatformOverride({file: 'bbb\\ccc.win32.js'}),
+    new PlatformOverride({file: 'bbb\\ddd.win32.js'}),
+  ]);
 
-// test('OutOfDateFile', async () => {
-//   const ourBaseFiles = _.cloneDeep(reactFiles);
-//   ourBaseFiles[0].content = 'Different than before';
-//   const ourReactRepo = new MockReactFileRepository(ourBaseFiles);
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([
+    {type: 'overrideNotFound', overrideName: 'bbb\\ddd.win32.js'},
+  ]);
+});
 
-//   const expectedError: ValidationError = {
-//     type: 'outOfDate',
-//     file: overrideFiles[0].filename,
-//   };
+test('validate - Multiple Valid Types', async () => {
+  const manifest = new Manifest([
+    new PatchOverride({
+      file: overrideFiles[0].filename,
+      baseFile: reactFiles[0].filename,
+      baseVersion: '0.61.5',
+      baseHash: hashContent(reactFiles[0].content),
+      issue: 4567,
+    }),
+    new DerivedOverride({
+      file: overrideFiles[1].filename,
+      baseFile: reactFiles[1].filename,
+      baseVersion: '0.60.6',
+      baseHash: hashContent(reactFiles[1].content),
+      issue: 4568,
+    }),
+    new PlatformOverride({file: overrideFiles[2].filename}),
+  ]);
 
-//   const testManifest = new Manifest(testSerialized, ovrRepo, ourReactRepo);
-//   const errors = await testManifest.validate();
-//   expect(errors).toEqual([expectedError]);
-// });
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
 
-// test('BaseFileNotFound', async () => {
-//   const ourSerialized = _.cloneDeep(testSerialized);
-//   const ovr = ourSerialized.overrides[0] as Serialized.PatchOverride;
-//   ovr.baseFile = 'foo/bar.js';
+const sampleManifest = new Manifest([
+  new CopyOverride({
+    file: overrideFiles[0].filename,
+    baseFile: reactFiles[0].filename,
+    baseVersion: '0.62.2',
+    baseHash: hashContent(reactFiles[0].content),
+    issue: 1234,
+  }),
+  new DerivedOverride({
+    file: overrideFiles[1].filename,
+    baseFile: reactFiles[1].filename,
+    baseVersion: '0.60.6',
+    baseHash: hashContent(reactFiles[1].content),
+    issue: 4568,
+  }),
+  new PlatformOverride({file: overrideFiles[2].filename}),
+]);
 
-//   const expectedError: ValidationError = {
-//     type: 'baseFileNotFound',
-//     file: 'aaa\\aaa.windows.js',
-//   };
+test('hasOverride - True', async () => {
+  expect(sampleManifest.hasOverride(overrideFiles[0].filename)).toBe(true);
+});
 
-//   const testManifest = new Manifest(ourSerialized, ovrRepo, reactRepo);
-//   const errors = await testManifest.validate();
-//   expect(errors).toEqual([expectedError]);
-// });
+test('hasOverride - False', async () => {
+  expect(sampleManifest.hasOverride('Never gonna give you up')).toBe(false);
+});
 
-// test('HasOverride', async () => {
-//   const manifest = new Manifest(testSerialized, ovrRepo, reactRepo);
-//   expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(true);
-// });
+test('removeOverride - Success', async () => {
+  const manifest = _.cloneDeep(sampleManifest);
 
-// test('DoesNotHaveOverride', async () => {
-//   const manifest = new Manifest(testSerialized, ovrRepo, reactRepo);
-//   expect(manifest.hasOverride('Never gonna give you up')).toBe(false);
-// });
+  expect(manifest.removeOverride(overrideFiles[0].filename)).toBe(true);
+  expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(false);
+});
 
-// test('RemoveOverride', async () => {
-//   const manifest = new Manifest(testSerialized, ovrRepo, reactRepo);
-
-//   expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(true);
-//   expect(manifest.removeOverride(overrideFiles[0].filename)).toBe(true);
-//   expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(false);
-// });
-
-// test('CannotRemoveOverride', async () => {
-//   const manifest = new Manifest(testSerialized, ovrRepo, reactRepo);
-//   expect(manifest.removeOverride('Never gonna let you down')).toBe(false);
-// });
+test('removeOverride - Does not exist', async () => {
+  const manifest = _.cloneDeep(sampleManifest);
+  expect(manifest.removeOverride('Never gonna let you down')).toBe(false);
+});
 
 // test('addOverrideSimple', async () => {
 //   const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
@@ -442,3 +436,82 @@
 //   expect(updated.baseVersion).toBe(reactRepo.getVersion());
 //   expect(updated.baseHash).toBe(Manifest.hashContent(reactFiles[0].content));
 // });
+
+test('Serialization Round-Trip', () => {
+  const serializedManifest: Serialized.Manifest = {
+    overrides: [
+      {
+        type: 'platform',
+        file: 'aaa.js',
+      },
+      {
+        type: 'derived',
+        file: 'abcd.windows.js',
+        baseFile: 'abcd.js',
+        baseVersion: '0.68.7',
+        baseHash: 'gksdpofgkesgpofk',
+        issue: undefined,
+      },
+      {
+        type: 'patch',
+        file: 'defg.windows.js',
+        baseFile: 'defg.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 'LEGACY_FIXME',
+      },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  expect(Manifest.fromSerialized(serializedManifest).serialize()).toEqual(
+    serializedManifest,
+  );
+});
+
+test('String Exact Serialization Round-Trip', () => {
+  const serializedManifest: any = {
+    overrides: [
+      {
+        type: 'platform',
+        file: 'aaa.js',
+      },
+      {
+        type: 'derived',
+        file: 'abcd.windows.js',
+        baseFile: 'abcd.js',
+        baseVersion: '0.68.7',
+        baseHash: 'gksdpofgkesgpofk',
+      },
+      {
+        type: 'patch',
+        file: 'defg.windows.js',
+        baseFile: 'defg.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 'LEGACY_FIXME',
+      },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  const manifestString = JSON.stringify(serializedManifest);
+  const manifest = Manifest.fromSerialized(
+    Serialized.parseManifest(manifestString),
+  );
+  expect(JSON.stringify(manifest.serialize())).toEqual(manifestString);
+});

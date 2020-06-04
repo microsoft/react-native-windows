@@ -8,17 +8,17 @@
 import * as Serialized from '../Serialized';
 import * as path from 'path';
 
-test('EmptyManifestInvalid', () => {
+test('Empty Manifest Invalid', () => {
   expect(() => Serialized.parseManifest('{}')).toThrow();
 });
 
-test('WellFormedNoOverrides', () => {
+test('Well Formed No Overrides', () => {
   expect(Serialized.parseManifest('{"overrides": []}')).toEqual({
     overrides: [],
   });
 });
 
-test('WellFormedPlatform', () => {
+test('Well Formed Platform', () => {
   const manifest: Serialized.Manifest = {
     overrides: [
       {
@@ -31,7 +31,7 @@ test('WellFormedPlatform', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
-test('WellFormedPatch', () => {
+test('Well Formed Patch', () => {
   const manifest: Serialized.Manifest = {
     overrides: [
       {
@@ -48,7 +48,7 @@ test('WellFormedPatch', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
-test('WellFormedDerived', () => {
+test('Well Formed Derived', () => {
   const manifest: Serialized.Manifest = {
     overrides: [
       {
@@ -65,7 +65,7 @@ test('WellFormedDerived', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
-test('WellFormedCopy', () => {
+test('Well Formed Copy', () => {
   const manifest: Serialized.Manifest = {
     overrides: [
       {
@@ -82,7 +82,7 @@ test('WellFormedCopy', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
-test('FixmeAllowedAsIssue', () => {
+test('Fixme Allowed As Issue', () => {
   const manifest: Serialized.Manifest = {
     overrides: [
       {
@@ -99,7 +99,7 @@ test('FixmeAllowedAsIssue', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
-test('PathShouldUsePlatformSlashes', () => {
+test('Path Should Use Platform Slashes', () => {
   const manifest = {
     overrides: [
       {
@@ -119,7 +119,7 @@ test('PathShouldUsePlatformSlashes', () => {
   expect(override.baseFile).toBe(`bar${path.sep}foo.js`);
 });
 
-test('IssueMustBePresentForPatch', () => {
+test('Issue Must Be Present For Patch', () => {
   const manifest = {
     overrides: [
       {
@@ -135,7 +135,7 @@ test('IssueMustBePresentForPatch', () => {
   expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
-test('IssueMustBePresentForCopy', () => {
+test('Issue Must Be Present For Copy', () => {
   const manifest = {
     overrides: [
       {
@@ -151,7 +151,7 @@ test('IssueMustBePresentForCopy', () => {
   expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
-test('IssueCannotBeArbitraryString', () => {
+test('Issue Cannot Be Arbitrary String', () => {
   const manifest = {
     overrides: [
       {
@@ -168,7 +168,7 @@ test('IssueCannotBeArbitraryString', () => {
   expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
-test('WellFormedPatchMustHaveMetadata', () => {
+test('Well Formed Patch Must Have Metadata', () => {
   const manifest = {
     overrides: [
       {
@@ -181,7 +181,7 @@ test('WellFormedPatchMustHaveMetadata', () => {
   expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
-test('WellFormedDerivedMustHaveMetadata', () => {
+test('Well Formed Derived Must Have Metadata', () => {
   const manifest = {
     overrides: [
       {
@@ -194,7 +194,7 @@ test('WellFormedDerivedMustHaveMetadata', () => {
   expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
 });
 
-test('WellFormedCopyMustHaveMetadata', () => {
+test('Well Formed Copy Must Have Metadata', () => {
   const manifest = {
     overrides: [
       {
