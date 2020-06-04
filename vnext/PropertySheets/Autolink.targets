@@ -4,7 +4,7 @@
  Licensed under the MIT License.. 
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="RunAutolink" BeforeTargets="PrepareForBuild">
+  <Target Name="AutolinkCheck" BeforeTargets="PrepareForBuild" Condition="'$(RunAutolinkCheck)' == 'true'">
     <Exec Command="$(AutolinkCommand) $(AutolinkCommandArgs)" WorkingDirectory="$(AutolinkCommandWorkingDir)" CustomWarningRegularExpression="Warning: " CustomErrorRegularExpression="Error: " />
   </Target>
 </Project>

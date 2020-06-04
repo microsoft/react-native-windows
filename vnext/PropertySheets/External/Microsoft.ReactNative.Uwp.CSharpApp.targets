@@ -29,6 +29,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
 
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.targets" />
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets"
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 

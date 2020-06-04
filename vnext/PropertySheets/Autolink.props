@@ -6,6 +6,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
+    <RunAutolinkCheck Condition="'$(RunAutolinkCheck)' == ''">true</RunAutolinkCheck>
     <AutolinkCommand Condition="'$(AutolinkCommand)' == ''">npx react-native autolink-windows</AutolinkCommand>
     <AutolinkCommandArgs Condition="'$(AutolinkCommandArgs)' == ''">--check</AutolinkCommandArgs>
     <AutolinkCommandWorkingDir Condition="'$(AutolinkCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</AutolinkCommandWorkingDir>

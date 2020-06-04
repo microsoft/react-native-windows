@@ -75,7 +75,12 @@ async function runWindows(config, args, options) {
 
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
-    const msBuildProps = build.parseMsBuildProps(options);
+    var msBuildProps = build.parseMsBuildProps(options);
+
+    if (!options.autolink) {
+      // Disable the autolink check if --no-autolink was passed
+      msBuildProps.RunAutolinkCheck = 'false';
+    }
 
     try {
       await build.buildSolution(
