@@ -25,9 +25,14 @@ struct DevSettings {
   REACT_METHOD(setIsShakeToShowDevMenuEnabled) void setIsShakeToShowDevMenuEnabled(bool enabled) noexcept;
 
   static void SetReload(Mso::React::ReactOptions const &options, Mso::VoidFunctor &&func) noexcept;
+  static void Reload(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties) noexcept;
+
+  //! Toggles the element inspector UI, allowing visual inspection of the react UI
+  static void ToggleElementInspector(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept;
 
  private:
-  static winrt::Microsoft::ReactNative::IReactPropertyName ReloadProperty() noexcept;
+  static winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::Foundation::IInspectable>
+  ReloadProperty() noexcept;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 

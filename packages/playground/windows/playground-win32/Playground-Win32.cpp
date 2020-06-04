@@ -127,6 +127,10 @@ struct WindowData {
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
 
+          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
+          winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
+              host.InstanceSettings().Properties(), rootElement.XamlRoot());
+
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
@@ -135,7 +139,6 @@ struct WindowData {
           m_reactRootView.ReactNativeHost(host);
 
           // Retrieve ABI pointer from C++/CX pointer
-          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
           rootElement.Children().Clear();
           rootElement.Children().Append(m_reactRootView);
         }

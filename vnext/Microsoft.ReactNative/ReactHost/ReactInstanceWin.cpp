@@ -25,6 +25,7 @@
 
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "DevMenu.h"
 #include "IReactDispatcher.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
@@ -146,7 +147,12 @@ ReactInstanceWin::ReactInstanceWin(
       m_options{options},
       m_whenCreated{std::move(whenCreated)},
       m_whenLoaded{std::move(whenLoaded)},
+      m_isFastReloadEnabled(options.UseFastRefresh()),
+      m_isLiveReloadEnabled(options.UseLiveReload()),
       m_updateUI{std::move(updateUI)},
+      m_useWebDebugger(options.UseWebDebugger()),
+      m_useDirectDebugger(options.UseDirectDebugger()),
+      m_debuggerBreakOnNextLine(options.DebuggerBreakOnNextLine()),
       m_reactContext{Mso::Make<ReactContext>(
           this,
           options.Properties,
@@ -170,6 +176,8 @@ void ReactInstanceWin::Initialize() noexcept {
 
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
+
+  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext);
 
   Mso::PostFuture(
       m_uiQueue,
@@ -199,12 +207,12 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
           m_redboxHandler = devSettings->redboxHandler = std::move(GetRedBoxHandler());
-          devSettings->useDirectDebugger = m_options.DeveloperSettings.UseDirectDebugger;
-          devSettings->debuggerBreakOnNextLine = m_options.DeveloperSettings.DebuggerBreakOnNextLine;
+          devSettings->useDirectDebugger = m_useDirectDebugger;
+          devSettings->debuggerBreakOnNextLine = m_debuggerBreakOnNextLine;
           devSettings->debuggerPort = m_options.DeveloperSettings.DebuggerPort;
           devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
-          devSettings->useWebDebugger = m_options.DeveloperSettings.UseWebDebugger;
-          devSettings->useFastRefresh = m_options.DeveloperSettings.UseFastRefresh;
+          devSettings->useWebDebugger = m_useWebDebugger;
+          devSettings->useFastRefresh = m_isFastReloadEnabled;
           // devSettings->memoryTracker = GetMemoryTracker();
           devSettings->bundleRootPath =
               m_options.BundleRootPath.empty() ? "ms-appx:///Bundle/" : m_options.BundleRootPath;
@@ -329,14 +337,15 @@ void ReactInstanceWin::Initialize() noexcept {
 
             LoadJSBundles();
 
-            if (m_options.DeveloperSettings.IsDevModeEnabled && State() != ReactInstanceState::HasError) {
+            if (Mso::React::ReactOptions::UseDeveloperSupport(m_options.Properties) &&
+                State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
                   STRING(RN_PLATFORM),
                   m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
                                                                        : m_options.DeveloperSettings.SourceBundleName,
                   GetSourceBundleHost(),
                   GetSourceBundlePort(),
-                  m_options.DeveloperSettings.UseFastRefresh);
+                  m_isFastReloadEnabled);
               m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
             }
 
@@ -373,7 +382,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
   // The OnReactInstanceLoaded internally only accepts the first call and ignores others.
   //
 
-  if (m_options.DeveloperSettings.UseWebDebugger || m_options.DeveloperSettings.UseFastRefresh) {
+  if (m_useWebDebugger || m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
     auto instanceWrapper = m_instanceWrapper.LoadWithLock();
     instanceWrapper->loadBundle(Mso::Copy(m_options.Identity));
@@ -569,7 +578,7 @@ facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexce
 std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
   if (m_options.RedBoxHandler) {
     return m_options.RedBoxHandler;
-  } else if (m_options.DeveloperSettings.IsDevModeEnabled) {
+  } else if (m_options.UseDeveloperSupport()) {
     auto localWkReactHost = m_weakReactHost;
     return CreateDefaultRedBoxHandler(std::move(localWkReactHost), Mso::Copy(m_uiQueue));
   } else {
@@ -579,7 +588,7 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
 
 std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
   // Live reload is enabled if we provide a callback function.
-  if (m_options.DeveloperSettings.UseLiveReload || m_options.DeveloperSettings.UseFastRefresh) {
+  if (m_isLiveReloadEnabled || m_isFastReloadEnabled) {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnLiveReload);
   }
   return std::function<void()>{};
@@ -647,7 +656,7 @@ void ReactInstanceWin::OnLiveReload() noexcept {
 }
 
 std::function<void()> ReactInstanceWin::GetWaitingForDebuggerCallback() noexcept {
-  if (m_options.DeveloperSettings.UseWebDebugger) {
+  if (m_useWebDebugger) {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnWaitingForDebugger);
   }
 
@@ -666,7 +675,7 @@ void ReactInstanceWin::OnWaitingForDebugger() noexcept {
 }
 
 std::function<void()> ReactInstanceWin::GetDebuggerAttachCallback() noexcept {
-  if (m_options.DeveloperSettings.UseWebDebugger) {
+  if (m_useWebDebugger) {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnDebuggerAttach);
   }
 

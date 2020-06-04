@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "DevSettingsModule.h"
+#include "IReactContext.h"
 
 namespace Microsoft::ReactNative {
 
@@ -23,16 +24,22 @@ struct ReloadFunctor
 };
 
 /*static*/ void DevSettings::SetReload(Mso::React::ReactOptions const &options, Mso::VoidFunctor &&func) noexcept {
-  options.Properties.Set(ReloadProperty(), winrt::make<ReloadFunctor>(std::move(func)));
+  options.Properties.Set(ReloadProperty().Handle(), winrt::make<ReloadFunctor>(std::move(func)));
 }
 
-/*static*/ winrt::Microsoft::ReactNative::IReactPropertyName DevSettings::ReloadProperty() noexcept {
-  return winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
-      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"DevSettings"), L"Reload");
+/*static*/ winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::Foundation::IInspectable>
+DevSettings::ReloadProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::Foundation::IInspectable> propId{
+      L"ReactNative.DevSettings", L"Reload"};
+  return propId;
 }
 
 void DevSettings::reload() noexcept {
-  (*winrt::get_self<ReloadFunctor>(m_context.Properties().Get(
+  Reload(m_context.Properties());
+}
+
+/*static*/ void DevSettings::Reload(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties) noexcept {
+  (*winrt::get_self<ReloadFunctor>(properties.Get(
       winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::Foundation::IInspectable>(ReloadProperty()))))();
 }
 
@@ -45,11 +52,11 @@ void DevSettings::onFastRefresh() noexcept {
 }
 
 void DevSettings::setHotLoadingEnabled(bool isHotLoadingEnabled) noexcept {
-  assert(false);
+  Mso::React::ReactOptions::SetUseFastRefresh(m_context.Properties().Handle(), isHotLoadingEnabled);
 }
 
 void DevSettings::setIsDebuggingRemotely(bool isDebuggingRemotelyEnabled) noexcept {
-  assert(false);
+  Mso::React::ReactOptions::SetUseWebDebugger(m_context.Properties().Handle(), isDebuggingRemotelyEnabled);
 }
 
 void DevSettings::setProfilingEnabled(bool isProfilingEnabled) noexcept {
@@ -57,7 +64,14 @@ void DevSettings::setProfilingEnabled(bool isProfilingEnabled) noexcept {
 }
 
 void DevSettings::toggleElementInspector() noexcept {
-  assert(false);
+  auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
+  ToggleElementInspector(contextSelf->GetInner());
+}
+
+/*static*/ void DevSettings::ToggleElementInspector(
+    Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  reactContext->CallJSFunction(
+      "RCTDeviceEventEmitter", "emit", folly::dynamic::array("toggleElementInspector", nullptr));
 }
 
 void DevSettings::addMenuItem(std::string title) noexcept {

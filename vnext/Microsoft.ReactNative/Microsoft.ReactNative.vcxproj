@@ -379,6 +379,7 @@
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\DevMenu.h" />
     <ClInclude Include="Views\ReactRootControl.h" />
     <ClInclude Include="XamlHelper.h">
       <DependentUpon>XamlHelper.idl</DependentUpon>
@@ -553,6 +554,7 @@
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\ReactRootControl.cpp" />
     <ClCompile Include="XamlHelper.cpp">
       <DependentUpon>XamlHelper.idl</DependentUpon>
