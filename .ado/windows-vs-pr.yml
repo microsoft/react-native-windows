@@ -564,7 +564,7 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
