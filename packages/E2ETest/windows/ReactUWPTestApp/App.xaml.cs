@@ -36,9 +36,9 @@ namespace ReactUWPTestApp
 #endif
 
 #if DEBUG
-            InstanceSettings.EnableDeveloperMenu = true;
+            InstanceSettings.UseDeveloperSupport = true;
 #else
-            InstanceSettings.EnableDeveloperMenu = false;
+            InstanceSettings.UseDeveloperSupport = false;
 #endif
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());

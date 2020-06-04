@@ -13,7 +13,7 @@ namespace Microsoft::ReactNative {
 static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>>
     &DeviceInfoHolderPropertyId() noexcept {
   static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DeviceInfoHolder>>> prop{
-      L"DeviceInfo", L"DeviceInfoHolder"};
+      L"ReactNative.DeviceInfo", L"DeviceInfoHolder"};
   return prop;
 }
 

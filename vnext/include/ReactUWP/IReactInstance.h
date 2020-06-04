@@ -43,7 +43,7 @@ struct ReactInstanceSettings {
   bool UseJsi{true};
   bool EnableJITCompilation{true};
   bool EnableByteCodeCaching{false};
-  bool EnableDeveloperMenu{false};
+  bool UseDeveloperSupport{false};
   uint16_t DebuggerPort{9229};
   uint16_t SourceBundlePort{0};
 

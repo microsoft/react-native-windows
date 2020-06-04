@@ -12,17 +12,17 @@
 namespace Microsoft::ReactNative {
 
 static const React::ReactPropertyId<bool> &SystemIsRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{L"I18n", L"SystemIsRTL"};
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.I18n", L"SystemIsRTL"};
   return prop;
 }
 
 static const React::ReactPropertyId<bool> &AllowRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{L"I18n", L"AllowRTL"};
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.I18n", L"AllowRTL"};
   return prop;
 }
 
 static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{L"I18n", L"ForceRTL"};
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.I18n", L"ForceRTL"};
   return prop;
 }
 

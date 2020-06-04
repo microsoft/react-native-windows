@@ -317,6 +317,9 @@
       <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\DevMenu.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -671,6 +674,9 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\DevMenu.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>

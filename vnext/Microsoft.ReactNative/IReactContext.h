@@ -28,6 +28,10 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
+  // Not part of the public ABI interface
+  // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods
+  Mso::React::IReactContext &GetInner() const noexcept;
+
  private:
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
