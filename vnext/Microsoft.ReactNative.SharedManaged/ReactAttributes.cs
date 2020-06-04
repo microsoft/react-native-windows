@@ -3,6 +3,9 @@
 
 using System;
 
+#pragma warning disable CS8625 // This file is compiled both without and with nullable
+#pragma warning disable CS8618 // This file is compiled both without and with nullable
+
 namespace Microsoft.ReactNative.Managed
 {
   [AttributeUsage(AttributeTargets.Class)]
@@ -33,7 +36,6 @@ namespace Microsoft.ReactNative.Managed
 
     public string ConstantName { get; set; }
   }
-
 
   [AttributeUsage(AttributeTargets.Method)]
   public class ReactConstantProviderAttribute : Attribute

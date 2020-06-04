@@ -226,7 +226,7 @@ export default class Bootstrap extends React.Component<
                 }}
                 {...{
                   // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-                  acceptsKeyboardFocus: true,
+                  focusable: true,
                 }}
               />
             </View>

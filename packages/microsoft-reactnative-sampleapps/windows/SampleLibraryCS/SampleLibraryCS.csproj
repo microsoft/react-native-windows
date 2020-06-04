@@ -22,6 +22,7 @@
     <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
     <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
     <LangVersion>7.3</LangVersion>
+    <ReactNativeCodeGenEnabled>true</ReactNativeCodeGenEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -112,7 +113,6 @@
     <Compile Include="CustomUserControlCS.cs" />
     <Compile Include="CustomUserControlViewManagerCS.cs" />
     <Compile Include="CircleViewManagerCS.cs" />
-    <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleModuleCS.cs" />
   </ItemGroup>

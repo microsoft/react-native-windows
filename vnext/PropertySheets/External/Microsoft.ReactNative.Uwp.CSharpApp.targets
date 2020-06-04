@@ -22,12 +22,15 @@
     </PackageReference>
   </ItemGroup>
 
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
+          Condition="'$(ReactNativeCodeGenEnabled)' == 'true'" />
+
    <!-- The props file for bundling is not set up to be just defaults, it assumes to be run at the end of the project. -->
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
 
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.targets" />
-  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets" Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
+  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets"
+          Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
   <Import Project="$(MSBuildProjectDirectory)$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
           Condition="Exists('$(MSBuildProjectDirectory)$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />

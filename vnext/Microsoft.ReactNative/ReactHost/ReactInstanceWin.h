@@ -77,6 +77,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept override;
   std::string GetBundleRootPath() noexcept override;
   std::shared_ptr<react::uwp::IReactInstance> UwpReactInstance() noexcept override;
+  bool IsLoaded() const noexcept override;
   void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;

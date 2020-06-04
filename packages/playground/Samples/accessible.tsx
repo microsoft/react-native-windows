@@ -23,7 +23,7 @@ export default class Bootstrap extends React.Component<
           style={styles.item}
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            acceptsKeyboardFocus: true,
+            focusable: true,
             accessibilityLabel: 'FIRST ITEM',
           }}>
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
@@ -33,7 +33,7 @@ export default class Bootstrap extends React.Component<
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             enableFocusRing: false,
-            acceptsKeyboardFocus: true,
+            focusable: true,
             accessibilityLabel: 'SECOND ITEM',
           }}>
           <Text style={styles.text}>No focus visual (SECOND ITEM)</Text>
@@ -45,7 +45,7 @@ export default class Bootstrap extends React.Component<
             onFocus: () => this.setState({displayText: 'FOCUSED'}),
             onBlur: () => this.setState({displayText: 'BLURRED'}),
             enableFocusRing: false,
-            acceptsKeyboardFocus: true,
+            focusable: true,
             accessibilityLabel: 'THIRD ITEM',
           }}>
           <Text style={styles.text}>{this.state.displayText}</Text>

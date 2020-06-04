@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow paremeterization of buildLogDirectory for msbuild task when using run-windows",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-01T23:47:14.917Z"
-}

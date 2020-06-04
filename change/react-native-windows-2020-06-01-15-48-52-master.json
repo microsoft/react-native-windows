@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "Code Cleanup: Some low haning fruit lint fixes",
+  "comment": "Adding compile time Code generation for Managed React Native modules for Windows",
   "packageName": "react-native-windows",
   "email": "dannyvv@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-06-01T23:06:42.651Z"
+  "date": "2020-06-01T22:48:52.079Z"
 }

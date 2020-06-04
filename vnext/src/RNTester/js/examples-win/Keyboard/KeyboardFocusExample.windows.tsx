@@ -108,7 +108,7 @@ class KeyboardFocusExample extends React.Component<
 
         <ViewWindows
           style={styles.keyEnterVisualizer}
-          acceptsKeyboardFocus={true}
+          focusable={true}
           ref={viewWindowsRef}>
           <Text>View accept focus</Text>
         </ViewWindows>

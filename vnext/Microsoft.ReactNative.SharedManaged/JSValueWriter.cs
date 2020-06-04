@@ -538,4 +538,9 @@ namespace Microsoft.ReactNative.Managed
   {
     public static WriteValueDelegate<T> WriteValue = JSValueWriter.GetWriteValueDelegate<T>();
   }
+  
+  public static class JSValueWriterCodeGen<T>
+  {
+    public static WriteValueDelegate<T> WriteValue { get; set; }
+  }
 }

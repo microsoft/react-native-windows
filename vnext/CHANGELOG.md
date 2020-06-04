@@ -1,8 +1,29 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Jun 2020 00:07:29 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Jun 2020 00:05:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.84
+
+Thu, 04 Jun 2020 00:05:05 GMT
+
+### Changes
+
+- Fix ReloadInstance crash caused by unloaded instance (vmorozov@microsoft.com)
+- Re-enable RNTester integration tests. (julio.rocha@microsoft.com)
+
+## 0.0.0-master.83
+
+Wed, 03 Jun 2020 00:05:25 GMT
+
+### Changes
+
+- Deprecate acceptsKeyboardFocus (kaigu@microsoft.com)
+- Remove react-native-community/cli dependency from template (acoates@microsoft.com)
+- Code Cleanup: Some low haning fruit lint fixes (dannyvv@microsoft.com)
+- Allow paremeterization of buildLogDirectory for msbuild task when using run-windows (dannyvv@microsoft.com)
+- Minor autolinking template update prep (jthysell@microsoft.com)
 
 ## 0.0.0-master.82
 

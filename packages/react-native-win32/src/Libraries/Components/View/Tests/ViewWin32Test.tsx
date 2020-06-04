@@ -113,7 +113,7 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
       <ViewWin32 keyDownEvents={handledNativeKeyboardEvents} keyUpEvents={handledNativeKeyboardEvents}>
         <ViewWin32
           style={this.state.hasFocus ? [styles.keyComponentRoot, styles.border] : styles.keyComponentRoot}
-          acceptsKeyboardFocus
+          focusable
           onKeyUp={this._onKeyUp}
           onKeyDown={this._onKeyDown}
           onFocus={this._onFocus}

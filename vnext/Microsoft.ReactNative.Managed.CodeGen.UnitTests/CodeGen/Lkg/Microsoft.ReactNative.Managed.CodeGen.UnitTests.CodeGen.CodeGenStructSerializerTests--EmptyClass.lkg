@@ -1,0 +1,32 @@
+internal void CreateObjectSerializers()
+{
+    global::Microsoft.ReactNative.Managed.JSValueReaderCodeGen<global::TestClass.MyStruct>.ReadValue = (global::Microsoft.ReactNative.IJSValueReader reader, out global::TestClass.MyStruct value) =>
+    {
+        value = new global::TestClass.MyStruct();
+        if (reader.ValueType == global::Microsoft.ReactNative.JSValueType.Object)
+        {
+            while (reader.GetNextObjectProperty(out string propertyName))
+            {
+                switch (propertyName)
+                {
+                }
+            }
+        }
+    }
+
+    ;
+    global::Microsoft.ReactNative.Managed.JSValueWriterCodeGen<global::TestClass.MyStruct>.WriteValue = (writer, value) =>
+    {
+        if (value != null)
+        {
+            writer.WriteObjectBegin();
+            writer.WriteObjectEnd();
+        }
+        else
+        {
+            writer.WriteNull();
+        }
+    }
+
+    ;
+}
