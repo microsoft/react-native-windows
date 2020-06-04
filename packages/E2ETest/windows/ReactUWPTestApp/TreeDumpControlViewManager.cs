@@ -93,7 +93,6 @@ namespace TreeDumpLibrary
             { "additionalProperties", ViewManagerPropertyType.Array }
         };
 
-
         private static string GetOutputFile(string dumpID)
         {
             return "TreeDump\\" + dumpID + ".json";
@@ -126,7 +125,6 @@ namespace TreeDumpLibrary
                 throw;
             }
         }
-
 
         public void SetDumpID(TextBlock view, string value)
         {

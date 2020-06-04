@@ -107,12 +107,14 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
