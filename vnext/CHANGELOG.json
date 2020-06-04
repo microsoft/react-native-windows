@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Jun 2020 23:30:48 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.10",
+      "version": "0.62.0-preview.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor autolinking template update prep",
+            "author": "jthysell@microsoft.com",
+            "commit": "58f8b4a3d84eafd8bd30a474334aac2b34979170",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Jun 2020 03:06:06 GMT",
       "tag": "react-native-windows_v0.62.0-preview.9",
       "version": "0.62.0-preview.9",

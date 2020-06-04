@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Jun 2020 03:06:06 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Jun 2020 23:30:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.10
+
+Thu, 04 Jun 2020 23:30:48 GMT
+
+### Changes
+
+- Minor autolinking template update prep (jthysell@microsoft.com)
 
 ## 0.62.0-preview.9
 
