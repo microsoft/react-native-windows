@@ -1,13 +1,16 @@
+// Change the below to true for autolink to target SampleAppCS instead of SampleAppCPP.
+// Then run `npx react-native autolink-windows` to actually run the autolink.
+const targetCS = false;
+
 module.exports = {
   reactNativePath: '../../vnext',
-  // Uncomment the below then run `npx react-native autolink-windows` to run autolink for SampleAppCS
-  // project: {
-  //   windows: {
-  //     sourceDir: 'windows',
-  //     solutionFile: 'SampleApps.sln',
-  //     project: {
-  //       projectFile: 'SampleAppCS\\SampleAppCS.csproj',
-  //     },
-  //   },
-  // },
+  project: {
+    windows: {
+      sourceDir: 'windows',
+      solutionFile: 'SampleApps.sln',
+      project: {
+        projectFile: targetCS ? 'SampleAppCS\\SampleAppCS.csproj' : 'SampleAppCPP\\SampleAppCPP.vcxproj',
+      },
+    },
+  },
 };

@@ -1,12 +1,15 @@
+// Change the below to true for autolink to target playground-win32 instead of playground.
+// Then run `npx react-native autolink-windows` to actually run the autolink.
+const targetWin32 = false;
+
 module.exports = {
-  // Uncomment the below then run `npx react-native autolink-windows` to run autolink for playground-win32
-  // project: {
-  //   windows: {
-  //     sourceDir: 'windows',
-  //     solutionFile: 'playground-win32.sln',
-  //     project: {
-  //       projectFile: 'playground-win32\\Playground-win32.vcxproj',
-  //     },
-  //   },
-  // },
+  project: {
+    windows: {
+      sourceDir: 'windows',
+      solutionFile: targetWin32 ? 'playground-win32.sln' : 'playground.sln',
+      project: {
+        projectFile: targetWin32 ? 'playground-win32\\playground-win32.vcxproj' : 'playground\\playground.vcxproj',
+      },
+    },
+  },
 };

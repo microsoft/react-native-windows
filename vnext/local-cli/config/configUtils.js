@@ -9,9 +9,6 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-const xmldoc = require('xmldoc');
-
-// find VS files matching the pattern
 function findFiles(folder, filenamePattern) {
   const files = glob.sync(path.join('**', filenamePattern), {
     cwd: folder,
@@ -27,7 +24,6 @@ function findFiles(folder, filenamePattern) {
   return files;
 }
 
-// finds the windows folder if present
 function findWindowsFolder(folder) {
   const winDir = 'windows';
   const joinedDir = path.join(folder, winDir);
@@ -38,64 +34,100 @@ function findWindowsFolder(folder) {
   return null;
 }
 
-// find the visual studio solution file
-function findSolutionFile(winFolder, packageJson = {}) {
-  if (packageJson.name) {
-    const solutionName = packageJson.name;
-
-    // First look for a solution named solutionName.sln
-    const slnFile = findFiles(winFolder, solutionName + '.sln')[0];
-
-    if (slnFile) {
-      return path.join(winFolder, slnFile);
-    }
-  }
-
-  // Next look for any solution *.sln
-  const allSln = findFiles(winFolder, '*.sln');
-
-  if (allSln.length > 0) {
-    return path.join(winFolder, allSln[0]);
-  }
-
-  return null;
+function isRnwSolution(filePath) {
+  return (
+    fs
+      .readFileSync(filePath)
+      .toString()
+      .search(/ReactNative/) > 0
+  );
 }
 
-// find the visual studio project file
-function findProjectFile(winFolder, packageJson = {}) {
-  if (packageJson.name) {
-    const projectName = packageJson.name;
+function findSolutionFiles(winFolder) {
+  // First search for all potential solution files
+  const allSolutions = findFiles(winFolder, '*.sln');
 
-    // First look for a project named projectName.vcxproj
-    const cppProj = findFiles(winFolder, projectName + '.vcxproj')[0];
+  if (allSolutions.length === 0) {
+    // If there're no solution files, return 0
+    return [];
+  }
 
-    if (cppProj) {
-      return path.join(winFolder, cppProj);
-    }
+  var solutionFiles = [];
 
-    // Next look for a project named projectName.csproj
-    const csProj = findFiles(winFolder, projectName + '.csproj')[0];
-
-    if (csProj) {
-      return path.join(winFolder, csProj);
+  // Try to find any solution file that appears to be a react native solution
+  for (var solutionFile of allSolutions) {
+    if (isRnwSolution(path.join(winFolder, solutionFile))) {
+      solutionFiles.push(solutionFile);
     }
   }
 
-  // Next look for any project *.vcxproj
+  return solutionFiles;
+}
+
+function isRnwDependencyProject(filePath) {
+  return (
+    fs
+      .readFileSync(filePath)
+      .toString()
+      .search(/Microsoft\.ReactNative\.Uwp\.(Cpp|CSharp)Lib\.targets/) > 0
+  );
+}
+
+function findDependencyProjectFiles(winFolder) {
+  // First, search for all potential project files
   const allCppProj = findFiles(winFolder, '*.vcxproj');
-
-  if (allCppProj.length > 0) {
-    return path.join(winFolder, allCppProj[0]);
-  }
-
-  // Next look for any project *.csproj
   const allCsProj = findFiles(winFolder, '*.csproj');
 
-  if (allCsProj.length > 0) {
-    return path.join(winFolder, allCsProj[0]);
+  const allProjects = allCppProj.concat(allCsProj);
+
+  if (allProjects.length === 0) {
+    // If there're no project files, return 0
+    return [];
   }
 
-  return null;
+  var dependencyProjectFiles = [];
+
+  // Try to find any project file that appears to be a dependency project
+  for (var projectFile of allProjects) {
+    if (isRnwDependencyProject(path.join(winFolder, projectFile))) {
+      dependencyProjectFiles.push(projectFile);
+    }
+  }
+
+  return dependencyProjectFiles;
+}
+
+function isRnwAppProject(filePath) {
+  return (
+    fs
+      .readFileSync(filePath)
+      .toString()
+      .search(/Microsoft\.ReactNative\.Uwp\.(Cpp|CSharp)App\.targets/) > 0
+  );
+}
+
+function findAppProjectFiles(winFolder) {
+  // First, search for all potential project files
+  const allCppProj = findFiles(winFolder, '*.vcxproj');
+  const allCsProj = findFiles(winFolder, '*.csproj');
+
+  const allProjects = allCppProj.concat(allCsProj);
+
+  if (allProjects.length === 0) {
+    // If there're no project files, return 0
+    return [];
+  }
+
+  var appProjectFiles = [];
+
+  // Try to find any project file that appears to be an app project
+  for (var projectFile of allProjects) {
+    if (isRnwAppProject(path.join(winFolder, projectFile))) {
+      appProjectFiles.push(projectFile);
+    }
+  }
+
+  return appProjectFiles;
 }
 
 function getProjectLanguage(projectPath) {
@@ -107,35 +139,42 @@ function getProjectLanguage(projectPath) {
   return null;
 }
 
-// read visual studio project file which is actually a XML doc
 function readProjectFile(projectPath) {
-  return new xmldoc.XmlDocument(fs.readFileSync(projectPath, 'utf8'));
+  return fs.readFileSync(projectPath, 'utf8').toString();
 }
 
-function findProperty(projectXml, propertyName) {
-  return projectXml.valueWithPath('PropertyGroup.' + propertyName);
+function findTagValue(projectContents, tagName) {
+  const regexExpression = `<${tagName}>(.*)</${tagName}>`;
+  const regex = new RegExp(regexExpression, 'm');
+  const match = projectContents.match(regex);
+
+  return match !== null && match.length === 2 ? match[1] : null;
 }
 
-function getProjectName(projectXml) {
+function getProjectName(projectContents) {
   return (
-    findProperty(projectXml, 'ProjectName') ||
-    findProperty(projectXml, 'AssemblyName')
+    findTagValue(projectContents, 'ProjectName') ||
+    findTagValue(projectContents, 'AssemblyName')
   );
 }
 
-function getProjectNamespace(projectXml) {
-  return findProperty(projectXml, 'RootNamespace');
+function getProjectNamespace(projectContents) {
+  return findTagValue(projectContents, 'RootNamespace');
 }
 
-function getProjectGuid(projectXml) {
-  return findProperty(projectXml, 'ProjectGuid');
+function getProjectGuid(projectContents) {
+  return findTagValue(projectContents, 'ProjectGuid');
 }
 
 module.exports = {
   findFiles: findFiles,
   findWindowsFolder: findWindowsFolder,
-  findSolutionFile: findSolutionFile,
-  findProjectFile: findProjectFile,
+  isRnwSolution: isRnwSolution,
+  findSolutionFiles: findSolutionFiles,
+  isRnwDependencyProject: isRnwDependencyProject,
+  findDependencyProjectFiles: findDependencyProjectFiles,
+  isRnwAppProject: isRnwAppProject,
+  findAppProjectFiles: findAppProjectFiles,
   getProjectLanguage: getProjectLanguage,
   readProjectFile: readProjectFile,
   getProjectName: getProjectName,

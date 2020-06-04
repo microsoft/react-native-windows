@@ -25,8 +25,8 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
 
 {
   folder: string,       // (auto) Absolute path to the module root folder, determined by react-native config, ex: 'c:\path\to\app-name\node_modules\module-name'
-  sourceDir: string,    // (req) Relative path to the windows implementation under folder, ex: 'windows'
-  solutionFile: string, // (req) Relative path to the module's VS solution file under sourceDir, ex: 'ModuleName.sln'
+  sourceDir: string,    // (opt, req if projects defined) Relative path to the windows implementation under folder, ex: 'windows'
+  solutionFile: string, // (opt) Relative path to the module's VS solution file under sourceDir, ex: 'ModuleName.sln'
   projects: [ // (opt) Array of VS projects that must be added to the consuming app's solution file, so they are built
     {
       projectFile: string,     // (req) Relative path to the VS project file under sourceDir, ex: 'ProjectName\ProjectName.vcxproj' for 'c:\path\to\app-name\node_modules\module-name\windows\ProjectName\ProjectName.vcxproj'
@@ -55,30 +55,54 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
 */
 
 function dependencyConfigWindows(folder, userConfig = {}) {
-  const usingManualOverride = 'sourceDir' in userConfig;
+  const usingManualProjectsOverride = 'projects' in userConfig;
 
-  const sourceDir = usingManualOverride
-    ? path.join(folder, userConfig.sourceDir)
-    : configUtils.findWindowsFolder(folder);
+  var projects = usingManualProjectsOverride ? userConfig.projects : [];
 
-  if (sourceDir === null) {
+  const usingManualNugetPackagesOverride = 'nugetPackages' in userConfig;
+
+  var nugetPackages = usingManualNugetPackagesOverride
+    ? userConfig.nugetPackages
+    : [];
+
+  var sourceDir = null;
+  if (usingManualProjectsOverride && projects.length > 0) {
+    // Manaully provided projects, so extract the sourceDir
+    if (!('sourceDir' in userConfig) || userConfig.sourceDir === null) {
+      throw new Error(
+        'sourceDir is required if projects are specified, but it is not specified in react-native.config',
+      );
+    }
+    sourceDir = path.join(folder, userConfig.sourceDir);
+  } else if (!usingManualProjectsOverride) {
+    // No manually provided projects, try to find sourceDir
+    sourceDir = configUtils.findWindowsFolder(folder);
+  }
+
+  if (
+    sourceDir === null &&
+    projects.length === 0 &&
+    nugetPackages.length === 0
+  ) {
+    // Nothing to do here, bail
     return null;
   }
 
-  if (usingManualOverride && !('solutionFile' in userConfig)) {
-    throw 'solutionFile is required but not specified in react-native.config';
+  const usingManualSolutionFile = 'solutionFile' in userConfig;
+
+  var solutionFile = null;
+  if (usingManualSolutionFile && userConfig.solutionFile !== null) {
+    // Manually provided solutionFile, so extract it
+    solutionFile = path.join(sourceDir, userConfig.solutionFile);
+  } else if (!usingManualSolutionFile) {
+    // No manually provided solutionFile, try to find it
+    const solutionFiles = configUtils.findSolutionFiled(sourceDir);
+    if (solutionFiles.length === 1) {
+      solutionFile = path.join(sourceDir, solutionFile);
+    }
   }
 
-  const packageJson = require(path.join(folder, 'package.json'));
-
-  const solutionFile = usingManualOverride
-    ? path.join(sourceDir, userConfig.solutionFile)
-    : configUtils.findSolutionFile(sourceDir, packageJson);
-
-  var projects = usingManualOverride ? userConfig.projects || [] : [];
-  var nugetPackages = usingManualOverride ? userConfig.nugetPackages || [] : [];
-
-  if (usingManualOverride) {
+  if (usingManualProjectsOverride) {
     // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
 
     const alwaysRequired = ['projectFile', 'directDependency'];
@@ -94,71 +118,79 @@ function dependencyConfigWindows(folder, userConfig = {}) {
       // Verifying (req) items
       alwaysRequired.forEach(item => {
         if (!(item in projects[i])) {
-          throw `${item} is required for each project in react-native.config`;
+          throw new Error(
+            `${item} is required for each project in react-native.config`,
+          );
         }
       });
 
       const projectFile = path.join(sourceDir, projects[i].projectFile);
 
-      const projectXml = configUtils.readProjectFile(projectFile);
+      const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
-
-      projects[i].projectName = configUtils.getProjectName(projectXml);
+      projects[i].projectName = configUtils.getProjectName(projectContents);
       projects[i].projectLang = configUtils.getProjectLanguage(projectFile);
-      projects[i].projectGuid = configUtils.getProjectGuid(projectXml);
+      projects[i].projectGuid = configUtils.getProjectGuid(projectContents);
 
       if (projects[i].directDependency) {
         // Verifying (req) items
         requiredForDirectDepenencies.forEach(item => {
           if (!(item in projects[i])) {
-            throw `${item} is required for each project in react-native.config`;
+            throw new Error(
+              `${item} is required for each project in react-native.config`,
+            );
           }
         });
       }
     }
   } else {
-    // No react-native.config, try to heurestically find the correct project
+    // No react-native.config, try to heurestically find any projects
 
-    const projectFile = configUtils.findProjectFile(sourceDir, packageJson);
+    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
 
-    const projectLang = configUtils.getProjectLanguage(projectFile);
+    for (let i = 0; i < foundProjects.length; i++) {
+      const projectFile = path.join(sourceDir, foundProjects[i]);
 
-    const projectXml = configUtils.readProjectFile(projectFile);
+      const projectLang = configUtils.getProjectLanguage(projectFile);
 
-    const projectName = configUtils.getProjectName(projectXml);
+      const projectContents = configUtils.readProjectFile(projectFile);
 
-    const projectGuid = configUtils.getProjectGuid(projectXml);
+      const projectName = configUtils.getProjectName(projectContents);
 
-    const projectNamespace = configUtils.getProjectNamespace(projectXml);
+      const projectGuid = configUtils.getProjectGuid(projectContents);
 
-    const directDependency = true;
+      const projectNamespace = configUtils.getProjectNamespace(projectContents);
 
-    const cppNamespace = projectNamespace.replace(/\./g, '::');
-    const csNamespace = projectNamespace.replace(/::/g, '.');
+      const directDependency = true;
 
-    const cppHeaders = [`winrt/${csNamespace}.h`];
-    const cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
-    const csNamespaces = [`${csNamespace}`];
-    const csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
+      const cppNamespace = projectNamespace.replace(/\./g, '::');
+      const csNamespace = projectNamespace.replace(/::/g, '.');
 
-    projects.push({
-      projectFile: projectFile.substr(sourceDir.length + 1),
-      projectName,
-      projectLang,
-      projectGuid,
-      directDependency,
-      cppHeaders,
-      cppPackageProviders,
-      csNamespaces,
-      csPackageProviders,
-    });
+      const cppHeaders = [`winrt/${csNamespace}.h`];
+      const cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
+      const csNamespaces = [`${csNamespace}`];
+      const csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
+
+      projects.push({
+        projectFile: projectFile.substr(sourceDir.length + 1),
+        projectName,
+        projectLang,
+        projectGuid,
+        directDependency,
+        cppHeaders,
+        cppPackageProviders,
+        csNamespaces,
+        csPackageProviders,
+      });
+    }
   }
 
   return {
     folder,
     sourceDir: sourceDir.substr(folder.length + 1),
-    solutionFile: solutionFile.substr(sourceDir.length + 1),
+    solutionFile:
+      solutionFile !== null ? solutionFile.substr(sourceDir.length + 1) : null,
     projects,
     nugetPackages,
   };

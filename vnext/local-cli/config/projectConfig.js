@@ -54,26 +54,68 @@ function projectConfigWindows(folder, userConfig = {}) {
     // Verifying (req) items
     alwaysRequired.forEach(item => {
       if (!(item in userConfig)) {
-        throw `${item} is required but not specified in react-native.config`;
+        throw new Error(
+          `${item} is required but not specified in react-native.config`,
+        );
       }
     });
   }
 
-  const packageJson = require(path.join(folder, 'package.json'));
+  const usingManualSolutionFile = 'solutionFile' in userConfig;
 
-  const solutionFile = usingManualOverride
-    ? path.join(sourceDir, userConfig.solutionFile)
-    : configUtils.findSolutionFile(sourceDir, packageJson);
-
-  if (usingManualOverride && !('projectFile' in userConfig.project)) {
-    throw 'projectFile is required but not specified in react-native.config';
+  var solutionFile = null;
+  if (usingManualSolutionFile && userConfig.solutionFile !== null) {
+    // Manually provided solutionFile, so extract it
+    solutionFile = path.join(sourceDir, userConfig.solutionFile);
+  } else if (!usingManualSolutionFile) {
+    // No manually provided solutionFile, try to find it
+    const foundSolutions = configUtils.findSolutionFiles(sourceDir);
+    if (foundSolutions.length === 0) {
+      throw new Error(
+        'No app solution file found, please specify in react-native.config',
+      );
+    } else if (foundSolutions.length > 1) {
+      throw new Error(
+        'Too many app solution files found, please specify in react-native.config',
+      );
+    }
+    solutionFile = path.join(sourceDir, foundSolutions[0]);
   }
 
-  const projectFile = usingManualOverride
-    ? path.join(sourceDir, userConfig.project.projectFile)
-    : configUtils.findProjectFile(sourceDir, packageJson);
+  if (solutionFile === null) {
+    throw new Error(
+      'Unable to determine app solution file, please specify in react-native.config',
+    );
+  }
 
-  const projectXml = configUtils.readProjectFile(projectFile);
+  const usingManualProjectOverride = 'project' in userConfig;
+
+  var projectFile = null;
+  if (usingManualProjectOverride) {
+    // Manually provided project, so extract it
+    projectFile = path.join(sourceDir, userConfig.project.projectFile);
+  } else {
+    // No manually provided project, try to find it
+    const foundProjects = configUtils.findAppProjectFiles(sourceDir);
+    if (foundProjects.length === 0) {
+      throw new Error(
+        'No app project file found, please specify in react-native.config',
+      );
+    } else if (foundProjects.length > 1) {
+      throw new Error(
+        'Too many app project files found, please specify in react-native.config',
+      );
+    }
+    projectFile = path.join(sourceDir, foundProjects[0]);
+  }
+
+  if (projectFile === null) {
+    throw new Error(
+      'Unable to determine app project file, please specify in react-native.config',
+    );
+  }
+
+  const projectContents = configUtils.readProjectFile(projectFile);
 
   return {
     folder,
@@ -81,9 +123,9 @@ function projectConfigWindows(folder, userConfig = {}) {
     solutionFile: solutionFile.substr(sourceDir.length + 1),
     project: {
       projectFile: projectFile.substr(sourceDir.length + 1),
-      projectName: configUtils.getProjectName(projectXml),
+      projectName: configUtils.getProjectName(projectContents),
       projectLang: configUtils.getProjectLanguage(projectFile),
-      projectGuid: configUtils.getProjectGuid(projectXml),
+      projectGuid: configUtils.getProjectGuid(projectContents),
     },
   };
 }

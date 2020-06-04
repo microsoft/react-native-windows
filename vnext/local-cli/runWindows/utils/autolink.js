@@ -98,7 +98,9 @@ async function updateAutoLink(config, args, options) {
     const windowsAppConfig = rnConfig.project.windows;
 
     if (!windowsAppConfig) {
-      throw 'Windows auto-link only supported on windows app projects.';
+      throw new Error(
+        'Windows auto-link only supported on windows app projects.',
+      );
     }
 
     verboseMessage('Found Windows app project, parsing...', verbose);
