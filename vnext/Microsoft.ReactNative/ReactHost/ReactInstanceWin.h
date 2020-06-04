@@ -144,11 +144,11 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   const Mso::Promise<void> m_whenDestroyed;
   const std::shared_ptr<react::uwp::UwpReactInstanceProxy> m_legacyInstance;
   const Mso::VoidFunctor m_updateUI;
-  const bool m_debuggerBreakOnNextLine;
-  const bool m_isFastReloadEnabled;
-  const bool m_isLiveReloadEnabled;
-  const bool m_useDirectDebugger;
-  const bool m_useWebDebugger;
+  const bool m_debuggerBreakOnNextLine : 1;
+  const bool m_isFastReloadEnabled : 1;
+  const bool m_isLiveReloadEnabled : 1;
+  const bool m_useDirectDebugger : 1;
+  const bool m_useWebDebugger : 1;
 
   const Mso::CntPtr<ReactContext> m_reactContext;
 

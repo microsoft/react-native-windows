@@ -28,11 +28,9 @@ struct DevSettings {
   static void Reload(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties) noexcept;
 
   //! Toggles the element inspector UI, allowing visual inspection of the react UI
-  static void ToggleElementInspector(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept;
+  static void ToggleElementInspector(Mso::React::IReactContext &reactContext) noexcept;
 
  private:
-  static winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::Foundation::IInspectable>
-  ReloadProperty() noexcept;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 

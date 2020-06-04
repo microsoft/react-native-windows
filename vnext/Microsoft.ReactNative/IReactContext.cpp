@@ -60,8 +60,8 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
-Mso::CntPtr<Mso::React::IReactContext> &ReactContext::GetInner() {
-  return m_context;
+Mso::React::IReactContext &ReactContext::GetInner() const noexcept {
+  return *m_context;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

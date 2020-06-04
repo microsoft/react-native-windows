@@ -337,8 +337,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
             LoadJSBundles();
 
-            if (Mso::React::ReactOptions::UseDeveloperSupport(m_options.Properties) &&
-                State() != ReactInstanceState::HasError) {
+            if (m_options.UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
                   STRING(RN_PLATFORM),
                   m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
