@@ -184,7 +184,7 @@ interface ITouchableWin32HighlightProps extends IViewWin32Props {
   rejectResponderTermination?: boolean;
   underlayColor?: string;
   children?: IRenderChild<ITouchableWin32State>;
-  innerRef?: React.RefObject<ViewWin32>
+  innerRef?: React.RefObject<TouchableWin32>
 }
 
 /**
@@ -221,7 +221,7 @@ class TouchableWin32Highlight extends React.Component<ITouchableWin32HighlightPr
         onMouseLeave={this._mouseLeave}
         renderStyle={this._generateStyle}
         children={this.props.children}
-        focusRef={this.props.innerRef}
+        ref={this.props.innerRef}
       />
     );
   }
@@ -431,7 +431,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
 
 const TouchableFocusExample = () => {
   const [focused, setFocused] = React.useState(false);
-  let focusableRef = React.useRef<ViewWin32>(null);
+  let focusableRef = React.useRef<TouchableWin32>(null);
 
   // onPress callback
   const focusOnPress = React.useCallback(() => {

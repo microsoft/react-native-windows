@@ -41,9 +41,4 @@ export interface ITouchableWin32Props extends IViewWin32Props {
    * will result in onKeyUp and onKeyDown getting fired regardless of filterKeys.
    */
   filterKeys?: (str: string) => boolean;
-  /**
-   * A ref to the internal View.
-   * This allows for imperative focusing of a Touchable
-   */
-  focusRef?: React.RefObject<ViewWin32>
 }

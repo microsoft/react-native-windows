@@ -188,6 +188,8 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   private _positionOnActivate: IPosition;
   private _dimensionsOnActivate: IDimensions;
 
+  private _internalRef: React.RefObject<ViewWin32>
+
   constructor(props) {
     super(props);
 
@@ -197,6 +199,8 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
       isFocused: false,
       isHovered: false,
     };
+
+
   }
 
   public componentWillUnmount() {
@@ -206,7 +210,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   }
 
   public render() {
-    const { children, focusRef, style, renderStyle, ...rest } = this.props;
+    const { children, style, renderStyle, ...rest } = this.props;
 
     // The React Native touchables generally clone the child component
     // to apply additional styles to it. This approach allows children
@@ -250,13 +254,17 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
         onKeyDown={this._onKeyDown}
         onKeyUp={this._onKeyUp}
         // Ref
-        ref={focusRef}
+        ref={this._internalRef}
         // Style
         style={computedStyle}
       >
         {child}
       </ViewWin32>
     );
+  }
+
+  public focus = () => {
+    this._internalRef.current.focus();
   }
 
   /**
