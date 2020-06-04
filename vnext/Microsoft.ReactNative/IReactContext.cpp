@@ -22,6 +22,10 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
+IReactDispatcher ReactContext::JSDispatcher() noexcept {
+  return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
 // Deprecated: Use XamlUIService directly.
 void ReactContext::DispatchEvent(
     xaml::FrameworkElement const &view,
