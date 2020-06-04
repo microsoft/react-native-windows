@@ -349,7 +349,7 @@ struct CustomUserControlViewManager : winrt::implements&lt;
 
   void DispatchCommand(
       winrt::Windows::UI::Xaml::FrameworkElement const &amp;view,
-      const std::string&amp; commandId,
+      winrt::hstring const &amp;commandId,
       winrt::Microsoft::ReactNative::IJSValueReader const &amp;commandArgsReader) noexcept;
 };
 
@@ -437,7 +437,7 @@ IVectorView&lt;hstring&gt; CustomUserControlViewManager::Commands() noexcept {
 
 void CustomUserControlViewManager::DispatchCommand(
     FrameworkElement const &amp;view,
-    const std::string&amp; commandId,
+    winrt::hstring const &amp;commandId,
     winrt::Microsoft::ReactNative::IJSValueReader const &amp;commandArgsReader) noexcept {
   if (auto control = view.try_as&lt;winrt::SampleLibraryCPP::CustomUserControlCPP&gt;()) {
     if (commandId == L"CustomCommand") {
