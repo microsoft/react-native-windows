@@ -3,6 +3,7 @@
 
 #include "ReactHost.h"
 #include <Future/FutureWait.h>
+#include <winrt/Windows.Foundation.h>
 
 namespace Mso::React {
 
