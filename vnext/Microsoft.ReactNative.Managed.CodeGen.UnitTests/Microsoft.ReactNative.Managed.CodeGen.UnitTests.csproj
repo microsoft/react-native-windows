@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- 
+      We have to work around an issue where nugets restore when this project is mixed with uap projects will chose the default version.
+      But when msbuild runs it will chose the LatestVersion resulting in the following error:
+          vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj : error : NETSDK1061: The project was restored using Microsoft.NETCore.App version 2.2.0, but with current settings, version 2.2.8 would be used instead. To resolve this issue, make sure the same settings are used for restore and for subsequent operations such as build or publish. Typically this issue can occur if the RuntimeIdentifier property is set during build or publish but not during restore. For more information, see https://aka.ms/dotnet-runtime-patch-selection.
+      
+      Attemting add an explicit PacakgeReference forcing version 2.2.8 resuls in the following warning that is not suppressable:
+        Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.DefaultItems.targets(257,5): warning NETSDK1023: A PackageReference for 'Microsoft.NETCore.App' was included in your project. This package is implicitly referenced by the .NET SDK and you do not typically need to reference it from your project. For more information, see https://aka.ms/sdkimplicitrefs [Z:\src\r1\vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj]
+
+      This seems to make nuget and msbuild agree with one another on the right version..
+    -->
+    <ImplicitPackageReferenceVersion Remove="Microsoft.NETCore.App" TargetFrameworkVersion="2.2" DefaultVersion="2.2.0" LatestVersion="2.2.8"/>
+    <ImplicitPackageReferenceVersion Include="Microsoft.NETCore.App" TargetFrameworkVersion="2.2" DefaultVersion="2.2.8" LatestVersion="2.2.8"/>
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <IsPackable>false</IsPackable>
+    <Platforms>x64;x86;ARM;ARM64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvailableItemName Include="Lkg" />
+    <Lkg Include="CodeGen\Lkg\*.lkg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.6.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+   <!-- Ensure the win10 sdk binaries loaded by the unittest match our apps sdk versions -->
+  <PropertyGroup>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersionEncoded>$(WindowsTargetPlatformVersion.Replace('.', '_'))</WindowsTargetPlatformVersionEncoded>
+    <DefineConstants>$(p:DefineConstants);win10SdkVersion$(WindowsTargetPlatformVersionEncoded)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CodeGen\Lkg\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj" />
+  </ItemGroup>
+
+  <Target Name="CopyLkgFiles" AfterTargets="Build">
+    <Copy SourceFiles="@(Lkg)" DestinationFiles="@(Lkg->'$(OutDir)Lkg\%(Filename)%(Extension)')" />
+
+    <ItemGroup>
+      <FileWrites Include="@(Lkg->'$(OutDir)Lkg\%(Filename)%(Extension)')" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="EnsureRuntimeDependenciesAreBuilt" AfterTargets="Build">
+    <ItemGroup>
+      <_ReactNativeManagedCodeGenUnitTestRuntimeDependencies Include="..\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
+      <_ReactNativeManagedCodeGenUnitTestRuntimeDependencies Include="..\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj" />
+    </ItemGroup>
+    <MSBuild
+      Projects="@(_ReactNativeManagedCodeGenUnitTestRuntimeDependencies)" 
+      BuildInParallel="$(BuildInParallel)" 
+      Properties="Configuration=$(Configuration); Platform=$(Platform)" 
+      ContinueOnError="$(ContinueOnError)" 
+      RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
+    </MSBuild>
+  </Target>
+
+</Project>
+

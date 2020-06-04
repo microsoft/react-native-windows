@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Jun 2020 00:05:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.84",
+      "version": "0.0.0-master.84",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReloadInstance crash caused by unloaded instance",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f0da7cdb53f29a9a9f4d1db606457b0cb3660fe7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Re-enable RNTester integration tests.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "e3757463c4592e9f7efb37d8ee0686867429b1dc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Jun 2020 00:05:25 GMT",
       "tag": "react-native-windows_v0.0.0-master.83",
       "version": "0.0.0-master.83",

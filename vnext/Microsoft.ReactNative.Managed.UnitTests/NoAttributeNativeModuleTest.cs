@@ -161,7 +161,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
     }
 
-
     public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
       bool isPosititve = await Task.Run(() => x >= 0);
@@ -1530,7 +1529,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
-
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()

@@ -144,6 +144,14 @@ std::string UwpReactInstanceProxy::GetBundleRootPath() const noexcept {
   return "";
 }
 
+bool UwpReactInstanceProxy::IsLoaded() const noexcept {
+  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+    return query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance).IsLoaded();
+  }
+
+  return false;
+}
+
 void UwpReactInstanceProxy::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) {
   m_xamlViewCreatedTestHook = std::move(testHook);
 }

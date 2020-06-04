@@ -1029,7 +1029,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       CheckNotEquals(new JSValueObject { }, 0, "tag_p114");
       CheckNotEquals(new JSValueObject { }, 0.0, "tag_p115");
 
-
       CheckEquals(new JSValueArray { }, new JSValueArray { }, "tag_p201");
       CheckEquals(new JSValueArray { 1 }, new JSValueArray { 1 }, "tag_p202");
       CheckEquals(new JSValueArray { 1, "Hello" },

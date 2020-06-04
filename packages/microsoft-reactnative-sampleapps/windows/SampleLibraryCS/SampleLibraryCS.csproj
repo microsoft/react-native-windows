@@ -23,6 +23,7 @@
     <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
     <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
     <LangVersion>7.3</LangVersion>
+    <ReactNativeCodeGenEnabled>true</ReactNativeCodeGenEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -113,7 +114,6 @@
     <Compile Include="CustomUserControlCS.cs" />
     <Compile Include="CustomUserControlViewManagerCS.cs" />
     <Compile Include="CircleViewManagerCS.cs" />
-    <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleModuleCS.cs" />
   </ItemGroup>
@@ -132,5 +132,5 @@
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CSharpLib.targets"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CSharpLib.targets" />
 </Project>

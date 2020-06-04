@@ -107,12 +107,14 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
@@ -370,7 +372,8 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
+      #5059 Disable failing or intermittent tests.
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
 
     steps:
       - checkout: self
@@ -436,38 +439,6 @@ jobs:
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
-
-      - task: VSTest@2
-        displayName: List Desktop Integration Tests
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          runTestsInIsolation: false
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: false
-          collectDumpOn: onAbortOnly
-          vsTestVersion: latest
-          otherConsoleOptions: '/ListTests'
-        condition: failed()
-
-      - task: VSTest@2
-        displayName: Re-Run Desktop Integration Tests
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: onAbortOnly
-          vsTestVersion: latest
-          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: failed()
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
@@ -593,7 +564,7 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found

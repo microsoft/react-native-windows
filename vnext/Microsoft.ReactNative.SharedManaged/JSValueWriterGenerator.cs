@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Xml.Schema;
 using static Microsoft.ReactNative.Managed.JSValueGenerator;
 using static System.Linq.Expressions.Expression;
 
@@ -18,7 +19,8 @@ namespace Microsoft.ReactNative.Managed
     // The current assembly to ensure we always register the basic type readers
     private static readonly Assembly s_currentAssembly = typeof(JSValueReaderGenerator).Assembly;
 
-    private static readonly ConcurrentDictionary<Assembly, bool> m_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
+    private static readonly ConcurrentDictionary<Assembly, bool> s_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
+    private static readonly ConcurrentDictionary<Type, MethodInfo> s_codeGenerateGenericExtensionMethods = new ConcurrentDictionary<Type, MethodInfo>();
 
     private static readonly Lazy<KeyValuePair<Type, MethodInfo>[]> s_allMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, MethodInfo>> s_nonGenericMethods;
@@ -27,12 +29,12 @@ namespace Microsoft.ReactNative.Managed
     public static void RegisterAssembly(Assembly assembly)
     {
       // UnitTests re-register over and over, safe to skip if already added.
-      if (m_registerdAssemblies.ContainsKey(assembly))
+      if (s_registerdAssemblies.ContainsKey(assembly))
       {
         return;
       }
 
-      m_registerdAssemblies.GetOrAdd(assembly, true);
+      s_registerdAssemblies.GetOrAdd(assembly, true);
 
       // Fail programs that register after we started serializing values.
       if (s_allMethods.IsValueCreated)
@@ -41,9 +43,18 @@ namespace Microsoft.ReactNative.Managed
       }
     }
 
+    public static void RegisterCodeGeneratorGenericExtensionMethod(Type type, MethodInfo method)
+    {
+      if (!method.IsGenericMethod)
+      {
+        throw new InvalidOperationException("Cannot register non generic methods.");
+      }
+      s_codeGenerateGenericExtensionMethods.TryAdd(type, method);
+    }
+
     static JSValueWriterGenerator()
     {
-      m_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
+      s_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
 
       // Get all extension WriteValue methods for IJSValueWriter.
       // The first parameter must be IJSValueWriter.
@@ -53,7 +64,7 @@ namespace Microsoft.ReactNative.Managed
       s_allMethods = new Lazy<KeyValuePair<Type, MethodInfo>[]>(() =>
       {
         var extensionMethods =
-          from assembly in m_registerdAssemblies.Keys
+          from assembly in s_registerdAssemblies.Keys
           from type in assembly.GetTypes()
           let typeInfo = type.GetTypeInfo()
           where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested
@@ -82,7 +93,7 @@ namespace Microsoft.ReactNative.Managed
       s_genericMethods = new Lazy<IReadOnlyDictionary<Type, SortedList<Type, MethodInfo>>>(() =>
       {
         var genericMethods =
-          from pair in s_allMethods.Value
+          from pair in s_allMethods.Value.Union(s_codeGenerateGenericExtensionMethods)
           where pair.Value.IsGenericMethod
           let type = pair.Key
           let keyType = type.GetTypeInfo().IsGenericType ? type.GetGenericTypeDefinition()
@@ -203,7 +214,7 @@ namespace Microsoft.ReactNative.Managed
 
     // It cannot be an extension method because it would conflict with the generic
     // extension method that uses T value type.
-    public static void WriteEnum<TEnum>(IJSValueWriter writer, TEnum value) /*TODO: Add in C# 7.3: where TEnum : Enum*/
+    public static void WriteEnum<TEnum>(IJSValueWriter writer, TEnum value) where TEnum : Enum
     {
       writer.WriteValue((int)(object)value);
     }
