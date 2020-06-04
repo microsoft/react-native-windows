@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
@@ -83,7 +83,7 @@ export function ImageTestPage() {
     if (imageWithBorder) {
       return 'ImageWithBorder';
     }
-    if (clickCount == 0) {
+    if (clickCount === 0) {
       return 'ImageWithoutBorder';
     }
     return 'ImageWithoutBorder-Subsequent';

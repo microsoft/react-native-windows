@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
@@ -19,13 +19,13 @@ describe('LoginTest', () => {
     assert.equal(LoginPage.getLoginResult(), 'Success');
   });
 
-  it('Login Fail', () => {
+  it('Login Fail due to user email', () => {
     LoginPage.setLoginInfo('username@microsoft.com', 'password');
     LoginPage.submitForm();
     assert.equal(LoginPage.getLoginResult(), 'Fail');
   });
 
-  it('Login Fail', () => {
+  it('Login Fail due to wrong password', () => {
     LoginPage.setLoginInfo('username', 'abcdefg');
     LoginPage.submitForm();
     assert.equal(LoginPage.getLoginResult(), 'Fail');

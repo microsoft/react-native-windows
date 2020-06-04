@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
@@ -24,7 +24,6 @@ using std::string;
 using std::vector;
 
 // None of these tests are runnable
-#if 0
 TEST_CLASS (WebSocketResourcePerformanceTest) {
   // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
   int32_t GetCurrentThreadCount() {
@@ -130,4 +129,3 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
   }
 };
-#endif

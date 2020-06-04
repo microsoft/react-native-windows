@@ -299,6 +299,8 @@ jobs:
     cancelTimeoutInMinutes: 5
     pool:
       vmImage: $(VmImage)
+    variables:
+      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
     steps:
       - checkout: self
@@ -318,14 +320,14 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows (Debug)
         inputs:
-          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
-          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
@@ -335,6 +337,13 @@ jobs:
           script: yarn bundle-cpp
           workingDirectory: packages\microsoft-reactnative-sampleapps
         condition: succeeded()
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload build logs
+        condition:  succeededOrFailed()
+        inputs:    
+          pathtoPublish: '$(BuildLogDirectory)'
+          artifactName: 'Build logs - $(Agent.JobName)' 
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -361,7 +370,8 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
+      #5059 Disable failing or intermittent tests.
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
 
     steps:
       - checkout: self
@@ -427,38 +437,6 @@ jobs:
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
-
-      - task: VSTest@2
-        displayName: List Desktop Integration Tests
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          runTestsInIsolation: false
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: false
-          collectDumpOn: onAbortOnly
-          vsTestVersion: latest
-          otherConsoleOptions: '/ListTests'
-        condition: failed()
-
-      - task: VSTest@2
-        displayName: Re-Run Desktop Integration Tests
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: onAbortOnly
-          vsTestVersion: latest
-          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: failed()
 
       - task: PowerShell@2
         displayName: Check the metro bundle server

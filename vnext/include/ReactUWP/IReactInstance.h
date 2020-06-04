@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -113,6 +113,8 @@ struct IReactInstance {
   virtual ExpressionAnimationStore &GetExpressionAnimationStore() = 0;
 
   virtual const ReactInstanceSettings &GetReactInstanceSettings() const = 0;
+
+  virtual bool IsLoaded() const noexcept = 0;
 };
 
 } // namespace uwp

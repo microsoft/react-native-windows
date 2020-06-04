@@ -42,7 +42,7 @@ exports.examples = [
             ref={scrollView => {
               _scrollView = scrollView;
             }}
-            acceptsKeyboardFocus={true} // TODO(macOS ISS#2323203)
+            focusable={true} // TODO(macOS ISS#2323203)
             automaticallyAdjustContentInsets={false}
             onScroll={() => {
               console.log('onScroll!');

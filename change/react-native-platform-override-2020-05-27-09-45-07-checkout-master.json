@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Allow Override Tooling to Use Nightly Builds",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-27T16:45:07.164Z"
-}
