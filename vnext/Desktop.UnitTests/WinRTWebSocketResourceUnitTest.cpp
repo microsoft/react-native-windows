@@ -65,7 +65,6 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   // TODO: Re-enable. Fails in x86|Release.
   //      Hangs due to exception not being caught within WinRTWebSocketResource::PerformConnect.
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectFails)
-  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectFails) {
     bool connected = false;

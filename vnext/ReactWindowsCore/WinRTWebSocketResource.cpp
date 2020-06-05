@@ -4,6 +4,7 @@
 // clang-format off
 #include "WinRTWebSocketResource.h"
 
+#include <ReactUWP/Utils/CppWinrtLessExceptions.h>
 #include <Unicode.h>
 #include <Utilities.h>
 
@@ -125,7 +126,21 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   {
     co_await resume_background();
 
-    co_await self->m_socket.ConnectAsync(self->m_uri);
+    auto async = self->m_socket.ConnectAsync(self->m_uri);
+
+    co_await lessthrow_await_adapter<IAsyncAction>{async};
+    //co_await async;
+
+    auto hr = async.ErrorCode();
+    if (!SUCCEEDED(hr))
+    {
+      if (self->m_errorHandler)
+      {
+        self->m_errorHandler({ "FAIL", ErrorType::Connection });
+      }
+
+      co_return;
+    }
 
     self->m_readyState = ReadyState::Open;
     if (self->m_connectHandler)
