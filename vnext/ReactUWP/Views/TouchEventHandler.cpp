@@ -8,7 +8,6 @@
 
 #include <Modules/NativeUIManager.h>
 #include <UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
@@ -418,7 +417,7 @@ bool TouchEventHandler::TagFromOriginalSource(
       // This is to support nested <Text> elements in React.
       // Nested React <Text> elements get translated into nested XAML <Span> elements,
       // while the content of the <Text> becomes a list of XAML <Run> elements.
-      if (const auto textBlock = sourceElement.try_as<winrt::Controls::TextBlock>()) {
+      if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
         const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
         const auto inlines = textBlock.Inlines().GetView();
 
@@ -450,31 +449,36 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
     const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
     const winrt::Point &pointerPos) {
   winrt::IPropertyValue tag(nullptr);
+
   for (const auto &el : inlines) {
-    if (const auto span = el.try_as<winrt::Documents::Span>()) {
+    if (const auto span = el.try_as<xaml::Documents::Span>()) {
       const auto resTag = TestHit(span.Inlines().GetView(), pointerPos);
 
       if (resTag) {
         return resTag;
       }
 
-    } else if (const auto run = el.try_as<winrt::Documents::Run>()) {
+    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
       const auto start = el.ContentStart();
       const auto end = el.ContentEnd();
 
-      const auto startRect = start.GetCharacterRect(winrt::Documents::LogicalDirection::Forward);
-      const auto endRect = end.GetCharacterRect(winrt::Documents::LogicalDirection::Forward);
+      auto startRect = start.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+      auto endRect = end.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
 
-      // Approximate the bounding rect (for now, don't account for text wrapping or right-to-left orientation)
+      // Swap rectangles in RTL scenarios.
+      if (startRect.X > endRect.X) {
+        const auto tempRect = startRect;
+        startRect = endRect;
+        endRect = tempRect;
+      }
+
+      // Approximate the bounding rect (for now, don't account for text wrapping).
       if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
           (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
-        tag = el.GetValue(winrt::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-        if (tag) {
-          return tag;
-        } else {
-          // TODO what if we land here? Can there be any more elements that satisfy the pointer position test?
-          // Why was the tag property not set?
-        }
+        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+        assert(tag);
+
+        return tag;
       }
     }
   }
