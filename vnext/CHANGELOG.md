@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Jun 2020 00:05:05 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Jun 2020 00:06:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.85
+
+Fri, 05 Jun 2020 00:06:16 GMT
+
+### Changes
+
+- Adding compile time Code generation for Managed React Native modules for Windows (dannyvv@microsoft.com)
+- Move devmenu out of RootControl, implement more of DevSettings (acoates@microsoft.com)
+- Fix SampleApp run-windows with deploy (dannyvv@microsoft.com)
 
 ## 0.0.0-master.84
 

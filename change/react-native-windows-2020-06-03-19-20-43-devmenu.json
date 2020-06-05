@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move devmenu out of RootControl, implement more of DevSettings",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-04T02:20:43.791Z"
-}

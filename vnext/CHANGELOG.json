@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 05 Jun 2020 00:06:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.85",
+      "version": "0.0.0-master.85",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding compile time Code generation for Managed React Native modules for Windows",
+            "author": "dannyvv@microsoft.com",
+            "commit": "cadf33ee4fbe4fb1ec4d9fef65a2d61495216cc6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move devmenu out of RootControl, implement more of DevSettings",
+            "author": "acoates@microsoft.com",
+            "commit": "f52d4942a42ed75d6fa92594897d2f3d7db1b7d7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix SampleApp run-windows with deploy",
+            "author": "dannyvv@microsoft.com",
+            "commit": "564636d9d45496acf5460d9797eb32b01c88d398",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jun 2020 00:05:05 GMT",
       "tag": "react-native-windows_v0.0.0-master.84",
       "version": "0.0.0-master.84",
