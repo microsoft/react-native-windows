@@ -33,9 +33,9 @@ App::App() noexcept
 #endif
 
 #if _DEBUG
-    InstanceSettings().EnableDeveloperMenu(true);
+    InstanceSettings().UseDeveloperSupport(true);
 #else
-    InstanceSettings().EnableDeveloperMenu(false);
+    InstanceSettings().UseDeveloperSupport(false);
 #endif
 
     RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules

@@ -2879,9 +2879,9 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/lodash@^4.14.149":
-  version "4.14.154"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.154.tgz#069e3c703fdb264e67be9e03b20a640bc0198ecc"
-  integrity sha512-VoDZIJmg3P8vPEnTldLvgA+q7RkIbVkbYX4k0cAVFzGAOQwUehVgRHgIr2/wepwivDst/rVRqaiBSjCXRnoWwQ==
+  version "4.14.155"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.155.tgz#e2b4514f46a261fd11542e47519c20ebce7bc23a"
+  integrity sha512-vEcX7S7aPhsBCivxMwAANQburHBtfN9RdyXFk84IJmu2Z4Hkg1tOFgaslRiEqqvoLtbCBi6ika1EMspE+NZ9Lg==
 
 "@types/minimatch@*":
   version "3.0.3"
@@ -4549,9 +4549,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.31.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.31.1.tgz#7f7e7702f4c0ac2db33907efef4d1306c612c59f"
-  integrity sha512-HVcMqpo+mUrl89RXzJQBOzvIhvL9e8QwUc+4RUtAakmocKizk8JZS5GhQwiAEYZUjjqYR+GDPSiGj9fC1BAjrQ==
+  version "1.31.3"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.31.3.tgz#63323cc6001f34adf9c0198f188b6c616b7a0f81"
+  integrity sha512-1znEEvma0Ozu5IFhH7WARNVTGuAXvadckKtVaG4YWqJ7J8ZMhJ2Aw9gJMcgQV8UEXw1t720h58zU23t6ZKET1g==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"

@@ -55,11 +55,11 @@ IAsyncAction ReactNativeHost::LoadInstance() noexcept {
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
-
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
+  auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider, turboModulesProvider);
 
     if (auto packageProviders = InstanceSettings().PackageProviders()) {
       for (auto const &packageProvider : packageProviders) {
@@ -74,7 +74,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   legacySettings.DebugBundlePath = to_string(m_instanceSettings.DebugBundlePath());
   legacySettings.DebugHost = to_string(m_instanceSettings.DebugHost());
   legacySettings.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
-  legacySettings.EnableDeveloperMenu = m_instanceSettings.EnableDeveloperMenu();
+  legacySettings.UseDeveloperSupport = m_instanceSettings.UseDeveloperSupport();
   legacySettings.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
   legacySettings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
   legacySettings.DebuggerBreakOnNextLine = m_instanceSettings.DebuggerBreakOnNextLine();
@@ -93,13 +93,13 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   Mso::React::ReactOptions reactOptions{};
   reactOptions.Properties = m_instanceSettings.Properties();
   reactOptions.Notifications = m_instanceSettings.Notifications();
-  reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
+  reactOptions.SetUseDeveloperSupport(legacySettings.UseDeveloperSupport);
   reactOptions.DeveloperSettings.SourceBundleName = legacySettings.DebugBundlePath;
-  reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
-  reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
-  reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;
-  reactOptions.DeveloperSettings.UseFastRefresh = legacySettings.UseFastRefresh;
-  reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
+  reactOptions.SetUseWebDebugger(legacySettings.UseWebDebugger);
+  reactOptions.SetUseDirectDebugger(legacySettings.UseDirectDebugger);
+  reactOptions.SetDebuggerBreakOnNextLine(legacySettings.DebuggerBreakOnNextLine);
+  reactOptions.SetUseFastRefresh(legacySettings.UseFastRefresh);
+  reactOptions.SetUseLiveReload(legacySettings.UseLiveReload);
   reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
   reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
   reactOptions.BundleRootPath = legacySettings.BundleRootPath;
@@ -113,6 +113,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.ModuleProvider = modulesProvider;
   reactOptions.ViewManagerProvider = viewManagersProvider;
+  reactOptions.TurboModuleProvider = turboModulesProvider;
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());

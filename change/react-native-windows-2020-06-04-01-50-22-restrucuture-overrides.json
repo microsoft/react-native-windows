@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure Image.windows.js is an exact copy of Image.ios.js",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-04T08:50:22.843Z"
+}

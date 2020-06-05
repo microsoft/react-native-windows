@@ -5,15 +5,25 @@
  * @format
  */
 
-import * as ManifestData from '../ManifestData';
+import * as Serialized from '../Serialized';
 import * as _ from 'lodash';
-import Manifest, {ValidationError} from '../Manifest';
+
+import {
+  CopyOverride,
+  DerivedOverride,
+  PatchOverride,
+  PlatformOverride,
+} from '../Override';
 
 import {
   MockFile,
   MockOverrideFileRepository,
   MockReactFileRepository,
 } from './MockFileRepository';
+
+import Manifest from '../Manifest';
+import {OverrideFactoryImpl} from '../OverrideFactory';
+import {hashContent} from '../Hash';
 
 const reactFiles: Array<MockFile> = [
   {
@@ -54,391 +64,271 @@ const overrideFiles: Array<MockFile> = [
 const reactRepo = new MockReactFileRepository(reactFiles);
 const ovrRepo = new MockOverrideFileRepository(overrideFiles);
 
-test('AllListedInManifest', async () => {
-  const manifest: ManifestData.Manifest = {
-    overrides: [
-      {type: 'platform', file: 'aaa\\aaa.windows.js'},
-      {type: 'platform', file: 'aaa\\bbb.windows.js'},
-      {type: 'platform', file: 'bbb\\ccc.win32.js'},
-    ],
-  };
+test('constructor - Duplicate Override Names', () => {
+  expect(
+    () =>
+      new Manifest([
+        new PlatformOverride({file: 'aaa.windows.js'}),
+        new PlatformOverride({file: 'aaa.windows.js'}),
+      ]),
+  ).toThrow();
+});
 
-  const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
+test('constructor - Input Mutation Doesnt Affect Manifest', () => {
+  const overrides = [
+    new PlatformOverride({file: 'aaa.windows.js'}),
+    new PlatformOverride({file: 'bbb.windows.js'}),
+  ];
+
+  const manifest = new Manifest(overrides);
+  expect(manifest.hasOverride('aaa.windows.js')).toBe(true);
+  overrides.length = 0;
+  expect(manifest.hasOverride('aaa.windows.js')).toBe(true);
+});
+
+test('validate - Empty Manifest', async () => {
+  const manifest = new Manifest([]);
+
+  const errors = await manifest.validate(
+    new MockOverrideFileRepository([]),
+    reactRepo,
+  );
   expect(errors).toEqual([]);
 });
 
-test('ManifestMissingFile', async () => {
-  const manifest: ManifestData.Manifest = {
-    overrides: [
-      {type: 'platform', file: 'aaa\\aaa.windows.js'},
-      {type: 'platform', file: 'aaa\\bbb.windows.js'},
-    ],
-  };
+test('validate - All Overrides Listed', async () => {
+  const manifest = new Manifest([
+    new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+    new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+    new PlatformOverride({file: 'bbb\\ccc.win32.js'}),
+  ]);
 
-  const expectedError: ValidationError = {
-    type: 'fileMissingFromManifest',
-    file: 'bbb\\ccc.win32.js',
-  };
-
-  const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
-  expect(errors).toEqual([expectedError]);
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
 });
 
-test('ManifestExtraFile', async () => {
-  const manifest: ManifestData.Manifest = {
-    overrides: [
-      {type: 'platform', file: 'aaa\\aaa.windows.js'},
-      {type: 'platform', file: 'aaa\\bbb.windows.js'},
-      {type: 'platform', file: 'bbb\\ccc.win32.js'},
-      {type: 'platform', file: 'bbb\\ddd.win32.js'},
-    ],
-  };
+test('validate - Missing Override', async () => {
+  const manifest = new Manifest([
+    new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+    new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+  ]);
 
-  const expectedError: ValidationError = {
-    type: 'overrideFileNotFound',
-    file: 'bbb\\ddd.win32.js',
-  };
-
-  const errors = await new Manifest(manifest, ovrRepo, reactRepo).validate();
-  expect(errors).toEqual([expectedError]);
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([
+    {type: 'missingFromManifest', overrideName: 'bbb\\ccc.win32.js'},
+  ]);
 });
 
-const testManifestData: ManifestData.Manifest = {
-  overrides: [
-    {
-      type: 'patch',
+test('validate - Extra Override', async () => {
+  const manifest = new Manifest([
+    new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+    new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+    new PlatformOverride({file: 'bbb\\ccc.win32.js'}),
+    new PlatformOverride({file: 'bbb\\ddd.win32.js'}),
+  ]);
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([
+    {type: 'overrideNotFound', overrideName: 'bbb\\ddd.win32.js'},
+  ]);
+});
+
+test('validate - Multiple Valid Types', async () => {
+  const manifest = new Manifest([
+    new PatchOverride({
       file: overrideFiles[0].filename,
       baseFile: reactFiles[0].filename,
       baseVersion: '0.61.5',
-      baseHash: Manifest.hashContent(reactFiles[0].content),
+      baseHash: hashContent(reactFiles[0].content),
       issue: 4567,
-    },
-    {
-      type: 'derived',
+    }),
+    new DerivedOverride({
       file: overrideFiles[1].filename,
       baseFile: reactFiles[1].filename,
       baseVersion: '0.60.6',
-      baseHash: Manifest.hashContent(reactFiles[1].content),
+      baseHash: hashContent(reactFiles[1].content),
       issue: 4568,
-    },
-    {
-      type: 'platform',
-      file: overrideFiles[2].filename,
-    },
-  ],
-};
+    }),
+    new PlatformOverride({file: overrideFiles[2].filename}),
+  ]);
 
-test('FullManifestValid', async () => {
-  const testManifest = new Manifest(testManifestData, ovrRepo, reactRepo);
-  const errors = await testManifest.validate();
+  const errors = await manifest.validate(ovrRepo, reactRepo);
   expect(errors).toEqual([]);
 });
 
-test('OutOfDateFile', async () => {
-  const ourBaseFiles = _.cloneDeep(reactFiles);
-  ourBaseFiles[0].content = 'Different than before';
-  const ourReactRepo = new MockReactFileRepository(ourBaseFiles);
-
-  const expectedError: ValidationError = {
-    type: 'outOfDate',
+const sampleManifest = new Manifest([
+  new CopyOverride({
     file: overrideFiles[0].filename,
-  };
+    baseFile: reactFiles[0].filename,
+    baseVersion: '0.62.2',
+    baseHash: hashContent(reactFiles[0].content),
+    issue: 1234,
+  }),
+  new DerivedOverride({
+    file: overrideFiles[1].filename,
+    baseFile: reactFiles[1].filename,
+    baseVersion: '0.60.6',
+    baseHash: hashContent(reactFiles[1].content),
+    issue: 4568,
+  }),
+  new PlatformOverride({file: overrideFiles[2].filename}),
+]);
 
-  const testManifest = new Manifest(testManifestData, ovrRepo, ourReactRepo);
-  const errors = await testManifest.validate();
-  expect(errors).toEqual([expectedError]);
+test('hasOverride - True', () => {
+  expect(sampleManifest.hasOverride(overrideFiles[0].filename)).toBe(true);
 });
 
-test('BaseFileNotFound', async () => {
-  const ourManifestData = _.cloneDeep(testManifestData);
-  const ovr = ourManifestData.overrides[0] as ManifestData.PatchEntry;
-  ovr.baseFile = 'foo/bar.js';
-
-  const expectedError: ValidationError = {
-    type: 'baseFileNotFound',
-    file: 'aaa\\aaa.windows.js',
-  };
-
-  const testManifest = new Manifest(ourManifestData, ovrRepo, reactRepo);
-  const errors = await testManifest.validate();
-  expect(errors).toEqual([expectedError]);
+test('hasOverride - False', () => {
+  expect(sampleManifest.hasOverride('Never gonna give you up')).toBe(false);
 });
 
-test('HasOverride', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
-  expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(true);
-});
+test('removeOverride - Success', () => {
+  const manifest = _.cloneDeep(sampleManifest);
 
-test('DoesNotHaveOverride', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
-  expect(manifest.hasOverride('Never gonna give you up')).toBe(false);
-});
-
-test('RemoveOverride', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
-
-  expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(true);
   expect(manifest.removeOverride(overrideFiles[0].filename)).toBe(true);
   expect(manifest.hasOverride(overrideFiles[0].filename)).toBe(false);
 });
 
-test('CannotRemoveOverride', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
+test('removeOverride - Does not exist', () => {
+  const manifest = _.cloneDeep(sampleManifest);
   expect(manifest.removeOverride('Never gonna let you down')).toBe(false);
 });
 
-test('addOverrideSimple', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const patch = overrideFiles[0].filename;
-  const patchOrig = reactFiles[0].filename;
-  await manifest.addOverride('patch', patch, patchOrig, 1234);
-  expect(manifest.hasOverride(patch)).toBe(true);
-
-  const derived = overrideFiles[1].filename;
-  const derivedOrig = reactFiles[1].filename;
-  await manifest.addOverride('derived', derived, derivedOrig);
-  expect(manifest.hasOverride(derived)).toBe(true);
-
-  const platform = overrideFiles[2].filename;
-  await manifest.addOverride('platform', platform);
-  expect(manifest.hasOverride(derived)).toBe(true);
-});
-
-test('addOverrideBadArgs', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  // Missing issue number
-  const patch = overrideFiles[0].filename;
-  const orig = reactFiles[0].filename;
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addOverride('patch', patch, orig)).rejects.toThrow();
-
-  // Missing issue number and base
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addOverride('patch', patch)).rejects.toThrow();
-
-  // Bad type
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addOverride('potato', patch)).rejects.toThrow();
-
-  // Missing base
-  const derived = overrideFiles[1].filename;
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addOverride('derived', derived)).rejects.toThrow();
-});
-
-test('addOverrideTypeSimple', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const patch = overrideFiles[0].filename;
-  const patchOrig = reactFiles[0].filename;
-  await manifest.addPatchOverride(patch, patchOrig, 1234);
-  expect(manifest.hasOverride(patch)).toBe(true);
-
-  const derived = overrideFiles[1].filename;
-  const derivedOrig = reactFiles[1].filename;
-  await manifest.addDerivedOverride(derived, derivedOrig);
-  expect(manifest.hasOverride(derived)).toBe(true);
-
-  const platform = overrideFiles[2].filename;
-  await manifest.addPlatformOverride(platform);
-  expect(manifest.hasOverride(derived)).toBe(true);
-});
-
-test('addOverrideDuplicate', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
-
-  const ovr = overrideFiles[0].filename;
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addOverride('platform', ovr)).rejects.toThrow();
-});
-
-test('addOverrideDuplicateNonNormalized', async () => {
-  const manifest = new Manifest(testManifestData, ovrRepo, reactRepo);
-
-  const ovr = overrideFiles[0].filename.replace('\\', '/');
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addOverride('platform', ovr)).rejects.toThrow();
-});
-
-test('addOverrideNoBase', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const patch = overrideFiles[0].filename;
-  const patchOrig = 'Never gonna make you cry';
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addPatchOverride(patch, patchOrig, 1234)).rejects.toThrow();
-
-  const derived = overrideFiles[1].filename;
-  const derivedOrig = 'Never gonna say goodbye';
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addDerivedOverride(derived, derivedOrig)).rejects.toThrow();
-});
-
-test('addOverrideNoOverride', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const patch = 'Never gonna tell a lie and hurt you';
-  const patchOrig = reactFiles[0].filename;
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addPatchOverride(patch, patchOrig, 1234)).rejects.toThrow();
-
-  const derived = 'Weve known each other for so long';
-  const derivedOrig = reactFiles[1].filename;
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.addDerivedOverride(derived, derivedOrig)).rejects.toThrow();
-});
-
-test('addPatchExportedAsData', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const override = overrideFiles[0].filename;
-  const base = reactFiles[0].filename;
-  await manifest.addPatchOverride(override, base, 1234);
-
-  const entryData = manifest.findOverride(override);
-
-  const patchEntryData = entryData as ManifestData.DerivedEntry;
-  expect(patchEntryData.type).toBe('patch');
-  expect(patchEntryData.file).toBe(override);
-  expect(patchEntryData.baseFile).toBe(base);
-  expect(patchEntryData.issue).toBe(1234);
-  expect(patchEntryData.baseVersion.length).not.toBe(0);
-  expect(patchEntryData.baseHash.length).not.toBe(0);
-});
-
-test('addDerivedExportedAsData', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const override = overrideFiles[0].filename;
-  const base = reactFiles[0].filename;
-  await manifest.addDerivedOverride(override, base, 1234);
-
-  const entryData = manifest.findOverride(override);
-
-  const derivedEntryData = entryData as ManifestData.DerivedEntry;
-  expect(derivedEntryData.type).toBe('derived');
-  expect(derivedEntryData.file).toBe(override);
-  expect(derivedEntryData.baseFile).toBe(base);
-  expect(derivedEntryData.issue).toBe(1234);
-  expect(derivedEntryData.baseVersion.length).not.toBe(0);
-  expect(derivedEntryData.baseHash.length).not.toBe(0);
-});
-
-test('addDerivedNoIssueExportedAsData', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const override = overrideFiles[0].filename;
-  const base = reactFiles[0].filename;
-  await manifest.addDerivedOverride(override, base);
-
-  const entryData = manifest.findOverride(override);
-
-  const derivedEntryData = entryData as ManifestData.DerivedEntry;
-  expect(derivedEntryData.type).toBe('derived');
-  expect(derivedEntryData.file).toBe(override);
-  expect(derivedEntryData.baseFile).toBe(base);
-  expect(derivedEntryData.issue).toBe(undefined);
-  expect(derivedEntryData.baseVersion.length).not.toBe(0);
-  expect(derivedEntryData.baseHash.length).not.toBe(0);
-});
-
-test('addPlatformExportedAsData', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-
-  const override = overrideFiles[0].filename;
-  await manifest.addPlatformOverride(override);
-
-  const entryData = manifest.findOverride(override);
-
-  const platformEntryData = entryData as ManifestData.PlatformEntry;
-  expect(platformEntryData.type).toBe('platform');
-  expect(platformEntryData.file).toBe(override);
-});
-
-test('ManifestMutateDoesntAffectData', async () => {
-  const manifestData: ManifestData.Manifest = {overrides: []};
-  const manifest = new Manifest(manifestData, ovrRepo, reactRepo);
-
-  const patch = overrideFiles[0].filename;
-  const patchOrig = reactFiles[0].filename;
-  await manifest.addPatchOverride(patch, patchOrig, 1234);
-
-  expect(manifestData.overrides.length).toBe(0);
-});
-
-test('DataMutateDoesntAffectManifest', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-  manifest.getAsData().overrides.push({
-    type: 'platform',
-    file: 'Your hearts been aching but youre too shy to say it',
-  });
-
-  expect(manifest.getAsData().overrides.length).toBe(0);
-});
-
-test('FindOverrideNoneExists', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-  expect(manifest.findOverride('foo')).toBe(null);
-});
-
-test('FindOverrideDoesExist', async () => {
-  const manifest = new Manifest(
-    {
-      overrides: [
-        {
-          type: 'platform',
-          file: 'Foo.js',
-        },
-      ],
-    },
-    ovrRepo,
-    reactRepo,
+test('addOverride - Simple', () => {
+  const manifest = new Manifest([]);
+  manifest.addOverride(
+    new PlatformOverride({file: 'Never gonna run around and desert you'}),
   );
-  // @ts-ignore no typings for toStrictEqual
-  expect(manifest.findOverride('Foo.js')).toStrictEqual({
-    type: 'platform',
-    file: 'Foo.js',
-  });
+  expect(manifest.hasOverride('Never gonna run around and desert you')).toBe(
+    true,
+  );
 });
 
-test('MarkUpToDatePlatform', async () => {
-  const manifest = new Manifest(
-    {
-      overrides: [
-        {
-          type: 'platform',
-          file: 'Foo.js',
-        },
-      ],
-    },
-    ovrRepo,
-    reactRepo,
+test('addOverride - Duplicate', () => {
+  const manifest = new Manifest([]);
+  manifest.addOverride(
+    new PlatformOverride({file: 'Never gonna make you cry'}),
   );
 
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.markUpToDate('Foo.js')).rejects.toThrow();
+  expect(() =>
+    manifest.addOverride(
+      new PlatformOverride({file: 'Never gonna make you cry'}),
+    ),
+  ).toThrow();
 });
 
-test('MarkUpToDateNotFound', async () => {
-  const manifest = new Manifest({overrides: []}, ovrRepo, reactRepo);
-  // @ts-ignore Typings don't know about rejects
-  expect(manifest.markUpToDate('Foo.js')).rejects.toThrow();
+test('findOverride - None exists', () => {
+  expect(sampleManifest.findOverride('Never gonna say goodbye')).toBeNull();
 });
 
-test('MarkUpToDateOutdated', async () => {
-  const ourTestData = _.cloneDeep(testManifestData);
-  const ovr = ourTestData.overrides[0] as ManifestData.NonPlatformEntry;
-  ovr.baseHash = '1234';
-  ovr.baseVersion = '0.0.1';
+test('findOverride - Exists', () => {
+  const override = new PlatformOverride({
+    file: 'Never gonna tell a lie and hurt you',
+  });
+  const manifest = new Manifest([override]);
 
-  const manifest = new Manifest(ourTestData, ovrRepo, reactRepo);
-  await manifest.markUpToDate(ovr.file);
+  expect(manifest.findOverride('Never gonna tell a lie and hurt you')).toEqual(
+    override,
+  );
+});
 
-  const updated = manifest.findOverride(
-    ovr.file,
-  ) as ManifestData.NonPlatformEntry;
-  expect(updated.baseVersion).toBe(reactRepo.getVersion());
-  expect(updated.baseHash).toBe(Manifest.hashContent(reactFiles[0].content));
+test('markUpToDate - Simple', async () => {
+  const manifest = new Manifest([
+    new CopyOverride({
+      file: overrideFiles[0].filename,
+      baseFile: reactFiles[0].filename,
+      baseVersion: '0.59.2',
+      baseHash: 'abcd',
+      issue: 1234,
+    }),
+  ]);
+
+  const overrideFactory = new OverrideFactoryImpl(reactRepo, ovrRepo);
+  await manifest.markUpToDate(overrideFiles[0].filename, overrideFactory);
+
+  const newOverride = manifest
+    .findOverride(overrideFiles[0].filename)!
+    .serialize() as Serialized.CopyOverride;
+
+  expect(newOverride.baseVersion).toBe(reactRepo.getVersion());
+  expect(newOverride.baseHash).toBe(hashContent(reactFiles[0].content));
+});
+
+test('Serialization Round-Trip', () => {
+  const serializedManifest: Serialized.Manifest = {
+    overrides: [
+      {
+        type: 'platform',
+        file: 'aaa.js',
+      },
+      {
+        type: 'derived',
+        file: 'abcd.windows.js',
+        baseFile: 'abcd.js',
+        baseVersion: '0.68.7',
+        baseHash: 'gksdpofgkesgpofk',
+        issue: undefined,
+      },
+      {
+        type: 'patch',
+        file: 'defg.windows.js',
+        baseFile: 'defg.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 'LEGACY_FIXME',
+      },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  expect(Manifest.fromSerialized(serializedManifest).serialize()).toEqual(
+    serializedManifest,
+  );
+});
+
+test('String Exact Serialization Round-Trip', () => {
+  const serializedManifest: any = {
+    overrides: [
+      {
+        type: 'platform',
+        file: 'aaa.js',
+      },
+      {
+        type: 'derived',
+        file: 'abcd.windows.js',
+        baseFile: 'abcd.js',
+        baseVersion: '0.68.7',
+        baseHash: 'gksdpofgkesgpofk',
+      },
+      {
+        type: 'patch',
+        file: 'defg.windows.js',
+        baseFile: 'defg.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 'LEGACY_FIXME',
+      },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  const manifestString = JSON.stringify(serializedManifest);
+  const manifest = Manifest.fromSerialized(
+    Serialized.parseManifest(manifestString),
+  );
+  expect(JSON.stringify(manifest.serialize())).toEqual(manifestString);
 });

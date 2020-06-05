@@ -17,7 +17,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    
+
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Platforms>x64;x86;ARM;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
@@ -68,9 +68,10 @@
   </Target>
 
 
-   <!-- Override -->
+  <!-- Override -->
   <Target Name="_CheckForMismatchingPlatform">
 
   </Target>
 
+  <Target Name="Deploy" />
 </Project>
