@@ -54,6 +54,12 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
 
 */
 
+/**
+ * Gets the config of any RNW native modules under the target folder.
+ * @param {string} folder The absolute path to the target folder.
+ * @param {object} userConfig A manually specified override config.
+ * @return {object} The config if any RNW native modules exist.
+ */
 function dependencyConfigWindows(folder, userConfig = {}) {
   const usingManualProjectsOverride = 'projects' in userConfig;
 

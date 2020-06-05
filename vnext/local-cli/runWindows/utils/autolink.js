@@ -17,12 +17,23 @@ const generatorCommon = require('../../generator-common');
 
 const templateRoot = path.join(__dirname, '../../generator-windows/templates');
 
+/**
+ * Logs the given message if verbose is True.
+ * @param {string} message The message to log.
+ * @param {boolean} verbose Whether or not verbose logging is enabled.
+ */
 function verboseMessage(message, verbose) {
   if (verbose) {
     console.log(message);
   }
 }
 
+/**
+ * Loads a source template file and performs the given replacements, normalizing CRLF.
+ * @param {string} srcFile Path to the source file.
+ * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
+ * @return The contents of the file with the replacements applied.
+ */
 function getNormalizedContents(srcFile, replacements) {
   // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
   for (var key in replacements) {
@@ -32,6 +43,14 @@ function getNormalizedContents(srcFile, replacements) {
   return generatorCommon.resolveContents(srcFile, replacements);
 }
 
+/**
+ * Updates the target file with the expected contents if it's different.
+ * @param {string} filePath Path to the target file to update.
+ * @param {string} expectedContents The expected contents of the file.
+ * @param {boolean} verbose If true, enable verbose logging.
+ * @param {boolean} checkMode It true, don't make any changes.
+ * @return {boolean} Whether any changes were necessary.
+ */
 function updateFile(filePath, expectedContents, verbose, checkMode) {
   const fileName = chalk.bold(path.basename(filePath));
   verboseMessage(`Reading ${fileName}...`, verbose);
@@ -57,6 +76,11 @@ function updateFile(filePath, expectedContents, verbose, checkMode) {
   return contentsChanged;
 }
 
+/**
+ * Exits the script with the given status code.
+ * @param {number} statusCode The status code.
+ * @param {boolean} loggingWasEnabled Whether or not verbose lossing was enabled.
+ */
 function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
   if (!loggingWasEnabled && statusCode !== 0) {
     console.log(
@@ -68,6 +92,12 @@ function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
   process.exit(statusCode);
 }
 
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ * @param {object} config Config passed from react-native CLI.
+ * @param {object} args Args passed from react-native CLI.
+ * @param {object} options Options passed from react-native CLI.
+ */
 async function updateAutoLink(config, args, options) {
   const startTime = performance.now();
 

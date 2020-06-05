@@ -37,6 +37,12 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
 
 */
 
+/**
+ * Gets the config of any RNW apps under the target folder.
+ * @param {string} folder The absolute path to the target folder.
+ * @param {object} userConfig A manually specified override config.
+ * @return {object} The config if any RNW apps exist.
+ */
 function projectConfigWindows(folder, userConfig = {}) {
   const usingManualOverride = 'sourceDir' in userConfig;
 

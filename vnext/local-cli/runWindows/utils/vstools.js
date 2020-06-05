@@ -16,9 +16,9 @@ const projectTypeGuidsByLanguage = {
 
 /**
  * Checks is the given block of lines exists within an array of lines.
- * @param {array} lines - The array of lines to search.
- * @param {array} block - The block of lines to search for.
- * @return {boolean} - True if the block of lines does exist within lines.
+ * @param {array} lines The array of lines to search.
+ * @param {array} block The block of lines to search for.
+ * @return {boolean} True if the block of lines does exist within lines.
  */
 function linesContainsBlock(lines, block) {
   if (block.length > 0) {
@@ -39,9 +39,9 @@ function linesContainsBlock(lines, block) {
 
 /**
  * Insert the given block of lines into an array of lines.
- * @param {array} lines - The array of lines to insert into.
- * @param {array} block - The block of lines to insert.
- * @param {number} index - The index to perform the insert.
+ * @param {array} lines The array of lines to insert into.
+ * @param {array} block The block of lines to insert.
+ * @param {number} index The index to perform the insert.
  */
 function insertBlockIntoLines(lines, block, index) {
   for (let i = 0; i < block.length; i++) {
@@ -51,10 +51,10 @@ function insertBlockIntoLines(lines, block, index) {
 
 /**
  * Search through an array of lines for a block of lines starting with startLine and ending with endLine.
- * @param {array} lines - The array of lines to search.
- * @param {string} startLine - The first line of the block.
- * @param {string} endLine - The last line of the block.
- * @param {boolean} includeStartEnd - Include the start and end lines in the result.
+ * @param {array} lines The array of lines to search.
+ * @param {string} startLine The first line of the block.
+ * @param {string} endLine The last line of the block.
+ * @param {boolean} includeStartEnd Include the start and end lines in the result.
  * @return {array} The found block of lines, if found.
  */
 function getBlockContentsFromLines(
@@ -79,10 +79,10 @@ function getBlockContentsFromLines(
 
 /**
  * Adds the necessary info from a VS project into a VS solution file so that it will build.
- * @param {string} slnFile - The Absolute path to the target VS solution file.
- * @param {object} project - The object representing the project info.
- * @param {boolean} verbose - If true, enable verbose logging.
- * @param {boolean} checkMode - It true, don't make any changes.
+ * @param {string} slnFile The Absolute path to the target VS solution file.
+ * @param {object} project The object representing the project info.
+ * @param {boolean} verbose If true, enable verbose logging.
+ * @param {boolean} checkMode It true, don't make any changes.
  * @return {boolean} Whether any changes were necessary.
  */
 function addProjectToSolution(
