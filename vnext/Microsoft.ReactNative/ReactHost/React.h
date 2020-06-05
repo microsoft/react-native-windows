@@ -15,6 +15,7 @@
 #include "future/future.h"
 
 #include <NativeModuleProvider.h>
+#include <TurboModulesProvider.h>
 
 #ifdef CORE_ABI
 #include <folly/dynamic.h>
@@ -142,6 +143,7 @@ struct ReactOptions {
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
+  std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> TurboModuleProvider;
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;

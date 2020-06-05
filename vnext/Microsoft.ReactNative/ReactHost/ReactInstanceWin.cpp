@@ -26,6 +26,7 @@
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DevMenu.h"
+#include "IReactContext.h"
 #include "IReactDispatcher.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
@@ -244,11 +245,19 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::AppState,
                   ::Microsoft::ReactNativeSpecs::AppStateSpec>());
 
-          nmp->AddModuleProvider(
-              L"Clipboard",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::Clipboard,
-                  ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+          if (m_options.UseWebDebugger()) {
+            nmp->AddModuleProvider(
+                L"Clipboard",
+                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                    ::Microsoft::ReactNative::Clipboard,
+                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+          } else {
+            m_options.TurboModuleProvider->AddModuleProvider(
+                L"Clipboard",
+                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                    ::Microsoft::ReactNative::Clipboard,
+                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+          }
 
           ::Microsoft::ReactNative::DevSettings::SetReload(
               strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
@@ -319,10 +328,12 @@ void ReactInstanceWin::Initialize() noexcept {
 
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
+            m_options.TurboModuleProvider->SetReactContext(
+                winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
-                nullptr,
+                m_options.TurboModuleProvider,
                 m_uiManager.Load(),
                 m_jsMessageThread.Load(),
                 Mso::Copy(m_batchingUIThread),
