@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "chalk": "^3",
+    "mustache": "^4.0.1",
     "npm-registry": "^0.1.13",
     "prompts": "^2.3.0",
     "semver": "^7.1.3",
