@@ -177,8 +177,7 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\Components\\TextInput\\TextInput.Types.win32.ts",
-      "baseFile": "Libraries\\Components\\TextInput\\TextInput.js"
+      "file": "Libraries\\Components\\TextInput\\TextInput.Types.win32.ts"
     },
     {
       "type": "derived",
