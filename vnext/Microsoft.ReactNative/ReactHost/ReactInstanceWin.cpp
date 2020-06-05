@@ -497,6 +497,11 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
 
   // Create MessageQueueThread for the DispatchQueue
   VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+
+  auto jsDispatcher =
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+  m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
   m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
       jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
   m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));

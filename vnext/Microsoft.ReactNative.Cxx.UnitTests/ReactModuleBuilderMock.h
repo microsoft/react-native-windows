@@ -123,6 +123,10 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+  IReactDispatcher JSDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   void DispatchEvent(
       xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,

@@ -29,6 +29,9 @@ namespace Microsoft.ReactNative {
     // Get ReactDispatcherHelper::UIDispatcherProperty from the Properties property bag.
     IReactDispatcher UIDispatcher { get; };
 
+    // Get ReactDispatcherHelper::JSDispatcherProperty from the Properties property bag.
+    IReactDispatcher JSDispatcher { get; };
+
     // Deprecated: Use DispatchEvent on XamlUIService instead
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 
