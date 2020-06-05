@@ -6,6 +6,9 @@
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "Unicode.h"
 
+using namespace winrt::Windows::Foundation;
+using namespace winrt::Windows::ApplicationModel;
+
 namespace Microsoft::ReactNative {
 
 void Clipboard::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
@@ -14,31 +17,39 @@ void Clipboard::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
 
 void Clipboard::getString(React::ReactPromise<React::JSValue> result) noexcept {
   auto jsDispatcher = m_reactContext.JSDispatcher();
-  auto promise = result;
-  m_reactContext.UIDispatcher().Post(
-      [jsDispatcher, promise]() -> winrt::fire_and_forget {
-        auto jsDispatcher2 = jsDispatcher;
-        auto promise2 = promise;
-        winrt::Windows::ApplicationModel::DataTransfer::DataPackageView data =
-            winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
-        try {
-          std::wstring text = std::wstring(co_await data.GetTextAsync());
-          jsDispatcher2.Post(
-              [promise2, text] { promise2.Resolve(React::JSValue{Microsoft::Common::Unicode::Utf16ToUtf8(text)}); });
-        } catch (winrt::hresult_error const &e) {
-          jsDispatcher2.Post([promise2, e] { promise2.Reject(std::wstring(e.message()).c_str()); });
-        } catch (...) {
-          jsDispatcher2.Post([promise2] { promise2.Reject(React::ReactError()); });
+  m_reactContext.UIDispatcher().Post([jsDispatcher, result] {
+    auto data = DataTransfer::Clipboard::GetContent();
+    auto asyncOp = data.GetTextAsync();
+    // unfortunately, lambda captures doesn't work well with winrt::fire_and_forget and co_await here
+    // call asyncOp.Completed explicitly
+    asyncOp.Completed([jsDispatcher, result](const IAsyncOperation<winrt::hstring> &asyncOp, AsyncStatus status) {
+      switch (status) {
+        case AsyncStatus::Completed: {
+          auto text = std::wstring(asyncOp.GetResults());
+          jsDispatcher.Post(
+              [result, text] { result.Resolve(React::JSValue{Microsoft::Common::Unicode::Utf16ToUtf8(text)}); });
+          break;
         }
-      } // namespace Microsoft::ReactNative
+        case AsyncStatus::Canceled: {
+          jsDispatcher.Post([result] { result.Reject(React::ReactError()); });
+          break;
+        }
+        case AsyncStatus::Error: {
+          auto message = std::wstring(winrt::hresult_error(asyncOp.ErrorCode()).message());
+          jsDispatcher.Post([result, message] { result.Reject(message.c_str()); });
+          break;
+        }
+      }
+    });
+  } // namespace Microsoft::ReactNative
   );
 }
 
 void Clipboard::setString(std::string content) noexcept {
   m_reactContext.UIDispatcher().Post([=] {
-    winrt::Windows::ApplicationModel::DataTransfer::DataPackage data;
+    DataTransfer::DataPackage data;
     data.SetText(Microsoft::Common::Unicode::Utf8ToUtf16(content));
-    winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(data);
+    DataTransfer::Clipboard::SetContent(data);
   });
 }
 
