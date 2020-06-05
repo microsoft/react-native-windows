@@ -8,6 +8,7 @@
 import * as FileSearch from './FileSearch';
 import * as Serialized from './Serialized';
 
+import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as ora from 'ora';
@@ -33,7 +34,7 @@ import {ValidationError} from './ValidationStrategy';
 const npmPackage = getNpmPackage();
 
 doMain(() => {
-  return new Promise((resolve, _) => {
+  return new Promise((resolve, _reject) => {
     yargs
       .command(
         'validate <manifests...>',
@@ -173,7 +174,7 @@ async function addOverride(overridePath: string) {
     manifest.removeOverride(overrideName);
   }
 
-  const promptAnswers = await promptForOverrideDetails();
+  const overrideDetails = await promptForOverrideDetails();
 
   const spinner = ora(
     'Adding override (This may take a while on first run)',
@@ -181,7 +182,7 @@ async function addOverride(overridePath: string) {
   await spinnerGuard(spinner, async () => {
     const override = await overrideFromDetails(
       overrideName,
-      promptAnswers,
+      overrideDetails,
       overrideFactory,
     );
     manifest.addOverride(override);
@@ -315,10 +316,12 @@ function printUpgradeStats(
 /**
  * Prints validation errors in a user-readable form to stderr
  */
-function printValidationErrors(errors: Array<ValidationError>) {
-  if (errors.length === 0) {
+function printValidationErrors(validationErrors: Array<ValidationError>) {
+  if (validationErrors.length === 0) {
     return;
   }
+
+  const errors = _.clone(validationErrors);
 
   // Add an initial line of separation
   console.error();
@@ -362,6 +365,10 @@ function printValidationErrors(errors: Array<ValidationError>) {
     errors,
     'The following overrides should be an exact copy of their base files. Ensure overrides are up to date or revert changes:',
   );
+
+  if (errors.length !== 0) {
+    throw new Error('Unprinted errors present:\n' + errors);
+  }
 }
 
 /**
@@ -372,8 +379,10 @@ function printErrorType(
   errors: ValidationError[],
   message: string,
 ) {
-  const filteredErrors = errors.filter(err => err.type === type);
-  filteredErrors.sort((a, b) => a.overrideName.localeCompare(b.overrideName));
+  const filteredErrors = _.remove(errors, err => err.type === type);
+  filteredErrors.sort((a, b) =>
+    a.overrideName.localeCompare(b.overrideName, 'en'),
+  );
 
   if (filteredErrors.length > 0) {
     console.error(chalk.red(message));
@@ -397,12 +406,8 @@ async function checkFileExists(friendlyName: string, filePath: string) {
  * Read a manifest and print a pretty error if we can't
  */
 async function readManifest(file: string): Promise<Manifest> {
-  try {
-    const data = await Serialized.readManifestFromFile(file);
-    return Manifest.fromSerialized(data);
-  } catch (ex) {
-    throw new Error('Could not parse manifest. Is it valid?');
-  }
+  const data = await Serialized.readManifestFromFile(file);
+  return Manifest.fromSerialized(data);
 }
 
 /**

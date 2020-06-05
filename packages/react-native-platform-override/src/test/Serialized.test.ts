@@ -6,7 +6,6 @@
  */
 
 import * as Serialized from '../Serialized';
-import * as path from 'path';
 
 test('Empty Manifest Invalid', () => {
   expect(() => Serialized.parseManifest('{}')).toThrow();
@@ -97,26 +96,6 @@ test('Fixme Allowed As Issue', () => {
   };
 
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
-});
-
-test('Path Should Use Platform Slashes', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo/foo.win32.js',
-        baseFile: 'bar\\foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 2345,
-      },
-    ],
-  };
-
-  const parsed = Serialized.parseManifest(JSON.stringify(manifest));
-  const override = parsed.overrides[0] as Serialized.PatchOverride;
-  expect(override.file).toBe(`foo${path.sep}foo.win32.js`);
-  expect(override.baseFile).toBe(`bar${path.sep}foo.js`);
 });
 
 test('Issue Must Be Present For Patch', () => {

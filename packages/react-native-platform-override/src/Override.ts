@@ -19,7 +19,7 @@ import OverrideFactory from './OverrideFactory';
  */
 export default interface Override {
   /**
-   * Identifer of the override (e.g. filename or directory name)
+   * Case sensitive identifer of the override (e.g. filename or directory name)
    */
   name(): string;
 

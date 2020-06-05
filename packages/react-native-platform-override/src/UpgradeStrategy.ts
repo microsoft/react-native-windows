@@ -18,7 +18,7 @@ export interface UpgradeResult {
  */
 export default interface UpgradeStrategy {
   upgrade(
-    reactRepo: GitReactFileRepository,
+    gitReactRepo: GitReactFileRepository,
     overrideRepo: OverrideFileRepository,
     newVersion: string,
     allowConflicts: boolean,
@@ -42,19 +42,19 @@ export const UpgradeStrategies = {
     baseFile: string,
     baseVersion: string,
   ): UpgradeStrategy => ({
-    upgrade: async (reactRepo, overrideRepo, newVersion, allowConflicts) => {
+    upgrade: async (gitReactRepo, overrideRepo, newVersion, allowConflicts) => {
       const ovrContent = await overrideRepo.getFileContents(override);
       if (ovrContent === null) {
         throw new Error(`Could not read ${override}`);
       }
 
-      const ovrAsPatch = await reactRepo.generatePatch(
+      const ovrAsPatch = await gitReactRepo.generatePatch(
         baseFile,
         baseVersion,
         ovrContent,
       );
 
-      const patched = (await reactRepo.getPatchedFile(
+      const patched = (await gitReactRepo.getPatchedFile(
         baseFile,
         newVersion,
         ovrAsPatch,
@@ -75,8 +75,11 @@ export const UpgradeStrategies = {
    * Overwrite our override with base file contents
    */
   copyFile: (override: string, baseFile: string): UpgradeStrategy => ({
-    upgrade: async (reactRepo, overrideRepo, newVersion) => {
-      const newContent = await reactRepo.getFileContents(baseFile, newVersion);
+    upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
+      const newContent = await gitReactRepo.getFileContents(
+        baseFile,
+        newVersion,
+      );
       if (newContent === null) {
         throw new Error(`Could not read ${baseFile}@${newVersion}`);
       }

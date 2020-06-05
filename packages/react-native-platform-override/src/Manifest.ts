@@ -27,7 +27,7 @@ export default class Manifest {
       throw new Error('Cannot construct a manifest with duplicate overrides');
     }
 
-    this.overrides = _.cloneDeep(overrides);
+    this.overrides = _.clone(overrides);
   }
 
   static fromSerialized(man: Serialized.Manifest): Manifest {
@@ -48,7 +48,7 @@ export default class Manifest {
 
     const overrideFiles = await overrideRepo.listFiles();
     const missingFromManifest = overrideFiles.filter(
-      file => !this.overrides.some(manOvr => manOvr.includesFile(file)),
+      file => !this.overrides.some(override => override.includesFile(file)),
     );
 
     for (const missingFile of missingFromManifest) {
@@ -59,8 +59,8 @@ export default class Manifest {
       ovr.validationStrategies(),
     );
 
-    for (const strat of validationTasks) {
-      errors.push(...(await strat.validate(overrideRepo, reactRepo)));
+    for (const task of validationTasks) {
+      errors.push(...(await task.validate(overrideRepo, reactRepo)));
     }
 
     return errors;
@@ -116,19 +116,15 @@ export default class Manifest {
    * current base file.
    */
   async markUpToDate(overrideName: string, overrideFactory: OverrideFactory) {
-    const entryIdx = this.findOverrideIndex(overrideName);
-    if (entryIdx === -1) {
+    const override = this.findOverride(overrideName);
+    if (override === null) {
       throw new Error(`Override '${overrideName}' does not exist`);
     }
 
-    const currentOverride = this.overrides[entryIdx];
-    const upToDateOverride = await currentOverride.createUpdated(
-      overrideFactory,
-    );
-
-    // Be careful not to rely on the saved index which may no longer be
-    // accurate after resuming. Modify the original retrieved object instead.
-    Object.assign(currentOverride, upToDateOverride);
+    // Mutate the object instead of replacing by index because the index may no
+    // longer be the same after awaiting.
+    const upToDateOverride = await override.createUpdated(overrideFactory);
+    Object.assign(override, upToDateOverride);
   }
 
   /**
@@ -137,7 +133,7 @@ export default class Manifest {
   serialize(): Serialized.Manifest {
     return {
       overrides: this.overrides
-        .sort((a, b) => a.name().localeCompare(b.name()))
+        .sort((a, b) => a.name().localeCompare(b.name(), 'en'))
         .map(override => override.serialize()),
     };
   }

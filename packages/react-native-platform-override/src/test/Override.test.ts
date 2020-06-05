@@ -49,7 +49,7 @@ const derivedOverride = testCase('derived', DerivedOverride, {
   issue: 1234,
 });
 
-const patchOverride = testCase('pacth', PatchOverride, {
+const patchOverride = testCase('patch', PatchOverride, {
   file: 'foo.windows.js',
   baseFile: 'foo.js',
   baseVersion: '0.62.2',
@@ -64,27 +64,27 @@ const fileOverrides: TestCase<OverrideConstructor>[] = [
   patchOverride,
 ];
 
-test.each(fileOverrides)('%s Override Name', (_, ovrClass, args) => {
+test.each(fileOverrides)('name - %s', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'bar.windows.js'});
   expect(override.name()).toBe('bar.windows.js');
 });
 
-test.each(fileOverrides)('%s Includes Same File', (_, ovrClass, args) => {
+test.each(fileOverrides)('includesFile - %s Has File', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'bar.windows.js'});
   expect(override.includesFile('bar.windows.js')).toBe(true);
 });
 
-test.each(fileOverrides)('%s Doesnt Include File', (_, ovrClass, args) => {
+test.each(fileOverrides)('includesFile - %s No File', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'bar.windows.js'});
   expect(override.includesFile('foo.windows.js')).toBe(false);
 });
 
-test.each(fileOverrides)('%s Includes Backslash File', (_, ovrClass, args) => {
+test.each(fileOverrides)('includesFile - %s Backslash', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'foo/bar.windows.js'});
   expect(override.includesFile('foo\\bar.windows.js')).toBe(true);
 });
 
-test.each(fileOverrides)('%s Includes Slash File', (_, ovrClass, args) => {
+test.each(fileOverrides)('includesFile - %s Slash', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'foo\\bar.windows.js'});
   expect(override.includesFile('foo/bar.windows.js')).toBe(true);
 });

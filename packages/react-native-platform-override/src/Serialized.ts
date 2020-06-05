@@ -97,15 +97,12 @@ export async function readManifestFromFile(
  */
 export function parseManifest(json: string): Manifest {
   const parsed = JSON.parse(json);
-  ThrowReporter.report(ManifestType.decode(parsed));
 
-  // Make sure directory separators go the right direction
-  (parsed as Manifest).overrides.forEach(override => {
-    override.file = path.normalize(override.file);
-    if (override.type !== 'platform') {
-      override.baseFile = path.normalize(override.baseFile);
-    }
-  });
+  try {
+    ThrowReporter.report(ManifestType.decode(parsed));
+  } catch (ex) {
+    throw new Error('Could not parse manifest. Is it valid?');
+  }
 
   return parsed;
 }
@@ -118,8 +115,6 @@ export async function writeManifestToFile(
   manifest: Manifest,
   filePath: string,
 ) {
-  manifest.overrides.sort((a, b) => a.file.localeCompare(b.file));
-
   const json = JSON.stringify(manifest, null /*replacer*/, 2 /*space*/);
   await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
   await fs.promises.writeFile(filePath, json);
