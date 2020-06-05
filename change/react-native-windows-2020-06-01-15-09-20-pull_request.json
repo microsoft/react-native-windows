@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "prerelease",
   "comment": "Expose turbo module registry API",
   "packageName": "react-native-windows",
   "email": "zihanc@microsoft.com",
