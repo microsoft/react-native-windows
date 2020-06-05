@@ -18,6 +18,7 @@
   "dependencies": {
     "chalk": "^3",
     "globby": "^9.2.0",
+    "mustache": "^4.0.1",
     "react-native-tscodegen": "0.62.1",
     "yargs": "^15.1.0"
   },
