@@ -55,11 +55,11 @@ IAsyncAction ReactNativeHost::LoadInstance() noexcept {
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
-
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
+  auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider, turboModulesProvider);
 
     if (auto packageProviders = InstanceSettings().PackageProviders()) {
       for (auto const &packageProvider : packageProviders) {
@@ -113,6 +113,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.ModuleProvider = modulesProvider;
   reactOptions.ViewManagerProvider = viewManagersProvider;
+  reactOptions.TurboModuleProvider = turboModulesProvider;
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());

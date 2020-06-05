@@ -277,6 +277,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
@@ -619,6 +620,7 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
+    <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h">
       <Filter>Pch</Filter>
     </ClInclude>

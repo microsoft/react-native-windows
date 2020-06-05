@@ -324,6 +324,7 @@
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="Modules\I18nManagerModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
+    <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
@@ -501,6 +502,7 @@
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
