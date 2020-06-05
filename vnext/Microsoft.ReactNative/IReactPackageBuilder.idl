@@ -14,6 +14,11 @@ namespace Microsoft.ReactNative {
   interface IReactPackageBuilder {
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
+  }
+
+  [webhosthidden]
+  interface IReactPackageBuilderExperimental
+    requires IReactPackageBuilder {
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
   }
 } // namespace Microsoft.ReactNative

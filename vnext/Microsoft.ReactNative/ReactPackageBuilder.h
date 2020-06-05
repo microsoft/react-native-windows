@@ -9,7 +9,8 @@
 
 namespace winrt::Microsoft::ReactNative {
 
-struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackageBuilder> {
+struct ReactPackageBuilder
+    : winrt::implements<ReactPackageBuilder, IReactPackageBuilder, IReactPackageBuilderExperimental> {
   ReactPackageBuilder(
       std::shared_ptr<NativeModulesProvider> const &modulesProvider,
       std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
