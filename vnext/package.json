@@ -29,6 +29,7 @@
     "envinfo": "^7.5.0",
     "fbjs": "^1.0.0",
     "glob": "^7.1.1",
+    "mustache": "^4.0.1",
     "ora": "^3.4.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.2",

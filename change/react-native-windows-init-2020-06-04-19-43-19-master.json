@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Update template gen to use mustache",
+  "packageName": "react-native-windows-init",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-05T02:43:16.990Z"
+}

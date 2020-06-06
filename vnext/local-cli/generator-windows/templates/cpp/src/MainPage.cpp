@@ -9,9 +9,9 @@
 // clang-format off
 
 using namespace winrt;
-using namespace <%=XamlNamespaceCpp%>;
+using namespace {{ xamlNamespaceCpp }};
 
-namespace winrt::<%=ns%>::implementation
+namespace winrt::{{ namespace }}::implementation
 {
     MainPage::MainPage()
     {
