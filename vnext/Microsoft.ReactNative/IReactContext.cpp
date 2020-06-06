@@ -5,12 +5,16 @@
 #include "IReactContext.h"
 #include "DynamicWriter.h"
 
-namespace winrt::Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context{std::move(context)} {}
 
 IReactPropertyBag ReactContext::Properties() noexcept {
   return m_context->Properties();
+}
+
+IReactDispatcher ReactContext::UIDispatcher() noexcept {
+  return Properties().Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
 void ReactContext::DispatchEvent(
@@ -51,4 +55,4 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::implementation
