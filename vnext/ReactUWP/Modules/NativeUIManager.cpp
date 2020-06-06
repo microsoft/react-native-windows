@@ -26,14 +26,13 @@ using namespace xaml::Media;
 namespace react {
 namespace uwp {
 
-
 YGConfigRef getYogaConfig(bool useLegacyStretchBehaviour) {
   static YGConfigRef yogaConfig;
   static std::once_flag onceFlag;
   std::call_once(onceFlag, [useLegacyStretchBehaviour]() {
     yogaConfig = YGConfigNew();
     YGConfigSetUseLegacyStretchBehaviour(yogaConfig, useLegacyStretchBehaviour);
-    });
+  });
   return yogaConfig;
 }
 
