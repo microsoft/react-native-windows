@@ -4,12 +4,12 @@
 #include "pch.h"
 
 #include <ReactUWP/Modules/NativeUIManager.h>
+#include <ReactUWP/Utils/Helpers.h>
 #include <ReactUWP/Views/XamlFeatures.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
-#include <ReactUWP/Utils/Helpers.h>
 
 namespace react {
 namespace uwp {
