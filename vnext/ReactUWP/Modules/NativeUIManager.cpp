@@ -26,8 +26,19 @@ using namespace xaml::Media;
 namespace react {
 namespace uwp {
 
-static YogaNodePtr make_yoga_node() {
-  YogaNodePtr result(YGNodeNew());
+
+YGConfigRef getYogaConfig(bool useLegacyStretchBehaviour) {
+  static YGConfigRef yogaConfig;
+  static std::once_flag onceFlag;
+  std::call_once(onceFlag, [useLegacyStretchBehaviour]() {
+    yogaConfig = YGConfigNew();
+    YGConfigSetUseLegacyStretchBehaviour(yogaConfig, useLegacyStretchBehaviour);
+    });
+  return yogaConfig;
+}
+
+static YogaNodePtr make_yoga_node(bool useLegacyStretchBehaviour) {
+  YogaNodePtr result(YGNodeNewWithConfig(getYogaConfig(useLegacyStretchBehaviour)));
   return result;
 }
 
@@ -129,8 +140,22 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
+// Previous versions of react-native-windows did not configure Yoga to use "LegacyStretchBehaviour"
+// We now set it, but to allow apps a period to transition, we are adding a property that can be set to
+// maintain the previous behavior.
+winrt::Microsoft::ReactNative::IReactPropertyName LegacyStretchBehaviourProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.NativeUIManager"),
+          L"LegacyStretchBehaviour");
+  return propName;
+}
+
 NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
   m_context = reactContext;
+  m_useLegacyStretchBehaviour =
+      winrt::unbox_value_or<bool>(m_context->Properties().Get(LegacyStretchBehaviourProperty()), true);
+
 #if defined(_DEBUG)
   YGConfigSetLogger(YGConfigGetDefault(), &YogaLog);
 
@@ -197,7 +222,7 @@ void NativeUIManager::AddRootView(
           ? xaml::FlowDirection::RightToLeft
           : xaml::FlowDirection::LeftToRight);
 
-  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
+  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_useLegacyStretchBehaviour));
 
   auto element = view.as<xaml::FrameworkElement>();
   element.Tag(winrt::PropertyValue::CreateInt64(shadowNode.m_tag));
@@ -728,7 +753,7 @@ void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly:
       m_extraLayoutNodes.push_back(node.m_tag);
     }
 
-    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node());
+    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_useLegacyStretchBehaviour));
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
       StyleYogaNode(node, yogaNode, props);
