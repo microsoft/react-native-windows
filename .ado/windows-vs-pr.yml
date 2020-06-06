@@ -89,7 +89,6 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
-            Microsoft.ReactNative.ComponentTests/Microsoft.ReactNative.ComponentTests.exe
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
             Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
