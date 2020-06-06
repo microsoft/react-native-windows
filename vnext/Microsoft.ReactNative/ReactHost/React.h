@@ -133,10 +133,6 @@ struct ViewManagerProvider2 {
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
-#ifndef CORE_ABI
-  react::uwp::ReactInstanceSettings LegacySettings;
-#endif
-
   winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
 
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
@@ -201,6 +197,13 @@ struct ReactOptions {
   //! Flag controlling whether the JavaScript engine uses JIT compilation.
   bool EnableJITCompilation{true};
 
+  std::string ByteCodeFileUri;
+  bool EnableByteCodeCaching{true};
+  bool UseJsi{true};
+#ifndef CORE_ABI
+  react::uwp::JSIEngine JsiEngine{react::uwp::JSIEngine::Chakra};
+#endif
+
   //! Enable function nativePerformanceNow.
   //! Method nativePerformanceNow() returns high resolution time info.
   //! It is not safe to expose to Custom Function. Add this flag so we can turn it off for Custom Function.
@@ -208,7 +211,7 @@ struct ReactOptions {
 
   ReactDevOptions DeveloperSettings = {};
 
-  //! This controls the availiablility of various developer support functionality including
+  //! This controls the availability of various developer support functionality including
   //! RedBox, and the Developer Menu
   void SetUseDeveloperSupport(bool enable) noexcept;
   bool UseDeveloperSupport() const noexcept;

@@ -21,13 +21,9 @@ namespace react::uwp {
 struct ViewManagerProvider;
 
 struct UwpReactInstanceProxy : IReactInstance, std::enable_shared_from_this<UwpReactInstanceProxy> {
-  UwpReactInstanceProxy(
-      Mso::WeakPtr<Mso::React::IReactInstance> &&weakReactInstance,
-      ReactInstanceSettings &&instanceSettings) noexcept;
+  UwpReactInstanceProxy(Mso::WeakPtr<Mso::React::IReactInstance> &&weakReactInstance) noexcept;
 
  public: // IReactInstance
-  void Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) override;
-
   void AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) override;
   void DetachRootView(IXamlRootView *pRootView) override;
   LiveReloadCallbackCookie RegisterLiveReloadCallback(std::function<void()> callback) override;
@@ -49,7 +45,6 @@ struct UwpReactInstanceProxy : IReactInstance, std::enable_shared_from_this<UwpR
   const std::string &LastErrorMessage() const noexcept override;
   void loadBundle(std::string &&jsBundleRelativePath) override;
   ExpressionAnimationStore &GetExpressionAnimationStore() override;
-  const ReactInstanceSettings &GetReactInstanceSettings() const override;
   std::string GetBundleRootPath() const noexcept override;
   bool IsLoaded() const noexcept override;
 
@@ -59,7 +54,6 @@ struct UwpReactInstanceProxy : IReactInstance, std::enable_shared_from_this<UwpR
 
  private:
   Mso::WeakPtr<Mso::React::IReactInstance> m_weakReactInstance;
-  ReactInstanceSettings m_instanceSettings;
   ExpressionAnimationStore m_expressionAnimationStore;
   std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 };
