@@ -17,7 +17,6 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 // None of these tests are runnable
-#if 0
 TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
@@ -186,4 +185,3 @@ TEST_CLASS (RNTesterIntegrationTests) {
     TestComponent("AccessibilityManagerTest");
   }
 };
-#endif

@@ -1,8 +1,56 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Jun 2020 00:05:31 GMT and should not be manually modified.
+This log was last generated on Sat, 06 Jun 2020 00:05:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.86
+
+Sat, 06 Jun 2020 00:05:20 GMT
+
+### Changes
+
+- Expose turbo module registry API (zihanc@microsoft.com)
+- Ensure Image.windows.js is an exact copy of Image.ios.js (ngerlem@microsoft.com)
+
+## 0.0.0-master.85
+
+Fri, 05 Jun 2020 00:06:16 GMT
+
+### Changes
+
+- Adding compile time Code generation for Managed React Native modules for Windows (dannyvv@microsoft.com)
+- Move devmenu out of RootControl, implement more of DevSettings (acoates@microsoft.com)
+- Fix SampleApp run-windows with deploy (dannyvv@microsoft.com)
+
+## 0.0.0-master.84
+
+Thu, 04 Jun 2020 00:05:05 GMT
+
+### Changes
+
+- Fix ReloadInstance crash caused by unloaded instance (vmorozov@microsoft.com)
+- Re-enable RNTester integration tests. (julio.rocha@microsoft.com)
+
+## 0.0.0-master.83
+
+Wed, 03 Jun 2020 00:05:25 GMT
+
+### Changes
+
+- Deprecate acceptsKeyboardFocus (kaigu@microsoft.com)
+- Remove react-native-community/cli dependency from template (acoates@microsoft.com)
+- Code Cleanup: Some low haning fruit lint fixes (dannyvv@microsoft.com)
+- Allow paremeterization of buildLogDirectory for msbuild task when using run-windows (dannyvv@microsoft.com)
+- Minor autolinking template update prep (jthysell@microsoft.com)
+
+## 0.0.0-master.82
+
+Tue, 02 Jun 2020 00:07:29 GMT
+
+### Changes
+
+- Enable ReactNativeHost integration test (vmorozov@microsoft.com)
 
 ## 0.0.0-master.81
 

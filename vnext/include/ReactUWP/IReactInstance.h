@@ -43,7 +43,7 @@ struct ReactInstanceSettings {
   bool UseJsi{true};
   bool EnableJITCompilation{true};
   bool EnableByteCodeCaching{false};
-  bool EnableDeveloperMenu{false};
+  bool UseDeveloperSupport{false};
   uint16_t DebuggerPort{9229};
   uint16_t SourceBundlePort{0};
 
@@ -113,6 +113,8 @@ struct IReactInstance {
   virtual ExpressionAnimationStore &GetExpressionAnimationStore() = 0;
 
   virtual const ReactInstanceSettings &GetReactInstanceSettings() const = 0;
+
+  virtual bool IsLoaded() const noexcept = 0;
 };
 
 } // namespace uwp

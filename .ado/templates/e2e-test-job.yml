@@ -12,6 +12,9 @@ jobs:
     pool:
       vmImage: $(VmImage)
 
+    variables:
+      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
+
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -40,16 +43,15 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
       - task: PublishBuildArtifacts@1
+        displayName: Upload build logs
         condition:  succeededOrFailed()
-        timeoutInMinutes: 10
         inputs:    
-          pathtoPublish: packages/E2ETest/msbuild.binlog 
-          artifactName: 'ReactUWPTestApp build log' 
-          publishLocation: 'Container'
+          pathtoPublish: '$(BuildLogDirectory)'
+          artifactName: 'Build logs - $(Agent.JobName)' 
 
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts

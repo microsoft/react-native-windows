@@ -6,33 +6,35 @@
  */
 
 import * as FileSearch from './FileSearch';
-import * as ManifestData from './ManifestData';
-import * as OverridePrompt from './OverridePrompt';
+import * as Serialized from './Serialized';
 
+import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as ora from 'ora';
 import * as path from 'path';
 import * as yargs from 'yargs';
 
-import Manifest, {ValidationError} from './Manifest';
+import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';
 import {
   OverrideFileRepository,
-  VersionedReactFileRepository,
+  ReactFileRepository,
   bindVersion,
 } from './FileRepository';
-import OverrideUpgrader, {UpgradeResult} from './OverrideUpgrader';
-
 import {getInstalledRNVersion, getNpmPackage} from './PackageUtils';
+import {overrideFromDetails, promptForOverrideDetails} from './OverridePrompt';
 
 import CrossProcessLock from './CrossProcessLock';
 import GitReactFileRepository from './GitReactFileRepository';
+import Manifest from './Manifest';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
+import {UpgradeResult} from './UpgradeStrategy';
+import {ValidationError} from './ValidationStrategy';
 
 const npmPackage = getNpmPackage();
 
 doMain(() => {
-  return new Promise((resolve, _) => {
+  return new Promise((resolve, _reject) => {
     yargs
       .command(
         'validate <manifests...>',
@@ -48,7 +50,7 @@ doMain(() => {
               describe: 'Optional React Native version to check against',
             },
           }),
-        cmdArgv => validateManifests(cmdArgv.manifests, cmdArgv.version),
+        cmdArgv => validateManifests(cmdArgv.manifests!, cmdArgv.version),
       )
       .command(
         'add <override>',
@@ -57,7 +59,7 @@ doMain(() => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
-        cmdArgv => addOverride(cmdArgv.override),
+        cmdArgv => addOverride(cmdArgv.override!),
       )
       .command(
         'remove <override>',
@@ -66,7 +68,7 @@ doMain(() => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to remove'},
           }),
-        cmdArgv => removeOverride(cmdArgv.override),
+        cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
         'auto-upgrade <manifest>',
@@ -82,7 +84,7 @@ doMain(() => {
               describe: 'Optional React Native version to check against',
             },
           }),
-        cmdArgv => autoUpgrade(cmdArgv.manifest, cmdArgv.version),
+        cmdArgv => autoUpgrade(cmdArgv.manifest!, cmdArgv.version),
       )
       .command(
         'manual-upgrade <manifest>',
@@ -98,7 +100,7 @@ doMain(() => {
               describe: 'Optional React Native version to check against',
             },
           }),
-        cmdArgv => manualUpgrade(cmdArgv.manifest, cmdArgv.version),
+        cmdArgv => manualUpgrade(cmdArgv.manifest!, cmdArgv.version),
       )
       .epilogue(npmPackage.description)
       .option('color', {hidden: true})
@@ -134,8 +136,12 @@ async function validateManifest(manifestPath: string, version?: string) {
   const spinner = ora(`Verifying overrides in ${fullPath}`).start();
 
   await spinnerGuard(spinner, async () => {
-    const manifest = await readManifest(manifestPath, version);
-    const validationErrors = await manifest.validate();
+    const {manifest, overrideRepo, reactRepo} = await createManifestContext(
+      manifestPath,
+      version,
+    );
+
+    const validationErrors = await manifest.validate(overrideRepo, reactRepo);
 
     if (validationErrors.length === 0) {
       spinner.succeed();
@@ -154,35 +160,34 @@ async function addOverride(overridePath: string) {
   await checkFileExists('override', overridePath);
 
   const manifestPath = await FileSearch.findManifest(overridePath);
+  const {manifest, overrideFactory} = await createManifestContext(manifestPath);
+
   const manifestDir = path.dirname(manifestPath);
+  const overrideName = path.normalize(path.relative(manifestDir, overridePath));
 
-  const manifest = await readManifest(manifestPath);
-  const relOverride = path.normalize(path.relative(manifestDir, overridePath));
-
-  if (manifest.hasOverride(relOverride)) {
+  if (manifest.hasOverride(overrideName)) {
     console.warn(
       chalk.yellow(
         'Warning: override already exists in manifest and will be overwritten',
       ),
     );
-    manifest.removeOverride(relOverride);
+    manifest.removeOverride(overrideName);
   }
 
-  const overrideDetails = await OverridePrompt.askForDetails(relOverride);
+  const overrideDetails = await promptForOverrideDetails();
 
   const spinner = ora(
     'Adding override (This may take a while on first run)',
   ).start();
   await spinnerGuard(spinner, async () => {
-    await manifest.addOverride(
-      overrideDetails.type,
-      relOverride,
-      overrideDetails.baseFile,
-      overrideDetails.issue,
+    const override = await overrideFromDetails(
+      overrideName,
+      overrideDetails,
+      overrideFactory,
     );
+    manifest.addOverride(override);
 
-    const manifestData = manifest.getAsData();
-    await ManifestData.writeToFile(manifestData, manifestPath);
+    await Serialized.writeManifestToFile(manifest.serialize(), manifestPath);
     spinner.succeed('Adding override');
   });
 }
@@ -195,16 +200,16 @@ async function removeOverride(overridePath: string) {
   const manifestDir = path.dirname(manifestPath);
 
   const manifest = await readManifest(manifestPath);
-  const relOverride = path.normalize(path.relative(manifestDir, overridePath));
+  const overrideName = path.normalize(path.relative(manifestDir, overridePath));
 
-  if (!manifest.removeOverride(relOverride)) {
+  if (!manifest.removeOverride(overrideName)) {
     console.error(
       chalk.red('Could not remove override. Is it part of the manifest?'),
     );
     process.exit(1);
   }
 
-  await ManifestData.writeToFile(manifest.getAsData(), manifestPath);
+  await Serialized.writeManifestToFile(manifest.serialize(), manifestPath);
   console.log(chalk.greenBright('Override successfully removed'));
 }
 
@@ -213,7 +218,11 @@ async function removeOverride(overridePath: string) {
  * out-of-date overrides.
  */
 async function autoUpgrade(manifestPath: string, version?: string) {
-  return doUpgrade(manifestPath, false /*isManual*/, version);
+  return performUpgrade(
+    manifestPath,
+    false /*allowConflicts*/,
+    version || (await getInstalledRNVersion()),
+  );
 }
 
 /**
@@ -221,68 +230,69 @@ async function autoUpgrade(manifestPath: string, version?: string) {
  * automatically merged.
  */
 async function manualUpgrade(manifestPath: string, version?: string) {
-  return doUpgrade(manifestPath, true /*isManual*/, version);
+  return performUpgrade(
+    manifestPath,
+    true /*allowConflicts*/,
+    version || (await getInstalledRNVersion()),
+  );
 }
 
 /**
  * Helper for autoUpgrade and manualUpgrade
  */
-async function doUpgrade(
+async function performUpgrade(
   manifestPath: string,
-  isManual: boolean,
-  version?: string,
+  allowConflicts: boolean,
+  version: string,
 ) {
+  const ctx = await createManifestContext(manifestPath, version);
+
   const spinner = ora('Merging overrides').start();
   await spinnerGuard(spinner, async () => {
-    const reactRepo = await GitReactFileRepository.createAndInit();
-    const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(manifestPath));
-    const upgrader = new OverrideUpgrader(reactRepo, ovrRepo);
-    const manifest = await readManifestUsingRepos(
-      manifestPath,
-      ovrRepo,
-      reactRepo,
-      version,
-    );
-
-    const outOfDateOverrides = (await manifest.validate())
+    const outOfDateOverrides = (await ctx.manifest.validate(
+      ctx.overrideRepo,
+      ctx.reactRepo,
+    ))
       .filter(err => err.type === 'outOfDate')
-      .map(err => err.file)
-      .map(file => manifest.findOverride(file)) as Array<
-      ManifestData.NonPlatformEntry
-    >;
+      .map(err => err.overrideName)
+      .map(ovrName => ctx.manifest.findOverride(ovrName)!);
 
-    const upgradedOverrides: Array<UpgradeResult> = [];
+    const upgradeResults: Array<UpgradeResult> = [];
 
     let i = 0;
     for (const override of outOfDateOverrides) {
       spinner.text = `Merging overrides (${++i}/${outOfDateOverrides.length})`;
 
-      const upgraded = await upgrader.getUpgraded(
-        override,
-        manifest.currentVersion(),
-      );
+      const upgradeResult = await override
+        .upgradeStrategy()
+        .upgrade(ctx.gitReactRepo, ctx.overrideRepo, version, allowConflicts);
 
-      if (isManual || !upgraded.hasConflicts) {
-        await ovrRepo.setFileContents(upgraded.overrideFile, upgraded.content);
-        await manifest.markUpToDate(upgraded.overrideFile);
+      upgradeResults.push(upgradeResult);
+
+      if (allowConflicts || !upgradeResult.hasConflicts) {
+        await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
       }
-
-      upgradedOverrides.push(upgraded);
     }
 
-    if (upgradedOverrides.length > 0) {
-      await ManifestData.writeToFile(manifest.getAsData(), manifestPath);
+    if (upgradeResults.length > 0) {
+      await Serialized.writeManifestToFile(
+        ctx.manifest.serialize(),
+        manifestPath,
+      );
     }
 
     spinner.succeed();
-    printUpgradeStats(upgradedOverrides, isManual);
+    printUpgradeStats(upgradeResults, allowConflicts);
   });
 }
 
 /**
  * Print statistics about an attempt to upgrade out-of-date-overrides.
  */
-function printUpgradeStats(results: Array<UpgradeResult>, isManual: boolean) {
+function printUpgradeStats(
+  results: Array<UpgradeResult>,
+  allowConflicts: boolean,
+) {
   const numTotal = results.length;
   const numConflicts = results.filter(res => res.hasConflicts).length;
   const numAutoPatched = numTotal - numConflicts;
@@ -296,7 +306,7 @@ function printUpgradeStats(results: Array<UpgradeResult>, isManual: boolean) {
       ),
     );
   }
-  if (isManual && numConflicts > 0) {
+  if (allowConflicts && numConflicts > 0) {
     console.log(
       chalk.yellowBright(`${numConflicts} overrides require manual resolution`),
     );
@@ -306,64 +316,77 @@ function printUpgradeStats(results: Array<UpgradeResult>, isManual: boolean) {
 /**
  * Prints validation errors in a user-readable form to stderr
  */
-function printValidationErrors(errors: Array<ValidationError>) {
-  if (errors.length === 0) {
+function printValidationErrors(validationErrors: Array<ValidationError>) {
+  if (validationErrors.length === 0) {
     return;
   }
+
+  const errors = _.clone(validationErrors);
 
   // Add an initial line of separation
   console.error();
 
-  errors.sort((a, b) => a.file.localeCompare(b.file));
-
-  const filesMissing = errors.filter(err => {
-    return err.type === 'fileMissingFromManifest';
-  });
-  const overridesMissing = errors.filter(err => {
-    return err.type === 'overrideFileNotFound';
-  });
-  const baseFilesNotFound = errors.filter(err => {
-    return err.type === 'baseFileNotFound';
-  });
-  const outOfDateFiles = errors.filter(err => {
-    return err.type === 'outOfDate';
-  });
-
-  if (filesMissing.length > 0) {
-    const errorMessage = `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${
+  printErrorType(
+    'missingFromManifest',
+    errors,
+    `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${
       npmPackage.name
-    } add <override>':`;
-    console.error(chalk.red(errorMessage));
-    filesMissing.forEach(err => console.error(` - ${err.file}`));
-    console.error();
-  }
+    } add <override>':`,
+  );
 
-  if (overridesMissing.length > 0) {
-    const errorMessage = `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${
+  printErrorType(
+    'overrideNotFound',
+    errors,
+    `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${
       npmPackage.name
-    } remove <override>':`;
-    console.error(chalk.red(errorMessage));
-    overridesMissing.forEach(err => console.error(` - ${err.file}`));
-    console.error();
-  }
+    } remove <override>':`,
+  );
 
-  if (baseFilesNotFound.length > 0) {
-    const errorMessage = `Found overrides whose original files do not exist. Remove existing overrides using 'npx ${
+  printErrorType(
+    'baseNotFound',
+    errors,
+    `Found overrides whose base files do not exist. Remove existing overrides using 'npx ${
       npmPackage.name
-    } remove <override>':`;
-    console.error(chalk.red(errorMessage));
-    baseFilesNotFound.forEach(err => console.error(` - ${err.file}`));
-    console.error();
-  }
+    } remove <override>':`,
+  );
 
-  if (outOfDateFiles.length > 0) {
-    const errorMessage = `Found overrides whose original files have changed. Upgrade overrides using 'npx ${
+  printErrorType(
+    'outOfDate',
+    errors,
+    `Found overrides whose original files have changed. Upgrade overrides using 'npx ${
       npmPackage.name
     } auto-upgrade <manifest>' and 'npx ${
       npmPackage.name
-    } manual-upgrade <manifest>':`;
-    console.error(chalk.red(errorMessage));
-    outOfDateFiles.forEach(err => console.error(` - ${err.file}`));
+    } manual-upgrade <manifest>':`,
+  );
+
+  printErrorType(
+    'overrideDifferentFromBase',
+    errors,
+    'The following overrides should be an exact copy of their base files. Ensure overrides are up to date or revert changes:',
+  );
+
+  if (errors.length !== 0) {
+    throw new Error('Unprinted errors present:\n' + errors);
+  }
+}
+
+/**
+ * Print validation errors of a speccific type
+ */
+function printErrorType(
+  type: ValidationError['type'],
+  errors: ValidationError[],
+  message: string,
+) {
+  const filteredErrors = _.remove(errors, err => err.type === type);
+  filteredErrors.sort((a, b) =>
+    a.overrideName.localeCompare(b.overrideName, 'en'),
+  );
+
+  if (filteredErrors.length > 0) {
+    console.error(chalk.red(message));
+    filteredErrors.forEach(err => console.error(` - ${err.overrideName}`));
     console.error();
   }
 }
@@ -382,36 +405,42 @@ async function checkFileExists(friendlyName: string, filePath: string) {
 /**
  * Read a manifest and print a pretty error if we can't
  */
-async function readManifest(file: string, version?: string): Promise<Manifest> {
-  const gitReactRepo = await GitReactFileRepository.createAndInit();
-  const ovrRepo = new OverrideFileRepositoryImpl(path.dirname(file));
-
-  return readManifestUsingRepos(file, ovrRepo, gitReactRepo, version);
+async function readManifest(file: string): Promise<Manifest> {
+  const data = await Serialized.readManifestFromFile(file);
+  return Manifest.fromSerialized(data);
 }
 
 /**
- * Like {@see readManifest}, but allows providing the file repositories to use.
+ * Context describing state centered around a single manifest
  */
-async function readManifestUsingRepos(
-  file: string,
-  ovrRepo: OverrideFileRepository,
-  versionedReactRepo: VersionedReactFileRepository,
+interface ManifestContext {
+  overrideRepo: OverrideFileRepository;
+  reactRepo: ReactFileRepository;
+  gitReactRepo: GitReactFileRepository;
+  overrideFactory: OverrideFactory;
+  manifest: Manifest;
+}
+
+/**
+ * Sets up state for a manifest describing overrides at a specified RN version
+ */
+async function createManifestContext(
+  manifestPath: string,
   version?: string,
-): Promise<Manifest> {
-  await checkFileExists('manifest', file);
+): Promise<ManifestContext> {
+  await checkFileExists('manifest', manifestPath);
+  version = version || (await getInstalledRNVersion());
 
-  let data: ManifestData.Manifest;
+  const overrideDir = path.dirname(manifestPath);
+  const overrideRepo = new OverrideFileRepositoryImpl(overrideDir);
 
-  try {
-    data = await ManifestData.readFromFile(file);
-  } catch (ex) {
-    throw new Error('Could not parse manifest. Is it valid?');
-  }
+  const gitReactRepo = await GitReactFileRepository.createAndInit();
+  const reactRepo = bindVersion(gitReactRepo, version);
 
-  const rnVersion = version || (await getInstalledRNVersion());
-  const reactRepo = bindVersion(versionedReactRepo, rnVersion);
+  const overrideFactory = new OverrideFactoryImpl(reactRepo, overrideRepo);
+  const manifest = await readManifest(manifestPath);
 
-  return new Manifest(data, ovrRepo, reactRepo);
+  return {overrideRepo, reactRepo, gitReactRepo, overrideFactory, manifest};
 }
 
 /**

@@ -40,7 +40,7 @@ export class BasePage {
     const maxWait = 20;
     var waitCount = 1;
     do {
-      testResult = this.treeDumpResult.getText() == 'TreeDump:Passed';
+      testResult = this.treeDumpResult.getText() === 'TreeDump:Passed';
       if (!testResult) {
         console.log(
           '####Waiting for treedump comparison result ' +

@@ -31,5 +31,8 @@ namespace Microsoft.ReactNative {
 
     // Get name of the UIDispatcher property for the IReactPropertyBag.
     static IReactPropertyName UIDispatcherProperty { get; };
+
+    // Get name of the JSDispatcher property for the IReactPropertyBag.
+    static IReactPropertyName JSDispatcherProperty { get; };
   }
 } // namespace ReactNative

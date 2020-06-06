@@ -20,7 +20,7 @@ Playground is a sample standalone application that allows testing of various JS 
 
 1. Run the app
 
-`yarn windows`
+`yarn windows --sln windows\Playground.sln`
 
 This command will build and deploy the application along with launching Metro bundler and the dev tools.
 

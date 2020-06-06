@@ -17,4 +17,7 @@
       <Private>false</Private>
     </ProjectReference>
   </ItemGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
+          Condition="'$(ReactNativeCodeGenEnabled)' == 'true'" />
 </Project>

@@ -18,7 +18,9 @@ namespace Microsoft.ReactNative.Managed
     // The current assembly to ensure we always register the basic type readers
     private static readonly Assembly s_currentAssembly = typeof(JSValueReaderGenerator).Assembly;
 
-    private static readonly ConcurrentDictionary<Assembly, bool> m_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
+    private static readonly ConcurrentDictionary<Assembly, bool> s_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
+    private static readonly ConcurrentDictionary<Type, MethodInfo> s_codeGenerateGenericExtensionMethods = new ConcurrentDictionary<Type, MethodInfo>();
+
     private static readonly Lazy<KeyValuePair<Type, MethodInfo>[]> s_allMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, MethodInfo>> s_nonGenericMethods;
     private static readonly Lazy<IReadOnlyDictionary<Type, SortedList<Type, MethodInfo>>> s_genericMethods;
@@ -26,12 +28,12 @@ namespace Microsoft.ReactNative.Managed
     public static void RegisterAssembly(Assembly assembly)
     {
       // UnitTests re-register over and over, safe to skip if already added.
-      if (m_registerdAssemblies.ContainsKey(assembly))
+      if (s_registerdAssemblies.ContainsKey(assembly))
       {
         return;
       }
 
-      m_registerdAssemblies.GetOrAdd(assembly, true);
+      s_registerdAssemblies.GetOrAdd(assembly, true);
 
       // Fail programs that register after we started serializing values.
       if (s_allMethods.IsValueCreated)
@@ -40,9 +42,18 @@ namespace Microsoft.ReactNative.Managed
       }
     }
 
+    public static void RegisterCodeGeneratorGenericExtensionMethod(Type type, MethodInfo method)
+    {
+      if (!method.IsGenericMethod)
+      {
+        throw new InvalidOperationException("Cannot register non generic methods.");
+      }
+      s_codeGenerateGenericExtensionMethods.TryAdd(type, method);
+    }
+
     static JSValueReaderGenerator()
     {
-      m_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
+      s_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
 
       // Get all extension ReadValue methods for IJSValueReader and JSValue.
       // The first parameter must be IJSValueReader or JSValue.
@@ -52,21 +63,21 @@ namespace Microsoft.ReactNative.Managed
       s_allMethods = new Lazy<KeyValuePair<Type, MethodInfo>[]>(() =>
       {
         var extensionMethods =
-          from assembly in m_registerdAssemblies.Keys
-      from type in assembly.GetTypes()
-      let typeInfo = type.GetTypeInfo()
-      where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested
-      from member in type.GetMember(nameof(JSValueReader.ReadValue), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
-      let method = member as MethodInfo
-      where (method != null) && method.IsDefined(typeof(ExtensionAttribute), inherit: false)
-      let parameters = method.GetParameters()
-      where parameters.Length == 2
-        && (parameters[0].ParameterType == typeof(IJSValueReader)
-         || parameters[0].ParameterType == typeof(JSValue))
-        && parameters[1].IsOut
-      let dataType = parameters[1].ParameterType.GetElementType()
-      where !dataType.IsGenericParameter
-      select new KeyValuePair<Type, MethodInfo>(dataType, method);
+          from assembly in s_registerdAssemblies.Keys
+          from type in assembly.GetTypes()
+          let typeInfo = type.GetTypeInfo()
+          where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested
+          from member in type.GetMember(nameof(JSValueReader.ReadValue), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+          let method = member as MethodInfo
+          where (method != null) && method.IsDefined(typeof(ExtensionAttribute), inherit: false)
+          let parameters = method.GetParameters()
+          where parameters.Length == 2
+            && (parameters[0].ParameterType == typeof(IJSValueReader)
+             || parameters[0].ParameterType == typeof(JSValue))
+            && parameters[1].IsOut
+          let dataType = parameters[1].ParameterType.GetElementType()
+          where !dataType.IsGenericParameter
+          select new KeyValuePair<Type, MethodInfo>(dataType, method);
         return extensionMethods.ToArray();
       });
 
@@ -83,16 +94,16 @@ namespace Microsoft.ReactNative.Managed
       s_genericMethods = new Lazy<IReadOnlyDictionary<Type, SortedList<Type, MethodInfo>>>(() =>
       {
         var genericMethods =
-          from pair in s_allMethods.Value
-      where pair.Value.IsGenericMethod
-      let type = pair.Key
-      let keyType = type.GetTypeInfo().IsGenericType ? type.GetGenericTypeDefinition()
-        : type.IsArray ? typeof(Array)
-        : throw new InvalidOperationException($"Unsupported argument type {type}")
-      group pair by keyType into g
-      select new KeyValuePair<Type, SortedList<Type, MethodInfo>>(
-        g.Key, new SortedList<Type, MethodInfo>(
-          g.ToDictionary(p => p.Key, p => p.Value), GenericTypeComparer.Default));
+          from pair in s_allMethods.Value.Union(s_codeGenerateGenericExtensionMethods)
+          where pair.Value.IsGenericMethod
+          let type = pair.Key
+          let keyType = type.GetTypeInfo().IsGenericType ? type.GetGenericTypeDefinition()
+            : type.IsArray ? typeof(Array)
+            : throw new InvalidOperationException($"Unsupported argument type {type}")
+          group pair by keyType into g
+          select new KeyValuePair<Type, SortedList<Type, MethodInfo>>(
+            g.Key, new SortedList<Type, MethodInfo>(
+              g.ToDictionary(p => p.Key, p => p.Value), GenericTypeComparer.Default));
         return genericMethods.ToDictionary(p => p.Key, p => p.Value);
       });
     }
@@ -226,7 +237,7 @@ namespace Microsoft.ReactNative.Managed
 
     // It cannot be an extension method because it would conflict with the generic
     // extension method that uses T value type.
-    public static void ReadEnum<TEnum>(IJSValueReader reader, out TEnum value) /*TODO: Add in C# v7.3: where TEnum : Enum*/
+    public static void ReadEnum<TEnum>(IJSValueReader reader, out TEnum value) where TEnum : Enum
     {
       value = (TEnum)(object)reader.ReadValue<int>();
     }

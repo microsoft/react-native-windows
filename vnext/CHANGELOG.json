@@ -2,6 +2,157 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 06 Jun 2020 00:05:20 GMT",
+      "tag": "react-native-windows_v0.0.0-master.86",
+      "version": "0.0.0-master.86",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose turbo module registry API",
+            "author": "zihanc@microsoft.com",
+            "commit": "8de33da1889102e2a185385c931351d9ae9511b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure Image.windows.js is an exact copy of Image.ios.js",
+            "author": "ngerlem@microsoft.com",
+            "commit": "61e5ea7ee9b1f94dd1d5ef185936c7bd8c9448e5",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix compile errors in clang",
+            "author": "jacke@fb.com",
+            "commit": "349034e5c6fc0ce5afee83b1170d7998647a735d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Expose JSDispatcher on IReactContext",
+            "author": "zihanc@microsoft.com",
+            "commit": "85fd1f4cf1bd26ed7eb9be1ae474c08b722fbcf4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Jun 2020 00:06:16 GMT",
+      "tag": "react-native-windows_v0.0.0-master.85",
+      "version": "0.0.0-master.85",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding compile time Code generation for Managed React Native modules for Windows",
+            "author": "dannyvv@microsoft.com",
+            "commit": "cadf33ee4fbe4fb1ec4d9fef65a2d61495216cc6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move devmenu out of RootControl, implement more of DevSettings",
+            "author": "acoates@microsoft.com",
+            "commit": "f52d4942a42ed75d6fa92594897d2f3d7db1b7d7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix SampleApp run-windows with deploy",
+            "author": "dannyvv@microsoft.com",
+            "commit": "564636d9d45496acf5460d9797eb32b01c88d398",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Jun 2020 00:05:05 GMT",
+      "tag": "react-native-windows_v0.0.0-master.84",
+      "version": "0.0.0-master.84",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReloadInstance crash caused by unloaded instance",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f0da7cdb53f29a9a9f4d1db606457b0cb3660fe7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Re-enable RNTester integration tests.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "e3757463c4592e9f7efb37d8ee0686867429b1dc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Jun 2020 00:05:25 GMT",
+      "tag": "react-native-windows_v0.0.0-master.83",
+      "version": "0.0.0-master.83",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Deprecate acceptsKeyboardFocus",
+            "author": "kaigu@microsoft.com",
+            "commit": "45d01a7db005595af39030904acff616eed5400f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove react-native-community/cli dependency from template",
+            "author": "acoates@microsoft.com",
+            "commit": "57b07e28712d5595729d3d79a36249e075778576",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Code Cleanup: Some low haning fruit lint fixes",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7361c32af8cce87267be33c1d1cfc9fb6368274c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow paremeterization of buildLogDirectory for msbuild task when using run-windows",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0001477e23d825e6a2a610e9c41b9bde6330bbf6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Minor autolinking template update prep",
+            "author": "jthysell@microsoft.com",
+            "commit": "c3ace8a77dbe6eab7e2f3fd213a1062163a06431",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "react-native-windows_v0.0.0-master.82",
+      "version": "0.0.0-master.82",
+      "comments": {
+        "none": [
+          {
+            "comment": "Share property bag ABI implementation and tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "84a6ba464303f7f4eef1877c248959d90cb7bf62",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Latest CELA open source policy is to not include All right reserved",
+            "author": "acoates@microsoft.com",
+            "commit": "3f17d742ee5045994fda3f10d2a489bde71659e3",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enable ReactNativeHost integration test",
+            "author": "vmorozov@microsoft.com",
+            "commit": "80d1a4064b3eaf5ba1125b0d28cd3b7a292bb43c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Jun 2020 00:05:31 GMT",
       "tag": "react-native-windows_v0.0.0-master.81",
       "version": "0.0.0-master.81",
