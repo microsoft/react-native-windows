@@ -24,16 +24,30 @@ req  - Item is required. If an override file exists, it MUST provide it. If no o
 opt  - Item is optional. If an override file exists, it MAY provide it. If no override file exists, config may try to calculate it.
 
 {
-  folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\app-name'
+  folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\my-app'
   sourceDir: string,    // (req) Relative path to the windows implementation under folder, ex: 'windows'
-  solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'AppName.sln'
+  solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'MyApp.sln'
   project: { // (req)
-    projectFile: string, // (req) Relative path to the VS project file under sourceDir, ex: 'AppName\AppName.vcxproj' for 'c:\path\to\app-name\windows\AppName\AppName.vcxproj'
-    projectName: string, // (auto) Name of the project, determined from projectFile, ex: 'AppName'
+    projectFile: string, // (req) Relative path to the VS project file under sourceDir, ex: 'MyApp\MyApp.vcxproj' for 'c:\path\to\my-app\windows\MyApp\MyApp.vcxproj'
+    projectName: string, // (auto) Name of the project, determined from projectFile, ex: 'MyApp'
     projectLang: string, // (auto) Language of the project, cpp or cs, determined from projectFile
     projectGuid: string, // (auto) Project identifier, determined from projectFile
   },
 }
+
+Example react-native.config.js:
+
+module.exports = {
+  project: {
+    windows: {
+      sourceDir: 'windows',
+      solutionFile: 'MyApp.sln',
+      project: {
+        projectFile: 'MyApp\\MyApp.vcxproj',
+      },
+    },
+  },
+};
 
 */
 
@@ -99,6 +113,11 @@ function projectConfigWindows(folder, userConfig = {}) {
   var projectFile = null;
   if (usingManualProjectOverride) {
     // Manually provided project, so extract it
+    if (!('projectFile' in userConfig.project)) {
+      throw new Error(
+        'projectFile is required for project in react-native.config',
+      );
+    }
     projectFile = path.join(sourceDir, userConfig.project.projectFile);
   } else {
     // No manually provided project, try to find it

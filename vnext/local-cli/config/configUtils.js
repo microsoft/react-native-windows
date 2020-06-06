@@ -76,7 +76,7 @@ function findSolutionFiles(winFolder) {
   var solutionFiles = [];
 
   // Try to find any solution file that appears to be a react native solution
-  for (var solutionFile of allSolutions) {
+  for (const solutionFile of allSolutions) {
     if (isRnwSolution(path.join(winFolder, solutionFile))) {
       solutionFiles.push(solutionFile);
     }
@@ -119,7 +119,7 @@ function findDependencyProjectFiles(winFolder) {
   var dependencyProjectFiles = [];
 
   // Try to find any project file that appears to be a dependency project
-  for (var projectFile of allProjects) {
+  for (const projectFile of allProjects) {
     if (isRnwDependencyProject(path.join(winFolder, projectFile))) {
       dependencyProjectFiles.push(projectFile);
     }
@@ -162,7 +162,7 @@ function findAppProjectFiles(winFolder) {
   var appProjectFiles = [];
 
   // Try to find any project file that appears to be an app project
-  for (var projectFile of allProjects) {
+  for (const projectFile of allProjects) {
     if (isRnwAppProject(path.join(winFolder, projectFile))) {
       appProjectFiles.push(projectFile);
     }
