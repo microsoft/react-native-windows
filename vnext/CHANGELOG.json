@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 06 Jun 2020 22:48:15 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.11",
+      "version": "0.62.0-preview.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented support for native module std::weak_ptr",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactInstance error state to avoid crashes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add UIDispatcher property to ReactInstanceSettings and IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jun 2020 23:30:48 GMT",
       "tag": "react-native-windows_v0.62.0-preview.10",
       "version": "0.62.0-preview.10",

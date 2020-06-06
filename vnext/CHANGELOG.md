@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Jun 2020 23:30:48 GMT and should not be manually modified.
+This log was last generated on Sat, 06 Jun 2020 22:48:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.11
+
+Sat, 06 Jun 2020 22:48:15 GMT
+
+### Changes
+
+- Implemented support for native module std::weak_ptr (vmorozov@microsoft.com)
+- Fix ReactInstance error state to avoid crashes (vmorozov@microsoft.com)
+- Add UIDispatcher property to ReactInstanceSettings and IReactContext (vmorozov@microsoft.com)
 
 ## 0.62.0-preview.10
 
