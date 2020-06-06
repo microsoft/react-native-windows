@@ -80,6 +80,10 @@ module.exports = {
  * @return {object} The config if any RNW native modules exist.
  */
 function dependencyConfigWindows(folder, userConfig = {}) {
+  if (userConfig === null) {
+    return null;
+  }
+
   const usingManualProjectsOverride =
     'projects' in userConfig && Array.isArray(userConfig.projects);
 

@@ -58,6 +58,10 @@ module.exports = {
  * @return {object} The config if any RNW apps exist.
  */
 function projectConfigWindows(folder, userConfig = {}) {
+  if (userConfig === null) {
+    return null;
+  }
+
   const usingManualOverride = 'sourceDir' in userConfig;
 
   const sourceDir = usingManualOverride
