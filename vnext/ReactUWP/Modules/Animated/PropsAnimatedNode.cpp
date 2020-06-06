@@ -9,6 +9,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
+#include <ReactUWP/Utils/Helpers.h>
 
 namespace react {
 namespace uwp {
@@ -158,7 +159,7 @@ void PropsAnimatedNode::StartAnimations() {
 void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
   if (m_expressionAnimations.count(valueTag)) {
     if (const auto target = GetUIElement()) {
-      // We should start and stop the expression animtaions if there are
+      // We should start and stop the expression animations if there are
       // no active animations. Suspending the active expression animations
       // while they are not in use causes subsequent key frame animations
       // which target the providing property set to never fire their completed
@@ -267,9 +268,11 @@ ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
 }
 
 xaml::UIElement PropsAnimatedNode::GetUIElement() {
-  if (const auto shadowNodeBase = GetShadowNodeBase()) {
-    if (const auto shadowNodeView = shadowNodeBase->GetView()) {
-      return shadowNodeView.as<xaml::UIElement>();
+  if (IsRS5OrHigher()) {
+    if (const auto shadowNodeBase = GetShadowNodeBase()) {
+      if (const auto shadowNodeView = shadowNodeBase->GetView()) {
+        return shadowNodeView.as<xaml::UIElement>();
+      }
     }
   }
   return nullptr;
