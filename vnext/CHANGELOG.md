@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 05 Jun 2020 00:06:16 GMT and should not be manually modified.
+This log was last generated on Sat, 06 Jun 2020 00:05:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.86
+
+Sat, 06 Jun 2020 00:05:20 GMT
+
+### Changes
+
+- Expose turbo module registry API (zihanc@microsoft.com)
+- Ensure Image.windows.js is an exact copy of Image.ios.js (ngerlem@microsoft.com)
 
 ## 0.0.0-master.85
 

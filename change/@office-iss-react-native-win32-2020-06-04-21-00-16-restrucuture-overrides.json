@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix errant baseFile in platform override",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-05T04:00:16.198Z"
-}

@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 06 Jun 2020 00:05:20 GMT",
+      "tag": "react-native-windows_v0.0.0-master.86",
+      "version": "0.0.0-master.86",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose turbo module registry API",
+            "author": "zihanc@microsoft.com",
+            "commit": "8de33da1889102e2a185385c931351d9ae9511b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure Image.windows.js is an exact copy of Image.ios.js",
+            "author": "ngerlem@microsoft.com",
+            "commit": "61e5ea7ee9b1f94dd1d5ef185936c7bd8c9448e5",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix compile errors in clang",
+            "author": "jacke@fb.com",
+            "commit": "349034e5c6fc0ce5afee83b1170d7998647a735d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Expose JSDispatcher on IReactContext",
+            "author": "zihanc@microsoft.com",
+            "commit": "85fd1f4cf1bd26ed7eb9be1ae474c08b722fbcf4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Jun 2020 00:06:16 GMT",
       "tag": "react-native-windows_v0.0.0-master.85",
       "version": "0.0.0-master.85",
