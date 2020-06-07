@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix support for `--namespace` on react-native-windows init for cpp",
+  "packageName": "react-native-windows-init",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-07T03:24:06.820Z"
+}
