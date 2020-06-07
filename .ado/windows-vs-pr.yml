@@ -540,7 +540,7 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
-          additionalInitArguments: $(additionalInitArguments)
+          additionalInitArguments: $[ coalesce($(additionalInitArguments), '') ]
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
@@ -559,6 +559,7 @@ jobs:
           configuration: Debug
           platform: x86
           version: $(reactNativeVersion)
+          additionalInitArguments: ${{ '' }}
           experimentalNugetDependency: true
 
   - job: RNWExtraChecks
