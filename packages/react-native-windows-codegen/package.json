@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-codegen",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",

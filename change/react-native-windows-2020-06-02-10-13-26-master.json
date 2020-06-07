@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove SharedProject",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-02T17:13:26.828Z"
-}

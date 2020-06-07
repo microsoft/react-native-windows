@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 06 Jun 2020 00:05:20 GMT and should not be manually modified.
+This log was last generated on Sun, 07 Jun 2020 00:05:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.87
+
+Sun, 07 Jun 2020 00:05:23 GMT
+
+### Changes
+
+- Remove SharedProject (dannyvv@microsoft.com)
+- Update template gen to use mustache (dannyvv@microsoft.com)
+- Install MSBuild log viewer (asklar@microsoft.com)
+- DevMenu should only show up when DeveloperSupport is on (acoates@microsoft.com)
+- Remove legacy ReactInstanceSettings struct (vmorozov@microsoft.com)
 
 ## 0.0.0-master.86
 

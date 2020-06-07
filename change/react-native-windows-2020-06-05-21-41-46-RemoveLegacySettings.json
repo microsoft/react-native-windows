@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove legacy ReactInstanceSettings struct",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-06T04:41:46.309Z"
-}

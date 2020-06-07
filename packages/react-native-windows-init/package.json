@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
