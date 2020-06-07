@@ -466,10 +466,12 @@ jobs:
           language: cpp
           configuration: Debug
           platform: x86
+          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
         X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
+          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
         #X86ReleaseCpp:
         #  language: cpp
         #  configuration: Release
@@ -538,6 +540,7 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
+          additionalInitArguments: $(additionalInitArguments)
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
