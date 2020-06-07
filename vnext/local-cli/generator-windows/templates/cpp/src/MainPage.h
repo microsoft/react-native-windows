@@ -3,7 +3,7 @@
 #include <winrt/Microsoft.ReactNative.h>
 
 // clang-format off
-namespace winrt::{{ namespace }}::implementation
+namespace winrt::{{ namespaceCpp }}::implementation
 {
     struct MainPage : MainPageT<MainPage>
     {
@@ -11,7 +11,7 @@ namespace winrt::{{ namespace }}::implementation
     };
 }
 
-namespace winrt::{{ namespace }}::factory_implementation
+namespace winrt::{{ namespaceCpp }}::factory_implementation
 {
     struct MainPage : MainPageT<MainPage, implementation::MainPage>
     {
