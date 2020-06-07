@@ -100,8 +100,8 @@ class NativeUIManager : public facebook::react::INativeUIManager {
  private:
   facebook::react::INativeUIManagerHost *m_host = nullptr;
   Mso::CntPtr<Mso::React::IReactContext> m_context;
+  YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
-  bool m_useLegacyStretchBehaviour = true;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;

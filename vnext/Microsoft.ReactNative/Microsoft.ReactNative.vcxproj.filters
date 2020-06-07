@@ -712,6 +712,7 @@
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
     <Midl Include="RedBoxHandler.idl" />
+    <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
     <Midl Include="XamlUIService.idl" />
   </ItemGroup>
