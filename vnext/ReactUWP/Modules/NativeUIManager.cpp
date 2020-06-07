@@ -130,17 +130,6 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
-// Previous versions of react-native-windows did not configure Yoga to use "LegacyStretchBehaviour"
-// We now set it, but to allow apps a period to transition, we are adding a property that can be set to
-// maintain the previous behavior.
-winrt::Microsoft::ReactNative::IReactPropertyName LegacyStretchBehaviourProperty() noexcept {
-  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
-      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
-          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.NativeUIManager"),
-          L"LegacyStretchBehaviour");
-  return propName;
-}
-
 NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
   m_context = reactContext;
 
