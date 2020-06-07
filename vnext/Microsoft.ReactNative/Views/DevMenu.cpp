@@ -58,13 +58,14 @@ void DevMenuManager::Init() noexcept {
         }
       }
 
-      auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
-      strongThis->m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
-          winrt::auto_revoke, [context](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
-            if (IsCtrlShiftD(args.VirtualKey())) {
-              DevMenuManager::Show(context->Properties());
-            }
-          });
+      if (auto coreWindow = winrt::CoreWindow::GetForCurrentThread()) {
+        strongThis->m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
+            winrt::auto_revoke, [context](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
+              if (IsCtrlShiftD(args.VirtualKey())) {
+                DevMenuManager::Show(context->Properties());
+              }
+            });
+      }
     }
   });
 }

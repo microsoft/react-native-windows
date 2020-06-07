@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add Integration and Component tests to CI",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-06T03:16:50.829Z"
+}
