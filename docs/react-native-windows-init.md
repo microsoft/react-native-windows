@@ -24,7 +24,7 @@ This has the following benefits:
 There are several templating schemes we could have chosen. We had a quick discussion and chose [mustache](https://www.npmjs.com/package/mustache) as it is a well-adopted, lightweight library dedicated for templating.
 Alternatives considered:
  * js template expression: This would have required all files to become js programs that needed to be imported and evaluated. Since a lot of files contain data format or code, we would have likely had quite a few ugly escaping cases.
- * t4:  This would have reuquired visual studio to be installed on the users machine and therefore only work on windows. There were also some perf concerns and we would have to write and ship a standalone executable for the msbuild tasks so we can call it from javascript.
+ * T4:  This would have required visual studio to be installed on the users machine and therefore only work on Windows. There were also some perf concerns and we would have to write and ship a standalone executable for the MSBuild tasks so we can call it from JavaScript.
 
 ### Quick mustache tutorial:
 For proper docs see the [manual](http://mustache.github.io/mustache.5.html) of [mustache](http://mustache.github.io/)
