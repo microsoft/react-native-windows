@@ -6,16 +6,15 @@
 // #include <XamlUtils.h>
 #include "Unicode.h"
 
-#include <winrt/Windows.UI.ViewManagement.h>
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include "Utils/Helpers.h"
 
 #include <UI.Xaml.Controls.h>
 
 namespace Microsoft::ReactNative {
 
-void Alert::showAlert(ShowAlertArgs const & args, std::function<void(std::string)> result) noexcept {
-
+void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)> result) noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), jsDispatcher, result, args] {
     if (auto strongThis = weakThis.lock()) {
@@ -30,8 +29,8 @@ void Alert::showAlert(ShowAlertArgs const & args, std::function<void(std::string
         // XamlRoot added in 19H1
         if (auto xamlRoot = React::XamlUIService::GetXamlRoot(strongThis->m_context.Properties().Handle())) {
           dialog.XamlRoot(xamlRoot);
-          }
         }
+      }
 
       auto asyncOp = dialog.ShowAsync();
       asyncOp.Completed(

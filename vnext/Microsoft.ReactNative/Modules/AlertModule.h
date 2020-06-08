@@ -33,9 +33,7 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(showAlert)
-  void showAlert(
-      ShowAlertArgs const &args,
-      std::function<void(std::string)> result) noexcept;
+  void showAlert(ShowAlertArgs const &args, std::function<void(std::string)> result) noexcept;
 
  private:
   React::ReactContext m_context;
