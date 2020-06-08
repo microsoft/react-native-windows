@@ -17,7 +17,6 @@ export interface ITouchableWin32Props extends IViewWin32Props
 |  [children](./react-native-win32.itouchablewin32props.children.md) | [IRenderChild](./react-native-win32.irenderchild.md)<!-- -->&lt;[ITouchableWin32State](./react-native-win32.itouchablewin32state.md)<!-- -->&gt; |  |
 |  [disabled](./react-native-win32.itouchablewin32props.disabled.md) | boolean |  |
 |  [filterKeys](./react-native-win32.itouchablewin32props.filterkeys.md) | (str: string) =&gt; boolean | Filters keys for touchableHandleKeyPress / touchableHandleKeyPressDown events. Space and Enter keys result in touchableHandleKeyPress(Down) in the event that no filterKeys function is provided as a callback. All keyboard events will result in onKeyUp and onKeyDown getting fired regardless of filterKeys. |
-|  [focusRef](./react-native-win32.itouchablewin32props.focusref.md) | React.RefObject&lt;[ViewWin32](./react-native-win32.viewwin32.md)<!-- -->&gt; | A ref to the internal View. This allows for imperative focusing of a Touchable |
 |  [onLongPress](./react-native-win32.itouchablewin32props.onlongpress.md) | () =&gt; void |  |
 |  [rejectResponderTermination](./react-native-win32.itouchablewin32props.rejectrespondertermination.md) | boolean |  |
 |  [renderStyle](./react-native-win32.itouchablewin32props.renderstyle.md) | [IRenderStyle](./react-native-win32.irenderstyle.md)<!-- -->&lt;[ITouchableWin32State](./react-native-win32.itouchablewin32state.md)<!-- -->, ViewStyle&gt; |  |

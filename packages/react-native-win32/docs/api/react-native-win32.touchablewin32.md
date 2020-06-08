@@ -18,6 +18,12 @@ export declare class TouchableWin32 extends React.Component<ITouchableWin32Props
 |  --- | --- | --- |
 |  [(constructor)(props)](./react-native-win32.touchablewin32._constructor_.md) |  | Constructs a new instance of the <code>TouchableWin32</code> class |
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [focus](./react-native-win32.touchablewin32.focus.md) |  | () =&gt; void |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

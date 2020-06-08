@@ -242,7 +242,6 @@ export interface ITouchableWin32Props extends IViewWin32Props {
     // (undocumented)
     disabled?: boolean;
     filterKeys?: (str: string) => boolean;
-    focusRef?: React.RefObject<ViewWin32>;
     // (undocumented)
     onLongPress?: () => void;
     // (undocumented)
@@ -441,6 +440,8 @@ export class TouchableWin32 extends React_2.Component<ITouchableWin32Props, IInt
     constructor(props: any);
     // (undocumented)
     componentWillUnmount(): void;
+    // (undocumented)
+    focus: () => void;
     // (undocumented)
     render(): JSX.Element;
     }

@@ -1,7 +1,6 @@
 import { Insets, ViewStyle } from 'react-native';
 
 import { IPressEvent, IRenderChild, IRenderStyle } from './TouchableWin32.Types';
-import { ViewWin32 } from '../View/ViewWin32'
 import { IViewWin32Props, IKeyboardEvent } from '../View/ViewWin32.Props';
 
 export interface ITouchableWin32State {
