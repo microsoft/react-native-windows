@@ -13,6 +13,7 @@ To debug the template, see [Contributing to the CLI](https://github.com/microsof
 
 ## Templating tech (Mustache)
 PR [#5126](https://github.com/microsoft/react-native-windows/pull/5126) updated the template generation for react-native-windows from regex replace to use the mustache template library. 
+
 ### Benefits
 This has the following benefits:
 * We can use conditionals and `foreach` in the template allowing for better expressivity
