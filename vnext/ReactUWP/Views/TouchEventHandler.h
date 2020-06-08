@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <IReactInstance.h>
+#include <UI.Xaml.Documents.h>
 #include <folly/dynamic.h>
 #include <optional>
 #include <set>
-#include <UI.Xaml.Documents.h>
-#include <IReactInstance.h>
 #include "XamlView.h"
 
 namespace winrt {
