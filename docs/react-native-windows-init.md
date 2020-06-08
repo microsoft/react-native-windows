@@ -9,7 +9,7 @@ The parameters for `init` is located in variable [`argv` in `packages/react-nati
 The template files can be found in [`vnext/local-cli/generator-windows/templates`](https://github.com/microsoft/react-native-windows/tree/7de1f3843a9754c7fbf744bf3e556fdca78472c1/vnext/local-cli/generator-windows/templates)
 
 ## Debugging:
-To debug the template [Contributing to the CLI](https://github.com/microsoft/react-native-windows/wiki/Contributing-to-the-CLI) on our wiki.
+To debug the template, see [Contributing to the CLI](https://github.com/microsoft/react-native-windows/wiki/Contributing-to-the-CLI) on our wiki.
 
 ## Templating tech (Mustache)
 PR [#5126](https://github.com/microsoft/react-native-windows/pull/5126) updated the template generation for react-native-windows from regex replace to use the mustache template library. 
