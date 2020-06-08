@@ -29,7 +29,7 @@ Alternatives considered:
 ### Quick mustache tutorial:
 For proper docs see the [manual](http://mustache.github.io/mustache.5.html) of [mustache](http://mustache.github.io/)
 But in short:
-You run mustach via `const text = mustache.render(inputText, obj);` where obj is a regular javascript object. 
+You run `mustache` via `const text = mustache.render(inputText, obj);` where obj is a regular JavaScript object. 
 For example:
 ```js
 {
