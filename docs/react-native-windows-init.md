@@ -15,7 +15,7 @@ To debug the template, see [Contributing to the CLI](https://github.com/microsof
 PR [#5126](https://github.com/microsoft/react-native-windows/pull/5126) updated the template generation for react-native-windows from regex replace to use the mustache template library. 
 ### Benefits
 This has the following benefits:
-* We can use conditionals and foreach in the template allowing for better expersivity
+* We can use conditionals and `foreach` in the template allowing for better expressivity
 * This expresivity shows that we don't have to construct Xml fragments in Javascript anymore to be inserted by regex replace
 * We don't need to have have a copy and edit for large differences like we had for experimental nuget, it is now a single template for each language.
 * We can now generate a cpp template that use both nuget AND winUI3.
