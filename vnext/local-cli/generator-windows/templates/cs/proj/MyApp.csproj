@@ -8,11 +8,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{<%=projectGuidUpper%>}</ProjectGuid>
+    <ProjectGuid>{{ projectGuidUpper }}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace><%=ns%></RootNamespace>
-    <AssemblyName><%=ns%></AssemblyName>
+    <RootNamespace>{{namespace}}</RootNamespace>
+    <AssemblyName>{{namespace}}</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -21,8 +21,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile><%=name%>_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <%=certificateThumbprint%>
+    <PackageCertificateKeyFile>{{ name }}_TemporaryKey.pfx</PackageCertificateKeyFile>
+    {{#certificateThumbprint}}
+    <PackageCertificateThumbprint>{{certificateThumbprint}}</PackageCertificateThumbprint>
+    {{/certificateThumbprint}}
     <PackageCertificatePassword>password</PackageCertificatePassword>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
     <LangVersion>7.3</LangVersion>
@@ -136,7 +138,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="<%=name%>_TemporaryKey.pfx" />
+    <None Include="{{ name }}_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />

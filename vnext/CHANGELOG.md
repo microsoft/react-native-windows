@@ -1,8 +1,47 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Jun 2020 00:05:05 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Jun 2020 00:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.88
+
+Mon, 08 Jun 2020 00:05:53 GMT
+
+### Changes
+
+- Add Integration and Component tests to CI (vmorozov@microsoft.com)
+
+## 0.0.0-master.87
+
+Sun, 07 Jun 2020 00:05:23 GMT
+
+### Changes
+
+- Remove SharedProject (dannyvv@microsoft.com)
+- Update template gen to use mustache (dannyvv@microsoft.com)
+- Install MSBuild log viewer (asklar@microsoft.com)
+- DevMenu should only show up when DeveloperSupport is on (acoates@microsoft.com)
+- Remove legacy ReactInstanceSettings struct (vmorozov@microsoft.com)
+
+## 0.0.0-master.86
+
+Sat, 06 Jun 2020 00:05:20 GMT
+
+### Changes
+
+- Expose turbo module registry API (zihanc@microsoft.com)
+- Ensure Image.windows.js is an exact copy of Image.ios.js (ngerlem@microsoft.com)
+
+## 0.0.0-master.85
+
+Fri, 05 Jun 2020 00:06:16 GMT
+
+### Changes
+
+- Adding compile time Code generation for Managed React Native modules for Windows (dannyvv@microsoft.com)
+- Move devmenu out of RootControl, implement more of DevSettings (acoates@microsoft.com)
+- Fix SampleApp run-windows with deploy (dannyvv@microsoft.com)
 
 ## 0.0.0-master.84
 

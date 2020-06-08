@@ -26,6 +26,9 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
       hstring const &eventName,
       JSValueArgWriter const &eventDataArgWriter) noexcept;
 
+  static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
+  static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
+
  private:
   std::weak_ptr<facebook::react::IUIManager> m_wkUIManager;
   Mso::CntPtr<Mso::React::IReactContext> m_context;

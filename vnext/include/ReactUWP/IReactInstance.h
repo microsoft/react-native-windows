@@ -34,35 +34,8 @@ enum class JSIEngine : int32_t {
   V8 = 2, // Use the JSIExecutorFactory with V8
 };
 
-struct ReactInstanceSettings {
-  bool UseWebDebugger{false};
-  bool UseFastRefresh{false};
-  bool UseLiveReload{false};
-  bool DebuggerBreakOnNextLine{false};
-  bool UseDirectDebugger{false};
-  bool UseJsi{true};
-  bool EnableJITCompilation{true};
-  bool EnableByteCodeCaching{false};
-  bool EnableDeveloperMenu{false};
-  uint16_t DebuggerPort{9229};
-  uint16_t SourceBundlePort{0};
-
-  std::string ByteCodeFileUri;
-  std::string DebugHost;
-  std::string DebugBundlePath;
-  std::string BundleRootPath;
-  std::string SourceBundleHost;
-  facebook::react::NativeLoggingHook LoggingCallback;
-  std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
-  JSIEngine jsiEngine{JSIEngine::Chakra};
-};
-
 struct IReactInstance {
   virtual ~IReactInstance() = default;
-
-  // Start the instance, triggering NativeModules descriptions and things to be
-  // resolved spThis make caller have full ability to create the shared_ptr
-  virtual void Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) = 0;
 
   virtual void AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) = 0;
   virtual void DetachRootView(IXamlRootView *pRootView) = 0;
@@ -111,8 +84,6 @@ struct IReactInstance {
   virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
 
   virtual ExpressionAnimationStore &GetExpressionAnimationStore() = 0;
-
-  virtual const ReactInstanceSettings &GetReactInstanceSettings() const = 0;
 
   virtual bool IsLoaded() const noexcept = 0;
 };

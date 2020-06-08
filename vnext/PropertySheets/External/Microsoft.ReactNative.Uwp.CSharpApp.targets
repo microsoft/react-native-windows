@@ -28,17 +28,17 @@
   <Import Project="$(ProjectDir)AutolinkedNativeModules.g.targets"
           Condition="Exists('$(ProjectDir)AutolinkedNativeModules.g.targets')" />
 
-  <Import Project="$(MSBuildProjectDirectory)$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
-          Condition="Exists('$(MSBuildProjectDirectory)$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
+  <Import Project="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe"  
+          Condition="Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
   <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
-    <Error Condition="!Exists('$(MSBuildProjectDirectory)$(OutputPath)\$(AssemblyName).Build.appxrecipe')" 
-           Text="You must first build the project before deploying it" />
+    <Error Condition="!Exists('$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe')" 
+           Text="You must first build the project before deploying it. Did not find: $(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).Build.appxrecipe" />
     <Copy SourceFiles="%(AppxPackagedFile.Identity)" 
-          DestinationFiles="$(MSBuildProjectDirectory)$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
     <Copy SourceFiles="%(AppXManifest.Identity)" 
-          DestinationFiles="$(MSBuildProjectDirectory)$(OutputPath)Appx\%(AppxManifest.PackagePath)" 
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxManifest.PackagePath)" 
           Condition="'%(AppxManifest.SubType)'!='Designer'"/>
-    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)$(OutputPath)Appx\AppxManifest.xml" 
+    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)\$(OutputPath)Appx\AppxManifest.xml" 
           ContinueOnError="false" />
   </Target>
 </Project>

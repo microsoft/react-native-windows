@@ -65,4 +65,10 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
   properties.Set(UIDispatcherProperty(), UIThreadDispatcher());
 }
 
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherProperty() noexcept {
+  static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcher")};
+  return jsThreadDispatcherProperty;
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -24,6 +24,8 @@ struct ReactDispatcher : implements<ReactDispatcher, winrt::default_interface<IR
   static IReactDispatcher GetUIDispatcher(IReactPropertyBag const &properties) noexcept;
   static void SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept;
 
+  static IReactPropertyName JSDispatcherProperty() noexcept;
+
  private:
   Mso::DispatchQueue m_queue;
 };
@@ -41,6 +43,10 @@ struct ReactDispatcherHelper {
 
   static IReactPropertyName UIDispatcherProperty() noexcept {
     return ReactDispatcher::UIDispatcherProperty();
+  }
+
+  static IReactPropertyName JSDispatcherProperty() noexcept {
+    return ReactDispatcher::JSDispatcherProperty();
   }
 };
 
