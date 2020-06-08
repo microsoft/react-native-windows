@@ -5,20 +5,22 @@
 #include "QuirkSettings.h"
 #include "QuirkSettings.g.cpp"
 
-#include "ReactPropertyBag.h"
 #include "QuirkSettings.h"
+#include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 QuirkSettings::QuirkSettings() noexcept {}
 
-/*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept {
+/*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
   SetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag(settings.Properties()), value);
 }
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBehaviorProperty() noexcept {
-  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
-      L"ReactNative.QuirkSettings", L"MatchAndroidAndIOSyStretchBehavior"};
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings",
+                                                                     L"MatchAndroidAndIOSyStretchBehavior"};
   return propId;
 }
 
