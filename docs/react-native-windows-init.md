@@ -62,4 +62,4 @@ We only use 4 mustache elements replacement patterns:
    ```
 
 ## Future
-In the future we hope this to be integrated with the react-native CLI templating scheme. At the moment there is only a very basic replacement scheme for a set of well defined variables, so at the moment it is not suitable. When we get to that point we'll see if we can leverage that or contribute some improvements in the templating for react native init.
+In the future we hope this to be integrated with the react-native CLI templating scheme. At the moment there is only a very basic replacement scheme for a set of well-defined variables, so at the moment it is not suitable. When we get to that point we'll see if we can leverage that or contribute some improvements in the templating for `react-native-init`.
