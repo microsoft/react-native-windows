@@ -87,24 +87,29 @@ function dependencyConfigWindows(folder, userConfig = {}) {
   const usingManualProjectsOverride =
     'projects' in userConfig && Array.isArray(userConfig.projects);
 
-  var projects = usingManualProjectsOverride ? userConfig.projects : [];
-
   const usingManualNugetPackagesOverride =
-    'nugetPackages' in userConfig && Array.isArray(nugetPackages);
+    'nugetPackages' in userConfig && Array.isArray(userConfig.nugetPackages);
 
-  var nugetPackages = usingManualNugetPackagesOverride
-    ? userConfig.nugetPackages
-    : [];
+  var result = {
+    folder,
+    projects: usingManualProjectsOverride ? userConfig.projects : [],
+    nugetPackages: usingManualNugetPackagesOverride
+      ? userConfig.nugetPackages
+      : [],
+  };
 
   var sourceDir = null;
-  if (usingManualProjectsOverride && projects.length > 0) {
+  if (usingManualProjectsOverride && result.projects.length > 0) {
     // Manaully provided projects, so extract the sourceDir
-    if (!('sourceDir' in userConfig) || userConfig.sourceDir === null) {
-      throw new Error(
-        'sourceDir is required if projects are specified, but it is not specified in react-native.config',
-      );
+    if (!('sourceDir' in userConfig)) {
+      sourceDir =
+        'Error: Source dir is required if projects are specified, but it is not specified in react-native.config.';
+    } else if (userConfig.sourceDir === null) {
+      sourceDir =
+        'Error: Source dir is required if projects are specified, but it is null in react-native.config.';
+    } else {
+      sourceDir = path.join(folder, userConfig.sourceDir);
     }
-    sourceDir = path.join(folder, userConfig.sourceDir);
   } else if (!usingManualProjectsOverride) {
     // No manually provided projects, try to find sourceDir
     sourceDir = configUtils.findWindowsFolder(folder);
@@ -112,12 +117,18 @@ function dependencyConfigWindows(folder, userConfig = {}) {
 
   if (
     sourceDir === null &&
-    projects.length === 0 &&
-    nugetPackages.length === 0
+    result.projects.length === 0 &&
+    result.nugetPackages.length === 0
   ) {
-    // Nothing to do here, bail
+    // Nothing to look for here, bail
     return null;
+  } else if (sourceDir !== null && sourceDir.startsWith('Error: ')) {
+    // Source dir error, bail with error
+    result.sourceDir = sourceDir;
+    return result;
   }
+
+  result.sourceDir = sourceDir.substr(folder.length + 1);
 
   const usingManualSolutionFile = 'solutionFile' in userConfig;
 
@@ -133,20 +144,29 @@ function dependencyConfigWindows(folder, userConfig = {}) {
     }
   }
 
+  result.solutionFile =
+    solutionFile !== null ? solutionFile.substr(sourceDir.length + 1) : null;
+
   if (usingManualProjectsOverride) {
     // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
 
     const alwaysRequired = ['projectFile', 'directDependency'];
 
-    for (let project of projects) {
+    for (let project of result.projects) {
       // Verifying (req) items
+      var errorFound = false;
       alwaysRequired.forEach(item => {
         if (!(item in project)) {
-          throw new Error(
-            `${item} is required for each project in react-native.config`,
-          );
+          project[
+            item
+          ] = `Error: ${item} is required for each project in react-native.config`;
+          errorFound = true;
         }
       });
+
+      if (errorFound) {
+        break;
+      }
 
       const projectFile = path.join(sourceDir, project.projectFile);
 
@@ -204,7 +224,7 @@ function dependencyConfigWindows(folder, userConfig = {}) {
       const csNamespaces = [`${csNamespace}`];
       const csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
 
-      projects.push({
+      result.projects.push({
         projectFile: projectFile.substr(sourceDir.length + 1),
         projectName,
         projectLang,
@@ -218,14 +238,7 @@ function dependencyConfigWindows(folder, userConfig = {}) {
     }
   }
 
-  return {
-    folder,
-    sourceDir: sourceDir !== null ? sourceDir.substr(folder.length + 1) : null,
-    solutionFile:
-      solutionFile !== null ? solutionFile.substr(sourceDir.length + 1) : null,
-    projects,
-    nugetPackages,
-  };
+  return result;
 }
 
 module.exports = {

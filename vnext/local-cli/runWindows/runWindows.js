@@ -15,6 +15,9 @@ const autolink = require('./utils/autolink');
 
 const chalk = require('chalk');
 
+const findProjectRoot = require('@react-native-community/cli/build/tools/config/findProjectRoot')
+  .default;
+
 function ExitProcessWithError(loggingWasEnabled) {
   if (!loggingWasEnabled) {
     console.log(
@@ -24,7 +27,13 @@ function ExitProcessWithError(loggingWasEnabled) {
   process.exit(1);
 }
 
-async function runWindows(config, args, options) {
+/**
+ * Performs build deploy and launch of RNW apps.
+ * @param {array} args Unprocessed args passed from react-native CLI.
+ * @param {object} config Config passed from react-native CLI.
+ * @param {object} options Options passed from react-native CLI.
+ */
+async function runWindows(args, config, options) {
   const verbose = options.logging;
 
   if (verbose) {
@@ -47,15 +56,23 @@ async function runWindows(config, args, options) {
     }
   }
 
-  // Fix up options
-  options.root = options.root || process.cwd();
-  const slnFile = options.sln || build.getSolutionFile(options);
+  // Either use the specified root or get the default one
+  options.root = options.root || findProjectRoot();
+
+  // Get the solution file
+  const slnFile = build.getAppSolutionFile(options, config);
 
   if (options.autolink) {
     const autolinkConfig = config;
     const autolinkArgs = [];
-    const autoLinkOptions = {logging: options.logging};
+    const autoLinkOptions = {
+      logging: options.logging,
+      proj: options.proj,
+      sln: options.sln,
+    };
     await autolink.func(autolinkConfig, autolinkArgs, autoLinkOptions);
+  } else {
+    newInfo('Autolink step is skipped');
   }
 
   if (options.build) {
@@ -110,6 +127,13 @@ async function runWindows(config, args, options) {
   await deploy.startServerInNewWindow(options, verbose);
 
   if (options.deploy) {
+    if (!slnFile) {
+      newError(
+        'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
+      );
+      ExitProcessWithError(options.logging);
+    }
+
     try {
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
@@ -229,6 +253,11 @@ module.exports = {
     {
       command: '--sln [string]',
       description: 'Solution file to build, e.g. windows\\myApp.sln',
+      default: undefined,
+    },
+    {
+      command: '--proj [string]',
+      description: 'Project file to build, e.g. windows\\myApp\\myApp.vcxproj',
       default: undefined,
     },
     {

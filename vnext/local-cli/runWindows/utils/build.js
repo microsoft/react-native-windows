@@ -10,12 +10,16 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const {execSync} = require('child_process');
-const glob = require('glob');
+
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
-const {commandWithProgress, newSpinner} = require('./commandWithProgress');
+const {
+  commandWithProgress,
+  newSpinner,
+  newError,
+} = require('./commandWithProgress');
 const util = require('util');
-const chalk = require('chalk');
+
 const existsAsync = util.promisify(fs.exists);
 
 async function buildSolution(
@@ -120,17 +124,66 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   }
 }
 
-function getSolutionFile(options) {
-  const solutions = glob.sync(path.join(options.root, 'windows/*.sln'));
-  if (solutions.length === 0) {
+const configErrorString = 'Error: ';
+
+function getAppSolutionFile(options, config) {
+  // Use the solution file if specified
+  if (options.sln) {
+    return path.join(options.root, options.sln);
+  }
+
+  // Check the answer from react-native config
+  const windowsAppConfig = config.project.windows;
+  const configSolutionFile = windowsAppConfig.solutionFile;
+
+  if (configSolutionFile.startsWith(configErrorString)) {
+    newError(
+      configSolutionFile.substr(configErrorString.length) +
+        ' Optionally, use --sln {slnFile}.',
+    );
     return null;
-  } else if (solutions.length === 1) {
-    return solutions[0];
   } else {
-    console.log(chalk.red('More than one solution file found:'));
-    console.log(chalk.bold(solutions.map(x => fs.realpathSync(x)).join('\n')));
-    console.log('Use --sln {slnFile} to specify which one to build');
+    return path.join(
+      windowsAppConfig.folder,
+      windowsAppConfig.sourceDir,
+      configSolutionFile,
+    );
+  }
+}
+
+function getAppProjectFile(options, config) {
+  // Use the project file if specified
+  if (options.proj) {
+    return path.join(options.root, options.proj);
+  }
+
+  // Check the answer from react-native config
+  const windowsAppConfig = config.project.windows;
+  const configProject = windowsAppConfig.project;
+
+  if (
+    typeof configProject === 'string' &&
+    configProject.startsWith(configErrorString)
+  ) {
+    newError(
+      configProject.substr(configErrorString.length) +
+        ' Optionally, use --proj {projFile}.',
+    );
     return null;
+  } else {
+    const configProjectFile = configProject.projectFile;
+    if (configProjectFile.startsWith(configErrorString)) {
+      newError(
+        configProjectFile.substr(configErrorString.length) +
+          ' Optionally, use --proj {projFile}.',
+      );
+      return null;
+    }
+    return path.join(
+      windowsAppConfig.folder,
+      windowsAppConfig.sourceDir,
+      configProjectFile,
+    );
   }
 }
 
@@ -148,7 +201,8 @@ function parseMsBuildProps(options) {
 
 module.exports = {
   buildSolution,
-  getSolutionFile,
+  getAppSolutionFile,
+  getAppProjectFile,
   restoreNuGetPackages,
   parseMsBuildProps,
 };

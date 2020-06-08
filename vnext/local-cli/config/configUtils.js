@@ -71,6 +71,9 @@ function findSolutionFiles(winFolder) {
   if (allSolutions.length === 0) {
     // If there're no solution files, return 0
     return [];
+  } else if (allSolutions.length === 1) {
+    // If there is exactly one solution file, assume it's it
+    return [allSolutions[0]];
   }
 
   var solutionFiles = [];

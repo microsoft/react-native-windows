@@ -5,7 +5,6 @@
  */
 // @ts-check
 
-const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
@@ -94,11 +93,11 @@ function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
 
 /**
  * Performs auto-linking for RNW native modules and apps.
+ * @param {array} args Unprocessed args passed from react-native CLI.
  * @param {object} config Config passed from react-native CLI.
- * @param {object} args Args passed from react-native CLI.
  * @param {object} options Options passed from react-native CLI.
  */
-async function updateAutoLink(config, args, options) {
+async function updateAutoLink(args, config, options) {
   const startTime = performance.now();
 
   const verbose = options.logging;
@@ -113,24 +112,10 @@ async function updateAutoLink(config, args, options) {
 
   verboseMessage('', verbose);
 
-  const execString = 'react-native config';
-  let output;
   try {
-    verboseMessage(`Running ${chalk.bold('react-native config')}...`, verbose);
+    verboseMessage('Parsing project...', verbose);
 
-    output = execSync(execString).toString();
-
-    verboseMessage(output, verbose);
-
-    verboseMessage('Parsing output...', verbose);
-
-    const rnConfig = JSON.parse(output);
-
-    if (!('project' in rnConfig) || rnConfig.project === null) {
-      throw new Error('No app project in react-native config output');
-    }
-
-    const projectConfig = rnConfig.project;
+    const projectConfig = config.project;
 
     if (!('windows' in projectConfig) || projectConfig.windows === null) {
       throw new Error(
@@ -138,9 +123,10 @@ async function updateAutoLink(config, args, options) {
       );
     }
 
-    verboseMessage('Found Windows app project, parsing...', verbose);
-
     const windowsAppConfig = projectConfig.windows;
+
+    verboseMessage('Found windows app project, config:', verbose);
+    verboseMessage(windowsAppConfig, verbose);
 
     const alwaysRequired = ['folder', 'sourceDir', 'solutionFile', 'project'];
 
@@ -189,19 +175,49 @@ async function updateAutoLink(config, args, options) {
 
     verboseMessage('Parsing dependencies...', verbose);
 
-    const dependencies = rnConfig.dependencies;
+    const dependenciesConfig = config.dependencies;
 
     let windowsDependencies = {};
 
-    for (const dependencyName in dependencies) {
-      const windowsDependency = dependencies[dependencyName].platforms.windows;
+    for (const dependencyName in dependenciesConfig) {
+      const windowsDependency =
+        dependenciesConfig[dependencyName].platforms.windows;
 
       if (windowsDependency) {
         verboseMessage(
-          `Found dependency ${chalk.bold(dependencyName)}.`,
+          `${chalk.bold(dependencyName)} has windows implementation, config:`,
           verbose,
         );
-        windowsDependencies[dependencyName] = windowsDependency;
+        verboseMessage(windowsDependency, verbose);
+
+        var dependencyIsValid = true;
+
+        dependencyIsValid =
+          dependencyIsValid &&
+          'sourceDir' in windowsDependency &&
+          windowsDependency.sourceDir !== null &&
+          !windowsDependency.sourceDir.startsWith('Error: ');
+
+        if (
+          'projects' in windowsDependency &&
+          Array.isArray(windowsDependency.projects)
+        ) {
+          windowsDependency.projects.forEach(project => {
+            const itemsToCheck = ['projectFile', 'directDependency'];
+            itemsToCheck.forEach(item => {
+              dependencyIsValid =
+                dependencyIsValid &&
+                item in project &&
+                project[item] !== null &&
+                !project[item].toString().startsWith('Error: ');
+            });
+          });
+        }
+
+        if (dependencyIsValid) {
+          verboseMessage(`Adding ${chalk.bold(dependencyName)}.`, verbose);
+          windowsDependencies[dependencyName] = windowsDependency;
+        }
       }
     }
 
