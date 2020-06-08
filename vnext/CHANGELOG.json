@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Jun 2020 00:05:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.88",
+      "version": "0.0.0-master.88",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Integration and Component tests to CI",
+            "author": "vmorozov@microsoft.com",
+            "commit": "6bb7f40c35c93faffc94187f71c735cdb9ea2eed",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 07 Jun 2020 00:05:23 GMT",
       "tag": "react-native-windows_v0.0.0-master.87",
       "version": "0.0.0-master.87",

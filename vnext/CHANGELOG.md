@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 07 Jun 2020 00:05:23 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Jun 2020 00:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.88
+
+Mon, 08 Jun 2020 00:05:53 GMT
+
+### Changes
+
+- Add Integration and Component tests to CI (vmorozov@microsoft.com)
 
 ## 0.0.0-master.87
 
