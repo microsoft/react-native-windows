@@ -3,7 +3,7 @@
 This document describes how the template initialization works for `react-native-windows init`.
 
 ## Where is the code:
-The main logic that determines the template values and which files to apply is function [`copyProjecTemplateAndReplace` in `vnext/local-cli/generator-windows/index.js`](https://github.com/microsoft/react-native-windows/blob/master/vnext/local-cli/generator-windows/index.js#L48).
+The main logic that determines the template values and which files to apply is function [`copyProjectTemplateAndReplace` in `vnext/local-cli/generator-windows/index.js`](https://github.com/microsoft/react-native-windows/blob/master/vnext/local-cli/generator-windows/index.js#L48).
 The parameters for `init` is located in variable [`argv` in `packages/react-native-windows-init/src/Cli.ts`](https://github.com/microsoft/react-native-windows/blob/7de1f3843a9754c7fbf744bf3e556fdca78472c1/packages/react-native-windows-init/src/Cli.ts#L27)
 
 The template files can be found in [`vnext/local-cli/generator-windows/templates`](https://github.com/microsoft/react-native-windows/tree/7de1f3843a9754c7fbf744bf3e556fdca78472c1/vnext/local-cli/generator-windows/templates)
@@ -63,4 +63,3 @@ We only use 4 mustache elements replacement patterns:
 
 ## Future
 In the future we hope this to be integrated with the react-native CLI templating scheme. At the moment there is only a very basic replacement scheme for a set of well defined variables, so at the moment it is not suitable. When we get to that point we'll see if we can leverage that or contribute some improvements in the templating for react native init.
-
