@@ -6,7 +6,6 @@
 
 // Modules
 #include <AsyncStorageModule.h>
-#include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
@@ -92,8 +91,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         return std::make_unique<react::uwp::AppThemeModule>(std::move(appTheme));
       },
       messageQueue);
-
-  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,

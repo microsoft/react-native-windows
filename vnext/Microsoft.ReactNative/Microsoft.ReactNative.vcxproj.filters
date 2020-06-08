@@ -20,9 +20,6 @@
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -261,6 +258,9 @@
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="IReactNotificationService.cpp" />
+    <ClCompile Include="Modules\AlertModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -373,9 +373,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -604,6 +601,9 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
+    <ClInclude Include="Modules\AlertModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>

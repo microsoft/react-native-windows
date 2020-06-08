@@ -28,6 +28,7 @@
 #include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
+#include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
@@ -237,6 +238,10 @@ void ReactInstanceWin::Initialize() noexcept {
               m_legacyReactInstance);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
+
+          nmp->AddModuleProvider(
+              L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
+
           nmp->AddModuleProvider(
               L"AppState",
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
