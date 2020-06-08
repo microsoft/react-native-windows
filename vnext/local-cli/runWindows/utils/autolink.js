@@ -125,21 +125,58 @@ async function updateAutoLink(config, args, options) {
     verboseMessage('Parsing output...', verbose);
 
     const rnConfig = JSON.parse(output);
-    const windowsAppConfig = rnConfig.project.windows;
 
-    if (!windowsAppConfig) {
+    if (!('project' in rnConfig) || rnConfig.project === null) {
+      throw new Error('No app project in react-native config output');
+    }
+
+    const projectConfig = rnConfig.project;
+
+    if (!('windows' in projectConfig) || projectConfig.windows === null) {
       throw new Error(
-        'Windows auto-link only supported on windows app projects.',
+        'Windows auto-link only supported on windows app projects',
       );
     }
 
     verboseMessage('Found Windows app project, parsing...', verbose);
+
+    const windowsAppConfig = projectConfig.windows;
+
+    const alwaysRequired = ['folder', 'sourceDir', 'solutionFile', 'project'];
+
+    alwaysRequired.forEach(item => {
+      if (!(item in windowsAppConfig) || windowsAppConfig[item] === null) {
+        throw new Error(
+          `${item} is required but not specified by react-native config`,
+        );
+      }
+    });
 
     const solutionFile = path.join(
       windowsAppConfig.folder,
       windowsAppConfig.sourceDir,
       windowsAppConfig.solutionFile,
     );
+
+    const windowsAppProjectConfig = windowsAppConfig.project;
+
+    const projectRequired = [
+      'projectFile',
+      'projectName',
+      'projectLang',
+      'projectGuid',
+    ];
+
+    projectRequired.forEach(item => {
+      if (
+        !(item in windowsAppProjectConfig) ||
+        windowsAppProjectConfig[item] === null
+      ) {
+        throw new Error(
+          `project.${item} is required but not specified by react-native config`,
+        );
+      }
+    });
 
     const projectFile = path.join(
       windowsAppConfig.folder,
