@@ -379,6 +379,10 @@
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
+    <ClInclude Include="QuirkSettings.h">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Views\DevMenu.h" />
     <ClInclude Include="Views\ReactRootControl.h" />
@@ -555,6 +559,10 @@
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
+    <ClCompile Include="QuirkSettings.cpp">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\ReactRootControl.cpp" />
@@ -595,6 +603,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="QuirkSettings.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />
