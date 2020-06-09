@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 08 Jun 2020 00:05:53 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Jun 2020 00:06:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.89
+
+Tue, 09 Jun 2020 00:06:03 GMT
+
+### Changes
+
+- Use yoga config to align with ios/android (acoates@microsoft.com)
 
 ## 0.0.0-master.88
 
