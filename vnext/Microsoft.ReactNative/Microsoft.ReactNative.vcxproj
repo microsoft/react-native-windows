@@ -209,7 +209,6 @@
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNodeType.h" />
@@ -318,6 +317,7 @@
     <ClInclude Include="JsiWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Modules\AlertModule.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
@@ -397,7 +397,6 @@
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimationDriver.cpp" />
@@ -500,6 +499,7 @@
     <ClCompile Include="JsiWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
