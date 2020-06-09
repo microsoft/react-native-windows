@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix compile errors in clang",
-  "packageName": "react-native-windows",
-  "email": "jacke@fb.com",
-  "dependentChangeType": "none",
-  "date": "2020-06-04T15:40:37.827Z"
-}

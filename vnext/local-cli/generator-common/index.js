@@ -1,6 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
+const mustache = require('mustache');
 
 /*
 type Options = {
@@ -163,9 +164,17 @@ function walk(current/*: string*/)/*: string[]*/ {
  */
 function resolveContents(srcPath, replacements) {
   let content = fs.readFileSync(srcPath, 'utf8');
-  Object.keys(replacements).forEach(regex => {
-    content = content.replace(new RegExp(regex, 'g'), replacements[regex]);
-  });
+
+  if (replacements.useMustache) {
+    content = mustache.render(content, replacements);
+    (replacements.regExpPatternsToRemove || []).forEach(regexPattern => {
+      content = content.replace(new RegExp(regexPattern, 'g'), '');
+    });
+  } else {
+    Object.keys(replacements).forEach(regex => {
+      content = content.replace(new RegExp(regex, 'g'), replacements[regex]);
+    });
+  }
   return content;
 }
 

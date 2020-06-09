@@ -58,13 +58,14 @@ void DevMenuManager::Init() noexcept {
         }
       }
 
-      auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
-      strongThis->m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
-          winrt::auto_revoke, [context](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
-            if (IsCtrlShiftD(args.VirtualKey())) {
-              DevMenuManager::Show(context->Properties());
-            }
-          });
+      if (auto coreWindow = winrt::CoreWindow::GetForCurrentThread()) {
+        strongThis->m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
+            winrt::auto_revoke, [context](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
+              if (IsCtrlShiftD(args.VirtualKey())) {
+                DevMenuManager::Show(context->Properties());
+              }
+            });
+      }
     }
   });
 }
@@ -80,6 +81,9 @@ void DevMenuManager::Init() noexcept {
 DevMenuManager::DevMenuManager(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
 
 void DevMenuManager::CreateAndShowUI() noexcept {
+  if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context->Properties()))
+    return;
+
   const winrt::hstring xamlString =
       LR"(
   <StackPanel

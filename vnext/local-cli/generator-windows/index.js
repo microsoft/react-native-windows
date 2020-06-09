@@ -73,7 +73,10 @@ function copyProjectTemplateAndReplace(
   if (options.experimentalNugetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
-  const projDir = options.experimentalNugetDependency ? 'proj-experimental' : 'proj';
+  if (options.useWinUI3) {
+    console.log('Using experimental WinUI3 dependency.');
+  }
+  const projDir = 'proj';
   const srcPath = path.join(srcRootPath, language);
   const projectGuid = uuid.v4();
   const rnwVersion = require('react-native-windows/package.json').version;
@@ -81,51 +84,69 @@ function copyProjectTemplateAndReplace(
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
-
-  const xamlNugetPkgName = options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml';
-  const xamlNugetPkgVersion = options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002';
-
-  const xamlPropsFile = `..\\packages\\${xamlNugetPkgName}.${xamlNugetPkgVersion}\\build\\native\\${xamlNugetPkgName}.props`;
-  const xamlPropsImport  = `<Import Project="${xamlPropsFile}" Condition="Exists('${xamlPropsFile}')" />`;
-  const xamlProps30 = String.raw`${xamlPropsImport}
-<ItemDefinitionGroup>
-  <ClCompile>
-    <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-  </ClCompile>
-</ItemDefinitionGroup>
-`;
-  const xamlProps2x = xamlPropsImport;
-  const xamlProps = options.useWinUI3 ? xamlProps30 : xamlProps2x;
-
-  const xamlTargetsPath = `..\\packages\\${xamlNugetPkgName}.${xamlNugetPkgVersion}\\build\\native\\${xamlNugetPkgName}.targets`;
-  const xamlTargets = `<Import Project="${xamlTargetsPath}" Condition="Exists('${xamlTargetsPath}')" />`;
-  const xamlNugetErrors = `<Error Condition="!Exists('${xamlTargetsPath}')" Text="$([System.String]::Format('$(ErrorText)', '${xamlTargetsPath}'))" />`;
   const xamlNamespace = options.useWinUI3 ? 'Microsoft.UI.Xaml' : 'Windows.UI.Xaml';
   const xamlNamespaceCpp = xamlNamespace.replace(/\./g, '::',);
 
+  const cppNugetPackages = [
+    {
+      id: 'Microsoft.Windows.CppWinRT',
+      version: '2.0.200316.3',
+      propsTopOfFile: true,
+      hasProps: true,
+    },
+    {
+      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
+      version: options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002',
+      propsMiddleOfFile: true, // For msbuild order of imports is very important since it follows a sequential macro expansion model. Cpp projects have two typical locations where props are imported.
+      hasProps: options.useWinUI3, // WinUI has props UI.Xaml does not.
+    },
+  ];
+
+  if (options.experimentalNugetDependency) {
+    cppNugetPackages.push(
+      {
+        id: 'Microsoft.ReactNative',
+        version: rnwVersion,
+        propsMiddleOfFile: true,
+        hasProps: false,
+      },
+    );
+  }
+
   const templateVars = {
-    '// clang-format off': '',
-    '// clang-format on': '',
-    '<%=ns%>': ns,
-    '<%=name%>': newProjectName,
-    '<%=projectGuid%>': projectGuid,
-    '<%=projectGuidUpper%>': projectGuid.toUpperCase(),
-    '<%rnwVersion%>' : rnwVersion,
-    '<%=packageGuid%>': packageGuid,
-    '<%=currentUser%>': currentUser,
-    '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',
-    '<%=XamlProps%>': xamlProps,
-    '<%=XamlTargets%>': xamlTargets,
-    '<%=XamlNugetErrors%>': xamlNugetErrors,
-    '<%=XamlNugetPkgName%>': xamlNugetPkgName,
-    '<%=XamlNugetPkgVersion%>': xamlNugetPkgVersion,
-    '<%=XamlNamespace%>': xamlNamespace,
-    '<%=XamlNamespaceCpp%>': xamlNamespaceCpp,
-    '<%=AutolinkProjectReferencesForTargets%>': '',
-    '<%=AutolinkCsUsingNamespaces%>': '',
-    '<%=AutolinkCsReactPacakgeProviders%>': '',
-    '<%=AutolinkCppIncludes%>': '',
-    '<%=AutolinkCppPackageProviders%>': '',
+    useMustache: true,
+    regExpPatternsToRemove: [
+      '//\\sclang-format\\s(on|off)\\s',
+    ],
+
+    name: newProjectName,
+    namespace: ns,
+
+    // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
+    // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
+    // we therefore have to precariously use the right casing in the right place or risk building in VS breaking.
+    projectGuidLower: `{${projectGuid.toLowerCase()}}`,
+    projectGuidUpper: `{${projectGuid.toUpperCase()}}`,
+
+    // packaging and signing variables:
+    packageGuid: packageGuid,
+    currentUser: currentUser,
+    certificateThumbprint: certificateThumbprint,
+
+    useExperimentalNuget: options.experimentalNugetDependency,
+
+    // cpp template variables
+    useWinUI3: options.useWinUI3,
+    xamlNamespace: xamlNamespace,
+    xamlNamespaceCpp: xamlNamespaceCpp,
+    cppNugetPackages: cppNugetPackages,
+
+    // autolinking template variables
+    autolinkProjectReferencesForTargets: '',
+    autolinkCsUsingNamespaces: '',
+    autolinkCsReactPacakgeProviders: '',
+    autolinkCppIncludes: '',
+    autolinkCppPackageProviders: '',
   };
 
   [

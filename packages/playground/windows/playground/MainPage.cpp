@@ -41,6 +41,7 @@ void MainPage::OnLoadClick(
   ReactRootView().ComponentName(mainComponentName);
   ReactRootView().ReactNativeHost(host);
 
+  host.InstanceSettings().UseDeveloperSupport(true);
   host.InstanceSettings().UseWebDebugger(x_UseWebDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseDirectDebugger(x_UseDirectDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());

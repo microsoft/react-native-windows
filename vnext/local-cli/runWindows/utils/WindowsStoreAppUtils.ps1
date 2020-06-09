@@ -212,7 +212,10 @@ function Start-Locally {
 
     add-type -TypeDefinition $code
     $appActivator = new-object StoreAppRunner.ApplicationActivationManager
-    $args = [system.String]::Join(" ", $argv)
+    if ($argv.Count -gt 0) {
+        $args = [system.String]::Join(" ", $argv)
+    }
+
     try {
         $appActivator.ActivateApplication($applicationUserModelId,$args,[StoreAppRunner.ActivateOptions]::None,[ref]0) | Out-Null
     } catch {

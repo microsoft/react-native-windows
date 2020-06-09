@@ -3,7 +3,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace <%=ns%>
+namespace {{ namespace }}
 {
     sealed partial class App : ReactApplication
     {

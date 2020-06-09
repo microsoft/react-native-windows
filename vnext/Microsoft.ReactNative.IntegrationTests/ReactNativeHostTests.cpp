@@ -47,7 +47,7 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckNoThrow(winrt::Microsoft::ReactNative::ReactNativeHost{});
   }
 
-  TEST_METHOD(JsFunctionCall_Succeeds) {
+  SKIPTESTMETHOD(JsFunctionCall_Succeeds) {
     std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
     std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
 

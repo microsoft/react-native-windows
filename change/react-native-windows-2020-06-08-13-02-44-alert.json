@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for Alert module with Xaml Islands",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-08T20:02:44.126Z"
+}

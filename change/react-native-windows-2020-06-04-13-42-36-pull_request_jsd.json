@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Expose JSDispatcher on IReactContext",
-  "packageName": "react-native-windows",
-  "email": "zihanc@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-06-04T20:42:36.629Z"
-}

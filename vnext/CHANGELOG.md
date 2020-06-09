@@ -1,8 +1,45 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 05 Jun 2020 00:06:16 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Jun 2020 00:06:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.89
+
+Tue, 09 Jun 2020 00:06:03 GMT
+
+### Changes
+
+- Use yoga config to align with ios/android (acoates@microsoft.com)
+
+## 0.0.0-master.88
+
+Mon, 08 Jun 2020 00:05:53 GMT
+
+### Changes
+
+- Add Integration and Component tests to CI (vmorozov@microsoft.com)
+
+## 0.0.0-master.87
+
+Sun, 07 Jun 2020 00:05:23 GMT
+
+### Changes
+
+- Remove SharedProject (dannyvv@microsoft.com)
+- Update template gen to use mustache (dannyvv@microsoft.com)
+- Install MSBuild log viewer (asklar@microsoft.com)
+- DevMenu should only show up when DeveloperSupport is on (acoates@microsoft.com)
+- Remove legacy ReactInstanceSettings struct (vmorozov@microsoft.com)
+
+## 0.0.0-master.86
+
+Sat, 06 Jun 2020 00:05:20 GMT
+
+### Changes
+
+- Expose turbo module registry API (zihanc@microsoft.com)
+- Ensure Image.windows.js is an exact copy of Image.ios.js (ngerlem@microsoft.com)
 
 ## 0.0.0-master.85
 

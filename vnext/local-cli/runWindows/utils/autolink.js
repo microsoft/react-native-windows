@@ -39,6 +39,8 @@ function getNormalizedContents(srcFile, replacements) {
     replacements[key] = replacements[key].replace(/\n/g, '\r\n');
   }
 
+  replacements.useMustache = true;
+
   return generatorCommon.resolveContents(srcFile, replacements);
 }
 
@@ -254,8 +256,8 @@ async function updateAutoLink(args, config, options) {
       );
 
       const csContents = getNormalizedContents(srcCsFile, {
-        '<%=AutolinkCsUsingNamespaces%>': csUsingNamespaces,
-        '<%=AutolinkCsReactPacakgeProviders%>': csReactPacakgeProviders,
+        autolinkCsUsingNamespaces: csUsingNamespaces,
+        autolinkCsReactPacakgeProviders: csReactPacakgeProviders,
       });
 
       changesNecessary =
@@ -298,8 +300,8 @@ async function updateAutoLink(args, config, options) {
       );
 
       const cppContents = getNormalizedContents(srcCppFile, {
-        '<%=AutolinkCppIncludes%>': cppIncludes,
-        '<%=AutolinkCppPackageProviders%>': cppPackageProviders,
+        autolinkCppIncludes: cppIncludes,
+        autolinkCppPackageProviders: cppPackageProviders,
       });
 
       changesNecessary =
@@ -349,7 +351,7 @@ async function updateAutoLink(args, config, options) {
     );
 
     const targetContents = getNormalizedContents(srcTargetFile, {
-      '<%=AutolinkProjectReferencesForTargets%>': projectReferencesForTargets,
+      autolinkProjectReferencesForTargets: projectReferencesForTargets,
     });
 
     changesNecessary =
