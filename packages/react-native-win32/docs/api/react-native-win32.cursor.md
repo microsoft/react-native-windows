@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Cursor = 'auto' | 'pointer';
+export declare type Cursor = 'auto' | 'default' | 'pointer' | 'help' | 'not-allowed' | 'wait' | 'move' | 'nesw-resize' | 'ns-resize' | 'nwse-resize' | 'we-resize' | 'text';
 ```
