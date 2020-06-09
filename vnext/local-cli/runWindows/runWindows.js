@@ -15,9 +15,6 @@ const autolink = require('./utils/autolink');
 
 const chalk = require('chalk');
 
-const findProjectRoot = require('@react-native-community/cli/build/tools/config/findProjectRoot')
-  .default;
-
 function ExitProcessWithError(loggingWasEnabled) {
   if (!loggingWasEnabled) {
     console.log(
@@ -57,7 +54,7 @@ async function runWindows(args, config, options) {
   }
 
   // Either use the specified root or get the default one
-  options.root = options.root || findProjectRoot();
+  options.root = options.root || config.root;
 
   // Get the solution file
   const slnFile = build.getAppSolutionFile(options, config);
