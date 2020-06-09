@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { ViewWin32 } from '../ViewWin32';
-import { IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
+import { Cursor, IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
 
 const styles = StyleSheet.create({
   border: {
@@ -213,6 +213,38 @@ const ToolTipExample: React.FunctionComponent<{}> = () => {
   );
 };
 
+interface ICursorTestComponentProps {
+  cursor: Cursor
+}
+
+const CursorTestComponent: React.FunctionComponent<ICursorTestComponentProps> = (props) => {
+  return (
+    <ViewWin32 style={{flexDirection: 'column'}}>
+      <Text>{props.cursor}</Text>
+      <ViewWin32 cursor={props.cursor} style={styles.blackbox} />
+    </ViewWin32>
+  )
+}
+
+const CursorExample: React.FunctionComponent = (props) => {
+  return (
+    <ViewWin32 style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+      <CursorTestComponent cursor='auto' />
+      <CursorTestComponent cursor='default' />
+      <CursorTestComponent cursor='help' />
+      <CursorTestComponent cursor='nesw-resize' />
+      <CursorTestComponent cursor='not-allowed' />
+      <CursorTestComponent cursor='ns-resize' />
+      <CursorTestComponent cursor='nwse-resize' />
+      <CursorTestComponent cursor='pointer' />
+      <CursorTestComponent cursor='wait' />
+      <CursorTestComponent cursor='move' />
+      <CursorTestComponent cursor='text' />
+      <CursorTestComponent cursor='we-resize' />
+    </ViewWin32>
+  );
+}
+
 export const title = '<ViewWin32>';
 export const displayName = 'ViewWin32 Example';
 export const description = 'All the stock View props plus Win32 specific ones';
@@ -249,6 +281,13 @@ export const examples = [
     description: 'Displays a tooltip on hover',
     render(): JSX.Element {
       return <ToolTipExample />;
+    },
+  },
+  {
+    title: 'Cursor example',
+    description: 'Each of these boxes should display a different cursor',
+    render(): JSX.Element {
+      return <CursorExample />;
     },
   },
 ];
