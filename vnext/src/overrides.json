@@ -533,11 +533,27 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "derived",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windows.js",
+      "baseFile": "Libraries\\StyleSheet\\PlatformColorValueTypes.android.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "4016a9409af82a0060f94ed78122a5813f407357",
+      "issue": "LEGACY_FIXME"
+    },
+    {
       "type": "patch",
       "file": "Libraries\\Types\\CoreEventTypes.js",
       "baseFile": "Libraries\\Types\\CoreEventTypes.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "83b203d547d9bdc57a8f3346ecee6f6e34b25f5d",
+      "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "derived",
+      "file": "Libraries\\Utilities\\Appearance.windows.js",
+      "baseFile": "Libraries\\Utilities\\Appearance.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "48bccf750042813b47f882d6467b20b178dcbc72",
       "issue": "LEGACY_FIXME"
     },
     {

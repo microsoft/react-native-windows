@@ -642,10 +642,26 @@
     },
     {
       "type": "copy",
+      "file": "RNTester\\js\\examples\\PlatformColor\\PlatformColorExample.js",
+      "baseFile": "RNTester\\js\\examples\\PlatformColor\\PlatformColorExample.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "f1c2babe02e11d237dbab875b8a7cd63fce048b6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "file": "RNTester\\js\\examples\\PointerEvents\\PointerEventsExample.js",
       "baseFile": "RNTester\\js\\examples\\PointerEvents\\PointerEventsExample.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "6e981af4c0ee1d67f6a6f236ce1a2bad27768ad6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Pressable\\PressableExample.js",
+      "baseFile": "RNTester\\js\\examples\\Pressable\\PressableExample.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e6cccf697079e00d66726dac5902cd53b10a7627",
       "issue": 4054
     },
     {

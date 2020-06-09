@@ -20,6 +20,10 @@ const TextAncestor = require('../../Text/TextAncestor');
 const TextInputState = require('./TextInputState');
 const TouchableWithoutFeedback = require('../Touchable/TouchableWithoutFeedback');
 
+// [Windows
+const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
+// Windows]
+
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 const setAndForwardRef = require('../../Utilities/setAndForwardRef');
@@ -1144,7 +1148,7 @@ function InternalTextInput(props: Props): React.Node {
         onSelectionChange={_onSelectionChange}
         onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
         selection={selection}
-        text={_getText()}
+        text={text}
       />
     );
   } // Windows]
