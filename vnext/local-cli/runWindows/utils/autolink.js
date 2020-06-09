@@ -14,6 +14,8 @@ const {newSpinner} = require('./commandWithProgress');
 const vstools = require('./vstools');
 const generatorCommon = require('../../generator-common');
 
+const configUtils = require('../../config/configUtils');
+
 const templateRoot = path.join(__dirname, '../../generator-windows/templates');
 
 /**
@@ -125,7 +127,32 @@ async function updateAutoLink(args, config, options) {
       );
     }
 
-    const windowsAppConfig = projectConfig.windows;
+    var windowsAppConfig = projectConfig.windows;
+
+    if (options.sln) {
+      const slnFile = path.join(windowsAppConfig.folder, options.sln);
+
+      windowsAppConfig.solutionFile = path.relative(
+        path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
+        slnFile,
+      );
+    }
+
+    if (options.proj) {
+      const projFile = path.join(windowsAppConfig.folder, options.proj);
+
+      const projectContents = configUtils.readProjectFile(projFile);
+
+      windowsAppConfig.project = {
+        projectFile: path.relative(
+          path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
+          projFile,
+        ),
+        projectName: configUtils.getProjectName(projectContents),
+        projectLang: configUtils.getProjectLanguage(projFile),
+        projectGuid: configUtils.getProjectGuid(projectContents),
+      };
+    }
 
     verboseMessage('Found windows app project, config:', verbose);
     verboseMessage(windowsAppConfig, verbose);
@@ -137,6 +164,11 @@ async function updateAutoLink(args, config, options) {
         throw new Error(
           `${item} is required but not specified by react-native config`,
         );
+      } else if (
+        typeof windowsAppConfig[item] === 'string' &&
+        windowsAppConfig[item].startsWith('Error: ')
+      ) {
+        throw new Error(`${item} invalid. ${windowsAppConfig[item]}`);
       }
     });
 
@@ -162,6 +194,13 @@ async function updateAutoLink(args, config, options) {
       ) {
         throw new Error(
           `project.${item} is required but not specified by react-native config`,
+        );
+      } else if (
+        typeof windowsAppProjectConfig[item] === 'string' &&
+        windowsAppProjectConfig[item].startsWith('Error: ')
+      ) {
+        throw new Error(
+          `project.${item} invalid. ${windowsAppProjectConfig[item]}`,
         );
       }
     });
@@ -451,6 +490,18 @@ module.exports = {
       command: '--check',
       description: 'Only check whether any autolinked files need to change',
       default: false,
+    },
+    {
+      command: '--sln [string]',
+      description:
+        'App solution file to use for auto-linking, e.g. windows\\myApp.sln',
+      default: undefined,
+    },
+    {
+      command: '--proj [string]',
+      description:
+        'App project file to use for auto-linking, e.g. windows\\myApp\\myApp.vcxproj',
+      default: undefined,
     },
   ],
 };

@@ -249,12 +249,13 @@ module.exports = {
     },
     {
       command: '--sln [string]',
-      description: 'Solution file to build, e.g. windows\\myApp.sln',
+      description: 'App solution file to build, e.g. windows\\myApp.sln',
       default: undefined,
     },
     {
       command: '--proj [string]',
-      description: 'Project file to build, e.g. windows\\myApp\\myApp.vcxproj',
+      description:
+        'App project file to build, e.g. windows\\myApp\\myApp.vcxproj',
       default: undefined,
     },
     {
