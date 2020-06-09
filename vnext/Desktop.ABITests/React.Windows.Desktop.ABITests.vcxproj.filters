@@ -44,9 +44,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MockReactPackageProvider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleMessageQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -72,7 +72,12 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
   }
 
-  TEST_METHOD(JsFunctionCall_Succeeds) {
+#ifndef CORE_ABI
+  TEST_METHOD(JsFunctionCall_Succeeds)
+#else
+  void JsFunctionCall_Succeeds()
+#endif
+  {
     std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
     std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
 
