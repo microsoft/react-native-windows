@@ -219,7 +219,8 @@ function findTagValue(projectContents, tagName) {
 function getProjectName(projectContents) {
   return (
     findTagValue(projectContents, 'ProjectName') ||
-    findTagValue(projectContents, 'AssemblyName')
+    findTagValue(projectContents, 'AssemblyName') ||
+    ''
   );
 }
 

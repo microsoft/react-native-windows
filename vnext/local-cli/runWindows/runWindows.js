@@ -63,14 +63,14 @@ async function runWindows(args, config, options) {
   const slnFile = build.getAppSolutionFile(options, config);
 
   if (options.autolink) {
-    const autolinkConfig = config;
     const autolinkArgs = [];
+    const autolinkConfig = config;
     const autoLinkOptions = {
       logging: options.logging,
       proj: options.proj,
       sln: options.sln,
     };
-    await autolink.func(autolinkConfig, autolinkArgs, autoLinkOptions);
+    await autolink.func(autolinkArgs, autolinkConfig, autoLinkOptions);
   } else {
     newInfo('Autolink step is skipped');
   }
