@@ -226,7 +226,7 @@ const CursorTestComponent: React.FunctionComponent<ICursorTestComponentProps> = 
   )
 }
 
-const CursorExample: React.FunctionComponent = (props) => {
+const CursorExample: React.FunctionComponent = () => {
   return (
     <ViewWin32 style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
       <CursorTestComponent cursor='auto' />
