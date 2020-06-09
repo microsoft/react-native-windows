@@ -10,6 +10,7 @@
 #include <Modules/NativeUIManager.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/Helpers.h>

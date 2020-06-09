@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "fix onPress for nested Text",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-08T20:24:45.321Z"
+}
