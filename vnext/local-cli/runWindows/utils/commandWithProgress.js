@@ -48,6 +48,7 @@ async function runPowerShellScriptFunction(
   verbose,
 ) {
   try {
+    const printException = verbose ? '$_;' : '';
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
@@ -56,7 +57,7 @@ async function runPowerShellScriptFunction(
         '-NoProfile',
         '-ExecutionPolicy',
         'RemoteSigned',
-        `Import-Module "${script}"; ${funcName} -ErrorAction Stop; exit $LASTEXITCODE`,
+        `Import-Module "${script}"; try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`,
       ],
       verbose,
     );
