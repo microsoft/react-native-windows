@@ -184,7 +184,11 @@ interface ITouchableWin32HighlightProps extends IViewWin32Props {
   rejectResponderTermination?: boolean;
   underlayColor?: string;
   children?: IRenderChild<ITouchableWin32State>;
-  innerRef?: React.RefObject<TouchableWin32>
+}
+
+interface ITouchableWin32HighlightComponentProps extends ITouchableWin32HighlightProps {
+  // Used as an imperative handle to the TouchableWin32 interface - primarily for focus()
+  innerRef?: React.Ref<TouchableWin32>;
 }
 
 /**
@@ -193,7 +197,7 @@ interface ITouchableWin32HighlightProps extends IViewWin32Props {
  * TouchableHighlight should manipulate the opacity of the wrapped view to display the underlay color.
  * This example merely uses hard coded color values to distinguish between different control states
  */
-class TouchableWin32Highlight extends React.Component<ITouchableWin32HighlightProps, {}> {
+class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32HighlightComponentProps, {}> {
 
   public render() {
     return (
@@ -306,6 +310,15 @@ class TouchableWin32Highlight extends React.Component<ITouchableWin32HighlightPr
     return Object.assign({}, this.props.style, finalStyle);
   };
 }
+
+// Demonstrating ref forwarding - forwarding a ref using an innerRef prop on a class component
+const TouchableWin32Highlight = React.forwardRef<TouchableWin32, ITouchableWin32HighlightProps>(
+  (props, ref) => {
+    return (
+      <TouchableWin32HighlightComponent innerRef={ref} {...props} />
+    );
+  }
+);
 
 /**
  * Both examples merely track number of presses
@@ -435,7 +448,7 @@ const TouchableFocusExample = () => {
 
   // onPress callback
   const focusOnPress = React.useCallback(() => {
-    focusableRef.current.focus();
+    focusableRef.current && focusableRef.current.focus();
     focused || setFocused(true);
   }, [focused]);
 
@@ -454,7 +467,7 @@ const TouchableFocusExample = () => {
       </TouchableWin32Highlight>
 
       <TouchableWin32Highlight
-        innerRef={focusableRef}
+        ref={focusableRef}
         onFocus={onFocus}
         onBlur={onBlur}
       >

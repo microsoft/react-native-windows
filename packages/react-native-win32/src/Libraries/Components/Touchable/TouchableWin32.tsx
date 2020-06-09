@@ -200,7 +200,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
       isHovered: false,
     };
 
-
+    this._internalRef = React.createRef<ViewWin32>();
   }
 
   public componentWillUnmount() {
