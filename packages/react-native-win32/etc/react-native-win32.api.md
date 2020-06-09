@@ -70,7 +70,7 @@ export class ButtonWin32 extends React_2.Component<IButtonWin32Props, IButtonWin
 export type ButtonWin32OmitStyles = RN.TextStyleIOS & RN.TextStyleAndroid;
 
 // @public (undocumented)
-export type Cursor = 'auto' | 'pointer';
+export type Cursor = 'auto' | 'default' | 'pointer' | 'help' | 'not-allowed' | 'wait' | 'move' | 'nesw-resize' | 'ns-resize' | 'nwse-resize' | 'we-resize' | 'text';
 
 // @public (undocumented)
 export enum EventPhase {
