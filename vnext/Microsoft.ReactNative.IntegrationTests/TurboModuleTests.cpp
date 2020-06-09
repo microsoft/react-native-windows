@@ -70,7 +70,7 @@ TEST_CLASS (TurboModuleTests) {
       host.LoadInstance();
     });
 
-    TestCheckEqual(1, SampleTurboModule::voidFunctionSignal.get_future().get());
+    TestCheckEqual(65536, SampleTurboModule::voidFunctionSignal.get_future().get());
 
     host.UnloadInstance().get();
     queueController.ShutdownQueueAsync().get();
