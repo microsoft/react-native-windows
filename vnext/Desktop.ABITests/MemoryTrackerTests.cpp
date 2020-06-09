@@ -18,7 +18,6 @@ namespace ABITests {
 TEST_CLASS(MemoryTrackerTests) {
  public:
   TEST_METHOD(Handler_AddedAndRemoved){
-    init_apartment(winrt::apartment_type::single_threaded);
     IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
@@ -31,7 +30,6 @@ TEST_CLASS(MemoryTrackerTests) {
 
 
   TEST_METHOD(CurrentMemoryUsage_ReturnsInitialValue) {
-    init_apartment(winrt::apartment_type::single_threaded);
     IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
@@ -41,7 +39,6 @@ TEST_CLASS(MemoryTrackerTests) {
   }
 
   TEST_METHOD(PeakMemoryUsage_ReturnsInitialValue) {
-    init_apartment(winrt::apartment_type::single_threaded);
     IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
@@ -51,8 +48,6 @@ TEST_CLASS(MemoryTrackerTests) {
 
  
   TEST_METHOD(ThresholdHandler_Called) {
-    init_apartment(winrt::apartment_type::single_threaded);
-
     IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
