@@ -124,7 +124,9 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
       if (token == L"-?") {
         std::cout << "Options:" << std::endl
                   << "  --direct-debugging <port>    Enable direct debugging on specified port." << std::endl;
-      } else if (token == L"--direct-debugging") {
+      }
+#if defined _DEBUG
+      else if (token == L"--direct-debugging") {
         if (std::getline(argumentStream, token, delimiter)) {
           const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
           hostImpl->InstanceSettings().UseWebDebugger(false);
@@ -132,11 +134,12 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
           hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
           hostImpl->InstanceSettings().DebuggerPort(port);
         }
+      } else if (token == L"--remote-debugging") {
+        hostImpl->InstanceSettings().UseWebDebugger(true);
+        hostImpl->InstanceSettings().UseDirectDebugger(false);
       }
+#endif
     }
-    // TODO: check for 'remoteDebugging'.  Return if not found.  Otherwise,
-    // validate a value is provided and then parse it to set the
-    // ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled flag
   }
 }
 
