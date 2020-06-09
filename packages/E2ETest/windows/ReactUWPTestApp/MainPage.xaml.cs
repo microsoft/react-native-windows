@@ -16,6 +16,7 @@ namespace ReactUWPTestApp
         public static bool UseRNTester
         { get; set; }
 
+        private bool Calculating { get; set; } = false;
         private bool Exit { get; set; } = false;
         public MainPage()
         {
@@ -26,14 +27,38 @@ namespace ReactUWPTestApp
                 myRootView.ComponentName = "RNTesterApp";
                 Unloaded += (object sender, RoutedEventArgs e) => { Exit = true; };
                 var dq = DispatcherQueue.GetForCurrentThread();
-                var dqt = dq.CreateTimer();
-                dqt.Interval = TimeSpan.FromMilliseconds(300);
-                dqt.IsRepeating = false;
-                dqt.Tick += UpdateTreeDump;
-                dq.ShutdownStarting += (DispatcherQueue dq_, DispatcherQueueShutdownStartingEventArgs _) => {
-                    Exit = true; dqt.Stop();
-                };
-                dqt.Start();
+
+                new Thread(() => {
+                    while (!Exit)
+                    {
+                        if (!Calculating)
+                        {
+                            Calculating = dq.TryEnqueue(async () =>
+                            {
+                                var pageHeader = TreeDumpLibrary.TreeDumpHelper.FindChildWithMatchingUIAID(this, "PageHeader") as TextBlock;
+                                if (pageHeader != null)
+                                {
+                                    var matches = await TreeDumpLibrary.TreeDumpControlViewManager.DoesTreeDumpMatchForRNTester(myRootView);
+                                    treeDump.Text = matches ? "OK" : "Failed";
+                                }
+                                Calculating = false;
+                            });
+                        } else
+                        {
+                            Thread.Sleep(200);
+                        }
+                    }
+                }).Start();
+
+                //
+                //var dqt = dq.CreateTimer();
+                //dqt.Interval = TimeSpan.FromMilliseconds(300);
+                //dqt.IsRepeating = false;
+                //dqt.Tick += UpdateTreeDump;
+                //dq.ShutdownStarting += (DispatcherQueue dq_, DispatcherQueueShutdownStartingEventArgs _) => {
+                //    Exit = true; dqt.Stop();
+                //};
+                //dqt.Start();
             }
             var app = Application.Current as App;
             myRootView.ReactNativeHost = app.Host;

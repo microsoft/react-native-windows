@@ -162,24 +162,30 @@ namespace TreeDumpLibrary
 
         public static async Task<bool> MatchDump(string outputJson, string masterFileRelativePath, string outputFileRelativePath)
         {
-            Debug.WriteLine($"master file = {Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\{masterFileRelativePath}");
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            Debug.WriteLine($"output file = {storageFolder.Path + "\\" + outputFileRelativePath}");
+            try
+            {
+                Debug.WriteLine($"master file = {Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\{masterFileRelativePath}");
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                Debug.WriteLine($"output file = {storageFolder.Path + "\\" + outputFileRelativePath}");
 
-            StorageFile outFile = await storageFolder.CreateFileAsync(outputFileRelativePath, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(outFile, outputJson);
+                StorageFile outFile = await storageFolder.CreateFileAsync(outputFileRelativePath, CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(outFile, outputJson);
 
-            StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{masterFileRelativePath}");
+                StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{masterFileRelativePath}");
 
-            string masterJson = await FileIO.ReadTextAsync(masterFile);
+                string masterJson = await FileIO.ReadTextAsync(masterFile);
 
-            if (!TreeDumpHelper.DumpsAreEqual(masterJson, outputJson))
+                if (!TreeDumpHelper.DumpsAreEqual(masterJson, outputJson))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            } catch
             {
                 return false;
-            }
-            else
-            {
-                return true;
             }
         }
 
