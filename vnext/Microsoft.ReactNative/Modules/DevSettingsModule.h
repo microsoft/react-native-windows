@@ -24,6 +24,11 @@ struct DevSettings {
   REACT_METHOD(addMenuItem) void addMenuItem(std::string title) noexcept;
   REACT_METHOD(setIsShakeToShowDevMenuEnabled) void setIsShakeToShowDevMenuEnabled(bool enabled) noexcept;
 
+  REACT_METHOD(addListener)
+  static void addListener(std::string eventName) noexcept;
+  REACT_METHOD(removeListeners)
+  static void removeListeners(double count) noexcept;
+
   static void SetReload(Mso::React::ReactOptions const &options, Mso::VoidFunctor &&func) noexcept;
 
  private:

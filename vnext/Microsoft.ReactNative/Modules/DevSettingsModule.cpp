@@ -68,4 +68,12 @@ void DevSettings::setIsShakeToShowDevMenuEnabled(bool enabled) noexcept {
   assert(false);
 }
 
+/*static*/ void DevSettings::addListener(std::string eventName) noexcept {
+  // noop
+}
+
+/*static*/ void DevSettings::removeListeners(double count) noexcept {
+  // noop
+}
+
 } // namespace Microsoft::ReactNative
