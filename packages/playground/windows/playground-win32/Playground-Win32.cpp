@@ -125,7 +125,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
-          host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
+          host.InstanceSettings().UseDeveloperSupport(true);
 
           auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
