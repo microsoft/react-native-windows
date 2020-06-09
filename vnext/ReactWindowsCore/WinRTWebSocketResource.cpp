@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 // clang-format off
@@ -8,6 +8,7 @@
 #include <Utilities.h>
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <RestrictedErrorInfo.h>
 

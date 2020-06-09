@@ -107,6 +107,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ReactInstanceSettingsTests.cpp" />
     <ClCompile Include="ReactNonAbiValueTests.cpp" />
     <ClCompile Include="ReactNotificationServiceTests.cpp" />
     <ClCompile Include="ReactPropertyBagTests.cpp" />
@@ -121,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="Application.manifest" />
+    <None Include="AddValues.js" />
     <None Include="packages.config" />
     <JsBundleEntry Include="AddValues.js" />
   </ItemGroup>

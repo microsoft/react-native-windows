@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -308,6 +308,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public IReactPropertyBag Properties { get; } = ReactPropertyBagHelper.CreatePropertyBag();
 
     public IReactNotificationService Notifications { get; } = ReactNotificationServiceHelper.CreateNotificationService();
+
+    public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
+
+    public IReactDispatcher JSDispatcher => Properties.Get(ReactDispatcherHelper.JSDispatcherProperty) as IReactDispatcher;
 
     public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
     {

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -12,8 +12,11 @@ namespace winrt::Microsoft::ReactNative {
 
 ReactPackageBuilder::ReactPackageBuilder(
     std::shared_ptr<NativeModulesProvider> const &modulesProvider,
-    std::shared_ptr<ViewManagersProvider> const &viewManagersProvider) noexcept
-    : m_modulesProvider{modulesProvider}, m_viewManagersProvider{viewManagersProvider} {}
+    std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
+    std::shared_ptr<TurboModulesProvider> const &turboModulesProvider) noexcept
+    : m_modulesProvider{modulesProvider},
+      m_viewManagersProvider{viewManagersProvider},
+      m_turboModulesProvider{turboModulesProvider} {}
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
   m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);
@@ -23,6 +26,12 @@ void ReactPackageBuilder::AddViewManager(
     hstring const &viewManagerName,
     ReactViewManagerProvider const &viewManagerProvider) noexcept {
   m_viewManagersProvider->AddViewManagerProvider(viewManagerName, viewManagerProvider);
+}
+
+void ReactPackageBuilder::AddTurboModule(
+    hstring const &moduleName,
+    ReactModuleProvider const &moduleProvider) noexcept {
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider);
 }
 
 } // namespace winrt::Microsoft::ReactNative

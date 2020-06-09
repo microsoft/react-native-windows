@@ -11,6 +11,9 @@
     <Message Text="=> PlatformName            [$(PlatformName)]" />
     <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
     <Message Text="=> PlatformToolset         [$(PlatformToolset)]" />
+    <Message Text="=> RootDir                 [$(RootDir)]" />
+    <Message Text="=> RootIntDir              [$(RootIntDir)]" />
+    <Message Text="=> RootOutDir              [$(RootOutDir)]" />
     <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
     <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
     <Message Text="=> IntDir                  [$(IntDir)]" />
@@ -21,6 +24,7 @@
     <Message Text="=> LastBuildUnsuccessful   [$(LastBuildUnsuccessful)]" />
     <Message Text="=> LastBuildState          [$(LastBuildState)]" />
     <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
+    <Message Text="=> WinVer                  [$(WinVer)]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
@@ -31,6 +35,7 @@
     <Message Text="=> XMLDocumentationFileName    [@(CLCompile->Metadata('XMLDocumentationFileName')->DirectoryName()->Distinct())]" />
     <Message Text="=> BrowseInformationFile       [@(CLCompile->Metadata('BrowseInformationFile')->DirectoryName()->Distinct())]" />
     <Message Text="=> PreprocessOutputPath        [@(CLCompile->Metadata('PreprocessOutputPath')->DirectoryName()->Distinct())]" />
+    <Message Text="=> PreprocessorDefinitions     [@(CLCompile->Metadata('PreprocessorDefinitions')->Distinct())]" />
     <Message Text="=> ClDirsToMake                [@(ClDirsToMake)]" />
 
     <Message Text="%0A" />

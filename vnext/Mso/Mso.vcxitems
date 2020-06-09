@@ -61,6 +61,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)future\future.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)future\futureForwardDecl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)future\futureWait.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\futureWinRT.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)guid\msoGuid.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)guid\msoGuidDetails.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)memoryApi\memoryApi.h" />

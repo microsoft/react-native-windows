@@ -23,7 +23,6 @@ Sample applications are not covered.
 - [Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj](#Microsoft.ReactNative.Managed)
 - [Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems](#Microsoft.ReactNative.SharedManaged)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
-- [ReactWindowsCore\ReactWindowsCore.vcxproj](#ReactWindowsCore)
 - [Shared\Shared.vcxitems](#Shared)
 
 ## Common Projects
@@ -31,10 +30,6 @@ Sample applications are not covered.
 ### Common
 *Static Library*<br/>
 Functionality shared between React and JSI projects that do not depend on React or JSI functionality.
-
-### ReactWindowsCore
-*Static Library*<br/>
-Contains common functionality for both Desktop and Universal Windows variants.
 
 ### Shared
 *Shared Items (no build artifact)*<br/>
@@ -45,7 +40,7 @@ Holds sources common to both Windows variants, that require different build conf
 *Static Library*<br/>
 React Native core, cross-platform C++ types and interfaces.<br/>
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.<br/>
-See https://github.com/facebook/react-native/tree/v0.59.9/ReactCommon.
+See https://github.com/facebook/react-native/tree/v0.62.0/ReactCommon.
 
 ### Folly
 *Static Library*<br/>
@@ -65,13 +60,11 @@ Code shared between [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop) and [JSI\Uni
 Contains helpers to simplify authoring C++/WinRT native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### Microsoft.ReactNative.Managed
-*Shared Items (no build artifact)*<br/>
+*Managed Library*<br/>
 Contains helpers to simplify authoring C# native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### Microsoft.ReactNative.SharedManaged
-*Shared Items (no build artifact)*<br/>
-This shared project is to be deprecated in some time in favor of the library [Microsoft.ReactNative.Managed](#Microsoft.ReactNative.Managed).
-For now it contaisn the same code as the library.
+Deprecated: This is still here so that customers get a specific error message on how to upgrade their project.
 
 ### React.Windows.IntegrationTests
 *Static Library*<br/>
@@ -79,9 +72,9 @@ Common framework for running out of process and/or full React instance testing.
 
 ### IntegrationTests (Node Project)
 *MSBuild Node project. For reading/editing purposes only (no build artifact)*<br/>
-Set of JavaScript component tests for [RNTester](https://github.com/facebook/react-native/tree/v0.59.9/RNTester).
+Set of JavaScript component tests for [RNTester](https://github.com/facebook/react-native/tree/v0.62.0/RNTester).
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.<br/>
-See https://github.com/facebook/react-native/tree/v0.59.9/IntegrationTests.
+See https://github.com/facebook/react-native/tree/v0.62.0/IntegrationTests.
 
 ## Windows Desktop Projects
 

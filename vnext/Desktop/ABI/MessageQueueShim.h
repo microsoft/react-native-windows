@@ -4,7 +4,7 @@
 #include <winrt/facebook.react.h>
 
 namespace facebook::react {
-class MessageQueueShim : public MessageQueueThread {
+class MessageQueueShim : public facebook::react::MessageQueueThread {
  public:
   MessageQueueShim(const ::winrt::facebook::react::IMessageQueue &abiMessageQueue);
   virtual void runOnQueue(std::function<void()> &&item) override;

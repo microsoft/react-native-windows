@@ -1,11 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 
 #include <ReactUWP/Modules/AppThemeModuleUwp.h>
 #include <ReactUWP/Modules/AppearanceModule.h>
-#include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/NativeModuleProvider.h>
 #include <smartPtr/cntPtr.h>
 #include <memory>

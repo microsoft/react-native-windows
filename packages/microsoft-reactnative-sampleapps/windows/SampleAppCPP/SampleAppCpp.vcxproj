@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. -->
+<!-- Copyright (c) Microsoft Corporation. Licensed under the MIT License. See LICENSE in the project root for license information. -->
 <Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
@@ -17,25 +17,29 @@
     <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <!-- Start Custom .NET Native properties -->
-    <DotNetNativeVersion>2.2.7-rel-27913-00</DotNetNativeVersion>
+    <DotNetNativeVersion Condition="Exists('$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\2.2.7-rel-27913-00\build\Microsoft.Net.Native.Compiler.props')">2.2.7-rel-27913-00</DotNetNativeVersion>
+    <DotNetNativeVersion Condition="Exists('$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\2.2.8-rel-28605-00\build\Microsoft.Net.Native.Compiler.props')">2.2.8-rel-28605-00</DotNetNativeVersion>
+    <DotNetNativeRuntimeVersion Condition="Exists('$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.7-rel-27913-00\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.7-rel-27913-00</DotNetNativeRuntimeVersion>
+    <DotNetNativeRuntimeVersion Condition="Exists('$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.7-rel-28605-00\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.7-rel-28605-00</DotNetNativeRuntimeVersion>
     <!-- The name 'DotNetNativeVersion' is critical for restoring the right .NET framework libraries -->
-    <UWPCoreRuntimeSdkVersion>2.2.9</UWPCoreRuntimeSdkVersion>
+    <UWPCoreRuntimeSdkVersion Condition="Exists('$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.9\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.9</UWPCoreRuntimeSdkVersion>
+    <UWPCoreRuntimeSdkVersion Condition="Exists('$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.10\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.10</UWPCoreRuntimeSdkVersion>
   </PropertyGroup>
   <!-- Start Custom .NET Native targets -->
   <!-- Import all of the .NET Native / CoreCLR props at the beginning of the project -->
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\Microsoft.Net.UWPCoreRuntimeSdk.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\Microsoft.Net.Native.Compiler.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.Compiler.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\Microsoft.Net.UWPCoreRuntimeSdk.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\Microsoft.Net.Native.Compiler.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.Compiler.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.props" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary.props" />
   <!-- End Custom .NET Native targets -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
@@ -91,14 +95,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared">
-    <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Label="ReactNativeWindowsPropertySheets">
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CppApp.props"/>
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
@@ -130,6 +134,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DebugConsole.h" />
+    <ClInclude Include="MainPage.h">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
@@ -157,6 +165,10 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MainPage.cpp">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -170,6 +182,10 @@
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
+    <Midl Include="MainPage.idl">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
@@ -181,9 +197,6 @@
     <Natvis Include="$(ReactNativeWindowsDir)\Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\SampleLibraryCpp\SampleLibraryCpp.vcxproj">
       <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
     </ProjectReference>
@@ -191,13 +204,17 @@
       <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CppApp.targets"/>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
@@ -218,17 +235,17 @@
     </ItemGroup>
   </Target>
   <!-- Import all of the .NET Native / CoreCLR targets at the end of the project -->
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\Microsoft.Net.Native.Compiler.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.Compiler.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets" />
-  <Import Condition="'$(WindowsTargetPlatformMinVersion)' &gt;= '10.0.16299.0'" Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\Microsoft.Net.Native.Compiler.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.Compiler.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets" />
+  <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary.targets" />
   <!-- End Custom .NET Native targets -->
 </Project>

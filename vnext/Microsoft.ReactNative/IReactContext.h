@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,7 +6,7 @@
 #include "ReactHost/React.h"
 #include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
@@ -14,6 +14,8 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
  public: // IReactContext
   IReactPropertyBag Properties() noexcept;
   IReactNotificationService Notifications() noexcept;
+  IReactDispatcher UIDispatcher() noexcept;
+  IReactDispatcher JSDispatcher() noexcept;
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       hstring const &eventName,
@@ -27,8 +29,12 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
+  // Not part of the public ABI interface
+  // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods
+  Mso::React::IReactContext &GetInner() const noexcept;
+
  private:
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::implementation

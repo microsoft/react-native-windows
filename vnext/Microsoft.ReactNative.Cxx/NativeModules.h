@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -265,7 +265,7 @@ constexpr size_t GetPromiseCount() noexcept {
 }
 
 template <class TResult>
-constexpr bool IsVoidResult() noexcept {
+constexpr bool IsVoidResultCheck() noexcept {
   return std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
 }
 
@@ -446,7 +446,7 @@ struct ModuleMethodInfoBase;
 
 template <class TResult, class... TArgs>
 struct ModuleMethodInfoBase<TResult(TArgs...) noexcept> {
-  constexpr static bool IsVoidResult = IsVoidResult<TResult>();
+  constexpr static bool IsVoidResult = IsVoidResultCheck<TResult>();
   constexpr static size_t ArgCount = sizeof...(TArgs);
   using ArgTuple = std::tuple<RemoveConstRef<TArgs>...>;
   constexpr static size_t CallbackCount = GetCallbackCount<ArgTuple>();
@@ -809,7 +809,7 @@ struct ReactMemberInfoIterator {
   static auto HasGetReactMemberAttribute(...) -> std::false_type;
 
   // Visit members in groups of 10 to avoid deep recursion.
-  template <int StartIndex, class TVisitor, int... I>
+  template <size_t StartIndex, class TVisitor, size_t... I>
   constexpr void ForEachMember(TVisitor &visitor, std::index_sequence<I...> *) noexcept {
     if constexpr (decltype(HasGetReactMemberAttribute(visitor, ReactAttributeId<StartIndex>{}))::value) {
       (GetMemberInfo<StartIndex + I>(visitor), ...);
@@ -858,7 +858,7 @@ struct ReactModuleBuilder {
   template <int I>
   void RegisterModule(std::wstring_view moduleName, std::wstring_view eventEmitterName, ReactAttributeId<I>) noexcept {
     RegisterModuleName(moduleName, eventEmitterName);
-    ReactMemberInfoIterator<TModule>{}.ForEachMember<I + 1>(*this);
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
   }
 
   void RegisterModuleName(std::wstring_view moduleName, std::wstring_view eventEmitterName = L"") noexcept {
@@ -969,7 +969,7 @@ struct ReactModuleVerifier {
 
   template <int I>
   constexpr void RegisterModule(std::wstring_view /*_*/, std::wstring_view /*_*/, ReactAttributeId<I>) noexcept {
-    ReactMemberInfoIterator<TModule>{}.ForEachMember<I + 1>(*this);
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
   }
 
   template <class TMember, class TAttribute, int I>

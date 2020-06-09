@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "MessageQueueThreadFactory.h"
@@ -12,8 +12,10 @@ std::shared_ptr<facebook::react::MessageQueueThread> MakeJSQueueThread() noexcep
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeUIQueueThread() noexcept {
-  return std::make_shared<Mso::React::MessageDispatchQueue>(
-      Mso::DispatchQueue::MakeCurrentThreadUIQueue(), nullptr, nullptr);
+  Mso::DispatchQueue queue = Mso::DispatchQueue::GetCurrentUIThreadQueue();
+  std::shared_ptr<facebook::react::MessageQueueThread> messageThread =
+      queue ? std::make_shared<Mso::React::MessageDispatchQueue>(queue, nullptr, nullptr) : nullptr;
+  return messageThread;
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeSerialQueueThread() noexcept {

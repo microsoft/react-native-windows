@@ -73,8 +73,6 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-      m_packageProviders;
 
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
@@ -94,7 +92,6 @@ struct WindowData {
     if (!m_host) {
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
-      m_host.PackageProviders(PackageProviders());
     }
 
     return m_host;
@@ -105,15 +102,6 @@ struct WindowData {
     }
 
     return m_instanceSettings;
-  }
-
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-  PackageProviders() noexcept {
-    if (!m_packageProviders) {
-      m_packageProviders = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>();
-    }
-
-    return m_packageProviders;
   }
 
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
@@ -129,7 +117,7 @@ struct WindowData {
 
           auto host = Host();
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
-          host.InstanceSettings().MainComponentName(appName);
+
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
           host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
           host.InstanceSettings().BundleRootPath(
@@ -138,19 +126,19 @@ struct WindowData {
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
-          host.InstanceSettings().Properties().Set(
-              winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty(),
-              winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIThreadDispatcher());
+
+          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
+          winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
+              host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
           m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
-          m_reactRootView.ComponentName(host.InstanceSettings().MainComponentName());
+          m_reactRootView.ComponentName(appName);
           m_reactRootView.ReactNativeHost(host);
 
           // Retrieve ABI pointer from C++/CX pointer
-          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
           rootElement.Children().Clear();
           rootElement.Children().Append(m_reactRootView);
         }

@@ -20,9 +20,6 @@
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -92,13 +89,7 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp">
@@ -267,19 +258,26 @@
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="IReactNotificationService.cpp" />
+    <ClCompile Include="Modules\AlertModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\ClipboardModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\DeviceStateModule.cpp">
+    <ClCompile Include="Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\I18nManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
@@ -320,6 +318,9 @@
       <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\DevMenu.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -372,9 +373,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -457,13 +455,7 @@
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\I18nModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h">
@@ -609,20 +601,26 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
-    <ClInclude Include="LifecycleState.h" />
+    <ClInclude Include="Modules\AlertModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\ClipboardModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\DeviceStateModule.h">
+    <ClInclude Include="Modules\DeviceInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\I18nManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
+    <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h">
       <Filter>Pch</Filter>
     </ClInclude>
@@ -678,6 +676,9 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\DevMenu.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -695,10 +696,8 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="IBackgroundEventListener.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactContext.idl" />
     <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
@@ -708,15 +707,14 @@
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
-    <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl" />
-    <Midl Include="ReactInstance.idl" />
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
     <Midl Include="RedBoxHandler.idl" />
+    <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="XamlUIService.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

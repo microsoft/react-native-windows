@@ -146,6 +146,7 @@ class RNTesterApp extends React.Component<Props, RNTesterNavigationState> {
   componentDidMount() {
     this._mounted = true;
     Linking.getInitialURL().then(url => {
+      // eslint-disable-next-line handle-callback-err
       AsyncStorage.getItem(APP_STATE_KEY, (err, storedString) => {
         if (!this._mounted) {
           return;

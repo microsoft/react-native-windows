@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -58,12 +58,8 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
-  void PackageProviders(Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept;
 
   ReactNative::ReactNativeHost Host() noexcept;
-
-  hstring MainComponentName() noexcept;
-  void MainComponentName(hstring const &value) noexcept;
 
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;
@@ -80,15 +76,9 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
- protected:
-  virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();
-
  private:
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{nullptr};
   ReactNative::ReactNativeHost m_host{nullptr};
-
-  ReactApplicationDelegate m_delegate{nullptr};
 
   void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
 };

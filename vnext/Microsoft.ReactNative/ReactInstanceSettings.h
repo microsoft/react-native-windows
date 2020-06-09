@@ -1,36 +1,25 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 
 #include "ReactInstanceSettings.g.h"
-
-#if _DEBUG
-#define REACT_DEFAULT_USE_DEVELOPER_SUPPORT true
-#define REACT_DEFAULT_USE_WEB_DEBUGGER true
-#define REACT_DEFAULT_USE_FAST_REFRESH true
-#define REACT_DEFAULT_USE_LIVE_RELOAD false
-#define REACT_DEFAULT_ENABLE_DEVELOPER_MENU true
-#else
-#define REACT_DEFAULT_USE_DEVELOPER_SUPPORT false
-#define REACT_DEFAULT_USE_WEB_DEBUGGER false
-#define REACT_DEFAULT_USE_FAST_REFRESH false
-#define REACT_DEFAULT_USE_LIVE_RELOAD false
-#define REACT_DEFAULT_ENABLE_DEVELOPER_MENU false
-#endif // _DEBUG
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
-  ReactInstanceSettings() = default;
+  ReactInstanceSettings() noexcept;
 
   IReactPropertyBag Properties() noexcept;
 
   IReactNotificationService Notifications() noexcept;
 
-  hstring MainComponentName() noexcept;
-  void MainComponentName(hstring const &value) noexcept;
+  Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
+  //! This controls the availiablility of various developer support functionality including
+  //! RedBox, and the Developer Menu
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;
 
@@ -40,18 +29,30 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
+  //! Should the instance run in a remote environment such as within a browser
+  //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
+  //! by Metro/Haul. Debugging will start as soon as the react native instance is loaded.
   bool UseWebDebugger() noexcept;
   void UseWebDebugger(bool value) noexcept;
 
+  //! Should the instance trigger the hot reload logic when it first loads the instance
+  //! Most edits should be visible within a second or two without the instance having to reload
+  //! Non-compatible changes still cause full reloads
   bool UseFastRefresh() noexcept;
   void UseFastRefresh(bool value) noexcept;
 
+  //! Should the instance monitor for changes to the JS and reload the instance when a change is
+  //! detected.  Generally its prefered to use FastFreshed instead of this.  But if there is some
+  //! issue with hot reloading in your app, then this can be used instead
   bool UseLiveReload() noexcept;
   void UseLiveReload(bool value) noexcept;
 
+  //! Should the instance setup the JS environment such that a JS debugger can attach to the JS environment
   bool UseDirectDebugger() noexcept;
   void UseDirectDebugger(bool value) noexcept;
 
+  //! Should the instance setup the JS environment to immediately break waiting for a JS debugger
+  //! This allows a JS debugger to be able to debug the boot JS code with in the instance
   bool DebuggerBreakOnNextLine() noexcept;
   void DebuggerBreakOnNextLine(bool value) noexcept;
 
@@ -64,6 +65,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool EnableByteCodeCaching() noexcept;
   void EnableByteCodeCaching(bool value) noexcept;
 
+  //! Same as UseDeveloperSupport
   bool EnableDeveloperMenu() noexcept;
   void EnableDeveloperMenu(bool value) noexcept;
 
@@ -85,28 +87,33 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   IRedBoxHandler RedBoxHandler() noexcept;
   void RedBoxHandler(IRedBoxHandler const &value) noexcept;
 
+  IReactDispatcher UIDispatcher() noexcept;
+  void UIDispatcher(IReactDispatcher const &value) noexcept;
+
+  hstring SourceBundleHost() noexcept;
+  void SourceBundleHost(hstring const &value) noexcept;
+
+  uint16_t SourceBundlePort() noexcept;
+  void SourceBundlePort(uint16_t value) noexcept;
+
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
-  hstring m_mainComponentName{};
-  bool m_useDeveloperSupport{REACT_DEFAULT_USE_DEVELOPER_SUPPORT};
+  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{
+      single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptMainModuleName{};
   hstring m_javaScriptBundleFile{};
-  bool m_useWebDebugger{REACT_DEFAULT_USE_WEB_DEBUGGER};
-  bool m_useFastRefresh{REACT_DEFAULT_USE_FAST_REFRESH};
-  bool m_useLiveReload{REACT_DEFAULT_USE_LIVE_RELOAD};
-  bool m_useDirectDebugger{false};
-  bool m_debuggerBreakOnNextLine{false};
   bool m_useJsi{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
-  bool m_enableDeveloperMenu{REACT_DEFAULT_ENABLE_DEVELOPER_MENU};
   hstring m_byteCodeFileUri{};
   hstring m_debugHost{};
   hstring m_debugBundlePath{};
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
   IRedBoxHandler m_redBoxHandler{nullptr};
+  hstring m_sourceBundleHost{};
+  uint16_t m_sourceBundlePort{0};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -131,20 +138,9 @@ inline IReactNotificationService ReactInstanceSettings::Notifications() noexcept
   return m_notifications;
 }
 
-inline hstring ReactInstanceSettings::MainComponentName() noexcept {
-  return m_mainComponentName;
-}
-
-inline void ReactInstanceSettings::MainComponentName(hstring const &value) noexcept {
-  m_mainComponentName = value;
-}
-
-inline bool ReactInstanceSettings::UseDeveloperSupport() noexcept {
-  return m_useDeveloperSupport;
-}
-
-inline void ReactInstanceSettings::UseDeveloperSupport(bool value) noexcept {
-  m_useDeveloperSupport = value;
+inline Windows::Foundation::Collections::IVector<IReactPackageProvider>
+ReactInstanceSettings::PackageProviders() noexcept {
+  return m_packageProviders;
 }
 
 inline hstring ReactInstanceSettings::JavaScriptMainModuleName() noexcept {
@@ -161,46 +157,6 @@ inline hstring ReactInstanceSettings::JavaScriptBundleFile() noexcept {
 
 inline void ReactInstanceSettings::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
-}
-
-inline bool ReactInstanceSettings::UseWebDebugger() noexcept {
-  return m_useWebDebugger;
-}
-
-inline void ReactInstanceSettings::UseWebDebugger(bool value) noexcept {
-  m_useWebDebugger = value;
-}
-
-inline bool ReactInstanceSettings::UseFastRefresh() noexcept {
-  return m_useFastRefresh;
-}
-
-inline void ReactInstanceSettings::UseFastRefresh(bool value) noexcept {
-  m_useFastRefresh = value;
-}
-
-inline bool ReactInstanceSettings::UseLiveReload() noexcept {
-  return m_useLiveReload;
-}
-
-inline void ReactInstanceSettings::UseLiveReload(bool value) noexcept {
-  m_useLiveReload = value;
-}
-
-inline bool ReactInstanceSettings::UseDirectDebugger() noexcept {
-  return m_useDirectDebugger;
-}
-
-inline void ReactInstanceSettings::UseDirectDebugger(bool value) noexcept {
-  m_useDirectDebugger = value;
-}
-
-inline bool ReactInstanceSettings::DebuggerBreakOnNextLine() noexcept {
-  return m_debuggerBreakOnNextLine;
-}
-
-inline void ReactInstanceSettings::DebuggerBreakOnNextLine(bool value) noexcept {
-  m_debuggerBreakOnNextLine = value;
 }
 
 inline bool ReactInstanceSettings::UseJsi() noexcept {
@@ -225,14 +181,6 @@ inline bool ReactInstanceSettings::EnableByteCodeCaching() noexcept {
 
 inline void ReactInstanceSettings::EnableByteCodeCaching(bool value) noexcept {
   m_enableByteCodeCaching = value;
-}
-
-inline bool ReactInstanceSettings::EnableDeveloperMenu() noexcept {
-  return m_enableDeveloperMenu;
-}
-
-inline void ReactInstanceSettings::EnableDeveloperMenu(bool value) noexcept {
-  m_enableDeveloperMenu = value;
 }
 
 inline hstring ReactInstanceSettings::ByteCodeFileUri() noexcept {
@@ -281,6 +229,22 @@ inline IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {
 
 inline void ReactInstanceSettings::RedBoxHandler(IRedBoxHandler const &value) noexcept {
   m_redBoxHandler = value;
+}
+
+inline hstring ReactInstanceSettings::SourceBundleHost() noexcept {
+  return m_sourceBundleHost;
+}
+
+inline void ReactInstanceSettings::SourceBundleHost(hstring const &value) noexcept {
+  m_sourceBundleHost = value;
+}
+
+inline uint16_t ReactInstanceSettings::SourceBundlePort() noexcept {
+  return m_sourceBundlePort;
+}
+
+inline void ReactInstanceSettings::SourceBundlePort(uint16_t value) noexcept {
+  m_sourceBundlePort = value;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

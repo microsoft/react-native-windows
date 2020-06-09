@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
@@ -23,6 +23,7 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
+// None of these tests are runnable
 TEST_CLASS (WebSocketResourcePerformanceTest) {
   // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
   int32_t GetCurrentThreadCount() {

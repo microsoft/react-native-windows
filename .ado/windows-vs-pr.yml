@@ -77,6 +77,12 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
+      - powershell: |
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+        displayName: Set GoogleTestAdapterPath
+
       - task: VSTest@2
         displayName: Run Universal Unit Tests (Native)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -84,6 +90,7 @@ jobs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
+            Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
             Mso.UnitTests/Mso.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
@@ -101,12 +108,14 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
@@ -160,7 +169,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -209,7 +218,7 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -293,12 +302,14 @@ jobs:
     cancelTimeoutInMinutes: 5
     pool:
       vmImage: $(VmImage)
+    variables:
+      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
     steps:
       - checkout: self
         clean: false
         submodules: false
-        
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
@@ -312,14 +323,14 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows (Debug)
         inputs:
-          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
-          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
@@ -329,6 +340,13 @@ jobs:
           script: yarn bundle-cpp
           workingDirectory: packages\microsoft-reactnative-sampleapps
         condition: succeeded()
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload build logs
+        condition:  succeededOrFailed()
+        inputs:    
+          pathtoPublish: '$(BuildLogDirectory)'
+          artifactName: 'Build logs - $(Agent.JobName)' 
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -355,16 +373,13 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
+      #5059 Disable failing or intermittent tests.
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
 
     steps:
       - checkout: self
         clean: false
         submodules: false
-
-      - task: VisualStudioTestPlatformInstaller@1
-        inputs:
-          testPlatformVersion: 16.3.0
 
       - template: templates/build-rnw.yml
         parameters:
@@ -377,6 +392,12 @@ jobs:
           script: yarn bundle
           workingDirectory: packages/react-native-win32
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
+
+      - powershell: |
+          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+        displayName: Set GoogleTestAdapterPath
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -393,7 +414,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
 
       - template: templates/stop-packagers.yml
 
@@ -416,41 +437,9 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
+          vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
-
-      - task: VSTest@2
-        displayName: List Desktop Integration Tests
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          runTestsInIsolation: false
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: false
-          collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
-          otherConsoleOptions: '/ListTests'
-        condition: failed()
-
-      - task: VSTest@2
-        displayName: Re-Run Desktop Integration Tests
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: onAbortOnly
-          vsTestVersion: toolsInstaller
-          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: failed()
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
@@ -576,7 +565,7 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -586,10 +575,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
+      - template: templates/yarn-install.yml
 
       - task: CmdLine@2
         displayName: Check for change files

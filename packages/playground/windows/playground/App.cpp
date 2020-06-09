@@ -37,50 +37,10 @@ App::App() {
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void App::OnLaunched(LaunchActivatedEventArgs const &e) {
-  Frame rootFrame{nullptr};
-  auto content = Window::Current().Content();
-  if (content) {
-    rootFrame = content.try_as<Frame>();
-  }
-
-  // Do not repeat app initialization when the Window already has content,
-  // just ensure that the window is active
-  if (rootFrame == nullptr) {
-    // Create a Frame to act as the navigation context and associate it with
-    // a SuspensionManager key
-    rootFrame = Frame();
-
-    rootFrame.NavigationFailed({this, &App::OnNavigationFailed});
-
-    if (e.PreviousExecutionState() == ApplicationExecutionState::Terminated) {
-      // Restore the saved session state only when appropriate, scheduling the
-      // final launch steps after the restore is complete
-    }
-
-    if (e.PrelaunchActivated() == false) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a navigation
-        // parameter
-        rootFrame.Navigate(xaml_typename<playground::MainPage>(), box_value(e.Arguments()));
-      }
-      // Place the frame in the current Window
-      Window::Current().Content(rootFrame);
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
-  } else {
-    if (e.PrelaunchActivated() == false) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a navigation
-        // parameter
-        rootFrame.Navigate(xaml_typename<playground::MainPage>(), box_value(e.Arguments()));
-      }
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
-  }
+  Frame frame{};
+  Window::Current().Content(frame);
+  Window::Current().Activate();
+  frame.Navigate(xaml_typename<playground::MainPage>(), box_value(e.Arguments()));
 }
 
 /// <summary>

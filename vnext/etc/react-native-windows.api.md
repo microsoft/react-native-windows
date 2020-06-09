@@ -270,12 +270,14 @@ export interface IPopupTargetState {
 
 // @public (undocumented)
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
-    // (undocumented)
+    // @deprecated (undocumented)
     acceptsKeyboardFocus?: boolean;
     accessibilityPosInSet?: number;
     accessibilitySetSize?: number;
     // (undocumented)
     children?: any;
+    // (undocumented)
+    focusable?: boolean;
 }
 
 // Warning: (ae-forgotten-export) The symbol "IPickerProps" needs to be exported by the entry point typings-index.d.ts

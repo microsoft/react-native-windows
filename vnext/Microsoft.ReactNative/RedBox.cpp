@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
 #include "RedBox.h"
@@ -403,7 +403,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
 
   virtual bool isDevSupportEnabled() const override {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
-      return reactHost->Options().DeveloperSettings.IsDevModeEnabled;
+      return Mso::React::ReactOptions::UseDeveloperSupport(reactHost->Options().Properties);
     }
 
     return false;

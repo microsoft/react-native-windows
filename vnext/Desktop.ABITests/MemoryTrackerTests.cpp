@@ -1,17 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <CppUnitTest.h>
-#include <IntegrationTests/ControllableMessageQueueThread.h>
 #include <winrt/base.h>
 #include <winrt/facebook.react.h>
 
-#include "ActivationFactory.h"
-#include "MessageQueueShim.h"
+#include "SimpleMessageQueue.h"
 
-using namespace Microsoft::React::Test;
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 
 namespace ABITests {
@@ -22,83 +17,72 @@ namespace ABITests {
 
 TEST_CLASS(MemoryTrackerTests) {
  public:
-  MemoryTrackerTests() noexcept {
-    winrt_activation_handler = WINRT_RoGetActivationFactory;
-  }
-
   TEST_METHOD(Handler_AddedAndRemoved){
     init_apartment(winrt::apartment_type::single_threaded);
-    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     uint32_t registrationToken = tracker.AddThresholdHandler(
         /* threshold */ 100,
         /* minCallbackIntervalInMilliseconds */ 100,
         [](uint64_t currentUsage) {});
-    Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
+    TestCheck(tracker.RemoveThresholdHandler(registrationToken));
   }
+
 
   TEST_METHOD(CurrentMemoryUsage_ReturnsInitialValue) {
     init_apartment(winrt::apartment_type::single_threaded);
-    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(1000);
-    Assert::AreEqual(
-        1000ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
+    TestCheckEqual(
+        1000ull, tracker.CurrentMemoryUsage(), "CurrentMemoryUsage");
   }
 
   TEST_METHOD(PeakMemoryUsage_ReturnsInitialValue) {
     init_apartment(winrt::apartment_type::single_threaded);
-    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(1000);
-    Assert::AreEqual(1000ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
+    TestCheckEqual(1000ull, tracker.PeakMemoryUsage(), "PeakMemoryUsage");
   }
 
+ 
   TEST_METHOD(ThresholdHandler_Called) {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    DWORD testThreadId = GetCurrentThreadId();
-
-    auto manualMessageQueue = std::make_shared<ControllableMessageQueueThread>(
-        ControllableMessageQueueThread::Mode::ManualDispatch);
-
-    IMessageQueue callbackMessageQueue =
-        ::winrt::make<MessageQueueShim>(manualMessageQueue);
+    IMessageQueue callbackMessageQueue = ::winrt::make<SimpleMessageQueue>();
     MemoryTracker tracker{callbackMessageQueue};
 
     tracker.Initialize(500);
 
     std::vector<uint64_t> actualCallbacks;
-    DWORD callbackThreadId;
+
     uint32_t registrationToken = tracker.AddThresholdHandler(
-        /* threshold */ 1000,
-        /* minCallbackIntervalInMilliseconds */ 100,
-        [&actualCallbacks, &callbackThreadId](uint64_t currentUsage) {
+         1000,
+         100,
+        [&actualCallbacks](uint64_t currentUsage) {
           actualCallbacks.push_back(currentUsage);
-          callbackThreadId = GetCurrentThreadId();
         });
 
     tracker.OnAllocation(1000);
 
     // allow the callback to get dispatched
-    Assert::IsTrue(
-        manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
-    Assert::IsTrue(manualMessageQueue->IsEmpty());
+    TestCheck(callbackMessageQueue.as<SimpleMessageQueue>()->DispatchOne());
+    TestCheck(callbackMessageQueue.as<SimpleMessageQueue>()->IsEmpty());
 
-    Assert::AreEqual(
-        1500ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
-    Assert::AreEqual(1500ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
+    TestCheckEqual(
+        1500ull, tracker.CurrentMemoryUsage(), "CurrentMemoryUsage");
+    TestCheckEqual(1500ull, tracker.PeakMemoryUsage(), "PeakMemoryUsage");
 
-    Assert::AreEqual(static_cast<size_t>(1), actualCallbacks.size());
-    Assert::AreEqual(1500ull, actualCallbacks[0]);
+    TestCheckEqual(static_cast<size_t>(1), actualCallbacks.size());
+    TestCheckEqual(1500ull, actualCallbacks[0]);
 
-    Assert::AreNotEqual(testThreadId, callbackThreadId);
-
-    Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
+    TestCheck(tracker.RemoveThresholdHandler(registrationToken));
   }
+
 };
 
 // clange-format on

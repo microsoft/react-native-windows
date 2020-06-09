@@ -1,15 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 #include "ReactDispatcherHelper.g.h"
-#include <ReactPropertyBag.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
+struct ReactDispatcher : implements<ReactDispatcher, winrt::default_interface<IReactDispatcher>> {
   ReactDispatcher() = default;
   ReactDispatcher(Mso::DispatchQueue &&queue) noexcept;
 
@@ -21,9 +20,11 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher> {
   static Mso::DispatchQueue GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept;
 
   static IReactDispatcher UIThreadDispatcher() noexcept;
-  static ReactPropertyId<IReactDispatcher> UIDispatcherProperty() noexcept;
+  static IReactPropertyName UIDispatcherProperty() noexcept;
   static IReactDispatcher GetUIDispatcher(IReactPropertyBag const &properties) noexcept;
   static void SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept;
+
+  static IReactPropertyName JSDispatcherProperty() noexcept;
 
  private:
   Mso::DispatchQueue m_queue;
@@ -41,7 +42,11 @@ struct ReactDispatcherHelper {
   }
 
   static IReactPropertyName UIDispatcherProperty() noexcept {
-    return ReactDispatcher::UIDispatcherProperty().Handle();
+    return ReactDispatcher::UIDispatcherProperty();
+  }
+
+  static IReactPropertyName JSDispatcherProperty() noexcept {
+    return ReactDispatcher::JSDispatcherProperty();
   }
 };
 

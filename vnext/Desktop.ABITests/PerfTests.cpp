@@ -1,13 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <CppUnitTest.h>
 #include <winrt/facebook.react.h>
 
 #include <ReactWindowsCore/Logging.h>
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 using namespace winrt;
 

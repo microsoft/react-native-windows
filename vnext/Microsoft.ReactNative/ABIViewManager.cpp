@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -27,7 +27,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_name{to_string(viewManager.Name())} {
   if (m_viewManagerWithReactContext) {
-    m_viewManagerWithReactContext.ReactContext(winrt::make<ReactContext>(Mso::Copy(reactContext)));
+    m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
   if (m_viewManagerWithNativeProperties) {
     m_nativeProps = m_viewManagerWithNativeProperties.NativeProps();

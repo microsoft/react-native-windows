@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 import "IReactPropertyBag.idl";
@@ -30,6 +30,9 @@ namespace Microsoft.ReactNative {
     static IReactDispatcher UIThreadDispatcher{ get; };
 
     // Get name of the UIDispatcher property for the IReactPropertyBag.
-    static IReactPropertyName UIDispatcherProperty();
+    static IReactPropertyName UIDispatcherProperty { get; };
+
+    // Get name of the JSDispatcher property for the IReactPropertyBag.
+    static IReactPropertyName JSDispatcherProperty { get; };
   }
 } // namespace ReactNative

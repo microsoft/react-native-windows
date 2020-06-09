@@ -30,9 +30,12 @@ struct DevSettings {
   static void removeListeners(double count) noexcept;
 
   static void SetReload(Mso::React::ReactOptions const &options, Mso::VoidFunctor &&func) noexcept;
+  static void Reload(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties) noexcept;
+
+  //! Toggles the element inspector UI, allowing visual inspection of the react UI
+  static void ToggleElementInspector(Mso::React::IReactContext &reactContext) noexcept;
 
  private:
-  static winrt::Microsoft::ReactNative::IReactPropertyName ReloadProperty() noexcept;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 

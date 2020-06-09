@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -54,18 +54,6 @@ TEST_CLASS (ReactPropertyBagTests) {
     TestCheck(ns1);
     TestCheck(ns2);
     TestCheck(ns1 == ns2);
-  }
-
-  TEST_METHOD(WeakGlobalNamespace) {
-    // Property bag keeps a weak reference to the Global namespace.
-    weak_ref<IReactPropertyNamespace> globalWeak;
-    {
-      auto global = ReactPropertyBagHelper::GlobalNamespace();
-      TestCheck(global);
-      globalWeak = global;
-      TestCheck(globalWeak.get());
-    }
-    TestCheck(!globalWeak.get());
   }
 
   TEST_METHOD(StoreName) {

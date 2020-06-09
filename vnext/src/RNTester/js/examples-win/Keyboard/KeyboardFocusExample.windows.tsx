@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -108,7 +108,7 @@ class KeyboardFocusExample extends React.Component<
 
         <ViewWindows
           style={styles.keyEnterVisualizer}
-          acceptsKeyboardFocus={true}
+          focusable={true}
           ref={viewWindowsRef}>
           <Text>View accept focus</Text>
         </ViewWindows>

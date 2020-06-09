@@ -69,6 +69,11 @@ $requirements = @(
         Valid = try { (Get-WindowsDeveloperLicense).IsValid } catch { $false }
     },
     @{
+        Name = 'Long path support is enabled';
+        Valid = try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1} catch { $false };
+        Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord };
+    }
+    @{
         Name = 'git';
         Valid = try { (Get-Command git.exe) -ne $null } catch { $false }
     }
@@ -116,6 +121,11 @@ $requirements = @(
             Invoke-WebRequest https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi  -OutFile $env:TEMP\WindowsApplicationDriver.msi 
             & $env:TEMP\WindowsApplicationDriver.msi /q
         };
+    },
+    @{
+        Name = "MSBuild Structured Log Viewer";
+        Valid = { (cmd "/c assoc .binlog 2>nul" )  -ne $null };
+        Install = { choco install -y msbuild-structured-log-viewer };
     }
 
     );
@@ -134,7 +144,12 @@ foreach ($req in $requirements)
 {
     Write-Host -NoNewline "Checking $($req.Name)    ";
     if (!($req.Valid)) {
-        Write-Host -ForegroundColor Red " Failed";
+        if ($req.Optional) {
+            Write-Host -ForegroundColor Yellow " Failed".PadLeft(50 - $req.Name.Length);
+        }
+        else {
+            Write-Host -ForegroundColor Red " Failed".PadLeft(50 - $req.Name.Length);
+        }
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
                 Invoke-Command $req.Install -ErrorAction Stop
@@ -146,7 +161,7 @@ foreach ($req in $requirements)
             $NeedsRerun = !($req.Optional);
         }
     } else {
-        Write-Host -ForegroundColor Green " OK";
+        Write-Host -ForegroundColor Green " OK".PadLeft(50 - $req.Name.Length);
     }
 }
 

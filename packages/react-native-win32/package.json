@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-master.14",
+  "version": "0.0.0-master.18",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -56,7 +56,7 @@
     "just-scripts": "^0.36.1",
     "react": "16.13.0",
     "react-native": "0.0.0-56cf99a96",
-    "react-native-platform-override": "^0.0.1",
+    "react-native-platform-override": "^0.0.4",
     "rimraf": "^3.0.0",
     "typescript": "^3.8.3"
   },

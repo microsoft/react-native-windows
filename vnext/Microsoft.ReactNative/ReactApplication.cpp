@@ -1,9 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
+#include "winrt/Microsoft.ReactNative.h"
 
 #include "IReactDispatcher.h"
 #include "Modules/LinkingManagerModule.h"
@@ -63,34 +64,16 @@ void ReactApplication::InstanceSettings(ReactNative::ReactInstanceSettings const
 }
 
 IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
-  if (!m_packageProviders) {
-    m_packageProviders = single_threaded_vector<IReactPackageProvider>();
-  }
-
-  return m_packageProviders;
-}
-
-void ReactApplication::PackageProviders(
-    Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept {
-  m_packageProviders = value;
+  return InstanceSettings().PackageProviders();
 }
 
 ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   if (!m_host) {
     m_host = make<ReactNativeHost>();
     m_host.InstanceSettings(InstanceSettings());
-    m_host.PackageProviders(PackageProviders());
   }
 
   return m_host;
-}
-
-hstring ReactApplication::MainComponentName() noexcept {
-  return InstanceSettings().MainComponentName();
-}
-
-void ReactApplication::MainComponentName(hstring const &value) noexcept {
-  InstanceSettings().MainComponentName(value);
 }
 
 bool ReactApplication::UseDeveloperSupport() noexcept {
@@ -127,8 +110,37 @@ void ReactApplication::OnActivated(IActivatedEventArgs const &e) {
 
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
   base_type::OnLaunched(e);
-  // auto args = std::wstring(e.Arguments().c_str());
   this->OnCreate(e);
+}
+
+void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
+  Microsoft::ReactNative::implementation::ReactNativeHost *hostImpl{
+      get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
+  if (!arguments.empty() /*&& host.HasInstance()*/) {
+    constexpr wchar_t delimiter = L' ';
+    std::wistringstream argumentStream(arguments);
+    std::wstring token;
+    while (std::getline(argumentStream, token, delimiter)) {
+      if (token == L"-?") {
+        std::cout << "Options:" << std::endl
+                  << "  --direct-debugging <port>    Enable direct debugging on specified port." << std::endl;
+      }
+#if defined _DEBUG
+      else if (token == L"--direct-debugging") {
+        if (std::getline(argumentStream, token, delimiter)) {
+          const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
+          hostImpl->InstanceSettings().UseWebDebugger(false);
+          hostImpl->InstanceSettings().UseDirectDebugger(true);
+          hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
+          hostImpl->InstanceSettings().DebuggerPort(port);
+        }
+      } else if (token == L"--remote-debugging") {
+        hostImpl->InstanceSettings().UseWebDebugger(true);
+        hostImpl->InstanceSettings().UseDirectDebugger(false);
+      }
+#endif
+    }
+  }
 }
 
 /// <summary>
@@ -138,10 +150,6 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
-  if (!m_delegate) {
-    m_delegate = CreateReactApplicationDelegate();
-  }
-
 #if defined _DEBUG
   if (IsDebuggerPresent()) {
     this->DebugSettings().EnableFrameRateCounter(TRUE);
@@ -179,34 +187,15 @@ void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
       // Restore the saved session state only when appropriate, scheduling the
       // final launch steps after the restore is complete
     }
-
-    if (!isPrelaunchActivated) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a
-        // navigation parameter
-        content = m_delegate.OnCreate(args);
-        rootFrame.Content(content);
-      }
-
-      // Place the frame in the current Window
-      Window::Current().Content(rootFrame);
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
-  } else {
-    if (!isPrelaunchActivated) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a
-        // navigation parameter
-        content = m_delegate.OnCreate(args);
-        rootFrame.Content(content);
-      }
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
+    Window::Current().Content(rootFrame);
   }
+
+  ApplyArguments(Host(), args.c_str());
+
+  // Nudge the ReactNativeHost to create the instance and wrapping context
+  Host().ReloadInstance();
+
+  Window::Current().Activate();
 }
 
 /// <summary>
@@ -229,10 +218,6 @@ void ReactApplication::OnSuspending(
 /// <param name="e">Details about the navigation failure</param>
 void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
   throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
-}
-
-ReactApplicationDelegate __stdcall ReactApplication::CreateReactApplicationDelegate() {
-  return ReactApplicationDelegate(*this);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

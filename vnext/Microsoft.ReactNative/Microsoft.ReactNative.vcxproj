@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. -->
+<!-- Copyright (c) Microsoft Corporation. Licensed under the MIT License. See LICENSE in the project root for license information. -->
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
@@ -197,6 +197,9 @@
       <!-- Custom XAML types must be in the project namespace to be usable by XAML -->
       <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
+    <ClCompile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
@@ -206,7 +209,6 @@
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNodeType.h" />
@@ -234,9 +236,7 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
     <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\I18nModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\LinkingManagerModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
@@ -311,19 +311,23 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="LifecycleState.h" />
+    <ClInclude Include="JsiReader.h">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="JsiWriter.h">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Modules\AlertModule.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
+    <ClInclude Include="Modules\I18nManagerModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
+    <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ReactApplicationDelegate.h">
-      <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="IReactContext.h">
       <DependentUpon>IReactContext.idl</DependentUpon>
@@ -342,10 +346,6 @@
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
     <ClInclude Include="ReactHost\UwpReactInstanceProxy.h" />
-    <ClInclude Include="ReactInstance.h">
-      <DependentUpon>ReactInstance.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="ReactInstanceSettings.h">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -356,6 +356,10 @@
     </ClInclude>
     <ClInclude Include="ReactNativeHost.h">
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="XamlUIService.h">
+      <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactPackageBuilder.h">
@@ -375,7 +379,12 @@
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
+    <ClInclude Include="QuirkSettings.h">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\DevMenu.h" />
     <ClInclude Include="Views\ReactRootControl.h" />
     <ClInclude Include="XamlHelper.h">
       <DependentUpon>XamlHelper.idl</DependentUpon>
@@ -388,7 +397,6 @@
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimationDriver.cpp" />
@@ -413,7 +421,6 @@
     <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />
@@ -486,11 +493,20 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="JsiReader.cpp">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="JsiWriter.cpp">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
+    <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -498,10 +514,6 @@
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="ReactApplicationDelegate.cpp">
-      <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="IReactContext.cpp">
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -514,10 +526,6 @@
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
     <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp" />
-    <ClCompile Include="ReactInstance.cpp">
-      <DependentUpon>ReactInstance.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ReactInstanceSettings.cpp">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -528,6 +536,10 @@
     </ClCompile>
     <ClCompile Include="ReactNativeHost.cpp">
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="XamlUIService.cpp">
+      <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactPackageBuilder.cpp">
@@ -547,7 +559,12 @@
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
+    <ClCompile Include="QuirkSettings.cpp">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\ReactRootControl.cpp" />
     <ClCompile Include="XamlHelper.cpp">
       <DependentUpon>XamlHelper.idl</DependentUpon>
@@ -559,11 +576,9 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\BorderEffect.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl" />
-    <Midl Include="IBackgroundEventListener.idl" />
     <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactNotificationService.idl" />
     <Midl Include="IReactPropertyBag.idl" />
@@ -571,15 +586,8 @@
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
-    <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="IReactContext.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactInstance.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstanceSettings.idl">
@@ -591,7 +599,13 @@
     <Midl Include="ReactNativeHost.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="XamlUIService.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="ReactRootView.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="QuirkSettings.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />
@@ -634,9 +648,6 @@
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
-      <Project>{11c084a3-a57c-4296-a679-cac17b603144}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

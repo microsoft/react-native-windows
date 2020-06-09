@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -6,7 +6,6 @@
 
 // Modules
 #include <AsyncStorageModule.h>
-#include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
@@ -19,7 +18,6 @@
 #include <Modules/NetworkingModule.h>
 #include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
-#include <ReactUWP/Modules/I18nModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // ReactWindowsCore
@@ -94,17 +92,12 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       },
       messageQueue);
 
-  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
-
   modules.emplace_back(
       NativeAnimatedModule::name,
       [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
         return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance));
       },
       messageQueue);
-
-  modules.emplace_back(
-      "I18nManager", []() mutable { return createI18nModule(std::make_unique<I18nModule>()); }, messageQueue);
 
   modules.emplace_back(
       AppearanceModule::Name,

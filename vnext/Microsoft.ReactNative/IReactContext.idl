@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 import "IJSValueWriter.idl";
@@ -26,7 +26,13 @@ namespace Microsoft.ReactNative {
     // The subscriptions added to IReactInstanceSettings.Notifications kept as long as IReactInstanceSettings alive.
     IReactNotificationService Notifications { get; };
 
-    // Dispatch UI event. This method is to be moved to IReactViewContext.
+    // Get ReactDispatcherHelper::UIDispatcherProperty from the Properties property bag.
+    IReactDispatcher UIDispatcher { get; };
+
+    // Get ReactDispatcherHelper::JSDispatcherProperty from the Properties property bag.
+    IReactDispatcher JSDispatcher { get; };
+
+    // Deprecated: Use DispatchEvent on XamlUIService instead
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 
     // Call JavaScript function methodName of moduleName.

@@ -19,7 +19,8 @@ import {getNpmPackage} from './PackageUtils';
 const RN_COMMIT_ENDPOINT =
   'https://api.github.com/repos/facebook/react-native/commits';
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
-const DEFAULT_DIR = path.join(os.tmpdir(), getNpmPackage().name, 'git');
+
+const defaultDir = path.join(os.tmpdir(), getNpmPackage().name, 'git');
 
 /**
  * Retrives React Native files using the React Native Github repo. Switching
@@ -29,32 +30,32 @@ export default class GitReactFileRepository
   implements VersionedReactFileRepository {
   private gitClient: simplegit.SimpleGit;
   private gitDirectory: string;
-  private checkedOutVersion: string;
+  private checkedOutVersion?: string;
 
   // We have a potential race condition where one call to getFileContents
   // could checkout out a new tag while an existing call is rading a file.
   // Queue items to ensure the read operation is performed atomically
   private actionQueue: ActionQueue;
 
-  private constructor() {}
+  private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
+    this.actionQueue = new ActionQueue();
+    this.gitDirectory = gitDirectory;
+    this.gitClient = gitClient;
+  }
 
   static async createAndInit(
-    gitDirectory?: string,
+    gitDirectory: string = defaultDir,
   ): Promise<GitReactFileRepository> {
-    let repo = new GitReactFileRepository();
-    repo.actionQueue = new ActionQueue();
+    await fs.promises.mkdir(gitDirectory, {recursive: true});
 
-    repo.gitDirectory = gitDirectory || DEFAULT_DIR;
-    await fs.promises.mkdir(repo.gitDirectory, {recursive: true});
+    const gitClient = simplegit(gitDirectory);
+    gitClient.silent(true);
 
-    repo.gitClient = simplegit(repo.gitDirectory);
-    repo.gitClient.silent(true);
-
-    if (!(await repo.gitClient.checkIsRepo())) {
-      await repo.gitClient.init();
+    if (!(await gitClient.checkIsRepo())) {
+      await gitClient.init();
     }
 
-    return repo;
+    return new GitReactFileRepository(gitDirectory, gitClient);
   }
 
   async getFileContents(
@@ -182,7 +183,7 @@ export default class GitReactFileRepository
     // a commit hash into the prerelease tag of 0.0.0 versions
     if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
       // We cannot do a shallow fetch of an abbreviated commit hash
-      const shortHash = semver.prerelease(reactNativeVersion)[0];
+      const shortHash = semver.prerelease(reactNativeVersion)![0];
       return this.longCommitHash(shortHash);
     } else {
       return `refs/tags/v${reactNativeVersion}`;

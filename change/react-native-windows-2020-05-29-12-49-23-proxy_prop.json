@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "implement --proxy in CLI",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-29T19:49:23.394Z"
+}

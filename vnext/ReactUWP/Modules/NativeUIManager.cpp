@@ -1,9 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
-#include "I18nModule.h"
+#include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
 #include <ReactRootView.h>
@@ -13,6 +13,7 @@
 #include <Views/ShadowNodeBase.h>
 
 #include "CppWinRTIncludes.h"
+#include "QuirkSettings.h"
 #include "Unicode.h"
 
 namespace winrt {
@@ -26,8 +27,8 @@ using namespace xaml::Media;
 namespace react {
 namespace uwp {
 
-static YogaNodePtr make_yoga_node() {
-  YogaNodePtr result(YGNodeNew());
+static YogaNodePtr make_yoga_node(YGConfigRef config) {
+  YogaNodePtr result(YGNodeNewWithConfig(config));
   return result;
 }
 
@@ -129,12 +130,19 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
-NativeUIManager::NativeUIManager() {
+NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
+  m_context = reactContext;
+
+  m_yogaConfig = YGConfigNew();
+  if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(
+          React::ReactPropertyBag(m_context->Properties())))
+    YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
+
 #if defined(_DEBUG)
-  YGConfigSetLogger(YGConfigGetDefault(), &YogaLog);
+  YGConfigSetLogger(m_yogaConfig, &YogaLog);
 
   // To Debug Yoga layout, uncomment the following line.
-  // YGConfigSetPrintTreeFlag(YGConfigGetDefault(), true);
+  // YGConfigSetPrintTreeFlag(m_yogaConfig, true);
 
   // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
   // gPrintSkips)
@@ -191,9 +199,12 @@ void NativeUIManager::AddRootView(
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
-      I18nHelper::Instance().getIsRTL() ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
+      Microsoft::ReactNative::I18nManager::IsRTL(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
+          ? xaml::FlowDirection::RightToLeft
+          : xaml::FlowDirection::LeftToRight);
 
-  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
+  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
 
   auto element = view.as<xaml::FrameworkElement>();
   element.Tag(winrt::PropertyValue::CreateInt64(shadowNode.m_tag));
@@ -724,7 +735,7 @@ void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly:
       m_extraLayoutNodes.push_back(node.m_tag);
     }
 
-    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node());
+    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_yogaConfig));
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
       StyleYogaNode(node, yogaNode, props);

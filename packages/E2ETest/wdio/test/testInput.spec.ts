@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
@@ -26,7 +26,31 @@ describe('First', () => {
   it('Type abc on TextInput', () => {
     TextInputTestPage.clearAndTypeOnTextInput('abc');
     assert.equal(TextInputTestPage.getTextInputText(), 'abc');
-    assert.ok(TextInputTestPage.getTextInputPrev2Text().includes('onKeyPress'));
+
+    // Due to some timing issues between the JS and native, the order of events
+    // might cause more onChange events to happen after the onKeyPress event
+    // So check the last few events for onKeyPress.
+    // eslint-disable-next-line no-undef
+    browser.waitUntil(
+      () =>
+        TextInputTestPage.getTextInputPrev2Text().includes(
+          'onKeyPress key: c'
+        ) ||
+        TextInputTestPage.getTextInputPrev3Text().includes(
+          'onKeyPress key: c'
+        ) ||
+        TextInputTestPage.getTextInputPrev4Text().includes('onKeyPress key: c'),
+      1000,
+      'Wait for text to be updated'
+    );
+
+    assert.ok(
+      TextInputTestPage.getTextInputPrev2Text().includes('onKeyPress key: c') ||
+        TextInputTestPage.getTextInputPrev3Text().includes(
+          'onKeyPress key: c'
+        ) ||
+        TextInputTestPage.getTextInputPrev4Text().includes('onKeyPress key: c')
+    );
   });
 
   it('Type def on TextInput', () => {

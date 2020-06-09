@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -53,6 +53,7 @@ class MSBuildTools {
     msBuildProps,
     verbose,
     target,
+    buildLogDirectory,
   ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
@@ -61,10 +62,17 @@ class MSBuildTools {
       newInfo(`Build target: ${target}`);
     }
     const verbosityOption = verbose ? 'normal' : 'minimal';
-    const errorLog = path.join(
-      process.env.temp,
-      `msbuild_${process.pid}${target ? '_' + target : ''}.err`,
+    const logPrefix = path.join(
+      buildLogDirectory || process.env.temp,
+      `msbuild_${process.pid}${target ? '_' + target : ''}`,
     );
+
+    const errorLog = logPrefix + '.err';
+    const warnLog = logPrefix + '.wrn';
+
+    const localBinLog = target ? `:${target}.binlog` : '';
+    const binlog = buildLogDirectory ? `:${logPrefix}.binlog` : localBinLog;
+
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -72,8 +80,9 @@ class MSBuildTools {
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
-      `/bl${target ? `:${target}.binlog` : ''}`,
+      `/bl${binlog}`,
       `/flp1:errorsonly;logfile=${errorLog}`,
+      `/flp2:warningsonly;logfile=${warnLog}`,
     ];
 
     if (target) {
