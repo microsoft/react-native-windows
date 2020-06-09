@@ -14,7 +14,7 @@ export interface IPickerItemData
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [label](./react-native-windows.ipickeritemdata.label.md) | <code>string</code> |  |
-|  [textColor](./react-native-windows.ipickeritemdata.textcolor.md) | <code>number</code> |  |
-|  [value](./react-native-windows.ipickeritemdata.value.md) | <code>any</code> |  |
+|  [label](./react-native-windows.ipickeritemdata.label.md) | string |  |
+|  [textColor](./react-native-windows.ipickeritemdata.textcolor.md) | number |  |
+|  [value](./react-native-windows.ipickeritemdata.value.md) | any |  |
 
