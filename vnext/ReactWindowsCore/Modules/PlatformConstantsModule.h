@@ -13,6 +13,9 @@ class PlatformConstantsModule : public facebook::xplat::module::CxxModule {
   std::string getName() override;
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<Method> getMethods() override;
+
+  private:
+  folly::dynamic StringOrNull(std::string_view str) noexcept;
 };
 
 } // namespace facebook::react
