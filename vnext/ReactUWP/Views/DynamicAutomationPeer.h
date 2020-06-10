@@ -66,7 +66,6 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   bool HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
   bool GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
   bool HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
-  winrt::hstring GetAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
   
   winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler() const;
 

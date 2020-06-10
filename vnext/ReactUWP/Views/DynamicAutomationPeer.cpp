@@ -4,8 +4,9 @@
 #include "pch.h"
 
 #include "DynamicAutomationPeer.h"
-#include "RangeAutomationPeer.h"
 #include "DynamicAutomationProperties.h"
+#include "RangeAutomationPeer.h"
+#include "ValueAutomationPeer.h"
 
 #include <UI.Xaml.Controls.h>
 
@@ -131,22 +132,19 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
        HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed))) {
     return *this;
   } else if (patternInterface == winrt::PatternInterface::Value && 
-      // TODO ?restrict to some control types?
+      accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ComboBox &&
       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text)) {
-    return *this;
+    return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::ValueAutomationPeer>(Owner());
   } else if (patternInterface == winrt::PatternInterface::RangeValue &&
       (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar ||
        accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable ||
        accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar) &&
-      (HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now) &&
-       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min) &&
-       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max) &&
+      ((HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now) &&
+        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min) &&
+        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max)) ||
        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text))) {
 
-      // TODO store as member field?
-      //const auto
     return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::RangeAutomationPeer>(Owner());
-    //return *this;
   }
 
   return Super::GetPatternCore(patternInterface);
@@ -217,23 +215,6 @@ void DynamicAutomationPeer::RemoveFromSelection() const {
 void DynamicAutomationPeer::Select() const {
   DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"select");
 }
-
-
-// IValueProvider
-// TODO
-// [...]
-// TODO figure this one out
-//bool DynamicAutomationPeer::IsReadOnly() {
-//  return true;
-//}
-
-//winrt::hstring DynamicAutomationPeer::Value() {
-//  return L"";
-//}
-//
-//void DynamicAutomationPeer::SetValue(winrt::hstring const& value) {
-//
-//}
 
 // IToggleProvider
 
@@ -404,20 +385,6 @@ bool DynamicAutomationPeer::HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE:
   }
 
   return false;
-}
-
-winrt::hstring DynamicAutomationPeer::GetAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
-  try {
-    if (auto const &owner = Owner()) {
-      switch (accValue) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
-          return DynamicAutomationProperties::GetAccessibilityValueText(owner);
-      }
-    }
-  } catch (...) {
-  }
-
-  return L"";
 }
 
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler

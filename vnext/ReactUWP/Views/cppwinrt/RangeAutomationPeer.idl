@@ -25,6 +25,6 @@ namespace PROJECT_ROOT_NAMESPACE
   runtimeclass RangeAutomationPeer :
     XAML_NAMESPACE.Automation.Provider.IRangeValueProvider
   {
-  RangeAutomationPeer(XAML_NAMESPACE.UIElement uiElement);
+    RangeAutomationPeer(XAML_NAMESPACE.UIElement uiElement);
   }
 }

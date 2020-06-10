@@ -263,6 +263,7 @@
     <ClInclude Include="..\ReactUWP\Views\DatePickerViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\DynamicAutomationPeer.h" />
     <ClInclude Include="..\ReactUWP\Views\RangeAutomationPeer.h" />
+    <ClInclude Include="..\ReactUWP\Views\ValueAutomationPeer.h" />
     <ClInclude Include="..\ReactUWP\Views\DynamicAutomationProperties.h" />
     <ClInclude Include="..\ReactUWP\Views\ExpressionAnimationStore.h" />
     <ClInclude Include="..\ReactUWP\Views\FlyoutViewManager.h" />
@@ -447,6 +448,7 @@
     <ClCompile Include="..\ReactUWP\Views\DatePickerViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="..\ReactUWP\Views\RangeAutomationPeer.cpp" />
+    <ClCompile Include="..\ReactUWP\Views\ValueAutomationPeer.cpp" />
     <ClCompile Include="..\ReactUWP\Views\DynamicAutomationProperties.cpp" />
     <ClCompile Include="..\ReactUWP\Views\ExpressionAnimationStore.cpp" />
     <ClCompile Include="..\ReactUWP\Views\FlyoutViewManager.cpp" />
@@ -577,7 +579,7 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\BorderEffect.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl" />
-    <Midl Include="..\ReactUWP\Views\cppwinrt\RangeAutomationPeer.idl" />
+    <!-- <Midl Include="..\ReactUWP\Views\cppwinrt\RangeAutomationPeer.idl" /> -->
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl" />
     <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IJSValueReader.idl" />

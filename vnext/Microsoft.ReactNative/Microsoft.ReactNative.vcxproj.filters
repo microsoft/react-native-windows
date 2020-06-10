@@ -167,6 +167,9 @@
     <ClCompile Include="..\ReactUWP\Views\RangeAutomationPeer.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\ValueAutomationPeer.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\DynamicAutomationProperties.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -512,6 +515,9 @@
     <ClInclude Include="..\ReactUWP\Views\RangeAutomationPeer.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\ValueAutomationPeer.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\DynamicAutomationProperties.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -699,9 +705,9 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="..\ReactUWP\Views\cppwinrt\RangeAutomationPeer.idl">
+    <!-- <Midl Include="..\ReactUWP\Views\cppwinrt\RangeAutomationPeer.idl">
       <Filter>Views\cppwinrt</Filter>
-    </Midl>
+    </Midl> -->
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>

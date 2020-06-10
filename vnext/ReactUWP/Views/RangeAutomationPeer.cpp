@@ -7,22 +7,12 @@
 #include "DynamicAutomationProperties.h"
 
 #include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Controls.Primitives.h>
 
 // Needed for latest versions of C++/WinRT
 #if __has_include("RangeAutomationPeer.g.cpp")
 #include "RangeAutomationPeer.g.cpp"
 #endif
-
-namespace winrt {
-using namespace Windows::Foundation;
-using namespace xaml;
-using namespace xaml::Automation;
-using namespace xaml::Automation::Peers;
-using namespace xaml::Automation::Provider;
-using namespace xaml::Controls;
-using namespace xaml::Interop;
-using namespace xaml::Media;
-} // namespace winrt
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
@@ -41,26 +31,31 @@ double RangeAutomationPeer::Value() {
   return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now);
 }
 
-// TODO
-// RN doesn't implement this
-double RangeAutomationPeer::SmallChange() {
-  return 0;
-}
-
-// TODO
-// RN doesn't implement this
-double RangeAutomationPeer::LargeChange() {
-  return 0;
-}
-
-// TODO 
-// RN doesn't implement this
+// Controls such as Slider, ProgressBar, ScrollBar are by definition interactive.
 bool RangeAutomationPeer::IsReadOnly() {
   return false;
 }
 
 void RangeAutomationPeer::SetValue(double value) {
   DynamicAutomationProperties::DispatchAccessibilityAction(m_uiElement, L"setValue");
+}
+
+// The following methods are not React Native props, but we need them to implement IRangeValueProvider.
+double RangeAutomationPeer::SmallChange() {
+  if (const auto& rangeElement = m_uiElement.try_as<xaml::Controls::Primitives::RangeBase>()) {
+    return rangeElement.SmallChange();
+  }
+
+  return 0;
+}
+
+// TODO check if this gets set automatically
+double RangeAutomationPeer::LargeChange() {
+  if (const auto &rangeElement = m_uiElement.try_as<xaml::Controls::Primitives::RangeBase>()) {
+    return rangeElement.LargeChange();
+  }
+
+  return 0;
 }
 
 
@@ -83,5 +78,4 @@ double RangeAutomationPeer::GetAccessibilityValueRange(
 
   return 0;
 }
-
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
