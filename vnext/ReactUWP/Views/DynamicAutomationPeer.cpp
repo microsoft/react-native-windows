@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "DynamicAutomationPeer.h"
+#include "RangeAutomationPeer.h"
 #include "DynamicAutomationProperties.h"
 
 #include <UI.Xaml.Controls.h>
@@ -141,7 +142,11 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min) &&
        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max) &&
        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text))) {
-    return *this;
+
+      // TODO store as member field?
+      //const auto
+    return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::RangeAutomationPeer>(Owner());
+    //return *this;
   }
 
   return Super::GetPatternCore(patternInterface);
@@ -213,40 +218,6 @@ void DynamicAutomationPeer::Select() const {
   DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"select");
 }
 
-// IRangeValueProvider
-double DynamicAutomationPeer::Minimum() {
-  return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min);
-}
-
-double DynamicAutomationPeer::Maximum() {
-  return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max);
-}
-
-double DynamicAutomationPeer::Value() {
-  return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now);
-}
-
-// TODO
-// RN doesn't implement this
-double DynamicAutomationPeer::SmallChange() {
-  return 0;
-}
-
-// TODO
-// RN doesn't implement this
-double DynamicAutomationPeer::LargeChange() {
-  return 0;
-}
-
-// TODO 
-// RN doesn't implement this
-bool DynamicAutomationPeer::IsReadOnly() {
-  return false;
-}
-
-void DynamicAutomationPeer::SetValue(double value) {
-  DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"setValue");
-}
 
 // IValueProvider
 // TODO
@@ -447,24 +418,6 @@ winrt::hstring DynamicAutomationPeer::GetAccessibilityValue(winrt::PROJECT_ROOT_
   }
 
   return L"";
-}
-
-double DynamicAutomationPeer::GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
-  try {
-    if (auto const &owner = Owner()) {
-      switch (accValue) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
-          return DynamicAutomationProperties::GetAccessibilityValueMin(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
-          return DynamicAutomationProperties::GetAccessibilityValueMax(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
-          return DynamicAutomationProperties::GetAccessibilityValueNow(owner);
-      }
-    }
-  } catch (...) {
-  }
-
-  return 0;
 }
 
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler

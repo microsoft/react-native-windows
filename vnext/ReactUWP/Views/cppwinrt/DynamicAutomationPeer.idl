@@ -148,14 +148,65 @@ namespace PROJECT_ROOT_NAMESPACE
   [webhosthidden]
   runtimeclass DynamicAutomationPeer :
     XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
-    XAML_NAMESPACE.Automation.Provider.IInvokeProvider,
-    //XAML_NAMESPACE.Automation.Provider.IValueProvider,
-    XAML_NAMESPACE.Automation.Provider.IRangeValueProvider,
-    XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
-    XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider,
-    XAML_NAMESPACE.Automation.Provider.IToggleProvider,
-    XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider
+      XAML_NAMESPACE.Automation.Provider.IInvokeProvider,
+      // XAML_NAMESPACE.Automation.Provider.IValueProvider,
+      // XAML_NAMESPACE.Automation.Provider.IRangeValueProvider,
+      XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
+      XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider, 
+      XAML_NAMESPACE.Automation.Provider.IToggleProvider,
+      XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider
+    
   {
     DynamicAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
   }
+
+  /*[default_interface]
+  [webhosthidden]
+  runtimeclass InvokeAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.IInvokeProvider
+  {
+    InvokeAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
+
+  [default_interface][webhosthidden]
+  runtimeclass RangeAutomationPeer:
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.IRangeValueProvider
+  {
+    RangeAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
+
+  [default_interface][webhosthidden]
+  runtimeclass SelectionAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.ISelectionProvider
+  {
+    SelectionAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
+
+  [default_interface][webhosthidden]
+  runtimeclass SelectionItemAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider
+  {
+    SelectionItemAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
+
+  [default_interface][webhosthidden]
+  runtimeclass ToggleAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.IToggleProvider
+  {
+    ToggleAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
+
+  [default_interface][webhosthidden]
+  runtimeclass ExpandCollapseAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider
+  {
+    ExpandCollapseAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }*/
+
 }
