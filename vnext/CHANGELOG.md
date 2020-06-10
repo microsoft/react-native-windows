@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 06 Jun 2020 22:48:15 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jun 2020 12:11:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.12
+
+Wed, 10 Jun 2020 12:11:09 GMT
+
+### Changes
+
+- Add XamlUIService with ElementFromReactTag (acoates@microsoft.com)
 
 ## 0.62.0-preview.11
 

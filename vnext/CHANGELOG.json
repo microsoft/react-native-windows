@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Jun 2020 12:11:09 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.12",
+      "version": "0.62.0-preview.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add XamlUIService with ElementFromReactTag",
+            "author": "acoates@microsoft.com",
+            "commit": "d037e54de76d5c1165300f919a14bbfa3ffbc199",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Jun 2020 22:48:15 GMT",
       "tag": "react-native-windows_v0.62.0-preview.11",
       "version": "0.62.0-preview.11",
