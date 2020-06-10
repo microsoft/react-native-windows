@@ -46,7 +46,12 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   void SetValue(double value);
 
   // IValueProvider
-  // ...
+  // Skip because of redefinition
+  //bool IsReadOnly();
+
+  //winrt::hstring Value();
+
+  //void SetValue(winrt::hstring const &value);
 
   // ISelectionProvider
   bool CanSelectMultiple() const {

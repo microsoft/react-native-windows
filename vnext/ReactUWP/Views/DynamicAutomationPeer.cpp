@@ -251,6 +251,18 @@ void DynamicAutomationPeer::SetValue(double value) {
 // IValueProvider
 // TODO
 // [...]
+// TODO figure this one out
+//bool DynamicAutomationPeer::IsReadOnly() {
+//  return true;
+//}
+
+//winrt::hstring DynamicAutomationPeer::Value() {
+//  return L"";
+//}
+//
+//void DynamicAutomationPeer::SetValue(winrt::hstring const& value) {
+//
+//}
 
 // IToggleProvider
 
