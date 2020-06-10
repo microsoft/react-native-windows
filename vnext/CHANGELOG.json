@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Jun 2020 00:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-master.90",
+      "version": "0.0.0-master.90",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "implement --proxy in CLI",
+            "author": "igklemen@microsoft.com",
+            "commit": "8f12940f753cee4f1ad8d4da7d9d3a3e755b9241",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't crash when using animations in RS3-RS4, just no-op",
+            "author": "asklar@microsoft.com",
+            "commit": "5650721bed3b9624a3bc0485d0981986f358c708",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add support for Alert module with Xaml Islands",
+            "author": "acoates@microsoft.com",
+            "commit": "452e8942864bf3ad1a442686578f0ca3193639be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix onPress for nested Text",
+            "author": "igklemen@microsoft.com",
+            "commit": "8fd8dcd3b4c6783ad176c620df57521c8131b894",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "translate PS exception into error code",
+            "author": "asklar@microsoft.com",
+            "commit": "ba662ef4e4a77a1dbcd98656cf820a6bb16a60f3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Jun 2020 00:06:03 GMT",
       "tag": "react-native-windows_v0.0.0-master.89",
       "version": "0.0.0-master.89",
