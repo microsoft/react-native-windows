@@ -43,8 +43,8 @@
       "type": "patch",
       "file": "Libraries\\Alert\\Alert.windows.js",
       "baseFile": "Libraries\\Alert\\Alert.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "bf73c8c30ecdada945c2af1f3146db028950c060",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -96,11 +96,11 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\CheckBox\\CheckBox.windows.tsx",
+      "type": "copy",
+      "file": "Libraries\\Components\\CheckBox\\CheckBox.windows.js",
       "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "7006aba4ecdfd27a213172ca92d1877b55729292",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "278d7049749ba8b5f3840f21ef6b3d528183829f",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -239,8 +239,8 @@
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\PickerWindows.tsx",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.ios.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "f1409e9f69332850927323ecf2cf66a3573ef25e",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "f15d5ab6c73a202608d66eb90f41497cb1fc6dc4",
       "issue": 4611
     },
     {
@@ -355,8 +355,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\TextInput\\TextInputState.windows.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInputState.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "b6abcc197d20eb192444f85e0a1e447a3019658f",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -377,16 +377,16 @@
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableHighlight.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableHighlight.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "b930d8995dab7c9aad3e14c3a78b73431c791a56",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b03a273535705ec4a1e979ec0adf06c90b8938e5",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableOpacity.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableOpacity.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "356d5eb7b824b35b79fb4108b3dffcd8c3cfa4f7",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e9b3b0a49be45f4030f34f7c91f5a47c01b50582",
       "issue": "LEGACY_FIXME"
     },
     {
