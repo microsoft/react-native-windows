@@ -16,5 +16,5 @@ constructor(props: IPopupProps);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>IPopupProps</code> |  |
+|  props | [IPopupProps](./react-native-windows.ipopupprops.md) |  |
 

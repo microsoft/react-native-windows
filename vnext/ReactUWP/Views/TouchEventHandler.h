@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <IReactInstance.h>
+#include <UI.Xaml.Documents.h>
 #include <folly/dynamic.h>
 #include <optional>
 #include <set>
-
-#include <IReactInstance.h>
 #include "XamlView.h"
 
 namespace winrt {
 using namespace Windows::UI;
 using namespace xaml;
 using namespace xaml::Controls;
+using namespace xaml::Documents;
 using namespace xaml::Input;
 using namespace Windows::Foundation;
 using namespace xaml::Media;
@@ -93,6 +94,9 @@ class TouchEventHandler {
   int64_t m_touchId = 0;
 
   bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement);
+  winrt::IPropertyValue TestHit(
+      const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
+      const winrt::Point &pointerPos);
 
   XamlView m_xamlView;
   std::weak_ptr<IReactInstance> m_wkReactInstance;

@@ -7,29 +7,48 @@
 
 import * as inquirer from 'inquirer';
 
-import {OverrideType} from './Manifest';
+import Override from './Override';
+import OverrideFactory from './OverrideFactory';
 
-const WIN_PLATFORM_EXT = /(\.win32|\.windows|\.windesktop)\.js/;
+export type OverridePromptAnswers =
+  | {type: 'derived'; baseFile: string; codeCopied: boolean; issue?: number}
+  | {type: 'patch'; baseFile: string; issue: number}
+  | {type: 'platform'}
+  | {type: 'copy'; baseFile: string; issue: number};
 
-export interface Details {
-  type: OverrideType;
-  baseFile?: string;
-  issue?: number;
-}
-
-export async function askForDetails(overrideFile: string): Promise<Details> {
-  switch (await promptOverrideType()) {
+export async function overrideFromDetails(
+  overridePath: string,
+  answers: OverridePromptAnswers,
+  factory: OverrideFactory,
+): Promise<Override> {
+  switch (answers.type) {
     case 'derived':
-      return promptDerivedDetails();
+      return factory.createDerivedOverride(
+        overridePath,
+        answers.baseFile,
+        answers.issue,
+      );
     case 'patch':
-      return promptPatchDetails(overrideFile);
+      return factory.createPatchOverride(
+        overridePath,
+        answers.baseFile,
+        answers.issue,
+      );
     case 'platform':
-      return {type: 'platform'};
+      return factory.createPlatformOverride(overridePath);
+    case 'copy':
+      return factory.createCopyOverride(
+        overridePath,
+        answers.baseFile,
+        answers.issue,
+      );
   }
 }
 
-async function promptOverrideType(): Promise<OverrideType> {
-  const response = await inquirer.prompt([
+export async function promptForOverrideDetails(): Promise<
+  OverridePromptAnswers
+> {
+  return inquirer.prompt([
     {
       type: 'list',
       name: 'type',
@@ -37,85 +56,62 @@ async function promptOverrideType(): Promise<OverrideType> {
       choices: [
         {
           name:
-            'Derived from upstream      (E.g. a Windows implementation of an existing component)',
+            'Derived from upstream            (E.g. a Windows implementation of an existing component)',
           value: 'derived',
           short: 'Derived',
         },
         {
-          name: 'Patches to upstream        (E.g. commenting out code)',
+          name: 'Patches to upstream              (E.g. commenting out code)',
           value: 'patch',
           short: 'Patch',
         },
         {
-          name: 'Independent platform logic (E.g. Windows-specific modules)',
+          name:
+            'Independent platform logic       (E.g. Windows-specific modules)',
           value: 'platform',
           short: 'Platform',
         },
+        {
+          name: 'Exact copy of an upstream file',
+          value: 'copy',
+          short: 'Copy',
+        },
       ],
     },
-  ]);
-
-  return response.type;
-}
-
-async function promptDerivedDetails(): Promise<Details> {
-  let issue: number;
-
-  const copiedResponse = await inquirer.prompt([
     {
+      when: res => res.type === 'derived',
       type: 'confirm',
       name: 'codeCopied',
       default: true,
       message: 'Does the derived file copy code from upstream?',
     },
-  ]);
-
-  if (copiedResponse.codeCopied) {
-    console.log(
-      'Copying code from upstream adds significant technical debt. Please create an issue using the "Deforking" label to track making changes so that code can be shared.',
-    );
-    const issueResponse = await inquirer.prompt([
-      {
-        type: 'input',
-        validate: validateIssueNumber,
-        name: 'issue',
-        message: 'Github Issue Number:',
-      },
-    ]);
-    issue = Number.parseInt(issueResponse.issue, 10);
-  }
-
-  const baseFileResponse = await inquirer.prompt([
     {
-      type: 'input',
-      name: 'baseFile',
-      message: 'What file does this override derive from (pick the closest)?',
-    },
-  ]);
-
-  return {type: 'derived', baseFile: baseFileResponse.baseFile, issue};
-}
-
-async function promptPatchDetails(overrideFile: string): Promise<Details> {
-  console.log(
-    'Patch-style overrides add signficant technical debt. Please create an issue using the "Deforking" label to track removal of the patch.',
-  );
-  const response = await inquirer.prompt([
-    {
+      when: res =>
+        (res.type === 'derived' && res.codeCopied) ||
+        ['copy', 'patch'].includes(res.type),
       type: 'input',
       validate: validateIssueNumber,
+      filter: filterIssueNumber,
+      askAnswered: true,
       name: 'issue',
-      message: 'Github Issue Number:',
+      message: 'Issue number tracking removal:',
+    },
+    {
+      when: res => ['copy', 'patch', 'derived'].includes(res.type),
+      type: 'input',
+      name: 'baseFile',
+      message: 'What file is this override based off of?',
     },
   ]);
+}
 
-  const baseFile = overrideFile.replace(WIN_PLATFORM_EXT, '.js');
-  return {type: 'patch', baseFile, issue: Number.parseInt(response.issue, 10)};
+function filterIssueNumber(answer: string): number | string {
+  const parsedInt = Number.parseInt(answer, 10);
+  return Number.isInteger(parsedInt) ? parsedInt : '';
 }
 
 function validateIssueNumber(answer: string): boolean | string {
   return (
-    Number.isInteger(Number.parseInt(answer, 10)) ||
-    'Github issue must be a number'
+    Number.isInteger(Number.parseInt(answer, 10)) || 'Issue must be a number'
   );
 }

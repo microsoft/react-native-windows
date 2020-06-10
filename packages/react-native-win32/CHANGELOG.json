@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 10 Jun 2020 00:05:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.19",
+      "version": "0.0.0-master.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "expand cursor prop + test comopnent",
+            "author": "taamireh@microsoft.com",
+            "commit": "93251e5714cfc7ac6211af4e809251d2d3ba7050",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Jun 2020 00:05:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.18",
+      "version": "0.0.0-master.18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix errant baseFile in platform override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "61e5ea7ee9b1f94dd1d5ef185936c7bd8c9448e5",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Jun 2020 00:05:25 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.17",
       "version": "0.0.0-master.17",

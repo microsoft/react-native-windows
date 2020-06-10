@@ -16,7 +16,7 @@
   "dependencies": {
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-windows": "0.0.0-master.85"
+    "react-native-windows": "0.0.0-master.90"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -25,7 +25,7 @@
     "@types/react-native": "^0.62.10",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
-    "react-native-windows-codegen": "0.0.5",
+    "react-native-windows-codegen": "0.0.6",
     "react-test-renderer": "16.9.0"
   }
 }

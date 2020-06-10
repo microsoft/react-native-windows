@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%=name%>", "<%=name%>\<%=name%>.csproj", "{<%=projectGuidUpper%>}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "{{ name }}", "{{ name }}\{{ name }}.csproj", "{{ projectGuidUpper }}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "..\node_modules\react-native-windows\Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
@@ -30,7 +30,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\node_modules\r
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactNative", "ReactNative", "{5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared", "..\node_modules\react-native-windows\Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Shared", "..\node_modules\react-native-windows\Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed", "..\node_modules\react-native-windows\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj", "{F2824844-CE15-4242-9420-308923CD76C3}"
 EndProject
@@ -58,30 +58,30 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{<%=projectGuidUpper%>}.Debug|ARM.ActiveCfg = Debug|ARM
-		{<%=projectGuidUpper%>}.Debug|ARM.Build.0 = Debug|ARM
-		{<%=projectGuidUpper%>}.Debug|ARM.Deploy.0 = Debug|ARM
-		{<%=projectGuidUpper%>}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{<%=projectGuidUpper%>}.Debug|ARM64.Build.0 = Debug|ARM64
-		{<%=projectGuidUpper%>}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{<%=projectGuidUpper%>}.Debug|x64.ActiveCfg = Debug|x64
-		{<%=projectGuidUpper%>}.Debug|x64.Build.0 = Debug|x64
-		{<%=projectGuidUpper%>}.Debug|x64.Deploy.0 = Debug|x64
-		{<%=projectGuidUpper%>}.Debug|x86.ActiveCfg = Debug|x86
-		{<%=projectGuidUpper%>}.Debug|x86.Build.0 = Debug|x86
-		{<%=projectGuidUpper%>}.Debug|x86.Deploy.0 = Debug|x86
-		{<%=projectGuidUpper%>}.Release|ARM.ActiveCfg = Release|ARM
-		{<%=projectGuidUpper%>}.Release|ARM.Build.0 = Release|ARM
-		{<%=projectGuidUpper%>}.Release|ARM.Deploy.0 = Release|ARM
-		{<%=projectGuidUpper%>}.Release|ARM64.ActiveCfg = Release|ARM64
-		{<%=projectGuidUpper%>}.Release|ARM64.Build.0 = Release|ARM64
-		{<%=projectGuidUpper%>}.Release|ARM64.Deploy.0 = Release|ARM64
-		{<%=projectGuidUpper%>}.Release|x64.ActiveCfg = Release|x64
-		{<%=projectGuidUpper%>}.Release|x64.Build.0 = Release|x64
-		{<%=projectGuidUpper%>}.Release|x64.Deploy.0 = Release|x64
-		{<%=projectGuidUpper%>}.Release|x86.ActiveCfg = Release|x86
-		{<%=projectGuidUpper%>}.Release|x86.Build.0 = Release|x86
-		{<%=projectGuidUpper%>}.Release|x86.Deploy.0 = Release|x86
+		{{ projectGuidUpper }}.Debug|ARM.ActiveCfg = Debug|ARM
+		{{ projectGuidUpper }}.Debug|ARM.Build.0 = Debug|ARM
+		{{ projectGuidUpper }}.Debug|ARM.Deploy.0 = Debug|ARM
+		{{ projectGuidUpper }}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{{ projectGuidUpper }}.Debug|ARM64.Build.0 = Debug|ARM64
+		{{ projectGuidUpper }}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{{ projectGuidUpper }}.Debug|x64.ActiveCfg = Debug|x64
+		{{ projectGuidUpper }}.Debug|x64.Build.0 = Debug|x64
+		{{ projectGuidUpper }}.Debug|x64.Deploy.0 = Debug|x64
+		{{ projectGuidUpper }}.Debug|x86.ActiveCfg = Debug|x86
+		{{ projectGuidUpper }}.Debug|x86.Build.0 = Debug|x86
+		{{ projectGuidUpper }}.Debug|x86.Deploy.0 = Debug|x86
+		{{ projectGuidUpper }}.Release|ARM.ActiveCfg = Release|ARM
+		{{ projectGuidUpper }}.Release|ARM.Build.0 = Release|ARM
+		{{ projectGuidUpper }}.Release|ARM.Deploy.0 = Release|ARM
+		{{ projectGuidUpper }}.Release|ARM64.ActiveCfg = Release|ARM64
+		{{ projectGuidUpper }}.Release|ARM64.Build.0 = Release|ARM64
+		{{ projectGuidUpper }}.Release|ARM64.Deploy.0 = Release|ARM64
+		{{ projectGuidUpper }}.Release|x64.ActiveCfg = Release|x64
+		{{ projectGuidUpper }}.Release|x64.Build.0 = Release|x64
+		{{ projectGuidUpper }}.Release|x64.Deploy.0 = Release|x64
+		{{ projectGuidUpper }}.Release|x86.ActiveCfg = Release|x86
+		{{ projectGuidUpper }}.Release|x86.Build.0 = Release|x86
+		{{ projectGuidUpper }}.Release|x86.Deploy.0 = Release|x86
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.Build.0 = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM64.ActiveCfg = Debug|ARM64

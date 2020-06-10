@@ -60,13 +60,11 @@ Code shared between [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop) and [JSI\Uni
 Contains helpers to simplify authoring C++/WinRT native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### Microsoft.ReactNative.Managed
-*Shared Items (no build artifact)*<br/>
+*Managed Library*<br/>
 Contains helpers to simplify authoring C# native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### Microsoft.ReactNative.SharedManaged
-*Shared Items (no build artifact)*<br/>
-This shared project is to be deprecated in some time in favor of the library [Microsoft.ReactNative.Managed](#Microsoft.ReactNative.Managed).
-For now it contaisn the same code as the library.
+Deprecated: This is still here so that customers get a specific error message on how to upgrade their project.
 
 ### React.Windows.IntegrationTests
 *Static Library*<br/>

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.85",
+  "version": "0.0.0-master.90",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "envinfo": "^7.5.0",
     "fbjs": "^1.0.0",
     "glob": "^7.1.1",
+    "mustache": "^4.0.1",
     "ora": "^3.4.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.2",
@@ -53,8 +54,8 @@
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
     "react": "16.11.0",
-    "react-native-windows-codegen": "0.0.5",
-    "react-native-platform-override": "^0.0.3",
+    "react-native-windows-codegen": "0.0.6",
+    "react-native-platform-override": "^0.0.4",
     "react-native": "0.62.2",
     "typescript": "^3.8.3"
   },

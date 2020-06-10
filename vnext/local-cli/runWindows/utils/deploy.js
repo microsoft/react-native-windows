@@ -218,7 +218,10 @@ async function deployToDesktop(options, verbose, slnFile) {
     );
   }
 
-  let args = ['--remote-debugging', options.proxy ? 'true' : 'false'];
+  let args = [];
+  if (options.remoteDebugging) {
+    args.push('--remote-debugging');
+  }
 
   if (options.directDebugging) {
     const port = parseInt(options.directDebugging, 10);

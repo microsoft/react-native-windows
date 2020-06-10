@@ -26,7 +26,9 @@
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DevMenu.h"
+#include "IReactContext.h"
 #include "IReactDispatcher.h"
+#include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DevSettingsModule.h"
@@ -157,9 +159,8 @@ ReactInstanceWin::ReactInstanceWin(
           this,
           options.Properties,
           winrt::make<implementation::ReactNotificationService>(options.Notifications))},
-      m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(
-          Mso::WeakPtr<Mso::React::IReactInstance>{this},
-          Mso::Copy(options.LegacySettings))} {
+      m_legacyInstance{
+          std::make_shared<react::uwp::UwpReactInstanceProxy>(Mso::WeakPtr<Mso::React::IReactInstance>{this})} {
   m_whenCreated.SetValue();
 }
 
@@ -171,8 +172,7 @@ void ReactInstanceWin::Initialize() noexcept {
   InitNativeMessageThread();
   InitUIMessageThread();
 
-  m_legacyReactInstance =
-      std::make_shared<react::uwp::UwpReactInstanceProxy>(this, Mso::Copy(m_options.LegacySettings));
+  m_legacyReactInstance = std::make_shared<react::uwp::UwpReactInstanceProxy>(this);
 
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
@@ -238,17 +238,29 @@ void ReactInstanceWin::Initialize() noexcept {
               m_legacyReactInstance);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
+
+          nmp->AddModuleProvider(
+              L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
+
           nmp->AddModuleProvider(
               L"AppState",
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
                   ::Microsoft::ReactNative::AppState,
                   ::Microsoft::ReactNativeSpecs::AppStateSpec>());
 
-          nmp->AddModuleProvider(
-              L"Clipboard",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::Clipboard,
-                  ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+          if (m_options.UseWebDebugger()) {
+            nmp->AddModuleProvider(
+                L"Clipboard",
+                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                    ::Microsoft::ReactNative::Clipboard,
+                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+          } else {
+            m_options.TurboModuleProvider->AddModuleProvider(
+                L"Clipboard",
+                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                    ::Microsoft::ReactNative::Clipboard,
+                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+          }
 
           ::Microsoft::ReactNative::DevSettings::SetReload(
               strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
@@ -285,11 +297,11 @@ void ReactInstanceWin::Initialize() noexcept {
             cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
           }
 
-          if (m_options.LegacySettings.UseJsi) {
+          if (m_options.UseJsi) {
             std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
             std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
-            switch (m_options.LegacySettings.jsiEngine) {
+            switch (m_options.JsiEngine) {
               case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
@@ -305,11 +317,10 @@ void ReactInstanceWin::Initialize() noexcept {
                 break;
 #endif
               case react::uwp::JSIEngine::Chakra:
-                if (m_options.LegacySettings.EnableByteCodeCaching ||
-                    !m_options.LegacySettings.ByteCodeFileUri.empty()) {
+                if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
                   scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
                   preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
-                      winrt::to_hstring(m_options.LegacySettings.ByteCodeFileUri));
+                      winrt::to_hstring(m_options.ByteCodeFileUri));
                 }
                 devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
                     devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
@@ -319,10 +330,12 @@ void ReactInstanceWin::Initialize() noexcept {
 
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
+            m_options.TurboModuleProvider->SetReactContext(
+                winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
-                nullptr,
+                m_options.TurboModuleProvider,
                 m_uiManager.Load(),
                 m_jsMessageThread.Load(),
                 Mso::Copy(m_batchingUIThread),
@@ -497,6 +510,11 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
 
   // Create MessageQueueThread for the DispatchQueue
   VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+
+  auto jsDispatcher =
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+  m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
   m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
       jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
   m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
@@ -753,7 +771,7 @@ std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() 
 }
 
 std::string ReactInstanceWin::GetBundleRootPath() noexcept {
-  return m_bundleRootPath.empty() ? m_options.LegacySettings.BundleRootPath : m_bundleRootPath;
+  return m_bundleRootPath.empty() ? m_options.BundleRootPath : m_bundleRootPath;
 }
 
 std::shared_ptr<react::uwp::IReactInstance> ReactInstanceWin::UwpReactInstance() noexcept {
