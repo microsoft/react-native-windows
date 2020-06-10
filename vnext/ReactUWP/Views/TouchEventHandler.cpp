@@ -417,11 +417,13 @@ bool TouchEventHandler::TagFromOriginalSource(
       // This is to support nested <Text> elements in React.
       // Nested React <Text> elements get translated into nested XAML <Span> elements,
       // while the content of the <Text> becomes a list of XAML <Run> elements.
+      // However, we should report the Text element as the target, not the contexts of the text.
       if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
         const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
         const auto inlines = textBlock.Inlines().GetView();
 
-        auto finerTag = TestHit(inlines, pointerPos);
+        bool isHit = false;
+        const auto finerTag = TestHit(inlines, pointerPos, isHit);
         if (finerTag) {
           tag = finerTag;
         }
@@ -447,18 +449,26 @@ bool TouchEventHandler::TagFromOriginalSource(
 
 winrt::IPropertyValue TouchEventHandler::TestHit(
     const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
-    const winrt::Point &pointerPos) {
+    const winrt::Point &pointerPos,
+    bool& isHit
+) {
   winrt::IPropertyValue tag(nullptr);
 
   for (const auto &el : inlines) {
     if (const auto span = el.try_as<xaml::Documents::Span>()) {
-      const auto resTag = TestHit(span.Inlines().GetView(), pointerPos);
+        auto resTag = TestHit(span.Inlines().GetView(), pointerPos, isHit);
 
-      if (resTag) {
-        return resTag;
+        if (resTag)
+          return resTag;
+
+        if (isHit) {
+          tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+          if (tag) {
+            return tag;
+          }
+        }
       }
-
-    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
+    else if (const auto run = el.try_as<xaml::Documents::Run>()) {
       const auto start = el.ContentStart();
       const auto end = el.ContentEnd();
 
@@ -475,10 +485,8 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
       // Approximate the bounding rect (for now, don't account for text wrapping).
       if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
           (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
-        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-        assert(tag);
-
-        return tag;
+        isHit = true;
+        return nullptr;
       }
     }
   }

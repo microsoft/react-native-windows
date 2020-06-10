@@ -96,7 +96,8 @@ class TouchEventHandler {
   bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement);
   winrt::IPropertyValue TestHit(
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
-      const winrt::Point &pointerPos);
+      const winrt::Point &pointerPos,
+      bool &isHit);
 
   XamlView m_xamlView;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
