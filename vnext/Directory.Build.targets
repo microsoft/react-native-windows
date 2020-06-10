@@ -11,6 +11,7 @@
     <Message Text="=> PlatformName            [$(PlatformName)]" />
     <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
     <Message Text="=> PlatformToolset         [$(PlatformToolset)]" />
+    <Message Text="=> SolutionDir             [$(SolutionDir)]" />
     <Message Text="=> RootDir                 [$(RootDir)]" />
     <Message Text="=> RootIntDir              [$(RootIntDir)]" />
     <Message Text="=> RootOutDir              [$(RootOutDir)]" />

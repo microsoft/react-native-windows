@@ -140,7 +140,8 @@
         $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(YogaDir);
-        %(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
@@ -175,6 +176,17 @@
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </Midl>
+  </ItemDefinitionGroup>
+  <!-- TODO: Remove after https://github.com/microsoft/hermes-windows/issues/12 is fixed. -->
+  <ItemDefinitionGroup Condition="'$(USE_HERMES)'=='true'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\installed\$(Platform)-windows\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)' == 'Release'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\installed\$(Platform)-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)' == 'Debug'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\installed\$(Platform)-windows\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>hermes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
