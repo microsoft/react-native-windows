@@ -23,7 +23,9 @@ using namespace xaml::Controls;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactHost()} {
+ReactNativeHost::ReactNativeHost() noexcept : ReactNativeHost(*Mso::React::MakeReactHost()) {}
+
+ReactNativeHost::ReactNativeHost(Mso::React::IReactHost &host) noexcept : m_reactHost(&host) {
 #if _DEBUG
   facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
     std::string str = std::string("ReactNative:") + message;

@@ -335,6 +335,7 @@
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
     <ClInclude Include="Modules\I18nManagerModule.h" />
+    <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
@@ -517,6 +518,7 @@
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
+    <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">

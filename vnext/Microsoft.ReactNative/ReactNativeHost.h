@@ -29,6 +29,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   Windows::Foundation::IAsyncAction UnloadInstance() noexcept;
 
  public:
+  ReactNativeHost(Mso::React::IReactHost &host) noexcept;
   Mso::React::IReactHost *ReactHost() noexcept;
 
  private:

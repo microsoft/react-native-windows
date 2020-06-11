@@ -19,6 +19,7 @@
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
+#include "../../codegen/NativeLogBoxSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -34,6 +35,7 @@
 #include "Modules/DevSettingsModule.h"
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LogBoxModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -107,6 +109,10 @@ void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
   }
+}
+
+Mso::WeakPtr<ReactInstanceWin> ReactContext::GetInnerInstance() noexcept {
+  return m_reactInstance;
 }
 
 //=============================================================================================
@@ -247,6 +253,12 @@ void ReactInstanceWin::Initialize() noexcept {
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
                   ::Microsoft::ReactNative::AppState,
                   ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
+          nmp->AddModuleProvider(
+              L"LogBox",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::LogBox,
+                  ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
 
           if (m_options.UseWebDebugger()) {
             nmp->AddModuleProvider(
@@ -794,6 +806,10 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   if (auto instanceWrapper = m_instanceWrapper.LoadWithLock()) {
     instanceWrapper->DetachRootView(rootView);
   }
+}
+
+const Mso::WeakPtr<IReactHost> ReactInstanceWin::GetHost() noexcept {
+  return m_weakReactHost;
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
