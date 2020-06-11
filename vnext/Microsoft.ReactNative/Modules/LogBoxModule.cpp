@@ -13,27 +13,27 @@
 
 namespace Microsoft::ReactNative {
 
-void LogBox::show() noexcept {
+void LogBox::Show() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
     return;
   }
 
   m_context.UIDispatcher().Post([weakThis = weak_from_this()] {
     if (auto strongThis = weakThis.lock()) {
-      strongThis->showOnUIThread();
+      strongThis->ShowOnUIThread();
     }
   });
 }
 
-void LogBox::hide() noexcept {
+void LogBox::Hide() noexcept {
   m_context.UIDispatcher().Post([weakThis = weak_from_this()] {
     if (auto strongThis = weakThis.lock()) {
-      strongThis->hideOnUIThread();
+      strongThis->HideOnUIThread();
     }
   });
 }
 
-void LogBox::showOnUIThread() noexcept {
+void LogBox::ShowOnUIThread() noexcept {
   auto contextImpl = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
   auto weakInstance = static_cast<Mso::React::ReactContext *>(&contextImpl->GetInner())->GetInnerInstance();
   auto instance = weakInstance.GetStrongPtr();
@@ -83,7 +83,7 @@ void LogBox::showOnUIThread() noexcept {
   m_tokenClosed = m_popup.Closed([wkThis = weak_from_this()](
       auto const & /*sender*/, winrt::IInspectable const & /*args*/) noexcept {
     if (auto strongThis = wkThis.lock()) {
-      strongThis->hideOnUIThread();
+      strongThis->HideOnUIThread();
     }
   });
 
@@ -91,7 +91,7 @@ void LogBox::showOnUIThread() noexcept {
   m_popup.IsOpen(true);
 }
 
-void LogBox::hideOnUIThread() noexcept {
+void LogBox::HideOnUIThread() noexcept {
   if (m_popup) {
     m_popup.Closed(m_tokenClosed);
     m_sizeChangedRevoker.revoke();

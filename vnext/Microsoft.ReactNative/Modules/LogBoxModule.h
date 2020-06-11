@@ -14,13 +14,12 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
-  REACT_METHOD(show) void show() noexcept;
-  REACT_METHOD(hide) void hide() noexcept;
+  REACT_METHOD(Show, L"show") void Show() noexcept;
+  REACT_METHOD(Hide, L"hide") void Hide() noexcept;
 
  private:
-  void showOnUIThread() noexcept;
-  void hideOnUIThread() noexcept;
-  void onPopupClosed() noexcept;
+  void ShowOnUIThread() noexcept;
+  void HideOnUIThread() noexcept;
 
   React::ReactContext m_context;
   xaml::Controls::Primitives::Popup m_popup{nullptr};
