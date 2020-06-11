@@ -14,7 +14,7 @@ const configUtils = require('./configUtils.js');
 react-native config will generate the following JSON for app projects that have a
 windows implementation, as a target for auto-linking. This is done heurestically,
 so if the result isn't quite correct, app developers can provide a manual override
-file: react-native.config.
+file: react-native.config.js.
 
 Schema for app projects:
 
@@ -35,7 +35,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
   },
 }
 
-Example react-native.config.js:
+Example react-native.config.js for a 'MyApp':
 
 module.exports = {
   project: {

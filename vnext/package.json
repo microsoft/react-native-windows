@@ -36,7 +36,9 @@
     "shelljs": "^0.7.8",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
-    "xml-parser": "^1.2.1"
+    "xml-parser": "^1.2.1",
+    "xmldom": "^0.3.0",
+    "xpath": "^0.0.27"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.3.8",
@@ -54,9 +56,9 @@
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
     "react": "16.11.0",
-    "react-native-windows-codegen": "0.0.6",
-    "react-native-platform-override": "^0.0.4",
     "react-native": "0.62.2",
+    "react-native-platform-override": "^0.0.4",
+    "react-native-windows-codegen": "0.0.6",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {

@@ -14,7 +14,7 @@ const configUtils = require('./configUtils.js');
 react-native config will generate the following JSON for each native module dependency
 under node_modules that has a windows implementation, in order to support auto-linking.
 This is done heurestically, so if the result isn't quite correct, native module developers
-can provide a manual override file: react-native.config.
+can provide a manual override file: react-native.config.js.
 
 Schema for dependencies:
 

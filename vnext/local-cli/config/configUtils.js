@@ -9,6 +9,13 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
+const xmldom = require('xmldom').DOMParser;
+const xpath = require('xpath');
+
+const msbuildSelect = xpath.useNamespaces({
+  msbuild: 'http://schemas.microsoft.com/developer/msbuild/2003',
+});
+
 /**
  * Search for files matching the pattern under the target folder.
  * @param {string} folder The absolute path to target folder.
@@ -22,6 +29,7 @@ function findFiles(folder, filenamePattern) {
       'node_modules/**',
       '**/Debug/**',
       '**/Release/**',
+      '**/WinUI3/**',
       '**/Generated Files/**',
       '**/packages/**',
     ],
@@ -46,7 +54,7 @@ function findWindowsFolder(folder) {
 }
 
 /**
- * Checks if the target file path is a RNW solution file.
+ * Checks if the target file path is a RNW solution file by checking if it contains the string "ReactNative".
  * @param {string} filePath The absolute file path to check.
  * @return {boolean} Whether the path is to a RNW solution file.
  */
@@ -94,12 +102,22 @@ function findSolutionFiles(winFolder) {
  * @return {boolean} Whether the path is to a RNW lib project file.
  */
 function isRnwDependencyProject(filePath) {
-  return (
-    fs
-      .readFileSync(filePath)
-      .toString()
-      .search(/Microsoft\.ReactNative\.Uwp\.(Cpp|CSharp)Lib\.targets/) > 0
-  );
+  const projectContents = readProjectFile(filePath);
+
+  const projectLang = getProjectLanguage(filePath);
+  if (projectLang === 'cs') {
+    return importProjectExists(
+      projectContents,
+      'Microsoft.ReactNative.Uwp.CSharpLib.targets',
+    );
+  } else if (projectLang === 'cpp') {
+    return importProjectExists(
+      projectContents,
+      'Microsoft.ReactNative.Uwp.CppLib.targets',
+    );
+  }
+
+  return false;
 }
 
 /**
@@ -137,12 +155,22 @@ function findDependencyProjectFiles(winFolder) {
  * @return {boolean} Whether the path is to a RNW app project file.
  */
 function isRnwAppProject(filePath) {
-  return (
-    fs
-      .readFileSync(filePath)
-      .toString()
-      .search(/Microsoft\.ReactNative\.Uwp\.(Cpp|CSharp)App\.targets/) > 0
-  );
+  const projectContents = readProjectFile(filePath);
+
+  const projectLang = getProjectLanguage(filePath);
+  if (projectLang === 'cs') {
+    return importProjectExists(
+      projectContents,
+      'Microsoft.ReactNative.Uwp.CSharpApp.targets',
+    );
+  } else if (projectLang === 'cpp') {
+    return importProjectExists(
+      projectContents,
+      'Microsoft.ReactNative.Uwp.CppApp.targets',
+    );
+  }
+
+  return false;
 }
 
 /**
@@ -191,55 +219,77 @@ function getProjectLanguage(projectPath) {
 /**
  * Reads in the contents of the target project file.
  * @param {string} projectPath The target project file path.
- * @return {string} The project file contents.
+ * @return {object} The project file contents.
  */
 function readProjectFile(projectPath) {
-  return fs.readFileSync(projectPath, 'utf8').toString();
+  const projectContents = fs.readFileSync(projectPath, 'utf8').toString();
+  return new xmldom().parseFromString(projectContents, 'application/xml');
 }
 
 /**
- * Search for the given XML tag in the project contents and return its value.
- * @param {string} projectContents The XML project contents.
- * @param {string} tagName The XML tag to look for.
+ * Search for the given property in the project contents and return its value.
+ * @param {object} projectContents The XML project contents.
+ * @param {string} propertyName The property to look for.
  * @return {string} The value of the tag if it exists.
  */
-function findTagValue(projectContents, tagName) {
-  const regexExpression = `<${tagName}>(.*)</${tagName}>`;
-  const regex = new RegExp(regexExpression, 'm');
-  const match = projectContents.match(regex);
+function findPropertyValue(projectContents, propertyName) {
+  var nodes = msbuildSelect(
+    `//msbuild:PropertyGroup/msbuild:${propertyName}`,
+    projectContents,
+  );
 
-  return match !== null && match.length === 2 ? match[1] : null;
+  if (nodes.length > 0) {
+    // Take the last one
+    return nodes[nodes.length - 1].textContent;
+  }
+
+  return null;
+}
+
+/**
+ * Search for the given import project in the project contents and return if it exists.
+ * @param {object} projectContents The XML project contents.
+ * @param {string} projectName The project to look for.
+ * @return {boolean} If the target exists.
+ */
+function importProjectExists(projectContents, projectName) {
+  var nodes = msbuildSelect(
+    `//msbuild:Import[contains(@Project,'${projectName}')]`,
+    projectContents,
+  );
+
+  return nodes.length > 0;
 }
 
 /**
  * Gets the name of the project from the project contents.
- * @param {string} projectContents The XML project contents.
+ * @param {object} projectContents The XML project contents.
  * @return {string} The project name.
  */
 function getProjectName(projectContents) {
   return (
-    findTagValue(projectContents, 'ProjectName') ||
-    findTagValue(projectContents, 'AssemblyName') ||
+    findPropertyValue(projectContents, 'ProjectName') ||
+    findPropertyValue(projectContents, 'AssemblyName') ||
     ''
   );
 }
 
 /**
  * Gets the namespace of the project from the project contents.
- * @param {string} projectContents The XML project contents.
+ * @param {object} projectContents The XML project contents.
  * @return {string} The project namespace.
  */
 function getProjectNamespace(projectContents) {
-  return findTagValue(projectContents, 'RootNamespace');
+  return findPropertyValue(projectContents, 'RootNamespace');
 }
 
 /**
  * Gets the guid of the project from the project contents.
- * @param {string} projectContents The XML project contents.
+ * @param {object} projectContents The XML project contents.
  * @return {string} The project guid.
  */
 function getProjectGuid(projectContents) {
-  return findTagValue(projectContents, 'ProjectGuid');
+  return findPropertyValue(projectContents, 'ProjectGuid');
 }
 
 module.exports = {
