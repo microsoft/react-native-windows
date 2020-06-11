@@ -144,7 +144,7 @@ $requirements = @(
         Valid = (cmd "/c assoc .binlog 2>nul" )  -ne $null;
         Install = {
             choco install -y msbuild-structured-log-viewer;
-            $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\app-2.0.152\StructuredLogViewer.exe -Recurse;
+            $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
             cmd /c "assoc .binlog=MSBuildLog";
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1";
          };
