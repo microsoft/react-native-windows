@@ -7,6 +7,7 @@
 
 #include "ReactPackageBuilder.h"
 #include "RedBox.h"
+#include "TurboModulesProvider.h"
 
 #include <future/futureWinRT.h>
 #include <winrt/Windows.Foundation.Collections.h>
