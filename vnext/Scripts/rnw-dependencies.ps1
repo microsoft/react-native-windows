@@ -1,6 +1,13 @@
 # Troubleshoot RNW dependencies
 param([switch]$Install = $false, [switch]$NoPrompt = $false, [switch]$Clone = $false)
-$vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', 'Microsoft.VisualStudio.ComponentGroup.UWP.Support', 'Microsoft.VisualStudio.Workload.ManagedDesktop', 'Microsoft.VisualStudio.Workload.NativeDesktop', 'Microsoft.VisualStudio.Workload.Universal', 'Microsoft.VisualStudio.ComponentGroup.UWP.VC');
+$vsComponents = @('Microsoft.Component.MSBuild', 
+    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+    'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
+    'Microsoft.VisualStudio.ComponentGroup.UWP.VC');
+
+$vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
+    'Microsoft.VisualStudio.Workload.NativeDesktop',
+    'Microsoft.VisualStudio.Workload.Universal');
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -18,7 +25,7 @@ function CheckVS {
     if (!(Test-Path $vsWhere)) {
         return $false;
     }
-    $output = & $vsWhere -version 16 -requires $vsWorkloads -property productPath
+    $output = & $vsWhere -version 16 -requires $vsComponents -property productPath
     return ($output -ne $null) -and (Test-Path $output);
 }
 
@@ -32,7 +39,7 @@ function InstallVS {
     $channelId = & $vsWhere -version 16 -property channelId
     $productId = & $vsWhere -version 16 -property productId
     $vsInstaller = "$installerPath\vs_installer.exe"
-    $addWorkloads = $vsWorkloads | % { '--add', $_ };
+    $addWorkloads = ($vsWorkloads + $vsComponents) | % { '--add', $_ };
     $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet" -split ' ')
     return $p.ExitCode
 }
@@ -72,6 +79,11 @@ $requirements = @(
         Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
         Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB;
         Optional = $true; # this requirement is fuzzy 
+    },
+    @{
+        Name = "Installed memory >= 16 GB";
+        Valid = (Get-WmiObject -Class win32_computersystem).TotalPhysicalMemory -ge 15GB;
+        Optional = $true;
     },
     @{
         Name = 'Windows version > 10.0.16299.0';
@@ -148,6 +160,7 @@ $requirements = @(
             cmd /c "assoc .binlog=MSBuildLog";
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1";
          };
+         Optional = $true;
     }
 
     );
