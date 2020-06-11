@@ -181,7 +181,7 @@ foreach ($req in $requirements)
     Write-Host -NoNewline "Checking $($req.Name)    ";
     if (!($req.Valid)) {
         if ($req.Optional) {
-            Write-Host -ForegroundColor Yellow " Failed".PadLeft(50 - $req.Name.Length);
+            Write-Host -ForegroundColor Yellow " Failed (warn)".PadLeft(50 - $req.Name.Length);
         }
         else {
             Write-Host -ForegroundColor Red " Failed".PadLeft(50 - $req.Name.Length);
