@@ -203,7 +203,7 @@ class RefreshControl extends React.Component<RefreshControlProps> {
       return (
         <PullToRefreshViewNativeComponent
           {...props}
-          ref={setRef}
+          ref={this._setNativeRef}
           onRefresh={this._onRefresh}
         />
       );
