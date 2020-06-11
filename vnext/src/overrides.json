@@ -101,7 +101,7 @@
       "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.android.js",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "278d7049749ba8b5f3840f21ef6b3d528183829f",
-      "issue": "LEGACY_FIXME"
+      "issue": 4694
     },
     {
       "type": "platform",
@@ -615,6 +615,14 @@
       "baseHash": "8093d13818e1c1e0dec5b6fb46b89d9152053d3c"
     },
     {
+      "type": "derived",
+      "file": "overrides.json",
+      "baseFile": "RNTester\\js\\examples\\PlatformColor\\PlatformColorExample.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "f1c2babe02e11d237dbab875b8a7cd63fce048b6",
+      "issue": "LEGACY_FIXME"
+    },
+    {
       "type": "platform",
       "file": "RNTester.ts"
     },
@@ -693,10 +701,6 @@
     {
       "type": "platform",
       "file": "RNTester\\js\\examples-win\\TransferProperties\\TransferPropertiesExample.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "RNTester\\js\\examples-win\\WindowsBrush\\WindowsBrushExample.windows.tsx"
     },
     {
       "type": "patch",

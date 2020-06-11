@@ -14,21 +14,18 @@ import type {ColorValue} from './StyleSheetTypes';
 import type {ProcessedColorValue} from './processColor';
 
 export opaque type NativeColorValue = {
-  resource_paths?: Array<string>,
+  windowsbrush?: string,
 };
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
-  return {resource_paths: names};
-};
-
-export const ColorAndroidPrivate = (color: string): ColorValue => {
-  return {resource_paths: [color]};
+  // We dont support fallback colors right now, so no point in sending more than the first color across the bridge
+  return {windowsbrush: names[0]};
 };
 
 export const normalizeColorObject = (
   color: NativeColorValue,
 ): ?ProcessedColorValue => {
-  if ('resource_paths' in color) {
+  if ('windowsbrush' in color) {
     return color;
   }
   return null;
