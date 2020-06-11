@@ -20,9 +20,6 @@
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -90,9 +87,6 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
@@ -264,6 +258,9 @@
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="IReactNotificationService.cpp" />
+    <ClCompile Include="Modules\AlertModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -280,6 +277,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
@@ -320,6 +318,9 @@
       <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\DevMenu.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -372,9 +373,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -603,6 +601,9 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
+    <ClInclude Include="Modules\AlertModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\AppStateModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -619,6 +620,7 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
+    <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h">
       <Filter>Pch</Filter>
     </ClInclude>
@@ -674,6 +676,9 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\DevMenu.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -707,6 +712,7 @@
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
     <Midl Include="RedBoxHandler.idl" />
+    <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
     <Midl Include="XamlUIService.idl" />
   </ItemGroup>

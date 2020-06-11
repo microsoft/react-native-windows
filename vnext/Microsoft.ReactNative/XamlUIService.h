@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -25,6 +25,9 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
       xaml::FrameworkElement const &view,
       hstring const &eventName,
       JSValueArgWriter const &eventDataArgWriter) noexcept;
+
+  static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
+  static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
 
  private:
   std::weak_ptr<facebook::react::IUIManager> m_wkUIManager;

@@ -1,5 +1,7 @@
-#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
+#pragma once
 #include "MainPage.g.h"
 
 namespace winrt::SampleAppCpp::implementation {

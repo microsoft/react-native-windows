@@ -6,17 +6,17 @@
  */
 
 import * as FileRepository from '../FileRepository';
-import * as ManifestData from '../ManifestData';
+import * as Serialized from '../Serialized';
 
 import * as ora from 'ora';
 import * as path from 'path';
 
 import GitReactFileRepository from '../GitReactFileRepository';
-import Manifest from '../Manifest';
 import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';
 
 import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../PackageUtils';
+import {hashContent} from '../Hash';
 
 const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
 const WHITESPACE_PATTERN = /\s/g;
@@ -32,14 +32,14 @@ const WHITESPACE_PATTERN = /\s/g;
 
   const version = await getInstalledRNVersion();
   const [overrides, reactSources] = await getFileRepos(ovrPath, version);
-  const manifest: ManifestData.Manifest = {overrides: []};
+  const manifest: Serialized.Manifest = {overrides: []};
   const overrideFiles = await overrides.listFiles();
 
   let i = 0;
   for (const file of overrideFiles) {
     spinner.text = `Creating manifest (${++i}/${overrideFiles.length})`;
 
-    const contents = await overrides.getFileContents(file);
+    const contents = (await overrides.getFileContents(file))!;
     (await tryAddCopy(file, version, contents, reactSources, manifest)) ||
       (await tryAddPatch(file, version, contents, reactSources, manifest)) ||
       (await tryAddDerived(file, version, contents, reactSources, manifest)) ||
@@ -47,7 +47,7 @@ const WHITESPACE_PATTERN = /\s/g;
   }
 
   const ovrFile = path.join(ovrPath, 'overrides.json');
-  await ManifestData.writeToFile(manifest, ovrFile);
+  await Serialized.writeManifestToFile(manifest, ovrFile);
 
   spinner.succeed();
 })();
@@ -57,9 +57,9 @@ async function tryAddCopy(
   rnVersion: string,
   override: string,
   reactSources: FileRepository.ReactFileRepository,
-  manifest: ManifestData.Manifest,
+  manifest: Serialized.Manifest,
 ): Promise<boolean> {
-  const baseContents = await reactSources.getFileContents(filename);
+  const baseContents = (await reactSources.getFileContents(filename))!;
 
   const baseSignificantChars = baseContents.replace(WHITESPACE_PATTERN, '');
   const ovrSignificantChars = override.replace(WHITESPACE_PATTERN, '');
@@ -72,7 +72,7 @@ async function tryAddCopy(
     file: filename,
     baseFile: filename,
     baseVersion: rnVersion,
-    baseHash: Manifest.hashContent(baseContents),
+    baseHash: hashContent(baseContents),
     issue: 0,
   });
 
@@ -84,7 +84,7 @@ async function tryAddPatch(
   rnVersion: string,
   override: string,
   reactSources: FileRepository.ReactFileRepository,
-  manifest: ManifestData.Manifest,
+  manifest: Serialized.Manifest,
 ): Promise<boolean> {
   const baseFile = filename.replace(WIN_PLATFORM_EXT, '');
   const baseContents = await reactSources.getFileContents(baseFile);
@@ -100,7 +100,7 @@ async function tryAddPatch(
       file: filename,
       baseFile: baseFile,
       baseVersion: rnVersion,
-      baseHash: Manifest.hashContent(baseContents),
+      baseHash: hashContent(baseContents),
       issue: 'LEGACY_FIXME',
     });
   } else {
@@ -115,7 +115,7 @@ async function tryAddDerived(
   rnVersion: string,
   override: string,
   reactSources: FileRepository.ReactFileRepository,
-  manifest: ManifestData.Manifest,
+  manifest: Serialized.Manifest,
 ): Promise<boolean> {
   const matches: Array<{file: string; contents: string; dist: number}> = [];
 
@@ -125,7 +125,7 @@ async function tryAddDerived(
   if (droidSim && droidSim.similar) {
     matches.push({
       file: droidFile,
-      contents: droidContents,
+      contents: droidContents!,
       dist: droidSim.editDistance,
     });
   }
@@ -136,7 +136,7 @@ async function tryAddDerived(
   if (iosSim && iosSim.similar) {
     matches.push({
       file: iosFile,
-      contents: iosContents,
+      contents: iosContents!,
       dist: iosSim.editDistance,
     });
   }
@@ -151,7 +151,7 @@ async function tryAddDerived(
     file: filename,
     baseFile: bestMatch.file,
     baseVersion: rnVersion,
-    baseHash: Manifest.hashContent(bestMatch.contents),
+    baseHash: hashContent(bestMatch.contents),
     issue: 'LEGACY_FIXME',
   });
 
@@ -161,7 +161,7 @@ async function tryAddDerived(
 function addUnknown(
   filename: string,
   rnVersion: string,
-  manifest: ManifestData.Manifest,
+  manifest: Serialized.Manifest,
 ) {
   (manifest.overrides as Array<any>).push({
     type: '???',

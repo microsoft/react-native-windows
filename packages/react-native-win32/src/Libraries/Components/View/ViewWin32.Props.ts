@@ -109,7 +109,17 @@ export type AccessibilityActionName =
 
   export type Cursor =
   | 'auto'
+  | 'default'
   | 'pointer'
+  | 'help'
+  | 'not-allowed'
+  | 'wait'
+  | 'move'
+  | 'nesw-resize'
+  | 'ns-resize'
+  | 'nwse-resize'
+  | 'we-resize'
+  | 'text'
 
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
@@ -172,6 +182,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   // tslint:disable-next-line no-reserved-keywords -- type name matching facebook implementation
   type?: React.ElementType;
   children?: React.ReactNode;
+  /** @Deprecated Use focusable instead.*/
   acceptsKeyboardFocus?: boolean;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
   /**
@@ -187,6 +198,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 
   accessibilitySetSize?: number;
   animationClass?: string;
+  focusable?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React

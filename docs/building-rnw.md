@@ -1,7 +1,7 @@
 
 # Building React-Native-Windows
 
-- Make sure you have installed [dependencies](./GettingStarted.md#dependencies)
+- Make sure you have installed [dependencies](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies). Just run `vnext\scripts\rnw-dependencies.ps1` in an elevated PowerShell session.
 - Install [Git](https://git-scm.com/download/win) if you don't have it installed in your development machine
 
 ## Build Steps
@@ -16,7 +16,7 @@
     yarn
     yarn build
     ```
-Note that react-native-windows is a monorepo and relies on monorepo tools like yarn and lerna.  See [this page](https://github.com/microsoft/react-native-windows/blob/master/vnext/docs/Monorepo.md) for more details.
+Note that react-native-windows is a monorepo and relies on monorepo tools like yarn and lerna.  See [this page](Monorepo.md) for more details.
 
 # Running the Playground app
   There are two ways to run the app.  In a fully managed easy way, or by manually running all the required steps:

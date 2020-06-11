@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -48,6 +48,21 @@ void XamlUIService::DispatchEvent(
 /*static*/ ReactPropertyId<XamlUIService> XamlUIService::XamlUIServiceProperty() noexcept {
   static ReactPropertyId<XamlUIService> uiManagerProperty{L"ReactNative.UIManager", L"XamlUIManager"};
   return uiManagerProperty;
+}
+
+ReactPropertyId<xaml::XamlRoot> XamlRootProperty() noexcept {
+  static ReactPropertyId<xaml::XamlRoot> propId{L"ReactNative.UIManager", L"XamlRoot"};
+  return propId;
+}
+
+/*static*/ void XamlUIService::SetXamlRoot(
+    IReactPropertyBag const &properties,
+    xaml::XamlRoot const &xamlRoot) noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(XamlRootProperty(), xamlRoot);
+}
+
+/*static*/ xaml::XamlRoot XamlUIService::GetXamlRoot(IReactPropertyBag const &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlRootProperty());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

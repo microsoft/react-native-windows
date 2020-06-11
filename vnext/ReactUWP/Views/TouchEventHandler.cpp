@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include <pch.h>
@@ -8,6 +8,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
@@ -407,11 +408,28 @@ bool TouchEventHandler::TagFromOriginalSource(
   // Find the React element that triggered the input event
   xaml::UIElement sourceElement = args.OriginalSource().try_as<xaml::UIElement>();
   winrt::IPropertyValue tag(nullptr);
+
   while (sourceElement) {
     tag = sourceElement.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
     if (tag) {
+      // If a TextBlock was the UIElement event source, perform a more accurate hit test,
+      // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
+      // This is to support nested <Text> elements in React.
+      // Nested React <Text> elements get translated into nested XAML <Span> elements,
+      // while the content of the <Text> becomes a list of XAML <Run> elements.
+      if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
+        const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
+        const auto inlines = textBlock.Inlines().GetView();
+
+        auto finerTag = TestHit(inlines, pointerPos);
+        if (finerTag) {
+          tag = finerTag;
+        }
+      }
+
       break;
     }
+
     sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
   }
 
@@ -425,6 +443,47 @@ bool TouchEventHandler::TagFromOriginalSource(
   *pTag = tag.GetInt64();
   *pSourceElement = sourceElement;
   return true;
+}
+
+winrt::IPropertyValue TouchEventHandler::TestHit(
+    const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
+    const winrt::Point &pointerPos) {
+  winrt::IPropertyValue tag(nullptr);
+
+  for (const auto &el : inlines) {
+    if (const auto span = el.try_as<xaml::Documents::Span>()) {
+      const auto resTag = TestHit(span.Inlines().GetView(), pointerPos);
+
+      if (resTag) {
+        return resTag;
+      }
+
+    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
+      const auto start = el.ContentStart();
+      const auto end = el.ContentEnd();
+
+      auto startRect = start.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+      auto endRect = end.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+
+      // Swap rectangles in RTL scenarios.
+      if (startRect.X > endRect.X) {
+        const auto tempRect = startRect;
+        startRect = endRect;
+        endRect = tempRect;
+      }
+
+      // Approximate the bounding rect (for now, don't account for text wrapping).
+      if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
+          (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
+        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+        assert(tag);
+
+        return tag;
+      }
+    }
+  }
+
+  return tag;
 }
 
 //

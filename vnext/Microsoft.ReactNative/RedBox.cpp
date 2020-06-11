@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
 #include "RedBox.h"
@@ -13,6 +13,7 @@
 #include <regex>
 #include "CppWinRTIncludes.h"
 #include "Unicode.h"
+#include "Utils/Helpers.h"
 
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
@@ -104,16 +105,38 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     PopulateFrameStackUI();
     UpdateErrorMessageUI();
 
-    // Do some kind of sizing logic...
-    auto window = xaml::Window::Current();
-    auto windowBounds = window.Bounds();
-    m_redboxContent.MaxHeight(windowBounds.Height);
-    m_redboxContent.Height(windowBounds.Height);
-    m_redboxContent.MaxWidth(windowBounds.Width);
-    m_redboxContent.Width(windowBounds.Width);
-    m_tokenSizeChanged = window.SizeChanged(
-        [&](auto const & /*sender*/, winrt::Windows::UI::Core::WindowSizeChangedEventArgs const &args) {
-          WindowSizeChanged(args);
+    xaml::FrameworkElement root{nullptr};
+
+    if (react::uwp::Is19H1OrHigher()) {
+      // XamlRoot added in 19H1
+      if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
+        if (auto xamlRoot =
+                winrt::Microsoft::ReactNative::XamlUIService::GetXamlRoot(reactHost->Options().Properties)) {
+          m_popup.XamlRoot(xamlRoot);
+          root = xamlRoot.Content().as<xaml::FrameworkElement>();
+        }
+      }
+    }
+
+    if (!root) {
+      auto window = xaml::Window::Current();
+      root = window.Content().as<xaml::FrameworkElement>();
+    }
+
+    m_redboxContent.MaxHeight(root.ActualSize().y);
+    m_redboxContent.Height(root.ActualSize().y);
+    m_redboxContent.MaxWidth(root.ActualSize().x);
+    m_redboxContent.Width(root.ActualSize().x);
+
+    m_sizeChangedRevoker = root.SizeChanged(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->m_redboxContent.MaxHeight(args.NewSize().Height);
+            strongThis->m_redboxContent.Height(args.NewSize().Height);
+            strongThis->m_redboxContent.MaxWidth(args.NewSize().Width);
+            strongThis->m_redboxContent.Width(args.NewSize().Width);
+          }
         });
 
     m_tokenClosed = m_popup.Closed([wkThis = std::weak_ptr(shared_from_this())](
@@ -138,7 +161,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_showing = false;
     m_dismissButton.Click(m_tokenDismiss);
     m_reloadButton.Click(m_tokenReload);
-    xaml::Window::Current().SizeChanged(m_tokenSizeChanged);
+    m_sizeChangedRevoker.revoke();
     m_popup.Closed(m_tokenClosed);
     m_redboxContent = nullptr;
     m_onClosedCallback(GetId());
@@ -356,10 +379,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   bool m_showing = false;
   Mso::Functor<void(uint32_t)> m_onClosedCallback;
+  xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
   winrt::event_token m_tokenDismiss;
   winrt::event_token m_tokenReload;
-  winrt::event_token m_tokenSizeChanged;
   ErrorInfo m_errorInfo;
   Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
@@ -403,7 +426,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
 
   virtual bool isDevSupportEnabled() const override {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
-      return reactHost->Options().DeveloperSettings.IsDevModeEnabled;
+      return Mso::React::ReactOptions::UseDeveloperSupport(reactHost->Options().Properties);
     }
 
     return false;

@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sun, 07 Jun 2020 00:05:23 GMT",
+      "tag": "react-native-windows-init_v0.1.8",
+      "version": "0.1.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update template gen to use mustache",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e39e42bc448117c4e981b41c7acdfd29f01417c",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 May 2020 00:04:44 GMT",
       "tag": "react-native-windows-init_v0.1.7",
       "version": "0.1.7",

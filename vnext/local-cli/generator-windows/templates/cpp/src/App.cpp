@@ -1,15 +1,17 @@
 #include "pch.h"
 
 #include "App.h"
+
+#include "AutolinkedNativeModules.g.h"
 #include "ReactPackageProvider.h"
 
 // clang-format off
-using namespace winrt::<%=ns%>;
-using namespace winrt::<%=ns%>::implementation;
+using namespace winrt::{{ namespace }};
+using namespace winrt::{{ namespace }}::implementation;
 using namespace winrt;
-using namespace <%=XamlNamespaceCpp%>;
-using namespace <%=XamlNamespaceCpp%>::Controls;
-using namespace <%=XamlNamespaceCpp%>::Navigation;
+using namespace {{ xamlNamespaceCpp }};
+using namespace {{ xamlNamespaceCpp }}::Controls;
+using namespace {{ xamlNamespaceCpp }}::Navigation;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 
@@ -31,9 +33,9 @@ App::App() noexcept
 #endif
 
 #if _DEBUG
-    InstanceSettings().EnableDeveloperMenu(true);
+    InstanceSettings().UseDeveloperSupport(true);
 #else
-    InstanceSettings().EnableDeveloperMenu(false);
+    InstanceSettings().UseDeveloperSupport(false);
 #endif
 
     RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
@@ -53,7 +55,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
     super::OnLaunched(e);
 
     Frame rootFrame = Window::Current().Content().as<Frame>();
-    rootFrame.Navigate(xaml_typename<<%=name%>::MainPage>(), box_value(e.Arguments()));
+    rootFrame.Navigate(xaml_typename<{{ name }}::MainPage>(), box_value(e.Arguments()));
 }
 
 /// <summary>

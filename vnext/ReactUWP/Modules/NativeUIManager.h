@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -100,6 +100,7 @@ class NativeUIManager : public facebook::react::INativeUIManager {
  private:
   facebook::react::INativeUIManagerHost *m_host = nullptr;
   Mso::CntPtr<Mso::React::IReactContext> m_context;
+  YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "AppStateModule.h"
+#include <XamlUtils.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "Unicode.h"
 
@@ -12,27 +13,27 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   m_context = reactContext;
   m_active = true;
 
-  auto currentApp = xaml::Application::Current();
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
+    m_enteredBackgroundRevoker = currentApp.EnteredBackground(
+        winrt::auto_revoke,
+        [weakThis = weak_from_this()](
+            winrt::IInspectable const & /*sender*/,
+            winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs const & /*e*/) noexcept {
+          if (auto strongThis = weakThis.lock()) {
+            strongThis->SetActive(false);
+          }
+        });
 
-  m_enteredBackgroundRevoker = currentApp.EnteredBackground(
-      winrt::auto_revoke,
-      [weakThis = weak_from_this()](
-          winrt::IInspectable const & /*sender*/,
-          winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs const & /*e*/) noexcept {
-        if (auto strongThis = weakThis.lock()) {
-          strongThis->SetActive(false);
-        }
-      });
-
-  m_leavingBackgroundRevoker = currentApp.LeavingBackground(
-      winrt::auto_revoke,
-      [weakThis = weak_from_this()](
-          winrt::IInspectable const & /*sender*/,
-          winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const & /*e*/) noexcept {
-        if (auto strongThis = weakThis.lock()) {
-          strongThis->SetActive(true);
-        }
-      });
+    m_leavingBackgroundRevoker = currentApp.LeavingBackground(
+        winrt::auto_revoke,
+        [weakThis = weak_from_this()](
+            winrt::IInspectable const & /*sender*/,
+            winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const & /*e*/) noexcept {
+          if (auto strongThis = weakThis.lock()) {
+            strongThis->SetActive(true);
+          }
+        });
+  }
 }
 
 void AppState::GetCurrentAppState(

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -63,6 +63,12 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
 
 /*static*/ void ReactDispatcher::SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept {
   properties.Set(UIDispatcherProperty(), UIThreadDispatcher());
+}
+
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherProperty() noexcept {
+  static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcher")};
+  return jsThreadDispatcherProperty;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

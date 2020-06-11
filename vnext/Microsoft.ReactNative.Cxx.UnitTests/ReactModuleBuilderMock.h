@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -120,6 +120,10 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   }
 
   IReactDispatcher UIDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactDispatcher JSDispatcher() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

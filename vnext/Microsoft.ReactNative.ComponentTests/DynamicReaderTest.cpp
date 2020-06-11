@@ -1,17 +1,24 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
-
-#undef max
-#undef min
+#include <DynamicReader.h>
+#include <DynamicWriter.h>
+#include "CommonReaderTest.h"
 
 namespace winrt::Microsoft::ReactNative {
 
 TEST_CLASS (DynamicReaderTest) {
-  TEST_METHOD(EmptyTest) {
-    TestCheckEqual(1, 1);
+  template <typename TCase>
+  void RunReaderTest() {
+    IJSValueWriter writer = winrt::make<DynamicWriter>();
+    TCase::Write(writer);
+    auto dynamicValue = writer.as<DynamicWriter>()->TakeValue();
+    IJSValueReader reader = winrt::make<DynamicReader>(dynamicValue);
+    TCase::Read(reader);
   }
+
+  IMPORT_READER_TEST_CASES
 };
 
 } // namespace winrt::Microsoft::ReactNative

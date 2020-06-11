@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -200,7 +200,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
     }
 
-
     [ReactMethod]
     public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
@@ -266,7 +265,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         reject("Already negative");
       }
     }
-
 
     [ReactMethod]
     public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
@@ -949,7 +947,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
-
     [TestMethod]
     public void TestMethodCall_TwoCallbacksZeroArgs1()
     {
@@ -1186,7 +1183,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
 
-
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()
     {
@@ -1394,7 +1390,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_module.OnIntEventProp(42);
       Assert.IsTrue(eventRaised);
     }
-
 
     [TestMethod]
     public void TestEvent_NoArgEventProperty()

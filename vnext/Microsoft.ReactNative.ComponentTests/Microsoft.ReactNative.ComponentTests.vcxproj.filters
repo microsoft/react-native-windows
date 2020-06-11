@@ -62,5 +62,8 @@
     <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h">
       <Filter>ExternalFiles\ReactWindowsCore</Filter>
     </ClInclude>
+    <ClInclude Include="CommonReaderTest.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,36 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 06 Jun 2020 00:05:20 GMT",
+      "tag": "react-native-platform-override_v0.0.4",
+      "version": "0.0.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Revise Architecture of react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "61e5ea7ee9b1f94dd1d5ef185936c7bd8c9448e5",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "react-native-platform-override_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Override Tooling to Use Nightly Builds",
+            "author": "ngerlem@microsoft.com",
+            "commit": "20cc280c848a958a818c27853a827a92e253c8b9",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2020 00:06:43 GMT",
       "tag": "react-native-platform-override_v0.0.2",
       "version": "0.0.2",

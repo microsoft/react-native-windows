@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -20,6 +20,10 @@ IReactNotificationService ReactContext::Notifications() noexcept {
 
 IReactDispatcher ReactContext::UIDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
+IReactDispatcher ReactContext::JSDispatcher() noexcept {
+  return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
 // Deprecated: Use XamlUIService directly.
@@ -58,6 +62,10 @@ void ReactContext::EmitJSEvent(
   paramsWriter->WriteArrayEnd();
   auto params = paramsWriter->TakeValue();
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
+}
+
+Mso::React::IReactContext &ReactContext::GetInner() const noexcept {
+  return *m_context;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

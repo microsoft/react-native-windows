@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -77,6 +77,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept override;
   std::string GetBundleRootPath() noexcept override;
   std::shared_ptr<react::uwp::IReactInstance> UwpReactInstance() noexcept override;
+  bool IsLoaded() const noexcept override;
   void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;
@@ -122,6 +123,15 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   friend struct LoadedCallbackGuard;
   void OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) noexcept;
 
+  void DrainJSCallQueue() noexcept;
+  void AbandonJSCallQueue() noexcept;
+
+  struct JSCallEntry {
+    std::string ModuleName;
+    std::string MethodName;
+    folly::dynamic Args;
+  };
+
 #if defined(USE_V8)
   static std::string getApplicationLocalFolder();
 #endif
@@ -134,6 +144,11 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   const Mso::Promise<void> m_whenDestroyed;
   const std::shared_ptr<react::uwp::UwpReactInstanceProxy> m_legacyInstance;
   const Mso::VoidFunctor m_updateUI;
+  const bool m_debuggerBreakOnNextLine : 1;
+  const bool m_isFastReloadEnabled : 1;
+  const bool m_isLiveReloadEnabled : 1;
+  const bool m_useDirectDebugger : 1;
+  const bool m_useWebDebugger : 1;
 
   const Mso::CntPtr<ReactContext> m_reactContext;
 
@@ -166,6 +181,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
   std::string m_bundleRootPath;
   Mso::DispatchQueue m_uiQueue;
+  std::deque<JSCallEntry> m_jsCallQueue;
 };
 
 } // namespace Mso::React

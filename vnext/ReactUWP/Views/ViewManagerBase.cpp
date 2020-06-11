@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -222,7 +222,7 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
   //  will include the containing Text element. And that's what matters.
   int64_t tag = GetTag(nodeToUpdate->GetView());
   auto instance = m_wkReactInstance.lock();
-  if (instance != nullptr)
+  if (instance != nullptr && instance->IsLoaded())
     static_cast<NativeUIManager *>(instance->NativeUIManager())->DirtyYogaNode(tag);
 
   for (const auto &pair : reactDiffMap.items()) {

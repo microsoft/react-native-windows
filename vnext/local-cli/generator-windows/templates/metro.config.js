@@ -15,11 +15,7 @@ module.exports = {
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
       // This prevents "react-native run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip
-      new RegExp(
-        `${path
-          .resolve(__dirname, 'msbuild.ProjectImports.zip')
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
+      /.*\.ProjectImports\.zip/,
     ]),
   },
   transformer: {

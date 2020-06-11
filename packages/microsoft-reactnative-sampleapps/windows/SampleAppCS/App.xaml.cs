@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
@@ -34,15 +34,15 @@ namespace SampleAppCS
 #endif
 
 #if DEBUG
-            InstanceSettings.EnableDeveloperMenu = true;
+            InstanceSettings.UseDeveloperSupport = true;
 #else
-            InstanceSettings.EnableDeveloperMenu = false;
+            InstanceSettings.UseDeveloperSupport = false;
 #endif
 
             InstanceSettings.Properties.Set(ReactPropertyBagHelper.GetName(null, "Prop1"), 43);
             InstanceSettings.Properties.Set(ReactPropertyBagHelper.GetName(null, "Prop2"), "Hello RNW!");
 
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            PackageProviders.Add(new ReactPackageProvider()); // Includes any modules in this project
             PackageProviders.Add(new ReflectionReactPackageProvider<App>());
             PackageProviders.Add(new SampleLibraryCS.ReactPackageProvider());
             PackageProviders.Add(new SampleLibraryCpp.ReactPackageProvider());
@@ -53,9 +53,8 @@ namespace SampleAppCS
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
-            var frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainPage));
-            Window.Current.Activate();
+            var frame = (Frame)Window.Current.Content;
+            frame.Navigate(typeof(MainPage), e.Arguments);
         }
     }
 }

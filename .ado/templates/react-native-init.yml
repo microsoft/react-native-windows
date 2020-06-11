@@ -52,11 +52,6 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
-  - task: CmdLine@2
-    displayName: Install react-native cli
-    inputs:
-      script: npm install -g react-native-cli
-
   - task: DownloadBuildArtifacts@0
     displayName: 'Download TestMSRNNuget Artifact'
     inputs:
@@ -64,10 +59,11 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
+  # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: react-native init testcli --version ${{ parameters.version }}
+      script: npx react-native init testcli --npm --version ${{ parameters.version }}
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
@@ -120,16 +116,23 @@ steps:
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --release
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs --release
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
+
+  - task: PublishBuildArtifacts@1
+    displayName: Upload build logs
+    condition:  succeededOrFailed()
+    inputs:    
+      pathtoPublish: '$(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs'
+      artifactName: 'Build logs - $(Agent.JobName)' 
 
   - task: CmdLine@2
     displayName: Create bundle testcli
@@ -148,7 +151,6 @@ steps:
         stop-process -name node
     condition: failed()
 
-
   - task: PublishPipelineArtifact@1
     displayName: Upload Verdaccio.log (on failure)
     inputs:
@@ -157,10 +159,3 @@ steps:
       publishLocation: 'pipeline'
     condition: failed()
 
-  - task: PublishPipelineArtifact@1
-    displayName: Upload msbuild.binlog (on failure)
-    inputs:
-      targetPath: '$(Agent.BuildDirectory)\testcli\*.binlog'
-      artifact: '$(Agent.JobName).msbuild.binlog'
-      publishLocation: 'pipeline'
-    condition: failed()

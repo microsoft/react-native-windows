@@ -70,7 +70,7 @@ export class ButtonWin32 extends React_2.Component<IButtonWin32Props, IButtonWin
 export type ButtonWin32OmitStyles = RN.TextStyleIOS & RN.TextStyleAndroid;
 
 // @public (undocumented)
-export type Cursor = 'auto' | 'pointer';
+export type Cursor = 'auto' | 'default' | 'pointer' | 'help' | 'not-allowed' | 'wait' | 'move' | 'nesw-resize' | 'ns-resize' | 'nwse-resize' | 'we-resize' | 'text';
 
 // @public (undocumented)
 export enum EventPhase {
@@ -325,7 +325,7 @@ export interface IViewWin32 {
 //
 // @public
 export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
-    // (undocumented)
+    // @deprecated (undocumented)
     acceptsKeyboardFocus?: boolean;
     // (undocumented)
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
@@ -342,6 +342,8 @@ export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes
     children?: React_2.ReactNode;
     // (undocumented)
     cursor?: Cursor;
+    // (undocumented)
+    focusable?: boolean;
     // (undocumented)
     keyDownEvents?: IHandledKeyboardEvent[];
     // (undocumented)

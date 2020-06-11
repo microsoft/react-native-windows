@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
@@ -36,9 +36,9 @@ namespace ReactUWPTestApp
 #endif
 
 #if DEBUG
-            InstanceSettings.EnableDeveloperMenu = true;
+            InstanceSettings.UseDeveloperSupport = true;
 #else
-            InstanceSettings.EnableDeveloperMenu = false;
+            InstanceSettings.UseDeveloperSupport = false;
 #endif
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());

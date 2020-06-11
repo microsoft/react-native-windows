@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -218,7 +218,10 @@ async function deployToDesktop(options, verbose, slnFile) {
     );
   }
 
-  let args = ['--remote-debugging', options.proxy ? 'true' : 'false'];
+  let args = [];
+  if (options.remoteDebugging) {
+    args.push('--remote-debugging');
+  }
 
   if (options.directDebugging) {
     const port = parseInt(options.directDebugging, 10);
@@ -261,6 +264,7 @@ async function deployToDesktop(options, verbose, slnFile) {
       {DeployLayout: true},
       options.verbose,
       'Deploy',
+      options.buildLogDirectory,
     );
   }
 

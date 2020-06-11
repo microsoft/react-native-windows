@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "I18nManagerModule.h"
 #include <IReactDispatcher.h>
+#include <XamlUtils.h>
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <winrt/Windows.Globalization.h>
 #include "Unicode.h"
@@ -11,26 +12,29 @@
 namespace Microsoft::ReactNative {
 
 static const React::ReactPropertyId<bool> &SystemIsRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{L"I18n", L"SystemIsRTL"};
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.I18n", L"SystemIsRTL"};
   return prop;
 }
 
 static const React::ReactPropertyId<bool> &AllowRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{L"I18n", L"AllowRTL"};
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.I18n", L"AllowRTL"};
   return prop;
 }
 
 static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
-  static const React::ReactPropertyId<bool> prop{L"I18n", L"ForceRTL"};
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.I18n", L"ForceRTL"};
   return prop;
 }
 
 void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  auto layoutDirection =
-      winrt::Windows::ApplicationModel::Resources::Core::ResourceContext().GetForCurrentView().QualifierValues().Lookup(
-          L"LayoutDirection");
+  if (xaml::TryGetCurrentApplication()) {
+    auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
+                               .GetForCurrentView()
+                               .QualifierValues()
+                               .Lookup(L"LayoutDirection");
 
-  propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+    propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+  }
 }
 
 /*static*/ bool I18nManager::IsRTL(const React::ReactPropertyBag &propertyBag) noexcept {

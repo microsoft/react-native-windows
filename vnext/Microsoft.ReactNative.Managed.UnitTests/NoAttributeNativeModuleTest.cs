@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -160,7 +160,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         reject("Already negative");
       }
     }
-
 
     public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
@@ -1530,7 +1529,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
-
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()

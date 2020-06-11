@@ -26,43 +26,6 @@ namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
 namespace WUXH = WUX::Hosting;
 
-struct SimpleRedBoxHandler : winrt::implements<SimpleRedBoxHandler, winrt::Microsoft::ReactNative::IRedBoxHandler> {
-  SimpleRedBoxHandler() noexcept {}
-
-  void ShowNewError(
-      winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info,
-      winrt::Microsoft::ReactNative::RedBoxErrorType type) noexcept {
-    OutputDebugStringA("----- Begin RedBox -----\n");
-
-    switch (type) {
-      case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal:
-        OutputDebugStringA("Fatal Error: ");
-        break;
-      case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft:
-        OutputDebugStringA("JavaScript Error: ");
-        break;
-      case winrt::Microsoft::ReactNative::RedBoxErrorType::Native:
-        OutputDebugStringA("Native Error: ");
-        break;
-    }
-
-    OutputDebugString(info.Message().c_str());
-    OutputDebugStringA("\n-----  End RedBox  -----\n");
-  }
-
-  bool IsDevSupportEnabled() noexcept {
-    return true;
-  }
-
-  void UpdateError(winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info) noexcept {
-    // noop
-  }
-
-  void DismissRedBox() noexcept {
-    // noop
-  }
-};
-
 struct WindowData {
   static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort = 9229;
@@ -73,8 +36,6 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-      m_packageProviders;
 
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
@@ -94,7 +55,6 @@ struct WindowData {
     if (!m_host) {
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
-      m_host.PackageProviders(PackageProviders());
     }
 
     return m_host;
@@ -105,15 +65,6 @@ struct WindowData {
     }
 
     return m_instanceSettings;
-  }
-
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider>
-  PackageProviders() noexcept {
-    if (!m_packageProviders) {
-      m_packageProviders = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>();
-    }
-
-    return m_packageProviders;
   }
 
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
@@ -137,7 +88,11 @@ struct WindowData {
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
-          host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
+          host.InstanceSettings().UseDeveloperSupport(true);
+
+          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
+          winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
+              host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
@@ -147,7 +102,6 @@ struct WindowData {
           m_reactRootView.ReactNativeHost(host);
 
           // Retrieve ABI pointer from C++/CX pointer
-          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
           rootElement.Children().Clear();
           rootElement.Children().Append(m_reactRootView);
         }
