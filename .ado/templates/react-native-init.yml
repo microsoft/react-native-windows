@@ -8,6 +8,7 @@ parameters:
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
+  additionalInitArguments: ''
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -69,7 +70,7 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }} --experimentalNugetDependency ${{ parameters.experimentalNugetDependency }}
+      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }} --experimentalNugetDependency ${{ parameters.experimentalNugetDependency }} ${{ parameters.additionalInitArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: PowerShell@2

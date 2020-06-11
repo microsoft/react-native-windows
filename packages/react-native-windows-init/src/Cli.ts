@@ -29,7 +29,11 @@ const argv = yargs.version(false).options({
     type: 'string',
     describe: 'The version of react-native-windows to use.',
   },
-  namespace: {type: 'string', describe: 'The native project namespace.'},
+  namespace: {
+    type: 'string',
+    describe:
+      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
+  },
   verbose: {type: 'boolean', describe: 'Enables logging.'},
   language: {
     type: 'string',
@@ -49,11 +53,10 @@ const argv = yargs.version(false).options({
   },
   useWinUI3: {
     type: 'boolean',
-    describe:
-    '[Experimental] Use WinUI3',
+    describe: '[Experimental] Use WinUI3',
     hidden: true,
     default: false,
-  }
+  },
 }).argv;
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;

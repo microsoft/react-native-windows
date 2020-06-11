@@ -6,8 +6,8 @@
 #include "ReactPackageProvider.h"
 
 // clang-format off
-using namespace winrt::{{ namespace }};
-using namespace winrt::{{ namespace }}::implementation;
+using namespace winrt::{{ namespaceCpp }};
+using namespace winrt::{{ namespaceCpp }}::implementation;
 using namespace winrt;
 using namespace {{ xamlNamespaceCpp }};
 using namespace {{ xamlNamespaceCpp }}::Controls;
@@ -55,7 +55,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
     super::OnLaunched(e);
 
     Frame rootFrame = Window::Current().Content().as<Frame>();
-    rootFrame.Navigate(xaml_typename<{{ name }}::MainPage>(), box_value(e.Arguments()));
+    rootFrame.Navigate(xaml_typename<{{ namespaceCpp }}::MainPage>(), box_value(e.Arguments()));
 }
 
 /// <summary>

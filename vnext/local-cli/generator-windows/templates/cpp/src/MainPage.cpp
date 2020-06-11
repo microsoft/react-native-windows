@@ -11,7 +11,7 @@
 using namespace winrt;
 using namespace {{ xamlNamespaceCpp }};
 
-namespace winrt::{{ namespace }}::implementation
+namespace winrt::{{ namespaceCpp }}::implementation
 {
     MainPage::MainPage()
     {

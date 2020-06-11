@@ -69,7 +69,8 @@ function copyProjectTemplateAndReplace(
   createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
 
   const language = options.language;
-  const ns = options.ns || newProjectName;
+  const namespace = options.ns || newProjectName;
+  const namespaceCpp = toCppNamespace(namespace);
   if (options.experimentalNugetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
@@ -85,7 +86,7 @@ function copyProjectTemplateAndReplace(
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
   const xamlNamespace = options.useWinUI3 ? 'Microsoft.UI.Xaml' : 'Windows.UI.Xaml';
-  const xamlNamespaceCpp = xamlNamespace.replace(/\./g, '::',);
+  const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
 
   const cppNugetPackages = [
     {
@@ -120,7 +121,8 @@ function copyProjectTemplateAndReplace(
     ],
 
     name: newProjectName,
-    namespace: ns,
+    namespace: namespace,
+    namespaceCpp: namespaceCpp,
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
@@ -184,6 +186,10 @@ function copyProjectTemplateAndReplace(
 
   console.log(chalk.white.bold('To run your app on UWP:'));
   console.log(chalk.white('   npx react-native run-windows'));
+}
+
+function toCppNamespace(namespace) {
+  return namespace.replace(/\./g, '::',);
 }
 
 function installDependencies(options) {
