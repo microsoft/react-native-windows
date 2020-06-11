@@ -26,6 +26,10 @@ function CheckVS {
         return $false;
     }
     $output = & $vsWhere -version 16 -requires $vsComponents -property productPath
+    $vsComponents | % {
+        Write-Output "Checking VS component $_";
+        & $vsWhere -version 16 -requires $_ -property productPath;
+    }
     return ($output -ne $null) -and (Test-Path $output);
 }
 
