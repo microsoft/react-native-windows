@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Implement logbox",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-11T03:32:34.962Z"
+}
