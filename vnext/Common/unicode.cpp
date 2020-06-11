@@ -15,8 +15,8 @@
 
 namespace Microsoft::Common::Unicode {
 
-// The implementations of the following functions heavily reference the MSDN
-// article at https://msdn.microsoft.com/en-us/magazine/mt763237.aspx.
+// The implementations of the following functions heavily reference the MSDN article at
+// https://docs.microsoft.com/en-us/archive/msdn-magazine/2016/september/c-unicode-encoding-conversions-with-stl-strings-and-win32-apis.
 
 std::wstring Utf8ToUtf16(const char *utf8, size_t utf8Len) {
   std::wstring utf16{};

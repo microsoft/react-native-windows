@@ -12,6 +12,7 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <RestrictedErrorInfo.h>
+#include <roerrorapi.h>
 
 // Standard Library
 #include <future>
@@ -41,6 +42,7 @@ using winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
 using winrt::Windows::Storage::Streams::DataWriter;
+using winrt::Windows::Storage::Streams::DataWriterStoreOperation;
 using winrt::Windows::Storage::Streams::IDataReader;
 using winrt::Windows::Storage::Streams::IDataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
@@ -50,11 +52,11 @@ namespace
   ///
   /// Implements an awaiter for Mso::DispatchQueue
   ///
-  auto resume_in_queue(const Mso::DispatchQueue& queue)
+  auto resume_in_queue(const Mso::DispatchQueue& queue) noexcept
   {
     struct awaitable
     {
-      awaitable(const Mso::DispatchQueue& queue)
+      awaitable(const Mso::DispatchQueue& queue) noexcept
         : m_queue{ queue }
       {
       }
@@ -66,7 +68,7 @@ namespace
 
       void await_resume() const noexcept {}
 
-      void await_suspend(std::experimental::coroutine_handle<> resume)
+      void await_suspend(std::experimental::coroutine_handle<> resume) noexcept
       {
         m_callback = [context = resume.address()]() noexcept
         {
@@ -122,21 +124,22 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 IAsyncAction WinRTWebSocketResource::PerformConnect()
 {
   auto self = shared_from_this();
+
+  co_await resume_background();
+
+  //TODO: Remove try/catch block after fixing unit tests.
   try
   {
-    co_await resume_background();
-
     auto async = self->m_socket.ConnectAsync(self->m_uri);
 
     co_await lessthrow_await_adapter<IAsyncAction>{async};
-    //co_await async;
 
     auto hr = async.ErrorCode();
     if (!SUCCEEDED(hr))
     {
       if (self->m_errorHandler)
       {
-        self->m_errorHandler({ "FAIL", ErrorType::Connection });
+        self->m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Connection });
       }
 
       co_return;
@@ -164,18 +167,19 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
 fire_and_forget WinRTWebSocketResource::PerformPing()
 {
   auto self = shared_from_this();
+
+  co_await resume_background();
+
+  co_await resume_on_signal(self->m_connectPerformed.get());
+
+  if (self->m_readyState != ReadyState::Open)
+  {
+    self = nullptr;
+    co_return;
+  }
+
   try
   {
-    co_await resume_background();
-
-    co_await resume_on_signal(self->m_connectPerformed.get());
-
-    if (self->m_readyState != ReadyState::Open)
-    {
-      self = nullptr;
-      co_return;
-    }
-
     self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
     string s{};
@@ -184,7 +188,20 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
       CheckedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
     self->m_writer.WriteBytes(arr);
 
-    co_await self->m_writer.StoreAsync();
+    auto async = self->m_writer.StoreAsync();
+
+    //co_await async;
+    co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+    if (!SUCCEEDED(async.ErrorCode()))
+    {
+      if (self->m_errorHandler)
+      {
+        self->m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Ping});
+      }
+
+      co_return;
+    }
 
     if (self->m_pingHandler)
     {
@@ -193,6 +210,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   }
   catch (hresult_error const& e)
   {
+    //TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler)
     {
       self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
@@ -208,30 +226,35 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
     co_return;
   }
 
+  co_await resume_background();
+
+  co_await resume_on_signal(self->m_connectPerformed.get());  // Ensure connection attempt has finished
+
+  co_await resume_in_queue(self->m_dispatchQueue);            // Ensure writes happen sequentially
+
+  if (self->m_readyState != ReadyState::Open)
+  {
+    self = nullptr;
+    co_return;
+  }
+
+  size_t length;
+  std::pair<string, bool> front;
+  bool popped = self->m_writeQueue.try_pop(front);
+  if (!popped)
+  {
+    if (self->m_errorHandler)
+    {
+      self->m_errorHandler({ "Could not retrieve outgoing message.", ErrorType::Send });
+    }
+
+    co_return;
+  }
+
+  auto [message, isBinary] = std::move(front);
+
   try
   {
-    co_await resume_background();
-
-    co_await resume_on_signal(self->m_connectPerformed.get());  // Ensure connection attempt has finished
-
-    co_await resume_in_queue(self->m_dispatchQueue);            // Ensure writes happen sequentially
-
-    if (self->m_readyState != ReadyState::Open)
-    {
-      self = nullptr;
-      co_return;
-    }
-
-    size_t length;
-    std::pair<string, bool> front;
-    bool popped = self->m_writeQueue.try_pop(front);
-    if (!popped)
-    {
-      throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
-    }
-
-    auto [message, isBinary] = std::move(front);
-
     if (isBinary)
     {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
@@ -252,15 +275,36 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
       self->m_writer.WriteBytes(arr);
     }
 
-    co_await self->m_writer.StoreAsync();
+    auto async = self->m_writer.StoreAsync();
+
+    co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+    if (!SUCCEEDED(async.ErrorCode()))
+    {
+      if (self->m_errorHandler)
+      {
+        self->m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Send });
+      }
+
+      co_return;
+    }
 
     if (self->m_writeHandler)
     {
       self->m_writeHandler(length);
     }
   }
+  catch (std::exception const& e)
+  {
+    // Utf8ToUtf16 may throw
+    if (self->m_errorHandler)
+    {
+      self->m_errorHandler({ e.what(), ErrorType::Ping });
+    }
+  }
   catch (hresult_error const& e)
   {
+    //TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler)
     {
       self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
@@ -283,32 +327,11 @@ fire_and_forget WinRTWebSocketResource::PerformClose()
       m_closeHandler(m_closeCode, m_closeReason);
     }
   }
-  catch (winrt::hresult_invalid_argument const& e)
+  catch (winrt::hresult_invalid_argument const&)
   {
     if (m_errorHandler)
     {
-      string message;
-
-      auto restricted = e.try_as<IRestrictedErrorInfo>();
-      BSTR description;
-      HRESULT error;
-      BSTR restrictedDesc;
-      BSTR capabilitySid;
-      if (SUCCEEDED(restricted->GetErrorDetails(&description, &error, &restrictedDesc, &capabilitySid)))
-      {
-        message = Utf16ToUtf8(description) + ": " + Utf16ToUtf8(restrictedDesc);
-      }
-      else
-      {
-        message = Utf16ToUtf8(e.message());
-      }
-      // BSTR's allocated memory must be explicitly released.
-      // See https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/allocating-and-releasing-memory-for-a-bstr
-      SysFreeString(description);
-      SysFreeString(restrictedDesc);
-      SysFreeString(capabilitySid);
-
-      m_errorHandler({ std::move(message), ErrorType::Close });
+      m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Close });
     }
   }
   catch (hresult_error const& e)
@@ -367,6 +390,40 @@ void WinRTWebSocketResource::Synchronize()
   {
     m_connectPerformedPromise.get_future().wait();
   }
+}
+
+string WinRTWebSocketResource::GetRestrictedErrorMessage() noexcept
+{
+  string result;
+  IRestrictedErrorInfo* errorInfo;
+  if (SUCCEEDED(GetRestrictedErrorInfo(&errorInfo)))
+  {
+    BSTR description;
+    HRESULT error;
+    BSTR restrictedDesc;
+    BSTR capabilitySid;
+    if (SUCCEEDED(errorInfo->GetErrorDetails(&description, &error, &restrictedDesc, &capabilitySid)))
+    {
+      result = Utf16ToUtf8(description) + ": " + Utf16ToUtf8(restrictedDesc);
+    }
+    else
+    {
+      result = "Unknown error";
+    }
+    // BSTR's allocated memory must be explicitly released.
+    // See https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/allocating-and-releasing-memory-for-a-bstr
+    SysFreeString(description);
+    SysFreeString(restrictedDesc);
+    SysFreeString(capabilitySid);
+
+    //TODO: Free errorInfo memory?
+  }
+  else
+  {
+    result = "Unknown error";
+  }
+
+  return std::move(result);
 }
 
 #pragma endregion Private members
