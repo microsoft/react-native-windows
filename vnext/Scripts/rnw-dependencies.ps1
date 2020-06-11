@@ -1,6 +1,6 @@
 # Troubleshoot RNW dependencies
-param([switch]$Install = $false, [switch]$NoPrompt = $false)
-$vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', 'Microsoft.VisualStudio.ComponentGroup.UWP.Support');
+param([switch]$Install = $false, [switch]$NoPrompt = $false, [switch]$Clone = $false)
+$vsWorkloads = @( 'Microsoft.Component.MSBuild', 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', 'Microsoft.VisualStudio.ComponentGroup.UWP.Support', 'Microsoft.VisualStudio.Workload.ManagedDesktop', 'Microsoft.VisualStudio.Workload.NativeDesktop', 'Microsoft.VisualStudio.Workload.Universal', 'Microsoft.VisualStudio.ComponentGroup.UWP.VC');
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -33,8 +33,8 @@ function InstallVS {
     $productId = & $vsWhere -version 16 -property productId
     $vsInstaller = "$installerPath\vs_installer.exe"
     $addWorkloads = $vsWorkloads | % { '--add', $_ };
-    Start-Process -PassThru -Wait  -Path $vsInstaller -ArgumentList ("install --channelId $channelId --productId $productId $addWorkloads --quiet" -split ' ')
-
+    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet" -split ' ')
+    return $p.ExitCode
 }
 
 function CheckNode {
@@ -85,14 +85,14 @@ $requirements = @(
     @{
         Name = 'Long path support is enabled';
         Valid = try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1} catch { $false };
-        Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord };
+        Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord;  };
     },
     @{
         Name = 'Choco';
         Valid = try { (Get-Command choco -ErrorAction Stop) -ne $null } catch { $false };
         Install = {
             [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; 
-            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
         };
     },
     @{
@@ -141,8 +141,13 @@ $requirements = @(
     },
     @{
         Name = "MSBuild Structured Log Viewer";
-        Valid = { (cmd "/c assoc .binlog 2>nul" )  -ne $null };
-        Install = { choco install -y msbuild-structured-log-viewer };
+        Valid = (cmd "/c assoc .binlog 2>nul" )  -ne $null;
+        Install = {
+            choco install -y msbuild-structured-log-viewer;
+            $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\app-2.0.152\StructuredLogViewer.exe -Recurse;
+            cmd /c "assoc .binlog=MSBuildLog";
+            cmd /c "ftype MSBuildLog=$($slv.FullName) %1";
+         };
     }
 
     );
@@ -170,7 +175,8 @@ foreach ($req in $requirements)
         }
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
-                Invoke-Command $req.Install -ErrorAction Stop
+                $LASTEXITCODE = 0;
+                Invoke-Command $req.Install -ErrorAction Stop;
                 if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
                 else { $Installed++; }
             } elseif (!$req.Optional) {
@@ -195,4 +201,8 @@ if ($NeedsRerun) {
 }
 if ($Installed -ne 0) {
     Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect."
+}
+
+if ($Clone) {
+    & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
 }
