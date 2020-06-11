@@ -190,7 +190,6 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
 
     auto async = self->m_writer.StoreAsync();
 
-    //co_await async;
     co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
 
     if (!SUCCEEDED(async.ErrorCode()))
