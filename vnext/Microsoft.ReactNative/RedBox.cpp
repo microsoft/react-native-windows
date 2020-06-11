@@ -60,31 +60,32 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_popup = xaml::Controls::Primitives::Popup{};
 
     const winrt::hstring xamlString =
-        L"<Grid Background='{ThemeResource ContentDialogBackground}'"
-        L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
-        L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'"
-        L"  RequestedTheme='Dark'>"
-        L"  <Grid.ColumnDefinitions>"
-        L"    <ColumnDefinition Width='*'/>"
-        L"    <ColumnDefinition Width='*'/>"
-        L"  </Grid.ColumnDefinitions>"
-        L"  <Grid.RowDefinitions>"
-        L"    <RowDefinition Height='*'/>"
-        L"    <RowDefinition Height='Auto'/>"
-        L"  </Grid.RowDefinitions>"
-        L"  <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>"
-        L"    <StackPanel HorizontalAlignment='Stretch'>"
-        L"      <StackPanel Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>"
-        L"        <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
-        L"        <Border Padding='15,15,15,0'/>"
-        L"        <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
-        L"      </StackPanel>"
-        L"      <StackPanel HorizontalAlignment='Stretch' x:Name='StackPanel' Margin='15' />"
-        L"    </StackPanel>"
-        L"  </ScrollViewer>"
-        L"  <Button x:Name='DismissButton' Grid.Row='1' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>"
-        L"  <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload (NYI)</Button>"
-        L"</Grid>";
+      LR"(
+        <Grid Background='#FF333333'
+          xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+          xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+          RequestedTheme='Dark'>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width='*'/>
+            <ColumnDefinition Width='*'/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height='*'/>
+            <RowDefinition Height='Auto'/>
+          </Grid.RowDefinitions>
+          <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>
+            <StackPanel HorizontalAlignment='Stretch'>
+              <StackPanel Background='#FFF35369' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>
+                <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>
+                <Border Padding='15,15,15,0'/>
+                <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>
+              </StackPanel>
+              <StackPanel HorizontalAlignment='Stretch' x:Name='StackPanel' Margin='15' />
+            </StackPanel>
+          </ScrollViewer>
+          <Button x:Name='DismissButton' Grid.Row='1' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>
+          <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload (NYI)</Button>
+        </Grid>)";
 
     m_redboxContent = winrt::unbox_value<xaml::Controls::Grid>(xaml::Markup::XamlReader::Load(xamlString));
     m_errorMessageText = m_redboxContent.FindName(L"ErrorMessageText").as<xaml::Controls::TextBlock>();
@@ -208,10 +209,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     // Finally, it's important to note that JS expressions of that are not of string type
     // need to be manually converted to string for them to get marshaled properly back here.
     webView.NavigationCompleted([=](IInspectable const &, auto const &) {
-      // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
       std::wstring jsExpression =
           L"(document.body.style.setProperty('color', 'white'), "
-          L"document.body.style.setProperty('background', '#be0000')) "
+          L"document.body.style.setProperty('background', '#f35369')) "
           L"|| document.documentElement.scrollHeight.toString()";
 
 #ifndef USE_WINUI3
@@ -309,13 +309,14 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_stackPanel.Children().Clear();
     for (const auto frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
-          L"<StackPanel Margin='0,5,0,5'"
-          L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
-          L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'"
-          L"  >"
-          L"  <TextBlock x:Name='MethodText' FontSize='14' Foreground='White' TextWrapping='Wrap' FontFamily='Consolas'/>"
-          L"  <TextBlock x:Name='FrameText' FontSize='14' Foreground='Gray' TextWrapping='Wrap' FontFamily='Consolas'/>"
-          L"</StackPanel>";
+      LR"(
+          <StackPanel Margin='0,5,0,5'
+            xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+            xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+            >
+            <TextBlock x:Name='MethodText' FontSize='14' Foreground='White' TextWrapping='Wrap' FontFamily='Consolas'/>
+            <TextBlock x:Name='FrameText' FontSize='14' Foreground='Gray' TextWrapping='Wrap' FontFamily='Consolas'/>
+          </StackPanel>)";
       auto frameContent =
           winrt::unbox_value<xaml::Controls::StackPanel>(xaml::Markup::XamlReader::Load(xamlFrameString));
       auto methodText = frameContent.FindName(L"MethodText").as<xaml::Controls::TextBlock>();
