@@ -249,13 +249,14 @@ module.exports = {
     },
     {
       command: '--sln [string]',
-      description: 'App solution file to build, e.g. windows\\myApp.sln',
+      description:
+        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
       default: undefined,
     },
     {
       command: '--proj [string]',
       description:
-        'App project file to build, e.g. windows\\myApp\\myApp.vcxproj',
+        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
       default: undefined,
     },
     {
