@@ -63,7 +63,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectFails)
-  TEST_IGNORE() //TODO: Remove before merging. Ensure mocks behave as original APIs.
+  TEST_IGNORE() // TODO: Remove before merging. Ensure mocks behave as original APIs.
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectFails) {
     bool connected = false;
