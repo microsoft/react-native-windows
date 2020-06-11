@@ -23,16 +23,7 @@ using namespace xaml::Controls;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactNativeHost::ReactNativeHost() noexcept : ReactNativeHost(*Mso::React::MakeReactHost()) {}
-
-ReactNativeHost::ReactNativeHost(Mso::React::IReactHost &host) noexcept : m_reactHost(&host) {
-#if _DEBUG
-  facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
-    std::string str = std::string("ReactNative:") + message;
-    OutputDebugStringA(str.c_str());
-  });
-#endif
-}
+ReactNativeHost::ReactNativeHost() noexcept : m_reactHost(Mso::React::MakeReactHost()) {}
 
 IVector<IReactPackageProvider> ReactNativeHost::PackageProviders() noexcept {
   return InstanceSettings().PackageProviders();
@@ -54,6 +45,24 @@ IAsyncAction ReactNativeHost::LoadInstance() noexcept {
   return ReloadInstance();
 }
 
+::Microsoft::ReactNative::ReactPropertyId<::Microsoft::ReactNative::ReactNonAbiValue<winrt::weak_ref<ReactNativeHost>>>
+ReactNativeHostProperty() noexcept {
+  static ::Microsoft::ReactNative::ReactPropertyId<
+      ::Microsoft::ReactNative::ReactNonAbiValue<winrt::weak_ref<ReactNativeHost>>>
+      propId{L"ReactNative.ReactNativeHost", L"ReactNativeHost"};
+  return propId;
+}
+
+/*static*/ winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost::GetReactNativeHost(
+    ReactPropertyBag const &properties) noexcept {
+  if (auto wkHost = properties.Get(ReactNativeHostProperty()).Value()) {
+    if (auto abiHost = wkHost.get()) {
+      return abiHost.as<winrt::Microsoft::ReactNative::ReactNativeHost>();
+    }
+  }
+  return nullptr;
+}
+
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
@@ -69,6 +78,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       }
     }
   }
+
+  ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.Properties = m_instanceSettings.Properties();

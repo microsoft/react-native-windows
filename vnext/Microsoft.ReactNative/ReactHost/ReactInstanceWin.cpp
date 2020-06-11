@@ -111,10 +111,6 @@ void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly
   }
 }
 
-Mso::WeakPtr<ReactInstanceWin> ReactContext::GetInnerInstance() noexcept {
-  return m_reactInstance;
-}
-
 //=============================================================================================
 // LoadedCallbackGuard ensures that the OnReactInstanceLoaded is always called.
 // It calls OnReactInstanceLoaded in destructor with a cancellation error.
@@ -806,10 +802,6 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   if (auto instanceWrapper = m_instanceWrapper.LoadWithLock()) {
     instanceWrapper->DetachRootView(rootView);
   }
-}
-
-const Mso::WeakPtr<IReactHost> ReactInstanceWin::GetHost() noexcept {
-  return m_weakReactHost;
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(

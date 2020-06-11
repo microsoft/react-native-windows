@@ -34,19 +34,13 @@ void LogBox::Hide() noexcept {
 }
 
 void LogBox::ShowOnUIThread() noexcept {
-  auto contextImpl = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
-  auto weakInstance = static_cast<Mso::React::ReactContext *>(&contextImpl->GetInner())->GetInnerInstance();
-  auto instance = weakInstance.GetStrongPtr();
-  if (!instance)
-    return;
-  auto weakHost = instance->GetHost();
-  auto host = weakHost.GetStrongPtr();
+  auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
   if (!host)
     return;
 
   m_logBoxContent = React::ReactRootView();
   m_logBoxContent.ComponentName(L"LogBox");
-  m_logBoxContent.ReactNativeHost(winrt::make<winrt::Microsoft::ReactNative::implementation::ReactNativeHost>(*host));
+  m_logBoxContent.ReactNativeHost(host);
 
   m_popup = xaml::Controls::Primitives::Popup{};
   xaml::FrameworkElement root{nullptr};

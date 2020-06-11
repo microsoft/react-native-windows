@@ -60,7 +60,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_popup = xaml::Controls::Primitives::Popup{};
 
     const winrt::hstring xamlString =
-      LR"(
+        LR"(
         <Grid Background='#FF333333'
           xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
           xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
@@ -309,7 +309,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_stackPanel.Children().Clear();
     for (const auto frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
-      LR"(
+          LR"(
           <StackPanel Margin='0,5,0,5'
             xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
             xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'

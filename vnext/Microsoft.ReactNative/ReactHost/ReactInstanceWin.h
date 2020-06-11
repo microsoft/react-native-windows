@@ -47,8 +47,6 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   // when the ReactInstance is destroyed.
   void Destroy() noexcept;
 
-  Mso::WeakPtr<ReactInstanceWin> GetInnerInstance() noexcept;
-
  public: // IReactContext
   winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept override;
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept override;
@@ -84,9 +82,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;
   void DetachRootView(facebook::react::IReactRootView *rootView) noexcept override;
-
- public: // Internal use only
-  const Mso::WeakPtr<IReactHost> GetHost() noexcept;
 
  private:
   friend MakePolicy;
