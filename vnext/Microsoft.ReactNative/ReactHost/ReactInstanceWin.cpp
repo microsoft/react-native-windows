@@ -9,6 +9,7 @@
 #include <ReactUWP/CreateUwpModules.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
@@ -387,7 +388,12 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
       if (auto strongThis = weakThis.GetStrongPtr()) {
         if (!strongThis->m_isLoaded) {
           strongThis->m_isLoaded = true;
-          strongThis->m_state = ReactInstanceState::Loaded;
+          if (!errorCode) {
+            strongThis->m_state = ReactInstanceState::Loaded;
+          } else {
+            strongThis->m_state = ReactInstanceState::HasError;
+          }
+
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
             onLoaded->Invoke(*strongThis, errorCode);
           }
@@ -456,7 +462,8 @@ void ReactInstanceWin::InitNativeMessageThread() noexcept {
 
 void ReactInstanceWin::InitUIMessageThread() noexcept {
   // Native queue was already given us in constructor.
-  m_uiQueue = winrt::Microsoft::ReactNative::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
+  m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatchQueue(m_options.Properties);
+  VerifyElseCrashSz(m_uiQueue, "No UI Dispatcher provided");
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
@@ -475,6 +482,10 @@ void ReactInstanceWin::InitUIManager() noexcept {
   react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyReactInstance);
 
   auto uiManager = react::uwp::CreateUIManager2(std::move(viewManagers));
+  auto wkUIManger = std::weak_ptr<facebook::react::IUIManager>(uiManager);
+  m_reactContext->Properties().Set(
+      winrt::Microsoft::ReactNative::implementation::XamlUIService::XamlUIServiceProperty().Handle(),
+      winrt::make<winrt::Microsoft::ReactNative::implementation::XamlUIService>(std::move(wkUIManger), m_reactContext));
   m_uiManager.Exchange(std::move(uiManager));
 }
 

@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Jun 2020 12:11:09 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.12",
+      "version": "0.62.0-preview.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add XamlUIService with ElementFromReactTag",
+            "author": "acoates@microsoft.com",
+            "commit": "d037e54de76d5c1165300f919a14bbfa3ffbc199",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Jun 2020 22:48:15 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.11",
+      "version": "0.62.0-preview.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented support for native module std::weak_ptr",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactInstance error state to avoid crashes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add UIDispatcher property to ReactInstanceSettings and IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Jun 2020 23:30:48 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.10",
+      "version": "0.62.0-preview.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor autolinking template update prep",
+            "author": "jthysell@microsoft.com",
+            "commit": "58f8b4a3d84eafd8bd30a474334aac2b34979170",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Jun 2020 03:06:06 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.9",
+      "version": "0.62.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Work around regression in app packaging in VS 16.5-16.6",
+            "author": "asklar@microsoft.com",
+            "commit": "be634f759b32e6cb25b5cd9c3ea01aa7a45bacb1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed Microsoft.ReactNative build in VS 16.6.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "01495ec79e26db7a29bcde91d53f730bcdb93aea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 May 2020 10:40:41 GMT",
       "tag": "react-native-windows_v0.62.0-preview.8",
       "version": "0.62.0-preview.8",

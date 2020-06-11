@@ -34,7 +34,7 @@ std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::Get
     m_modulesWorkerQueue = react::uwp::MakeSerialQueueThread();
   }
 
-  auto winrtReactContext = winrt::make<ReactContext>(Mso::Copy(reactContext));
+  auto winrtReactContext = winrt::make<implementation::ReactContext>(Mso::Copy(reactContext));
 
   for (auto &entry : m_moduleProviders) {
     modules.emplace_back(

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "IJSValueWriter.idl";
+import "IReactDispatcher.idl";
 import "IReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative {
@@ -9,7 +10,13 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   interface IReactContext {
     IReactPropertyBag Properties { get; };
+    // Get ReactDispatcherHelper::UIDispatcherProperty from the Properties property bag.
+    IReactDispatcher UIDispatcher { get; };
+
+    // Deprecated: Use DispatchEvent on XamlUIService instead
     void DispatchEvent(Windows.UI.Xaml.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
+
+    // Call JavaScript function methodName of moduleName.
     void CallJSFunction(String moduleName, String methodName, JSValueArgWriter paramsArgWriter);
     void EmitJSEvent(String eventEmitterName, String eventName, JSValueArgWriter paramsArgWriter);
   }

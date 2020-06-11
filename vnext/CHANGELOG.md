@@ -1,8 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 May 2020 10:40:41 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jun 2020 12:11:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.12
+
+Wed, 10 Jun 2020 12:11:09 GMT
+
+### Changes
+
+- Add XamlUIService with ElementFromReactTag (acoates@microsoft.com)
+
+## 0.62.0-preview.11
+
+Sat, 06 Jun 2020 22:48:15 GMT
+
+### Changes
+
+- Implemented support for native module std::weak_ptr (vmorozov@microsoft.com)
+- Fix ReactInstance error state to avoid crashes (vmorozov@microsoft.com)
+- Add UIDispatcher property to ReactInstanceSettings and IReactContext (vmorozov@microsoft.com)
+
+## 0.62.0-preview.10
+
+Thu, 04 Jun 2020 23:30:48 GMT
+
+### Changes
+
+- Minor autolinking template update prep (jthysell@microsoft.com)
+
+## 0.62.0-preview.9
+
+Tue, 02 Jun 2020 03:06:06 GMT
+
+### Changes
+
+- Work around regression in app packaging in VS 16.5-16.6 (asklar@microsoft.com)
+- Fixed Microsoft.ReactNative build in VS 16.6.0 (vmorozov@microsoft.com)
 
 ## 0.62.0-preview.8
 
