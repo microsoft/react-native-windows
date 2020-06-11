@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>IReactNotificationService · React Native for Windows + macOS</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="*Describe the API*"/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="IReactNotificationService · React Native for Windows + macOS"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="*Describe the API*"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows + macOS Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows + macOS Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows + macOS"/><h2 class="headerTitleWithLogo">React Native for Windows + macOS</h2></a><a href="/react-native-windows/versions"><h3>next</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-native-windows/docs/next/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/next/flyout-component" target="_self">APIs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/IReactNotificationService-api-windows.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">IReactNotificationService</h1></header><article><div><span><p><em>Describe the API</em></p>
+<h1><a class="anchor" aria-hidden="true" id="reference"></a><a href="#reference" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reference</h1>
+<h2><a class="anchor" aria-hidden="true" id="methods"></a><a href="#methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
+<!-- // Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+<p>import &quot;IReactDispatcher.idl&quot;;
+import &quot;IReactPropertyBag.idl&quot;;</p>
+<p>namespace Microsoft.ReactNative {</p>
+<p>// A subscription to a notification.
+// The subscription is removed when this object is deleted or the Unsubscribe method is called.
+[webhosthidden]
+interface IReactNotificationSubscription
+{
+// Name of the notification.
+IReactPropertyName NotificationName { get; };</p>
+<pre><code class="hljs">// The IReactDispatcher provided when the notification subscription created.
+// All notifications will be handled using this dispatcher.
+IReactDispatcher Dispatcher { get; };
+
+// True if the subscription is still active.
+// This property is checked before notification handler is invoked.
+Boolean IsSubscribed { get; };
+
+// Remove the subscription.
+// Because of the multi-threaded nature of the notifications, the handler can be still called
+// after the Unsubscribe method called if the IsSubscribed property is already checked.
+// Consider calling the Unsubscribe method and the handler in the same IReactDispatcher
+// to ensure that no handler is invoked after the Unsubscribe method call.
+void Unsubscribe();
+</code></pre>
+<p>}</p>
+<p>// Notification args provided to the notification handler.
+[webhosthidden]
+interface IReactNotificationArgs
+{
+// The notification subscription that can be used to unsubscribe in the notification handler.
+// It also has the name and dispatcher associated with the notification.
+IReactNotificationSubscription Subscription { get; };</p>
+<pre><code class="hljs">// The data sent with the notification. It can be any WinRT type.
+// Consider using IReactPropertyBag for semi-structured data.
+// It can be null if notification has no data.
+Object Data { get; };
+</code></pre>
+<p>}</p>
+<p>// Delegate to handle notifications.
+// The sender parameter is the object that sent the notification. It can be null.
+// The args contain the notification-specific data and the notification subscription.
+[webhosthidden]
+delegate void ReactNotificationHandler(Object sender, IReactNotificationArgs args);</p>
+<p>// The notification service is used to subscribe to notifications and to send notifications.
+[webhosthidden]
+interface IReactNotificationService
+{
+// Subscribe to a notification.
+// The notificationName as a property name can belong to a specific namespace. It must be not null.
+// The dispatcher is used to call notification handlers. If it is null, then handler is called synchronously.
+// The handler is a delegate that can be implemented as a lambda to handle notifications.
+// The method returns IReactNotificationSubscription that must be kept alive while the subscription
+// is active. The subscription is removed when the IReactNotificationSubscription is destroyed.
+IReactNotificationSubscription Subscribe(
+IReactPropertyName notificationName, IReactDispatcher dispatcher, ReactNotificationHandler handler);</p>
+<pre><code class="hljs">// Send the notification with notificationName.
+// The sender is the object that sends notification. It can be null.
+// The data is the data associated with the notification. It can be null.
+// Consider using IReactPropertyBag for sending semi-structured data. It can be created
+// using the ReactPropertyBagHelper.CreatePropertyBag method.
+void SendNotification(IReactPropertyName notificationName, Object sender, Object data);
+</code></pre>
+<p>}</p>
+<p>// Helper methods for the notification service implementation.
+[webhosthidden]
+static runtimeclass ReactNotificationServiceHelper
+{
+// Create new instance of IReactNotificationService
+static IReactNotificationService CreateNotificationService();
+}
+} // namespace Microsoft.ReactNative --&gt;</p>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#methods">Methods</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows + macOS Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/rnm-getting-started"> Get Started with macOS</a></div><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

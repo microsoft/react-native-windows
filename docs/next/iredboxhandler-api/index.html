@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>IRedBoxHandler · React Native for Windows + macOS</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="RedBoxHandler provides an extension point to allow custom error handling within the react instance.  This can be useful if you have an exsiting error reporting system that you want react errors to be reported to.  The default implementation of RedBoxHandler shows error messages in a full screen error screen within the application."/><meta name="docsearch:version" content="next"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="IRedBoxHandler · React Native for Windows + macOS"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="RedBoxHandler provides an extension point to allow custom error handling within the react instance.  This can be useful if you have an exsiting error reporting system that you want react errors to be reported to.  The default implementation of RedBoxHandler shows error messages in a full screen error screen within the application."/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows + macOS Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows + macOS Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows + macOS"/><h2 class="headerTitleWithLogo">React Native for Windows + macOS</h2></a><a href="/react-native-windows/versions"><h3>next</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-native-windows/docs/next/getting-started" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/react-native-windows/docs/next/flyout-component" target="_self">APIs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Native API (Windows)</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Components (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/flyout-component">Flyout</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/glyph-component">Glyph</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/popup-component">Popup</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">JavaScript API (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/apptheme-api">AppTheme</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ikeyboardprops-api">IKeyboardProps</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/iviewwindowsprops-api">IViewWindowsProps</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native API (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ijsvaluereader-api">IJSValueReader</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ijsvaluewriter-api">IJSValueWriter</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactcontext-api">IReactContext</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactdispatcher-api">IReactDispatcher</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactmodulebuilder-api">IReactModuleBuilder</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactnonabivalue-api">IReactNonAbiValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactpackagebuilder-api">IReactPackageBuilder</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactpackageprovider-api">IReactPackageProvider</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/ireactpropertybag-api">IReactPropertyBag</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/next/iredboxhandler-api">IRedBoxHandler</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/iviewmanager-api">IViewManager</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/reactapplication-api">ReactApplication</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/reactinstancesettings-api">ReactInstanceSettings</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/reactnativehost-api">ReactNativeHost</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/next/xamluiservice-api">XamlUIService</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/IRedBoxHandler-api-windows.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">IRedBoxHandler</h1></header><article><div><span><p>RedBoxHandler provides an extension point to allow custom error handling within the react instance.  This can be useful if you have an exsiting error reporting system that you want react errors to be reported to.  The default implementation of RedBoxHandler shows error messages in a full screen error screen within the application.</p>
+<p>-- Insert Screenshot here --</p>
+<p>If you want to maintain the existing RedBox behaviors, and also report errors to your own reporting system, your implementation can call into the default RedBoxHandler, which can be obtained by calling</p>
+<pre><code class="hljs css language-csharp">RedBoxHelper<span class="token punctuation">::</span><span class="token function">CreateDefaultHandler</span><span class="token punctuation">(</span>Host<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Sample settings up a RedBoxHander that reports errors to an external system, and displays the default RedBox experience within the application:</p>
+<pre><code class="hljs css language-csharp">
+<span class="token keyword">class</span> <span class="token class-name">MyRedBoxHandler</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IRedBoxHandler</span></span>
+<span class="token punctuation">{</span>
+  <span class="token function">MyRedBoxHandler</span><span class="token punctuation">(</span><span class="token class-name">IRedBoxHandler</span> defaultHandler<span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    innerHandler <span class="token operator">=</span> defaultHandler<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ShowNewError</span><span class="token punctuation">(</span><span class="token class-name">IRedBoxErrorInfo</span> info<span class="token punctuation">,</span> <span class="token class-name">RedBoxErrorType</span> type<span class="token punctuation">)</span> 
+  <span class="token punctuation">{</span>
+    <span class="token comment">// Dont report non-fatal errors (optional)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">!=</span> RedBoxErrorType<span class="token punctuation">.</span>JavaScriptSoft<span class="token punctuation">)</span> 
+      <span class="token function">ReportErrorToMyErrorReportingSystem</span><span class="token punctuation">(</span>info<span class="token punctuation">,</span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Display errors in app if the instance is running with DevSupportEnabled</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>innerHandler<span class="token punctuation">.</span>IsDevSupportEnabled<span class="token punctuation">)</span>
+      innerHandler<span class="token punctuation">.</span><span class="token function">ShowNewError</span><span class="token punctuation">(</span>info<span class="token punctuation">,</span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> IsDevSupportEnabled <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">{</span>
+    <span class="token comment">// The default handler will return true if the instance has DevSupport turned on</span>
+    <span class="token comment">// But if you want to record error information in released versions of your app</span>
+    <span class="token comment">// Then you should return true here, so that all errors get reported.</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">UpdateError</span><span class="token punctuation">(</span><span class="token class-name">IRedBoxErrorInfo</span> info<span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>innerHandler<span class="token punctuation">.</span>IsDevSupportEnabled<span class="token punctuation">)</span>
+      innerHandler<span class="token punctuation">.</span><span class="token function">UpdateError</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">DismissRedBox</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>innerHandler<span class="token punctuation">.</span>IsDevSupportEnabled<span class="token punctuation">)</span>
+      innerHandler<span class="token punctuation">.</span><span class="token function">DismissRedBox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token class-name">IRedBoxHandler</span> innerHandler<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token function">RegisterMyRedBoxHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  Host<span class="token punctuation">.</span>InstanceSettings<span class="token punctuation">.</span>RedBoxHandler <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">MyRedBoxHandler</span><span class="token punctuation">(</span>RedBoxHelper<span class="token punctuation">.</span><span class="token function">CreateDefaultHandler</span><span class="token punctuation">(</span>Host<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<h1><a class="anchor" aria-hidden="true" id="reference"></a><a href="#reference" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reference</h1>
+<h1><a class="anchor" aria-hidden="true" id="iredboxhandler"></a><a href="#iredboxhandler" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IRedBoxHandler</h1>
+<h2><a class="anchor" aria-hidden="true" id="methods"></a><a href="#methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
+<h3><a class="anchor" aria-hidden="true" id="shownewerror"></a><a href="#shownewerror" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ShowNewError()</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ShowNewError</span><span class="token punctuation">(</span><span class="token class-name">IRedBoxErrorInfo</span> info<span class="token punctuation">,</span> <span class="token class-name">RedBoxErrorType</span> type<span class="token punctuation">)</span>
+</code></pre>
+<p>This method is called when an error is initially hit.</p>
+<h3><a class="anchor" aria-hidden="true" id="updateerror"></a><a href="#updateerror" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>UpdateError()</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">UpdateError</span><span class="token punctuation">(</span><span class="token class-name">IRedBoxErrorInfo</span> info<span class="token punctuation">)</span>
+</code></pre>
+<p>This method is called when updated information about an error has been resolved.  For javascript errors, this is called if source map information was able to be resolved to provide a more useful callstack.</p>
+<h2><a class="anchor" aria-hidden="true" id="properties"></a><a href="#properties" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h2>
+<h3><a class="anchor" aria-hidden="true" id="isdevsupportenabled"></a><a href="#isdevsupportenabled" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>IsDevSupportEnabled</code></h3>
+<pre><code class="hljs css language-csharp">  <span class="token return-type class-name"><span class="token keyword">bool</span></span> IsDevSupportEnabled <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This property will control if errors should be reported to the handler.  If this returns false, <a href="#shownewerror">ShowNewError</a> and <a href="#updateerror">UpdateError</a> will not be called.</p>
+<h1><a class="anchor" aria-hidden="true" id="redboxerrortype-enum"></a><a href="#redboxerrortype-enum" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>RedBoxErrorType (enum)</h1>
+<table>
+<thead>
+<tr><th style="text-align:left">RedBoxErrorType</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">JavaScriptFatal</td><td style="text-align:left">A JS Exception was thrown and not catched or otherwise fatal error</td></tr>
+<tr><td style="text-align:left">JavaScriptSoft</td><td style="text-align:left">An error coming from JS that isn't fatal, such as console.error</td></tr>
+<tr><td style="text-align:left">Native</td><td style="text-align:left">An error happened in native code</td></tr>
+</tbody>
+</table>
+<h1><a class="anchor" aria-hidden="true" id="iredboxerrorframeinfo"></a><a href="#iredboxerrorframeinfo" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IRedBoxErrorFrameInfo</h1>
+<p>This object represents a single frame within the callstack of an error.</p>
+<h2><a class="anchor" aria-hidden="true" id="properties-1"></a><a href="#properties-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h2>
+<h3><a class="anchor" aria-hidden="true" id="file"></a><a href="#file" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>File</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">string</span></span> File <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The file location of this frame</p>
+<h3><a class="anchor" aria-hidden="true" id="method"></a><a href="#method" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Method</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">string</span></span> Method <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The method name of this frame</p>
+<h3><a class="anchor" aria-hidden="true" id="line"></a><a href="#line" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Line</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">uint</span></span> Line <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The line number within the file</p>
+<h3><a class="anchor" aria-hidden="true" id="column"></a><a href="#column" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Column</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">uint</span></span> Column <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The column within the line</p>
+<h1><a class="anchor" aria-hidden="true" id="iredboxerrorinfo"></a><a href="#iredboxerrorinfo" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IRedBoxErrorInfo</h1>
+<p>This object provides information about the error.  For javascript errors, a callstack is also provided.</p>
+<h2><a class="anchor" aria-hidden="true" id="properties-2"></a><a href="#properties-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h2>
+<h3><a class="anchor" aria-hidden="true" id="message"></a><a href="#message" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Message</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">string</span></span> Message <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>The error message.</p>
+<h3><a class="anchor" aria-hidden="true" id="id"></a><a href="#id" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Id</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name"><span class="token keyword">uint</span></span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This Id can be used in <a href="#updateerror">UpdateError</a> to identify which error is being updated.  For native errors, this is currently always <code>0</code>, and <a href="#updateerror">UpdateError</a> will never be called.</p>
+<h3><a class="anchor" aria-hidden="true" id="callstack"></a><a href="#callstack" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Callstack</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token return-type class-name">IVector<span class="token punctuation">&lt;</span>IRedBoxErrorFrameInfo<span class="token punctuation">></span></span> Callstack <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>For JavaScript errors, this will contain the callstack of where the error occured.</p>
+<h1><a class="anchor" aria-hidden="true" id="redboxhelper"></a><a href="#redboxhelper" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>RedBoxHelper</h1>
+<h2><a class="anchor" aria-hidden="true" id="methods-1"></a><a href="#methods-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
+<h3><a class="anchor" aria-hidden="true" id="createdefaulthandler"></a><a href="#createdefaulthandler" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>CreateDefaultHandler</code></h3>
+<pre><code class="hljs css language-csharp"><span class="token keyword">static</span> <span class="token return-type class-name">IRedBoxHandler</span> <span class="token function">CreateDefaultHandler</span><span class="token punctuation">(</span><span class="token class-name">ReactNativeHost</span> host<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This provides access to the default <a href="#IRedBoxHandler">IRedBoxHandler</a>. This can be used to display the default redbox as part of a custom RedBoxHandler implementation.</p>
+<!--
+<p>import &quot;ReactNativeHost.idl&quot;;</p>
+<p>namespace Microsoft.ReactNative {</p>
+<p>enum RedBoxErrorType {
+JavaScriptFatal, // A JS Exception was thrown and not catched or otherwise fatal error
+JavaScriptSoft, // An error coming from JS that isn't fatal, such as console.error
+Native,
+};</p>
+<p>[webhosthidden] interface IRedBoxErrorFrameInfo {
+String File { get; };
+String Method { get; };
+UInt32 Line { get; };
+UInt32 Column { get; };
+}</p>
+<p>[webhosthidden] interface IRedBoxErrorInfo {
+String Message { get; };
+UInt32 Id { get; };
+IVectorView<IRedBoxErrorFrameInfo> Callstack { get; };
+}</p>
+<p>[webhosthidden]
+interface IRedBoxHandler
+{
+void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type);
+Boolean IsDevSupportEnabled { get; };
+void UpdateError(IRedBoxErrorInfo info);
+void DismissRedBox();
+}</p>
+<p>[webhosthidden]
+[default_interface]
+runtimeclass RedBoxHelper {
+RedBoxHelper();
+static IRedBoxHandler CreateDefaultHandler(Microsoft.ReactNative.ReactNativeHost host);
+}</p>
+<p>}
+--&gt;</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/next/ireactpropertybag-api"><span class="arrow-prev">← </span><span class="function-name-prevnext">IReactPropertyBag</span></a><a class="docs-next button" href="/react-native-windows/docs/next/iviewmanager-api"><span class="function-name-prevnext">IViewManager</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#methods">Methods</a><ul class="toc-headings"><li><a href="#shownewerror"><code>ShowNewError()</code></a></li><li><a href="#updateerror"><code>UpdateError()</code></a></li></ul></li><li><a href="#properties">Properties</a><ul class="toc-headings"><li><a href="#isdevsupportenabled"><code>IsDevSupportEnabled</code></a></li></ul></li><li><a href="#properties-1">Properties</a><ul class="toc-headings"><li><a href="#file"><code>File</code></a></li><li><a href="#method"><code>Method</code></a></li><li><a href="#line"><code>Line</code></a></li><li><a href="#column"><code>Column</code></a></li></ul></li><li><a href="#properties-2">Properties</a><ul class="toc-headings"><li><a href="#message"><code>Message</code></a></li><li><a href="#id"><code>Id</code></a></li><li><a href="#callstack"><code>Callstack</code></a></li></ul></li><li><a href="#methods-1">Methods</a><ul class="toc-headings"><li><a href="#createdefaulthandler"><code>CreateDefaultHandler</code></a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows + macOS Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/rnm-getting-started"> Get Started with macOS</a></div><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
