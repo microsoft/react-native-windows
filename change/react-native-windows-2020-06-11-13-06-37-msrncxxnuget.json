@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add Microsoft.ReactNative.Cxx to the nugets.",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-11T20:06:37.842Z"
+}
