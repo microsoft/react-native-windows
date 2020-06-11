@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 09 Jun 2020 00:06:03 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jun 2020 00:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.90
+
+Wed, 10 Jun 2020 00:05:10 GMT
+
+### Changes
+
+- implement --proxy in CLI (igklemen@microsoft.com)
+- Don't crash when using animations in RS3-RS4, just no-op (asklar@microsoft.com)
+- Add support for Alert module with Xaml Islands (acoates@microsoft.com)
+- fix onPress for nested Text (igklemen@microsoft.com)
+- translate PS exception into error code (asklar@microsoft.com)
 
 ## 0.0.0-master.89
 

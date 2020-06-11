@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "expand cursor prop + test comopnent",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "taamireh@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-09T01:38:19.239Z"
-}

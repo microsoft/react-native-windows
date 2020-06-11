@@ -41,7 +41,7 @@ const Platform = {
           isTesting: false,
           reactNativeVersion: {
             major: 0,
-            minor: 62,
+            minor: 0,
             patch: 0,
             prerelease: undefined,
           },

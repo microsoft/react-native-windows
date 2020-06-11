@@ -26,43 +26,6 @@ namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
 namespace WUXH = WUX::Hosting;
 
-struct SimpleRedBoxHandler : winrt::implements<SimpleRedBoxHandler, winrt::Microsoft::ReactNative::IRedBoxHandler> {
-  SimpleRedBoxHandler() noexcept {}
-
-  void ShowNewError(
-      winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info,
-      winrt::Microsoft::ReactNative::RedBoxErrorType type) noexcept {
-    OutputDebugStringA("----- Begin RedBox -----\n");
-
-    switch (type) {
-      case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal:
-        OutputDebugStringA("Fatal Error: ");
-        break;
-      case winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft:
-        OutputDebugStringA("JavaScript Error: ");
-        break;
-      case winrt::Microsoft::ReactNative::RedBoxErrorType::Native:
-        OutputDebugStringA("Native Error: ");
-        break;
-    }
-
-    OutputDebugString(info.Message().c_str());
-    OutputDebugStringA("\n-----  End RedBox  -----\n");
-  }
-
-  bool IsDevSupportEnabled() noexcept {
-    return true;
-  }
-
-  void UpdateError(winrt::Microsoft::ReactNative::IRedBoxErrorInfo const &info) noexcept {
-    // noop
-  }
-
-  void DismissRedBox() noexcept {
-    // noop
-  }
-};
-
 struct WindowData {
   static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort = 9229;
@@ -125,7 +88,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
           host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
-          host.InstanceSettings().RedBoxHandler(winrt::make<SimpleRedBoxHandler>());
+          host.InstanceSettings().UseDeveloperSupport(true);
 
           auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(

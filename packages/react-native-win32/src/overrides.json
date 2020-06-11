@@ -233,6 +233,14 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\core\\ReactNativeVersionCheck.win32.js",
+      "baseFile": "Libraries\\core\\ReactNativeVersionCheck.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "599ad6d6c8485cd453cd926cdf89f06640d439f6",
+      "issue": 5170
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.win32.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
       "baseVersion": "0.0.0-56cf99a96",
@@ -318,6 +326,13 @@
       "baseVersion": "0.61.5",
       "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "derived",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.win32.js",
+      "baseFile": "Libraries\\StyleSheet\\PlatformColorValueTypes.android.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "4016a9409af82a0060f94ed78122a5813f407357"
     },
     {
       "type": "patch",

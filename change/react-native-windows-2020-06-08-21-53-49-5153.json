@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "translate PS exception into error code",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-09T04:53:49.046Z"
-}
