@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Jun 2020 00:05:10 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jun 2020 00:05:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.91
+
+Thu, 11 Jun 2020 00:05:14 GMT
+
+### Changes
+
+- Add support for redbox's on xamlislands (acoates@microsoft.com)
+- Manually set Lib and Include paths for Hermes (julio.rocha@microsoft.com)
+- More rnw-dependencies improvements (asklar@microsoft.com)
 
 ## 0.0.0-master.90
 

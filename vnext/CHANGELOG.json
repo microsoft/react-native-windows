@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Jun 2020 00:05:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.91",
+      "version": "0.0.0-master.91",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add support for redbox's on xamlislands",
+            "author": "acoates@microsoft.com",
+            "commit": "72d108144cfddecff3c8e61bc41b13487917bb53",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Manually set Lib and Include paths for Hermes",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "246cea3abb852dabdcb96e40614e74e909af05d2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "More rnw-dependencies improvements",
+            "author": "asklar@microsoft.com",
+            "commit": "7062c6ea760096e6d989179098ee33622d1ee3ec",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Call turbo module in IntegrationTests",
+            "author": "zihanc@microsoft.com",
+            "commit": "2f479757c611f1491ea4b47b74f8f76bbe03a39a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jun 2020 00:05:10 GMT",
       "tag": "react-native-windows_v0.0.0-master.90",
       "version": "0.0.0-master.90",
