@@ -112,6 +112,7 @@
     <ClCompile Include="ReactNotificationServiceTests.cpp" />
     <ClCompile Include="ReactPropertyBagTests.cpp" />
     <ClCompile Include="ReactNativeHostTests.cpp" />
+    <ClCompile Include="TurboModuleTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -124,8 +125,10 @@
   <ItemGroup>
     <Manifest Include="Application.manifest" />
     <None Include="AddValues.js" />
+    <None Include="TurboModuleTests.js" />
     <None Include="packages.config" />
     <JsBundleEntry Include="AddValues.js" />
+    <JsBundleEntry Include="TurboModuleTests.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">

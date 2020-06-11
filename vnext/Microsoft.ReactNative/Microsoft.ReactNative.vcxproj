@@ -140,7 +140,8 @@
         $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
         $(ReactNativeWindowsDir)include\ReactWindowsCore;
         $(YogaDir);
-        %(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
@@ -176,6 +177,17 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
+  <!-- TODO: Remove after https://github.com/microsoft/hermes-windows/issues/12 is fixed. -->
+  <ItemDefinitionGroup Condition="'$(USE_HERMES)'=='true'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\installed\$(PlatformTarget)-windows\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)' == 'Release'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\installed\$(PlatformTarget)-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)' == 'Debug'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\installed\$(PlatformTarget)-windows\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>hermes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
@@ -209,7 +221,6 @@
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNodeType.h" />
@@ -318,6 +329,7 @@
     <ClInclude Include="JsiWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Modules\AlertModule.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
@@ -379,6 +391,10 @@
     <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
+    <ClInclude Include="QuirkSettings.h">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Views\DevMenu.h" />
     <ClInclude Include="Views\ReactRootControl.h" />
@@ -393,7 +409,6 @@
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimationDriver.cpp" />
@@ -496,6 +511,7 @@
     <ClCompile Include="JsiWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
@@ -555,6 +571,10 @@
     <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
+    <ClCompile Include="QuirkSettings.cpp">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\ReactRootControl.cpp" />
@@ -595,6 +615,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="QuirkSettings.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />

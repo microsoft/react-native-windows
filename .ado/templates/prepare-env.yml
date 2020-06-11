@@ -30,11 +30,6 @@ steps:
   - template: yarn-install.yml
 
   - task: CmdLine@2
-    displayName: Install react-native-cli
-    inputs:
-      script: npm install -g react-native-cli
-
-  - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}

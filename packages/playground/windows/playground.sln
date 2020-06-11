@@ -25,8 +25,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Universal", "..\..\..\v
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx", "..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems", "{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\vnext\Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactNative", "ReactNative", "{5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}"
@@ -39,7 +37,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
-		..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{67a1076f-7790-4203-86ea-4402ccb5e782}*SharedItemsImports = 13
 		..\..\..\vnext\Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{a62d504a-16b8-41d2-9f19-e2e86019e5e4}*SharedItemsImports = 4
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
@@ -233,7 +230,6 @@ Global
 		{0CC28589-39E4-4288-B162-97B959F8B843} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{A62D504A-16B8-41D2-9F19-E2E86019E5E4} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
-		{67A1076F-7790-4203-86EA-4402CCB5E782} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}

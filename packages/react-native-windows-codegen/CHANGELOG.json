@@ -2,6 +2,21 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Sun, 07 Jun 2020 00:05:23 GMT",
+      "tag": "react-native-windows-codegen_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update template gen to use mustache",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e39e42bc448117c4e981b41c7acdfd29f01417c",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 May 2020 00:04:45 GMT",
       "tag": "react-native-windows-codegen_v0.0.5",
       "version": "0.0.5",

@@ -2,6 +2,149 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Jun 2020 00:05:14 GMT",
+      "tag": "react-native-windows_v0.0.0-master.91",
+      "version": "0.0.0-master.91",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add support for redbox's on xamlislands",
+            "author": "acoates@microsoft.com",
+            "commit": "72d108144cfddecff3c8e61bc41b13487917bb53",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Manually set Lib and Include paths for Hermes",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "246cea3abb852dabdcb96e40614e74e909af05d2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "More rnw-dependencies improvements",
+            "author": "asklar@microsoft.com",
+            "commit": "7062c6ea760096e6d989179098ee33622d1ee3ec",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Call turbo module in IntegrationTests",
+            "author": "zihanc@microsoft.com",
+            "commit": "2f479757c611f1491ea4b47b74f8f76bbe03a39a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jun 2020 00:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-master.90",
+      "version": "0.0.0-master.90",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "implement --proxy in CLI",
+            "author": "igklemen@microsoft.com",
+            "commit": "8f12940f753cee4f1ad8d4da7d9d3a3e755b9241",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't crash when using animations in RS3-RS4, just no-op",
+            "author": "asklar@microsoft.com",
+            "commit": "5650721bed3b9624a3bc0485d0981986f358c708",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add support for Alert module with Xaml Islands",
+            "author": "acoates@microsoft.com",
+            "commit": "452e8942864bf3ad1a442686578f0ca3193639be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix onPress for nested Text",
+            "author": "igklemen@microsoft.com",
+            "commit": "8fd8dcd3b4c6783ad176c620df57521c8131b894",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "translate PS exception into error code",
+            "author": "asklar@microsoft.com",
+            "commit": "ba662ef4e4a77a1dbcd98656cf820a6bb16a60f3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Jun 2020 00:06:03 GMT",
+      "tag": "react-native-windows_v0.0.0-master.89",
+      "version": "0.0.0-master.89",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use yoga config to align with ios/android",
+            "author": "acoates@microsoft.com",
+            "commit": "becf0c3f0eb25508f807ce73b9144e9371211517",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Jun 2020 00:05:53 GMT",
+      "tag": "react-native-windows_v0.0.0-master.88",
+      "version": "0.0.0-master.88",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Integration and Component tests to CI",
+            "author": "vmorozov@microsoft.com",
+            "commit": "6bb7f40c35c93faffc94187f71c735cdb9ea2eed",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 07 Jun 2020 00:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-master.87",
+      "version": "0.0.0-master.87",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove SharedProject",
+            "author": "dannyvv@microsoft.com",
+            "commit": "f69190f9c879ec096624bad78d558c87f49e16d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update template gen to use mustache",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e39e42bc448117c4e981b41c7acdfd29f01417c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Install MSBuild log viewer",
+            "author": "asklar@microsoft.com",
+            "commit": "d8e37acc471b04600e0a559610260d993c9c8116",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "DevMenu should only show up when DeveloperSupport is on",
+            "author": "acoates@microsoft.com",
+            "commit": "8cb9717c3107bfeccf0936f930a0acb49e02fad4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove legacy ReactInstanceSettings struct",
+            "author": "vmorozov@microsoft.com",
+            "commit": "25eadc1d313ed0b5b29dbd884b06f32fff5d3b5c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Jun 2020 00:05:20 GMT",
       "tag": "react-native-windows_v0.0.0-master.86",
       "version": "0.0.0-master.86",

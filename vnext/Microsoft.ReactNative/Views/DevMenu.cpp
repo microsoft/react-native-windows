@@ -81,6 +81,9 @@ void DevMenuManager::Init() noexcept {
 DevMenuManager::DevMenuManager(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
 
 void DevMenuManager::CreateAndShowUI() noexcept {
+  if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context->Properties()))
+    return;
+
   const winrt::hstring xamlString =
       LR"(
   <StackPanel

@@ -56,18 +56,6 @@ TEST_CLASS (ReactPropertyBagTests) {
     TestCheck(ns1 == ns2);
   }
 
-  TEST_METHOD(WeakGlobalNamespace) {
-    // Property bag keeps a weak reference to the Global namespace.
-    weak_ref<IReactPropertyNamespace> globalWeak;
-    {
-      auto global = ReactPropertyBagHelper::GlobalNamespace();
-      TestCheck(global);
-      globalWeak = global;
-      TestCheck(globalWeak.get());
-    }
-    TestCheck(!globalWeak.get());
-  }
-
   TEST_METHOD(StoreName) {
     // Return the same namespace object for the same string.
     auto ns1 = ReactPropertyBagHelper::GetNamespace(L"Foo");

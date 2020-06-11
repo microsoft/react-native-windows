@@ -14,10 +14,10 @@ static getDerivedStateFromProps(nextProps: IPopupProps, prevState: IPopupTargetS
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  nextProps | <code>IPopupProps</code> |  |
-|  prevState | <code>IPopupTargetState</code> |  |
+|  nextProps | [IPopupProps](./react-native-windows.ipopupprops.md) |  |
+|  prevState | [IPopupTargetState](./react-native-windows.ipopuptargetstate.md) |  |
 
 <b>Returns:</b>
 
-`IPopupTargetState`
+[IPopupTargetState](./react-native-windows.ipopuptargetstate.md)
 
