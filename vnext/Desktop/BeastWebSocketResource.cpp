@@ -473,15 +473,15 @@ WebSocketResource::WebSocketResource(Url &&url) : BaseWebSocketResource(std::mov
 
 #pragma endregion WebSocketResource members
 
-#pragma region SecureWebSocket members
+#pragma region SecureWebSocketResource members
 
-SecureWebSocket::SecureWebSocket(Url &&url) : BaseWebSocketResource(std::move(url)) {
+SecureWebSocketResource::SecureWebSocketResource(Url &&url) : BaseWebSocketResource(std::move(url)) {
   auto ssl = ssl::context(ssl::context::sslv23_client);
   this->m_stream = make_unique<websocket::stream<ssl_stream<tcp_stream>>>(this->m_context, ssl);
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
-void SecureWebSocket::Handshake() {
+void SecureWebSocketResource::Handshake() {
   this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this](error_code ec) {
     if (ec && this->m_errorHandler) {
       this->m_errorHandler({ec.message(), ErrorType::Connection});
@@ -491,7 +491,7 @@ void SecureWebSocket::Handshake() {
   });
 }
 
-#pragma endregion SecureWebSocket members
+#pragma endregion SecureWebSocketResource members
 
 namespace Test {
 
@@ -637,7 +637,7 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 } // namespace Beast
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Beast
 
 namespace boost::beast {
 

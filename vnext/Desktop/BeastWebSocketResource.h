@@ -216,7 +216,7 @@ class WebSocketResource : public BaseWebSocketResource<> {
   WebSocketResource(Url &&url);
 };
 
-class SecureWebSocket : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>> {
+class SecureWebSocketResource : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>> {
 #pragma region BaseWebSocketResource overrides
 
   void Handshake() override;
@@ -224,7 +224,7 @@ class SecureWebSocket : public BaseWebSocketResource<boost::beast::ssl_stream<bo
 #pragma endregion
 
  public:
-  SecureWebSocket(Url &&url);
+  SecureWebSocketResource(Url &&url);
 };
 
 namespace Test {
