@@ -178,7 +178,7 @@ if (!(IsElevated)) {
     return;
 }
 
-$NeedsRerun = $false
+$NeedsRerun = 0
 $Installed = 0
 foreach ($req in $requirements)
 {
@@ -197,10 +197,10 @@ foreach ($req in $requirements)
                 if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
                 else { $Installed++; }
             } else {
-                $NeedsRerun |= !($req.Optional); # don't let failures from optional components fail the script 
+                $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script 
             }
         } else {
-            $NeedsRerun |= !($req.Optional);
+            $NeedsRerun += !($req.Optional);
         }
     } else {
         Write-Host -ForegroundColor Green " OK".PadLeft(50 - $req.Name.Length);
@@ -216,7 +216,7 @@ if ($Clone) {
     & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
 }
 
-if ($NeedsRerun) {
+if ($NeedsRerun -ne 0) {
     Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
     if (!$NoPrompt) {
         [System.Console]::ReadKey();
