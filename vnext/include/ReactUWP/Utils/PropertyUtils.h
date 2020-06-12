@@ -146,6 +146,13 @@ bool TryUpdateForeground(const T &element, const std::string &propertyName, cons
   return false;
 }
 
+inline xaml::Media::Brush GetDefaultBorderBrush() {
+  return xaml::Application::Current()
+      .Resources()
+      .Lookup(winrt::box_value(L"DefaultTextForegroundThemeBrush"))
+      .as<xaml::Media::Brush>();
+}
+
 template <class T>
 bool TryUpdateBorderProperties(
     ShadowNodeBase *node,
@@ -168,6 +175,9 @@ bool TryUpdateBorderProperties(
     if (iter != edgeTypeMap.end()) {
       if (propertyValue.isNumber()) {
         SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
+        if (!element.BorderBrush()) {
+          element.BorderBrush(GetDefaultBorderBrush());
+        }
       } else if (propertyValue.isNull()) {
         SetBorderThickness(node, element, iter->second, 0);
       }

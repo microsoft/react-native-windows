@@ -9,6 +9,7 @@
 #include <UI.Xaml.Media.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <Utils/PropertyUtils.h>
 
 // Needed for latest versions of C++/WinRT
 #if __has_include("ViewPanel.g.cpp")
@@ -302,9 +303,12 @@ void ViewPanel::FinalizeProperties() {
     else
       m_border.ClearValue(xaml::Controls::Border::BorderBrushProperty());
 
-    if (hasBorderThickness)
+    if (hasBorderThickness) {
       m_border.BorderThickness(BorderThickness());
-    else
+      if (!hasBorderBrush) {
+        m_border.BorderBrush(::react::uwp::GetDefaultBorderBrush());
+      }
+    }  else
       m_border.ClearValue(xaml::Controls::Border::BorderThicknessProperty());
 
     if (hasCornerRadius)
