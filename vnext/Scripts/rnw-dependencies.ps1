@@ -220,7 +220,7 @@ if ($NeedsRerun) {
     throw;
 } else {
     Write-Output "All mandatory requirements met";
-    return 0;
+    $LASTEXITCODE = 0; # don't let failures from optional components fail the script 
 }
 
 if ($Clone) {
