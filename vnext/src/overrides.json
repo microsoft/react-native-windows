@@ -320,22 +320,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.windows.js",
-      "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "2c312e39ea468283e73be4319370d4f29ea5c932",
-      "issue": 3990
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Components\\Switch\\SwitchNativeComponent.windows.js",
-      "baseFile": "Libraries\\Components\\Switch\\SwitchNativeComponent.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "38aae656c9d51aac5034cddd257ed3748b991b2d",
-      "issue": 3990
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Components\\TextInput\\TextInput.windesktop.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",

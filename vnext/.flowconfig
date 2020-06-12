@@ -9,7 +9,6 @@
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
-<PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
 <PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
@@ -17,32 +16,21 @@
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
-<PROJECT_ROOT>/Libraries/Components/StatusBar/NativeStatusBarManagerAndroid.js
-<PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableBounce.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
-<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
-<PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
-<PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Lists/VirtualizedList.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
-<PROJECT_ROOT>/Libraries/Pressability/PressabilityDebug.js
-<PROJECT_ROOT>/Libraries/StyleSheet/normalizeColor.js
-<PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
-<PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
-<PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
 <PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
 <PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
@@ -117,15 +105,17 @@ emoji=true
 esproposal.optional_chaining=enable
 esproposal.nullish_coalescing=enable
 
+exact_by_default=true
+
 module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.windows.js
 
 munge_underscores=true
 
+module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.js'
+module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
-module.name_mapper='react-native$' -> '<PROJECT_ROOT>/index.js'
-module.name_mapper='react-native/\(.*\)' -> '<PROJECT_ROOT>/\1'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -135,8 +125,6 @@ suppress_type=$FlowFixMeEmpty
 
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_android\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_android\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 experimental.well_formed_exports=true
@@ -151,10 +139,10 @@ untyped-type-import=warn
 nonstrict-import=warn
 deprecated-type=warn
 unsafe-getters-setters=warn
-inexact-spread=warn
 unnecessary-invariant=warn
 signature-verification-failure=warn
 deprecated-utility=error
+unsafe-addition=error
 
 [strict]
 deprecated-type
@@ -166,4 +154,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.120.1
+^0.120.0
