@@ -14,18 +14,29 @@ beforeAll(() => {
 
 function assertLogContains(text: string) {
   const log = TextInputTestPage.getTextInputCurText();
-  assert.ok(log.split('\n').includes(text), `${log} didn't contain "${text}"`);
+  assert.ok(log, `${log} should not be falsy`);
+  assert.ok(log.split('\n').includes(text), `${log} did not contain "${text}"`);
+}
+
+function assertLastLogIs(text: string) {
+  const log = TextInputTestPage.getTextInputCurText();
+  assert.ok(log, `${log} should not be falsy`);
+  assert.equal(
+    log.split('\n')[0],
+    text,
+    `${log} last item is not contain "${text}"`
+  );
 }
 
 describe('First', () => {
   it('Click on TextInput to focus', () => {
     TextInputTestPage.clickTextInput();
-    assert.ok(TextInputTestPage.getTextInputCurText().startsWith('onFocus'));
+    assertLastLogIs('onFocus');
   });
 
   it('Click on multiline TextInput to move focus away from single line TextInput', () => {
     TextInputTestPage.clickMultilineTextInput();
-    assert.ok(TextInputTestPage.getTextInputCurText().startsWith('onBlur'));
+    assertLastLogIs('onBlur');
   });
 
   it('Type abc on TextInput', () => {
