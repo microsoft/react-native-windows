@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Tue, 19 May 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 01 Jun 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,6 +12,13 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[Build 2020 Recap]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html</guid>
+            <pubDate>Mon, 01 Jun 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>At the end of May 2020, Microsoft wrapped up the annual <a href="https://mybuild.microsoft.com/">Build developer conference</a>. React Native was a big theme at Build 2020 this year, with over 6 sessions dedicated to React Native and many tie-ins from other talks.</p> <p>The biggest announcement from ...</p>]]></description>
+        </item>
         <item>
             <title><![CDATA[Announcing React Native for macOS and more]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2020/05/19/rn4mupdadates.html</link>
