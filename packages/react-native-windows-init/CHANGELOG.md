@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sun, 07 Jun 2020 00:05:23 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jun 2020 00:33:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.9
+
+Fri, 12 Jun 2020 00:33:44 GMT
+
+### Patches
+
+- Fix support for `--namespace` on react-native-windows init for cpp (dannyvv@microsoft.com)
 
 ## 0.1.8
 

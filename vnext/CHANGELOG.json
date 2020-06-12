@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2020 00:33:44 GMT",
+      "tag": "react-native-windows_v0.0.0-master.92",
+      "version": "0.0.0-master.92",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix support for `--namespace` on react-native-windows init for cpp",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7d7b6fb2b392acc7956e32398ac779e78ad0e4cf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Jun 2020 00:05:14 GMT",
       "tag": "react-native-windows_v0.0.0-master.91",
       "version": "0.0.0-master.91",
