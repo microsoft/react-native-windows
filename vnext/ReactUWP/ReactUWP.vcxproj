@@ -76,7 +76,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <!--
@@ -98,24 +98,7 @@
         _HAS_AUTO_PTR_ETC;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>
-        $(ReactNativeWindowsDir)ReactUWP\Pch;
-        $(ReactNativeWindowsDir);
-        $(ReactNativeWindowsDir)Common;
-        $(ReactNativeWindowsDir)Pch;
-        $(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;
-        $(ReactNativeWindowsDir)ReactWindowsCore;
-        $(ReactNativeWindowsDir)include\ReactWindowsCore;
-        $(ReactNativeWindowsDir)include\ReactUWP;
-        $(YogaDir);
-        $(ReactNativeDir)\ReactCommon;
-        $(ReactNativeWindowsDir)\JSI\Shared;$(JSI_Source);
-        $(ReactNativeWindowsDir)include;
-        $(ReactNativeWindowsDir)stubs;
-        $(ReactNativeWindowsDir)Shared;
-        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
-        $(FollyDir);%(AdditionalIncludeDirectories)
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)\JSI\Shared;$(JSI_Source);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <ShowIncludes>false</ShowIncludes>
