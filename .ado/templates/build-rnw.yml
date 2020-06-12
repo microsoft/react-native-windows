@@ -51,8 +51,6 @@ steps:
         /p:PlatformToolset=${{parameters.platformToolset}}
         ${{parameters.msbuildArguments}}
         /p:BaseIntDir=$(BaseIntDir)
-        /maxCpuCount:2
-        /p:CL_MPCount=2
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
