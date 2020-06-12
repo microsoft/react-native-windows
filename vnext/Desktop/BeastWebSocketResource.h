@@ -146,6 +146,8 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// </param>
   virtual void Handshake();
 
+  virtual std::shared_ptr<const BaseWebSocketResource<SocketLayer, Stream>> SharedFromThis() const = 0;
+
  public:
   ~BaseWebSocketResource() override;
 
@@ -211,17 +213,29 @@ class BaseWebSocketResource : public IWebSocketResource {
 #pragma endregion IWebSocketResource
 };
 
-class WebSocketResource : public BaseWebSocketResource<> {
- public:
+class WebSocketResource : public BaseWebSocketResource<>, public std::enable_shared_from_this<WebSocketResource> {
+
+#pragma region BaseWebSocketResource overrides
+
+  std::shared_ptr<const BaseWebSocketResource<>> SharedFromThis() const override;
+
+#pragma endregion BaseWebSocketResource overrides
+
+public:
   WebSocketResource(Url &&url);
 };
 
-class SecureWebSocketResource : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>> {
+class SecureWebSocketResource : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>,
+                                public std::enable_shared_from_this<SecureWebSocketResource> {
+
 #pragma region BaseWebSocketResource overrides
 
   void Handshake() override;
 
-#pragma endregion
+  std::shared_ptr<const BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis()
+      const override;
+
+#pragma endregion BaseWebSocketResource overrides
 
  public:
   SecureWebSocketResource(Url &&url);
@@ -308,11 +322,19 @@ class MockStream {
   std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocket : public BaseWebSocketResource<
-                          std::nullptr_t, // Unused. MockStream works as its own next/lowest layer.
-                          MockStream> {
- public:
-  TestWebSocket(facebook::react::Url &&url);
+class TestWebSocketResource : public BaseWebSocketResource<
+                                      std::nullptr_t, // Unused. MockStream works as its own next/lowest layer.
+                                      MockStream>,
+                              public std::enable_shared_from_this<TestWebSocketResource> {
+
+#pragma region BaseWebSocketResource overrides
+
+  std::shared_ptr<const BaseWebSocketResource<std::nullptr_t, MockStream>> SharedFromThis() const override;
+
+#pragma endregion BaseWebSocketResource overrides
+
+public:
+  TestWebSocketResource(facebook::react::Url &&url);
 
   void SetConnectResult(std::function<boost::system::error_code()> &&resultFunc);
   void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)> &&resultFunc);

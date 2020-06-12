@@ -23,11 +23,10 @@ using boost::asio::ip::tcp;
 
 using std::function;
 using std::make_unique;
+using std::shared_ptr;
 using std::size_t;
 using std::string;
 using std::unique_ptr;
-
-// using boostecr = boost::system::error_code const &;
 
 namespace Microsoft::React {
 
@@ -471,6 +470,11 @@ WebSocketResource::WebSocketResource(Url &&url) : BaseWebSocketResource(std::mov
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
+shared_ptr<const BaseWebSocketResource<>> WebSocketResource::SharedFromThis() const /*override*/
+{
+  return this->shared_from_this();
+}
+
 #pragma endregion WebSocketResource members
 
 #pragma region SecureWebSocketResource members
@@ -489,6 +493,11 @@ void SecureWebSocketResource::Handshake() {
       BaseWebSocketResource::Handshake();
     }
   });
+}
+
+shared_ptr<const BaseWebSocketResource<ssl_stream<tcp_stream>>> SecureWebSocketResource::SharedFromThis() const
+/*override*/ {
+  return this->shared_from_this();
 }
 
 #pragma endregion SecureWebSocketResource members
@@ -616,19 +625,24 @@ MockStream::async_close(websocket::close_reason const &cr, CloseHandler &&handle
 
 #pragma region TestWebSocket
 
-TestWebSocket::TestWebSocket(Url &&url) : BaseWebSocketResource(std::move(url)) {
+shared_ptr<const Beast::BaseWebSocketResource<std::nullptr_t, MockStream>> TestWebSocketResource::SharedFromThis() const /*override*/
+{
+  return this->shared_from_this();
+}
+
+TestWebSocketResource::TestWebSocketResource(Url &&url) : BaseWebSocketResource(std::move(url)) {
   m_stream = make_unique<MockStream>(m_context);
 }
 
-void TestWebSocket::SetConnectResult(function<error_code()> &&resultFunc) {
+void TestWebSocketResource::SetConnectResult(function<error_code()> &&resultFunc) {
   m_stream->ConnectResult = std::move(resultFunc);
 }
 
-void TestWebSocket::SetHandshakeResult(function<error_code(string, string)> &&resultFunc) {
+void TestWebSocketResource::SetHandshakeResult(function<error_code(string, string)> &&resultFunc) {
   m_stream->HandshakeResult = std::move(resultFunc);
 }
 
-void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
+void TestWebSocketResource::SetCloseResult(function<error_code()> &&resultFunc) {
   m_stream->CloseResult = std::move(resultFunc);
 }
 
@@ -637,7 +651,7 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 } // namespace Beast
 
-} // namespace Microsoft::React::Beast
+} // namespace Microsoft::React
 
 namespace boost::beast {
 
