@@ -874,25 +874,25 @@ void NativeUIManager::DoLayout() {
     // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
     // which will inherit down the XAML tree, allowing all native controls to pick it up.
     YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+  }
 
-    for (auto &tagToYogaNode : m_tagsToYogaNodes) {
-      int64_t tag = tagToYogaNode.first;
-      YGNodeRef yogaNode = tagToYogaNode.second.get();
+  for (auto &tagToYogaNode : m_tagsToYogaNodes) {
+    int64_t tag = tagToYogaNode.first;
+    YGNodeRef yogaNode = tagToYogaNode.second.get();
 
-      if (!YGNodeGetHasNewLayout(yogaNode))
-        continue;
-      YGNodeSetHasNewLayout(yogaNode, false);
+    if (!YGNodeGetHasNewLayout(yogaNode))
+      continue;
+    YGNodeSetHasNewLayout(yogaNode, false);
 
-      float left = YGNodeLayoutGetLeft(yogaNode);
-      float top = YGNodeLayoutGetTop(yogaNode);
-      float width = YGNodeLayoutGetWidth(yogaNode);
-      float height = YGNodeLayoutGetHeight(yogaNode);
+    float left = YGNodeLayoutGetLeft(yogaNode);
+    float top = YGNodeLayoutGetTop(yogaNode);
+    float width = YGNodeLayoutGetWidth(yogaNode);
+    float height = YGNodeLayoutGetHeight(yogaNode);
 
-      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-      auto view = shadowNode.GetView();
-      auto pViewManager = shadowNode.GetViewManager();
-      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
-    }
+    ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+    auto view = shadowNode.GetView();
+    auto pViewManager = shadowNode.GetViewManager();
+    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
   }
 }
 
