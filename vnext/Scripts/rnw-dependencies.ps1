@@ -196,11 +196,11 @@ foreach ($req in $requirements)
                 Invoke-Command $req.Install -ErrorAction Stop;
                 if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
                 else { $Installed++; }
-            } elseif (!$req.Optional) {
-                $NeedsRerun = $true;
+            } else {
+                $NeedsRerun |= !($req.Optional); # don't let failures from optional components fail the script 
             }
         } else {
-            $NeedsRerun = !($req.Optional);
+            $NeedsRerun |= !($req.Optional);
         }
     } else {
         Write-Host -ForegroundColor Green " OK".PadLeft(50 - $req.Name.Length);
@@ -212,6 +212,10 @@ if ($Installed -ne 0) {
     Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect."
 }
 
+if ($Clone) {
+    & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
+}
+
 if ($NeedsRerun) {
     Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
     if (!$NoPrompt) {
@@ -220,9 +224,6 @@ if ($NeedsRerun) {
     throw;
 } else {
     Write-Output "All mandatory requirements met";
-    $LASTEXITCODE = 0; # don't let failures from optional components fail the script 
+    exit 0;
 }
 
-if ($Clone) {
-    & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
-}
