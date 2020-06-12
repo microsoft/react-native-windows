@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2020 18:07:47 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.13",
+      "version": "0.62.0-preview.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Attempt to fix Publish pipeline",
+            "author": "tudorm@microsoft.com",
+            "commit": "1639137e726d74911c7db7f01ed116ff2fe05113",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jun 2020 12:11:09 GMT",
       "tag": "react-native-windows_v0.62.0-preview.12",
       "version": "0.62.0-preview.12",
