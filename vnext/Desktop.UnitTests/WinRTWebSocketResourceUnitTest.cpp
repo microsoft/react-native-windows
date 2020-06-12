@@ -26,7 +26,12 @@ IAsyncAction DoNothingAsync() {
 }
 
 IAsyncAction ThrowAsync() {
-  throw winrt::hresult_error(winrt::hresult(E_FAIL), L"Expected Failure");
+  // See https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/error-handling
+  winrt::check_hresult(E_FAIL);
+  co_return;
+
+  // TODO: Re-enable or delete before merging.
+  // throw winrt::hresult_error(winrt::hresult(E_FAIL), L"Expected Failure");
 }
 
 } // namespace
@@ -63,7 +68,6 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectFails)
-  TEST_IGNORE() // TODO: Remove before merging. Ensure mocks behave as original APIs.
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectFails) {
     bool connected = false;

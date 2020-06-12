@@ -11,6 +11,7 @@
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
+#include <atlbase.h>
 #include <RestrictedErrorInfo.h>
 #include <roerrorapi.h>
 
@@ -127,29 +128,28 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
 
   co_await resume_background();
 
-  //TODO: Remove try/catch block after fixing unit tests.
   try
   {
     auto async = self->m_socket.ConnectAsync(self->m_uri);
 
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
-    auto hr = async.ErrorCode();
-    if (!SUCCEEDED(hr))
+    if (SUCCEEDED(async.ErrorCode()))
+    {
+      self->m_readyState = ReadyState::Open;
+      if (self->m_connectHandler)
+      {
+        self->m_connectHandler();
+      }
+    }
+    else
     {
       if (self->m_errorHandler)
       {
         self->m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Connection });
       }
-
-      co_return;
     }
 
-    self->m_readyState = ReadyState::Open;
-    if (self->m_connectHandler)
-    {
-      self->m_connectHandler();
-    }
   }
   catch (hresult_error const& e)
   {
@@ -192,24 +192,23 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
 
     co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
 
-    if (!SUCCEEDED(async.ErrorCode()))
+    if (SUCCEEDED(async.ErrorCode()))
+      {
+      if (self->m_pingHandler)
+      {
+        self->m_pingHandler();
+      }
+    }
+    else
     {
       if (self->m_errorHandler)
       {
         self->m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Ping});
       }
-
-      co_return;
-    }
-
-    if (self->m_pingHandler)
-    {
-      self->m_pingHandler();
     }
   }
   catch (hresult_error const& e)
   {
-    //TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler)
     {
       self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
@@ -278,19 +277,19 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
 
     co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
 
-    if (!SUCCEEDED(async.ErrorCode()))
+    if (SUCCEEDED(async.ErrorCode()))
+    {
+      if (self->m_writeHandler)
+      {
+        self->m_writeHandler(length);
+      }
+    }
+    else
     {
       if (self->m_errorHandler)
       {
         self->m_errorHandler({ GetRestrictedErrorMessage(), ErrorType::Send });
       }
-
-      co_return;
-    }
-
-    if (self->m_writeHandler)
-    {
-      self->m_writeHandler(length);
     }
   }
   catch (std::exception const& e)
@@ -394,7 +393,7 @@ void WinRTWebSocketResource::Synchronize()
 string WinRTWebSocketResource::GetRestrictedErrorMessage() noexcept
 {
   string result;
-  IRestrictedErrorInfo* errorInfo;
+  CComPtr<IRestrictedErrorInfo> errorInfo;
   if (SUCCEEDED(GetRestrictedErrorInfo(&errorInfo)))
   {
     BSTR description;
@@ -403,7 +402,14 @@ string WinRTWebSocketResource::GetRestrictedErrorMessage() noexcept
     BSTR capabilitySid;
     if (SUCCEEDED(errorInfo->GetErrorDetails(&description, &error, &restrictedDesc, &capabilitySid)))
     {
-      result = Utf16ToUtf8(description) + ": " + Utf16ToUtf8(restrictedDesc);
+      try
+      {
+        result = Utf16ToUtf8(description) + ": " + Utf16ToUtf8(restrictedDesc);
+      }
+      catch (const std::exception& e)
+      {
+        result = e.what();
+      }
     }
     else
     {
@@ -414,8 +420,6 @@ string WinRTWebSocketResource::GetRestrictedErrorMessage() noexcept
     SysFreeString(description);
     SysFreeString(restrictedDesc);
     SysFreeString(capabilitySid);
-
-    //TODO: Free errorInfo memory?
   }
   else
   {
