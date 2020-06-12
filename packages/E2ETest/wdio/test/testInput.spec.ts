@@ -12,6 +12,11 @@ beforeAll(() => {
   HomePage.clickAndGoToTextInputPage();
 });
 
+function assertLogContains(text: string) {
+  const log = TextInputTestPage.getTextInputCurText();
+  assert.ok(log.split('\n').includes(text), `${log} didn't contain "${text}"`);
+}
+
 describe('First', () => {
   it('Click on TextInput to focus', () => {
     TextInputTestPage.clickTextInput();
@@ -29,22 +34,8 @@ describe('First', () => {
 
     // Due to some timing issues between the JS and native, the order of events
     // might cause more onChange events to happen after the onKeyPress event
-    // So check the last few events for onKeyPress.
-    // eslint-disable-next-line no-undef
-    browser.waitUntil(
-      () =>
-        TextInputTestPage.getTextInputCurText()
-          .split('\n')
-          .includes('onKeyPress key: c'),
-      1000,
-      'Wait for text to be updated'
-    );
-
-    assert.ok(
-      TextInputTestPage.getTextInputCurText()
-        .split('\n')
-        .includes('onKeyPress key: c')
-    );
+    // So the onKeyPress event might not be the last item in the log
+    assertLogContains('onKeyPress key: c');
   });
 
   it('Type def on TextInput', () => {
@@ -59,11 +50,7 @@ describe('First', () => {
 
   it('Type abc on multiline TextInput then press Enter key', () => {
     TextInputTestPage.clearAndEnterOnTextInput('abc');
-    assert.ok(
-      TextInputTestPage.getTextInputCurText()
-        .split('\n')
-        .includes('prev: onSubmitEditing text: abc')
-    );
+    assertLogContains('onSubmitEditing text: abc');
   });
 
   it('Type abc on multiline TextInput', () => {
