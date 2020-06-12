@@ -3,12 +3,11 @@
 
 #pragma once
 
-#include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/core/multi_buffer.hpp>
+#include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/ssl.hpp>
-#include <boost/beast/websocket/ssl.hpp>
-#include <boost/beast/websocket/ssl.hpp>
 #include <boost/beast/websocket.hpp>
+#include <boost/beast/websocket/ssl.hpp>
 #include <queue>
 #include <thread>
 #include "IWebSocketResource.h"
@@ -94,7 +93,7 @@ class BaseWebSocketResource : public IWebSocketResource {
 
   boost::beast::websocket::close_code ToBeastCloseCode(IWebSocketResource::CloseCode closeCode);
 
-  #pragma region Async handlers
+#pragma region Async handlers
 
   void OnResolve(boost::beast::error_code ec, typename boost::asio::ip::tcp::resolver::results_type results);
 
@@ -110,7 +109,7 @@ class BaseWebSocketResource : public IWebSocketResource {
 
   void OnPing(boost::beast::error_code ec);
 
-  #pragma endregion Async handlers
+#pragma endregion Async handlers
 
  protected:
   /// <summary>
@@ -217,8 +216,7 @@ class WebSocketResource : public BaseWebSocketResource<> {
   WebSocketResource(Url &&url);
 };
 
-class SecureWebSocket
-    : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>> {
+class SecureWebSocket : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>> {
 #pragma region BaseWebSocketResource overrides
 
   void Handshake() override;
@@ -246,9 +244,9 @@ class MockStream {
 
   boost::asio::io_context::executor_type get_executor() noexcept;
 
-//  lowest_layer_type &lowest_layer();
+  //  lowest_layer_type &lowest_layer();
 
-//  lowest_layer_type const &lowest_layer() const;
+  //  lowest_layer_type const &lowest_layer() const;
 
   void binary(bool value);
 
@@ -262,21 +260,19 @@ class MockStream {
 
   void set_option(boost::beast::websocket::stream_base::decorator opt);
 
-  void get_option(boost::beast::websocket::stream_base::timeout& opt);
+  void get_option(boost::beast::websocket::stream_base::timeout &opt);
 
-  void set_option(boost::beast::websocket::stream_base::timeout const& opt);
+  void set_option(boost::beast::websocket::stream_base::timeout const &opt);
 
-  void set_option(boost::beast::websocket::permessage_deflate const& o);
+  void set_option(boost::beast::websocket::permessage_deflate const &o);
 
-  void get_option(boost::beast::websocket::permessage_deflate& o);
+  void get_option(boost::beast::websocket::permessage_deflate &o);
 
 #pragma region boost::beast::basic_stream mocks
 
-template<class RangeConnectHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::endpoint))
-async_connect(
-  boost::asio::ip::tcp::resolver::iterator const& endpoints,
-  RangeConnectHandler&& handler);
+  template <class RangeConnectHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::endpoint))
+  async_connect(boost::asio::ip::tcp::resolver::iterator const &endpoints, RangeConnectHandler &&handler);
 
 #pragma endregion boost::beast::basic_stream mocks
 
@@ -284,10 +280,7 @@ async_connect(
 
   template <class HandshakeHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
-  async_handshake(
-      boost::beast::string_view host,
-      boost::beast::string_view target,
-      HandshakeHandler &&handler);
+  async_handshake(boost::beast::string_view host, boost::beast::string_view target, HandshakeHandler &&handler);
 
   template <class DynamicBuffer, class ReadHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
@@ -315,12 +308,9 @@ async_connect(
   std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocket : public  BaseWebSocketResource
-                              <
-                                std::nullptr_t, // Unused. MockStream works as its own next/lowest layer.
-                                MockStream
-                              >
-{
+class TestWebSocket : public BaseWebSocketResource<
+                          std::nullptr_t, // Unused. MockStream works as its own next/lowest layer.
+                          MockStream> {
  public:
   TestWebSocket(facebook::react::Url &&url);
 
