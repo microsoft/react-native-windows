@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "revert dfc57fcf2504f57baab20f550b36a618eaa99e56",
   "packageName": "react-native-windows",
   "email": "kmelmon@microsoft.com",
