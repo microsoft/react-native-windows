@@ -207,6 +207,11 @@ foreach ($req in $requirements)
     }
 }
 
+
+if ($Installed -ne 0) {
+    Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect."
+}
+
 if ($NeedsRerun) {
     Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
     if (!$NoPrompt) {
@@ -215,9 +220,7 @@ if ($NeedsRerun) {
     throw;
 } else {
     Write-Output "All mandatory requirements met";
-}
-if ($Installed -ne 0) {
-    Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect."
+    return 0;
 }
 
 if ($Clone) {
