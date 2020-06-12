@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2020 20:55:23 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.14",
+      "version": "0.62.0-preview.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.62] Cherry pick PR #5071 for CallJsFunction queuing",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d3bcc6df4cef7d6e73f1e6082887163f42425cc4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Microsoft.ReactNative.Cxx to the nugets.",
+            "author": "acoates@microsoft.com",
+            "commit": "04eb1f97c949632e9e086deccbe45b80109a0fc7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jun 2020 18:07:47 GMT",
       "tag": "react-native-windows_v0.62.0-preview.13",
       "version": "0.62.0-preview.13",
