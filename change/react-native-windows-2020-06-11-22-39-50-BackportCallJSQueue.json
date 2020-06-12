@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Cherry pick PR #5071 for JSCallFunction queuing",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-12T05:39:50.177Z"
+}
