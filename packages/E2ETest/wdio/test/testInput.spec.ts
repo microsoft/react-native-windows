@@ -27,8 +27,6 @@ describe('First', () => {
     TextInputTestPage.clearAndTypeOnTextInput('abc');
     assert.equal(TextInputTestPage.getTextInputText(), 'abc');
 
-    assert.ok(TextInputTestPage.getTextInputCurText().startsWith('onBlur'));
-
     // Due to some timing issues between the JS and native, the order of events
     // might cause more onChange events to happen after the onKeyPress event
     // So check the last few events for onKeyPress.
