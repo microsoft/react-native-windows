@@ -61,7 +61,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     const winrt::hstring xamlString =
         LR"(
-        <Grid Background='#FF333333'
+        <Grid Background='#1A1A1A'
           xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
           xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
           RequestedTheme='Dark'>
@@ -75,7 +75,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           </Grid.RowDefinitions>
           <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>
             <StackPanel HorizontalAlignment='Stretch'>
-              <StackPanel Background='#FFF35369' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>
+              <StackPanel Background='#D01926' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>
                 <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>
                 <Border Padding='15,15,15,0'/>
                 <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>
@@ -211,7 +211,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     webView.NavigationCompleted([=](IInspectable const &, auto const &) {
       std::wstring jsExpression =
           L"(document.body.style.setProperty('color', 'white'), "
-          L"document.body.style.setProperty('background', '#f35369')) "
+          L"document.body.style.setProperty('background', '#d01926')) "
           L"|| document.documentElement.scrollHeight.toString()";
 
 #ifndef USE_WINUI3
