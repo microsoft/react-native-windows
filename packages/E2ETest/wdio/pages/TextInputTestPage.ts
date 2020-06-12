@@ -51,22 +51,6 @@ class TextInputTestPage extends BasePage {
     return this.curTextInput.getText();
   }
 
-  getTextInputPrevText() {
-    return this.prevTextInput.getText();
-  }
-
-  getTextInputPrev2Text() {
-    return this.prev2TextInput.getText();
-  }
-
-  getTextInputPrev3Text() {
-    return this.prev3TextInput.getText();
-  }
-
-  getTextInputPrev4Text() {
-    return this.prev4TextInput.getText();
-  }
-
   getTextInputText() {
     return this.textInput.getText();
   }

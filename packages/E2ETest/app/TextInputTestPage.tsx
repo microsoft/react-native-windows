@@ -77,9 +77,7 @@ export class TextInputTestPage extends React.Component<
         />
         <Text testID={CURTEXT_ON_TEXTINPUT}>{this.state.log}</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text testID={CURTEXT_ON_TEXTINPUT}>
-            curText: {this.state.curText}
-          </Text>
+          <Text testID={CURTEXT_ON_TEXTINPUT}>curText: {this.state.log}</Text>
         </View>
       </View>
     );
