@@ -1,6 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 03 Jun 2020 05:03:30 GMT and should not be manually modified.
+This log was last generated on Sat, 13 Jun 2020 00:48:38 GMT and should not be manually modified.
+
+<!-- Start content -->
+
+## 0.61.12
+
+Sat, 13 Jun 2020 00:48:38 GMT
+
+### Patches
+
+- revert dfc57fcf2504f57baab20f550b36a618eaa99e56 (kmelmon@microsoft.com)
 
 ## 0.61.11
 Wed, 03 Jun 2020 05:03:30 GMT
