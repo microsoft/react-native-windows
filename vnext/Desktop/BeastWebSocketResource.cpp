@@ -49,8 +49,8 @@ BaseWebSocketResource<SocketLayer, Stream>::~BaseWebSocketResource() {
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::Handshake() {
-  ////TODO: Enable?
-  ////m_stream->set_option(websocket::stream_base::timeout::suggested(role_type::client));
+  //TODO: Enable if we want a configurable timeout.
+  //m_stream->set_option(websocket::stream_base::timeout::suggested(role_type::client));
   m_stream->async_handshake(
       m_url.host, m_url.Target(), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnHandshake, SharedFromThis()));
 }
