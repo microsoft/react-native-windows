@@ -232,6 +232,8 @@ class SecureWebSocketResource : public BaseWebSocketResource<boost::beast::ssl_s
 
   void Handshake() override;
 
+  void OnSslHandshake(boost::beast::error_code ec);
+
   std::shared_ptr<BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis()
       override;
 

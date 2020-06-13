@@ -485,15 +485,18 @@ SecureWebSocketResource::SecureWebSocketResource(Url &&url) : BaseWebSocketResou
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
-//TODO: Use SharedFromThis()
 void SecureWebSocketResource::Handshake() {
-  this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this](error_code ec) {
-    if (ec && this->m_errorHandler) {
-      this->m_errorHandler({ec.message(), ErrorType::Connection});
-    } else {
-      BaseWebSocketResource::Handshake();
-    }
-  });
+  // Prefer shared_from_this() in concrete classes. SharedFromThis() falis to compile.
+  this->m_stream->next_layer().async_handshake(
+      ssl::stream_base::client, bind_front_handler(&SecureWebSocketResource::OnSslHandshake, shared_from_this()));
+}
+
+void SecureWebSocketResource::OnSslHandshake(error_code ec) {
+  if (ec && m_errorHandler) {
+    m_errorHandler({ec.message(), ErrorType::Connection});
+  } else {
+    BaseWebSocketResource::Handshake();
+  }
 }
 
 shared_ptr<BaseWebSocketResource<ssl_stream<tcp_stream>>> SecureWebSocketResource::SharedFromThis()
