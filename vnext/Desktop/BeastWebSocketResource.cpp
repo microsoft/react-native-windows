@@ -52,7 +52,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::Handshake() {
   ////TODO: Enable?
   ////m_stream->set_option(websocket::stream_base::timeout::suggested(role_type::client));
   m_stream->async_handshake(
-      m_url.host, m_url.Target(), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnHandshake, this));
+      m_url.host, m_url.Target(), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnHandshake, SharedFromThis()));
 }
 
 template <typename SocketLayer, typename Stream>
@@ -91,7 +91,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::PerformRead() {
   }
 
   // Check if there are more bytes available than a header length (2).
-  m_stream->async_read(m_bufferIn, bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnRead, this));
+  m_stream->async_read(m_bufferIn, bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnRead, SharedFromThis()));
 }
 
 template <typename SocketLayer, typename Stream>
@@ -145,7 +145,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::PerformWrite() {
     m_stream->write_buffer_bytes(request.first.length());
 
   m_stream->async_write(
-      buffer(request.first), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnWrite, this));
+      buffer(request.first), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnWrite, SharedFromThis()));
 }
 
 template <typename SocketLayer, typename Stream>
@@ -173,7 +173,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::PerformPing() {
   --m_pingRequests;
 
   m_stream->async_ping(
-      websocket::ping_data(), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnPing, this));
+      websocket::ping_data(), bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnPing, SharedFromThis()));
 }
 
 template <typename SocketLayer, typename Stream>
@@ -197,7 +197,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::PerformClose() {
 
   m_stream->async_close(
       ToBeastCloseCode(m_closeCodeRequest),
-      bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnClose, this));
+      bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnClose, SharedFromThis()));
 
   // Synchronize context thread.
   Stop();
@@ -227,11 +227,11 @@ void BaseWebSocketResource<SocketLayer, Stream>::Stop() {
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::EnqueueWrite(const string &message, bool binary) {
-  post(m_context, [this, message = std::move(message), binary]() {
-    m_writeRequests.emplace(std::move(message), binary);
+  post(m_context, [self = SharedFromThis(), message = std::move(message), binary]() {
+    self->m_writeRequests.emplace(std::move(message), binary);
 
-    if (!m_writeInProgress && ReadyState::Open == m_readyState)
-      PerformWrite();
+    if (!self->m_writeInProgress && ReadyState::Open == self->m_readyState)
+      self->PerformWrite();
   });
 }
 
@@ -330,11 +330,11 @@ void BaseWebSocketResource<SocketLayer, Stream>::Connect(const Protocols &protoc
 
   tcp::resolver resolver(m_context);
   resolver.async_resolve(
-      m_url.host, m_url.port, bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnResolve, this));
+      m_url.host, m_url.port, bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnResolve, SharedFromThis()));
 
-  m_contextThread = std::thread([this]() {
-    m_workGuard = make_unique<executor_work_guard<io_context::executor_type>>(make_work_guard(m_context));
-    m_context.run();
+  m_contextThread = std::thread([self = SharedFromThis()]() {
+    self->m_workGuard = make_unique<executor_work_guard<io_context::executor_type>>(make_work_guard(self->m_context));
+    self->m_context.run();
   });
 }
 
@@ -351,7 +351,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::OnResolve(
 
   // Connect
   get_lowest_layer(*m_stream).async_connect(
-      results, bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnConnect, this));
+      results, bind_front_handler(&BaseWebSocketResource<SocketLayer, Stream>::OnConnect, SharedFromThis()));
 }
 
 template <typename SocketLayer, typename Stream>
@@ -470,7 +470,7 @@ WebSocketResource::WebSocketResource(Url &&url) : BaseWebSocketResource(std::mov
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
-shared_ptr<const BaseWebSocketResource<>> WebSocketResource::SharedFromThis() const /*override*/
+shared_ptr<BaseWebSocketResource<>> WebSocketResource::SharedFromThis() /*override*/
 {
   return this->shared_from_this();
 }
@@ -485,6 +485,7 @@ SecureWebSocketResource::SecureWebSocketResource(Url &&url) : BaseWebSocketResou
   this->m_stream->auto_fragment(false); // ISS:2906963 Re-enable message fragmenting.
 }
 
+//TODO: Use SharedFromThis()
 void SecureWebSocketResource::Handshake() {
   this->m_stream->next_layer().async_handshake(ssl::stream_base::client, [this](error_code ec) {
     if (ec && this->m_errorHandler) {
@@ -495,7 +496,7 @@ void SecureWebSocketResource::Handshake() {
   });
 }
 
-shared_ptr<const BaseWebSocketResource<ssl_stream<tcp_stream>>> SecureWebSocketResource::SharedFromThis() const
+shared_ptr<BaseWebSocketResource<ssl_stream<tcp_stream>>> SecureWebSocketResource::SharedFromThis()
 /*override*/ {
   return this->shared_from_this();
 }
@@ -625,7 +626,7 @@ MockStream::async_close(websocket::close_reason const &cr, CloseHandler &&handle
 
 #pragma region TestWebSocket
 
-shared_ptr<const Beast::BaseWebSocketResource<std::nullptr_t, MockStream>> TestWebSocketResource::SharedFromThis() const /*override*/
+shared_ptr<Beast::BaseWebSocketResource<std::nullptr_t, MockStream>> TestWebSocketResource::SharedFromThis()  /*override*/
 {
   return this->shared_from_this();
 }

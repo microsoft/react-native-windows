@@ -146,7 +146,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// </param>
   virtual void Handshake();
 
-  virtual std::shared_ptr<const BaseWebSocketResource<SocketLayer, Stream>> SharedFromThis() const = 0;
+  virtual std::shared_ptr<BaseWebSocketResource<SocketLayer, Stream>> SharedFromThis() = 0;
 
  public:
   ~BaseWebSocketResource() override;
@@ -217,7 +217,7 @@ class WebSocketResource : public BaseWebSocketResource<>, public std::enable_sha
 
 #pragma region BaseWebSocketResource overrides
 
-  std::shared_ptr<const BaseWebSocketResource<>> SharedFromThis() const override;
+  std::shared_ptr<BaseWebSocketResource<>> SharedFromThis() override;
 
 #pragma endregion BaseWebSocketResource overrides
 
@@ -232,8 +232,8 @@ class SecureWebSocketResource : public BaseWebSocketResource<boost::beast::ssl_s
 
   void Handshake() override;
 
-  std::shared_ptr<const BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis()
-      const override;
+  std::shared_ptr<BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis()
+      override;
 
 #pragma endregion BaseWebSocketResource overrides
 
@@ -329,7 +329,7 @@ class TestWebSocketResource : public BaseWebSocketResource<
 
 #pragma region BaseWebSocketResource overrides
 
-  std::shared_ptr<const BaseWebSocketResource<std::nullptr_t, MockStream>> SharedFromThis() const override;
+  std::shared_ptr<BaseWebSocketResource<std::nullptr_t, MockStream>> SharedFromThis() override;
 
 #pragma endregion BaseWebSocketResource overrides
 
