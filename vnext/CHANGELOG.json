@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 13 Jun 2020 00:09:11 GMT",
+      "tag": "react-native-windows_v0.0.0-master.93",
+      "version": "0.0.0-master.93",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implement logbox",
+            "author": "acoates@microsoft.com",
+            "commit": "fbbe72f1481ace7c824d8203aa3f147eb0fdcbf6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Microsoft.ReactNative.Cxx to the nugets.",
+            "author": "acoates@microsoft.com",
+            "commit": "ef0fd96936b64d21345366bf49e96123bf60fa1c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix file lock issue wiht msbuild /bl flag and the metro bundler",
+            "author": "dannyvv@microsoft.com",
+            "commit": "394573753837320f51e9e3969e149961f3471480",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Implement SyncMethod and Constant for TurboModule",
+            "author": "zihanc@microsoft.com",
+            "commit": "de852396cf3c6e5bb9c15da97a59b3e0256831e3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jun 2020 00:33:44 GMT",
       "tag": "react-native-windows_v0.0.0-master.92",
       "version": "0.0.0-master.92",

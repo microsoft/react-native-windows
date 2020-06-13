@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 10 Jun 2020 00:05:10 GMT and should not be manually modified.
+This log was last generated on Sat, 13 Jun 2020 00:09:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.20
+
+Sat, 13 Jun 2020 00:09:11 GMT
+
+### Changes
+
+- Add focusRef prop to TouchableWin32 (taamireh@microsoft.com)
 
 ## 0.0.0-master.19
 
