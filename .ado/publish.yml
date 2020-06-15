@@ -93,6 +93,7 @@ jobs:
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
+            /p:USE_V8=true
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
