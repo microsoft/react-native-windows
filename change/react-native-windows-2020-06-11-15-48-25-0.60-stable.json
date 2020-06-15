@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable V8 globally. Turn it on specifically for Desktop builds",
-  "packageName": "react-native-windows",
-  "email": "tudorm@microsoft.com",
-  "commit": "c135c1d29b7357f4f6dddf9cec40091e3d93db4b",
-  "dependentChangeType": "patch",
-  "date": "2020-06-11T22:48:24.922Z"
-}

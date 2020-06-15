@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 21 May 2020 04:06:07 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Jun 2020 17:54:59 GMT and should not be manually modified.
 
+## 0.60.0-vnext.168
+Mon, 15 Jun 2020 17:54:59 GMT
+
+### Changes
+
+- Disable V8 globally. Turn it on specifically for Desktop builds (tudorm@microsoft.com)
 ## 0.60.0-vnext.167
 Thu, 21 May 2020 04:06:07 GMT
 
