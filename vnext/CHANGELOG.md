@@ -1,8 +1,33 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 06 Jun 2020 22:48:15 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jun 2020 20:55:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.14
+
+Fri, 12 Jun 2020 20:55:23 GMT
+
+### Changes
+
+- [0.62] Cherry pick PR #5071 for CallJsFunction queuing (vmorozov@microsoft.com)
+- Add Microsoft.ReactNative.Cxx to the nugets. (acoates@microsoft.com)
+
+## 0.62.0-preview.13
+
+Fri, 12 Jun 2020 18:07:47 GMT
+
+### Changes
+
+- Attempt to fix Publish pipeline (tudorm@microsoft.com)
+
+## 0.62.0-preview.12
+
+Wed, 10 Jun 2020 12:11:09 GMT
+
+### Changes
+
+- Add XamlUIService with ElementFromReactTag (acoates@microsoft.com)
 
 ## 0.62.0-preview.11
 
