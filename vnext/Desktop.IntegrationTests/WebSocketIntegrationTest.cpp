@@ -142,7 +142,6 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(PingClose)
-    TEST_IGNORE() //TODO: Remove before merging!
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(PingClose)
   {
