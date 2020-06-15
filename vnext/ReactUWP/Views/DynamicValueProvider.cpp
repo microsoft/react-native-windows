@@ -4,42 +4,47 @@
 #include "pch.h"
 
 #include "DynamicAutomationProperties.h"
-#include "ValueAutomationPeer.h"
+#include "DynamicValueProvider.h"
 
 #include <UI.Xaml.Controls.h>
 
 // Needed for latest versions of C++/WinRT
-#if __has_include("ValueAutomationPeer.g.cpp")
-#include "ValueAutomationPeer.g.cpp"
+#if __has_include("DynamicValueProvider.g.cpp")
+#include "DynamicValueProvider.g.cpp"
 #endif
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
-ValueAutomationPeer::ValueAutomationPeer(xaml::UIElement const &uiElement) : m_uiElement(uiElement) {}
+DynamicValueProvider::DynamicValueProvider(xaml::Automation::Peers::FrameworkElementAutomationPeer peer)
+    : m_peer(peer) {}
 
 // IValueProvider
-winrt::hstring ValueAutomationPeer::Value() {
+winrt::hstring DynamicValueProvider::Value() {
   return GetAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text);
 }
 
 // The following methods are not React Native props, but we need them to implement IValueProvider.
-bool ValueAutomationPeer::IsReadOnly() {
-  // We only support this for ComboBox now, which is interactive.
+bool DynamicValueProvider::IsReadOnly() {
   return false;
 }
 
-void ValueAutomationPeer::SetValue(winrt::hstring const &value) {
-  DynamicAutomationProperties::DispatchAccessibilityAction(m_uiElement, L"setValue");
+void DynamicValueProvider::SetValue(winrt::hstring const &value) {
+  try {
+    if (auto const &owner = m_peer.Owner()) {
+      DynamicAutomationProperties::DispatchAccessibilityAction(owner, L"setValue");
+    }
+  } catch (...) {
+  }
 }
 
 // Private Methods
-winrt::hstring ValueAutomationPeer::GetAccessibilityValue(
+winrt::hstring DynamicValueProvider::GetAccessibilityValue(
     winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
   try {
-    if (m_uiElement) {
+    if (auto const &owner = m_peer.Owner()) {
       switch (accValue) {
         case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
-          return DynamicAutomationProperties::GetAccessibilityValueText(m_uiElement);
+          return DynamicAutomationProperties::GetAccessibilityValueText(owner);
       }
     }
   } catch (...) {

@@ -5,15 +5,16 @@
 
 #include <winrt/Windows.Foundation.h>
 
-#include "ValueAutomationPeer.g.h"
+#include "DynamicAutomationPeer.g.h"
+#include "DynamicValueProvider.g.h"
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
-struct ValueAutomationPeer : ValueAutomationPeerT<ValueAutomationPeer> {
-  using Super = ValueAutomationPeerT<ValueAutomationPeer>;
+struct DynamicValueProvider : DynamicValueProviderT<DynamicValueProvider> {
+  using Super = DynamicValueProviderT<DynamicValueProvider>;
 
-  ValueAutomationPeer() = delete;
-  ValueAutomationPeer(xaml::UIElement const &owner);
+  DynamicValueProvider() = delete;
+  DynamicValueProvider(xaml::Automation::Peers::FrameworkElementAutomationPeer peer);
 
   // IValueProvider
   winrt::hstring Value();
@@ -22,10 +23,10 @@ struct ValueAutomationPeer : ValueAutomationPeerT<ValueAutomationPeer> {
 
  private:
   winrt::hstring GetAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
-  xaml::UIElement m_uiElement;
+  xaml::Automation::Peers::FrameworkElementAutomationPeer m_peer{nullptr};
 };
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
-struct ValueAutomationPeer : ValueAutomationPeerT<ValueAutomationPeer, implementation::ValueAutomationPeer> {};
+struct DynamicValueProvider : DynamicValueProviderT<DynamicValueProvider, implementation::DynamicValueProvider> {};
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation

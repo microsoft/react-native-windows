@@ -152,23 +152,17 @@ namespace PROJECT_ROOT_NAMESPACE
     XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
     XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider, 
     XAML_NAMESPACE.Automation.Provider.IToggleProvider,
-    XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider
+    XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider,
+    XAML_NAMESPACE.Automation.Provider.IRangeValueProvider
   {
     DynamicAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
   }
 
   [default_interface]
   [webhosthidden]
-  runtimeclass RangeAutomationPeer :
-    XAML_NAMESPACE.Automation.Provider.IRangeValueProvider
-  {
-    RangeAutomationPeer(XAML_NAMESPACE.UIElement uiElement);
-  }
-
-  [default_interface]
-  [webhosthidden] runtimeclass ValueAutomationPeer :
+  runtimeclass DynamicValueProvider :
     XAML_NAMESPACE.Automation.Provider.IValueProvider
   {
-    ValueAutomationPeer(XAML_NAMESPACE.UIElement uiElement);
+    DynamicValueProvider(XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer peer);
   }
 }

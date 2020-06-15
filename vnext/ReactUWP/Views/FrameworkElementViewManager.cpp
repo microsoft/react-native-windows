@@ -22,8 +22,8 @@
 #include "DynamicAutomationProperties.h"
 
 #include <Views/ViewPanel.h>
-#include "cdebug.h"
 #include "Unicode.h"
+#include "cdebug.h"
 
 namespace winrt {
 using namespace xaml;
@@ -156,9 +156,7 @@ static folly::dynamic GetAccessibilityStateProps() {
 
 static folly::dynamic GetAccessibilityValueProps() {
   folly::dynamic props = folly::dynamic::object();
-  // TODO number ok?
-  props.update(folly::dynamic::object("min", "number")("max", "number")("now", "number")(
-      "text", "string"));
+  props.update(folly::dynamic::object("min", "number")("max", "number")("now", "number")("text", "string"));
   return props;
 }
 
@@ -453,7 +451,6 @@ bool FrameworkElementViewManager::UpdateProperty(
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityValue") {
-      
       // TODO handle else error
       if (propertyValue.isObject()) {
         for (const auto &pair : propertyValue.items()) {
@@ -461,19 +458,19 @@ bool FrameworkElementViewManager::UpdateProperty(
           const folly::dynamic &innerValue = pair.second;
           // TODO override min/max/now if text present
           // TODO enforce required min/max if now present
-          
+
           if (innerName == "min" && innerValue.isNumber()) {
-            DynamicAutomationProperties::SetAccessibilityValueMin(element, static_cast<double>(innerValue.getDouble()));
+            DynamicAutomationProperties::SetAccessibilityValueMin(element, static_cast<double>(innerValue.getInt()));
           } else if (innerName == "max" && innerValue.isNumber()) {
-            DynamicAutomationProperties::SetAccessibilityValueMax(element, static_cast<double>(innerValue.getDouble()));
+            DynamicAutomationProperties::SetAccessibilityValueMax(element, static_cast<double>(innerValue.getInt()));
           } else if (innerName == "now" && innerValue.isNumber()) {
-            DynamicAutomationProperties::SetAccessibilityValueNow(element, static_cast<double>(innerValue.getDouble()));
+            DynamicAutomationProperties::SetAccessibilityValueNow(element, static_cast<double>(innerValue.getInt()));
           } else if (innerName == "text" && innerValue.isString()) {
-            DynamicAutomationProperties::SetAccessibilityValueText(element, 
-                Microsoft::Common::Unicode::Utf8ToUtf16(innerValue.getString()).c_str());
-          } 
+            DynamicAutomationProperties::SetAccessibilityValueText(
+                element, Microsoft::Common::Unicode::Utf8ToUtf16(innerValue.getString()).c_str());
+          }
         }
-      } 
+      }
     } else if (propertyName == "testID") {
       if (propertyValue.isString()) {
         auto value = react::uwp::asHstring(propertyValue);
