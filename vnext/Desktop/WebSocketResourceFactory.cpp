@@ -37,7 +37,7 @@ IWebSocketResource::Make(const string &urlString, bool legacyImplementation, boo
       if (url.port.empty())
         url.port = "443";
 
-      return make_shared<Beast::SecureWebSocket>(std::move(url));
+      return make_shared<Beast::SecureWebSocketResource>(std::move(url));
     } else {
       throw std::invalid_argument((string("Incorrect URL scheme: ") + url.scheme).c_str());
     }

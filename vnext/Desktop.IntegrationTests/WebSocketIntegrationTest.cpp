@@ -141,6 +141,8 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::IsTrue(closed);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(PingClose)
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(PingClose)
   {
     auto server = make_shared<Test::WebSocketServer>(5556);
@@ -169,42 +171,6 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     Assert::IsTrue(pinged);
     Assert::AreEqual({}, errorString);
-  }
-
-  // Emulate promise/future functionality.
-  // Fails when connecting to stock package bundler.
-  BEGIN_TEST_METHOD_ATTRIBUTE(WaitForBundlerResponseNoClose)
-  TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(WaitForBundlerResponseNoClose) {
-    string url = "ws://localhost:8081/debugger-proxy?role=client";
-    // string url = "ws://localhost:5555/";
-    auto ws = IWebSocketResource::Make(url);
-    string json =
-        "{\"inject\":{},\"id\":1,\"method\":\"executeApplicationScript\",\"url\":\"http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true\"}";
-    // string json = "{}";
-    std::mutex mutex;
-    condition_variable condition;
-    bool read = false;
-    bool connected = false;
-    bool wrote = false;
-    ws->SetOnConnect([&connected]() { connected = true; });
-    ws->SetOnSend([&wrote](size_t size) { wrote = true; });
-    ws->SetOnMessage([&mutex, &condition, &read](size_t size, const string &message) {
-      lock_guard<std::mutex> guard(mutex);
-      read = true;
-      condition.notify_all();
-    });
-
-    ws->Connect();
-    ws->Send(json);
-
-    unique_lock<std::mutex> lock(mutex);
-    condition.wait(lock);
-
-    Assert::IsTrue(connected);
-    Assert::IsTrue(wrote);
-    Assert::IsTrue(read);
   }
 
   TEST_METHOD(SendReceiveClose)
