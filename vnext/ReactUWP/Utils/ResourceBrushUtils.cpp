@@ -11,7 +11,7 @@ namespace uwp {
 
 DefaultBrushStore::DefaultBrushStore() {}
 
-DefaultBrushStore& DefaultBrushStore::Instance() {
+DefaultBrushStore &DefaultBrushStore::Instance() {
   static DefaultBrushStore instance;
   return instance;
 }
@@ -23,9 +23,9 @@ void DefaultBrushStore::Reset() {
 xaml::Media::Brush DefaultBrushStore::GetDefaultBorderBrush() {
   if (!m_defaultBorderBrush) {
     m_defaultBorderBrush = xaml::Application::Current()
-        .Resources()
-        .Lookup(winrt::box_value(L"DefaultTextForegroundThemeBrush"))
-        .as<xaml::Media::Brush>();
+                               .Resources()
+                               .Lookup(winrt::box_value(L"DefaultTextForegroundThemeBrush"))
+                               .as<xaml::Media::Brush>();
   }
 
   return m_defaultBorderBrush;

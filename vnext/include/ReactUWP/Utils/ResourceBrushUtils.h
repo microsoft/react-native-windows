@@ -9,13 +9,13 @@ namespace react {
 namespace uwp {
 
 class DefaultBrushStore {
-public:
+ public:
   static DefaultBrushStore &Instance();
   void Reset();
 
   xaml::Media::Brush GetDefaultBorderBrush();
 
-private:
+ private:
   DefaultBrushStore();
   DefaultBrushStore(const DefaultBrushStore &) = delete;
   void operator=(const DefaultBrushStore &) = delete;
