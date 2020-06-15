@@ -301,12 +301,16 @@ void ViewPanel::FinalizeProperties() {
     // TODO: Can Binding be used here?
     if (hasBorderBrush)
       m_border.BorderBrush(BorderBrush());
-    else
+    else if (!hasBorderThickness) {
       m_border.ClearValue(xaml::Controls::Border::BorderBrushProperty());
+    }
 
     if (hasBorderThickness) {
       m_border.BorderThickness(BorderThickness());
       if (!hasBorderBrush) {
+        // Borders draw something other than transparent on other platforms.
+        // To match, we'll use a default border brush if one isn't already set.
+        // Note:  Keep this in sync with code in TryUpdateBorderProperties().
         m_border.BorderBrush(::react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
       }
     } else

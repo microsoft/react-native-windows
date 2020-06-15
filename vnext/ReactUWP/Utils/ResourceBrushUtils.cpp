@@ -12,7 +12,7 @@ namespace uwp {
 DefaultBrushStore::DefaultBrushStore() {}
 
 DefaultBrushStore &DefaultBrushStore::Instance() {
-  static DefaultBrushStore instance;
+  thread_local static DefaultBrushStore instance;
   return instance;
 }
 
