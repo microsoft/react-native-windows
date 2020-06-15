@@ -174,7 +174,7 @@ bool TryUpdateBorderProperties(
       if (propertyValue.isNumber()) {
         SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
         if (propertyValue.asDouble() != 0 && !element.BorderBrush()) {
-          // Borders draw something other than transparent on other platforms.
+          // Borders with no brush draw something other than transparent on other platforms.
           // To match, we'll use a default border brush if one isn't already set.
           // Note:  Keep this in sync with code in ViewPanel::FinalizeProperties().
           element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());

@@ -8,7 +8,7 @@
 namespace react {
 namespace uwp {
 
-// Helper singleton class to cache brushes used as defaults.
+// Helper per-UI-thread singleton class to cache brushes used as defaults.
 class DefaultBrushStore {
  public:
   static DefaultBrushStore &Instance();
