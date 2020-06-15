@@ -7,6 +7,8 @@
 #include "ViewPanel.h"
 
 #include <UI.Xaml.Media.h>
+#include <Utils/PropertyUtils.h>
+#include <utils/ResourceBrushUtils.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
@@ -299,12 +301,19 @@ void ViewPanel::FinalizeProperties() {
     // TODO: Can Binding be used here?
     if (hasBorderBrush)
       m_border.BorderBrush(BorderBrush());
-    else
+    else if (!hasBorderThickness) {
       m_border.ClearValue(xaml::Controls::Border::BorderBrushProperty());
+    }
 
-    if (hasBorderThickness)
+    if (hasBorderThickness) {
       m_border.BorderThickness(BorderThickness());
-    else
+      if (!hasBorderBrush) {
+        // Borders with no brush draw something other than transparent on other platforms.
+        // To match, we'll use a default border brush if one isn't already set.
+        // Note:  Keep this in sync with code in TryUpdateBorderProperties().
+        m_border.BorderBrush(::react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
+      }
+    } else
       m_border.ClearValue(xaml::Controls::Border::BorderThicknessProperty());
 
     if (hasCornerRadius)
