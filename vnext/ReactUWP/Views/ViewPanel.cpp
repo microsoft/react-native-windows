@@ -10,6 +10,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <Utils/PropertyUtils.h>
+#include <utils/ResourceBrushUtils.h>
 
 // Needed for latest versions of C++/WinRT
 #if __has_include("ViewPanel.g.cpp")
@@ -306,7 +307,7 @@ void ViewPanel::FinalizeProperties() {
     if (hasBorderThickness) {
       m_border.BorderThickness(BorderThickness());
       if (!hasBorderBrush) {
-        m_border.BorderBrush(::react::uwp::GetDefaultBorderBrush());
+        m_border.BorderBrush(::react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
       }
     }  else
       m_border.ClearValue(xaml::Controls::Border::BorderThicknessProperty());

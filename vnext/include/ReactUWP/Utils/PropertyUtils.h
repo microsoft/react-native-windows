@@ -146,13 +146,6 @@ bool TryUpdateForeground(const T &element, const std::string &propertyName, cons
   return false;
 }
 
-inline xaml::Media::Brush GetDefaultBorderBrush() {
-  return xaml::Application::Current()
-      .Resources()
-      .Lookup(winrt::box_value(L"DefaultTextForegroundThemeBrush"))
-      .as<xaml::Media::Brush>();
-}
-
 template <class T>
 bool TryUpdateBorderProperties(
     ShadowNodeBase *node,
@@ -167,7 +160,11 @@ bool TryUpdateBorderProperties(
       element.BorderBrush(brush);
       UpdateControlBorderResourceBrushes(element, brush);
     } else if (propertyValue.isNull()) {
-      element.ClearValue(T::BorderBrushProperty());
+      if (element.BorderThickness() != xaml::ThicknessHelper::FromUniformLength(0.0)) {
+        element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
+      } else {
+        element.ClearValue(T::BorderBrushProperty());
+      }
       UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else {
@@ -175,8 +172,8 @@ bool TryUpdateBorderProperties(
     if (iter != edgeTypeMap.end()) {
       if (propertyValue.isNumber()) {
         SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
-        if (!element.BorderBrush()) {
-          element.BorderBrush(GetDefaultBorderBrush());
+        if (propertyValue.asDouble() != 0 && !element.BorderBrush()) {
+          element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
         }
       } else if (propertyValue.isNull()) {
         SetBorderThickness(node, element, iter->second, 0);

@@ -9,6 +9,28 @@
 namespace react {
 namespace uwp {
 
+DefaultBrushStore::DefaultBrushStore() {}
+
+DefaultBrushStore& DefaultBrushStore::Instance() {
+  static DefaultBrushStore instance;
+  return instance;
+}
+
+void DefaultBrushStore::Reset() {
+  m_defaultBorderBrush = nullptr;
+}
+
+xaml::Media::Brush DefaultBrushStore::GetDefaultBorderBrush() {
+  if (!m_defaultBorderBrush) {
+    m_defaultBorderBrush = xaml::Application::Current()
+        .Resources()
+        .Lookup(winrt::box_value(L"DefaultTextForegroundThemeBrush"))
+        .as<xaml::Media::Brush>();
+  }
+
+  return m_defaultBorderBrush;
+}
+
 void UpdateResourceBrush(
     const xaml::FrameworkElement &element,
     const std::wstring &resourceName,

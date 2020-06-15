@@ -8,6 +8,21 @@
 namespace react {
 namespace uwp {
 
+class DefaultBrushStore {
+public:
+  static DefaultBrushStore &Instance();
+  void Reset();
+
+  xaml::Media::Brush GetDefaultBorderBrush();
+
+private:
+  DefaultBrushStore();
+  DefaultBrushStore(const DefaultBrushStore &) = delete;
+  void operator=(const DefaultBrushStore &) = delete;
+
+  xaml::Media::Brush m_defaultBorderBrush = nullptr;
+};
+
 // Some XAML controls use additional resource-brushes that need to be
 // kept in sync with the Background, Foreground, and BorderBrush
 // DependencyProperties. RN clients (windows-included) that

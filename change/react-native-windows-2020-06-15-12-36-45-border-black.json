@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "use default brush for border",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-15T19:36:45.167Z"
+}
