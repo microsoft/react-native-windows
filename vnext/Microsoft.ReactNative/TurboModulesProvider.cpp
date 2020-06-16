@@ -197,9 +197,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     rejectFunction = {runtime, args[count - 1]};
                   }
 
-                  auto makeCallback = [&runtime](const facebook::jsi::Value &callbackValue) -> MethodResultCallback {
-                    return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime)](
-                               const IJSValueWriter &writer) {
+                  auto makeCallback = [&runtime](
+                                          const facebook::jsi::Value &callbackValue) noexcept->MethodResultCallback {
+                    return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime) ](
+                        const IJSValueWriter &writer) noexcept {
                       auto result = writer.as<JsiWriter>()->MoveResult();
                       VerifyElseCrash(result.isObject() && result.asObject(runtime).isArray(runtime));
                       auto jsArray = result.asObject(runtime).asArray(runtime);
