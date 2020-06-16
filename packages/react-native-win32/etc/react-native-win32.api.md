@@ -439,6 +439,8 @@ export class TouchableWin32 extends React_2.Component<ITouchableWin32Props, IInt
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
+    focus: () => void;
+    // (undocumented)
     render(): JSX.Element;
     }
 
