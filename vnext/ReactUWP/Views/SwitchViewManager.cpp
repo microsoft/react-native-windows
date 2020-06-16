@@ -167,7 +167,7 @@ void SwitchViewManager::DispatchCommand(
     const folly::dynamic &commandArgs) {
   if (commandId == "setValue") {
     auto value = commandArgs[0].asBool();
-    viewToUpdate.as<winrt::ToggleSwitch>().IsEnabled(value);
+    viewToUpdate.as<winrt::ToggleSwitch>().IsOn(value);
   } else {
     Super::DispatchCommand(viewToUpdate, commandId, commandArgs);
   }
