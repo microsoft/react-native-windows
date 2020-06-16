@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Jun 2020 00:05:48 GMT",
+      "tag": "react-native-windows_v0.0.0-master.94",
+      "version": "0.0.0-master.94",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": " Upgrade to boost 1.72.0.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "852830974c349359d81996abd18eab2a5627652a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Prevent Switches from Accidentally Becoming Disabled",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2004692171370684f5d79d9cc6cf1dec78326266",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "use default brush for border",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c9a2cc1bc5fe59e526f82578772a3646a1b5ee61",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Jun 2020 00:09:11 GMT",
       "tag": "react-native-windows_v0.0.0-master.93",
       "version": "0.0.0-master.93",
