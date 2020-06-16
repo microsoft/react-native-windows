@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Don't lint target folder and don't flow check node_modules packages",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-16T01:01:44.414Z"
+}
