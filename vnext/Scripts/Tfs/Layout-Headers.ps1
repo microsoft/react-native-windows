@@ -112,3 +112,6 @@ Copy-Item -Force -Path $ReactWindowsRoot\Scripts\StripAdditionalPlatformsFromNus
 
 # Microsoft.ReactNative.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot
+
+# Natvis files
+Copy-Item -Force -Path $ReactWindowsRoot\vnext\Folly\Folly.natvis -Destination $TargetRoot\natvis

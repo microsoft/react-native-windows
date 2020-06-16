@@ -20,6 +20,7 @@
     Uncomment once we are producing doc xml file
     <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml"   target="lib\uap10.0"/> 
     -->
+    <file src="$nugetroot$\natvis\Folly.natvis" target ="natvis\Folly.natvis"/>
 
     <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
 
