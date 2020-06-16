@@ -220,7 +220,6 @@
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
-    <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNode.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNodeType.h" />
@@ -248,7 +247,6 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h" />
     <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h" />
-    <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\LinkingManagerModule.h" />
     <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h" />
@@ -408,8 +406,6 @@
     <ClCompile Include="..\ReactUWP\Base\CoreNativeModules.cpp" />
     <ClCompile Include="..\ReactUWP\Base\CoreUIManagers.cpp" />
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp" />
-    <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp" />
-    <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\Animated\AnimationDriver.cpp" />
@@ -433,7 +429,6 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp" />
-    <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp" />

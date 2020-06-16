@@ -14,12 +14,6 @@
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp">
       <Filter>CxxReactUWP</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp">
-      <Filter>Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
-      <Filter>Executors</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -89,7 +83,7 @@
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
+    <ClCompile Include="..\ReactUWP\Modules\DevSupportManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp">
@@ -374,9 +368,6 @@
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
-      <Filter>Executors</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
@@ -458,7 +449,7 @@
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h">
+    <ClInclude Include="..\ReactUWP\Modules\DevSupportManager.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h">
@@ -736,9 +727,6 @@
     </Filter>
     <Filter Include="CxxReactUWP">
       <UniqueIdentifier>{3b861ea5-e87b-4783-a4b1-ce28548c1985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Executors">
-      <UniqueIdentifier>{c3b4164c-f768-4259-9ef1-ceeaa04ce57a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{2c78db3b-c1c1-4951-870e-02e0964bcb00}</UniqueIdentifier>
