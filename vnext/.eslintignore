@@ -1,11 +1,12 @@
+**/node_modules
 /dist
 /flow
+/index.*
+/jest
 /lib
 /Libraries
-**/node_modules
 /packages
 /ReactCopies
 /RNTester
-/index.*
 /RNTester.*
-/jest
+/target
