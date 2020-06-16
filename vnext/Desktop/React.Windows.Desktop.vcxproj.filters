@@ -147,6 +147,8 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">

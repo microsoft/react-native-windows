@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "TurboModulesProvider.h"
 #include <ReactCommon/TurboModuleUtils.h>
+#include <crash/verifyElseCrash.h>
 #include "JsiReader.h"
 #include "JsiWriter.h"
 

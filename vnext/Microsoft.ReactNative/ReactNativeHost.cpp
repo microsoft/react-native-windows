@@ -54,10 +54,10 @@ IAsyncAction ReactNativeHost::LoadInstance() noexcept {
 }
 
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
-#ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
+#ifndef CORE_ABI
 
   if (!m_packageBuilder) {
     m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider, turboModulesProvider);

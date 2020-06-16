@@ -102,6 +102,7 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CORE_ABI</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <!-- TODO: Remove after https://github.com/microsoft/hermes-windows/issues/12 is fixed. -->
@@ -162,11 +163,13 @@
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
