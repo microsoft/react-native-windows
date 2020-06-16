@@ -5,9 +5,9 @@
 
 #include <Executors/WebSocketJSExecutor.h>
 #include <cxxreact/JSBigString.h>
+#include <winrt/Windows.Foundation.h>
 #include "MockExecutorDelegate.h"
 #include "TestMessageQueueThread.h"
-#include <winrt/Windows.Foundation.h>
 
 using namespace facebook::react;
 using namespace react::uwp;
@@ -35,7 +35,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
     jsThread->quitSynchronous();
 
     Assert::AreEqual({}, errorMessage);
-    //Assert::IsTrue(connected);
+    // Assert::IsTrue(connected);
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncFails)
@@ -52,7 +52,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
     jsThread->quitSynchronous();
 
     Assert::AreNotEqual({}, errorMessage);
-    //Assert::IsFalse(connected);
+    // Assert::IsFalse(connected);
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(LoadApplicationScriptSucceeds)
@@ -77,7 +77,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
 
     jsQueue->quitSynchronous();
 
-    //Assert::IsTrue(connected);
+    // Assert::IsTrue(connected);
     Assert::AreEqual({}, errorMessage);
   }
 
@@ -99,7 +99,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
 
     jsThread->quitSynchronous();
 
-    //Assert::IsTrue(connected);
+    // Assert::IsTrue(connected);
     Assert::AreNotEqual({}, errorMessage);
   }
 
@@ -121,7 +121,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
 
     jsThread->quitSynchronous();
 
-    //Assert::IsTrue(connected);
+    // Assert::IsTrue(connected);
     Assert::AreNotEqual({}, errorMessage);
   }
 };
