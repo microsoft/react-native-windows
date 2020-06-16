@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Jun 2020 23:24:44 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.16",
+      "version": "0.62.0-preview.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Unify DevSupportManager and WebSocketJSExecutor",
+            "author": "acoates@microsoft.com",
+            "commit": "fe11a96ebecc3ea9a2afb5fe24e0cf694e3968ab",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2020 08:37:17 GMT",
       "tag": "react-native-windows_v0.62.0-preview.15",
       "version": "0.62.0-preview.15",

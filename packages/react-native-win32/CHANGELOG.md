@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 15 Jun 2020 22:59:23 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Jun 2020 23:24:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.7
+
+Tue, 16 Jun 2020 23:24:44 GMT
+
+### Changes
+
+- Enable fast refresh (acoates@microsoft.com)
 
 ## 0.62.0-preview.6
 
