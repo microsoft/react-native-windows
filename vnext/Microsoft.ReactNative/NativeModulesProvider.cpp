@@ -30,7 +30,7 @@ std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::Get
   for (auto &entry : m_moduleProviders) {
     modules.emplace_back(
         entry.first,
-        [moduleName = entry.first, moduleProvider = entry.second, winrtReactContext]() noexcept {
+        [ moduleName = entry.first, moduleProvider = entry.second, winrtReactContext ]() noexcept {
           IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>(winrtReactContext);
           auto providedModule = moduleProvider(moduleBuilder);
           return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(moduleName, providedModule);
