@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Prevent Switches from Accidentally Becoming Disabled",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-14T07:14:17.082Z"
-}
