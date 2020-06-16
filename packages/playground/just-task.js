@@ -1,24 +1,12 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  * @ts-check
  */
 
-const path = require('path');
-const {
-  task,
-  series,
-  option,
-  argv,
-  tscTask,
-  eslintTask,
-} = require('just-scripts');
-const libPath = path.resolve(process.cwd(), 'lib');
-const srcPath = path.resolve(process.cwd(), 'src');
-
-option('production');
-option('clean');
+const fs = require('fs');
+const {task, series, eslintTask} = require('just-scripts');
 
 task('eslint', () => {
   return eslintTask();
@@ -26,19 +14,13 @@ task('eslint', () => {
 task('eslint:fix', () => {
   return eslintTask({fix: true});
 });
-task('ts', () => {
-  return tscTask({
-    pretty: true,
-    noEmit: true,
-    ...(argv().production && {
-      inlineSources: true,
-      sourceRoot: path.relative(libPath, srcPath),
-    }),
-    target: 'es6',
-    module: 'commonjs',
-  });
-});
 
-task('build', series('ts'));
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));
+
+task('prepareBundleWin32', () => {
+  const file = 'windows/playground-win32/Bundle';
+  if (!fs.existsSync(file)) {
+    fs.mkdirSync(file);
+  }
+});

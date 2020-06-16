@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -10,16 +10,8 @@
 
 namespace react::uwp {
 
-UwpReactInstanceProxy::UwpReactInstanceProxy(
-    Mso::WeakPtr<Mso::React::IReactInstance> &&weakReactInstance,
-    ReactInstanceSettings &&instanceSettings) noexcept
-    : m_weakReactInstance{weakReactInstance}, m_instanceSettings{std::move(instanceSettings)} {}
-
-void UwpReactInstanceProxy::Start(
-    const std::shared_ptr<IReactInstance> & /*spThis*/,
-    const ReactInstanceSettings & /*settings*/) {
-  VerifyElseCrashSz(false, "Deprecated. Use ReactHost.");
-}
+UwpReactInstanceProxy::UwpReactInstanceProxy(Mso::WeakPtr<Mso::React::IReactInstance> &&weakReactInstance) noexcept
+    : m_weakReactInstance{weakReactInstance} {}
 
 void UwpReactInstanceProxy::AttachMeasuredRootView(IXamlRootView * /*pRootView*/, folly::dynamic && /*initProps*/) {
   VerifyElseCrashSz(false, "Deprecated. Use ReactHost.");
@@ -132,16 +124,20 @@ ExpressionAnimationStore &UwpReactInstanceProxy::GetExpressionAnimationStore() {
   return m_expressionAnimationStore;
 }
 
-const ReactInstanceSettings &UwpReactInstanceProxy::GetReactInstanceSettings() const {
-  return m_instanceSettings;
-}
-
 std::string UwpReactInstanceProxy::GetBundleRootPath() const noexcept {
   if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
     return query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance).GetBundleRootPath();
   }
 
   return "";
+}
+
+bool UwpReactInstanceProxy::IsLoaded() const noexcept {
+  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+    return query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance).IsLoaded();
+  }
+
+  return false;
 }
 
 void UwpReactInstanceProxy::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) {

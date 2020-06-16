@@ -11,7 +11,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
-    <ItemGroup Label="ProjectConfigurations">
+  <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
@@ -44,6 +44,22 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|Win32">
+      <Configuration>WinUI3</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|x64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -68,7 +84,15 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeDir)\ReactCommon\jscallinvoker;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(ReactNativeDir)\ReactCommon;
+        $(JSI_SourcePath);$(JSI_Source);
+        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(FollyDir);$(ReactNativeWindowsDir)stubs;
+        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
+        %(AdditionalIncludeDirectories);
+      </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -81,7 +105,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
   </ImportGroup>
   <ItemGroup>
     <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
@@ -138,31 +162,35 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
+    <!-- Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122 -->
+    <ClCompile Condition="'$(Platform)' == 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" FloatingPointModel="Strict" />
+    <ClCompile Condition="'$(Platform)' != 'x64'" Include="$(YogaDir)\yoga\Yoga.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\BridgeJSCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
     <!-- Forced include only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" ForcedIncludeFiles="stdexcept" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -171,10 +199,11 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ReactNativePackageDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
     <Error Condition="!Exists('$(YogaDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
+  <Target Name="Deploy" />
 </Project>

@@ -1,0 +1,14 @@
+!node_modules
+!vnext/packages
+!vnext/ReactCopies
+!packages/react-native-platform-override/node_modules
+!packages/override-tools/node_modules
+!packages/react-native-win32/node_modules
+!packages/E2ETest/node_modules
+!packages/microsoft-reactnative-sampleapps/node_modules
+!packages/playground/node_modules
+!packages/react-native-windows-codegen/node_modules
+!packages/react-native-windows-init/node_modules
+!packages/rnpm-plugin-windows/node_modules
+!packages/scripts/node_modules
+!.github/ISSUE_TEMPLATE

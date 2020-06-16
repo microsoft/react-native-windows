@@ -16,5 +16,5 @@ constructor(props: ITextWin32Props);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>ITextWin32Props</code> |  |
+|  props | [ITextWin32Props](./react-native-win32.itextwin32props.md) |  |
 

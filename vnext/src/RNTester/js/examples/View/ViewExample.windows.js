@@ -10,8 +10,6 @@
 
 'use strict';
 
-/* eslint-disable react-native/no-inline-styles */
-
 const React = require('react');
 
 const {
@@ -405,7 +403,7 @@ exports.examples = [
   {
     // [TODO(macOS ISS#2323203)
     title: 'ToolTip',
-    render() {
+    render(): React.Node {
       return (
         <View tooltip="Parent View">
           <Text style={{fontSize: 11}}>

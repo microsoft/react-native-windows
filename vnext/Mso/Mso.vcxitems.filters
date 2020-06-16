@@ -342,6 +342,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl.h">
       <Filter>src\eventWaitHandle</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\futureWinRT.h">
+      <Filter>future</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryApi.cpp">

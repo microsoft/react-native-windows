@@ -2,6 +2,306 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 13 Jun 2020 00:09:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.20",
+      "version": "0.0.0-master.20",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add focusRef prop to TouchableWin32",
+            "author": "taamireh@microsoft.com",
+            "commit": "67a72aca889f27e2d7bc1e4596d92f36bf311a87",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jun 2020 00:05:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.19",
+      "version": "0.0.0-master.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "expand cursor prop + test comopnent",
+            "author": "taamireh@microsoft.com",
+            "commit": "93251e5714cfc7ac6211af4e809251d2d3ba7050",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Jun 2020 00:05:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.18",
+      "version": "0.0.0-master.18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix errant baseFile in platform override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "61e5ea7ee9b1f94dd1d5ef185936c7bd8c9448e5",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Jun 2020 00:05:25 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.17",
+      "version": "0.0.0-master.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Deprecate acceptsKeyboardFocus",
+            "author": "kaigu@microsoft.com",
+            "commit": "45d01a7db005595af39030904acff616eed5400f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.16",
+      "version": "0.0.0-master.16",
+      "comments": {
+        "none": [
+          {
+            "comment": "Latest CELA open source policy is to not include All right reserved",
+            "author": "acoates@microsoft.com",
+            "commit": "3f17d742ee5045994fda3f10d2a489bde71659e3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 May 2020 00:06:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.15",
+      "version": "0.0.0-master.15",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename override-tools to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85b01cb32e4b6c46aebb38bdcc5f612a616c856a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 May 2020 00:04:45 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.14",
+      "version": "0.0.0-master.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move several stubs from TS to flow",
+            "author": "acoates@microsoft.com",
+            "commit": "0e0dba50cc377172a19df4cd97c3babef7da0c8c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 May 2020 00:04:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.13",
+      "version": "0.0.0-master.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reduce need for custom metro configs",
+            "author": "acoates@microsoft.com",
+            "commit": "60afde987aa23f2755ea69a14e4809c242374895",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 19 May 2020 00:05:07 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.12",
+      "version": "0.0.0-master.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adapt ViewWin32, etc to \"accessibilityState\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba50b6050e9c2aa0e09cbb69549816014d381a2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 May 2020 00:04:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.11",
+      "version": "0.0.0-master.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add win32-specific accessibility props Description, DescribedBy, and LabeledBy",
+            "author": "ppatboyd@outlook.com",
+            "commit": "579a25b0079e62375e2ab94d4f8680e14d19c0c8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 May 2020 00:04:42 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.10",
+      "version": "0.0.0-master.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Align local metro config with future CLI changes",
+            "author": "acoates@microsoft.com",
+            "commit": "e4a5f453b6d1d85e19b6e7ae7350d92db81f3aaf",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 May 2020 00:05:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.9",
+      "version": "0.0.0-master.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Ensure InitializeCore is run before app code",
+            "author": "acoates@microsoft.com",
+            "commit": "6088cb0d6b9291e7877d5b0aefd6f18cb1bace3c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 May 2020 00:05:07 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.8",
+      "version": "0.0.0-master.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use inlineSourceMap and inlineSources to encode original TS into sourcemap",
+            "author": "rezha@microsoft.com",
+            "commit": "6398c2dc10d8c7093b3c6b108b5c541f067389b8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Apr 2020 18:40:40 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.7",
+      "version": "0.0.0-master.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Package Fixes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1ca0c2916ac29d3646a35d0e90c8bee8c6cda8d2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Apr 2020 00:04:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update rex-win32 version to something more recent",
+            "author": "acoates@microsoft.com",
+            "commit": "fc72e04428dff1c31acdb9183f3ce95a0a5a53c1",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Apr 2020 00:04:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.6",
+      "version": "0.0.0-master.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implelent Shared StatusBarManagerModule and Do Module Cleanup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "609c18ca016e9e4b5831890bad56309f02280566",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Apr 2020 22:26:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.5",
+      "version": "0.0.0-master.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use a custom resolver wrapper to allow metro to run for multiple platforms at once",
+            "author": "acoates@microsoft.com",
+            "commit": "d53d06aec7ddb8a17480a5e8dc9522e115792a64",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Apr 2020 14:59:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.4",
+      "version": "0.0.0-master.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to React Native 0.62",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ae37f8e7518f808116ce906a7f7b32f00412612d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 20:28:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bumping dev deps",
+            "author": "acoates@microsoft.com",
+            "commit": "03fb17db7b929a6a9ec5b3ce4a00f8ea54560b03",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Apr 2020 19:49:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
+      "version": "0.0.0-master.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bumping dev deps",
+            "author": "acoates@microsoft.com",
+            "commit": "407c0834ada43cd9d42c24cb6ddfe7c91ddf960a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Apr 2020 20:12:21 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.3",
       "version": "0.0.0-master.3",

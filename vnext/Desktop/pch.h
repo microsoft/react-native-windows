@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,4 +6,7 @@
 #ifndef NOGDI
 #define NOGDI
 #endif
+
 #include <windows.h>
+#include <winrt/base.h>
+#include <mutex>

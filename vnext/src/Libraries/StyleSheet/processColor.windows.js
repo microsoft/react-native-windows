@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
  * @format
@@ -10,8 +10,8 @@
 
 const Platform = require('../Utilities/Platform');
 
-const normalizeColor = require('../Color/normalizeColor');
-import type {NativeOrDynamicColorType} from '../Color/NativeOrDynamicColorType'; // ]TODO(macOS ISS#2323203)
+const normalizeColor = require('./normalizeColor');
+import type {NativeOrDynamicColorType} from './NativeOrDynamicColorType'; // ]TODO(macOS ISS#2323203)
 
 /* eslint no-bitwise: 0 */
 function processColor(

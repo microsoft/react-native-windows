@@ -14,5 +14,5 @@ export interface IAppThemeChangedEvent
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [currentTheme](./react-native-windows.iappthemechangedevent.currenttheme.md) | <code>AppThemeTypes</code> |  |
+|  [currentTheme](./react-native-windows.iappthemechangedevent.currenttheme.md) | [AppThemeTypes](./react-native-windows.appthemetypes.md) |  |
 

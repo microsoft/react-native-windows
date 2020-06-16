@@ -109,8 +109,18 @@ export type AccessibilityActionName =
 
   export type Cursor =
   | 'auto'
+  | 'default'
   | 'pointer'
-  
+  | 'help'
+  | 'not-allowed'
+  | 'wait'
+  | 'move'
+  | 'nesw-resize'
+  | 'ns-resize'
+  | 'nwse-resize'
+  | 'we-resize'
+  | 'text'
+
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
   label?: string;
@@ -122,7 +132,7 @@ export type AccessibilityActionEvent = RN.NativeSyntheticEvent<
   }>
   >;
 
-export type AccessibilityStates = RN.AccessibilityStates | 'multiselectable' | 'required';
+export type AccessibilityState = RN.AccessibilityState & {multiselectable?: boolean, required?: boolean};
 
 export type SharedAccessibilityPropsIOSandWin32 = {
   onAccessibilityTap?: () => void;
@@ -131,7 +141,7 @@ export type SharedAccessibilityPropsIOSandWin32 = {
 export type OmittedAccessibilityPropsWin32 = {
   accessibilityActions?: ReadonlyArray<RN.AccessibilityActionInfo>;
   accessibilityRole?: RN.AccessibilityRole;
-  accessibilityStates?: RN.AccessibilityState[];
+  accessibilityState?: RN.AccessibilityState;
 };
 
 export type BasePropsWin32 = {
@@ -146,8 +156,17 @@ export type BasePropsWin32 = {
    * timer, toolbar, tree, and treeitem.
    */
   accessibilityRole?: RN.AccessibilityRole | ARIARole;
-  accessibilityStates?: AccessibilityStates[];
+  accessibilityState?: AccessibilityState;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
+
+  /**
+  * Windows Accessibility extensions for allowing other DOM elements to label or describe a given element.
+  *
+  * Defined as a reference to another DOM element inheriting from the primary base classes of React-Native elements.
+  * The reference will be converted to a native reference (tag) before passing to the native platform.
+  */
+ accessibilityDescribedBy?: React.RefObject<any>;
+ accessibilityLabeledBy?: React.RefObject<any>;
 };
 
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
@@ -163,6 +182,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   // tslint:disable-next-line no-reserved-keywords -- type name matching facebook implementation
   type?: React.ElementType;
   children?: React.ReactNode;
+  /** @Deprecated Use focusable instead.*/
   acceptsKeyboardFocus?: boolean;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
   /**
@@ -178,6 +198,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 
   accessibilitySetSize?: number;
   animationClass?: string;
+  focusable?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React

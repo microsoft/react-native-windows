@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -9,11 +9,12 @@
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
-
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <UI.Composition.h>
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
 
 namespace winrt {
-using ToggleButton = Windows::UI::Xaml::Controls::Primitives::ToggleButton;
+using ToggleButton = xaml::Controls::Primitives::ToggleButton;
 }
 
 namespace react {
@@ -57,33 +58,32 @@ facebook::react::ShadowNode *SliderViewManager::createShadow() const {
 }
 
 XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/) {
-  auto slider = winrt::Slider();
+  auto slider = xaml::Controls::Slider();
   return slider;
 }
 
-void SliderViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
-  auto slider = nodeToUpdate->GetView().as<winrt::Slider>();
+bool SliderViewManager::UpdateProperty(
+    ShadowNodeBase *nodeToUpdate,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  auto slider = nodeToUpdate->GetView().as<xaml::Controls::Slider>();
   if (slider == nullptr)
-    return;
+    return true;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
-
-    if (propertyName == "disabled") {
-      if (propertyValue.isBool())
-        slider.IsEnabled(!propertyValue.asBool());
-      else if (pair.second.isNull())
-        slider.ClearValue(winrt::Control::IsEnabledProperty());
-    } else if (propertyName == "value") {
-      if (propertyValue.isNumber())
-        slider.Value(propertyValue.asDouble());
-      else if (pair.second.isNull())
-        slider.Value(0);
-    }
+  if (propertyName == "disabled") {
+    if (propertyValue.isBool())
+      slider.IsEnabled(!propertyValue.asBool());
+    else if (propertyValue.isNull())
+      slider.ClearValue(xaml::Controls::Control::IsEnabledProperty());
+  } else if (propertyName == "value") {
+    if (propertyValue.isNumber())
+      slider.Value(propertyValue.asDouble());
+    else if (propertyValue.isNull())
+      slider.Value(0);
+  } else {
+    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  return true;
 }
 
 } // namespace uwp

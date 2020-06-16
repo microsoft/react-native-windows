@@ -1,17 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_JSVALUEXAML
 #define MICROSOFT_REACTNATIVE_JSVALUEXAML
-
+#include "CppWinRTIncludes.h"
 #include "JSValue.h"
 
 namespace winrt::Microsoft::ReactNative {
 
 #ifndef CXXUNITTESTS
 
-inline void ReadValue(JSValue const &jsValue, Windows::UI::Xaml::Media::Brush &value) noexcept {
+inline void ReadValue(JSValue const &jsValue, xaml::Media::Brush &value) noexcept {
   value = XamlHelper::BrushFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
 

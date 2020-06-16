@@ -1,6 +1,7 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// clang-format off
 #include <CppUnitTest.h>
 #include <IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
@@ -21,118 +22,43 @@ using std::unique_lock;
 using std::chrono::milliseconds;
 
 using CloseCode = IWebSocketResource::CloseCode;
+using Error = IWebSocketResource::Error;
 
-TEST_CLASS (WebSocketIntegrationTest) {
-  TEST_METHOD(ConnectClose) {
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-    Assert::IsFalse(nullptr == ws);
-    bool connected = false;
-    string message;
-    ws->SetOnConnect([&connected]() { connected = true; });
-
-    server->Start();
-    ws->Connect();
-    ws->Close(CloseCode::Normal, "Closing");
-    server->Stop();
-
-    Assert::IsTrue(connected);
-  }
-
-  TEST_METHOD(ConnectNoClose) {
-    bool connected = false;
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->Start();
-
-    // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
+TEST_CLASS (WebSocketIntegrationTest)
+{
+  void SendReceiveCloseBase(bool isSecure)
+  {
+    auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
+    server->SetMessageFactory([](string&& message)
     {
-      auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-      ws->SetOnConnect([&connected]() { connected = true; });
-
-      ws->Connect();
-    }
-
-    server->Stop();
-
-    Assert::IsTrue(connected);
-  }
-
-  TEST_METHOD(PingClose) {
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->Start();
-
-    auto ws = IWebSocketResource::Make("ws://localhost:5556");
-    promise<bool> pingPromise;
-    ws->SetOnPing([&pingPromise]() { pingPromise.set_value(true); });
-    string errorString;
-    ws->SetOnError([&errorString](IWebSocketResource::Error err) { errorString = err.Message; });
-
-    ws->Connect();
-    ws->Ping();
-    auto pingFuture = pingPromise.get_future();
-    pingFuture.wait();
-    bool pinged = pingFuture.get();
-    ws->Close(CloseCode::Normal, "Closing after reading");
-
-    server->Stop();
-
-    Assert::IsTrue(pinged);
-    Assert::AreEqual({}, errorString);
-  }
-
-  // Emulate promise/future functionality.
-  // Fails when connecting to stock package bundler.
-  BEGIN_TEST_METHOD_ATTRIBUTE(WaitForBundlerResponseNoClose)
-  TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(WaitForBundlerResponseNoClose) {
-    string url = "ws://localhost:8081/debugger-proxy?role=client";
-    // string url = "ws://localhost:5555/";
-    auto ws = IWebSocketResource::Make(url);
-    string json =
-        "{\"inject\":{},\"id\":1,\"method\":\"executeApplicationScript\",\"url\":\"http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true\"}";
-    // string json = "{}";
-    std::mutex mutex;
-    condition_variable condition;
-    bool read = false;
-    bool connected = false;
-    bool wrote = false;
-    ws->SetOnConnect([&connected]() { connected = true; });
-    ws->SetOnSend([&wrote](size_t size) { wrote = true; });
-    ws->SetOnMessage([&mutex, &condition, &read](size_t size, const string &message) {
-      lock_guard<std::mutex> guard(mutex);
-      read = true;
-      condition.notify_all();
+      return message + "_response";
     });
-
-    ws->Connect();
-    ws->Send(json);
-
-    unique_lock<std::mutex> lock(mutex);
-    condition.wait(lock);
-
-    Assert::IsTrue(connected);
-    Assert::IsTrue(wrote);
-    Assert::IsTrue(read);
-  }
-
-  TEST_METHOD(SendReceiveClose) {
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    string scheme = "ws";
+    if (isSecure)
+      scheme += "s";
+    auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/", false, true);
     promise<size_t> sentSizePromise;
-    ws->SetOnSend([&sentSizePromise](size_t size) { sentSizePromise.set_value(size); });
+    ws->SetOnSend([&sentSizePromise](size_t size)
+    {
+      sentSizePromise.set_value(size);
+    });
     promise<string> receivedPromise;
-    ws->SetOnMessage([&receivedPromise](size_t size, const string &message) { receivedPromise.set_value(message); });
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
+    {
+      receivedPromise.set_value(message);
+    });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    {
+      errorMessage = err.Message;
+    });
 
     server->Start();
     string sent = "prefix";
     ws->Connect();
     ws->Send(sent);
 
-    // Block until respone is received. Fail in case of a remote endpoint failure.
+    // Block until response is received. Fail in case of a remote endpoint failure.
     auto sentSizeFuture = sentSizePromise.get_future();
     sentSizeFuture.wait();
     auto sentSize = sentSizeFuture.get();
@@ -147,6 +73,109 @@ TEST_CLASS (WebSocketIntegrationTest) {
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(sent.length(), sentSize);
     Assert::AreEqual({"prefix_response"}, received);
+  }
+
+  TEST_METHOD(ConnectClose)
+  {
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    Assert::IsFalse(nullptr == ws);
+    bool connected = false;
+    bool closed = false;
+    bool error = false;
+    ws->SetOnConnect([&connected]()
+    {
+      connected = true;
+    });
+    ws->SetOnClose([&closed](CloseCode code, const string& reason)
+    {
+      closed = true;
+    });
+    ws->SetOnError([&error](Error&& e)
+    {
+      error = true;
+    });
+
+    server->Start();
+    ws->Connect();
+    ws->Close(CloseCode::Normal, "Closing");
+    server->Stop();
+
+    Assert::IsFalse(error);
+    Assert::IsTrue(connected);
+    Assert::IsTrue(closed);
+  }
+
+  TEST_METHOD(ConnectNoClose)
+  {
+    bool connected = false;
+    bool closed = false;
+    string errorMessage;
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
+
+    // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
+    {
+      auto ws = IWebSocketResource::Make("ws://localhost:5556");
+      ws->SetOnConnect([&connected]()
+      {
+        connected = true;
+      });
+      ws->SetOnClose([&closed](CloseCode code, const string& reason)
+      {
+        closed = true;
+      });
+      ws->SetOnError([&errorMessage](IWebSocketResource::Error && error)
+      {
+        errorMessage = error.Message;
+      });
+
+      ws->Connect();
+      ws->Close();//TODO: Either remove or rename test.
+    }
+
+    server->Stop();
+
+    Assert::AreEqual({}, errorMessage);
+    Assert::IsTrue(connected);
+    Assert::IsTrue(closed);
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(PingClose)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(PingClose)
+  {
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
+
+    auto ws = IWebSocketResource::Make("ws://localhost:5556");
+    promise<bool> pingPromise;
+    ws->SetOnPing([&pingPromise]()
+    {
+      pingPromise.set_value(true);
+    });
+    string errorString;
+    ws->SetOnError([&errorString](IWebSocketResource::Error err)
+    {
+      errorString = err.Message;
+    });
+
+    ws->Connect();
+    ws->Ping();
+    auto pingFuture = pingPromise.get_future();
+    pingFuture.wait();
+    bool pinged = pingFuture.get();
+    ws->Close(CloseCode::Normal, "Closing after reading");
+
+    server->Stop();
+
+    Assert::IsTrue(pinged);
+    Assert::AreEqual({}, errorString);
+  }
+
+  TEST_METHOD(SendReceiveClose)
+  {
+    SendReceiveCloseBase(/*isSecure*/ false);
   }
 
   TEST_METHOD(SendReceiveLargeMessage) {
@@ -171,7 +200,7 @@ TEST_CLASS (WebSocketIntegrationTest) {
     string large(chars);
     ws->Send(large);
 
-    // Block until respone is received. Fail in case of a remote endpoint failure.
+    // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
     future.wait();
     string result = future.get();
@@ -228,24 +257,12 @@ TEST_CLASS (WebSocketIntegrationTest) {
     server->Stop();
   }
 
-  TEST_METHOD(SendReceiveSsl) {
-    auto server = make_shared<Test::WebSocketServer>(5556, /*isSecure*/ true);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocketResource::Make("wss://localhost:5556");
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &messageIn) { response.set_value(messageIn); });
-
-    server->Start();
-    ws->Connect();
-    ws->Send("suffixme");
-
-    auto result = response.get_future();
-    result.wait();
-
-    ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
-
-    Assert::AreEqual({"suffixme_response"}, result.get());
+  BEGIN_TEST_METHOD_ATTRIBUTE(SendReceiveSsl)
+    TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SendReceiveSsl)
+  {
+    SendReceiveCloseBase(/*isSecure*/ true);
   }
 
   // TODO: Use Test::WebSocketServer!!!
@@ -301,21 +318,29 @@ TEST_CLASS (WebSocketIntegrationTest) {
     Assert::AreEqual({}, errorMessage);
   }
 
-  TEST_METHOD(SendConsecutive) {
+  TEST_METHOD(SendConsecutive)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
     const int writes = 10;
     int count = 0;
-    ws->SetOnMessage([&response, &count, writes](size_t size, const string &message) {
+    ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
+    {
       if (++count < writes)
         return;
 
       response.set_value(message);
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    {
+      errorMessage = err.Message;
+    });
 
     server->Start();
     ws->Connect();
@@ -324,9 +349,11 @@ TEST_CLASS (WebSocketIntegrationTest) {
     // The WebSocket implementation can't handle multiple write operations
     // concurrently.
     for (int i = 0; i < writes; i++)
+    {
       ws->Send("suffixme");
+    }
 
-    // Block until respone is received. Fail in case of a remote endpoint failure.
+    // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
     future.wait();
     string result = future.get();

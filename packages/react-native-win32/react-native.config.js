@@ -6,10 +6,7 @@ module.exports = {
         linkConfig: () => null,
         projectConfig: (projectRoot, projectParams) => null,
         dependencyConfig: (projectRoot, dependencyParams) => null,
+        npmPackageName: '@office-iss/react-native-win32',
       },
     },
-
-    // *****
-    // This is only used when building bundles within react-native-win32.
-    reactNativePath: '.',
   };

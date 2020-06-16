@@ -126,6 +126,13 @@ packages/
 jsconfig.json
 package-lock.json
 
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
 #JavaScript files
 *.jsbundle
 
@@ -147,6 +154,7 @@ x64/
 x86/
 bld/
 [Ll]og/
+*.binlog
 
 # Certificates
 *.pfx
@@ -155,3 +163,5 @@ bld/
 *_coverage.xml
 
 tsdoc-metadata.json
+*.dmp
+*.pp

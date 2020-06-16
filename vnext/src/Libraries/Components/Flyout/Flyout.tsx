@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -20,7 +20,7 @@ export interface IFlyoutTargetState {
   targetRef?: React.ReactNode;
 }
 
-const RCTFlyout = requireNativeComponent('RCTFlyout');
+const RCTFlyout = requireNativeComponent<IFlyoutProps>('RCTFlyout');
 
 /**
  * Renders a flyout component.

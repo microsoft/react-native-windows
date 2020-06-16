@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -12,9 +12,20 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
+const chalk = require('chalk');
+
+function ExitProcessWithError(loggingWasEnabled) {
+  if (!loggingWasEnabled) {
+    console.log(
+      `Re-run the command with ${chalk.bold('--logging')} for more information`,
+    );
+  }
+  process.exit(1);
+}
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
+
   if (verbose) {
     newInfo('Verbose: ON');
   }
@@ -31,30 +42,30 @@ async function runWindows(config, args, options) {
       return;
     } catch (e) {
       newError('Unable to print environment info.\n' + e.toString());
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
   }
 
   // Fix up options
   options.root = options.root || process.cwd();
+  const slnFile = options.sln || build.getSolutionFile(options);
 
   if (options.autolink) {
     autolink.updateAutoLink(verbose);
   }
   if (options.build) {
-    const slnFile = build.getSolutionFile(options);
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
       );
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
 
     try {
       await build.restoreNuGetPackages(options, slnFile, verbose);
     } catch (e) {
       newError('Failed to restore the NuGet packages: ' + e.toString());
-      process.exit(1);
+      ExitProcessWithError(options.logging);
     }
 
     // Get build/deploy options
@@ -68,12 +79,19 @@ async function runWindows(config, args, options) {
         options.arch,
         msBuildProps,
         verbose,
+        undefined, // build the default target
+        options.buildLogDirectory,
       );
     } catch (e) {
       newError(
-        `Build failed with message ${e}. Check your build configuration.`,
+        `Build failed with message ${
+          e.message
+        }. Check your build configuration.`,
       );
-      process.exit(1);
+      if (e.logfile) {
+        console.log('See', chalk.bold(e.logfile));
+      }
+      ExitProcessWithError(options.logging);
     }
   } else {
     newInfo('Build step is skipped');
@@ -86,11 +104,11 @@ async function runWindows(config, args, options) {
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {
-        await deploy.deployToDesktop(options, verbose);
+        await deploy.deployToDesktop(options, verbose, slnFile);
       }
     } catch (e) {
-      newError(`Failed to deploy: ${e.message}`);
-      process.exit(1);
+      newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
+      ExitProcessWithError(options.logging);
     }
   } else {
     newInfo('Deploy step is skipped');
@@ -116,14 +134,16 @@ runWindows({
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
- *    proxy: Boolean - Run using remote JS proxy
+ *    remote-debugging: Boolean - Run using remote JS proxy
  *    verbose: Boolean - Enables logging
  *    no-packager: Boolean - Do not launch packager while building
  *    bundle: Boolean - Enable Bundle configuration.
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
+ *    sln: String - Solution file to build
  *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
+ *    direct-debugging: Number - Enable direct debugging on specified port
  */
 module.exports = {
   name: 'run-windows',
@@ -142,7 +162,7 @@ module.exports = {
     },
     {
       command: '--arch [string]',
-      description: 'The build architecture (ARM, x86, x64)',
+      description: 'The build architecture (ARM, ARM64, x86, x64)',
       default: 'x86',
     },
     {
@@ -158,7 +178,7 @@ module.exports = {
       description: 'Deploys the app to the specified GUID for a device.',
     },
     {
-      command: '--proxy',
+      command: '--remote-debugging',
       description: 'Deploys the app in remote debugging mode.',
     },
     {
@@ -192,19 +212,33 @@ module.exports = {
       default: false,
     },
     {
+      command: '--sln [string]',
+      description: 'Solution file to build, e.g. windows\\myApp.sln',
+      default: undefined,
+    },
+    {
       command: '--msbuildprops [string]',
       description:
         'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
     },
     {
+      command: '--buildLogDirectory [string]',
+      description:
+        'Optional directory where msbuild log files should be stored',
+    },
+    {
       command: '--info',
-      description: 'Dump enviroment information',
+      description: 'Dump environment information',
       default: false,
     },
     {
       command: '--autolink',
       description: 'Auto link native modules',
       default: false,
+    },
+    {
+      command: '--direct-debugging [number]',
+      description: 'Enable direct debugging on specified port',
     },
   ],
 };

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -60,7 +60,7 @@ class WebSocketJSExecutor : public JSExecutor {
 
   std::shared_ptr<ExecutorDelegate> m_delegate;
   std::shared_ptr<MessageQueueThread> m_messageQueueThread;
-  std::unique_ptr<IWebSocketResource> m_webSocket;
+  std::shared_ptr<IWebSocketResource> m_webSocket;
   folly::dynamic m_injectedObjects = folly::dynamic::object;
   std::function<void(std::string)> m_errorCallback;
 

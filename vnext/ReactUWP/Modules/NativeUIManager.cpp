@@ -1,31 +1,34 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
+#include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
 #include <ReactRootView.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
+#include "CppWinRTIncludes.h"
+#include "QuirkSettings.h"
 #include "Unicode.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react {
 namespace uwp {
 
-static YogaNodePtr make_yoga_node() {
-  YogaNodePtr result(YGNodeNew());
+static YogaNodePtr make_yoga_node(YGConfigRef config) {
+  YogaNodePtr result(YGNodeNewWithConfig(config));
   return result;
 }
 
@@ -98,7 +101,7 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot() {
   if (m_host) {
     for (auto const tag : m_host->GetAllRootTags()) {
       if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
-        if (auto uiElement10 = shadowNode->GetView().try_as<winrt::IUIElement10>()) {
+        if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
           if (auto xamlRoot = uiElement10.XamlRoot())
             return xamlRoot;
         }
@@ -108,7 +111,7 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot() {
   return nullptr;
 }
 
-XamlView NativeUIManager::reactPeerOrContainerFrom(winrt::FrameworkElement fe) {
+XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   if (m_host) {
     while (fe) {
       if (auto value = GetTagAsPropertyValue(fe)) {
@@ -121,18 +124,25 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(winrt::FrameworkElement fe) {
           }
         }
       }
-      fe = fe.Parent().try_as<winrt::FrameworkElement>();
+      fe = fe.Parent().try_as<xaml::FrameworkElement>();
     }
   }
   return nullptr;
 }
 
-NativeUIManager::NativeUIManager() {
+NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
+  m_context = reactContext;
+
+  m_yogaConfig = YGConfigNew();
+  if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(
+          React::ReactPropertyBag(m_context->Properties())))
+    YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
+
 #if defined(_DEBUG)
-  YGConfigSetLogger(YGConfigGetDefault(), &YogaLog);
+  YGConfigSetLogger(m_yogaConfig, &YogaLog);
 
   // To Debug Yoga layout, uncomment the following line.
-  // YGConfigSetPrintTreeFlag(YGConfigGetDefault(), true);
+  // YGConfigSetPrintTreeFlag(m_yogaConfig, true);
 
   // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
   // gPrintSkips)
@@ -159,7 +169,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   void AddView(facebook::react::ShadowNode &child, int64_t index) override {
     auto panel(GetView().as<winrt::Panel>());
     if (panel != nullptr) {
-      auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<winrt::UIElement>();
+      auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>();
       panel.Children().InsertAt(static_cast<uint32_t>(index), childView);
     }
   }
@@ -187,14 +197,21 @@ void NativeUIManager::AddRootView(
   XamlView view = xamlRootView->GetXamlView();
   m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
 
-  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
+  // Push the appropriate FlowDirection into the root view.
+  view.as<xaml::FrameworkElement>().FlowDirection(
+      Microsoft::ReactNative::I18nManager::IsRTL(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
+          ? xaml::FlowDirection::RightToLeft
+          : xaml::FlowDirection::LeftToRight);
 
-  auto element = view.as<winrt::FrameworkElement>();
+  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
+
+  auto element = view.as<xaml::FrameworkElement>();
   element.Tag(winrt::PropertyValue::CreateInt64(shadowNode.m_tag));
 
   // Add listener to size change so we can redo the layout when that happens
   m_sizeChangedVector.push_back(
-      view.as<winrt::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
+      view.as<xaml::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
 }
 
 void NativeUIManager::destroy() {
@@ -507,13 +524,12 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
 
       YGNodeStyleSetDisplay(yogaNode, display);
     } else if (key == "direction") {
-      YGDirection direction = YGDirectionInherit;
-      if (value == "inherit" || value.isNull())
-        direction = YGDirectionInherit;
-      else if (value == "ltr" || value.isNull())
-        direction = YGDirectionLTR;
-      else if (value == "rtl")
-        direction = YGDirectionRTL;
+      // https://github.com/microsoft/react-native-windows/issues/4668
+      // In order to support the direction property, we tell yoga to always layout
+      // in LTR direction, then push the appropriate FlowDirection into XAML.
+      // This way XAML handles flipping in RTL mode, which works both for RN components
+      // as well as native components that have purely XAML sub-trees (eg ComboBox).
+      YGDirection direction = YGDirectionLTR;
 
       YGNodeStyleSetDirection(yogaNode, direction);
     } else if (key == "aspectRatio") {
@@ -719,7 +735,7 @@ void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly:
       m_extraLayoutNodes.push_back(node.m_tag);
     }
 
-    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node());
+    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_yogaConfig));
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
       StyleYogaNode(node, yogaNode, props);
@@ -793,6 +809,7 @@ void NativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
         auto context = std::make_unique<YogaContext>(node.GetView());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
+        m_tagsToYogaContext.erase(node.m_tag);
         m_tagsToYogaContext.emplace(node.m_tag, std::move(context));
       }
     } else {
@@ -837,7 +854,7 @@ void NativeUIManager::DoLayout() {
   const auto extraLayoutNodes = m_extraLayoutNodes;
   for (const int64_t tag : extraLayoutNodes) {
     ShadowNodeBase &node = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto element = node.GetView().as<winrt::FrameworkElement>();
+    auto element = node.GetView().as<xaml::FrameworkElement>();
     element.UpdateLayout();
   }
   // Values need to be cleared from the vector before next call to DoLayout.
@@ -848,38 +865,40 @@ void NativeUIManager::DoLayout() {
 
     ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
     YGNodeRef rootNode = GetYogaNode(rootTag);
-    auto rootElement = rootShadowNode.GetView().as<winrt::FrameworkElement>();
+    auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
 
     float actualWidth = static_cast<float>(rootElement.ActualWidth());
     float actualHeight = static_cast<float>(rootElement.ActualHeight());
 
-    // TODO: Real direction (VSO 1697992: RTL Layout)
+    // We must always run layout in LTR mode, which might seem unintuitive.
+    // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
+    // which will inherit down the XAML tree, allowing all native controls to pick it up.
     YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+  }
 
-    for (auto &tagToYogaNode : m_tagsToYogaNodes) {
-      int64_t tag = tagToYogaNode.first;
-      YGNodeRef yogaNode = tagToYogaNode.second.get();
+  for (auto &tagToYogaNode : m_tagsToYogaNodes) {
+    int64_t tag = tagToYogaNode.first;
+    YGNodeRef yogaNode = tagToYogaNode.second.get();
 
-      if (!YGNodeGetHasNewLayout(yogaNode))
-        continue;
-      YGNodeSetHasNewLayout(yogaNode, false);
+    if (!YGNodeGetHasNewLayout(yogaNode))
+      continue;
+    YGNodeSetHasNewLayout(yogaNode, false);
 
-      float left = YGNodeLayoutGetLeft(yogaNode);
-      float top = YGNodeLayoutGetTop(yogaNode);
-      float width = YGNodeLayoutGetWidth(yogaNode);
-      float height = YGNodeLayoutGetHeight(yogaNode);
+    float left = YGNodeLayoutGetLeft(yogaNode);
+    float top = YGNodeLayoutGetTop(yogaNode);
+    float width = YGNodeLayoutGetWidth(yogaNode);
+    float height = YGNodeLayoutGetHeight(yogaNode);
 
-      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-      auto view = shadowNode.GetView();
-      auto pViewManager = shadowNode.GetViewManager();
-      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
-    }
+    ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+    auto view = shadowNode.GetView();
+    auto pViewManager = shadowNode.GetViewManager();
+    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
   }
 }
 
 winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
-    winrt::FrameworkElement element,
-    winrt::UIElement parent) {
+    xaml::FrameworkElement element,
+    xaml::UIElement parent) {
   if (parent == nullptr) {
     assert(false);
     return winrt::Windows::Foundation::Rect();
@@ -907,7 +926,7 @@ void NativeUIManager::measure(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto feView = view.try_as<winrt::FrameworkElement>();
+  auto feView = view.try_as<xaml::FrameworkElement>();
   if (feView == nullptr) {
     callback(args);
     return;
@@ -915,7 +934,7 @@ void NativeUIManager::measure(
 
   // Traverse up the react node tree to find any windowed popups.
   // If there are none, then we use the top-level root provided by our caller.
-  winrt::FrameworkElement feRootView = nullptr;
+  xaml::FrameworkElement feRootView = nullptr;
   int64_t rootTag = shadowNode.m_tag;
   int64_t childTag = rootTag;
   while (true) {
@@ -925,7 +944,7 @@ void NativeUIManager::measure(
     ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
     if (rootNode.IsWindowed()) {
       ShadowNodeBase &childNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
-      feRootView = childNode.GetView().try_as<winrt::FrameworkElement>();
+      feRootView = childNode.GetView().try_as<xaml::FrameworkElement>();
       break;
     }
     childTag = currNode.m_tag;
@@ -935,7 +954,7 @@ void NativeUIManager::measure(
   if (feRootView == nullptr) {
     // Retrieve the XAML element for the root view containing this view
     if (auto xamlRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
-      feRootView = xamlRootView.as<winrt::FrameworkElement>();
+      feRootView = xamlRootView.as<xaml::FrameworkElement>();
     }
     if (feRootView == nullptr) {
       callback(args);
@@ -969,8 +988,8 @@ void NativeUIManager::measureInWindow(
   std::vector<folly::dynamic> args;
 
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
-  if (auto view = node.GetView().try_as<winrt::FrameworkElement>()) {
-    auto windowTransform = view.TransformToVisual(winrt::Window::Current().Content());
+  if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
+    auto windowTransform = view.TransformToVisual(xaml::Window::Current().Content());
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
     // x, y
@@ -994,8 +1013,8 @@ void NativeUIManager::measureLayout(
   try {
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
     const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
-    const auto targetElement = target.GetView().as<winrt::FrameworkElement>();
-    const auto ancenstorElement = ancestor.GetView().as<winrt::FrameworkElement>();
+    const auto targetElement = target.GetView().as<xaml::FrameworkElement>();
+    const auto ancenstorElement = ancestor.GetView().as<xaml::FrameworkElement>();
 
     const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
     const auto width = static_cast<float>(targetElement.ActualWidth());
@@ -1025,7 +1044,7 @@ void NativeUIManager::findSubviewIn(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto rootUIView = view.as<winrt::UIElement>();
+  auto rootUIView = view.as<xaml::UIElement>();
   if (rootUIView == nullptr) {
     callback({});
     return;
@@ -1043,10 +1062,10 @@ void NativeUIManager::findSubviewIn(
   auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(pointInAppWindow, rootUIView);
 
   int64_t foundTag{};
-  winrt::FrameworkElement foundElement = nullptr;
+  xaml::FrameworkElement foundElement = nullptr;
 
   for (const auto &elem : hitTestElements) {
-    if (foundElement = elem.try_as<winrt::FrameworkElement>()) {
+    if (foundElement = elem.try_as<xaml::FrameworkElement>()) {
       auto tag = foundElement.Tag();
       if (tag != nullptr) {
         foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
@@ -1074,7 +1093,7 @@ void NativeUIManager::findSubviewIn(
 
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    winrt::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
+    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
   }
 }
 
@@ -1083,7 +1102,7 @@ void NativeUIManager::blur(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
     auto view = shadowNode->GetView();
     // Only blur if current UI is focused to avoid problem described in PR #2687
-    if (view == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>()) {
+    if (view == xaml::Input::FocusManager::GetFocusedElement().try_as<xaml::DependencyObject>()) {
       if (auto reactControl = GetParentXamlReactControl(reactTag).lock()) {
         reactControl->blur(shadowNode->GetView());
       } else {

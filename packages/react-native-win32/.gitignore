@@ -1,7 +1,7 @@
 /dist
 /flow
-/flow-typed
 /index.*
+/interface.*
 /IntegrationTests
 /jest
 /lib
@@ -9,4 +9,4 @@
 /RNTester
 /RNTester.*
 /temp
-/WorkingHeaders
+/typings-index.*

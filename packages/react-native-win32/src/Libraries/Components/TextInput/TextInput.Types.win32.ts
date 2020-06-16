@@ -66,10 +66,3 @@ export type IEditingEvent = NativeSyntheticEvent<Readonly<IEditingPayload>>;
 
 // TODO: Why do I need this one
 export type IPasswordRules = string;
-
-// TODO: Can I get away without this?
-export interface IRCTInput {
-  blur(): void;
-  focus(): void;
-  clear(): void;
-}

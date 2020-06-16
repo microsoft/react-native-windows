@@ -1,12 +1,12 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import React = require('react');
 import {Button, Text, View} from 'react-native';
-import {Picker} from 'react-native-windows';
+import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
 
 interface MakesModels {
   name: string;

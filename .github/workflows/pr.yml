@@ -163,9 +163,6 @@ jobs:
       - name: Init new project
         run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
 
-      - name: Install rnpm-plugin-windows
-        run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
-
       - name: Apply windows template
         run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext
 
@@ -313,9 +310,6 @@ jobs:
 
       - name: Build ReactWindows.sln
         run: msbuild vnext\ReactWindows.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
-        env:
-          RNW_PKG_VERSION_STR: Private Build
-          RNW_PKG_VERSION: 1000,0,0,0
 
       - name: Run Desktop Unit Tests
         if: matrix.BuildPlatform != 'arm'
@@ -410,9 +404,6 @@ jobs:
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-arm ${{ runner.temp }}\NugetRoot\target\arm\ship /E /MOVE /NP
           echo This makes errorlevel 0
           dir c:\
-
-      - name: NuGet Pack ReactUwp
-        run: nuget pack ${{ runner.temp }}\NugetRoot\ReactUwp.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
 
       - name: NuGet Pack ReactWin32
         run: nuget pack ${{ runner.temp }}\NugetRoot\ReactWin32.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr

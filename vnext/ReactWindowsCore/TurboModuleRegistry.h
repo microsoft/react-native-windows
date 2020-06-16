@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModule.h>
 
 namespace facebook {
@@ -15,7 +15,7 @@ class TurboModuleRegistry {
    */
   virtual std::shared_ptr<TurboModule> getModule(
       const std::string &moduleName,
-      const std::shared_ptr<JSCallInvoker> &jsInvoker) noexcept = 0;
+      const std::shared_ptr<CallInvoker> &callInvoker) noexcept = 0;
 
   /**
    * Return the names of all the NativeModules that are supposed to be eagerly initialized. By

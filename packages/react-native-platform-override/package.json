@@ -1,0 +1,63 @@
+{
+  "name": "react-native-platform-override",
+  "version": "0.0.4",
+  "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "packages/react-native-platform-override"
+  },
+  "scripts": {
+    "build": "just-scripts build",
+    "change": "beachball change",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix",
+    "test": "just-scripts test",
+    "watch": "tsc -w"
+  },
+  "bin": {
+    "react-native-platform-override": "./bin.js"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "inquirer": "^7.1.0",
+    "io-ts": "^2.1.1",
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.0",
+    "ora": "^4.0.3",
+    "semver": "^7.3.2",
+    "simple-git": "^1.131.0",
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/chalk": "^2.2.0",
+    "@types/diff-match-patch": "^1.0.32",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.7.4",
+    "@types/node-fetch": "^2.5.7",
+    "@types/ora": "^3.2.0",
+    "@types/semver": "^7.2.0",
+    "@types/yargs": "^15.0.3",
+    "babel-jest": "^24.9.0",
+    "diff-match-patch": "^1.0.4",
+    "fp-ts": "^2.5.0",
+    "jest": "^24.9.0",
+    "just-scripts": "^0.36.1",
+    "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major"
+    ]
+  }
+}

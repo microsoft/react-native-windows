@@ -13,14 +13,16 @@ parameters:
   yarnBuildCmd: build
 
   # Visual Studio Installer
-  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
+  listVsComponents: false
+  installVsComponents: false
 
 steps:
   - template: prepare-env.yml
     parameters:
-      vsInstallerUri: ${{ parameters.vsInstallerUri }}
       vsComponents: ${{ parameters.vsComponents }}
+      listVsComponents: ${{ parameters.listVsComponents }}
+      installVsComponents: ${{ parameters.installVsComponents }}
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
 

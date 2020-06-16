@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 5,
-    height: 40,
     width: 700,
     borderColor: '#7a42f4',
     borderWidth: 1,

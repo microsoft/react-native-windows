@@ -4,11 +4,17 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Nightly publish build
+  branches:
+    include:
+    - master
+
 trigger:
   batch: true
   branches:
     include:
-      - master
       - "*-stable"
 
 pr: none
@@ -28,10 +34,7 @@ jobs:
 
       - template: templates/configure-git.yml
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
+      - template: templates/yarn-install.yml
 
       - task: CmdLine@2
         displayName: yarn build
@@ -41,7 +44,7 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
@@ -93,7 +96,9 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
-            /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
+            /p:RNW_PKG_VERSION_MAJOR="$(RNW_PKG_VERSION_MAJOR)"
+            /p:RNW_PKG_VERSION_MINOR="$(RNW_PKG_VERSION_MINOR)"
+            /p:RNW_PKG_VERSION_PATCH="$(RNW_PKG_VERSION_PATCH)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -149,14 +154,12 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: $(VsComponents)
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
-          contents: |
-            ReactUWP\**
+          contents: Microsoft.ReactNative\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2

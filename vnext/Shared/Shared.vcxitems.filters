@@ -1,22 +1,302 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp">
-      <Filter>AsyncStorage</Filter>
+      <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorage\AsyncStorageManager.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorage\FollyDynamicConverter.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorage\KeyValueStorage.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\tracing\tracing.cpp">
+      <Filter>Source Files\tracing</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\AsyncStorageModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\ExceptionsManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\I18nModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\PlatformConstantsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\SourceCodeModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\StatusBarManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\UIManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\BaseScriptStoreImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\cdebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ChakraRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\CxxMessageQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\HermesRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\JSBigAbiString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\LayoutAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\MemoryTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ShadowNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ShadowNodeRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\TurboModuleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\V8JSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ViewManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\WinRTWebSocketResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\AsyncStorageModuleWin32.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="AsyncStorage">
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{87359046-466f-4c83-856e-1755bcb1c066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{d297c8b2-b89e-46e9-8d7c-ee4766384cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AsyncStorage">
       <UniqueIdentifier>{83a6224b-fdbc-49fa-83d4-c9010f17bffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AsyncStorage">
+      <UniqueIdentifier>{ee633764-9967-4233-8848-81edf1488790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\etw">
+      <UniqueIdentifier>{5862fbd1-2e67-4c90-9e58-24a66d71aec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Modules">
+      <UniqueIdentifier>{37d57028-146d-45f3-a56d-2ce7625a3449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pch">
+      <UniqueIdentifier>{da7f5a49-e3fb-46c3-906d-be42b8b651f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tracing">
+      <UniqueIdentifier>{87b365df-267b-4c00-860a-53d129a65a4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\etw">
+      <UniqueIdentifier>{6008bddc-9f23-4190-9eea-662fb1ab2467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tracing">
+      <UniqueIdentifier>{6d6b7412-d407-4ee3-be2a-addd9dba140a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Modules">
+      <UniqueIdentifier>{5e38b06d-5bcb-437b-9a9b-e787e37ef3ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h">
-      <Filter>AsyncStorage</Filter>
+      <Filter>Header Files\AsyncStorage</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorage\AsyncStorageManager.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorage\FollyDynamicConverter.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorage\KeyValueStorage.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\react_native_windows.h">
+      <Filter>Header Files\etw</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\ExceptionsManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\I18nModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\SourceCodeModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\StatusBarManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\UIManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\WebSocketModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\tracing\fbsystrace.h">
+      <Filter>Header Files\tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Pch\pch.h">
+      <Filter>Header Files\Pch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AbiSafe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\AsyncStorageModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\BaseScriptStoreImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\BatchingMessageQueueThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ChakraRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\CreateModules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\CxxMessageQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevServerHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\HermesRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IDevSupportManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IHttpResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\INativeUIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\InstanceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IReactRootView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IRedBoxHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IUIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IWebSocketResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\JSBigAbiString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\LayoutAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\MemoryMappedBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\MemoryTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\NativeModuleProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\OInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ShadowNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ShadowNodeRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Tracing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\TurboModuleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\TurboModuleRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\V8JSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\WebSocketJSExecutorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\WinRTWebSocketResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\AsyncStorageModuleWin32.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\build.bat">
+      <Filter>Source Files\etw</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\react_native_windows.man">
+      <Filter>Source Files\etw</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\react_native_windows_etw_res.dll">
+      <Filter>Source Files\etw</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\register.bat">
+      <Filter>Source Files\etw</Filter>
+    </None>
   </ItemGroup>
 </Project>

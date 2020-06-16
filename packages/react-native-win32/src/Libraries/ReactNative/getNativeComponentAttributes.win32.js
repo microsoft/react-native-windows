@@ -21,8 +21,7 @@ const processColor = require('../StyleSheet/processColor');
 const resolveAssetSource = require('../Image/resolveAssetSource');
 const sizesDiffer = require('../Utilities/differ/sizesDiffer');
 const warning = require('fbjs/lib/warning');
-import type {NativeOrDynamicColorType} from 'NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
-
+import type {NativeOrDynamicColorType} from '../StyleSheet/NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
 
 function getNativeComponentAttributes(uiViewClassName: string): any {
   const viewConfig = UIManager.getViewManagerConfig(uiViewClassName);

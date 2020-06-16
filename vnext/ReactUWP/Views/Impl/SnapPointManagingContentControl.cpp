@@ -79,7 +79,7 @@ void SnapPointManagingContentControl::VerticalSnapPointsChanged(winrt::event_tok
 }
 
 winrt::IVectorView<float> SnapPointManagingContentControl::GetIrregularSnapPoints(
-    winrt::Orientation /*orientation*/,
+    xaml::Controls::Orientation /*orientation*/,
     winrt::SnapPointsAlignment /*alignment*/) {
   const auto retVal = winrt::single_threaded_vector<float>();
 
@@ -99,7 +99,7 @@ winrt::IVectorView<float> SnapPointManagingContentControl::GetIrregularSnapPoint
 }
 
 float SnapPointManagingContentControl::GetRegularSnapPoints(
-    winrt::Orientation /*orientation*/,
+    xaml::Controls::Orientation /*orientation*/,
     winrt::SnapPointsAlignment /*alignment*/,
     float /*offset*/) {
   if (m_interval > 0.0f) {

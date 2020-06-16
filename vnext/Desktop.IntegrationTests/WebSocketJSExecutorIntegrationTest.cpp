@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
@@ -19,6 +19,7 @@ using std::move;
 using std::string;
 using std::unique_ptr;
 
+// None of these tests are runnable
 TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncSucceeds) END_TEST_METHOD_ATTRIBUTE() TEST_METHOD(ConnectAsyncSucceeds) {
     auto jsThread = make_shared<TestMessageQueueThread>();
@@ -51,6 +52,7 @@ TEST_CLASS (WebSocketJSExecutorIntegrationTest) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(LoadApplicationScriptSucceeds)
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(LoadApplicationScriptSucceeds) {
     auto jsQueue = make_shared<TestMessageQueueThread>();

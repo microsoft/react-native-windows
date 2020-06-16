@@ -14,10 +14,10 @@ static getDerivedStateFromProps(nextProps: IFlyoutProps, prevState: IFlyoutTarge
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  nextProps | <code>IFlyoutProps</code> |  |
-|  prevState | <code>IFlyoutTargetState</code> |  |
+|  nextProps | [IFlyoutProps](./react-native-windows.iflyoutprops.md) |  |
+|  prevState | [IFlyoutTargetState](./react-native-windows.iflyouttargetstate.md) |  |
 
 <b>Returns:</b>
 
-`IFlyoutTargetState`
+[IFlyoutTargetState](./react-native-windows.iflyouttargetstate.md)
 

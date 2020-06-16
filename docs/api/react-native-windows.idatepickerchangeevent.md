@@ -14,5 +14,5 @@ export interface IDatePickerChangeEvent
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [nativeEvent](./react-native-windows.idatepickerchangeevent.nativeevent.md) | <code>{</code><br/><code>        newDate: number;</code><br/><code>    }</code> |  |
+|  [nativeEvent](./react-native-windows.idatepickerchangeevent.nativeevent.md) | { newDate: number; } |  |
 

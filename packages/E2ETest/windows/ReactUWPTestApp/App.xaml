@@ -3,8 +3,14 @@
     x:Class="ReactUWPTestApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ReactUWPTestApp">
+    xmlns:local="using:ReactUWPTestApp"
+    RequestedTheme="Light">
     <Application.Resources>
-        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="SystemAccentColor">#409efe</Color>
+        </ResourceDictionary>
     </Application.Resources>
 </react:ReactApplication>

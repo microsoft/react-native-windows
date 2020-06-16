@@ -4,13 +4,8 @@
  *
  * @format
  */
-const fs = require('fs');
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
-
-const rnPath = fs.realpathSync(
-  path.resolve(require.resolve('react-native/package.json'), '..'),
-);
 const rnwPath = path.resolve(__dirname, '../../vnext');
 
 module.exports = {
@@ -25,35 +20,11 @@ module.exports = {
   resolver: {
     extraNodeModules: {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
-      'react-native': rnwPath,
       'react-native-windows': rnwPath,
     },
-    // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
-      new RegExp(
-        '.*microsoft-reactnative-sampleapps/msbuild.*'.replace(/[/\\]/g, '\\/'),
-      ), // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
-      new RegExp(`${path.resolve(rnPath)}.*`.replace(/[/\\]/g, '/')),
-      new RegExp(
-        `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
-      ),
-      new RegExp(
-        `${path
-          .resolve(rnwPath, 'node_modules/react-native')
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
-      new RegExp(
-        `${path
-          .resolve(
-            require.resolve('@react-native-community/cli/package.json'),
-            '../node_modules/react-native',
-          )
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
-
+      // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
+      /.*\.ProjectImports\.zip/,
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,8 +7,8 @@
 
 #include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
-#include "ReactInstance.h"
 #include "ReactInstanceSettings.h"
+#include "ReactPropertyBag.h"
 #include "ViewManagersProvider.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -20,29 +20,23 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
   // property PackageProviders
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
-  void PackageProviders(Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept;
 
   // property InstanceSettings
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
-  void ReloadInstance() noexcept;
-
-  void OnSuspend() noexcept;
-  void OnEnteredBackground() noexcept;
-  void OnLeavingBackground() noexcept;
-  void OnResume(OnResumeAction const &action) noexcept;
-  void OnBackPressed() noexcept;
+  Windows::Foundation::IAsyncAction LoadInstance() noexcept;
+  Windows::Foundation::IAsyncAction ReloadInstance() noexcept;
+  Windows::Foundation::IAsyncAction UnloadInstance() noexcept;
 
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
+  static winrt::Microsoft::ReactNative::ReactNativeHost GetReactNativeHost(ReactPropertyBag const &properties) noexcept;
 
  private:
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;
 
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  ReactNative::ReactInstance m_reactInstance{nullptr};
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders;
   ReactNative::IReactPackageBuilder m_packageBuilder;
 };
 

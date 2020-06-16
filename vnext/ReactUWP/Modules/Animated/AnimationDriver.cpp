@@ -1,8 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
+#include <UI.Composition.h>
 #include "AnimationDriver.h"
 
 namespace react {

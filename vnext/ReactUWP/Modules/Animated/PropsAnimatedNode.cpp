@@ -1,9 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
 #include <ReactUWP/Modules/NativeUIManager.h>
+#include <ReactUWP/Utils/Helpers.h>
 #include <ReactUWP/Views/XamlFeatures.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
@@ -22,18 +23,18 @@ PropsAnimatedNode::PropsAnimatedNode(
     m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
   }
 
-  m_subchannelPropertySet = winrt::Window::Current().Compositor().CreatePropertySet();
+  m_subchannelPropertySet = xaml::Window::Current().Compositor().CreatePropertySet();
   m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
   m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
 
-  m_translationCombined = winrt::Window::Current().Compositor().CreateExpressionAnimation(
+  m_translationCombined = xaml::Window::Current().Compositor().CreateExpressionAnimation(
       L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
   m_translationCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
   m_translationCombined.Target(L"Translation");
 
-  m_scaleCombined = winrt::Window::Current().Compositor().CreateExpressionAnimation(
+  m_scaleCombined = xaml::Window::Current().Compositor().CreateExpressionAnimation(
       L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
   m_scaleCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
   m_scaleCombined.Target(L"Scale");
@@ -97,9 +98,25 @@ void PropsAnimatedNode::UpdateView() {
   StartAnimations();
 }
 
+static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
+  auto compositeMode = uiElement.CompositeMode();
+  switch (compositeMode) {
+    case xaml::Media::ElementCompositeMode::SourceOver:
+    case xaml::Media::ElementCompositeMode::MinBlend:
+      uiElement.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
+      break;
+    default:
+      uiElement.CompositeMode(xaml::Media::ElementCompositeMode::SourceOver);
+      break;
+  }
+  uiElement.CompositeMode(compositeMode);
+}
+
 void PropsAnimatedNode::StartAnimations() {
   if (m_expressionAnimations.size()) {
     if (const auto uiElement = GetUIElement()) {
+      // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
+      EnsureUIElementDirtyForRender(uiElement);
       uiElement.RotationAxis(m_rotationAxis);
       for (const auto anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
@@ -120,7 +137,7 @@ void PropsAnimatedNode::StartAnimations() {
       }
       if (m_needsCenterPointAnimation) {
         if (!m_centerPointAnimation) {
-          m_centerPointAnimation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+          m_centerPointAnimation = xaml::Window::Current().Compositor().CreateExpressionAnimation();
           m_centerPointAnimation.Target(L"CenterPoint");
           m_centerPointAnimation.SetReferenceParameter(
               L"centerPointPropertySet", GetShadowNodeBase()->EnsureTransformPS());
@@ -142,7 +159,7 @@ void PropsAnimatedNode::StartAnimations() {
 void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
   if (m_expressionAnimations.count(valueTag)) {
     if (const auto target = GetUIElement()) {
-      // We should start and stop the expression animtaions if there are
+      // We should start and stop the expression animations if there are
       // no active animations. Suspending the active expression animations
       // while they are not in use causes subsequent key frame animations
       // which target the providing property set to never fire their completed
@@ -171,7 +188,7 @@ void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
 void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType) {
   if (const auto manager = m_manager.lock()) {
     if (const auto valueNode = manager->GetValueAnimatedNode(valueNodeTag)) {
-      const auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+      const auto animation = xaml::Window::Current().Compositor().CreateExpressionAnimation();
       animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
       animation.Expression(
           static_cast<winrt::hstring>(L"ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
@@ -250,10 +267,12 @@ ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
   return nullptr;
 }
 
-winrt::UIElement PropsAnimatedNode::GetUIElement() {
-  if (const auto shadowNodeBase = GetShadowNodeBase()) {
-    if (const auto shadowNodeView = shadowNodeBase->GetView()) {
-      return shadowNodeView.as<winrt::UIElement>();
+xaml::UIElement PropsAnimatedNode::GetUIElement() {
+  if (IsRS5OrHigher()) {
+    if (const auto shadowNodeBase = GetShadowNodeBase()) {
+      if (const auto shadowNodeView = shadowNodeBase->GetView()) {
+        return shadowNodeView.as<xaml::UIElement>();
+      }
     }
   }
   return nullptr;

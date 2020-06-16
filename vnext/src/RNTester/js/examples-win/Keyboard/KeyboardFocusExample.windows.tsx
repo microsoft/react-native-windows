@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -15,12 +15,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {
-  supportKeyboard,
-  IKeyboardEvent,
-  ViewWindows,
-  Picker,
-} from 'react-native-windows';
+import {IKeyboardEvent} from '../../../../Libraries/Components/Keyboard/KeyboardExtProps';
+import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import {supportKeyboard} from '../../../../Libraries/Components/Keyboard/KeyboardExt';
+import {ViewWindows} from '../../../../Libraries/Components/View/ViewWindows';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);
@@ -110,7 +108,7 @@ class KeyboardFocusExample extends React.Component<
 
         <ViewWindows
           style={styles.keyEnterVisualizer}
-          acceptsKeyboardFocus={true}
+          focusable={true}
           ref={viewWindowsRef}>
           <Text>View accept focus</Text>
         </ViewWindows>

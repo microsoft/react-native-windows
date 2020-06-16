@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -22,7 +22,7 @@ class RefreshControlViewManager : public FrameworkElementViewManager {
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
-  void AddView(XamlView parent, XamlView child, int64_t index) override;
+  void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
 };
 
 } // namespace uwp

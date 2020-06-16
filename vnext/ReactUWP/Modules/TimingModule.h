@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -11,8 +11,6 @@
 #include <vector>
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-
 namespace react {
 namespace uwp {
 
@@ -74,7 +72,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
  private:
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
-  winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
+  xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {

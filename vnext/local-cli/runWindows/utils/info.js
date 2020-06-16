@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -16,7 +16,6 @@ async function getEnvironmentInfo() {
       'react-native',
       'react-native-windows',
       '@react-native-community/cli',
-      'rnpm-plugin-windows',
       'react-native-cli',
     ],
     npmGlobalPackages: ['*react-native*'],

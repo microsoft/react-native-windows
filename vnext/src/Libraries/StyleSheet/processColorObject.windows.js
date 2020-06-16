@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @flow
  * @format
@@ -7,7 +7,7 @@
 
 'use strict';
 
-import type {NativeOrDynamicColorType} from 'normalizeColorObject';
+import type {NativeOrDynamicColorType} from './normalizeColorObject';
 
 function processColorObject(
   color: NativeOrDynamicColorType,

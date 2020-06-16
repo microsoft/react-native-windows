@@ -1,10 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 
 #include <DevSettings.h>
-#include <RedBoxHandler.h>
+#include <IRedBoxHandler.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 #include <map>

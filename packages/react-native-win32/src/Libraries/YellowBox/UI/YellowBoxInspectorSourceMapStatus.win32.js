@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
  * @flow strict-local
@@ -19,4 +19,7 @@ type Props = $ReadOnly<{|
   status: 'COMPLETE' | 'FAILED' | 'NONE' | 'PENDING',
 |}>;
 
-module.exports = (props: Props) => <Text>{props.status}</Text>;
+const YellowBoxInspectorSourceMapStaus = (props: Props): React.Node => {
+  return <Text>{props.status}</Text>;
+};
+module.exports = YellowBoxInspectorSourceMapStaus;

@@ -11,10 +11,14 @@
 DECLSPEC_NORETURN void CrashWithRecovery(uint32_t tag) noexcept;
 
 #define DisableVecAssert() false
+#ifndef VerifyElseCrash
 #define VerifyElseCrash(f) VerifyElseCrashTag(f, UNTAGGED)
+#endif
 #define VerifySucceededElseCrash(hr) VerifySucceededElseCrashTag(hr, UNTAGGED)
 #define VerifyElseCrashTag(f, tag) VerifyElseCrashSzTag(f, "False: " #f, tag)
+#ifndef VerifyElseCrashSz
 #define VerifyElseCrashSz(f, sz) VerifyElseCrashSzTag(f, sz, UNTAGGED)
+#endif
 
 // Asserts first so the dev can easily attach. If already attached, it does not assert
 // because bringing up the assert dialog can cause more code to run (OM:278842).

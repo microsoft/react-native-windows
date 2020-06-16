@@ -1,0 +1,7 @@
+moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
+{
+    global::Microsoft.ReactNative.Managed.ReactConstantProvider provider = new global::Microsoft.ReactNative.Managed.ReactConstantProvider(writer);
+    module.MyMethod(provider);
+}
+
+);

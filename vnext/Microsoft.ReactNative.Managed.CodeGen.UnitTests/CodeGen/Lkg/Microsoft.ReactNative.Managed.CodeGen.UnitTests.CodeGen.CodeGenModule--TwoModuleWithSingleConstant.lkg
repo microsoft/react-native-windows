@@ -1,0 +1,29 @@
+internal void CreateModules(global::Microsoft.ReactNative.IReactPackageBuilder packageBuilder)
+{
+    packageBuilder.AddModule("MyModule1", (global::Microsoft.ReactNative.IReactModuleBuilder moduleBuilder) =>
+    {
+        global::TestClass.MyModule1 module = new global::TestClass.MyModule1();
+        moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
+        {
+            global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyConstant1", module.MyConstant1);
+        }
+
+        );
+        return module;
+    }
+
+    );
+    packageBuilder.AddModule("MyModule2", (global::Microsoft.ReactNative.IReactModuleBuilder moduleBuilder) =>
+    {
+        global::TestClass.MyModule2 module = new global::TestClass.MyModule2();
+        moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
+        {
+            global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyConstant2", module.MyConstant2);
+        }
+
+        );
+        return module;
+    }
+
+    );
+}

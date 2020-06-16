@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -108,10 +108,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Text/TextExample'),
   },
   {
-    key: 'TextInputExample',
-    module: require('./../examples-win/TextInput/TextInputExample'),
-  },
-  {
     key: 'TouchableExample',
     module: require('react-native/RNTester/js/examples/Touchable/TouchableExample'),
   },
@@ -148,12 +144,34 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AlertExample',
-    module: require('react-native/RNTester/js/examples/Alert/AlertExample')
-      .AlertExample,
+    module: {
+      title: require('react-native/RNTester/js/examples/Alert/AlertExample')
+        .AlertExample.title,
+      description: require('react-native/RNTester/js/examples/Alert/AlertExample')
+        .AlertExample.description,
+      examples: [
+        {
+          render: () => {
+            return React.createElement(
+              require('react-native/RNTester/js/examples/Alert/AlertExample')
+                .AlertExample,
+            );
+          },
+        },
+      ],
+    },
   },
   {
     key: 'AnimatedExample',
     module: require('react-native/RNTester/js/examples/Animated/AnimatedExample'),
+  },
+  {
+    key: 'Animation - GratuitousAnimation',
+    module: require('react-native/RNTester/js/examples/Animated/AnimatedGratuitousApp/AnExApp'),
+  },
+  {
+    key: 'AppearanceExample',
+    module: require('react-native/RNTester/js/examples/Appearance/AppearanceExample'),
   },
   {
     key: 'AppStateExample',
@@ -174,6 +192,10 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'CrashExample',
     module: require('react-native/RNTester/js/examples/Crash/CrashExample'),
+  },
+  {
+    key: 'DevSettings',
+    module: require('react-native/RNTester/js/examples/DevSettings/DevSettingsExample'),
   },
   {
     key: 'Dimensions',
@@ -212,6 +234,14 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/RTL/RTLExample'),
   },
   {
+    key: 'ShareExample',
+    module: require('react-native/RNTester/js/examples/Share/ShareExample'),
+  },
+  {
+    key: 'TimerExample',
+    module: require('react-native/RNTester/js/examples/Timer/TimerExample'),
+  },
+  {
     key: 'ThemingExample',
     module: require('./../examples-win/Theming/ThemingExample'),
   },
@@ -222,10 +252,6 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'TransformExample',
     module: require('react-native/RNTester/js/examples/Transform/TransformExample'),
-  },
-  {
-    key: 'TimerExample',
-    module: require('react-native/RNTester/js/examples/Timer/TimerExample'),
   },
   {
     key: 'WebSocketExample',

@@ -1,20 +1,20 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_JSVALUEWRITER
 #define MICROSOFT_REACTNATIVE_JSVALUEWRITER
 
+#include <winrt/Microsoft.ReactNative.h>
+#include "JSValue.h"
 #include "StructInfo.h"
-#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
 
 //==============================================================================
-// IJSValueWriter extensions
+// IJSValueWriter extensions forward declarations
 //==============================================================================
 
-// Forward declarations
 void WriteValue(IJSValueWriter const &writer, std::nullptr_t) noexcept;
 template <class T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, int> = 1>
 void WriteValue(IJSValueWriter const &writer, T const &value) noexcept;
@@ -60,6 +60,9 @@ void WriteProperties(IJSValueWriter const &writer, T const &value) noexcept;
 
 template <class... TArgs>
 void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexcept;
+
+template <class... TArgs>
+JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept;
 
 IJSValueWriter MakeJSValueTreeWriter() noexcept;
 
@@ -252,6 +255,18 @@ inline void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexc
   writer.WriteArrayBegin();
   (WriteValue(writer, args), ...);
   writer.WriteArrayEnd();
+}
+
+template <class T, std::enable_if_t<std::is_invocable_v<T, IJSValueWriter const &>, int> = 0>
+inline JSValueArgWriter MakeJSValueArgWriter(T &&argWriter) noexcept {
+  return std::forward<T>(argWriter);
+}
+
+template <class... TArgs>
+inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
+  return [&args...](IJSValueWriter const &writer) noexcept {
+    WriteArgs(writer, args...);
+  };
 }
 
 } // namespace winrt::Microsoft::ReactNative

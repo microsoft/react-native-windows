@@ -10,6 +10,6 @@
 export declare type OmittedAccessibilityPropsWin32 = {
     accessibilityActions?: ReadonlyArray<RN.AccessibilityActionInfo>;
     accessibilityRole?: RN.AccessibilityRole;
-    accessibilityStates?: RN.AccessibilityState[];
+    accessibilityState?: RN.AccessibilityState;
 };
 ```

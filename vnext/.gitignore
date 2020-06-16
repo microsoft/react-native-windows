@@ -43,7 +43,6 @@ node_modules
 /bots/node_modules/
 
 /flow
-/flow-typed
 /dist
 /IntegrationTests/*.js
 /IntegrationTests/*.png
@@ -53,10 +52,18 @@ node_modules
 /RNTester
 /RNTester.*
 /index.*
+/interface.*
+/typings-index.*
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # Visual Studio
 .vs/
-.vscode/
 Generated Files/
 /obj/
 /AppPackages/
@@ -84,3 +91,6 @@ temp
 /coverage
 /third-party
 /packages/
+
+# Copied from root as part of build
+/README.md

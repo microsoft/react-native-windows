@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -34,33 +34,8 @@ enum class JSIEngine : int32_t {
   V8 = 2, // Use the JSIExecutorFactory with V8
 };
 
-struct ReactInstanceSettings {
-  bool UseWebDebugger{false};
-  bool UseFastRefresh{false};
-  bool UseLiveReload{false};
-  bool DebuggerBreakOnNextLine{false};
-  bool UseDirectDebugger{false};
-  bool UseJsi{true};
-  bool EnableJITCompilation{true};
-  bool EnableByteCodeCaching{false};
-  bool EnableDeveloperMenu{false};
-  uint16_t DebuggerPort{9229};
-
-  std::string ByteCodeFileUri;
-  std::string DebugHost;
-  std::string DebugBundlePath;
-  std::string BundleRootPath;
-  facebook::react::NativeLoggingHook LoggingCallback;
-  std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
-  JSIEngine jsiEngine{JSIEngine::Chakra};
-};
-
 struct IReactInstance {
   virtual ~IReactInstance() = default;
-
-  // Start the instance, triggering NativeModules descriptions and things to be
-  // resolved spThis make caller have full ability to create the shared_ptr
-  virtual void Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) = 0;
 
   virtual void AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) = 0;
   virtual void DetachRootView(IXamlRootView *pRootView) = 0;
@@ -110,7 +85,7 @@ struct IReactInstance {
 
   virtual ExpressionAnimationStore &GetExpressionAnimationStore() = 0;
 
-  virtual const ReactInstanceSettings &GetReactInstanceSettings() const = 0;
+  virtual bool IsLoaded() const noexcept = 0;
 };
 
 } // namespace uwp

@@ -12,10 +12,7 @@ module.exports = {
         linkConfig: () => null,
         projectConfig: projectConfig.projectConfigWindows,
         dependencyConfig: dependencyConfig.dependencyConfigWindows,
+        npmPackageName: 'react-native-windows',
       },
     },
-
-    // *****
-    // This is only used when building bundles within react-native-windows.
-    reactNativePath: '.',
   };

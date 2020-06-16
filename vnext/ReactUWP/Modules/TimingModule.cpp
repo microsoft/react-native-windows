@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -7,6 +7,7 @@
 #include "TimingModule.h"
 
 #include <InstanceManager.h>
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 
 #include <cxxreact/CxxModule.h>
@@ -18,13 +19,12 @@
 #pragma warning(pop)
 
 #include <unknwnbase.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
 
 using namespace facebook::xplat;
 using namespace folly;
 namespace winrt {
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 using namespace std;
 
@@ -133,7 +133,7 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
 
   if (m_timerQueue.IsEmpty()) {
     m_rendering.revoke();
-    m_rendering = winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering(
+    m_rendering = xaml::Media::CompositionTarget::Rendering(
         winrt::auto_revoke,
         [wkThis = std::weak_ptr(this->shared_from_this())](
             const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {

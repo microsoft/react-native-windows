@@ -14,11 +14,11 @@ export interface IButtonWin32Props extends RN.ButtonProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [onBlur](./react-native-win32.ibuttonwin32props.onblur.md) | <code>() =&gt; void</code> | Blur event. Called when focus is lost. |
-|  [onFocus](./react-native-win32.ibuttonwin32props.onfocus.md) | <code>() =&gt; void</code> | Focus event. Called when focus is acquired. |
-|  [onMouseEnter](./react-native-win32.ibuttonwin32props.onmouseenter.md) | <code>() =&gt; void</code> | Mouse-enter event. Called when mouse is moved on to the control. |
-|  [onMouseLeave](./react-native-win32.ibuttonwin32props.onmouseleave.md) | <code>() =&gt; void</code> | Mouse-leave event. Called when mouse is moved off of the control. |
-|  [onTouchEnd](./react-native-win32.ibuttonwin32props.ontouchend.md) | <code>(event: RN.GestureResponderEvent) =&gt; void</code> | Touch-end event. Called when the user stops touching the control. |
-|  [onTouchStart](./react-native-win32.ibuttonwin32props.ontouchstart.md) | <code>(event: RN.GestureResponderEvent) =&gt; void</code> | Touch-start event. Called when the user begins touching the control. |
-|  [style](./react-native-win32.ibuttonwin32props.style.md) | <code>RN.StyleProp&lt;IButtonWin32Style&gt;</code> | Style information which controls the visual appearence of the button. |
+|  [onBlur](./react-native-win32.ibuttonwin32props.onblur.md) | () =&gt; void | Blur event. Called when focus is lost. |
+|  [onFocus](./react-native-win32.ibuttonwin32props.onfocus.md) | () =&gt; void | Focus event. Called when focus is acquired. |
+|  [onMouseEnter](./react-native-win32.ibuttonwin32props.onmouseenter.md) | () =&gt; void | Mouse-enter event. Called when mouse is moved on to the control. |
+|  [onMouseLeave](./react-native-win32.ibuttonwin32props.onmouseleave.md) | () =&gt; void | Mouse-leave event. Called when mouse is moved off of the control. |
+|  [onTouchEnd](./react-native-win32.ibuttonwin32props.ontouchend.md) | (event: RN.GestureResponderEvent) =&gt; void | Touch-end event. Called when the user stops touching the control. |
+|  [onTouchStart](./react-native-win32.ibuttonwin32props.ontouchstart.md) | (event: RN.GestureResponderEvent) =&gt; void | Touch-start event. Called when the user begins touching the control. |
+|  [style](./react-native-win32.ibuttonwin32props.style.md) | RN.StyleProp&lt;[IButtonWin32Style](./react-native-win32.ibuttonwin32style.md)<!-- -->&gt; | Style information which controls the visual appearence of the button. |
 

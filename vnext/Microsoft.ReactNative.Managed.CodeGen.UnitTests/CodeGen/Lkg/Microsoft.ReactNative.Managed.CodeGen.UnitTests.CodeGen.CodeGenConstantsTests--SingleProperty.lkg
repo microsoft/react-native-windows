@@ -1,0 +1,6 @@
+moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
+{
+    global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyPropWithBetterName", module.MyPop);
+}
+
+);

@@ -1,13 +1,13 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import React = require('react');
 import {Text, View, Button} from 'react-native';
-import {AppTheme, IAppThemeChangedEvent} from 'react-native-windows';
-
+import {AppTheme} from '../../../../Libraries/AppTheme/AppTheme';
+import {IAppThemeChangedEvent} from '../../../../Libraries/AppTheme/AppThemeTypes';
 class ThemeExample extends React.Component {
   state = {
     currentTheme: AppTheme.currentTheme,

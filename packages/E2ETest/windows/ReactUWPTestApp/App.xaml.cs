@@ -1,16 +1,16 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using Microsoft.ReactNative;
+using System;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.Foundation;
+using Microsoft.ReactNative.Managed;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace ReactUWPTestApp
 {
@@ -25,8 +25,6 @@ namespace ReactUWPTestApp
         /// </summary>
         public App()
         {
-            MainComponentName = "ReactUWPTestApp";
-
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
@@ -38,12 +36,13 @@ namespace ReactUWPTestApp
 #endif
 
 #if DEBUG
-            InstanceSettings.EnableDeveloperMenu = true;
+            InstanceSettings.UseDeveloperSupport = true;
 #else
-            InstanceSettings.EnableDeveloperMenu = false;
+            InstanceSettings.UseDeveloperSupport = false;
 #endif
 
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
+            PackageProviders.Add(new ReflectionReactPackageProvider<App>());
             PackageProviders.Add(new TreeDumpLibrary.ReactPackageProvider());
 
             this.InitializeComponent();
@@ -57,6 +56,15 @@ namespace ReactUWPTestApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                frame = new Frame();
+                Window.Current.Content = frame;
+            }
+            frame.Navigate(typeof(MainPage));
+            Window.Current.Activate();
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
         }

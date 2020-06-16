@@ -3,14 +3,35 @@
  */
 const fs = require('fs');
 const path = require('path');
+const rnwPath = __dirname;
+const {resolve} = require('metro-resolver');
 const blacklist = require('metro-config/src/defaults/blacklist');
 
-const rnPath = fs.realpathSync(
-  fs.realpathSync(
-    path.resolve(require.resolve('react-native/package.json'), '..'),
-  ),
-);
-const rnwPath = __dirname;
+function reactNativePlatformResolver(platformImplementations) {
+  return (context, _realModuleName, platform, moduleName) => {
+    let backupResolveRequest = context.resolveRequest;
+    delete context.resolveRequest;
+
+    try {
+      let modifiedModuleName = moduleName;
+      if (platformImplementations[platform]) {
+        if (moduleName === 'react-native') {
+          modifiedModuleName = platformImplementations[platform];
+        } else if (moduleName.startsWith('react-native/')) {
+          modifiedModuleName = `${
+            platformImplementations[platform]
+          }/${modifiedModuleName.slice('react-native/'.length)}`;
+        }
+      }
+      let result = resolve(context, modifiedModuleName, platform);
+      return result;
+    } catch (e) {
+      throw e;
+    } finally {
+      context.resolveRequest = backupResolveRequest;
+    }
+  };
+}
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -20,30 +41,21 @@ module.exports = {
   ],
 
   resolver: {
+    // We need a custom resolveRequest right now since our integration tests use a "windesktop" platform thats specific to integration tests.
+    resolveRequest: reactNativePlatformResolver({
+      windesktop: 'react-native-windows',
+      windows: 'react-native-windows',
+    }),
     extraNodeModules: {
-      // Redirect react-native and react-native-windows to this folder
-      'react-native': rnwPath,
+      // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
     },
-    // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],
-    // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go away after RN 0.61 when haste is removed
     blacklistRE: blacklist([
-      new RegExp(`${path.resolve(rnPath).replace(/[/\\]/g, '/')}.*`),
-      new RegExp(
-        `${path.resolve(rnwPath, 'ReactCopies').replace(/[/\\]/g, '/')}.*`,
-      ),
-      new RegExp(
-        `${path
-          .resolve(
-            require.resolve('@react-native-community/cli/package.json'),
-            '../node_modules/react-native',
-          )
-          .replace(/[/\\]/g, '/')}.*`,
-      ),
+      // Avoid error EBUSY: resource busy or locked, open '...\vnext\msbuild.ProjectImports.zip' when building 'vnext\Microsoft.ReactNative.sln' with '/bl'
+      /.*\.ProjectImports\.zip/,
     ]),
   },
+
   transformer: {
     getTransformOptions: async () => ({
       transform: {

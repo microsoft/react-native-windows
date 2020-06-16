@@ -26,7 +26,13 @@ function generateWindows (projectDir, name, ns, options) {
     path.join(__dirname, 'generator-windows', 'templates'),
     projectDir,
     name,
-    { ns, overwrite: options.overwrite, language: options.language }
+    {
+      ns,
+      overwrite: options.overwrite,
+      language: options.language,
+      experimentalNugetDependency: options.experimentalNugetDependency,
+      useWinUI3: options.useWinUI3,
+    }
   );
 }
 

@@ -1,24 +1,23 @@
 #pragma once
 
-#include "winrt/Windows.Foundation.Collections.h"
-#include "winrt/Windows.Foundation.h"
-#include "winrt/Windows.UI.Xaml.Controls.Primitives.h"
-#include "winrt/Windows.UI.Xaml.Controls.h"
-#include "winrt/Windows.UI.Xaml.h"
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
 namespace react {
 namespace uwp {
 
 class SnapPointManagingContentControl
-    : public winrt::ContentControlT<SnapPointManagingContentControl, winrt::IScrollSnapPointsInfo> {
+    : public xaml::Controls::ContentControlT<SnapPointManagingContentControl, winrt::IScrollSnapPointsInfo> {
  public:
   SnapPointManagingContentControl();
 
@@ -43,10 +42,11 @@ class SnapPointManagingContentControl
   void VerticalSnapPointsChanged(winrt::event_token const &token);
 
   winrt::IVectorView<float> GetIrregularSnapPoints(
-      winrt::Orientation orientation,
+      xaml::Controls::Orientation orientation,
       winrt::SnapPointsAlignment alignment);
 
-  float GetRegularSnapPoints(winrt::Orientation orientation, winrt::SnapPointsAlignment alignment, float offset);
+  float
+  GetRegularSnapPoints(xaml::Controls::Orientation orientation, winrt::SnapPointsAlignment alignment, float offset);
 
   // Helpers
   void SetHorizontal(bool horizontal);

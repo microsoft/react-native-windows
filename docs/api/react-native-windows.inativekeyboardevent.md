@@ -14,11 +14,11 @@ export interface INativeKeyboardEvent
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [altKey](./react-native-windows.inativekeyboardevent.altkey.md) | <code>boolean</code> |  |
-|  [code](./react-native-windows.inativekeyboardevent.code.md) | <code>string</code> |  |
-|  [ctrlKey](./react-native-windows.inativekeyboardevent.ctrlkey.md) | <code>boolean</code> |  |
-|  [eventPhase](./react-native-windows.inativekeyboardevent.eventphase.md) | <code>EventPhase</code> |  |
-|  [key](./react-native-windows.inativekeyboardevent.key.md) | <code>string</code> |  |
-|  [metaKey](./react-native-windows.inativekeyboardevent.metakey.md) | <code>boolean</code> |  |
-|  [shiftKey](./react-native-windows.inativekeyboardevent.shiftkey.md) | <code>boolean</code> |  |
+|  [altKey](./react-native-windows.inativekeyboardevent.altkey.md) | boolean |  |
+|  [code](./react-native-windows.inativekeyboardevent.code.md) | string |  |
+|  [ctrlKey](./react-native-windows.inativekeyboardevent.ctrlkey.md) | boolean |  |
+|  [eventPhase](./react-native-windows.inativekeyboardevent.eventphase.md) | [EventPhase](./react-native-windows.eventphase.md) |  |
+|  [key](./react-native-windows.inativekeyboardevent.key.md) | string |  |
+|  [metaKey](./react-native-windows.inativekeyboardevent.metakey.md) | boolean |  |
+|  [shiftKey](./react-native-windows.inativekeyboardevent.shiftkey.md) | boolean |  |
 

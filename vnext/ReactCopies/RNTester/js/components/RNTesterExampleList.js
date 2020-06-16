@@ -26,13 +26,17 @@ const {
 import type {ViewStyleProp} from '../../../Libraries/StyleSheet/StyleSheet';
 import type {RNTesterExample} from '../types/RNTesterTypes';
 
+import {RNTesterThemeContext} from './RNTesterTheme';
+
 type Props = {
   onNavigate: Function,
   list: {
     ComponentExamples: Array<RNTesterExample>,
     APIExamples: Array<RNTesterExample>,
+    ...
   },
   style?: ?ViewStyleProp,
+  ...
 };
 
 class RowComponent extends React.PureComponent<{
@@ -41,6 +45,7 @@ class RowComponent extends React.PureComponent<{
   onPress?: Function,
   onShowUnderlay?: Function,
   onHideUnderlay?: Function,
+  ...
 }> {
   _onPress = () => {
     if (this.props.onPress) {
@@ -52,21 +57,54 @@ class RowComponent extends React.PureComponent<{
   render() {
     const {item} = this.props;
     return (
-      <TouchableHighlight
-        onShowUnderlay={this.props.onShowUnderlay}
-        onHideUnderlay={this.props.onHideUnderlay}
-        onPress={this._onPress}>
-        <View style={styles.row}>
-          <Text style={styles.rowTitleText}>{item.module.title}</Text>
-          <Text style={styles.rowDetailText}>{item.module.description}</Text>
-        </View>
-      </TouchableHighlight>
+      <RNTesterThemeContext.Consumer>
+        {theme => {
+          return (
+            <TouchableHighlight
+              onShowUnderlay={this.props.onShowUnderlay}
+              onHideUnderlay={this.props.onHideUnderlay}
+              onPress={this._onPress}>
+              <View
+                style={[
+                  styles.row,
+                  {backgroundColor: theme.SystemBackgroundColor},
+                ]}>
+                <Text style={[styles.rowTitleText, {color: theme.LabelColor}]}>
+                  {item.module.title}
+                </Text>
+                <Text
+                  style={[
+                    styles.rowDetailText,
+                    {color: theme.SecondaryLabelColor},
+                  ]}>
+                  {item.module.description}
+                </Text>
+              </View>
+            </TouchableHighlight>
+          );
+        }}
+      </RNTesterThemeContext.Consumer>
     );
   }
 }
 
 const renderSectionHeader = ({section}) => (
-  <Text style={styles.sectionHeader}>{section.title}</Text>
+  <RNTesterThemeContext.Consumer>
+    {theme => {
+      return (
+        <Text
+          style={[
+            styles.sectionHeader,
+            {
+              color: theme.SecondaryLabelColor,
+              backgroundColor: theme.GroupedBackgroundColor,
+            },
+          ]}>
+          {section.title}
+        </Text>
+      );
+    }}
+  </RNTesterThemeContext.Consumer>
 );
 
 class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
@@ -89,34 +127,41 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
     ];
 
     return (
-      <View style={[styles.listContainer, this.props.style]}>
-        {this._renderTitleRow()}
-        <RNTesterExampleFilter
-          testID="explorer_search"
-          sections={sections}
-          filter={filter}
-          render={({filteredSections}) => (
-            <SectionList
-              ItemSeparatorComponent={ItemSeparator}
-              contentContainerStyle={styles.sectionListContentContainer}
-              style={styles.list}
-              sections={filteredSections}
-              renderItem={this._renderItem}
-              enableEmptySections={true}
-              itemShouldUpdate={this._itemShouldUpdate}
-              keyboardShouldPersistTaps="handled"
-              automaticallyAdjustContentInsets={false}
-              keyboardDismissMode="on-drag"
-              renderSectionHeader={renderSectionHeader}
-            />
-          )}
-        />
-      </View>
+      <RNTesterThemeContext.Consumer>
+        {theme => {
+          return (
+            <View
+              style={[
+                styles.listContainer,
+                this.props.style,
+                {backgroundColor: theme.SecondaryGroupedBackgroundColor},
+              ]}>
+              {this._renderTitleRow()}
+              <RNTesterExampleFilter
+                testID="explorer_search"
+                sections={sections}
+                filter={filter}
+                render={({filteredSections}) => (
+                  <SectionList
+                    ItemSeparatorComponent={ItemSeparator}
+                    contentContainerStyle={{
+                      backgroundColor: theme.SeparatorColor,
+                    }}
+                    style={{backgroundColor: theme.SystemBackgroundColor}}
+                    sections={filteredSections}
+                    renderItem={this._renderItem}
+                    keyboardShouldPersistTaps="handled"
+                    automaticallyAdjustContentInsets={false}
+                    keyboardDismissMode="on-drag"
+                    renderSectionHeader={renderSectionHeader}
+                  />
+                )}
+              />
+            </View>
+          );
+        }}
+      </RNTesterThemeContext.Consumer>
     );
-  }
-
-  _itemShouldUpdate(curr, prev) {
-    return curr.item !== prev.item;
   }
 
   _renderItem = ({item, separators}) => (
@@ -157,39 +202,44 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
 }
 
 const ItemSeparator = ({highlighted}) => (
-  <View style={highlighted ? styles.separatorHighlighted : styles.separator} />
+  <RNTesterThemeContext.Consumer>
+    {theme => {
+      return (
+        <View
+          style={
+            highlighted
+              ? [
+                  styles.separatorHighlighted,
+                  {backgroundColor: theme.OpaqueSeparatorColor},
+                ]
+              : [styles.separator, {backgroundColor: theme.SeparatorColor}]
+          }
+        />
+      );
+    }}
+  </RNTesterThemeContext.Consumer>
 );
 
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
   },
-  list: {
-    backgroundColor: '#eeeeee',
-  },
   sectionHeader: {
-    backgroundColor: '#eeeeee',
     padding: 5,
     fontWeight: '500',
     fontSize: 11,
   },
   row: {
-    backgroundColor: 'white',
     justifyContent: 'center',
     paddingHorizontal: 15,
     paddingVertical: 8,
   },
   separator: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#bbbbbb',
     marginLeft: 15,
   },
   separatorHighlighted: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: 'rgb(217, 217, 217)',
-  },
-  sectionListContentContainer: {
-    backgroundColor: 'white',
   },
   rowTitleText: {
     fontSize: 17,
@@ -197,7 +247,6 @@ const styles = StyleSheet.create({
   },
   rowDetailText: {
     fontSize: 15,
-    color: '#888888',
     lineHeight: 20,
   },
 });

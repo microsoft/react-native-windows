@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+  </PropertyGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CSharpApp.props"/>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -19,7 +23,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
-    <LangVersion>7.0</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -77,7 +81,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
     <OutputPath>bin\ARM64\Release\</OutputPath>
@@ -115,9 +119,6 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup>
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
-  </PropertyGroup>
-  <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
@@ -125,6 +126,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DebugConsole.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -150,14 +154,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.9</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
-      <Name>Microsoft.ReactNative</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SampleLibraryCpp\SampleLibraryCpp.vcxproj">
       <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
       <Name>SampleLibraryCpp</Name>
@@ -166,26 +166,16 @@
       <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
       <Name>SampleLibraryCS</Name>
     </ProjectReference>
-    <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.3.191129002</Version>
-    </PackageReference>
   </ItemGroup>
-  <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems" Label="Shared" />
+  <ItemGroup>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>
-  <PropertyGroup>
-    <BundleCommand>
-      npx --no-install yarn run bundle-cs
-    </BundleCommand>
-  </PropertyGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CSharpApp.targets"/>
 </Project>

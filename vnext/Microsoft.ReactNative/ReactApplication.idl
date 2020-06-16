@@ -1,20 +1,20 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 import "ReactNativeHost.idl";
+#include "NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
 
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass ReactApplication : Windows.UI.Xaml.Application {
+  unsealed runtimeclass ReactApplication : XAML_NAMESPACE.Application {
     ReactApplication();
 
     ReactInstanceSettings InstanceSettings { get; set; };
-    IVector<IReactPackageProvider> PackageProviders { get; set; };
+    IVector<IReactPackageProvider> PackageProviders { get; };
     ReactNativeHost Host { get; };
 
-    String MainComponentName { get; set; };
     Boolean UseDeveloperSupport { get; set; };
     String JavaScriptMainModuleName { get; set; };
     String JavaScriptBundleFile { get; set; };

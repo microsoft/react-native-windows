@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\CreateUwpModules.h">
-      <Filter>ReactUWP</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\InstanceFactory.h">
       <Filter>ReactUWP</Filter>
     </ClInclude>
@@ -86,6 +83,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h">
       <Filter>ReactUWP\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\cdebug.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ReactUWP">
@@ -100,5 +98,8 @@
     <Filter Include="ReactUWP\Utils">
       <UniqueIdentifier>{77bf1091-5dda-46a7-ac20-6540d6e396d3}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />
   </ItemGroup>
 </Project>

@@ -13,11 +13,12 @@ Invoke-WebRequest -Uri 'https://download.visualstudio.microsoft.com/download/pr/
 $p = Start-Process -PassThru $dir\vs_enterprise.exe -RedirectStandardError $dir\err -RedirectStandardOutput $dir\out -ArgumentList "export --installpath `"$installationPath`" --quiet --config $vsconfig" 
 $p.WaitForExit()
 $x = [Datetime]::Now.AddSeconds(60)
-while (!(Test-Path $vsconfig) -and ([datetime]::Now -lt $x))
+
+do
 {
-    Sleep 5
     Write-Host "Waiting for vsconfig file..."
-}
+    Sleep 5
+} while (!(Test-Path $vsconfig) -and ([datetime]::Now -lt $x))
 
 Get-Content $dir\err
 Get-Content $dir\out

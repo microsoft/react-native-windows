@@ -1,12 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 
 #include <Views/ViewPanel.h>
-
-#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#include <winrt/Windows.UI.Xaml.Automation.h>
 
 #include "ViewControl.g.h"
 
@@ -23,7 +20,7 @@ struct ViewControl : ViewControlT<ViewControl> {
   // Constructors
   ViewControl();
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
+  xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   winrt::PROJECT_ROOT_NAMESPACE::ViewPanel GetPanel() const;
 };

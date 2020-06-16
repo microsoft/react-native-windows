@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,26 +7,20 @@
 #undef U
 
 #include <IDevSupportManager.h>
-
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/system/error_code.hpp>
 #include <cxxreact/JSExecutor.h>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
-using JSECreator =
-    std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>;
+using JSECreator = std::function<std::unique_ptr<facebook::react::JSExecutor>(
+    std::shared_ptr<facebook::react::ExecutorDelegate>,
+    std::shared_ptr<facebook::react::MessageQueueThread>)>;
 
-struct DevSettings;
-
-class DevSupportManager : public IDevSupportManager {
+class DevSupportManager : public facebook::react::IDevSupportManager {
  public:
   DevSupportManager();
   ~DevSupportManager();
 
-  virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) override;
+  virtual facebook::react::JSECreator LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) override;
   virtual std::string GetJavaScriptFromServer(
       const std::string &debugHost,
       const std::string &jsBundleName,
@@ -43,10 +37,7 @@ class DevSupportManager : public IDevSupportManager {
       const Concurrency::cancellation_token &token = Concurrency::cancellation_token::none());
 
   bool m_exceptionCaught = false;
-  boost::asio::io_context m_context;
-  boost::asio::ip::tcp::resolver m_resolver;
   Concurrency::cancellation_token_source m_liveReloadCts;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

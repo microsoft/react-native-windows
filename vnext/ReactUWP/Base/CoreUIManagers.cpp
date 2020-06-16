@@ -1,12 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
+#include <IUIManager.h>
 #include <Modules/NativeUIManager.h>
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ViewManagerProvider.h>
-#include <ReactWindowsCore/IUIManager.h>
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
@@ -69,33 +69,11 @@ void AddPolyesterViewManagers(
   viewManagers.push_back(std::make_unique<polyester::IconViewManager>(instance));
 }
 
-// TODO: This function is just a stand-in for a system that allows an individual
-// host to provide a
-//  different set of view managers and native ui manager. Having all of this in
-//  one place will simply make it easier to slot in that system when ready.
-
-REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>)
-CreateUIManager(
-    std::shared_ptr<IReactInstance> instance,
-    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
-  std::vector<std::unique_ptr<facebook::react::IViewManager>> viewManagers;
-
-  // Custom view managers
-  if (viewManagerProvider) {
-    viewManagers = viewManagerProvider->GetViewManagers(instance);
-  }
-
-  AddStandardViewManagers(viewManagers, instance);
-  AddPolyesterViewManagers(viewManagers, instance);
-
-  // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager());
-}
-
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
+    Mso::React::IReactContext *context,
     std::vector<react::uwp::NativeViewManager> &&viewManagers) noexcept {
   // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager());
+  return createIUIManager(std::move(viewManagers), new NativeUIManager(context));
 }
 
 } // namespace react::uwp

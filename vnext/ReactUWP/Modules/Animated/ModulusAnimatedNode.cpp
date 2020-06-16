@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -17,7 +17,7 @@ ModulusAnimatedNode::ModulusAnimatedNode(
   m_modulus = static_cast<int64_t>(config.find(s_modulusName).dereference().second.asDouble());
 
   m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, mod = m_modulus, manager]() {
-    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
     anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
     anim.SetScalarParameter(s_modName, static_cast<float>(mod));
     anim.Expression(

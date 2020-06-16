@@ -1,0 +1,38 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactPropertyBag.idl";
+
+namespace Microsoft.ReactNative {
+
+  // The delegate is used to create property value on-demand.
+  [webhosthidden]
+  delegate void ReactDispatcherCallback();
+
+  [webhosthidden]
+  interface IReactDispatcher
+  {
+    // True if dispatcher uses current thread.
+    Boolean HasThreadAccess { get; };
+
+    // Post task for the asynchronous execution.
+    void Post(ReactDispatcherCallback callback);
+  }
+
+  // Helper methods for the property bag implementation.
+  [webhosthidden]
+  static runtimeclass ReactDispatcherHelper
+  {
+    // Creates a new serial dispatcher that uses thread pool to run tasks.
+    static IReactDispatcher CreateSerialDispatcher();
+
+    // Get or create IReactDispatcher for the current UI thread.
+    static IReactDispatcher UIThreadDispatcher{ get; };
+
+    // Get name of the UIDispatcher property for the IReactPropertyBag.
+    static IReactPropertyName UIDispatcherProperty { get; };
+
+    // Get name of the JSDispatcher property for the IReactPropertyBag.
+    static IReactPropertyName JSDispatcherProperty { get; };
+  }
+} // namespace ReactNative

@@ -12,7 +12,7 @@ const enum SelectState {
 }
 
 interface IButtonWin32State {
-  accessibilityStates: RN.AccessibilityStates[];
+  accessibilityState: RN.AccessibilityState;
 }
 
 /**
@@ -26,11 +26,11 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
 
   public render() {
     const viewProps: IViewWin32Props = {
-      acceptsKeyboardFocus: true,
       accessible: true,
       accessibilityLabel: this.props.accessibilityLabel || this.props.title,
       accessibilityRole: 'button',
-      accessibilityStates: this.state.accessibilityStates,
+      accessibilityState: this.state.accessibilityState,
+      focusable: true,
       onFocus: this._onFocus,
       onBlur: this._onBlur,
       onMouseEnter: this.props.onMouseEnter,
@@ -38,11 +38,11 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
       onTouchStart: this.props.onTouchStart,
       onTouchEnd: this._onTouchEnd,
       testID: this.props.testID,
-      style: this.props.style as RN.StyleProp<RN.ViewStyle>
+      style: this.props.style as RN.StyleProp<RN.ViewStyle>,
     };
 
     const textProps: ITextWin32Props = {
-      textStyle: 'None'
+      textStyle: 'None',
     };
     if (this.props.color) {
       textProps.style = { color: this.props.color };
@@ -56,14 +56,12 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
   }
 
   private _makeState = (select: SelectState): IButtonWin32State => {
-    const accessibilityStates: RN.AccessibilityStates[] = [];
-    if (this.props.disabled) {
-      accessibilityStates.push('disabled');
-    } else if (select === SelectState.Selected) {
-      accessibilityStates.push('selected');
-    }
-
-    return { accessibilityStates };
+    return {
+      accessibilityState: {
+        disabled: this.props.disabled === true,
+        selected: select === SelectState.Selected,
+      },
+    };
   };
 
   private _setState = (select: SelectState): void => {

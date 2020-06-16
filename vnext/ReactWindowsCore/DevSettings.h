@@ -1,11 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 #include "Logging.h"
 #include "MemoryTracker.h"
 
-#include <RedBoxHandler.h>
+#include <IRedBoxHandler.h>
 #include <functional>
 #include <map>
 #include <memory>

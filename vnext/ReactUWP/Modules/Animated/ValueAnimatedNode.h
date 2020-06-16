@@ -1,12 +1,13 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
+#include <UI.Composition.h>
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
 
 namespace winrt {
-using namespace winrt::Windows::UI::Composition;
+using namespace comp;
 }
 
 namespace react {
@@ -25,7 +26,7 @@ class ValueAnimatedNode : public AnimatedNode {
   void Offset(double offset);
   void FlattenOffset();
   void ExtractOffset();
-  winrt::CompositionPropertySet PropertySet() {
+  comp::CompositionPropertySet PropertySet() {
     return m_propertySet;
   };
 
@@ -40,7 +41,7 @@ class ValueAnimatedNode : public AnimatedNode {
   static constexpr std::wstring_view s_offsetName{L"o"};
 
  protected:
-  winrt::CompositionPropertySet m_propertySet{nullptr};
+  comp::CompositionPropertySet m_propertySet{nullptr};
 
   static constexpr std::string_view s_inputName{"input"};
 

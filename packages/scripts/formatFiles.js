@@ -35,6 +35,7 @@ function queryNoOpenFiles() {
   if (opened) {
     console.error('The following files have incorrect formatting:');
     console.error(opened);
+    console.error('Running `yarn format` from the repo root should fix this.');
     process.exit(2);
   }
 }

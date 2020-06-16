@@ -20,9 +20,6 @@
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -86,19 +83,13 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\ClipboardModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp">
@@ -114,9 +105,6 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\StatusBarModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp">
@@ -268,14 +256,34 @@
     </ClCompile>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="Modules\AppStateData.cpp">
+    <ClCompile Include="IReactDispatcher.cpp" />
+    <ClCompile Include="IReactNotificationService.cpp" />
+    <ClCompile Include="Modules\AlertModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AppStateModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ClipboardModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\I18nManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\LogBoxModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="TurboModulesProvider.cpp" />
+    <ClCompile Include="Pch\pch.cpp">
+      <Filter>Pch</Filter>
+    </ClCompile>
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
@@ -286,9 +294,6 @@
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactHost\MsoUtils.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\PropertyBag.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp">
@@ -305,6 +310,7 @@
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
+    <ClCompile Include="TestHook.cpp" />
     <ClCompile Include="Threading\BatchingQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -315,19 +321,61 @@
       <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\DevMenu.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -404,19 +452,13 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
+    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\ClipboardModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\I18nModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h">
@@ -432,9 +474,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\TimingModule.h">
@@ -457,33 +496,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
       <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h">
       <Filter>Views</Filter>
@@ -590,15 +602,34 @@
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="HResult.h" />
-    <ClInclude Include="LifecycleState.h" />
-    <ClInclude Include="Modules\AppStateData.h">
+    <ClInclude Include="IReactDispatcher.h" />
+    <ClInclude Include="IReactNotificationService.h" />
+    <ClInclude Include="Modules\AlertModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AppStateModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ClipboardModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DeviceInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSettingsModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\I18nManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\LogBoxModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="TurboModulesProvider.h" />
+    <ClInclude Include="Pch\pch.h">
+      <Filter>Pch</Filter>
+    </ClInclude>
     <ClInclude Include="ReactHost\AsyncActionQueue.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
@@ -615,12 +646,6 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\MsoUtils.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\PropertyBag.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\PropertyBag_internal.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\React.h">
@@ -646,6 +671,7 @@
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
+    <ClInclude Include="TestHook.h" />
     <ClInclude Include="Threading\BatchingQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
@@ -656,6 +682,9 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\DevMenu.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -673,24 +702,25 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="IBackgroundEventListener.idl" />
-    <Midl Include="IBoxedValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactContext.idl" />
+    <Midl Include="IReactDispatcher.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
+    <Midl Include="IReactNonAbiValue.idl" />
+    <Midl Include="IReactNotificationService.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
+    <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
-    <Midl Include="NoExceptionAttribute.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl" />
-    <Midl Include="ReactInstance.idl" />
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
+    <Midl Include="RedBoxHandler.idl" />
+    <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="XamlUIService.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -716,6 +746,9 @@
     <Filter Include="Modules\Animated">
       <UniqueIdentifier>{1fe62423-356b-44a9-a97c-79950d299afe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pch">
+      <UniqueIdentifier>{cabb286d-fae0-4cfa-b793-79d13f559b41}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Polyester">
       <UniqueIdentifier>{c7bc39da-51b4-4410-846f-ffc20dfa57cc}</UniqueIdentifier>
     </Filter>
@@ -740,5 +773,8 @@
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
   </ItemGroup>
 </Project>

@@ -9,6 +9,9 @@
 *.h   text eol=crlf
 *.hpp text eol=crlf
 
+# Spec Codegen uses LF
+*Spec.g.h eol=lf
+
 # Force Visual Studio project files (mostly XML) to CRLF
 #   This helps avoid conflict which occurs when Xmarian/Mac contributors with AutoCRLF=input (or off)
 #   check in these files as CRLFs, and then Windows contributors with AutoCRLF=true end up checking then

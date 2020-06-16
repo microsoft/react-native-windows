@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../app/Consts';
 
 export function By(testId: string): WebdriverIO.Element {
+  // eslint-disable-next-line no-undef
   return $('~' + testId);
 }
 
@@ -24,6 +25,7 @@ export class BasePage {
   }
 
   waitForPageLoaded(timeout?: number) {
+    // eslint-disable-next-line no-undef
     browser.waitUntil(
       () => {
         return this.isPagedLoadedOrLoadBundleError();
@@ -33,12 +35,12 @@ export class BasePage {
     );
   }
 
-  getTreeDumpResult() {
+  getTreeDumpResult(): boolean {
     var testResult = false;
     const maxWait = 20;
     var waitCount = 1;
     do {
-      testResult = this.treeDumpResult.getText() == 'TreeDump:Passed';
+      testResult = this.treeDumpResult.getText() === 'TreeDump:Passed';
       if (!testResult) {
         console.log(
           '####Waiting for treedump comparison result ' +
@@ -56,7 +58,9 @@ export class BasePage {
   }
 
   protected timeoutForPageLoaded(currentTimeout?: number) {
-    if (currentTimeout) return currentTimeout;
+    if (currentTimeout) {
+      return currentTimeout;
+    }
     return this.waitforPageTimeout;
   }
 

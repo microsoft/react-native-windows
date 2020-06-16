@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,13 +7,13 @@
 #include "future/future.h"
 
 #include <functional>
+#include "CppWinRTIncludes.h"
 #include "JSValue.h"
+#include "NativeModules.h"
 
 #undef GetCurrentTime
-#include "Windows.UI.Xaml.h"
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -23,26 +23,15 @@ struct ReactModuleBuilderMock {
   template <class... TArgs>
   void Call0(std::wstring const &methodName, TArgs &&... args) noexcept;
 
-  template <class TResult, class... TArgs>
+  template <class... TArgs, class... TReasolveArgs>
   Mso::Future<bool>
-  Call1(std::wstring const &methodName, std::function<void(TResult)> &&resolve, TArgs &&... args) noexcept;
+  Call1(std::wstring const &methodName, std::function<void(TReasolveArgs...)> &&resolve, TArgs &&... args) noexcept;
 
-  template <class... TArgs>
-  Mso::Future<bool>
-  Call1(std::wstring const &methodName, std::function<void()> const &resolve, TArgs &&... args) noexcept;
-
-  template <class TResult, class TError, class... TArgs>
+  template <class... TArgs, class... TResolveArgs, class... TRejectArgs>
   Mso::Future<bool> Call2(
       std::wstring const &methodName,
-      std::function<void(TResult)> const &resolve,
-      std::function<void(TError)> const &reject,
-      TArgs &&... args) noexcept;
-
-  template <class TError, class... TArgs>
-  Mso::Future<bool> Call2(
-      std::wstring const &methodName,
-      std::function<void()> const &resolve,
-      std::function<void(TError)> const &reject,
+      std::function<void(TResolveArgs...)> const &resolve,
+      std::function<void(TRejectArgs...)> const &reject,
       TArgs &&... args) noexcept;
 
   template <class TResult, class... TArgs>
@@ -96,15 +85,16 @@ struct ReactModuleBuilderMock {
   static IJSValueReader ArgReader(TArgs &&... args) noexcept;
   static IJSValueReader CreateArgReader(std::function<void(IJSValueWriter const &)> const &argWriter) noexcept;
 
-  template <class T>
+  template <class... TArgs, size_t... I>
   MethodResultCallback ResolveCallback(
-      std::function<void(T)> const &resolve,
+      std::function<void(TArgs...)> const &resolve,
+      std::index_sequence<I...>,
       Mso::Promise<bool> const &promise) noexcept;
-  MethodResultCallback ResolveCallback(
-      std::function<void()> const &resolve,
+  template <class... TArgs, size_t... I>
+  MethodResultCallback RejectCallback(
+      std::function<void(TArgs...)> const &reject,
+      std::index_sequence<I...>,
       Mso::Promise<bool> const &promise) noexcept;
-  template <class T>
-  MethodResultCallback RejectCallback(std::function<void(T)> const &reject, Mso::Promise<bool> const &promise) noexcept;
 
  private:
   IReactContext m_reactContext{nullptr};
@@ -112,8 +102,8 @@ struct ReactModuleBuilderMock {
   std::vector<ConstantProviderDelegate> m_constantProviders;
   std::map<std::wstring, std::tuple<MethodReturnType, MethodDelegate>> m_methods;
   std::map<std::wstring, SyncMethodDelegate> m_syncMethods;
-  bool m_isResolveCallbackCalled;
-  bool m_isRejectCallbackCalled;
+  bool m_isResolveCallbackCalled{false};
+  bool m_isRejectCallbackCalled{false};
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsFunctionHandler;
   Mso::Functor<void(std::wstring_view, std::wstring_view, JSValue const &)> m_jsEventHandler;
 };
@@ -121,8 +111,24 @@ struct ReactModuleBuilderMock {
 struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
+  IReactPropertyBag Properties() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactNotificationService Notifications() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactDispatcher UIDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactDispatcher JSDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   void DispatchEvent(
-      FrameworkElement const & /*view*/,
+      xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,
       JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {}
 
@@ -164,60 +170,35 @@ inline void ReactModuleBuilderMock::Call0(std::wstring const &methodName, TArgs 
   }
 }
 
-template <class TResult, class... TArgs>
+template <class... TArgs, class... TResolveArgs>
 inline Mso::Future<bool> ReactModuleBuilderMock::Call1(
     std::wstring const &methodName,
-    std::function<void(TResult)> &&resolve,
+    std::function<void(TResolveArgs...)> &&resolve,
     TArgs &&... args) noexcept {
   Mso::Promise<bool> promise;
   if (auto method = GetMethod1(methodName)) {
-    method(ArgReader(std::forward<TArgs>(args)...), ArgWriter(), ResolveCallback(resolve, promise), nullptr);
+    method(
+        ArgReader(std::forward<TArgs>(args)...),
+        ArgWriter(),
+        ResolveCallback(resolve, std::make_index_sequence<sizeof...(TResolveArgs)>{}, promise),
+        nullptr);
   }
   return promise.AsFuture();
 }
 
-template <class... TArgs>
-inline Mso::Future<bool> ReactModuleBuilderMock::Call1(
-    std::wstring const &methodName,
-    std::function<void()> const &resolve,
-    TArgs &&... args) noexcept {
-  Mso::Promise<bool> promise;
-  if (auto method = GetMethod1(methodName)) {
-    method(ArgReader(std::forward<TArgs>(args)...), ArgWriter(), ResolveCallback(resolve, promise), nullptr);
-  }
-  return promise.AsFuture();
-}
-
-template <class TResult, class TError, class... TArgs>
+template <class... TArgs, class... TResolveArgs, class... TRejectArgs>
 inline Mso::Future<bool> ReactModuleBuilderMock::Call2(
     std::wstring const &methodName,
-    std::function<void(TResult)> const &resolve,
-    std::function<void(TError)> const &reject,
+    std::function<void(TResolveArgs...)> const &resolve,
+    std::function<void(TRejectArgs...)> const &reject,
     TArgs &&... args) noexcept {
   Mso::Promise<bool> promise;
   if (auto method = GetMethod2(methodName)) {
     method(
         ArgReader(std::forward<TArgs>(args)...),
         ArgWriter(),
-        ResolveCallback(resolve, promise),
-        RejectCallback(reject, promise));
-  }
-  return promise.AsFuture();
-}
-
-template <class TError, class... TArgs>
-inline Mso::Future<bool> ReactModuleBuilderMock::Call2(
-    std::wstring const &methodName,
-    std::function<void()> const &resolve,
-    std::function<void(TError)> const &reject,
-    TArgs &&... args) noexcept {
-  Mso::Promise<bool> promise;
-  if (auto method = GetMethod2(methodName)) {
-    method(
-        ArgReader(std::forward<TArgs>(args)...),
-        ArgWriter(),
-        ResolveCallback(resolve, promise),
-        RejectCallback(reject, promise));
+        ResolveCallback(resolve, std::make_index_sequence<sizeof...(TResolveArgs)>{}, promise),
+        RejectCallback(reject, std::make_index_sequence<sizeof...(TRejectArgs)>{}, promise));
   }
   return promise.AsFuture();
 }
@@ -239,37 +220,29 @@ inline /*static*/ IJSValueReader ReactModuleBuilderMock::ArgReader(TArgs &&... a
   });
 }
 
-template <class T>
+template <class... TArgs, size_t... I>
 inline MethodResultCallback ReactModuleBuilderMock::ResolveCallback(
-    std::function<void(T)> const &resolve,
+    std::function<void(TArgs...)> const &resolve,
+    std::index_sequence<I...>,
     Mso::Promise<bool> const &promise) noexcept {
   return [ this, resolve, promise ](IJSValueWriter const &writer) noexcept {
-    std::remove_const_t<std::remove_reference_t<T>> arg;
-    ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), arg);
-    resolve(arg);
+    std::tuple<RemoveConstRef<TArgs>...> args;
+    ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), std::get<I>(args)...);
+    resolve(std::get<I>(args)...);
     m_isResolveCallbackCalled = true;
     promise.TrySetValue(true);
   };
 }
 
-inline MethodResultCallback ReactModuleBuilderMock::ResolveCallback(
-    std::function<void()> const &resolve,
-    Mso::Promise<bool> const &promise) noexcept {
-  return [ this, resolve, promise ](IJSValueWriter const & /*writer*/) noexcept {
-    resolve();
-    m_isResolveCallbackCalled = true;
-    promise.TrySetValue(true);
-  };
-}
-
-template <class T>
+template <class... TArgs, size_t... I>
 inline MethodResultCallback ReactModuleBuilderMock::RejectCallback(
-    std::function<void(T)> const &reject,
+    std::function<void(TArgs...)> const &reject,
+    std::index_sequence<I...>,
     Mso::Promise<bool> const &promise) noexcept {
   return [ this, reject, promise ](IJSValueWriter const &writer) noexcept {
-    std::remove_const_t<std::remove_reference_t<T>> arg;
-    ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), arg);
-    reject(arg);
+    std::tuple<RemoveConstRef<TArgs>...> args;
+    ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), std::get<I>(args)...);
+    reject(std::get<I>(args)...);
     m_isRejectCallbackCalled = true;
     promise.TrySetValue(false);
   };

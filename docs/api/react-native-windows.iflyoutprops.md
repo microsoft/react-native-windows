@@ -14,12 +14,12 @@ export interface IFlyoutProps extends ViewProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [horizontalOffset](./react-native-windows.iflyoutprops.horizontaloffset.md) | <code>number</code> |  |
-|  [isLightDismissEnabled](./react-native-windows.iflyoutprops.islightdismissenabled.md) | <code>boolean</code> |  |
-|  [isOpen](./react-native-windows.iflyoutprops.isopen.md) | <code>boolean</code> |  |
-|  [isOverlayEnabled](./react-native-windows.iflyoutprops.isoverlayenabled.md) | <code>boolean</code> | Specifies whether the area outside the flyout is darkened |
-|  [onDismiss](./react-native-windows.iflyoutprops.ondismiss.md) | <code>(isOpen: boolean) =&gt; void</code> |  |
-|  [placement](./react-native-windows.iflyoutprops.placement.md) | <code>Placement</code> |  |
-|  [target](./react-native-windows.iflyoutprops.target.md) | <code>React.ReactNode</code> |  |
-|  [verticalOffset](./react-native-windows.iflyoutprops.verticaloffset.md) | <code>number</code> |  |
+|  [horizontalOffset](./react-native-windows.iflyoutprops.horizontaloffset.md) | number |  |
+|  [isLightDismissEnabled](./react-native-windows.iflyoutprops.islightdismissenabled.md) | boolean |  |
+|  [isOpen](./react-native-windows.iflyoutprops.isopen.md) | boolean |  |
+|  [isOverlayEnabled](./react-native-windows.iflyoutprops.isoverlayenabled.md) | boolean | Specifies whether the area outside the flyout is darkened |
+|  [onDismiss](./react-native-windows.iflyoutprops.ondismiss.md) | (isOpen: boolean) =&gt; void |  |
+|  [placement](./react-native-windows.iflyoutprops.placement.md) | [Placement](./react-native-windows.placement.md) |  |
+|  [target](./react-native-windows.iflyoutprops.target.md) | React.ReactNode |  |
+|  [verticalOffset](./react-native-windows.iflyoutprops.verticaloffset.md) | number |  |
 

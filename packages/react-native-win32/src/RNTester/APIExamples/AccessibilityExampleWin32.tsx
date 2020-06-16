@@ -8,14 +8,14 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  ListRenderItemInfo
+  ListRenderItemInfo,
 } from 'react-native';
 import { ViewWin32 } from '../../Libraries/Components/View/ViewWin32';
 
 const styles = StyleSheet.create({
   border: {
     borderStyle: 'dotted',
-    borderColor: 'black'
+    borderColor: 'black',
   },
   box: {
     borderWidth: 2,
@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     height: 20,
     backgroundColor: 'whitesmoke',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   listContainer: {
-    height: 150
-  }
+    height: 150,
+  },
 });
 
 interface IFocusableComponentState {
@@ -42,10 +42,10 @@ const AnnotationExample: React.FunctionComponent = props => {
   return (
     <ViewWin32
       accessible
-      acceptsKeyboardFocus
       accessibilityAnnotation={{ typeID: 'Comment', author: 'Krystal Siler', dateTime: '7/19/2019 1:03 PM' }}
       accessibilityLabel="Test accessibility label"
       accessibilityHint="Test accessibility hint"
+      focusable
       style={styles.box}
     >
       <Text>Comment.</Text>
@@ -58,7 +58,7 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
     super(props);
     this.state = {
       hasFocus: false,
-      expanded: false
+      expanded: false,
     };
   }
 
@@ -68,11 +68,11 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
         <TouchableHighlight onPress={this._onPress} underlayColor={'transparent'}>
           <ViewWin32
             accessible
-            acceptsKeyboardFocus
             accessibilityLabel={'Test accessibility label'}
             accessibilityRole="button"
             accessibilityActions={[{ name: 'Expand' }, { name: 'Collapse' }]}
-            accessibilityStates={this.state.expanded ? ['expanded'] : []}
+            accessibilityState={{expanded: this.state.expanded}}
+            focusable
             onAccessibilityAction={this._onAccessibilityAction}
             style={this.state.hasFocus ? [styles.box, styles.border] : styles.box}
             onFocus={this._onFocus}
@@ -100,25 +100,25 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
 
   private _expand = () => {
     this.setState({
-      expanded: true
+      expanded: true,
     });
   };
 
   private _collapse = () => {
     this.setState({
-      expanded: false
+      expanded: false,
     });
   };
 
   private _onFocus = () => {
     this.setState({
-      hasFocus: true
+      hasFocus: true,
     });
   };
 
   private _onBlur = () => {
     this.setState({
-      hasFocus: false
+      hasFocus: false,
     });
   };
 
@@ -136,14 +136,14 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
     super(props);
 
     this.state = {
-      selectedItems: []
+      selectedItems: [],
     };
   }
 
   public handleAdd = item => {
     if (this.state.selectedItems.indexOf(item) === -1) {
       this.setState({
-        selectedItems: this.state.selectedItems.concat([item])
+        selectedItems: this.state.selectedItems.concat([item]),
       });
     }
   };
@@ -154,14 +154,14 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
       const index = array.indexOf(item);
       array.splice(index, 1);
       this.setState({
-        selectedItems: array
+        selectedItems: array,
       });
     }
   };
 
   public render() {
     return (
-      <ViewWin32 accessible accessibilityRole="tablist" accessibilityStates={['multiselectable']}>
+      <ViewWin32 accessible accessibilityRole="tablist" accessibilityState={{multiselectable: true}}>
         <SelectionItemComponent
           value={1}
           color="#aee8fcff"
@@ -213,13 +213,13 @@ const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentPro
     <TouchableHighlight onPress={_onPress} underlayColor={'transparent'}>
       <ViewWin32
         accessible
-        acceptsKeyboardFocus
         accessibilityLevel={props.level}
         accessibilityPositionInSet={props.position}
         accessibilitySetSize={props.size}
         accessibilityActions={[{ name: 'AddToSelection' }, { name: 'RemoveFromSelection' }]}
         accessibilityRole="tab"
-        accessibilityStates={props.isSelected ? ['selected'] : []}
+        accessibilityState={{selected: props.isSelected}}
+        focusable
         style={props.isSelected ? [styles.box, { backgroundColor: props.color }] : styles.box}
         onAccessibilityAction={_onAccessibilityAction}
         onAccessibilityTap={_onPress}
@@ -264,7 +264,7 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
   public constructor(props) {
     super(props);
     this.state = {
-      hasFocus: false
+      hasFocus: false,
     };
   }
 
@@ -272,12 +272,12 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
     return (
       <ViewWin32
         accessible
-        acceptsKeyboardFocus
         accessibilityLabel={this.props.label}
         accessibilityRole="treeitem"
         accessibilityLevel={this.props.level}
         accessibilitySetSize={this.props.setSize}
         accessibilityPositionInSet={this.props.positionInSet}
+        focusable
         style={this.state.hasFocus ? [styles.box, styles.border] : styles.box}
         onFocus={this._onFocus}
         onBlur={this._onBlur}
@@ -289,13 +289,13 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
 
   private _onFocus = () => {
     this.setState({
-      hasFocus: true
+      hasFocus: true,
     });
   };
 
   private _onBlur = () => {
     this.setState({
-      hasFocus: false
+      hasFocus: false,
     });
   };
 }
@@ -323,7 +323,7 @@ interface IFlatListProps {
 
 const FlatListExample: React.FunctionComponent<IFlatListProps> = props => {
   return (
-    <ViewWin32 accessible acceptsKeyboardFocus accessibilityRole="tree">
+    <ViewWin32 accessible accessibilityRole="tree" focusable>
       <FlatList data={generateList(4)} renderItem={props.renderItem} keyExtractor={props.keyExtractor} />
     </ViewWin32>
   );
@@ -352,7 +352,7 @@ function generateList(size: number): Array<IListProps> {
       label: i.toString(),
       level: 1,
       setSize: size,
-      positionInSet: i
+      positionInSet: i,
     };
     list[i - 1] = item;
   }
@@ -387,31 +387,31 @@ export const examples = [
     {
       title: 'Annotation Example',
       description: 'A comment that exposes annotation properties.',
-      render: () => <AnnotationExample />
+      render: () => <AnnotationExample />,
     },
     {
       title: 'Button Example',
       description: 'A button with some basic accessibility props and expand/collapse',
-      render: () => <ButtonExample />
+      render: () => <ButtonExample />,
     },
     {
       title: 'MultiSelection Example',
       description: 'A list of items that can be selected',
-      render: () => <MultiSelectionExample />
+      render: () => <MultiSelectionExample />,
     },
     {
       title: 'FlatList Example',
       description: 'A flat list of headers with n of m support',
-      render: () => <FlatListExample renderItem={renderItem} keyExtractor={keyExtractor} />
+      render: () => <FlatListExample renderItem={renderItem} keyExtractor={keyExtractor} />,
     },
     {
       title: 'Virtualized FlatList Example',
       description: 'A virtualized flat list of 30 items with n of m support',
-      render: () => <VirtualizedFlatListExample renderItem={renderItem} getItemLayout={getItemLayout} keyExtractor={keyExtractor} />
+      render: () => <VirtualizedFlatListExample renderItem={renderItem} getItemLayout={getItemLayout} keyExtractor={keyExtractor} />,
     },
     {
       title: 'AccessibilityInfo Example',
       description: 'AccessibilityInfo Native Module announcement',
-      render: () => <AccessibilityInfoExample />
-    }
+      render: () => <AccessibilityInfoExample />,
+    },
   ];

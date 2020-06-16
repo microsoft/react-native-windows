@@ -112,6 +112,7 @@
     <ClInclude Include="JsonJSValueReader.h" />
     <ClInclude Include="JsonReader.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="ReactModuleBuilderMock.h" />
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +126,9 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ReactContextTest.cpp" />
     <ClCompile Include="ReactModuleBuilderMock.cpp" />
+    <ClCompile Include="TurboModuleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -135,14 +138,16 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IBoxedValue.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactContext.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactModuleBuilder.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilder.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IViewManager.idl" />
-    <Midl Include="..\Microsoft.ReactNative\NoExceptionAttribute.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

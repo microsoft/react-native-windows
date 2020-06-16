@@ -1,11 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
 #include "AppThemeModuleUwp.h"
 
-#include <Utils\ValueUtils.h>
+#include <Utils/ValueUtils.h>
+#include <XamlUtils.h>
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -13,12 +14,11 @@
 #endif
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
+using namespace xaml;
 using namespace Windows::UI::ViewManagement;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 //
 // AppTheme
@@ -27,36 +27,38 @@ namespace uwp {
 AppTheme::AppTheme(
     const std::shared_ptr<IReactInstance> &reactInstance,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-    : react::windows::AppTheme(), m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
-  m_currentTheme = winrt::Application::Current().RequestedTheme();
-  m_isHighContrast = m_accessibilitySettings.HighContrast();
-  m_highContrastColors = getHighContrastColors();
+    : m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
+    m_currentTheme = currentApp.RequestedTheme();
+    m_isHighContrast = m_accessibilitySettings.HighContrast();
+    m_highContrastColors = getHighContrastColors();
 
-  m_highContrastChangedRevoker =
-      m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
-        folly::dynamic eventData = folly::dynamic::object("highContrastColors", getHighContrastColors())(
-            "isHighContrast", getIsHighContrast());
+    m_highContrastChangedRevoker =
+        m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
+          folly::dynamic eventData = folly::dynamic::object("highContrastColors", getHighContrastColors())(
+              "isHighContrast", getIsHighContrast());
 
-        fireEvent("highContrastChanged", std::move(eventData));
-      });
+          fireEvent("highContrastChanged", std::move(eventData));
+        });
 
-  m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
-    m_queueThread->runOnQueue([this]() {
-      if (m_currentTheme != winrt::Application::Current().RequestedTheme() && !m_accessibilitySettings.HighContrast()) {
-        m_currentTheme = winrt::Application::Current().RequestedTheme();
+    m_colorValuesChangedRevoker =
+        m_uiSettings.ColorValuesChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
+          m_queueThread->runOnQueue([this]() {
+            if (m_currentTheme != winrt::Application::Current().RequestedTheme() &&
+                !m_accessibilitySettings.HighContrast()) {
+              m_currentTheme = winrt::Application::Current().RequestedTheme();
 
-        folly::dynamic eventData = folly::dynamic::object("currentTheme", getCurrentTheme());
+              folly::dynamic eventData = folly::dynamic::object("currentTheme", getCurrentTheme());
 
-        fireEvent("appThemeChanged", std::move(eventData));
-      }
-    });
-  });
+              fireEvent("appThemeChanged", std::move(eventData));
+            }
+          });
+        });
+  }
 }
 
-AppTheme::~AppTheme() = default;
-
-const std::string AppTheme::getCurrentTheme() {
-  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light : AppTheme::dark;
+std::string AppTheme::getCurrentTheme() {
+  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::Light : AppTheme::Dark;
 }
 
 bool AppTheme::getIsHighContrast() {
@@ -94,5 +96,17 @@ void AppTheme::fireEvent(std::string const &eventName, folly::dynamic &&eventDat
     instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
   }
 }
-} // namespace uwp
-} // namespace react
+
+AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme) : m_appTheme(std::move(appTheme)) {}
+
+auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic> {
+  return {{"initialAppTheme", folly::dynamic{m_appTheme->getCurrentTheme()}},
+          {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
+          {"initialHighContrastColors", folly::dynamic{m_appTheme->getHighContrastColors()}}};
+}
+
+auto AppThemeModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method> {
+  return {};
+}
+
+} // namespace react::uwp

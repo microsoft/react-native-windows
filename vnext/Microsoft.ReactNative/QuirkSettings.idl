@@ -1,0 +1,23 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ReactInstanceSettings.idl";
+
+namespace Microsoft.ReactNative {
+
+  // This can be used to add settings that allow react-native-windows behavior to be maintained across version updates
+  // to facilitate upgrades.  Settings in here are likely to be removed in future releases, so apps should try to update
+  // their code to not rely on settings from here.
+  [webhosthidden]
+  [default_interface]
+  runtimeclass QuirkSettings {
+    QuirkSettings();
+
+    // Older versions of react-native-windows did not use yoga's legacy stretch behavior.  This meant that 
+    // react-native-windows would layout views slightly differently that in iOS and Android.
+    // Set this setting to false to maintain the behavior from react-native-windows <= 0.62
+    // The default value is true.
+    static void SetMatchAndroidAndIOSStretchBehavior(ReactInstanceSettings settings, Boolean value);
+  }
+
+} // namespace Microsoft.ReactNative

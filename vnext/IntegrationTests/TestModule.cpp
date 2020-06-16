@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "TestModule.h"
@@ -83,5 +83,30 @@ auto TestDeviceInfoModule::getMethods() -> vector<Method> {
 }
 
 #pragma endregion TestDeviceInfoModule members
+
+#pragma region TestAppStateModule members
+
+/*static*/ string TestAppStateModule::name = "AppState";
+
+TestAppStateModule::TestAppStateModule() {}
+
+string TestAppStateModule::getName() {
+  return name;
+}
+
+auto TestAppStateModule::getConstants() -> map<string, dynamic> {
+  return {{"initialAppState", "active"}};
+}
+
+auto TestAppStateModule::getMethods() -> vector<Method> {
+  return {Method(
+      "getCurrentAppState",
+      [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/) {
+        cbSuccess({folly::dynamic::object("app_state", "active")});
+      },
+      AsyncTag)};
+}
+
+#pragma endregion TestAppStateModule members
 
 } // namespace Microsoft::React::Test

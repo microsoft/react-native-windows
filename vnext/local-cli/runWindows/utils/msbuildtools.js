@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -46,22 +46,48 @@ class MSBuildTools {
     results.forEach(result => console.log(chalk.white(result)));
   }
 
-  async buildProject(slnFile, buildType, buildArch, msBuildProps, verbose) {
+  async buildProject(
+    slnFile,
+    buildType,
+    buildArch,
+    msBuildProps,
+    verbose,
+    target,
+    buildLogDirectory,
+  ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
+    if (target) {
+      newInfo(`Build target: ${target}`);
+    }
+    const verbosityOption = verbose ? 'normal' : 'minimal';
+    const logPrefix = path.join(
+      buildLogDirectory || process.env.temp,
+      `msbuild_${process.pid}${target ? '_' + target : ''}`,
+    );
 
-    //const verbosityOption = verbose ? 'normal' : 'quiet';
-    const verbosityOption = 'normal';
+    const errorLog = logPrefix + '.err';
+    const warnLog = logPrefix + '.wrn';
+
+    const localBinLog = target ? `:${target}.binlog` : '';
+    const binlog = buildLogDirectory ? `:${logPrefix}.binlog` : localBinLog;
+
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
+      '/maxCpuCount',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
+      `/bl${binlog}`,
+      `/flp1:errorsonly;logfile=${errorLog}`,
+      `/flp2:warningsonly;logfile=${warnLog}`,
     ];
 
-    args.push('/bl');
+    if (target) {
+      args.push(`/t:${target}`);
+    }
 
     if (msBuildProps) {
       Object.keys(msBuildProps).forEach(function(key) {
@@ -73,41 +99,69 @@ class MSBuildTools {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
       newError(e.message);
-      return;
+      throw e;
     }
 
-    console.log(`Running MSBuild with args ${args.join(' ')}`);
+    if (verbose) {
+      console.log(`Running MSBuild with args ${args.join(' ')}`);
+    }
 
     const progressName = 'Building Solution';
     const spinner = newSpinner(progressName);
-    await commandWithProgress(
-      spinner,
-      progressName,
-      path.join(this.path, 'msbuild.exe'),
-      [slnFile].concat(args),
-      verbose,
-    );
+    try {
+      await commandWithProgress(
+        spinner,
+        progressName,
+        path.join(this.path, 'msbuild.exe'),
+        [slnFile].concat(args),
+        verbose,
+      );
+    } catch (e) {
+      let error = e;
+      if (!e) {
+        const firstMessage = (await fs.promises.readFile(errorLog))
+          .toString()
+          .split(EOL)[0];
+        error = new Error(firstMessage);
+        error.logfile = errorLog;
+      }
+      throw error;
+    }
+    // If we have no errors, delete the error log when we're done
+    if ((await fs.promises.stat(errorLog)).size === 0) {
+      await fs.promises.unlink(errorLog);
+    }
   }
 }
 
-function VSWhere(requires, version, property) {
+function VSWhere(requires, version, property, verbose) {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
     process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
+  if (verbose) {
+    console.log('Looking for vswhere at: ' + vsWherePath);
+  }
+
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
-    const vsPath = child_process
+    if (verbose) {
+      console.log('Found vswhere.');
+    }
+    const propertyValue = child_process
       .execSync(
         `"${vsWherePath}" -version [${version},${Number(version) +
           1}) -products * -requires ${requires} -property ${property}`,
       )
       .toString()
       .split(EOL)[0];
-    return vsPath;
+    return propertyValue;
   } else {
+    if (verbose) {
+      console.log("Couldn't find vswhere, querying registry.");
+    }
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
     let toolsPath = null;
     // Try to get the MSBuild path using registry
@@ -116,6 +170,9 @@ function VSWhere(requires, version, property) {
       let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
       if (toolsPathOutput) {
         let toolsPathOutputStr = toolsPathOutput[1];
+        if (verbose) {
+          console.log('Query found: ' + toolsPathOutputStr);
+        }
         // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
         if (version === '16.0') {
           toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
@@ -148,18 +205,30 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 
   // https://aka.ms/vs/workloads
-  const requires = [
-    'Microsoft.Component.MSBuild',
-    getVCToolsByArch(buildArch),
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
-  ];
+  const requires = ['Microsoft.Component.MSBuild', getVCToolsByArch(buildArch)];
 
-  const vsPath = VSWhere(requires.join(' '), version, 'installationPath');
+  const vsPath = VSWhere(
+    requires.join(' '),
+    version,
+    'installationPath',
+    verbose,
+  );
+
+  if (verbose) {
+    console.log('VS path: ' + vsPath);
+  }
+
   const installationVersion = VSWhere(
     requires.join(' '),
     version,
     'installationVersion',
+    verbose,
   );
+
+  if (verbose) {
+    console.log('VS version: ' + installationVersion);
+  }
+
   // VS 2019 changed path naming convention
   const vsVersion = version === '16.0' ? 'Current' : version;
 
@@ -170,6 +239,10 @@ function checkMSBuildVersion(version, buildArch, verbose) {
     vsVersion,
     'Bin/MSBuild.exe',
   );
+
+  if (verbose) {
+    console.log('Looking for MSBuild at: ' + msBuildPath);
+  }
 
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
 

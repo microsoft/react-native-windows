@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -11,6 +11,7 @@
 #include <cxxreact/ReactMarker.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
+#include <filesystem>
 #include "OInstance.h"
 #include "Unicode.h"
 
@@ -28,6 +29,7 @@
 #include <Modules/ExceptionsManagerModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
+#include <Modules/StatusBarManagerModule.h>
 
 #if (defined(_MSC_VER) && (defined(WINRT)))
 #include <Utils/LocalBundleReader.h>
@@ -49,9 +51,16 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
-#include <ReactCommon/JSCallInvoker.h>
+#include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
+
+#if (defined(_MSC_VER) && !defined(WINRT))
+// Type only available in Desktop.
+using Microsoft::React::WebSocketModule;
+#endif
+
+namespace fs = std::filesystem;
 
 // forward declaration.
 namespace facebook::react::tracing {
@@ -151,9 +160,9 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #endif
 }
 
-class BridgeJSCallInvoker : public JSCallInvoker {
+class BridgeCallInvoker : public CallInvoker {
  public:
-  BridgeJSCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
+  BridgeCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
       : messageQueueThread_(std::move(messageQueueThread)) {}
 
   void invokeAsync(std::function<void()> &&func) override {
@@ -183,7 +192,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
     auto turboModuleManager =
-        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeJSCallInvoker>(jsQueue));
+        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeCallInvoker>(jsQueue));
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
@@ -538,7 +547,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
 
 #else
-      std::string bundlePath = m_devSettings->bundleRootPath + jsBundleRelativePath + ".bundle";
+      std::string bundlePath =
+          (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
 
       auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
@@ -644,12 +654,18 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       []() { return std::make_unique<PlatformConstantsModule>(); },
       nativeQueue));
 
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      StatusBarManagerModule::Name,
+      []() { return std::make_unique<StatusBarManagerModule>(); },
+      nativeQueue));
+
   return modules;
 }
 
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
   // setup polling for live reload
-  if (!m_devManager->HasException() && m_devSettings->liveReloadCallback != nullptr) {
+  if (!m_devManager->HasException() && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
     m_devManager->StartPollingLiveReload(m_devSettings->debugHost, m_devSettings->liveReloadCallback);
   }
 }

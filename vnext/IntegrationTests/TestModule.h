@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -46,6 +46,19 @@ class TestDeviceInfoModule : public facebook::xplat::module::CxxModule {
   static std::string name;
 
   TestDeviceInfoModule();
+
+  std::string getName() override;
+
+  auto getConstants() -> std::map<std::string, folly::dynamic> override;
+
+  auto getMethods() -> std::vector<Method> override;
+};
+
+class TestAppStateModule : public facebook::xplat::module::CxxModule {
+ public:
+  static std::string name;
+
+  TestAppStateModule();
 
   std::string getName() override;
 

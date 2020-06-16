@@ -14,6 +14,6 @@ export interface IHighContrastChangedEvent
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [highContrastColors](./react-native-windows.ihighcontrastchangedevent.highcontrastcolors.md) | <code>IHighContrastColors</code> |  |
-|  [isHighContrast](./react-native-windows.ihighcontrastchangedevent.ishighcontrast.md) | <code>boolean</code> |  |
+|  [highContrastColors](./react-native-windows.ihighcontrastchangedevent.highcontrastcolors.md) | [IHighContrastColors](./react-native-windows.ihighcontrastcolors.md) |  |
+|  [isHighContrast](./react-native-windows.ihighcontrastchangedevent.ishighcontrast.md) | boolean |  |
 

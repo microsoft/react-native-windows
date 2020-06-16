@@ -8,15 +8,13 @@
 #include <IReactInstance.h>
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
 namespace react {

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -6,22 +6,18 @@
 
 // Modules
 #include <AsyncStorageModule.h>
-#include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
-#include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
-#include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
-#include <Modules/StatusBarModule.h>
 #include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
-#include <ReactUWP/Modules/I18nModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // ReactWindowsCore
@@ -49,21 +45,18 @@ bool HasPackageIdentity() noexcept {
 } // namespace
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
-    std::shared_ptr<facebook::react::IUIManager> uiManager,
+    const std::shared_ptr<facebook::react::IUIManager> &uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
-    std::shared_ptr<DeviceInfo> deviceInfo,
-    std::shared_ptr<facebook::react::DevSettings> devSettings,
-    const I18nModule::I18nInfo &&i18nInfo,
-    std::shared_ptr<facebook::react::AppState> appstate,
-    std::shared_ptr<react::windows::AppTheme> appTheme,
+    std::shared_ptr<react::uwp::AppTheme> &&appTheme,
+    Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
 
   modules.emplace_back(
       "UIManager",
-      [uiManager = std::move(uiManager), uiMessageQueue]() {
+      [uiManager, uiMessageQueue]() {
         return facebook::react::createUIManagerModule(std::shared_ptr(uiManager), std::shared_ptr(uiMessageQueue));
       },
       messageQueue);
@@ -80,14 +73,11 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);
 
   modules.emplace_back(
-      DeviceInfoModule::name, [deviceInfo]() { return std::make_unique<DeviceInfoModule>(deviceInfo); }, messageQueue);
-
-  modules.emplace_back(
       LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, messageQueue);
 
   modules.emplace_back(
       ImageViewManagerModule::name,
-      [messageQueue]() { return std::make_unique<ImageViewManagerModule>(messageQueue); },
+      [messageQueue]() { return std::make_unique<ImageViewManagerModule>(); },
       messageQueue);
 
   modules.emplace_back(
@@ -96,24 +86,11 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       MakeSerialQueueThread()); // TODO: figure out threading
 
   modules.emplace_back(
-      facebook::react::AppStateModule::name,
-      [appstate = std::move(appstate)]() mutable {
-        return std::make_unique<facebook::react::AppStateModule>(std::move(appstate));
-      },
-      MakeSerialQueueThread());
-
-  modules.emplace_back(
-      react::windows::AppThemeModule::name,
+      react::uwp::AppThemeModule::Name,
       [appTheme = std::move(appTheme)]() mutable {
-        return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme));
+        return std::make_unique<react::uwp::AppThemeModule>(std::move(appTheme));
       },
       messageQueue);
-
-  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
-
-  modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
-
-  modules.emplace_back(StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,
@@ -123,9 +100,9 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       messageQueue);
 
   modules.emplace_back(
-      "I18nManager",
-      [i18nInfo = std::move(i18nInfo)]() mutable {
-        return createI18nModule(std::make_unique<I18nModule>(std::move(i18nInfo)));
+      AppearanceModule::Name,
+      [appearanceListener = std::move(appearanceListener)]() mutable {
+        return std::make_unique<AppearanceModule>(std::move(appearanceListener));
       },
       messageQueue);
 

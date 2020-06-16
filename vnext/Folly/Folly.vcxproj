@@ -45,6 +45,22 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|ARM64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|Win32">
+      <Configuration>WinUI3</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WinUI3|x64">
+      <Configuration>WinUI3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -260,13 +276,13 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
   </Target>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
     <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" />
@@ -274,12 +290,12 @@
   </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
     <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />
-    <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, https://github.com/microsoft/msbuild/pull/4935, We will still succeed, and this will be fixed in a newer version of MSBuild  -->
-    <Unzip Condition="!Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
+    <Unzip Condition="!Exists('$(FollyDir)')" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <ItemGroup>
-    <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*"/>
+    <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
+  <Target Name="Deploy" />
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
   <!--
   <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">

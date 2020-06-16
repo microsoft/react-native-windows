@@ -8,7 +8,7 @@
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 import * as semver from 'semver';
-import {execSync} from 'child_process';
+import {exec, execSync} from 'child_process';
 import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
@@ -29,7 +29,11 @@ const argv = yargs.version(false).options({
     type: 'string',
     describe: 'The version of react-native-windows to use.',
   },
-  namespace: {type: 'string', describe: 'The native project namespace.'},
+  namespace: {
+    type: 'string',
+    describe:
+      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
+  },
   verbose: {type: 'boolean', describe: 'Enables logging.'},
   language: {
     type: 'string',
@@ -47,9 +51,14 @@ const argv = yargs.version(false).options({
       'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
     hidden: true,
   },
+  useWinUI3: {
+    type: 'boolean',
+    describe: '[Experimental] Use WinUI3',
+    hidden: true,
+    default: false,
+  },
 }).argv;
 
-const EXITCODE_NO_MATCHING_RNW = 2;
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;
 const EXITCODE_NO_REACTNATIVE_FOUND = 5;
@@ -171,22 +180,38 @@ function getLatestMatchingVersion(
         },
       );
     } else {
-      // Assume that versionSemVer is actually a tag
-      npm.packages.release(
-        pkg,
-        versionSemVer,
-        (err: any, details: {version: string}[]) => {
-          if (err) {
-            reject(err);
-          } else if (details && details.length > 0) {
-            resolve(details[0].version);
-            return;
-          }
-          reject(
-            new Error(`No matching version of ${pkg}@${versionSemVer} found`),
-          );
-        },
-      );
+      try {
+        exec(
+          `npm info ${pkg}@${versionSemVer} version --json`,
+          (err, stdout, _stderr) => {
+            try {
+              if (!err) {
+                let candidates = JSON.parse(stdout);
+                if (typeof candidates === 'string') {
+                  resolve(candidates);
+                  return;
+                }
+                candidates = candidates.sort(semver.rcompare);
+                if (candidates && candidates.length > 0) {
+                  resolve(candidates[0]);
+                  return;
+                }
+              }
+              reject(
+                new Error(
+                  `No matching version of ${pkg}@${versionSemVer} found`,
+                ),
+              );
+            } catch (e) {
+              reject(e);
+            }
+          },
+        );
+      } catch (err) {
+        reject(
+          new Error(`No matching version of ${pkg}@${versionSemVer} found`),
+        );
+      }
     }
   });
 }
@@ -238,10 +263,11 @@ function isProjectUsingYarn(cwd: string) {
 
     if (!rnwResolvedVersion) {
       if (argv.version) {
-        console.error(
-          `Error: No version of react-native-windows@${argv.version} found`,
+        console.warn(
+          `Warning: Querying npm to find react-native-windows@${
+            argv.version
+          } failed.  Attempting to continue anyway...`,
         );
-        process.exit(EXITCODE_NO_MATCHING_RNW);
       } else {
         const rnwLatestVersion = await getLatestRNWVersion();
         console.error(
@@ -315,7 +341,6 @@ You can either downgrade your version of ${chalk.green(
     const pkgmgr = isProjectUsingYarn(process.cwd())
       ? 'yarn add'
       : 'npm install --save';
-
     const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
     console.log(
       `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
@@ -324,7 +349,13 @@ You can either downgrade your version of ${chalk.green(
     );
     execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
     console.log(
-      chalk.green(`react-native-windows@${version} successfully installed.`),
+      chalk.green(
+        `react-native-windows@${chalk.cyan(
+          require(require.resolve('react-native-windows/package.json', {
+            paths: [process.cwd()],
+          })).version,
+        )} successfully installed.`,
+      ),
     );
 
     const generateWindows = require(reactNativeWindowsGeneratePath());
@@ -333,6 +364,7 @@ You can either downgrade your version of ${chalk.green(
       overwrite: argv.overwrite,
       verbose: argv.verbose,
       experimentalNugetDependency: argv.experimentalNugetDependency,
+      useWinUI3: argv.useWinUI3,
     });
   } catch (error) {
     console.error(chalk.red(error.message));

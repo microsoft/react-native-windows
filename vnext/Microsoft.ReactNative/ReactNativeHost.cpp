@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -6,11 +6,20 @@
 #include "ReactNativeHost.g.cpp"
 
 #include "ReactPackageBuilder.h"
+#include "RedBox.h"
+
+#include <future/futureWinRT.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include "ReactInstanceSettings.h"
 
 using namespace winrt;
+using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+
+#ifndef CORE_ABI
+using namespace xaml;
+using namespace xaml::Controls;
+#endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -24,15 +33,7 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
 }
 
 IVector<IReactPackageProvider> ReactNativeHost::PackageProviders() noexcept {
-  if (!m_packageProviders) {
-    m_packageProviders = single_threaded_vector<IReactPackageProvider>();
-  }
-
-  return m_packageProviders;
-}
-
-void ReactNativeHost::PackageProviders(IVector<IReactPackageProvider> const &value) noexcept {
-  m_packageProviders = value;
+  return InstanceSettings().PackageProviders();
 }
 
 ReactNative::ReactInstanceSettings ReactNativeHost::InstanceSettings() noexcept {
@@ -47,54 +48,74 @@ void ReactNativeHost::InstanceSettings(ReactNative::ReactInstanceSettings const 
   m_instanceSettings = value;
 }
 
-void ReactNativeHost::ReloadInstance() noexcept {
-  auto modulesProvider = std::make_shared<NativeModulesProvider>();
+IAsyncAction ReactNativeHost::LoadInstance() noexcept {
+  return ReloadInstance();
+}
 
+::Microsoft::ReactNative::ReactPropertyId<::Microsoft::ReactNative::ReactNonAbiValue<winrt::weak_ref<ReactNativeHost>>>
+ReactNativeHostProperty() noexcept {
+  static ::Microsoft::ReactNative::ReactPropertyId<
+      ::Microsoft::ReactNative::ReactNonAbiValue<winrt::weak_ref<ReactNativeHost>>>
+      propId{L"ReactNative.ReactNativeHost", L"ReactNativeHost"};
+  return propId;
+}
+
+/*static*/ winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost::GetReactNativeHost(
+    ReactPropertyBag const &properties) noexcept {
+  if (auto wkHost = properties.Get(ReactNativeHostProperty()).Value()) {
+    if (auto abiHost = wkHost.get()) {
+      return abiHost.as<winrt::Microsoft::ReactNative::ReactNativeHost>();
+    }
+  }
+  return nullptr;
+}
+
+IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
+#ifndef CORE_ABI
+  auto modulesProvider = std::make_shared<NativeModulesProvider>();
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
+  auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider, turboModulesProvider);
 
-    if (m_packageProviders) {
-      for (auto const &packageProvider : m_packageProviders) {
+    if (auto packageProviders = InstanceSettings().PackageProviders()) {
+      for (auto const &packageProvider : packageProviders) {
         packageProvider.CreatePackage(m_packageBuilder);
       }
     }
   }
 
-  react::uwp::ReactInstanceSettings legacySettings{};
-  legacySettings.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
-  legacySettings.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
-  legacySettings.DebugBundlePath = to_string(m_instanceSettings.DebugBundlePath());
-  legacySettings.DebugHost = to_string(m_instanceSettings.DebugHost());
-  legacySettings.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
-  legacySettings.EnableDeveloperMenu = m_instanceSettings.EnableDeveloperMenu();
-  legacySettings.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
-  legacySettings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
-  legacySettings.DebuggerBreakOnNextLine = m_instanceSettings.DebuggerBreakOnNextLine();
-  legacySettings.UseJsi = m_instanceSettings.UseJsi();
-  legacySettings.UseFastRefresh = m_instanceSettings.UseFastRefresh();
-  legacySettings.UseLiveReload = m_instanceSettings.UseLiveReload();
-  legacySettings.UseWebDebugger = m_instanceSettings.UseWebDebugger();
-  legacySettings.DebuggerPort = m_instanceSettings.DebuggerPort();
+  ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());
 
   Mso::React::ReactOptions reactOptions{};
-  reactOptions.DeveloperSettings.IsDevModeEnabled = legacySettings.EnableDeveloperMenu;
-  reactOptions.DeveloperSettings.SourceBundlePath = legacySettings.DebugBundlePath;
-  reactOptions.DeveloperSettings.UseWebDebugger = legacySettings.UseWebDebugger;
-  reactOptions.DeveloperSettings.UseDirectDebugger = legacySettings.UseDirectDebugger;
-  reactOptions.DeveloperSettings.DebuggerBreakOnNextLine = legacySettings.DebuggerBreakOnNextLine;
-  reactOptions.DeveloperSettings.UseFastRefresh = legacySettings.UseFastRefresh;
-  reactOptions.DeveloperSettings.UseLiveReload = legacySettings.UseLiveReload;
-  reactOptions.EnableJITCompilation = legacySettings.EnableJITCompilation;
-  reactOptions.DeveloperSettings.DebugHost = legacySettings.DebugHost;
-  reactOptions.BundleRootPath = legacySettings.BundleRootPath;
-  reactOptions.DeveloperSettings.DebuggerPort = legacySettings.DebuggerPort;
+  reactOptions.Properties = m_instanceSettings.Properties();
+  reactOptions.Notifications = m_instanceSettings.Notifications();
+  reactOptions.SetUseDeveloperSupport(m_instanceSettings.UseDeveloperSupport());
+  reactOptions.DeveloperSettings.SourceBundleName = to_string(m_instanceSettings.DebugBundlePath());
+  reactOptions.SetUseWebDebugger(m_instanceSettings.UseWebDebugger());
+  reactOptions.SetUseDirectDebugger(m_instanceSettings.UseDirectDebugger());
+  reactOptions.SetDebuggerBreakOnNextLine(m_instanceSettings.DebuggerBreakOnNextLine());
+  reactOptions.SetUseFastRefresh(m_instanceSettings.UseFastRefresh());
+  reactOptions.SetUseLiveReload(m_instanceSettings.UseLiveReload());
+  reactOptions.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
+  reactOptions.DeveloperSettings.DebugHost = to_string(m_instanceSettings.DebugHost());
+  reactOptions.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
+  reactOptions.DeveloperSettings.DebuggerPort = m_instanceSettings.DebuggerPort();
+  if (m_instanceSettings.RedBoxHandler()) {
+    reactOptions.RedBoxHandler = Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler());
+  }
+  reactOptions.DeveloperSettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
+  reactOptions.DeveloperSettings.SourceBundlePort =
+      m_instanceSettings.SourceBundlePort() != 0 ? std::to_string(m_instanceSettings.SourceBundlePort()) : "";
 
-  reactOptions.LegacySettings = std::move(legacySettings);
+  reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
+  reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
+  reactOptions.UseJsi = m_instanceSettings.UseJsi();
 
   reactOptions.ModuleProvider = modulesProvider;
   reactOptions.ViewManagerProvider = viewManagersProvider;
+  reactOptions.TurboModuleProvider = turboModulesProvider;
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
@@ -108,80 +129,19 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.Identity = jsBundleFile;
 
-  m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions));
+  return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
+#else
+  // Core ABI work needed
+  VerifyElseCrash(false);
+#endif
+}
+
+IAsyncAction ReactNativeHost::UnloadInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_reactHost->UnloadInstance());
 }
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {
   return m_reactHost.Get();
-}
-
-// TODO: Create a LifeCycleStateMachine in constructor to raise events in response
-// to events from the application and associate it with the ReactContext.
-// Define the ILifecycleEventListener and add support to ReactContext to
-// register a lifecycle listener. Define the IBackgroundEventListener and add
-// support to ReactContext to register modules as background event listeners.
-
-void ReactNativeHost::OnSuspend() noexcept {
-  OutputDebugStringW(L"TODO: ReactNativeHost::OnSuspend not implemented");
-
-  // DispatcherHelpers.AssertOnDispatcher();
-
-  //_defaultBackButtonHandler = null;
-  //_suspendCancellation?.Dispose();
-
-  // if (_useDeveloperSupport)
-  //{
-  //    _devSupportManager.IsEnabled = false;
-  //}
-
-  //_lifecycleStateMachine.OnSuspend();
-}
-
-void ReactNativeHost::OnEnteredBackground() noexcept {
-  OutputDebugStringW(L"TODO: ReactNativeHost::OnEnteredBackground not implemented");
-
-  // DispatcherHelpers.AssertOnDispatcher();
-  //_lifecycleStateMachine.OnEnteredBackground();
-}
-
-void ReactNativeHost::OnLeavingBackground() noexcept {
-  OutputDebugStringW(L"TODO: ReactNativeHost::OnLeavingBackground not implemented");
-
-  // DispatcherHelpers.AssertOnDispatcher();
-  //_lifecycleStateMachine.OnLeavingBackground();
-}
-
-void ReactNativeHost::OnResume(OnResumeAction const & /*action*/) noexcept {
-  OutputDebugStringW(L"TODO: ReactNativeHost::OnResume not implemented");
-
-  // see the ReactInstanceManager.cs from the C# implementation
-
-  //_defaultBackButtonHandler = onBackPressed;
-  //_suspendCancellation = new CancellationDisposable();
-
-  // if (_useDeveloperSupport)
-  //{
-  //	_devSupportManager.IsEnabled = true;
-  //}
-
-  //_lifecycleStateMachine.OnResume();
-}
-
-void ReactNativeHost::OnBackPressed() noexcept {
-  OutputDebugStringW(L"TODO: ReactNativeHost::OnBackPressed not implemented");
-
-  // DispatcherHelpers.AssertOnDispatcher();
-  // var reactContext = _currentReactContext;
-  // if (reactContext == null)
-  //{
-  //	RnLog.Warn(ReactConstants.RNW, $"ReactInstanceManager: OnBackPressed:
-  // Instance detached from instance manager.");
-  // InvokeDefaultOnBackPressed();
-  //}
-  // else
-  //{
-  //	reactContext.GetNativeModule<DeviceEventManagerModule>().EmitHardwareBackPressed();
-  //}
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

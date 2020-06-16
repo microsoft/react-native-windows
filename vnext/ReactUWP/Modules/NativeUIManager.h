@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,11 +7,10 @@
 #include <IReactRootView.h>
 #include <Views/ViewManagerBase.h>
 
-#include <winrt/Windows.UI.Xaml.h>
-
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
 
+#include <ReactHost/React.h>
 #include <map>
 #include <memory>
 #include <vector>
@@ -31,7 +30,7 @@ typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager : public facebook::react::INativeUIManager {
  public:
-  NativeUIManager();
+  NativeUIManager(Mso::React::IReactContext *reactContext);
 
   // INativeUIManager
   facebook::react::ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
@@ -85,11 +84,11 @@ class NativeUIManager : public facebook::react::INativeUIManager {
   // XamlIsland/AppWindow scenarios. Since it doesn't have parent, and all nodes
   // in the tree should have the same XamlRoot, this function iterates all roots
   // and try to get a valid XamlRoot.
-  winrt::XamlRoot tryGetXamlRoot();
+  xaml::XamlRoot tryGetXamlRoot();
 
   // Searches itself and its parent to get a valid XamlView.
   // Like Mouse/Keyboard, the event source may not have matched XamlView.
-  XamlView reactPeerOrContainerFrom(winrt::FrameworkElement fe);
+  XamlView reactPeerOrContainerFrom(xaml::FrameworkElement fe);
 
  private:
   void DoLayout();
@@ -100,11 +99,13 @@ class NativeUIManager : public facebook::react::INativeUIManager {
 
  private:
   facebook::react::INativeUIManagerHost *m_host = nullptr;
+  Mso::CntPtr<Mso::React::IReactContext> m_context;
+  YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
-  std::vector<winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
+  std::vector<xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
   std::vector<int64_t> m_extraLayoutNodes;
 

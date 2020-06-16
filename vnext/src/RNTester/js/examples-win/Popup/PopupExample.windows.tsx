@@ -1,12 +1,12 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import React = require('react');
 import {Button, Text, TextInput, View} from 'react-native';
-import {Popup} from 'react-native-windows';
+import {Popup} from '../../../../Libraries/Components/Popup/Popup';
 
 interface IAnchoredPopupExampleState {
   showPopup: boolean;

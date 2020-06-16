@@ -5,8 +5,9 @@ parameters:
   debug: false
 
   # Visual Studio Installer
-  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
+  listVsComponents: false
+  installVsComponents: false
 
 steps:
   - task: PowerShell@2
@@ -26,24 +27,19 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
-  - task: CmdLine@2
-    displayName: yarn install
-    inputs:
-      script: yarn install --frozen-lockfile
-
-  - task: CmdLine@2
-    displayName: Install react-native-cli
-    inputs:
-      script: npm install -g react-native-cli
+  - template: yarn-install.yml
 
   - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}
 
-  - template: install-SDK.yml
-    parameters:
-      sdkVersion: $(Win10Version)
+  - task: PowerShell@2
+    displayName: List Visual Studio Components
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+    condition: and(succeeded(), ${{ parameters.listVsComponents }})
 
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
@@ -51,10 +47,10 @@ steps:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
       arguments:
-        -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: and(ne('${{ parameters.vsComponents }}', ''), eq(variables['VmImage'], 'windows-2019')) # Note that this is evaluated at parsing, so parameters.vsComponents is never empty
+        -Cleanup:$true
+    condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
   - task: PowerShell@2
     displayName: List disksize after prepare-env

@@ -24,7 +24,7 @@ export declare class Picker extends React.Component<IPickerProps, State>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [Item](./react-native-windows.picker.item.md) | <code>static</code> | <code>typeof PickerItem</code> |  |
+|  [Item](./react-native-windows.picker.item.md) | <code>static</code> | typeof PickerItem |  |
 
 ## Methods
 

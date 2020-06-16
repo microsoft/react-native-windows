@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,7 +6,6 @@
 
 #include <IReactInstance.h>
 #include <object/unknownObject.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 #include "IXamlRootView.h"
 #include "ReactHost/React.h"
 #include "SIPEventHandler.h"
@@ -15,11 +14,12 @@
 
 namespace winrt {
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
+using namespace Windows::UI::Core;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Input;
 using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml::Media;
 } // namespace winrt
 
 namespace react::uwp {
@@ -74,14 +74,9 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void ShowInstanceLoaded(Mso::React::IReactInstance &reactInstance) noexcept;
   void ShowInstanceError() noexcept;
 
-  void InitializeDeveloperMenu() noexcept;
-  void ShowDeveloperMenu() noexcept;
-  void DismissDeveloperMenu() noexcept;
-  bool IsDeveloperMenuShowing() const noexcept;
-  void ToggleInspector() noexcept;
-
-  void ReloadHost() noexcept;
-  void ReloadViewHost() noexcept;
+  void AttachBackHandlers(XamlView const &rootView) noexcept;
+  void RemoveBackHandlers() noexcept;
+  bool OnBackRequested() noexcept;
 
  private:
   int64_t m_rootTag{-1};
@@ -99,11 +94,6 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
   std::weak_ptr<facebook::react::InstanceWrapper> m_fbReactInstance;
 
-  bool m_isDevModeEnabled{false};
-  bool m_useFastRefresh{false};
-  bool m_useWebDebugger{false};
-  bool m_directDebugging{false};
-  bool m_breakOnNextLine{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
 
@@ -115,21 +105,11 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   winrt::weak_ref<XamlView> m_weakRootView{nullptr};
   winrt::weak_ref<XamlView> m_weakXamlRootView{nullptr};
 
-  winrt::ContentControl m_focusSafeHarbor{nullptr};
-  winrt::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
-  winrt::Grid m_redBoxGrid{nullptr};
+  xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
+  xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
   winrt::Grid m_greenBoxGrid{nullptr};
-  winrt::TextBlock m_errorTextBlock{nullptr};
   winrt::TextBlock m_waitingTextBlock{nullptr};
-  winrt::Grid m_developerMenuRoot{nullptr};
-  winrt::Button::Click_revoker m_remoteDebugJSRevoker{};
-  winrt::Button::Click_revoker m_cancelRevoker{};
-  winrt::Button::Click_revoker m_toggleInspectorRevoker{};
-  winrt::Button::Click_revoker m_reloadJSRevoker{};
-  winrt::Button::Click_revoker m_fastRefreshRevoker{};
-  winrt::Button::Click_revoker m_directDebuggingRevoker{};
-  winrt::Button::Click_revoker m_breakOnNextLineRevoker{};
-  winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
+  winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};
 };
 
 //! This class ensures that we access ReactRootView from UI thread.

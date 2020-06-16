@@ -1,18 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
 #include "RefreshControlManager.h"
 
-#include <winrt/Windows.UI.Xaml.Shapes.h>
-
 #include <ReactUWP\Utils\Helpers.h>
+#include <UI.Xaml.Controls.h>
 #include <Views/ShadowNodeBase.h>
 
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
+using namespace xaml;
+using namespace xaml::Controls;
 using namespace Windows::Foundation;
 } // namespace winrt
 
@@ -95,7 +94,7 @@ XamlView RefreshControlViewManager::CreateViewCore(int64_t /*tag*/) {
   }
 }
 
-void RefreshControlViewManager::AddView(XamlView parent, XamlView child, int64_t /*index*/) {
+void RefreshControlViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t /*index*/) {
   if (auto refreshContainer = parent.try_as<winrt::RefreshContainer>()) {
     refreshContainer.Content(child.as<winrt::ScrollViewer>());
   } else if (auto grid = parent.try_as<winrt::Grid>()) {

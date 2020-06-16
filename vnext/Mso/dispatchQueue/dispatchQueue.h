@@ -48,7 +48,7 @@ enum class PendingTaskAction {
 };
 
 //! Callback type to handle queue local values
-using SwapDispatchLocalValueCallback = void (*)(void **localValue, void *tlsValue) noexcept;
+using SwapDispatchLocalValueCallback = void (*)(void **localValue, void **tlsValue) noexcept;
 
 //! Gets a pointer to the state storage. This is a 'back-door' for advanced scenarios. Use with caution!
 template <typename TObject>
@@ -58,7 +58,7 @@ auto GetRawState(TObject &&obj) noexcept;
 //! It creates new value if localValue is null.
 //! It destroys local value if tlsValue is null.
 template <typename TValue>
-void SwapDispatchLocalValue(void **localValue, void *tlsValue) noexcept;
+void SwapDispatchLocalValue(void **localValue, void **tlsValue) noexcept;
 
 template <typename TInvoke, typename TOnCancel>
 Mso::VoidFunctor MakeDispatchTask(TInvoke &&invoke, TOnCancel &&onCancel) noexcept;
@@ -69,7 +69,7 @@ Mso::VoidFunctor MakeDispatchCleanupTask(TInvoke &&invoke) noexcept;
 //! RAII class to unlock the queue local value by swapping it back with TLS variable.
 struct DispatchLocalValueGuard {
   //! Create new DispatchLocalValueGuard instance and swap TLS value with the queue local value.
-  DispatchLocalValueGuard(IDispatchQueueService *queue, void *tlsValue) noexcept;
+  DispatchLocalValueGuard(IDispatchQueueService *queue, void **tlsValue) noexcept;
 
   //! Swap back the TLS value with the queue local value. It must run on the same thread as the constructor.
   ~DispatchLocalValueGuard() noexcept;
@@ -82,7 +82,7 @@ struct DispatchLocalValueGuard {
 
  private:
   IDispatchQueueService *m_queue;
-  void *m_tlsValue;
+  void **m_tlsValue;
 };
 
 //! Serial or concurrent dispatch queue main API.
@@ -113,17 +113,15 @@ struct DispatchQueue {
   //! demand.
   static DispatchQueue const &ConcurrentQueue() noexcept;
 
-  //! Get DispatchQueue associated with the main UI thread. It is created on demand.
-  static DispatchQueue const &MainUIQueue() noexcept;
-
   //! Create new serial DispatchQueue on top of platform specific thread pool.
   static DispatchQueue MakeSerialQueue() noexcept;
 
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
   static DispatchQueue MakeLooperQueue() noexcept;
 
-  //! Create new UI DispatchQueue for the current UI thread.
-  static DispatchQueue MakeCurrentThreadUIQueue() noexcept;
+  //! Get a dispatch queue for the current UI thread. The result is null if the UI thread has no system UI thread
+  //! dispatcher.
+  static DispatchQueue GetCurrentUIThreadQueue() noexcept;
 
   //! Create a concurrent queue on top of platform specific thread pool that uses up to maxThreads threads.
   //! If maxThreads is zero, then it creates a concurrent queue that has a predefined limit on concurrently submitted
@@ -158,8 +156,7 @@ struct DispatchQueue {
   //! True if tasks are invoked in a serial order by the queue.
   bool IsSerial() const noexcept;
 
-  //! True if queue is running on current thread or associated with it. E.g. MainUIQueue always returns true for the
-  //! main UI thread.
+  //! True if queue is running on current thread or associated with it.
   bool HasThreadAccess() const noexcept;
 
   //! Check if a long running task should yield.
@@ -178,7 +175,7 @@ struct DispatchQueue {
   //! The returned DispatchLocalValueGuard returns true when casted to bool in case of success. It can be used inside of
   //! an 'if' statement.
   template <typename TValue>
-  DispatchLocalValueGuard LockLocalValue(TValue *tlsValue) const noexcept;
+  DispatchLocalValueGuard LockLocalValue(TValue **tlsValue) const noexcept;
 
   //! Suspend asynchronous task invocation and return a guard that resumes it in its destructor.
   DispatchSuspendGuard Suspend() const noexcept;
@@ -365,10 +362,10 @@ struct IDispatchQueueService : IUnknown {
   //! Unlocking the QLV swaps it back with the TLS variable.
   //! On the first call the variable will be created by swapLocalValue. When queue is shutdown the variable is destroyed
   //! by swapLocalValue. The TLS variable address corresponding to the QLV is used to define a key for storing QLV.
-  virtual bool TryLockQueueLocalValue(SwapDispatchLocalValueCallback swapLocalValue, void *tlsValue) noexcept = 0;
+  virtual bool TryLockQueueLocalValue(SwapDispatchLocalValueCallback swapLocalValue, void **tlsValue) noexcept = 0;
 
   //! Unlock the queue local value by swapping it back with the TLS value.
-  virtual void UnlockLocalValue(void *tlsValue) noexcept = 0;
+  virtual void UnlockLocalValue(void **tlsValue) noexcept = 0;
 
   //! Suspend task invocation and increment internal suspend count by one.
   //! Note that we do not expose IsSuspeneded() method because the Suspend/Resume
@@ -416,17 +413,15 @@ struct IDispatchQueueStatic : IUnknown {
   //! demand.
   virtual DispatchQueue const &ConcurrentQueue() noexcept = 0;
 
-  //! Get DispatchQueue associated with the main UI thread. It is created on demand.
-  virtual DispatchQueue const &MainUIQueue() noexcept = 0;
-
   //! Create new serial DispatchQueue on top of platform specific thread pool.
   virtual DispatchQueue MakeSerialQueue() noexcept = 0;
 
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
   virtual DispatchQueue MakeLooperQueue() noexcept = 0;
 
-  //! Creates new UI DispatchQueue for the current UI thread.
-  virtual DispatchQueue MakeCurrentThreadUIQueue() noexcept = 0;
+  //! Get a dispatch queue for the current UI thread. The result is null if the UI thread has no system UI thread
+  //! dispatcher.
+  virtual DispatchQueue GetCurrentUIThreadQueue() noexcept = 0;
 
   //! Create a concurrent queue on top of platform specific thread pool that uses up to maxThreads threads.
   //! If maxThreads is zero, then it creates a concurrent queue that has a predefined limit on concurrently submitted
@@ -481,17 +476,18 @@ inline auto GetRawState(TObject &&obj) noexcept {
 }
 
 template <typename TValue>
-void SwapQueueLocalValue(void **localValue, void *tlsValue) noexcept {
+void SwapDispatchLocalValue(void **localValue, void **tlsValue) noexcept {
   if (!tlsValue) { // Delete the queue local value when tlsValue is null.
     if (*localValue) {
       delete static_cast<TValue *>(*localValue);
       *localValue = nullptr;
     }
-  } else if (!*localValue) { // Initialize queue local value on the first call
+    return;
+  } else if (!*tlsValue && !*localValue) { // Initialize queue local value on the first call
     *localValue = new TValue{};
   }
   using std::swap;
-  swap(*static_cast<TValue *>(*localValue), *static_cast<TValue *>(tlsValue));
+  swap(*localValue, *tlsValue);
 }
 
 template <typename TInvoke, typename TOnCancel>
@@ -511,7 +507,7 @@ inline Mso::VoidFunctor MakeDispatchCleanupTask(TInvoke &&invoke) noexcept {
 // DispatchLocalValueGuard inline implementation
 //=============================================================================
 
-inline DispatchLocalValueGuard::DispatchLocalValueGuard(IDispatchQueueService *queue, void *tlsValue) noexcept
+inline DispatchLocalValueGuard::DispatchLocalValueGuard(IDispatchQueueService *queue, void **tlsValue) noexcept
     : m_queue{queue}, m_tlsValue{tlsValue} {}
 
 inline DispatchLocalValueGuard::~DispatchLocalValueGuard() noexcept {
@@ -545,10 +541,6 @@ inline /*static*/ DispatchQueue const &DispatchQueue::ConcurrentQueue() noexcept
   return IDispatchQueueStatic::Instance()->ConcurrentQueue();
 }
 
-inline /*static*/ DispatchQueue const &DispatchQueue::MainUIQueue() noexcept {
-  return IDispatchQueueStatic::Instance()->MainUIQueue();
-}
-
 inline /*static*/ DispatchQueue DispatchQueue::MakeSerialQueue() noexcept {
   return IDispatchQueueStatic::Instance()->MakeSerialQueue();
 }
@@ -557,8 +549,8 @@ inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue() noexcept {
   return IDispatchQueueStatic::Instance()->MakeLooperQueue();
 }
 
-inline /*static*/ DispatchQueue DispatchQueue::MakeCurrentThreadUIQueue() noexcept {
-  return IDispatchQueueStatic::Instance()->MakeCurrentThreadUIQueue();
+inline /*static*/ DispatchQueue DispatchQueue::GetCurrentUIThreadQueue() noexcept {
+  return IDispatchQueueStatic::Instance()->GetCurrentUIThreadQueue();
 }
 
 inline /*static*/ DispatchQueue DispatchQueue::MakeConcurrentQueue(uint32_t maxThreads) noexcept {
@@ -607,9 +599,9 @@ inline DispatchTaskBatch DispatchQueue::StartTaskBatching() const noexcept {
 }
 
 template <typename TValue>
-inline DispatchLocalValueGuard DispatchQueue::LockLocalValue(TValue *tlsValue) const noexcept {
-  if (m_state->TryLockQueueLocalValue(SwapDispatchLocalValue<TValue>, tlsValue)) {
-    return DispatchLocalValueGuard{m_state.Get(), tlsValue};
+inline DispatchLocalValueGuard DispatchQueue::LockLocalValue(TValue **tlsValue) const noexcept {
+  if (m_state->TryLockQueueLocalValue(SwapDispatchLocalValue<TValue>, (void **)tlsValue)) {
+    return DispatchLocalValueGuard{m_state.Get(), (void **)tlsValue};
   } else {
     return DispatchLocalValueGuard{nullptr, nullptr};
   }

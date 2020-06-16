@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -18,7 +18,7 @@ MultiplicationAnimatedNode::MultiplicationAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"1";

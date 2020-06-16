@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "ShadowNode.h"
@@ -8,7 +8,7 @@ namespace react {
 
 ShadowNode::~ShadowNode() {}
 
-void ShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {}
+void ShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {}
 
 void ShadowNode::onDropViewInstance() {}
 

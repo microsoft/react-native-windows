@@ -10,8 +10,6 @@
 
 'use strict';
 
-import NativeAccessibilityInfo from './NativeAccessibilityInfo';
-
 const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
 
 // [Windows
@@ -20,6 +18,8 @@ const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter'
 const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
 // Windows]
 
+import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
 const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
 
@@ -27,6 +27,7 @@ type ChangeEventName = $Keys<{
   change: string,
   reduceMotionChanged: string,
   screenReaderChanged: string,
+  ...
 }>;
 
 const _subscriptions = new Map();
@@ -97,7 +98,10 @@ const AccessibilityInfo = {
    *
    * Same as `isScreenReaderEnabled`
    */
-  get fetch() {
+  get fetch(): () => Promise<boolean> {
+    console.warn(
+      'AccessibilityInfo.fetch is deprecated, call Accessibility.isScreenReaderEnabled instead',
+    );
     return this.isScreenReaderEnabled;
   },
 

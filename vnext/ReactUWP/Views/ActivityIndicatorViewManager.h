@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -17,9 +17,12 @@ class ActivityIndicatorViewManager : public ControlViewManager {
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;
 
-  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
-
  protected:
+  bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const folly::dynamic &propertyValue) override;
+
   XamlView CreateViewCore(int64_t tag) override;
 };
 

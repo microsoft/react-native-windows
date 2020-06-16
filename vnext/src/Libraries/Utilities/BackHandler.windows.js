@@ -1,15 +1,33 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- * @format
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @flow
+ * @format
  */
 
 'use strict';
 
-// TODO Hx: Implement.
+import NativeDeviceEventManager from '../../Libraries/NativeModules/specs/NativeDeviceEventManager';
+import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
 
-function emptyFunction() {}
+const DEVICE_BACK_EVENT = 'hardwareBackPress';
+
+type BackPressEventName = 'backPress' | 'hardwareBackPress';
+
+const _backPressSubscriptions = [];
+
+RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function() {
+  for (let i = _backPressSubscriptions.length - 1; i >= 0; i--) {
+    if (_backPressSubscriptions[i]()) {
+      return;
+    }
+  }
+
+  BackHandler.exitApp();
+});
 
 /**
  * Detect hardware button presses for back navigation.
@@ -41,15 +59,58 @@ function emptyFunction() {}
  * });
  * ```
  */
+type TBackHandler = {|
+  +exitApp: () => void,
+  +addEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => {remove: () => void, ...},
+  +removeEventListener: (
+    eventName: BackPressEventName,
+    handler: Function,
+  ) => void,
+|};
+const BackHandler: TBackHandler = {
+  exitApp: function(): void {
+    if (!NativeDeviceEventManager) {
+      return;
+    }
 
-var BackHandler = {
-  exitApp: emptyFunction,
-  addEventListener() {
+    NativeDeviceEventManager.invokeDefaultBackPressHandler();
+  },
+
+  /**
+   * Adds an event handler. Supported events:
+   *
+   * - `hardwareBackPress`: Fires when the Android hardware back button is pressed or when the
+   * tvOS menu button is pressed.
+   */
+  addEventListener: function(
+    eventName: BackPressEventName,
+    handler: Function,
+  ): {remove: () => void, ...} {
+    if (_backPressSubscriptions.indexOf(handler) === -1) {
+      _backPressSubscriptions.push(handler);
+    }
     return {
-      remove: emptyFunction,
+      remove: (): void => BackHandler.removeEventListener(eventName, handler),
     };
   },
-  removeEventListener: emptyFunction,
+
+  /**
+   * Removes the event handler.
+   */
+  removeEventListener: function(
+    eventName: BackPressEventName,
+    handler: Function,
+  ): void {
+    if (_backPressSubscriptions.indexOf(handler) !== -1) {
+      _backPressSubscriptions.splice(
+        _backPressSubscriptions.indexOf(handler),
+        1,
+      );
+    }
+  },
 };
 
 module.exports = BackHandler;

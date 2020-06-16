@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
  * @format
@@ -59,4 +59,4 @@ class RCTNetworking extends NativeEventEmitter {
   }
 }
 
-module.exports = new RCTNetworking();
+module.exports = (new RCTNetworking(): RCTNetworking);

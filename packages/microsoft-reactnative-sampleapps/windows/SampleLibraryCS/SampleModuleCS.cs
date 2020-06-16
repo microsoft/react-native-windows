@@ -1,11 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 using Windows.System.Threading;
 
@@ -25,10 +24,20 @@ namespace SampleLibraryCS
         #region Initializer
 
         [ReactInitializer]
-        public void Initialize(IReactContext _)
+        public void Initialize(ReactContext reactContext)
         {
+            Debug.WriteLine($"C# Properties.Prop1: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop1"))}");
+            Debug.WriteLine($"C# Properties.Prop2: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop2"))}");
+
+            var cppTimerNotification = ReactPropertyBagHelper.GetName(ReactPropertyBagHelper.GetNamespace("SampleModuleCppImpl"), "TimerNotification");
+            var csTimerNotification = ReactPropertyBagHelper.GetName(ReactPropertyBagHelper.GetNamespace("SampleModuleCS"), "TimerNotification");
+
+            reactContext.Handle.Notifications.Subscribe(cppTimerNotification, null,
+                (object sender, IReactNotificationArgs args) => Debug.WriteLine($"C# module, C++ timer:: {args.Data}"));
+
             _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
             {
+                reactContext.Handle.Notifications.SendNotification(csTimerNotification, null, _timerCount);
                 TimedEvent?.Invoke(++_timerCount);
                 if (_timerCount == 5)
                 {

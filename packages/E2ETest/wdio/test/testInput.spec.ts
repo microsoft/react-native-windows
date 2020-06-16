@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
@@ -12,21 +12,31 @@ beforeAll(() => {
   HomePage.clickAndGoToTextInputPage();
 });
 
+function assertLogContains(text: string) {
+  const log = TextInputTestPage.getTextInputCurText();
+  assert.ok(log, `${log} should not be falsy`);
+  assert.ok(log.split('\n').includes(text), `${log} did not contain "${text}"`);
+}
+
 describe('First', () => {
   it('Click on TextInput to focus', () => {
     TextInputTestPage.clickTextInput();
-    assert.ok(TextInputTestPage.getTextInputCurText().includes('onFocus'));
+    assertLogContains('onFocus');
   });
 
   it('Click on multiline TextInput to move focus away from single line TextInput', () => {
     TextInputTestPage.clickMultilineTextInput();
-    assert.ok(TextInputTestPage.getTextInputPrevText().includes('onBlur'));
+    assertLogContains('onBlur');
   });
 
   it('Type abc on TextInput', () => {
     TextInputTestPage.clearAndTypeOnTextInput('abc');
     assert.equal(TextInputTestPage.getTextInputText(), 'abc');
-    assert.ok(TextInputTestPage.getTextInputPrev2Text().includes('onKeyPress'));
+
+    // Due to some timing issues between the JS and native, the order of events
+    // might cause more onChange events to happen after the onKeyPress event
+    // So the onKeyPress event might not be the last item in the log
+    assertLogContains('onKeyPress key: c');
   });
 
   it('Type def on TextInput', () => {
@@ -41,10 +51,7 @@ describe('First', () => {
 
   it('Type abc on multiline TextInput then press Enter key', () => {
     TextInputTestPage.clearAndEnterOnTextInput('abc');
-    assert.equal(
-      TextInputTestPage.getTextInputPrevText(),
-      'prev: onSubmitEditing text: abc'
-    );
+    assertLogContains('onSubmitEditing text: abc');
   });
 
   it('Type abc on multiline TextInput', () => {

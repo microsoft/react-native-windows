@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include <BeastWebSocketResource.h>
@@ -9,7 +9,7 @@ using namespace boost::beast;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using boost::system::error_code;
-using Microsoft::React::Beast::Test::TestWebSocket;
+using Microsoft::React::Beast::Test::TestWebSocketResource;
 using std::future;
 using std::make_unique;
 using std::promise;
@@ -30,7 +30,7 @@ TEST_CLASS(BaseWebSocketTest){
   END_TEST_CLASS_ATTRIBUTE()
 
   TEST_METHOD(CreateAndSetHandlers){
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
 
     Assert::IsFalse(nullptr == ws);
     ws->SetOnConnect([]() {});
@@ -44,7 +44,7 @@ TEST_CLASS(BaseWebSocketTest){
   TEST_METHOD(ConnectSucceeds) {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
 
@@ -58,7 +58,7 @@ TEST_CLASS(BaseWebSocketTest){
   TEST_METHOD(ConnectFails) {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
     ws->SetConnectResult([]() -> error_code {
@@ -78,7 +78,7 @@ TEST_CLASS(BaseWebSocketTest){
   TEST_METHOD(HandshakeFails) {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
     ws->SetHandshakeResult([](string, string) -> error_code {
@@ -99,7 +99,7 @@ TEST_CLASS(BaseWebSocketTest){
     string errorMessage;
     promise<void> connected;
     bool closed = false;
-    auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected.set_value(); });
     ws->SetOnClose(

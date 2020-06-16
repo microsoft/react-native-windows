@@ -1,0 +1,1 @@
+moduleBuilder.AddInitializer((global::Microsoft.ReactNative.IReactContext reactContext) => module.Initialize(new global::Microsoft.ReactNative.Managed.ReactContext(reactContext)));

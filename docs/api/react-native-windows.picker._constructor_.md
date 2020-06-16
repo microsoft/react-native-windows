@@ -16,5 +16,5 @@ constructor(props: IPickerProps);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>IPickerProps</code> |  |
+|  props | IPickerProps |  |
 

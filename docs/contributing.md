@@ -28,7 +28,15 @@ In SourceTree, click on commit in the top left. This won't actually do anything 
 To stage files using the command line, you need to run `git add MyFileOne.tsx` for each file. You can also look up how to add all files with changes under a directory. Next you will want to commit changes with `git commit –m "This change updates the padding in the dropdown"`
 
 You can commit multiple times until you are ready to make a pull request. You should keep the message short since it will not be used in the bug notes and is just for keeping track of the multiple commits in one pull request. 
- 
+
+### Run auto-format
+Run `yarn format` in the repository's root directory if you're making C++ changes.
+
+Run `yarn lint:fix` if making JS/TS changes.
+
+### Run yarn api if you made API changes
+If you made API changes, run `yarn api` to update the auto-generated API docs.
+
 ### Provide changelog information
 Run `yarn change` in the root of the repo.
 
