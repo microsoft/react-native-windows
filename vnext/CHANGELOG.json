@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Jun 2020 08:37:17 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.15",
+      "version": "0.62.0-preview.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Prevent Switches from Accidentally Becoming Disabled",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9c8448948da9081bcda22302fbeea317662d3ba3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jun 2020 20:55:23 GMT",
       "tag": "react-native-windows_v0.62.0-preview.14",
       "version": "0.62.0-preview.14",

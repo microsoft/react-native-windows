@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 Jun 2020 20:55:23 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Jun 2020 08:37:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.15
+
+Tue, 16 Jun 2020 08:37:17 GMT
+
+### Changes
+
+- Prevent Switches from Accidentally Becoming Disabled (ngerlem@microsoft.com)
 
 ## 0.62.0-preview.14
 
