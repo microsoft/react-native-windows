@@ -66,16 +66,56 @@ struct SampleTurboModule {
     constantsSignal.set_value(resultString);
   }
 
+  REACT_METHOD(oneCallback)
+  void oneCallback(int a, int b, const std::function<void(int)> &resolve) noexcept {
+    resolve(a + b);
+  }
+
+  REACT_METHOD(oneCallbackResult)
+  void oneCallbackResult(int r) noexcept {
+    oneCallbackSignal.set_value(r);
+  }
+
+  REACT_METHOD(twoCallbacks)
+  void twoCallbacks(
+      bool succeeded,
+      int a,
+      std::string b,
+      const std::function<void(int)> &resolve,
+      const std::function<void(std::string)> &reject) noexcept {
+    if (succeeded) {
+      resolve(a);
+    } else {
+      reject(b);
+    }
+  }
+
+  REACT_METHOD(twoCallbacksResolved)
+  void twoCallbacksResolved(int r) noexcept {
+    twoCallbacksResolvedSignal.set_value(r);
+  }
+
+  REACT_METHOD(twoCallbacksRejected)
+  void twoCallbacksRejected(std::string r) noexcept {
+    twoCallbacksRejectedSignal.set_value(r);
+  }
+
   static std::promise<bool> succeededSignal;
   static std::promise<std::string> promiseFunctionSignal;
   static std::promise<std::string> syncFunctionSignal;
   static std::promise<std::string> constantsSignal;
+  static std::promise<int> oneCallbackSignal;
+  static std::promise<int> twoCallbacksResolvedSignal;
+  static std::promise<std::string> twoCallbacksRejectedSignal;
 };
 
 std::promise<bool> SampleTurboModule::succeededSignal;
 std::promise<std::string> SampleTurboModule::promiseFunctionSignal;
 std::promise<std::string> SampleTurboModule::syncFunctionSignal;
 std::promise<std::string> SampleTurboModule::constantsSignal;
+std::promise<int> SampleTurboModule::oneCallbackSignal;
+std::promise<int> SampleTurboModule::twoCallbacksResolvedSignal;
+std::promise<std::string> SampleTurboModule::twoCallbacksRejectedSignal;
 
 struct SampleTurboModuleSpec : TurboModuleSpec {
   static constexpr auto methods = std::tuple{
@@ -86,6 +126,16 @@ struct SampleTurboModuleSpec : TurboModuleSpec {
       SyncMethod<std::string(std::string, int, bool) noexcept>{4, L"syncFunction"},
       Method<void(std::string) noexcept>{5, L"syncFunctionResult"},
       Method<void(std::string, int) noexcept>{6, L"constants"},
+      Method<void(int, int, const std::function<void(int)> &) noexcept>{7, L"oneCallback"},
+      Method<void(int) noexcept>{8, L"oneCallbackResult"},
+      Method<void(
+          bool,
+          int,
+          std::string,
+          const std::function<void(int)> &,
+          const std::function<void(std::string)> &) noexcept>{9, L"twoCallbacks"},
+      Method<void(int) noexcept>{10, L"twoCallbacksResolved"},
+      Method<void(std::string) noexcept>{11, L"twoCallbacksRejected"},
   };
 
   template <class TModule>
@@ -99,6 +149,11 @@ struct SampleTurboModuleSpec : TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(4, "syncFunction", "I don't care error message");
     REACT_SHOW_METHOD_SPEC_ERRORS(5, "syncFunctionResult", "I don't care error message");
     REACT_SHOW_METHOD_SPEC_ERRORS(6, "constants", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(7, "oneCallback", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(8, "oneCallbackResult", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(9, "twoCallbacks", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(10, "twoCallbacksResolved", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(11, "twoCallbacksRejected", "I don't care error message");
   }
 };
 
@@ -138,6 +193,9 @@ TEST_CLASS (TurboModuleTests) {
     TestCheckEqual("something, 1, true", SampleTurboModule::promiseFunctionSignal.get_future().get());
     TestCheckEqual("something, 2, false", SampleTurboModule::syncFunctionSignal.get_future().get());
     TestCheckEqual("constantString, 3", SampleTurboModule::constantsSignal.get_future().get());
+    TestCheckEqual(3, SampleTurboModule::oneCallbackSignal.get_future().get());
+    TestCheckEqual(123, SampleTurboModule::twoCallbacksResolvedSignal.get_future().get());
+    TestCheckEqual("Failed", SampleTurboModule::twoCallbacksRejectedSignal.get_future().get());
 
     host.UnloadInstance().get();
     queueController.ShutdownQueueAsync().get();

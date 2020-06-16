@@ -140,8 +140,22 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 const facebook::jsi::Value *args,
                 size_t count) {
               // prepare input arguments
-              facebook::jsi::Array argsArray(runtime, count);
-              for (size_t i = 0; i < count; i++) {
+              size_t serializableArgumentCount = count;
+              switch (method.ReturnType) {
+                case MethodReturnType::Callback:
+                  VerifyElseCrash(count >= 1);
+                  VerifyElseCrash(args[count - 1].isObject() && args[count - 1].asObject(runtime).isFunction(runtime));
+                  serializableArgumentCount -= 1;
+                  break;
+                case MethodReturnType::TwoCallbacks:
+                  VerifyElseCrash(count >= 2);
+                  VerifyElseCrash(args[count - 1].isObject() && args[count - 1].asObject(runtime).isFunction(runtime));
+                  VerifyElseCrash(args[count - 2].isObject() && args[count - 2].asObject(runtime).isFunction(runtime));
+                  serializableArgumentCount -= 2;
+                  break;
+              }
+              facebook::jsi::Array argsArray(runtime, serializableArgumentCount);
+              for (size_t i = 0; i < serializableArgumentCount; i++) {
                 argsArray.setValueAtIndex(runtime, i, args[i]);
               }
               auto argReader = winrt::make<JsiReader>(runtime, facebook::jsi::Value(runtime, argsArray));
@@ -173,8 +187,39 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                       });
                 }
                 case MethodReturnType::Callback:
-                case MethodReturnType::TwoCallbacks:
-                  VerifyElseCrash(false);
+                case MethodReturnType::TwoCallbacks: {
+                  facebook::jsi::Value resolveFunction;
+                  facebook::jsi::Value rejectFunction;
+                  if (method.ReturnType == MethodReturnType::Callback) {
+                    resolveFunction = {runtime, args[count - 1]};
+                  } else {
+                    resolveFunction = {runtime, args[count - 2]};
+                    rejectFunction = {runtime, args[count - 1]};
+                  }
+
+                  auto makeCallback = [&runtime](const facebook::jsi::Value &callbackValue) -> MethodResultCallback {
+                    return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime)](
+                               const IJSValueWriter &writer) {
+                      auto result = writer.as<JsiWriter>()->MoveResult();
+                      VerifyElseCrash(result.isObject() && result.asObject(runtime).isArray(runtime));
+                      auto jsArray = result.asObject(runtime).asArray(runtime);
+                      auto size = jsArray.size(runtime);
+                      auto buffer = std::make_unique<facebook::jsi::Value[]>(size);
+                      for (size_t i = 0; i < size; i++) {
+                        buffer[i] = facebook::jsi::Value(runtime, jsArray.getValueAtIndex(runtime, i));
+                      }
+                      const facebook::jsi::Value *args = buffer.get();
+                      callbackFunction.call(runtime, args, size);
+                    };
+                  };
+
+                  method.Method(
+                      argReader,
+                      argWriter,
+                      makeCallback(resolveFunction),
+                      (method.ReturnType == MethodReturnType::Callback ? nullptr : makeCallback(rejectFunction)));
+                  return facebook::jsi::Value::undefined();
+                }
                 default:
                   VerifyElseCrash(false);
               }
