@@ -30,9 +30,8 @@ bool DynamicValueProvider::IsReadOnly() {
 
 void DynamicValueProvider::SetValue(winrt::hstring const &value) {
   try {
-    if (auto const &owner = m_peer.Owner()) {
-      DynamicAutomationProperties::DispatchAccessibilityAction(owner, L"setValue");
-    }
+    auto const &owner = m_peer.Owner();
+    DynamicAutomationProperties::DispatchAccessibilityAction(owner, L"setValue");
   } catch (...) {
   }
 }
@@ -41,11 +40,10 @@ void DynamicValueProvider::SetValue(winrt::hstring const &value) {
 winrt::hstring DynamicValueProvider::GetAccessibilityValue(
     winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
   try {
-    if (auto const &owner = m_peer.Owner()) {
-      switch (accValue) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
-          return DynamicAutomationProperties::GetAccessibilityValueText(owner);
-      }
+    auto const &owner = m_peer.Owner();
+    switch (accValue) {
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
+        return DynamicAutomationProperties::GetAccessibilityValueText(owner);
     }
   } catch (...) {
   }

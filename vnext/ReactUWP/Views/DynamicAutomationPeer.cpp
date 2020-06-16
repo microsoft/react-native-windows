@@ -132,11 +132,9 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::Value &&
-
-      // TODO
-      // Should I be limiting this at al? If so, what elements to include apart from this one?
-      accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ComboBox &&
-
+      accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar &&
+      accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable &&
+      accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar &&
       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text)) {
     return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::DynamicValueProvider>(
         this->try_as<winrt::FrameworkElementAutomationPeer>());
@@ -145,10 +143,9 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
       (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar ||
        accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable ||
        accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar) &&
-      ((HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now) &&
-        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min) &&
-        HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max)) ||
-       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text))) {
+      (HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now) &&
+       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min) &&
+       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max))) {
     return *this;
   }
 
@@ -300,6 +297,11 @@ void DynamicAutomationPeer::SetValue(double value) {
 // Return default value for RangeBase-derived types, such as Slider and ProgressBar.
 // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.smallchange?view=winrt-19041
 double DynamicAutomationPeer::SmallChange() {
+  auto accessibilityRole = GetAccessibilityRole();
+  if (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable) {
+    return 1;
+  }
+
   return 0.1;
 }
 
@@ -307,6 +309,11 @@ double DynamicAutomationPeer::SmallChange() {
 // Return default value for RangeBase-derived types, such as Slider and ProgressBar.
 // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.largechange?view=winrt-19041
 double DynamicAutomationPeer::LargeChange() {
+  auto accessibilityRole = GetAccessibilityRole();
+  if (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable) {
+    return 10;
+  }
+
   return 1;
 }
 
@@ -408,24 +415,24 @@ bool DynamicAutomationPeer::GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE:
 
 bool DynamicAutomationPeer::HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
   try {
-    if (auto const &owner = Owner()) {
-      winrt::IInspectable value = nullptr;
-      switch (accValue) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueMinProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueMaxProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueNowProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueTextProperty());
-          break;
-      }
-      return (value != xaml::DependencyProperty::UnsetValue());
+    auto const &owner = Owner();
+    winrt::IInspectable value = nullptr;
+
+    switch (accValue) {
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueMinProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueMaxProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueNowProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueTextProperty());
+        break;
     }
+    return (value != xaml::DependencyProperty::UnsetValue());
   } catch (...) {
   }
 
@@ -447,15 +454,15 @@ DynamicAutomationPeer::GetAccessibilityInvokeEventHandler() const {
 double DynamicAutomationPeer::GetAccessibilityValueRange(
     winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
   try {
-    if (auto const &owner = Owner()) {
-      switch (accValue) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
-          return DynamicAutomationProperties::GetAccessibilityValueMin(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
-          return DynamicAutomationProperties::GetAccessibilityValueMax(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
-          return DynamicAutomationProperties::GetAccessibilityValueNow(owner);
-      }
+    auto const &owner = Owner();
+
+    switch (accValue) {
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
+        return DynamicAutomationProperties::GetAccessibilityValueMin(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
+        return DynamicAutomationProperties::GetAccessibilityValueMax(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
+        return DynamicAutomationProperties::GetAccessibilityValueNow(owner);
     }
   } catch (...) {
   }
