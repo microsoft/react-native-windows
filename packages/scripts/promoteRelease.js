@@ -12,7 +12,7 @@ const child_process = require('child_process');
 const findUp = require('find-up');
 const fs = require('fs');
 const path = require('path');
-const simplegit = require('simplegit');
+const simplegit = require('simple-git/promise');
 const util = require('util');
 const yaml = require('js-yaml');
 const yargs = require('yargs');
@@ -28,9 +28,6 @@ const glob = util.promisify(require('glob').glob);
   if (argv.release === 'preview') {
     console.log(`Creating branch ${branchName}...`);
     await git.checkoutBranch(branchName, 'HEAD');
-  } else {
-    console.log(`Checking out ${branchName}...`);
-    await git.checkoutLocal(branchName);
   }
 
   console.log('Updating Beachball configuration...');
@@ -50,6 +47,7 @@ const glob = util.promisify(require('glob').glob);
   }
 
   console.log('Committing changes...');
+  await git.add('--all');
   await git.commit(commitMessage);
 
   console.log('Generating change files...');
@@ -238,7 +236,7 @@ async function updatePackageVersions(packageVersion) {
 async function createChangeFiles(changeType, message) {
   const repoRoot = await findRepoRoot();
   child_process.execSync(
-    `npx beachball change --type ${changeType} --message ${message}`,
-    {cwd: repoRoot},
+    `npx beachball change --type ${changeType} --message "${message}"`,
+    {cwd: repoRoot, stdio: 'ignore'},
   );
 }
