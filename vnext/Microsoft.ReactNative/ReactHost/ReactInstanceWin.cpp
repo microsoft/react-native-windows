@@ -19,6 +19,7 @@
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
+#include "../../codegen/NativeLogBoxSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -34,6 +35,7 @@
 #include "Modules/DevSettingsModule.h"
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LogBoxModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -247,6 +249,12 @@ void ReactInstanceWin::Initialize() noexcept {
               winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
                   ::Microsoft::ReactNative::AppState,
                   ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
+          nmp->AddModuleProvider(
+              L"LogBox",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::LogBox,
+                  ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
 
           if (m_options.UseWebDebugger()) {
             nmp->AddModuleProvider(

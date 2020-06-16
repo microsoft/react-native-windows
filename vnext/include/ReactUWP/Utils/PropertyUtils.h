@@ -160,7 +160,12 @@ bool TryUpdateBorderProperties(
       element.BorderBrush(brush);
       UpdateControlBorderResourceBrushes(element, brush);
     } else if (propertyValue.isNull()) {
-      element.ClearValue(T::BorderBrushProperty());
+      // If there's still a border thickness, use the default border brush.
+      if (element.BorderThickness() != xaml::ThicknessHelper::FromUniformLength(0.0)) {
+        element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
+      } else {
+        element.ClearValue(T::BorderBrushProperty());
+      }
       UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else {
@@ -168,6 +173,12 @@ bool TryUpdateBorderProperties(
     if (iter != edgeTypeMap.end()) {
       if (propertyValue.isNumber()) {
         SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
+        if (propertyValue.asDouble() != 0 && !element.BorderBrush()) {
+          // Borders with no brush draw something other than transparent on other platforms.
+          // To match, we'll use a default border brush if one isn't already set.
+          // Note:  Keep this in sync with code in ViewPanel::FinalizeProperties().
+          element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
+        }
       } else if (propertyValue.isNull()) {
         SetBorderThickness(node, element, iter->second, 0);
       }

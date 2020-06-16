@@ -34,7 +34,14 @@ void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
     xaml::RoutedEventArgs const & /*args*/) {
   auto host = Host();
-  auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
+
+  winrt::hstring bundleFile;
+
+  if (x_entryPointCombo().SelectedItem().try_as<ComboBoxItem>()) {
+    bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
+  } else {
+    bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem());
+  }
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
 
   auto mainComponentName = unbox_value<hstring>(x_rootComponentNameCombo().SelectedItem().as<ComboBoxItem>().Content());
@@ -56,8 +63,9 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
     winrt::Windows::Foundation::IInspectable const & /*sender*/,
     xaml::Controls::SelectionChangedEventArgs const & /*e*/) {
   if (x_rootComponentNameCombo()) {
-    auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
-    if (std::wstring(bundleFile).compare(L"Samples\\rntester") == 0) {
+    if (x_entryPointCombo().SelectedItem() && x_entryPointCombo().SelectedItem().try_as<ComboBoxItem>() &&
+        std::wstring(unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content()))
+                .compare(L"Samples\\rntester") == 0) {
       x_rootComponentNameCombo().SelectedIndex(0);
     } else {
       x_rootComponentNameCombo().SelectedIndex(1);

@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 13 Jun 2020 00:09:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.20",
+      "version": "0.0.0-master.20",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add focusRef prop to TouchableWin32",
+            "author": "taamireh@microsoft.com",
+            "commit": "67a72aca889f27e2d7bc1e4596d92f36bf311a87",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jun 2020 00:05:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.19",
       "version": "0.0.0-master.19",

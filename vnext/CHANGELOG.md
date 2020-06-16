@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 Jun 2020 00:33:44 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Jun 2020 00:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-master.94
+
+Tue, 16 Jun 2020 00:05:48 GMT
+
+### Changes
+
+-  Upgrade to boost 1.72.0. (julio.rocha@microsoft.com)
+- Prevent Switches from Accidentally Becoming Disabled (ngerlem@microsoft.com)
+- use default brush for border (kmelmon@microsoft.com)
+
+## 0.0.0-master.93
+
+Sat, 13 Jun 2020 00:09:11 GMT
+
+### Changes
+
+- Implement logbox (acoates@microsoft.com)
+- Add Microsoft.ReactNative.Cxx to the nugets. (acoates@microsoft.com)
+- Fix file lock issue wiht msbuild /bl flag and the metro bundler (dannyvv@microsoft.com)
 
 ## 0.0.0-master.92
 

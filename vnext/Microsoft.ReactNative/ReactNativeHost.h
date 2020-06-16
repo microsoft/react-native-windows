@@ -8,6 +8,7 @@
 #include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
 #include "ReactInstanceSettings.h"
+#include "ReactPropertyBag.h"
 #include "ViewManagersProvider.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -30,6 +31,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
+  static winrt::Microsoft::ReactNative::ReactNativeHost GetReactNativeHost(ReactPropertyBag const &properties) noexcept;
 
  private:
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;

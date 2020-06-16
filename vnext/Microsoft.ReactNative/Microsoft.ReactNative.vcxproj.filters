@@ -276,6 +276,9 @@
     <ClCompile Include="Modules\I18nManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\LogBoxModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
@@ -617,6 +620,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\I18nManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\LogBoxModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
