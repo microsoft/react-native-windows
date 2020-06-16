@@ -45,22 +45,6 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|ARM">
-      <Configuration>WinUI3</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|ARM64">
-      <Configuration>WinUI3</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|Win32">
-      <Configuration>WinUI3</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|x64">
-      <Configuration>WinUI3</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
     <ConfigurationType>StaticLibrary</ConfigurationType>

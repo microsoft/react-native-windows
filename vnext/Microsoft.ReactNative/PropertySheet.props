@@ -15,7 +15,19 @@
     </BuildMacro>
   </ItemGroup>
     
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='WinUI3'">
+  <PropertyGroup Label="WinUI3 Support" Condition="'$(UseWinUI3)'==''">
+    <UseWinUI3 Condition="Exists('UseWinUI3') Or Exists('$(SolutionDir)\UseWinUI3')">true</UseWinUI3>
+  </PropertyGroup>
+
+  <PropertyGroup Label="WinUI3 versioning">
+    <WinUIPackageName Condition="'$(UseWinUI3)'=='true'">Microsoft.WinUI</WinUIPackageName>
+    <WinUIPackageVersion Condition="'$(UseWinUI3)'=='true'">3.0.0-alpha.200210.0</WinUIPackageVersion>
+
+    <WinUIPackageName Condition="'$(UseWinUI3)'!='true'">Microsoft.UI.Xaml</WinUIPackageName>
+    <WinUIPackageVersion Condition="'$(UseWinUI3)'!='true'">2.3.191129002</WinUIPackageVersion>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(UseWinUI3)'=='true'">
     <ClCompile>
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
