@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update C++/WinRT to version 2.0.200615.7",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-16T23:14:45.463Z"
+}
