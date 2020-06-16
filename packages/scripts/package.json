@@ -10,7 +10,14 @@
     "directory": "packages/scripts"
   },
   "devDependencies": {
+    "chalk": "^4.1.0",
     "clang-format": "1.2.4",
-    "just-scripts": "^0.36.1"
+    "find-up": "^4.1.0",
+    "glob": "^7.1.6",
+    "js-yaml": "^3.14.0",
+    "just-scripts": "^0.36.1",
+    "lodash": "^4.17.15",
+    "simplegit": "^1.0.2",
+    "yargs": "^15.3.1"
   }
 }
