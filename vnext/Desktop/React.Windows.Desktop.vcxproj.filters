@@ -65,12 +65,6 @@
     <ClCompile Include="DevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Executors\WebSocketJSExecutor.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
     <ClCompile Include="HttpResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -117,9 +111,6 @@
     </ClInclude>
     <ClInclude Include="DevSupportManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Executors\WebSocketJSExecutor.h">
-      <Filter>Header Files\Executors</Filter>
     </ClInclude>
     <ClInclude Include="HttpResource.h">
       <Filter>Header Files</Filter>

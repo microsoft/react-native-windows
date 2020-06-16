@@ -5,18 +5,19 @@
 
 #include "pch.h"
 
-#include "DevSupportManagerUwp.h"
+#include "DevSupportManager.h"
 
 #include <ReactWindowsCore/DevServerHelper.h>
 #include <ReactWindowsCore/DevSettings.h>
 
-#include <Executors/WebSocketJSExecutorUwp.h>
+#include <Executors/WebSocketJSExecutor.h>
 
 #include "Unicode.h"
 #include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
