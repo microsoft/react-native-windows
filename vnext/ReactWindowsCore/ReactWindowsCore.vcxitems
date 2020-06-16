@@ -143,10 +143,7 @@
     <ClInclude Include="CxxMessageQueue.h" />
     <ClInclude Include="DevServerHelper.h" />
     <ClInclude Include="DevSettings.h" />
-    <ClCompile Include="DevSupportManager.cpp" />
     <ClInclude Include="etw\react_native_windows.h" />
-    <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
-    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClInclude Include="IDevSupportManager.h" />
     <ClInclude Include="INativeUIManager.h" />
     <ClInclude Include="InstanceManager.h" />

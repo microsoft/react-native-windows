@@ -62,16 +62,16 @@
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
     </ClCompile>
-    <ClCompile Include="DevSupportManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp">
+      <Filter>Source Files\Executors</Filter>
     </ClCompile>
     <ClCompile Include="HttpResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JSBigStringResourceDll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LazyDevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="module.g.cpp">
@@ -112,13 +112,13 @@
     <ClInclude Include="DevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.h">
+      <Filter>Header Files\Executors</Filter>
+    </ClInclude>
     <ClInclude Include="HttpResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LazyDevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Modules\NetworkingModule.h">

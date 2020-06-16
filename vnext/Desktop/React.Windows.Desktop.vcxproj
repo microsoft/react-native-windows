@@ -116,8 +116,10 @@
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
+    <ClCompile Include="..\ReactWindowsCore\DevSupportManager.cpp" />
+    <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp" />
+    <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
-    <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
@@ -142,7 +144,8 @@
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="LazyDevSupportManager.h" />
+    <ClInclude Include="..\ReactWindowsCore\DevSupportManager.h" />
+    <ClInclude Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />

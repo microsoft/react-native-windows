@@ -186,7 +186,7 @@
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
+    <ClInclude Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimatedNodeType.h" />
@@ -215,7 +215,7 @@
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSettingsModule.h" />
-    <ClInclude Include="Modules\DevSupportManagerUwp.h" />
+    <ClInclude Include="..\ReactWindowsCore\DevSupportManager.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\ImageViewManagerModule.h" />
     <ClInclude Include="Modules\LinkingManagerModule.h" />
@@ -288,8 +288,8 @@
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
-    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
-    <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
+    <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
@@ -315,7 +315,7 @@
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
-    <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
+    <ClCompile Include="..\ReactWindowsCore\DevSupportManager.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
