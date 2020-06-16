@@ -106,6 +106,7 @@ jobs:
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
     dependsOn: RnwNpmPublish
+    timeoutInMinutes: 90
     strategy:
       matrix:
         X64Debug:
