@@ -5,7 +5,7 @@
 #include <CppUnitTest.h>
 
 #include <Modules/AppStateModule.h>
-#include <Modules/DevSupportManagerUwp.h>
+#include <DevSupportManager.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
