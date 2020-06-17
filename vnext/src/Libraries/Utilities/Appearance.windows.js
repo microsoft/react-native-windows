@@ -17,7 +17,7 @@ import NativeAppearance, {
   type ColorSchemeName,
 } from './NativeAppearance';
 import invariant from 'invariant';
-import {isAsyncDebugging} from './DebugEnvironment';
+import {isAsyncDebugging} from './DebugEnvironment'; // [Windows] taken from f7b90336be25
 
 type AppearanceListener = (preferences: AppearancePreferences) => void;
 const eventEmitter = new EventEmitter();
@@ -51,6 +51,7 @@ module.exports = {
    * @returns {?ColorSchemeName} Value for the color scheme preference.
    */
   getColorScheme(): ?ColorSchemeName {
+    // [Windows Taken from f7b90336be25
     if (__DEV__) {
       if (isAsyncDebugging) {
         // Hard code light theme when using the async debugger as
@@ -58,6 +59,7 @@ module.exports = {
         return 'light';
       }
     }
+    // Windows]
 
     // TODO: (hramos) T52919652 Use ?ColorSchemeName once codegen supports union
     const nativeColorScheme: ?string =
