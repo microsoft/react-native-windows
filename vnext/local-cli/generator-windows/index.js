@@ -91,7 +91,7 @@ function copyProjectTemplateAndReplace(
   const cppNugetPackages = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.200316.3',
+      version: '2.0.200615.7',
       propsTopOfFile: true,
       hasProps: true,
     },
