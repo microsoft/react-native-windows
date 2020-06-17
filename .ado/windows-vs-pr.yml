@@ -344,9 +344,9 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: Upload build logs
         condition:  succeededOrFailed()
-        inputs:    
+        inputs:
           pathtoPublish: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)' 
+          artifactName: 'Build logs - $(Agent.JobName)'
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -374,7 +374,7 @@ jobs:
 
     variables:
       #5059 Disable failing or intermittent tests.
-      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
 
     steps:
       - checkout: self
