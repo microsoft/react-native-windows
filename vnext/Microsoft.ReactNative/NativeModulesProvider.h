@@ -19,7 +19,6 @@ class NativeModulesProvider final : public Mso::React::NativeModuleProvider2 {
 
  private:
   std::map<std::string, ReactModuleProvider> m_moduleProviders;
-  std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{nullptr};
   IReactPackageBuilder m_packageBuilder;
 };
 

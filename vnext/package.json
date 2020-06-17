@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-master.90",
+  "version": "0.0.0-canary.95",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,7 +13,6 @@
   "scripts": {
     "api": "just-scripts api",
     "build": "just-scripts build",
-    "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
@@ -64,7 +63,7 @@
     "react-native": "^0.62.0-0"
   },
   "beachball": {
-    "defaultNpmTag": "master",
+    "defaultNpmTag": "canary",
     "disallowedChangeTypes": [
       "major",
       "minor",

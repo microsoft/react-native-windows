@@ -52,6 +52,24 @@ IAsyncAction ReactNativeHost::LoadInstance() noexcept {
   return ReloadInstance();
 }
 
+::Microsoft::ReactNative::ReactPropertyId<::Microsoft::ReactNative::ReactNonAbiValue<winrt::weak_ref<ReactNativeHost>>>
+ReactNativeHostProperty() noexcept {
+  static ::Microsoft::ReactNative::ReactPropertyId<
+      ::Microsoft::ReactNative::ReactNonAbiValue<winrt::weak_ref<ReactNativeHost>>>
+      propId{L"ReactNative.ReactNativeHost", L"ReactNativeHost"};
+  return propId;
+}
+
+/*static*/ winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost::GetReactNativeHost(
+    ReactPropertyBag const &properties) noexcept {
+  if (auto wkHost = properties.Get(ReactNativeHostProperty()).Value()) {
+    if (auto abiHost = wkHost.get()) {
+      return abiHost.as<winrt::Microsoft::ReactNative::ReactNativeHost>();
+    }
+  }
+  return nullptr;
+}
+
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
@@ -67,6 +85,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       }
     }
   }
+
+  ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.Properties = m_instanceSettings.Properties();

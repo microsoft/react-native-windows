@@ -9,6 +9,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
+  - template: variables/release.yml
   - template: variables/vs2019.yml
   - name: reactNativeVersion
     value: 0.0.0-56cf99a96
@@ -141,7 +142,7 @@ jobs:
             $pkgVersion = $pkgJson.version
             $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -slices ("$(BuildPlatform).$(BuildConfiguration)")
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
-            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target;baseplatform=$(BuildPlatform);baseconfiguration=$(BuildConfiguration)" -Verbosity Detailed
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.StagingDirectory);baseplatform=$(BuildPlatform);baseconfiguration=$(BuildConfiguration)" -Verbosity Detailed
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PublishBuildArtifacts@1
@@ -374,7 +375,7 @@ jobs:
 
     variables:
       #5059 Disable failing or intermittent tests.
-      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
 
     steps:
       - checkout: self
@@ -467,10 +468,12 @@ jobs:
           language: cpp
           configuration: Debug
           platform: x86
+          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
         X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
+          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
         #X86ReleaseCpp:
         #  language: cpp
         #  configuration: Release
@@ -539,6 +542,7 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
+          additionalInitArguments: $[ coalesce($(additionalInitArguments), '') ]
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
@@ -557,6 +561,7 @@ jobs:
           configuration: Debug
           platform: x86
           version: $(reactNativeVersion)
+          additionalInitArguments: ${{ '' }}
           experimentalNugetDependency: true
 
   - job: RNWExtraChecks

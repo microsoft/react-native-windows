@@ -23,6 +23,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\cdebug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\CxxMessageQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevSupportManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\HermesRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(USE_HERMES)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -70,6 +73,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevServerHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevSettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\react_native_windows.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\HermesRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IDevSupportManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\IHttpResource.h" />
