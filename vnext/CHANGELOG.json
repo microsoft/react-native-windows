@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Jun 2020 00:05:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.95",
+      "version": "0.0.0-canary.95",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Unify DevSupportManager and WebSocketJSExecutor",
+            "author": "acoates@microsoft.com",
+            "commit": "dc2a53ac3f2fcfb094a09cb95e5ce1beec603406",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename \"master\" packages to \"canary\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "454349e6f5c428b3a93f5c7420fbac8f63c0c25a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't lint target folder and don't flow check node_modules packages",
+            "author": "dannyvv@microsoft.com",
+            "commit": "8bbcd4fea2f5753ac72b1b795532a4055687cc06",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Implement REACT_METHOD + Callback/TwoCallbacks for turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "decd1bea627d9f33a0f56778ea44e71e42b22ebe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2020 00:05:48 GMT",
       "tag": "react-native-windows_v0.0.0-master.94",
       "version": "0.0.0-master.94",

@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Implement REACT_METHOD + Callback/TwoCallbacks for turbo module",
-  "packageName": "react-native-windows",
-  "email": "zihanc@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-06-16T00:03:11.520Z"
-}
