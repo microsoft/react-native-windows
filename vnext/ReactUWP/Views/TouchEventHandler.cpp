@@ -450,25 +450,23 @@ bool TouchEventHandler::TagFromOriginalSource(
 winrt::IPropertyValue TouchEventHandler::TestHit(
     const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
     const winrt::Point &pointerPos,
-    bool& isHit
-) {
+    bool &isHit) {
   winrt::IPropertyValue tag(nullptr);
 
   for (const auto &el : inlines) {
     if (const auto span = el.try_as<xaml::Documents::Span>()) {
-        auto resTag = TestHit(span.Inlines().GetView(), pointerPos, isHit);
+      auto resTag = TestHit(span.Inlines().GetView(), pointerPos, isHit);
 
-        if (resTag)
-          return resTag;
+      if (resTag)
+        return resTag;
 
-        if (isHit) {
-          tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-          if (tag) {
-            return tag;
-          }
+      if (isHit) {
+        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+        if (tag) {
+          return tag;
         }
       }
-    else if (const auto run = el.try_as<xaml::Documents::Run>()) {
+    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
       const auto start = el.ContentStart();
       const auto end = el.ContentEnd();
 

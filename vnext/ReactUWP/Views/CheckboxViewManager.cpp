@@ -44,16 +44,15 @@ void CheckBoxShadowNode::createView() {
   RegisterChangedEvents();
 }
 
-void CheckBoxShadowNode::RegisterChangedEvents()
-{
+void CheckBoxShadowNode::RegisterChangedEvents() {
   auto checkbox = GetView().as<xaml::Controls::CheckBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
 
   m_checkBoxCheckedRevoker = checkbox.Checked(winrt::auto_revoke, [=](auto &&, auto &&) {
     auto instance = wkinstance.lock();
     if (!m_updating && instance != nullptr)
-          OnCheckedChanged(*instance, m_tag, true);
-      });
+      OnCheckedChanged(*instance, m_tag, true);
+  });
   m_checkBoxUncheckedRevoker = checkbox.Unchecked(winrt::auto_revoke, [=](auto &&, auto &&) {
     auto instance = wkinstance.lock();
     if (!m_updating && instance != nullptr)
@@ -61,12 +60,10 @@ void CheckBoxShadowNode::RegisterChangedEvents()
   });
 }
 
-void CheckBoxShadowNode::UnregisterChangedEvents()
-{
+void CheckBoxShadowNode::UnregisterChangedEvents() {
   m_checkBoxCheckedRevoker.revoke();
   m_checkBoxUncheckedRevoker.revoke();
 }
-
 
 void CheckBoxShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
@@ -134,7 +131,7 @@ void CheckBoxViewManager::DispatchCommand(
     auto value = commandArgs[0].asBool();
 
     if (auto instance = GetReactInstance().lock()) {
-      auto shadow = static_cast<CheckBoxShadowNode*>(
+      auto shadow = static_cast<CheckBoxShadowNode *>(
           instance->NativeUIManager()->getHost()->FindShadowNodeForTag(GetTag(viewToUpdate)));
       // we unregister the changed events and then restore them so that we don't fire an
       // onChange event to JS when JS itself is updating the value of the checkbox
@@ -142,7 +139,6 @@ void CheckBoxViewManager::DispatchCommand(
       viewToUpdate.as<xaml::Controls::CheckBox>().IsChecked(value);
       shadow->RegisterChangedEvents();
     }
-    
 
     viewToUpdate.as<xaml::Controls::CheckBox>().IsChecked(value);
   } else {

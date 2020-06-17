@@ -14,7 +14,7 @@ class PlatformConstantsModule : public facebook::xplat::module::CxxModule {
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<Method> getMethods() override;
 
-  private:
+ private:
   folly::dynamic StringOrNull(std::string_view str) noexcept;
 };
 

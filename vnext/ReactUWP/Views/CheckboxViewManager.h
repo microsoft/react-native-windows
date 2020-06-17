@@ -25,10 +25,8 @@ class CheckBoxViewManager : public ControlViewManager {
       const std::string &propertyName,
       const folly::dynamic &propertyValue) override;
 
-  void DispatchCommand(
-    const XamlView &viewToUpdate,
-    const std::string &commandId,
-    const folly::dynamic &commandArgs) override;
+  void DispatchCommand(const XamlView &viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs)
+      override;
 
   XamlView CreateViewCore(int64_t tag) override;
 
