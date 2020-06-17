@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 13 Jun 2020 00:48:38 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Jun 2020 09:19:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.61.13
+
+Wed, 17 Jun 2020 09:19:15 GMT
+
+### Patches
+
+- Disable V8 by default (tudorm@microsoft.com)
 
 ## 0.61.12
 
