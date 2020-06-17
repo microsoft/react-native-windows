@@ -29,6 +29,14 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "patch",
+      "file": "Libraries\\Components\\Button.win32.js",
+      "baseFile": "Libraries\\Components\\Button.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "1bb31cc95e6e4b71ff09f024dd102a9717925e51",
+      "issue": 5269
+    },
+    {
       "type": "platform",
       "file": "Libraries\\Components\\Button\\ButtonWin32.Props.ts"
     },
@@ -376,14 +384,6 @@
       "file": "RNTester\\APIExamples\\ThemingModuleAPI.tsx"
     },
     {
-      "type": "derived",
-      "file": "RNTester\\AsyncStorageStub.ts",
-      "baseFile": "Libraries\\Storage\\AsyncStorage.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "688288dd65948fef904f6361f4e68c50605d1889",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "patch",
       "file": "RNTester\\js\\components\\ListExampleShared.win32.js",
       "baseFile": "RNTester\\js\\components\\ListExampleShared.js",
@@ -401,11 +401,11 @@
     },
     {
       "type": "derived",
-      "file": "RNTester\\js\\RNTesterApp.win32.tsx",
-      "baseFile": "RNTester\\js\\RNTesterApp.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "53ddf0736fa7aba54191961066d2e934ba22dfa2",
-      "issue": "LEGACY_FIXME"
+      "file": "RNTester\\js\\RNTesterApp.win32.js",
+      "baseFile": "RNTester\\js\\RNTesterApp.ios.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "34d2517461704840a508ce1856bc3a364fb3fc7e",
+      "issue": 4586
     },
     {
       "type": "derived",
