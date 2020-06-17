@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 Jun 2020 17:54:59 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Jun 2020 16:46:49 GMT and should not be manually modified.
 
+## 0.60.0-vnext.169
+Wed, 17 Jun 2020 16:46:49 GMT
+
+### Patches
+
+- Drop LazySupportManager (julio.rocha@microsoft.com)
 ## 0.60.0-vnext.168
 Mon, 15 Jun 2020 17:54:59 GMT
 

@@ -2,6 +2,19 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Jun 2020 16:46:49 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.169",
+      "version": "0.60.0-vnext.169",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Drop LazySupportManager",
+            "author": "julio.rocha@microsoft.com"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Jun 2020 17:54:59 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.168",
       "version": "0.60.0-vnext.168",
