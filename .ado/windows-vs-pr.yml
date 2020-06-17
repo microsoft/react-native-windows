@@ -375,7 +375,7 @@ jobs:
     variables:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
-      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&(FullyQualifiedName!~WebSocketModule_Ping)'
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&(FullyQualifiedName!~WebSocketModule_)'
 
     steps:
       - checkout: self
