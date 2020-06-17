@@ -5,7 +5,7 @@
 
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/RAMBundleRegistry.h>
-#include "WebSocketJSExecutorUwp.h"
+#include "WebSocketJSExecutor.h"
 
 #include <folly/dynamic.h>
 #include <folly/json.h>
@@ -13,6 +13,7 @@
 #include "Unicode.h"
 #include "Utilities.h"
 
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 
 // Hx/OFFICEDEV: Ignore warnings

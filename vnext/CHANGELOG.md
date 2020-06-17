@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 16 Jun 2020 00:05:48 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Jun 2020 00:05:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.95
+
+Wed, 17 Jun 2020 00:05:39 GMT
+
+### Changes
+
+- Unify DevSupportManager and WebSocketJSExecutor (acoates@microsoft.com)
+- Rename "master" packages to "canary" (ngerlem@microsoft.com)
+- Don't lint target folder and don't flow check node_modules packages (dannyvv@microsoft.com)
 
 ## 0.0.0-master.94
 

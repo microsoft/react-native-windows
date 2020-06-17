@@ -169,9 +169,6 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
-    <ClCompile Include="DevSupportManager.cpp" />
-    <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
-    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
@@ -207,8 +204,6 @@
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="DevSupportManager.h" />
-    <ClInclude Include="Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />

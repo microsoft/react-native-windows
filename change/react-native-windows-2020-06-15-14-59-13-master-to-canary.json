@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename \"master\" packages to \"canary\"",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-15T21:59:12.995Z"
-}

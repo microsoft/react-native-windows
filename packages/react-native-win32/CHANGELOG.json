@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 17 Jun 2020 00:05:39 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename \"master\" packages to \"canary\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "454349e6f5c428b3a93f5c7420fbac8f63c0c25a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Jun 2020 00:09:11 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.20",
       "version": "0.0.0-master.20",
