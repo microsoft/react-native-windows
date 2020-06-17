@@ -19,7 +19,7 @@ namespace facebook {
 namespace react {
 #ifdef PATCH_RN
 
-JSECreator DevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &settings) {
+JSECreator Microsoft::React::DevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &settings) {
   return [this, settings](shared_ptr<ExecutorDelegate> delegate, shared_ptr<MessageQueueThread> jsQueue) {
     auto sandboxJSE = make_unique<SandboxJSExecutor>(delegate, jsQueue);
     auto sandboxEndpoint = std::make_shared<NamedPipeEndpoint>(settings.sandboxPipeName);
