@@ -2,6 +2,13 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
+ * This script automatically changes files to prepare to move a release from
+ * one stage to another. E.g. going from a release in our master branch to a
+ * preview release in a stable branch, promoting a preview to latest, or moving
+ * latest to legacy.
+ *
+ * See "Release Promotion" in our wiki for a detailed guide.
+ *
  * @format
  * @ts-check
  */
@@ -57,11 +64,7 @@ const glob = util.promisify(require('glob').glob);
     await createChangeFiles('patch', commitMessage);
   }
 
-  console.log(
-    chalk.green(
-      'All done! Please check locally commited changes and push or create a PR.',
-    ),
-  );
+  console.log(chalk.green('All done! Please check locally commited changes.'));
 })();
 
 /**
@@ -86,7 +89,7 @@ function collectArgs() {
     .wrap(120)
     .version(false).argv;
 
-  if (argv.rnVersion && !argv.rnVersion.match(/\d+\.\d+/)) {
+  if (!argv.rnVersion.match(/\d+\.\d+/)) {
     console.error(chalk.red('Unexpected format for version (expected x.y)'));
     process.exit(1);
   }
