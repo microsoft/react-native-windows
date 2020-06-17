@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Run NativeModules 2.0 in JS thread",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-16T21:33:30.305Z"
+}

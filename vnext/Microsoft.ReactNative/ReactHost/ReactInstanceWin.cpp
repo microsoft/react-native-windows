@@ -295,7 +295,7 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::I18nManager,
                   ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
 
-          auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
+          auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());
           cxxModules.insert(
               cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
 
