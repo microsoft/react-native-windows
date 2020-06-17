@@ -48,7 +48,6 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
@@ -102,18 +101,6 @@
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="module.g.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TimingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\WebSocketModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
       <Filter>Generated Files</Filter>
@@ -121,13 +108,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -171,12 +151,6 @@
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\NetworkingModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\TimingModule.h">
-      <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleFactories.h">
       <Filter>Header Files</Filter>
