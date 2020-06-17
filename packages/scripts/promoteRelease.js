@@ -7,7 +7,7 @@
  * preview release in a stable branch, promoting a preview to latest, or moving
  * latest to legacy.
  *
- * See "Release Promotion" in our wiki for a detailed guide.
+ * See "How to promote a release" in our wiki for a detailed guide.
  *
  * @format
  * @ts-check
