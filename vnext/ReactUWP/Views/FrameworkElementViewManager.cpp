@@ -451,13 +451,10 @@ bool FrameworkElementViewManager::UpdateProperty(
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityValue") {
-      // TODO handle else error
       if (propertyValue.isObject()) {
         for (const auto &pair : propertyValue.items()) {
           const std::string &innerName = pair.first.getString();
           const folly::dynamic &innerValue = pair.second;
-          // TODO override min/max/now if text present
-          // TODO enforce required min/max if now present
 
           if (innerName == "min" && innerValue.isNumber()) {
             DynamicAutomationProperties::SetAccessibilityValueMin(element, static_cast<double>(innerValue.getInt()));
@@ -466,8 +463,8 @@ bool FrameworkElementViewManager::UpdateProperty(
           } else if (innerName == "now" && innerValue.isNumber()) {
             DynamicAutomationProperties::SetAccessibilityValueNow(element, static_cast<double>(innerValue.getInt()));
           } else if (innerName == "text" && innerValue.isString()) {
-            DynamicAutomationProperties::SetAccessibilityValueText(
-                element, Microsoft::Common::Unicode::Utf8ToUtf16(innerValue.getString()).c_str());
+            auto value = react::uwp::asHstring(innerValue);
+            DynamicAutomationProperties::SetAccessibilityValueText(element, value);
           }
         }
       }

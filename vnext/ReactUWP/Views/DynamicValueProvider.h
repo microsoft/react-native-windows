@@ -22,7 +22,7 @@ struct DynamicValueProvider : DynamicValueProviderT<DynamicValueProvider> {
   void SetValue(winrt::hstring const &value);
 
  private:
-  winrt::hstring GetAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
+  winrt::hstring GetAccessibilityValue() const;
   xaml::Automation::Peers::FrameworkElementAutomationPeer m_peer{nullptr};
 };
 } // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation

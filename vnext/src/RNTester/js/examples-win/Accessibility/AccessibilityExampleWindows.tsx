@@ -446,7 +446,7 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityRole="adjustable">
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
-            should be to the following according to UIA: Min-{' '}
+            should be the following according to UIA: Min-{' '}
             {this.state.viewRangeMin}
             Max- {this.state.viewRangeMax}
             Now- {this.state.viewRangeNow}
@@ -466,7 +466,7 @@ class AccessibilityStateExamples extends React.Component {
           }}
           accessibilityRole="combobox">
           <Text>
-            The View's properties should be to the following according to UIA:
+            The View's properties should be the following according to UIA:
             Text- {this.state.viewValueText}
           </Text>
         </View>

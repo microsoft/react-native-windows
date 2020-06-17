@@ -20,7 +20,7 @@ DynamicValueProvider::DynamicValueProvider(xaml::Automation::Peers::FrameworkEle
 
 // IValueProvider
 winrt::hstring DynamicValueProvider::Value() {
-  return GetAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text);
+  return GetAccessibilityValue();
 }
 
 // The following methods are not React Native props, but we need them to implement IValueProvider.
@@ -30,20 +30,25 @@ bool DynamicValueProvider::IsReadOnly() {
 
 void DynamicValueProvider::SetValue(winrt::hstring const &value) {
   try {
-    auto const &owner = m_peer.Owner();
-    DynamicAutomationProperties::DispatchAccessibilityAction(owner, L"setValue");
+    DynamicAutomationProperties::DispatchAccessibilityAction(m_peer.Owner(), L"setValue");
   } catch (...) {
   }
 }
 
 // Private Methods
-winrt::hstring DynamicValueProvider::GetAccessibilityValue(
-    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
+winrt::hstring DynamicValueProvider::GetAccessibilityValue() const {
   try {
+    winrt::IInspectable value = nullptr;
     auto const &owner = m_peer.Owner();
-    switch (accValue) {
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
-        return DynamicAutomationProperties::GetAccessibilityValueText(owner);
+
+    value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueTextProperty());
+    if (value != xaml::DependencyProperty::UnsetValue()) {
+      return DynamicAutomationProperties::GetAccessibilityValueText(owner);
+    } else {
+      value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueNowProperty());
+      if (value != xaml::DependencyProperty::UnsetValue()) {
+        return std::to_wstring(DynamicAutomationProperties::GetAccessibilityValueNow(owner)).c_str();
+      }
     }
   } catch (...) {
   }

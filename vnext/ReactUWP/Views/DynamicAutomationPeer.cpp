@@ -135,7 +135,8 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
       accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar &&
       accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable &&
       accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar &&
-      HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text)) {
+      (HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text) ||
+       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now))) {
     return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::DynamicValueProvider>(
         this->try_as<winrt::FrameworkElementAutomationPeer>());
   } else if (
@@ -286,35 +287,23 @@ bool DynamicAutomationPeer::IsReadOnly() {
 
 void DynamicAutomationPeer::SetValue(double value) {
   try {
-    if (auto const &owner = Owner()) {
-      DynamicAutomationProperties::DispatchAccessibilityAction(owner, L"setValue");
-    }
+    DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"setValue");
   } catch (...) {
   }
 }
 
 // Doesn't have a React Native analog.
-// Return default value for RangeBase-derived types, such as Slider and ProgressBar.
+// Return default value for XAML Slider.
 // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.smallchange?view=winrt-19041
 double DynamicAutomationPeer::SmallChange() {
-  auto accessibilityRole = GetAccessibilityRole();
-  if (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable) {
-    return 1;
-  }
-
-  return 0.1;
+  return 1;
 }
 
 // Doesn't have a React Native analog.
-// Return default value for RangeBase-derived types, such as Slider and ProgressBar.
+// Return default value for XAML Slider.
 // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.largechange?view=winrt-19041
 double DynamicAutomationPeer::LargeChange() {
-  auto accessibilityRole = GetAccessibilityRole();
-  if (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable) {
-    return 10;
-  }
-
-  return 1;
+  return 10;
 }
 
 // Private Methods
@@ -322,16 +311,14 @@ winrt::hstring DynamicAutomationPeer::GetContentName() const {
   winrt::hstring name = L"";
 
   try {
-    if (auto const &owner = Owner()) {
-      if (auto const &viewControl = owner.try_as<winrt::PROJECT_ROOT_NAMESPACE::ViewControl>()) {
-        auto viewPanel = viewControl.GetPanel();
+    if (auto const &viewControl = Owner().try_as<winrt::PROJECT_ROOT_NAMESPACE::ViewControl>()) {
+      auto viewPanel = viewControl.GetPanel();
 
-        for (auto const &child : viewPanel.Children()) {
-          if (auto const &textBlock = child.try_as<winrt::TextBlock>()) {
-            name = name.empty() ? textBlock.Text() : (L" " + name + textBlock.Text());
-          } else if (auto const &stringableName = child.try_as<winrt::IStringable>()) {
-            name = (name.empty() ? L"" : L" ") + name + stringableName.ToString();
-          }
+      for (auto const &child : viewPanel.Children()) {
+        if (auto const &textBlock = child.try_as<winrt::TextBlock>()) {
+          name = name.empty() ? textBlock.Text() : (L" " + name + textBlock.Text());
+        } else if (auto const &stringableName = child.try_as<winrt::IStringable>()) {
+          name = (name.empty() ? L"" : L" ") + name + stringableName.ToString();
         }
       }
     }
@@ -343,9 +330,7 @@ winrt::hstring DynamicAutomationPeer::GetContentName() const {
 
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles DynamicAutomationPeer::GetAccessibilityRole() const {
   try {
-    if (auto const &owner = Owner()) {
-      return DynamicAutomationProperties::GetAccessibilityRole(owner);
-    }
+    return DynamicAutomationProperties::GetAccessibilityRole(Owner());
   } catch (...) {
   }
 
@@ -354,33 +339,32 @@ winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles DynamicAutomationPeer::GetAcce
 
 bool DynamicAutomationPeer::HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const {
   try {
-    if (auto const &owner = Owner()) {
-      winrt::IInspectable value = nullptr;
-      switch (state) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateSelectedProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateDisabledProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCheckedProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateBusyProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateExpandedProperty());
-          break;
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed:
-          value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
-          break;
-      }
-      return (value != xaml::DependencyProperty::UnsetValue());
+    auto const &owner = Owner();
+    winrt::IInspectable value = nullptr;
+    switch (state) {
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateSelectedProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateDisabledProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCheckedProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateBusyProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateExpandedProperty());
+        break;
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed:
+        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
+        break;
     }
+    return (value != xaml::DependencyProperty::UnsetValue());
   } catch (...) {
   }
 
@@ -389,23 +373,22 @@ bool DynamicAutomationPeer::HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE:
 
 bool DynamicAutomationPeer::GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const {
   try {
-    if (auto const &owner = Owner()) {
-      switch (state) {
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected:
-          return DynamicAutomationProperties::GetAccessibilityStateSelected(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled:
-          return DynamicAutomationProperties::GetAccessibilityStateDisabled(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked:
-          return DynamicAutomationProperties::GetAccessibilityStateChecked(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked:
-          return DynamicAutomationProperties::GetAccessibilityStateUnchecked(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy:
-          return DynamicAutomationProperties::GetAccessibilityStateBusy(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded:
-          return DynamicAutomationProperties::GetAccessibilityStateExpanded(owner);
-        case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed:
-          return DynamicAutomationProperties::GetAccessibilityStateCollapsed(owner);
-      }
+    auto const &owner = Owner();
+    switch (state) {
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected:
+        return DynamicAutomationProperties::GetAccessibilityStateSelected(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled:
+        return DynamicAutomationProperties::GetAccessibilityStateDisabled(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked:
+        return DynamicAutomationProperties::GetAccessibilityStateChecked(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked:
+        return DynamicAutomationProperties::GetAccessibilityStateUnchecked(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy:
+        return DynamicAutomationProperties::GetAccessibilityStateBusy(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded:
+        return DynamicAutomationProperties::GetAccessibilityStateExpanded(owner);
+      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed:
+        return DynamicAutomationProperties::GetAccessibilityStateCollapsed(owner);
     }
   } catch (...) {
   }
@@ -442,9 +425,7 @@ bool DynamicAutomationPeer::HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE:
 winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler
 DynamicAutomationPeer::GetAccessibilityInvokeEventHandler() const {
   try {
-    if (auto const &owner = Owner()) {
-      return DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(owner);
-    }
+    return DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(Owner());
   } catch (...) {
   }
 
