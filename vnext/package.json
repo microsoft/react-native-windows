@@ -13,7 +13,6 @@
   "scripts": {
     "api": "just-scripts api",
     "build": "just-scripts build",
-    "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
