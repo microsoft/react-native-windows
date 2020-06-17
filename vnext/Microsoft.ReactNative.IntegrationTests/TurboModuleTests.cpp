@@ -16,68 +16,68 @@ struct SampleTurboModule {
   REACT_INIT(Initialize)
   void Initialize(ReactContext const & /*reactContext*/) noexcept {}
 
-  REACT_CONSTANT(constantString)
-  const std::string constantString{"constantString"};
+  REACT_CONSTANT(m_constantString, L"constantString")
+  const std::string m_constantString{"constantString"};
 
-  REACT_CONSTANT(constantInt)
-  const int constantInt{3};
+  REACT_CONSTANT(m_constantInt, L"constantInt")
+  const int m_constantInt{3};
 
-  REACT_METHOD(succeeded)
-  void succeeded() noexcept {
+  REACT_METHOD(Succeeded, L"succeeded")
+  void Succeeded() noexcept {
     succeededSignal.set_value(true);
   }
 
-  REACT_METHOD(onError)
-  void onError(std::string errorMessage) noexcept {
+  REACT_METHOD(OnError, L"onError")
+  void OnError(std::string errorMessage) noexcept {
     // intended to keep the parameter name for debug purpose
     succeededSignal.set_value(false);
   }
 
-  REACT_METHOD(promiseFunction)
-  void promiseFunction(std::string a, int b, bool c, ReactPromise<React::JSValue> result) noexcept {
+  REACT_METHOD(PromiseFunction, L"promiseFunction")
+  void PromiseFunction(std::string a, int b, bool c, ReactPromise<React::JSValue> result) noexcept {
     auto resultString = (std::stringstream() << a << ", " << b << ", " << (c ? "true" : "false")).str();
     result.Resolve({resultString});
     // TODO:
     // calling ".then" in the bundle fails, figure out why
     // it could be an issue about environment setup
     // since the issue doesn't happen in Playground.sln
-    promiseFunctionResult(resultString);
+    PromiseFunctionResult(resultString);
   }
 
-  REACT_METHOD(promiseFunctionResult)
-  void promiseFunctionResult(std::string a) noexcept {
+  REACT_METHOD(PromiseFunctionResult, L"promiseFunctionResult")
+  void PromiseFunctionResult(std::string a) noexcept {
     promiseFunctionSignal.set_value(a);
   }
 
-  REACT_SYNC_METHOD(syncFunction)
-  std::string syncFunction(std::string a, int b, bool c) noexcept {
+  REACT_SYNC_METHOD(SyncFunction, L"syncFunction")
+  std::string SyncFunction(std::string a, int b, bool c) noexcept {
     auto resultString = (std::stringstream() << a << ", " << b << ", " << (c ? "true" : "false")).str();
     return resultString;
   }
 
-  REACT_METHOD(syncFunctionResult)
-  void syncFunctionResult(std::string a) noexcept {
+  REACT_METHOD(SyncFunctionResult, L"syncFunctionResult")
+  void SyncFunctionResult(std::string a) noexcept {
     syncFunctionSignal.set_value(a);
   }
 
-  REACT_METHOD(constants)
-  void constants(std::string a, int b) noexcept {
+  REACT_METHOD(Constants, L"constants")
+  void Constants(std::string a, int b) noexcept {
     auto resultString = (std::stringstream() << a << ", " << b).str();
     constantsSignal.set_value(resultString);
   }
 
-  REACT_METHOD(oneCallback)
-  void oneCallback(int a, int b, const std::function<void(int)> &resolve) noexcept {
+  REACT_METHOD(OneCallback, L"oneCallback")
+  void OneCallback(int a, int b, const std::function<void(int)> &resolve) noexcept {
     resolve(a + b);
   }
 
-  REACT_METHOD(oneCallbackResult)
-  void oneCallbackResult(int r) noexcept {
+  REACT_METHOD(OneCallbackResult, L"oneCallbackResult")
+  void OneCallbackResult(int r) noexcept {
     oneCallbackSignal.set_value(r);
   }
 
-  REACT_METHOD(twoCallbacks)
-  void twoCallbacks(
+  REACT_METHOD(TwoCallbacks, L"twoCallbacks")
+  void TwoCallbacks(
       bool succeeded,
       int a,
       std::string b,
@@ -90,13 +90,13 @@ struct SampleTurboModule {
     }
   }
 
-  REACT_METHOD(twoCallbacksResolved)
-  void twoCallbacksResolved(int r) noexcept {
+  REACT_METHOD(TwoCallbacksResolved, L"twoCallbacksResolved")
+  void TwoCallbacksResolved(int r) noexcept {
     twoCallbacksResolvedSignal.set_value(r);
   }
 
-  REACT_METHOD(twoCallbacksRejected)
-  void twoCallbacksRejected(std::string r) noexcept {
+  REACT_METHOD(TwoCallbacksRejected, L"twoCallbacksRejected")
+  void TwoCallbacksRejected(std::string r) noexcept {
     twoCallbacksRejectedSignal.set_value(r);
   }
 
