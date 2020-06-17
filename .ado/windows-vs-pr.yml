@@ -53,7 +53,7 @@ jobs:
         #  BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 60
+    timeoutInMinutes: 90
     cancelTimeoutInMinutes: 5
 
     steps:
@@ -113,7 +113,7 @@ jobs:
           BuildPlatform: x64
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 60
+    timeoutInMinutes: 90
     cancelTimeoutInMinutes: 5
 
     steps:
@@ -208,7 +208,7 @@ jobs:
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-    timeoutInMinutes: 60
+    timeoutInMinutes: 90
     cancelTimeoutInMinutes: 5
     #pool:
     #  vmImage: $(VmImage)
@@ -303,6 +303,7 @@ jobs:
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="Private Build"
             /p:RNW_PKG_VERSION="1000,0,0,0"
+            /p:USE_V8=true
 
       - task: CmdLine@2
         displayName: Build react-native-win32 RNTester bundle
