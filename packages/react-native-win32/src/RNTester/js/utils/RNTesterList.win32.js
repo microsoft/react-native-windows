@@ -14,6 +14,22 @@ import type {RNTesterExample} from '../types/RNTesterTypes';
 
 const ComponentExamples: Array<RNTesterExample> = [
   {
+    key: 'ButtonExample',
+    module: require('../examples/Button/ButtonExample'),
+  },
+  {
+    key: 'NewAppScreenExample',
+    module: require('../examples/NewAppScreen/NewAppScreenExample'),
+  },
+  {
+    key: 'PickerExample',
+    module: require('../examples/Picker/PickerExample'),
+  },
+  {
+    key: 'PressableExample',
+    module: require('../examples/Pressable/PressableExample'),
+  },
+  {
     key: 'TouchableWin32Example',
     module: require('../../../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
   },
@@ -41,10 +57,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'ImageWin32Test',
     module: require('../../../Libraries/Image/Tests/ImageWin32Test'),
   },
-  {
-    key: 'PickerExample',
-    module: require('react-native/RNTester/js/examples/Picker/PickerExample'),
-  },
 ];
 
 const APIExamples: Array<RNTesterExample> = [
@@ -63,6 +75,10 @@ const APIExamples: Array<RNTesterExample> = [
   {
     key: 'LayoutExample',
     module: require('react-native/RNTester/js/examples/Layout/LayoutExample'),
+  },
+  {
+    key: 'PlatformColorExample',
+    module: require('../examples/PlatformColor/PlatformColorExample'),
   },
   {
     key: 'PointerEventsExample',

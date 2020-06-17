@@ -22,6 +22,8 @@ const View = require('../Components/View/View');
 
 const invariant = require('invariant');
 
+const UIManager = require('../ReactNative/UIManager'); // [Win32]
+
 import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
 
 export type ReactRenderer = {

@@ -159,16 +159,16 @@
       "type": "derived",
       "file": "Libraries\\Components\\TextInput\\TextInput.win32.tsx",
       "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "ddc98a5d277a630f3ac95c5d416a1028ba27382d",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a50310f6dee460f7d1a53e0f1a21dbac9cf02094",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\TextInput\\TextInputState.win32.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInputState.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "b6abcc197d20eb192444f85e0a1e447a3019658f",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -411,8 +411,8 @@
       "type": "derived",
       "file": "RNTester\\js\\utils\\RNTesterList.win32.js",
       "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "f1e77952c292fe2898645f81f280b64f8ea17b90",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "65c3876bdbc2755cd568b2779ed962fa7a4edf6a",
       "issue": "LEGACY_FIXME"
     },
     {
