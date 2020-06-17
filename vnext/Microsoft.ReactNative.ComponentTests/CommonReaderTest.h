@@ -308,17 +308,20 @@ struct NestedObjectWithPrimitiveValues {
     RunReaderTest<ReaderTestCases::name>(); \
   }
 
-#define IMPORT_READER_TEST_CASES                          \
-  IMPORT_READER_TEST_CASE(PrimitiveNull)                  \
-  IMPORT_READER_TEST_CASE(PrimitiveBoolean)               \
-  IMPORT_READER_TEST_CASE(PrimitiveInt)                   \
-  IMPORT_READER_TEST_CASE(PrimitiveDouble)                \
-  IMPORT_READER_TEST_CASE(PrimitiveString)                \
-  IMPORT_READER_TEST_CASE(EmptyArray)                     \
-  IMPORT_READER_TEST_CASE(ArrayWitnOneElement)            \
-  IMPORT_READER_TEST_CASE(ArrayWitnMultipleElement)       \
-  IMPORT_READER_TEST_CASE(EmptyNestedArray)               \
-  IMPORT_READER_TEST_CASE(NestedArrayWithPrimitiveValues) \
-  IMPORT_READER_TEST_CASE(EmptyObject)                    \
-  IMPORT_READER_TEST_CASE(SimpleObject)                   \
+#define IMPORT_ARGUMENT_READER_TEST_CASES           \
+  IMPORT_READER_TEST_CASE(EmptyArray)               \
+  IMPORT_READER_TEST_CASE(ArrayWitnOneElement)      \
+  IMPORT_READER_TEST_CASE(ArrayWitnMultipleElement) \
+  IMPORT_READER_TEST_CASE(EmptyNestedArray)         \
+  IMPORT_READER_TEST_CASE(NestedArrayWithPrimitiveValues)
+
+#define IMPORT_READER_TEST_CASES            \
+  IMPORT_READER_TEST_CASE(PrimitiveNull)    \
+  IMPORT_READER_TEST_CASE(PrimitiveBoolean) \
+  IMPORT_READER_TEST_CASE(PrimitiveInt)     \
+  IMPORT_READER_TEST_CASE(PrimitiveDouble)  \
+  IMPORT_READER_TEST_CASE(PrimitiveString)  \
+  IMPORT_ARGUMENT_READER_TEST_CASES         \
+  IMPORT_READER_TEST_CASE(EmptyObject)      \
+  IMPORT_READER_TEST_CASE(SimpleObject)     \
   IMPORT_READER_TEST_CASE(NestedObjectWithPrimitiveValues)

@@ -180,6 +180,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ClCompile Include="DynamicReaderTest.cpp" />
+    <ClCompile Include="JsiArgumentReaderTest.cpp" />
     <ClCompile Include="JsiReaderTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch/pch.cpp">

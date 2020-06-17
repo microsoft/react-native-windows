@@ -154,13 +154,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                   serializableArgumentCount -= 2;
                   break;
               }
-              facebook::jsi::Array argsArray(runtime, serializableArgumentCount);
-              for (size_t i = 0; i < serializableArgumentCount; i++) {
-                argsArray.setValueAtIndex(runtime, i, args[i]);
-              }
-              auto argReader = winrt::make<JsiReader>(runtime, facebook::jsi::Value(runtime, argsArray));
+              auto argReader = winrt::make<JsiReader>(runtime, args, serializableArgumentCount);
 
               // prepare output value
+              // TODO: it is no reason to pass a argWriter just to receive [undefined] for void, should be optimized
               auto argWriter = winrt::make<JsiWriter>(runtime);
 
               // call the function
@@ -201,16 +198,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                                           const facebook::jsi::Value &callbackValue) noexcept->MethodResultCallback {
                     return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime) ](
                         const IJSValueWriter &writer) noexcept {
-                      auto result = writer.as<JsiWriter>()->MoveResult();
-                      VerifyElseCrash(result.isObject() && result.asObject(runtime).isArray(runtime));
-                      auto jsArray = result.asObject(runtime).asArray(runtime);
-                      auto size = jsArray.size(runtime);
-                      auto buffer = std::make_unique<facebook::jsi::Value[]>(size);
-                      for (size_t i = 0; i < size; i++) {
-                        buffer[i] = facebook::jsi::Value(runtime, jsArray.getValueAtIndex(runtime, i));
-                      }
-                      const facebook::jsi::Value *args = buffer.get();
-                      callbackFunction.call(runtime, args, size);
+                      const facebook::jsi::Value *resultArgs = nullptr;
+                      size_t resultCount = 0;
+                      writer.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
+                      callbackFunction.call(runtime, resultArgs, resultCount);
                     };
                   };
 
@@ -242,11 +233,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 const facebook::jsi::Value *args,
                 size_t count) {
               // prepare input arguments
-              facebook::jsi::Array argsArray(runtime, count);
-              for (size_t i = 0; i < count; i++) {
-                argsArray.setValueAtIndex(runtime, i, args[i]);
-              }
-              auto argReader = winrt::make<JsiReader>(runtime, facebook::jsi::Value(runtime, argsArray));
+              auto argReader = winrt::make<JsiReader>(runtime, args, count);
 
               // prepare output value
               auto argWriter = winrt::make<JsiWriter>(runtime);
@@ -255,7 +242,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
               method(argReader, argWriter);
 
               // set the return value
-              return argWriter.as<JsiWriter>()->MoveResult().asObject(rt).asArray(rt).getValueAtIndex(rt, 0);
+              const facebook::jsi::Value *resultArgs = nullptr;
+              size_t resultCount = 0;
+              argWriter.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
+              return facebook::jsi::Value(rt, resultArgs[0]);
             });
       }
     }
