@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Drop LazySupportManager",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
