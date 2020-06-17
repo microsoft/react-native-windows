@@ -364,30 +364,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.win32.js",
-      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "80f52a83aa0b9750a8955bc79975d2b3914c664b",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.win32.js",
-      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.js",
-      "baseVersion": "0.62.1",
-      "baseHash": "11d3fba8d2596ecb628ca1b6db3347f444920fb9",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\YellowBox\\UI\\YellowBoxList.win32.js",
-      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxList.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "8093d13818e1c1e0dec5b6fb46b89d9152053d3c",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "platform",
       "file": "RNTester.ts"
     },
