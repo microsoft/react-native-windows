@@ -35,23 +35,6 @@
 <PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
 <PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
 <PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js
-<PROJECT_ROOT>/RNTester/js/FlatListExample.js
-<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
-<PROJECT_ROOT>/RNTester/js/RNTesterExampleList.js
-<PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
-<PROJECT_ROOT>/RNTester/js/TouchableExample.js
-<PROJECT_ROOT>/RNTester/js/ViewExample.js
-
-; Schema files are used for turbo-module code generation, but are not bundled.
-; We don't yet have the react-native-codegen package they rely on, so supress
-; checks for now.
-<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicatorSchema.js
-<PROJECT_ROOT>/Libraries/Components/RefreshControl/AndroidSwipeRefreshLayoutSchema.js
-<PROJECT_ROOT>/Libraries/Components/RefreshControl/PullToRefreshViewSchema.js
-<PROJECT_ROOT>/Libraries/Components/Slider/SliderSchema.js
-<PROJECT_ROOT>/Libraries/Components/Switch/SwitchSchema.js
-<PROJECT_ROOT>/Libraries/Components/UnimplementedViews/UnimplementedNativeViewSchema.js
-<PROJECT_ROOT>/Libraries/Modal/ModalSchema.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -79,8 +62,6 @@
 ; require from fbjs/lib instead: require('fbjs/lib/warning')
 .*/node_modules/warning/.*
 
-; Flow doesn't support platforms
-.*/Libraries/Utilities/HMRLoadingView.js
 
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
@@ -91,8 +72,6 @@
 [untyped]
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
-<PROJECT_ROOT>/Libraries/ActionSheetIOS/ActionSheetIOS.js
-<PROJECT_ROOT>/Libraries/Share/Share.js
 
 [include]
 ; Need to include hoisted modules
