@@ -50,8 +50,8 @@ export type BasePropsWin32 = {
     accessibilityRole?: RN.AccessibilityRole | ARIARole;
     accessibilityStates?: AccessibilityStates[];
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
-    accessibilityDescribedBy?: React_2.RefObject<any>;
-    accessibilityLabeledBy?: React_2.RefObject<any>;
+    accessibilityDescribedBy?: React.RefObject<any>;
+    accessibilityLabeledBy?: React.RefObject<any>;
 };
 
 // Warning: (ae-forgotten-export) The symbol "IButtonWin32State" needs to be exported by the entry point typings-main.d.ts
@@ -438,9 +438,9 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
 export type UseFrom<TOrigin, TUse, Key extends keyof TUse> = Pick<TOrigin, Exclude<keyof TOrigin, Key>> & Pick<TUse, Key>;
 
 // @public (undocumented)
-export const ViewWin32: React_2.ForwardRefExoticComponent<IViewWin32Props & React_2.RefAttributes<any>>;
+export const ViewWin32: React.ForwardRefExoticComponent<IViewWin32Props & React.RefAttributes<any>>;
 
-// Warning: (ae-forgotten-export) The symbol "ViewWin32Type" needs to be exported by the entry point typings-index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ViewWin32Type" needs to be exported by the entry point typings-main.d.ts
 //
 // @public (undocumented)
 export type ViewWin32 = ViewWin32Type;
