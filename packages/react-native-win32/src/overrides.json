@@ -132,14 +132,6 @@
       "issue": 4378
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerIOS.win32.js",
-      "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerIOS.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "f9f3d19210ade74181dbd291ffd97d8905d61035",
-      "issue": 4363
-    },
-    {
       "type": "platform",
       "file": "Libraries\\Components\\Text\\TextWin32.Props.ts"
     },
@@ -260,14 +252,6 @@
       "file": "Libraries\\Image\\ImageTypes.ts"
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Image\\ImageViewNativeComponent.win32.js",
-      "baseFile": "Libraries\\Image\\ImageViewNativeComponent.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "5be170fa51b53992c94244a313e253f44e53bd57",
-      "issue": 4321
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Image\\NativeImageLoaderWin32.js",
       "baseFile": "Libraries\\Image\\NativeImageLoaderIOS.js",
@@ -328,11 +312,8 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.win32.js",
-      "baseFile": "Libraries\\StyleSheet\\PlatformColorValueTypes.android.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "4016a9409af82a0060f94ed78122a5813f407357"
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.win32.js"
     },
     {
       "type": "patch",

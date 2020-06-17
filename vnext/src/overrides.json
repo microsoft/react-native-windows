@@ -517,12 +517,8 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windows.js",
-      "baseFile": "Libraries\\StyleSheet\\PlatformColorValueTypes.android.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "4016a9409af82a0060f94ed78122a5813f407357",
-      "issue": "LEGACY_FIXME"
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windows.js"
     },
     {
       "type": "patch",
