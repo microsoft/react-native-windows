@@ -51,6 +51,8 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
+        /maxCpuCount:1
+        /p:CL_MPCount=1
         ${{parameters.msbuildArguments}}
 
   - task: PublishBuildArtifacts@1

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Jun 2020 09:19:15 GMT",
+      "tag": "react-native-windows_v0.61.13",
+      "version": "0.61.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Disable V8 by default",
+            "author": "tudorm@microsoft.com",
+            "commit": "fa132f4236aca5b9aac26fe8069dac8149ef1581",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Jun 2020 00:48:38 GMT",
       "tag": "react-native-windows_v0.61.12",
       "version": "0.61.12",
