@@ -101,12 +101,6 @@
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LazyDevSupportManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BeastWebSocketResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
       <Filter>Generated Files</Filter>
@@ -156,9 +150,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LazyDevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleFactories.h">

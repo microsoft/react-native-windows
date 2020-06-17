@@ -95,7 +95,6 @@
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
-    <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
@@ -127,7 +126,6 @@
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="Executors\WebSocketJSExecutor.h" />
-    <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
