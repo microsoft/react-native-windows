@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "> This change is only intended for developers working on react-native-windows, it is not intended   for end-developers 'using' react-native-windows.",
+  "packageName": "react-native-windows-init",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-18T02:17:03.925Z"
+}
