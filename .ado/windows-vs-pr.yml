@@ -427,6 +427,12 @@ jobs:
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
 
+      - task: PowerShell@2
+        displayName: Check the metro bundle server
+        inputs:
+          targetType: 'inline'
+          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
         inputs:
@@ -441,13 +447,6 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-
-      - task: PowerShell@2
-        displayName: Check the metro bundle server
-        inputs:
-          targetType: 'inline'
-          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
-        condition: failed()
 
       - template: templates/stop-packagers.yml
 
