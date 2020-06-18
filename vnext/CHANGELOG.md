@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 17 Jun 2020 09:19:15 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Jun 2020 08:02:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.61.14
+
+Thu, 18 Jun 2020 08:02:42 GMT
+
+### Patches
+
+- Drop LazySupportManager (julio.rocha@microsoft.com)
 
 ## 0.61.13
 
