@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create Scripts for the Release Process",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-16T07:10:39.737Z"
-}
