@@ -11,9 +11,13 @@ namespace winrt::Microsoft::ReactNative {
 // JsiReader implementation
 //===========================================================================
 
-JsiReader::JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value &root) noexcept
-    : m_runtime(runtime), m_root(root) {
+JsiReader::JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value &root) noexcept : m_runtime(runtime) {
   SetValue(root);
+}
+
+JsiReader::JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value *args, size_t count) noexcept
+    : m_runtime(runtime) {
+  m_containers.push_back({args, count});
 }
 
 JSValueType JsiReader::ValueType() noexcept {
@@ -72,19 +76,32 @@ bool JsiReader::GetNextArrayItem() noexcept {
   }
 
   auto &top = m_containers[m_containers.size() - 1];
-  if (top.Type != ContainerType::Array) {
+  if (top.Type == ContainerType::Object) {
     return false;
   }
 
   top.Index++;
-  if (top.Index < static_cast<int>(top.CurrentArray.value().size(m_runtime))) {
-    SetValue(top.CurrentArray.value().getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)));
-    return true;
-  } else {
-    m_containers.pop_back();
-    m_currentPrimitiveValue.reset();
-    return false;
+
+  switch (top.Type) {
+    case ContainerType::Array: {
+      if (top.Index < static_cast<int>(top.CurrentArray.value().size(m_runtime))) {
+        SetValue(top.CurrentArray.value().getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)));
+        return true;
+      }
+      break;
+    }
+    case ContainerType::Args: {
+      if (top.Index < static_cast<int>(top.ArgLength)) {
+        SetValue({m_runtime, top.ArgElements[top.Index]});
+        return true;
+      }
+      break;
+    }
   }
+
+  m_containers.pop_back();
+  m_currentPrimitiveValue.reset();
+  return false;
 }
 
 hstring JsiReader::GetString() noexcept {

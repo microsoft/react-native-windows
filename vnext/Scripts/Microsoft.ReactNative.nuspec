@@ -21,6 +21,8 @@
     <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml"   target="lib\uap10.0"/> 
     -->
 
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
+
     <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm\native\release" />
     <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm\native\release" />
     <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm\native\release" />

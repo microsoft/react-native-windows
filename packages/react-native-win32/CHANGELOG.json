@@ -2,6 +2,51 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 18 Jun 2020 00:07:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.22",
+      "version": "0.0.0-canary.22",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create Scripts for the Release Process",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09c55119a42002be07b9c3325ca6859d06a99cc3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Jun 2020 00:05:39 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename \"master\" packages to \"canary\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "454349e6f5c428b3a93f5c7420fbac8f63c0c25a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Jun 2020 00:09:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-master.20",
+      "version": "0.0.0-master.20",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add focusRef prop to TouchableWin32",
+            "author": "taamireh@microsoft.com",
+            "commit": "67a72aca889f27e2d7bc1e4596d92f36bf311a87",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jun 2020 00:05:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-master.19",
       "version": "0.0.0-master.19",

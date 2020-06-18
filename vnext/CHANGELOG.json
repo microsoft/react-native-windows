@@ -2,6 +2,165 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Jun 2020 00:07:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.96",
+      "version": "0.0.0-canary.96",
+      "comments": {
+        "none": [
+          {
+            "comment": "Apply compatible casing on SampleTurboModule members",
+            "author": "zihanc@microsoft.com",
+            "commit": "409789783c360e5de6812ce1afd1b0ed0bff5fd1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Optimize TurboModulesProvider to not performing unnecessary (Value*, size_t) <--> Array conversions",
+            "author": "zihanc@microsoft.com",
+            "commit": "76a8973dfd9101f913770ce2d42fe9360c006f73",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Create Scripts for the Release Process",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09c55119a42002be07b9c3325ca6859d06a99cc3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Run NativeModules 2.0 in JS thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "17d8bed353add81cad6958588a72c16f1ce33d74",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update C++/WinRT to version 2.0.200615.7",
+            "author": "vmorozov@microsoft.com",
+            "commit": "db9a065c7908f8f48d33f6e625ae5dd88ef713d0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "version agnostic msbuild log viewer",
+            "author": "asklar@microsoft.com",
+            "commit": "4cbde0c00bfa8e82eced0bd3389b53ad03a1f5d9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Jun 2020 00:05:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.95",
+      "version": "0.0.0-canary.95",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Unify DevSupportManager and WebSocketJSExecutor",
+            "author": "acoates@microsoft.com",
+            "commit": "dc2a53ac3f2fcfb094a09cb95e5ce1beec603406",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename \"master\" packages to \"canary\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "454349e6f5c428b3a93f5c7420fbac8f63c0c25a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't lint target folder and don't flow check node_modules packages",
+            "author": "dannyvv@microsoft.com",
+            "commit": "8bbcd4fea2f5753ac72b1b795532a4055687cc06",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Implement REACT_METHOD + Callback/TwoCallbacks for turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "decd1bea627d9f33a0f56778ea44e71e42b22ebe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 Jun 2020 00:05:48 GMT",
+      "tag": "react-native-windows_v0.0.0-master.94",
+      "version": "0.0.0-master.94",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": " Upgrade to boost 1.72.0.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "852830974c349359d81996abd18eab2a5627652a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Prevent Switches from Accidentally Becoming Disabled",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2004692171370684f5d79d9cc6cf1dec78326266",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "use default brush for border",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c9a2cc1bc5fe59e526f82578772a3646a1b5ee61",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Jun 2020 00:09:11 GMT",
+      "tag": "react-native-windows_v0.0.0-master.93",
+      "version": "0.0.0-master.93",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implement logbox",
+            "author": "acoates@microsoft.com",
+            "commit": "fbbe72f1481ace7c824d8203aa3f147eb0fdcbf6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Microsoft.ReactNative.Cxx to the nugets.",
+            "author": "acoates@microsoft.com",
+            "commit": "ef0fd96936b64d21345366bf49e96123bf60fa1c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix file lock issue wiht msbuild /bl flag and the metro bundler",
+            "author": "dannyvv@microsoft.com",
+            "commit": "394573753837320f51e9e3969e149961f3471480",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Implement SyncMethod and Constant for TurboModule",
+            "author": "zihanc@microsoft.com",
+            "commit": "de852396cf3c6e5bb9c15da97a59b3e0256831e3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jun 2020 00:33:44 GMT",
+      "tag": "react-native-windows_v0.0.0-master.92",
+      "version": "0.0.0-master.92",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix support for `--namespace` on react-native-windows init for cpp",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7d7b6fb2b392acc7956e32398ac779e78ad0e4cf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Jun 2020 00:05:14 GMT",
       "tag": "react-native-windows_v0.0.0-master.91",
       "version": "0.0.0-master.91",

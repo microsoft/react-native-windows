@@ -9,7 +9,15 @@ namespace winrt::Microsoft::ReactNative {
 
 struct JsiWriter : winrt::implements<JsiWriter, IJSValueWriter> {
   JsiWriter(facebook::jsi::Runtime &runtime) noexcept;
+
+  // MoveResult crashes when the root object is not closed.
+  // MoveResult returns the constructed root object.
   facebook::jsi::Value MoveResult() noexcept;
+
+  // AccessResultAsArgs crashes when the root object is not closed.
+  // AccessResultAsArgs crashes when the root object is not an array.
+  // AccessResultAsArgs gives you elements of the written array directly.
+  void AccessResultAsArgs(const facebook::jsi::Value *&args, size_t &count) noexcept;
 
  public: // IJSValueWriter
   void WriteNull() noexcept;
@@ -49,6 +57,8 @@ struct JsiWriter : winrt::implements<JsiWriter, IJSValueWriter> {
   };
 
  private:
+  facebook::jsi::Value ContainerToValue(Container &&container) noexcept;
+  void WriteContainer(Container &&container) noexcept;
   void WriteValue(facebook::jsi::Value &&value) noexcept;
   Container &Top() noexcept;
   Container Pop() noexcept;
@@ -56,7 +66,13 @@ struct JsiWriter : winrt::implements<JsiWriter, IJSValueWriter> {
 
  private:
   facebook::jsi::Runtime &m_runtime;
-  facebook::jsi::Value m_result;
+  // m_containers represents a stack of constructing objects.
+  // when the root object is not closed, the bottom container in m_containers is ContainerState::AcceptValueAndFinish.
+  // when the root object is closed, m_containers will be empty, m_resultAsValue or m_resultAsContainer will be written.
+  // m_resultAsContainer is available when the root object is an array.
+  // MoveResult or AccessResultAsArgs is ready to use when the root object is closed.
+  std::optional<facebook::jsi::Value> m_resultAsValue;
+  std::optional<Container> m_resultAsContainer;
   std::vector<Container> m_containers;
 };
 

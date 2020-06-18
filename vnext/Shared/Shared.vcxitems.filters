@@ -97,6 +97,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevSupportManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -284,6 +287,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\AsyncStorageModuleWin32.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\build.bat">

@@ -68,6 +68,10 @@
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
+; Ignore react-native-windows' target folder. Flow is not compiled with long path support and after running unittests these folders have long paths
+.*/node_modules/react-native-windows/target/.*
+.target/.*
+
 ; These files dont need to be checked and just increase the build time
 .*/node_modules/microsoft-reactnative-sampleapps/.*
 
@@ -82,7 +86,6 @@
 
 ; Ignore unexpected extra "@providesModule"
 .*/node_modules/.*/node_modules/fbjs/.*
-
 
 ; These should not be required directly
 ; require from fbjs/lib instead: require('fbjs/lib/warning')
