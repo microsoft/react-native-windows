@@ -96,6 +96,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ShowIncludes>
     </ClCompile>
     <Link>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
@@ -155,20 +156,26 @@
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
-    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />

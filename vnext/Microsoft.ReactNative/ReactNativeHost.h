@@ -8,7 +8,6 @@
 #include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
 #include "ReactInstanceSettings.h"
-#include "ViewManagersProvider.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

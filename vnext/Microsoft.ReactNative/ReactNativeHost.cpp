@@ -55,12 +55,19 @@ IAsyncAction ReactNativeHost::LoadInstance() noexcept {
 
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
-  auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
-  auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
+
 #ifndef CORE_ABI
+  auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
+#endif
+
+  auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider, turboModulesProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider,
+ #ifndef CORE_ABI
+        viewManagersProvider,
+#endif
+        turboModulesProvider);
 
     if (auto packageProviders = InstanceSettings().PackageProviders()) {
       for (auto const &packageProvider : packageProviders) {
@@ -68,6 +75,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       }
     }
   }
+
+#ifndef CORE_ABI
 
   Mso::React::ReactOptions reactOptions{};
   reactOptions.Properties = m_instanceSettings.Properties();
