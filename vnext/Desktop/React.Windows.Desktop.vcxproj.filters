@@ -65,15 +65,6 @@
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TimingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\WebSocketModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="DevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -83,11 +74,14 @@
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LazyDevSupportManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\NetworkingModule.cpp">
+      <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="BeastWebSocketResource.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\TimingModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\WebSocketModule.cpp">
+      <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
@@ -131,8 +125,11 @@
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LazyDevSupportManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Modules\NetworkingModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TimingModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleFactories.h">
       <Filter>Header Files</Filter>

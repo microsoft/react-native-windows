@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Jun 2020 08:02:42 GMT",
+      "tag": "react-native-windows_v0.61.14",
+      "version": "0.61.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Drop LazySupportManager",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b7cadc576aeba14ddd563fa07c503fba8246d240",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jun 2020 09:19:15 GMT",
       "tag": "react-native-windows_v0.61.13",
       "version": "0.61.13",
