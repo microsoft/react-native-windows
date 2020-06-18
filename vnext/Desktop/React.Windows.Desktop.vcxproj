@@ -92,7 +92,7 @@
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative"</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
