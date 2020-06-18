@@ -441,7 +441,6 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
