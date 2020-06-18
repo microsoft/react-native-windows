@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix building vcxproj files outside of solution",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-18T02:10:13.505Z"
+}
