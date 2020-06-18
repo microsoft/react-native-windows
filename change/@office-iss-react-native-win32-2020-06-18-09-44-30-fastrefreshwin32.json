@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Enable FastRefresh support",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-18T16:44:30.428Z"
+}
