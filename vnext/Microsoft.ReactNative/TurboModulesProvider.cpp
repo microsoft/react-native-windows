@@ -296,8 +296,15 @@ void TurboModulesProvider::AddModuleProvider(
     winrt::hstring const &moduleName,
     ReactModuleProvider const &moduleProvider) noexcept {
   auto key = to_string(moduleName);
-  VerifyElseCrash(m_moduleProviders.find(key) == m_moduleProviders.end());
-  m_moduleProviders.insert({key, moduleProvider});
+  auto it = m_moduleProviders.find(key);
+  if (it == m_moduleProviders.end()) {
+    m_moduleProviders.insert({key, moduleProvider});
+  } else {
+    // turbo modules should be replacable before the first time it is requested
+    // if a turbo module has been requested, it will be cached in m_cachedModules
+    // in this case, changing m_moduleProviders affects nothing
+    it->second = moduleProvider;
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative
