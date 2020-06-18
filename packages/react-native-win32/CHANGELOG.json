@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 18 Jun 2020 20:32:33 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.3",
+      "version": "0.27.3",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "ViewWin32 Accessibility: labeledBy, describedBy (#4883)",
+            "author": "ppatboyd@outlook.com",
+            "commit": "6bd48938a5b1dd7c471492d545cba7ca13ee8686"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 May 2020 00:35:27 GMT",
       "tag": "@office-iss/react-native-win32_v0.27.3",
       "version": "0.27.3",
