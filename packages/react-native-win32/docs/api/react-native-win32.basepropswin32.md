@@ -11,5 +11,7 @@ export declare type BasePropsWin32 = {
     accessibilityRole?: RN.AccessibilityRole | ARIARole;
     accessibilityStates?: AccessibilityStates[];
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
+    accessibilityDescribedBy?: React.RefObject<any>;
+    accessibilityLabeledBy?: React.RefObject<any>;
 };
 ```
