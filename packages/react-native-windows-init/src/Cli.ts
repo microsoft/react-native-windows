@@ -256,8 +256,8 @@ function isProjectUsingYarn(cwd: string) {
   try {
     const name = getReactNativeAppName();
     const ns = argv.namespace || name;
+    const useDevMode = argv.useDevMode;
     let version = argv.version;
-    let useDevMode = argv.useDevMode;
 
     if (!version) {
       const rnVersion = getReactNativeVersion();
