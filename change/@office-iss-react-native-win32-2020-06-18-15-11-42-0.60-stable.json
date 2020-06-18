@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Republish as 0.60",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-18T22:11:42.714Z"
+}
