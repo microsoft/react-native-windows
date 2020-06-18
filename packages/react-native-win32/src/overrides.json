@@ -289,14 +289,6 @@
     },
     {
       "type": "patch",
-      "file": "Libraries\\core\\setUpDeveloperTools.win32.js",
-      "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d09be2d9fc8c621538c2262947580a03ff47177f",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "Libraries\\core\\setUpReactDevTools.win32.js",
       "baseFile": "Libraries\\core\\setUpReactDevTools.js",
       "baseVersion": "0.62.0-rc.3",

@@ -2543,10 +2543,10 @@
     universal-user-agent "^3.0.0"
     url-template "^2.0.8"
 
-"@office-iss/rex-win32@0.0.0-devmain.12823.10000":
-  version "0.0.0-devmain.12823.10000"
-  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.0.0-devmain.12823.10000.tgz#ad4e1cf040fc02e51fcc5f6ba926a3b6f2c14bb0"
-  integrity sha512-rAjjiSgUFcB0ogHSKklHF+CaDZd7OXCXrv0zkfDM4XY2xfJykOtnr6rT0OqRgZvInDT9RSxi0yuQ4ck1HV+Bdw==
+"@office-iss/rex-win32@0.62.0-preview.16-tenantreactnativewin-13017.2":
+  version "0.62.0-preview.16-tenantreactnativewin-13017.2"
+  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.62.0-preview.16-tenantreactnativewin-13017.2.tgz#d51a4f08e1389b5aec323efb824d4be2a2df9fc3"
+  integrity sha512-lF0x2Ki1o1T1a+T0HfODJNF/G8+Gy8V/C0dXRWXel7MoPfZ677GnauwiaM9UN3C5zCogFRMHDIpBVnUStdfQEw==
   dependencies:
     command-line-args "^5.0.2"
     command-line-usage "^5.0.5"
