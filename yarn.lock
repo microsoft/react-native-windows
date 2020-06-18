@@ -4551,17 +4551,19 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.18.4"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.18.4.tgz#08838ad053729f1306ec58d8dd16126e90f256de"
-  integrity sha512-WdvWtIg1yPTmpPmyXykvE//m8fHUg19AEZnO+XaLjgoIrKIR3PKf8uek0Xy0lH+XJFg2gPN/FRnuSwTEx47Y7g==
+  version "1.31.4"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.31.4.tgz#e58e3f593ce734577d7016960c760dc77397dcac"
+  integrity sha512-x0tBTOeDqirCdjK5KIE3KcXSgsQOAE7vpyki305dC/4Dh0iSgSrWVQUrX1O8O4L2PGTwaCmr1cyLjduAVvsGQA==
   dependencies:
     cosmiconfig "^6.0.0"
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
     glob "^7.1.4"
+    lodash "^4.17.15"
     minimatch "^3.0.4"
     prompts "~2.1.0"
     semver "^6.1.1"
+    toposort "^2.0.2"
     yargs-parser "^13.1.0"
 
 before-after-hook@^2.0.0:
@@ -12627,6 +12629,11 @@ toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
+
+toposort@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
+  integrity sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
 
 tough-cookie@^2.3.3:
   version "2.5.0"
