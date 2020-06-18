@@ -345,9 +345,9 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: Upload build logs
         condition:  succeededOrFailed()
-        inputs:    
+        inputs:
           pathtoPublish: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)' 
+          artifactName: 'Build logs - $(Agent.JobName)'
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -374,8 +374,9 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      #5059 Disable failing or intermittent tests.
-      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
+      #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
+      #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&(FullyQualifiedName!~WebSocketModule_)'
 
     steps:
       - checkout: self
