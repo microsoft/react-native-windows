@@ -300,7 +300,7 @@ void TurboModulesProvider::AddModuleProvider(
   if (it == m_moduleProviders.end()) {
     m_moduleProviders.insert({key, moduleProvider});
   } else {
-    // turbo modules should be replacable before the first time it is requested
+    // turbo modules should be replaceable before the first time it is requested
     // if a turbo module has been requested, it will be cached in m_cachedModules
     // in this case, changing m_moduleProviders affects nothing
     it->second = moduleProvider;
