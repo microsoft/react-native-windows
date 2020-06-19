@@ -138,13 +138,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   }
 
   reactOptions.Identity = jsBundleFile;
-
-#ifndef CORE_ABI
   return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
-#else
-  // Core ABI work needed
-  VerifyElseCrash(false);
-#endif
+
 }
 
 IAsyncAction ReactNativeHost::UnloadInstance() noexcept {

@@ -72,14 +72,13 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
   }
 
-  TEST_METHOD(JsFunctionCall_Succeeds) {
+  SKIPTESTMETHOD(JsFunctionCall_Succeeds) {
     std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
     std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
 
     winrt::Microsoft::ReactNative::ReactNativeHost host{};
 
     auto queueController = winrt::Windows::System::DispatcherQueueController::CreateOnDedicatedThread();
-//#ifndef CORE_ABI
     queueController.DispatcherQueue().TryEnqueue([&]() noexcept {
       host.PackageProviders().Append(winrt::make<TestPackageProvider>());
 
@@ -103,7 +102,6 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(35, returnValue.get());
 
     host.UnloadInstance().get();
-//#endif
     queueController.ShutdownQueueAsync().get();
   }
 };
