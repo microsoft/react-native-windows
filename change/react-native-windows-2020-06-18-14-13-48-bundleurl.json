@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Complete BundleUrl should be provided to JSExecutor when using fastrefresh without remote debugging",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-18T21:13:48.785Z"
+}

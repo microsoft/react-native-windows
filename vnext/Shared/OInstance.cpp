@@ -491,21 +491,21 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 }
 
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
-  // load JS
-  if (m_devSettings->useWebDebugger) {
-    // First attempt to get download the Js locally, to catch any bundling
-    // errors before attempting to load the actual script.
-    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
-        m_devSettings->debugHost,
-        m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
-        m_devSettings->platformName);
+  try {
+    if (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback != nullptr ||
+        m_devSettings->useFastRefresh) {
+      // First attempt to get download the Js locally, to catch any bundling
+      // errors before attempting to load the actual script.
+      auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+          m_devSettings->debugHost,
+          m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
+          m_devSettings->platformName);
 
-    if (m_devManager->HasException()) {
-      m_devSettings->errorCallback(jsBundleString);
-      return;
-    }
+      if (m_devManager->HasException()) {
+        m_devSettings->errorCallback(jsBundleString);
+        return;
+      }
 
-    try {
       auto bundleUrl = DevServerHelper::get_BundleUrl(
           m_devSettings->debugHost,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
@@ -513,24 +513,12 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           /*dev*/ "true",
           /*hot*/ "false");
 
+      // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
       m_innerInstance->loadScriptFromString(
-          std::make_unique<const JSBigStdString>(bundleUrl), bundleUrl, synchronously);
-    } catch (std::exception &e) {
-      m_devSettings->errorCallback(e.what());
-      return;
-    }
-  } else if (m_devSettings->liveReloadCallback != nullptr || m_devSettings->useFastRefresh) {
-    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
-        m_devSettings->debugHost, jsBundleRelativePath, m_devSettings->platformName);
-
-    if (m_devManager->HasException()) {
-      m_devSettings->errorCallback(jsBundleString);
+          std::make_unique<const JSBigStdString>(m_devSettings->useWebDebugger ? bundleUrl : jsBundleString),
+          bundleUrl,
+          synchronously);
     } else {
-      m_innerInstance->loadScriptFromString(
-          std::make_unique<const JSBigStdString>(jsBundleString), jsBundleRelativePath, synchronously);
-    }
-  } else {
-    try {
 #if (defined(_MSC_VER) && !defined(WINRT))
       auto fullBundleFilePath = GetJSBundleFilePath(m_jsBundleBasePath, jsBundleRelativePath);
 
@@ -553,14 +541,13 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
-
-#if defined(_CHAKRACORE_H_)
-    } catch (const facebook::react::ChakraJSException &e) {
-      m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
-#endif
-    } catch (std::exception &e) {
-      m_devSettings->errorCallback(e.what());
     }
+#if defined(_CHAKRACORE_H_)
+  } catch (const facebook::react::ChakraJSException &e) {
+    m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
+#endif
+  } catch (std::exception &e) {
+    m_devSettings->errorCallback(e.what());
   }
 }
 

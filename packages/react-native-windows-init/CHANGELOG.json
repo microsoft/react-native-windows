@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 19 Jun 2020 00:07:58 GMT",
+      "tag": "react-native-windows-init_v0.1.10",
+      "version": "0.1.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "This change is only intended for developers working on react-native-windows, it is not intended for end-developers 'using' react-native-windows.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "15f91528465b44cbff29a11ecb520694e4f2fcfc",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jun 2020 00:33:44 GMT",
       "tag": "react-native-windows-init_v0.1.9",
       "version": "0.1.9",

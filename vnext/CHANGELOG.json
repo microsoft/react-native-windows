@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 19 Jun 2020 00:07:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.97",
+      "version": "0.0.0-canary.97",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move the addition of folly.natvis to ReactWin32.nuspec",
+            "author": "warleu@microsoft.com",
+            "commit": "c6fbf6032858bd64966ed6d1d34c7e1bd3c5c96e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix building vcxproj files outside of solution",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b0de0a236e3e8e74507b90c1450e13c94d93c3c7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Jun 2020 00:07:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.96",
       "version": "0.0.0-canary.96",
