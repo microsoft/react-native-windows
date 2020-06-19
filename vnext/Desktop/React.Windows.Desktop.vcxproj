@@ -179,6 +179,7 @@
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
