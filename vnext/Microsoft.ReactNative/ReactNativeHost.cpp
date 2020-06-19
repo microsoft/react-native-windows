@@ -117,13 +117,14 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.DeveloperSettings.SourceBundlePort =
       m_instanceSettings.SourceBundlePort() != 0 ? std::to_string(m_instanceSettings.SourceBundlePort()) : "";
 
-#ifndef CORE_ABI
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
   reactOptions.UseJsi = m_instanceSettings.UseJsi();
 
   reactOptions.ModuleProvider = modulesProvider;
+#ifndef CORE_ABI
   reactOptions.ViewManagerProvider = viewManagersProvider;
+#endif
   reactOptions.TurboModuleProvider = turboModulesProvider;
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
@@ -138,6 +139,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.Identity = jsBundleFile;
 
+#ifndef CORE_ABI
   return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
 #else
   // Core ABI work needed
