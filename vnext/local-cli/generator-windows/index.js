@@ -94,11 +94,13 @@ function copyProjectTemplateAndReplace(
       version: '2.0.200615.7',
       propsTopOfFile: true,
       hasProps: true,
+      hasTargets: true,
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002',
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+      hasTargets: false,
     },
   ];
 
@@ -109,6 +111,7 @@ function copyProjectTemplateAndReplace(
         version: rnwVersion,
         propsMiddleOfFile: true,
         hasProps: false,
+        hasTargets: true,
       },
     );
   }
