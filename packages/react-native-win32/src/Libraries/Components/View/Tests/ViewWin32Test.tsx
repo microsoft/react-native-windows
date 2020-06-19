@@ -31,17 +31,22 @@ interface IFocusableComponentState {
 
 class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentState> {
   private _focusTarget: ViewWin32 = null;
+  private _labeledBy: React.RefObject<ViewWin32>;
+
   public constructor(props) {
     super(props);
     this.state = {
       hasFocus: false,
     };
+    this._labeledBy = React.createRef<ViewWin32>();
   }
   public render() {
     return (
+      <ViewWin32>
+        <ViewWin32 ref={this._labeledBy} accessibilityLabel="separate label for test" />
       <ViewWin32 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
         <TouchableHighlight onPress={this._onPress}>
-          <ViewWin32 style={styles.blackbox} />
+          <ViewWin32 accessibilityLabeledBy={this._labeledBy} style={styles.blackbox} />
         </TouchableHighlight>
         <ViewWin32
           ref={this._setRef}
@@ -52,6 +57,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
         >
           <Text>{this.state.hasFocus ? 'Focus: Yes' : 'Focus: No'}</Text>
         </ViewWin32>
+      </ViewWin32>
       </ViewWin32>
     );
   }

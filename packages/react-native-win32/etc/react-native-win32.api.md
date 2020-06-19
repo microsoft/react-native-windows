@@ -10,6 +10,7 @@ import { NativeSyntheticEvent } from 'react-native';
 import * as React from 'react';
 import RN = require('react-native');
 import { StyleProp } from 'react-native';
+import { View } from 'react-native';
 import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
@@ -49,6 +50,8 @@ export type BasePropsWin32 = {
     accessibilityRole?: RN.AccessibilityRole | ARIARole;
     accessibilityStates?: AccessibilityStates[];
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
+    accessibilityDescribedBy?: React.RefObject<any>;
+    accessibilityLabeledBy?: React.RefObject<any>;
 };
 
 // Warning: (ae-forgotten-export) The symbol "IButtonWin32State" needs to be exported by the entry point typings-main.d.ts
@@ -440,12 +443,12 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
 export type UseFrom<TOrigin, TUse, Key extends keyof TUse> = Pick<TOrigin, Exclude<keyof TOrigin, Key>> & Pick<TUse, Key>;
 
 // @public (undocumented)
-export class ViewWin32 extends React.Component<IViewWin32Props, {}> implements IViewWin32 {
-    constructor(props: IViewWin32Props);
-    focus(): void;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const ViewWin32: React.ForwardRefExoticComponent<IViewWin32Props & React.RefAttributes<any>>;
+
+// Warning: (ae-forgotten-export) The symbol "ViewWin32Type" needs to be exported by the entry point typings-main.d.ts
+//
+// @public (undocumented)
+export type ViewWin32 = ViewWin32Type;
 
 // @public (undocumented)
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid & RN.ViewPropsIOS & RN.AccessibilityPropsAndroid & Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
