@@ -95,12 +95,6 @@ function copyProjectTemplateAndReplace(
       propsTopOfFile: true,
       hasProps: true,
     },
-    {
-      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002',
-      propsMiddleOfFile: true, // For msbuild order of imports is very important since it follows a sequential macro expansion model. Cpp projects have two typical locations where props are imported.
-      hasProps: options.useWinUI3, // WinUI has props UI.Xaml does not.
-    },
   ];
 
   if (options.experimentalNugetDependency) {
@@ -158,15 +152,6 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
-
-  if (options.useWinUI3) {
-    const slnFilePath = path.join(windowsDir, newProjectName + '.sln');
-    const slnText = fs.readFileSync(slnFilePath).toString();
-    // Target Microsoft.ReactNative.Cxx to WinUI3
-    const regex = /({F7D32BD0-2749-483E-9A0D-1635EF7E3136}\..*\.\w+) = \w+\|([\w\d]+)/g;
-    const makeWinUI3 = '$1 = WinUI3|$2';
-    fs.writeFileSync(slnFilePath, slnText.replace(regex, makeWinUI3));
-  }
 
   if (language === 'cs') {
     [
