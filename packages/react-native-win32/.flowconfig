@@ -23,7 +23,6 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
-<PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
 <PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Image/ImageViewNativeComponent.js
