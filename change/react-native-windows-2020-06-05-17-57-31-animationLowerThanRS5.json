@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Don't crash when using animations in RS3-RS4, just no-op",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-06T00:57:31.416Z"
-}

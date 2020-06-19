@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -143,7 +143,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
-    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
@@ -154,7 +154,7 @@
     </PropertyGroup>
     <Warning Condition="'$(USE_V8)' != 'true'" Text="Building desktop project without USE_V8 (value is '$(USE_V8)')" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />

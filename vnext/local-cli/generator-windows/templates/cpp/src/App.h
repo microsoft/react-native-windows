@@ -3,7 +3,7 @@
 #include "App.xaml.g.h"
 
 // clang-format off
-namespace winrt::{{ namespace }}::implementation
+namespace winrt::{{ namespaceCpp }}::implementation
 {
     struct App : AppT<App>
     {
@@ -14,6 +14,6 @@ namespace winrt::{{ namespace }}::implementation
       private:
         using super = AppT<App>;
     };
-} // namespace winrt::{{ namespace }}::implementation
+} // namespace winrt::{{ namespaceCpp }}::implementation
 
 // clang-format on

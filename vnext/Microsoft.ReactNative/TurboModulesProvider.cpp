@@ -29,21 +29,78 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
   }
 
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
-    VerifyElseCrash(false);
+    m_constantProviderList.push_back(constantProvider);
   }
 
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept {
     auto key = to_string(name);
-    VerifyElseCrash(m_methods.find(key) == m_methods.end());
+    EnsureMemberNotSet(key);
     m_methods.insert({key, {returnType, method}});
   }
 
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
-    VerifyElseCrash(false);
+    auto key = to_string(name);
+    EnsureMemberNotSet(key);
+    m_syncMethods.insert({key, method});
+  }
+
+  facebook::jsi::Value GetConstantOrUndefined(facebook::jsi::Runtime &runtime, const std::string &key) noexcept {
+    // unfortunately it is no way to cache constants
+    // because destructor of jsi::Value must be executed in the JavaScript engine thread
+    // which is not possible to guarantee if constants are cached in this class
+    // so here all constant providers are executed once to know the property name
+    // and then whenever a constant is required, run the constant provider again to get the value
+    if (!m_constantsEvaluated) {
+      m_constantsEvaluated = true;
+
+      for (auto cp : m_constantProviderList) {
+        // one constant provider writes one property to the writer
+        auto writer = winrt::make<JsiWriter>(runtime);
+        writer.WriteObjectBegin();
+        cp(writer);
+        writer.WriteObjectEnd();
+
+        // so it is safe just to read the first property name
+        auto constantObject = writer.as<JsiWriter>()->MoveResult().asObject(runtime);
+        auto propertyNames = constantObject.getPropertyNames(runtime);
+        auto firstPropertyName = propertyNames.getValueAtIndex(runtime, 0).asString(runtime);
+        auto cpKey = firstPropertyName.utf8(runtime);
+        EnsureMemberNotSet(cpKey);
+
+        // save the constant provider
+        m_constantProviders.insert({cpKey, cp});
+      }
+    }
+
+    auto it = m_constantProviders.find(key);
+    if (it == m_constantProviders.end()) {
+      return facebook::jsi::Value::undefined();
+    }
+
+    auto writer = winrt::make<JsiWriter>(runtime);
+    writer.WriteObjectBegin();
+    it->second(writer);
+    writer.WriteObjectEnd();
+
+    // the constant provider producing {foo:constant} is stored at m_constantProviders.find("foo");
+    // so no need to check again
+    auto constantObject = writer.as<JsiWriter>()->MoveResult().asObject(runtime);
+    return constantObject.getProperty(runtime, key.c_str());
   }
 
  public:
   std::unordered_map<std::string, TurboModuleMethodInfo> m_methods;
+  std::unordered_map<std::string, SyncMethodDelegate> m_syncMethods;
+  std::unordered_map<std::string, ConstantProviderDelegate> m_constantProviders;
+  std::vector<ConstantProviderDelegate> m_constantProviderList;
+  bool m_constantsEvaluated = false;
+
+ private:
+  void EnsureMemberNotSet(const std::string &key) noexcept {
+    VerifyElseCrash(m_methods.find(key) == m_methods.end());
+    VerifyElseCrash(m_syncMethods.find(key) == m_syncMethods.end());
+    VerifyElseCrash(m_constantProviders.find(key) == m_constantProviders.end());
+  }
 
  private:
   IReactContext m_reactContext;
@@ -68,6 +125,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     // it is not safe to assume that "runtime" never changes, so members are not cached here
     auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();
     auto key = propName.utf8(runtime);
+
     {
       // try to find a Method
       auto it = tmb->m_methods.find(key);
@@ -82,13 +140,24 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 const facebook::jsi::Value *args,
                 size_t count) {
               // prepare input arguments
-              facebook::jsi::Array argsArray(runtime, count);
-              for (size_t i = 0; i < count; i++) {
-                argsArray.setValueAtIndex(runtime, i, args[i]);
+              size_t serializableArgumentCount = count;
+              switch (method.ReturnType) {
+                case MethodReturnType::Callback:
+                  VerifyElseCrash(count >= 1);
+                  VerifyElseCrash(args[count - 1].isObject() && args[count - 1].asObject(runtime).isFunction(runtime));
+                  serializableArgumentCount -= 1;
+                  break;
+                case MethodReturnType::TwoCallbacks:
+                  VerifyElseCrash(count >= 2);
+                  VerifyElseCrash(args[count - 1].isObject() && args[count - 1].asObject(runtime).isFunction(runtime));
+                  VerifyElseCrash(args[count - 2].isObject() && args[count - 2].asObject(runtime).isFunction(runtime));
+                  serializableArgumentCount -= 2;
+                  break;
               }
-              auto argReader = winrt::make<JsiReader>(runtime, facebook::jsi::Value(runtime, argsArray));
+              auto argReader = winrt::make<JsiReader>(runtime, args, serializableArgumentCount);
 
               // prepare output value
+              // TODO: it is no reason to pass a argWriter just to receive [undefined] for void, should be optimized
               auto argWriter = winrt::make<JsiWriter>(runtime);
 
               // call the function
@@ -115,8 +184,34 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                       });
                 }
                 case MethodReturnType::Callback:
-                case MethodReturnType::TwoCallbacks:
-                  VerifyElseCrash(false);
+                case MethodReturnType::TwoCallbacks: {
+                  facebook::jsi::Value resolveFunction;
+                  facebook::jsi::Value rejectFunction;
+                  if (method.ReturnType == MethodReturnType::Callback) {
+                    resolveFunction = {runtime, args[count - 1]};
+                  } else {
+                    resolveFunction = {runtime, args[count - 2]};
+                    rejectFunction = {runtime, args[count - 1]};
+                  }
+
+                  auto makeCallback = [&runtime](
+                                          const facebook::jsi::Value &callbackValue) noexcept->MethodResultCallback {
+                    return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime) ](
+                        const IJSValueWriter &writer) noexcept {
+                      const facebook::jsi::Value *resultArgs = nullptr;
+                      size_t resultCount = 0;
+                      writer.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
+                      callbackFunction.call(runtime, resultArgs, resultCount);
+                    };
+                  };
+
+                  method.Method(
+                      argReader,
+                      argWriter,
+                      makeCallback(resolveFunction),
+                      (method.ReturnType == MethodReturnType::Callback ? nullptr : makeCallback(rejectFunction)));
+                  return facebook::jsi::Value::undefined();
+                }
                 default:
                   VerifyElseCrash(false);
               }
@@ -124,8 +219,39 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       }
     }
 
-    // missing member, return undefined
-    return facebook::jsi::Value::undefined();
+    {
+      // try to find a SyncMethod
+      auto it = tmb->m_syncMethods.find(key);
+      if (it != tmb->m_syncMethods.end()) {
+        return facebook::jsi::Function::createFromHostFunction(
+            runtime,
+            propName,
+            0,
+            [&runtime, method = it->second](
+                facebook::jsi::Runtime &rt,
+                const facebook::jsi::Value &thisVal,
+                const facebook::jsi::Value *args,
+                size_t count) {
+              // prepare input arguments
+              auto argReader = winrt::make<JsiReader>(runtime, args, count);
+
+              // prepare output value
+              auto argWriter = winrt::make<JsiWriter>(runtime);
+
+              // call the function
+              method(argReader, argWriter);
+
+              // set the return value
+              const facebook::jsi::Value *resultArgs = nullptr;
+              size_t resultCount = 0;
+              argWriter.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
+              return facebook::jsi::Value(rt, resultArgs[0]);
+            });
+      }
+    }
+
+    // returns undefined if the constant doesn't exist
+    return tmb->GetConstantOrUndefined(runtime, key);
   }
 
  private:

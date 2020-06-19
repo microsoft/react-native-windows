@@ -100,12 +100,18 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop.Test.DLL -Name -Recurse -Include $
 # include headers
 Copy-Item -Force -Recurse -Path $ReactWindowsRoot\include -Destination $TargetRoot\inc
 
+# Microsoft.ReactNative.CXX project
+Copy-Item -Force -Recurse -Path $ReactWindowsRoot\Microsoft.ReactNative.Cxx -Destination $TargetRoot\Microsoft.ReactNative.Cxx
+
 # NUSPEC
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\*.nuspec -Destination $TargetRoot
+
 
 #Copy StripAdditionalPlatformsFromNuspec.ps1 for use by publish task
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -Destination $TargetRoot
 
-
 # Microsoft.ReactNative.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot
+
+# Natvis files
+Copy-Item -Force -Path $ReactWindowsRoot\Folly\Folly.natvis -Destination (New-Item -ItemType Directory $TargetRoot\natvis -Force)

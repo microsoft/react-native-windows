@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include "WebSocketJSExecutorUwp.h"
+#include "WebSocketJSExecutor.h"
 
 namespace facebook {
 namespace react {

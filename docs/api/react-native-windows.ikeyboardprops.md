@@ -14,10 +14,10 @@ export interface IKeyboardProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [keyDownEvents](./react-native-windows.ikeyboardprops.keydownevents.md) | <code>IHandledKeyboardEvent[]</code> |  |
-|  [keyUpEvents](./react-native-windows.ikeyboardprops.keyupevents.md) | <code>IHandledKeyboardEvent[]</code> |  |
-|  [onKeyDown](./react-native-windows.ikeyboardprops.onkeydown.md) | <code>(args: IKeyboardEvent) =&gt; void</code> |  |
-|  [onKeyDownCapture](./react-native-windows.ikeyboardprops.onkeydowncapture.md) | <code>(args: IKeyboardEvent) =&gt; void</code> |  |
-|  [onKeyUp](./react-native-windows.ikeyboardprops.onkeyup.md) | <code>(args: IKeyboardEvent) =&gt; void</code> |  |
-|  [onKeyUpCapture](./react-native-windows.ikeyboardprops.onkeyupcapture.md) | <code>(args: IKeyboardEvent) =&gt; void</code> |  |
+|  [keyDownEvents](./react-native-windows.ikeyboardprops.keydownevents.md) | [IHandledKeyboardEvent](./react-native-windows.ihandledkeyboardevent.md)<!-- -->\[\] |  |
+|  [keyUpEvents](./react-native-windows.ikeyboardprops.keyupevents.md) | [IHandledKeyboardEvent](./react-native-windows.ihandledkeyboardevent.md)<!-- -->\[\] |  |
+|  [onKeyDown](./react-native-windows.ikeyboardprops.onkeydown.md) | (args: [IKeyboardEvent](./react-native-windows.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [onKeyDownCapture](./react-native-windows.ikeyboardprops.onkeydowncapture.md) | (args: [IKeyboardEvent](./react-native-windows.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [onKeyUp](./react-native-windows.ikeyboardprops.onkeyup.md) | (args: [IKeyboardEvent](./react-native-windows.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [onKeyUpCapture](./react-native-windows.ikeyboardprops.onkeyupcapture.md) | (args: [IKeyboardEvent](./react-native-windows.ikeyboardevent.md)<!-- -->) =&gt; void |  |
 

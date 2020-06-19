@@ -19,6 +19,7 @@
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
+#include "../../codegen/NativeLogBoxSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -34,6 +35,7 @@
 #include "Modules/DevSettingsModule.h"
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LogBoxModule.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -248,6 +250,12 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::AppState,
                   ::Microsoft::ReactNativeSpecs::AppStateSpec>());
 
+          nmp->AddModuleProvider(
+              L"LogBox",
+              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+                  ::Microsoft::ReactNative::LogBox,
+                  ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
+
           if (m_options.UseWebDebugger()) {
             nmp->AddModuleProvider(
                 L"Clipboard",
@@ -287,7 +295,7 @@ void ReactInstanceWin::Initialize() noexcept {
                   ::Microsoft::ReactNative::I18nManager,
                   ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
 
-          auto modules = nmp->GetModules(m_reactContext, m_batchingUIThread);
+          auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());
           cxxModules.insert(
               cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
 

@@ -14,14 +14,14 @@ export interface IDatePickerProps extends ViewProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [dateFormat](./react-native-windows.idatepickerprops.dateformat.md) | <code>'day month year' &#124; 'dayofweek day month' &#124; 'longdate' &#124; 'shortdate'</code> |  |
-|  [dayOfWeekFormat](./react-native-windows.idatepickerprops.dayofweekformat.md) | <code>'{dayofweek.abbreviated(2)}' &#124; '{dayofweek.abbreviated(3)}' &#124; '{dayofweek.full}'</code> |  |
-|  [firstDayOfWeek](./react-native-windows.idatepickerprops.firstdayofweek.md) | <code>DayOfWeek</code> |  |
-|  [maxDate](./react-native-windows.idatepickerprops.maxdate.md) | <code>Date</code> |  |
-|  [minDate](./react-native-windows.idatepickerprops.mindate.md) | <code>Date</code> |  |
-|  [onChange](./react-native-windows.idatepickerprops.onchange.md) | <code>(event: IDatePickerChangeEvent) =&gt; void</code> |  |
-|  [onDateChange](./react-native-windows.idatepickerprops.ondatechange.md) | <code>(newDate: Date) =&gt; void</code> |  |
-|  [placeholderText](./react-native-windows.idatepickerprops.placeholdertext.md) | <code>string</code> |  |
-|  [selectedDate](./react-native-windows.idatepickerprops.selecteddate.md) | <code>Date</code> |  |
-|  [timeZoneOffsetInSeconds](./react-native-windows.idatepickerprops.timezoneoffsetinseconds.md) | <code>number</code> |  |
+|  [dateFormat](./react-native-windows.idatepickerprops.dateformat.md) | 'day month year' \| 'dayofweek day month' \| 'longdate' \| 'shortdate' |  |
+|  [dayOfWeekFormat](./react-native-windows.idatepickerprops.dayofweekformat.md) | '{dayofweek.abbreviated(2)}' \| '{dayofweek.abbreviated(3)}' \| '{dayofweek.full}' |  |
+|  [firstDayOfWeek](./react-native-windows.idatepickerprops.firstdayofweek.md) | [DayOfWeek](./react-native-windows.dayofweek.md) |  |
+|  [maxDate](./react-native-windows.idatepickerprops.maxdate.md) | Date |  |
+|  [minDate](./react-native-windows.idatepickerprops.mindate.md) | Date |  |
+|  [onChange](./react-native-windows.idatepickerprops.onchange.md) | (event: [IDatePickerChangeEvent](./react-native-windows.idatepickerchangeevent.md)<!-- -->) =&gt; void |  |
+|  [onDateChange](./react-native-windows.idatepickerprops.ondatechange.md) | (newDate: Date) =&gt; void |  |
+|  [placeholderText](./react-native-windows.idatepickerprops.placeholdertext.md) | string |  |
+|  [selectedDate](./react-native-windows.idatepickerprops.selecteddate.md) | Date |  |
+|  [timeZoneOffsetInSeconds](./react-native-windows.idatepickerprops.timezoneoffsetinseconds.md) | number |  |
 

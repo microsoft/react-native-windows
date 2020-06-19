@@ -1,8 +1,88 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 09 Jun 2020 00:06:03 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.97
+
+Fri, 19 Jun 2020 00:07:58 GMT
+
+### Changes
+
+- Move the addition of folly.natvis to ReactWin32.nuspec (warleu@microsoft.com)
+- Fix building vcxproj files outside of solution (dannyvv@microsoft.com)
+
+## 0.0.0-canary.96
+
+Thu, 18 Jun 2020 00:07:44 GMT
+
+### Changes
+
+- Create Scripts for the Release Process (ngerlem@microsoft.com)
+- Run NativeModules 2.0 in JS thread (vmorozov@microsoft.com)
+- Update C++/WinRT to version 2.0.200615.7 (vmorozov@microsoft.com)
+- version agnostic msbuild log viewer (asklar@microsoft.com)
+
+## 0.0.0-canary.95
+
+Wed, 17 Jun 2020 00:05:39 GMT
+
+### Changes
+
+- Unify DevSupportManager and WebSocketJSExecutor (acoates@microsoft.com)
+- Rename "master" packages to "canary" (ngerlem@microsoft.com)
+- Don't lint target folder and don't flow check node_modules packages (dannyvv@microsoft.com)
+
+## 0.0.0-master.94
+
+Tue, 16 Jun 2020 00:05:48 GMT
+
+### Changes
+
+-  Upgrade to boost 1.72.0. (julio.rocha@microsoft.com)
+- Prevent Switches from Accidentally Becoming Disabled (ngerlem@microsoft.com)
+- use default brush for border (kmelmon@microsoft.com)
+
+## 0.0.0-master.93
+
+Sat, 13 Jun 2020 00:09:11 GMT
+
+### Changes
+
+- Implement logbox (acoates@microsoft.com)
+- Add Microsoft.ReactNative.Cxx to the nugets. (acoates@microsoft.com)
+- Fix file lock issue wiht msbuild /bl flag and the metro bundler (dannyvv@microsoft.com)
+
+## 0.0.0-master.92
+
+Fri, 12 Jun 2020 00:33:44 GMT
+
+### Changes
+
+- Fix support for `--namespace` on react-native-windows init for cpp (dannyvv@microsoft.com)
+
+## 0.0.0-master.91
+
+Thu, 11 Jun 2020 00:05:14 GMT
+
+### Changes
+
+- Add support for redbox's on xamlislands (acoates@microsoft.com)
+- Manually set Lib and Include paths for Hermes (julio.rocha@microsoft.com)
+- More rnw-dependencies improvements (asklar@microsoft.com)
+
+## 0.0.0-master.90
+
+Wed, 10 Jun 2020 00:05:10 GMT
+
+### Changes
+
+- implement --proxy in CLI (igklemen@microsoft.com)
+- Don't crash when using animations in RS3-RS4, just no-op (asklar@microsoft.com)
+- Add support for Alert module with Xaml Islands (acoates@microsoft.com)
+- fix onPress for nested Text (igklemen@microsoft.com)
+- translate PS exception into error code (asklar@microsoft.com)
 
 ## 0.0.0-master.89
 

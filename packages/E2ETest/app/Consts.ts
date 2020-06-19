@@ -14,10 +14,6 @@ export const TEXTINPUT_TESTPAGE = 'TextInputTestPage';
 
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
 export const CURTEXT_ON_TEXTINPUT = 'CurTextInput';
-export const PREVTEXT_ON_TEXTINPUT = 'PrevTextInput';
-export const PREV2TEXT_ON_TEXTINPUT = 'Prev2TextInput';
-export const PREV3TEXT_ON_TEXTINPUT = 'Prev3TextInput';
-export const PREV4TEXT_ON_TEXTINPUT = 'Prev4TextInput';
 export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
 export const CAP_TEXTINPUT_ON_TEXTINPUT = 'TextInputAutoCap';
 

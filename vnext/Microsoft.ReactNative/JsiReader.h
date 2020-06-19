@@ -10,6 +10,7 @@ namespace winrt::Microsoft::ReactNative {
 
 struct JsiReader : implements<JsiReader, IJSValueReader> {
   JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value &root) noexcept;
+  JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value *args, size_t count) noexcept;
 
  public: // IJSValueReader
   JSValueType ValueType() noexcept;
@@ -24,13 +25,16 @@ struct JsiReader : implements<JsiReader, IJSValueReader> {
   enum class ContainerType {
     Object,
     Array,
+    Args,
   };
 
   struct Container {
     ContainerType Type;
-    std::optional<facebook::jsi::Object> CurrentObject; // valid for object
-    std::optional<facebook::jsi::Array> PropertyNames; // valid for object
-    std::optional<facebook::jsi::Array> CurrentArray; // valid for array
+    std::optional<facebook::jsi::Object> CurrentObject; // valid for ContainerType::Object
+    std::optional<facebook::jsi::Array> PropertyNames; // valid for ContainerType::Object
+    std::optional<facebook::jsi::Array> CurrentArray; // valid for ContainerType::Array
+    const facebook::jsi::Value *ArgElements = nullptr; // valid for ContainerType::Args
+    size_t ArgLength = 0; // valid for ContainerType::Args
     int Index = -1;
 
     Container(facebook::jsi::Runtime &runtime, facebook::jsi::Object &&value) noexcept
@@ -41,6 +45,9 @@ struct JsiReader : implements<JsiReader, IJSValueReader> {
     Container(facebook::jsi::Array &&value) noexcept
         : Type(ContainerType::Array), CurrentArray(std::make_optional<facebook::jsi::Array>(std::move(value))) {}
 
+    Container(const facebook::jsi::Value *args, size_t count) noexcept
+        : Type(ContainerType::Args), ArgElements(args), ArgLength(count) {}
+
     Container(const Container &) = delete;
     Container(Container &&) = default;
   };
@@ -50,7 +57,6 @@ struct JsiReader : implements<JsiReader, IJSValueReader> {
 
  private:
   facebook::jsi::Runtime &m_runtime;
-  const facebook::jsi::Value &m_root;
 
   // when m_currentPrimitiveValue is not null, the current value is a primitive value
   // when m_currentPrimitiveValue is null, the current value is the top value of m_nonPrimitiveValues

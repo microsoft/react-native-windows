@@ -20,7 +20,7 @@ export declare class DatePicker extends React.Component<IDatePickerProps>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [defaultProps](./react-native-windows.datepicker.defaultprops.md) | <code>static</code> | <code>IDatePickerProps</code> |  |
+|  [defaultProps](./react-native-windows.datepicker.defaultprops.md) | <code>static</code> | [IDatePickerProps](./react-native-windows.idatepickerprops.md) |  |
 
 ## Methods
 

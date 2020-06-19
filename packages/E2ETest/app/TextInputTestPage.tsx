@@ -10,19 +10,11 @@ import {
   TEXTINPUT_ON_TEXTINPUT,
   ML_TEXTINPUT_ON_TEXTINPUT,
   CURTEXT_ON_TEXTINPUT,
-  PREVTEXT_ON_TEXTINPUT,
-  PREV2TEXT_ON_TEXTINPUT,
-  PREV3TEXT_ON_TEXTINPUT,
-  PREV4TEXT_ON_TEXTINPUT,
   CAP_TEXTINPUT_ON_TEXTINPUT,
 } from './Consts';
 
 interface ITextInputTestPageState {
-  curText: string;
-  prevText: string;
-  prev2Text: string;
-  prev3Text: string;
-  prev4Text: string;
+  log: string;
 }
 
 export class TextInputTestPage extends React.Component<
@@ -30,21 +22,13 @@ export class TextInputTestPage extends React.Component<
   ITextInputTestPageState
 > {
   public state = {
-    curText: '<No Event>',
-    prevText: '<No Event>',
-    prev2Text: '<No Event>',
-    prev3Text: '<No Event>',
-    prev4Text: '<No Event>',
+    log: '<Log Start>',
   };
 
   public updateText = (text: string) => {
     this.setState(state => {
       return {
-        curText: text,
-        prevText: state.curText,
-        prev2Text: state.prevText,
-        prev3Text: state.prev2Text,
-        prev4Text: state.prev3Text,
+        log: text + '\n' + state.log,
       };
     });
   };
@@ -91,23 +75,7 @@ export class TextInputTestPage extends React.Component<
           placeholder="autoCapitalize"
           autoCapitalize="characters"
         />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text testID={CURTEXT_ON_TEXTINPUT}>
-            curText: {this.state.curText}
-          </Text>
-          <Text testID={PREVTEXT_ON_TEXTINPUT}>
-            prev: {this.state.prevText}
-          </Text>
-          <Text testID={PREV2TEXT_ON_TEXTINPUT}>
-            prev2: {this.state.prev2Text}
-          </Text>
-          <Text testID={PREV3TEXT_ON_TEXTINPUT}>
-            prev3: {this.state.prev3Text}
-          </Text>
-          <Text testID={PREV4TEXT_ON_TEXTINPUT}>
-            prev4: {this.state.prev4Text}
-          </Text>
-        </View>
+        <Text testID={CURTEXT_ON_TEXTINPUT}>{this.state.log}</Text>
       </View>
     );
   }

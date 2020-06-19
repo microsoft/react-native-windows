@@ -109,7 +109,17 @@ export type AccessibilityActionName =
 
   export type Cursor =
   | 'auto'
+  | 'default'
   | 'pointer'
+  | 'help'
+  | 'not-allowed'
+  | 'wait'
+  | 'move'
+  | 'nesw-resize'
+  | 'ns-resize'
+  | 'nwse-resize'
+  | 'we-resize'
+  | 'text'
 
 export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
