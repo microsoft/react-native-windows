@@ -92,7 +92,7 @@
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative"</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -103,6 +103,7 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CORE_ABI</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <!-- TODO: Remove after https://github.com/microsoft/hermes-windows/issues/12 is fixed. -->
@@ -155,19 +156,30 @@
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
-    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />

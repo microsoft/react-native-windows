@@ -32,8 +32,10 @@ namespace Microsoft.ReactNative {
     // Get ReactDispatcherHelper::JSDispatcherProperty from the Properties property bag.
     IReactDispatcher JSDispatcher { get; };
 
+#ifndef CORE_ABI
     // Deprecated: Use DispatchEvent on XamlUIService instead
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
+#endif
 
     // Call JavaScript function methodName of moduleName.
     void CallJSFunction(String moduleName, String methodName, JSValueArgWriter paramsArgWriter);

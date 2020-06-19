@@ -8,7 +8,7 @@
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace ABITests {
+namespace ReactNativeIntegrationTests {
 
 class MockReactPackageProvider : public winrt::implements<MockReactPackageProvider, IReactPackageProvider> {
  public:
@@ -20,4 +20,4 @@ class MockReactPackageProvider : public winrt::implements<MockReactPackageProvid
   std::function<void(IReactPackageBuilder const &)> MockCreatePackage;
 };
 
-} // namespace ABITests
+} // namespace ReactNativeIntegrationTests
