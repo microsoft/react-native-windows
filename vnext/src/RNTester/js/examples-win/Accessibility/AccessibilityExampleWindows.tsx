@@ -273,6 +273,11 @@ class AccessibilityStateExamples extends React.Component {
     viewChecked: 0,
     viewBusy: false,
     viewCollapsed: false,
+
+    viewRangeNow: 10,
+    viewRangeMax: 125,
+    viewRangeMin: 5,
+    viewValueText: 'testText',
   };
 
   public render() {
@@ -419,6 +424,52 @@ class AccessibilityStateExamples extends React.Component {
             UIA
           </Text>
         </View>
+
+        <Text>
+          The following View exposes accessibilityValue fields (min, max, now)
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          onPress={this.rangePress}>
+          <Text>Range value increment</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: 'gray',
+            height: 50,
+          }}
+          accessibilityValue={{
+            min: this.state.viewRangeMin,
+            max: this.state.viewRangeMax,
+            now: this.state.viewRangeNow,
+          }}
+          accessibilityRole="adjustable">
+          <Text>
+            The View's (accessibilityRole == adjustable, ie. Slider) properties
+            should be the following according to UIA: Min-{' '}
+            {this.state.viewRangeMin}
+            Max- {this.state.viewRangeMax}
+            Now- {this.state.viewRangeNow}
+          </Text>
+        </View>
+
+        <Text>
+          The following View exposes the accessibilityValue.Text field
+        </Text>
+        <View
+          style={{
+            backgroundColor: 'gray',
+            height: 50,
+          }}
+          accessibilityValue={{
+            text: this.state.viewValueText,
+          }}
+          accessibilityRole="combobox">
+          <Text>
+            The View's properties should be the following according to UIA:
+            Text- {this.state.viewValueText}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -447,6 +498,10 @@ class AccessibilityStateExamples extends React.Component {
 
   private collapsePress = () => {
     this.setState({viewCollapsed: !this.state.viewCollapsed});
+  };
+
+  private rangePress = () => {
+    this.setState({viewRangeNow: this.state.viewRangeNow + 1});
   };
 }
 

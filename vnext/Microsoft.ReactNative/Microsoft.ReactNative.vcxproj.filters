@@ -158,6 +158,9 @@
     <ClCompile Include="..\ReactUWP\Views\DynamicAutomationPeer.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\DynamicValueProvider.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\DynamicAutomationProperties.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -498,6 +501,9 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\DynamicAutomationPeer.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\DynamicValueProvider.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\DynamicAutomationProperties.h">
