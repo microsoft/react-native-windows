@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 18 Jun 2020 00:07:44 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.97
+
+Fri, 19 Jun 2020 00:07:58 GMT
+
+### Changes
+
+- Move the addition of folly.natvis to ReactWin32.nuspec (warleu@microsoft.com)
+- Fix building vcxproj files outside of solution (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.96
 
