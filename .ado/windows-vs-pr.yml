@@ -131,7 +131,7 @@ jobs:
             $pkgVersion = $pkgJson.version
             $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -slices ("$(BuildPlatform).$(BuildConfiguration)")
             Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
-            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target;baseplatform=$(BuildPlatform);baseconfiguration=$(BuildConfiguration)" -Verbosity Detailed
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.StagingDirectory);baseplatform=$(BuildPlatform);baseconfiguration=$(BuildConfiguration)" -Verbosity Detailed
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PublishBuildArtifacts@1
@@ -308,7 +308,7 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
+      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocket)
 
     steps:
       - checkout: self

@@ -122,17 +122,17 @@ bool QueueService::HasTaskBatching() noexcept {
   return m_taskBatches.find(std::this_thread::get_id()) != m_taskBatches.end();
 }
 
-bool QueueService::TryLockQueueLocalValue(SwapDispatchLocalValueCallback swapLocalValue, void *tlsValue) noexcept {
-  return TrySwapLocalValue(swapLocalValue, tlsValue, LocalValueSwapAction::Unlock);
+bool QueueService::TryLockQueueLocalValue(SwapDispatchLocalValueCallback swapLocalValue, void **tlsValue) noexcept {
+  return TrySwapLocalValue(swapLocalValue, tlsValue, LocalValueSwapAction::Lock);
 }
 
-void QueueService::UnlockLocalValue(void *tlsValue) noexcept {
+void QueueService::UnlockLocalValue(void **tlsValue) noexcept {
   TrySwapLocalValue(nullptr, tlsValue, LocalValueSwapAction::Unlock);
 }
 
 bool QueueService::TrySwapLocalValue(
     SwapDispatchLocalValueCallback swapLocalValue,
-    void *tlsValue,
+    void **tlsValue,
     LocalValueSwapAction action) noexcept {
   std::lock_guard lock{m_mutex};
 
@@ -140,7 +140,7 @@ bool QueueService::TrySwapLocalValue(
   // layout between threads. We use address delta between the provided TLS value and
   // our internal localValueAnchor. It must be the same for a TLS value between threads.
   static thread_local uint8_t localValueAnchor{0};
-  ptrdiff_t key = static_cast<uint8_t *>(tlsValue) - &localValueAnchor;
+  ptrdiff_t key = static_cast<uint8_t *>(static_cast<void *>(tlsValue)) - &localValueAnchor;
   auto [it, added] = m_localValues.try_emplace(key, swapLocalValue);
   return it->second.TrySwapLocalValue(tlsValue, action);
 }
@@ -230,7 +230,7 @@ QueueLocalValueEntry::~QueueLocalValueEntry() noexcept {
   m_swapLocalValue(&m_data, nullptr);
 }
 
-bool QueueLocalValueEntry::TrySwapLocalValue(void *tlsValue, LocalValueSwapAction action) noexcept {
+bool QueueLocalValueEntry::TrySwapLocalValue(void **tlsValue, LocalValueSwapAction action) noexcept {
   if (action == LocalValueSwapAction::Lock && !m_isLocked) {
     m_isLocked = true;
   } else if (action == LocalValueSwapAction::Unlock && m_isLocked) {
@@ -275,10 +275,6 @@ DispatchQueue DispatchQueueStatic::MakeSerialQueue() noexcept {
 
 DispatchQueue DispatchQueueStatic::MakeLooperQueue() noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeLooperScheduler());
-}
-
-DispatchQueue DispatchQueueStatic::MakeCurrentThreadUIQueue() noexcept {
-  return Mso::Make<QueueService, IDispatchQueueService>(MakeCurrentThreadUIScheduler());
 }
 
 DispatchQueue DispatchQueueStatic::MakeConcurrentQueue(uint32_t maxThreads) noexcept {

@@ -18,9 +18,6 @@
     <ClCompile Include="WebSocketIntegrationTest.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocketJSExecutorIntegrationTest.cpp">
-      <Filter>Integration Tests</Filter>
-    </ClCompile>
     <ClCompile Include="WebSocketModuleIntegrationTest.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>

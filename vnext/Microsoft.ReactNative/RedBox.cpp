@@ -55,10 +55,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   }
 
   void WindowSizeChanged(winrt::Windows::UI::Core::WindowSizeChangedEventArgs const &args) noexcept {
-    m_redboxContent.MaxHeight(args.Size().Height);
-    m_redboxContent.Height(args.Size().Height);
-    m_redboxContent.MaxWidth(args.Size().Width);
-    m_redboxContent.Width(args.Size().Width);
+    if (m_redboxContent) {
+      m_redboxContent.MaxHeight(args.Size().Height);
+      m_redboxContent.Height(args.Size().Height);
+      m_redboxContent.MaxWidth(args.Size().Width);
+      m_redboxContent.Width(args.Size().Width);
+    }
   }
 
   void ShowNewJSError() noexcept {
@@ -147,6 +149,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_reloadButton.Click(m_tokenReload);
     xaml::Window::Current().SizeChanged(m_tokenSizeChanged);
     m_popup.Closed(m_tokenClosed);
+    m_redboxContent = nullptr;
     m_onClosedCallback(GetId());
   }
 

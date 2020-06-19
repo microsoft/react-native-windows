@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 16 Jun 2020 23:24:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0-preview.7",
+      "version": "0.62.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable fast refresh",
+            "author": "acoates@microsoft.com",
+            "commit": "fe11a96ebecc3ea9a2afb5fe24e0cf694e3968ab",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Jun 2020 22:59:23 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0-preview.6",
+      "version": "0.62.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add focusRef prop to TouchableWin32",
+            "author": "taamireh@microsoft.com",
+            "commit": "5502dcfd27189e5e2deb223e569d34fcaf0741f4",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 May 2020 23:08:54 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0-preview.5",
       "version": "0.62.0-preview.5",

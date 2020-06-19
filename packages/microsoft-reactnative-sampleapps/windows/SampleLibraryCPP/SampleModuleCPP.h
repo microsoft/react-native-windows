@@ -10,7 +10,7 @@
 #include "DebugHelpers.h"
 #include "NativeModules.h"
 
-#define DEBUG_OUTPUT(...) DebugWriteLine("SampleModuleCppImpl", ##__VA_ARGS__);
+#define DEBUG_OUTPUT(...) DebugWriteLine("SampleLibraryCpp", ##__VA_ARGS__);
 
 namespace SampleLibraryCpp {
 
@@ -39,6 +39,7 @@ struct SampleModuleCppImpl {
     DEBUG_OUTPUT("C++ Properties.Prop1:", *reactContext.Properties().Get(myProp1));
     DEBUG_OUTPUT("C++ Properties.Prop2:", winrt::to_string(*reactContext.Properties().Get(myProp2)));
 
+    // Note that all notification subscriptions are removed automatically when React instance is unloaded.
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
         [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           TimedEvent(++m_timerCount);
@@ -244,6 +245,24 @@ struct SampleModuleCppImpl {
   winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};
   int m_timerCount{0};
   static constexpr std::chrono::milliseconds TimedEventInterval{5000};
+};
+
+// SampleSharedCppModule shows how to inherited native modules from std::enable_shared_from_this
+// to use weak_from_this() in event handlers. In this example we use notifications instead
+// of events just to show case the std::weak_ptr use.
+REACT_MODULE(SampleSharedCppModule);
+struct SampleSharedCppModule : std::enable_shared_from_this<SampleSharedCppModule> {
+  using IInspectable = winrt::Windows::Foundation::IInspectable;
+
+  // The Initialize method is called when React instance loaded JavaScript and the module is ready to use.
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const & /*reactContext*/) noexcept {}
+
+  REACT_METHOD(SayHello)
+  std::string SayHello() noexcept {
+    // This method is currently unused
+    return "Hello";
+  }
 };
 
 } // namespace SampleLibraryCpp

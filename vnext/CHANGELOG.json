@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Jun 2020 23:24:44 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.16",
+      "version": "0.62.0-preview.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Unify DevSupportManager and WebSocketJSExecutor",
+            "author": "acoates@microsoft.com",
+            "commit": "fe11a96ebecc3ea9a2afb5fe24e0cf694e3968ab",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 Jun 2020 08:37:17 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.15",
+      "version": "0.62.0-preview.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Prevent Switches from Accidentally Becoming Disabled",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9c8448948da9081bcda22302fbeea317662d3ba3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jun 2020 20:55:23 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.14",
+      "version": "0.62.0-preview.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.62] Cherry pick PR #5071 for CallJsFunction queuing",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d3bcc6df4cef7d6e73f1e6082887163f42425cc4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Microsoft.ReactNative.Cxx to the nugets.",
+            "author": "acoates@microsoft.com",
+            "commit": "04eb1f97c949632e9e086deccbe45b80109a0fc7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jun 2020 18:07:47 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.13",
+      "version": "0.62.0-preview.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Attempt to fix Publish pipeline",
+            "author": "tudorm@microsoft.com",
+            "commit": "1639137e726d74911c7db7f01ed116ff2fe05113",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jun 2020 12:11:09 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.12",
+      "version": "0.62.0-preview.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add XamlUIService with ElementFromReactTag",
+            "author": "acoates@microsoft.com",
+            "commit": "d037e54de76d5c1165300f919a14bbfa3ffbc199",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Jun 2020 22:48:15 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.11",
+      "version": "0.62.0-preview.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implemented support for native module std::weak_ptr",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactInstance error state to avoid crashes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add UIDispatcher property to ReactInstanceSettings and IReactContext",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f9c75d5964224768b52959d1a1aa45036e5c05b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jun 2020 23:30:48 GMT",
       "tag": "react-native-windows_v0.62.0-preview.10",
       "version": "0.62.0-preview.10",

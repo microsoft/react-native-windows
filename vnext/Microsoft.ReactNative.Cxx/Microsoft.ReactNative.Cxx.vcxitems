@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeReader.h" />
@@ -23,6 +24,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactDispatcher.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactNonAbiValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPropertyBag.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactContext.h" />

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #pragma once
-#ifndef MICROSOFT_REACTNATIVE_PROPERTYBAG
-#define MICROSOFT_REACTNATIVE_PROPERTYBAG
+#ifndef MICROSOFT_REACTNATIVE_REACTPROPERTYBAG
+#define MICROSOFT_REACTNATIVE_REACTPROPERTYBAG
 
 //
 // ReactPropertyBag is a thread-safe storage of property values.
@@ -69,18 +69,28 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 #include <optional>
+#include "ReactHandleHelper.h"
 #include "ReactNonAbiValue.h"
 
 namespace winrt::Microsoft::ReactNative {
 
-// Encapsulates the IReactPropertyNamespace
+// ReactPropertyNamespace encapsulates the IReactPropertyNamespace.
+// It represents an atomic property namespace object.
 struct ReactPropertyNamespace {
   ReactPropertyNamespace(std::nullptr_t = nullptr) noexcept {}
 
   explicit ReactPropertyNamespace(IReactPropertyNamespace const &handle) noexcept : m_handle{handle} {}
 
-  explicit ReactPropertyNamespace(param::hstring const &ns) noexcept
-      : m_handle{ReactPropertyBagHelper::GetNamespace(ns)} {}
+  explicit ReactPropertyNamespace(param::hstring const &namespaceName) noexcept
+      : m_handle{ReactPropertyBagHelper::GetNamespace(namespaceName)} {}
+
+  IReactPropertyNamespace const &Handle() const noexcept {
+    return m_handle;
+  }
+
+  explicit operator bool() const noexcept {
+    return m_handle ? true : false;
+  }
 
   static ReactPropertyNamespace Global() noexcept {
     return ReactPropertyNamespace{ReactPropertyBagHelper::GlobalNamespace()};
@@ -90,35 +100,38 @@ struct ReactPropertyNamespace {
     return m_handle ? m_handle.NamespaceName() : hstring{};
   }
 
-  IReactPropertyNamespace const &Handle() const noexcept {
-    return m_handle;
-  }
-
-  explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
-  }
-
  private:
   IReactPropertyNamespace m_handle;
 };
 
-// Encapsulates the IReactPropertyName and the property type
-template <class T>
-struct ReactPropertyId {
-  using PropertyType = T;
+// ReactPropertyName encapsulates the IReactPropertyName.
+// It represents an atomic property name object that defines a LocalName
+// within the referenced Namespace.
+struct ReactPropertyName {
+  ReactPropertyName(std::nullptr_t = nullptr) noexcept {}
 
-  ReactPropertyId(std::nullptr_t = nullptr) noexcept {}
+  explicit ReactPropertyName(IReactPropertyName const &handle) noexcept : m_handle{handle} {}
 
-  explicit ReactPropertyId(IReactPropertyName const &handle) noexcept : m_handle{handle} {}
-
-  explicit ReactPropertyId(hstring const &localName) noexcept
+  explicit ReactPropertyName(hstring const &localName) noexcept
       : m_handle{ReactPropertyBagHelper::GetName(nullptr, localName)} {}
 
-  ReactPropertyId(ReactPropertyNamespace const &ns, hstring const &localName) noexcept
+  ReactPropertyName(ReactPropertyNamespace const &ns, hstring const &localName) noexcept
       : m_handle{ReactPropertyBagHelper::GetName(ns.Handle(), localName)} {}
 
-  ReactPropertyId(hstring const &ns, hstring const &localName) noexcept
-      : m_handle{ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(ns), localName)} {}
+  ReactPropertyName(hstring const &namespaceName, hstring const &localName) noexcept
+      : m_handle{ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(namespaceName), localName)} {}
+
+  IReactPropertyName const &Handle() const noexcept {
+    return m_handle;
+  }
+
+  explicit operator bool() const noexcept {
+    return m_handle ? true : false;
+  }
+
+  ReactPropertyNamespace Namespace() const noexcept {
+    return ReactPropertyNamespace{m_handle ? m_handle.Namespace() : nullptr};
+  }
 
   hstring NamespaceName() const noexcept {
     return m_handle ? m_handle.Namespace().NamespaceName() : hstring{};
@@ -128,16 +141,15 @@ struct ReactPropertyId {
     return m_handle ? m_handle.LocalName() : hstring{};
   }
 
-  IReactPropertyName const &Handle() const noexcept {
-    return m_handle;
-  }
-
-  explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
-  }
-
  private:
   IReactPropertyName m_handle;
+};
+
+// Encapsulates the IReactPropertyName and the property type
+template <class T>
+struct ReactPropertyId : ReactPropertyName {
+  using PropertyType = T;
+  using ReactPropertyName::ReactPropertyName;
 };
 
 // ReactPropertyBag is a wrapper for IReactPropertyBag to store strongly-typed properties in a thread-safe way.
@@ -159,7 +171,7 @@ struct ReactPropertyBag {
 
   // True if handle is not null.
   explicit operator bool() const noexcept {
-    return static_cast<bool>(m_handle);
+    return m_handle ? true : false;
   }
 
   // Get ReactPropertyBag handle.
@@ -229,37 +241,7 @@ struct ReactPropertyBag {
     Remove(m_handle, propertyId);
   }
 
-  // True if two ReactPropertyBags have the same handle.
-  friend bool operator==(const ReactPropertyBag &left, const ReactPropertyBag &right) noexcept {
-    return left.m_handle == right.m_handle;
-  }
-
-  // True if two ReactPropertyBags have different handles.
-  friend bool operator!=(const ReactPropertyBag &left, const ReactPropertyBag &right) noexcept {
-    return left.m_handle != right.m_handle;
-  }
-
-  // True if left ReactPropertyBag handle is null.
-  friend bool operator==(const ReactPropertyBag &left, std::nullptr_t) noexcept {
-    return !static_cast<bool>(left.m_handle);
-  }
-
-  // True if left ReactPropertyBag handle is not null.
-  friend bool operator!=(const ReactPropertyBag &left, std::nullptr_t) noexcept {
-    return static_cast<bool>(left.m_handle);
-  }
-
-  // True if right ReactPropertyBag handle is null.
-  friend bool operator==(std::nullptr_t, const ReactPropertyBag &right) noexcept {
-    return !static_cast<bool>(right.m_handle);
-  }
-
-  // True if right ReactPropertyBag handle is not null.
-  friend bool operator!=(std::nullptr_t, const ReactPropertyBag &right) noexcept {
-    return static_cast<bool>(right.m_handle);
-  }
-
- private:
+  // Box value to an ABI-safe object.
   template <class T, class TValue, std::enable_if_t<!IsReactNonAbiValueV<T> || std::is_same_v<T, TValue>, int> = 0>
   static Windows::Foundation::IInspectable ToObject(TValue const &value) noexcept {
     // We box WinRT types and return IInspectable-inherited values as-is.
@@ -267,6 +249,7 @@ struct ReactPropertyBag {
     return box_value(value);
   }
 
+  // Box value to an ABI-safe object.
   template <class T, class TValue, std::enable_if_t<IsReactNonAbiValueV<T> && !std::is_same_v<T, TValue>, int> = 0>
   static Windows::Foundation::IInspectable ToObject(TValue &&value) noexcept {
     // Create ReactNonAbiValue<U> with newly allocated wrapper for U and pass TValue as an argument to the U
@@ -275,11 +258,13 @@ struct ReactPropertyBag {
     return T{std::in_place, std::forward<TValue>(value)};
   }
 
+  // Box value to an ABI-safe object.
   template <class T>
   static Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
     return value ? ToObject<T>(*value) : nullptr;
   }
 
+  // Unbox value from an ABI-safe object.
   template <class T>
   static auto FromObject(Windows::Foundation::IInspectable const &obj) noexcept {
     // The code mostly borrowed from the winrt::unbox_value_or implementation to return
@@ -316,4 +301,4 @@ struct ReactPropertyBag {
 
 } // namespace winrt::Microsoft::ReactNative
 
-#endif // MICROSOFT_REACTNATIVE_PROPERTYBAG
+#endif // MICROSOFT_REACTNATIVE_REACTPROPERTYBAG

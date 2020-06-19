@@ -14,12 +14,6 @@
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp">
       <Filter>CxxReactUWP</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp">
-      <Filter>Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
-      <Filter>Executors</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -98,7 +92,6 @@
     <ClCompile Include="..\ReactUWP\Modules\DeviceInfoModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DevSupportManagerUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\I18nModule.cpp">
@@ -365,9 +358,6 @@
     <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
-      <Filter>Executors</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -458,7 +448,6 @@
     <ClInclude Include="..\ReactUWP\Modules\DeviceInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\DevSupportManagerUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\I18nModule.h">
@@ -706,6 +695,7 @@
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="XamlUIService.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -721,9 +711,6 @@
     </Filter>
     <Filter Include="CxxReactUWP">
       <UniqueIdentifier>{3b861ea5-e87b-4783-a4b1-ce28548c1985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Executors">
-      <UniqueIdentifier>{c3b4164c-f768-4259-9ef1-ceeaa04ce57a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{2c78db3b-c1c1-4951-870e-02e0964bcb00}</UniqueIdentifier>

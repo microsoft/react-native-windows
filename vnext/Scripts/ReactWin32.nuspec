@@ -61,5 +61,7 @@
 
     <file src="$nugetroot$\inc\include\**\*.*" target="inc\include" />
 
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
+
   </files>
 </package>

@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Jun 2020 23:30:48 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Jun 2020 23:24:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.16
+
+Tue, 16 Jun 2020 23:24:44 GMT
+
+### Changes
+
+- Unify DevSupportManager and WebSocketJSExecutor (acoates@microsoft.com)
+
+## 0.62.0-preview.15
+
+Tue, 16 Jun 2020 08:37:17 GMT
+
+### Changes
+
+- Prevent Switches from Accidentally Becoming Disabled (ngerlem@microsoft.com)
+
+## 0.62.0-preview.14
+
+Fri, 12 Jun 2020 20:55:23 GMT
+
+### Changes
+
+- [0.62] Cherry pick PR #5071 for CallJsFunction queuing (vmorozov@microsoft.com)
+- Add Microsoft.ReactNative.Cxx to the nugets. (acoates@microsoft.com)
+
+## 0.62.0-preview.13
+
+Fri, 12 Jun 2020 18:07:47 GMT
+
+### Changes
+
+- Attempt to fix Publish pipeline (tudorm@microsoft.com)
+
+## 0.62.0-preview.12
+
+Wed, 10 Jun 2020 12:11:09 GMT
+
+### Changes
+
+- Add XamlUIService with ElementFromReactTag (acoates@microsoft.com)
+
+## 0.62.0-preview.11
+
+Sat, 06 Jun 2020 22:48:15 GMT
+
+### Changes
+
+- Implemented support for native module std::weak_ptr (vmorozov@microsoft.com)
+- Fix ReactInstance error state to avoid crashes (vmorozov@microsoft.com)
+- Add UIDispatcher property to ReactInstanceSettings and IReactContext (vmorozov@microsoft.com)
 
 ## 0.62.0-preview.10
 

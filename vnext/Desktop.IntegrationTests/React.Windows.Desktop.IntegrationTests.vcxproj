@@ -94,7 +94,6 @@
     <ClCompile Include="DesktopTestInstance.cpp" />
     <ClCompile Include="DesktopTestRunner.cpp" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
-    <ClCompile Include="WebSocketJSExecutorIntegrationTest.cpp" />
     <ClCompile Include="WebSocketModuleIntegrationTest.cpp" />
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
   </ItemGroup>
