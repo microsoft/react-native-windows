@@ -79,7 +79,7 @@ TEST_CLASS (ReactNativeHostTests) {
     winrt::Microsoft::ReactNative::ReactNativeHost host{};
 
     auto queueController = winrt::Windows::System::DispatcherQueueController::CreateOnDedicatedThread();
-#ifndef CORE_ABI
+//#ifndef CORE_ABI
     queueController.DispatcherQueue().TryEnqueue([&]() noexcept {
       host.PackageProviders().Append(winrt::make<TestPackageProvider>());
 
@@ -103,7 +103,7 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(35, returnValue.get());
 
     host.UnloadInstance().get();
-#endif
+//#endif
     queueController.ShutdownQueueAsync().get();
   }
 };

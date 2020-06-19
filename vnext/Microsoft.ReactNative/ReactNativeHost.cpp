@@ -94,7 +94,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
     }
   }
 
-#ifndef CORE_ABI
   ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());
 
   Mso::React::ReactOptions reactOptions{};
@@ -118,6 +117,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.DeveloperSettings.SourceBundlePort =
       m_instanceSettings.SourceBundlePort() != 0 ? std::to_string(m_instanceSettings.SourceBundlePort()) : "";
 
+#ifndef CORE_ABI
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
   reactOptions.UseJsi = m_instanceSettings.UseJsi();
