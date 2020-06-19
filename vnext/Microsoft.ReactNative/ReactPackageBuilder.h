@@ -22,16 +22,16 @@ struct ReactPackageBuilder
 
  public: // IReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
- #ifndef CORE_ABI
+#ifndef CORE_ABI
   void AddViewManager(hstring const &viewManagerName, ReactViewManagerProvider const &viewManagerProvider) noexcept;
- #endif
+#endif
   void AddTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
  private:
   std::shared_ptr<NativeModulesProvider> m_modulesProvider;
- #ifndef CORE_ABI
+#ifndef CORE_ABI
   std::shared_ptr<ViewManagersProvider> m_viewManagersProvider;
- #endif
+#endif
   std::shared_ptr<TurboModulesProvider> m_turboModulesProvider;
 };
 

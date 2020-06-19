@@ -20,7 +20,8 @@ ReactPackageBuilder::ReactPackageBuilder(
 #ifndef CORE_ABI
       m_viewManagersProvider{viewManagersProvider},
 #endif
-      m_turboModulesProvider{turboModulesProvider} {}
+      m_turboModulesProvider{turboModulesProvider} {
+}
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
   m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);

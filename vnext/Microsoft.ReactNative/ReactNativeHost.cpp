@@ -81,8 +81,9 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider,
- #ifndef CORE_ABI
+    m_packageBuilder = make<ReactPackageBuilder>(
+        modulesProvider,
+#ifndef CORE_ABI
         viewManagersProvider,
 #endif
         turboModulesProvider);
@@ -139,7 +140,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.Identity = jsBundleFile;
   return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
-
 }
 
 IAsyncAction ReactNativeHost::UnloadInstance() noexcept {

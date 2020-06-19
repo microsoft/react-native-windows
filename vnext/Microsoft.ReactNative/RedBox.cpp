@@ -7,10 +7,15 @@
 #include <regex>
 #include "Unicode.h"
 
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 
 #ifndef CORE_ABI
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Markup.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.System.h>
@@ -18,11 +23,6 @@
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
-#include <UI.Xaml.Controls.Primitives.h>
-#include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Documents.h>
-#include <UI.Xaml.Input.h>
-#include <UI.Xaml.Markup.h>
 #endif
 
 using namespace winrt::Windows::Foundation;
