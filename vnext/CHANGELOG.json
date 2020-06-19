@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 19 Jun 2020 14:10:40 GMT",
+      "tag": "react-native-windows_v0.62.0-preview.17",
+      "version": "0.62.0-preview.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.62] Backport External Lib Props/Targets",
+            "author": "jthysell@microsoft.com",
+            "commit": "d42851bae0f373112664713c1503ac0e66d46d0f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2020 23:24:44 GMT",
       "tag": "react-native-windows_v0.62.0-preview.16",
       "version": "0.62.0-preview.16",

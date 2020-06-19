@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 16 Jun 2020 23:24:44 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Jun 2020 14:10:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.0-preview.17
+
+Fri, 19 Jun 2020 14:10:40 GMT
+
+### Changes
+
+- [0.62] Backport External Lib Props/Targets (jthysell@microsoft.com)
 
 ## 0.62.0-preview.16
 
