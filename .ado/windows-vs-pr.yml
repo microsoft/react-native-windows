@@ -447,6 +447,7 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - template: templates/stop-packagers.yml
 
