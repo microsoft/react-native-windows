@@ -198,7 +198,9 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     {{#cppNugetPackages}}
+    {{#hasProps}}
     <Import Project="..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" />
+    {{/hasProps}}
     {{/cppNugetPackages}}
     <Import Project="..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
   </ImportGroup>
@@ -209,8 +211,8 @@
     {{#cppNugetPackages}}
     {{#hasProps}}
     <Error Condition="!Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props'))" />
-    {{/hasProps}}
     <Error Condition="!Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets'))" />
+    {{/hasProps}}
     {{/cppNugetPackages}}
     <Error Condition="!Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
   </Target>

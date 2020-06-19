@@ -95,6 +95,11 @@ function copyProjectTemplateAndReplace(
       propsTopOfFile: true,
       hasProps: true,
     },
+    {
+      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
+      version: options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002',
+      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+    },
   ];
 
   if (options.experimentalNugetDependency) {
