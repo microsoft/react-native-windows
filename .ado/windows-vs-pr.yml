@@ -447,6 +447,7 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - template: templates/stop-packagers.yml
