@@ -88,7 +88,7 @@
     <Import Project="PropertySheet.props" />
     <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
-  <Import Project="$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props" Condition="Exists('$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props')" />
+  <Import Project="$(SolutionDir)packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!=''"/>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(GeneratedFilesDir);$(IncludePath)</IncludePath>

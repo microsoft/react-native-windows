@@ -7,9 +7,12 @@
   <PropertyGroup Label="WinUI3 versioning">
     <WinUIPackageName Condition="'$(UseWinUI3)'=='true'">Microsoft.WinUI</WinUIPackageName>
     <WinUIPackageVersion Condition="'$(UseWinUI3)'=='true'">3.0.0-alpha.200210.0</WinUIPackageVersion>
+    <WinUIPackageProps  Condition="'$(UseWinUI3)'=='true'">$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props</WinUIPackageProps>
 
     <WinUIPackageName Condition="'$(UseWinUI3)'!='true'">Microsoft.UI.Xaml</WinUIPackageName>
     <WinUIPackageVersion Condition="'$(UseWinUI3)'!='true'">2.3.191129002</WinUIPackageVersion>
+    <!-- In WinUI 2.x, the props file is imported for us by the targets file -->
+    <WinUIPackageProps Condition="'$(UseWinUI3)'!='true'" />
   </PropertyGroup>
 
   <ItemDefinitionGroup Condition="'$(UseWinUI3)'=='true'">
@@ -20,4 +23,9 @@
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
+
+  <Target Name="PrintWinUIConfig" BeforeTargets="Midl;Build">
+    <Message Text="UseWinUI3 = $(UseWinUI3)" />
+    <Message Text="WinUIPackage = $(WinUIPackageName).$(WinUIPackageVersion)" />
+  </Target>
 </Project>
