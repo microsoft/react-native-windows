@@ -16,7 +16,7 @@
     <ReactNativeCodeGenFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).g.cs</ReactNativeCodeGenFile>
     <_ReactNativeCodeGenResponseFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).rsp</_ReactNativeCodeGenResponseFile>
 
-    <_ReactNativeCodeGenProjectPath>$(ReactNativeWindowsDir)Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj</_ReactNativeCodeGenProjectPath>
+    <_ReactNativeCodeGenProjectPath>$(ReactNativeWindowsDir)\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj</_ReactNativeCodeGenProjectPath>
     <_ReactNativeCodeGenProjectProperties>Configuration=$(Configuration);Platform=$(Platform);DeployOnBuild=true;PublishProfile=DeployAsTool-$(Configuration);NoWarn=1023</_ReactNativeCodeGenProjectProperties>
 
     <PrepareResourcesDependsOn>

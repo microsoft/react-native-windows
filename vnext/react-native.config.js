@@ -6,6 +6,7 @@ module.exports = {
     // **** This section defined commands and options on how to provide the windows platform to external applications
     commands: [
       require('./local-cli/runWindows/runWindows'),
+      require('./local-cli/runWindows/utils/autolink'),
     ],
     platforms: {
       windows: {

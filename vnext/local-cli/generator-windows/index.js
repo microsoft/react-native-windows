@@ -127,8 +127,8 @@ function copyProjectTemplateAndReplace(
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
     // we therefore have to precariously use the right casing in the right place or risk building in VS breaking.
-    projectGuidLower: `{${projectGuid}}`,
-    projectGuidUpper: `{${projectGuid}}`,
+    projectGuidLower: `{${projectGuid.toLowerCase()}}`,
+    projectGuidUpper: `{${projectGuid.toUpperCase()}}`,
 
     // packaging and signing variables:
     packageGuid: packageGuid,
@@ -142,6 +142,13 @@ function copyProjectTemplateAndReplace(
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+
+    // autolinking template variables
+    autolinkProjectReferencesForTargets: '',
+    autolinkCsUsingNamespaces: '',
+    autolinkCsReactPacakgeProviders: '',
+    autolinkCppIncludes: '',
+    autolinkCppPackageProviders: '',
   };
 
   [

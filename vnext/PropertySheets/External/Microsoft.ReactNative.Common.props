@@ -2,6 +2,11 @@
 <!-- 
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
+
+  This file will be consumed by ALL app and module projects (Desktop & UWP,
+  both inside and outside of this repo) that build on top of
+  Microsoft.ReactNative. Do not make any changes here unless it applies to
+  ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
