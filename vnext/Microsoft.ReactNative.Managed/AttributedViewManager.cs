@@ -6,8 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+#if !USE_WINUI3
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+#endif
 using static Microsoft.ReactNative.Managed.ReactContextGenerator;
 
 namespace Microsoft.ReactNative.Managed

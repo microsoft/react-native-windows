@@ -13,12 +13,17 @@
     <WinUIPackageVersion Condition="'$(UseWinUI3)'!='true'">2.3.191129002</WinUIPackageVersion>
     <!-- In WinUI 2.x, the props file is imported for us by the targets file -->
     <WinUIPackageProps Condition="'$(UseWinUI3)'!='true'" />
+
+    <!-- Enlighten C# code about WinUI3 -->
+    <DefineConstants>USE_WINUI3;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemDefinitionGroup Condition="'$(UseWinUI3)'=='true'">
+    <!-- Enlighten C++ code about WinUI3 -->
     <ClCompile>
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <!-- Enlighten IDL interfaces about WinUI3 -->
     <Midl>
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
