@@ -75,6 +75,7 @@
     <ClCompile>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
+        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
@@ -103,7 +104,10 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CORE_ABI</PreprocessorDefinitions>
+      <!--
+        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
+      -->
+      <PreprocessorDefinitions>CORE_ABI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <!-- TODO: Remove after https://github.com/microsoft/hermes-windows/issues/12 is fixed. -->

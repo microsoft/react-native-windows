@@ -11,4 +11,4 @@
 #include <winrt/base.h>
 #include <mutex>
 
-#include "Base/CxxReactIncludes.h"
+#include <Base/CxxReactIncludes.h>
