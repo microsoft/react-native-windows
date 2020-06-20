@@ -15,7 +15,7 @@
     <WinUIPackageProps Condition="'$(UseWinUI3)'!='true'" />
 
     <!-- Enlighten C# code about WinUI3 -->
-    <DefineConstants>USE_WINUI3;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition="'$(UseWinUI3)'=='true'">USE_WINUI3;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemDefinitionGroup Condition="'$(UseWinUI3)'=='true'">
