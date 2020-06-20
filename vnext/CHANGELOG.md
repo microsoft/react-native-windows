@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
+This log was last generated on Sat, 20 Jun 2020 00:05:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.98
+
+Sat, 20 Jun 2020 00:05:18 GMT
+
+### Changes
+
+- Auto-linking for native modules (source-based) (jthysell@microsoft.com)
+- Implement AccessibilityValue from RN 62 (igklemen@microsoft.com)
+- Complete BundleUrl should be provided to JSExecutor when using fastrefresh without remote debugging (acoates@microsoft.com)
+- turbo modules should be replacable (zihanc@microsoft.com)
 
 ## 0.0.0-canary.97
 

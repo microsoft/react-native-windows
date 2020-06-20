@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 20 Jun 2020 00:05:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.98",
+      "version": "0.0.0-canary.98",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Auto-linking for native modules (source-based)",
+            "author": "jthysell@microsoft.com",
+            "commit": "78ae737696d476cb19d03d9346af57634f4581c5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement AccessibilityValue from RN 62",
+            "author": "igklemen@microsoft.com",
+            "commit": "57e990dce9904b1e64b9bff35a0ed5ee2e90a4c6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Complete BundleUrl should be provided to JSExecutor when using fastrefresh without remote debugging",
+            "author": "acoates@microsoft.com",
+            "commit": "0f8b773d82bec9aeaf775a616e8cc9a21c01501f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "turbo modules should be replacable",
+            "author": "zihanc@microsoft.com",
+            "commit": "654376b7ef7c50495ffb3d2d22abc2b2063ce74c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Jun 2020 00:07:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.97",
       "version": "0.0.0-canary.97",
