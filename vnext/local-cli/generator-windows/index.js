@@ -76,6 +76,7 @@ function copyProjectTemplateAndReplace(
   }
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
+    fs.truncateSync(path.join(destPath, windowsDir, 'UseWinUI3'));
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, language);
