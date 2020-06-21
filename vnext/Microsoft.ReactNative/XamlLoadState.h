@@ -23,4 +23,3 @@ struct XamlLoadState {
 
   static XamlLoadState g_Instance;
 };
-

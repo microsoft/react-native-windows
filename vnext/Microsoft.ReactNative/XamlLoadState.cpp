@@ -17,69 +17,64 @@ typedef struct _UNICODE_STRING {
   PWSTR Buffer;
 } UNICODE_STRING, *PUNICODE_STRING;
 
-typedef UNICODE_STRING const* PCUNICODE_STRING;
+typedef UNICODE_STRING const *PCUNICODE_STRING;
 
 typedef struct _LDR_DLL_LOADED_NOTIFICATION_DATA {
-    ULONG Flags;                    //Reserved.
-    PCUNICODE_STRING FullDllName;   //The full path name of the DLL module.
-    PCUNICODE_STRING BaseDllName;   //The base file name of the DLL module.
-    PVOID DllBase;                  //A pointer to the base address for the DLL in memory.
-    ULONG SizeOfImage;              //The size of the DLL image, in bytes.
+  ULONG Flags; // Reserved.
+  PCUNICODE_STRING FullDllName; // The full path name of the DLL module.
+  PCUNICODE_STRING BaseDllName; // The base file name of the DLL module.
+  PVOID DllBase; // A pointer to the base address for the DLL in memory.
+  ULONG SizeOfImage; // The size of the DLL image, in bytes.
 } LDR_DLL_LOADED_NOTIFICATION_DATA, *PLDR_DLL_LOADED_NOTIFICATION_DATA;
 
 typedef struct _LDR_DLL_UNLOADED_NOTIFICATION_DATA {
-    ULONG Flags;                    //Reserved.
-    PCUNICODE_STRING FullDllName;   //The full path name of the DLL module.
-    PCUNICODE_STRING BaseDllName;   //The base file name of the DLL module.
-    PVOID DllBase;                  //A pointer to the base address for the DLL in memory.
-    ULONG SizeOfImage;              //The size of the DLL image, in bytes.
+  ULONG Flags; // Reserved.
+  PCUNICODE_STRING FullDllName; // The full path name of the DLL module.
+  PCUNICODE_STRING BaseDllName; // The base file name of the DLL module.
+  PVOID DllBase; // A pointer to the base address for the DLL in memory.
+  ULONG SizeOfImage; // The size of the DLL image, in bytes.
 } LDR_DLL_UNLOADED_NOTIFICATION_DATA, *PLDR_DLL_UNLOADED_NOTIFICATION_DATA;
 
 typedef union _LDR_DLL_NOTIFICATION_DATA {
-    LDR_DLL_LOADED_NOTIFICATION_DATA Loaded;
-    LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
+  LDR_DLL_LOADED_NOTIFICATION_DATA Loaded;
+  LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
 } LDR_DLL_NOTIFICATION_DATA, *PLDR_DLL_NOTIFICATION_DATA;
 
-typedef LDR_DLL_NOTIFICATION_DATA const* PCLDR_DLL_NOTIFICATION_DATA;
+typedef LDR_DLL_NOTIFICATION_DATA const *PCLDR_DLL_NOTIFICATION_DATA;
 
 typedef VOID CALLBACK LDR_DLL_NOTIFICATION_FUNCTION(
-    _In_     ULONG                       NotificationReason,
-    _In_     PCLDR_DLL_NOTIFICATION_DATA NotificationData,
-    _In_opt_ PVOID                       Context
-    );
+    _In_ ULONG NotificationReason,
+    _In_ PCLDR_DLL_NOTIFICATION_DATA NotificationData,
+    _In_opt_ PVOID Context);
 
-typedef LDR_DLL_NOTIFICATION_FUNCTION* PLDR_DLL_NOTIFICATION_FUNCTION;
+typedef LDR_DLL_NOTIFICATION_FUNCTION *PLDR_DLL_NOTIFICATION_FUNCTION;
 
 #define LDR_DLL_NOTIFICATION_REASON_LOADED 1
 
 NTSTATUS NTAPI LdrRegisterDllNotification(
-  _In_     ULONG                          Flags,
-  _In_     PLDR_DLL_NOTIFICATION_FUNCTION NotificationFunction,
-  _In_opt_ PVOID                          Context,
-  _Out_    PVOID                          *Cookie
-);
+    _In_ ULONG Flags,
+    _In_ PLDR_DLL_NOTIFICATION_FUNCTION NotificationFunction,
+    _In_opt_ PVOID Context,
+    _Out_ PVOID *Cookie);
 
-NTSTATUS NTAPI LdrUnregisterDllNotification(
-  _In_ PVOID Cookie
-);
+NTSTATUS NTAPI LdrUnregisterDllNotification(_In_ PVOID Cookie);
 
 #pragma endregion
 
 LDR_DLL_NOTIFICATION_FUNCTION MyNotificationFunction;
 
-#define NTDLL_FUNCTION(name) \
-  reinterpret_cast<decltype(&name)>(GetProcAddress(ntdll, #name))
+#define NTDLL_FUNCTION(name) reinterpret_cast<decltype(&name)>(GetProcAddress(ntdll, #name))
 
 std::string XamlLoadState::GetXamlVersion(PCWSTR path) {
   DWORD dwHandle;
   DWORD size = GetFileVersionInfoSizeW(path, &dwHandle);
   std::string buffer;
   buffer.reserve(size);
-  
-  if (GetFileVersionInfo(path, 0, size, const_cast<char*>(buffer.c_str()))) {
-    VS_FIXEDFILEINFO* fileInfo;
+
+  if (GetFileVersionInfo(path, 0, size, const_cast<char *>(buffer.c_str()))) {
+    VS_FIXEDFILEINFO *fileInfo;
     UINT len{};
-    if (VerQueryValueW(buffer.c_str(), L"\\", (void**)&fileInfo, &len)) {
+    if (VerQueryValueW(buffer.c_str(), L"\\", (void **)&fileInfo, &len)) {
       const DWORD ls = fileInfo->dwFileVersionMS & 0x3fff;
       DWORD ms = fileInfo->dwFileVersionMS >> 16;
       // WinUI 3 Alpha has version 10.0.10011.16384. Convert 10.0 to 3.0
@@ -106,7 +101,7 @@ XamlLoadState::XamlLoadState() {
     wchar_t path[MAX_PATH]{};
     if (GetModuleFileNameW(mod, path, ARRAYSIZE(path))) {
       RegisterDll(mux.data(), path);
-    }    
+    }
   }
 
   auto ntdll = GetModuleHandle(L"ntdll.dll");
@@ -181,4 +176,3 @@ VOID CALLBACK MyNotificationFunction(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA d
     }
   }
 }
-
