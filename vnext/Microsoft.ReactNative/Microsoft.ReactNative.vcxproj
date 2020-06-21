@@ -349,6 +349,7 @@
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
     <ClInclude Include="Views\XamlFeatures.h" />
+    <ClInclude Include="XamlLoadState.h" />
     <ClInclude Include="XamlUIService.h">
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -529,6 +530,7 @@
     <ClCompile Include="Views\ViewViewManager.cpp" />
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
     <ClCompile Include="Views\XamlFeatures.cpp" />
+    <ClCompile Include="XamlLoadState.cpp" />
     <ClCompile Include="XamlUIService.cpp">
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
