@@ -1,7 +1,7 @@
 ﻿using Microsoft.ReactNative;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using {{ xamlNamespace }};
+using {{ xamlNamespace }}.Controls;
 
 namespace {{ namespace }}
 {

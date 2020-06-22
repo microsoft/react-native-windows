@@ -5,7 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+#if !USE_WINUI3
 using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml.Media;
+#endif
 
 namespace Microsoft.ReactNative.Managed
 {
