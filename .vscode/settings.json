@@ -7,7 +7,7 @@
     "**/lib": true,
     "**/dist": true
   },
-  // "editor.formatOnSave": true,
+  "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "eslint.packageManager": "yarn",
   "eslint.enable": true,
@@ -47,7 +47,7 @@
   "clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
   "clang-format.executable": "${workspaceRoot}/vnext/node_modules/.bin/clang-format",
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  // "editor.codeActionsOnSave": {
-  //   "source.fixAll.eslint": true
-  // }
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
