@@ -234,10 +234,10 @@ TEST_CLASS_EX (WhenAllTest, LibletAwareMemLeakDetection) {
 
   TEST_METHOD(WhenAll_Tuple_Three) {
     auto f1 = Mso::PostFuture([]() noexcept { return 47; });
-    auto f2 = Mso::PostFuture([]() noexcept -> std::string { return "82"; });
-    auto f3 = Mso::PostFuture([]() noexcept -> double { return 32.5; });
+    auto f2 = Mso::PostFuture([]() noexcept->std::string { return "82"; });
+    auto f3 = Mso::PostFuture([]() noexcept->double { return 32.5; });
 
-    auto fr = Mso::WhenAll(f1, f2, f3).Then([](std::tuple<int, std::string, double> &&result) noexcept {
+    auto fr = Mso::WhenAll(f1, f2, f3).Then([](std::tuple<int, std::string, double> && result) noexcept {
       TestCheck(std::get<0>(result) == 47);
       TestCheck(std::stoi(std::get<1>(result)) == 82);
       TestCheck(int(std::get<2>(result)) == 32);
@@ -250,7 +250,7 @@ TEST_CLASS_EX (WhenAllTest, LibletAwareMemLeakDetection) {
   TEST_METHOD(WhenAll_Tuple_Two_Error) {
     Mso::ManualResetEvent complete;
     auto f1 = Mso::MakeFailedFuture<int>(Mso::CancellationErrorProvider().MakeErrorCode(true));
-    auto f2 = Mso::PostFuture([&]() noexcept -> std::string {
+    auto f2 = Mso::PostFuture([&]() noexcept->std::string {
       complete.Wait();
       return "82";
     });

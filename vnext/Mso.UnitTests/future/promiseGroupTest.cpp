@@ -185,15 +185,15 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
     // modify original vector and see that the Promise still has the original copy.
     vec.push_back(4);
 
-    auto future1 = p1.AddFuture().Then([&](std::vector<int> &value) noexcept {
+    auto future1 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
       TestCheckEqual(3u, v1.size());
     });
-    auto future2 = p1.AddFuture().Then([&](std::vector<int> &value) noexcept {
+    auto future2 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
       TestCheckEqual(3u, v1.size());
     });
-    auto future3 = p1.AddFuture().Then([&](std::vector<int> &value) noexcept {
+    auto future3 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
       TestCheckEqual(3u, v1.size());
     });
@@ -212,15 +212,15 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
 
     TestCheck(vec.empty());
 
-    auto future1 = p1.AddFuture().Then([&](std::vector<int> &value) noexcept {
+    auto future1 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
       TestCheckEqual(3u, v1.size());
     });
-    auto future2 = p1.AddFuture().Then([&](std::vector<int> &value) noexcept {
+    auto future2 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
       TestCheckEqual(3u, v1.size());
     });
-    auto future3 = p1.AddFuture().Then([&](std::vector<int> &value) noexcept {
+    auto future3 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
       TestCheckEqual(3u, v1.size());
     });
