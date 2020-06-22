@@ -78,6 +78,16 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
+      - task: MSBuild@1
+        inputs:
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          solution: vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj
+          msbuildArguments: |
+            /t:PublishTool
+          # Only publish on the ReleaseX64 build
+          condition: and(succeeded(), eq(variables.BuildConfiguration, 'Release'), eq(variables.BuildPlatform, 'x64'))
+
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
@@ -104,13 +114,29 @@ jobs:
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - task: VSTest@2
-        displayName: Run Universal Unit Tests (Managed)
+        displayName: Run Universal Unit Tests (UAP)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          codeCoverageEnabled: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (NetCore)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
-            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
