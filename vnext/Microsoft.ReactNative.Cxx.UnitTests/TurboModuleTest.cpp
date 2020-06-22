@@ -107,12 +107,12 @@ struct MyTurboModule {
 
   REACT_METHOD(NegateDispatchQueueCallback)
   void NegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve]() noexcept { resolve(-x); });
   }
 
   REACT_METHOD(NegateFutureCallback)
   void NegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::PostFuture([x, resolve]() noexcept { resolve(-x); });
   }
 
   REACT_METHOD(SayHelloCallback)
@@ -138,12 +138,12 @@ struct MyTurboModule {
 
   REACT_METHOD(StaticNegateDispatchQueueCallback)
   static void StaticNegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve]() noexcept { resolve(-x); });
   }
 
   REACT_METHOD(StaticNegateFutureCallback)
   static void StaticNegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::PostFuture([x, resolve]() noexcept { resolve(-x); });
   }
 
   REACT_METHOD(StaticSayHelloCallback)
@@ -209,7 +209,7 @@ struct MyTurboModule {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve, reject ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -223,7 +223,7 @@ struct MyTurboModule {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::PostFuture([ x, resolve, reject ]() noexcept {
+    Mso::PostFuture([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -289,7 +289,7 @@ struct MyTurboModule {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve, reject ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -303,7 +303,7 @@ struct MyTurboModule {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::PostFuture([ x, resolve, reject ]() noexcept {
+    Mso::PostFuture([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -400,7 +400,7 @@ struct MyTurboModule {
 
   REACT_METHOD(NegateDispatchQueuePromise)
   void NegateDispatchQueuePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -413,7 +413,7 @@ struct MyTurboModule {
 
   REACT_METHOD(NegateFuturePromise)
   void NegateFuturePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::PostFuture([ x, result ]() noexcept {
+    Mso::PostFuture([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -482,7 +482,7 @@ struct MyTurboModule {
 
   REACT_METHOD(StaticNegateDispatchQueuePromise)
   static void StaticNegateDispatchQueuePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -495,7 +495,7 @@ struct MyTurboModule {
 
   REACT_METHOD(StaticNegateFuturePromise)
   static void StaticNegateFuturePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::PostFuture([ x, result ]() noexcept {
+    Mso::PostFuture([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -1279,8 +1279,10 @@ TEST_CLASS (TurboModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_StaticSayHello) {
-    m_builderMock.Call1(L"StaticSayHello", std::function<void(const std::string &)>([
-                        ](const std::string &result) noexcept { TestCheck(result == "Hello"); }));
+    m_builderMock.Call1(
+        L"StaticSayHello", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+          TestCheck(result == "Hello");
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1347,8 +1349,10 @@ TEST_CLASS (TurboModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_SayHelloCallback) {
-    m_builderMock.Call1(L"SayHelloCallback", std::function<void(const std::string &)>([
-                        ](const std::string &result) noexcept { TestCheck(result == "Hello_2"); }));
+    m_builderMock.Call1(
+        L"SayHelloCallback", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+          TestCheck(result == "Hello_2");
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1389,8 +1393,10 @@ TEST_CLASS (TurboModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_StaticSayHelloCallback) {
-    m_builderMock.Call1(L"StaticSayHelloCallback", std::function<void(const std::string &)>([
-                        ](const std::string &result) noexcept { TestCheck(result == "Static Hello_2"); }));
+    m_builderMock.Call1(
+        L"StaticSayHelloCallback", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+          TestCheck(result == "Static Hello_2");
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1663,8 +1669,10 @@ TEST_CLASS (TurboModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_TwoCallbacksZeroArgs1) {
-    m_builderMock.Call2(L"TwoCallbacksZeroArgs1", std::function<void()>([]() noexcept {}), std::function<void()>([
-                        ]() noexcept { TestCheckFail(); }));
+    m_builderMock.Call2(
+        L"TwoCallbacksZeroArgs1", std::function<void()>([]() noexcept {}), std::function<void()>([]() noexcept {
+          TestCheckFail();
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -2076,7 +2084,7 @@ TEST_CLASS (TurboModuleTest) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
         L"RCTDeviceEventEmitter", L"OnNoArgEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
-          TestCheckEqual(0, args.size());
+          TestCheckEqual(0u, args.size());
           eventRaised = true;
         });
 
@@ -2208,7 +2216,7 @@ TEST_CLASS (TurboModuleTest) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
         L"MyTurboModule", L"JSNoArgFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
-          TestCheckEqual(0, args.size());
+          TestCheckEqual(0u, args.size());
           functionCalled = true;
         });
 

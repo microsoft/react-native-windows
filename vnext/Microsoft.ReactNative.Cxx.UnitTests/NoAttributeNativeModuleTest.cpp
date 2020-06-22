@@ -99,11 +99,11 @@ struct SimpleNativeModule2 {
   }
 
   void NegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve]() noexcept { resolve(-x); });
   }
 
   void NegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::PostFuture([x, resolve]() noexcept { resolve(-x); });
   }
 
   void SayHelloCallback(std::function<void(const std::string &)> const &resolve) noexcept {
@@ -124,11 +124,11 @@ struct SimpleNativeModule2 {
   }
 
   static void StaticNegateDispatchQueueCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve]() noexcept { resolve(-x); });
   }
 
   static void StaticNegateFutureCallback(int x, std::function<void(int)> const &resolve) noexcept {
-    Mso::PostFuture([ x, resolve ]() noexcept { resolve(-x); });
+    Mso::PostFuture([x, resolve]() noexcept { resolve(-x); });
   }
 
   static void StaticSayHelloCallback(std::function<void(const std::string &)> const &resolve) noexcept {
@@ -186,7 +186,7 @@ struct SimpleNativeModule2 {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve, reject ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -199,7 +199,7 @@ struct SimpleNativeModule2 {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::PostFuture([ x, resolve, reject ]() noexcept {
+    Mso::PostFuture([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -259,7 +259,7 @@ struct SimpleNativeModule2 {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, resolve, reject ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -272,7 +272,7 @@ struct SimpleNativeModule2 {
       int x,
       std::function<void(int)> const &resolve,
       std::function<void(std::string const &)> const &reject) noexcept {
-    Mso::PostFuture([ x, resolve, reject ]() noexcept {
+    Mso::PostFuture([x, resolve, reject]() noexcept {
       if (x >= 0) {
         resolve(-x);
       } else {
@@ -357,7 +357,7 @@ struct SimpleNativeModule2 {
   }
 
   void NegateDispatchQueuePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -369,7 +369,7 @@ struct SimpleNativeModule2 {
   }
 
   void NegateFuturePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::PostFuture([ x, result ]() noexcept {
+    Mso::PostFuture([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -430,7 +430,7 @@ struct SimpleNativeModule2 {
   }
 
   static void StaticNegateDispatchQueuePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::DispatchQueue::ConcurrentQueue().Post([ x, result ]() noexcept {
+    Mso::DispatchQueue::ConcurrentQueue().Post([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -442,7 +442,7 @@ struct SimpleNativeModule2 {
   }
 
   static void StaticNegateFuturePromise(int x, React::ReactPromise<int> const &result) noexcept {
-    Mso::PostFuture([ x, result ]() noexcept {
+    Mso::PostFuture([x, result]() noexcept {
       if (x >= 0) {
         result.Resolve(-x);
       } else {
@@ -690,8 +690,10 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_StaticSayHello) {
-    m_builderMock.Call1(L"StaticSayHello", std::function<void(const std::string &)>([
-                        ](const std::string &result) noexcept { TestCheck(result == "Hello"); }));
+    m_builderMock.Call1(
+        L"StaticSayHello", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+          TestCheck(result == "Hello");
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
@@ -759,8 +761,10 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_SayHelloCallback) {
-    m_builderMock.Call1(L"SayHelloCallback", std::function<void(const std::string &)>([
-                        ](const std::string &result) noexcept { TestCheck(result == "Hello_2"); }));
+    m_builderMock.Call1(
+        L"SayHelloCallback", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+          TestCheck(result == "Hello_2");
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -801,8 +805,10 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_StaticSayHelloCallback) {
-    m_builderMock.Call1(L"StaticSayHelloCallback", std::function<void(const std::string &)>([
-                        ](const std::string &result) noexcept { TestCheck(result == "Static Hello_2"); }));
+    m_builderMock.Call1(
+        L"StaticSayHelloCallback", std::function<void(const std::string &)>([](const std::string &result) noexcept {
+          TestCheck(result == "Static Hello_2");
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1075,8 +1081,10 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
   }
 
   TEST_METHOD(TestMethodCall_TwoCallbacksZeroArgs1) {
-    m_builderMock.Call2(L"TwoCallbacksZeroArgs1", std::function<void()>([]() noexcept {}), std::function<void()>([
-                        ]() noexcept { TestCheckFail(); }));
+    m_builderMock.Call2(
+        L"TwoCallbacksZeroArgs1", std::function<void()>([]() noexcept {}), std::function<void()>([]() noexcept {
+          TestCheckFail();
+        }));
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -1488,7 +1496,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
         L"RCTDeviceEventEmitter", L"OnNoArgEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
-          TestCheckEqual(0, args.size());
+          TestCheckEqual(0u, args.size());
           eventRaised = true;
         });
 
@@ -1620,7 +1628,7 @@ TEST_CLASS (NoAttributeNativeModuleTest) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
         L"SimpleNativeModule2", L"JSNoArgFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
-          TestCheckEqual(0, args.size());
+          TestCheckEqual(0u, args.size());
           functionCalled = true;
         });
 
