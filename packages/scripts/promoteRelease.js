@@ -43,7 +43,7 @@ const glob = util.promisify(require('glob').glob);
   console.log('Updating CI variables...');
   await writeAdoVariables({
     npmTag: distTag(argv.release, argv.rnVersion),
-    extraPublishArgs: '--git-tags',
+    extraPublishArgs: '',
   });
 
   if (argv.release === 'preview') {
