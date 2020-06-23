@@ -107,7 +107,7 @@ void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActiv
   }
 }
 
-void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e_) {
+void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_) {
   base_type::OnLaunched(e_);
   Windows::ApplicationModel::Activation::LaunchActivatedEventArgs e =
 #ifdef USE_WINUI3

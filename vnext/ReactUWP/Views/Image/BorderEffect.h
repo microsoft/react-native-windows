@@ -1,12 +1,7 @@
 #pragma once
 
-#ifndef USE_WINUI3
-#include <Microsoft.UI.Composition.Effects.BorderEffect.g.h>
-#define BORDEREFFECT_NAMESPACE winrt::Microsoft::UI::Composition::Effects
-#else
 #define BORDEREFFECT_NAMESPACE winrt::Microsoft::ReactNative
 #include <BorderEffect.g.h>
-#endif
 
 #pragma warning(push)
 #pragma warning(disable : 28285 28196 6387 6319 26812)
