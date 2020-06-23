@@ -47,5 +47,8 @@
     "**/@wdio/utils": "5.12.1",
     "**/webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "**/webdriverio": "5.12.1"
+  },
+  "beachball": {
+    "gitTags": false
   }
 }
