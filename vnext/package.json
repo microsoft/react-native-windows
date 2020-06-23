@@ -13,7 +13,6 @@
   "scripts": {
     "api": "just-scripts api",
     "build": "just-scripts build",
-    "change": "beachball change -b 0.62-stable",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
@@ -63,11 +62,11 @@
     "react-native": "^0.62.0-0"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   }
 }
