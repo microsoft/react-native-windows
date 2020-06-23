@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 20 Jun 2020 00:05:18 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Jun 2020 00:05:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Tue, 23 Jun 2020 00:05:47 GMT
+
+### Changes
+
+- start moving away from config and use a sentinel file instead (asklar@microsoft.com)
 
 ## 0.0.0-canary.98
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Jun 2020 00:05:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.99",
+      "version": "0.0.0-canary.99",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "start moving away from config and use a sentinel file instead",
+            "author": "asklar@microsoft.com",
+            "commit": "a6724d0de7db2bd9712299e51490fc44df07afe9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Jun 2020 00:05:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.98",
       "version": "0.0.0-canary.98",
