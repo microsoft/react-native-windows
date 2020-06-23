@@ -19,8 +19,16 @@ class BorderEffect
  public:
   DECLARE_D2D_GUID(CLSID_D2D1Border);
   DECLARE_SINGLE_SOURCE(Source);
-  DECLARE_POD_PROPERTY(ExtendX, winrt::Microsoft::ReactNative::CanvasEdgeBehavior, winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Clamp, true);
-  DECLARE_POD_PROPERTY(ExtendY, winrt::Microsoft::ReactNative::CanvasEdgeBehavior, winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Clamp, true);
+  DECLARE_POD_PROPERTY(
+      ExtendX,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Clamp,
+      true);
+  DECLARE_POD_PROPERTY(
+      ExtendY,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Clamp,
+      true);
   DECLARE_NAMED_PROPERTY_MAPPING(
       {L"ExtendX", D2D1_BORDER_PROP_EDGE_MODE_X, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT},
       {L"ExtendY", D2D1_BORDER_PROP_EDGE_MODE_Y, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});

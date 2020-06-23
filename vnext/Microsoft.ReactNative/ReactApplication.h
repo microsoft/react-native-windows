@@ -7,7 +7,6 @@
 #include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
 
-
 #ifdef USE_WINUI3
 namespace activation = xaml;
 #else
@@ -26,28 +25,32 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // It must be updated if the shape of generated ReactApplication_base is changed in future.
 // The only difference is that this class has no default constructor.
 template <typename D, typename... I>
-struct __declspec(empty_bases) NoDefaultCtorReactApplication_base
-    : implements<
-          D,
-          Microsoft::ReactNative::ReactApplication,
-          composable,
-          composing,
-          xaml::IApplicationOverrides,
+struct __declspec(empty_bases) NoDefaultCtorReactApplication_base : implements<
+                                                                        D,
+                                                                        Microsoft::ReactNative::ReactApplication,
+                                                                        composable,
+                                                                        composing,
+                                                                        xaml::IApplicationOverrides,
 #ifndef USE_WINUI3
-  xaml::IApplicationOverrides2,
+                                                                        xaml::IApplicationOverrides2,
 #endif
-          I...>,
-      impl::require<D, xaml::IApplication
-  #ifndef USE_WINUI3
-  , xaml::IApplication2, xaml::IApplication3
-  #endif
-      >,
-      impl::base<D, xaml::Application>,
-      xaml::IApplicationOverridesT<D>
+                                                                        I...>,
+                                                                    impl::require<
+                                                                        D,
+                                                                        xaml::IApplication
 #ifndef USE_WINUI3
-      , xaml::IApplicationOverrides2T<D>
+                                                                        ,
+                                                                        xaml::IApplication2,
+                                                                        xaml::IApplication3
 #endif
-  {
+                                                                        >,
+                                                                    impl::base<D, xaml::Application>,
+                                                                    xaml::IApplicationOverridesT<D>
+#ifndef USE_WINUI3
+    ,
+                                                                    xaml::IApplicationOverrides2T<D>
+#endif
+{
   using base_type = NoDefaultCtorReactApplication_base;
   using class_type = Microsoft::ReactNative::ReactApplication;
   using implements_type = typename NoDefaultCtorReactApplication_base::implements_type;
@@ -59,11 +62,14 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base
   }
 
  protected:
-  using dispatch = impl::dispatch_to_overridable<D, xaml::IApplicationOverrides
+  using dispatch = impl::dispatch_to_overridable<
+      D,
+      xaml::IApplicationOverrides
 #ifndef USE_WINUI3
-    , xaml::IApplicationOverrides2
+      ,
+      xaml::IApplicationOverrides2
 #endif
-  >;
+      >;
   auto overridable() noexcept {
     return dispatch::overridable(static_cast<D &>(*this));
   }

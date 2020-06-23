@@ -54,7 +54,7 @@ void SIPEventHandler::InitializeCoreInputView() {
       m_coreInputView = winrt::CoreInputView::GetForUIContext(uiElement.UIContext());
     } else
 #endif
-      /// TODO: Figure out how to use SIP in WinUI 3 and island
+    /// TODO: Figure out how to use SIP in WinUI 3 and island
     {
       m_coreInputView = winrt::CoreInputView::GetForCurrentView();
     }

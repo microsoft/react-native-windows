@@ -115,7 +115,6 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e_) {
 #else
       e_;
 #endif // USE_WINUI3
-      
 
   this->OnCreate(e);
 }

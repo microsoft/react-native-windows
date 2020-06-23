@@ -10,7 +10,6 @@
 
 #include <Utils/PropertyUtils.h>
 
-
 #ifdef USE_WINUI3
 #define TAB_INDEX_PROPERTY xaml::UIElement::TabIndexProperty
 #else
@@ -68,7 +67,7 @@ bool ControlViewManager::UpdateProperty(
     } else if (propertyName == "tabIndex") {
       if (propertyValue.isNumber()) {
         auto tabIndex = propertyValue.asDouble();
-        if (tabIndex == static_cast<int32_t>(tabIndex)) 
+        if (tabIndex == static_cast<int32_t>(tabIndex))
           control.ClearValue(TAB_INDEX_PROPERTY());
         control.TabIndex(static_cast<int32_t>(tabIndex));
       } else if (propertyValue.isNull()) {
