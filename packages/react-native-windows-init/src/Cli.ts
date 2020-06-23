@@ -72,6 +72,7 @@ const EXITCODE_UNKNOWN_ERROR = 6;
 const EXITCODE_NO_PACKAGE_JSON = 7;
 const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
+const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 
 function reactNativeWindowsGeneratePath() {
   return require.resolve('react-native-windows/local-cli/generate-windows.js', {
@@ -258,6 +259,14 @@ function isProjectUsingYarn(cwd: string) {
     const ns = argv.namespace || name;
     const useDevMode = argv.useDevMode;
     let version = argv.version;
+
+    if (argv.useWinUI3 && argv.experimentalNugetDependency) {
+      // WinUI3 is not yet compatible with nuget packages
+      console.error(
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNugetDependency' are incompatible",
+      );
+      process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
+    }
 
     if (!version) {
       const rnVersion = getReactNativeVersion();
