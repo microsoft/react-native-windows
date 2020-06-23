@@ -26,6 +26,8 @@ const yargs = require('yargs');
 
 const glob = util.promisify(require('glob').glob);
 
+const findRepoRoot = require('./findRepoRoot');
+
 (async () => {
   const argv = collectArgs();
   const git = simplegit();
@@ -193,14 +195,6 @@ async function updatePackage(packageName, props) {
 
   console.error(chalk.red(`Unable to find package ${packageName}`));
   process.exit(1);
-}
-
-/**
- * Find the root directory of the repo
- */
-async function findRepoRoot() {
-  const rootPackage = await findUp('package.json', {cwd: '..'});
-  return path.dirname(rootPackage);
 }
 
 /**
