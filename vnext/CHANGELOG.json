@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Jun 2020 06:37:28 GMT",
+      "tag": "react-native-windows_v0.62.0",
+      "version": "0.62.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.62 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09aa9424993fbe1fc9ad9a0ef5a77fd4f63d51a2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Jun 2020 14:10:40 GMT",
       "tag": "react-native-windows_v0.62.0-preview.17",
       "version": "0.62.0-preview.17",
