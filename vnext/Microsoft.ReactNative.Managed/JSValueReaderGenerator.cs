@@ -302,7 +302,7 @@ namespace Microsoft.ReactNative.Managed
       var properties =
         from property in classType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
         let propertySetter = property.SetMethod
-        where propertySetter.IsPublic
+        where propertySetter != null && propertySetter.IsPublic
         select new { property.Name, Type = property.PropertyType };
       var members = fields.Concat(properties).ToArray();
 
