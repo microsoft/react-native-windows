@@ -63,7 +63,14 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--
+        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
+      -->
+      <PreprocessorDefinitions>
+        _CONSOLE;
+        CORE_ABI;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UseFullPaths>true</UseFullPaths>
       <CallingConvention>Cdecl</CallingConvention>
@@ -129,22 +136,23 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PerfTests.cpp" />
-    <ClCompile Include="ReactNativeHostTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleMessageQueue.h" />
-    <ClInclude Include="MockReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="Application.manifest" />
     <None Include="packages.config" />
+    <JsBundleEntry Include="..\Microsoft.ReactNative.IntegrationTests\AddValues.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\Microsoft.ReactNative.IntegrationTests\TestBundle.targets" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

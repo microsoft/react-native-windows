@@ -4,7 +4,9 @@
 #include "pch.h"
 #include "IReactContext.h"
 #include "DynamicWriter.h"
+#ifndef CORE_ABI
 #include "XamlUIService.h"
+#endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -26,6 +28,7 @@ IReactDispatcher ReactContext::JSDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
+#ifndef CORE_ABI
 // Deprecated: Use XamlUIService directly.
 void ReactContext::DispatchEvent(
     xaml::FrameworkElement const &view,
@@ -39,6 +42,7 @@ void ReactContext::DispatchEvent(
     xamlUIService.DispatchEvent(view, eventName, eventDataArgWriter);
   }
 }
+#endif
 
 void ReactContext::CallJSFunction(
     hstring const &moduleName,

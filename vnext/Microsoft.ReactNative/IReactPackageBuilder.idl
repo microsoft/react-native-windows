@@ -3,17 +3,23 @@
 
 import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
+#ifndef CORE_ABI
 import "IViewManager.idl";
+#endif
 
 namespace Microsoft.ReactNative {
 
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
+#ifndef CORE_ABI
   delegate IViewManager ReactViewManagerProvider();
+#endif
 
   [webhosthidden]
   interface IReactPackageBuilder {
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
+#ifndef CORE_ABI
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
+#endif
   }
 
   [webhosthidden]

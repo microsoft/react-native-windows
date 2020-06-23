@@ -7,6 +7,7 @@
 
 #include "ReactPackageBuilder.h"
 #include "RedBox.h"
+#include "TurboModulesProvider.h"
 
 #include <future/futureWinRT.h>
 #include <winrt/Windows.Foundation.Collections.h>
@@ -71,13 +72,21 @@ ReactNativeHostProperty() noexcept {
 }
 
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
-#ifndef CORE_ABI
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
+
+#ifndef CORE_ABI
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
+#endif
+
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider, turboModulesProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(
+        modulesProvider,
+#ifndef CORE_ABI
+        viewManagersProvider,
+#endif
+        turboModulesProvider);
 
     if (auto packageProviders = InstanceSettings().PackageProviders()) {
       for (auto const &packageProvider : packageProviders) {
@@ -114,7 +123,9 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.UseJsi = m_instanceSettings.UseJsi();
 
   reactOptions.ModuleProvider = modulesProvider;
+#ifndef CORE_ABI
   reactOptions.ViewManagerProvider = viewManagersProvider;
+#endif
   reactOptions.TurboModuleProvider = turboModulesProvider;
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
@@ -128,12 +139,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   }
 
   reactOptions.Identity = jsBundleFile;
-
   return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
-#else
-  // Core ABI work needed
-  VerifyElseCrash(false);
-#endif
 }
 
 IAsyncAction ReactNativeHost::UnloadInstance() noexcept {
