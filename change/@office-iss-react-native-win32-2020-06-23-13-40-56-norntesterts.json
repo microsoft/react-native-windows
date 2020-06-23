@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Slightly reduce the number of TS files in rnwin32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-06-23T20:40:56.093Z"
+}
