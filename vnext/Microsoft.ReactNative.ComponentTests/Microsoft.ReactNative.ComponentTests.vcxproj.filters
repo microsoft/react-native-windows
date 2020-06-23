@@ -27,6 +27,9 @@
     <ClCompile Include="DynamicReaderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="JsiArgumentReaderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="JsiReaderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

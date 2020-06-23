@@ -2,6 +2,122 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Jun 2020 00:05:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.99",
+      "version": "0.0.0-canary.99",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "start moving away from config and use a sentinel file instead",
+            "author": "asklar@microsoft.com",
+            "commit": "a6724d0de7db2bd9712299e51490fc44df07afe9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 20 Jun 2020 00:05:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.98",
+      "version": "0.0.0-canary.98",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Auto-linking for native modules (source-based)",
+            "author": "jthysell@microsoft.com",
+            "commit": "78ae737696d476cb19d03d9346af57634f4581c5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement AccessibilityValue from RN 62",
+            "author": "igklemen@microsoft.com",
+            "commit": "57e990dce9904b1e64b9bff35a0ed5ee2e90a4c6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Complete BundleUrl should be provided to JSExecutor when using fastrefresh without remote debugging",
+            "author": "acoates@microsoft.com",
+            "commit": "0f8b773d82bec9aeaf775a616e8cc9a21c01501f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "turbo modules should be replacable",
+            "author": "zihanc@microsoft.com",
+            "commit": "654376b7ef7c50495ffb3d2d22abc2b2063ce74c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Jun 2020 00:07:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.97",
+      "version": "0.0.0-canary.97",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move the addition of folly.natvis to ReactWin32.nuspec",
+            "author": "warleu@microsoft.com",
+            "commit": "c6fbf6032858bd64966ed6d1d34c7e1bd3c5c96e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix building vcxproj files outside of solution",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b0de0a236e3e8e74507b90c1450e13c94d93c3c7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Jun 2020 00:07:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.96",
+      "version": "0.0.0-canary.96",
+      "comments": {
+        "none": [
+          {
+            "comment": "Apply compatible casing on SampleTurboModule members",
+            "author": "zihanc@microsoft.com",
+            "commit": "409789783c360e5de6812ce1afd1b0ed0bff5fd1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Optimize TurboModulesProvider to not performing unnecessary (Value*, size_t) <--> Array conversions",
+            "author": "zihanc@microsoft.com",
+            "commit": "76a8973dfd9101f913770ce2d42fe9360c006f73",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Create Scripts for the Release Process",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09c55119a42002be07b9c3325ca6859d06a99cc3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Run NativeModules 2.0 in JS thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "17d8bed353add81cad6958588a72c16f1ce33d74",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update C++/WinRT to version 2.0.200615.7",
+            "author": "vmorozov@microsoft.com",
+            "commit": "db9a065c7908f8f48d33f6e625ae5dd88ef713d0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "version agnostic msbuild log viewer",
+            "author": "asklar@microsoft.com",
+            "commit": "4cbde0c00bfa8e82eced0bd3389b53ad03a1f5d9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jun 2020 00:05:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.95",
       "version": "0.0.0-canary.95",

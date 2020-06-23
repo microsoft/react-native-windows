@@ -8,7 +8,6 @@
 #include "IReactModuleBuilder.h"
 #include "Threading/MessageQueueThreadFactory.h"
 
-#include <ReactUWP/ReactUwp.h>
 #include <folly/json.h>
 
 #include "ReactHost/MsoUtils.h"

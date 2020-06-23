@@ -57,6 +57,12 @@ const argv = yargs.version(false).options({
     hidden: true,
     default: false,
   },
+  useDevMode: {
+    type: 'boolean',
+    describe:
+      'Link rather than Add/Install the react-native-windows package. This option is for the developement workflow of the developers working on react-native-windows.',
+    hidden: true,
+  },
 }).argv;
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
@@ -66,6 +72,7 @@ const EXITCODE_UNKNOWN_ERROR = 6;
 const EXITCODE_NO_PACKAGE_JSON = 7;
 const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
+const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 
 function reactNativeWindowsGeneratePath() {
   return require.resolve('react-native-windows/local-cli/generate-windows.js', {
@@ -250,7 +257,16 @@ function isProjectUsingYarn(cwd: string) {
   try {
     const name = getReactNativeAppName();
     const ns = argv.namespace || name;
+    const useDevMode = argv.useDevMode;
     let version = argv.version;
+
+    if (argv.useWinUI3 && argv.experimentalNugetDependency) {
+      // WinUI3 is not yet compatible with nuget packages
+      console.error(
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNugetDependency' are incompatible",
+      );
+      process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
+    }
 
     if (!version) {
       const rnVersion = getReactNativeVersion();
@@ -339,7 +355,11 @@ You can either downgrade your version of ${chalk.green(
     }
 
     const pkgmgr = isProjectUsingYarn(process.cwd())
-      ? 'yarn add'
+      ? useDevMode
+        ? 'yarn link'
+        : 'yarn add'
+      : useDevMode
+      ? 'npm link'
       : 'npm install --save';
     const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
     console.log(
@@ -347,7 +367,10 @@ You can either downgrade your version of ${chalk.green(
         version,
       )}...`,
     );
-    execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
+    const pkgIdentity = useDevMode
+      ? 'react-native-windows'
+      : `react-native-windows@${version}`;
+    execSync(`${pkgmgr} ${pkgIdentity}`, execOptions);
     console.log(
       chalk.green(
         `react-native-windows@${chalk.cyan(

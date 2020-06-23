@@ -159,7 +159,7 @@ jobs:
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86:
-          BuildConfiguration: WinUI3
+          BuildConfiguration: Debug
           BuildPlatform: x86
     pool:
       vmImage: $(VmImage)
@@ -196,6 +196,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
+            /p:UseWinUI3=true
 
 
   - job: RNWUniversalOtherProjectsPR
@@ -345,9 +346,9 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: Upload build logs
         condition:  succeededOrFailed()
-        inputs:    
+        inputs:
           pathtoPublish: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)' 
+          artifactName: 'Build logs - $(Agent.JobName)'
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -374,8 +375,15 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      #5059 Disable failing or intermittent tests.
-      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocket)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)'
+      #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
+      #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      Desktop.IntegrationTests.Filter: >
+        (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+        (FullyQualifiedName!~WebSocketModule_)&
+        (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
     steps:
       - checkout: self
@@ -426,6 +434,12 @@ jobs:
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
 
+      - task: PowerShell@2
+        displayName: Check the metro bundle server
+        inputs:
+          targetType: 'inline'
+          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
         inputs:
@@ -440,14 +454,8 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
-
-      - task: PowerShell@2
-        displayName: Check the metro bundle server
-        inputs:
-          targetType: 'inline'
-          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
-        condition: failed()
 
       - template: templates/stop-packagers.yml
 

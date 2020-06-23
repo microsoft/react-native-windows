@@ -81,8 +81,6 @@ TEST_CLASS (NativeTraceEventTests) {
 
  public:
   TEST_METHOD(NativeTraceEventHandler_Registered) {
-    init_apartment(winrt::apartment_type::single_threaded);
-
     ::winrt::facebook::react::INativeTraceHandler handler = winrt::make<TestTraceHandler>();
 
     // anticipatory, see TODO below

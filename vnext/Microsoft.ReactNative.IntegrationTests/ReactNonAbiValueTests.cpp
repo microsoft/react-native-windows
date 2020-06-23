@@ -106,7 +106,7 @@ TEST_CLASS (ReactNonAbiValueTests) {
 
   TEST_METHOD(NonAbiValue_operator_arrow) {
     ReactNonAbiValue<std::string> v1{std::in_place, "Hello"};
-    TestCheckEqual(5, v1->length());
+    TestCheckEqual(5u, v1->length());
   }
 
   TEST_METHOD(NonAbiValue_operator_call) {

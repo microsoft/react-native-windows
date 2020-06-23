@@ -27,8 +27,6 @@ TEST_CLASS (NativeLogEventTests) {
 
  public:
   TEST_METHOD(NativeLogEventHandler_Registered) {
-    init_apartment(winrt::apartment_type::single_threaded);
-
     // anticipatory, see TODO below
     std::vector<std::pair<::winrt::facebook::react::LogLevel, std::wstring>> logMessages;
 

@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Share ReactNativeHost::ReloadInstance impl between UWP and Win32",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-06-19T20:28:45.233Z"
+}

@@ -48,10 +48,10 @@ TEST_CLASS (JSValueTest) {
     TestCheck(intValue);
     TestCheck(doubleValue);
 
-    TestCheckEqual(1, objValue->size());
-    TestCheckEqual(1, jsValue["ObjValue"].PropertyCount());
-    TestCheckEqual(2, arrayValue->size());
-    TestCheckEqual(2, jsValue["ArrayValue"].ItemCount());
+    TestCheckEqual(1u, objValue->size());
+    TestCheckEqual(1u, jsValue["ObjValue"].PropertyCount());
+    TestCheckEqual(2u, arrayValue->size());
+    TestCheckEqual(2u, jsValue["ArrayValue"].ItemCount());
     TestCheckEqual("Hello", *stringValue);
     TestCheckEqual(true, *boolValue);
     TestCheckEqual(42, *intValue);
@@ -212,13 +212,13 @@ TEST_CLASS (JSValueTest) {
 
     TestCheck(jsValue["NullValue1"].IsNull());
     TestCheck(jsValue["NullValue2"].IsNull());
-    TestCheckEqual(1, jsValue["ObjValue"].PropertyCount());
+    TestCheckEqual(1u, jsValue["ObjValue"].PropertyCount());
     TestCheckEqual(2, jsValue["ObjValue"]["prop1"]);
-    TestCheckEqual(0, jsValue["ObjValueEmpty"].PropertyCount());
-    TestCheckEqual(2, jsValue["ArrayValue"].ItemCount());
+    TestCheckEqual(0u, jsValue["ObjValueEmpty"].PropertyCount());
+    TestCheckEqual(2u, jsValue["ArrayValue"].ItemCount());
     TestCheckEqual(1, jsValue["ArrayValue"][0]);
     TestCheckEqual(2, jsValue["ArrayValue"][1]);
-    TestCheckEqual(0, jsValue["ArrayValueEmpty"].ItemCount());
+    TestCheckEqual(0u, jsValue["ArrayValueEmpty"].ItemCount());
     TestCheckEqual("Hello", jsValue["StringValue1"]);
     TestCheckEqual("", jsValue["StringValue2"]);
     TestCheckEqual(true, jsValue["BoolValue"]);
@@ -250,13 +250,13 @@ TEST_CLASS (JSValueTest) {
     TestCheckEqual(JSValueType::Double, jsValue[8].Type());
 
     TestCheck(jsValue["NullValue"].IsNull());
-    TestCheckEqual(1, jsValue[1].PropertyCount());
+    TestCheckEqual(1u, jsValue[1].PropertyCount());
     TestCheckEqual(2, jsValue[1]["prop1"]);
-    TestCheckEqual(0, jsValue[2].PropertyCount());
-    TestCheckEqual(2, jsValue[3].ItemCount());
+    TestCheckEqual(0u, jsValue[2].PropertyCount());
+    TestCheckEqual(2u, jsValue[3].ItemCount());
     TestCheckEqual(1, jsValue[3][0]);
     TestCheckEqual(2, jsValue[3][1]);
-    TestCheckEqual(0, jsValue[4].ItemCount());
+    TestCheckEqual(0u, jsValue[4].ItemCount());
     TestCheckEqual("Hello", jsValue[5]);
     TestCheckEqual(true, jsValue[6]);
     TestCheckEqual(42, jsValue[7]);
@@ -290,10 +290,10 @@ TEST_CLASS (JSValueTest) {
     TestCheckEqual(JSValueType::Double, value11.Type());
 
     TestCheck(value01.IsNull());
-    TestCheckEqual(1, value02.TryGetObject()->size());
-    TestCheckEqual(0, value03.TryGetObject()->size());
-    TestCheckEqual(2, value04.TryGetArray()->size());
-    TestCheckEqual(0, value05.TryGetArray()->size());
+    TestCheckEqual(1u, value02.TryGetObject()->size());
+    TestCheckEqual(0u, value03.TryGetObject()->size());
+    TestCheckEqual(2u, value04.TryGetArray()->size());
+    TestCheckEqual(0u, value05.TryGetArray()->size());
     TestCheckEqual("Hello", *value06.TryGetString());
     TestCheckEqual(true, *value07.TryGetBoolean());
     TestCheckEqual(false, *value08.TryGetBoolean());
@@ -366,37 +366,37 @@ TEST_CLASS (JSValueTest) {
     TestCheckEqual(JSValueType::Double, value20.Type());
     TestCheckEqual(JSValueType::Double, value21.Type());
 
-    TestCheckEqual(3, value01.PropertyCount());
+    TestCheckEqual(3u, value01.PropertyCount());
     TestCheckEqual(nullptr, value01["prop1"]);
     TestCheckEqual(42, value01["prop2"]);
     TestCheckEqual("Hello", value01["prop3"]);
 
-    TestCheckEqual(3, value02.PropertyCount());
+    TestCheckEqual(3u, value02.PropertyCount());
     TestCheckEqual(nullptr, value02["prop1"]);
     TestCheckEqual(42, value02["prop2"]);
     TestCheckEqual("Hello", value02["prop3"]);
 
-    TestCheckEqual(1, value03.PropertyCount());
+    TestCheckEqual(1u, value03.PropertyCount());
     TestCheckEqual(3, value03["prop1"]);
 
-    TestCheckEqual(3, value04.ItemCount());
+    TestCheckEqual(3u, value04.ItemCount());
     TestCheckEqual(nullptr, value04[0]);
     TestCheckEqual(nullptr, value04[1]);
     TestCheckEqual(nullptr, value04[2]);
 
-    TestCheckEqual(1, value05.ItemCount());
+    TestCheckEqual(1u, value05.ItemCount());
     TestCheckEqual(3, value05[0]);
 
-    TestCheckEqual(2, value06.ItemCount());
+    TestCheckEqual(2u, value06.ItemCount());
     TestCheckEqual(42, value06[0]);
     TestCheckEqual(42, value06[1]);
 
-    TestCheckEqual(3, value07.ItemCount());
+    TestCheckEqual(3u, value07.ItemCount());
     TestCheckEqual(nullptr, value07[0]);
     TestCheckEqual(42, value07[1]);
     TestCheckEqual("Hello", value07[2]);
 
-    TestCheckEqual(3, value08.ItemCount());
+    TestCheckEqual(3u, value08.ItemCount());
     TestCheckEqual(nullptr, value08[0]);
     TestCheckEqual(42, value08[1]);
     TestCheckEqual("Hello", value08[2]);

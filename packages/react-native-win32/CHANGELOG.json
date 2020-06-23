@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 19 Jun 2020 00:07:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.23",
+      "version": "0.0.0-canary.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable FastRefresh support",
+            "author": "acoates@microsoft.com",
+            "commit": "c5930b17b47c5651e89d8b5a6db6355c101f271e",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Jun 2020 00:07:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.22",
+      "version": "0.0.0-canary.22",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create Scripts for the Release Process",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09c55119a42002be07b9c3325ca6859d06a99cc3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jun 2020 00:05:39 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.21",
       "version": "0.0.0-canary.21",

@@ -16,10 +16,12 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   IReactNotificationService Notifications() noexcept;
   IReactDispatcher UIDispatcher() noexcept;
   IReactDispatcher JSDispatcher() noexcept;
+#ifndef CORE_ABI
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       hstring const &eventName,
       JSValueArgWriter const &eventDataArgWriter) noexcept;
+#endif
   void CallJSFunction(
       hstring const &moduleName,
       hstring const &methodName,

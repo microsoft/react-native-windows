@@ -60,11 +60,23 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   void Expand() const;
   void Collapse() const;
 
+  // IRangeValueProvider
+  double Minimum();
+  double Maximum();
+  double Value();
+  double SmallChange();
+  double LargeChange();
+  bool IsReadOnly();
+  void SetValue(double value);
+
  private:
   winrt::hstring GetContentName() const;
   winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles GetAccessibilityRole() const;
   bool HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
   bool GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
+  bool HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
+  double GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
+
   winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler() const;
 
   static xaml::DependencyProperty AccessibilityActionsProperty();

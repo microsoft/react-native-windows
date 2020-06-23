@@ -240,14 +240,6 @@
       "issue": 5170
     },
     {
-      "type": "patch",
-      "file": "Libraries\\core\\setUpDeveloperTools.win32.js",
-      "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "dac10e7b4ec4b65b658f26aeeedc05cc975a53cd",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Image\\Image.win32.js",
       "baseFile": "Libraries\\Image\\Image.ios.js",

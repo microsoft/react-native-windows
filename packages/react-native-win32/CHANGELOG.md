@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 17 Jun 2020 00:05:39 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.23
+
+Fri, 19 Jun 2020 00:07:58 GMT
+
+### Changes
+
+- Enable FastRefresh support (acoates@microsoft.com)
+
+## 0.0.0-canary.22
+
+Thu, 18 Jun 2020 00:07:44 GMT
+
+### Changes
+
+- Create Scripts for the Release Process (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.21
 

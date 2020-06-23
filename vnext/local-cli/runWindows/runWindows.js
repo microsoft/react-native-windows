@@ -12,6 +12,7 @@ const {newError, newInfo} = require('./utils/commandWithProgress');
 const info = require('./utils/info');
 const msbuildtools = require('./utils/msbuildtools');
 const autolink = require('./utils/autolink');
+
 const chalk = require('chalk');
 
 function ExitProcessWithError(loggingWasEnabled) {
@@ -23,7 +24,13 @@ function ExitProcessWithError(loggingWasEnabled) {
   process.exit(1);
 }
 
-async function runWindows(config, args, options) {
+/**
+ * Performs build deploy and launch of RNW apps.
+ * @param {array} args Unprocessed args passed from react-native CLI.
+ * @param {object} config Config passed from react-native CLI.
+ * @param {object} options Options passed from react-native CLI.
+ */
+async function runWindows(args, config, options) {
   const verbose = options.logging;
 
   if (verbose) {
@@ -46,13 +53,25 @@ async function runWindows(config, args, options) {
     }
   }
 
-  // Fix up options
-  options.root = options.root || process.cwd();
-  const slnFile = options.sln || build.getSolutionFile(options);
+  // Either use the specified root or get the default one
+  options.root = options.root || config.root;
+
+  // Get the solution file
+  const slnFile = build.getAppSolutionFile(options, config);
 
   if (options.autolink) {
-    autolink.updateAutoLink(verbose);
+    const autolinkArgs = [];
+    const autolinkConfig = config;
+    const autoLinkOptions = {
+      logging: options.logging,
+      proj: options.proj,
+      sln: options.sln,
+    };
+    await autolink.func(autolinkArgs, autolinkConfig, autoLinkOptions);
+  } else {
+    newInfo('Autolink step is skipped');
   }
+
   if (options.build) {
     if (!slnFile) {
       newError(
@@ -70,7 +89,12 @@ async function runWindows(config, args, options) {
 
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
-    const msBuildProps = build.parseMsBuildProps(options);
+    var msBuildProps = build.parseMsBuildProps(options);
+
+    if (!options.autolink) {
+      // Disable the autolink check if --no-autolink was passed
+      msBuildProps.RunAutolinkCheck = 'false';
+    }
 
     try {
       await build.buildSolution(
@@ -100,6 +124,13 @@ async function runWindows(config, args, options) {
   await deploy.startServerInNewWindow(options, verbose);
 
   if (options.deploy) {
+    if (!slnFile) {
+      newError(
+        'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
+      );
+      ExitProcessWithError(options.logging);
+    }
+
     try {
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
@@ -202,6 +233,11 @@ module.exports = {
       default: false,
     },
     {
+      command: '--no-autolink',
+      description: 'Do not run autolinking',
+      default: false,
+    },
+    {
       command: '--no-build',
       description: 'Do not build the solution',
       default: false,
@@ -213,7 +249,14 @@ module.exports = {
     },
     {
       command: '--sln [string]',
-      description: 'Solution file to build, e.g. windows\\myApp.sln',
+      description:
+        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+      default: undefined,
+    },
+    {
+      command: '--proj [string]',
+      description:
+        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
       default: undefined,
     },
     {
@@ -229,11 +272,6 @@ module.exports = {
     {
       command: '--info',
       description: 'Dump environment information',
-      default: false,
-    },
-    {
-      command: '--autolink',
-      description: 'Auto link native modules',
       default: false,
     },
     {

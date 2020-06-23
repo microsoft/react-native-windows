@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix warnings of signed/unsigned comparrison mismatches on x86 builds",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-22T15:35:37.030Z"
+}

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.95",
+  "version": "0.0.0-canary.99",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,7 +35,9 @@
     "shelljs": "^0.7.8",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
-    "xml-parser": "^1.2.1"
+    "xml-parser": "^1.2.1",
+    "xmldom": "^0.3.0",
+    "xpath": "^0.0.27"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.3.8",

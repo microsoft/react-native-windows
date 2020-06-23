@@ -76,6 +76,7 @@ function copyProjectTemplateAndReplace(
   }
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
+    fs.writeFileSync(path.join(destPath, windowsDir, 'UseWinUI3'), '');
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, language);
@@ -91,15 +92,16 @@ function copyProjectTemplateAndReplace(
   const cppNugetPackages = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.200316.3',
+      version: '2.0.200615.7',
       propsTopOfFile: true,
       hasProps: true,
+      hasTargets: true,
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002',
-      propsMiddleOfFile: true, // For msbuild order of imports is very important since it follows a sequential macro expansion model. Cpp projects have two typical locations where props are imported.
-      hasProps: options.useWinUI3, // WinUI has props UI.Xaml does not.
+      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+      hasTargets: false,
     },
   ];
 
@@ -110,6 +112,7 @@ function copyProjectTemplateAndReplace(
         version: rnwVersion,
         propsMiddleOfFile: true,
         hasProps: false,
+        hasTargets: true,
       },
     );
   }
@@ -127,8 +130,8 @@ function copyProjectTemplateAndReplace(
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
     // we therefore have to precariously use the right casing in the right place or risk building in VS breaking.
-    projectGuidLower: `{${projectGuid}}`,
-    projectGuidUpper: `{${projectGuid}}`,
+    projectGuidLower: `{${projectGuid.toLowerCase()}}`,
+    projectGuidUpper: `{${projectGuid.toUpperCase()}}`,
 
     // packaging and signing variables:
     packageGuid: packageGuid,
@@ -142,6 +145,13 @@ function copyProjectTemplateAndReplace(
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+
+    // autolinking template variables
+    autolinkProjectReferencesForTargets: '',
+    autolinkCsUsingNamespaces: '',
+    autolinkCsReactPacakgeProviders: '',
+    autolinkCppIncludes: '',
+    autolinkCppPackageProviders: '',
   };
 
   [
@@ -151,15 +161,6 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
-
-  if (options.useWinUI3) {
-    const slnFilePath = path.join(windowsDir, newProjectName + '.sln');
-    const slnText = fs.readFileSync(slnFilePath).toString();
-    // Target Microsoft.ReactNative.Cxx to WinUI3
-    const regex = /({F7D32BD0-2749-483E-9A0D-1635EF7E3136}\..*\.\w+) = \w+\|([\w\d]+)/g;
-    const makeWinUI3 = '$1 = WinUI3|$2';
-    fs.writeFileSync(slnFilePath, slnText.replace(regex, makeWinUI3));
-  }
 
   if (language === 'cs') {
     [

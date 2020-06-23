@@ -4,27 +4,32 @@
 #include "RedBox.h"
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
-#include <winrt/Windows.ApplicationModel.Core.h>
-#include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.Web.Http.h>
 #include <regex>
-#include "CppWinRTIncludes.h"
 #include "Unicode.h"
-#include "Utils/Helpers.h"
 
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
+
+#ifndef CORE_ABI
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.Web.Http.h>
+#include "CppWinRTIncludes.h"
+#include "Utils/Helpers.h"
+#endif
 
 using namespace winrt::Windows::Foundation;
 
 namespace Mso::React {
 
+#ifndef CORE_ABI
 struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
       const Mso::WeakPtr<IReactHost> &weakReactHost,
@@ -507,6 +512,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
+#endif
 
 struct RedBoxErrorFrameInfo
     : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
@@ -600,10 +606,12 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
+#ifndef CORE_ABI
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
     Mso::DispatchQueue &&uiQueue) noexcept {
   return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
 }
+#endif
 
 } // namespace Mso::React

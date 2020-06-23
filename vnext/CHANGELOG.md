@@ -1,8 +1,47 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 17 Jun 2020 00:05:39 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Jun 2020 00:05:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Tue, 23 Jun 2020 00:05:47 GMT
+
+### Changes
+
+- start moving away from config and use a sentinel file instead (asklar@microsoft.com)
+
+## 0.0.0-canary.98
+
+Sat, 20 Jun 2020 00:05:18 GMT
+
+### Changes
+
+- Auto-linking for native modules (source-based) (jthysell@microsoft.com)
+- Implement AccessibilityValue from RN 62 (igklemen@microsoft.com)
+- Complete BundleUrl should be provided to JSExecutor when using fastrefresh without remote debugging (acoates@microsoft.com)
+- turbo modules should be replacable (zihanc@microsoft.com)
+
+## 0.0.0-canary.97
+
+Fri, 19 Jun 2020 00:07:58 GMT
+
+### Changes
+
+- Move the addition of folly.natvis to ReactWin32.nuspec (warleu@microsoft.com)
+- Fix building vcxproj files outside of solution (dannyvv@microsoft.com)
+
+## 0.0.0-canary.96
+
+Thu, 18 Jun 2020 00:07:44 GMT
+
+### Changes
+
+- Create Scripts for the Release Process (ngerlem@microsoft.com)
+- Run NativeModules 2.0 in JS thread (vmorozov@microsoft.com)
+- Update C++/WinRT to version 2.0.200615.7 (vmorozov@microsoft.com)
+- version agnostic msbuild log viewer (asklar@microsoft.com)
 
 ## 0.0.0-canary.95
 

@@ -28,7 +28,7 @@ TEST_CLASS_EX (WhenAllTest, LibletAwareMemLeakDetection) {
 
   TEST_METHOD(WhenAll_Init_Empty) {
     auto fr = Mso::WhenAll<int>({}).Then([](Mso::Async::ArrayView<int> result) noexcept {
-      TestCheckEqual(0, result.Size());
+      TestCheckEqual(0u, result.Size());
       return 42;
     });
 
@@ -53,8 +53,8 @@ TEST_CLASS_EX (WhenAllTest, LibletAwareMemLeakDetection) {
 
     auto fr = Mso::WhenAll({f1, f2}).Then([](Mso::Async::ArrayView<double> r) noexcept {
       // Check value alignment
-      TestCheckEqual(0, reinterpret_cast<uintptr_t>(&r[0]) & (sizeof(double) - 1));
-      TestCheckEqual(0, reinterpret_cast<uintptr_t>(&r[1]) & (sizeof(double) - 1));
+      TestCheckEqual(0u, reinterpret_cast<uintptr_t>(&r[0]) & (sizeof(double) - 1));
+      TestCheckEqual(0u, reinterpret_cast<uintptr_t>(&r[1]) & (sizeof(double) - 1));
       return r[0] + r[1];
     });
 
@@ -68,9 +68,9 @@ TEST_CLASS_EX (WhenAllTest, LibletAwareMemLeakDetection) {
 
     auto fr = Mso::WhenAll({f1, f2, f3}).Then([](Mso::Async::ArrayView<double> r) noexcept {
       // Check value alignment
-      TestCheckEqual(0, reinterpret_cast<uintptr_t>(&r[0]) & (sizeof(double) - 1));
-      TestCheckEqual(0, reinterpret_cast<uintptr_t>(&r[1]) & (sizeof(double) - 1));
-      TestCheckEqual(0, reinterpret_cast<uintptr_t>(&r[2]) & (sizeof(double) - 1));
+      TestCheckEqual(0u, reinterpret_cast<uintptr_t>(&r[0]) & (sizeof(double) - 1));
+      TestCheckEqual(0u, reinterpret_cast<uintptr_t>(&r[1]) & (sizeof(double) - 1));
+      TestCheckEqual(0u, reinterpret_cast<uintptr_t>(&r[2]) & (sizeof(double) - 1));
       return r[0] + r[1] + r[2];
     });
 
@@ -115,7 +115,7 @@ TEST_CLASS_EX (WhenAllTest, LibletAwareMemLeakDetection) {
 
   TEST_METHOD(WhenAll_Vector_Empty) {
     auto fr = Mso::WhenAll(std::vector<Mso::Future<int>>()).Then([](Mso::Async::ArrayView<int> r) noexcept {
-      TestCheckEqual(0, r.Size());
+      TestCheckEqual(0u, r.Size());
       return 42;
     });
 

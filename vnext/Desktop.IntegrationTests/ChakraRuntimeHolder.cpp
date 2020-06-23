@@ -1,5 +1,3 @@
-#include "pch.h"
-
 #include "ChakraRuntimeHolder.h"
 
 #include <JSI/Shared/ChakraRuntimeFactory.h>

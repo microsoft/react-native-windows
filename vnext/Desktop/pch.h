@@ -10,3 +10,5 @@
 #include <windows.h>
 #include <winrt/base.h>
 #include <mutex>
+
+#include <Base/CxxReactIncludes.h>

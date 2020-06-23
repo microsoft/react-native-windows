@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -48,6 +47,7 @@
     <ENABLEPermissive>true</ENABLEPermissive>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -75,6 +75,7 @@
     <ClCompile>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
+        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
@@ -92,7 +93,7 @@
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative";"$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files"</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);"$(ReactNativeWindowsDir)Microsoft.ReactNative"</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -103,6 +104,10 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
+      <!--
+        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
+      -->
+      <PreprocessorDefinitions>CORE_ABI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <!-- TODO: Remove after https://github.com/microsoft/hermes-windows/issues/12 is fixed. -->
@@ -155,19 +160,30 @@
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
-    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
@@ -240,7 +256,7 @@
     <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
     <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets')" />
   </ImportGroup>
@@ -267,8 +283,8 @@
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.43\build\native\ChakraCore.Debugger.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets'))" />
   </Target>
