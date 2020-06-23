@@ -7,6 +7,13 @@
 #include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
 
+
+#ifdef USE_WINUI3
+namespace activation = xaml;
+#else
+namespace activation = winrt::Windows::ApplicationModel::Activation;
+#endif
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 // NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
@@ -26,12 +33,21 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base
           composable,
           composing,
           xaml::IApplicationOverrides,
-          xaml::IApplicationOverrides2,
+#ifndef USE_WINUI3
+  xaml::IApplicationOverrides2,
+#endif
           I...>,
-      impl::require<D, xaml::IApplication, xaml::IApplication2, xaml::IApplication3>,
+      impl::require<D, xaml::IApplication
+  #ifndef USE_WINUI3
+  , xaml::IApplication2, xaml::IApplication3
+  #endif
+      >,
       impl::base<D, xaml::Application>,
-      xaml::IApplicationOverridesT<D>,
-      xaml::IApplicationOverrides2T<D> {
+      xaml::IApplicationOverridesT<D>
+#ifndef USE_WINUI3
+      , xaml::IApplicationOverrides2T<D>
+#endif
+  {
   using base_type = NoDefaultCtorReactApplication_base;
   using class_type = Microsoft::ReactNative::ReactApplication;
   using implements_type = typename NoDefaultCtorReactApplication_base::implements_type;
@@ -43,7 +59,11 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base
   }
 
  protected:
-  using dispatch = impl::dispatch_to_overridable<D, xaml::IApplicationOverrides, xaml::IApplicationOverrides2>;
+  using dispatch = impl::dispatch_to_overridable<D, xaml::IApplicationOverrides
+#ifndef USE_WINUI3
+    , xaml::IApplicationOverrides2
+#endif
+  >;
   auto overridable() noexcept {
     return dispatch::overridable(static_cast<D &>(*this));
   }
@@ -72,7 +92,7 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
 
  public:
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
-  void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &e);
+  void OnLaunched(activation::LaunchActivatedEventArgs const &e);
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 

@@ -6,7 +6,7 @@
 
   <PropertyGroup Label="WinUI3 versioning">
     <WinUIPackageName Condition="'$(UseWinUI3)'=='true'">Microsoft.WinUI</WinUIPackageName>
-    <WinUIPackageVersion Condition="'$(UseWinUI3)'=='true'">3.0.0-alpha.200210.0</WinUIPackageVersion>
+    <WinUIPackageVersion Condition="'$(UseWinUI3)'=='true'">3.0.0-preview1.200515.3</WinUIPackageVersion>
     <WinUIPackageProps  Condition="'$(UseWinUI3)'=='true'">$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props</WinUIPackageProps>
 
     <WinUIPackageName Condition="'$(UseWinUI3)'!='true'">Microsoft.UI.Xaml</WinUIPackageName>

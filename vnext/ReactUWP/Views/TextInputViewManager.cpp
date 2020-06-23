@@ -16,10 +16,17 @@
 
 #include <IReactInstance.h>
 
+#ifdef USE_WINUI3
+  namespace winrt { namespace Microsoft { namespace UI { namespace Xaml { namespace Controls {
+    using IPasswordBox4 = ::xaml::Controls::IPasswordBox;
+    using ITextBox6 = ::xaml::Controls::ITextBox;
+  }}}}};
+#endif
+
 namespace winrt {
-using namespace xaml;
-using namespace xaml::Shapes;
-using namespace xaml::Media;
+  using namespace xaml;
+  using namespace xaml::Media;
+  using namespace xaml::Shapes;
 } // namespace winrt
 
 namespace react {
@@ -159,6 +166,7 @@ void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
   }
 }
 
+
 void TextInputShadowNode::registerEvents() {
   auto control = GetView().as<xaml::Controls::Control>();
   auto wkinstance = GetViewManager()->GetReactInstance();
@@ -182,6 +190,8 @@ void TextInputShadowNode::registerEvents() {
         winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
   } else {
     m_textBoxTextChangingRevoker = {};
+
+
     if (control.try_as<xaml::Controls::IPasswordBox4>()) {
       m_passwordBoxPasswordChangingRevoker = control.as<xaml::Controls::IPasswordBox4>().PasswordChanging(
           winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });

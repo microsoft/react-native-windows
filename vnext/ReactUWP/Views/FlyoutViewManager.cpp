@@ -57,7 +57,7 @@ static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placeme
 template <>
 struct json_type_traits<winrt::FlyoutPlacementMode> {
   static winrt::FlyoutPlacementMode parseJson(const folly::dynamic &json) {
-    auto placementMode = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>()) ? placementModeRS5 : placementModeMinVersion;
+    auto placementMode = react::uwp::IsRS5OrHigher() ? placementModeRS5 : placementModeMinVersion;
     auto iter = placementMode.find(json.asString());
 
     if (iter != placementMode.end()) {
@@ -145,7 +145,7 @@ void FlyoutShadowNode::createView() {
   Super::createView();
 
   m_flyout = winrt::Flyout();
-  m_isFlyoutShowOptionsSupported = !!(m_flyout.try_as<winrt::IFlyoutBase5>());
+  m_isFlyoutShowOptionsSupported = IsRS5OrHigher();
 
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
@@ -226,10 +226,10 @@ void FlyoutShadowNode::createView() {
       });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
-  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
+  if (Is19H1OrHigher()) {
     if (auto instance = wkinstance.lock()) {
       if (auto xamlRoot = static_cast<NativeUIManager *>(instance->NativeUIManager())->tryGetXamlRoot()) {
-        flyoutBase6.XamlRoot(xamlRoot);
+        m_flyout.XamlRoot(xamlRoot);
       }
     }
   }
