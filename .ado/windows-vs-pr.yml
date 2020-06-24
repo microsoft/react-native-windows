@@ -476,12 +476,12 @@ jobs:
           language: cpp
           configuration: Debug
           platform: x86
-          additionalInitArguments: ${{ '--namespace MyCompany.MyApplication.MyComponent' }}
+          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
         X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
-          additionalInitArguments: ${{ '--namespace MyCompany.MyApplication.MyComponent' }}
+          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
         #X86ReleaseCpp:
         #  language: cpp
         #  configuration: Release
@@ -542,12 +542,12 @@ jobs:
           language: cpp
           configuration: Debug
           platform: x86
-          additionalInitArguments: ${{ '--useWinUI3 true' }}
+          additionalInitArguments: --useWinUI3 true
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
-          additionalInitArguments: ${{ '--useWinUI3 true' }}
+          additionalInitArguments: --useWinUI3 true
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -560,7 +560,7 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
-          additionalInitArguments: $[ coalesce($(additionalInitArguments), '') ]
+          additionalInitArguments: $(additionalInitArguments)
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
