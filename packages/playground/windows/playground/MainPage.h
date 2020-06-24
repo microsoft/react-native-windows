@@ -16,8 +16,7 @@ struct MainPage : MainPageT<MainPage> {
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
 
-  bool m_useWebDebugger{false};
-  winrt::hstring bundlerHostname;
+  winrt::hstring m_bundlerHostname;
 
  public:
   void x_entryPointCombo_SelectionChanged(
