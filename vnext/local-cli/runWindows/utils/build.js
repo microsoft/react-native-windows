@@ -187,8 +187,12 @@ function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
     http
       .get(url)
-      .on('response', res => res.pipe(destFile))
-      .on('finish', () => resolve())
+      .on('response', res => {
+        res.pipe(destFile).on('finish', () => {
+          destFile.close();
+          resolve();
+        });
+      })
       .on('error', err => {
         fs.unlink(dest, () => reject(err));
       });
