@@ -501,10 +501,6 @@
     },
     {
       "type": "platform",
-      "file": "RNTester.ts"
-    },
-    {
-      "type": "platform",
       "file": "RNTester\\APIExamples\\AccessibilityExampleWin32.tsx"
     },
     {
