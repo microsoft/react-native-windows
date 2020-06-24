@@ -246,6 +246,43 @@ async function getLatestMatchingRNWVersion(
   }
 }
 
+function installReactNativeWindows(version: string, useDevMode: boolean) {
+  console.log(
+    `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
+      version,
+    )}...`,
+  );
+
+  const cwd = process.cwd();
+  const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
+
+  if (useDevMode) {
+    execSync(
+      isProjectUsingYarn(cwd)
+        ? 'yarn link react-native-windows'
+        : 'npm link react-native-windows',
+      execOptions,
+    );
+  } else {
+    const pkgJsonPath = findUp.sync('package.json', {cwd});
+    let pkgJson = require(pkgJsonPath);
+    let deps = pkgJson.dependencies || {};
+    deps['react-native-windows'] = version;
+    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
+  }
+
+  console.log(
+    chalk.green(
+      `react-native-windows@${chalk.cyan(
+        require(require.resolve('react-native-windows/package.json', {
+          paths: [cwd],
+        })).version,
+      )} successfully installed.`,
+    ),
+  );
+}
+
 /**
  * Check if project is using Yarn (has `yarn.lock` in the tree)
  */
@@ -354,32 +391,7 @@ You can either downgrade your version of ${chalk.green(
       }
     }
 
-    const pkgmgr = isProjectUsingYarn(process.cwd())
-      ? useDevMode
-        ? 'yarn link'
-        : 'yarn add'
-      : useDevMode
-      ? 'npm link'
-      : 'npm install --save';
-    const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
-    console.log(
-      `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
-        version,
-      )}...`,
-    );
-    const pkgIdentity = useDevMode
-      ? 'react-native-windows'
-      : `react-native-windows@${version}`;
-    execSync(`${pkgmgr} ${pkgIdentity}`, execOptions);
-    console.log(
-      chalk.green(
-        `react-native-windows@${chalk.cyan(
-          require(require.resolve('react-native-windows/package.json', {
-            paths: [process.cwd()],
-          })).version,
-        )} successfully installed.`,
-      ),
-    );
+    installReactNativeWindows(version, useDevMode);
 
     const generateWindows = require(reactNativeWindowsGeneratePath());
     generateWindows(process.cwd(), name, ns, {
