@@ -13,7 +13,6 @@ using namespace {{ xamlNamespaceCpp }};
 using namespace {{ xamlNamespaceCpp }}::Controls;
 using namespace {{ xamlNamespaceCpp }}::Navigation;
 using namespace Windows::ApplicationModel;
-using namespace Windows::ApplicationModel::Activation;
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of
@@ -50,7 +49,7 @@ App::App() noexcept
 /// will be used such as when the application is launched to open a specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void App::OnLaunched(LaunchActivatedEventArgs const& e)
+void App::OnLaunched(activation::LaunchActivatedEventArgs const& e)
 {
     super::OnLaunched(e);
 

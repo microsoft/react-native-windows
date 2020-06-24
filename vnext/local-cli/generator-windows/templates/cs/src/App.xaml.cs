@@ -1,5 +1,7 @@
 ﻿using Microsoft.ReactNative;
+{{^useWinUI3}}
 using Windows.ApplicationModel.Activation;
+{{/useWinUI3}}
 using {{ xamlNamespace }};
 using {{ xamlNamespace }}.Controls;
 
