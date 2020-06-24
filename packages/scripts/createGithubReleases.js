@@ -10,6 +10,7 @@
  */
 
 const _ = require('lodash');
+const chalk = require('chalk');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
@@ -51,6 +52,8 @@ const argv = yargs
       }
     }
   }
+
+  console.log(chalk.green('All done!'));
 })();
 
 /**
