@@ -60,10 +60,14 @@ const argv = yargs.version(false).strict(true).options({
   useDevMode: {
     type: 'boolean',
     describe:
-      'Link rather than Add/Install the react-native-windows package. This option is for the developement workflow of the developers working on react-native-windows.',
+      'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
     hidden: true,
   },
 }).argv;
+
+if (argv.verbose) {
+  console.log(argv);
+}
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;
