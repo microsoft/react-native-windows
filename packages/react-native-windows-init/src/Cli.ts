@@ -63,7 +63,7 @@ const argv = yargs.version(false).strict(true).options({
       'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
     hidden: true,
   },
-}).argv;
+}).check((a, o) => { if (a._.length != 0) { throw `Unrecognized option ${a._}`; }; return true }).argv;
 
 if (argv.verbose) {
   console.log(argv);
