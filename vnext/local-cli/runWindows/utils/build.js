@@ -187,8 +187,9 @@ function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
     https
       .get(url)
-      .on('response', res => {
-        res.pipe(destFile).on('finish', () => {
+      .on('response', res => res.pipe(destFile))
+      .on('finish', () => {
+        destFile.on('finish', () => {
           destFile.close();
           resolve();
         });
