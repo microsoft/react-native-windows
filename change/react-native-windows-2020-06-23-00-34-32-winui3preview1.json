@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "update csproj to use versions from winui.props",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-23T07:34:32.230Z"
-}
