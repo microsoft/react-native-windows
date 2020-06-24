@@ -7,9 +7,9 @@
 'use strict';
 
 const fs = require('fs');
+const http = require('http');
 const os = require('os');
 const path = require('path');
-const {execSync} = require('child_process');
 
 const MSBuildTools = require('./msbuildtools');
 const Version = require('./version');
@@ -73,55 +73,25 @@ async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
 }
 
 async function restoreNuGetPackages(options, slnFile, verbose) {
-  let nugetPath =
-    options.nugetPath || path.join(os.tmpdir(), 'nuget.4.9.2.exe');
-
-  let downloadedNuget = false;
-  const ensureNugetSpinner = newSpinner('Locating NuGet executable');
-  if (!(await existsAsync(nugetPath))) {
-    try {
-      nugetPath = execSync('where nuget')
-        .toString()
-        .trim();
-    } catch {}
-  }
+  const nugetPath = path.join(os.tmpdir(), 'nuget.4.9.2.exe');
 
   if (!(await existsAsync(nugetPath))) {
-    await commandWithProgress(
-      ensureNugetSpinner,
-      'Downloading NuGet Binary',
-      'powershell',
-      `$progressPreference = [System.Management.Automation.ActionPreference]::SilentlyContinue; Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
-        ' ',
-      ),
-      verbose,
+    const spinner = newSpinner('Downloading NuGet Binary');
+    await downloadFileWithRetry(
+      'https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe',
+      nugetPath,
+      1 /*retries*/,
     );
-    downloadedNuget = true;
-  }
-  ensureNugetSpinner.succeed('Found NuGet Binary');
-
-  if (verbose) {
-    console.log(`Using Nuget: ${nugetPath}`);
+    spinner.succeed();
   }
 
   const msbuildTools = MSBuildTools.findAvailableVersion('x86', verbose);
-  try {
-    await nugetRestore(
-      nugetPath,
-      slnFile,
-      verbose,
-      msbuildTools.installationVersion,
-    );
-  } catch (e) {
-    if (!options.isRetryingNuget) {
-      const retryOptions = Object.assign({isRetryingNuget: true}, options);
-      if (downloadedNuget) {
-        fs.unlinkSync(nugetPath);
-      }
-      return restoreNuGetPackages(retryOptions, slnFile, verbose);
-    }
-    throw e;
-  }
+  await nugetRestore(
+    nugetPath,
+    slnFile,
+    verbose,
+    msbuildTools.installationVersion,
+  );
 }
 
 const configErrorString = 'Error: ';
@@ -197,6 +167,32 @@ function parseMsBuildProps(options) {
     }
   }
   return result;
+}
+
+async function downloadFileWithRetry(url, dest, retries) {
+  for (let retryCount = 0; ; ++retryCount) {
+    try {
+      return await downloadFile(url, dest);
+    } catch (ex) {
+      if (retryCount === retries) {
+        throw ex;
+      }
+    }
+  }
+}
+
+function downloadFile(url, dest) {
+  const destFile = fs.createWriteStream(dest);
+
+  return new Promise((resolve, reject) => {
+    http
+      .get(url)
+      .on('response', res => res.pipe(destFile))
+      .on('finish', () => resolve())
+      .on('error', err => {
+        fs.unlink(dest, () => reject(err));
+      });
+  });
 }
 
 module.exports = {
