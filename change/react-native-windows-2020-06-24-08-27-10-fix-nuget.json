@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Use Deterministic NuGet Binary",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-24T15:27:10.726Z"
+}

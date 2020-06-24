@@ -30,7 +30,7 @@ Currently the feature is behind an msbuild property `$(ReactNativeCodeGenEnabled
 The default at the moment is false, it is only turned  on for a single project for now which is the [SampleLibraryCS.csproj](https://github.com/microsoft/react-native-windows/blob/master/packages/microsoft-reactnative-sampleapps/windows/SampleLibraryCS/SampleLibraryCS.csproj) project, to prove it is stable. We will slowly enable it for all projects in the repo and then make it the default.
 
 ## MsBuild/Nuget Complications
-MsBuild and Nuget spent a long time fighting me in mixing a NetCoreApp2.2 executable and WinRT apps in the same solution and the same build. ProjectReferences cannot be used so I had to use the `<MsBuild>` task directly in the targets and it was tricky making it build from both the customer apps as well as our main build solution and unittest (Microsoft.ReactNative.sln). In the end there are a few hacks in place to make this work.
+MsBuild and Nuget spent a long time fighting me in mixing a NetCoreApp3.1 executable and WinRT apps in the same solution and the same build. ProjectReferences cannot be used so I had to use the `<MsBuild>` task directly in the targets and it was tricky making it build from both the customer apps as well as our main build solution and unittest (Microsoft.ReactNative.sln). In the end there are a few hacks in place to make this work.
 The hookups in msbuild do not use the latest BeforeTargets/AfterTargets feature to schedule the main work. I opted to follow the same pattern that the Xaml Codegen uses, so the React CodeGen runs after all the other codegen tools (like resgen, xamlcompile etc) to ensure people familiar with those extensions know how to work with the React Managed CodeGen.
 
 ## Future improvements
