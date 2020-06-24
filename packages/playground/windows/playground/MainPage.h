@@ -17,11 +17,13 @@ struct MainPage : MainPageT<MainPage> {
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
 
   bool m_useWebDebugger{false};
+  winrt::hstring debugHost;
 
  public:
   void x_entryPointCombo_SelectionChanged(
       winrt::Windows::Foundation::IInspectable const &sender,
       xaml::Controls::SelectionChangedEventArgs const &e);
+  void OnNavigatedTo(const Windows::UI::Xaml::Navigation::NavigationEventArgs &e);
 };
 
 } // namespace winrt::playground::implementation
