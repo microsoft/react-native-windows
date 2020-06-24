@@ -18,7 +18,6 @@
     "just-scripts": "^0.36.1",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
-    "ora": "^4.0.3",
     "semver": "^7.3.2",
     "simplegit": "^1.0.2",
     "yargs": "^15.3.1"

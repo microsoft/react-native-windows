@@ -140,10 +140,6 @@ function needsRelease(changeEntry, localTags, releases) {
  * @param {string} token the GitHub auth token
  */
 async function releaseChange(packageName, changeEntry, token) {
-  if (packageName !== 'react-native-windows') {
-    return;
-  }
-
   const pre = semver.prerelease(changeEntry.version);
   console.log(`Creating release for ${packageName} ${changeEntry.version}...`);
 
