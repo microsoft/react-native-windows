@@ -104,7 +104,9 @@ std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::re
             }
 
             if (!method.compare(L"reload")) {
-              reloadCallback();
+              if (reloadCallback) {
+                reloadCallback();
+              }
             } else if (!method.compare(L"devMenu")) {
               // TODO showDevMenu
             } else if (!method.compare(L"captureHeap")) {
