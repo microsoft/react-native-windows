@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 24 Jun 2020 11:51:11 GMT",
+      "tag": "react-native-windows-init_v0.1.12",
+      "version": "0.1.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix issue running react-native-windows-init with yarn",
+            "author": "acoates@microsoft.com",
+            "commit": "b165f0cb3979a1eadbc7c54a056558779254f44e",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jun 2020 00:07:20 GMT",
       "tag": "react-native-windows-init_v0.1.11",
       "version": "0.1.11",
