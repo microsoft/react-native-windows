@@ -7,7 +7,7 @@
 'use strict';
 
 const fs = require('fs');
-const http = require('http');
+const https = require('https');
 const os = require('os');
 const path = require('path');
 
@@ -185,7 +185,7 @@ function downloadFile(url, dest) {
   const destFile = fs.createWriteStream(dest);
 
   return new Promise((resolve, reject) => {
-    http
+    https
       .get(url)
       .on('response', res => {
         res.pipe(destFile).on('finish', () => {
