@@ -30,14 +30,17 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
     propertyBag.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
     auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-    auto const &window = xaml::Window::Current().CoreWindow();
+    /// TODO: WinUI 3 islands support
+    if (xaml::Window::Current()) {
+      auto const &window = xaml::Window::Current().CoreWindow();
 
-    deviceInfoHolder->m_sizeChangedRevoker =
-        window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
-          if (auto strongHolder = weakHolder.lock()) {
-            strongHolder->updateDeviceInfo();
-          }
-        });
+      deviceInfoHolder->m_sizeChangedRevoker =
+          window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
+            if (auto strongHolder = weakHolder.lock()) {
+              strongHolder->updateDeviceInfo();
+            }
+          });
+    }
 
     deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
         winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
@@ -87,16 +90,19 @@ void DeviceInfoHolder::SetCallback(
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
   auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto const window = xaml::Window::Current().CoreWindow();
-  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+  /// TODO: WinUI 3 islands support
+  if (xaml::Window::Current()) {
+    auto const window = xaml::Window::Current().CoreWindow();
+    winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
-  m_windowWidth = window.Bounds().Width;
-  m_windowHeight = window.Bounds().Height;
-  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
-  m_textScaleFactor = uiSettings.TextScaleFactor();
-  m_dpi = displayInfo.LogicalDpi();
-  m_screenWidth = displayInfo.ScreenWidthInRawPixels();
-  m_screenHeight = displayInfo.ScreenHeightInRawPixels();
+    m_windowWidth = window.Bounds().Width;
+    m_windowHeight = window.Bounds().Height;
+    m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+    m_textScaleFactor = uiSettings.TextScaleFactor();
+    m_dpi = displayInfo.LogicalDpi();
+    m_screenWidth = displayInfo.ScreenWidthInRawPixels();
+    m_screenHeight = displayInfo.ScreenHeightInRawPixels();
+  }
 }
 
 void DeviceInfo::GetConstants(React::ReactConstantProvider &provider) noexcept {

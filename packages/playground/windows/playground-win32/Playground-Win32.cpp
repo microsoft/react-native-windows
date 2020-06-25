@@ -14,24 +14,29 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 
-#include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Hosting.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Hosting.h>
 
 #pragma pop_macro("GetCurrentTime")
 
-namespace WUX = winrt::Windows::UI::Xaml;
-namespace WUXC = WUX::Controls;
-namespace WUXH = WUX::Hosting;
+#ifndef USE_WINUI3
+namespace xaml = winrt::Windows::UI::Xaml;
+#else
+namespace xaml = winrt::Microsoft::UI::Xaml;
+#endif
+
+namespace controls = xaml::Controls;
+namespace hosting = xaml::Hosting;
 
 struct WindowData {
   static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  WUXH::DesktopWindowXamlSource m_desktopWindowXamlSource;
+  hosting::DesktopWindowXamlSource m_desktopWindowXamlSource;
 
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
@@ -44,7 +49,7 @@ struct WindowData {
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
 
-  WindowData(const WUXH::DesktopWindowXamlSource &desktopWindowXamlSource)
+  WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
@@ -90,7 +95,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
+          auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
               host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
@@ -124,6 +129,7 @@ struct WindowData {
   }
 
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
+#ifndef USE_WINUI3
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
     // Parent the DesktopWindowXamlSource object to current window
     winrt::check_hresult(interop->AttachToWindow(hwnd));
@@ -131,18 +137,24 @@ struct WindowData {
     // Get the new child window's hwnd
     HWND hWndXamlIsland = nullptr;
     winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
-
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
+#else
+    /// TODO: find WinUI3 alternative
+#endif
 
     return 0;
   }
 
   LRESULT OnWindowPosChanged(HWND /* hwnd */, const WINDOWPOS *windowPosition) {
+#ifndef USE_WINUI3
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
     HWND interopHwnd;
     winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
 
     MoveWindow(interopHwnd, 0, 0, windowPosition->cx, windowPosition->cy, TRUE);
+#else
+    /// TODO: find WinUI3 alternative
+#endif
 
     return 0;
   }
@@ -312,7 +324,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
-  WUXH::DesktopWindowXamlSource desktopXamlSource;
+  hosting::DesktopWindowXamlSource desktopXamlSource;
 
   WNDCLASSEXW wcex = {};
   wcex.cbSize = sizeof(WNDCLASSEX);
@@ -331,7 +343,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
 
-  auto xamlContent = WUXC::Grid();
+  auto xamlContent = controls::Grid();
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
@@ -359,12 +371,14 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
+#ifndef USE_WINUI3
     auto xamlSourceNative2 = desktopXamlSource.as<IDesktopWindowXamlSourceNative2>();
     BOOL xamlSourceProcessedMessage = FALSE;
     winrt::check_hresult(xamlSourceNative2->PreTranslateMessage(&msg, &xamlSourceProcessedMessage));
     if (xamlSourceProcessedMessage) {
       continue;
     }
+#endif
 
     if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
