@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Share
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
 EndProject
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "Playground-win32 (Package)", "Playground-win32 (Package)\Playground-win32 (Package).wapproj", "{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
@@ -103,6 +105,18 @@ Global
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x64.Build.0 = Release|x64
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.ActiveCfg = Release|Win32
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.Build.0 = Release|Win32
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Debug|x64.ActiveCfg = Debug|x64
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Debug|x64.Build.0 = Debug|x64
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Debug|x64.Deploy.0 = Debug|x64
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Debug|x86.ActiveCfg = Debug|x86
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Debug|x86.Build.0 = Debug|x86
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Debug|x86.Deploy.0 = Debug|x86
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Release|x64.ActiveCfg = Release|x64
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Release|x64.Build.0 = Release|x64
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Release|x64.Deploy.0 = Release|x64
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Release|x86.ActiveCfg = Release|x86
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Release|x86.Build.0 = Release|x86
+		{EEC4EF0F-3DD6-4D36-84D8-E5EC3F5ED5FF}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
