@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "resource.h"
 
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <windows.h>
@@ -13,8 +15,6 @@
 #undef GetCurrentTime
 
 #include <winrt/Microsoft.ReactNative.h>
-
-#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>
@@ -129,7 +129,6 @@ struct WindowData {
   }
 
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
-#ifndef USE_WINUI3
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
     // Parent the DesktopWindowXamlSource object to current window
     winrt::check_hresult(interop->AttachToWindow(hwnd));
@@ -138,23 +137,16 @@ struct WindowData {
     HWND hWndXamlIsland = nullptr;
     winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
-#else
-    /// TODO: find WinUI3 alternative
-#endif
 
     return 0;
   }
 
   LRESULT OnWindowPosChanged(HWND /* hwnd */, const WINDOWPOS *windowPosition) {
-#ifndef USE_WINUI3
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
     HWND interopHwnd;
     winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
 
     MoveWindow(interopHwnd, 0, 0, windowPosition->cx, windowPosition->cy, TRUE);
-#else
-    /// TODO: find WinUI3 alternative
-#endif
 
     return 0;
   }
@@ -371,14 +363,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
-#ifndef USE_WINUI3
     auto xamlSourceNative2 = desktopXamlSource.as<IDesktopWindowXamlSourceNative2>();
     BOOL xamlSourceProcessedMessage = FALSE;
     winrt::check_hresult(xamlSourceNative2->PreTranslateMessage(&msg, &xamlSourceProcessedMessage));
     if (xamlSourceProcessedMessage) {
       continue;
     }
-#endif
 
     if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
