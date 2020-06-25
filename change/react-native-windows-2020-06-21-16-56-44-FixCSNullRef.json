@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix JSValueReaderGenerator runtime error for read-only properties",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-21T23:56:43.976Z"
-}

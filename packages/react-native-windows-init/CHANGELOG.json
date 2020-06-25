@@ -2,6 +2,51 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 25 Jun 2020 14:32:50 GMT",
+      "tag": "react-native-windows-init_v0.1.13",
+      "version": "0.1.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "make cli strict and pass true to trailing bool param",
+            "author": "asklar@microsoft.com",
+            "commit": "757224a501649082d3e037f959591b05b3a495c3",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 11:51:11 GMT",
+      "tag": "react-native-windows-init_v0.1.12",
+      "version": "0.1.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix issue running react-native-windows-init with yarn",
+            "author": "acoates@microsoft.com",
+            "commit": "b165f0cb3979a1eadbc7c54a056558779254f44e",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 00:07:20 GMT",
+      "tag": "react-native-windows-init_v0.1.11",
+      "version": "0.1.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Prevent --useWinUI3 and --experimentalNugetDependency from being used at the same time in react-native-windows-init",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d20915e57295038ccd49178766e580cb952c8ed4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Jun 2020 00:07:58 GMT",
       "tag": "react-native-windows-init_v0.1.10",
       "version": "0.1.10",

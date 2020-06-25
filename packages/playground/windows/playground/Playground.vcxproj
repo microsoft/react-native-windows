@@ -81,7 +81,6 @@
   </ImportGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props"/>
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   </ImportGroup>
   <Import Project="..\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!=''" />
   <PropertyGroup Label="UserMacros" />

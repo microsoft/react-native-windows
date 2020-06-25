@@ -54,6 +54,9 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
+  if (!m_bundlerHostname.empty()) {
+    host.InstanceSettings().DebugHost(m_bundlerHostname);
+  }
 
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
@@ -71,6 +74,10 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
       x_rootComponentNameCombo().SelectedIndex(1);
     }
   }
+}
+
+void MainPage::OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e) {
+  m_bundlerHostname = unbox_value<hstring>(e.Parameter());
 }
 
 Microsoft::ReactNative::ReactNativeHost MainPage::Host() noexcept {

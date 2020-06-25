@@ -306,4 +306,5 @@ module.exports = {
   getProjectName: getProjectName,
   getProjectNamespace: getProjectNamespace,
   getProjectGuid: getProjectGuid,
+  findPropertyValue: findPropertyValue,
 };

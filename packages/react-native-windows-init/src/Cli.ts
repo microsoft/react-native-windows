@@ -24,7 +24,7 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.version(false).options({
+const argv = yargs.version(false).strict(true).options({
   version: {
     type: 'string',
     describe: 'The version of react-native-windows to use.',
@@ -60,10 +60,14 @@ const argv = yargs.version(false).options({
   useDevMode: {
     type: 'boolean',
     describe:
-      'Link rather than Add/Install the react-native-windows package. This option is for the developement workflow of the developers working on react-native-windows.',
+      'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
     hidden: true,
   },
-}).argv;
+}).check((a, o) => { if (a._.length != 0) { throw `Unrecognized option ${a._}`; }; return true }).argv;
+
+if (argv.verbose) {
+  console.log(argv);
+}
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;
@@ -246,6 +250,43 @@ async function getLatestMatchingRNWVersion(
   }
 }
 
+function installReactNativeWindows(version: string, useDevMode: boolean) {
+  console.log(
+    `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
+      version,
+    )}...`,
+  );
+
+  const cwd = process.cwd();
+  const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
+
+  if (useDevMode) {
+    execSync(
+      isProjectUsingYarn(cwd)
+        ? 'yarn link react-native-windows'
+        : 'npm link react-native-windows',
+      execOptions,
+    );
+  } else {
+    const pkgJsonPath = findUp.sync('package.json', {cwd});
+    let pkgJson = require(pkgJsonPath);
+    let deps = pkgJson.dependencies || {};
+    deps['react-native-windows'] = version;
+    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
+  }
+
+  console.log(
+    chalk.green(
+      `react-native-windows@${chalk.cyan(
+        require(require.resolve('react-native-windows/package.json', {
+          paths: [cwd],
+        })).version,
+      )} successfully installed.`,
+    ),
+  );
+}
+
 /**
  * Check if project is using Yarn (has `yarn.lock` in the tree)
  */
@@ -354,32 +395,7 @@ You can either downgrade your version of ${chalk.green(
       }
     }
 
-    const pkgmgr = isProjectUsingYarn(process.cwd())
-      ? useDevMode
-        ? 'yarn link'
-        : 'yarn add'
-      : useDevMode
-      ? 'npm link'
-      : 'npm install --save';
-    const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
-    console.log(
-      `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
-        version,
-      )}...`,
-    );
-    const pkgIdentity = useDevMode
-      ? 'react-native-windows'
-      : `react-native-windows@${version}`;
-    execSync(`${pkgmgr} ${pkgIdentity}`, execOptions);
-    console.log(
-      chalk.green(
-        `react-native-windows@${chalk.cyan(
-          require(require.resolve('react-native-windows/package.json', {
-            paths: [process.cwd()],
-          })).version,
-        )} successfully installed.`,
-      ),
-    );
+    installReactNativeWindows(version, useDevMode);
 
     const generateWindows = require(reactNativeWindowsGeneratePath());
     generateWindows(process.cwd(), name, ns, {
