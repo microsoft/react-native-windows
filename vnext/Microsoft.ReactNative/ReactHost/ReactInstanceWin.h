@@ -104,9 +104,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   void InitUIMessageThread() noexcept;
   void InitUIManager() noexcept;
   std::string GetBytecodeFileName() noexcept;
-  std::string GetDebugHost() noexcept;
-  std::string GetSourceBundleHost() noexcept;
-  std::string GetSourceBundlePort() noexcept;
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;
   facebook::react::NativeLoggingHook GetLoggingCallback() noexcept;

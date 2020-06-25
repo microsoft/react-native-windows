@@ -191,14 +191,6 @@ inline void ReactInstanceSettings::ByteCodeFileUri(hstring const &value) noexcep
   m_byteCodeFileUri = value;
 }
 
-inline hstring ReactInstanceSettings::DebugHost() noexcept {
-  return m_debugHost;
-}
-
-inline void ReactInstanceSettings::DebugHost(hstring const &value) noexcept {
-  m_debugHost = value;
-}
-
 inline hstring ReactInstanceSettings::DebugBundlePath() noexcept {
   return m_debugBundlePath;
 }
