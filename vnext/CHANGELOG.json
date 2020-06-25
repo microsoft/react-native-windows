@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 Jun 2020 14:32:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.102",
+      "version": "0.0.0-canary.102",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI3 Preview 1",
+            "author": "asklar@microsoft.com",
+            "commit": "757224a501649082d3e037f959591b05b3a495c3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Jun 2020 00:07:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.101",
       "version": "0.0.0-canary.101",
