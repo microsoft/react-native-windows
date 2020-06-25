@@ -1,6 +1,6 @@
 steps:
 
   - task: CmdLine@2
-    displayName: yarn install
+    displayName: midgard-yarn (faster yarn install)
     inputs:
       script: npx midgard-yarn@1.23.5 --network-concurrency 20 --frozen-lockfile
