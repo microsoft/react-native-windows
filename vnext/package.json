@@ -63,7 +63,7 @@
   },
   "peerDependencies": {
     "react": "16.13.0",
-    "react-native": "^0.0.0-0"
+    "react-native": "0.0.0-56cf99a96"
   },
   "beachball": {
     "defaultNpmTag": "canary",
