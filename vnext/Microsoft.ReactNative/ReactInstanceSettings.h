@@ -107,7 +107,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
-  hstring m_debugHost{};
   hstring m_debugBundlePath{};
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
