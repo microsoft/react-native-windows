@@ -43,7 +43,10 @@ const findRepoRoot = require('./findRepoRoot');
   await updateBeachballConfigs(argv.release, argv.rnVersion);
 
   console.log('Updating CI variables...');
-  await writeAdoVariables({npmTag: distTag(argv.release, argv.rnVersion)});
+  await writeAdoVariables({
+    npmTag: distTag(argv.release, argv.rnVersion),
+    extraPublishArgs: '',
+  });
 
   if (argv.release === 'preview') {
     console.log('Updating root change script...');

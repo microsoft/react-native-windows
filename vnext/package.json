@@ -66,6 +66,7 @@
   },
   "beachball": {
     "defaultNpmTag": "canary",
+    "gitTags": true,
     "disallowedChangeTypes": [
       "major",
       "minor",
