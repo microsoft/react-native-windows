@@ -53,7 +53,8 @@ class DevServerHelper {
   static std::string get_PackagerOpenStackFrameUrl(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort) {
-    return string_format(PackagerConnectionUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return string_format(
+        PackagerOpenStackFrameUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static constexpr const char DefaultPackagerHost[] = "localhost";
