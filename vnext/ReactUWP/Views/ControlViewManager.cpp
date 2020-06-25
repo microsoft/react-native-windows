@@ -10,6 +10,12 @@
 
 #include <Utils/PropertyUtils.h>
 
+#ifdef USE_WINUI3
+#define TAB_INDEX_PROPERTY xaml::UIElement::TabIndexProperty
+#else
+#define TAB_INDEX_PROPERTY xaml::Controls::Control::TabIndexProperty
+#endif
+
 namespace react {
 namespace uwp {
 
@@ -32,7 +38,8 @@ void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlV
   TransferProperty(oldView, newView, xaml::Controls::Control::BorderThicknessProperty());
   TransferProperty(oldView, newView, xaml::Controls::Control::PaddingProperty());
   TransferProperty(oldView, newView, xaml::Controls::Control::ForegroundProperty());
-  TransferProperty(oldView, newView, xaml::Controls::Control::TabIndexProperty());
+  TransferProperty(oldView, newView, TAB_INDEX_PROPERTY());
+
   // Control.CornerRadius is only supported on >= RS5
   if (oldView.try_as<xaml::Controls::Control>() && newView.try_as<xaml::Controls::Control>()) {
     TransferProperty(oldView, newView, xaml::Controls::Control::CornerRadiusProperty());
@@ -61,10 +68,10 @@ bool ControlViewManager::UpdateProperty(
       if (propertyValue.isNumber()) {
         auto tabIndex = propertyValue.asDouble();
         if (tabIndex == static_cast<int32_t>(tabIndex))
-          control.ClearValue(xaml::Controls::Control::TabIndexProperty());
+          control.ClearValue(TAB_INDEX_PROPERTY());
         control.TabIndex(static_cast<int32_t>(tabIndex));
       } else if (propertyValue.isNull()) {
-        control.ClearValue(xaml::Controls::Control::TabIndexProperty());
+        control.ClearValue(TAB_INDEX_PROPERTY());
       }
     } else {
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);

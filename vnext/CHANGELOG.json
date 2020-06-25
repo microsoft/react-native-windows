@@ -2,6 +2,56 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 Jun 2020 00:07:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.101",
+      "version": "0.0.0-canary.101",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use Deterministic NuGet Binary",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ffa1ca29f73b75d1c801006010811891f6ff7c88",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 00:07:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.100",
+      "version": "0.0.0-canary.100",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix warnings of signed/unsigned comparrison mismatches on x86 builds",
+            "author": "dannyvv@microsoft.com",
+            "commit": "f7f23dfaf8b06347f18a8625d81bf4c1e9dc716e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "update csproj to use versions from winui.props",
+            "author": "asklar@microsoft.com",
+            "commit": "2bfbbcb4decd33c640eac28c4afffb261a33e6b8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValueReaderGenerator runtime error for read-only properties",
+            "author": "vmorozov@microsoft.com",
+            "commit": "6c861c298290bae4519c013436c46dc292891396",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Share ReactNativeHost::ReloadInstance impl between UWP and Win32",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f2aa9eeacca65f709b74740b715a282fdae5486b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jun 2020 00:05:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.99",
       "version": "0.0.0-canary.99",

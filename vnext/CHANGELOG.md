@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Jun 2020 00:05:47 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jun 2020 00:07:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.101
+
+Thu, 25 Jun 2020 00:07:54 GMT
+
+### Changes
+
+- Use Deterministic NuGet Binary (ngerlem@microsoft.com)
+
+## 0.0.0-canary.100
+
+Wed, 24 Jun 2020 00:07:20 GMT
+
+### Changes
+
+- Fix warnings of signed/unsigned comparrison mismatches on x86 builds (dannyvv@microsoft.com)
+- update csproj to use versions from winui.props (asklar@microsoft.com)
+- Fix JSValueReaderGenerator runtime error for read-only properties (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.99
 

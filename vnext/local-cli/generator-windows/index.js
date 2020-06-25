@@ -8,6 +8,11 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const os = require('os');
 const {
+  readProjectFile,
+  findPropertyValue,
+} = require('../config/configUtils');
+
+const {
   createDir,
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
@@ -89,6 +94,10 @@ function copyProjectTemplateAndReplace(
   const xamlNamespace = options.useWinUI3 ? 'Microsoft.UI.Xaml' : 'Windows.UI.Xaml';
   const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
 
+  const winui3PropsPath = require.resolve('react-native-windows/PropertySheets/WinUI.props', {paths: [process.cwd()]});
+  const winui3Props = readProjectFile(winui3PropsPath);
+  const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
+
   const cppNugetPackages = [
     {
       id: 'Microsoft.Windows.CppWinRT',
@@ -99,7 +108,7 @@ function copyProjectTemplateAndReplace(
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? '3.0.0-alpha.200210.0' : '2.3.191129002',
+      version: options.useWinUI3 ? winui3Version : '2.3.191129002',
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
     },

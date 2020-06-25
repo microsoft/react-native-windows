@@ -47,11 +47,15 @@ void SIPEventHandler::InitializeCoreInputView() {
       return; // CoreInputView is only supported on >= RS3.
     }
 
+#ifndef USE_WINUI3
     if (Is19H1OrHigher()) {
       // 19H1 and higher supports island scenarios
       auto uiElement(xamlView.as<xaml::UIElement>());
       m_coreInputView = winrt::CoreInputView::GetForUIContext(uiElement.UIContext());
-    } else {
+    } else
+#endif
+    /// TODO: Figure out how to use SIP in WinUI 3 and island
+    {
       m_coreInputView = winrt::CoreInputView::GetForCurrentView();
     }
 

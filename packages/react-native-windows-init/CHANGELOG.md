@@ -1,8 +1,24 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
+This log was last generated on Wed, 24 Jun 2020 11:51:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.12
+
+Wed, 24 Jun 2020 11:51:11 GMT
+
+### Patches
+
+- Fix issue running react-native-windows-init with yarn (acoates@microsoft.com)
+
+## 0.1.11
+
+Wed, 24 Jun 2020 00:07:20 GMT
+
+### Patches
+
+- Prevent --useWinUI3 and --experimentalNugetDependency from being used at the same time in react-native-windows-init (dannyvv@microsoft.com)
 
 ## 0.1.10
 

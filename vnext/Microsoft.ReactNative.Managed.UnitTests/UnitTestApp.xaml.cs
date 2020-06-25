@@ -3,10 +3,16 @@
 
 using System;
 using Windows.ApplicationModel;
+#if !USE_WINUI3
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+#endif
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -30,11 +36,17 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs e)
+    protected override void OnLaunched(LaunchActivatedEventArgs e_)
     {
+      Windows.ApplicationModel.Activation.LaunchActivatedEventArgs e =
+#if USE_WINUI3
+        e_.UWPLaunchActivatedEventArgs;
+#else
+        e_;
+#endif
 
 #if DEBUG
-      if (System.Diagnostics.Debugger.IsAttached)
+      if (global::System.Diagnostics.Debugger.IsAttached)
       {
         this.DebugSettings.EnableFrameRateCounter = true;
       }
@@ -51,7 +63,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
         rootFrame.NavigationFailed += OnNavigationFailed;
 
-        if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+        if (e.PreviousExecutionState == Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
         {
           //TODO: Load state from previously suspended application
         }

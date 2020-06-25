@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 24 Jun 2020 11:51:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.23",
+      "version": "0.0.0-canary.23",
+      "comments": {
+        "none": [
+          {
+            "comment": "Slightly reduce the number of TS files in rnwin32",
+            "author": "acoates@microsoft.com",
+            "commit": "f25cb04ac039a75994e50106ba3553175dc195d8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Jun 2020 00:07:58 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.23",
       "version": "0.0.0-canary.23",

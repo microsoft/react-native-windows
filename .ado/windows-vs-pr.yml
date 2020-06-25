@@ -104,12 +104,11 @@ jobs:
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - task: VSTest@2
-        displayName: Run Universal Unit Tests (Managed)
+        displayName: Run Universal Unit Tests (UWP)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
-            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
@@ -120,6 +119,23 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (NetCore)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          codeCoverageEnabled: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -502,10 +518,12 @@ jobs:
           language: cpp
           configuration: Release
           platform: x64
+          additionalInitArguments: 
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
+          additionalInitArguments: 
         #ArmDebugCpp:
         #  language: cpp
         #  configuration: Debug
@@ -518,10 +536,12 @@ jobs:
           language: cpp
           configuration: Release
           platform: arm
+          additionalInitArguments: 
         ArmReleaseCs:
           language: cs
           configuration: Release
           platform: arm
+          additionalInitArguments: 
         #Arm64DebugCpp:
         #  language: cpp
         #  configuration: Debug
@@ -538,6 +558,16 @@ jobs:
         #  language: cs
         #  configuration: Release
         #  platform: arm64
+        WinUI3_X86DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x86
+          additionalInitArguments: --useWinUI3 true
+        WinUI3_X86DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x86
+          additionalInitArguments: --useWinUI3 true
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -550,7 +580,7 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
-          additionalInitArguments: $[ coalesce($(additionalInitArguments), '') ]
+          additionalInitArguments: $(additionalInitArguments)
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental

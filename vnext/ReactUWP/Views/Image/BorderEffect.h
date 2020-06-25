@@ -1,12 +1,7 @@
 #pragma once
 
-#ifndef USE_WINUI3
-#include <Microsoft.UI.Composition.Effects.BorderEffect.g.h>
-#define BORDEREFFECT_NAMESPACE winrt::Microsoft::UI::Composition::Effects
-#else
 #define BORDEREFFECT_NAMESPACE winrt::Microsoft::ReactNative
 #include <BorderEffect.g.h>
-#endif
 
 #pragma warning(push)
 #pragma warning(disable : 28285 28196 6387 6319 26812)
@@ -19,8 +14,16 @@ class BorderEffect
  public:
   DECLARE_D2D_GUID(CLSID_D2D1Border);
   DECLARE_SINGLE_SOURCE(Source);
-  DECLARE_POD_PROPERTY(ExtendX, winrt::CanvasEdgeBehavior, winrt::CanvasEdgeBehavior::Clamp, true);
-  DECLARE_POD_PROPERTY(ExtendY, winrt::CanvasEdgeBehavior, winrt::CanvasEdgeBehavior::Clamp, true);
+  DECLARE_POD_PROPERTY(
+      ExtendX,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Clamp,
+      true);
+  DECLARE_POD_PROPERTY(
+      ExtendY,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior,
+      winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Clamp,
+      true);
   DECLARE_NAMED_PROPERTY_MAPPING(
       {L"ExtendX", D2D1_BORDER_PROP_EDGE_MODE_X, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT},
       {L"ExtendY", D2D1_BORDER_PROP_EDGE_MODE_Y, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});
