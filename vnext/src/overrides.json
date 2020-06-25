@@ -17,14 +17,6 @@
       "file": "IntegrationTests\\DummyTest.js"
     },
     {
-      "type": "patch",
-      "file": "IntegrationTests\\IntegrationTestsApp.windesktop.js",
-      "baseFile": "IntegrationTests\\IntegrationTestsApp.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "5be58c2fa844770c24722dbaf776510b3032250c",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "platform",
       "file": "IntegrationTests\\LoggingTest.js"
     },
@@ -518,6 +510,10 @@
     },
     {
       "type": "platform",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windesktop.js"
+    },
+    {
+      "type": "platform",
       "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windows.js"
     },
     {
@@ -555,6 +551,14 @@
     {
       "type": "platform",
       "file": "Libraries\\Utilities\\DebugEnvironment.js"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Utilities\\HMRClient.windesktop.js",
+      "baseFile": "Libraries\\Utilities\\HMRClient.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "76e71abd8c4128cbdf212291b1d8d8994deb3da0",
+      "issue": 4087
     },
     {
       "type": "derived",

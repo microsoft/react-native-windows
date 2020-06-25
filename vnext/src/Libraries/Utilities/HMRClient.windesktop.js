@@ -13,9 +13,11 @@
 const Platform = require('./Platform');
 
 //TODO: Implement for Desktop integration tests.
+// [Windesktop
 if (Platform.OS !== 'windesktop') {
   const DevSettings = require('./DevSettings');
 }
+// Windesktop]
 const invariant = require('invariant');
 const MetroHMRClient = require('metro/src/lib/bundle-modules/HMRClient');
 const prettyFormat = require('pretty-format');
