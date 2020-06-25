@@ -47,6 +47,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Documents.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.DesktopWindowXamlSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Markup.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.h" />

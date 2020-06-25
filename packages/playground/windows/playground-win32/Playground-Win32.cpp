@@ -16,15 +16,20 @@
 
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Hosting.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Hosting.h>
 
 #pragma pop_macro("GetCurrentTime")
 
-namespace WUX = winrt::Windows::UI::Xaml;
-namespace WUXC = WUX::Controls;
-namespace WUXH = WUX::Hosting;
+#ifndef USE_WINUI3
+namespace xaml = winrt::Windows::UI::Xaml;
+#else
+namespace xaml = winrt::Microsoft::UI::Xaml;
+#endif
+
+namespace controls = xaml::Controls;
+namespace hosting = xaml::Hosting;
 
 int RunPlayground(int showCmd, bool useWebDebugger);
 
@@ -33,7 +38,7 @@ struct WindowData {
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  WUXH::DesktopWindowXamlSource m_desktopWindowXamlSource;
+  hosting::DesktopWindowXamlSource m_desktopWindowXamlSource;
 
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
@@ -46,7 +51,7 @@ struct WindowData {
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
 
-  WindowData(const WUXH::DesktopWindowXamlSource &desktopWindowXamlSource)
+  WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
@@ -92,7 +97,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
+          auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
               host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
@@ -340,7 +345,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
   windowData->m_useWebDebugger = useWebDebugger;
 
-  auto xamlContent = WUXC::Grid();
+  auto xamlContent = controls::Grid();
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
