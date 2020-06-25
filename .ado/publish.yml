@@ -45,7 +45,12 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
+
+      - task: CmdLine@2
+        displayName: Create GitHub Release
+        inputs:
+          script: node ./packages/scripts/createGithubReleases.js --authToken $(GITHUB_API)
 
       - task: CmdLine@2
         displayName: Set Version Env Vars

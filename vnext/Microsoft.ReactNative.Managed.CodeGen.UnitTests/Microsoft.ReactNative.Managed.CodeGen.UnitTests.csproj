@@ -1,22 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <!-- 
-      We have to work around an issue where nugets restore when this project is mixed with uap projects will chose the default version.
-      But when msbuild runs it will chose the LatestVersion resulting in the following error:
-          vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj : error : NETSDK1061: The project was restored using Microsoft.NETCore.App version 2.2.0, but with current settings, version 2.2.8 would be used instead. To resolve this issue, make sure the same settings are used for restore and for subsequent operations such as build or publish. Typically this issue can occur if the RuntimeIdentifier property is set during build or publish but not during restore. For more information, see https://aka.ms/dotnet-runtime-patch-selection.
-      
-      Attemting add an explicit PacakgeReference forcing version 2.2.8 resuls in the following warning that is not suppressable:
-        Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.DefaultItems.targets(257,5): warning NETSDK1023: A PackageReference for 'Microsoft.NETCore.App' was included in your project. This package is implicitly referenced by the .NET SDK and you do not typically need to reference it from your project. For more information, see https://aka.ms/sdkimplicitrefs [Z:\src\r1\vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj]
-
-      This seems to make nuget and msbuild agree with one another on the right version..
-    -->
-    <ImplicitPackageReferenceVersion Remove="Microsoft.NETCore.App" TargetFrameworkVersion="2.2" DefaultVersion="2.2.0" LatestVersion="2.2.8"/>
-    <ImplicitPackageReferenceVersion Include="Microsoft.NETCore.App" TargetFrameworkVersion="2.2" DefaultVersion="2.2.8" LatestVersion="2.2.8"/>
-  </ItemGroup>
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <IsPackable>false</IsPackable>

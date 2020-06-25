@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 24 Jun 2020 00:07:20 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jun 2020 14:32:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.102
+
+Thu, 25 Jun 2020 14:32:50 GMT
+
+### Changes
+
+- WinUI3 Preview 1 (asklar@microsoft.com)
+
+## 0.0.0-canary.101
+
+Thu, 25 Jun 2020 00:07:54 GMT
+
+### Changes
+
+- Use Deterministic NuGet Binary (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.100
 

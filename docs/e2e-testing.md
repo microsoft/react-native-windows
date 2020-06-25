@@ -22,43 +22,33 @@ E2E test app, test library and test cases are in packages/E2ETest/, and they are
 
 ## Procedures to setup and run E2E test
 
-1. Install React Native command line interface using NPM:
-```
-npm install -g react-native-cli
-```
+### Download and install WinAppDriver [WinAppDriver v1.1](https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi)
 
-2. Download and install WinAppDriver [WinAppDriver v1.1](https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi)
-
-3. Install node packages, build JS
+### Install node packages, build JS
 
 - C:\repo>`cd react-native-windows`
 - C:\repo\react-native-windows>`yarn install`
 - C:\repo\react-native-windows>`yarn build`
 
-4. Run the bundle server
+### Start the Metro server
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run start`
-- wait until you see 'Loading dependency graph, done.'
 
-5. Ensure debugger is running
-
-Open Chrome and navigate to `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools.
-
-6. Open a new command prompt, build native app, deploy and launch e2e testing
+### To build, deploy and run the full e2e test suite
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run e2e`
 
-## Procedures to only run E2E test
+### To run E2E tests
 
-Make sure bundle server is running(see above 'Run the bundle server' step) and chrome windows is open (see above 'Ensure debugger is running' step)
+First make sure bundle server is running (see "Start the Metro server" above)
 
-- run all specs
+- To run all test specs
 
 packages\E2ETest>`yarn run e2etest`
 
--  Run one spec
+-  To run one test spec (eg login.spec.ts)
 
 packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 

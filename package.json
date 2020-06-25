@@ -27,7 +27,7 @@
     ]
   },
   "devDependencies": {
-    "beachball": "^1.13.4",
+    "beachball": "^1.32.0",
     "husky": "^4.2.5",
     "lerna": "^3.16.1"
   },
@@ -47,5 +47,8 @@
     "**/@wdio/utils": "5.12.1",
     "**/webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "**/webdriverio": "5.12.1"
+  },
+  "beachball": {
+    "gitTags": false
   }
 }

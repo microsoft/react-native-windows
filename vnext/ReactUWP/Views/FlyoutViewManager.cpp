@@ -17,6 +17,13 @@
 #include <Utils/Helpers.h>
 #include <Utils/PropertyHandlerUtils.h>
 
+#ifdef USE_WINUI3
+namespace winrt::Microsoft::UI::Xaml::Controls::Primitives {
+using IFlyoutBase5 = ::xaml::Controls::Primitives::IFlyoutBase;
+using IFlyoutBase6 = ::xaml::Controls::Primitives::IFlyoutBase;
+}; // namespace winrt::Microsoft::UI::Xaml::Controls::Primitives
+#endif
+
 namespace winrt {
 using namespace xaml::Controls;
 using namespace xaml::Controls::Primitives;
@@ -145,7 +152,7 @@ void FlyoutShadowNode::createView() {
   Super::createView();
 
   m_flyout = winrt::Flyout();
-  m_isFlyoutShowOptionsSupported = !!(m_flyout.try_as<winrt::IFlyoutBase5>());
+  m_isFlyoutShowOptionsSupported = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>());
 
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
