@@ -24,7 +24,7 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.version(false).options({
+const argv = yargs.version(false).strict(true).options({
   version: {
     type: 'string',
     describe: 'The version of react-native-windows to use.',
@@ -60,10 +60,14 @@ const argv = yargs.version(false).options({
   useDevMode: {
     type: 'boolean',
     describe:
-      'Link rather than Add/Install the react-native-windows package. This option is for the developement workflow of the developers working on react-native-windows.',
+      'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
     hidden: true,
   },
-}).argv;
+}).check((a, o) => { if (a._.length != 0) { throw `Unrecognized option ${a._}`; }; return true }).argv;
+
+if (argv.verbose) {
+  console.log(argv);
+}
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;

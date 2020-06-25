@@ -22,7 +22,6 @@ using namespace ABI::Windows::Graphics::Effects;
 } // namespace abi
 
 namespace winrt {
-using namespace winrt::Microsoft::UI::Composition::Effects;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Graphics::Effects;
 using namespace winrt::Windows::UI;
