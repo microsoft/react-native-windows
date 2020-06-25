@@ -14,8 +14,9 @@ const Platform = require('./Platform');
 
 //TODO: Implement for Desktop integration tests.
 // [Windesktop
+let DevSettings = null;
 if (Platform.OS !== 'windesktop') {
-  const DevSettings = require('./DevSettings');
+  DevSettings = require('./DevSettings');
 }
 // Windesktop]
 const invariant = require('invariant');
