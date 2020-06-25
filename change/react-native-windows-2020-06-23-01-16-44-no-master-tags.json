@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "none",
   "comment": "Only create tags for react-native-windows",
   "packageName": "react-native-windows",
   "email": "ngerlem@microsoft.com",
