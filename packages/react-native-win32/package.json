@@ -62,7 +62,7 @@
   "peerDependencies": {
     "react": "16.13.0",
     "react-dom": "16.8.6",
-    "react-native": "^0.62.0-0"
+    "react-native": "^0.0.0-0"
   },
   "beachball": {
     "defaultNpmTag": "canary",
