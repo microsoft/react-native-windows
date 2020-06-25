@@ -7,6 +7,7 @@ const uuid = require('uuid');
 const childProcess = require('child_process');
 const fs = require('fs');
 const os = require('os');
+const semver = require('semver');
 const {
   readProjectFile,
   findPropertyValue,
@@ -206,28 +207,33 @@ function installDependencies(options) {
   const cwd = process.cwd();
 
   // Extract react-native peer dependency version
-  const vnextPackageJsonPath = require.resolve('react-native-windows/package.json', {paths: [process.cwd()]});
-  const vnextPackageJson = JSON.parse(fs.readFileSync(vnextPackageJsonPath, { encoding: 'UTF8' }));
-  let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
+  const rnwPackageJsonPath = require.resolve('react-native-windows/package.json', {paths: [process.cwd()]});
+  const rnwPackageJson = JSON.parse(fs.readFileSync(rnwPackageJsonPath, { encoding: 'UTF8' }));
+  let rnPeerDependency = rnwPackageJson.peerDependencies['react-native'];
   const depDelim = ' || ';
-  const delimIndex = reactNativeVersion.indexOf(depDelim);
+  const delimIndex = rnPeerDependency.indexOf(depDelim);
   if (delimIndex !== -1) {
-    reactNativeVersion = reactNativeVersion.slice(0, delimIndex);
+    rnPeerDependency = rnPeerDependency.slice(0, delimIndex);
   }
 
-  console.log(chalk.green('Updating to compatible version of react-native:'));
-  console.log(chalk.white(`    ${reactNativeVersion}`));
+  const rnPackageJsonPath = require.resolve('react-native/package.json', {paths: [process.cwd()]});
+  const rnPackageJson = JSON.parse(fs.readFileSync(rnPackageJsonPath, { encoding: 'UTF8' }));
 
-  // Patch package.json to have proper react-native version and install
-  const projectPackageJsonPath = path.join(cwd, 'package.json');
-  const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
-  projectPackageJson.scripts.windows = 'react-native run-windows';
-  projectPackageJson.dependencies['react-native'] = reactNativeVersion;
-  fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
+  if (!semver.satisfies(rnPackageJson.version, rnPeerDependency)) {
+    console.log(chalk.green('Installing a compatible version of react-native:'));
+    console.log(chalk.white(`    ${rnPeerDependency}`));
 
-  // Install dependencies using correct package manager
-  const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
-  childProcess.execSync(isYarn ? 'yarn' : 'npm i', options && options.verbose ? { stdio: 'inherit' } : {});
+    // Patch package.json to have proper react-native version and install
+    const projectPackageJsonPath = path.join(cwd, 'package.json');
+    const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
+    projectPackageJson.scripts.windows = 'react-native run-windows';
+    projectPackageJson.dependencies['react-native'] = rnPeerDependency;
+    fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
+
+    // Install dependencies using correct package manager
+    const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
+    childProcess.execSync(isYarn ? 'yarn' : 'npm i', options && options.verbose ? { stdio: 'inherit' } : {});
+  }
 }
 
 module.exports = {
