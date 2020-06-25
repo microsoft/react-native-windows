@@ -17,18 +17,10 @@
 #include <IReactInstance.h>
 
 #ifdef USE_WINUI3
-namespace winrt {
-namespace Microsoft {
-namespace UI {
-namespace Xaml {
-namespace Controls {
+namespace winrt::Microsoft::UI::Xaml::Controls {
 using IPasswordBox4 = ::xaml::Controls::IPasswordBox;
 using ITextBox6 = ::xaml::Controls::ITextBox;
-} // namespace Controls
-} // namespace Xaml
-} // namespace UI
-} // namespace Microsoft
-}; // namespace winrt
+}; // namespace winrt::Microsoft::UI::Xaml::Controls
 #endif
 
 namespace winrt {

@@ -17,6 +17,13 @@
 #include <Utils/Helpers.h>
 #include <Utils/PropertyHandlerUtils.h>
 
+#ifdef USE_WINUI3
+namespace winrt::Microsoft::UI::Xaml::Controls::Primitives {
+using IFlyoutBase5 = ::xaml::Controls::Primitives::IFlyoutBase;
+using IFlyoutBase6 = ::xaml::Controls::Primitives::IFlyoutBase;
+}; // namespace winrt::Microsoft::UI::Xaml::Controls::Primitives
+#endif
+
 namespace winrt {
 using namespace xaml::Controls;
 using namespace xaml::Controls::Primitives;
@@ -57,7 +64,7 @@ static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placeme
 template <>
 struct json_type_traits<winrt::FlyoutPlacementMode> {
   static winrt::FlyoutPlacementMode parseJson(const folly::dynamic &json) {
-    auto placementMode = react::uwp::IsRS5OrHigher() ? placementModeRS5 : placementModeMinVersion;
+    auto placementMode = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>()) ? placementModeRS5 : placementModeMinVersion;
     auto iter = placementMode.find(json.asString());
 
     if (iter != placementMode.end()) {
@@ -145,7 +152,7 @@ void FlyoutShadowNode::createView() {
   Super::createView();
 
   m_flyout = winrt::Flyout();
-  m_isFlyoutShowOptionsSupported = IsRS5OrHigher();
+  m_isFlyoutShowOptionsSupported = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>());
 
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
@@ -226,10 +233,10 @@ void FlyoutShadowNode::createView() {
       });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
-  if (Is19H1OrHigher()) {
+  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
     if (auto instance = wkinstance.lock()) {
       if (auto xamlRoot = static_cast<NativeUIManager *>(instance->NativeUIManager())->tryGetXamlRoot()) {
-        m_flyout.XamlRoot(xamlRoot);
+        flyoutBase6.XamlRoot(xamlRoot);
       }
     }
   }
