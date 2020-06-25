@@ -42,7 +42,7 @@ E2E test app, test library and test cases are in packages/E2ETest/, and they are
 
 ### To run E2E tests
 
-Make sure bundle server is running(see above 'Run the bundle server' step) and chrome windows is open (see above 'Ensure debugger is running' step)
+First make sure bundle server is running (see "Start the Metro server" above)
 
 - To run all test specs
 
