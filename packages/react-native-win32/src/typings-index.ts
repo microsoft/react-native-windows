@@ -21,6 +21,7 @@ export * from './Libraries/Components/Text/TextWin32.Props';
 export * from './Libraries/Components/Text/TextWin32';
 export * from './Libraries/Components/Button/ButtonWin32.Props';
 export * from './Libraries/Components/Button/ButtonWin32';
+export * from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
 export * from './Libraries/Components/Touchable/TouchableWin32.Props';
 export * from './Libraries/Components/Touchable/TouchableWin32.Types';
 export * from './Libraries/Components/Touchable/TouchableWin32';

@@ -9,6 +9,7 @@
 ```typescript
 export interface IButtonWin32Props extends RN.ButtonProps 
 ```
+<b>Extends:</b> RN.ButtonProps
 
 ## Properties
 

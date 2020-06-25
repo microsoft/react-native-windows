@@ -88,6 +88,10 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'ImageWin32Test',
     module: require('../../../Libraries/Image/Tests/ImageWin32Test'),
   },
+  {
+    key: 'ColorGradientWin32Example',
+    module: require('../examples/ColorGradientWin32Example'),
+  },
 ];
 
 const APIExamples: Array<RNTesterExample> = [
@@ -108,6 +112,8 @@ const APIExamples: Array<RNTesterExample> = [
         .AlertExample.description,
       examples: [
         {
+          title: require('react-native/RNTester/js/examples/Alert/AlertExample')
+            .AlertExample.title,
           render: () => {
             return createElement(
               require('react-native/RNTester/js/examples/Alert/AlertExample')

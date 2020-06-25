@@ -13,22 +13,36 @@
 import type {ColorValue} from './StyleSheetTypes';
 import type {ProcessedColorValue} from './processColor';
 
-export opaque type NativeColorValue = {
-  resource_paths?: Array<string>,
-};
+type GradientColorStop = {|
+  color: ColorValue | ProcessedColorValue,
+  offset: number,
+|};
+
+export type GradientColorValueWin32 = {|
+  gradientDirection: 'ToBottom' | 'ToTop' | 'ToRight' | 'ToLeft',
+  colorStops: Array<GradientColorStop>,
+|};
+
+export opaque type NativeColorValue =
+  | $ReadOnly<GradientColorValueWin32>
+  | $ReadOnly<{|
+      resource_paths?: Array<string>,
+    |}>;
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
   return {resource_paths: names};
 };
 
-export const ColorAndroidPrivate = (color: string): ColorValue => {
-  return {resource_paths: [color]};
+export const ColorGradientWin32Private = (
+  gradientColor: GradientColorValueWin32,
+): ColorValue => {
+  return gradientColor;
 };
 
 export const normalizeColorObject = (
   color: NativeColorValue,
 ): ?ProcessedColorValue => {
-  if ('resource_paths' in color) {
+  if ('resource_paths' in color || 'gradientDirection' in color) {
     return color;
   }
   return null;

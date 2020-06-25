@@ -9,6 +9,7 @@
 ```typescript
 export interface IPersonaCoinProps extends ViewProps 
 ```
+<b>Extends:</b> ViewProps
 
 ## Properties
 
