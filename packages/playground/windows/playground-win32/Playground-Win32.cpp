@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "resource.h"
 
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <windows.h>
@@ -13,8 +15,6 @@
 #undef GetCurrentTime
 
 #include <winrt/Microsoft.ReactNative.h>
-
-#include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>

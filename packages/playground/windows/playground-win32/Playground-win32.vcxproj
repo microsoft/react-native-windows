@@ -76,6 +76,7 @@
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" />
   </ImportGroup>
+   <Import Project="..\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('..\packages\$(WinUIPackageProps)')" />
   <PropertyGroup>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>867D41FE5091AED426000143497EA4DFC29A8097</PackageCertificateThumbprint>
@@ -163,4 +164,16 @@
     <Error Condition="!Exists('..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VCRTForwarders.140.1.0.2-rc\build\native\Microsoft.VCRTForwarders.140.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
+  <Target Name="Preprocess">
+      <Message Condition="'$(Source)'!=''" Text="Preprocessing: $(Source)"/>
+      <Error Condition="'$(Source)'==''" Text="To generate a pre-processed file, please specify a source file with msbuild /p:Source=nameOfTheSource.cpp"/>
+      <CL PreprocessToFile="true" Sources="$(Source)"
+          AdditionalIncludeDirectories="%(ClCompile.AdditionalIncludeDirectories)"
+          PreprocessorDefinitions="%(ClCompile.PreprocessorDefinitions)"
+          AdditionalOptions="%(ClCompile.AdditionalOptions) /d1PP"
+          PreprocessKeepComments="true"
+          PreprocessOutputPath="$(Source.Replace('.cpp', '.pp'))"
+          />
+  </Target>
+
 </Project>

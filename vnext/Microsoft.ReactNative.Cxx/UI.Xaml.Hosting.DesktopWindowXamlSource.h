@@ -4,8 +4,8 @@
 #pragma once
 
 #ifdef USE_WINUI3
-// This header doesn't exist in WinUI 3,
-// DesktopWindowXamlSource is moved to Microsoft.UI.Xaml.Hosting.
+#include <Microsoft.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+using IDesktopWindowXamlSourceNative2 = IDesktopWindowXamlSourceNative;
 #else
 #include <winrt/Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #endif //  USE_WINUI3
