@@ -46,9 +46,9 @@ const argv = yargs
   const releases = await fetchReleases(argv.authToken);
 
   for (const changelog of changelogs) {
-    for (const changeEntry of changelog.entries) {
-      if (needsRelease(changeEntry, localTags, releases)) {
-        await releaseChange(changelog.name, changeEntry, argv.authToken);
+    for (const release of aggregateReleases(changelog)) {
+      if (needsRelease(release, localTags, releases)) {
+        await publishRelease(release, argv.authToken);
       }
     }
   }
@@ -123,16 +123,13 @@ async function fetchAllPages(baseUrl, token) {
 /**
  * Determines whether we should try to make a release for a change entry
  *
- * @param {object} changeEntry
+ * @param {object} release
  * @param {string[]} localTags
  * @param {object[]} releases
  */
-function needsRelease(changeEntry, localTags, releases) {
+function needsRelease(release, localTags, releases) {
   const releaseTags = releases.map(r => r.tag_name);
-  return (
-    localTags.includes(changeEntry.tag) &&
-    !releaseTags.includes(changeEntry.tag)
-  );
+  return localTags.includes(release.tag) && !releaseTags.includes(release.tag);
 }
 
 /**
@@ -142,17 +139,19 @@ function needsRelease(changeEntry, localTags, releases) {
  * @param {object} changeEntry
  * @param {string} token the GitHub auth token
  */
-async function releaseChange(packageName, changeEntry, token) {
-  const pre = semver.prerelease(changeEntry.version);
-  console.log(`Creating release for ${packageName} ${changeEntry.version}...`);
+async function publishRelease(release, token) {
+  const pre = semver.prerelease(release.version);
+  console.log(
+    `Creating release for ${release.packageName} ${release.version}...`,
+  );
 
   const res = await fetch(`${RNW_REPO_ENDPOINT}/releases`, {
     method: 'POST',
     headers: requestHeaders(token),
     body: JSON.stringify({
-      tag_name: changeEntry.tag,
-      name: `${packageTitle(packageName)} ${changeEntry.version}`,
-      body: createReleaseMarkdown(changeEntry),
+      tag_name: release.tag,
+      name: `${packageTitle(release.packageName)} ${release.version}`,
+      body: createReleaseMarkdown(release),
       prerelease: !!pre,
     }),
   });
@@ -163,15 +162,39 @@ async function releaseChange(packageName, changeEntry, token) {
 }
 
 /**
+ * Transforms the changelog JSON into an array of releases.
+ *
+ * @param {object} changelog
+ */
+function aggregateReleases(changelog) {
+  const entriesByTag = _.groupBy(changelog.entries, e => e.tag);
+
+  const commentsByTag = _.mapValues(entriesByTag, entries => {
+    const comments = [];
+
+    const commentsByType = _.merge(...entries.map(entry => entry.comments));
+    const changeTypes = Object.keys(commentsByType).filter(t => t !== 'none');
+    changeTypes.forEach(t => comments.push(...commentsByType[t]));
+    return comments;
+  });
+
+  return Object.keys(commentsByTag).map(tag => ({
+    packageName: changelog.name,
+    tag: tag,
+    version: entriesByTag[tag][0].version,
+    comments: commentsByTag[tag],
+  }));
+}
+
+/**
  * Create the markdown representation of a release
  *
  * @param {object} changeEntry
  */
-function createReleaseMarkdown(changeEntry) {
+function createReleaseMarkdown(release) {
   let md = '';
 
-  const changes = _.flatten(_.values(changeEntry.comments));
-  for (const change of changes) {
+  for (const change of release.comments) {
     const abbrevCommit = change.commit.substr(0, 8);
     md += `- ${abbrevCommit} ${change.comment} (${change.author})\n`;
   }
