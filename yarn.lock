@@ -2443,14 +2443,14 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.8.14"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.14.tgz#bcedaa07a598ee02cf84579b6b8f24108219c908"
-  integrity sha512-QlLV1MXRehAz16Mp+OW1bKHLVfVIki/fHDtfkiwzOVJP2r1wMVNc4Uast2wcHIyqfcYOIZuvGadF+1YW+PT44g==
+  version "7.8.16"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.16.tgz#562c51a0d32b8ad390fe5a4a9edb75080ac8b51c"
+  integrity sha512-Njp6Ty8XtKqLnsXRu7281BQgYvl5I8EkuQQcia1/NEuEMJI4h4GKVIFST+4wbk/DgF00pL8zbdSAiQgPPekE6w==
   dependencies:
-    "@microsoft/api-extractor-model" "7.8.8"
+    "@microsoft/api-extractor-model" "7.8.10"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.24.1"
-    "@rushstack/ts-command-line" "4.4.2"
+    "@rushstack/node-core-library" "3.24.3"
+    "@rushstack/ts-command-line" "4.4.4"
     colors "~1.2.1"
     js-yaml "~3.13.1"
     resolve "~1.17.0"
