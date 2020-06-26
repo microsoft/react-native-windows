@@ -9,6 +9,7 @@
 ```typescript
 export declare class DatePicker extends React.Component<IDatePickerProps> 
 ```
+<b>Extends:</b> React.Component&lt;[IDatePickerProps](./react-native-windows.idatepickerprops.md)<!-- -->&gt;
 
 ## Constructors
 

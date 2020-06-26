@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Upgrade React Native to 3/22 Nightly Build",
+  "packageName": "react-native-windows-codegen",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-27T20:40:29.506Z"
+}
