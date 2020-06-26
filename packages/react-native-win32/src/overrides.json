@@ -29,14 +29,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Components\\Button.win32.js",
-      "baseFile": "Libraries\\Components\\Button.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "1bb31cc95e6e4b71ff09f024dd102a9717925e51",
-      "issue": 5269
-    },
-    {
       "type": "platform",
       "file": "Libraries\\Components\\Button\\ButtonWin32.Props.ts"
     },
@@ -330,6 +322,14 @@
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "073367bc043b5e7e9db6ec046da088e750d3693c",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\StyleSheet\\StyleSheetValidation.win32.js",
+      "baseFile": "Libraries\\StyleSheet\\StyleSheetValidation.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "5fe7febd1eb5374745fe612030806512e9161796",
+      "issue": 5269
     },
     {
       "type": "derived",

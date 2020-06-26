@@ -518,6 +518,14 @@
     },
     {
       "type": "patch",
+      "file": "Libraries\\StyleSheet\\StyleSheetValidation.windows.js",
+      "baseFile": "Libraries\\StyleSheet\\StyleSheetValidation.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "5fe7febd1eb5374745fe612030806512e9161796",
+      "issue": 5269
+    },
+    {
+      "type": "patch",
       "file": "Libraries\\Types\\CoreEventTypes.js",
       "baseFile": "Libraries\\Types\\CoreEventTypes.js",
       "baseVersion": "0.62.0-rc.3",
