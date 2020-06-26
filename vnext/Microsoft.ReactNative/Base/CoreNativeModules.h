@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <ReactUWP/Modules/AppThemeModuleUwp.h>
-#include <ReactUWP/Modules/AppearanceModule.h>
+#include <Modules/AppThemeModuleUwp.h>
+#include <Modules/AppearanceModule.h>
 #include <ReactWindowsCore/NativeModuleProvider.h>
 #include <smartPtr/cntPtr.h>
 #include <memory>

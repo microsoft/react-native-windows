@@ -5,277 +5,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="..\ReactUWP\Base\CoreNativeModules.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Base\CoreUIManagers.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp">
-      <Filter>CxxReactUWP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\AnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\AnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\CalculatedAnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\DecayAnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\DiffClampAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\DivisionAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\EventAnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\FrameAnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\InterpolationAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\ModulusAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\MultiplicationAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\NativeAnimatedModule.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\NativeAnimatedNodeManager.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\PropsAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\SpringAnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\StyleAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\SubtractionAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUwp\Modules\AppearanceModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AppThemeModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\DevSupportManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\ImageViewManagerModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\LinkingManagerModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\LocationObserverModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\NativeUIManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\NetworkingModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\TimingModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\WebSocketModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\ButtonViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\ContentControlViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\ResourceBrushUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\UwpPreparedScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\UwpScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\ValueUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ActivityIndicatorViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\CheckboxViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ControlViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\DatePickerViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\DynamicAutomationPeer.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\DynamicValueProvider.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\DynamicAutomationProperties.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ExpressionAnimationStore.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\FlyoutViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\FrameworkElementViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Image\ImageViewManager.cpp">
-      <Filter>Views\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Image\ReactImage.cpp">
-      <Filter>Views\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Image\ReactImageBrush.cpp">
-      <Filter>Views\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.cpp">
-      <Filter>Views\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.cpp">
-      <Filter>Views\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\KeyboardEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\PickerViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\PopupViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\RawTextViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\RefreshControlManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\RootViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ScrollContentViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ScrollViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ShadowNodeBase.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\SIPEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\SliderViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\SwitchViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\TextInputViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\TextViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\TouchEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ViewControl.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ViewManagerBase.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ViewPanel.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ViewViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\VirtualTextViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp" />
     <ClCompile Include="IReactNotificationService.cpp" />
-    <ClCompile Include="Modules\AlertModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\AppStateModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\ClipboardModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\DevSettingsModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\I18nManagerModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\LogBoxModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
@@ -318,278 +51,278 @@
       <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Base\CoreNativeModules.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\CoreUIManagers.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CxxReactUWP\JSBigString.cpp">
+      <Filter>CxxReactUWP</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AlertModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AppearanceModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AppStateModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AppThemeModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ClipboardModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DeviceInfoModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\DevSettingsModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\I18nManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ImageViewManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\LinkingManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\LocationObserverModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\LogBoxModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\NativeUIManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\NetworkingModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\TimingModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\WebSocketModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Polyester\ButtonContentViewManager.cpp">
+      <Filter>Polyester</Filter>
+    </ClCompile>
+    <ClCompile Include="Polyester\ButtonViewManager.cpp">
+      <Filter>Polyester</Filter>
+    </ClCompile>
+    <ClCompile Include="Polyester\ContentControlViewManager.cpp">
+      <Filter>Polyester</Filter>
+    </ClCompile>
+    <ClCompile Include="Polyester\HyperlinkViewManager.cpp">
+      <Filter>Polyester</Filter>
+    </ClCompile>
+    <ClCompile Include="Polyester\IconViewManager.cpp">
+      <Filter>Polyester</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ImageViewManager.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ReactImage.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\CheckboxViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ControlViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DatePickerViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\DevMenu.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicAutomationPeer.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicAutomationProperties.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicValueProvider.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\FlyoutViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\FrameworkElementViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\KeyboardEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\PickerViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\PopupViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\RawTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\ReactRootControl.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\RefreshControlManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\RootViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ScrollContentViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ScrollViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ShadowNodeBase.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\SIPEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\SliderViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\SwitchViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\TextInputViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\TextViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\TouchEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ViewControl.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ViewManagerBase.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ViewPanel.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ViewViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\VirtualTextViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\XamlFeatures.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\AccessibilityUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Helpers.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\LocalBundleReader.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ResourceBrushUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ValueUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\ReactUWP\Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\LocalBundleReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\PropertyHandlerUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\PropertyUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\ResourceBrushUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\StandardControlResourceKeyNames.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Utils\UwpScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\AnimatedNodeType.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\AnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\AnimationType.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\CalculatedAnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\DecayAnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\DiffClampAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\DivisionAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\EventAnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\ExtrapolationType.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\FacadeType.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\FrameAnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\InterpolationAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\ModulusAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\MultiplicationAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\NativeAnimatedModule.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\NativeAnimatedNodeManager.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\PropsAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\SpringAnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\StyleAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\SubtractionAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\TrackingAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\TransformAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUwp\Modules\AppearanceModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AppThemeModuleUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\DevSupportManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\ImageViewManagerModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\LinkingManagerModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\LocationObserverModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\NativeUIManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\NetworkingModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\TimingModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\WebSocketModuleUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\ButtonViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\CheckboxViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\DatePickerViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\DynamicAutomationPeer.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\DynamicValueProvider.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\DynamicAutomationProperties.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ExpressionAnimationStore.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\FlyoutViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\BorderEffect.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\ImageViewManager.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\ReactImage.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\ReactImageBrush.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.h">
-      <Filter>Views\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.h">
-      <Filter>Views\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\PickerViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\PopupViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\RawTextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\RefreshControlManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\RootViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ScrollContentViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ScrollViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\SIPEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\SliderViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\SwitchViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\TextInputViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\TextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\TouchEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ViewControl.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ViewPanel.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\ViewViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\VirtualTextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\XamlFeatures.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CxxReactIncludes.h">
@@ -601,27 +334,6 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
-    <ClInclude Include="Modules\AlertModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\AppStateModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\ClipboardModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\DeviceInfoModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\DevSettingsModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\I18nManagerModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\LogBoxModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h">
@@ -679,26 +391,303 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Base\CoreNativeModules.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DecayAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\EventAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FacadeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\TransformAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AlertModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AppearanceModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AppStateModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AppThemeModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ClipboardModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DeviceInfoModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\DevSettingsModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\I18nManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ImageViewManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\LinkingManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\LocationObserverModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\LogBoxModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\NativeUIManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\NetworkingModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TimingModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\WebSocketModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Polyester\ButtonContentViewManager.h">
+      <Filter>Polyester</Filter>
+    </ClInclude>
+    <ClInclude Include="Polyester\ButtonViewManager.h">
+      <Filter>Polyester</Filter>
+    </ClInclude>
+    <ClInclude Include="Polyester\ContentControlViewManager.h">
+      <Filter>Polyester</Filter>
+    </ClInclude>
+    <ClInclude Include="Polyester\HyperlinkViewManager.h">
+      <Filter>Polyester</Filter>
+    </ClInclude>
+    <ClInclude Include="Polyester\IconViewManager.h">
+      <Filter>Polyester</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\BorderEffect.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ImageViewManager.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImage.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImageBrush.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ActivityIndicatorViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\CheckboxViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ControlViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DatePickerViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Views\DevMenu.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicAutomationPeer.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicAutomationProperties.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicValueProvider.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ExpressionAnimationStore.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\FlyoutViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\FrameworkElementViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\KeyboardEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\PickerViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\PopupViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\RawTextViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\ReactRootControl.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Views\RefreshControlManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\RootViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ScrollContentViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ScrollViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ShadowNodeBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SIPEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SliderViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SwitchViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\TextInputViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\TextViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\TouchEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ViewControl.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ViewManagerBase.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ViewPanel.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ViewViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\VirtualTextViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\XamlFeatures.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\AccessibilityUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Helpers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\LocalBundleReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\PropertyHandlerUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\PropertyUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ValueUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="XamlView.h" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
-    <Midl Include="..\ReactUWP\Views\cppwinrt\BorderEffect.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
-    <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
-    <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="IReactContext.idl" />
@@ -718,6 +707,18 @@
     <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
     <Midl Include="XamlUIService.idl" />
+    <Midl Include="Views\cppwinrt\AccessibilityAction.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views\cppwinrt\BorderEffect.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views\cppwinrt\ViewPanel.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

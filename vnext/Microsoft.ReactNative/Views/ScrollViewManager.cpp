@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <ReactUWP\Views\SIPEventHandler.h>
+#include <Views/SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"

@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative
+{
+  [version(1)]
+  struct AccessibilityAction
+  {
+      String Name;
+      String Label;
+  };
+}
