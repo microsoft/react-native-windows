@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Jun 2020 20:17:03 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jun 2020 23:59:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.104
+
+Fri, 26 Jun 2020 23:59:27 GMT
+
+### Changes
+
+- Upgrade React Native to 3/22 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.103
 

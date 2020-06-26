@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2020 23:59:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.104",
+      "version": "0.0.0-canary.104",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade React Native to 3/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0727ffcb907673749ddbf43e7a7c0922957c9e82",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jun 2020 20:17:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.103",
       "version": "0.0.0-canary.103",
