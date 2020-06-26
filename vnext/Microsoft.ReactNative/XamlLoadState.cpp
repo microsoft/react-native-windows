@@ -1,11 +1,44 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "XamlLoadState.h"
 #include <sstream>
+#include "unicode.h"
 
-XamlLoadState XamlLoadState::g_Instance;
+constexpr std::wstring_view systemXamlDllName{L"Windows.UI.Xaml.dll"};
+constexpr std::wstring_view winUIDllName{L"Microsoft.UI.Xaml.dll"};
 
-constexpr std::wstring_view wux{L"Windows.UI.Xaml.dll"};
-constexpr std::wstring_view mux{L"Microsoft.UI.Xaml.dll"};
+std::ostream &operator<<(std::ostream &o, const XamlLoadState::XamlVersion &version) {
+  return o << version.m_major << "." << version.m_minor;
+}
+
+XamlLoadState::XamlDialect XamlLoadState::XamlVersion::GetMode() const {
+  switch (m_major) {
+    case 2:
+      return XamlDialect::SystemXAML;
+      break;
+    case 3:
+      return XamlDialect::WinUI;
+      break;
+    default:
+      return XamlDialect::Unknown;
+      break;
+  }
+}
+
+XamlLoadState::XamlDialect XamlLoadState::XamlVersion::GetKnownMode() const {
+  auto const mode = GetMode();
+  if (mode == XamlDialect::Unknown) {
+    std::stringstream ss;
+    ss << "Unknown XAML version " << *this;
+    if (!m_path.empty()) {
+      ss << " found at " << Microsoft::Common::Unicode::Utf16ToUtf8(m_path);
+    }
+    throw std::exception(ss.str().c_str());
+  }
+  return mode;
+}
 
 #pragma region NT APIs
 
@@ -61,29 +94,27 @@ NTSTATUS NTAPI LdrUnregisterDllNotification(_In_ PVOID Cookie);
 
 #pragma endregion
 
-LDR_DLL_NOTIFICATION_FUNCTION MyNotificationFunction;
+LDR_DLL_NOTIFICATION_FUNCTION XamlLoadNotification;
 
 #define NTDLL_FUNCTION(name) reinterpret_cast<decltype(&name)>(GetProcAddress(ntdll, #name))
 
-std::string XamlLoadState::GetXamlVersion(PCWSTR path) {
+XamlLoadState::XamlVersion XamlLoadState::GetXamlVersion(const std::wstring &path) {
   DWORD dwHandle;
-  DWORD size = GetFileVersionInfoSizeW(path, &dwHandle);
+  DWORD size = GetFileVersionInfoSizeW(path.c_str(), &dwHandle);
   std::string buffer;
   buffer.reserve(size);
 
-  if (GetFileVersionInfo(path, 0, size, const_cast<char *>(buffer.c_str()))) {
+  if (GetFileVersionInfo(path.c_str(), 0, size, const_cast<char *>(buffer.c_str()))) {
     VS_FIXEDFILEINFO *fileInfo;
     UINT len{};
     if (VerQueryValueW(buffer.c_str(), L"\\", (void **)&fileInfo, &len)) {
-      const DWORD ls = fileInfo->dwFileVersionMS & 0x3fff;
+      const DWORD ls = fileInfo->dwFileVersionMS & 0xffff;
       DWORD ms = fileInfo->dwFileVersionMS >> 16;
       // WinUI 3 Alpha has version 10.0.10011.16384. Convert 10.0 to 3.0
       if (ms == 10) {
         ms = 3;
       }
-      std::stringstream v;
-      v << ms << "." << ls;
-      return v.str();
+      return {static_cast<uint16_t>(ms), static_cast<uint16_t>(ls), path};
     }
   }
 
@@ -93,20 +124,20 @@ std::string XamlLoadState::GetXamlVersion(PCWSTR path) {
 XamlLoadState::XamlLoadState() {
   HMODULE mod{nullptr};
 
-  if (GetModuleHandle(wux.data())) {
-    RegisterDll(wux.data(), nullptr);
+  if (GetModuleHandle(systemXamlDllName.data())) {
+    RegisterDll(systemXamlDllName.data(), nullptr);
   }
-  mod = GetModuleHandle(mux.data());
+  mod = GetModuleHandle(winUIDllName.data());
   if (mod) {
     wchar_t path[MAX_PATH]{};
     if (GetModuleFileNameW(mod, path, ARRAYSIZE(path))) {
-      RegisterDll(mux.data(), path);
+      RegisterDll(winUIDllName.data(), path);
     }
   }
 
   auto ntdll = GetModuleHandle(L"ntdll.dll");
   auto pfn = NTDLL_FUNCTION(LdrRegisterDllNotification);
-  (*pfn)(0, MyNotificationFunction, nullptr, &m_cookie);
+  (*pfn)(0, XamlLoadNotification, nullptr, &m_cookie);
 }
 
 XamlLoadState::~XamlLoadState() {
@@ -116,7 +147,7 @@ XamlLoadState::~XamlLoadState() {
 }
 
 void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
-  if (wux == DllName) {
+  if (DllName == systemXamlDllName) {
     switch (m_mode) {
       case XamlDialect::Unknown:
         m_mode = XamlDialect::SystemXAML;
@@ -125,28 +156,19 @@ void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
         // should never get here
         return;
       case XamlDialect::WinUI:
-        throw std::exception("XAML dialect mismatch - WinUI 3 already loaded when attempting to load WUX");
+        throw std::exception("XAML dialect mismatch - WinUI 3 already loaded when attempting to load Windows.UI.Xaml");
     }
-  } else if (mux == DllName) {
-    std::string newVersion = GetXamlVersion(path);
+  } else if (DllName == winUIDllName) {
+    auto newVersion = GetXamlVersion(path);
+    auto const newMode = newVersion.GetKnownMode();
     switch (m_mode) {
       case XamlDialect::Unknown:
         m_version = newVersion;
-        switch (m_version[0]) {
-          case '2':
-            m_mode = XamlDialect::SystemXAML;
-            break;
-          case '3':
-            m_mode = XamlDialect::WinUI;
-            break;
-          default:
-            throw std::exception("Unknown XAML version");
-            break;
-        }
+        m_mode = newMode;
         break;
 
       case XamlDialect::SystemXAML:
-        if (m_version == "" && newVersion[0] == '2') {
+        if ((m_version.GetMode() == XamlDialect::Unknown) && (newMode == XamlDialect::SystemXAML)) {
           m_version = newVersion;
         } else {
           /* we've either:
@@ -162,12 +184,17 @@ void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
         break;
 
       default:
-        throw std::exception("Unexpected");
+        std::stringstream ss;
+        ss << "Unexpected XAML mode " << static_cast<int>(m_mode) << " when trying to load " << (path ? path : DllName);
+        throw std::exception(ss.str().c_str());
     }
   }
 }
 
-VOID CALLBACK MyNotificationFunction(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA data, void *context) {
+#ifdef DEBUG
+XamlLoadState XamlLoadState::g_Instance;
+
+VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA data, void *context) {
   if (reason == LDR_DLL_NOTIFICATION_REASON_LOADED) {
     auto name = data->Loaded.BaseDllName->Buffer;
     auto path = data->Loaded.FullDllName->Buffer;
@@ -176,3 +203,7 @@ VOID CALLBACK MyNotificationFunction(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA d
     }
   }
 }
+#else
+VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA data, void *context) {}
+#endif // DEBUG
+

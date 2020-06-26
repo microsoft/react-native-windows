@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 
 /// <summary>
@@ -12,14 +15,28 @@ struct XamlLoadState {
     SystemXAML = 1,
     WinUI = 2,
   };
-  std::string m_version{};
-  XamlDialect m_mode{XamlDialect::Unknown};
-  void *m_cookie;
 
-  void RegisterDll(PCWSTR DllName, PCWSTR path);
-  static std::string GetXamlVersion(PCWSTR path);
+  struct XamlVersion {
+    uint16_t m_major{};
+    uint16_t m_minor{};
+    std::wstring m_path{};
+    XamlDialect GetMode() const;
+    XamlDialect GetKnownMode() const;
+  };
+
   XamlLoadState();
   ~XamlLoadState();
 
+#ifdef DEBUG
   static XamlLoadState g_Instance;
+#endif
+
+  void RegisterDll(PCWSTR DllName, PCWSTR path);
+
+ private:
+  XamlVersion m_version;
+  XamlDialect m_mode{XamlDialect::Unknown};
+  void *m_cookie;
+
+  static XamlVersion GetXamlVersion(const std::wstring &path);
 };
