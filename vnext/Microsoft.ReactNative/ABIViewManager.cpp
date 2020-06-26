@@ -8,7 +8,7 @@
 
 #include "IReactContext.h"
 
-#include <ReactUWP/Utils/ValueUtils.h>
+#include <Utils/ValueUtils.h>
 #include "ReactHost/MsoUtils.h"
 
 namespace winrt::Microsoft::ReactNative {

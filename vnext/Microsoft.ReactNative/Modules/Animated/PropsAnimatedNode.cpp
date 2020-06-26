@@ -3,10 +3,10 @@
 
 #include "pch.h"
 
-#include <ReactUWP/Modules/NativeUIManager.h>
-#include <ReactUWP/Utils/Helpers.h>
-#include <ReactUWP/Views/XamlFeatures.h>
+#include <Modules/NativeUIManager.h>
+#include <Utils/Helpers.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/XamlFeatures.h>
 #include "NativeAnimatedNodeManager.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"

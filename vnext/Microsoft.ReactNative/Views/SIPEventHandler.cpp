@@ -6,8 +6,8 @@
 #include "SIPEventHandler.h"
 
 #include <Modules/NativeUIManager.h>
-#include <ReactUWP/Utils/Helpers.h>
 #include <UI.Xaml.Media.h>
+#include <Utils/Helpers.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
