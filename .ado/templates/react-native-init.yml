@@ -4,7 +4,7 @@ parameters:
   version:
   platform:
   configuration:
-  experimentalNugetDependency: false
+  experimentalNuGetDependency: false
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
@@ -58,7 +58,7 @@ steps:
     inputs:
       artifactName: TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }}
       downloadPath: $(System.DefaultWorkingDirectory)
-    condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
+    condition: and(succeeded(), eq('true', ${{ parameters.experimentalNuGetDependency }}))
 
   # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
@@ -70,7 +70,7 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} --experimentalNugetDependency ${{ parameters.experimentalNugetDependency }} ${{ parameters.additionalInitArguments }}
+      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} --experimentalNuGetDependency ${{ parameters.experimentalNuGetDependency }} ${{ parameters.additionalInitArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: PowerShell@2
@@ -91,7 +91,7 @@ steps:
         $packageSources.InsertBefore($newSource, $packageSources.FirstChild);
         $xml.save("$(Agent.BuildDirectory)\testcli\windows\Nuget.Config");
 
-    condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
+    condition: and(succeeded(), eq('true', ${{ parameters.experimentalNuGetDependency }}))
 
   - task: PowerShell@2
     displayName: List Visual Studio Components

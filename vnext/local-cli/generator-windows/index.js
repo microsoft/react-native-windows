@@ -76,7 +76,7 @@ function copyProjectTemplateAndReplace(
   const language = options.language;
   const namespace = options.ns || newProjectName;
   const namespaceCpp = toCppNamespace(namespace);
-  if (options.experimentalNugetDependency) {
+  if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
   if (options.useWinUI3) {
@@ -114,7 +114,7 @@ function copyProjectTemplateAndReplace(
     },
   ];
 
-  if (options.experimentalNugetDependency) {
+  if (options.experimentalNuGetDependency) {
     cppNugetPackages.push(
       {
         id: 'Microsoft.ReactNative',
@@ -147,7 +147,7 @@ function copyProjectTemplateAndReplace(
     currentUser: currentUser,
     certificateThumbprint: certificateThumbprint,
 
-    useExperimentalNuget: options.experimentalNugetDependency,
+    useExperimentalNuget: options.experimentalNuGetDependency,
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
@@ -184,7 +184,7 @@ function copyProjectTemplateAndReplace(
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
   // Once we are publishing to nuget.org, this shouldn't be needed anymore
-  if (options.experimentalNugetDependency) {
+  if (options.experimentalNuGetDependency) {
     [
       { from: path.join(srcPath, projDir, 'NuGet.Config'), to: path.join(windowsDir, 'NuGet.Config') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
