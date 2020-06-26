@@ -6,7 +6,7 @@
 #include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
-#include <ReactRootView.h>
+#include <ReactRootView2.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>

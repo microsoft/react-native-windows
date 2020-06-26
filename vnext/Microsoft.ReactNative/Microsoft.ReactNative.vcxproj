@@ -263,6 +263,8 @@
     <ClInclude Include="Polyester\ContentControlViewManager.h" />
     <ClInclude Include="Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="Polyester\IconViewManager.h" />
+    <ClInclude Include="ReactHost\IReactInstance.h" />
+    <ClInclude Include="ReactHost\ViewManagerProvider.h" />
     <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -326,11 +328,13 @@
     <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\IXamlRootView.h" />
     <ClInclude Include="Views\KeyboardEventHandler.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
     <ClInclude Include="Views\ReactRootControl.h" />
+    <ClInclude Include="Views\ReactRootView2.h" />
     <ClInclude Include="Views\RefreshControlManager.h" />
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />

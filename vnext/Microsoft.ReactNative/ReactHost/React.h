@@ -22,10 +22,10 @@
 #else
 // When building Desktop, the include below results in
 // fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
-#include <ReactUWP/IReactInstance.h>
+#include <IReactInstance.h>
 #endif
 
-#include <ReactUWP/ViewManagerProvider.h>
+#include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace Mso::React {
