@@ -9,6 +9,7 @@
 ```typescript
 export interface IPopupProps extends ViewProps 
 ```
+<b>Extends:</b> ViewProps
 
 ## Properties
 

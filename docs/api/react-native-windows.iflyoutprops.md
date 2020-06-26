@@ -9,6 +9,7 @@
 ```typescript
 export interface IFlyoutProps extends ViewProps 
 ```
+<b>Extends:</b> ViewProps
 
 ## Properties
 
