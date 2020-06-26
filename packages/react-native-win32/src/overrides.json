@@ -2,7 +2,7 @@
   "overrides": [
     {
       "type": "platform",
-      "file": "index.win32.ts"
+      "file": "index.win32.js"
     },
     {
       "type": "patch",
@@ -316,6 +316,14 @@
       "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.win32.js"
     },
     {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypesWin32.d.ts"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypesWin32.js"
+    },
+    {
       "type": "patch",
       "file": "Libraries\\StyleSheet\\StyleSheet.win32.js",
       "baseFile": "Libraries\\StyleSheet\\StyleSheet.js",
@@ -386,6 +394,10 @@
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "8a8182f7c36e8184b7bbfe1445263ceca622b2c1",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "platform",
+      "file": "RNTester\\js\\examples\\ColorGradientWin32Example.js"
     },
     {
       "type": "derived",
