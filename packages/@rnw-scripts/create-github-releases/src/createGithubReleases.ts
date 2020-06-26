@@ -27,7 +27,7 @@ const RNW_REPO_ENDPOINT =
   'https://api.github.com/repos/microsoft/react-native-windows';
 
 /**
- * Representation of a single user's change and message
+ * Representation the JSON chanelog comment obejct
  */
 interface Comment {
   comment: string;
@@ -50,22 +50,18 @@ interface Changelog {
 }
 
 /**
- * Represents the details of an individual relaease
+ * Represents the details of an individual release
  */
 interface Release {
   packageName: string;
   tag: string;
   version: string;
-  comments: Array<{
-    comment: string;
-    author: string;
-    commit: string;
-    package: string;
-  }>;
+  comments: Comment[];
 }
 
 /**
- * Some of the props exposed on a release by GitHub's REST API
+ * Some of the props exposed on a release by GitHub's REST API for a release
+ * resource
  */
 interface GithubApiRelease {
   url: string;
@@ -233,7 +229,7 @@ function aggregateReleases(changelog: Changelog): Release[] {
 /**
  * Create the markdown representation of a release
  */
-function createReleaseMarkdown(release: Release) {
+function createReleaseMarkdown(release: Release): string {
   let md = '';
 
   for (const change of release.comments) {
@@ -247,7 +243,7 @@ function createReleaseMarkdown(release: Release) {
 /**
  * Create request headers common to GitHub API calls
  */
-function requestHeaders(token: string) {
+function requestHeaders(token: string): {[header: string]: string} {
   return {
     Authorization: `Token ${token}`,
     'Content-Type': 'application/json',
@@ -258,7 +254,7 @@ function requestHeaders(token: string) {
 /**
  * Return a release title name corresponding to a package
  */
-function packageTitle(packageName: string) {
+function packageTitle(packageName: string): string {
   if (packageName === 'react-native-windows') {
     return 'React Native Windows';
   } else {

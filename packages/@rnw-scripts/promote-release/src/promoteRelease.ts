@@ -211,7 +211,7 @@ async function updatePackage(packageName: string, props: {[key: string]: any}) {
  * @param release
  * @param version
  */
-function distTag(release: ReleaseType, version: string) {
+function distTag(release: ReleaseType, version: string): string {
   if (release === 'legacy') {
     return `v${version}-stable`;
   } else {

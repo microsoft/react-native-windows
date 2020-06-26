@@ -22,7 +22,8 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
-      "packages/**",
+      "packages/*",
+      "packages/@rnw-scripts/*",
       "vnext"
     ]
   },
