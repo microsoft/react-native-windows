@@ -6,6 +6,8 @@
 #include <sstream>
 #include "unicode.h"
 
+#ifdef DEBUG
+
 constexpr std::wstring_view systemXamlDllName{L"Windows.UI.Xaml.dll"};
 constexpr std::wstring_view winUIDllName{L"Microsoft.UI.Xaml.dll"};
 
@@ -191,7 +193,6 @@ void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
   }
 }
 
-#ifdef DEBUG
 XamlLoadState XamlLoadState::g_Instance;
 
 VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA data, void *context) {
@@ -203,6 +204,5 @@ VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA dat
     }
   }
 }
-#else
-VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA data, void *context) {}
+
 #endif // DEBUG
