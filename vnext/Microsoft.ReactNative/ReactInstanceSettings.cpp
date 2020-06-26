@@ -80,4 +80,21 @@ void ReactInstanceSettings::EnableDeveloperMenu(bool value) noexcept {
   UseDeveloperSupport(value);
 }
 
+hstring ReactInstanceSettings::DebugHost() noexcept {
+  std::wstring dhost(SourceBundleHost());
+  dhost.append(L":");
+  dhost.append(std::to_wstring(SourceBundlePort()));
+  return hstring(dhost);
+}
+
+void ReactInstanceSettings::DebugHost(hstring const &value) noexcept {
+  std::wstring dhost(value);
+  auto colonPos = dhost.find(L':');
+  if (colonPos != std::wstring::npos) {
+    SourceBundleHost(hstring(dhost.substr(0, colonPos)));
+    dhost.erase(0, colonPos + 1);
+    SourceBundlePort(static_cast<uint16_t>(std::stoi(dhost)));
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

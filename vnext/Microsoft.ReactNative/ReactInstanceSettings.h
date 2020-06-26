@@ -107,7 +107,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
-  hstring m_debugHost{};
   hstring m_debugBundlePath{};
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
@@ -189,14 +188,6 @@ inline hstring ReactInstanceSettings::ByteCodeFileUri() noexcept {
 
 inline void ReactInstanceSettings::ByteCodeFileUri(hstring const &value) noexcept {
   m_byteCodeFileUri = value;
-}
-
-inline hstring ReactInstanceSettings::DebugHost() noexcept {
-  return m_debugHost;
-}
-
-inline void ReactInstanceSettings::DebugHost(hstring const &value) noexcept {
-  m_debugHost = value;
 }
 
 inline hstring ReactInstanceSettings::DebugBundlePath() noexcept {
