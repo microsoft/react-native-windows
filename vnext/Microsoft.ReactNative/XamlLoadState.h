@@ -20,7 +20,7 @@ struct XamlLoadState {
     uint16_t m_major{};
     uint16_t m_minor{};
     std::wstring m_path{};
-    XamlDialect GetMode() const;
+    XamlDialect GetMode() const noexcept;
     XamlDialect GetKnownMode() const;
   };
 

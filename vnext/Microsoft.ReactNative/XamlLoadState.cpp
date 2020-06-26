@@ -15,7 +15,7 @@ std::ostream &operator<<(std::ostream &o, const XamlLoadState::XamlVersion &vers
   return o << version.m_major << "." << version.m_minor;
 }
 
-XamlLoadState::XamlDialect XamlLoadState::XamlVersion::GetMode() const {
+XamlLoadState::XamlDialect XamlLoadState::XamlVersion::GetMode() const noexcept {
   switch (m_major) {
     case 2:
       return XamlDialect::SystemXAML;
