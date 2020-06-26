@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2020 00:05:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.102",
+      "version": "0.0.0-canary.102",
+      "comments": {
+        "none": [
+          {
+            "comment": "Only create tags for react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "99266b801dd01798ca54c08a9bcc5255e2e7b1d9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Jun 2020 14:32:50 GMT",
       "tag": "react-native-windows_v0.0.0-canary.102",
       "version": "0.0.0-canary.102",
