@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add Enterprise vs2019 support to rnw-dependencies",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-26T17:31:10.492Z"
+}
