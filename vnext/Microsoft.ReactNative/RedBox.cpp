@@ -5,6 +5,7 @@
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
 #include <regex>
+#include "DevServerHelper.h"
 #include "DynamicReader.h"
 #include "Unicode.h"
 
@@ -334,13 +335,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
                               IInspectable const & /*sender*/, xaml::Input::TappedRoutedEventArgs const & /*e*/) {
         if (auto reactHost = weakReactHost.GetStrongPtr()) {
           auto devSettings = reactHost->Options().DeveloperSettings;
-          std::string stackFrameUri = "http://";
-          stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
-          stackFrameUri.append(":");
-          stackFrameUri.append(devSettings.SourceBundlePort.empty() ? "8081" : devSettings.SourceBundlePort);
-          stackFrameUri.append("/open-stack-frame");
-
-          Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};
+          Uri uri{
+              Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerOpenStackFrameUrl(
+                  devSettings.SourceBundleHost, devSettings.SourceBundlePort))};
           winrt::Windows::Web::Http::HttpClient httpClient{};
           winrt::Windows::Data::Json::JsonObject payload{};
 

@@ -497,7 +497,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // First attempt to get download the Js locally, to catch any bundling
       // errors before attempting to load the actual script.
       auto jsBundleString = m_devManager->GetJavaScriptFromServer(
-          m_devSettings->debugHost,
+          m_devSettings->sourceBundleHost,
+          m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName);
 
@@ -507,7 +508,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
 
       auto bundleUrl = DevServerHelper::get_BundleUrl(
-          m_devSettings->debugHost,
+          m_devSettings->sourceBundleHost,
+          m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
           /*dev*/ "true",
@@ -613,7 +615,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   // list
   std::string bundleUrl = (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback)
       ? DevServerHelper::get_BundleUrl(
-            m_devSettings->debugHost,
+            m_devSettings->sourceBundleHost,
+            m_devSettings->sourceBundlePort,
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
             "true" /*dev*/,
@@ -653,7 +656,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
   // setup polling for live reload
   if (!m_devManager->HasException() && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
-    m_devManager->StartPollingLiveReload(m_devSettings->debugHost, m_devSettings->liveReloadCallback);
+    m_devManager->StartPollingLiveReload(
+        m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
   }
 }
 

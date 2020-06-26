@@ -72,7 +72,9 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string &u
 }
 
 void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings &settings) {
-  DownloadFromAsync(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(settings.debugHost)).get();
+  DownloadFromAsync(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(
+                        settings.sourceBundleHost, settings.sourceBundlePort))
+      .get();
 }
 
 std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::react::DevSettings &settings) {
@@ -104,7 +106,9 @@ std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::re
             }
 
             if (!method.compare(L"reload")) {
-              reloadCallback();
+              if (reloadCallback) {
+                reloadCallback();
+              }
             } else if (!method.compare(L"devMenu")) {
               // TODO showDevMenu
             } else if (!method.compare(L"captureHeap")) {
@@ -116,7 +120,8 @@ std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::re
       });
 
   winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16("ws://" + settings.debugHost + "/message"));
+      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerConnectionUrl(
+          settings.sourceBundleHost, settings.sourceBundlePort)));
   auto async = m_ws.ConnectAsync(uri);
 
 #ifdef DEFAULT_CPPWINRT_EXCEPTIONS
@@ -141,7 +146,8 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const f
       try {
         websocketJSE
             ->ConnectAsync(
-                facebook::react::DevServerHelper::get_WebsocketProxyUrl(settings.debugHost),
+                facebook::react::DevServerHelper::get_WebsocketProxyUrl(
+                    settings.sourceBundleHost, settings.sourceBundlePort),
                 settings.errorCallback,
                 settings.waitingForDebuggerCallback,
                 settings.debuggerAttachCallback)
@@ -212,10 +218,14 @@ std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const s
   co_return responseMessage.StatusCode();
 }
 
-void DevSupportManager::StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) {
+void DevSupportManager::StartPollingLiveReload(
+    const std::string &sourceBundleHost,
+    const uint16_t sourceBundlePort,
+    std::function<void()> onChangeCallback) {
   m_cancellation_token = false;
 
-  std::string refreshUrl = facebook::react::DevServerHelper::get_OnChangeEndpointUrl(debugHost);
+  std::string refreshUrl =
+      facebook::react::DevServerHelper::get_OnChangeEndpointUrl(sourceBundleHost, sourceBundlePort);
   auto task = [refreshUrl, onChangeCallback = move(onChangeCallback), this](const std::atomic_bool &cancelled) {
     while (!cancelled) {
       try {
@@ -249,14 +259,15 @@ void DevSupportManager::StopPollingLiveReload() {
 }
 
 std::string DevSupportManager::GetJavaScriptFromServer(
-    const std::string &debugHost,
+    const std::string &sourceBundleHost,
+    const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform) {
   // Reset exception state since client is requesting new service
   m_exceptionCaught = false;
 
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
-      debugHost, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
+      sourceBundleHost, sourceBundlePort, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
   try {
     std::string s;
     bool success;

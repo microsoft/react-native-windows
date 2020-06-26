@@ -115,8 +115,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
     reactOptions.RedBoxHandler = Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler());
   }
   reactOptions.DeveloperSettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
-  reactOptions.DeveloperSettings.SourceBundlePort =
-      m_instanceSettings.SourceBundlePort() != 0 ? std::to_string(m_instanceSettings.SourceBundlePort()) : "";
+  reactOptions.DeveloperSettings.SourceBundlePort = m_instanceSettings.SourceBundlePort();
 
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();

@@ -11,8 +11,8 @@
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
 
-#include <ReactUWP/Views/FrameworkElementViewManager.h>
-#include <ReactUWP/Views/ShadowNodeBase.h>
+#include <Views/FrameworkElementViewManager.h>
+#include <Views/ShadowNodeBase.h>
 #include "ReactHost/React.h"
 
 #include "winrt/Microsoft.ReactNative.h"

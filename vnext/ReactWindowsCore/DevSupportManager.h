@@ -30,10 +30,14 @@ class DevSupportManager : public facebook::react::IDevSupportManager {
 
   virtual facebook::react::JSECreator LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) override;
   virtual std::string GetJavaScriptFromServer(
-      const std::string &debugHost,
+      const std::string &sourceBundleHost,
+      const uint16_t sourceBundlePort,
       const std::string &jsBundleName,
       const std::string &platform) override;
-  virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) override;
+  virtual void StartPollingLiveReload(
+      const std::string &sourceBundleHost,
+      const uint16_t sourceBundlePort,
+      std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
   virtual bool HasException() override {
     return m_exceptionCaught;

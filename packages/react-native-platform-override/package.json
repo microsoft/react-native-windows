@@ -56,6 +56,10 @@
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ],
   "beachball": {
     "disallowedChangeTypes": [
       "major"

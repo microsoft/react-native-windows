@@ -44,7 +44,8 @@ using ChakraBundleUrlMetadataMap = std::map<std::string, ChakraBundleMetadata>;
 
 struct DevSettings {
   bool useJITCompilation{true};
-  std::string debugHost;
+  uint16_t sourceBundlePort{0};
+  std::string sourceBundleHost;
   std::string debugBundlePath;
   std::string platformName{STRING(RN_PLATFORM)};
   std::function<void()> liveReloadCallback;

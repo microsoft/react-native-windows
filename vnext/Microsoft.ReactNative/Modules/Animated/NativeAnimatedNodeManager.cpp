@@ -22,7 +22,7 @@
 #include "AnimationType.h"
 #include "FacadeType.h"
 
-#include <ReactUWP\Modules\NativeUIManager.h>
+#include <Modules/NativeUIManager.h>
 #include <Windows.Foundation.h>
 
 namespace react {
