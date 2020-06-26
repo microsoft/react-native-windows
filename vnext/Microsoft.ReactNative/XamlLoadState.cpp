@@ -206,4 +206,3 @@ VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA dat
 #else
 VOID CALLBACK XamlLoadNotification(ULONG reason, PCLDR_DLL_NOTIFICATION_DATA data, void *context) {}
 #endif // DEBUG
-
