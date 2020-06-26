@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2020 20:17:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.103",
+      "version": "0.0.0-canary.103",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a null check on reload callback",
+            "author": "acoates@microsoft.com",
+            "commit": "b75a1eac7f9a18a7e9a00f7936e70b287ec15e76",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Unify storage for sourceBundleHost/Port and debugHost",
+            "author": "acoates@microsoft.com",
+            "commit": "8a9e98a5b4c87b9ffb4ab951daf1e08fb23f3e3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove ReactUWP project folder",
+            "author": "vmorozov@microsoft.com",
+            "commit": "43cc8c3503eca65d2bfb35d8424537c21aabc012",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix empty host getting passed to HMR client when SourceBundleHost not specified",
+            "author": "acoates@microsoft.com",
+            "commit": "454d3552a67e1b621d2c8d3d598da393020066f5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jun 2020 00:05:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.102",
       "version": "0.0.0-canary.102",
