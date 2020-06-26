@@ -57,7 +57,7 @@
     "prettier": "1.17.0",
     "react": "16.13.0",
     "react-native-windows-codegen": "0.0.6",
-    "react-native-platform-override": "^0.0.4",
+    "react-native-platform-override": "^0.0.5",
     "react-native": "0.0.0-56cf99a96",
     "typescript": "^3.8.3"
   },

@@ -55,7 +55,7 @@
     "just-scripts": "^0.36.1",
     "react": "16.13.0",
     "react-native": "0.0.0-56cf99a96",
-    "react-native-platform-override": "^0.0.4",
+    "react-native-platform-override": "^0.0.5",
     "rimraf": "^3.0.0",
     "typescript": "^3.8.3"
   },
