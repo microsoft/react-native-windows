@@ -50,7 +50,7 @@ jobs:
       - task: CmdLine@2
         displayName: Create GitHub Release
         inputs:
-          script: node ./packages/scripts/createGithubReleases.js --authToken $(GITHUB_API)
+          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
 
       - task: CmdLine@2
         displayName: Set Version Env Vars

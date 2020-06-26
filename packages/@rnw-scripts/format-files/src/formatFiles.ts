@@ -1,18 +1,28 @@
 /**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ *
  * @format
- * @ts-check
  */
-'use strict';
+
+import * as async from 'async';
+import * as path from 'path';
+
+import {
+  SpawnSyncOptions,
+  StdioOptions,
+  execSync,
+  spawn,
+  spawnSync,
+} from 'child_process';
+
+// @ts-ignore (no typings for clang-format)
+import {getNativeBinary} from 'clang-format';
 
 /// These constants control which files are formatted
 const includeEndsWith = ['.h', '.cpp'];
-const excludePathContains = [];
+const excludePathContains: string[] = [];
 const excludePathEndsWith = ['.g.h', '.g.cpp'];
-
-const path = require('path');
-const {spawn, spawnSync, execSync} = require('child_process');
-const async = require('async');
-const {getNativeBinary} = require('clang-format');
 
 const VERIFY_FLAG = '-verify';
 
@@ -40,11 +50,11 @@ function queryNoOpenFiles() {
   }
 }
 
-function errorFromExitCode(exitCode) {
+function errorFromExitCode(exitCode: number) {
   return new Error(`clang-format exited with exit code ${exitCode}.`);
 }
 
-function git(args, options) {
+function git(args: string[], options: SpawnSyncOptions) {
   const results = spawnSync('git', args, options);
 
   if (results.status === 0) {
@@ -62,7 +72,7 @@ function git(args, options) {
   }
 }
 
-function listAllTrackedFiles(cwd) {
+function listAllTrackedFiles(cwd: string) {
   const results = git(['ls-tree', '-r', '--name-only', '--full-tree', 'HEAD'], {
     cwd,
   });
@@ -77,10 +87,14 @@ function listAllTrackedFiles(cwd) {
 /**
  * Spawn the clang-format binary with given arguments.
  */
-function spawnClangFormat(args, done, stdio) {
+function spawnClangFormat(
+  args: string[],
+  done: (any?: any) => void,
+  stdio: StdioOptions,
+) {
   // WARNING: This function's interface should stay stable across versions for the cross-version
   // loading below to work.
-  let nativeBinary;
+  let nativeBinary: string;
 
   try {
     nativeBinary = getNativeBinary();
@@ -110,7 +124,7 @@ function spawnClangFormat(args, done, stdio) {
   }
 
   // launch a new process for each chunk
-  async.series(
+  async.series<number, Error>(
     chunks.map(function(chunk) {
       return function(callback) {
         const clangFormatProcess = spawn(nativeBinary, args.concat(chunk), {
@@ -141,6 +155,4 @@ function spawnClangFormat(args, done, stdio) {
   );
 }
 
-if (require.main === module) {
-  main();
-}
+main();
