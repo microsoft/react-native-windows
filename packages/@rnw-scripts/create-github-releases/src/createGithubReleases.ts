@@ -9,27 +9,77 @@
  * @ts-check
  */
 
-const _ = require('lodash');
-const chalk = require('chalk');
-const fetch = require('node-fetch');
-const fs = require('fs');
-const path = require('path');
-const semver = require('semver');
-const simplegit = require('simple-git/promise');
-const util = require('util');
-const yargs = require('yargs');
+import * as _ from 'lodash';
+import * as chalk from 'chalk';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as semver from 'semver';
+import * as simplegit from 'simple-git/promise';
+import * as util from 'util';
+import * as yargs from 'yargs';
+
+import fetch from 'node-fetch';
+import findRepoRoot from '@rnw-scripts/find-repo-root';
 
 const glob = util.promisify(require('glob').glob);
 
-const findRepoRoot = require('./findRepoRoot');
-
 const RNW_REPO_ENDPOINT =
   'https://api.github.com/repos/microsoft/react-native-windows';
+
+/**
+ * Representation the JSON chanelog comment obejct
+ */
+interface Comment {
+  comment: string;
+  author: string;
+  commit: string;
+  package: string;
+}
+
+/**
+ * Representation of JSON changelog
+ */
+interface Changelog {
+  name: string;
+  entries: Array<{
+    date: string;
+    tag: string;
+    version: string;
+    comments: {[type in 'none' | 'prerelease' | 'minor' | 'major']: Comment[]};
+  }>;
+}
+
+/**
+ * Represents the details of an individual release
+ */
+interface Release {
+  packageName: string;
+  tag: string;
+  version: string;
+  comments: Comment[];
+}
+
+/**
+ * Some of the props exposed on a release by GitHub's REST API for a release
+ * resource
+ */
+interface GithubApiRelease {
+  url: string;
+  id: number;
+  tag_name: string;
+  name: string;
+  body: string;
+  draft: boolean;
+  prerelease: boolean;
+  created_at: string;
+  published_at: boolean;
+}
 
 const argv = yargs
   .options({
     authToken: {
       describe: 'GitHub Auth token',
+      type: 'string',
       demandOption: true,
     },
   })
@@ -43,11 +93,11 @@ const argv = yargs
   const localTags = (await simplegit().tags()).all;
 
   console.log('Fetching releases...');
-  const releases = await fetchReleases(argv.authToken);
+  const githubReleases = await fetchReleases(argv.authToken);
 
   for (const changelog of changelogs) {
     for (const release of aggregateReleases(changelog)) {
-      if (needsRelease(release, localTags, releases)) {
+      if (needsRelease(release, localTags, githubReleases)) {
         await publishRelease(release, argv.authToken);
       }
     }
@@ -58,12 +108,10 @@ const argv = yargs
 
 /**
  * Collects all of the changelogs in the repo
- *
- * @returns {Array<{name: string, entries: []}>}
  */
-async function readChangelogs() {
+async function readChangelogs(): Promise<Changelog[]> {
   const repoRoot = await findRepoRoot();
-  const changelogs = await glob('**/CHANGELOG.json', {
+  const changelogs: string[] = await glob('**/CHANGELOG.json', {
     cwd: repoRoot,
     ignore: '**/node_modules/**',
   });
@@ -71,35 +119,33 @@ async function readChangelogs() {
   return Promise.all(
     changelogs.map(async changelog => {
       const fullPath = path.join(repoRoot, changelog);
-      return JSON.parse(await fs.promises.readFile(fullPath));
+      return JSON.parse((await fs.promises.readFile(fullPath)).toString());
     }),
   );
 }
 
 /**
  * Fetch a list of all releases that Github knows about
- *
- * @param {string} token the GitHub auth token
  */
-async function fetchReleases(token) {
+async function fetchReleases(token: string): Promise<GithubApiRelease[]> {
   return await fetchAllPages(`${RNW_REPO_ENDPOINT}/releases`, token);
 }
 
 /**
  * Fethches all pages of a given GitHub resource
  *
- * @param {string} baseUrl the resoure URL
- * @param {string} token the GitHub auth token
+ * @param baseUrl the resoure URL
+ * @param token the GitHub auth token
  * @returns a merged representation of the arrays of all pages
  */
-async function fetchAllPages(baseUrl, token) {
+async function fetchAllPages(baseUrl: string, token: string): Promise<any[]> {
   let page = 0;
   const results = [];
 
   while (true) {
     const pageUrl = new URL(baseUrl);
-    pageUrl.searchParams.append('per_page', 100);
-    pageUrl.searchParams.append('page', ++page);
+    pageUrl.searchParams.append('per_page', '100');
+    pageUrl.searchParams.append('page', (++page).toString());
 
     const pageResult = await fetch(pageUrl, {
       headers: requestHeaders(token),
@@ -122,24 +168,20 @@ async function fetchAllPages(baseUrl, token) {
 
 /**
  * Determines whether we should try to make a release for a change entry
- *
- * @param {object} release
- * @param {string[]} localTags
- * @param {object[]} releases
  */
-function needsRelease(release, localTags, releases) {
-  const releaseTags = releases.map(r => r.tag_name);
+function needsRelease(
+  release: Release,
+  localTags: string[],
+  githubReleases: GithubApiRelease[],
+) {
+  const releaseTags = githubReleases.map(r => r.tag_name);
   return localTags.includes(release.tag) && !releaseTags.includes(release.tag);
 }
 
 /**
  * Create a release for the given change entry
- *
- * @param {string} packageName
- * @param {object} changeEntry
- * @param {string} token the GitHub auth token
  */
-async function publishRelease(release, token) {
+async function publishRelease(release: Release, token: string) {
   const pre = semver.prerelease(release.version);
   console.log(
     `Creating release for ${release.packageName} ${release.version}...`,
@@ -163,16 +205,14 @@ async function publishRelease(release, token) {
 
 /**
  * Transforms the changelog JSON into an array of releases.
- *
- * @param {object} changelog
  */
-function aggregateReleases(changelog) {
+function aggregateReleases(changelog: Changelog): Release[] {
   const entriesByTag = _.groupBy(changelog.entries, e => e.tag);
 
   const commentsByTag = _.mapValues(entriesByTag, entries => {
-    const comments = [];
+    const comments: Comment[] = [];
 
-    const commentsByType = _.merge(...entries.map(entry => entry.comments));
+    const commentsByType = _.merge({}, ...entries.map(entry => entry.comments));
     const changeTypes = Object.keys(commentsByType).filter(t => t !== 'none');
     changeTypes.forEach(t => comments.push(...commentsByType[t]));
     return comments;
@@ -180,7 +220,7 @@ function aggregateReleases(changelog) {
 
   return Object.keys(commentsByTag).map(tag => ({
     packageName: changelog.name,
-    tag: tag,
+    tag,
     version: entriesByTag[tag][0].version,
     comments: commentsByTag[tag],
   }));
@@ -188,10 +228,8 @@ function aggregateReleases(changelog) {
 
 /**
  * Create the markdown representation of a release
- *
- * @param {object} changeEntry
  */
-function createReleaseMarkdown(release) {
+function createReleaseMarkdown(release: Release): string {
   let md = '';
 
   for (const change of release.comments) {
@@ -204,10 +242,8 @@ function createReleaseMarkdown(release) {
 
 /**
  * Create request headers common to GitHub API calls
- *
- * @param {string} token
  */
-function requestHeaders(token) {
+function requestHeaders(token: string): {[header: string]: string} {
   return {
     Authorization: `Token ${token}`,
     'Content-Type': 'application/json',
@@ -217,10 +253,8 @@ function requestHeaders(token) {
 
 /**
  * Return a release title name corresponding to a package
- *
- * @param {string} packageName
  */
-function packageTitle(packageName) {
+function packageTitle(packageName: string): string {
   if (packageName === 'react-native-windows') {
     return 'React Native Windows';
   } else {

@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Convert Repo Scripts To Published TypeScript Packages",
+  "packageName": "@rnw-scripts/format-files",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-26T09:58:47.622Z"
+}

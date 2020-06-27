@@ -6,23 +6,25 @@
  * @ts-check
  */
 
-const findUp = require('find-up');
-const fs = require('fs');
-const path = require('path');
+import * as findUp from 'find-up';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /**
  * Find the root directory of the repo upward from cwd
  */
-module.exports = async () => {
+export default async (): Promise<string> => {
   const root = await findUp(
-    async dir => {
+    async (dir): Promise<findUp.Match> => {
       const packagePath = path.join(dir, 'package.json');
       if (!(await findUp.exists(packagePath))) {
-        return false;
+        return undefined;
       }
 
-      const pkg = await fs.promises.readFile(packagePath);
-      return JSON.parse(pkg).name === 'react-native-windows-repo' && dir;
+      const pkg = (await fs.promises.readFile(packagePath)).toString();
+      return JSON.parse(pkg).name === 'react-native-windows-repo'
+        ? dir
+        : undefined;
     },
     {type: 'directory'},
   );
