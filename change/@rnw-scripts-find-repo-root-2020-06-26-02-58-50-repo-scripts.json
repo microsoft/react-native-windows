@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Convert Repo Scripts To Published TypeScript Packages",
-  "packageName": "@rnw-scripts/find-repo-root",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-26T09:58:46.467Z"
-}

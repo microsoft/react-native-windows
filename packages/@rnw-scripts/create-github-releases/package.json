@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/create-github-releases",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "create-github-releases": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "0.0.0",
+    "@rnw-scripts/find-repo-root": "0.0.1",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
