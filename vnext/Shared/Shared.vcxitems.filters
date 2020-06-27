@@ -97,9 +97,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -134,6 +140,12 @@
     </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{5e38b06d-5bcb-437b-9a9b-e787e37ef3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Executors">
+      <UniqueIdentifier>{a3399e44-cc5c-45bf-8e6e-ea5f3fcdc8f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Executors">
+      <UniqueIdentifier>{d2b54f2c-7e3c-48a6-8df6-dea9fb7ab4e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +299,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h">
+      <Filter>Header Files\Executors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">
