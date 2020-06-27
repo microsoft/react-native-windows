@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 27 Jun 2020 03:29:52 GMT",
+      "tag": "react-native-platform-override_v0.0.7",
+      "version": "0.0.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Convert Repo Scripts To Published TypeScript Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "44ee2b41c92250d1dfd767098e6d7cbf0ac01cfa",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jun 2020 23:59:27 GMT",
       "tag": "react-native-platform-override_v0.0.6",
       "version": "0.0.6",

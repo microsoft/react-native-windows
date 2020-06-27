@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Fri, 26 Jun 2020 23:59:27 GMT and should not be manually modified.
+This log was last generated on Sat, 27 Jun 2020 03:29:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.7
+
+Sat, 27 Jun 2020 03:29:52 GMT
+
+### Patches
+
+- Convert Repo Scripts To Published TypeScript Packages (ngerlem@microsoft.com)
 
 ## 0.0.6
 
