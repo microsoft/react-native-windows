@@ -3,9 +3,9 @@
 
 #include "pch.h"
 
+#include <IReactInstance.h>
 #include <IUIManager.h>
 #include <Modules/NativeUIManager.h>
-#include <IReactInstance.h>
 #include <ViewManagerProvider.h>
 
 // Standard View Managers

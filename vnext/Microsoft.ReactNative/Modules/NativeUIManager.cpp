@@ -6,13 +6,13 @@
 #include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
-#include <ReactRootView2.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
 
 #include "CppWinRTIncludes.h"
+#include "IXamlRootView.h"
 #include "QuirkSettings.h"
 #include "Unicode.h"
 
@@ -156,7 +156,7 @@ struct RootShadowNode final : public ShadowNodeBase {
 
   RootShadowNode(facebook::react::IReactRootView *rootView, facebook::react::INativeUIManagerHost *host)
       : m_host(host) {
-    auto reactRootView = static_cast<react::uwp::ReactRootView *>(rootView);
+    auto reactRootView = static_cast<react::uwp::IXamlRootView *>(rootView);
     m_view = reactRootView->GetXamlView();
   }
 

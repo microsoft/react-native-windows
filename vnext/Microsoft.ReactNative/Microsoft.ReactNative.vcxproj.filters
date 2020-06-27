@@ -695,9 +695,6 @@
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\ReactRootView2.h">
-      <Filter>Views</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
