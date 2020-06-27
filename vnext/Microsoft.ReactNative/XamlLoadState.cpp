@@ -6,7 +6,7 @@
 #include <sstream>
 #include "unicode.h"
 
-#ifdef DEBUG
+#ifdef XAML_GUARD
 
 constexpr std::wstring_view systemXamlDllName{L"Windows.UI.Xaml.dll"};
 constexpr std::wstring_view winUIDllName{L"Microsoft.UI.Xaml.dll"};
@@ -102,11 +102,11 @@ LDR_DLL_NOTIFICATION_FUNCTION XamlLoadNotification;
 
 XamlLoadState::XamlVersion XamlLoadState::GetXamlVersion(const std::wstring &path) {
   DWORD dwHandle;
-  DWORD size = GetFileVersionInfoSizeW(path.c_str(), &dwHandle);
+  DWORD size = GetFileVersionInfoSizeExW(0, path.c_str(), &dwHandle);
   std::string buffer;
   buffer.reserve(size);
 
-  if (GetFileVersionInfo(path.c_str(), 0, size, const_cast<char *>(buffer.c_str()))) {
+  if (GetFileVersionInfoExW(0, path.c_str(), 0, size, const_cast<char *>(buffer.c_str()))) {
     VS_FIXEDFILEINFO *fileInfo;
     UINT len{};
     if (VerQueryValueW(buffer.c_str(), L"\\", (void **)&fileInfo, &len)) {

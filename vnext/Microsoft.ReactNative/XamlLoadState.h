@@ -3,6 +3,9 @@
 
 #pragma once
 
+// Turn this off if you'd like to disable XAML versioning guard.
+#define XAML_GUARD
+
 /// <summary>
 /// Implements a guard to ensure that only one XAML dll gets loaded in the current process.
 /// This is important because different XAML dlls are not inter-operable.
@@ -27,7 +30,7 @@ struct XamlLoadState {
   XamlLoadState();
   ~XamlLoadState();
 
-#ifdef DEBUG
+#ifdef XAML_GUARD
   static XamlLoadState g_Instance;
 #endif
 
