@@ -61,7 +61,7 @@ jobs:
           name: VersionEnvVars
           path: ${{ runner.temp }}/versionEnvVars
 
-      # This sets some env vars that we use to generate the correct version information in the dll and nuget
+      # This sets some env vars that we use to generate the correct version information in the dll and NuGet
       - run: node ${{ runner.temp }}/versionEnvVars/versionEnvVars.js
 
       - name: yarn install
@@ -73,7 +73,7 @@ jobs:
         run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
         shell: powershell
 
-      - name: Setup Nuget.exe
+      - name: Setup NuGet.exe
         uses: warrenbuckley/Setup-Nuget@v1
 
       - name: NuGet restore
@@ -85,7 +85,7 @@ jobs:
       - name: Build ReactWindows.sln
         run: msbuild vnext\ReactWindows.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
 
-      - name: "Copy Nuget source files"
+      - name: "Copy NuGet source files"
         if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
         run: vnext\layoutFilesForNuget.bat ${{ runner.temp }}\artifacts
 
@@ -104,18 +104,18 @@ jobs:
           path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
       - uses: actions/upload-artifact@master
-        name: Publish Artifacts - Nuget Source files
+        name: Publish Artifacts - NuGet Source files
         if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
         with:
           name: ReactWindows-source
           path: ${{ runner.temp }}\artifacts
 
   RNWNugetPublish:
-    name: React-Native-Windows Build and Pack Nuget
+    name: React-Native-Windows Build and Pack NuGet
     runs-on: windows-2016
     needs: RnwNativePublishBuild
     steps:
-      - name: Setup Nuget.exe
+      - name: Setup NuGet.exe
         uses: warrenbuckley/Setup-Nuget@v1
 
       - uses: actions/download-artifact@master
@@ -123,7 +123,7 @@ jobs:
           name: VersionEnvVars
           path: ${{ runner.temp }}/versionEnvVars
 
-      # This sets some env vars that we use to generate the correct version information in the dll and nuget
+      # This sets some env vars that we use to generate the correct version information in the dll and NuGet
       - run: node ${{ runner.temp }}/versionEnvVars/versionEnvVars.js
 
       - uses: actions/download-artifact@master
@@ -161,7 +161,7 @@ jobs:
           name: ReactWindows-source
           path: ${{ runner.temp }}\artifacts\ReactWindows-source
 
-      - name: Copy files from build artifacts to nuget root
+      - name: Copy files from build artifacts to NuGet root
         run: |
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-source ${{ runner.temp }}\NugetRoot /E /MOVE /NP
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x64 ${{ runner.temp }}\NugetRoot\target\x64\Debug /E /MOVE /NP

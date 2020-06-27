@@ -179,7 +179,7 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-    displayName: Publish Nuget
+    displayName: Publish NuGet
     pool:
       vmImage: $(VmImage)
 

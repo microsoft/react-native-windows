@@ -24,46 +24,55 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.version(false).strict(true).options({
-  version: {
-    type: 'string',
-    describe: 'The version of react-native-windows to use.',
-  },
-  namespace: {
-    type: 'string',
-    describe:
-      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
-  },
-  verbose: {type: 'boolean', describe: 'Enables logging.'},
-  language: {
-    type: 'string',
-    describe: 'Which language the app is written in.',
-    choices: ['cs', 'cpp'],
-    default: 'cpp',
-  },
-  overwrite: {
-    type: 'boolean',
-    describe: 'Overwrite any existing files without prompting',
-  },
-  experimentalNugetDependency: {
-    type: 'boolean',
-    describe:
-      'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
-    hidden: true,
-  },
-  useWinUI3: {
-    type: 'boolean',
-    describe: '[Experimental] Use WinUI3',
-    hidden: true,
-    default: false,
-  },
-  useDevMode: {
-    type: 'boolean',
-    describe:
-      'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
-    hidden: true,
-  },
-}).check((a, o) => { if (a._.length != 0) { throw `Unrecognized option ${a._}`; }; return true }).argv;
+const argv = yargs
+  .version(false)
+  .strict(true)
+  .options({
+    version: {
+      type: 'string',
+      describe: 'The version of react-native-windows to use.',
+    },
+    namespace: {
+      type: 'string',
+      describe:
+        "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
+    },
+    verbose: {type: 'boolean', describe: 'Enables logging.'},
+    language: {
+      type: 'string',
+      describe: 'Which language the app is written in.',
+      choices: ['cs', 'cpp'],
+      default: 'cpp',
+    },
+    overwrite: {
+      type: 'boolean',
+      describe: 'Overwrite any existing files without prompting',
+    },
+    experimentalNuGetDependency: {
+      type: 'boolean',
+      describe:
+        'Experimental change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
+      hidden: true,
+    },
+    useWinUI3: {
+      type: 'boolean',
+      describe: '[Experimental] Use WinUI3',
+      hidden: true,
+      default: false,
+    },
+    useDevMode: {
+      type: 'boolean',
+      describe:
+        'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
+      hidden: true,
+    },
+  })
+  .check((a, o) => {
+    if (a._.length != 0) {
+      throw `Unrecognized option ${a._}`;
+    }
+    return true;
+  }).argv;
 
 if (argv.verbose) {
   console.log(argv);
@@ -301,10 +310,10 @@ function isProjectUsingYarn(cwd: string) {
     const useDevMode = argv.useDevMode;
     let version = argv.version;
 
-    if (argv.useWinUI3 && argv.experimentalNugetDependency) {
-      // WinUI3 is not yet compatible with nuget packages
+    if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
+      // WinUI3 is not yet compatible with NuGet packages
       console.error(
-        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNugetDependency' are incompatible",
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
       );
       process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
     }
@@ -402,7 +411,7 @@ You can either downgrade your version of ${chalk.green(
       language: argv.language,
       overwrite: argv.overwrite,
       verbose: argv.verbose,
-      experimentalNugetDependency: argv.experimentalNugetDependency,
+      experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
     });
   } catch (error) {
