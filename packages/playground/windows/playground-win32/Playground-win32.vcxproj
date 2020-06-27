@@ -10,6 +10,7 @@
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <BuildMSRNCxx>false</BuildMSRNCxx>
+    <RunAutolinkCheck>false</RunAutolinkCheck>
   </PropertyGroup>
   <PropertyGroup Label="FromWinUI3_VSIX">
     <ProjectName>Playground-win32</ProjectName>
