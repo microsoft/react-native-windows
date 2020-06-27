@@ -5,12 +5,7 @@
  * @ts-check
  */
 
-const {
-  task,
-  series,
-  option,
-  eslintTask,
-} = require('just-scripts');
+const {task, series, option, eslintTask} = require('just-scripts');
 const fs = require('fs');
 const path = require('path');
 const {execSync} = require('child_process');

@@ -10,7 +10,7 @@ Specifies the direction the gradient is in, and a list of color stops for the gr
 
 ```typescript
 export type GradientColorValueWin32 = {
-  gradientDirection: 'ToBottom' | 'ToTop' | 'ToRight' | 'ToLeft',
-  colorStops: GradientColorStop[]
+  gradientDirection: 'ToBottom' | 'ToTop' | 'ToRight' | 'ToLeft';
+  colorStops: GradientColorStop[];
 };
 ```
