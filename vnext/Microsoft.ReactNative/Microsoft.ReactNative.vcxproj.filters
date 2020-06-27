@@ -661,6 +661,9 @@
     <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\ManagedResource.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Utils\LocalBundleReader.h">
       <Filter>Utils</Filter>
     </ClInclude>
