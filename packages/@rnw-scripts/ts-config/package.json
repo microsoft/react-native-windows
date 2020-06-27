@@ -7,11 +7,5 @@
     "url": "git@github.com:microsoft/react-native-windows.git",
     "directory": "packages/@rnw-scripts/ts-config"
   },
-  "main": "tsconfig.json",
-  "devDependencies": {
-    "eslint": "6.7.0"
-  },
-  "peerDependencies": {
-    "eslint": ">=6.7.0"
-  }
+  "main": "tsconfig.json"
 }

@@ -1,0 +1,14 @@
+{
+  "name": "@rnw-scripts/just-task",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/just-task"
+  },
+  "main": "just-task.js",
+  "peerDependencies": {
+    "just-scripts": "^0.36.1"
+  }
+}

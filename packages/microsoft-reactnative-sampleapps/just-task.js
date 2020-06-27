@@ -46,6 +46,6 @@ task('prepareBundle', () => {
   ensureDirectoryExists('windows/SampleAppCPP/Bundle');
 });
 
-task('build', parallel('ts', 'codegen'));
+task('build', parallel('codegen'));
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));
