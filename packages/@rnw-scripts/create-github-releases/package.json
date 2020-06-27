@@ -28,6 +28,9 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.0",
+    "@rnw-scripts/just-task": "0.0.0",
+    "@rnw-scripts/ts-config": "0.0.0",
     "@types/chalk": "^2.2.0",
     "@types/glob": "^7.1.0",
     "@types/lodash": "^4.14.157",

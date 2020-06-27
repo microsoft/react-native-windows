@@ -8,9 +8,7 @@
 const {
   task,
   series,
-  parallel,
   option,
-  argv,
   eslintTask,
 } = require('just-scripts');
 const fs = require('fs');
@@ -46,6 +44,6 @@ task('prepareBundle', () => {
   ensureDirectoryExists('windows/SampleAppCPP/Bundle');
 });
 
-task('build', parallel('codegen'));
+task('build', series('codegen'));
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));

@@ -25,6 +25,9 @@
     "yargs": "^15.1.0"
   },
   "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.0",
+    "@rnw-scripts/just-task": "0.0.0",
+    "@rnw-scripts/ts-config": "0.0.0",
     "@types/chalk": "^2.2.0",
     "@types/prompts": "^2.0.3",
     "@types/semver": "^7.1.0",

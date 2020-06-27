@@ -8,6 +8,9 @@
     "directory": "packages/@rnw-scripts/eslint-config"
   },
   "main": "eslintrc.js",
+  "dependencies": {
+    "@react-native-community/eslint-config": "^1.1.0"
+  },
   "devDependencies": {
     "eslint": "6.7.0"
   },

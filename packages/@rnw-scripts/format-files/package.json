@@ -22,6 +22,9 @@
     "clang-format": "1.2.4"
   },
   "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.0",
+    "@rnw-scripts/just-task": "0.0.0",
+    "@rnw-scripts/ts-config": "0.0.0",
     "@types/async": "^3.2.3",
     "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
