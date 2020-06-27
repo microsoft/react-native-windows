@@ -18,6 +18,7 @@ schedules:
     include:
       - "*-stable"
 
+trigger: none
 pr: none
 
 jobs:
