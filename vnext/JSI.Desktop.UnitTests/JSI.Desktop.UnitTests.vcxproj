@@ -11,7 +11,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <!-- #2702: We need to figure out how we want to consume the Google Test'
-    Nuget for Win32. For now, we do not build this project for Win32. -->
+    NuGet for Win32. For now, we do not build this project for Win32. -->
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}</ProjectGuid>

@@ -49,10 +49,10 @@ const argv = yargs
       type: 'boolean',
       describe: 'Overwrite any existing files without prompting',
     },
-    experimentalNugetDependency: {
+    experimentalNuGetDependency: {
       type: 'boolean',
       describe:
-        'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
+        'Experimental change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
       hidden: true,
     },
     useWinUI3: {
@@ -315,10 +315,10 @@ function isProjectUsingYarn(cwd: string) {
     const useDevMode = argv.useDevMode || false;
     let version = argv.version;
 
-    if (argv.useWinUI3 && argv.experimentalNugetDependency) {
-      // WinUI3 is not yet compatible with nuget packages
+    if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
+      // WinUI3 is not yet compatible with NuGet packages
       console.error(
-        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNugetDependency' are incompatible",
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
       );
       process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
     }
@@ -416,7 +416,7 @@ You can either downgrade your version of ${chalk.green(
       language: argv.language,
       overwrite: argv.overwrite,
       verbose: argv.verbose,
-      experimentalNugetDependency: argv.experimentalNugetDependency,
+      experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
     });
   } catch (error) {

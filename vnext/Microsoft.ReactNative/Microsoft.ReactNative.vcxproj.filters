@@ -686,6 +686,15 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="XamlView.h" />
+    <ClInclude Include="ReactHost\IReactInstance.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactHost\ViewManagerProvider.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\IXamlRootView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
