@@ -11,7 +11,6 @@ const {
   parallel,
   option,
   argv,
-  tscTask,
   eslintTask,
 } = require('just-scripts');
 const fs = require('fs');
@@ -26,16 +25,6 @@ task('eslint', () => {
 });
 task('eslint:fix', () => {
   return eslintTask({fix: true});
-});
-task('ts', () => {
-  return tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es6',
-    module: 'commonjs',
-  });
 });
 
 task('codegen', () => {

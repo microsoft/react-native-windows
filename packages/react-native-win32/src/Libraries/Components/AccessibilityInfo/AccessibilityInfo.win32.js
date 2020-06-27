@@ -162,7 +162,10 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#announceforaccessibility
    */
   // [Windows] add reactTag
-  announceForAccessibility: function(announcement: string, reactTag?: ?number): void {
+  announceForAccessibility: function(
+    announcement: string,
+    reactTag?: ?number,
+  ): void {
     if (NativeAccessibilityInfo) {
       NativeAccessibilityInfo.announceForAccessibility(announcement, reactTag);
     }

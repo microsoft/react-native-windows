@@ -10,11 +10,12 @@ import * as fs from 'fs';
 import * as semver from 'semver';
 import {exec, execSync} from 'child_process';
 import * as validUrl from 'valid-url';
-import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
+
+import prompts from 'prompts';
 
 const npmConfReg = execSync('npm config get registry')
   .toString()
@@ -24,46 +25,55 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.version(false).strict(true).options({
-  version: {
-    type: 'string',
-    describe: 'The version of react-native-windows to use.',
-  },
-  namespace: {
-    type: 'string',
-    describe:
-      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
-  },
-  verbose: {type: 'boolean', describe: 'Enables logging.'},
-  language: {
-    type: 'string',
-    describe: 'Which language the app is written in.',
-    choices: ['cs', 'cpp'],
-    default: 'cpp',
-  },
-  overwrite: {
-    type: 'boolean',
-    describe: 'Overwrite any existing files without prompting',
-  },
-  experimentalNugetDependency: {
-    type: 'boolean',
-    describe:
-      'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
-    hidden: true,
-  },
-  useWinUI3: {
-    type: 'boolean',
-    describe: '[Experimental] Use WinUI3',
-    hidden: true,
-    default: false,
-  },
-  useDevMode: {
-    type: 'boolean',
-    describe:
-      'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
-    hidden: true,
-  },
-}).check((a, o) => { if (a._.length != 0) { throw `Unrecognized option ${a._}`; }; return true }).argv;
+const argv = yargs
+  .version(false)
+  .strict(true)
+  .options({
+    version: {
+      type: 'string',
+      describe: 'The version of react-native-windows to use.',
+    },
+    namespace: {
+      type: 'string',
+      describe:
+        "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
+    },
+    verbose: {type: 'boolean', describe: 'Enables logging.'},
+    language: {
+      type: 'string',
+      describe: 'Which language the app is written in.',
+      choices: ['cs', 'cpp'],
+      default: 'cpp',
+    },
+    overwrite: {
+      type: 'boolean',
+      describe: 'Overwrite any existing files without prompting',
+    },
+    experimentalNugetDependency: {
+      type: 'boolean',
+      describe:
+        'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
+      hidden: true,
+    },
+    useWinUI3: {
+      type: 'boolean',
+      describe: '[Experimental] Use WinUI3',
+      hidden: true,
+      default: false,
+    },
+    useDevMode: {
+      type: 'boolean',
+      describe:
+        'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
+      hidden: true,
+    },
+  })
+  .check(a => {
+    if (a._.length !== 0) {
+      throw `Unrecognized option ${a._}`;
+    }
+    return true;
+  }).argv;
 
 if (argv.verbose) {
   console.log(argv);
@@ -123,7 +133,7 @@ function getReactNativeVersion() {
   process.exit(EXITCODE_NO_REACTNATIVE_FOUND);
 }
 
-function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string) {
+function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string): never {
   console.error(`Error: Unsupported version of react-native: ${chalk.cyan(
     rnVersion,
   )}
@@ -269,6 +279,10 @@ function installReactNativeWindows(version: string, useDevMode: boolean) {
     );
   } else {
     const pkgJsonPath = findUp.sync('package.json', {cwd});
+    if (!pkgJsonPath) {
+      throw new Error('Unable to find package.json');
+    }
+
     let pkgJson = require(pkgJsonPath);
     let deps = pkgJson.dependencies || {};
     deps['react-native-windows'] = version;
@@ -298,7 +312,7 @@ function isProjectUsingYarn(cwd: string) {
   try {
     const name = getReactNativeAppName();
     const ns = argv.namespace || name;
-    const useDevMode = argv.useDevMode;
+    const useDevMode = argv.useDevMode || false;
     let version = argv.version;
 
     if (argv.useWinUI3 && argv.experimentalNugetDependency) {
@@ -359,7 +373,7 @@ Please modify your application to use ${chalk.green(
         )}`,
       );
 
-      if (semver.prerelease(rnwResolvedVersion)) {
+      if (rnwResolvedVersion && semver.prerelease(rnwResolvedVersion)) {
         const rnwLatestVersion = await getLatestRNWVersion();
         console.warn(
           `

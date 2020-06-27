@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@types/find-up": "^4.0.0",
+    "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },

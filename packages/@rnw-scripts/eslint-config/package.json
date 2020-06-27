@@ -1,0 +1,17 @@
+{
+  "name": "@rnw-scripts/eslint-config",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/eslint-config"
+  },
+  "main": "eslintrc.js",
+  "devDependencies": {
+    "eslint": "6.7.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=6.7.0"
+  }
+}

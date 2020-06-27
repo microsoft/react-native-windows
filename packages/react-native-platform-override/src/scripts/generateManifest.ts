@@ -8,8 +8,9 @@
 import * as FileRepository from '../FileRepository';
 import * as Serialized from '../Serialized';
 
-import * as ora from 'ora';
 import * as path from 'path';
+
+import ora from 'ora';
 
 import GitReactFileRepository from '../GitReactFileRepository';
 import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';

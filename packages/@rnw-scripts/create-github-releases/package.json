@@ -24,6 +24,7 @@
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "semver": "^7.3.2",
+    "simple-git": "^1.131.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@types/node-fetch": "^2.5.7",
     "@types/semver": "^7.3.1",
     "@types/yargs": "^15.0.5",
+    "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },

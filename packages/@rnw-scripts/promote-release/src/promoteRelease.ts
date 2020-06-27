@@ -17,12 +17,12 @@ import * as chalk from 'chalk';
 import * as child_process from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as simplegit from 'simple-git/promise';
 import * as util from 'util';
 import * as yaml from 'js-yaml';
 import * as yargs from 'yargs';
 
 import findRepoRoot from '@rnw-scripts/find-repo-root';
+import simplegit from 'simple-git/promise';
 
 const glob = util.promisify(require('glob').glob);
 

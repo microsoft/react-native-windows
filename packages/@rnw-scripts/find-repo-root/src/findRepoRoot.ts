@@ -6,16 +6,17 @@
  * @ts-check
  */
 
-import * as findUp from 'find-up';
 import * as fs from 'fs';
 import * as path from 'path';
+
+import findUp from 'find-up';
 
 /**
  * Find the root directory of the repo upward from cwd
  */
 export default async (): Promise<string> => {
   const root = await findUp(
-    async (dir): Promise<findUp.Match> => {
+    async (dir: string): Promise<findUp.Match> => {
       const packagePath = path.join(dir, 'package.json');
       if (!(await findUp.exists(packagePath))) {
         return undefined;

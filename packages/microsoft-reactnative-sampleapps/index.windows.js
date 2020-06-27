@@ -7,16 +7,16 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Button,
-  findNodeHandle,
-  requireNativeComponent,
+  Linking,
   StyleSheet,
   Text,
   UIManager,
   View,
-  Linking,
+  findNodeHandle,
+  requireNativeComponent,
 } from 'react-native';
 
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
 import {MyComp} from './myComp';
 

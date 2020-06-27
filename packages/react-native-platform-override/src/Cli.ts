@@ -11,7 +11,6 @@ import * as Serialized from './Serialized';
 import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
-import * as ora from 'ora';
 import * as path from 'path';
 import * as yargs from 'yargs';
 
@@ -30,6 +29,8 @@ import Manifest from './Manifest';
 import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
+
+import ora from 'ora';
 
 const npmPackage = getNpmPackage();
 
