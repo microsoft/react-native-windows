@@ -4,13 +4,20 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/vs2017.yml
 
-trigger:
-  batch: true
+schedules:
+- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
+  displayName: Nightly master publish build
   branches:
     include:
       - master
+
+- cron: "0 5 * * 1" # 5AM Monday UTC (10PM Sunday PST)
+  displayName: Weekly stable publish build
+  branches:
+    include:
       - "*-stable"
 
+trigger: none
 pr: none
 
 jobs:
