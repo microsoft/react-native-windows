@@ -7,6 +7,8 @@
 #include <XamlUtils.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::ReactNative {
 
@@ -89,20 +91,31 @@ void DeviceInfoHolder::SetCallback(
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
-  auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  /// TODO: WinUI 3 islands support
   if (xaml::Window::Current()) {
     auto const window = xaml::Window::Current().CoreWindow();
-    winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
     m_windowWidth = window.Bounds().Width;
     m_windowHeight = window.Bounds().Height;
-    m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
-    m_textScaleFactor = uiSettings.TextScaleFactor();
-    m_dpi = displayInfo.LogicalDpi();
-    m_screenWidth = displayInfo.ScreenWidthInRawPixels();
-    m_screenHeight = displayInfo.ScreenHeightInRawPixels();
+  } else {
+    /// TODO: WinUI 3 Island - mock for now
+    m_windowWidth = 600;
+    m_windowHeight = 800;
+
+    /*
+        auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
+
+        // Get the new child window's hwnd
+        HWND hWndXamlIsland = nullptr;
+        winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
+        */
   }
+  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+  m_textScaleFactor = uiSettings.TextScaleFactor();
+  auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+  m_dpi = displayInfo.LogicalDpi();
+  m_screenWidth = displayInfo.ScreenWidthInRawPixels();
+  m_screenHeight = displayInfo.ScreenHeightInRawPixels();
 }
 
 void DeviceInfo::GetConstants(React::ReactConstantProvider &provider) noexcept {

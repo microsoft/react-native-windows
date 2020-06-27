@@ -7,5 +7,5 @@
 #include <Microsoft.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 using IDesktopWindowXamlSourceNative2 = IDesktopWindowXamlSourceNative;
 #else
-#include <winrt/Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #endif //  USE_WINUI3
