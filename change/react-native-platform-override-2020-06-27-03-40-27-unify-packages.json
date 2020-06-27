@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Share eslint and Typescript configs across packages",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-27T10:39:47.413Z"
+}
