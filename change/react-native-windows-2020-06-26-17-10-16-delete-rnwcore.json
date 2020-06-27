@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Removed references to ReactWindowsCore",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-27T00:10:16.671Z"
+}
