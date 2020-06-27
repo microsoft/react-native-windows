@@ -17,17 +17,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactUwp.h">
       <Filter>ReactUWP</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\II18nModule.h">
-      <Filter>ReactWindowsCore</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\II18nModule.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ReactWindowsAPI.h">
-      <Filter>ReactWindowsCore</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ReactWindowsAPI.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\SourceCodeModule.h">
-      <Filter>ReactWindowsCore</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\SourceCodeModule.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ViewManager.h">
-      <Filter>ReactWindowsCore</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ViewManager.h">
+      <Filter>Shared</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ControlViewManager.h">
       <Filter>ReactUWP\Views</Filter>
@@ -83,13 +83,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h">
       <Filter>ReactUWP\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\cdebug.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\cdebug.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ReactUWP">
       <UniqueIdentifier>{ea454789-44fc-4ca6-aa0d-99b15a521026}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ReactWindowsCore">
+    <Filter Include="Shared">
       <UniqueIdentifier>{2c26b820-a216-4922-b03f-56ed5c58ce25}</UniqueIdentifier>
     </Filter>
     <Filter Include="ReactUWP\Views">

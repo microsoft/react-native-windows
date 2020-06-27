@@ -20,7 +20,7 @@
 #include <Modules/WebSocketModuleUwp.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
-// ReactWindowsCore
+// Shared
 #include <CreateModules.h>
 
 namespace react::uwp {

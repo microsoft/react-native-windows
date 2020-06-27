@@ -4,7 +4,7 @@
 #pragma once
 
 #include <NativeModuleProvider.h>
-#include <ReactWindowsCore/ReactWindowsAPI.h>
+#include <Shared/ReactWindowsAPI.h>
 #include <memory>
 #include "ViewManagerProvider.h"
 #include "XamlView.h"
