@@ -75,10 +75,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
   public componentDidMount() {
     this._lastNativeText = this.props.value;
 
-    const tag = findNodeHandle(this);
-    if (tag !== null) {
-      TextInputState.registerInput(tag);
-    }
+    TextInputState.registerInput(this);
 
     if (this.props.autoFocus) {
       this._rafID = requestAnimationFrame(this.focus);
@@ -109,10 +106,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
     }
 
     // unregister
-    const tag = findNodeHandle(this);
-    if (tag !== null) {
-      TextInputState.unregisterInput(tag);
-    }
+    TextInputState.unregisterInput(this);
 
     // cancel animationFrame
     if (this._rafID !== null) {
@@ -151,14 +145,14 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Returns true if the TextInput is focused
    */
   public isFocused(): boolean {
-    return TextInputState.currentlyFocusedField() === findNodeHandle(this);
+    return TextInputState.currentlyFocusedInput() === this;
   }
 
   /**
    * Focuses the TextInput
    */
   public focus = (): void => {
-    TextInputState.setFocusedTextInput(findNodeHandle(this));
+    TextInputState.setFocusedTextInput(this);
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.focus, null);
   }
@@ -167,7 +161,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Blurs the TextInput
    */
   public blur = (): void => {
-    TextInputState.blurTextInput(findNodeHandle(this));
+    TextInputState.blurTextInput(this);
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.blur, null);
   }

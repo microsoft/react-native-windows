@@ -10,7 +10,7 @@
 
 'use strict';
 import ReactNativeViewViewConfigAndroid from './ReactNativeViewViewConfigAndroid';
-import {Platform} from 'react-native'; // from facebook:master d204541
+import {Platform} from 'react-native';
 
 const ReactNativeViewConfig = {
   uiViewClassName: 'RCTView',
@@ -340,7 +340,7 @@ const ReactNativeViewConfig = {
       textTransform: true,
       tintColor: {process: require('../../StyleSheet/processColor')},
       top: true,
-      transform: ((Platform.OS === 'ios' // from facebook:master d204541
+      transform: ((Platform.OS === 'ios'
         ? {diff: require('../../Utilities/differ/matricesDiffer')}
         : {process: require('../../StyleSheet/processTransform')}): any),
       transformMatrix: true,
@@ -352,7 +352,7 @@ const ReactNativeViewConfig = {
     },
     testID: true,
     top: true,
-    transform: ((Platform.OS === 'ios' // from facebook:master d204541
+    transform: ((Platform.OS === 'ios'
       ? {diff: require('../../Utilities/differ/matricesDiffer')}
       : {process: require('../../StyleSheet/processTransform')}): any),
     translateX: true,

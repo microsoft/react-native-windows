@@ -24,6 +24,7 @@
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
+#include <ReactWindowsCore/DevServerHelper.h>
 #include <ReactWindowsCore/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DevMenu.h"
@@ -203,7 +204,8 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
-          devSettings->debugHost = GetDebugHost();
+          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost;
+          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort;
           devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName;
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
@@ -363,8 +365,11 @@ void ReactInstanceWin::Initialize() noexcept {
                   STRING(RN_PLATFORM),
                   m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
                                                                        : m_options.DeveloperSettings.SourceBundleName,
-                  GetSourceBundleHost(),
-                  GetSourceBundlePort(),
+                  m_options.DeveloperSettings.SourceBundleHost.empty()
+                      ? facebook::react::DevServerHelper::DefaultPackagerHost
+                      : m_options.DeveloperSettings.SourceBundleHost,
+                  m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
+                                                               : facebook::react::DevServerHelper::DefaultPackagerPort,
                   m_isFastReloadEnabled);
               m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
             }
@@ -617,29 +622,6 @@ std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnLiveReload);
   }
   return std::function<void()>{};
-}
-
-std::string ReactInstanceWin::GetSourceBundleHost() noexcept {
-  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
-  return !devOptions.SourceBundleHost.empty() ? devOptions.SourceBundleHost : "localhost";
-}
-
-std::string ReactInstanceWin::GetSourceBundlePort() noexcept {
-  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
-  return !devOptions.SourceBundlePort.empty() ? devOptions.SourceBundlePort : "8081";
-}
-
-std::string ReactInstanceWin::GetDebugHost() noexcept {
-  std::string debugHost;
-  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
-  if (!devOptions.DebugHost.empty()) {
-    debugHost = devOptions.DebugHost;
-  } else {
-    debugHost = GetSourceBundleHost();
-    debugHost.append(":");
-    debugHost.append(GetSourceBundlePort());
-  }
-  return debugHost;
 }
 
 std::string ReactInstanceWin::GetBytecodeFileName() noexcept {

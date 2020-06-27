@@ -76,13 +76,6 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop.DLL -Recurse -Include '*.def' | Fo
 	-Force
 }
 
-# React.Windows.ReactUWP headers
-Get-ChildItem -Path $ReactWindowsRoot\ReactUWP -Name -Recurse -Include '*.h','*.hpp' | ForEach-Object { Copy-Item `
-	-Path        $ReactWindowsRoot\ReactUWP\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ReactUWP\$(Split-Path $_) -Force) `
-	-Force
-}
-
 # React.Windows.Test headers
 Get-ChildItem -Path $ReactWindowsRoot\Test -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $ReactWindowsRoot\Test\$_ `

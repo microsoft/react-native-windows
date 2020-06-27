@@ -97,9 +97,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevSupportManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\DevSupportManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -134,6 +140,12 @@
     </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{5e38b06d-5bcb-437b-9a9b-e787e37ef3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Executors">
+      <UniqueIdentifier>{e24fd2a4-182f-41b5-b952-ea001e160825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Executors">
+      <UniqueIdentifier>{89e77d8d-846a-4036-a024-c9af915be5db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +299,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Modules\AsyncStorageModuleWin32.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\Executors\WebSocketJSExecutor.h">
+      <Filter>Header Files\Executors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\ReactWindowsCore\etw\build.bat">

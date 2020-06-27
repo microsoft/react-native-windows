@@ -11,6 +11,7 @@ TouchableWin32 is a 'componentization' of the Touchable Mixin in React Native. T
 ```typescript
 export declare class TouchableWin32 extends React.Component<ITouchableWin32Props, IInternalTouchableWin32State> 
 ```
+<b>Extends:</b> React.Component&lt;[ITouchableWin32Props](./react-native-win32.itouchablewin32props.md)<!-- -->, IInternalTouchableWin32State&gt;
 
 ## Constructors
 

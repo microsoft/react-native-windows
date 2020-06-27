@@ -3,6 +3,7 @@
 
 #include "PlatformConstantsModule.h"
 #include <VersionHelpers.h>
+#include <cxxreact/ReactNativeVersion.h>
 
 using Method = facebook::xplat::module::CxxModule::Method;
 
@@ -35,10 +36,10 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
       // We don't currently treat Native code differently in a test environment
       {"isTesting", false},
 
-      // Since we're out-of-tree, we don't know the exact version of React Native
-      // we're paired with. Provide something sane for now, and try to provide a
-      // better source of truth later. Tracked by Issue #4073
-      {"reactNativeVersion", folly::dynamic::object("major", 0)("minor", 62)("patch", 0)},
+      // Provide version information stamped into the compiled version of react-native
+      {"reactNativeVersion",
+       folly::dynamic::object("major", ReactNativeVersion.Major)("minor", ReactNativeVersion.Minor)(
+           "patch", ReactNativeVersion.Patch)("prerelease", StringOrNull(ReactNativeVersion.Prerelease))},
 
       // Provide version information for react-native-windows -- which is independant of
       // the version of react-native we are built from
@@ -51,6 +52,10 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
       // exposing something here like a facility to check Universal API
       // Contract.
   };
+}
+
+folly::dynamic PlatformConstantsModule::StringOrNull(std::string_view str) noexcept {
+  return str.empty() ? folly::dynamic(nullptr) : folly::dynamic(str);
 }
 
 } // namespace facebook::react

@@ -45,6 +45,7 @@ This package provides Win32 specific components and provides JS implementations 
 
 |  Variable | Description |
 |  --- | --- |
+|  [ColorGradientWin32](./react-native-win32.colorgradientwin32.md) | Creates a color value that renders using a grandient brush. This can be used to provide a value to most components that take a standard color value. |
 |  [PersonaCoin](./react-native-win32.personacoin.md) |  |
 |  [ViewWin32](./react-native-win32.viewwin32.md) |  |
 
@@ -62,6 +63,8 @@ This package provides Win32 specific components and provides JS implementations 
 |  [BasePropsWin32](./react-native-win32.basepropswin32.md) |  |
 |  [ButtonWin32OmitStyles](./react-native-win32.buttonwin32omitstyles.md) |  |
 |  [Cursor](./react-native-win32.cursor.md) |  |
+|  [GradientColorStop](./react-native-win32.gradientcolorstop.md) | A color stop within a gradient. The values can either be other color values such as 'red', or a value thats already gone through processColor Note: Currently we only support color stops from 0 to 1. (Where 0 is the gradient start, 1 is gradient end) |
+|  [GradientColorValueWin32](./react-native-win32.gradientcolorvaluewin32.md) | Specifies the direction the gradient is in, and a list of color stops for the gradient. Note: Currently we only support 2 color stops |
 |  [IChildAsFunction](./react-native-win32.ichildasfunction.md) | Used by IRenderChild, it simply describes a function that takes some generic state type T and returns a ReactNode |
 |  [IHandledKeyboardEvent](./react-native-win32.ihandledkeyboardevent.md) |  |
 |  [IKeyboardEvent](./react-native-win32.ikeyboardevent.md) |  |

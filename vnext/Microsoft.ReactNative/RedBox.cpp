@@ -5,6 +5,8 @@
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
 #include <regex>
+#include "DevServerHelper.h"
+#include "DynamicReader.h"
 #include "Unicode.h"
 
 #include <winrt/Windows.Foundation.Collections.h>
@@ -333,13 +335,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
                               IInspectable const & /*sender*/, xaml::Input::TappedRoutedEventArgs const & /*e*/) {
         if (auto reactHost = weakReactHost.GetStrongPtr()) {
           auto devSettings = reactHost->Options().DeveloperSettings;
-          std::string stackFrameUri = "http://";
-          stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
-          stackFrameUri.append(":");
-          stackFrameUri.append(devSettings.SourceBundlePort.empty() ? "8081" : devSettings.SourceBundlePort);
-          stackFrameUri.append("/open-stack-frame");
-
-          Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};
+          Uri uri{
+              Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerOpenStackFrameUrl(
+                  devSettings.SourceBundleHost, devSettings.SourceBundlePort))};
           winrt::Windows::Web::Http::HttpClient httpClient{};
           winrt::Windows::Data::Json::JsonObject payload{};
 
@@ -415,6 +413,16 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
+    // Check if the rebox has been suppressed
+    if (!info.ExtraData.isNull()) {
+      auto iterator = info.ExtraData.find("suppressRedBox");
+      if (iterator != info.ExtraData.items().end()) {
+        if (iterator->second.asBool()) {
+          return;
+        }
+      }
+    }
+
     std::shared_ptr<RedBox> redbox(std::make_shared<RedBox>(
         m_weakReactHost,
         [wkthis = std::weak_ptr(shared_from_this())](uint32_t id) {
@@ -534,6 +542,10 @@ struct RedBoxErrorFrameInfo
     return m_frame.Column;
   }
 
+  bool Collapse() const noexcept {
+    return m_frame.Collapse;
+  }
+
  private:
   Mso::React::ErrorFrameInfo m_frame;
 };
@@ -543,6 +555,22 @@ struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Micros
 
   winrt::hstring Message() const noexcept {
     return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
+  }
+
+  winrt::hstring OriginalMessage() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.OriginalMessage).c_str();
+  }
+
+  winrt::hstring Name() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Name).c_str();
+  }
+
+  winrt::hstring ComponentStack() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.ComponentStack).c_str();
+  }
+
+  winrt::Microsoft::ReactNative::IJSValueReader ExtraData() const noexcept {
+    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_errorInfo.ExtraData);
   }
 
   uint32_t Id() const noexcept {

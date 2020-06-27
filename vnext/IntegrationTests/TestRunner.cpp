@@ -70,7 +70,6 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
     // TestRunner implementation.
     shared_ptr<DevSettings> devSettings = make_shared<DevSettings>();
     devSettings->useWebDebugger = false; // WebSocketJSExecutor can't register native log hooks.
-    devSettings->debugHost = "localhost:8081";
     devSettings->liveReloadCallback = []() {}; // Enables ChakraExecutor
     devSettings->errorCallback = [&result](string message) {
       result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(message);
