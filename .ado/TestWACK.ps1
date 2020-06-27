@@ -1,8 +1,8 @@
 param([string]$Platform, [string]$Configuration, [string]$OutputPath)
 
 if ($Configuration -eq 'Release') {
-    $appxPath = Resolve-Path $PSScriptRoot\..\packages\playground\windows\AppPackages\playground\playground_1.0.0.0_Test\playground_1.0.0.0_$Platform.appxbundle
-    $appxPath
+    $appxPath = Resolve-Path $PSScriptRoot\..\packages\playground\windows\AppPackages\playground\playground_1.0.0.0_${Platform}_Test\playground_1.0.0.0_$Platform.appx
+    gci $appxPath
 
     if (!(Test-Path $OutputPath)) {
         mkdir -Path $OutputPath
