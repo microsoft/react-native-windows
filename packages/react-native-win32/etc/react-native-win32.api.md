@@ -69,6 +69,11 @@ export class ButtonWin32 extends React_2.Component<IButtonWin32Props, IButtonWin
 // @public (undocumented)
 export type ButtonWin32OmitStyles = RN.TextStyleIOS & RN.TextStyleAndroid;
 
+// @public
+export const ColorGradientWin32 : (
+  gradientColor: GradientColorValueWin32
+) => any;
+
 // @public (undocumented)
 export type Cursor = 'auto' | 'default' | 'pointer' | 'help' | 'not-allowed' | 'wait' | 'move' | 'nesw-resize' | 'ns-resize' | 'nwse-resize' | 'we-resize' | 'text';
 
@@ -83,6 +88,18 @@ export enum EventPhase {
     // (undocumented)
     None = 0
 }
+
+// @public
+export type GradientColorStop = {
+  color: string /*ColorValue*/ | number /*ProcessedColorValue*/,
+  offset: 0 | 1,
+};
+
+// @public
+export type GradientColorValueWin32 = {
+  gradientDirection: 'ToBottom' | 'ToTop' | 'ToRight' | 'ToLeft',
+  colorStops: GradientColorStop[]
+};
 
 // @public (undocumented)
 export interface IButtonWin32Props extends RN.ButtonProps {

@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct JSDevSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueObject) noexcept>{0, L"onSuccess"},
+      Method<void(std::string) noexcept>{0, L"onSuccess"},
       Method<void(double, std::string) noexcept>{1, L"onFailure"},
   };
 
@@ -26,8 +26,8 @@ struct JSDevSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "onSuccess",
-          "    REACT_METHOD(onSuccess) void onSuccess(React::JSValueObject && data) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(onSuccess) static void onSuccess(React::JSValueObject && data) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(onSuccess) void onSuccess(std::string data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(onSuccess) static void onSuccess(std::string data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "onFailure",

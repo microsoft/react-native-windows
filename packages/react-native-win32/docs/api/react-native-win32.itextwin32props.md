@@ -9,6 +9,7 @@
 ```typescript
 export interface ITextWin32Props extends Omit<RN.TextProps, TextWin32OmitTypes>, BasePropsWin32 
 ```
+<b>Extends:</b> Omit&lt;RN.TextProps, [TextWin32OmitTypes](./react-native-win32.textwin32omittypes.md)<!-- -->&gt;, [BasePropsWin32](./react-native-win32.basepropswin32.md)
 
 ## Properties
 

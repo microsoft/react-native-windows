@@ -9,6 +9,7 @@
 ```typescript
 export interface IDatePickerProps extends ViewProps 
 ```
+<b>Extends:</b> ViewProps
 
 ## Properties
 

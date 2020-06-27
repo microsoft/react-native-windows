@@ -14,7 +14,7 @@ function npmVersionToRcVersion(npmVersion) {
 
 let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
-// Record commit number, so that additional build tasks can record that commit in the nuget
+// Record commit number, so that additional build tasks can record that commit in the NuGet
 const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString().trim();
 
 let versionEnvVars = {

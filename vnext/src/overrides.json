@@ -17,14 +17,6 @@
       "file": "IntegrationTests\\DummyTest.js"
     },
     {
-      "type": "patch",
-      "file": "IntegrationTests\\IntegrationTestsApp.windesktop.js",
-      "baseFile": "IntegrationTests\\IntegrationTestsApp.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "8a02205cad7a8966b1f1ecb66575d8263af56c16",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "platform",
       "file": "IntegrationTests\\LoggingTest.js"
     },
@@ -36,23 +28,15 @@
       "type": "derived",
       "file": "Libraries\\Alert\\Alert.windesktop.js",
       "baseFile": "Libraries\\Alert\\Alert.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "bf73c8c30ecdada945c2af1f3146db028950c060"
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa"
     },
     {
       "type": "patch",
       "file": "Libraries\\Alert\\Alert.windows.js",
       "baseFile": "Libraries\\Alert\\Alert.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "bf73c8c30ecdada945c2af1f3146db028950c060",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.windows.js",
-      "baseFile": "Libraries\\Animated\\src\\nodes\\AnimatedInterpolation.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "e5e0e4e6c1b20844ec1deecc34ffa9452360ba03",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -67,32 +51,32 @@
       "type": "copy",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windesktop.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "840be6f49fe36a3bcfb568eb285bf860f0dd441d",
       "issue": 4578
     },
     {
       "type": "copy",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windows.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "eb1753df0ab59f8c23fdd6469e69bfd349be1a58",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "840be6f49fe36a3bcfb568eb285bf860f0dd441d",
       "issue": 4578
     },
     {
       "type": "derived",
       "file": "Libraries\\Components\\Button.windesktop.js",
       "baseFile": "Libraries\\Components\\Button.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "664721f888487db3fd31c831db79bed5e683ce58",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "1bb31cc95e6e4b71ff09f024dd102a9717925e51",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\Button.windows.js",
       "baseFile": "Libraries\\Components\\Button.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "664721f888487db3fd31c831db79bed5e683ce58",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "1bb31cc95e6e4b71ff09f024dd102a9717925e51",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -104,12 +88,12 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
-      "file": "Libraries\\Components\\CheckBox\\CheckBox.windows.tsx",
+      "type": "copy",
+      "file": "Libraries\\Components\\CheckBox\\CheckBox.windows.js",
       "baseFile": "Libraries\\Components\\CheckBox\\CheckBox.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "7006aba4ecdfd27a213172ca92d1877b55729292",
-      "issue": "LEGACY_FIXME"
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "278d7049749ba8b5f3840f21ef6b3d528183829f",
+      "issue": 4694
     },
     {
       "type": "platform",
@@ -207,8 +191,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\Picker\\Picker.windows.js",
       "baseFile": "Libraries\\Components\\Picker\\Picker.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "67a10fef33208d21006d7bd51b4e6fd8d4c9ca5d",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "8efa98a764d4e80b835ca0dbf1cf3a8b6f01ffe4",
       "issue": 4611
     },
     {
@@ -247,17 +231,9 @@
       "type": "derived",
       "file": "Libraries\\Components\\Picker\\PickerWindows.tsx",
       "baseFile": "Libraries\\Components\\Picker\\PickerIOS.ios.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "f1409e9f69332850927323ecf2cf66a3573ef25e",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "f15d5ab6c73a202608d66eb90f41497cb1fc6dc4",
       "issue": 4611
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Components\\Picker\\RCTPickerNativeComponent.windows.js",
-      "baseFile": "Libraries\\Components\\Picker\\RCTPickerNativeComponent.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "aa6f9c4499a2b08d77158ee22fcc2a784847a7a0",
-      "issue": "LEGACY_FIXME"
     },
     {
       "type": "platform",
@@ -299,8 +275,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\RefreshControl\\RefreshControl.windows.js",
       "baseFile": "Libraries\\Components\\RefreshControl\\RefreshControl.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "90fa2ab5e119957459158cbbf2effe07cff1b2ae",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "61f351ccc7fbfc340adb9b0cab22497d978ba26d",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -321,22 +297,6 @@
     },
     {
       "type": "derived",
-      "file": "Libraries\\Components\\ScrollView\\ScrollView.windesktop.js",
-      "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "ad1f9e693d11926daf324f992de3741def01e35e",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Components\\ScrollView\\ScrollView.windows.js",
-      "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "ad1f9e693d11926daf324f992de3741def01e35e",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
       "file": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.windesktop.js",
       "baseFile": "Libraries\\Components\\SegmentedControlIOS\\SegmentedControlIOS.android.js",
       "baseVersion": "0.61.5",
@@ -352,43 +312,27 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "patch",
-      "file": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.windows.js",
-      "baseFile": "Libraries\\Components\\StatusBar\\NativeStatusBarManagerAndroid.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "2c312e39ea468283e73be4319370d4f29ea5c932",
-      "issue": 3990
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Components\\Switch\\SwitchNativeComponent.windows.js",
-      "baseFile": "Libraries\\Components\\Switch\\SwitchNativeComponent.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "38aae656c9d51aac5034cddd257ed3748b991b2d",
-      "issue": 3990
-    },
-    {
       "type": "derived",
       "file": "Libraries\\Components\\TextInput\\TextInput.windesktop.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "ddc98a5d277a630f3ac95c5d416a1028ba27382d",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a50310f6dee460f7d1a53e0f1a21dbac9cf02094",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\TextInput\\TextInput.windows.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInput.js",
-      "baseVersion": "0.62.1",
-      "baseHash": "ddc98a5d277a630f3ac95c5d416a1028ba27382d",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a50310f6dee460f7d1a53e0f1a21dbac9cf02094",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\TextInput\\TextInputState.windows.js",
       "baseFile": "Libraries\\Components\\TextInput\\TextInputState.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "b6abcc197d20eb192444f85e0a1e447a3019658f",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -407,50 +351,34 @@
     },
     {
       "type": "patch",
-      "file": "Libraries\\Components\\Touchable\\TouchableBounce.windows.js",
-      "baseFile": "Libraries\\Components\\Touchable\\TouchableBounce.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d2bb715bb7b4fe8a324252409273747c96a4e687",
-      "issue": 4310
-    },
-    {
-      "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableHighlight.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableHighlight.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "b930d8995dab7c9aad3e14c3a78b73431c791a56",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b03a273535705ec4a1e979ec0adf06c90b8938e5",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.windows.js",
-      "baseFile": "Libraries\\Components\\Touchable\\TouchableNativeFeedback.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "68dd135de8d10534754b7abe409bf0a7fb038578",
-      "issue": 4310
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableOpacity.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableOpacity.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "356d5eb7b824b35b79fb4108b3dffcd8c3cfa4f7",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e9b3b0a49be45f4030f34f7c91f5a47c01b50582",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries\\Components\\Touchable\\TouchableWithoutFeedback.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "78e0bcf18020ec967f7d96767d7b555af5b9b3b6",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "8fef33cd9edce5725695ca1e7fd9705916578799",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Components\\View\\ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries\\Components\\View\\ReactNativeViewViewConfig.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "79f89796dab244dad97186438375669479316913",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "8d5d480284b4cdaf7d8d86935967370d455b7b68",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -465,8 +393,8 @@
       "type": "patch",
       "file": "Libraries\\Components\\View\\ViewPropTypes.windows.js",
       "baseFile": "Libraries\\Components\\View\\ViewPropTypes.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "5c7afdf3f620d06d2a54ace1fbb3d01dd15aa30e",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "28c010eda90627523d2aba884e4f4f8892d9fe37",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -481,25 +409,9 @@
       "type": "patch",
       "file": "Libraries\\core\\setUpDeveloperTools.windesktop.js",
       "baseFile": "Libraries\\core\\setUpDeveloperTools.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d09be2d9fc8c621538c2262947580a03ff47177f",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "dac10e7b4ec4b65b658f26aeeedc05cc975a53cd",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\core\\setUpReactDevTools.windesktop.js",
-      "baseFile": "Libraries\\core\\setUpReactDevTools.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "90b15d4c0940af7c72077d1eaef45d3256012aed",
-      "issue": 4310
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\core\\setUpReactDevTools.windows.js",
-      "baseFile": "Libraries\\core\\setUpReactDevTools.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "90b15d4c0940af7c72077d1eaef45d3256012aed",
-      "issue": 4310
     },
     {
       "type": "patch",
@@ -513,47 +425,31 @@
       "type": "derived",
       "file": "Libraries\\Image\\Image.windesktop.js",
       "baseFile": "Libraries\\Image\\Image.ios.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0"
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "26acff268b815c7b3c5da0d6c9c009073b202ea8"
     },
     {
       "type": "copy",
       "file": "Libraries\\Image\\Image.windows.js",
       "baseFile": "Libraries\\Image\\Image.ios.js",
-      "baseVersion": "0.62.1",
-      "baseHash": "80a9ee2404220201df09a5ff97e2bf7e03c854e0",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "26acff268b815c7b3c5da0d6c9c009073b202ea8",
       "issue": 4590
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Inspector\\Inspector.windesktop.js",
-      "baseFile": "Libraries\\Inspector\\Inspector.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "4d8dd865cf9dc902cc415dbf7146df9dc198d2bb",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Inspector\\Inspector.windows.js",
-      "baseFile": "Libraries\\Inspector\\Inspector.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "4d8dd865cf9dc902cc415dbf7146df9dc198d2bb",
-      "issue": 4310
     },
     {
       "type": "patch",
       "file": "Libraries\\Inspector\\InspectorOverlay.windesktop.js",
       "baseFile": "Libraries\\Inspector\\InspectorOverlay.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "a8cb0b3e6bd7334214a37db8bb1bb91510a5e838",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b8535e8c605e6c0e940aae6c04f0d573eaa4788e",
       "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
       "file": "Libraries\\Lists\\VirtualizedList.windows.js",
       "baseFile": "Libraries\\Lists\\VirtualizedList.js",
-      "baseVersion": "0.62.1",
-      "baseHash": "28df77a107962f12c19471b1f882fa802c065619",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "dd3f2413c3e51f3faca34ebb71635dbdeb716e47",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -592,17 +488,9 @@
       "type": "patch",
       "file": "Libraries\\Pressability\\Pressability.windows.js",
       "baseFile": "Libraries\\Pressability\\Pressability.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "acf1c23e6f39d8fb201a06bca850760efe295057",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a3e33cfe943788b47933ea2c7a807326c8545492",
       "issue": 4379
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\Pressability\\PressabilityDebug.windows.js",
-      "baseFile": "Libraries\\Pressability\\PressabilityDebug.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "4b94cc9c0fd201000db1a5c2fb874253e5e37606",
-      "issue": 4310
     },
     {
       "type": "derived",
@@ -622,55 +510,19 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.windows.js"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\StyleSheet\\normalizeColor.windows.js",
-      "baseFile": "Libraries\\StyleSheet\\normalizeColor.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "48265ddff91efb254176c02f8d40bc71acce3252",
-      "issue": 3990
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windesktop.js"
     },
     {
       "type": "platform",
-      "file": "Libraries\\StyleSheet\\normalizeColorObject.windesktop.js"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\StyleSheet\\normalizeColorObject.windows.js"
+      "file": "Libraries\\StyleSheet\\PlatformColorValueTypes.windows.js"
     },
     {
       "type": "patch",
-      "file": "Libraries\\StyleSheet\\processColor.windows.js",
-      "baseFile": "Libraries\\StyleSheet\\processColor.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "c24356f7c86e22d2d52ce2d7cded979509ad931c",
-      "issue": 3990
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\StyleSheet\\processColorArray.windows.js",
-      "baseFile": "Libraries\\StyleSheet\\processColorArray.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "66b19d011a777ed38e5513eda9da2d61c9045595",
-      "issue": 3990
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\StyleSheet\\processColorObject.windesktop.js"
-    },
-    {
-      "type": "platform",
-      "file": "Libraries\\StyleSheet\\processColorObject.windows.js"
-    },
-    {
-      "type": "patch",
-      "file": "Libraries\\StyleSheet\\StyleSheetTypes.windows.js",
-      "baseFile": "Libraries\\StyleSheet\\StyleSheetTypes.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "b973dbd7645c513fa8eb3373ad68d58c7fc6032e",
-      "issue": 3990
+      "file": "Libraries\\StyleSheet\\StyleSheetValidation.windows.js",
+      "baseFile": "Libraries\\StyleSheet\\StyleSheetValidation.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "5fe7febd1eb5374745fe612030806512e9161796",
+      "issue": 5269
     },
     {
       "type": "patch",
@@ -679,6 +531,14 @@
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "83b203d547d9bdc57a8f3346ecee6f6e34b25f5d",
       "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Utilities\\Appearance.windows.js",
+      "baseFile": "Libraries\\Utilities\\Appearance.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "48bccf750042813b47f882d6467b20b178dcbc72",
+      "issue": 5270
     },
     {
       "type": "derived",
@@ -697,6 +557,18 @@
       "issue": 4629
     },
     {
+      "type": "platform",
+      "file": "Libraries\\Utilities\\DebugEnvironment.js"
+    },
+    {
+      "type": "patch",
+      "file": "Libraries\\Utilities\\HMRClient.windesktop.js",
+      "baseFile": "Libraries\\Utilities\\HMRClient.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "76e71abd8c4128cbdf212291b1d8d8994deb3da0",
+      "issue": 4087
+    },
+    {
       "type": "derived",
       "file": "Libraries\\Utilities\\NativePlatformConstantsWin.js",
       "baseFile": "Libraries\\Utilities\\NativePlatformConstantsIOS.js",
@@ -707,36 +579,23 @@
       "type": "derived",
       "file": "Libraries\\Utilities\\Platform.windesktop.js",
       "baseFile": "Libraries\\Utilities\\Platform.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d3a3db6cba034363c2544e6da13d7eac1f9cddfb"
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "bcaebbe089a41de46724b00e69fcdba7e6b1ed7f"
     },
     {
       "type": "derived",
       "file": "Libraries\\Utilities\\Platform.windows.js",
       "baseFile": "Libraries\\Utilities\\Platform.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "d3a3db6cba034363c2544e6da13d7eac1f9cddfb"
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "bcaebbe089a41de46724b00e69fcdba7e6b1ed7f"
     },
     {
       "type": "derived",
-      "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.windesktop.js",
-      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorHeader.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "80f52a83aa0b9750a8955bc79975d2b3914c664b"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.windesktop.js",
-      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxInspectorSourceMapStatus.js",
-      "baseVersion": "0.62.1",
-      "baseHash": "11d3fba8d2596ecb628ca1b6db3347f444920fb9"
-    },
-    {
-      "type": "derived",
-      "file": "Libraries\\YellowBox\\UI\\YellowBoxList.windesktop.js",
-      "baseFile": "Libraries\\YellowBox\\UI\\YellowBoxList.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "8093d13818e1c1e0dec5b6fb46b89d9152053d3c"
+      "file": "overrides.json",
+      "baseFile": "RNTester\\js\\examples\\PlatformColor\\PlatformColorExample.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "f1c2babe02e11d237dbab875b8a7cd63fce048b6",
+      "issue": "LEGACY_FIXME"
     },
     {
       "type": "platform",
@@ -819,8 +678,12 @@
       "file": "RNTester\\js\\examples-win\\TransferProperties\\TransferPropertiesExample.tsx"
     },
     {
-      "type": "platform",
-      "file": "RNTester\\js\\examples-win\\WindowsBrush\\WindowsBrushExample.windows.tsx"
+      "type": "derived",
+      "file": "RNTester\\js\\examples\\PlatformColor\\PlatformColorExample.windows.js",
+      "baseFile": "RNTester\\js\\examples\\PlatformColor\\PlatformColorExample.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "f1c2babe02e11d237dbab875b8a7cd63fce048b6",
+      "issue": 4055
     },
     {
       "type": "patch",
@@ -850,16 +713,16 @@
       "type": "derived",
       "file": "RNTester\\js\\RNTesterApp.windows.js",
       "baseFile": "RNTester\\js\\RNTesterApp.ios.js",
-      "baseVersion": "0.62.2",
-      "baseHash": "e1e649835256a5460c4bae59ef465727a5ae9983",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "34d2517461704840a508ce1856bc3a364fb3fc7e",
       "issue": 4586
     },
     {
       "type": "derived",
       "file": "RNTester\\js\\utils\\RNTesterList.windows.ts",
       "baseFile": "RNTester\\js\\utils\\RNTesterList.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "f1e77952c292fe2898645f81f280b64f8ea17b90",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "65c3876bdbc2755cd568b2779ed962fa7a4edf6a",
       "issue": "LEGACY_FIXME"
     },
     {

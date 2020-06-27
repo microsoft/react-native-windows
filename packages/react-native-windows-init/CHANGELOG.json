@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2020 23:59:27 GMT",
+      "tag": "react-native-windows-init_v0.1.14",
+      "version": "0.1.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade React Native to 3/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0727ffcb907673749ddbf43e7a7c0922957c9e82",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Jun 2020 14:32:50 GMT",
       "tag": "react-native-windows-init_v0.1.13",
       "version": "0.1.13",

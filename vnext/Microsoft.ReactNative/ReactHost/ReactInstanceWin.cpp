@@ -366,8 +366,8 @@ void ReactInstanceWin::Initialize() noexcept {
                   m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
                                                                        : m_options.DeveloperSettings.SourceBundleName,
                   m_options.DeveloperSettings.SourceBundleHost.empty()
-                      ? m_options.DeveloperSettings.SourceBundleHost
-                      : facebook::react::DevServerHelper::DefaultPackagerHost,
+                      ? facebook::react::DevServerHelper::DefaultPackagerHost
+                      : m_options.DeveloperSettings.SourceBundleHost,
                   m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
                                                                : facebook::react::DevServerHelper::DefaultPackagerPort,
                   m_isFastReloadEnabled);

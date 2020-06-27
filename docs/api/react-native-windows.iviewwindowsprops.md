@@ -9,6 +9,7 @@
 ```typescript
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps 
 ```
+<b>Extends:</b> [IKeyboardProps](./react-native-windows.ikeyboardprops.md)<!-- -->, ViewProps
 
 ## Remarks
 

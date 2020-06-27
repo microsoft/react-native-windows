@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add a null check on reload callback",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-24T17:33:33.674Z"
-}

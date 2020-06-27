@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove ReactUWP project folder",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-26T01:48:39.297Z"
-}

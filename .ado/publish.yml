@@ -6,18 +6,19 @@ variables:
   - template: variables/vs2019.yml
 
 schedules:
-- cron: "0 0 * * *"
-  displayName: Nightly publish build
+- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
+  displayName: Nightly master publish build
   branches:
     include:
-    - master
+      - master
 
-trigger:
-  batch: true
+- cron: "0 5 * * 1" # 5AM Monday UTC (10PM Sunday PST)
+  displayName: Weekly stable publish build
   branches:
     include:
       - "*-stable"
 
+trigger: none
 pr: none
 
 jobs:
@@ -50,7 +51,7 @@ jobs:
       - task: CmdLine@2
         displayName: Create GitHub Release
         inputs:
-          script: node ./packages/scripts/createGithubReleases.js --authToken $(GITHUB_API)
+          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
@@ -178,7 +179,7 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-    displayName: Publish Nuget
+    displayName: Publish NuGet
     pool:
       vmImage: $(VmImage)
 

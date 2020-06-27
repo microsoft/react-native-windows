@@ -1,5 +1,5 @@
-# For PR builds we dont want to have to build _ALL_ the platforms just to get a nuget and test one platform.
-# this script filters the files required by the nuget, so we can produce a test nuget on a single platform
+# For PR builds we dont want to have to build _ALL_ the platforms just to get a NuGet and test one platform.
+# this script filters the files required by the NuGet, so we can produce a test NuGet on a single platform
 
 param (
     [string]$nuspec = "$PSScriptRoot\Microsoft.ReactNative.nuspec",

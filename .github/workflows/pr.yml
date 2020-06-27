@@ -393,7 +393,7 @@ jobs:
           name: ReactWindows-source
           path: ${{ runner.temp }}\artifacts\ReactWindows-source
 
-      - name: Copy files from build artifacts to nuget root
+      - name: Copy files from build artifacts to NuGet root
         run: |
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-source ${{ runner.temp }}\NugetRoot /E /MOVE /NP
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x64 ${{ runner.temp }}\NugetRoot\target\x64\Debug /E /MOVE /NP

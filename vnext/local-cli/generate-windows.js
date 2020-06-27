@@ -30,7 +30,7 @@ function generateWindows (projectDir, name, ns, options) {
       ns,
       overwrite: options.overwrite,
       language: options.language,
-      experimentalNugetDependency: options.experimentalNugetDependency,
+      experimentalNuGetDependency: options.experimentalNuGetDependency,
       useWinUI3: options.useWinUI3,
     }
   );
