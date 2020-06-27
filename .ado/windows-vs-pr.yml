@@ -261,7 +261,10 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-            /p:AppxPackageSigningEnabled=false
+
+      - powershell: |
+            gci -Recurse packages/playground/windows/
+        displayName: List playground folder
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
