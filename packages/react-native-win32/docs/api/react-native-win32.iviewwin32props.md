@@ -11,6 +11,7 @@ Properties for ViewWin32 component
 ```typescript
 export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 
 ```
+<b>Extends:</b> Omit&lt;RN.ViewProps, [ViewWin32OmitTypes](./react-native-win32.viewwin32omittypes.md)<!-- -->&gt;, [BasePropsWin32](./react-native-win32.basepropswin32.md)
 
 ## Properties
 

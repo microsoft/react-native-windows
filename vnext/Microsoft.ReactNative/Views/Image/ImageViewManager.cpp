@@ -149,7 +149,7 @@ void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, R
 
   int64_t tag = grid.Tag().as<winrt::IPropertyValue>().GetInt64();
   folly::dynamic imageSource =
-      folly::dynamic::object()("url", source.uri)("width", source.width)("height", source.height);
+      folly::dynamic::object()("uri", source.uri)("width", source.width)("height", source.height);
 
   folly::dynamic eventData = folly::dynamic::object()("target", tag)("source", imageSource);
   reactInstance->DispatchEvent(tag, eventName, std::move(eventData));

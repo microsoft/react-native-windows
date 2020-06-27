@@ -12,6 +12,7 @@
   "devDependencies": {
     "chalk": "^4.1.0",
     "clang-format": "1.2.4",
+    "eslint": "5.1.0",
     "find-up": "^4.1.0",
     "glob": "^7.1.6",
     "js-yaml": "^3.14.0",

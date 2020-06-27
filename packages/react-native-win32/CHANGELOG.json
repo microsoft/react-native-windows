@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2020 23:59:27 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.25",
+      "version": "0.0.0-canary.25",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade React Native to 3/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0727ffcb907673749ddbf43e7a7c0922957c9e82",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jun 2020 11:51:11 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.23",
       "version": "0.0.0-canary.23",

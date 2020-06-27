@@ -16,12 +16,17 @@ namespace Microsoft.ReactNative {
     String Method { get; };
     UInt32 Line { get; };
     UInt32 Column { get; };
+    Boolean Collapse { get; };
   }
 
   [webhosthidden] interface IRedBoxErrorInfo {
     String Message { get; };
+    String OriginalMessage { get; };
+    String Name { get; };
+    String ComponentStack { get; };
     UInt32 Id { get; };
     IVectorView<IRedBoxErrorFrameInfo> Callstack { get; };
+    IJSValueReader ExtraData { get; };
   }
 
   [webhosthidden]

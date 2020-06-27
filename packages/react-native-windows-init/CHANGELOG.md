@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 25 Jun 2020 14:32:50 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jun 2020 23:59:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.14
+
+Fri, 26 Jun 2020 23:59:27 GMT
+
+### Patches
+
+- Upgrade React Native to 3/22 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.1.13
 
