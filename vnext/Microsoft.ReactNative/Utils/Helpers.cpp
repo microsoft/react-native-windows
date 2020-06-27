@@ -98,7 +98,7 @@ bool Is19H1OrHigher() {
 bool IsXamlIsland() {
   auto appModel = managed_resource(
       LoadLibraryEx(L"Api-ms-win-appmodel-runtime-l1-1-2.dll", 0, LOAD_LIBRARY_SEARCH_SYSTEM32), FreeLibrary);
-  decltype(&AppPolicyGetWindowingModel) pfnAppPolicyGetWindowingModel =
+  auto pfnAppPolicyGetWindowingModel =
       reinterpret_cast<decltype(&AppPolicyGetWindowingModel)>(GetProcAddress(appModel, "AppPolicyGetWindowingModel"));
 
   AppPolicyWindowingModel e;
