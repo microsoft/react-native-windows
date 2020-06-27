@@ -25,7 +25,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
 
 {
   folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\my-app'
-  sourceDir: string,    // (req) Relative path to the windows implementation under folder, ex: 'windows'
+  sourceDir: string,    // (req) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'MyApp.sln'
   project: { // (req)
     projectFile: string, // (req) Relative path to the VS project file under sourceDir, ex: 'MyApp\MyApp.vcxproj' for 'c:\path\to\my-app\windows\MyApp\MyApp.vcxproj'

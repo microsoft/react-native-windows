@@ -20,7 +20,7 @@ class ReactViewHost;
 //! ReactHost manages lifetime of ReactNative instance.
 //! It is associated with a native queue that is used modify its state.
 //! - It can reload or unload react instance using Reload and Unload.
-//! - ReactInstance() returns current react native instance.
+//! - ReactInstance() returns current React Native instance.
 //! - NativeQueue() returns the associate native queue.
 //! - Options() - returns options used for creating ReactInstance.
 //!
@@ -180,7 +180,7 @@ Mso::Future<void> ReactHost::PostInQueue(TCallback &&callback) noexcept {
   using Callback = std::decay_t<TCallback>;
   return Mso::PostFuture(
       m_executor,
-      [ weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)} ]() mutable noexcept {
+      [weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)}]() mutable noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           return callback();
         }

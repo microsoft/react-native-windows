@@ -189,7 +189,7 @@ module.exports = {
     {
       command: '--root [string]',
       description:
-        'Override the root directory for the windows build which contains the windows folder.',
+        'Override the root directory for the Windows build which contains the windows folder.',
     },
     {
       command: '--arch [string]',
