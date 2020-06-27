@@ -8,5 +8,13 @@ if ($Configuration -eq 'Release') {
         mkdir -Path $OutputPath
     }
     & "C:\Program Files (x86)\Windows Kits\10\App Certification Kit\appcert.exe" test -appxpackagepath $appxPath -reportoutputpath $OutputPath\result.xml
+
+    $xml=[xml] (gc $OutputPath\result.xml)
+
+    $supportedApiTest = ($xml.REPORT.REQUIREMENTS.REQUIREMENT | Where-Object -Property TITLE -EQ  "Supported API test").TEST;
+    if ($supportedApiTest.RESULT.'#cdata-section' -eq 'FAIL') {
+        $errors = $supportedApiTest.MESSAGES.MESSAGE.TEXT -join "`n"
+        throw $errors
+    }
 }
 
