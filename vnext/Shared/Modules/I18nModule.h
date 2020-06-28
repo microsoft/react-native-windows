@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ReactWindowsCore/II18nModule.h>
+#include <Shared/II18nModule.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 

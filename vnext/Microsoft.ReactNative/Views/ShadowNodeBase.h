@@ -9,7 +9,7 @@
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
 
-#include <ReactWindowsCore/ReactWindowsAPI.h>
+#include <Shared/ReactWindowsAPI.h>
 #include "KeyboardEventHandler.h"
 
 namespace react {

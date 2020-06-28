@@ -126,9 +126,9 @@
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)include;
-        $(ReactNativeWindowsDir)ReactWindowsCore;
-        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
-        $(ReactNativeWindowsDir)include\ReactWindowsCore;
+        $(ReactNativeWindowsDir)Shared;
+        $(ReactNativeWindowsDir)Shared\tracing;
+        $(ReactNativeWindowsDir)include\Shared;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(YogaDir);
         %(AdditionalIncludeDirectories)
@@ -198,8 +198,8 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h" />
-    <ClCompile Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\tracing.cpp" />
+    <ClInclude Include="$(ReactNativeWindowsDir)Shared\tracing\fbsystrace.h" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Shared\tracing\tracing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Base\FollyIncludes.h" />
