@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix build errors for codegen unittest project when building in VS2019",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-26T22:45:16.637Z"
-}

@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 Jun 2020 03:52:38 GMT and should not be manually modified.
+This log was last generated on Sun, 28 Jun 2020 05:04:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.107
+
+Sun, 28 Jun 2020 05:04:51 GMT
+
+### Changes
+
+- Fix casing typos in NuGet and MSBuild (dannyvv@microsoft.com)
+- Remove Include/ReactUWP files (vmorozov@microsoft.com)
+- Fix build errors for codegen unittest project when building in VS2019 (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.106
 

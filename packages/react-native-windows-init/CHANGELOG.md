@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 26 Jun 2020 23:59:27 GMT and should not be manually modified.
+This log was last generated on Sun, 28 Jun 2020 05:04:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.15
+
+Sun, 28 Jun 2020 05:04:51 GMT
+
+### Patches
+
+- Fix casing typos in NuGet and MSBuild (dannyvv@microsoft.com)
 
 ## 0.1.14
 
