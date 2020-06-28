@@ -43,7 +43,7 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
       winrt::Microsoft::ReactNative::IReactNotificationService const &notifications) noexcept;
 
   // ReactContext may have longer lifespan than ReactInstance.
-  // The ReactInstance uses the Destroy method to enforce the ReactContext cleaup
+  // The ReactInstance uses the Destroy method to enforce the ReactContext cleanup
   // when the ReactInstance is destroyed.
   void Destroy() noexcept;
 
@@ -52,6 +52,11 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept override;
   void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
+  ReactInstanceState State() const noexcept override;
+  bool IsLoaded() const noexcept override;
+  std::string GetBundleRootPath() const noexcept override;
+  facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
+  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
 
  private:
   Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
