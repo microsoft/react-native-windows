@@ -1,6 +1,6 @@
 module.exports = {
   extends: ['@rnw-scripts'],
   rules:{ 
-    "sort-imports": "warn",
+    "sort-imports": "error",
   }
 };

@@ -1,7 +1,7 @@
 /dist
 /flow
 /index.*
-/IntgrationTests
+/IntegrationTests
 /jest
 /lib
 /Libraries

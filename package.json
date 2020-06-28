@@ -28,7 +28,6 @@
     ]
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.0.0",
     "beachball": "^1.32.0",
     "husky": "^4.2.5",
     "lerna": "^3.16.1"

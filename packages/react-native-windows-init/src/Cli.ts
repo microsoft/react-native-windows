@@ -10,12 +10,11 @@ import * as fs from 'fs';
 import * as semver from 'semver';
 import {exec, execSync} from 'child_process';
 import * as validUrl from 'valid-url';
+import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
-
-import prompts from 'prompts';
 
 const npmConfReg = execSync('npm config get registry')
   .toString()

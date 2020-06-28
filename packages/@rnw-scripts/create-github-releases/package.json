@@ -2,14 +2,8 @@
   "name": "@rnw-scripts/create-github-releases",
   "version": "0.0.1",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git",
-    "directory": "packages/@rnw-scripts/create-github-releases"
-  },
   "scripts": {
     "build": "just-scripts build",
-    "change": "beachball change",
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix"

@@ -12,16 +12,16 @@
 
 const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
 
-// [Windows
+// [Win32
 //const UIManager = require('../../ReactNative/UIManager');
 
 const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
-// Windows]
+// Win32]
 
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
-const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
+// const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange'; [Win32]
 
 type ChangeEventName = $Keys<{
   change: string,

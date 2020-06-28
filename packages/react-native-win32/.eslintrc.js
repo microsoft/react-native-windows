@@ -1,10 +1,8 @@
 module.exports = {
     extends: ['@rnw-scripts'],
     rules: {
-      "sort-imports": "off",
-
       // Not clean
-      "react-hooks/exhaustive-deps": "off",
-      "react-hooks/rules-of-hooks": "off",
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/rules-of-hooks": "warn",
     }
   };

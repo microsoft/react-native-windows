@@ -15,7 +15,7 @@ module.exports = {
     "react-native/no-inline-styles" : "off",
   },
   ignorePatterns: [
-    '**/lib/**',
-    '**/lib-commonjs/**'
+    'lib/**',
+    'lib-commonjs/**'
   ]
 };

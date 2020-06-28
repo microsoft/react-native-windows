@@ -9,6 +9,5 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "esModuleInterop": true
   }
 }
