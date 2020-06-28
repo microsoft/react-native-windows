@@ -6,7 +6,7 @@
 #include "ReactRootControl.h"
 
 #include <CxxMessageQueue.h>
-#include <ReactUWP/InstanceFactory.h>
+#include <InstanceFactory.h>
 #include <Utils/ValueUtils.h>
 #include "Unicode.h"
 
@@ -75,10 +75,6 @@ XamlView ReactRootControl::GetXamlView() const noexcept {
 }
 
 void ReactRootControl::SetJSComponentName(std::string && /*mainComponentName*/) noexcept {
-  VerifyElseCrashSz(false, "Deprecated. Use ReactViewHost.");
-}
-
-void ReactRootControl::SetInstanceCreator(const ReactInstanceCreator & /*instanceCreator*/) noexcept {
   VerifyElseCrashSz(false, "Deprecated. Use ReactViewHost.");
 }
 

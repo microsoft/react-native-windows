@@ -1,0 +1,34 @@
+{
+  "name": "@rnw-scripts/find-repo-root",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/find-repo-root"
+  },
+  "scripts": {
+    "build": "just-scripts build",
+    "change": "beachball change",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix"
+  },
+  "main": "lib-commonjs/findRepoRoot.js",
+  "dependencies": {
+    "find-up": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/find-up": "^4.0.0",
+    "just-scripts": "^0.36.1",
+    "typescript": "^3.8.3"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major"
+    ]
+  },
+  "files": [
+    "lib-commonjs"
+  ]
+}

@@ -1,5 +1,5 @@
 # Troubleshoot RNW dependencies
-param([switch]$Install = $false, [switch]$NoPrompt = $false, [switch]$Clone = $false)
+param([switch]$Install = $false, [switch]$NoPrompt = $false, [switch]$Clone = $false, [switch]$Enterprise = $false)
 $vsComponents = @('Microsoft.Component.MSBuild', 
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
@@ -38,7 +38,12 @@ function InstallVS {
     $vsWhere = "$installerPath\vswhere.exe"
     if (!(Test-Path $vsWhere)) {
         # No VSWhere / VS_Installer
-        & choco install -y visualstudio2019community
+        if ($Enterprise) {
+            # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
+            & choco install -y visualstudio2019enterprise
+        } else {
+            & choco install -y visualstudio2019community
+        }
     }
     $channelId = & $vsWhere -version 16 -property channelId
     $productId = & $vsWhere -version 16 -property productId

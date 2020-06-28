@@ -35,7 +35,6 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   std::shared_ptr<IReactInstance> GetReactInstance() const noexcept override;
   XamlView GetXamlView() const noexcept override;
   void SetJSComponentName(std::string &&mainComponentName) noexcept override;
-  void SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept override;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept override;
   void AttachRoot() noexcept override;
   void DetachRoot() noexcept override;

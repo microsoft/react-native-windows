@@ -146,11 +146,11 @@ jobs:
 
       - script: |
           npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch)
-        displayName: Bump package versions to align nuget version with npm version
+        displayName: Bump package versions to align NuGet version with npm version
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PowerShell@2
-        displayName: Prepare minimum nuget for testing experimental init
+        displayName: Prepare minimum NuGet for testing experimental init
         inputs:
           targetType: 'inline'
           script: |
@@ -600,7 +600,7 @@ jobs:
           platform: x86
           version: $(reactNativeVersion)
           additionalInitArguments: ${{ '' }}
-          experimentalNugetDependency: true
+          experimentalNuGetDependency: true
 
   - job: RNWExtraChecks
     displayName: Extra Checks
@@ -626,14 +626,14 @@ jobs:
           script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
-        displayName: yarn format:verify
-        inputs:
-          script: yarn format:verify
-
-      - task: CmdLine@2
         displayName: yarn buildci
         inputs:
           script: yarn buildci
+
+      - task: CmdLine@2
+        displayName: yarn format:verify
+        inputs:
+          script: yarn format:verify
 
       - task: CmdLine@2
         displayName: yarn lint
@@ -661,7 +661,7 @@ jobs:
       BuildPlatform: x64
 
   - job: RNWNugetPR
-    displayName: Build and Pack Nuget
+    displayName: Build and Pack NuGet
     dependsOn:
       - Setup
       - RNWUniversalPR
@@ -675,7 +675,7 @@ jobs:
       - checkout: self
         fetchDepth: 15
 
-      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      # The commit tag in the nuspec requires that we use at least NuGet 4.6
       - task: NuGetToolInstaller@0
         inputs:
           versionSpec: ">=4.6.0"
