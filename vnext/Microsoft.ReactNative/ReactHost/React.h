@@ -81,7 +81,9 @@ struct IReactContext : IUnknown {
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
   virtual std::string GetBundleRootPath() const noexcept = 0;
+#ifndef CORE_ABI
   virtual facebook::react::INativeUIManager *NativeUIManager() const noexcept = 0;
+#endif
   virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
 };
 
