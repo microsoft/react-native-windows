@@ -5,7 +5,7 @@
 
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
-#include <ReactWindowsCore/NativeModuleProvider.h>
+#include <Shared/NativeModuleProvider.h>
 #include <smartPtr/cntPtr.h>
 #include <memory>
 #include <vector>

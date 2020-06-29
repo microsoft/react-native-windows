@@ -24,8 +24,8 @@
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
-#include <ReactWindowsCore/DevServerHelper.h>
-#include <ReactWindowsCore/ViewManager.h>
+#include <Shared/DevServerHelper.h>
+#include <Shared/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DevMenu.h"
 #include "IReactContext.h"

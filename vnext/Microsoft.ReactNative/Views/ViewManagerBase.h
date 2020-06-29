@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <ReactWindowsCore/ReactWindowsAPI.h>
-#include <ReactWindowsCore/ViewManager.h>
+#include <Shared/ReactWindowsAPI.h>
+#include <Shared/ViewManager.h>
 #include <XamlView.h>
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
