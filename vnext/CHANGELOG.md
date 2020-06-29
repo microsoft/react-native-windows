@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 28 Jun 2020 05:04:51 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Jun 2020 05:04:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.108
+
+Mon, 29 Jun 2020 05:04:57 GMT
+
+### Changes
+
+- Removed references to ReactWindowsCore (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.107
 
