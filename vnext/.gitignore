@@ -44,6 +44,7 @@ node_modules
 
 /flow
 /dist
+/IntegrationTests/*.command
 /IntegrationTests/*.js
 /IntegrationTests/*.png
 /lib
