@@ -18,6 +18,10 @@ namespace Mso {
 
   Method Make is noexcept depending on the Make policy IsNoExcept value.
 */
+#pragma warning(push)
+#pragma warning(disable : 4702) // unreachable code might be hit in a few cases in this file: If the linkers determines
+                                // ValidateObject throws, or when some of the lambda's are inlined...
+
 template <typename T, typename TResult = T, typename... TArgs>
 inline Mso::CntPtr<TResult> Make(TArgs &&... args) noexcept(T::MakePolicy::IsNoExcept) {
   typename T::RefCountPolicy::template MemoryGuard<T> memoryGuard = {};
@@ -117,8 +121,6 @@ namespace MakePolicy {
 /// ThrowCtor MakePolicy passes all parameters to the constructor.
 /// ThrowCtor::Make may throw an exception if constructor throws.
 /// To allow this class to access private constructor add "friend MakePolicy;" to your class.
-#pragma warning(push)
-#pragma warning(disable : 4702) // unreachable code might be hit if the linkers determines the constructor will throw.
 struct ThrowCtor {
   static const bool IsNoExcept = false;
 
@@ -129,7 +131,6 @@ struct ThrowCtor {
     memoryGuard.ObjMemory = nullptr; // Memory is now controlled by the object. Set to null to avoid memory destruction.
   }
 };
-#pragma warning(pop)
 
 /// NoThrowCtor MakePolicy passes all parameters to the constructor.
 /// NoThrowCtor::Make does not throw exception and crashes the app if constructor throws.
@@ -188,6 +189,8 @@ struct MakeAllocator {
     Mso::Memory::Free(ptr);
   }
 };
+
+#pragma warning(pop)
 
 } // namespace Mso
 
