@@ -39,7 +39,7 @@ class Alert {
     // The text 'OK' should be probably localized. iOS Alert does that in native.
     const validButtons: Buttons = buttons
       ? buttons.slice(0, 3)
-      : [{ text: 'OK' }];
+      : [{text: 'OK'}];
     const buttonPositive = validButtons.pop();
     const buttonNegative = validButtons.pop();
     const buttonNeutral = validButtons.pop();
