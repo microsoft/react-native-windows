@@ -149,7 +149,7 @@ function prompt(
   return str || value || '';
 }
 
-function walk(current /*: string*/) /*: string[]*/ {
+function walk(current: string): string[] {
   if (!fs.lstatSync(current).isDirectory()) {
     return [current];
   }
@@ -157,7 +157,7 @@ function walk(current /*: string*/) /*: string[]*/ {
   const files = fs
     .readdirSync(current)
     .map(child => walk(path.join(current, child)));
-  const result /*: string[]*/ = [];
+  const result: string[] = [];
   return result.concat.apply([current], files);
 }
 
@@ -186,7 +186,7 @@ export function resolveContents(srcPath: string, replacements): string {
 // Binary files, don't process these (avoid decoding as utf8)
 const binaryExtensions = ['.png', '.jar', '.keystore'];
 
-// type ContentChangedCallbackOption = 'identical' | 'changed' | 'new' | null;
+type ContentChangedCallbackOption = 'identical' | 'changed' | 'new' | null;
 
 /**
  * Copy a file to given destination, replacing parts of its contents.
@@ -204,12 +204,12 @@ function copyAndReplace(
   srcPath: string,
   destPath: string,
   replacements: Record<string, string>,
-  contentChangedCallback /*:
+  contentChangedCallback:
     | ((
         path: string,
         option: ContentChangedCallbackOption,
       ) => 'keep' | 'overwrite')
-    | null*/,
+    | null,
 ) {
   if (fs.lstatSync(srcPath).isDirectory()) {
     if (!fs.existsSync(destPath)) {
@@ -225,7 +225,7 @@ function copyAndReplace(
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
       const newContentBuffer = fs.readFileSync(srcPath);
-      let contentChanged /*: ContentChangedCallbackOption*/ = 'identical';
+      let contentChanged: ContentChangedCallbackOption = 'identical';
       try {
         const origContentBuffer = fs.readFileSync(destPath);
         // eslint-disable-next-line no-undef
@@ -256,7 +256,7 @@ function copyAndReplace(
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
       // Check if contents changed and ask to overwrite
-      let contentChanged /*: ContentChangedCallbackOption*/ = 'identical';
+      let contentChanged: ContentChangedCallbackOption = 'identical';
       try {
         const origContent = fs.readFileSync(destPath, 'utf8');
         if (content !== origContent) {
