@@ -12,7 +12,7 @@
 
 // [Windows
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
-const AlertNative = TurboModuleRegistry.getEnforcing('Alert');
+const PLYAlertManager = TurboModuleRegistry.getEnforcing('Alert');
 // Windows]
 
 export type AlertType =
