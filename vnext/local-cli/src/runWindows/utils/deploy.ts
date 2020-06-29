@@ -198,8 +198,8 @@ export async function deployToDesktop(options, verbose, slnFile) {
   );
 
   const vsVersion = execSync(
-      `"${vsWherePath}" -version 16 -property catalog_productDisplayVersion`,
-    )
+    `"${vsWherePath}" -version 16 -property catalog_productDisplayVersion`,
+  )
     .toString()
     .split(EOL)[0];
 
@@ -213,7 +213,14 @@ export async function deployToDesktop(options, verbose, slnFile) {
       );
     }
     fs.copyFileSync(
-      path.join(path.resolve(__dirname), '..', '..', '..', 'powershell', 'Add-AppDevPackage.ps1'),
+      path.join(
+        path.resolve(__dirname),
+        '..',
+        '..',
+        '..',
+        'powershell',
+        'Add-AppDevPackage.ps1',
+      ),
       script,
     );
   }

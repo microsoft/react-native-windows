@@ -35,9 +35,8 @@ export function newSpinner(text) {
 
     // By default, ora process.stderr as the output stream, however,the VS Code debugger
     // Uses stdout to match success patterns
-    stream: process.stdout
+    stream: process.stdout,
   };
-
 
   return ora(options).start();
 }
@@ -69,7 +68,13 @@ export async function runPowerShellScriptFunction(
   }
 }
 
-export function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
+export function commandWithProgress(
+  spinner,
+  taskDoingName,
+  command,
+  args,
+  verbose,
+) {
   return new Promise(function(resolve, reject) {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 

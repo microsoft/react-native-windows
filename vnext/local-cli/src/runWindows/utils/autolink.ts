@@ -7,7 +7,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as chalk from 'chalk';
-import { performance } from 'perf_hooks';
+import {performance} from 'perf_hooks';
 
 import {newSpinner} from './commandWithProgress';
 import * as vstools from './vstools';
@@ -15,7 +15,10 @@ import * as generatorCommon from '../../generator-common';
 
 import * as configUtils from '../../config/configUtils';
 
-const templateRoot = path.join(__dirname, '../../../generator-windows/templates');
+const templateRoot = path.join(
+  __dirname,
+  '../../../generator-windows/templates',
+);
 
 /**
  * Logs the given message if verbose is True.

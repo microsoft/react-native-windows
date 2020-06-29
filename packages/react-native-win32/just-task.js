@@ -7,6 +7,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const glob = require('glob');
 const {
   task,
   copyTask,
@@ -73,12 +74,16 @@ task('ts', () => {
 
 task('clean', () => {
   const rnSrcFiles = glob.sync('**', {cwd: srcPath});
-  
-  const rnOutputs = new Set(rnSrcFiles.flatMap(srcFile => {
-    const {dir, name} = path.parse(srcFile);
-    const baseName = path.format({dir, name});
-    return glob.sync(`${baseName}*(.d)+(.js|.jsx|.ts|.tsx)*(.map)`, {absolute: true});
-  }));
+
+  const rnOutputs = new Set(
+    rnSrcFiles.flatMap(srcFile => {
+      const {dir, name} = path.parse(srcFile);
+      const baseName = path.format({dir, name});
+      return glob.sync(`${baseName}*(.d)+(.js|.jsx|.ts|.tsx)*(.map)`, {
+        absolute: true,
+      });
+    }),
+  );
 
   logger.info(`Removing ${rnOutputs.size} files`);
   rnOutputs.forEach(fs.unlinkSync);

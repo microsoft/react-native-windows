@@ -19,18 +19,19 @@ const REQUIRED_VERSIONS = {
   },
 };
 
-function shortenVersion (version) {
+function shortenVersion(version) {
   return /^(\d+(?:\.\d+)?)/.exec(version.toString())[1];
 }
 
-function getMinimalRequiredVersionFor (requirement, windowsTargetVersion) {
+function getMinimalRequiredVersionFor(requirement, windowsTargetVersion) {
   return Version.tryParse(REQUIRED_VERSIONS[windowsTargetVersion][requirement]);
 }
 
-function getInstalledWindowsSdks () {
+function getInstalledWindowsSdks() {
   const installedSdks = [];
 
-  const execString = 'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows" /s /v InstallationFolder /reg:32';
+  const execString =
+    'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows" /s /v InstallationFolder /reg:32';
   let output;
   try {
     output = execSync(execString).toString();
@@ -52,19 +53,26 @@ function getInstalledWindowsSdks () {
 
 function checkWinSdk(windowsTargetVersion) {
   const installedSdks = getInstalledWindowsSdks();
-  const requiredVersion = getMinimalRequiredVersionFor('windowssdk', windowsTargetVersion);
-  const hasSdkInstalled = installedSdks.some(installedSdk => installedSdk.eq(requiredVersion));
+  const requiredVersion = getMinimalRequiredVersionFor(
+    'windowssdk',
+    windowsTargetVersion,
+  );
+  const hasSdkInstalled = installedSdks.some(installedSdk =>
+    installedSdk.eq(requiredVersion),
+  );
 
-  if (hasSdkInstalled) { return shortenVersion(requiredVersion); }
+  if (hasSdkInstalled) {
+    return shortenVersion(requiredVersion);
+  }
 
   if (!hasSdkInstalled) {
     const shortenedVersion = shortenVersion(requiredVersion);
     throw new Error(
-      `Windows SDK not found. Ensure that you have installed Windows ${shortenedVersion} SDK along with Visual Studio or install Windows ${shortenedVersion} SDK separately from https://dev.windows.com/en-us/downloads`
+      `Windows SDK not found. Ensure that you have installed Windows ${shortenedVersion} SDK along with Visual Studio or install Windows ${shortenedVersion} SDK separately from https://dev.windows.com/en-us/downloads`,
     );
   }
 }
 
 export function isWinSdkPresent(target) {
   return checkWinSdk(target);
-};
+}

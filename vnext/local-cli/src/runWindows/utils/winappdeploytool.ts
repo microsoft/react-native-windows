@@ -7,11 +7,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 const execSync = require('child_process').execSync;
-import {
-  newSpinner,
-  commandWithProgress,
-  newWarn,
-} from './commandWithProgress';
+import {newSpinner, commandWithProgress, newWarn} from './commandWithProgress';
 
 function sortDevices(l, r) {
   return l.toString().length > r.toString().length;

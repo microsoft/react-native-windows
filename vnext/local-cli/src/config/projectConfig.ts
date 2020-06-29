@@ -56,7 +56,10 @@ module.exports = {
  * @param {object} userConfig A manually specified override config.
  * @return {object} The config if any RNW apps exist.
  */
-function projectConfigWindows(folder: string, userConfig: Record<string, any> = {}) {
+function projectConfigWindows(
+  folder: string,
+  userConfig: Record<string, any> = {},
+) {
   if (userConfig === null) {
     return null;
   }

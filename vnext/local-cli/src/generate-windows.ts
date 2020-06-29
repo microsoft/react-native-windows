@@ -9,7 +9,7 @@ import * as path from 'path';
 import {
   copyProjectTemplateAndReplace,
   installDependencies,
- } from './generator-windows';
+} from './generator-windows';
 
 /**
  * Simple utility for running the Windows generator.
@@ -19,7 +19,12 @@ import {
  * @param  ns         namespace for the project
  * @param  {Object} options    command line options container
  */
-export default function generateWindows (projectDir: string, name: string, ns: string, options) {
+export default function generateWindows(
+  projectDir: string,
+  name: string,
+  ns: string,
+  options,
+) {
   if (!fs.existsSync(projectDir)) {
     fs.mkdirSync(projectDir);
   }
@@ -36,6 +41,6 @@ export default function generateWindows (projectDir: string, name: string, ns: s
       language: options.language,
       experimentalNuGetDependency: options.experimentalNuGetDependency,
       useWinUI3: options.useWinUI3,
-    }
+    },
   );
 }

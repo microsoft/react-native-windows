@@ -29,7 +29,11 @@ class MSBuildTools {
    * @param path  Path to MSBuild.exe (x86)
    * @param installationVersion is the full version e.g. 16.3.29411.108
    */
-  constructor(public readonly version, private path: string, public readonly installationVersion) {}
+  constructor(
+    public readonly version,
+    private path: string,
+    public readonly installationVersion,
+  ) {}
 
   cleanProject(slnFile) {
     const cmd = `"${path.join(
@@ -283,7 +287,7 @@ export function findAvailableVersion(buildArch, verbose) {
     }
   }
   return msbuildTools;
-};
+}
 
 function getSDK10InstallationFolder() {
   const folder = '';
@@ -344,4 +348,4 @@ export function getAllAvailableUAPVersions() {
     .forEach(version => version && results.push(version));
 
   return results;
-};
+}

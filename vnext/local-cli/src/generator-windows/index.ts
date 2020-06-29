@@ -12,10 +12,7 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as semver from 'semver';
-import {
-  readProjectFile,
-  findPropertyValue,
-} from '../config/configUtils';
+import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
   createDir,
@@ -32,26 +29,52 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
   if (os.platform() === 'win32') {
     try {
       const timeout = 10000; // 10 seconds;
-      const thumbprint = childProcess.execSync(`powershell -command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`, {timeout}).toString().trim();
+      const thumbprint = childProcess
+        .execSync(
+          `powershell -command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`,
+          {timeout},
+        )
+        .toString()
+        .trim();
       if (!fs.existsSync(path.join(windowsDir, newProjectName))) {
         fs.mkdirSync(path.join(windowsDir, newProjectName));
       }
-      childProcess.execSync(`powershell -command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd"`, {timeout});
-      console.log(chalk.green('Self-signed certificate generated successfully.'));
+      childProcess.execSync(
+        `powershell -command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(
+          windowsDir,
+          newProjectName,
+          newProjectName,
+        )}_TemporaryKey.pfx -Password $pwd"`,
+        {timeout},
+      );
+      console.log(
+        chalk.green('Self-signed certificate generated successfully.'),
+      );
       return thumbprint;
-      } catch (err) {
-        console.log(chalk.yellow('Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.'));
-        toCopyTempKey = true;
-      }
-    } else {
-    console.log(chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'));
+    } catch (err) {
+      console.log(
+        chalk.yellow(
+          'Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.',
+        ),
+      );
+      toCopyTempKey = true;
+    }
+  } else {
+    console.log(
+      chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
+    );
     toCopyTempKey = true;
   }
   if (toCopyTempKey) {
     copyAndReplaceWithChangedCallback(
       path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
       destPath,
-      path.join(windowsDir, newProjectName, newProjectName + '_TemporaryKey.pfx'));
+      path.join(
+        windowsDir,
+        newProjectName,
+        newProjectName + '_TemporaryKey.pfx',
+      ),
+    );
   }
 }
 
@@ -59,7 +82,7 @@ export function copyProjectTemplateAndReplace(
   srcRootPath,
   destPath,
   newProjectName,
-  options: Record<string, any> = {}
+  options: Record<string, any> = {},
 ) {
   if (!srcRootPath) {
     throw new Error('Need a path to copy from');
@@ -94,22 +117,32 @@ export function copyProjectTemplateAndReplace(
   const rnwVersion = require('react-native-windows/package.json').version;
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
-  const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
+  const certificateThumbprint = generateCertificate(
+    srcPath,
+    destPath,
+    newProjectName,
+    currentUser,
+  );
 
-  const xamlNamespace = options.useWinUI3 ? 'Microsoft.UI.Xaml' : 'Windows.UI.Xaml';
+  const xamlNamespace = options.useWinUI3
+    ? 'Microsoft.UI.Xaml'
+    : 'Windows.UI.Xaml';
   const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
 
-  const winui3PropsPath = require.resolve('react-native-windows/PropertySheets/WinUI.props', {paths: [process.cwd()]});
+  const winui3PropsPath = require.resolve(
+    'react-native-windows/PropertySheets/WinUI.props',
+    {paths: [process.cwd()]},
+  );
   const winui3Props = readProjectFile(winui3PropsPath);
   const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
 
-  const cppNugetPackages : Array<{
-    id: string,
-    version: string,
-    propsTopOfFile?: boolean,
-    propsMiddleOfFile?: boolean,
-    hasProps: boolean,
-    hasTargets: boolean,
+  const cppNugetPackages: Array<{
+    id: string;
+    version: string;
+    propsTopOfFile?: boolean;
+    propsMiddleOfFile?: boolean;
+    hasProps: boolean;
+    hasTargets: boolean;
   }> = [
     {
       id: 'Microsoft.Windows.CppWinRT',
@@ -127,22 +160,18 @@ export function copyProjectTemplateAndReplace(
   ];
 
   if (options.experimentalNuGetDependency) {
-    cppNugetPackages.push(
-      {
-        id: 'Microsoft.ReactNative',
-        version: rnwVersion,
-        propsMiddleOfFile: true,
-        hasProps: false,
-        hasTargets: true,
-      },
-    );
+    cppNugetPackages.push({
+      id: 'Microsoft.ReactNative',
+      version: rnwVersion,
+      propsMiddleOfFile: true,
+      hasProps: false,
+      hasTargets: true,
+    });
   }
 
   const templateVars: Record<string, any> = {
     useMustache: true,
-    regExpPatternsToRemove: [
-      '//\\sclang-format\\s(on|off)\\s',
-    ],
+    regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s'],
 
     name: newProjectName,
     namespace: namespace,
@@ -176,50 +205,134 @@ export function copyProjectTemplateAndReplace(
   };
 
   [
-    { from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js' },
-    { from: path.join(srcRootPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
-    { from: path.join(srcRootPath, 'b_gitignore'), to: path.join(windowsDir, newProjectName, '.gitignore') },
-    { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, bundleDir, 'index.windows.bundle') },
-    { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
-  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+    {from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js'},
+    {
+      from: path.join(srcRootPath, '_gitignore'),
+      to: path.join(windowsDir, '.gitignore'),
+    },
+    {
+      from: path.join(srcRootPath, 'b_gitignore'),
+      to: path.join(windowsDir, newProjectName, '.gitignore'),
+    },
+    {
+      from: path.join(srcRootPath, 'index.windows.bundle'),
+      to: path.join(
+        windowsDir,
+        newProjectName,
+        bundleDir,
+        'index.windows.bundle',
+      ),
+    },
+    {
+      from: path.join(srcPath, projDir, 'MyApp.sln'),
+      to: path.join(windowsDir, newProjectName + '.sln'),
+    },
+  ].forEach(mapping =>
+    copyAndReplaceWithChangedCallback(
+      mapping.from,
+      destPath,
+      mapping.to,
+      templateVars,
+      options.overwrite,
+    ),
+  );
 
   if (language === 'cs') {
     [
-      { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
-    ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
-  }
-  else {
+      {
+        from: path.join(srcPath, projDir, 'MyApp.csproj'),
+        to: path.join(windowsDir, newProjectName, newProjectName + '.csproj'),
+      },
+    ].forEach(mapping =>
+      copyAndReplaceWithChangedCallback(
+        mapping.from,
+        destPath,
+        mapping.to,
+        templateVars,
+        options.overwrite,
+      ),
+    );
+  } else {
     [
-      { from: path.join(srcPath, projDir, 'MyApp.vcxproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj') },
-      { from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj.filters') },
-      { from: path.join(srcPath, projDir, 'packages.config'), to: path.join(windowsDir, newProjectName, 'packages.config') },
-  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+      {
+        from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
+        to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj'),
+      },
+      {
+        from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'),
+        to: path.join(
+          windowsDir,
+          newProjectName,
+          newProjectName + '.vcxproj.filters',
+        ),
+      },
+      {
+        from: path.join(srcPath, projDir, 'packages.config'),
+        to: path.join(windowsDir, newProjectName, 'packages.config'),
+      },
+    ].forEach(mapping =>
+      copyAndReplaceWithChangedCallback(
+        mapping.from,
+        destPath,
+        mapping.to,
+        templateVars,
+        options.overwrite,
+      ),
+    );
 
-  // Once we are publishing to nuget.org, this shouldn't be needed anymore
-  if (options.experimentalNuGetDependency) {
-    [
-      { from: path.join(srcPath, projDir, 'NuGet.Config'), to: path.join(windowsDir, 'NuGet.Config') },
-  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
-  }
+    // Once we are publishing to nuget.org, this shouldn't be needed anymore
+    if (options.experimentalNuGetDependency) {
+      [
+        {
+          from: path.join(srcPath, projDir, 'NuGet.Config'),
+          to: path.join(windowsDir, 'NuGet.Config'),
+        },
+      ].forEach(mapping =>
+        copyAndReplaceWithChangedCallback(
+          mapping.from,
+          destPath,
+          mapping.to,
+          templateVars,
+          options.overwrite,
+        ),
+      );
+    }
   }
 
-  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars, options.overwrite);
-  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars, options.overwrite);
+  copyAndReplaceAll(
+    path.join(srcPath, 'assets'),
+    destPath,
+    path.join(windowsDir, newProjectName, 'Assets'),
+    templateVars,
+    options.overwrite,
+  );
+  copyAndReplaceAll(
+    path.join(srcPath, 'src'),
+    destPath,
+    path.join(windowsDir, newProjectName),
+    templateVars,
+    options.overwrite,
+  );
 
   console.log(chalk.white.bold('To run your app on UWP:'));
   console.log(chalk.white('   npx react-native run-windows'));
 }
 
 function toCppNamespace(namespace) {
-  return namespace.replace(/\./g, '::',);
+  return namespace.replace(/\./g, '::');
 }
 
 export function installDependencies(options) {
   const cwd = process.cwd();
 
   // Extract react-native peer dependency version
-  const rnwPackageJsonPath = require.resolve('react-native-windows/package.json', {paths: [process.cwd()]});
-  const rnwPackageJson = JSON.parse(fs.readFileSync(rnwPackageJsonPath, { encoding: 'UTF8' }));
+  const rnwPackageJsonPath = require.resolve(
+    'react-native-windows/package.json',
+    {paths: [process.cwd()]},
+  );
+  const rnwPackageJson = JSON.parse(
+    fs.readFileSync(rnwPackageJsonPath, {encoding: 'UTF8'}),
+  );
   let rnPeerDependency = rnwPackageJson.peerDependencies['react-native'];
   const depDelim = ' || ';
   const delimIndex = rnPeerDependency.indexOf(depDelim);
@@ -227,22 +340,36 @@ export function installDependencies(options) {
     rnPeerDependency = rnPeerDependency.slice(0, delimIndex);
   }
 
-  const rnPackageJsonPath = require.resolve('react-native/package.json', {paths: [process.cwd()]});
-  const rnPackageJson = JSON.parse(fs.readFileSync(rnPackageJsonPath, { encoding: 'UTF8' }));
+  const rnPackageJsonPath = require.resolve('react-native/package.json', {
+    paths: [process.cwd()],
+  });
+  const rnPackageJson = JSON.parse(
+    fs.readFileSync(rnPackageJsonPath, {encoding: 'UTF8'}),
+  );
 
   if (!semver.satisfies(rnPackageJson.version, rnPeerDependency)) {
-    console.log(chalk.green('Installing a compatible version of react-native:'));
+    console.log(
+      chalk.green('Installing a compatible version of react-native:'),
+    );
     console.log(chalk.white(`    ${rnPeerDependency}`));
 
     // Patch package.json to have proper react-native version and install
     const projectPackageJsonPath = path.join(cwd, 'package.json');
-    const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
+    const projectPackageJson = JSON.parse(
+      fs.readFileSync(projectPackageJsonPath, {encoding: 'UTF8'}),
+    );
     projectPackageJson.scripts.windows = 'react-native run-windows';
     projectPackageJson.dependencies['react-native'] = rnPeerDependency;
-    fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
+    fs.writeFileSync(
+      projectPackageJsonPath,
+      JSON.stringify(projectPackageJson, null, 2),
+    );
 
     // Install dependencies using correct package manager
     const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
-    childProcess.execSync(isYarn ? 'yarn' : 'npm i', options && options.verbose ? { stdio: 'inherit' } : {});
+    childProcess.execSync(
+      isYarn ? 'yarn' : 'npm i',
+      options && options.verbose ? {stdio: 'inherit'} : {},
+    );
   }
 }

@@ -19,7 +19,7 @@ const {
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
   parallel,
-  logger
+  logger,
 } = require('just-scripts');
 const {execSync} = require('child_process');
 const fs = require('fs');
@@ -65,7 +65,9 @@ task('copyReadmeFromRoot', () => {
   );
 });
 
-task('compileTsPlatformOverrides',  tscTask({
+task(
+  'compileTsPlatformOverrides',
+  tscTask({
     project: path.join(srcPath, 'tsconfig.json'),
     pretty: true,
     ...(argv().production && {
@@ -73,20 +75,28 @@ task('compileTsPlatformOverrides',  tscTask({
     }),
     target: 'es5',
     module: 'commonjs',
-}));
+  }),
+);
 
-task('compileLocalCli', tscTask({
-    project: path.join('./local-cli/tsconfig.json')
-}));
+task(
+  'compileLocalCli',
+  tscTask({
+    project: path.join('./local-cli/tsconfig.json'),
+  }),
+);
 
 task('cleanRNLibraries', () => {
   const rnSrcFiles = glob.sync('**', {cwd: srcPath});
-  
-  const rnOutputs = new Set(rnSrcFiles.flatMap(srcFile => {
-    const {dir, name} = path.parse(srcFile);
-    const baseName = path.format({dir, name});
-    return glob.sync(`${baseName}*(.d)+(.js|.jsx|.ts|.tsx)*(.map)`, {absolute: true});
-  }));
+
+  const rnOutputs = new Set(
+    rnSrcFiles.flatMap(srcFile => {
+      const {dir, name} = path.parse(srcFile);
+      const baseName = path.format({dir, name});
+      return glob.sync(`${baseName}*(.d)+(.js|.jsx|.ts|.tsx)*(.map)`, {
+        absolute: true,
+      });
+    }),
+  );
 
   logger.info(`Removing ${rnOutputs.size} files`);
   rnOutputs.forEach(fs.unlinkSync);
@@ -107,7 +117,7 @@ task(
       condition('apiExtractorVerify', () => argv().ci),
     ),
     'compileLocalCli',
-  )
+  ),
 );
 
 task('clean', series('cleanRNLibraries', 'cleanLocalCli'));

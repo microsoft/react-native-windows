@@ -231,7 +231,10 @@ export function readProjectFile(projectPath: string) {
  * @param propertyName The property to look for.
  * @return The value of the tag if it exists.
  */
-export function findPropertyValue(projectContents, propertyName: string): string {
+export function findPropertyValue(
+  projectContents,
+  propertyName: string,
+): string {
   var nodes = msbuildSelect(
     `//msbuild:PropertyGroup/msbuild:${propertyName}`,
     projectContents,
@@ -251,7 +254,10 @@ export function findPropertyValue(projectContents, propertyName: string): string
  * @param projectName The project to look for.
  * @return If the target exists.
  */
-export function importProjectExists(projectContents, projectName: string): boolean {
+export function importProjectExists(
+  projectContents,
+  projectName: string,
+): boolean {
   var nodes = msbuildSelect(
     `//msbuild:Import[contains(@Project,'${projectName}')]`,
     projectContents,
