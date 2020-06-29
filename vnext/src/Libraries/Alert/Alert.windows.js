@@ -6,8 +6,8 @@
  */
 'use strict';
 
-const NativeModules = require('../BatchedBridge/NativeModules');
-const AlertNative = NativeModules.Alert;
+import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+const AlertNative = TurboModuleRegistry.getEnforcing('Alert');
 
 export type AlertType =
   | 'default'
@@ -39,7 +39,7 @@ class Alert {
     // The text 'OK' should be probably localized. iOS Alert does that in native.
     const validButtons: Buttons = buttons
       ? buttons.slice(0, 3)
-      : [{text: 'OK'}];
+      : [{ text: 'OK' }];
     const buttonPositive = validButtons.pop();
     const buttonNegative = validButtons.pop();
     const buttonNeutral = validButtons.pop();

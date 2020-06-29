@@ -11,8 +11,8 @@
 'use strict';
 
 // [Windows
-const NativeModules = require('../BatchedBridge/NativeModules');
-const PLYAlertManager = NativeModules.PLYAlertManager;
+import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+const AlertNative = TurboModuleRegistry.getEnforcing('Alert');
 // Windows]
 
 export type AlertType =
