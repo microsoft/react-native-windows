@@ -13,6 +13,9 @@
     <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
+    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Debug'" Label="Configuration">true</LinkIncremental>
+    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Release'" Label="Configuration">false</LinkIncremental>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">
@@ -95,6 +98,9 @@
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
         WIN32_LEAN_AND_MEAN;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(EnableWinRtLeanAndMean)' == 'true'">
         WINRT_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
