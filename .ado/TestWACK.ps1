@@ -1,7 +1,6 @@
 param([string]$Platform, [string]$Configuration, [string]$OutputPath)
 
 $exceptions = @(
-    'API __C_specific_handler in kernel32.dll is not supported for this application type. Microsoft.ReactNative.dll calls this API.'
 );
 
 if (!(Test-Path $OutputPath)) {
@@ -20,6 +19,7 @@ if ($Configuration -eq 'Release') {
     $errors = $supportedApiTest.MESSAGES.MESSAGE.TEXT | Where-Object { $_ -notin $exceptions }
 
     if ($errors.Length -ne 0) {
+        # Throw in order to break the AzureDevOps pipeline 
         throw $errors
     }
 }
