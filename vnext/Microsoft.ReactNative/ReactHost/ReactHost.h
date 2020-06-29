@@ -180,7 +180,7 @@ Mso::Future<void> ReactHost::PostInQueue(TCallback &&callback) noexcept {
   using Callback = std::decay_t<TCallback>;
   return Mso::PostFuture(
       m_executor,
-      [weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)}]() mutable noexcept {
+      [ weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)} ]() mutable noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           return callback();
         }

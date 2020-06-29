@@ -211,7 +211,7 @@ struct CallbackCreator<TCallback<void(TArgs...)>> {
   static TCallback<void(TArgs...)> Create(
       IJSValueWriter const &argWriter,
       MethodResultCallback const &callback) noexcept {
-    return TCallback([callback, argWriter](TArgs... args) noexcept {
+    return TCallback([ callback, argWriter ](TArgs... args) noexcept {
       WriteArgs(argWriter, std::move(args)...);
       callback(argWriter);
     });
@@ -224,7 +224,7 @@ struct CallbackCreator<TCallback<void(TArgs...) noexcept>> {
   static TCallback<void(TArgs...)> Create(
       IJSValueWriter const &argWriter,
       MethodResultCallback const &callback) noexcept {
-    return TCallback([callback, argWriter](TArgs... args) noexcept {
+    return TCallback([ callback, argWriter ](TArgs... args) noexcept {
       WriteArgs(argWriter, std::move(args)...);
       callback(argWriter);
     });
@@ -392,7 +392,7 @@ struct ModuleInitMethodInfo<void (TModule::*)(ReactContext const &) noexcept> {
   using MethodType = void (TModule::*)(ReactContext const &) noexcept;
 
   static InitializerDelegate GetInitializer(void *module, MethodType method) noexcept {
-    return [module = static_cast<ModuleType *>(module), method](ReactContext const &reactContext) noexcept {
+    return [ module = static_cast<ModuleType *>(module), method ](ReactContext const &reactContext) noexcept {
       (module->*method)(reactContext);
     };
   }
@@ -491,11 +491,11 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> : ModuleMethodI
       std::index_sequence<ArgIndex...>,
       std::index_sequence<CallbackIndex...>,
       std::index_sequence<PromiseIndex...>) noexcept {
-    return [module, method](
-               IJSValueReader const &argReader,
-               [[maybe_unused]] IJSValueWriter const &argWriter,
-               [[maybe_unused]] MethodResultCallback const &resolve,
-               [[maybe_unused]] MethodResultCallback const &reject) mutable noexcept {
+    return [ module, method ](
+        IJSValueReader const &argReader,
+        [[maybe_unused]] IJSValueWriter const &argWriter,
+        [[maybe_unused]] MethodResultCallback const &resolve,
+        [[maybe_unused]] MethodResultCallback const &reject) mutable noexcept {
       typename Super::InputArgTuple inputArgs{};
       ReadArgs(argReader, std::get<ArgIndex>(inputArgs)...);
       if constexpr (!Super::IsVoidResult) {
@@ -549,10 +549,10 @@ struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> : ModuleMethodInfoBase<T
       std::index_sequence<CallbackIndex...>,
       std::index_sequence<PromiseIndex...>) noexcept {
     return [method](
-               IJSValueReader const &argReader,
-               [[maybe_unused]] IJSValueWriter const &argWriter,
-               [[maybe_unused]] MethodResultCallback const &resolve,
-               [[maybe_unused]] MethodResultCallback const &reject) mutable noexcept {
+        IJSValueReader const &argReader,
+        [[maybe_unused]] IJSValueWriter const &argWriter,
+        [[maybe_unused]] MethodResultCallback const &resolve,
+        [[maybe_unused]] MethodResultCallback const &reject) mutable noexcept {
       typename Super::InputArgTuple inputArgs{};
       ReadArgs(argReader, std::get<ArgIndex>(inputArgs)...);
       if constexpr (!Super::IsVoidResult) {
@@ -613,7 +613,7 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept>
 
   template <size_t... I>
   static SyncMethodDelegate GetFunc(ModuleType *module, MethodType method, std::index_sequence<I...>) noexcept {
-    return [module, method](IJSValueReader const &argReader, IJSValueWriter const &argWriter) mutable noexcept {
+    return [ module, method ](IJSValueReader const &argReader, IJSValueWriter const &argWriter) mutable noexcept {
       using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
       ArgTuple typedArgs{};
       ReadArgs(argReader, std::get<I>(typedArgs)...);
@@ -670,7 +670,8 @@ struct ModuleConstFieldInfo<TValue TModule::*> {
   using FieldType = TValue TModule::*;
 
   static ConstantProviderDelegate GetConstantProvider(void *module, std::wstring_view name, FieldType field) noexcept {
-    return [module = static_cast<ModuleType *>(module), name, field](IJSValueWriter const &argWriter) mutable noexcept {
+    return
+        [ module = static_cast<ModuleType *>(module), name, field ](IJSValueWriter const &argWriter) mutable noexcept {
       WriteProperty(argWriter, name, module->*field);
     };
   }
@@ -682,7 +683,9 @@ struct ModuleConstFieldInfo<TValue *> {
 
   static ConstantProviderDelegate
   GetConstantProvider(void * /*module*/, std::wstring_view name, FieldType field) noexcept {
-    return [name, field](IJSValueWriter const &argWriter) mutable noexcept { WriteProperty(argWriter, name, *field); };
+    return [ name, field ](IJSValueWriter const &argWriter) mutable noexcept {
+      WriteProperty(argWriter, name, *field);
+    };
   }
 };
 
@@ -711,7 +714,7 @@ struct ModuleConstantInfo<void (TModule::*)(ReactConstantProvider &) noexcept> {
   using MethodType = void (TModule::*)(ReactConstantProvider &) noexcept;
 
   static ConstantProviderDelegate GetConstantProvider(void *module, MethodType method) noexcept {
-    return [module = static_cast<ModuleType *>(module), method](IJSValueWriter const &argWriter) mutable noexcept {
+    return [ module = static_cast<ModuleType *>(module), method ](IJSValueWriter const &argWriter) mutable noexcept {
       ReactConstantProvider constantProvider{argWriter};
       (module->*method)(constantProvider);
     };
@@ -744,9 +747,9 @@ struct ModuleEventFieldInfo<TFunc<void(TArgs...)> TModule::*> {
       FieldType field,
       std::wstring_view eventName,
       std::wstring_view eventEmitterName) noexcept {
-    return [module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName](
-               IReactContext const &reactContext) noexcept {
-      module->*field = [reactContext, eventEmitterName, eventName](TArgs... args) noexcept {
+    return [ module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName ](
+        IReactContext const &reactContext) noexcept {
+      module->*field = [ reactContext, eventEmitterName, eventName ](TArgs... args) noexcept {
         reactContext.EmitJSEvent(
             eventEmitterName, eventName, [&args...]([[maybe_unused]] IJSValueWriter const &argWriter) noexcept {
               (void)argWriter; // [[maybe_unused]] above does not work
@@ -771,9 +774,9 @@ struct ModuleFunctionFieldInfo<TFunc<void(TArgs...)> TModule::*> {
       FieldType field,
       std::wstring_view functionName,
       std::wstring_view moduleName) noexcept {
-    return [module = static_cast<ModuleType *>(module), field, functionName, moduleName](
-               IReactContext const &reactContext) noexcept {
-      module->*field = [reactContext, functionName, moduleName](TArgs... args) noexcept {
+    return [ module = static_cast<ModuleType *>(module), field, functionName, moduleName ](
+        IReactContext const &reactContext) noexcept {
+      module->*field = [ reactContext, functionName, moduleName ](TArgs... args) noexcept {
         reactContext.CallJSFunction(moduleName, functionName, [&args...](IJSValueWriter const &argWriter) noexcept {
           WriteArgs(argWriter, args...);
         });
