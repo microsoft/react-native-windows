@@ -10,6 +10,7 @@ parameters:
   packMicrosoftReactNative: true
   packMicrosoftReactNativeManaged: true
   packMicrosoftReactNativeManagedCodeGen: true
+  signMicrosoft: false
 
 steps:
   - task: DownloadBuildArtifacts@0
@@ -25,6 +26,14 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         slices: ''
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
+
+  - ${{ if eq(parameters.signMicrosoft, true) }}:
+    - task: PkgESCodeSign@10
+      displayName: 'CodeSign all Microsoft.ReactNative Binaries'
+      inputs:
+        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.SignConfig.xml
+        inPathRoot: ${{parameters.nugetroot}}
+        outPathRoot: ${{parameters.nugetroot}}
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
     - template: prep-and-pack-single.yml
@@ -49,3 +58,11 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         slices: ''
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+
+  - ${{ if eq(parameters.signMicrosoft, true) }}:
+    - task: PkgESCodeSign@10
+      displayName: 'CodeSign all Microsoft.ReactNative NuGets'
+      inputs:
+        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.NugetSignConfig.xml
+        inPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
+        outPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
