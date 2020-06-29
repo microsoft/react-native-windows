@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Stop generating extra files in MS.RN.ComponentTests",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-06-28T18:36:54.466Z"
+}
