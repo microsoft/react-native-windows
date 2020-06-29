@@ -163,7 +163,7 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
 
 function getMatchingReactNativeSemVerForReactNativeWindowsVersion(
   rnwVersion: string,
-) : string {
+): string {
   const validVersion = semver.valid(rnwVersion);
   if (validVersion) {
     const major = semver.major(validVersion);
