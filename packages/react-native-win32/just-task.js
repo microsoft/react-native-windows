@@ -18,9 +18,8 @@ const {
   eslintTask,
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
-  cleanTask,
+  logger,
 } = require('just-scripts');
-const libPath = path.resolve(process.cwd(), 'lib');
 const srcPath = path.resolve(process.cwd(), 'src');
 
 option('production');
@@ -43,7 +42,7 @@ task('eslint', () => {
 task('eslint:fix', () => {
   return eslintTask({fix: true});
 });
-task('copyFlowFiles', () => {
+task('copyFlowPlatformOverrides', () => {
   return copyTask(['src/**/*.js'], '.');
 });
 task('copyPngFiles', () => {
@@ -52,7 +51,7 @@ task('copyPngFiles', () => {
 task('copyTypescriptTypeDefFiles', () => {
   return copyTask(['src/**/*.d.ts'], '.');
 });
-task('initRNLibraries', () => {
+task('copyRNLibraries', () => {
   require('../../vnext/scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
 
@@ -71,12 +70,18 @@ task('ts', () => {
     module: 'commonjs',
   });
 });
+
 task('clean', () => {
-  return cleanTask(
-    ['dist', 'flow', 'jest', 'Libraries', 'RNTester'].map(p =>
-      path.join(process.cwd(), p),
-    ),
-  );
+  const rnSrcFiles = glob.sync('**', {cwd: srcPath});
+  
+  const rnOutputs = new Set(rnSrcFiles.flatMap(srcFile => {
+    const {dir, name} = path.parse(srcFile);
+    const baseName = path.format({dir, name});
+    return glob.sync(`${baseName}*(.d)+(.js|.jsx|.ts|.tsx)*(.map)`, {absolute: true});
+  }));
+
+  logger.info(`Removing ${rnOutputs.size} files`);
+  rnOutputs.forEach(fs.unlinkSync);
 });
 
 function ensureDirectoryExists(filePath) {
@@ -100,8 +105,8 @@ task(
   'build',
   series(
     condition('clean', () => argv().clean),
-    'initRNLibraries',
-    'copyFlowFiles',
+    'copyRNLibraries',
+    'copyFlowPlatformOverrides',
     'copyPngFiles',
     'copyTypescriptTypeDefFiles',
     'ts',

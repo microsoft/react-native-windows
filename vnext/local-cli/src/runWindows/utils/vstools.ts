@@ -3,11 +3,10 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as chalk from 'chalk';
 
 const projectTypeGuidsByLanguage = {
   cpp: '{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}',
@@ -79,18 +78,18 @@ function getBlockContentsFromLines(
 
 /**
  * Adds the necessary info from a VS project into a VS solution file so that it will build.
- * @param {string} slnFile The Absolute path to the target VS solution file.
+ * @param slnFile The Absolute path to the target VS solution file.
  * @param {object} project The object representing the project info.
- * @param {boolean} verbose If true, enable verbose logging.
- * @param {boolean} checkMode It true, don't make any changes.
- * @return {boolean} Whether any changes were necessary.
+ * @param verbose If true, enable verbose logging.
+ * @param checkMode It true, don't make any changes.
+ * @return Whether any changes were necessary.
  */
-function addProjectToSolution(
-  slnFile,
+export function addProjectToSolution(
+  slnFile: string,
   project,
-  verbose = false,
-  checkMode = false,
-) {
+  verbose: boolean = false,
+  checkMode: boolean = false,
+): boolean {
   if (verbose) {
     console.log(
       `Processing ${chalk.bold(path.basename(project.projectFile))}...`,
@@ -207,7 +206,3 @@ function addProjectToSolution(
 
   return contentsChanged;
 }
-
-module.exports = {
-  addProjectToSolution: addProjectToSolution,
-};

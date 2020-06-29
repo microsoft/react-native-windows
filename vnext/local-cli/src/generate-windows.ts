@@ -1,21 +1,25 @@
-'use strict';
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-const fs = require('fs');
-const path = require('path');
-const {
+import * as fs from 'fs';
+import * as path from 'path';
+import {
   copyProjectTemplateAndReplace,
   installDependencies,
- } = require('./generator-windows');
+ } from './generator-windows';
 
 /**
  * Simple utility for running the Windows generator.
  *
- * @param  {String} projectDir root project directory (i.e. contains index.js)
- * @param  {String} name       name of the root JS module for this app
- * @param  {String} ns         namespace for the project
+ * @param  projectDir root project directory (i.e. contains index.js)
+ * @param  name       name of the root JS module for this app
+ * @param  ns         namespace for the project
  * @param  {Object} options    command line options container
  */
-function generateWindows (projectDir, name, ns, options) {
+export default function generateWindows (projectDir: string, name: string, ns: string, options) {
   if (!fs.existsSync(projectDir)) {
     fs.mkdirSync(projectDir);
   }
@@ -23,7 +27,7 @@ function generateWindows (projectDir, name, ns, options) {
   installDependencies(options);
 
   copyProjectTemplateAndReplace(
-    path.join(__dirname, 'generator-windows', 'templates'),
+    path.join(__dirname, '..', 'generator-windows', 'templates'),
     projectDir,
     name,
     {
@@ -35,5 +39,3 @@ function generateWindows (projectDir, name, ns, options) {
     }
   );
 }
-
-module.exports = generateWindows;

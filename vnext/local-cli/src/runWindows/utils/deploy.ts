@@ -3,18 +3,15 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
 
-const {spawn, execSync} = require('child_process');
-const fs = require('fs');
-const http = require('http');
-const path = require('path');
-const glob = require('glob');
-const parse = require('xml-parser');
-const child_process = require('child_process');
-const EOL = require('os').EOL;
-const WinAppDeployTool = require('./winappdeploytool');
+import {spawn, execSync, SpawnOptions} from 'child_process';
+import * as fs from 'fs';
+import * as http from 'http';
+import * as path from 'path';
+import * as glob from 'glob';
+import * as parse from 'xml-parser';
+import {EOL} from 'os';
+import WinAppDeployTool from './winappdeploytool';
 const {
   newInfo,
   newSuccess,
@@ -24,7 +21,7 @@ const {
   commandWithProgress,
   runPowerShellScriptFunction,
 } = require('./commandWithProgress');
-const build = require('./build');
+import * as build from './build';
 
 function pushd(pathArg) {
   const cwd = process.cwd();
@@ -32,7 +29,7 @@ function pushd(pathArg) {
   return () => process.chdir(cwd);
 }
 
-function getBuildConfiguration(options) {
+export function getBuildConfiguration(options) {
   return (
     (options.release ? 'Release' : 'Debug') + (options.bundle ? 'Bundle' : '')
   );
@@ -86,6 +83,10 @@ function getWindowsStoreAppUtils(options) {
   const popd = pushd(options.root);
   const windowsStoreAppUtilsPath = path.resolve(
     __dirname,
+    '..',
+    '..',
+    '..',
+    'powershell',
     'WindowsStoreAppUtils.ps1',
   );
   execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
@@ -129,7 +130,7 @@ function handleResponseError(e) {
 }
 
 // Errors: 0x80073d10 - bad architecture
-async function deployToDevice(options, verbose) {
+export async function deployToDevice(options, verbose) {
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -177,7 +178,7 @@ async function deployToDevice(options, verbose) {
   }
 }
 
-async function deployToDesktop(options, verbose, slnFile) {
+export async function deployToDesktop(options, verbose, slnFile) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options);
@@ -196,8 +197,7 @@ async function deployToDesktop(options, verbose, slnFile) {
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
-  const vsVersion = child_process
-    .execSync(
+  const vsVersion = execSync(
       `"${vsWherePath}" -version 16 -property catalog_productDisplayVersion`,
     )
     .toString()
@@ -213,7 +213,7 @@ async function deployToDesktop(options, verbose, slnFile) {
       );
     }
     fs.copyFileSync(
-      path.join(path.resolve(__dirname), 'Add-AppDevPackage.ps1'),
+      path.join(path.resolve(__dirname), '..', '..', '..', 'powershell', 'Add-AppDevPackage.ps1'),
       script,
     );
   }
@@ -303,7 +303,7 @@ async function deployToDesktop(options, verbose, slnFile) {
   }
 }
 
-function startServerInNewWindow(options, verbose) {
+export function startServerInNewWindow(options, verbose) {
   return new Promise(resolve => {
     if (options.packager) {
       http
@@ -328,7 +328,7 @@ function launchServer(options, verbose) {
     __dirname,
     '../../../Scripts/launchPackager.bat',
   );
-  const opts = {
+  const opts: SpawnOptions = {
     cwd: options.root,
     detached: true,
     stdio: verbose ? 'inherit' : 'ignore',
@@ -338,10 +338,3 @@ function launchServer(options, verbose) {
     spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts),
   );
 }
-
-module.exports = {
-  getBuildConfiguration,
-  deployToDesktop,
-  deployToDevice,
-  startServerInNewWindow,
-};

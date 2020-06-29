@@ -1,23 +1,27 @@
-// @ts-check
-'use strict';
-const chalk = require('chalk');
-const path = require('path');
-const username = require('username');
-const uuid = require('uuid');
-const childProcess = require('child_process');
-const fs = require('fs');
-const os = require('os');
-const semver = require('semver');
-const {
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
+
+import * as chalk from 'chalk';
+import * as path from 'path';
+import * as username from 'username';
+import * as uuid from 'uuid';
+import * as childProcess from 'child_process';
+import * as fs from 'fs';
+import * as os from 'os';
+import * as semver from 'semver';
+import {
   readProjectFile,
   findPropertyValue,
-} = require('../config/configUtils');
+} from '../config/configUtils';
 
-const {
+import {
   createDir,
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
-} = require('../generator-common');
+} from '../generator-common';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
@@ -51,11 +55,11 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
   }
 }
 
-function copyProjectTemplateAndReplace(
+export function copyProjectTemplateAndReplace(
   srcRootPath,
   destPath,
   newProjectName,
-  options = {}
+  options: Record<string, any> = {}
 ) {
   if (!srcRootPath) {
     throw new Error('Need a path to copy from');
@@ -99,7 +103,14 @@ function copyProjectTemplateAndReplace(
   const winui3Props = readProjectFile(winui3PropsPath);
   const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
 
-  const cppNugetPackages = [
+  const cppNugetPackages : Array<{
+    id: string,
+    version: string,
+    propsTopOfFile?: boolean,
+    propsMiddleOfFile?: boolean,
+    hasProps: boolean,
+    hasTargets: boolean,
+  }> = [
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.200615.7',
@@ -127,7 +138,7 @@ function copyProjectTemplateAndReplace(
     );
   }
 
-  const templateVars = {
+  const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: [
       '//\\sclang-format\\s(on|off)\\s',
@@ -203,7 +214,7 @@ function toCppNamespace(namespace) {
   return namespace.replace(/\./g, '::',);
 }
 
-function installDependencies(options) {
+export function installDependencies(options) {
   const cwd = process.cwd();
 
   // Extract react-native peer dependency version
@@ -235,8 +246,3 @@ function installDependencies(options) {
     childProcess.execSync(isYarn ? 'yarn' : 'npm i', options && options.verbose ? { stdio: 'inherit' } : {});
   }
 }
-
-module.exports = {
-  copyProjectTemplateAndReplace,
-  installDependencies,
-};

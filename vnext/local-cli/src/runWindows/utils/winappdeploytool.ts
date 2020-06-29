@@ -3,23 +3,28 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
 
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 const execSync = require('child_process').execSync;
-const {
+import {
   newSpinner,
   commandWithProgress,
   newWarn,
-} = require('./commandWithProgress');
+} from './commandWithProgress';
 
 function sortDevices(l, r) {
   return l.toString().length > r.toString().length;
 }
 
 class DeviceInfo {
+  public guid;
+  public ip;
+
+  private index;
+  private name;
+  private type;
+
   constructor(deviceIndex, deviceName, deviceType) {
     this.index = deviceIndex;
     this.name = deviceName;
@@ -31,7 +36,9 @@ class DeviceInfo {
   }
 }
 
-class WinAppDeployTool {
+export default class WinAppDeployTool {
+  private path;
+
   constructor() {
     const programFilesPath =
       process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
@@ -43,7 +50,6 @@ class WinAppDeployTool {
       'x86',
       'WinAppDeployCmd.exe',
     );
-    this.targetOSVersion = '10.0';
   }
 
   get isAvailable() {
@@ -71,7 +77,7 @@ class WinAppDeployTool {
       return devices[0];
     }
 
-    const candidateList = devices.filter(device => device.__guid === target);
+    const candidateList = devices.filter(device => device.guid === target);
 
     if (candidateList.length > 0) {
       return candidateList[0];
@@ -99,8 +105,8 @@ class WinAppDeployTool {
       const type = 'device';
 
       const deviceInfo = new DeviceInfo(arrayIndex, name, type);
-      deviceInfo.__ip = ip;
-      deviceInfo.__guid = guid;
+      deviceInfo.ip = ip;
+      deviceInfo.guid = guid;
 
       return deviceInfo;
     });
@@ -114,7 +120,7 @@ class WinAppDeployTool {
     shouldLaunch,
     shouldUpdate,
     pin,
-    verbose,
+    verbose: boolean = false,
   ) {
     const text = `Installing app to ${targetDevice.name}`;
 
@@ -129,7 +135,7 @@ class WinAppDeployTool {
       '-file',
       pathToAppxPackage,
       '-ip',
-      targetDevice.__ip,
+      targetDevice.ip,
     ];
 
     if (pin) {
@@ -144,10 +150,8 @@ class WinAppDeployTool {
       newSpinner(text),
       text,
       this.path,
-      `uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`.split(' '),
+      `uninstall -package ${packageInfo} -ip {$targetDevice.ip}`.split(' '),
       verbose,
     );
   }
 }
-
-module.exports = WinAppDeployTool;

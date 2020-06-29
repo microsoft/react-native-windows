@@ -4,7 +4,7 @@
     "target": "es6",
     "module": "commonjs",
     "jsx": "react",
-    "outDir": ".",
+    "outDir": "..",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -14,11 +14,8 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "strict": true,
-    "rootDir": "src",
-    "paths": {
-      "react-native-windows": ["src/Libraries/react-native/typings-index"] // This mapping is relative to "baseUrl"
-    }
+    "rootDir": "."
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "lib"]
+  "include": ["."],
+  "exclude": []
 }

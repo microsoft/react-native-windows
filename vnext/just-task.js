@@ -8,6 +8,7 @@
 const path = require('path');
 const {
   task,
+  cleanTask,
   copyTask,
   series,
   condition,
@@ -17,11 +18,12 @@ const {
   eslintTask,
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
-  cleanTask,
+  parallel,
+  logger
 } = require('just-scripts');
 const {execSync} = require('child_process');
 const fs = require('fs');
-const libPath = path.resolve(process.cwd(), 'lib');
+const glob = require('glob');
 const srcPath = path.resolve(process.cwd(), 'src');
 
 option('production');
@@ -48,17 +50,11 @@ task('flow-check', () => {
   require('child_process').execSync('npx flow check', {stdio: 'inherit'});
 });
 
-task('eslint', () => {
-  return eslintTask();
-});
-task('eslint:fix', () => {
-  return eslintTask({fix: true});
-});
+task('eslint', eslintTask());
+task('eslint:fix', eslintTask({fix: true}));
 
-task('copyFlowFiles', () => {
-  return copyTask(['src/**/*.js'], '.');
-});
-task('initRNLibraries', () => {
+task('copyFlowPlatformOverrides', copyTask(['src/**/*.js'], '.'));
+task('copyRNLibraries', () => {
   require('./Scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
 
@@ -69,37 +65,52 @@ task('copyReadmeFromRoot', () => {
   );
 });
 
-task('ts', () => {
-  return tscTask({
+task('compileTsPlatformOverrides',  tscTask({
+    project: path.join(srcPath, 'tsconfig.json'),
     pretty: true,
     ...(argv().production && {
       inlineSources: true,
-      sourceRoot: path.relative(libPath, srcPath),
     }),
     target: 'es5',
     module: 'commonjs',
-  });
+}));
+
+task('compileLocalCli', tscTask({
+    project: path.join('./local-cli/tsconfig.json')
+}));
+
+task('cleanRNLibraries', () => {
+  const rnSrcFiles = glob.sync('**', {cwd: srcPath});
+  
+  const rnOutputs = new Set(rnSrcFiles.flatMap(srcFile => {
+    const {dir, name} = path.parse(srcFile);
+    const baseName = path.format({dir, name});
+    return glob.sync(`${baseName}*(.d)+(.js|.jsx|.ts|.tsx)*(.map)`, {absolute: true});
+  }));
+
+  logger.info(`Removing ${rnOutputs.size} files`);
+  rnOutputs.forEach(fs.unlinkSync);
 });
-task('clean', () => {
-  return cleanTask(
-    ['dist', 'flow', 'jest', 'Libraries', 'RNTester'].map(p =>
-      path.join(process.cwd(), p),
-    ),
-  );
-});
+
+task('cleanLocalCli', cleanTask(['local-cli/lib-commonjs']));
 
 task(
   'build',
-  series(
-    condition('clean', () => true || argv().clean),
-    'initRNLibraries',
-    'copyFlowFiles',
-    'copyReadmeFromRoot',
-    'ts',
-    'codegen',
-    condition('apiExtractorVerify', () => argv().ci),
-  ),
+  parallel(
+    series(
+      condition('clean', () => argv().clean),
+      'copyRNLibraries',
+      'copyFlowPlatformOverrides',
+      'copyReadmeFromRoot',
+      'compileTsPlatformOverrides',
+      'codegen',
+      condition('apiExtractorVerify', () => argv().ci),
+    ),
+    'compileLocalCli',
+  )
 );
+
+task('clean', series('cleanRNLibraries', 'cleanLocalCli'));
 
 task('lint', series('eslint', 'flow-check'));
 task('lint:fix', series('eslint:fix'));

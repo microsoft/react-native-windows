@@ -1,9 +1,13 @@
-'use strict';
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 const execSync = require('child_process').execSync;
-const path = require('path');
-const shell = require('shelljs');
-const Version = require('./version');
+import * as path from 'path';
+import * as shell from 'shelljs';
+import Version from './version';
 
 const REQUIRED_VERSIONS = {
   '10.0': {
@@ -46,7 +50,7 @@ function getInstalledWindowsSdks () {
   return installedSdks;
 }
 
-function checkWinSdk (windowsTargetVersion) {
+function checkWinSdk(windowsTargetVersion) {
   const installedSdks = getInstalledWindowsSdks();
   const requiredVersion = getMinimalRequiredVersionFor('windowssdk', windowsTargetVersion);
   const hasSdkInstalled = installedSdks.some(installedSdk => installedSdk.eq(requiredVersion));
@@ -61,6 +65,6 @@ function checkWinSdk (windowsTargetVersion) {
   }
 }
 
-module.exports.isWinSdkPresent = function isWinSdkPresent(target) {
+export function isWinSdkPresent(target) {
   return checkWinSdk(target);
 };

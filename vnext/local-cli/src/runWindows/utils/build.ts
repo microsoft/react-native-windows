@@ -3,26 +3,24 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
 
-const fs = require('fs');
-const https = require('https');
-const os = require('os');
-const path = require('path');
+import * as fs from 'fs';
+import * as https from 'https';
+import * as os from 'os';
+import * as path from 'path';
 
-const MSBuildTools = require('./msbuildtools');
-const Version = require('./version');
+import * as MSBuildTools from './msbuildtools';
+import Version from './version';
 const {
   commandWithProgress,
   newSpinner,
   newError,
 } = require('./commandWithProgress');
-const util = require('util');
+import * as util from 'util';
 
 const existsAsync = util.promisify(fs.exists);
 
-async function buildSolution(
+export async function buildSolution(
   slnFile,
   buildType,
   buildArch,
@@ -72,7 +70,7 @@ async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
   );
 }
 
-async function restoreNuGetPackages(options, slnFile, verbose) {
+export async function restoreNuGetPackages(options, slnFile, verbose) {
   const nugetPath = path.join(os.tmpdir(), 'nuget.4.9.2.exe');
 
   if (!(await existsAsync(nugetPath))) {
@@ -96,7 +94,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
 
 const configErrorString = 'Error: ';
 
-function getAppSolutionFile(options, config) {
+export function getAppSolutionFile(options, config) {
   // Use the solution file if specified
   if (options.sln) {
     return path.join(options.root, options.sln);
@@ -121,7 +119,7 @@ function getAppSolutionFile(options, config) {
   }
 }
 
-function getAppProjectFile(options, config) {
+export function getAppProjectFile(options, config) {
   // Use the project file if specified
   if (options.proj) {
     return path.join(options.root, options.proj);
@@ -157,7 +155,7 @@ function getAppProjectFile(options, config) {
   }
 }
 
-function parseMsBuildProps(options) {
+export function parseMsBuildProps(options): Record<string, any> {
   let result = {};
   if (options.msbuildprops) {
     const props = options.msbuildprops.split(',');
@@ -199,11 +197,3 @@ function downloadFile(url, dest) {
       });
   });
 }
-
-module.exports = {
-  buildSolution,
-  getAppSolutionFile,
-  getAppProjectFile,
-  restoreNuGetPackages,
-  parseMsBuildProps,
-};

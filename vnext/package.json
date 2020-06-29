@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
+    "chalk": "^3.0.0",
     "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
     "envinfo": "^7.5.0",
@@ -44,6 +45,7 @@
     "@microsoft/api-documenter": "^7.3.8",
     "@microsoft/api-extractor": "^7.3.8",
     "@react-native-community/eslint-config": "^1.1.0",
+    "@types/chalk": "^2.2.0",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/ora": "^3.2.0",

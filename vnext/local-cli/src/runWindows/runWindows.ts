@@ -3,17 +3,15 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
 
-const build = require('./utils/build');
-const deploy = require('./utils/deploy');
-const {newError, newInfo} = require('./utils/commandWithProgress');
-const info = require('./utils/info');
-const msbuildtools = require('./utils/msbuildtools');
-const autolink = require('./utils/autolink');
+import * as build from './utils/build';
+import * as deploy from './utils/deploy';
+import {newError, newInfo} from './utils/commandWithProgress';
+import * as info from './utils/info';
+import * as msbuildtools from './utils/msbuildtools';
+import autolink from './utils/autolink';
 
-const chalk = require('chalk');
+import * as chalk from 'chalk';
 
 function ExitProcessWithError(loggingWasEnabled) {
   if (!loggingWasEnabled) {
@@ -26,11 +24,11 @@ function ExitProcessWithError(loggingWasEnabled) {
 
 /**
  * Performs build deploy and launch of RNW apps.
- * @param {array} args Unprocessed args passed from react-native CLI.
+ * @param args Unprocessed args passed from react-native CLI.
  * @param {object} config Config passed from react-native CLI.
  * @param {object} options Options passed from react-native CLI.
  */
-async function runWindows(args, config, options) {
+async function runWindows(args: string[], config, options) {
   const verbose = options.logging;
 
   if (verbose) {

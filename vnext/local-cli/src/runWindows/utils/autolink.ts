@@ -3,20 +3,19 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
-const performance = require('perf_hooks').performance;
+import * as fs from 'fs';
+import * as path from 'path';
+import * as chalk from 'chalk';
+import { performance } from 'perf_hooks';
 
-const {newSpinner} = require('./commandWithProgress');
-const vstools = require('./vstools');
-const generatorCommon = require('../../generator-common');
+import {newSpinner} from './commandWithProgress';
+import * as vstools from './vstools';
+import * as generatorCommon from '../../generator-common';
 
-const configUtils = require('../../config/configUtils');
+import * as configUtils from '../../config/configUtils';
 
-const templateRoot = path.join(__dirname, '../../generator-windows/templates');
+const templateRoot = path.join(__dirname, '../../../generator-windows/templates');
 
 /**
  * Logs the given message if verbose is True.
@@ -476,7 +475,7 @@ async function updateAutoLink(args, config, options) {
   }
 }
 
-module.exports = {
+export default {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,

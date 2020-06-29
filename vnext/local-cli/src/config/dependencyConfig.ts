@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const path = require('path');
+import * as path from 'path';
 
-const configUtils = require('./configUtils.js');
+import * as configUtils from './configUtils.js';
 
 /*
 
@@ -75,11 +74,10 @@ module.exports = {
 
 /**
  * Gets the config of any RNW native modules under the target folder.
- * @param {string} folder The absolute path to the target folder.
  * @param {object} userConfig A manually specified override config.
  * @return {object} The config if any RNW native modules exist.
  */
-function dependencyConfigWindows(folder, userConfig = {}) {
+function dependencyConfigWindows(folder: string, userConfig: Record<string, any> = {}): Record<string, any> {
   if (userConfig === null) {
     return null;
   }
@@ -90,7 +88,7 @@ function dependencyConfigWindows(folder, userConfig = {}) {
   const usingManualNugetPackagesOverride =
     'nugetPackages' in userConfig && Array.isArray(userConfig.nugetPackages);
 
-  var result = {
+  var result: Record<string, any> = {
     folder,
     projects: usingManualProjectsOverride ? userConfig.projects : [],
     nugetPackages: usingManualNugetPackagesOverride

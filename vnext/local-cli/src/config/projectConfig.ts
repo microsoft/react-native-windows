@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const path = require('path');
+import * as path from 'path';
 
-const configUtils = require('./configUtils.js');
+import * as configUtils from './configUtils.js';
 
 /*
 
@@ -53,11 +52,11 @@ module.exports = {
 
 /**
  * Gets the config of any RNW apps under the target folder.
- * @param {string} folder The absolute path to the target folder.
+ * @param folder The absolute path to the target folder.
  * @param {object} userConfig A manually specified override config.
  * @return {object} The config if any RNW apps exist.
  */
-function projectConfigWindows(folder, userConfig = {}) {
+function projectConfigWindows(folder: string, userConfig: Record<string, any> = {}) {
   if (userConfig === null) {
     return null;
   }
@@ -73,7 +72,7 @@ function projectConfigWindows(folder, userConfig = {}) {
     return null;
   }
 
-  var result = {
+  var result: Record<string, any> = {
     folder: folder,
     sourceDir: sourceDir.substr(folder.length + 1),
   };

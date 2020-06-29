@@ -1,18 +1,13 @@
-'use strict';
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 const VERSION_EXPRESSION = /^\d{1,8}(\.\d{1,8}){0,3}$/;
 
-function zeroIfUndefined(val) {
-  return typeof val === 'undefined' ? 0 : val;
-}
-
-class Version {
-  constructor(major, minor, build, qfe) {
-    this.major = major;
-    this.minor = zeroIfUndefined(minor);
-    this.build = zeroIfUndefined(build);
-    this.qfe = zeroIfUndefined(qfe);
-  }
+export default class Version {
+  constructor(private major: number, private minor: number = 0, private build: number = 0, private qfe: number= 0) {}
 
   eq(other) {
     if (other.constructor !== Version) {
@@ -37,7 +32,7 @@ class Version {
     if (this.build > other.build) { return true; }
     if (this.build < other.build) { return false; }
     if (this.qfe > other.qfe) { return true; }
-    if (this.que < other.qfe) { return false; }
+    if (this.qfe < other.qfe) { return false; }
 
     return false;
   }
@@ -54,7 +49,7 @@ class Version {
     if (this.build > other.build) { return true; }
     if (this.build < other.build) { return false; }
     if (this.qfe > other.qfe) { return true; }
-    if (this.que < other.qfe) { return false; }
+    if (this.qfe < other.qfe) { return false; }
 
     return true;
   }
@@ -87,5 +82,3 @@ class Version {
     return null;
   }
 }
-
-module.exports = Version;

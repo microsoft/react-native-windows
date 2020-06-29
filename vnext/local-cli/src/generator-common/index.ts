@@ -1,22 +1,27 @@
-const fs = require('fs');
-const chalk = require('chalk');
-const path = require('path');
-const mustache = require('mustache');
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-/*
-type Options = {
+import * as fs from 'fs';
+import * as chalk from 'chalk';
+import * as path from 'path';
+import * as mustache from 'mustache';
+
+interface Options {
   echo?: string;
   ask?: string;
   value?: string;
   autocomplete?: string[] | Function;
-};*/
+};
 
 const term = 13; // carriage return
 
 function prompt(
-  ask/*?: string | Options*/,
-  value/*?: string | Options*/,
-  opts/*?: Options*/,
+  ask?: string | Options,
+  value?: string | Options,
+  opts?: Options,
 ) {
   let insert = 0;
   opts = opts || {};
@@ -158,11 +163,11 @@ function walk(current/*: string*/)/*: string[]*/ {
 
 /**
  * Get a source file and replace parts of its contents.
- * @param {string} srcPath Path to the source file.
+ * @param srcPath Path to the source file.
  * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
  * @return The contents of the file with the replacements applied.
  */
-function resolveContents(srcPath, replacements) {
+export function resolveContents(srcPath:string , replacements): string {
   let content = fs.readFileSync(srcPath, 'utf8');
 
   if (replacements.useMustache) {
@@ -196,9 +201,9 @@ const binaryExtensions = ['.png', '.jar', '.keystore'];
  *        Function(path, 'identical' | 'changed' | 'new') => 'keep' | 'overwrite'
  */
 function copyAndReplace(
-  srcPath /*: string*/,
-  destPath /*: string*/,
-  replacements /*: Record<string, string>*/,
+  srcPath: string,
+  destPath: string,
+  replacements: Record<string, string>,
   contentChangedCallback/*:
     | ((
         path: string,
@@ -280,9 +285,9 @@ function copyAndReplace(
  * Same as 'cp' on Unix. Don't do any replacements.
  */
 function copyBinaryFile(
-  srcPath/*: string*/,
-  destPath/*: string*/,
-  cb/*: (err?: Error) => void*/,
+  srcPath: string,
+  destPath: string,
+  cb: (err?: Error) => void,
 ) {
   let cbCalled = false;
   const srcPermissions = fs.statSync(srcPath).mode;
@@ -300,7 +305,7 @@ function copyBinaryFile(
     done();
   });
   readStream.pipe(writeStream);
-  function done(err/*?: Error*/) {
+  function done(err?: Error) {
     if (!cbCalled) {
       cb(err);
       cbCalled = true;
@@ -308,13 +313,13 @@ function copyBinaryFile(
   }
 }
 
-function createDir(destPath) {
+export function createDir(destPath) {
   if (!fs.existsSync(destPath)) {
     fs.mkdirSync(destPath);
   }
 }
 
-function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements, alwaysOverwrite) {
+export function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements?: Record<string, string>, alwaysOverwrite?: boolean) {
   if (!replacements) {
     replacements = {};
   }
@@ -338,7 +343,7 @@ function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, 
   );
 }
 
-function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements, alwaysOverwrite) {
+export function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements, alwaysOverwrite) {
   walk(srcPath).forEach(absoluteSrcFilePath => {
     const filename = path.relative(srcPath, absoluteSrcFilePath);
     const relativeDestPath = path.join(relativeDestDir, filename);
@@ -403,7 +408,3 @@ function upgradeFileContentChangedCallback(
     `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`
   );
 }
-
-module.exports = {
-  createDir, resolveContents, copyAndReplaceWithChangedCallback, copyAndReplaceAll,
-};

@@ -3,36 +3,33 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
-const EOL = require('os').EOL;
-const fs = require('fs');
-const path = require('path');
-const child_process = require('child_process');
-const chalk = require('chalk');
-const shell = require('shelljs');
-const Version = require('./version');
-const checkRequirements = require('./checkRequirements');
-const {
+
+import {EOL} from 'os';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as child_process from 'child_process';
+import * as chalk from 'chalk';
+import * as shell from 'shelljs';
+import Version from './version';
+import * as checkRequirements from './checkRequirements';
+import {
   commandWithProgress,
   newInfo,
   newSpinner,
   newSuccess,
   newError,
-} = require('./commandWithProgress');
-const execSync = require('child_process').execSync;
+} from './commandWithProgress';
+import {execSync} from 'child_process';
 
 const MSBUILD_VERSIONS = ['16.0'];
 
 class MSBuildTools {
-  // version is something like 16.0 for 2019
-  // localPath is the path to MSBuild.exe (x86)
-  // installationVersion is the full version e.g. 16.3.29411.108
-  constructor(version, localPath, installationVersion) {
-    this.version = version;
-    this.path = localPath;
-    this.installationVersion = installationVersion;
-  }
+  /**
+   * @param version is something like 16.0 for 2019
+   * @param path  Path to MSBuild.exe (x86)
+   * @param installationVersion is the full version e.g. 16.3.29411.108
+   */
+  constructor(public readonly version, private path: string, public readonly installationVersion) {}
 
   cleanProject(slnFile) {
     const cmd = `"${path.join(
@@ -257,7 +254,7 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 }
 
-module.exports.findAvailableVersion = function(buildArch, verbose) {
+export function findAvailableVersion(buildArch, verbose) {
   const versions =
     process.env.VisualStudioVersion != null
       ? [
@@ -309,7 +306,7 @@ function getSDK10InstallationFolder() {
   return folder;
 }
 
-module.exports.getAllAvailableUAPVersions = function() {
+export function getAllAvailableUAPVersions() {
   const results = [];
 
   const programFilesFolder =
