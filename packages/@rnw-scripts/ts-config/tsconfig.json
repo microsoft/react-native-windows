@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "jsx": "preserve",
+    "jsx": "react-native",
     "sourceMap": true,
     "declaration": true,
     "strict": true,
