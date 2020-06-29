@@ -4,7 +4,7 @@
     <!--
       Disable WINRT_LEAN_AND_MEAN - Allow out-of-library interface implementations
     -->
-    <EnableWinRtLeanAndMean>false</NoWinRtLeanAndMean>
+    <EnableWinRtLeanAndMean>false</EnableWinRtLeanAndMean>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">

@@ -31,7 +31,6 @@
   </ImportGroup>
   <PropertyGroup>
     <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(ReactNativeWindowsDir)JSI\Shared;$(MSBuildProjectDirectory);$(ReactNativeDir)\ReactCommon\callinvoker;$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
