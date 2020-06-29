@@ -416,7 +416,7 @@ You can either downgrade your version of ${chalk.green(
 
     const generateWindows = requireGenerateWindows();
     generateWindows(process.cwd(), name, ns, {
-      language: argv.language,
+      language: argv.language as 'cs'|'cpp',
       overwrite: argv.overwrite,
       verbose: argv.verbose,
       experimentalNuGetDependency: argv.experimentalNuGetDependency,

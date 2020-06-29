@@ -23,7 +23,12 @@ import {
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
 
-function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
+function generateCertificate(
+  srcPath: string,
+  destPath: string,
+  newProjectName: string,
+  currentUser: string,
+) {
   console.log('Generating self-signed certificate...');
   let toCopyTempKey = false;
   if (os.platform() === 'win32') {
@@ -79,10 +84,16 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
 }
 
 export function copyProjectTemplateAndReplace(
-  srcRootPath,
-  destPath,
-  newProjectName,
-  options: Record<string, any> = {},
+  srcRootPath: string,
+  destPath: string,
+  newProjectName: string,
+  namespace: string,
+  options: {
+    overwrite: boolean;
+    language: 'cpp' | 'cs';
+    experimentalNuGetDependency: boolean;
+    useWinUI3: boolean;
+  },
 ) {
   if (!srcRootPath) {
     throw new Error('Need a path to copy from');
@@ -102,7 +113,6 @@ export function copyProjectTemplateAndReplace(
   createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
 
   const language = options.language;
-  const namespace = options.ns || newProjectName;
   const namespaceCpp = toCppNamespace(namespace);
   if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
@@ -322,7 +332,7 @@ function toCppNamespace(namespace) {
   return namespace.replace(/\./g, '::');
 }
 
-export function installDependencies(options) {
+export function installDependencies(options: {verbose: boolean}) {
   const cwd = process.cwd();
 
   // Extract react-native peer dependency version
@@ -369,7 +379,7 @@ export function installDependencies(options) {
     const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
     childProcess.execSync(
       isYarn ? 'yarn' : 'npm i',
-      options && options.verbose ? {stdio: 'inherit'} : {},
+      options.verbose ? {stdio: 'inherit'} : {},
     );
   }
 }
