@@ -193,7 +193,7 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::
           MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
 
-  registerNativeModule(
+  registerTurboModule(
       L"LogBox",
       winrt::Microsoft::ReactNative::
           MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox, ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
