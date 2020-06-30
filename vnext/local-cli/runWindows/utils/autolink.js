@@ -322,6 +322,12 @@ async function updateAutoLink(args, config, options) {
         });
       }
 
+      if (cppPackageProviders === '') {
+        // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
+        // therefore add a usage.
+        cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
+      }
+
       const cppFileName = 'AutolinkedNativeModules.g.cpp';
 
       const srcCppFile = path.join(
