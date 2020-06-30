@@ -203,7 +203,7 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::
           MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard, ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
 
-  registerNativeModule(
+  registerTurboModule(
       L"DeviceInfo",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
           ::Microsoft::ReactNative::DeviceInfo,
