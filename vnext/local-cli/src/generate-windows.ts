@@ -57,7 +57,7 @@ export function generateWindows(
   installDependencies(options);
 
   copyProjectTemplateAndReplace(
-    path.join(__dirname, '..', 'generator-windows', 'templates'),
+    path.join(__dirname, '..', 'templates'),
     projectDir,
     name,
     ns,

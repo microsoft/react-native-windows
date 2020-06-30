@@ -15,10 +15,7 @@ import * as generatorCommon from '../../generator-common';
 
 import * as configUtils from '../../config/configUtils';
 
-const templateRoot = path.join(
-  __dirname,
-  '../../../generator-windows/templates',
-);
+const templateRoot = path.join(__dirname, '../../../templates');
 
 /**
  * Logs the given message if verbose is True.
