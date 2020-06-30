@@ -22,6 +22,12 @@ struct SampleTurboModule {
   REACT_CONSTANT(m_constantInt, L"constantInt")
   const int m_constantInt{3};
 
+  REACT_CONSTANT_PROVIDER(GetConstants)
+  void GetConstants(React::ReactConstantProvider &provider) noexcept {
+    provider.Add(L"constantString2", L"Hello");
+    provider.Add(L"constantInt2", 10);
+  }
+
   REACT_METHOD(Succeeded, L"succeeded")
   void Succeeded() noexcept {
     succeededSignal.set_value(true);
@@ -61,8 +67,8 @@ struct SampleTurboModule {
   }
 
   REACT_METHOD(Constants, L"constants")
-  void Constants(std::string a, int b) noexcept {
-    auto resultString = (std::stringstream() << a << ", " << b).str();
+  void Constants(std::string a, int b, std::string c, int d) noexcept {
+    auto resultString = (std::stringstream() << a << ", " << b << ", " << c << ", " << d).str();
     constantsSignal.set_value(resultString);
   }
 
@@ -125,7 +131,7 @@ struct SampleTurboModuleSpec : TurboModuleSpec {
       Method<void(std::string) noexcept>{3, L"promiseFunctionResult"},
       SyncMethod<std::string(std::string, int, bool) noexcept>{4, L"syncFunction"},
       Method<void(std::string) noexcept>{5, L"syncFunctionResult"},
-      Method<void(std::string, int) noexcept>{6, L"constants"},
+      Method<void(std::string, int, std::string, int) noexcept>{6, L"constants"},
       Method<void(int, int, const std::function<void(int)> &) noexcept>{7, L"oneCallback"},
       Method<void(int) noexcept>{8, L"oneCallbackResult"},
       Method<void(
@@ -192,7 +198,7 @@ TEST_CLASS (TurboModuleTests) {
     TestCheckEqual(true, SampleTurboModule::succeededSignal.get_future().get());
     TestCheckEqual("something, 1, true", SampleTurboModule::promiseFunctionSignal.get_future().get());
     TestCheckEqual("something, 2, false", SampleTurboModule::syncFunctionSignal.get_future().get());
-    TestCheckEqual("constantString, 3", SampleTurboModule::constantsSignal.get_future().get());
+    TestCheckEqual("constantString, 3, Hello, 10", SampleTurboModule::constantsSignal.get_future().get());
     TestCheckEqual(3, SampleTurboModule::oneCallbackSignal.get_future().get());
     TestCheckEqual(123, SampleTurboModule::twoCallbacksResolvedSignal.get_future().get());
     TestCheckEqual("Failed", SampleTurboModule::twoCallbacksRejectedSignal.get_future().get());
