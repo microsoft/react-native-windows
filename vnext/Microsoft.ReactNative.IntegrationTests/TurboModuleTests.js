@@ -42,7 +42,9 @@ try {
   sampleTurboModule
     .constants(
       c.constantString,
-      c.constantInt
+      c.constantInt,
+      c.constantString2,
+      c.constantInt2
     );
 
   sampleTurboModule
