@@ -13,17 +13,19 @@ import * as MSBuildTools from './msbuildtools';
 import Version from './version';
 import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
 import * as util from 'util';
+import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
+import {Config} from '@react-native-community/cli-types';
 
 const existsAsync = util.promisify(fs.exists);
 
 export async function buildSolution(
-  slnFile,
-  buildType,
-  buildArch,
-  msBuildProps,
-  verbose,
-  target,
-  buildLogDirectory,
+  slnFile: string,
+  buildType: BuildConfig,
+  buildArch: BuildArch,
+  msBuildProps: Record<string, string>,
+  verbose: boolean,
+  target: string,
+  buildLogDirectory: string,
 ) {
   const minVersion = new Version(10, 0, 18362, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
@@ -45,7 +47,12 @@ export async function buildSolution(
   );
 }
 
-async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
+async function nugetRestore(
+  nugetPath: string,
+  slnFile: string,
+  verbose: boolean,
+  msbuildVersion: string,
+) {
   const text = 'Restoring NuGet packages ';
   const spinner = newSpinner(text);
   console.log(nugetPath);
@@ -66,7 +73,11 @@ async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
   );
 }
 
-export async function restoreNuGetPackages(options, slnFile, verbose) {
+export async function restoreNuGetPackages(
+  options: RunWindowsOptions,
+  slnFile: string,
+  verbose: boolean,
+) {
   const nugetPath = path.join(os.tmpdir(), 'nuget.4.9.2.exe');
 
   if (!(await existsAsync(nugetPath))) {
@@ -90,7 +101,7 @@ export async function restoreNuGetPackages(options, slnFile, verbose) {
 
 const configErrorString = 'Error: ';
 
-export function getAppSolutionFile(options, config) {
+export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
   // Use the solution file if specified
   if (options.sln) {
     return path.join(options.root, options.sln);
@@ -115,7 +126,7 @@ export function getAppSolutionFile(options, config) {
   }
 }
 
-export function getAppProjectFile(options, config) {
+export function getAppProjectFile(options: RunWindowsOptions, config: Config) {
   // Use the project file if specified
   if (options.proj) {
     return path.join(options.root, options.proj);
@@ -151,8 +162,10 @@ export function getAppProjectFile(options, config) {
   }
 }
 
-export function parseMsBuildProps(options): Record<string, any> {
-  let result = {};
+export function parseMsBuildProps(
+  options: RunWindowsOptions,
+): Record<string, string> {
+  let result: Record<string, string> = {};
   if (options.msbuildprops) {
     const props = options.msbuildprops.split(',');
     for (let i = 0; i < props.length; i++) {
@@ -163,7 +176,11 @@ export function parseMsBuildProps(options): Record<string, any> {
   return result;
 }
 
-async function downloadFileWithRetry(url, dest, retries) {
+async function downloadFileWithRetry(
+  url: string,
+  dest: string,
+  retries: number,
+) {
   for (let retryCount = 0; ; ++retryCount) {
     try {
       return await downloadFile(url, dest);
@@ -175,7 +192,7 @@ async function downloadFileWithRetry(url, dest, retries) {
   }
 }
 
-function downloadFile(url, dest) {
+function downloadFile(url: string, dest: string) {
   const destFile = fs.createWriteStream(dest);
 
   return new Promise((resolve, reject) => {

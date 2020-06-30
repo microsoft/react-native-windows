@@ -72,15 +72,44 @@ module.exports = {
 
 */
 
+export interface ProjectDependency {
+  projectFile: string;
+  directDependency: boolean;
+  projectName: string;
+  projectLang: 'cpp' | 'cs';
+  projectGuid: string;
+  cppHeaders?: string[];
+  cppPackageProviders?: string[];
+  csNamespaces?: string[];
+  csPackageProviders?: string[];
+}
+
+export interface NuGetPackageDependency {
+  packageName: string;
+  packageVersion: string;
+  cppHeaders: string[];
+  cppPackageProviders: string[];
+  csNamespaces: string[];
+  csPackageProviders: string[];
+}
+
+export interface WindowsDependencyConfig {
+  folder: string;
+  sourceDir?: string;
+  solutionFile: string | null;
+  projects?: ProjectDependency[];
+  nugetPackages?: NuGetPackageDependency[];
+}
+
 /**
  * Gets the config of any RNW native modules under the target folder.
- * @param {object} userConfig A manually specified override config.
- * @return {object} The config if any RNW native modules exist.
+ * @param userConfig A manually specified override config.
+ * @return The config if any RNW native modules exist.
  */
 export function dependencyConfigWindows(
   folder: string,
-  userConfig: Record<string, any> = {},
-): Record<string, any> {
+  userConfig: Partial<WindowsDependencyConfig> | null = {},
+): WindowsDependencyConfig | null {
   if (userConfig === null) {
     return null;
   }
@@ -91,9 +120,10 @@ export function dependencyConfigWindows(
   const usingManualNugetPackagesOverride =
     'nugetPackages' in userConfig && Array.isArray(userConfig.nugetPackages);
 
-  var result: Record<string, any> = {
+  var result: WindowsDependencyConfig = {
     folder,
     projects: usingManualProjectsOverride ? userConfig.projects : [],
+    solutionFile: null,
     nugetPackages: usingManualNugetPackagesOverride
       ? userConfig.nugetPackages
       : [],
@@ -151,16 +181,19 @@ export function dependencyConfigWindows(
   if (usingManualProjectsOverride) {
     // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
 
-    const alwaysRequired = ['projectFile', 'directDependency'];
+    const alwaysRequired: Array<keyof ProjectDependency> = [
+      'projectFile',
+      'directDependency',
+    ];
 
     for (let project of result.projects) {
       // Verifying (req) items
       var errorFound = false;
       alwaysRequired.forEach(item => {
         if (!(item in project)) {
-          project[
+          (project[
             item
-          ] = `Error: ${item} is required for each project in react-native.config`;
+          ] as string) = `Error: ${item} is required for each project in react-native.config`;
           errorFound = true;
         }
       });

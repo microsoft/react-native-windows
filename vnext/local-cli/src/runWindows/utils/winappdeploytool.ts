@@ -14,14 +14,14 @@ function sortDevices(l: DeviceInfo, r: DeviceInfo): number {
 }
 
 class DeviceInfo {
-  public guid;
-  public ip;
-  public name;
+  public guid?: string;
+  public ip?: string;
 
-  private index;
-  private type;
+  public readonly name: string;
+  private index: number;
+  private type: string;
 
-  constructor(deviceIndex, deviceName, deviceType) {
+  constructor(deviceIndex: number, deviceName: string, deviceType: string) {
     this.index = deviceIndex;
     this.name = deviceName;
     this.type = deviceType;
@@ -33,7 +33,7 @@ class DeviceInfo {
 }
 
 export default class WinAppDeployTool {
-  private path;
+  private path: string;
 
   constructor() {
     const programFilesPath =
@@ -52,7 +52,7 @@ export default class WinAppDeployTool {
     return fs.existsSync(this.path);
   }
 
-  findDevice(target) {
+  findDevice(target: string): DeviceInfo {
     const devices = this.enumerateDevices();
 
     if (devices.length === 0) {
@@ -82,7 +82,7 @@ export default class WinAppDeployTool {
     }
   }
 
-  enumerateDevices() {
+  enumerateDevices(): DeviceInfo[] {
     // 127.0.0.1   00000015-b21e-0da9-0000-000000000000    Lumia 1520 (RM-940)\r
     //  maps to
     // [(line), '127.0.0.1', '00000015-b21e-0da9-0000-000000000000', 'Lumia 1520 (RM-940)']
@@ -111,11 +111,11 @@ export default class WinAppDeployTool {
   }
 
   async installAppPackage(
-    pathToAppxPackage,
-    targetDevice,
-    shouldLaunch,
-    shouldUpdate,
-    pin,
+    pathToAppxPackage: string,
+    targetDevice: DeviceInfo,
+    shouldLaunch: boolean,
+    shouldUpdate: boolean,
+    pin: boolean,
     verbose: boolean = false,
   ) {
     const text = `Installing app to ${targetDevice.name}`;
@@ -135,18 +135,22 @@ export default class WinAppDeployTool {
     ];
 
     if (pin) {
-      args.push('-pin', pin);
+      args.push('-pin', pin.toString());
     }
     await commandWithProgress(newSpinner(text), text, this.path, args, verbose);
   }
 
-  async uninstallAppPackage(packageInfo, targetDevice, verbose) {
+  async uninstallAppPackage(
+    appName: string,
+    targetDevice: DeviceInfo,
+    verbose: boolean,
+  ) {
     const text = `Uninstalling app from ${targetDevice.name}`;
     await commandWithProgress(
       newSpinner(text),
       text,
       this.path,
-      `uninstall -package ${packageInfo} -ip {$targetDevice.ip}`.split(' '),
+      `uninstall -package ${appName} -ip {$targetDevice.ip}`.split(' '),
       verbose,
     );
   }

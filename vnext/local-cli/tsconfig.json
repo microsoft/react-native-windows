@@ -4,6 +4,13 @@
     "outDir": "lib-commonjs",
     "strict": false,
     "noImplicitReturns": false,
+    "noImplicitAny": true,
+    "lib": [
+      "DOM",
+      "ES6",
+      "DOM.Iterable",
+      "ES2019.String"
+    ]
   },
-  "include": ["src"]
+  "include": ["src"],
 }

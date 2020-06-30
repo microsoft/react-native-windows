@@ -206,7 +206,7 @@ export function findAppProjectFiles(winFolder: string): string[] {
  * @param projectPath The project file path to check.
  * @return The language string: cpp, cs, or null if unknown.
  */
-export function getProjectLanguage(projectPath: string): string {
+export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' | null {
   if (projectPath.endsWith('.vcxproj')) {
     return 'cpp';
   } else if (projectPath.endsWith('.csproj')) {
@@ -227,12 +227,12 @@ export function readProjectFile(projectPath: string) {
 
 /**
  * Search for the given property in the project contents and return its value.
- * @param {object} projectContents The XML project contents.
+ * @param projectContents The XML project contents.
  * @param propertyName The property to look for.
  * @return The value of the tag if it exists.
  */
 export function findPropertyValue(
-  projectContents,
+  projectContents: Node,
   propertyName: string,
 ): string {
   var nodes = msbuildSelect(
@@ -250,12 +250,12 @@ export function findPropertyValue(
 
 /**
  * Search for the given import project in the project contents and return if it exists.
- * @param {object} projectContents The XML project contents.
+ * @param projectContents The XML project contents.
  * @param projectName The project to look for.
  * @return If the target exists.
  */
 export function importProjectExists(
-  projectContents,
+  projectContents: Node,
   projectName: string,
 ): boolean {
   var nodes = msbuildSelect(
@@ -268,10 +268,10 @@ export function importProjectExists(
 
 /**
  * Gets the name of the project from the project contents.
- * @param {object} projectContents The XML project contents.
+ * @param projectContents The XML project contents.
  * @return The project name.
  */
-export function getProjectName(projectContents): string {
+export function getProjectName(projectContents: Node): string {
   return (
     findPropertyValue(projectContents, 'ProjectName') ||
     findPropertyValue(projectContents, 'AssemblyName') ||
@@ -281,18 +281,18 @@ export function getProjectName(projectContents): string {
 
 /**
  * Gets the namespace of the project from the project contents.
- * @param {object} projectContents The XML project contents.
+ * @param projectContents The XML project contents.
  * @return The project namespace.
  */
-export function getProjectNamespace(projectContents): string {
+export function getProjectNamespace(projectContents: Node): string {
   return findPropertyValue(projectContents, 'RootNamespace');
 }
 
 /**
  * Gets the guid of the project from the project contents.
- * @param {object} projectContents The XML project contents.
+ * @param projectContents The XML project contents.
  * @return The project guid.
  */
-export function getProjectGuid(projectContents): string {
+export function getProjectGuid(projectContents: Node): string {
   return findPropertyValue(projectContents, 'ProjectGuid');
 }

@@ -50,16 +50,32 @@ module.exports = {
 
 */
 
+export interface Project {
+  projectFile: string;
+  projectName: string;
+  projectLang: 'cpp' | 'cs';
+  projectGuid: string;
+}
+
+export interface WindowsProjectConfig {
+  folder: string;
+  sourceDir: string;
+  solutionFile: string;
+  project: Project;
+}
+
+type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
+
 /**
  * Gets the config of any RNW apps under the target folder.
  * @param folder The absolute path to the target folder.
- * @param {object} userConfig A manually specified override config.
- * @return {object} The config if any RNW apps exist.
+ * @param userConfig A manually specified override config.
+ * @return The config if any RNW apps exist.
  */
 export function projectConfigWindows(
   folder: string,
-  userConfig: Record<string, any> = {},
-) {
+  userConfig: Partial<WindowsProjectConfig> = {},
+): WindowsProjectConfig {
   if (userConfig === null) {
     return null;
   }
@@ -75,7 +91,7 @@ export function projectConfigWindows(
     return null;
   }
 
-  var result: Record<string, any> = {
+  var result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
     sourceDir: sourceDir.substr(folder.length + 1),
   };
@@ -96,10 +112,14 @@ export function projectConfigWindows(
 
     // Manual override, try to use it for project
     if (!('project' in userConfig)) {
-      result.project =
-        'Error: Project is required but not specified in react-native.config.';
+      result.project = {
+        projectFile:
+          'Error: Project is required but not specified in react-native.config.',
+      };
     } else if (userConfig.project === null) {
-      result.project = 'Error: Project is null in react-native.config.';
+      result.project = {
+        projectFile: 'Error: Project is null in react-native.config.',
+      };
     } else {
       if (!('projectFile' in userConfig.project)) {
         result.project = {
@@ -160,5 +180,5 @@ export function projectConfigWindows(
     result.project.projectGuid = configUtils.getProjectGuid(projectContents);
   }
 
-  return result;
+  return result as WindowsProjectConfig;
 }

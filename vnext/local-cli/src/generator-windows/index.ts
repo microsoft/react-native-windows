@@ -328,7 +328,7 @@ export function copyProjectTemplateAndReplace(
   console.log(chalk.white('   npx react-native run-windows'));
 }
 
-function toCppNamespace(namespace) {
+function toCppNamespace(namespace: string) {
   return namespace.replace(/\./g, '::');
 }
 

@@ -4,12 +4,19 @@
  * @format
  */
 
-const execSync = require('child_process').execSync;
+import {execSync} from 'child_process';
 import * as path from 'path';
 import * as shell from 'shelljs';
 import Version from './version';
 
-const REQUIRED_VERSIONS = {
+type Requirement =
+  | 'os'
+  | 'msbuild'
+  | 'visualstudio'
+  | 'windowssdk'
+  | 'phonesdk';
+
+const REQUIRED_VERSIONS: Record<string, Record<Requirement, string>> = {
   '10.0': {
     os: '6.3',
     msbuild: '14.0',
@@ -19,20 +26,23 @@ const REQUIRED_VERSIONS = {
   },
 };
 
-function shortenVersion(version) {
+function shortenVersion(version: Version): string {
   return /^(\d+(?:\.\d+)?)/.exec(version.toString())[1];
 }
 
-function getMinimalRequiredVersionFor(requirement, windowsTargetVersion) {
+function getMinimalRequiredVersionFor(
+  requirement: Requirement,
+  windowsTargetVersion: keyof (typeof REQUIRED_VERSIONS),
+): Version | null {
   return Version.tryParse(REQUIRED_VERSIONS[windowsTargetVersion][requirement]);
 }
 
-function getInstalledWindowsSdks() {
-  const installedSdks = [];
+function getInstalledWindowsSdks(): Version[] {
+  const installedSdks: Version[] = [];
 
   const execString =
     'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows" /s /v InstallationFolder /reg:32';
-  let output;
+  let output: string;
   try {
     output = execSync(execString).toString();
   } catch (e) {
@@ -40,7 +50,7 @@ function getInstalledWindowsSdks() {
   }
 
   const re = /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
-  let match;
+  let match: RegExpExecArray;
   while ((match = re.exec(output))) {
     const sdkPath = match[2];
     if (shell.test('-e', path.join(sdkPath, 'SDKManifest.xml'))) {
@@ -51,7 +61,7 @@ function getInstalledWindowsSdks() {
   return installedSdks;
 }
 
-function checkWinSdk(windowsTargetVersion) {
+function checkWinSdk(windowsTargetVersion: string): string {
   const installedSdks = getInstalledWindowsSdks();
   const requiredVersion = getMinimalRequiredVersionFor(
     'windowssdk',
@@ -73,6 +83,6 @@ function checkWinSdk(windowsTargetVersion) {
   }
 }
 
-export function isWinSdkPresent(target) {
+export function isWinSdkPresent(target: string): string {
   return checkWinSdk(target);
 }

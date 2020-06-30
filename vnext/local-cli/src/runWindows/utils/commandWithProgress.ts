@@ -9,12 +9,12 @@ import * as ora from 'ora';
 import * as spinners from 'cli-spinners';
 import * as chalk from 'chalk';
 
-function setSpinnerText(spinner, prefix, text) {
+function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {
   text = prefix + spinnerString(text);
   spinner.text = text.length > 45 ? text.slice(0, 110) + '...' : text;
 }
 
-function spinnerString(msg) {
+function spinnerString(msg: string) {
   msg = msg.trim();
   const lastLineIndex = msg.lastIndexOf('\n');
   if (lastLineIndex > 0) {
@@ -24,7 +24,7 @@ function spinnerString(msg) {
   return msg;
 }
 
-export function newSpinner(text) {
+export function newSpinner(text: string) {
   const options: ora.Options = {
     text: text,
     indent: 1,
@@ -42,10 +42,10 @@ export function newSpinner(text) {
 }
 
 export async function runPowerShellScriptFunction(
-  taskDescription,
-  script,
-  funcName,
-  verbose,
+  taskDescription: string,
+  script: string,
+  funcName: string,
+  verbose: boolean,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
@@ -69,11 +69,11 @@ export async function runPowerShellScriptFunction(
 }
 
 export function commandWithProgress(
-  spinner,
-  taskDoingName,
-  command,
-  args,
-  verbose,
+  spinner: ora.Ora,
+  taskDoingName: string,
+  command: string,
+  args: string[],
+  verbose: boolean,
 ) {
   return new Promise(function(resolve, reject) {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
@@ -83,7 +83,7 @@ export function commandWithProgress(
     }
 
     const cp = spawn(command, args, spawnOptions);
-    let firstErrorLine = null;
+    let firstErrorLine: string | null = null;
     if (!verbose) {
       cp.stdout.on('data', chunk => {
         const text = chunk.toString();
@@ -121,18 +121,18 @@ export function commandWithProgress(
   });
 }
 
-export function newError(text) {
+export function newError(text: string) {
   newSpinner(text).fail(text);
 }
 
-export function newWarn(text) {
+export function newWarn(text: string) {
   newSpinner(text).warn(text);
 }
 
-export function newSuccess(text) {
+export function newSuccess(text: string) {
   newSpinner(text).succeed(text);
 }
 
-export function newInfo(text) {
+export function newInfo(text: string) {
   newSpinner(text).info(text);
 }

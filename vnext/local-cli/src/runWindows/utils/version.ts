@@ -14,7 +14,7 @@ export default class Version {
     private qfe: number = 0,
   ) {}
 
-  eq(other) {
+  eq(other: Version): boolean {
     if (other.constructor !== Version) {
       throw new TypeError('other must be a Version instance');
     }
@@ -27,7 +27,7 @@ export default class Version {
     );
   }
 
-  gt(other) {
+  gt(other: Version): boolean {
     if (other.constructor !== Version) {
       throw new TypeError('other must be a Version instance');
     }
@@ -60,7 +60,7 @@ export default class Version {
     return false;
   }
 
-  gte(other) {
+  gte(other: Version): boolean {
     if (other.constructor !== Version) {
       throw new TypeError('other must be a Version instance');
     }
@@ -93,11 +93,11 @@ export default class Version {
     return true;
   }
 
-  toString() {
+  toString(): string {
     return `${this.major}.${this.minor}.${this.build}.${this.qfe}`;
   }
 
-  static compare(x, y) {
+  static compare(x: Version, y: Version): number {
     if (x.constructor !== Version || y.constructor !== Version) {
       throw new TypeError('Only can compare Version objects');
     }
@@ -105,7 +105,7 @@ export default class Version {
     return x.gt(y) ? 1 : x.eq(y) ? 0 : -1;
   }
 
-  static fromString(str) {
+  static fromString(str: string): Version {
     const version = Version.tryParse(str);
     if (!version) {
       throw new TypeError('Cannot construct a version from "' + str + '".');
@@ -113,7 +113,7 @@ export default class Version {
     return version;
   }
 
-  static tryParse(str) {
+  static tryParse(str: string): Version | null {
     if (VERSION_EXPRESSION.test(str)) {
       const versionArray = str.split('.').map(x => parseInt(x, 10));
       return new Version(

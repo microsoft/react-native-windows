@@ -22,24 +22,29 @@ import {
   runPowerShellScriptFunction,
 } from './commandWithProgress';
 import * as build from './build';
+import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 
-function pushd(pathArg) {
+function pushd(pathArg: string): () => void {
   const cwd = process.cwd();
   process.chdir(pathArg);
   return () => process.chdir(cwd);
 }
 
-export function getBuildConfiguration(options) {
-  return (
-    (options.release ? 'Release' : 'Debug') + (options.bundle ? 'Bundle' : '')
-  );
+export function getBuildConfiguration(options: RunWindowsOptions): BuildConfig {
+  return options.release
+    ? options.bundle
+      ? 'ReleaseBundle'
+      : 'Release'
+    : options.bundle
+    ? 'DebugBundle'
+    : 'Debug';
 }
 
-function shouldLaunchApp(options) {
+function shouldLaunchApp(options: RunWindowsOptions): boolean {
   return options.launch;
 }
 
-function getAppPackage(options) {
+function getAppPackage(options: RunWindowsOptions): string {
   const configuration = getBuildConfiguration(options);
   const packageFolder =
     options.arch === 'x86'
@@ -79,7 +84,7 @@ function getAppPackage(options) {
   return appPackage;
 }
 
-function getWindowsStoreAppUtils(options) {
+function getWindowsStoreAppUtils(options: RunWindowsOptions) {
   const popd = pushd(options.root);
   const windowsStoreAppUtilsPath = path.resolve(
     __dirname,
@@ -94,7 +99,7 @@ function getWindowsStoreAppUtils(options) {
   return windowsStoreAppUtilsPath;
 }
 
-function getAppxManifestPath(options) {
+function getAppxManifestPath(options: RunWindowsOptions) {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
@@ -113,15 +118,15 @@ function getAppxManifestPath(options) {
   return appxPath;
 }
 
-function parseAppxManifest(appxManifestPath) {
+function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
 
-function getAppxManifest(options) {
+function getAppxManifest(options: RunWindowsOptions): parse.Document {
   return parseAppxManifest(getAppxManifestPath(options));
 }
 
-function handleResponseError(e) {
+function handleResponseError(e: Error): never {
   if (e.message.indexOf('Error code -2146233088')) {
     throw new Error(`No Windows Mobile device was detected: ${e.message}`);
   } else {
@@ -130,7 +135,10 @@ function handleResponseError(e) {
 }
 
 // Errors: 0x80073d10 - bad architecture
-export async function deployToDevice(options, verbose) {
+export async function deployToDevice(
+  options: RunWindowsOptions,
+  verbose: boolean,
+) {
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -178,7 +186,11 @@ export async function deployToDevice(options, verbose) {
   }
 }
 
-export async function deployToDesktop(options, verbose, slnFile) {
+export async function deployToDesktop(
+  options: RunWindowsOptions,
+  verbose: boolean,
+  slnFile: string,
+) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options);
@@ -268,8 +280,8 @@ export async function deployToDesktop(options, verbose, slnFile) {
       slnFile,
       options.release ? 'Release' : 'Debug',
       options.arch,
-      {DeployLayout: true},
-      options.verbose,
+      {DeployLayout: 'true'},
+      verbose,
       'Deploy',
       options.buildLogDirectory,
     );
@@ -311,7 +323,7 @@ export async function deployToDesktop(options, verbose, slnFile) {
 }
 
 export function startServerInNewWindow(
-  options,
+  options: RunWindowsOptions,
   verbose: boolean,
 ): Promise<void> {
   return new Promise(resolve => {
@@ -335,7 +347,7 @@ export function startServerInNewWindow(
   });
 }
 
-function launchServer(options, verbose: boolean) {
+function launchServer(options: RunWindowsOptions, verbose: boolean) {
   newSuccess('Starting the React-Native Server');
   const opts: SpawnOptions = {
     cwd: options.root,

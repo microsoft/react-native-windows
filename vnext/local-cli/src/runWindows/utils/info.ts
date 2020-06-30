@@ -4,9 +4,10 @@
  * @format
  */
 
+// @ts-ignore no typings
 import * as envinfo from 'envinfo';
 
-export async function getEnvironmentInfo() {
+export async function getEnvironmentInfo(): Promise<string> {
   return await envinfo.run({
     System: ['OS', 'CPU', 'Memory', 'Shell'],
     Binaries: ['Node', 'Yarn', 'npm', 'Watchman'],
