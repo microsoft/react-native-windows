@@ -29,7 +29,7 @@ function newSpinner(text) {
   const options = {text: text, indent: 1};
 
   // ora turns off emoji rendering by default on windows, since the default terminal
-  // doesn't render them.  Turn them back on when running in the new windows terminal
+  // doesn't render them.  Turn them back on when running in the new Windows terminal
   if (process.env.WT_SESSION) {
     options.spinner = spinners.dots;
   }

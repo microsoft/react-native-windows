@@ -123,7 +123,7 @@ async function updateAutoLink(args, config, options) {
 
     if (!('windows' in projectConfig) || projectConfig.windows === null) {
       throw new Error(
-        'Windows auto-link only supported on windows app projects',
+        'Windows auto-link only supported on Windows app projects',
       );
     }
 
@@ -154,7 +154,7 @@ async function updateAutoLink(args, config, options) {
       };
     }
 
-    verboseMessage('Found windows app project, config:', verbose);
+    verboseMessage('Found Windows app project, config:', verbose);
     verboseMessage(windowsAppConfig, verbose);
 
     const alwaysRequired = ['folder', 'sourceDir', 'solutionFile', 'project'];
@@ -226,7 +226,7 @@ async function updateAutoLink(args, config, options) {
 
       if (windowsDependency) {
         verboseMessage(
-          `${chalk.bold(dependencyName)} has windows implementation, config:`,
+          `${chalk.bold(dependencyName)} has Windows implementation, config:`,
           verbose,
         );
         verboseMessage(windowsDependency, verbose);
