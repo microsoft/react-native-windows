@@ -9,7 +9,7 @@ Creates a color value that renders using a grandient brush. This can be used to 
 <b>Signature:</b>
 
 ```typescript
-ColorGradientWin32 : (
-  gradientColor: GradientColorValueWin32
-) => any
+ColorGradientWin32: (
+    gradientColor: GradientColorValueWin32,
+  ) => any
 ```

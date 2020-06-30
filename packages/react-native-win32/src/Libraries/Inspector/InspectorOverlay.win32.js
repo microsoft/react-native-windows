@@ -10,7 +10,7 @@
 
 'use strict';
 
-const Dimensions = require('../Utilities/Dimensions');
+// const Dimensions = require('../Utilities/Dimensions'); [Win32]
 const ElementBox = require('./ElementBox');
 const React = require('react');
 const StyleSheet = require('../StyleSheet/StyleSheet');

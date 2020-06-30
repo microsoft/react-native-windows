@@ -1,0 +1,6 @@
+{
+  "name": "@rnw-scripts/ts-config",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "tsconfig.json"
+}

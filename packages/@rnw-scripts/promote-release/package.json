@@ -2,14 +2,8 @@
   "name": "@rnw-scripts/promote-release",
   "version": "0.0.1",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git",
-    "directory": "packages/@rnw-scripts/promote-release"
-  },
   "scripts": {
     "build": "just-scripts build",
-    "change": "beachball change",
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix"
@@ -23,15 +17,19 @@
     "glob": "^7.1.6",
     "js-yaml": "^3.14.0",
     "lodash": "^4.17.15",
-    "simplegit": "^1.0.2",
+    "simple-git": "^1.131.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.0",
+    "@rnw-scripts/just-task": "0.0.0",
+    "@rnw-scripts/ts-config": "0.0.0",
     "@types/chalk": "^2.2.0",
     "@types/glob": "^7.1.0",
     "@types/js-yaml": "^3.12.5",
     "@types/lodash": "^4.14.157",
     "@types/yargs": "^15.0.5",
+    "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },

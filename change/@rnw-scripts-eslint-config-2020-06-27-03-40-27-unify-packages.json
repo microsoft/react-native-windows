@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Share eslint and Typescript configs across packages",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-27T10:39:27.572Z"
+}
