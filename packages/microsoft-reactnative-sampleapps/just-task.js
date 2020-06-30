@@ -9,7 +9,6 @@ const {
   task,
   series,
   parallel,
-  option,
   argv,
   tscTask,
   eslintTask,
@@ -17,9 +16,6 @@ const {
 const fs = require('fs');
 const path = require('path');
 const {execSync} = require('child_process');
-
-option('production');
-option('clean');
 
 task('eslint', () => {
   return eslintTask();
