@@ -18,7 +18,7 @@
     "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
     "start": "react-native start",
-    "watch": "tsc -w",
+    "watch": "just-scripts watch",
     "validate-overrides": "react-native-platform-override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
   },
   "dependencies": {

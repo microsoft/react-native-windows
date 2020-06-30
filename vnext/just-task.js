@@ -14,6 +14,7 @@ const {
   option,
   argv,
   tscTask,
+  tscWatchTask,
   eslintTask,
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
@@ -74,6 +75,8 @@ task(
 );
 
 task('compileLocalCli', tscTask({project: './local-cli/tsconfig.json'}));
+
+task('watch', tscWatchTask({project: './local-cli/tsconfig.json'}));
 
 task('cleanRnLibraries', copyRNLibaries.cleanTask(__dirname));
 task('cleanLocalCli', cleanTask(['local-cli/lib-commonjs']));
