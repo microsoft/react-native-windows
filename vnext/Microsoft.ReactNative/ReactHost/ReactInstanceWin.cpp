@@ -188,7 +188,7 @@ void ReactInstanceWin::LoadModules(
 
   registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
 
-  registerNativeModule(
+  registerTurboModule(
       L"AppState",
       winrt::Microsoft::ReactNative::
           MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
