@@ -23,7 +23,7 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
-   <!-- Ensure the win10 sdk binaries loaded by the unittest match our apps sdk versions -->
+   <!-- Ensure the Win10 SDK binaries loaded by the unittest match our apps SDK versions -->
   <PropertyGroup>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>

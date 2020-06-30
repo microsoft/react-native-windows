@@ -1,4 +1,4 @@
-# React native windows initialization
+# React Native Windows initialization
 
 This document describes how the template initialization works for `react-native-windows init`.
 

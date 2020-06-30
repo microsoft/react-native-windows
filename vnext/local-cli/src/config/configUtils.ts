@@ -85,7 +85,7 @@ export function findSolutionFiles(winFolder: string): string[] {
 
   var solutionFiles = [];
 
-  // Try to find any solution file that appears to be a react native solution
+  // Try to find any solution file that appears to be a React Native solution
   for (const solutionFile of allSolutions) {
     if (isRnwSolution(path.join(winFolder, solutionFile))) {
       solutionFiles.push(solutionFile);

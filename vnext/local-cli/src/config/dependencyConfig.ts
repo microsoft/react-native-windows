@@ -11,7 +11,7 @@ import * as configUtils from './configUtils.js';
 /*
 
 react-native config will generate the following JSON for each native module dependency
-under node_modules that has a windows implementation, in order to support auto-linking.
+under node_modules that has a Windows implementation, in order to support auto-linking.
 This is done heurestically, so if the result isn't quite correct, native module developers
 can provide a manual override file: react-native.config.js.
 
@@ -24,7 +24,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
 
 {
   folder: string,       // (auto) Absolute path to the module root folder, determined by react-native config, ex: 'c:\path\to\app-name\node_modules\my-module'
-  sourceDir: string,    // (opt, req if projects defined) Relative path to the windows implementation under folder, ex: 'windows'
+  sourceDir: string,    // (opt, req if projects defined) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (opt) Relative path to the module's VS solution file under sourceDir, ex: 'MyModule.sln'
   projects: [ // (opt) Array of VS projects that must be added to the consuming app's solution file, so they are built
     {

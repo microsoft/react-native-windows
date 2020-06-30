@@ -163,7 +163,7 @@ jobs:
       - name: Init new project
         run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
 
-      - name: Apply windows template
+      - name: Apply Windows template
         run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext
 
       - name: Install SDK
