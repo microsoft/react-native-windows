@@ -211,7 +211,8 @@ export function copyProjectTemplateAndReplace(
     autolinkCsUsingNamespaces: '',
     autolinkCsReactPacakgeProviders: '',
     autolinkCppIncludes: '',
-    autolinkCppPackageProviders: '',
+    autolinkCppPackageProviders:
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
   };
 
   [
