@@ -10,7 +10,6 @@
 
 #include <appmodel.h>
 #include <processthreadsapi.h>
-#include "ManagedResource.h"
 
 namespace winrt {
 using namespace xaml::Controls::Primitives;
@@ -96,13 +95,8 @@ bool Is19H1OrHigher() {
 }
 
 bool IsXamlIsland() {
-  auto appModel = react::uwp::managed_resource(
-      LoadLibraryEx(L"Api-ms-win-appmodel-runtime-l1-1-2.dll", 0, LOAD_LIBRARY_SEARCH_SYSTEM32), FreeLibrary);
-  auto pfnAppPolicyGetWindowingModel =
-      reinterpret_cast<decltype(&AppPolicyGetWindowingModel)>(GetProcAddress(appModel, "AppPolicyGetWindowingModel"));
-
   AppPolicyWindowingModel e;
-  if (FAILED(pfnAppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
+  if (FAILED(AppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
       e == AppPolicyWindowingModel_ClassicDesktop) {
     return true;
   }
