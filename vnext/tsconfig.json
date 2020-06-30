@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "target": "es6",
     "module": "commonjs",
-    "jsx": "react-native",
+    "jsx": "react",
     "outDir": ".",
     "declaration": true,
     "declarationMap": true,
