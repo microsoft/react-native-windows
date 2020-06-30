@@ -209,7 +209,7 @@ void ReactInstanceWin::LoadModules(
           ::Microsoft::ReactNative::DeviceInfo,
           ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
 
-  registerNativeModule(
+  registerTurboModule(
       L"DevSettings",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
           ::Microsoft::ReactNative::DevSettings,
