@@ -310,7 +310,10 @@ export async function deployToDesktop(options, verbose, slnFile) {
   }
 }
 
-export function startServerInNewWindow(options, verbose) {
+export function startServerInNewWindow(
+  options,
+  verbose: boolean,
+): Promise<void> {
   return new Promise(resolve => {
     if (options.packager) {
       http
@@ -322,26 +325,23 @@ export function startServerInNewWindow(options, verbose) {
           }
           resolve();
         })
-        .on('error', () => resolve(launchServer(options, verbose)));
+        .on('error', () => {
+          launchServer(options, verbose);
+          resolve();
+        });
     } else {
       resolve();
     }
   });
 }
 
-function launchServer(options, verbose) {
+function launchServer(options, verbose: boolean) {
   newSuccess('Starting the React-Native Server');
-  const launchPackagerScript = path.resolve(
-    __dirname,
-    '../../../Scripts/launchPackager.bat',
-  );
   const opts: SpawnOptions = {
     cwd: options.root,
     detached: true,
     stdio: verbose ? 'inherit' : 'ignore',
   };
 
-  return Promise.resolve(
-    spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts),
-  );
+  spawn('cmd.exe', ['/C', 'start npx --no-install react-native start'], opts);
 }
