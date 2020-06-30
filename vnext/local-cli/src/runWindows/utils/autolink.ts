@@ -478,7 +478,7 @@ async function updateAutoLink(args, config, options) {
   }
 }
 
-export default {
+export = {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,

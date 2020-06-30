@@ -5,13 +5,13 @@
  */
 
 import * as build from './utils/build';
+import * as chalk from 'chalk';
 import * as deploy from './utils/deploy';
 import {newError, newInfo} from './utils/commandWithProgress';
 import * as info from './utils/info';
 import * as msbuildtools from './utils/msbuildtools';
-import autolink from './utils/autolink';
 
-import * as chalk from 'chalk';
+import autolink = require('./utils/autolink');
 
 function ExitProcessWithError(loggingWasEnabled) {
   if (!loggingWasEnabled) {
@@ -174,7 +174,7 @@ runWindows({
  *    msBuildProps: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  *    direct-debugging: Number - Enable direct debugging on specified port
  */
-module.exports = {
+export = {
   name: 'run-windows',
   description:
     'builds your app and starts it on a connected Windows desktop, emulator or device',
