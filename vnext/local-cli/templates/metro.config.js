@@ -4,8 +4,8 @@
  *
  * @format
  */
-import * as path from 'path';
-import * as blacklist from 'metro-config/src/defaults/blacklist';
+const path = require('path');
+const blacklist = require('metro-config/src/defaults/blacklist');
 
 module.exports = {
   resolver: {
