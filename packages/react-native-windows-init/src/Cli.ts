@@ -99,11 +99,16 @@ const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 function requireGenerateWindows(): GenerateWindows {
   try {
     // Try the path for 0.63+
-    return require('react-native-windows/local-cli/lib-commonjs/generate-windows')
-      .generateWindows;
+    return require(require.resolve(
+      'react-native-windows/local-cli/lib-commonjs/generate-windows',
+      {paths: [process.cwd()]},
+    )).generateWindows;
   } catch {
     // Fall back to trying the older path
-    return require('react-native-windows/local-cli/generate-windows');
+    return require(require.resolve(
+      'react-native-windows/local-cli/generate-windows',
+      {paths: [process.cwd()]},
+    ));
   }
 }
 
