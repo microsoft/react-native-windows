@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 30 Jun 2020 05:06:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Call AppPolicyGetWindowingModel dynamically since it's WACK-banned",
+            "author": "asklar@microsoft.com",
+            "commit": "22d1cfc62a7a8fa8513704f9124ffc2429dc2847",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Stop generating extra files in MS.RN.ComponentTests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3f8b33aa954d6f3c023545b51e0a686d1986f246",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jun 2020 05:04:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.108",
       "version": "0.0.0-canary.108",
