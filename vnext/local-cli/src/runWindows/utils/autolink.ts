@@ -19,10 +19,10 @@ const templateRoot = path.join(__dirname, '../../../templates');
 
 /**
  * Logs the given message if verbose is True.
- * @param {string} message The message to log.
- * @param {boolean} verbose Whether or not verbose logging is enabled.
+ * @param message The message to log.
+ * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message, verbose) {
+function verboseMessage(message: string, verbose: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -30,11 +30,11 @@ function verboseMessage(message, verbose) {
 
 /**
  * Loads a source template file and performs the given replacements, normalizing CRLF.
- * @param {string} srcFile Path to the source file.
+ * @param srcFile Path to the source file.
  * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
  * @return The contents of the file with the replacements applied.
  */
-function getNormalizedContents(srcFile, replacements) {
+function getNormalizedContents(srcFile: string, replacements) {
   // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
   for (var key in replacements) {
     replacements[key] = replacements[key].replace(/\n/g, '\r\n');
@@ -47,13 +47,18 @@ function getNormalizedContents(srcFile, replacements) {
 
 /**
  * Updates the target file with the expected contents if it's different.
- * @param {string} filePath Path to the target file to update.
- * @param {string} expectedContents The expected contents of the file.
- * @param {boolean} verbose If true, enable verbose logging.
- * @param {boolean} checkMode It true, don't make any changes.
- * @return {boolean} Whether any changes were necessary.
+ * @param filePath Path to the target file to update.
+ * @param expectedContents The expected contents of the file.
+ * @param verbose If true, enable verbose logging.
+ * @param checkMode It true, don't make any changes.
+ * @return Whether any changes were necessary.
  */
-function updateFile(filePath, expectedContents, verbose, checkMode) {
+function updateFile(
+  filePath: string,
+  expectedContents: string,
+  verbose: boolean,
+  checkMode: boolean,
+): boolean {
   const fileName = chalk.bold(path.basename(filePath));
   verboseMessage(`Reading ${fileName}...`, verbose);
   const actualContents = fs.existsSync(filePath)
@@ -80,10 +85,13 @@ function updateFile(filePath, expectedContents, verbose, checkMode) {
 
 /**
  * Exits the script with the given status code.
- * @param {number} statusCode The status code.
- * @param {boolean} loggingWasEnabled Whether or not verbose lossing was enabled.
+ * @param statusCode The status code.
+ * @param loggingWasEnabled Whether or not verbose lossing was enabled.
  */
-function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
+function exitProcessWithStatusCode(
+  statusCode: number,
+  loggingWasEnabled: boolean,
+) {
   if (!loggingWasEnabled && statusCode !== 0) {
     console.log(
       `Error: Re-run the command with ${chalk.bold(
