@@ -13,6 +13,8 @@ variables:
   - template: variables/vs2019.yml
   - name: reactNativeVersion
     value: 0.0.0-56cf99a96
+  - name: usePRShortCuts
+    value: true
 
 jobs:
   - job: Setup
@@ -77,6 +79,7 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
+          usePRShortCuts: ${{ variables.usePRShortCuts }}
 
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
@@ -188,6 +191,8 @@ jobs:
         submodules: false
 
       - template: templates/prepare-env.yml
+        parameters: 
+          usePRShortCuts: ${{ variables.usePRShortCuts }}
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -238,6 +243,8 @@ jobs:
         submodules: false
 
       - template: templates/prepare-env.yml
+        parameters: 
+          usePRShortCuts: ${{ variables.usePRShortCuts }}
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -339,6 +346,8 @@ jobs:
         submodules: false
 
       - template: templates/prepare-env.yml
+        parameters: 
+          usePRShortCuts: ${{ variables.usePRShortCuts }}
 
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps
@@ -420,6 +429,7 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
+          usePRShortCuts: ${{ variables.usePRShortCuts }}
 
       - task: CmdLine@2
         displayName: Build react-native-win32 RNTester bundle
@@ -669,6 +679,7 @@ jobs:
     parameters:
       name: E2ETest
       BuildPlatform: x64
+      usePRShortCuts: ${{ variables.usePRShortCuts }}
 
   - job: RNWNugetPR
     displayName: Build and Pack NuGet

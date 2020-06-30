@@ -2,6 +2,7 @@
 
 parameters:
   debug: false
+  usePRShortCuts: false
 
   # NuGet & MSBuild
   project:
@@ -27,6 +28,7 @@ steps:
       installVsComponents: ${{ parameters.installVsComponents }}
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
+      usePRShortCuts: ${{ parameters.usePRShortCuts }}
 
   - task: NuGetCommand@2
     displayName: NuGet restore

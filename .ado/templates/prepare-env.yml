@@ -3,11 +3,13 @@
 parameters:
   yarnBuildCmd: build
   debug: false
+  usePRShortCuts: false
 
   # Visual Studio Installer
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
+  
 
 steps:
   - task: PowerShell@2
@@ -22,6 +24,19 @@ steps:
       targetType: inline # filePath | inline
       script: |
         Get-WmiObject Win32_LogicalDisk
+
+  - task: powershell@2
+    displayName: "Disable defender on Yarn and NuGet folders"
+    inputs:
+      targetType: inline
+      script: |
+        Write-Host "Excluding midgard-yarn cache folder"
+        Add-MpPreference -ExclusionPath "\.yarnCache"
+        Write-Host "Excluding nuget cache folder"
+        Add-MpPreference -ExclusionPath "$env:userProfile\.nuget"
+        Write-Host "Excluding source folder"
+        Add-MpPreference -ExclusionPath "$(Build.SourcesDirectory)"
+    condition: and(succeeded(), ${{ parameters.usePRShortCuts }})
 
   - task: NuGetToolInstaller@0
     inputs:

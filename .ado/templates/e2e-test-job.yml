@@ -2,6 +2,7 @@
 parameters:
   name: ''
   BuildPlatform: x86 # ARM, x86, x64
+  usePRShortCuts: false
 
 jobs:
   - job: ${{ parameters.name }}
@@ -25,6 +26,8 @@ jobs:
         submodules: false
             
       - template: prepare-env.yml
+        parameters:
+          usePRShortCuts: ${{ parameters.usePRShortCuts }}
 
       - task: CmdLine@2
         displayName: Set LocalDumps
