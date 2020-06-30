@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sun, 28 Jun 2020 05:04:51 GMT",
+      "tag": "react-native-windows-init_v0.1.15",
+      "version": "0.1.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix casing typos in NuGet and MSBuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a4ed167972e14ff5bc46c22bac7939bf9153b85d",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jun 2020 23:59:27 GMT",
       "tag": "react-native-windows-init_v0.1.14",
       "version": "0.1.14",

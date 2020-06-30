@@ -1,7 +1,7 @@
-**/node_modules
 /dist
 /flow
 /index.*
+/IntegrationTests
 /jest
 /lib
 /Libraries

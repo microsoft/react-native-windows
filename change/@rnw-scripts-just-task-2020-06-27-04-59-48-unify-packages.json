@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Share eslint and Typescript configs across packages",
+  "packageName": "@rnw-scripts/just-task",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-27T11:59:48.746Z"
+}

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <winrt/facebook.react.h>
 
-#include <ReactWindowsCore/Logging.h>
+#include <Shared/Logging.h>
 
 using namespace winrt::facebook::react;
 using namespace winrt;

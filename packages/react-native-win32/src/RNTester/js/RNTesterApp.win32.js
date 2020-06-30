@@ -17,14 +17,14 @@ const RNTesterList = require('./utils/RNTesterList'); // [Win32] Remove .ios
 const RNTesterNavigationReducer = require('./utils/RNTesterNavigationReducer');
 const React = require('react');
 // const SnapshotViewIOS = require('./examples/Snapshot/SnapshotViewIOS.ios'); [Win32]
-const URIActionMap = require('./utils/URIActionMap');
+// const URIActionMap = require('./utils/URIActionMap'); [Win32]
 
 const {
   AppRegistry,
   // AsyncStorage, [Win32]
-  BackHandler,
+  // BackHandler, [Win32]
   Button,
-  Linking,
+  // Linking, [Win32]
   Platform,
   SafeAreaView,
   StyleSheet,

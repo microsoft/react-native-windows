@@ -261,7 +261,17 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-            /p:AppxPackageSigningEnabled=false
+
+      - powershell: .ado/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
+        displayName: Test WACK
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload WACK report
+        condition:  succeededOrFailed()
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/WACK'
+          artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration)'
+
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32

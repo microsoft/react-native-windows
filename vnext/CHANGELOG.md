@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 Jun 2020 03:52:38 GMT and should not be manually modified.
+This log was last generated on Tue, 30 Jun 2020 05:06:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.109
+
+Tue, 30 Jun 2020 05:06:03 GMT
+
+### Changes
+
+- Call AppPolicyGetWindowingModel dynamically since it's WACK-banned (asklar@microsoft.com)
+
+## 0.0.0-canary.108
+
+Mon, 29 Jun 2020 05:04:57 GMT
+
+### Changes
+
+- Removed references to ReactWindowsCore (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.107
+
+Sun, 28 Jun 2020 05:04:51 GMT
+
+### Changes
+
+- Fix casing typos in NuGet and MSBuild (dannyvv@microsoft.com)
+- Remove Include/ReactUWP files (vmorozov@microsoft.com)
+- Fix build errors for codegen unittest project when building in VS2019 (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.106
 

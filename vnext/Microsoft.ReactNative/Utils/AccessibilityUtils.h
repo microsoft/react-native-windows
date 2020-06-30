@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ReactWindowsCore/ReactWindowsAPI.h>
+#include <Shared/ReactWindowsAPI.h>
 #include "CppWinRTIncludes.h"
 namespace react {
 namespace uwp {

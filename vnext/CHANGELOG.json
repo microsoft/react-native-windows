@@ -2,6 +2,71 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 30 Jun 2020 05:06:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Call AppPolicyGetWindowingModel dynamically since it's WACK-banned",
+            "author": "asklar@microsoft.com",
+            "commit": "22d1cfc62a7a8fa8513704f9124ffc2429dc2847",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Stop generating extra files in MS.RN.ComponentTests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3f8b33aa954d6f3c023545b51e0a686d1986f246",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 29 Jun 2020 05:04:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.108",
+      "version": "0.0.0-canary.108",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Removed references to ReactWindowsCore",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "99448817162075650c2f5e9798d10023ba7fd173",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 28 Jun 2020 05:04:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.107",
+      "version": "0.0.0-canary.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix casing typos in NuGet and MSBuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a4ed167972e14ff5bc46c22bac7939bf9153b85d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove Include/ReactUWP files",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5cedc7f1569c1241244b842b93162cc368ec295d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix build errors for codegen unittest project when building in VS2019",
+            "author": "dannyvv@microsoft.com",
+            "commit": "cb5088e3bc19349beb9ff362bdf1127bf7f677bd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Jun 2020 03:52:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.106",
       "version": "0.0.0-canary.106",

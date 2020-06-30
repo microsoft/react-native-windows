@@ -1,0 +1,9 @@
+{
+  "name": "@rnw-scripts/just-task",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "just-task.js",
+  "peerDependencies": {
+    "just-scripts": "^0.36.1"
+  }
+}
