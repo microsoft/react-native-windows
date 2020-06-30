@@ -44,7 +44,7 @@ export interface GenerateOptions {
  * @param  ns         namespace for the project
  * @param  options    command line options container
  */
-export default function generateWindows(
+export function generateWindows(
   projectDir: string,
   name: string,
   ns: string,
@@ -66,7 +66,7 @@ export default function generateWindows(
 }
 
 // Assert the interface here doesn't change for the reasons above
-const assertStableInterface: (typeof generateWindows) extends (
+const assertStableInterface: typeof generateWindows extends (
   projectDir: string,
   name: string,
   ns: string,

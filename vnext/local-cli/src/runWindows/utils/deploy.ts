@@ -12,7 +12,7 @@ import * as glob from 'glob';
 import * as parse from 'xml-parser';
 import {EOL} from 'os';
 import WinAppDeployTool from './winappdeploytool';
-const {
+import {
   newInfo,
   newSuccess,
   newError,
@@ -20,7 +20,7 @@ const {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
-} = require('./commandWithProgress');
+} from './commandWithProgress';
 import * as build from './build';
 
 function pushd(pathArg) {

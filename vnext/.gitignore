@@ -55,6 +55,7 @@ node_modules
 /index.*
 /interface.*
 /typings-index.*
+/rn-get-polyfills.js
 
 # VS Code
 .vscode/*

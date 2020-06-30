@@ -9,7 +9,6 @@ const path = require('path');
 const {
   task,
   cleanTask,
-  copyTask,
   series,
   condition,
   option,
@@ -74,12 +73,7 @@ task(
   }),
 );
 
-task(
-  'compileLocalCli',
-  tscTask({
-    project: path.join('./local-cli/tsconfig.json'),
-  }),
-);
+task('compileLocalCli', tscTask({project: './local-cli/tsconfig.json'}));
 
 task('cleanRnLibraries', copyRNLibaries.cleanTask(__dirname));
 task('cleanLocalCli', cleanTask(['local-cli/lib-commonjs']));

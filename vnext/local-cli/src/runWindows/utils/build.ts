@@ -11,11 +11,7 @@ import * as path from 'path';
 
 import * as MSBuildTools from './msbuildtools';
 import Version from './version';
-const {
-  commandWithProgress,
-  newSpinner,
-  newError,
-} = require('./commandWithProgress');
+import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
 import * as util from 'util';
 
 const existsAsync = util.promisify(fs.exists);

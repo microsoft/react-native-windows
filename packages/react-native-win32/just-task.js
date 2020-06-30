@@ -35,7 +35,7 @@ task('apiDocumenter', () => {
 });
 
 task('eslint', eslintTask());
-task('eslint:fix', () => eslintTask({fix: true}));
+task('eslint:fix', eslintTask({fix: true}));
 
 task('copyRNLibraries', copyRNLibaries.copyTask(__dirname));
 

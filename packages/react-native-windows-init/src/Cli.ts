@@ -16,7 +16,7 @@ import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
-import type generateWindows from 'react-native-windows/local-cli/lib-commonjs/generate-windows';
+import type {generateWindows} from 'react-native-windows/local-cli/lib-commonjs/generate-windows';
 
 const npmConfReg = execSync('npm config get registry')
   .toString()
@@ -99,7 +99,7 @@ const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 function requireGenerateWindows(): typeof generateWindows  {
   try {
     // Try the path for 0.63+
-    return require('react-native-windows/local-cli/lib-commonjs/generate-windows');
+    return require('react-native-windows/local-cli/lib-commonjs/generate-windows').generateWindows;
   } catch {
     // Fall back to trying the older path
     return require('react-native-windows/local-cli/generate-windows');

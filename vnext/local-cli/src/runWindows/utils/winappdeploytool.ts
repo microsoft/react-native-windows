@@ -6,19 +6,19 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-const execSync = require('child_process').execSync;
+import {execSync} from 'child_process';
 import {newSpinner, commandWithProgress, newWarn} from './commandWithProgress';
 
-function sortDevices(l, r) {
-  return l.toString().length > r.toString().length;
+function sortDevices(l: DeviceInfo, r: DeviceInfo): number {
+  return l.toString().length - r.toString().length;
 }
 
 class DeviceInfo {
   public guid;
   public ip;
+  public name;
 
   private index;
-  private name;
   private type;
 
   constructor(deviceIndex, deviceName, deviceType) {
