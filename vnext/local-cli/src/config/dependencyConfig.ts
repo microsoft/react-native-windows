@@ -77,7 +77,7 @@ module.exports = {
  * @param {object} userConfig A manually specified override config.
  * @return {object} The config if any RNW native modules exist.
  */
-function dependencyConfigWindows(
+export function dependencyConfigWindows(
   folder: string,
   userConfig: Record<string, any> = {},
 ): Record<string, any> {
@@ -241,7 +241,3 @@ function dependencyConfigWindows(
 
   return result;
 }
-
-module.exports = {
-  dependencyConfigWindows: dependencyConfigWindows,
-};
