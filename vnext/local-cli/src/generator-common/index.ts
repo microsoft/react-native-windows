@@ -1,23 +1,36 @@
-const fs = require('fs');
-const chalk = require('chalk');
-const path = require('path');
-const mustache = require('mustache');
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-/*
-type Options = {
+import * as fs from 'fs';
+import * as chalk from 'chalk';
+import * as path from 'path';
+import * as mustache from 'mustache';
+
+/**
+ * Text to replace, + config options
+ */
+export type Replacements = {
+  useMustache?: boolean;
+  regExpPatternsToRemove?: RegExp[];
+} & Record<string, string>;
+
+interface Options {
   echo?: string;
   ask?: string;
   value?: string;
   autocomplete?: string[] | Function;
-};*/
+}
 
 const term = 13; // carriage return
 
 function prompt(
-  ask/*?: string | Options*/,
-  value/*?: string | Options*/,
-  opts/*?: Options*/,
-) {
+  ask?: string | Options,
+  value?: string,
+  opts?: Options,
+): string {
   let insert = 0;
   opts = opts || {};
 
@@ -82,7 +95,7 @@ function prompt(
       fs.closeSync(fd);
       process.exit(130);
       if (process.stdin.setRawMode) {
-        process.stdin.setRawMode/*!*/(!!wasRaw);
+        process.stdin.setRawMode(/*!*/ !!wasRaw);
       }
       return null;
     }
@@ -144,7 +157,7 @@ function prompt(
   return str || value || '';
 }
 
-function walk(current/*: string*/)/*: string[]*/ {
+function walk(current: string): string[] {
   if (!fs.lstatSync(current).isDirectory()) {
     return [current];
   }
@@ -152,17 +165,20 @@ function walk(current/*: string*/)/*: string[]*/ {
   const files = fs
     .readdirSync(current)
     .map(child => walk(path.join(current, child)));
-  const result/*: string[]*/ = [];
+  const result: string[] = [];
   return result.concat.apply([current], files);
 }
 
 /**
  * Get a source file and replace parts of its contents.
- * @param {string} srcPath Path to the source file.
+ * @param srcPath Path to the source file.
  * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
  * @return The contents of the file with the replacements applied.
  */
-function resolveContents(srcPath, replacements) {
+export function resolveContents(
+  srcPath: string,
+  replacements: Replacements,
+): string {
   let content = fs.readFileSync(srcPath, 'utf8');
 
   if (replacements.useMustache) {
@@ -181,7 +197,12 @@ function resolveContents(srcPath, replacements) {
 // Binary files, don't process these (avoid decoding as utf8)
 const binaryExtensions = ['.png', '.jar', '.keystore'];
 
-// type ContentChangedCallbackOption = 'identical' | 'changed' | 'new' | null;
+type ContentChangedCallbackOption = 'identical' | 'changed' | 'new' | null;
+
+type ContentChangedCallback = (
+  path: string,
+  option: ContentChangedCallbackOption,
+) => 'keep' | 'overwrite';
 
 /**
  * Copy a file to given destination, replacing parts of its contents.
@@ -196,15 +217,10 @@ const binaryExtensions = ['.png', '.jar', '.keystore'];
  *        Function(path, 'identical' | 'changed' | 'new') => 'keep' | 'overwrite'
  */
 function copyAndReplace(
-  srcPath /*: string*/,
-  destPath /*: string*/,
-  replacements /*: Record<string, string>*/,
-  contentChangedCallback/*:
-    | ((
-        path: string,
-        option: ContentChangedCallbackOption,
-      ) => 'keep' | 'overwrite')
-    | null*/,
+  srcPath: string,
+  destPath: string,
+  replacements: Replacements,
+  contentChangedCallback: ContentChangedCallback | null,
 ) {
   if (fs.lstatSync(srcPath).isDirectory()) {
     if (!fs.existsSync(destPath)) {
@@ -220,7 +236,7 @@ function copyAndReplace(
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
       const newContentBuffer = fs.readFileSync(srcPath);
-      let contentChanged/*: ContentChangedCallbackOption*/ = 'identical';
+      let contentChanged: ContentChangedCallbackOption = 'identical';
       try {
         const origContentBuffer = fs.readFileSync(destPath);
         // eslint-disable-next-line no-undef
@@ -251,7 +267,7 @@ function copyAndReplace(
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
       // Check if contents changed and ask to overwrite
-      let contentChanged/*: ContentChangedCallbackOption*/ = 'identical';
+      let contentChanged: ContentChangedCallbackOption = 'identical';
       try {
         const origContent = fs.readFileSync(destPath, 'utf8');
         if (content !== origContent) {
@@ -280,9 +296,9 @@ function copyAndReplace(
  * Same as 'cp' on Unix. Don't do any replacements.
  */
 function copyBinaryFile(
-  srcPath/*: string*/,
-  destPath/*: string*/,
-  cb/*: (err?: Error) => void*/,
+  srcPath: string,
+  destPath: string,
+  cb: (err?: Error) => void,
 ) {
   let cbCalled = false;
   const srcPermissions = fs.statSync(srcPath).mode;
@@ -300,7 +316,7 @@ function copyBinaryFile(
     done();
   });
   readStream.pipe(writeStream);
-  function done(err/*?: Error*/) {
+  function done(err?: Error) {
     if (!cbCalled) {
       cb(err);
       cbCalled = true;
@@ -308,68 +324,93 @@ function copyBinaryFile(
   }
 }
 
-function createDir(destPath) {
+export function createDir(destPath: string) {
   if (!fs.existsSync(destPath)) {
     fs.mkdirSync(destPath);
   }
 }
 
-function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements, alwaysOverwrite) {
+export function copyAndReplaceWithChangedCallback(
+  srcPath: string,
+  destRoot: string,
+  relativeDestPath: string,
+  replacements?: Record<string, string>,
+  alwaysOverwrite?: boolean,
+) {
   if (!replacements) {
     replacements = {};
   }
-  const contentChangedCallback = alwaysOverwrite ? (_, contentChanged) =>
-  alwaysOverwriteContentChangedCallback(
-    srcPath,
-    relativeDestPath,
-    contentChanged
-  ) : (_, contentChanged) =>
-    upgradeFileContentChangedCallback(
-      srcPath,
-      relativeDestPath,
-      contentChanged
-    );
+  const contentChangedCallback: ContentChangedCallback = alwaysOverwrite
+    ? (_, contentChanged) =>
+        alwaysOverwriteContentChangedCallback(
+          srcPath,
+          relativeDestPath,
+          contentChanged,
+        )
+    : (_, contentChanged) =>
+        upgradeFileContentChangedCallback(
+          srcPath,
+          relativeDestPath,
+          contentChanged,
+        );
 
   copyAndReplace(
     srcPath,
     path.join(destRoot, relativeDestPath),
     replacements,
-    contentChangedCallback
+    contentChangedCallback,
   );
 }
 
-function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements, alwaysOverwrite) {
+export function copyAndReplaceAll(
+  srcPath: string,
+  destPath: string,
+  relativeDestDir: string,
+  replacements: Replacements,
+  alwaysOverwrite: boolean,
+) {
   walk(srcPath).forEach(absoluteSrcFilePath => {
     const filename = path.relative(srcPath, absoluteSrcFilePath);
     const relativeDestPath = path.join(relativeDestDir, filename);
-    copyAndReplaceWithChangedCallback(absoluteSrcFilePath, destPath, relativeDestPath, replacements, alwaysOverwrite);
+    copyAndReplaceWithChangedCallback(
+      absoluteSrcFilePath,
+      destPath,
+      relativeDestPath,
+      replacements,
+      alwaysOverwrite,
+    );
   });
 }
 
-function alwaysOverwriteContentChangedCallback(  absoluteSrcFilePath,
-  relativeDestPath,
-  contentChanged
+function alwaysOverwriteContentChangedCallback(
+  absoluteSrcFilePath: string,
+  relativeDestPath: string,
+  contentChanged: ContentChangedCallbackOption,
 ) {
   if (contentChanged === 'new') {
     console.log(`${chalk.bold('new')} ${relativeDestPath}`);
     return 'overwrite';
   }
   if (contentChanged === 'changed') {
-    console.log(`${chalk.bold('changed')} ${relativeDestPath} ${chalk.yellow('[overwriting]')}`);
+    console.log(
+      `${chalk.bold('changed')} ${relativeDestPath} ${chalk.yellow(
+        '[overwriting]',
+      )}`,
+    );
     return 'overwrite';
   }
   if (contentChanged === 'identical') {
     return 'keep';
   }
   throw new Error(
-    `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`
+    `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`,
   );
 }
 
 function upgradeFileContentChangedCallback(
-  absoluteSrcFilePath,
-  relativeDestPath,
-  contentChanged
+  absoluteSrcFilePath: string,
+  relativeDestPath: string,
+  contentChanged: ContentChangedCallbackOption,
 ) {
   if (contentChanged === 'new') {
     console.log(`${chalk.bold('new')} ${relativeDestPath}`);
@@ -378,15 +419,15 @@ function upgradeFileContentChangedCallback(
   if (contentChanged === 'changed') {
     console.log(
       `${chalk.bold(relativeDestPath)} ` +
-      `has changed in the new version.\nDo you want to keep your ${relativeDestPath} or replace it with the ` +
-      'latest version?\nMake sure you have any changes you made to this file saved somewhere.\n' +
-      `You can see the new version here: ${absoluteSrcFilePath}\n` +
-      `Do you want to replace ${relativeDestPath}? ` +
-      'Answer y to replace, n to keep your version: '
+        `has changed in the new version.\nDo you want to keep your ${relativeDestPath} or replace it with the ` +
+        'latest version?\nMake sure you have any changes you made to this file saved somewhere.\n' +
+        `You can see the new version here: ${absoluteSrcFilePath}\n` +
+        `Do you want to replace ${relativeDestPath}? ` +
+        'Answer y to replace, n to keep your version: ',
     );
     let answer;
     while (!answer) {
-       answer = prompt();
+      answer = prompt();
     }
 
     if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
@@ -400,10 +441,6 @@ function upgradeFileContentChangedCallback(
     return 'keep';
   }
   throw new Error(
-    `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`
+    `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`,
   );
 }
-
-module.exports = {
-  createDir, resolveContents, copyAndReplaceWithChangedCallback, copyAndReplaceAll,
-};

@@ -16,6 +16,8 @@ import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
+import GenerateWindows from './GenerateWindowsType';
+
 const npmConfReg = execSync('npm config get registry')
   .toString()
   .trim();
@@ -94,10 +96,20 @@ const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
 const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 
-function reactNativeWindowsGeneratePath(): string {
-  return require.resolve('react-native-windows/local-cli/generate-windows.js', {
-    paths: [process.cwd()],
-  });
+function requireGenerateWindows(): GenerateWindows {
+  try {
+    // Try the path for 0.63+
+    return require(require.resolve(
+      'react-native-windows/local-cli/lib-commonjs/generate-windows',
+      {paths: [process.cwd()]},
+    )).generateWindows;
+  } catch {
+    // Fall back to trying the older path
+    return require(require.resolve(
+      'react-native-windows/local-cli/generate-windows',
+      {paths: [process.cwd()]},
+    ));
+  }
 }
 
 function getReactNativeAppName(): string {
@@ -417,9 +429,9 @@ You can either downgrade your version of ${chalk.green(
 
     installReactNativeWindows(version, useDevMode);
 
-    const generateWindows = require(reactNativeWindowsGeneratePath());
+    const generateWindows = requireGenerateWindows();
     generateWindows(process.cwd(), name, ns, {
-      language: argv.language,
+      language: argv.language as 'cs' | 'cpp',
       overwrite: argv.overwrite,
       verbose: argv.verbose,
       experimentalNuGetDependency: argv.experimentalNuGetDependency,

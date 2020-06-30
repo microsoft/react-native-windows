@@ -3,19 +3,16 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
 
-const {spawn, execSync} = require('child_process');
-const fs = require('fs');
-const http = require('http');
-const path = require('path');
-const glob = require('glob');
-const parse = require('xml-parser');
-const child_process = require('child_process');
-const EOL = require('os').EOL;
-const WinAppDeployTool = require('./winappdeploytool');
-const {
+import {spawn, execSync, SpawnOptions} from 'child_process';
+import * as fs from 'fs';
+import * as http from 'http';
+import * as path from 'path';
+import * as glob from 'glob';
+import * as parse from 'xml-parser';
+import {EOL} from 'os';
+import WinAppDeployTool from './winappdeploytool';
+import {
   newInfo,
   newSuccess,
   newError,
@@ -23,26 +20,31 @@ const {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
-} = require('./commandWithProgress');
-const build = require('./build');
+} from './commandWithProgress';
+import * as build from './build';
+import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 
-function pushd(pathArg) {
+function pushd(pathArg: string): () => void {
   const cwd = process.cwd();
   process.chdir(pathArg);
   return () => process.chdir(cwd);
 }
 
-function getBuildConfiguration(options) {
-  return (
-    (options.release ? 'Release' : 'Debug') + (options.bundle ? 'Bundle' : '')
-  );
+export function getBuildConfiguration(options: RunWindowsOptions): BuildConfig {
+  return options.release
+    ? options.bundle
+      ? 'ReleaseBundle'
+      : 'Release'
+    : options.bundle
+    ? 'DebugBundle'
+    : 'Debug';
 }
 
-function shouldLaunchApp(options) {
+function shouldLaunchApp(options: RunWindowsOptions): boolean {
   return options.launch;
 }
 
-function getAppPackage(options) {
+function getAppPackage(options: RunWindowsOptions): string {
   const configuration = getBuildConfiguration(options);
   const packageFolder =
     options.arch === 'x86'
@@ -82,10 +84,14 @@ function getAppPackage(options) {
   return appPackage;
 }
 
-function getWindowsStoreAppUtils(options) {
+function getWindowsStoreAppUtils(options: RunWindowsOptions) {
   const popd = pushd(options.root);
   const windowsStoreAppUtilsPath = path.resolve(
     __dirname,
+    '..',
+    '..',
+    '..',
+    'powershell',
     'WindowsStoreAppUtils.ps1',
   );
   execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
@@ -93,7 +99,7 @@ function getWindowsStoreAppUtils(options) {
   return windowsStoreAppUtilsPath;
 }
 
-function getAppxManifestPath(options) {
+function getAppxManifestPath(options: RunWindowsOptions) {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
@@ -112,15 +118,15 @@ function getAppxManifestPath(options) {
   return appxPath;
 }
 
-function parseAppxManifest(appxManifestPath) {
+function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
 
-function getAppxManifest(options) {
+function getAppxManifest(options: RunWindowsOptions): parse.Document {
   return parseAppxManifest(getAppxManifestPath(options));
 }
 
-function handleResponseError(e) {
+function handleResponseError(e: Error): never {
   if (e.message.indexOf('Error code -2146233088')) {
     throw new Error(`No Windows Mobile device was detected: ${e.message}`);
   } else {
@@ -129,7 +135,10 @@ function handleResponseError(e) {
 }
 
 // Errors: 0x80073d10 - bad architecture
-async function deployToDevice(options, verbose) {
+export async function deployToDevice(
+  options: RunWindowsOptions,
+  verbose: boolean,
+) {
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -177,7 +186,11 @@ async function deployToDevice(options, verbose) {
   }
 }
 
-async function deployToDesktop(options, verbose, slnFile) {
+export async function deployToDesktop(
+  options: RunWindowsOptions,
+  verbose: boolean,
+  slnFile: string,
+) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options);
@@ -196,10 +209,9 @@ async function deployToDesktop(options, verbose, slnFile) {
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
-  const vsVersion = child_process
-    .execSync(
-      `"${vsWherePath}" -version 16 -property catalog_productDisplayVersion`,
-    )
+  const vsVersion = execSync(
+    `"${vsWherePath}" -version 16 -property catalog_productDisplayVersion`,
+  )
     .toString()
     .split(EOL)[0];
 
@@ -213,7 +225,14 @@ async function deployToDesktop(options, verbose, slnFile) {
       );
     }
     fs.copyFileSync(
-      path.join(path.resolve(__dirname), 'Add-AppDevPackage.ps1'),
+      path.join(
+        path.resolve(__dirname),
+        '..',
+        '..',
+        '..',
+        'powershell',
+        'Add-AppDevPackage.ps1',
+      ),
       script,
     );
   }
@@ -261,8 +280,8 @@ async function deployToDesktop(options, verbose, slnFile) {
       slnFile,
       options.release ? 'Release' : 'Debug',
       options.arch,
-      {DeployLayout: true},
-      options.verbose,
+      {DeployLayout: 'true'},
+      verbose,
       'Deploy',
       options.buildLogDirectory,
     );
@@ -303,7 +322,10 @@ async function deployToDesktop(options, verbose, slnFile) {
   }
 }
 
-function startServerInNewWindow(options, verbose) {
+export function startServerInNewWindow(
+  options: RunWindowsOptions,
+  verbose: boolean,
+): Promise<void> {
   return new Promise(resolve => {
     if (options.packager) {
       http
@@ -315,33 +337,23 @@ function startServerInNewWindow(options, verbose) {
           }
           resolve();
         })
-        .on('error', () => resolve(launchServer(options, verbose)));
+        .on('error', () => {
+          launchServer(options, verbose);
+          resolve();
+        });
     } else {
       resolve();
     }
   });
 }
 
-function launchServer(options, verbose) {
+function launchServer(options: RunWindowsOptions, verbose: boolean) {
   newSuccess('Starting the React-Native Server');
-  const launchPackagerScript = path.resolve(
-    __dirname,
-    '../../../Scripts/launchPackager.bat',
-  );
-  const opts = {
+  const opts: SpawnOptions = {
     cwd: options.root,
     detached: true,
     stdio: verbose ? 'inherit' : 'ignore',
   };
 
-  return Promise.resolve(
-    spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts),
-  );
+  spawn('cmd.exe', ['/C', 'start npx --no-install react-native start'], opts);
 }
-
-module.exports = {
-  getBuildConfiguration,
-  deployToDesktop,
-  deployToDevice,
-  startServerInNewWindow,
-};

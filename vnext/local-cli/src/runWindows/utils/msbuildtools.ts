@@ -3,38 +3,40 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
-const EOL = require('os').EOL;
-const fs = require('fs');
-const path = require('path');
-const child_process = require('child_process');
-const chalk = require('chalk');
-const shell = require('shelljs');
-const Version = require('./version');
-const checkRequirements = require('./checkRequirements');
-const {
+
+import {EOL} from 'os';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as child_process from 'child_process';
+import * as chalk from 'chalk';
+import * as shell from 'shelljs';
+import Version from './version';
+import * as checkRequirements from './checkRequirements';
+import {
   commandWithProgress,
   newInfo,
   newSpinner,
   newSuccess,
   newError,
-} = require('./commandWithProgress');
-const execSync = require('child_process').execSync;
+} from './commandWithProgress';
+import {execSync} from 'child_process';
+import {BuildArch, BuildConfig} from '../runWindowsOptions';
 
 const MSBUILD_VERSIONS = ['16.0'];
 
 class MSBuildTools {
-  // version is something like 16.0 for 2019
-  // localPath is the path to MSBuild.exe (x86)
-  // installationVersion is the full version e.g. 16.3.29411.108
-  constructor(version, localPath, installationVersion) {
-    this.version = version;
-    this.path = localPath;
-    this.installationVersion = installationVersion;
-  }
+  /**
+   * @param version is something like 16.0 for 2019
+   * @param path  Path to MSBuild.exe (x86)
+   * @param installationVersion is the full version e.g. 16.3.29411.108
+   */
+  constructor(
+    public readonly version: string,
+    public readonly path: string,
+    public readonly installationVersion: string,
+  ) {}
 
-  cleanProject(slnFile) {
+  cleanProject(slnFile: string) {
     const cmd = `"${path.join(
       this.path,
       'msbuild.exe',
@@ -47,13 +49,13 @@ class MSBuildTools {
   }
 
   async buildProject(
-    slnFile,
-    buildType,
-    buildArch,
-    msBuildProps,
-    verbose,
-    target,
-    buildLogDirectory,
+    slnFile: string,
+    buildType: BuildConfig,
+    buildArch: BuildArch,
+    msBuildProps: Record<string, string>,
+    verbose: boolean,
+    target: string | undefined,
+    buildLogDirectory: string | undefined,
   ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
@@ -134,7 +136,12 @@ class MSBuildTools {
   }
 }
 
-function VSWhere(requires, version, property, verbose) {
+function VSWhere(
+  requires: string,
+  version: string,
+  property: string,
+  verbose: boolean,
+): string | null {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
     process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
@@ -186,7 +193,7 @@ function VSWhere(requires, version, property, verbose) {
   }
 }
 
-function getVCToolsByArch(buildArch) {
+function getVCToolsByArch(buildArch: BuildArch): string {
   switch (buildArch.toLowerCase()) {
     case 'x86':
     case 'x64':
@@ -198,7 +205,11 @@ function getVCToolsByArch(buildArch) {
   }
 }
 
-function checkMSBuildVersion(version, buildArch, verbose) {
+function checkMSBuildVersion(
+  version: string,
+  buildArch: BuildArch,
+  verbose: boolean,
+): MSBuildTools | null {
   let toolsPath = null;
   if (verbose) {
     console.log('Searching for MSBuild version ' + version);
@@ -257,7 +268,10 @@ function checkMSBuildVersion(version, buildArch, verbose) {
   }
 }
 
-module.exports.findAvailableVersion = function(buildArch, verbose) {
+export function findAvailableVersion(
+  buildArch: BuildArch,
+  verbose: boolean,
+): MSBuildTools {
   const versions =
     process.env.VisualStudioVersion != null
       ? [
@@ -286,9 +300,9 @@ module.exports.findAvailableVersion = function(buildArch, verbose) {
     }
   }
   return msbuildTools;
-};
+}
 
-function getSDK10InstallationFolder() {
+function getSDK10InstallationFolder(): string {
   const folder = '';
 
   const execString =
@@ -309,8 +323,8 @@ function getSDK10InstallationFolder() {
   return folder;
 }
 
-module.exports.getAllAvailableUAPVersions = function() {
-  const results = [];
+export function getAllAvailableUAPVersions(): Version[] {
+  const results: Version[] = [];
 
   const programFilesFolder =
     process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
@@ -347,4 +361,4 @@ module.exports.getAllAvailableUAPVersions = function() {
     .forEach(version => version && results.push(version));
 
   return results;
-};
+}

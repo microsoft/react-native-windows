@@ -3,24 +3,25 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
-'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const execSync = require('child_process').execSync;
-const {
-  newSpinner,
-  commandWithProgress,
-  newWarn,
-} = require('./commandWithProgress');
+import * as fs from 'fs';
+import * as path from 'path';
+import {execSync} from 'child_process';
+import {newSpinner, commandWithProgress, newWarn} from './commandWithProgress';
 
-function sortDevices(l, r) {
-  return l.toString().length > r.toString().length;
+function sortDevices(l: DeviceInfo, r: DeviceInfo): number {
+  return l.toString().length - r.toString().length;
 }
 
 class DeviceInfo {
-  constructor(deviceIndex, deviceName, deviceType) {
+  public guid?: string;
+  public ip?: string;
+
+  public readonly name: string;
+  private index: number;
+  private type: string;
+
+  constructor(deviceIndex: number, deviceName: string, deviceType: string) {
     this.index = deviceIndex;
     this.name = deviceName;
     this.type = deviceType;
@@ -31,7 +32,9 @@ class DeviceInfo {
   }
 }
 
-class WinAppDeployTool {
+export default class WinAppDeployTool {
+  private path: string;
+
   constructor() {
     const programFilesPath =
       process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
@@ -43,14 +46,13 @@ class WinAppDeployTool {
       'x86',
       'WinAppDeployCmd.exe',
     );
-    this.targetOSVersion = '10.0';
   }
 
   get isAvailable() {
     return fs.existsSync(this.path);
   }
 
-  findDevice(target) {
+  findDevice(target: string): DeviceInfo {
     const devices = this.enumerateDevices();
 
     if (devices.length === 0) {
@@ -71,7 +73,7 @@ class WinAppDeployTool {
       return devices[0];
     }
 
-    const candidateList = devices.filter(device => device.__guid === target);
+    const candidateList = devices.filter(device => device.guid === target);
 
     if (candidateList.length > 0) {
       return candidateList[0];
@@ -80,7 +82,7 @@ class WinAppDeployTool {
     }
   }
 
-  enumerateDevices() {
+  enumerateDevices(): DeviceInfo[] {
     // 127.0.0.1   00000015-b21e-0da9-0000-000000000000    Lumia 1520 (RM-940)\r
     //  maps to
     // [(line), '127.0.0.1', '00000015-b21e-0da9-0000-000000000000', 'Lumia 1520 (RM-940)']
@@ -99,8 +101,8 @@ class WinAppDeployTool {
       const type = 'device';
 
       const deviceInfo = new DeviceInfo(arrayIndex, name, type);
-      deviceInfo.__ip = ip;
-      deviceInfo.__guid = guid;
+      deviceInfo.ip = ip;
+      deviceInfo.guid = guid;
 
       return deviceInfo;
     });
@@ -109,12 +111,12 @@ class WinAppDeployTool {
   }
 
   async installAppPackage(
-    pathToAppxPackage,
-    targetDevice,
-    shouldLaunch,
-    shouldUpdate,
-    pin,
-    verbose,
+    pathToAppxPackage: string,
+    targetDevice: DeviceInfo,
+    shouldLaunch: boolean,
+    shouldUpdate: boolean,
+    pin: boolean,
+    verbose: boolean = false,
   ) {
     const text = `Installing app to ${targetDevice.name}`;
 
@@ -129,25 +131,27 @@ class WinAppDeployTool {
       '-file',
       pathToAppxPackage,
       '-ip',
-      targetDevice.__ip,
+      targetDevice.ip,
     ];
 
     if (pin) {
-      args.push('-pin', pin);
+      args.push('-pin', pin.toString());
     }
     await commandWithProgress(newSpinner(text), text, this.path, args, verbose);
   }
 
-  async uninstallAppPackage(packageInfo, targetDevice, verbose) {
+  async uninstallAppPackage(
+    appName: string,
+    targetDevice: DeviceInfo,
+    verbose: boolean,
+  ) {
     const text = `Uninstalling app from ${targetDevice.name}`;
     await commandWithProgress(
       newSpinner(text),
       text,
       this.path,
-      `uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`.split(' '),
+      `uninstall -package ${appName} -ip {$targetDevice.ip}`.split(' '),
       verbose,
     );
   }
 }
-
-module.exports = WinAppDeployTool;

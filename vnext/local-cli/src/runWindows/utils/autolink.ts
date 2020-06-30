@@ -3,27 +3,32 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
-const performance = require('perf_hooks').performance;
+import * as fs from 'fs';
+import * as path from 'path';
+import * as chalk from 'chalk';
+import {performance} from 'perf_hooks';
 
-const {newSpinner} = require('./commandWithProgress');
-const vstools = require('./vstools');
-const generatorCommon = require('../../generator-common');
+import {newSpinner} from './commandWithProgress';
+import * as vstools from './vstools';
+import * as generatorCommon from '../../generator-common';
+import * as configUtils from '../../config/configUtils';
 
-const configUtils = require('../../config/configUtils');
+import {Command, Config} from '@react-native-community/cli-types';
+import {
+  WindowsDependencyConfig,
+  ProjectDependency,
+} from '../../config/dependencyConfig';
+import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 
-const templateRoot = path.join(__dirname, '../../generator-windows/templates');
+const templateRoot = path.join(__dirname, '../../../templates');
 
 /**
  * Logs the given message if verbose is True.
- * @param {string} message The message to log.
- * @param {boolean} verbose Whether or not verbose logging is enabled.
+ * @param message The message to log.
+ * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message, verbose) {
+function verboseMessage(message: string, verbose: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -31,11 +36,14 @@ function verboseMessage(message, verbose) {
 
 /**
  * Loads a source template file and performs the given replacements, normalizing CRLF.
- * @param {string} srcFile Path to the source file.
- * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
+ * @param srcFile Path to the source file.
+ * @param replacements e.g. {'TextToBeReplaced': 'Replacement'}
  * @return The contents of the file with the replacements applied.
  */
-function getNormalizedContents(srcFile, replacements) {
+function getNormalizedContents(
+  srcFile: string,
+  replacements: generatorCommon.Replacements,
+) {
   // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
   for (var key in replacements) {
     replacements[key] = replacements[key].replace(/\n/g, '\r\n');
@@ -48,13 +56,18 @@ function getNormalizedContents(srcFile, replacements) {
 
 /**
  * Updates the target file with the expected contents if it's different.
- * @param {string} filePath Path to the target file to update.
- * @param {string} expectedContents The expected contents of the file.
- * @param {boolean} verbose If true, enable verbose logging.
- * @param {boolean} checkMode It true, don't make any changes.
- * @return {boolean} Whether any changes were necessary.
+ * @param filePath Path to the target file to update.
+ * @param expectedContents The expected contents of the file.
+ * @param verbose If true, enable verbose logging.
+ * @param checkMode It true, don't make any changes.
+ * @return Whether any changes were necessary.
  */
-function updateFile(filePath, expectedContents, verbose, checkMode) {
+function updateFile(
+  filePath: string,
+  expectedContents: string,
+  verbose: boolean,
+  checkMode: boolean,
+): boolean {
   const fileName = chalk.bold(path.basename(filePath));
   verboseMessage(`Reading ${fileName}...`, verbose);
   const actualContents = fs.existsSync(filePath)
@@ -81,10 +94,13 @@ function updateFile(filePath, expectedContents, verbose, checkMode) {
 
 /**
  * Exits the script with the given status code.
- * @param {number} statusCode The status code.
- * @param {boolean} loggingWasEnabled Whether or not verbose lossing was enabled.
+ * @param statusCode The status code.
+ * @param loggingWasEnabled Whether or not verbose lossing was enabled.
  */
-function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
+function exitProcessWithStatusCode(
+  statusCode: number,
+  loggingWasEnabled: boolean,
+) {
   if (!loggingWasEnabled && statusCode !== 0) {
     console.log(
       `Error: Re-run the command with ${chalk.bold(
@@ -97,11 +113,15 @@ function exitProcessWithStatusCode(statusCode, loggingWasEnabled) {
 
 /**
  * Performs auto-linking for RNW native modules and apps.
- * @param {array} args Unprocessed args passed from react-native CLI.
- * @param {object} config Config passed from react-native CLI.
- * @param {object} options Options passed from react-native CLI.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
  */
-async function updateAutoLink(args, config, options) {
+async function updateAutoLink(
+  args: string[],
+  config: Config,
+  options: AutoLinkOptions,
+) {
   const startTime = performance.now();
 
   const verbose = options.logging;
@@ -127,7 +147,7 @@ async function updateAutoLink(args, config, options) {
       );
     }
 
-    var windowsAppConfig = projectConfig.windows;
+    var windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
 
     if (options.sln) {
       const slnFile = path.join(windowsAppConfig.folder, options.sln);
@@ -155,9 +175,14 @@ async function updateAutoLink(args, config, options) {
     }
 
     verboseMessage('Found Windows app project, config:', verbose);
-    verboseMessage(windowsAppConfig, verbose);
+    verboseMessage(windowsAppConfig.toString(), verbose);
 
-    const alwaysRequired = ['folder', 'sourceDir', 'solutionFile', 'project'];
+    const alwaysRequired: Array<keyof WindowsProjectConfig> = [
+      'folder',
+      'sourceDir',
+      'solutionFile',
+      'project',
+    ];
 
     alwaysRequired.forEach(item => {
       if (!(item in windowsAppConfig) || windowsAppConfig[item] === null) {
@@ -166,7 +191,7 @@ async function updateAutoLink(args, config, options) {
         );
       } else if (
         typeof windowsAppConfig[item] === 'string' &&
-        windowsAppConfig[item].startsWith('Error: ')
+        (windowsAppConfig[item] as string).startsWith('Error: ')
       ) {
         throw new Error(`${item} invalid. ${windowsAppConfig[item]}`);
       }
@@ -180,7 +205,7 @@ async function updateAutoLink(args, config, options) {
 
     const windowsAppProjectConfig = windowsAppConfig.project;
 
-    const projectRequired = [
+    const projectRequired: Array<keyof Project> = [
       'projectFile',
       'projectName',
       'projectLang',
@@ -218,10 +243,10 @@ async function updateAutoLink(args, config, options) {
 
     const dependenciesConfig = config.dependencies;
 
-    let windowsDependencies = {};
+    let windowsDependencies: Record<string, WindowsDependencyConfig> = {};
 
     for (const dependencyName in dependenciesConfig) {
-      const windowsDependency =
+      const windowsDependency: WindowsDependencyConfig | undefined =
         dependenciesConfig[dependencyName].platforms.windows;
 
       if (windowsDependency) {
@@ -229,7 +254,7 @@ async function updateAutoLink(args, config, options) {
           `${chalk.bold(dependencyName)} has Windows implementation, config:`,
           verbose,
         );
-        verboseMessage(windowsDependency, verbose);
+        verboseMessage(windowsDependency.toString(), verbose);
 
         var dependencyIsValid = true;
 
@@ -244,7 +269,10 @@ async function updateAutoLink(args, config, options) {
           Array.isArray(windowsDependency.projects)
         ) {
           windowsDependency.projects.forEach(project => {
-            const itemsToCheck = ['projectFile', 'directDependency'];
+            const itemsToCheck: Array<keyof ProjectDependency> = [
+              'projectFile',
+              'directDependency',
+            ];
             itemsToCheck.forEach(item => {
               dependencyIsValid =
                 dependencyIsValid &&
@@ -404,7 +432,7 @@ async function updateAutoLink(args, config, options) {
       changesNecessary;
 
     // Generating project entries for solution
-    let projectsForSolution = [];
+    let projectsForSolution: Project[] = [];
 
     for (const dependencyName in windowsDependencies) {
       // Process projects
@@ -482,32 +510,41 @@ async function updateAutoLink(args, config, options) {
   }
 }
 
-module.exports = {
+interface AutoLinkOptions {
+  logging: boolean;
+  check: boolean;
+  sln?: string;
+  proj?: string;
+}
+
+const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,
   options: [
     {
-      command: '--logging',
+      name: '--logging',
       description: 'Verbose output logging',
       default: false,
     },
     {
-      command: '--check',
+      name: '--check',
       description: 'Only check whether any autolinked files need to change',
       default: false,
     },
     {
-      command: '--sln [string]',
+      name: '--sln [string]',
       description:
         "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
       default: undefined,
     },
     {
-      command: '--proj [string]',
+      name: '--proj [string]',
       description:
         "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
       default: undefined,
     },
   ],
 };
+
+export = autoLinkCommand;

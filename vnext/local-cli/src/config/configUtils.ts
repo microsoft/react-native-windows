@@ -1,16 +1,15 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as glob from 'glob';
 
-const xmldom = require('xmldom').DOMParser;
-const xpath = require('xpath');
+import {DOMParser} from 'xmldom';
+import * as xpath from 'xpath';
 
 const msbuildSelect = xpath.useNamespaces({
   msbuild: 'http://schemas.microsoft.com/developer/msbuild/2003',
@@ -18,11 +17,11 @@ const msbuildSelect = xpath.useNamespaces({
 
 /**
  * Search for files matching the pattern under the target folder.
- * @param {string} folder The absolute path to target folder.
- * @param {string} filenamePattern The pattern to search for.
- * @return {array} Return the array of relative file paths.
+ * @param folder The absolute path to target folder.
+ * @param filenamePattern The pattern to search for.
+ * @return  Return the array of relative file paths.
  */
-function findFiles(folder, filenamePattern) {
+export function findFiles(folder: string, filenamePattern: string): string[] {
   const files = glob.sync(path.join('**', filenamePattern), {
     cwd: folder,
     ignore: [
@@ -40,10 +39,10 @@ function findFiles(folder, filenamePattern) {
 
 /**
  * Search for the windows sub-folder under the target folder.
- * @param {string} folder The absolute path to the target folder.
+ * @param folder The absolute path to the target folder.
  * @return The absolute path to the windows folder, if it exists.
  */
-function findWindowsFolder(folder) {
+export function findWindowsFolder(folder: string): string {
   const winDir = 'windows';
   const joinedDir = path.join(folder, winDir);
   if (fs.existsSync(joinedDir)) {
@@ -55,10 +54,10 @@ function findWindowsFolder(folder) {
 
 /**
  * Checks if the target file path is a RNW solution file by checking if it contains the string "ReactNative".
- * @param {string} filePath The absolute file path to check.
- * @return {boolean} Whether the path is to a RNW solution file.
+ * @param filePath The absolute file path to check.
+ * @return Whether the path is to a RNW solution file.
  */
-function isRnwSolution(filePath) {
+export function isRnwSolution(filePath: string): boolean {
   return (
     fs
       .readFileSync(filePath)
@@ -69,10 +68,10 @@ function isRnwSolution(filePath) {
 
 /**
  * Search for the RNW solution files under the target folder.
- * @param {string} winFolder The absolute path to target folder.
- * @return {array} Return the array of relative file paths.
+ * @param winFolder The absolute path to target folder.
+ * @return Return the array of relative file paths.
  */
-function findSolutionFiles(winFolder) {
+export function findSolutionFiles(winFolder: string): string[] {
   // First search for all potential solution files
   const allSolutions = findFiles(winFolder, '*.sln');
 
@@ -98,10 +97,10 @@ function findSolutionFiles(winFolder) {
 
 /**
  * Checks if the target file path is a RNW lib project file.
- * @param {string} filePath The absolute file path to check.
- * @return {boolean} Whether the path is to a RNW lib project file.
+ * @param filePath The absolute file path to check.
+ * @return Whether the path is to a RNW lib project file.
  */
-function isRnwDependencyProject(filePath) {
+export function isRnwDependencyProject(filePath: string): boolean {
   const projectContents = readProjectFile(filePath);
 
   const projectLang = getProjectLanguage(filePath);
@@ -122,10 +121,10 @@ function isRnwDependencyProject(filePath) {
 
 /**
  * Search for the RNW lib project files under the target folder.
- * @param {string} winFolder The absolute path to target folder.
- * @return {array} Return the array of relative file paths.
+ * @param winFolder The absolute path to target folder.
+ * @return Return the array of relative file paths.
  */
-function findDependencyProjectFiles(winFolder) {
+export function findDependencyProjectFiles(winFolder: string): string[] {
   // First, search for all potential project files
   const allCppProj = findFiles(winFolder, '*.vcxproj');
   const allCsProj = findFiles(winFolder, '*.csproj');
@@ -151,10 +150,10 @@ function findDependencyProjectFiles(winFolder) {
 
 /**
  * Checks if the target file path is a RNW app project file.
- * @param {string} filePath The absolute file path to check.
- * @return {boolean} Whether the path is to a RNW app project file.
+ * @param filePath The absolute file path to check.
+ * @return Whether the path is to a RNW app project file.
  */
-function isRnwAppProject(filePath) {
+function isRnwAppProject(filePath: string): boolean {
   const projectContents = readProjectFile(filePath);
 
   const projectLang = getProjectLanguage(filePath);
@@ -175,10 +174,10 @@ function isRnwAppProject(filePath) {
 
 /**
  * Search for the RNW app project files under the target folder.
- * @param {string} winFolder The absolute path to target folder.
- * @return {array} Return the array of relative file paths.
+ * @param winFolder The absolute path to target folder.
+ * @return Return the array of relative file paths.
  */
-function findAppProjectFiles(winFolder) {
+export function findAppProjectFiles(winFolder: string): string[] {
   // First, search for all potential project files
   const allCppProj = findFiles(winFolder, '*.vcxproj');
   const allCsProj = findFiles(winFolder, '*.csproj');
@@ -204,10 +203,10 @@ function findAppProjectFiles(winFolder) {
 
 /**
  * Returns the programming language of the project file.
- * @param {string} projectPath The project file path to check.
- * @return {string} The language string: cpp, cs, or null if unknown.
+ * @param projectPath The project file path to check.
+ * @return The language string: cpp, cs, or null if unknown.
  */
-function getProjectLanguage(projectPath) {
+export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' | null {
   if (projectPath.endsWith('.vcxproj')) {
     return 'cpp';
   } else if (projectPath.endsWith('.csproj')) {
@@ -218,21 +217,24 @@ function getProjectLanguage(projectPath) {
 
 /**
  * Reads in the contents of the target project file.
- * @param {string} projectPath The target project file path.
- * @return {object} The project file contents.
+ * @param projectPath The target project file path.
+ * @return The project file contents.
  */
-function readProjectFile(projectPath) {
+export function readProjectFile(projectPath: string) {
   const projectContents = fs.readFileSync(projectPath, 'utf8').toString();
-  return new xmldom().parseFromString(projectContents, 'application/xml');
+  return new DOMParser().parseFromString(projectContents, 'application/xml');
 }
 
 /**
  * Search for the given property in the project contents and return its value.
- * @param {object} projectContents The XML project contents.
- * @param {string} propertyName The property to look for.
- * @return {string} The value of the tag if it exists.
+ * @param projectContents The XML project contents.
+ * @param propertyName The property to look for.
+ * @return The value of the tag if it exists.
  */
-function findPropertyValue(projectContents, propertyName) {
+export function findPropertyValue(
+  projectContents: Node,
+  propertyName: string,
+): string {
   var nodes = msbuildSelect(
     `//msbuild:PropertyGroup/msbuild:${propertyName}`,
     projectContents,
@@ -240,7 +242,7 @@ function findPropertyValue(projectContents, propertyName) {
 
   if (nodes.length > 0) {
     // Take the last one
-    return nodes[nodes.length - 1].textContent;
+    return (nodes[nodes.length - 1] as Node).textContent;
   }
 
   return null;
@@ -248,11 +250,14 @@ function findPropertyValue(projectContents, propertyName) {
 
 /**
  * Search for the given import project in the project contents and return if it exists.
- * @param {object} projectContents The XML project contents.
- * @param {string} projectName The project to look for.
- * @return {boolean} If the target exists.
+ * @param projectContents The XML project contents.
+ * @param projectName The project to look for.
+ * @return If the target exists.
  */
-function importProjectExists(projectContents, projectName) {
+export function importProjectExists(
+  projectContents: Node,
+  projectName: string,
+): boolean {
   var nodes = msbuildSelect(
     `//msbuild:Import[contains(@Project,'${projectName}')]`,
     projectContents,
@@ -263,10 +268,10 @@ function importProjectExists(projectContents, projectName) {
 
 /**
  * Gets the name of the project from the project contents.
- * @param {object} projectContents The XML project contents.
- * @return {string} The project name.
+ * @param projectContents The XML project contents.
+ * @return The project name.
  */
-function getProjectName(projectContents) {
+export function getProjectName(projectContents: Node): string {
   return (
     findPropertyValue(projectContents, 'ProjectName') ||
     findPropertyValue(projectContents, 'AssemblyName') ||
@@ -276,35 +281,18 @@ function getProjectName(projectContents) {
 
 /**
  * Gets the namespace of the project from the project contents.
- * @param {object} projectContents The XML project contents.
- * @return {string} The project namespace.
+ * @param projectContents The XML project contents.
+ * @return The project namespace.
  */
-function getProjectNamespace(projectContents) {
+export function getProjectNamespace(projectContents: Node): string {
   return findPropertyValue(projectContents, 'RootNamespace');
 }
 
 /**
  * Gets the guid of the project from the project contents.
- * @param {object} projectContents The XML project contents.
- * @return {string} The project guid.
+ * @param projectContents The XML project contents.
+ * @return The project guid.
  */
-function getProjectGuid(projectContents) {
+export function getProjectGuid(projectContents: Node): string {
   return findPropertyValue(projectContents, 'ProjectGuid');
 }
-
-module.exports = {
-  findFiles: findFiles,
-  findWindowsFolder: findWindowsFolder,
-  isRnwSolution: isRnwSolution,
-  findSolutionFiles: findSolutionFiles,
-  isRnwDependencyProject: isRnwDependencyProject,
-  findDependencyProjectFiles: findDependencyProjectFiles,
-  isRnwAppProject: isRnwAppProject,
-  findAppProjectFiles: findAppProjectFiles,
-  getProjectLanguage: getProjectLanguage,
-  readProjectFile: readProjectFile,
-  getProjectName: getProjectName,
-  getProjectNamespace: getProjectNamespace,
-  getProjectGuid: getProjectGuid,
-  findPropertyValue: findPropertyValue,
-};

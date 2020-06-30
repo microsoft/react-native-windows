@@ -35,6 +35,7 @@
     "@types/yargs": "^15.0.3",
     "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
+    "react-native-windows": "^0.0.0-canary.106",
     "typescript": "^3.8.3"
   },
   "files": [

@@ -3,19 +3,18 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const child_process = require('child_process');
-const ora = require('ora');
-const spinners = require('cli-spinners');
-const chalk = require('chalk');
+import {spawn, SpawnOptions} from 'child_process';
+import * as ora from 'ora';
+import * as spinners from 'cli-spinners';
+import * as chalk from 'chalk';
 
-function setSpinnerText(spinner, prefix, text) {
+function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {
   text = prefix + spinnerString(text);
   spinner.text = text.length > 45 ? text.slice(0, 110) + '...' : text;
 }
 
-function spinnerString(msg) {
+function spinnerString(msg: string) {
   msg = msg.trim();
   const lastLineIndex = msg.lastIndexOf('\n');
   if (lastLineIndex > 0) {
@@ -25,27 +24,28 @@ function spinnerString(msg) {
   return msg;
 }
 
-function newSpinner(text) {
-  const options = {text: text, indent: 1};
+export function newSpinner(text: string) {
+  const options: ora.Options = {
+    text: text,
+    indent: 1,
 
-  // ora turns off emoji rendering by default on windows, since the default terminal
-  // doesn't render them.  Turn them back on when running in the new Windows terminal
-  if (process.env.WT_SESSION) {
-    options.spinner = spinners.dots;
-  }
+    // ora turns off emoji rendering by default on windows, since the default terminal
+    // doesn't render them.  Turn them back on when running in the new windows terminal
+    ...(process.env.WT_SESSION && {spinner: spinners.dots}),
 
-  // By default, ora process.stderr as the output stream, however,the VS Code debugger
-  // Uses stdout to match success patterns
-  options.stream = process.stdout;
+    // By default, ora process.stderr as the output stream, however,the VS Code debugger
+    // Uses stdout to match success patterns
+    stream: process.stdout,
+  };
 
   return ora(options).start();
 }
 
-async function runPowerShellScriptFunction(
-  taskDescription,
-  script,
-  funcName,
-  verbose,
+export async function runPowerShellScriptFunction(
+  taskDescription: string,
+  script: string,
+  funcName: string,
+  verbose: boolean,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
@@ -68,16 +68,22 @@ async function runPowerShellScriptFunction(
   }
 }
 
-function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
+export function commandWithProgress(
+  spinner: ora.Ora,
+  taskDoingName: string,
+  command: string,
+  args: string[],
+  verbose: boolean,
+) {
   return new Promise(function(resolve, reject) {
-    const spawnOptions = verbose ? {stdio: 'inherit'} : {};
+    const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {
       spinner.stop();
     }
 
-    const cp = child_process.spawn(command, args, spawnOptions);
-    let firstErrorLine = null;
+    const cp = spawn(command, args, spawnOptions);
+    let firstErrorLine: string | null = null;
     if (!verbose) {
       cp.stdout.on('data', chunk => {
         const text = chunk.toString();
@@ -115,28 +121,18 @@ function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
   });
 }
 
-function newError(text) {
+export function newError(text: string) {
   newSpinner(text).fail(text);
 }
 
-function newWarn(text) {
+export function newWarn(text: string) {
   newSpinner(text).warn(text);
 }
 
-function newSuccess(text) {
+export function newSuccess(text: string) {
   newSpinner(text).succeed(text);
 }
 
-function newInfo(text) {
+export function newInfo(text: string) {
   newSpinner(text).info(text);
 }
-
-module.exports = {
-  commandWithProgress,
-  newError,
-  newInfo,
-  newSpinner,
-  newSuccess,
-  newWarn,
-  runPowerShellScriptFunction,
-};

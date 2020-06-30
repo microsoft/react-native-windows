@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Migrate the local-cli to TypeScript",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-29T10:26:13.597Z"
+}

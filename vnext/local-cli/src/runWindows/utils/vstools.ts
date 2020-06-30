@@ -3,11 +3,11 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as chalk from 'chalk';
+import {Project} from '../../config/projectConfig';
 
 const projectTypeGuidsByLanguage = {
   cpp: '{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}',
@@ -16,11 +16,11 @@ const projectTypeGuidsByLanguage = {
 
 /**
  * Checks is the given block of lines exists within an array of lines.
- * @param {array} lines The array of lines to search.
- * @param {array} block The block of lines to search for.
- * @return {boolean} True if the block of lines does exist within lines.
+ * @param lines The array of lines to search.
+ * @param block The block of lines to search for.
+ * @return True if the block of lines does exist within lines.
  */
-function linesContainsBlock(lines, block) {
+function linesContainsBlock(lines: string[], block: string[]): boolean {
   if (block.length > 0) {
     var startIndex = lines.indexOf(block[0]);
 
@@ -39,11 +39,11 @@ function linesContainsBlock(lines, block) {
 
 /**
  * Insert the given block of lines into an array of lines.
- * @param {array} lines The array of lines to insert into.
- * @param {array} block The block of lines to insert.
- * @param {number} index The index to perform the insert.
+ * @param lines The array of lines to insert into.
+ * @param block The block of lines to insert.
+ * @param index The index to perform the insert.
  */
-function insertBlockIntoLines(lines, block, index) {
+function insertBlockIntoLines(lines: string[], block: string[], index: number) {
   for (let i = 0; i < block.length; i++) {
     lines.splice(index + i, 0, block[i]);
   }
@@ -51,18 +51,18 @@ function insertBlockIntoLines(lines, block, index) {
 
 /**
  * Search through an array of lines for a block of lines starting with startLine and ending with endLine.
- * @param {array} lines The array of lines to search.
- * @param {string} startLine The first line of the block.
- * @param {string} endLine The last line of the block.
- * @param {boolean} includeStartEnd Include the start and end lines in the result.
- * @return {array} The found block of lines, if found.
+ * @param lines The array of lines to search.
+ * @param startLine The first line of the block.
+ * @param endLine The last line of the block.
+ * @param includeStartEnd Include the start and end lines in the result.
+ * @return The found block of lines, if found.
  */
 function getBlockContentsFromLines(
-  lines,
-  startLine,
-  endLine,
-  includeStartEnd = true,
-) {
+  lines: string[],
+  startLine: string,
+  endLine: string,
+  includeStartEnd: boolean = true,
+): string[] {
   const startIndex = lines.indexOf(startLine);
   const endIndex = lines.indexOf(endLine, startIndex);
 
@@ -79,18 +79,18 @@ function getBlockContentsFromLines(
 
 /**
  * Adds the necessary info from a VS project into a VS solution file so that it will build.
- * @param {string} slnFile The Absolute path to the target VS solution file.
- * @param {object} project The object representing the project info.
- * @param {boolean} verbose If true, enable verbose logging.
- * @param {boolean} checkMode It true, don't make any changes.
- * @return {boolean} Whether any changes were necessary.
+ * @param slnFile The Absolute path to the target VS solution file.
+ * @param project The object representing the project info.
+ * @param verbose If true, enable verbose logging.
+ * @param checkMode It true, don't make any changes.
+ * @return Whether any changes were necessary.
  */
-function addProjectToSolution(
-  slnFile,
-  project,
-  verbose = false,
-  checkMode = false,
-) {
+export function addProjectToSolution(
+  slnFile: string,
+  project: Project,
+  verbose: boolean = false,
+  checkMode: boolean = false,
+): boolean {
   if (verbose) {
     console.log(
       `Processing ${chalk.bold(path.basename(project.projectFile))}...`,
@@ -139,7 +139,7 @@ function addProjectToSolution(
     false,
   ).map(line => line.match(/\s+([\w|]+)\s=/)[1]);
 
-  let projectConfigLines = [];
+  let projectConfigLines: string[] = [];
 
   slnConfigs.forEach(slnConfig => {
     projectConfigLines.push(
@@ -207,7 +207,3 @@ function addProjectToSolution(
 
   return contentsChanged;
 }
-
-module.exports = {
-  addProjectToSolution: addProjectToSolution,
-};

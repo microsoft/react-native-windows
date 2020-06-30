@@ -3,11 +3,11 @@
  * Licensed under the MIT License.
  * @format
  */
-// @ts-check
 
-const envinfo = require('envinfo');
+// @ts-ignore no typings
+import * as envinfo from 'envinfo';
 
-async function getEnvironmentInfo() {
+export async function getEnvironmentInfo(): Promise<string> {
   return await envinfo.run({
     System: ['OS', 'CPU', 'Memory', 'Shell'],
     Binaries: ['Node', 'Yarn', 'npm', 'Watchman'],
@@ -21,7 +21,3 @@ async function getEnvironmentInfo() {
     npmGlobalPackages: ['*react-native*'],
   });
 }
-
-module.exports = {
-  getEnvironmentInfo,
-};

@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Migrate the local-cli to TypeScript",
+  "packageName": "react-native-windows-init",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-06-29T10:26:20.519Z"
+}
