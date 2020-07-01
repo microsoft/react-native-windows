@@ -215,7 +215,7 @@ void ReactInstanceWin::LoadModules(
           ::Microsoft::ReactNative::DevSettings,
           ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
 
-  registerNativeModule(
+  registerTurboModule(
       L"I18nManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
           ::Microsoft::ReactNative::I18nManager,
