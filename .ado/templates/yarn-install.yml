@@ -11,10 +11,10 @@ steps:
       restoreKeys: |
         midgard-yarn | "$(Agent.OS)"
         midgard-yarn
-      path: \.yarnCache
+      path: $(Agent.BuildDirectory)\.yarnCache
     displayName: Cache Yarn packages
 
   - task: CmdLine@2
     displayName: midgard-yarn (faster yarn install)
     inputs:
-      script: npx midgard-yarn@1.23.10 --network-concurrency 40 --frozen-lockfile --cache-folder \.yarnCache
+      script: npx midgard-yarn@1.23.10 --network-concurrency 40 --frozen-lockfile --cache-folder $(Agent.BuildDirectory)\.yarnCache
