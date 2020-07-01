@@ -1,5 +1,15 @@
 steps:
 
+
+  - task: Cache@2
+    inputs:
+      key: 'midgard-yarn | "$(Agent.OS)" | yarn.lock'
+      restoreKeys: |
+        midgard-yarn | "$(Agent.OS)"
+        midgard-yarn
+      path: \.yarnCache
+    displayName: Cache Yarn packages
+
   - task: CmdLine@2
     displayName: midgard-yarn (faster yarn install)
     inputs:

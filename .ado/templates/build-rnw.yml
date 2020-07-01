@@ -28,6 +28,15 @@ steps:
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
 
+  - task: Cache@2
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/vnext/**/packages.config,$(Build.SourcesDirectory)/vnext/**/*.csproj'
+      restoreKeys: |
+        nuget | "$(Agent.OS)"
+        nuget
+      path: $(Build.SourcesDirectory)/vnext/packages
+    displayName: Cache Nuget packages
+
   - task: NuGetCommand@2
     displayName: NuGet restore
     inputs:
