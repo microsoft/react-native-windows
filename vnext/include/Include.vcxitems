@@ -14,35 +14,11 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\InstanceFactory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IReactInstance.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IXamlRootView.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactRootView.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactUwp.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\CppWinrtLessExceptions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\Helpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\LocalBundleReader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyHandlerUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ResourceBrushUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpPreparedScriptStore.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ViewManagerProvider.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\XamlView.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\AccessibilityUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ValueUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ControlViewManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\FrameworkElementViewManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\KeyboardEventHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ShadowNodeBase.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ViewManagerBase.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\cdebug.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\II18nModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ReactWindowsAPI.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\SourceCodeModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ViewManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\AsyncStorageModuleWin32Config.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\cdebug.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\II18nModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ReactWindowsAPI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />

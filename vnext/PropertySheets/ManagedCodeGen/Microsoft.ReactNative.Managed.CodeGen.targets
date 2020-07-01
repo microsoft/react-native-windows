@@ -16,7 +16,7 @@
     <ReactNativeCodeGenFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).g.cs</ReactNativeCodeGenFile>
     <_ReactNativeCodeGenResponseFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).rsp</_ReactNativeCodeGenResponseFile>
 
-    <_ReactNativeCodeGenProjectPath>$(ReactNativeWindowsDir)Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj</_ReactNativeCodeGenProjectPath>
+    <_ReactNativeCodeGenProjectPath>$(ReactNativeWindowsDir)\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj</_ReactNativeCodeGenProjectPath>
     <_ReactNativeCodeGenProjectProperties>Configuration=$(Configuration);Platform=$(Platform);DeployOnBuild=true;PublishProfile=DeployAsTool-$(Configuration);NoWarn=1023</_ReactNativeCodeGenProjectProperties>
 
     <PrepareResourcesDependsOn>
@@ -28,7 +28,7 @@
   <!-- 
     This target ensures that the codegen tool is compiled and published. 
     It will set the property groups for the path of the deployment as well as listing all the dependent files of the tool for incrementality
-    When this is moved to a nuget package, this is no longer needed.
+    When this is moved to a NuGet package, this is no longer needed.
   -->
   <Target Name="_ReactNativeManagedCodeGenPublishTool" Condition="'$(DesignTimeBuild)' != 'true'">
 
@@ -51,12 +51,12 @@
     </MSBuild>
 
     <ItemGroup>
-      <!-- MsBuild does not allow targets to return properties, so map it to a property from an itemgroup -->
+      <!-- MSBuild does not allow targets to return properties, so map it to a property from an itemgroup -->
       <_ReactNativeCodeGenToolFiles Include="@(_ReactNativeCodeGenToolFilesTemp)" />
     </ItemGroup>
 
     <PropertyGroup>
-      <!-- MsBuild does not allow targets to return properties, so map it to a property from an itemgroup -->
+      <!-- MSBuild does not allow targets to return properties, so map it to a property from an itemgroup -->
       <_ReactNativeCodeGenToolExecutable>@(_ReactNativeCodeGenToolExecutableTemp)</_ReactNativeCodeGenToolExecutable>
     </PropertyGroup>
 

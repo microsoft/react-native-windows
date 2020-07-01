@@ -15,6 +15,11 @@
 
 #include <tuple>
 
+namespace winrt::Microsoft::ReactNative {
+class NativeModulesProvider;
+class TurboModulesProvider;
+} // namespace winrt::Microsoft::ReactNative
+
 namespace Mso::React {
 
 static_assert(
@@ -94,6 +99,9 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
       Mso::Promise<void> &&whenCreated,
       Mso::Promise<void> &&whenLoaded,
       Mso::VoidFunctor &&updateUI) noexcept;
+  void LoadModules(
+      const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
+      const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept;
   void Initialize() noexcept override;
   ~ReactInstanceWin() override;
 
@@ -104,9 +112,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   void InitUIMessageThread() noexcept;
   void InitUIManager() noexcept;
   std::string GetBytecodeFileName() noexcept;
-  std::string GetDebugHost() noexcept;
-  std::string GetSourceBundleHost() noexcept;
-  std::string GetSourceBundlePort() noexcept;
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;
   facebook::react::NativeLoggingHook GetLoggingCallback() noexcept;

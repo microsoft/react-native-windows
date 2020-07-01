@@ -57,9 +57,9 @@ Get-ChildItem -Path $ReactWindowsRoot\stubs -Name -Recurse -Include $patterns | 
 }
 
 # React.Windows.Core headers
-Get-ChildItem -Path $ReactWindowsRoot\ReactWindowsCore -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
-	-Path        $ReactWindowsRoot\ReactWindowsCore\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ReactWindowsCore\$(Split-Path $_) -Force) `
+Get-ChildItem -Path $ReactWindowsRoot\Shared -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactWindowsRoot\Shared\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Shared\$(Split-Path $_) -Force) `
 	-Force
 }
 
@@ -73,13 +73,6 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop -Name -Recurse -Include '*.h','*.h
 Get-ChildItem -Path $ReactWindowsRoot\Desktop.DLL -Recurse -Include '*.def' | ForEach-Object { Copy-Item `
 	-Path        $_ `
 	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ -Force) `
-	-Force
-}
-
-# React.Windows.ReactUWP headers
-Get-ChildItem -Path $ReactWindowsRoot\ReactUWP -Name -Recurse -Include '*.h','*.hpp' | ForEach-Object { Copy-Item `
-	-Path        $ReactWindowsRoot\ReactUWP\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ReactUWP\$(Split-Path $_) -Force) `
 	-Force
 }
 

@@ -19,20 +19,20 @@ The generated C# file will contain a class called `ReactPackageProvider` in the 
  * Generate and register custom serialization methods.
 
 ### In source mode
-The targets file hooks up an msbuild target that will ensure the tool is compiled, deployed and runnable based on the tools sources. The codegen tool is defined in the Microsoft.ReactNative.Managed.CodeGen project. It will build and deploy the tool in the current configuraiton of your project (debug or release) but will always build and run it in platform x64.
+The targets file hooks up an MSBuild target that will ensure the tool is compiled, deployed and runnable based on the tools sources. The codegen tool is defined in the Microsoft.ReactNative.Managed.CodeGen project. It will build and deploy the tool in the current configuraiton of your project (debug or release) but will always build and run it in platform x64.
 
-### In nuget mode (Future)
-The tool will be shipped as a binary and the steps won't have to build or deploy the tool. The shipped version in the nuget package will only be release win-x64.
-When building the apps that are checked in to our repo for testing, we have to remain running off the source version as msbuild and nuget are not flexible enough to build and consume a nuget package in the same build.
+### In NuGet mode (Future)
+The tool will be shipped as a binary and the steps won't have to build or deploy the tool. The shipped version in the NuGet package will only be release win-x64.
+When building the apps that are checked in to our repo for testing, we have to remain running off the source version as MSBuild and NuGet are not flexible enough to build and consume a NuGet package in the same build.
 
 ## Turning on/off
-Currently the feature is behind an msbuild property `$(ReactNativeCodeGenEnabled)`.
+Currently the feature is behind an MSBuild property `$(ReactNativeCodeGenEnabled)`.
 The default at the moment is false, it is only turned  on for a single project for now which is the [SampleLibraryCS.csproj](https://github.com/microsoft/react-native-windows/blob/master/packages/microsoft-reactnative-sampleapps/windows/SampleLibraryCS/SampleLibraryCS.csproj) project, to prove it is stable. We will slowly enable it for all projects in the repo and then make it the default.
 
-## MsBuild/Nuget Complications
-MsBuild and Nuget spent a long time fighting me in mixing a NetCoreApp2.2 executable and WinRT apps in the same solution and the same build. ProjectReferences cannot be used so I had to use the `<MsBuild>` task directly in the targets and it was tricky making it build from both the customer apps as well as our main build solution and unittest (Microsoft.ReactNative.sln). In the end there are a few hacks in place to make this work.
-The hookups in msbuild do not use the latest BeforeTargets/AfterTargets feature to schedule the main work. I opted to follow the same pattern that the Xaml Codegen uses, so the React CodeGen runs after all the other codegen tools (like resgen, xamlcompile etc) to ensure people familiar with those extensions know how to work with the React Managed CodeGen.
+## MSBuild/NuGet Complications
+MSBuild and NuGet spent a long time fighting me in mixing a NetCoreApp3.1 executable and WinRT apps in the same solution and the same build. ProjectReferences cannot be used so I had to use the `<MSBuild>` task directly in the targets and it was tricky making it build from both the customer apps as well as our main build solution and unittest (Microsoft.ReactNative.sln). In the end there are a few hacks in place to make this work.
+The hookups in MSBuild do not use the latest BeforeTargets/AfterTargets feature to schedule the main work. I opted to follow the same pattern that the Xaml Codegen uses, so the React CodeGen runs after all the other codegen tools (like resgen, xamlcompile etc) to ensure people familiar with those extensions know how to work with the React Managed CodeGen.
 
 ## Future improvements
  * Add support for `Task<T>` async methods. [#5143](https://github.com/microsoft/react-native-windows/issues/5143)
- * Ship it as a nuget package [#4546](https://github.com/microsoft/react-native-windows/issues/4546)
+ * Ship it as a NuGet package [#4546](https://github.com/microsoft/react-native-windows/issues/4546)

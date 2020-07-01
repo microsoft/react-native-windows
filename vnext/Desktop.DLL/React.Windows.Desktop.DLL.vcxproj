@@ -42,7 +42,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeDir)\ReactCommon;$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
     <!--
     Prevents Microsoft.Windows.CppWinRT.props from adding WindowsApp.lib reference, see
     WindowsApp_downleve.lib reference below.
@@ -91,7 +90,7 @@
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <AdditionalDependencies>WindowsApp_downlevel.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>api-ms-win-core-winrt-error-l1-1-0.dll;api-ms-win-core-winrt-error-l1-1-1.dll;api-ms-win-core-winrt-string-l1-1-0.dll;ChakraCore.Debugger.DLL;ChakraCore.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>ChakraCore.Debugger.DLL;ChakraCore.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">

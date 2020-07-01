@@ -141,7 +141,7 @@
       "Method '" methodName "' does not match signature" REACT_SHOW_SYNC_METHOD_SIGNATURES(methodName, signatures));
 
 //
-// Code below helps to register React native modules and verify method signatures
+// Code below helps to register React Native modules and verify method signatures
 // against specification.
 //
 

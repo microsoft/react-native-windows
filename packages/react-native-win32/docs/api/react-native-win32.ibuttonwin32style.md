@@ -9,3 +9,5 @@
 ```typescript
 export interface IButtonWin32Style extends Omit<RN.TextStyle, ButtonWin32OmitStyles> 
 ```
+<b>Extends:</b> Omit&lt;RN.TextStyle, [ButtonWin32OmitStyles](./react-native-win32.buttonwin32omitstyles.md)<!-- -->&gt;
+

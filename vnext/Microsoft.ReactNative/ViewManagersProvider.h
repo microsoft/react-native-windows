@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ReactWindowsCore/ViewManager.h>
+#include <Shared/ViewManager.h>
 #include "ReactHost/React.h"
 
 #include <winrt/Microsoft.ReactNative.h>

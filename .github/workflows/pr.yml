@@ -163,7 +163,7 @@ jobs:
       - name: Init new project
         run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
 
-      - name: Apply windows template
+      - name: Apply Windows template
         run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext
 
       - name: Install SDK
@@ -393,7 +393,7 @@ jobs:
           name: ReactWindows-source
           path: ${{ runner.temp }}\artifacts\ReactWindows-source
 
-      - name: Copy files from build artifacts to nuget root
+      - name: Copy files from build artifacts to NuGet root
         run: |
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-source ${{ runner.temp }}\NugetRoot /E /MOVE /NP
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x64 ${{ runner.temp }}\NugetRoot\target\x64\Debug /E /MOVE /NP

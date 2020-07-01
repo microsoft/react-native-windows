@@ -1,0 +1,47 @@
+{
+  "name": "@rnw-scripts/create-github-releases",
+  "version": "0.0.2",
+  "license": "MIT",
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix"
+  },
+  "bin": {
+    "create-github-releases": "./bin.js"
+  },
+  "dependencies": {
+    "@rnw-scripts/find-repo-root": "0.0.2",
+    "chalk": "^4.1.0",
+    "glob": "^7.1.6",
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.0",
+    "semver": "^7.3.2",
+    "simple-git": "^1.131.0",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.1",
+    "@rnw-scripts/just-task": "0.0.1",
+    "@rnw-scripts/ts-config": "0.0.1",
+    "@types/chalk": "^2.2.0",
+    "@types/glob": "^7.1.0",
+    "@types/lodash": "^4.14.157",
+    "@types/node-fetch": "^2.5.7",
+    "@types/semver": "^7.3.1",
+    "@types/yargs": "^15.0.5",
+    "eslint": "6.7.0",
+    "just-scripts": "^0.36.1",
+    "typescript": "^3.8.3"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major"
+    ]
+  },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ]
+}

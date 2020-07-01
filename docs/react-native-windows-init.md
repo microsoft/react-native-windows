@@ -1,4 +1,4 @@
-# React native windows initialization
+# React Native Windows initialization
 
 This document describes how the template initialization works for `react-native-windows init`.
 
@@ -18,8 +18,8 @@ PR [#5126](https://github.com/microsoft/react-native-windows/pull/5126) updated 
 This has the following benefits:
 * We can use conditionals and `foreach` in the template allowing for better expressivity
 * This expressivity shows that we don't have to construct XML fragments in JavaScript anymore to be inserted by `regex.replace`
-* We don't need to have have a copy and edit for large differences like we had for experimental nuget, it is now a single template for each language.
-* We can now generate a cpp template that use both nuget AND winUI3.
+* We don't need to have have a copy and edit for large differences like we had for experimental NuGet, it is now a single template for each language.
+* We can now generate a cpp template that use both NuGet AND WinUI3.
 
 ### Research before setteling on Mustache
 There are several templating schemes we could have chosen. We had a quick discussion and chose [mustache](https://www.npmjs.com/package/mustache) as it is a well-adopted, lightweight library dedicated for templating.

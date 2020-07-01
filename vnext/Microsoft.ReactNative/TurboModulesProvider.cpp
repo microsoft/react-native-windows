@@ -30,77 +30,35 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
   }
 
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
-    m_constantProviderList.push_back(constantProvider);
+    EnsureMemberNotSet("getConstants", false);
+    m_constantProviders.push_back(constantProvider);
   }
 
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept {
     auto key = to_string(name);
-    EnsureMemberNotSet(key);
+    EnsureMemberNotSet(key, true);
     m_methods.insert({key, {returnType, method}});
   }
 
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
     auto key = to_string(name);
-    EnsureMemberNotSet(key);
+    EnsureMemberNotSet(key, true);
     m_syncMethods.insert({key, method});
-  }
-
-  facebook::jsi::Value GetConstantOrUndefined(facebook::jsi::Runtime &runtime, const std::string &key) noexcept {
-    // unfortunately it is no way to cache constants
-    // because destructor of jsi::Value must be executed in the JavaScript engine thread
-    // which is not possible to guarantee if constants are cached in this class
-    // so here all constant providers are executed once to know the property name
-    // and then whenever a constant is required, run the constant provider again to get the value
-    if (!m_constantsEvaluated) {
-      m_constantsEvaluated = true;
-
-      for (auto cp : m_constantProviderList) {
-        // one constant provider writes one property to the writer
-        auto writer = winrt::make<JsiWriter>(runtime);
-        writer.WriteObjectBegin();
-        cp(writer);
-        writer.WriteObjectEnd();
-
-        // so it is safe just to read the first property name
-        auto constantObject = writer.as<JsiWriter>()->MoveResult().asObject(runtime);
-        auto propertyNames = constantObject.getPropertyNames(runtime);
-        auto firstPropertyName = propertyNames.getValueAtIndex(runtime, 0).asString(runtime);
-        auto cpKey = firstPropertyName.utf8(runtime);
-        EnsureMemberNotSet(cpKey);
-
-        // save the constant provider
-        m_constantProviders.insert({cpKey, cp});
-      }
-    }
-
-    auto it = m_constantProviders.find(key);
-    if (it == m_constantProviders.end()) {
-      return facebook::jsi::Value::undefined();
-    }
-
-    auto writer = winrt::make<JsiWriter>(runtime);
-    writer.WriteObjectBegin();
-    it->second(writer);
-    writer.WriteObjectEnd();
-
-    // the constant provider producing {foo:constant} is stored at m_constantProviders.find("foo");
-    // so no need to check again
-    auto constantObject = writer.as<JsiWriter>()->MoveResult().asObject(runtime);
-    return constantObject.getProperty(runtime, key.c_str());
   }
 
  public:
   std::unordered_map<std::string, TurboModuleMethodInfo> m_methods;
   std::unordered_map<std::string, SyncMethodDelegate> m_syncMethods;
-  std::unordered_map<std::string, ConstantProviderDelegate> m_constantProviders;
-  std::vector<ConstantProviderDelegate> m_constantProviderList;
+  std::vector<ConstantProviderDelegate> m_constantProviders;
   bool m_constantsEvaluated = false;
 
  private:
-  void EnsureMemberNotSet(const std::string &key) noexcept {
+  void EnsureMemberNotSet(const std::string &key, bool checkingMethod) noexcept {
     VerifyElseCrash(m_methods.find(key) == m_methods.end());
     VerifyElseCrash(m_syncMethods.find(key) == m_syncMethods.end());
-    VerifyElseCrash(m_constantProviders.find(key) == m_constantProviders.end());
+    if (checkingMethod && key == "getConstants") {
+      VerifyElseCrash(m_constantProviders.size() == 0);
+    }
   }
 
  private:
@@ -126,6 +84,28 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     // it is not safe to assume that "runtime" never changes, so members are not cached here
     auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();
     auto key = propName.utf8(runtime);
+
+    if (key == "getConstants" && tmb->m_constantProviders.size() > 0) {
+      // try to find getConstants if there is any constant
+      return facebook::jsi::Function::createFromHostFunction(
+          runtime,
+          propName,
+          0,
+          [&runtime, tmb](
+              facebook::jsi::Runtime &rt,
+              const facebook::jsi::Value &thisVal,
+              const facebook::jsi::Value *args,
+              size_t count) {
+            // collect all constants to an object
+            auto writer = winrt::make<JsiWriter>(runtime);
+            writer.WriteObjectBegin();
+            for (auto cp : tmb->m_constantProviders) {
+              cp(writer);
+            }
+            writer.WriteObjectEnd();
+            return writer.as<JsiWriter>()->MoveResult();
+          });
+    }
 
     {
       // try to find a Method
@@ -251,8 +231,8 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       }
     }
 
-    // returns undefined if the constant doesn't exist
-    return tmb->GetConstantOrUndefined(runtime, key);
+    // returns undefined if the expected member is not found
+    return facebook::jsi::Value::undefined();
   }
 
  private:
@@ -297,8 +277,15 @@ void TurboModulesProvider::AddModuleProvider(
     winrt::hstring const &moduleName,
     ReactModuleProvider const &moduleProvider) noexcept {
   auto key = to_string(moduleName);
-  VerifyElseCrash(m_moduleProviders.find(key) == m_moduleProviders.end());
-  m_moduleProviders.insert({key, moduleProvider});
+  auto it = m_moduleProviders.find(key);
+  if (it == m_moduleProviders.end()) {
+    m_moduleProviders.insert({key, moduleProvider});
+  } else {
+    // turbo modules should be replaceable before the first time it is requested
+    // if a turbo module has been requested, it will be cached in m_cachedModules
+    // in this case, changing m_moduleProviders affects nothing
+    it->second = moduleProvider;
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative

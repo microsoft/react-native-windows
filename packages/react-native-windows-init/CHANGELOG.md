@@ -1,8 +1,58 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.16
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Patches
+
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
+
+## 0.1.15
+
+Sun, 28 Jun 2020 05:04:51 GMT
+
+### Patches
+
+- Fix casing typos in NuGet and MSBuild (dannyvv@microsoft.com)
+
+## 0.1.14
+
+Fri, 26 Jun 2020 23:59:27 GMT
+
+### Patches
+
+- Upgrade React Native to 3/22 Nightly Build (ngerlem@microsoft.com)
+
+## 0.1.13
+
+Thu, 25 Jun 2020 14:32:50 GMT
+
+### Patches
+
+- make cli strict and pass true to trailing bool param (asklar@microsoft.com)
+
+## 0.1.12
+
+Wed, 24 Jun 2020 11:51:11 GMT
+
+### Patches
+
+- Fix issue running react-native-windows-init with yarn (acoates@microsoft.com)
+
+## 0.1.11
+
+Wed, 24 Jun 2020 00:07:20 GMT
+
+### Patches
+
+- Prevent --useWinUI3 and --experimentalNugetDependency from being used at the same time in react-native-windows-init (dannyvv@microsoft.com)
 
 ## 0.1.10
 

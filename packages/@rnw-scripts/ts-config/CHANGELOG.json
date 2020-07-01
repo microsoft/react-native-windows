@@ -1,0 +1,26 @@
+{
+  "name": "@rnw-scripts/ts-config",
+  "entries": [
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "@rnw-scripts/ts-config_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "@rnw-scripts/ts-config"
+          },
+          {
+            "comment": "Migrate the local-cli to TypeScript",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5b28bba588d7c2edd076a60353accad9cbe37b34",
+            "package": "@rnw-scripts/ts-config"
+          }
+        ]
+      }
+    }
+  ]
+}

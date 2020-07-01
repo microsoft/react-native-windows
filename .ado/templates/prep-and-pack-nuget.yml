@@ -1,7 +1,7 @@
 parameters:
   publishCommitId: '0'
   npmVersion: '0.0.1-pr'
-  # Note: Nuget pack expects platform-specific file spearators ('\' on Windows).
+  # Note: NuGet pack expects platform-specific file spearators ('\' on Windows).
   nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
   desktopId: 'OfficeReact.Win32'
   microsoftRNId: 'Microsoft.ReactNative'

@@ -1,8 +1,27 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 19 Jun 2020 00:07:58 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.27
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Changes
+
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Update Alert.(windows|win32).js to enable turbo module (zihanc@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+
+## 0.0.0-canary.25
+
+Fri, 26 Jun 2020 23:59:27 GMT
+
+### Changes
+
+- Upgrade React Native to 3/22 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.23
 

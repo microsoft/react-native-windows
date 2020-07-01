@@ -5,11 +5,11 @@
  * @ts-check
  */
 
+const copyRNLibaries = require('../../vnext/scripts/copyRNLibraries');
 const path = require('path');
 const fs = require('fs');
 const {
   task,
-  copyTask,
   series,
   condition,
   option,
@@ -18,10 +18,7 @@ const {
   eslintTask,
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
-  cleanTask,
 } = require('just-scripts');
-const libPath = path.resolve(process.cwd(), 'lib');
-const srcPath = path.resolve(process.cwd(), 'src');
 
 option('production');
 option('clean');
@@ -37,21 +34,10 @@ task('apiDocumenter', () => {
   );
 });
 
-task('eslint', () => {
-  return eslintTask();
-});
-task('eslint:fix', () => {
-  return eslintTask({fix: true});
-});
-task('copyFlowFiles', () => {
-  return copyTask(['src/**/*.js'], '.');
-});
-task('copyPngFiles', () => {
-  return copyTask(['src/**/*.png'], '.');
-});
-task('initRNLibraries', () => {
-  require('../../vnext/scripts/copyRNLibraries').copyRNLibraries(__dirname);
-});
+task('eslint', eslintTask());
+task('eslint:fix', eslintTask({fix: true}));
+
+task('copyRNLibraries', copyRNLibaries.copyTask(__dirname));
 
 task('flow-check', () => {
   require('child_process').execSync('npx flow check', {stdio: 'inherit'});
@@ -62,19 +48,13 @@ task('ts', () => {
     pretty: true,
     ...(argv().production && {
       inlineSources: true,
-      sourceRoot: path.relative(libPath, srcPath),
     }),
     target: 'es5',
     module: 'commonjs',
   });
 });
-task('clean', () => {
-  return cleanTask(
-    ['dist', 'flow', 'jest', 'Libraries', 'RNTester'].map(p =>
-      path.join(process.cwd(), p),
-    ),
-  );
-});
+
+task('clean', copyRNLibaries.cleanTask(__dirname));
 
 function ensureDirectoryExists(filePath) {
   const dir = path.dirname(filePath);
@@ -86,7 +66,10 @@ function ensureDirectoryExists(filePath) {
 
 task('prepareBundle', () => {
   ensureDirectoryExists(
-    path.resolve(__dirname, 'dist/win32/dev/index.win32.bundle'),
+    path.resolve(
+      __dirname,
+      'dist/win32/dev/RNTester/js/RNTesterApp.win32.bundle',
+    ),
   );
 });
 
@@ -94,9 +77,7 @@ task(
   'build',
   series(
     condition('clean', () => argv().clean),
-    'initRNLibraries',
-    'copyFlowFiles',
-    'copyPngFiles',
+    'copyRNLibraries',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),
   ),

@@ -24,7 +24,8 @@
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
-#include <ReactWindowsCore/ViewManager.h>
+#include <Shared/DevServerHelper.h>
+#include <Shared/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DevMenu.h"
 #include "IReactContext.h"
@@ -168,6 +169,59 @@ ReactInstanceWin::ReactInstanceWin(
 
 ReactInstanceWin::~ReactInstanceWin() noexcept {}
 
+void ReactInstanceWin::LoadModules(
+    const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
+    const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
+  auto registerNativeModule = [&nativeModulesProvider](
+      const wchar_t *name, const ReactModuleProvider &provider) noexcept {
+    nativeModulesProvider->AddModuleProvider(name, provider);
+  };
+
+  auto registerTurboModule = [ this, &nativeModulesProvider, &turboModulesProvider ](
+      const wchar_t *name, const ReactModuleProvider &provider) noexcept {
+    if (m_options.UseWebDebugger()) {
+      nativeModulesProvider->AddModuleProvider(name, provider);
+    } else {
+      turboModulesProvider->AddModuleProvider(name, provider);
+    }
+  };
+
+  registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
+
+  registerTurboModule(
+      L"AppState",
+      winrt::Microsoft::ReactNative::
+          MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
+  registerTurboModule(
+      L"LogBox",
+      winrt::Microsoft::ReactNative::
+          MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox, ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
+
+  registerTurboModule(
+      L"Clipboard",
+      winrt::Microsoft::ReactNative::
+          MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard, ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+
+  registerTurboModule(
+      L"DeviceInfo",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::DeviceInfo,
+          ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
+
+  registerTurboModule(
+      L"DevSettings",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::DevSettings,
+          ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+
+  registerTurboModule(
+      L"I18nManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::I18nManager,
+          ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
+}
+
 //! Initialize() is called from the native queue.
 void ReactInstanceWin::Initialize() noexcept {
   InitJSMessageThread();
@@ -203,7 +257,8 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
-          devSettings->debugHost = GetDebugHost();
+          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost;
+          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort;
           devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName;
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
@@ -241,59 +296,13 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
-          nmp->AddModuleProvider(
-              L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
-
-          nmp->AddModuleProvider(
-              L"AppState",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::AppState,
-                  ::Microsoft::ReactNativeSpecs::AppStateSpec>());
-
-          nmp->AddModuleProvider(
-              L"LogBox",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::LogBox,
-                  ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
-
-          if (m_options.UseWebDebugger()) {
-            nmp->AddModuleProvider(
-                L"Clipboard",
-                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                    ::Microsoft::ReactNative::Clipboard,
-                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
-          } else {
-            m_options.TurboModuleProvider->AddModuleProvider(
-                L"Clipboard",
-                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                    ::Microsoft::ReactNative::Clipboard,
-                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
-          }
-
           ::Microsoft::ReactNative::DevSettings::SetReload(
               strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
                 if (auto reactHost = weakReactHost.GetStrongPtr()) {
                   reactHost->ReloadInstance();
                 }
               });
-
-          nmp->AddModuleProvider(
-              L"DeviceInfo",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::DeviceInfo,
-                  ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
-
-          nmp->AddModuleProvider(
-              L"DevSettings",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::DevSettings,
-                  ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
-
-          nmp->AddModuleProvider(
-              L"I18nManager",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::I18nManager,
-                  ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
+          LoadModules(nmp, m_options.TurboModuleProvider);
 
           auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());
           cxxModules.insert(
@@ -363,8 +372,11 @@ void ReactInstanceWin::Initialize() noexcept {
                   STRING(RN_PLATFORM),
                   m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
                                                                        : m_options.DeveloperSettings.SourceBundleName,
-                  GetSourceBundleHost(),
-                  GetSourceBundlePort(),
+                  m_options.DeveloperSettings.SourceBundleHost.empty()
+                      ? facebook::react::DevServerHelper::DefaultPackagerHost
+                      : m_options.DeveloperSettings.SourceBundleHost,
+                  m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
+                                                               : facebook::react::DevServerHelper::DefaultPackagerPort,
                   m_isFastReloadEnabled);
               m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
             }
@@ -617,29 +629,6 @@ std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
     return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnLiveReload);
   }
   return std::function<void()>{};
-}
-
-std::string ReactInstanceWin::GetSourceBundleHost() noexcept {
-  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
-  return !devOptions.SourceBundleHost.empty() ? devOptions.SourceBundleHost : "localhost";
-}
-
-std::string ReactInstanceWin::GetSourceBundlePort() noexcept {
-  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
-  return !devOptions.SourceBundlePort.empty() ? devOptions.SourceBundlePort : "8081";
-}
-
-std::string ReactInstanceWin::GetDebugHost() noexcept {
-  std::string debugHost;
-  const ReactDevOptions &devOptions = m_options.DeveloperSettings;
-  if (!devOptions.DebugHost.empty()) {
-    debugHost = devOptions.DebugHost;
-  } else {
-    debugHost = GetSourceBundleHost();
-    debugHost.append(":");
-    debugHost.append(GetSourceBundlePort());
-  }
-  return debugHost;
 }
 
 std::string ReactInstanceWin::GetBytecodeFileName() noexcept {

@@ -242,6 +242,8 @@ TEST_CLASS (ObjectRefCountTest) {
     TestAssert::IsTrue(obj.IsEmpty());
   }
 
+#pragma warning(push)
+#pragma warning(disable : 4702) // unreachable code
   TEST_METHOD(ObjectRefCount_Make_CtorThrows) {
     Mso::CntPtr<ObjectRefCountSample4Throw> obj;
     bool deleted = false;
@@ -261,6 +263,7 @@ TEST_CLASS (ObjectRefCountTest) {
     TestAssert::IsTrue(deleted); // If InitializeThis throws then destructor must be called.
     TestAssert::IsTrue(obj.IsEmpty());
   }
+#pragma warning(pop)
 
   TEST_METHOD(ObjectRefCount_MakeElseNull) {
     bool deleted = false;
@@ -363,6 +366,8 @@ TEST_CLASS (ObjectRefCountTest) {
     TestAssert::IsTrue(obj.IsEmpty());
   }
 
+#pragma warning(push)
+#pragma warning(disable : 4702) // unreachable code
   TEST_METHOD(ObjectRefCount_MakeAlloc_CtorThrows) {
     Mso::CntPtr<ObjectRefCountSample41Throw> obj;
     AllocTestState state = {};
@@ -386,6 +391,7 @@ TEST_CLASS (ObjectRefCountTest) {
     AssertAllocState(state); // If InitializeThis throws then destructor must be called.
     TestAssert::IsTrue(obj.IsEmpty());
   }
+#pragma warning(pop)
 
   TEST_METHOD(ObjectRefCount_MakeAllocElseNull) {
     AllocTestState state = {};

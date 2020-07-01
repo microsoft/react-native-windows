@@ -84,6 +84,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Picker/PickerWindowsExample'),
   },
   {
+    key: 'PressableExample',
+    module: require('../examples/Pressable/PressableExample'),
+  },
+  {
     key: 'PopupExample',
     module: require('./../examples-win/Popup/PopupExample'),
   },
@@ -182,7 +186,7 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/Border/BorderExample'),
   },
   {
-    key: 'BoxShadowExample - windows NotYetImplemented',
+    key: 'BoxShadowExample - Windows NotYetImplemented',
     module: require('react-native/RNTester/js/examples/BoxShadow/BoxShadowExample'),
   },
   {
@@ -226,6 +230,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/PanResponder/PanResponderExample'),
   },
   {
+    key: 'PlatformColorExample',
+    module: require('../examples/PlatformColor/PlatformColorExample'),
+  },
+  {
     key: 'PointerEventsExample',
     module: require('react-native/RNTester/js/examples/PointerEvents/PointerEventsExample'),
   },
@@ -244,10 +252,6 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'ThemingExample',
     module: require('./../examples-win/Theming/ThemingExample'),
-  },
-  {
-    key: 'WindowsBrushExample',
-    module: require('./../examples-win/WindowsBrush/WindowsBrushExample'),
   },
   {
     key: 'TransformExample',

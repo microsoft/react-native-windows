@@ -1481,7 +1481,7 @@ TEST_CLASS (NativeModuleTest) {
     bool eventRaised = false;
     m_builderMock.ExpectEvent(
         L"RCTDeviceEventEmitter", L"OnNoArgEvent", [&eventRaised](React::JSValueArray const &args) noexcept {
-          TestCheckEqual(0, args.size());
+          TestCheckEqual(0u, args.size());
           eventRaised = true;
         });
 
@@ -1613,7 +1613,7 @@ TEST_CLASS (NativeModuleTest) {
     bool functionCalled = false;
     m_builderMock.ExpectFunction(
         L"SimpleNativeModule", L"JSNoArgFunction", [&functionCalled](React::JSValueArray const &args) noexcept {
-          TestCheckEqual(0, args.size());
+          TestCheckEqual(0u, args.size());
           functionCalled = true;
         });
 

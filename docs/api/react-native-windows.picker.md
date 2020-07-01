@@ -13,6 +13,7 @@ when using editable=true, onValueChange can be called with a selectedValue of nu
 ```typescript
 export declare class Picker extends React.Component<IPickerProps, State> 
 ```
+<b>Extends:</b> React.Component&lt;IPickerProps, State&gt;
 
 ## Constructors
 

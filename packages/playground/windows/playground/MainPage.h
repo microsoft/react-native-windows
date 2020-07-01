@@ -16,12 +16,13 @@ struct MainPage : MainPageT<MainPage> {
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
 
-  bool m_useWebDebugger{false};
+  winrt::hstring m_bundlerHostname;
 
  public:
   void x_entryPointCombo_SelectionChanged(
       winrt::Windows::Foundation::IInspectable const &sender,
       xaml::Controls::SelectionChangedEventArgs const &e);
+  void OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e);
 };
 
 } // namespace winrt::playground::implementation

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="AutolinkCheck" BeforeTargets="PrepareForBuild" Condition="'$(RunAutolinkCheck)' == 'true'">
+    <Exec Command="$(AutolinkCommand) $(AutolinkCommandArgs)" WorkingDirectory="$(AutolinkCommandWorkingDir)" CustomWarningRegularExpression="Warning: " CustomErrorRegularExpression="Error: " />
+  </Target>
+</Project>

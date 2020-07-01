@@ -12,7 +12,7 @@ variables:
   - template: variables/release.yml
   - template: variables/vs2019.yml
   - name: reactNativeVersion
-    value: 0.62.2
+    value: 0.0.0-56cf99a96
 
 jobs:
   - job: Setup
@@ -104,12 +104,11 @@ jobs:
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - task: VSTest@2
-        displayName: Run Universal Unit Tests (Managed)
+        displayName: Run Universal Unit Tests (UWP)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
-            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
             Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
@@ -121,6 +120,23 @@ jobs:
           vsTestVersion: latest
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (NetCore)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          codeCoverageEnabled: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
+
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
@@ -130,11 +146,11 @@ jobs:
 
       - script: |
           npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch)
-        displayName: Bump package versions to align nuget version with npm version
+        displayName: Bump package versions to align NuGet version with npm version
         condition: eq('true', variables['TestMSRNNuget'])
 
       - task: PowerShell@2
-        displayName: Prepare minimum nuget for testing experimental init
+        displayName: Prepare minimum NuGet for testing experimental init
         inputs:
           targetType: 'inline'
           script: |
@@ -159,7 +175,7 @@ jobs:
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86:
-          BuildConfiguration: WinUI3
+          BuildConfiguration: Debug
           BuildPlatform: x86
     pool:
       vmImage: $(VmImage)
@@ -196,6 +212,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
+            /p:UseWinUI3=true
 
 
   - job: RNWUniversalOtherProjectsPR
@@ -244,7 +261,17 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-            /p:AppxPackageSigningEnabled=false
+
+      - powershell: .ado/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
+        displayName: Test WACK
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload WACK report
+        condition:  succeededOrFailed()
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/WACK'
+          artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration)'
+
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
@@ -376,7 +403,13 @@ jobs:
     variables:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
-      Desktop.IntegrationTests.Filter: '(FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&(FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&(FullyQualifiedName!~WebSocketModule_)&(FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)'
+      Desktop.IntegrationTests.Filter: >
+        (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+        (FullyQualifiedName!~WebSocketModule_)&
+        (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
     steps:
       - checkout: self
@@ -495,10 +528,12 @@ jobs:
           language: cpp
           configuration: Release
           platform: x64
+          additionalInitArguments: 
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
+          additionalInitArguments: 
         #ArmDebugCpp:
         #  language: cpp
         #  configuration: Debug
@@ -511,10 +546,12 @@ jobs:
           language: cpp
           configuration: Release
           platform: arm
+          additionalInitArguments: 
         ArmReleaseCs:
           language: cs
           configuration: Release
           platform: arm
+          additionalInitArguments: 
         #Arm64DebugCpp:
         #  language: cpp
         #  configuration: Debug
@@ -531,6 +568,16 @@ jobs:
         #  language: cs
         #  configuration: Release
         #  platform: arm64
+        WinUI3_X86DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x86
+          additionalInitArguments: --useWinUI3 true
+        WinUI3_X86DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x86
+          additionalInitArguments: --useWinUI3 true
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -543,7 +590,7 @@ jobs:
           configuration: $(configuration)
           platform: $(platform)
           version: $(reactNativeVersion)
-          additionalInitArguments: $[ coalesce($(additionalInitArguments), '') ]
+          additionalInitArguments: $(additionalInitArguments)
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
@@ -563,7 +610,7 @@ jobs:
           platform: x86
           version: $(reactNativeVersion)
           additionalInitArguments: ${{ '' }}
-          experimentalNugetDependency: true
+          experimentalNuGetDependency: true
 
   - job: RNWExtraChecks
     displayName: Extra Checks
@@ -589,14 +636,14 @@ jobs:
           script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
-        displayName: yarn format:verify
-        inputs:
-          script: yarn format:verify
-
-      - task: CmdLine@2
         displayName: yarn buildci
         inputs:
           script: yarn buildci
+
+      - task: CmdLine@2
+        displayName: yarn format:verify
+        inputs:
+          script: yarn format:verify
 
       - task: CmdLine@2
         displayName: yarn lint
@@ -624,7 +671,7 @@ jobs:
       BuildPlatform: x64
 
   - job: RNWNugetPR
-    displayName: Build and Pack Nuget
+    displayName: Build and Pack NuGet
     dependsOn:
       - Setup
       - RNWUniversalPR
@@ -638,7 +685,7 @@ jobs:
       - checkout: self
         fetchDepth: 15
 
-      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      # The commit tag in the nuspec requires that we use at least NuGet 4.6
       - task: NuGetToolInstaller@0
         inputs:
           versionSpec: ">=4.6.0"

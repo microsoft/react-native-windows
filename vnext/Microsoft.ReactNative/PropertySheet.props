@@ -14,14 +14,4 @@
       <Value>$(CppWinRTVerbosity)</Value>
     </BuildMacro>
   </ItemGroup>
-    
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='WinUI3'">
-    <ClCompile>
-      <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <Midl>
-      <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-  </ItemDefinitionGroup>
-
 </Project>

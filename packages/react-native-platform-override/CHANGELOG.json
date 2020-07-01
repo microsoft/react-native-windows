@@ -2,6 +2,66 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "react-native-platform-override_v0.0.8",
+      "version": "0.0.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 27 Jun 2020 03:29:52 GMT",
+      "tag": "react-native-platform-override_v0.0.7",
+      "version": "0.0.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Convert Repo Scripts To Published TypeScript Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "44ee2b41c92250d1dfd767098e6d7cbf0ac01cfa",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jun 2020 23:59:27 GMT",
+      "tag": "react-native-platform-override_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade React Native to 3/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0727ffcb907673749ddbf43e7a7c0922957c9e82",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jun 2020 20:17:03 GMT",
+      "tag": "react-native-platform-override_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Ensure lib-commonjs is packaged into react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "697c8c38a355ca41e90250de71ed8d94247161cc",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Jun 2020 00:05:20 GMT",
       "tag": "react-native-platform-override_v0.0.4",
       "version": "0.0.4",

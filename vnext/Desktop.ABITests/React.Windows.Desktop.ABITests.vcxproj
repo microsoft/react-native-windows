@@ -53,7 +53,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(ReactNativeWindowsDir);$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -63,6 +62,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <!--
+        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
+      -->
       <PreprocessorDefinitions>
         _CONSOLE;
         CORE_ABI;

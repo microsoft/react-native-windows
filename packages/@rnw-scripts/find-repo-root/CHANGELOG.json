@@ -1,0 +1,35 @@
+{
+  "name": "@rnw-scripts/find-repo-root",
+  "entries": [
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 27 Jun 2020 03:52:38 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Convert Repo Scripts To Published TypeScript Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ee99286e12977ff07d66fbddc7d6a40fd47d257c",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    }
+  ]
+}
