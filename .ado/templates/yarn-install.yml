@@ -1,6 +1,7 @@
 steps:
   - script: |
       echo $(System.DefaultWorkingDirectory)
+      echo ------------------
       set
     displayName: "Check vars"
 
