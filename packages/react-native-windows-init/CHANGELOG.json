@@ -2,6 +2,33 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "react-native-windows-init_v0.1.16",
+      "version": "0.1.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "react-native-windows-init"
+          },
+          {
+            "comment": "Migrate the local-cli to TypeScript",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5b28bba588d7c2edd076a60353accad9cbe37b34",
+            "package": "react-native-windows-init"
+          },
+          {
+            "comment": "Fix a few more casing typos",
+            "author": "dannyvv@microsoft.com",
+            "commit": "532e299688d745c0d7c5d8790a681f60813eb678",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 28 Jun 2020 05:04:51 GMT",
       "tag": "react-native-windows-init_v0.1.15",
       "version": "0.1.15",

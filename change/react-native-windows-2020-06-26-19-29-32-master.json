@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix a few more casing typos",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-27T02:29:32.310Z"
-}

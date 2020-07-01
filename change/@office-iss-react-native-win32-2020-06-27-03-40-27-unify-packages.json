@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Share eslint and Typescript configs across packages",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-27T10:39:56.134Z"
-}

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Alert.(windows|win32).js to enable turbo module",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "zihanc@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-29T20:50:34.775Z"
-}

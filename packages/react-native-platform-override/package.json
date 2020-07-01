@@ -1,6 +1,6 @@
 {
   "name": "react-native-platform-override",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "repository": {
@@ -34,9 +34,9 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "0.0.0",
-    "@rnw-scripts/just-task": "0.0.0",
-    "@rnw-scripts/ts-config": "0.0.0",
+    "@rnw-scripts/eslint-config": "0.0.1",
+    "@rnw-scripts/just-task": "0.0.1",
+    "@rnw-scripts/ts-config": "0.0.1",
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
     "@types/inquirer": "^6.5.0",

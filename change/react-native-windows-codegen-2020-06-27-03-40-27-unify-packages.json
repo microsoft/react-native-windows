@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Share eslint and Typescript configs across packages",
-  "packageName": "react-native-windows-codegen",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-27T10:40:20.501Z"
-}
