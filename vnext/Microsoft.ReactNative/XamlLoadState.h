@@ -41,4 +41,4 @@ struct XamlLoadState {
 
   static XamlVersion GetXamlVersion(const std::wstring &path) noexcept;
 };
-}
+} // namespace react::uwp
