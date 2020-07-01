@@ -42,7 +42,7 @@ export function findFiles(folder: string, filenamePattern: string): string[] {
  * @param folder The absolute path to the target folder.
  * @return The absolute path to the windows folder, if it exists.
  */
-export function findWindowsFolder(folder: string): string {
+export function findWindowsFolder(folder: string): string | null {
   const winDir = 'windows';
   const joinedDir = path.join(folder, winDir);
   if (fs.existsSync(joinedDir)) {
@@ -206,13 +206,14 @@ export function findAppProjectFiles(winFolder: string): string[] {
  * @param projectPath The project file path to check.
  * @return The language string: cpp, cs, or null if unknown.
  */
-export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' | null {
+export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' {
   if (projectPath.endsWith('.vcxproj')) {
     return 'cpp';
   } else if (projectPath.endsWith('.csproj')) {
     return 'cs';
   }
-  return null;
+
+  throw new Error(`Cannot determine langauge for project '${projectPath}'`);
 }
 
 /**
@@ -234,7 +235,7 @@ export function readProjectFile(projectPath: string) {
 export function findPropertyValue(
   projectContents: Node,
   propertyName: string,
-): string {
+): string | null {
   var nodes = msbuildSelect(
     `//msbuild:PropertyGroup/msbuild:${propertyName}`,
     projectContents,
@@ -272,11 +273,15 @@ export function importProjectExists(
  * @return The project name.
  */
 export function getProjectName(projectContents: Node): string {
-  return (
+  const name =
     findPropertyValue(projectContents, 'ProjectName') ||
-    findPropertyValue(projectContents, 'AssemblyName') ||
-    ''
-  );
+    findPropertyValue(projectContents, 'AssemblyName');
+
+  if (name === null) {
+    throw new Error('Could not determine project name');
+  }
+
+  return name;
 }
 
 /**
@@ -285,7 +290,12 @@ export function getProjectName(projectContents: Node): string {
  * @return The project namespace.
  */
 export function getProjectNamespace(projectContents: Node): string {
-  return findPropertyValue(projectContents, 'RootNamespace');
+  const namespace = findPropertyValue(projectContents, 'RootNamespace');
+  if (namespace === null) {
+    throw new Error('Could not find RootNamespace in project');
+  }
+
+  return namespace;
 }
 
 /**
@@ -294,5 +304,10 @@ export function getProjectNamespace(projectContents: Node): string {
  * @return The project guid.
  */
 export function getProjectGuid(projectContents: Node): string {
-  return findPropertyValue(projectContents, 'ProjectGuid');
+  const guid = findPropertyValue(projectContents, 'ProjectGuid');
+  if (guid === null) {
+    throw new Error('Could not find ProjectGuid in project');
+  }
+
+  return guid;
 }

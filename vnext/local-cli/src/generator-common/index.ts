@@ -28,7 +28,7 @@ const term = 13; // carriage return
 
 function prompt(
   ask?: string | Options,
-  value?: string,
+  value?: string | Options,
   opts?: Options,
 ): string {
   let insert = 0;
@@ -94,10 +94,6 @@ function prompt(
       process.stdout.write('^C\n');
       fs.closeSync(fd);
       process.exit(130);
-      if (process.stdin.setRawMode) {
-        process.stdin.setRawMode(/*!*/ !!wasRaw);
-      }
-      return null;
     }
 
     // catch the terminating character
@@ -154,7 +150,7 @@ function prompt(
     process.stdin.setRawMode(!!wasRaw);
   }
 
-  return str || value || '';
+  return str || (value as string) || '';
 }
 
 function walk(current: string): string[] {

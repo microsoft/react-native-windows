@@ -28,7 +28,7 @@ const templateRoot = path.join(__dirname, '../../../templates');
  * @param message The message to log.
  * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message: string, verbose: boolean) {
+function verboseMessage(message: any, verbose: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -175,7 +175,7 @@ async function updateAutoLink(
     }
 
     verboseMessage('Found Windows app project, config:', verbose);
-    verboseMessage(windowsAppConfig.toString(), verbose);
+    verboseMessage(windowsAppConfig, verbose);
 
     const alwaysRequired: Array<keyof WindowsProjectConfig> = [
       'folder',
@@ -254,15 +254,16 @@ async function updateAutoLink(
           `${chalk.bold(dependencyName)} has Windows implementation, config:`,
           verbose,
         );
-        verboseMessage(windowsDependency.toString(), verbose);
+        verboseMessage(windowsDependency, verbose);
 
         var dependencyIsValid = true;
 
-        dependencyIsValid =
+        dependencyIsValid = !!(
           dependencyIsValid &&
           'sourceDir' in windowsDependency &&
-          windowsDependency.sourceDir !== null &&
-          !windowsDependency.sourceDir.startsWith('Error: ');
+          windowsDependency.sourceDir &&
+          !windowsDependency.sourceDir.startsWith('Error: ')
+        );
 
         if (
           'projects' in windowsDependency &&
@@ -274,11 +275,12 @@ async function updateAutoLink(
               'directDependency',
             ];
             itemsToCheck.forEach(item => {
-              dependencyIsValid =
+              dependencyIsValid = !!(
                 dependencyIsValid &&
                 item in project &&
-                project[item] !== null &&
-                !project[item].toString().startsWith('Error: ');
+                project[item] &&
+                !project[item]!.toString().startsWith('Error: ')
+              );
             });
           });
         }
@@ -390,7 +392,7 @@ async function updateAutoLink(
         if (project.directDependency) {
           const dependencyProjectFile = path.join(
             windowsDependencies[dependencyName].folder,
-            windowsDependencies[dependencyName].sourceDir,
+            windowsDependencies[dependencyName].sourceDir!,
             project.projectFile,
           );
 
@@ -439,7 +441,7 @@ async function updateAutoLink(
       windowsDependencies[dependencyName].projects.forEach(project => {
         const dependencyProjectFile = path.join(
           windowsDependencies[dependencyName].folder,
-          windowsDependencies[dependencyName].sourceDir,
+          windowsDependencies[dependencyName].sourceDir!,
           project.projectFile,
         );
 

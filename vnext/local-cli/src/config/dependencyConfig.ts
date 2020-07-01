@@ -78,10 +78,10 @@ export interface ProjectDependency {
   projectName: string;
   projectLang: 'cpp' | 'cs';
   projectGuid: string;
-  cppHeaders?: string[];
-  cppPackageProviders?: string[];
-  csNamespaces?: string[];
-  csPackageProviders?: string[];
+  cppHeaders: string[];
+  cppPackageProviders: string[];
+  csNamespaces: string[];
+  csPackageProviders: string[];
 }
 
 export interface NuGetPackageDependency {
@@ -97,8 +97,8 @@ export interface WindowsDependencyConfig {
   folder: string;
   sourceDir?: string;
   solutionFile: string | null;
-  projects?: ProjectDependency[];
-  nugetPackages?: NuGetPackageDependency[];
+  projects: ProjectDependency[];
+  nugetPackages: NuGetPackageDependency[];
 }
 
 /**
@@ -122,14 +122,14 @@ export function dependencyConfigWindows(
 
   var result: WindowsDependencyConfig = {
     folder,
-    projects: usingManualProjectsOverride ? userConfig.projects : [],
+    projects: usingManualProjectsOverride ? userConfig.projects! : [],
     solutionFile: null,
     nugetPackages: usingManualNugetPackagesOverride
-      ? userConfig.nugetPackages
+      ? userConfig.nugetPackages!
       : [],
   };
 
-  var sourceDir = null;
+  let sourceDir: string | null = null;
   if (usingManualProjectsOverride && result.projects.length > 0) {
     // Manaully provided projects, so extract the sourceDir
     if (!('sourceDir' in userConfig)) {
@@ -139,7 +139,7 @@ export function dependencyConfigWindows(
       sourceDir =
         'Error: Source dir is required if projects are specified, but it is null in react-native.config.';
     } else {
-      sourceDir = path.join(folder, userConfig.sourceDir);
+      sourceDir = path.join(folder, userConfig.sourceDir!);
     }
   } else if (!usingManualProjectsOverride) {
     // No manually provided projects, try to find sourceDir
@@ -147,13 +147,12 @@ export function dependencyConfigWindows(
   }
 
   if (
-    sourceDir === null &&
-    result.projects.length === 0 &&
-    result.nugetPackages.length === 0
+    sourceDir === null ||
+    (result.projects.length === 0 && result.nugetPackages.length === 0)
   ) {
     // Nothing to look for here, bail
     return null;
-  } else if (sourceDir !== null && sourceDir.startsWith('Error: ')) {
+  } else if (sourceDir.startsWith('Error: ')) {
     // Source dir error, bail with error
     result.sourceDir = sourceDir;
     return result;
@@ -166,7 +165,7 @@ export function dependencyConfigWindows(
   var solutionFile = null;
   if (usingManualSolutionFile && userConfig.solutionFile !== null) {
     // Manually provided solutionFile, so extract it
-    solutionFile = path.join(sourceDir, userConfig.solutionFile);
+    solutionFile = path.join(sourceDir, userConfig.solutionFile!);
   } else if (!usingManualSolutionFile) {
     // No manually provided solutionFile, try to find it
     const foundSolutions = configUtils.findSolutionFiles(sourceDir);
