@@ -10,14 +10,15 @@ import * as path from 'path';
 import * as mustache from 'mustache';
 
 /**
- * Text to replace, + config options
+ * Text to replace, + config PromptOptions
  */
 export type Replacements = {
   useMustache?: boolean;
   regExpPatternsToRemove?: RegExp[];
-} & Record<string, string>;
+  [key: string]: any;
+};
 
-interface Options {
+interface PromptOptions {
   echo?: string;
   ask?: string;
   value?: string;
@@ -27,9 +28,9 @@ interface Options {
 const term = 13; // carriage return
 
 function prompt(
-  ask?: string | Options,
-  value?: string | Options,
-  opts?: Options,
+  ask?: string | PromptOptions,
+  value?: string | PromptOptions,
+  opts?: PromptOptions,
 ): string {
   let insert = 0;
   opts = opts || {};

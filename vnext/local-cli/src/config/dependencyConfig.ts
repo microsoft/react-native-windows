@@ -206,14 +206,21 @@ export function dependencyConfigWindows(
       const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
-      project.projectName = configUtils.getProjectName(projectContents);
+      project.projectName = configUtils.getProjectName(
+        projectFile,
+        projectContents,
+      );
       project.projectLang = configUtils.getProjectLanguage(projectFile);
-      project.projectGuid = configUtils.getProjectGuid(projectContents);
+      project.projectGuid = configUtils.getProjectGuid(
+        projectFile,
+        projectContents,
+      );
 
       if (project.directDependency) {
         // Calculating more (auto) items
 
         const projectNamespace = configUtils.getProjectNamespace(
+          projectFile,
           projectContents,
         );
         const cppNamespace = projectNamespace.replace(/\./g, '::');
@@ -241,11 +248,20 @@ export function dependencyConfigWindows(
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
-      const projectName = configUtils.getProjectName(projectContents);
+      const projectName = configUtils.getProjectName(
+        projectFile,
+        projectContents,
+      );
 
-      const projectGuid = configUtils.getProjectGuid(projectContents);
+      const projectGuid = configUtils.getProjectGuid(
+        projectFile,
+        projectContents,
+      );
 
-      const projectNamespace = configUtils.getProjectNamespace(projectContents);
+      const projectNamespace = configUtils.getProjectNamespace(
+        projectFile,
+        projectContents,
+      );
 
       const directDependency = true;
 

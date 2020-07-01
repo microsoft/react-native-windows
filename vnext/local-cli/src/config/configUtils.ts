@@ -269,16 +269,20 @@ export function importProjectExists(
 
 /**
  * Gets the name of the project from the project contents.
+ * @param projectPath The project file path to check.
  * @param projectContents The XML project contents.
  * @return The project name.
  */
-export function getProjectName(projectContents: Node): string {
+export function getProjectName(
+  projectPath: string,
+  projectContents: Node,
+): string {
   const name =
     findPropertyValue(projectContents, 'ProjectName') ||
     findPropertyValue(projectContents, 'AssemblyName');
 
   if (name === null) {
-    throw new Error('Could not determine project name');
+    throw new Error(`Could not determine name of project ${projectPath}`);
   }
 
   return name;
@@ -286,13 +290,17 @@ export function getProjectName(projectContents: Node): string {
 
 /**
  * Gets the namespace of the project from the project contents.
+ * @param projectPath The project file path to check.
  * @param projectContents The XML project contents.
  * @return The project namespace.
  */
-export function getProjectNamespace(projectContents: Node): string {
+export function getProjectNamespace(
+  projectPath: string,
+  projectContents: Node,
+): string {
   const namespace = findPropertyValue(projectContents, 'RootNamespace');
   if (namespace === null) {
-    throw new Error('Could not find RootNamespace in project');
+    throw new Error(`Could not determine namespace of project ${projectPath}`);
   }
 
   return namespace;
@@ -300,13 +308,17 @@ export function getProjectNamespace(projectContents: Node): string {
 
 /**
  * Gets the guid of the project from the project contents.
+ * @param projectPath The project file path to check.
  * @param projectContents The XML project contents.
  * @return The project guid.
  */
-export function getProjectGuid(projectContents: Node): string {
+export function getProjectGuid(
+  projectPath: string,
+  projectContents: Node,
+): string {
   const guid = findPropertyValue(projectContents, 'ProjectGuid');
   if (guid === null) {
-    throw new Error('Could not find ProjectGuid in project');
+    throw new Error(`Could not determine GUID of project ${projectPath}`);
   }
 
   return guid;

@@ -168,9 +168,9 @@ async function updateAutoLink(
           path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
           projFile,
         ),
-        projectName: configUtils.getProjectName(projectContents),
+        projectName: configUtils.getProjectName(projFile, projectContents),
         projectLang: configUtils.getProjectLanguage(projFile),
-        projectGuid: configUtils.getProjectGuid(projectContents),
+        projectGuid: configUtils.getProjectGuid(projFile, projectContents),
       };
     }
 

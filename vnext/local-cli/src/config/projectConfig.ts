@@ -175,9 +175,15 @@ export function projectConfigWindows(
     const projectContents = configUtils.readProjectFile(projectFile);
 
     // Add missing (auto) items
-    result.project.projectName = configUtils.getProjectName(projectContents);
+    result.project.projectName = configUtils.getProjectName(
+      projectFile,
+      projectContents,
+    );
     result.project.projectLang = configUtils.getProjectLanguage(projectFile);
-    result.project.projectGuid = configUtils.getProjectGuid(projectContents);
+    result.project.projectGuid = configUtils.getProjectGuid(
+      projectFile,
+      projectContents,
+    );
   }
 
   return result as WindowsProjectConfig;
