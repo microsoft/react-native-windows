@@ -1,5 +1,8 @@
 steps:
-
+  - script: |
+      echo $(System.DefaultWorkingDirectory)
+      set
+    displayName: "Check vars"
 
   - task: Cache@2
     inputs:
