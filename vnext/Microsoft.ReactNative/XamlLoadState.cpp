@@ -6,7 +6,9 @@
 #include <sstream>
 #include "unicode.h"
 
-#ifdef XAML_GUARD
+#ifndef DISABLE_XAML_GUARD
+
+using namespace react::uwp;
 
 constexpr std::wstring_view systemXamlDllName{L"Windows.UI.Xaml.dll"};
 constexpr std::wstring_view winUIDllName{L"Microsoft.UI.Xaml.dll"};
@@ -43,6 +45,10 @@ XamlLoadState::XamlDialect XamlLoadState::XamlVersion::GetKnownMode() const {
 }
 
 #pragma region NT APIs
+// See:
+//  https://docs.microsoft.com/en-us/windows/win32/devnotes/ldrregisterdllnotification
+//  https://docs.microsoft.com/en-us/windows/win32/devnotes/ldrunregisterdllnotification
+//  https://docs.microsoft.com/en-us/windows/win32/api/ntdef/ns-ntdef-_unicode_string
 
 typedef LONG NTSTATUS;
 
@@ -100,7 +106,7 @@ LDR_DLL_NOTIFICATION_FUNCTION XamlLoadNotification;
 
 #define NTDLL_FUNCTION(name) reinterpret_cast<decltype(&name)>(GetProcAddress(ntdll, #name))
 
-XamlLoadState::XamlVersion XamlLoadState::GetXamlVersion(const std::wstring &path) {
+XamlLoadState::XamlVersion XamlLoadState::GetXamlVersion(const std::wstring &path) noexcept {
   DWORD dwHandle;
   DWORD size = GetFileVersionInfoSizeExW(0, path.c_str(), &dwHandle);
   std::string buffer;
@@ -148,8 +154,8 @@ XamlLoadState::~XamlLoadState() {
   (*pfn)(m_cookie);
 }
 
-void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
-  if (DllName == systemXamlDllName) {
+void XamlLoadState::RegisterDll(PCWSTR dllName, PCWSTR path) {
+  if (dllName == systemXamlDllName) {
     switch (m_mode) {
       case XamlDialect::Unknown:
         m_mode = XamlDialect::SystemXAML;
@@ -160,7 +166,7 @@ void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
       case XamlDialect::WinUI:
         throw std::exception("XAML dialect mismatch - WinUI 3 already loaded when attempting to load Windows.UI.Xaml");
     }
-  } else if (DllName == winUIDllName) {
+  } else if (dllName == winUIDllName) {
     auto newVersion = GetXamlVersion(path);
     auto const newMode = newVersion.GetKnownMode();
     switch (m_mode) {
@@ -187,7 +193,7 @@ void XamlLoadState::RegisterDll(PCWSTR DllName, PCWSTR path) {
 
       default:
         std::stringstream ss;
-        ss << "Unexpected XAML mode " << static_cast<int>(m_mode) << " when trying to load " << (path ? path : DllName);
+        ss << "Unexpected XAML mode " << static_cast<int>(m_mode) << " when trying to load " << (path ? path : dllName);
         throw std::exception(ss.str().c_str());
     }
   }

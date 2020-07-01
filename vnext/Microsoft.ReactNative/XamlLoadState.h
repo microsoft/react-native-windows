@@ -3,9 +3,7 @@
 
 #pragma once
 
-// Turn this off if you'd like to disable XAML versioning guard.
-#define XAML_GUARD
-
+namespace react::uwp {
 /// <summary>
 /// Implements a guard to ensure that only one XAML dll gets loaded in the current process.
 /// This is important because different XAML dlls are not inter-operable.
@@ -30,16 +28,17 @@ struct XamlLoadState {
   XamlLoadState();
   ~XamlLoadState();
 
-#ifdef XAML_GUARD
+#ifndef DISABLE_XAML_GUARD
   static XamlLoadState g_Instance;
 #endif
 
-  void RegisterDll(PCWSTR DllName, PCWSTR path);
+  void RegisterDll(PCWSTR dllName, PCWSTR path);
 
  private:
   XamlVersion m_version;
   XamlDialect m_mode{XamlDialect::Unknown};
   void *m_cookie;
 
-  static XamlVersion GetXamlVersion(const std::wstring &path);
+  static XamlVersion GetXamlVersion(const std::wstring &path) noexcept;
 };
+}
