@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Use Deterministic NuGet Binary",
   "packageName": "react-native-windows",
   "email": "ngerlem@microsoft.com",
