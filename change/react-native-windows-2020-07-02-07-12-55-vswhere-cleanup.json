@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Cleanup VS Installation Related CLI code",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-02T14:12:55.102Z"
+}
