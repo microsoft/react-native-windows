@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-02T03:53:19.749Z"
+}
