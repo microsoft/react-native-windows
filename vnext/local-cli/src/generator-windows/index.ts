@@ -86,6 +86,24 @@ async function generateCertificate(
   return null;
 }
 
+/**
+ * This represents the data to insert nuget packages
+ */
+interface NugetPackage {
+  id: string;
+  version: string;
+}
+
+/**
+ * This represents the data to insert nuget packages with Cpp specific information
+ */
+interface CppNugetPackage extends NugetPackage {
+  propsTopOfFile?: boolean;
+  propsMiddleOfFile?: boolean;
+  hasProps: boolean;
+  hasTargets: boolean;
+}
+
 export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
@@ -112,7 +130,7 @@ export async function copyProjectTemplateAndReplace(
 
   const language = options.language;
   const namespaceCpp = toCppNamespace(namespace);
-  if (options.experimentalNuGetDependency) {
+  if (options.experimentalNugetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
   if (options.useWinUI3) {
@@ -121,8 +139,10 @@ export async function copyProjectTemplateAndReplace(
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, language);
+  const sharedPath = path.join(srcRootPath, 'shared');
   const projectGuid = uuid.v4();
   const rnwVersion = require('react-native-windows/package.json').version;
+  const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
   const certificateThumbprint = await generateCertificate(
@@ -147,14 +167,14 @@ export async function copyProjectTemplateAndReplace(
     throw new Error('Unable to find WinUI3 version from property sheets');
   }
 
-  const cppNugetPackages: Array<{
-    id: string;
-    version: string;
-    propsTopOfFile?: boolean;
-    propsMiddleOfFile?: boolean;
-    hasProps: boolean;
-    hasTargets: boolean;
-  }> = [
+  const csNugetPackages: NugetPackage[] = [
+    {
+      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
+      version: '6.2.9',
+    },
+  ];
+
+  const cppNugetPackages: CppNugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.200615.7',
@@ -170,10 +190,15 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
-  if (options.experimentalNuGetDependency) {
+  if (options.experimentalNugetDependency) {
+    csNugetPackages.push({
+      id: 'Microsoft.ReactNative.Managed',
+      version: nugetVersion,
+    });
+
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative',
-      version: rnwVersion,
+      version: nugetVersion,
       propsMiddleOfFile: true,
       hasProps: false,
       hasTargets: true,
@@ -199,13 +224,17 @@ export async function copyProjectTemplateAndReplace(
     currentUser: currentUser,
     certificateThumbprint: certificateThumbprint,
 
-    useExperimentalNuget: options.experimentalNuGetDependency,
+    useExperimentalNuget: options.experimentalNugetDependency,
+    nuGetTestFeed: options.nuGetTestFeed,
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+
+    // cs template variables
+    csNugetPackages: csNugetPackages,
 
     // autolinking template variables
     autolinkProjectReferencesForTargets: '',
@@ -297,17 +326,24 @@ export async function copyProjectTemplateAndReplace(
         options.overwrite,
       );
     }
+  }
 
-    // Once we are publishing to nuget.org, this shouldn't be needed anymore
-    if (options.experimentalNuGetDependency) {
-      await copyAndReplaceWithChangedCallback(
-        path.join(srcPath, projDir, 'NuGet.Config'),
+  // Once we are publishing to nuget.org, this shouldn't be needed anymore
+  if (options.experimentalNugetDependency) {
+    [
+      {
+        from: path.join(sharedPath, projDir, 'NuGet.Config'),
+        to: path.join(windowsDir, 'NuGet.Config'),
+      },
+    ].forEach(mapping =>
+      copyAndReplaceWithChangedCallback(
+        mapping.from,
         destPath,
-        path.join(windowsDir, 'NuGet.Config'),
+        mapping.to,
         templateVars,
         options.overwrite,
-      );
-    }
+      ),
+    );
   }
 
   await copyAndReplaceAll(
