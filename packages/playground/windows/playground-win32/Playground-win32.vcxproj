@@ -12,7 +12,7 @@
     <BuildMSRNCxx>false</BuildMSRNCxx>
     <RunAutolinkCheck>false</RunAutolinkCheck>
   </PropertyGroup>
-  <PropertyGroup Label="FromWinUI3_VSIX">
+  <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
     <ProjectName>Playground-win32</ProjectName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
