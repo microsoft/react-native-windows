@@ -81,7 +81,7 @@ async function runWindows(
     }
 
     try {
-      await build.restoreNuGetPackages(options, slnFile, verbose);
+      await build.restoreNuGetPackages(slnFile, verbose);
     } catch (e) {
       newError('Failed to restore the NuGet packages: ' + e.toString());
       ExitProcessWithError(options.logging);
