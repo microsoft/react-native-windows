@@ -11,6 +11,7 @@
     <ClCompile Include="IReactNotificationService.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
+    <ClCompile Include="XamlLoadState.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
@@ -685,6 +686,7 @@
     <ClInclude Include="Utils\ValueUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="XamlLoadState.h" />
     <ClInclude Include="XamlView.h" />
     <ClInclude Include="ReactHost\IReactInstance.h">
       <Filter>ReactHost</Filter>
