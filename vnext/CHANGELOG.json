@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 02 Jul 2020 05:05:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.111",
+      "version": "0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Migrate 'AppState' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "ce0d59e4d7417b3ef6b7357d16c7a40dd709c2b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'DeviceInfo' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "6dd50410e82ff3fe157804ac170bdf670ef1e10c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'I18nManager' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "a5fd8388c9210267635153ad5d4e694db4473a7d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.110",
       "version": "0.0.0-canary.110",
