@@ -19,6 +19,7 @@ import {
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
+import {GenerateOptions} from '../generate-windows';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
@@ -28,7 +29,7 @@ function generateCertificate(
   destPath: string,
   newProjectName: string,
   currentUser: string,
-) {
+): string | null {
   console.log('Generating self-signed certificate...');
   let toCopyTempKey = false;
   if (os.platform() === 'win32') {
@@ -81,6 +82,8 @@ function generateCertificate(
       ),
     );
   }
+
+  return null;
 }
 
 export function copyProjectTemplateAndReplace(
@@ -88,12 +91,7 @@ export function copyProjectTemplateAndReplace(
   destPath: string,
   newProjectName: string,
   namespace: string,
-  options: {
-    overwrite: boolean;
-    language: 'cpp' | 'cs';
-    experimentalNuGetDependency: boolean;
-    useWinUI3: boolean;
-  },
+  options: GenerateOptions,
 ) {
   if (!srcRootPath) {
     throw new Error('Need a path to copy from');
@@ -126,7 +124,7 @@ export function copyProjectTemplateAndReplace(
   const projectGuid = uuid.v4();
   const rnwVersion = require('react-native-windows/package.json').version;
   const packageGuid = uuid.v4();
-  const currentUser = username.sync(); // Gets the current username depending on the platform.
+  const currentUser = username.sync()!; // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(
     srcPath,
     destPath,
@@ -145,6 +143,9 @@ export function copyProjectTemplateAndReplace(
   );
   const winui3Props = readProjectFile(winui3PropsPath);
   const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
+  if (winui3Version === null) {
+    throw new Error('Unable to find WinUI3 version from property sheets');
+  }
 
   const cppNugetPackages: Array<{
     id: string;

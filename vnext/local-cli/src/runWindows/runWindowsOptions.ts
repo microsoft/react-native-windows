@@ -30,14 +30,14 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  */
 export interface RunWindowsOptions {
   release?: boolean;
-  root?: string;
+  root: string;
   arch: BuildArch;
   emulator?: boolean;
   device?: boolean;
   target?: string;
   remoteDebugging?: string;
   logging: boolean;
-  packager?: boolean;
+  packager: boolean;
   bundle: boolean;
   launch: boolean;
   autolink: boolean;
@@ -47,8 +47,8 @@ export interface RunWindowsOptions {
   proj?: string;
   msbuildprops?: string;
   buildLogDirectory?: string;
-  info?: boolean;
-  directDebugging?: string;
+  info: boolean;
+  directDebugging?: number;
 }
 
 export const runWindowsOptions: CommandOption[] = [
@@ -60,11 +60,13 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--root [string]',
     description:
       'Override the root directory for the windows build which contains the windows folder.',
+    default: config => config.root,
   },
   {
     name: '--arch [string]',
     description: 'The build architecture (ARM, ARM64, x86, x64)',
     default: 'x86',
+    parse: parseBuildArch,
   },
   {
     name: '--emulator',
@@ -90,6 +92,7 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--no-packager',
     description: 'Do not launch packager while building',
+    default: false,
   },
   {
     name: '--bundle',
@@ -146,5 +149,35 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--direct-debugging [number]',
     description: 'Enable direct debugging on specified port',
+    parse: parseDirectDebuggingPort,
   },
 ];
+
+function parseBuildArch(arg: string): BuildArch {
+  const supportedArches: BuildArch[] = ['x86', 'x64', 'ARM64', 'ARM'];
+  for (const supported of supportedArches) {
+    if (arg.toLowerCase() === supported.toLowerCase()) {
+      return supported;
+    }
+  }
+
+  errorOut(`Unrecognized --arch '${arg}'. Expected one of ${supportedArches}`);
+}
+
+function parseDirectDebuggingPort(arg: string): number {
+  const num = parseInt(arg, 10);
+
+  if (!Number.isInteger(num)) {
+    errorOut(`Expected argument '--direct-debugging' to be a number`);
+  }
+  if (num < 1024 || num >= 65535) {
+    errorOut('Direct debugging port it out of range');
+  }
+
+  return num;
+}
+
+function errorOut(arg: string): never {
+  console.error(arg);
+  process.exit(1);
+}

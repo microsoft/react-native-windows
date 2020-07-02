@@ -15,9 +15,10 @@ import * as mustache from 'mustache';
 export type Replacements = {
   useMustache?: boolean;
   regExpPatternsToRemove?: RegExp[];
-} & Record<string, string>;
+  [key: string]: any;
+};
 
-interface Options {
+interface PromptOptions {
   echo?: string;
   ask?: string;
   value?: string;
@@ -27,9 +28,9 @@ interface Options {
 const term = 13; // carriage return
 
 function prompt(
-  ask?: string | Options,
-  value?: string,
-  opts?: Options,
+  ask?: string | PromptOptions,
+  value?: string | PromptOptions,
+  opts?: PromptOptions,
 ): string {
   let insert = 0;
   opts = opts || {};
@@ -94,10 +95,6 @@ function prompt(
       process.stdout.write('^C\n');
       fs.closeSync(fd);
       process.exit(130);
-      if (process.stdin.setRawMode) {
-        process.stdin.setRawMode(/*!*/ !!wasRaw);
-      }
-      return null;
     }
 
     // catch the terminating character
@@ -154,7 +151,7 @@ function prompt(
     process.stdin.setRawMode(!!wasRaw);
   }
 
-  return str || value || '';
+  return str || (value as string) || '';
 }
 
 function walk(current: string): string[] {
