@@ -291,7 +291,7 @@ async function upgradeFileContentChangedCallback(
         name: 'shouldReplace',
         type: 'confirm',
         message: `Do you want to replace ${relativeDestPath}?`,
-        default: true,
+        default: false,
       },
     ]);
 
