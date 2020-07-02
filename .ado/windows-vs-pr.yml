@@ -403,11 +403,13 @@ jobs:
     variables:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      #5412 - Disable XHRSample due to intermittedly crashing the test process
       Desktop.IntegrationTests.Filter: >
         (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
         (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
         (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
         (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
         (FullyQualifiedName!~WebSocketModule_)&
         (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
