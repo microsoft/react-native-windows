@@ -6,6 +6,7 @@
 
 import * as fs from 'fs';
 import * as chalk from 'chalk';
+import * as inquirer from 'inquirer';
 import * as path from 'path';
 import * as mustache from 'mustache';
 
@@ -17,142 +18,6 @@ export type Replacements = {
   regExpPatternsToRemove?: RegExp[];
   [key: string]: any;
 };
-
-interface PromptOptions {
-  echo?: string;
-  ask?: string;
-  value?: string;
-  autocomplete?: string[] | Function;
-}
-
-const term = 13; // carriage return
-
-function prompt(
-  ask?: string | PromptOptions,
-  value?: string | PromptOptions,
-  opts?: PromptOptions,
-): string {
-  let insert = 0;
-  opts = opts || {};
-
-  if (typeof ask === 'object') {
-    opts = ask;
-    ask = opts.ask;
-  } else if (typeof value === 'object') {
-    opts = value;
-    value = opts.value;
-  }
-  ask = ask || '';
-  const echo = opts.echo;
-  const masked = 'echo' in opts;
-
-  let fd;
-  if (process.platform === 'win32') {
-    // @ts-ignore
-    fd = process.stdin.fd;
-  } else {
-    fd = fs.openSync('/dev/tty', 'rs');
-  }
-
-  const wasRaw = process.stdin.isRaw;
-  if (!wasRaw && process.stdin.setRawMode) {
-    process.stdin.setRawMode(true);
-  }
-
-  // eslint-disable-next-line no-undef
-  let buf = Buffer.alloc(3);
-  let str = '';
-
-  let character;
-
-  let read;
-
-  if (ask) {
-    process.stdout.write(ask);
-  }
-
-  while (true) {
-    read = fs.readSync(fd, buf, 0, 3, null);
-    if (read > 1) {
-      // received a control sequence
-      if (buf.toString()) {
-        str += buf.toString();
-        str = str.replace(/\0/g, '');
-        insert = str.length;
-        process.stdout.write(`\u001b[2K\u001b[0G${ask}${str}`);
-        process.stdout.write(`\u001b[${insert + ask.length + 1}G`);
-        // eslint-disable-next-line no-undef
-        buf = Buffer.alloc(3);
-      }
-      continue; // any other 3 character sequence is ignored
-    }
-
-    // if it is not a control character seq, assume only one character is read
-    character = buf[read - 1];
-
-    // catch a ^C and return null
-    if (character === 3) {
-      process.stdout.write('^C\n');
-      fs.closeSync(fd);
-      process.exit(130);
-    }
-
-    // catch the terminating character
-    if (character === term) {
-      fs.closeSync(fd);
-      break;
-    }
-
-    if (
-      character === 127 ||
-      (process.platform === 'win32' && character === 8)
-    ) {
-      // backspace
-      if (!insert) {
-        continue;
-      }
-      str = str.slice(0, insert - 1) + str.slice(insert);
-      insert--;
-      process.stdout.write('\u001b[2D');
-    } else {
-      if (character < 32 || character > 126) {
-        continue;
-      }
-      str =
-        str.slice(0, insert) +
-        String.fromCharCode(character) +
-        str.slice(insert);
-      insert++;
-    }
-
-    if (masked) {
-      process.stdout.write(
-        `\u001b[2K\u001b[0G${ask}${Array(str.length + 1).join(echo)}`,
-      );
-    } else {
-      process.stdout.write('\u001b[s');
-      if (insert === str.length) {
-        process.stdout.write(`\u001b[2K\u001b[0G${ask}${str}`);
-      } else if (ask) {
-        process.stdout.write(`\u001b[2K\u001b[0G${ask}${str}`);
-      } else {
-        process.stdout.write(
-          `\u001b[2K\u001b[0G${str}\u001b[${str.length - insert}D`,
-        );
-      }
-      process.stdout.write('\u001b[u');
-      process.stdout.write('\u001b[1C');
-    }
-  }
-
-  process.stdout.write('\n');
-
-  if (process.stdin.setRawMode) {
-    process.stdin.setRawMode(!!wasRaw);
-  }
-
-  return str || (value as string) || '';
-}
 
 function walk(current: string): string[] {
   if (!fs.lstatSync(current).isDirectory()) {
@@ -169,7 +34,7 @@ function walk(current: string): string[] {
 /**
  * Get a source file and replace parts of its contents.
  * @param srcPath Path to the source file.
- * @param {object} replacements e.g. {'TextToBeReplaced': 'Replacement'}
+ * @param replacements e.g. {'TextToBeReplaced': 'Replacement'}
  * @return The contents of the file with the replacements applied.
  */
 export function resolveContents(
@@ -199,7 +64,7 @@ type ContentChangedCallbackOption = 'identical' | 'changed' | 'new' | null;
 type ContentChangedCallback = (
   path: string,
   option: ContentChangedCallbackOption,
-) => 'keep' | 'overwrite';
+) => Promise<'keep' | 'overwrite'>;
 
 /**
  * Copy a file to given destination, replacing parts of its contents.
@@ -213,7 +78,7 @@ type ContentChangedCallback = (
  *        If null, files will be overwritten.
  *        Function(path, 'identical' | 'changed' | 'new') => 'keep' | 'overwrite'
  */
-function copyAndReplace(
+async function copyAndReplace(
   srcPath: string,
   destPath: string,
   replacements: Replacements,
@@ -247,7 +112,7 @@ function copyAndReplace(
           throw err;
         }
       }
-      shouldOverwrite = contentChangedCallback(destPath, contentChanged);
+      shouldOverwrite = await contentChangedCallback(destPath, contentChanged);
     }
     if (shouldOverwrite === 'overwrite') {
       copyBinaryFile(srcPath, destPath, err => {
@@ -278,7 +143,7 @@ function copyAndReplace(
           throw err;
         }
       }
-      shouldOverwrite = contentChangedCallback(destPath, contentChanged);
+      shouldOverwrite = await contentChangedCallback(destPath, contentChanged);
     }
     if (shouldOverwrite === 'overwrite') {
       fs.writeFileSync(destPath, content, {
@@ -327,7 +192,7 @@ export function createDir(destPath: string) {
   }
 }
 
-export function copyAndReplaceWithChangedCallback(
+export async function copyAndReplaceWithChangedCallback(
   srcPath: string,
   destRoot: string,
   relativeDestPath: string,
@@ -351,7 +216,7 @@ export function copyAndReplaceWithChangedCallback(
           contentChanged,
         );
 
-  copyAndReplace(
+  await copyAndReplace(
     srcPath,
     path.join(destRoot, relativeDestPath),
     replacements,
@@ -359,31 +224,31 @@ export function copyAndReplaceWithChangedCallback(
   );
 }
 
-export function copyAndReplaceAll(
+export async function copyAndReplaceAll(
   srcPath: string,
   destPath: string,
   relativeDestDir: string,
   replacements: Replacements,
   alwaysOverwrite: boolean,
 ) {
-  walk(srcPath).forEach(absoluteSrcFilePath => {
+  for (const absoluteSrcFilePath of walk(srcPath)) {
     const filename = path.relative(srcPath, absoluteSrcFilePath);
     const relativeDestPath = path.join(relativeDestDir, filename);
-    copyAndReplaceWithChangedCallback(
+    await copyAndReplaceWithChangedCallback(
       absoluteSrcFilePath,
       destPath,
       relativeDestPath,
       replacements,
       alwaysOverwrite,
     );
-  });
+  }
 }
 
-function alwaysOverwriteContentChangedCallback(
+async function alwaysOverwriteContentChangedCallback(
   absoluteSrcFilePath: string,
   relativeDestPath: string,
   contentChanged: ContentChangedCallbackOption,
-) {
+): Promise<'keep' | 'overwrite'> {
   if (contentChanged === 'new') {
     console.log(`${chalk.bold('new')} ${relativeDestPath}`);
     return 'overwrite';
@@ -404,11 +269,11 @@ function alwaysOverwriteContentChangedCallback(
   );
 }
 
-function upgradeFileContentChangedCallback(
+async function upgradeFileContentChangedCallback(
   absoluteSrcFilePath: string,
   relativeDestPath: string,
   contentChanged: ContentChangedCallbackOption,
-) {
+): Promise<'keep' | 'overwrite'> {
   if (contentChanged === 'new') {
     console.log(`${chalk.bold('new')} ${relativeDestPath}`);
     return 'overwrite';
@@ -418,21 +283,19 @@ function upgradeFileContentChangedCallback(
       `${chalk.bold(relativeDestPath)} ` +
         `has changed in the new version.\nDo you want to keep your ${relativeDestPath} or replace it with the ` +
         'latest version?\nMake sure you have any changes you made to this file saved somewhere.\n' +
-        `You can see the new version here: ${absoluteSrcFilePath}\n` +
-        `Do you want to replace ${relativeDestPath}? ` +
-        'Answer y to replace, n to keep your version: ',
+        `You can see the new version here: ${absoluteSrcFilePath}`,
     );
-    let answer;
-    while (!answer) {
-      answer = prompt();
-    }
 
-    if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
-      console.log(`Replacing ${relativeDestPath}`);
-      return 'overwrite';
-    }
-    console.log(`Keeping your ${relativeDestPath}`);
-    return 'keep';
+    const {shoudReplace} = await inquirer.prompt([
+      {
+        name: 'shouldReplace',
+        type: 'confirm',
+        message: `Do you want to replace ${relativeDestPath}?`,
+        default: false,
+      },
+    ]);
+
+    return shoudReplace ? 'overwrite' : 'keep';
   }
   if (contentChanged === 'identical') {
     return 'keep';

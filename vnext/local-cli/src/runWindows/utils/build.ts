@@ -4,19 +4,13 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as https from 'https';
-import * as os from 'os';
 import * as path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
 import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
-import * as util from 'util';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
-
-const existsAsync = util.promisify(fs.exists);
 
 export async function buildSolution(
   buildTools: MSBuildTools,
@@ -47,19 +41,17 @@ export async function buildSolution(
   );
 }
 
-async function nugetRestore(
-  nugetPath: string,
+export async function restoreNuGetPackages(
   slnFile: string,
+  buildTools: MSBuildTools,
   verbose: boolean,
-  msbuildVersion: string,
 ) {
   const text = 'Restoring NuGet packages ';
   const spinner = newSpinner(text);
-  console.log(nugetPath);
   await commandWithProgress(
     spinner,
     text,
-    nugetPath,
+    require.resolve('nuget-exe'),
     [
       'restore',
       `${slnFile}`,
@@ -67,34 +59,9 @@ async function nugetRestore(
       '-Verbosity',
       verbose ? 'normal' : 'quiet',
       '-MSBuildVersion',
-      msbuildVersion,
+      buildTools.version,
     ],
     verbose,
-  );
-}
-
-export async function restoreNuGetPackages(
-  slnFile: string,
-  buildTools: MSBuildTools,
-  verbose: boolean,
-) {
-  const nugetPath = path.join(os.tmpdir(), 'nuget.4.9.2.exe');
-
-  if (!(await existsAsync(nugetPath))) {
-    const spinner = newSpinner('Downloading NuGet Binary');
-    await downloadFileWithRetry(
-      'https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe',
-      nugetPath,
-      1 /*retries*/,
-    );
-    spinner.succeed();
-  }
-
-  await nugetRestore(
-    nugetPath,
-    slnFile,
-    verbose,
-    buildTools.installationVersion,
   );
 }
 
@@ -173,39 +140,4 @@ export function parseMsBuildProps(
     }
   }
   return result;
-}
-
-async function downloadFileWithRetry(
-  url: string,
-  dest: string,
-  retries: number,
-) {
-  for (let retryCount = 0; ; ++retryCount) {
-    try {
-      return await downloadFile(url, dest);
-    } catch (ex) {
-      if (retryCount === retries) {
-        throw ex;
-      }
-    }
-  }
-}
-
-function downloadFile(url: string, dest: string) {
-  const destFile = fs.createWriteStream(dest);
-
-  return new Promise((resolve, reject) => {
-    https
-      .get(url)
-      .on('response', res => res.pipe(destFile))
-      .on('finish', () => {
-        destFile.on('finish', () => {
-          destFile.close();
-          resolve();
-        });
-      })
-      .on('error', err => {
-        fs.unlink(dest, () => reject(err));
-      });
-  });
 }
