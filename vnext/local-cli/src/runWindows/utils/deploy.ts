@@ -205,7 +205,7 @@ export async function deployToDesktop(
 
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
-    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
+    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles!,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
@@ -243,15 +243,7 @@ export async function deployToDesktop(
   }
 
   if (options.directDebugging) {
-    const port = parseInt(options.directDebugging, 10);
-    if (!isNaN(port) && port > 1024 && port < 65535) {
-      args.push('--direct-debugging', port.toString());
-    } else {
-      newError(
-        'Direct debugging port not specified, invalid or out of bounds.',
-      );
-      process.exit(1);
-    }
+    args.push('--direct-debugging', options.directDebugging.toString());
   }
 
   await runPowerShellScriptFunction(

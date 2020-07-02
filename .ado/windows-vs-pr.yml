@@ -403,11 +403,13 @@ jobs:
     variables:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      #5412 - Disable XHRSample due to intermittedly crashing the test process
       Desktop.IntegrationTests.Filter: >
         (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
         (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
         (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
         (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
         (FullyQualifiedName!~WebSocketModule_)&
         (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
@@ -597,7 +599,12 @@ jobs:
     dependsOn:
      - Setup
      - RNWUniversalPR
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: |
+      and
+      (
+        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
+        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
@@ -676,7 +683,13 @@ jobs:
       - Setup
       - RNWUniversalPR
       - RNWDesktopPR
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: |
+      and
+      (
+        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
+        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+        in(dependencies.RNWDesktopPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30

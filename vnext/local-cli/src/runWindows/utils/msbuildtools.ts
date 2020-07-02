@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as child_process from 'child_process';
 import * as chalk from 'chalk';
+import * as os from 'os';
 import * as shell from 'shelljs';
 import Version from './version';
 import * as checkRequirements from './checkRequirements';
@@ -65,7 +66,7 @@ class MSBuildTools {
     }
     const verbosityOption = verbose ? 'normal' : 'minimal';
     const logPrefix = path.join(
-      buildLogDirectory || process.env.temp,
+      buildLogDirectory || os.tmpdir(),
       `msbuild_${process.pid}${target ? '_' + target : ''}`,
     );
 
@@ -141,10 +142,10 @@ function VSWhere(
   version: string,
   property: string,
   verbose: boolean,
-): string | null {
+): string {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
-    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
+    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles!,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
@@ -170,7 +171,6 @@ function VSWhere(
       console.log("Couldn't find vswhere, querying registry.");
     }
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
-    let toolsPath = null;
     // Try to get the MSBuild path using registry
     try {
       const output = child_process.execSync(query).toString();
@@ -184,23 +184,22 @@ function VSWhere(
         if (version === '16.0') {
           toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
         }
-        toolsPath = toolsPathOutputStr;
+        return toolsPathOutputStr;
       }
-    } catch (e) {
-      toolsPath = null;
-    }
-    return toolsPath;
+    } catch {}
+
+    throw new Error(`Failed to find ${requires}`);
   }
 }
 
 function getVCToolsByArch(buildArch: BuildArch): string {
-  switch (buildArch.toLowerCase()) {
+  switch (buildArch) {
     case 'x86':
     case 'x64':
       return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
-    case 'arm':
+    case 'ARM':
       return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
-    case 'arm64':
+    case 'ARM64':
       return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
   }
 }

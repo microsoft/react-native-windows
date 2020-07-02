@@ -24,8 +24,8 @@ export async function buildSolution(
   buildArch: BuildArch,
   msBuildProps: Record<string, string>,
   verbose: boolean,
-  target: string,
-  buildLogDirectory: string,
+  target?: string,
+  buildLogDirectory?: string,
 ) {
   const minVersion = new Version(10, 0, 18362, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();

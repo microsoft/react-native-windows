@@ -85,12 +85,12 @@ export function commandWithProgress(
     const cp = spawn(command, args, spawnOptions);
     let firstErrorLine: string | null = null;
     if (!verbose) {
-      cp.stdout.on('data', chunk => {
+      cp.stdout!.on('data', chunk => {
         const text = chunk.toString();
         setSpinnerText(spinner, taskDoingName + ': ', text);
       });
-      cp.stderr.on('data', chunk => {
-        const text = chunk.toString();
+      cp.stderr!.on('data', chunk => {
+        const text: string = chunk.toString();
         if (!firstErrorLine) {
           firstErrorLine = text;
         }

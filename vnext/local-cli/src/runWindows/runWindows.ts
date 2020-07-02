@@ -56,9 +56,6 @@ async function runWindows(
     }
   }
 
-  // Either use the specified root or get the default one
-  options.root = options.root || config.root;
-
   // Get the solution file
   const slnFile = build.getAppSolutionFile(options, config);
 

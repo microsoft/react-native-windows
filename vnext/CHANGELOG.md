@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Jul 2020 05:05:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.111
+
+Thu, 02 Jul 2020 05:05:06 GMT
+
+### Changes
+
+- Migrate 'AppState' to turbo module (zihanc@microsoft.com)
+- Migrate 'DeviceInfo' to turbo module (zihanc@microsoft.com)
+- Migrate 'I18nManager' to turbo module (zihanc@microsoft.com)
 
 ## 0.0.0-canary.110
 

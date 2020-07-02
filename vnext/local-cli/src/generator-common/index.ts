@@ -16,7 +16,8 @@ import * as mustache from 'mustache';
 export type Replacements = {
   useMustache?: boolean;
   regExpPatternsToRemove?: RegExp[];
-} & Record<string, string>;
+  [key: string]: any;
+};
 
 function walk(current: string): string[] {
   if (!fs.lstatSync(current).isDirectory()) {

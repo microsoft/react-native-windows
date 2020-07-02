@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Migrate 'I18nManager' to turbo module",
-  "packageName": "react-native-windows",
-  "email": "zihanc@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-06-30T19:42:24.426Z"
-}
