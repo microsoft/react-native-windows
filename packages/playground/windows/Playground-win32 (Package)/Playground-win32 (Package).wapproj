@@ -6,6 +6,8 @@
   <PropertyGroup>
     <EntryPointProjectUniqueName>..\Playground-win32\Playground-win32.vcxproj</EntryPointProjectUniqueName>
   </PropertyGroup>
+  <!-- VS 16.7 is the first version of VS that enables WinUI 3 packaged apps / desktop bridge
+  However 16.7 is still in Preview so it's not available in GitHub Actions -->
   <Import Project="VisualStudioVersion_MustBe_16.7.0_ButIts_$(MSBuildVersion)" Condition="'$(MSBuildVersion)'!='16.7.0'" />
   <Import Project="Playground-win32-packaging.proj" Condition="'$(MSBuildVersion)'=='16.7.0'" />
 </Project>
