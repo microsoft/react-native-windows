@@ -1,7 +1,7 @@
 {
   "name": "nuget-exe",
   "version": "4.9.1",
-  "description": "Repackaged NuGet.exe bianry",
+  "description": "Repackaged NuGet.exe binary",
   "main": "nuget-4.9.2.exe",
   "repository": "https://github.com/microsoft/react-native-windows",
   "license": "MIT",
