@@ -635,6 +635,21 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
+      # Run unbroken checking local filebefore installing packages to avoid scanning node_modules
+      # The exclusions of unbroken don't support wildcards yet and we have many throughout the repo
+      - task: CmdLine@2
+        displayName: check local links in .md files
+        inputs:
+          script: npx unbroken -q --local-only --allow-local-line-sections
+
+      # This runs will check for web-links. If broken links are found, since external changes could affect this.
+      # It will report a warning if this step fails so we'll pay attention to fix quickly.
+      - task: CmdLine@2
+        displayName: check web links in .md files
+        inputs:
+          script: npx unbroken -q --allow-local-line-sections
+        continueOnError: true
+
       - template: templates/yarn-install.yml
 
       - task: CmdLine@2
