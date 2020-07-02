@@ -92,7 +92,7 @@ export default class WinAppDeployTool {
     const devices = matchedLines.map((line, arrayIndex) => {
       const match = line.match(LINE_TEST);
       if (!match) {
-        throw new Error('Unexpwcted format of "devices" output');
+        throw new Error('Unexpected format of "devices" output');
       }
 
       const ip = match[1];

@@ -10,7 +10,7 @@ import * as path from 'path';
 import * as mustache from 'mustache';
 
 /**
- * Text to replace, + config PromptOptions
+ * Text to replace, + config options
  */
 export type Replacements = {
   useMustache?: boolean;
