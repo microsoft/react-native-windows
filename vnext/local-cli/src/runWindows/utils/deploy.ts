@@ -204,7 +204,7 @@ export async function deployToDesktop(
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
 
-  const vsVersion = buildTools.version;
+  const vsVersion = buildTools.installationVersion;
 
   if (vsVersion.startsWith('16.5') || vsVersion.startsWith('16.6')) {
     // VS 16.5 and 16.6 introduced a regression in packaging where the certificates created in the UI will render the package uninstallable.

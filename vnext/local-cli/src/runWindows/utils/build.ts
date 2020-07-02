@@ -59,7 +59,7 @@ export async function restoreNuGetPackages(
       '-Verbosity',
       verbose ? 'normal' : 'quiet',
       '-MSBuildVersion',
-      buildTools.version,
+      buildTools.installationVersion,
     ],
     verbose,
   );
