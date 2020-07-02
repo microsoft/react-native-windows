@@ -23,7 +23,7 @@ import {
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
 
-function generateCertificate(
+async function generateCertificate(
   srcPath: string,
   destPath: string,
   newProjectName: string,
@@ -71,7 +71,7 @@ function generateCertificate(
     toCopyTempKey = true;
   }
   if (toCopyTempKey) {
-    copyAndReplaceWithChangedCallback(
+    await copyAndReplaceWithChangedCallback(
       path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
       destPath,
       path.join(
@@ -83,7 +83,7 @@ function generateCertificate(
   }
 }
 
-export function copyProjectTemplateAndReplace(
+export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
   newProjectName: string,
@@ -127,7 +127,7 @@ export function copyProjectTemplateAndReplace(
   const rnwVersion = require('react-native-windows/package.json').version;
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
-  const certificateThumbprint = generateCertificate(
+  const certificateThumbprint = await generateCertificate(
     srcPath,
     destPath,
     newProjectName,
@@ -215,7 +215,7 @@ export function copyProjectTemplateAndReplace(
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
   };
 
-  [
+  const commonMappings = [
     {from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js'},
     {
       from: path.join(srcRootPath, '_gitignore'),
@@ -238,33 +238,37 @@ export function copyProjectTemplateAndReplace(
       from: path.join(srcPath, projDir, 'MyApp.sln'),
       to: path.join(windowsDir, newProjectName + '.sln'),
     },
-  ].forEach(mapping =>
-    copyAndReplaceWithChangedCallback(
+  ];
+
+  for (const mapping of commonMappings) {
+    await copyAndReplaceWithChangedCallback(
       mapping.from,
       destPath,
       mapping.to,
       templateVars,
       options.overwrite,
-    ),
-  );
+    );
+  }
 
   if (language === 'cs') {
-    [
+    const csMappings = [
       {
         from: path.join(srcPath, projDir, 'MyApp.csproj'),
         to: path.join(windowsDir, newProjectName, newProjectName + '.csproj'),
       },
-    ].forEach(mapping =>
-      copyAndReplaceWithChangedCallback(
+    ];
+
+    for (const mapping of csMappings) {
+      await copyAndReplaceWithChangedCallback(
         mapping.from,
         destPath,
         mapping.to,
         templateVars,
         options.overwrite,
-      ),
-    );
+      );
+    }
   } else {
-    [
+    const cppMappings = [
       {
         from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
         to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj'),
@@ -281,43 +285,38 @@ export function copyProjectTemplateAndReplace(
         from: path.join(srcPath, projDir, 'packages.config'),
         to: path.join(windowsDir, newProjectName, 'packages.config'),
       },
-    ].forEach(mapping =>
-      copyAndReplaceWithChangedCallback(
+    ];
+
+    for (const mapping of cppMappings) {
+      await copyAndReplaceWithChangedCallback(
         mapping.from,
         destPath,
         mapping.to,
         templateVars,
         options.overwrite,
-      ),
-    );
+      );
+    }
 
     // Once we are publishing to nuget.org, this shouldn't be needed anymore
     if (options.experimentalNuGetDependency) {
-      [
-        {
-          from: path.join(srcPath, projDir, 'NuGet.Config'),
-          to: path.join(windowsDir, 'NuGet.Config'),
-        },
-      ].forEach(mapping =>
-        copyAndReplaceWithChangedCallback(
-          mapping.from,
-          destPath,
-          mapping.to,
-          templateVars,
-          options.overwrite,
-        ),
+      await copyAndReplaceWithChangedCallback(
+        path.join(srcPath, projDir, 'NuGet.Config'),
+        destPath,
+        path.join(windowsDir, 'NuGet.Config'),
+        templateVars,
+        options.overwrite,
       );
     }
   }
 
-  copyAndReplaceAll(
+  await copyAndReplaceAll(
     path.join(srcPath, 'assets'),
     destPath,
     path.join(windowsDir, newProjectName, 'Assets'),
     templateVars,
     options.overwrite,
   );
-  copyAndReplaceAll(
+  await copyAndReplaceAll(
     path.join(srcPath, 'src'),
     destPath,
     path.join(windowsDir, newProjectName),

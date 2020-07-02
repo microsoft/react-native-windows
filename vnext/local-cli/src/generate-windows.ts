@@ -44,7 +44,7 @@ export interface GenerateOptions {
  * @param  ns         namespace for the project
  * @param  options    command line options container
  */
-export function generateWindows(
+export async function generateWindows(
   projectDir: string,
   name: string,
   ns: string,
@@ -56,7 +56,7 @@ export function generateWindows(
 
   installDependencies(options);
 
-  copyProjectTemplateAndReplace(
+  await copyProjectTemplateAndReplace(
     path.join(__dirname, '..', 'templates'),
     projectDir,
     name,
@@ -71,7 +71,7 @@ const assertStableInterface: typeof generateWindows extends (
   name: string,
   ns: string,
   options: GenerateOptions,
-) => void
+) => Promise<void>
   ? true
   : never = true;
 assertStableInterface;
