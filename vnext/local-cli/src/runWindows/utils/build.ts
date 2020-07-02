@@ -9,7 +9,7 @@ import * as https from 'https';
 import * as os from 'os';
 import * as path from 'path';
 
-import * as MSBuildTools from './msbuildtools';
+import MSBuildTools from './msbuildtools';
 import Version from './version';
 import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
 import * as util from 'util';
@@ -19,6 +19,7 @@ import {Config} from '@react-native-community/cli-types';
 const existsAsync = util.promisify(fs.exists);
 
 export async function buildSolution(
+  buildTools: MSBuildTools,
   slnFile: string,
   buildType: BuildConfig,
   buildArch: BuildArch,
@@ -35,8 +36,7 @@ export async function buildSolution(
     );
   }
 
-  const msBuildTools = MSBuildTools.findAvailableVersion(buildArch, verbose);
-  await msBuildTools.buildProject(
+  await buildTools.buildProject(
     slnFile,
     buildType,
     buildArch,
@@ -74,8 +74,8 @@ async function nugetRestore(
 }
 
 export async function restoreNuGetPackages(
-  options: RunWindowsOptions,
   slnFile: string,
+  buildTools: MSBuildTools,
   verbose: boolean,
 ) {
   const nugetPath = path.join(os.tmpdir(), 'nuget.4.9.2.exe');
@@ -90,12 +90,11 @@ export async function restoreNuGetPackages(
     spinner.succeed();
   }
 
-  const msbuildTools = MSBuildTools.findAvailableVersion('x86', verbose);
   await nugetRestore(
     nugetPath,
     slnFile,
     verbose,
-    msbuildTools.installationVersion,
+    buildTools.installationVersion,
   );
 }
 
