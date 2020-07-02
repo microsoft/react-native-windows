@@ -113,7 +113,6 @@
     "/index.windows.js.map",
     "/interface.js",
     "/just-task.js",
-    "/layoutFilesForNuget.bat",
     "/metro-react-native-platform.js",
     "/metro.config.js",
     "/react-native.config.js",
