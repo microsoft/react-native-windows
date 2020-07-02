@@ -11,7 +11,7 @@
 
 #include <unknwn.h>
 
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
-#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #pragma pop_macro("GetCurrentTime")

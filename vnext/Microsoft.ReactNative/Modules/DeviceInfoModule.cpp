@@ -4,11 +4,11 @@
 #include "pch.h"
 #include "DeviceInfoModule.h"
 #include <IReactDispatcher.h>
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #include <XamlUtils.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
-#include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::ReactNative {
 
