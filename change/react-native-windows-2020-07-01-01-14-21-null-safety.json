@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enforce null/undefined safety for the CLI",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-01T08:14:21.490Z"
-}

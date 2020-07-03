@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 02 Jul 2020 05:05:06 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Jul 2020 05:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.112
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Changes
+
+- Enforce null/undefined safety for the CLI (ngerlem@microsoft.com)
+- Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package (dannyvv@microsoft.com)
+- Remove github actions workflow for CI and publish (dannyvv@microsoft.com)
+- Include "nuget.exe" as Package Dependency of react-native-windows (ngerlem@microsoft.com)
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+- Cleanup VS Installation Related CLI code (ngerlem@microsoft.com)
+- add guard to ensure only one version of XAML is loaded (asklar@microsoft.com)
 
 ## 0.0.0-canary.111
 

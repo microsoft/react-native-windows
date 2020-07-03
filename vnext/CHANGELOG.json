@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2020 05:05:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.112",
+      "version": "0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enforce null/undefined safety for the CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "228e0bc5dc985b6eb71c94395304d99a0d054e2c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7cfed33bb3ee4118a4e2aedc0e365ff8f81cca5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove github actions workflow for CI and publish",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0accbb156142c9f8466e2b50a32c8684e6b41648",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Include \"nuget.exe\" as Package Dependency of react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b0380620601d136f4273a1245f6a60468fd375",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Replace Custom Generator Prompt With Inquirer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a25a8294ff602cc457e34dfd38cae10650092810",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Cleanup VS Installation Related CLI code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4d0fb0726278def6df793c648420422a7dbf3b62",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add guard to ensure only one version of XAML is loaded",
+            "author": "asklar@microsoft.com",
+            "commit": "e636d0d513d38cf3921887c56983b45cceb02d8e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Jul 2020 05:05:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.111",
       "version": "0.0.0-canary.111",

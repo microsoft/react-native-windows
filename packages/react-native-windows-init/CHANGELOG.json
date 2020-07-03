@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2020 05:05:03 GMT",
+      "tag": "react-native-windows-init_v0.1.17",
+      "version": "0.1.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace Custom Generator Prompt With Inquirer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a25a8294ff602cc457e34dfd38cae10650092810",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "react-native-windows-init_v0.1.16",
       "version": "0.1.16",

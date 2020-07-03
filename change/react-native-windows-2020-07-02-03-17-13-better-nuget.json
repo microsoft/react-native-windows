@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include \"nuget.exe\" as Package Dependency of react-native-windows",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-02T10:17:13.358Z"
-}
