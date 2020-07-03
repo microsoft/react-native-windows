@@ -9,7 +9,7 @@ import * as chalk from 'chalk';
 import * as deploy from './utils/deploy';
 import {newError, newInfo} from './utils/commandWithProgress';
 import * as info from './utils/info';
-import * as msbuildtools from './utils/msbuildtools';
+import MSBuildTools from './utils/msbuildtools';
 
 import {Command, Config} from '@react-native-community/cli-types';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
@@ -47,7 +47,7 @@ async function runWindows(
       const output = await info.getEnvironmentInfo();
       console.log(output.trimEnd());
       console.log('  Installed UWP SDKs:');
-      const sdks = msbuildtools.getAllAvailableUAPVersions();
+      const sdks = MSBuildTools.getAllAvailableUAPVersions();
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
@@ -72,6 +72,8 @@ async function runWindows(
     newInfo('Autolink step is skipped');
   }
 
+  const buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+
   if (options.build) {
     if (!slnFile) {
       newError(
@@ -81,7 +83,7 @@ async function runWindows(
     }
 
     try {
-      await build.restoreNuGetPackages(slnFile, verbose);
+      await build.restoreNuGetPackages(slnFile, buildTools, verbose);
     } catch (e) {
       newError('Failed to restore the NuGet packages: ' + e.toString());
       ExitProcessWithError(options.logging);
@@ -98,6 +100,7 @@ async function runWindows(
 
     try {
       await build.buildSolution(
+        buildTools,
         slnFile,
         buildType,
         options.arch,
@@ -135,7 +138,7 @@ async function runWindows(
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {
-        await deploy.deployToDesktop(options, verbose, slnFile);
+        await deploy.deployToDesktop(options, verbose, slnFile, buildTools);
       }
     } catch (e) {
       newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);

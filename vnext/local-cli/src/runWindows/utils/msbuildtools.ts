@@ -22,10 +22,9 @@ import {
 } from './commandWithProgress';
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
+import {findLatestVsInstall} from './vsInstalls';
 
-const MSBUILD_VERSIONS = ['16.0'];
-
-class MSBuildTools {
+export default class MSBuildTools {
   /**
    * @param version is something like 16.0 for 2019
    * @param path  Path to MSBuild.exe (x86)
@@ -135,60 +134,92 @@ class MSBuildTools {
       await fs.promises.unlink(errorLog);
     }
   }
-}
 
-function VSWhere(
-  requires: string,
-  version: string,
-  property: string,
-  verbose: boolean,
-): string {
-  // This path is maintained and VS has promised to keep it valid.
-  const vsWherePath = path.join(
-    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles!,
-    '/Microsoft Visual Studio/Installer/vswhere.exe',
-  );
+  static findAvailableVersion(
+    buildArch: BuildArch,
+    verbose: boolean,
+  ): MSBuildTools {
+    // https://aka.ms/vs/workloads
+    const requires = [
+      'Microsoft.Component.MSBuild',
+      getVCToolsByArch(buildArch),
+    ];
+    const version = process.env.VisualStudioVersion || '16.0';
+    const vsInstallation = findLatestVsInstall({requires, version, verbose});
 
-  if (verbose) {
-    console.log('Looking for vswhere at: ' + vsWherePath);
+    if (!vsInstallation) {
+      if (process.env.VisualStudioVersion != null) {
+        throw new Error(
+          `MSBuild tools not found for version ${
+            process.env.VisualStudioVersion
+          } (from environment). Make sure all required components have been installed`,
+        );
+      } else {
+        throw new Error(
+          'MSBuild tools not found. Make sure all required components have been installed',
+        );
+      }
+    }
+
+    const toolsPath = path.join(
+      vsInstallation.installationPath,
+      'MSBuild/Current/Bin',
+    );
+
+    if (fs.existsSync(toolsPath)) {
+      newSuccess(
+        `Found MSBuild v${version} at ${toolsPath} (${
+          vsInstallation.installationVersion
+        })`,
+      );
+      return new MSBuildTools(
+        version,
+        toolsPath,
+        vsInstallation.installationVersion,
+      );
+    } else {
+      throw new Error(`MSBuild path '${toolsPath} does not exist'`);
+    }
   }
 
-  // Check if vswhere is present and try to find MSBuild.
-  if (fs.existsSync(vsWherePath)) {
-    if (verbose) {
-      console.log('Found vswhere.');
-    }
-    const propertyValue = child_process
-      .execSync(
-        `"${vsWherePath}" -version [${version},${Number(version) +
-          1}) -products * -requires ${requires} -property ${property}`,
-      )
-      .toString()
-      .split(EOL)[0];
-    return propertyValue;
-  } else {
-    if (verbose) {
-      console.log("Couldn't find vswhere, querying registry.");
-    }
-    const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
-    // Try to get the MSBuild path using registry
-    try {
-      const output = child_process.execSync(query).toString();
-      let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
-      if (toolsPathOutput) {
-        let toolsPathOutputStr = toolsPathOutput[1];
-        if (verbose) {
-          console.log('Query found: ' + toolsPathOutputStr);
-        }
-        // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
-        if (version === '16.0') {
-          toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
-        }
-        return toolsPathOutputStr;
-      }
-    } catch {}
+  static getAllAvailableUAPVersions(): Version[] {
+    const results: Version[] = [];
 
-    throw new Error(`Failed to find ${requires}`);
+    const programFilesFolder =
+      process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
+    // No Program Files folder found, so we won't be able to find UAP SDK
+    if (!programFilesFolder) {
+      return results;
+    }
+
+    let uapFolderPath = path.join(
+      programFilesFolder,
+      'Windows Kits',
+      '10',
+      'Platforms',
+      'UAP',
+    );
+
+    if (!shell.test('-e', uapFolderPath)) {
+      // Check other installation folder from reg
+      const sdkFolder = getSDK10InstallationFolder();
+      if (sdkFolder) {
+        uapFolderPath = path.join(sdkFolder, 'Platforms', 'UAP');
+      }
+    }
+
+    // No UAP SDK exists on this machine
+    if (!shell.test('-e', uapFolderPath)) {
+      return results;
+    }
+
+    shell
+      .ls(uapFolderPath)
+      .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
+      .map(Version.tryParse)
+      .forEach(version => version && results.push(version));
+
+    return results;
   }
 }
 
@@ -202,103 +233,6 @@ function getVCToolsByArch(buildArch: BuildArch): string {
     case 'ARM64':
       return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
   }
-}
-
-function checkMSBuildVersion(
-  version: string,
-  buildArch: BuildArch,
-  verbose: boolean,
-): MSBuildTools | null {
-  let toolsPath = null;
-  if (verbose) {
-    console.log('Searching for MSBuild version ' + version);
-  }
-
-  // https://aka.ms/vs/workloads
-  const requires = ['Microsoft.Component.MSBuild', getVCToolsByArch(buildArch)];
-
-  const vsPath = VSWhere(
-    requires.join(' '),
-    version,
-    'installationPath',
-    verbose,
-  );
-
-  if (verbose) {
-    console.log('VS path: ' + vsPath);
-  }
-
-  const installationVersion = VSWhere(
-    requires.join(' '),
-    version,
-    'installationVersion',
-    verbose,
-  );
-
-  if (verbose) {
-    console.log('VS version: ' + installationVersion);
-  }
-
-  // VS 2019 changed path naming convention
-  const vsVersion = version === '16.0' ? 'Current' : version;
-
-  // look for the specified version of msbuild
-  const msBuildPath = path.join(
-    vsPath,
-    'MSBuild',
-    vsVersion,
-    'Bin/MSBuild.exe',
-  );
-
-  if (verbose) {
-    console.log('Looking for MSBuild at: ' + msBuildPath);
-  }
-
-  toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
-
-  // We found something so return MSBuild Tools.
-  if (toolsPath) {
-    newSuccess(
-      `Found MSBuild v${version} at ${toolsPath} (${installationVersion})`,
-    );
-    return new MSBuildTools(version, toolsPath, installationVersion);
-  } else {
-    return null;
-  }
-}
-
-export function findAvailableVersion(
-  buildArch: BuildArch,
-  verbose: boolean,
-): MSBuildTools {
-  const versions =
-    process.env.VisualStudioVersion != null
-      ? [
-          checkMSBuildVersion(
-            process.env.VisualStudioVersion,
-            buildArch,
-            verbose,
-          ),
-        ]
-      : MSBUILD_VERSIONS.map(function(value) {
-          return checkMSBuildVersion(value, buildArch, verbose);
-        });
-  const msbuildTools = versions.find(Boolean);
-
-  if (!msbuildTools) {
-    if (process.env.VisualStudioVersion != null) {
-      throw new Error(
-        `MSBuild tools not found for version ${
-          process.env.VisualStudioVersion
-        } (from environment). Make sure all required components have been installed`,
-      );
-    } else {
-      throw new Error(
-        'MSBuild tools not found. Make sure all required components have been installed',
-      );
-    }
-  }
-  return msbuildTools;
 }
 
 function getSDK10InstallationFolder(): string {
@@ -320,44 +254,4 @@ function getSDK10InstallationFolder(): string {
   }
 
   return folder;
-}
-
-export function getAllAvailableUAPVersions(): Version[] {
-  const results: Version[] = [];
-
-  const programFilesFolder =
-    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
-  // No Program Files folder found, so we won't be able to find UAP SDK
-  if (!programFilesFolder) {
-    return results;
-  }
-
-  let uapFolderPath = path.join(
-    programFilesFolder,
-    'Windows Kits',
-    '10',
-    'Platforms',
-    'UAP',
-  );
-
-  if (!shell.test('-e', uapFolderPath)) {
-    // Check other installation folder from reg
-    const sdkFolder = getSDK10InstallationFolder();
-    if (sdkFolder) {
-      uapFolderPath = path.join(sdkFolder, 'Platforms', 'UAP');
-    }
-  }
-
-  // No UAP SDK exists on this machine
-  if (!shell.test('-e', uapFolderPath)) {
-    return results;
-  }
-
-  shell
-    .ls(uapFolderPath)
-    .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
-    .map(Version.tryParse)
-    .forEach(version => version && results.push(version));
-
-  return results;
 }

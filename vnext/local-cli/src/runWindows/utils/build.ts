@@ -6,13 +6,14 @@
 
 import * as path from 'path';
 
-import * as MSBuildTools from './msbuildtools';
+import MSBuildTools from './msbuildtools';
 import Version from './version';
 import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 
 export async function buildSolution(
+  buildTools: MSBuildTools,
   slnFile: string,
   buildType: BuildConfig,
   buildArch: BuildArch,
@@ -29,8 +30,7 @@ export async function buildSolution(
     );
   }
 
-  const msBuildTools = MSBuildTools.findAvailableVersion(buildArch, verbose);
-  await msBuildTools.buildProject(
+  await buildTools.buildProject(
     slnFile,
     buildType,
     buildArch,
@@ -41,10 +41,10 @@ export async function buildSolution(
   );
 }
 
-async function nugetRestore(
+export async function restoreNuGetPackages(
   slnFile: string,
+  buildTools: MSBuildTools,
   verbose: boolean,
-  msbuildVersion: string,
 ) {
   const text = 'Restoring NuGet packages ';
   const spinner = newSpinner(text);
@@ -59,15 +59,10 @@ async function nugetRestore(
       '-Verbosity',
       verbose ? 'normal' : 'quiet',
       '-MSBuildVersion',
-      msbuildVersion,
+      buildTools.installationVersion,
     ],
     verbose,
   );
-}
-
-export async function restoreNuGetPackages(slnFile: string, verbose: boolean) {
-  const msbuildTools = MSBuildTools.findAvailableVersion('x86', verbose);
-  await nugetRestore(slnFile, verbose, msbuildTools.installationVersion);
 }
 
 const configErrorString = 'Error: ';
