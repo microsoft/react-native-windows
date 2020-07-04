@@ -69,7 +69,14 @@ const OverrideType = t.union([
   CopyOverrideType,
 ]);
 
-const ManifestType = t.type({overrides: t.array(OverrideType)});
+/**
+ * Schema for the "overrides.json" manifest
+ */
+const ManifestType = t.type({
+  includePatterns: t.union([t.undefined, t.array(t.string)]),
+  excludePatterns: t.union([t.undefined, t.array(t.string)]),
+  overrides: t.array(OverrideType),
+});
 
 export type PlatformOverride = t.TypeOf<typeof PlatformOverrideType>;
 export type PatchOverride = t.TypeOf<typeof PatchOverrideType>;

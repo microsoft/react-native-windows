@@ -20,8 +20,6 @@ const RN_COMMIT_ENDPOINT =
   'https://api.github.com/repos/facebook/react-native/commits';
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
 
-const defaultDir = path.join(os.tmpdir(), getNpmPackage().name, 'git');
-
 /**
  * Retrives React Native files using the React Native Github repo. Switching
  * between getting file contents of different versions may be slow.
@@ -44,30 +42,31 @@ export default class GitReactFileRepository
   }
 
   static async createAndInit(
-    gitDirectory: string = defaultDir,
+    gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
-    await fs.promises.mkdir(gitDirectory, {recursive: true});
+    const dir = gitDirectory || (await this.defaultGitDirectory());
+    await fs.promises.mkdir(dir, {recursive: true});
 
-    const gitClient = simplegit(gitDirectory);
+    const gitClient = simplegit(dir);
     gitClient.silent(true);
 
     if (!(await gitClient.checkIsRepo())) {
       await gitClient.init();
     }
 
-    return new GitReactFileRepository(gitDirectory, gitClient);
+    return new GitReactFileRepository(dir, gitClient);
   }
 
   async getFileContents(
     filename: string,
     reactNativeVersion: string,
-  ): Promise<string | null> {
+  ): Promise<Buffer | null> {
     return this.actionQueue.enqueue(async () => {
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
 
       try {
-        return (await fs.promises.readFile(filePath)).toString();
+        return await fs.promises.readFile(filePath);
       } catch {
         return null;
       }
@@ -81,7 +80,7 @@ export default class GitReactFileRepository
   async generatePatch(
     filename: string,
     reactNativeVersion: string,
-    newContent: string,
+    newContent: Buffer,
   ): Promise<string> {
     return this.actionQueue.enqueue(async () => {
       await this.checkoutVersion(reactNativeVersion);
@@ -92,7 +91,15 @@ export default class GitReactFileRepository
         const patch = await this.gitClient.diff([
           '--patch',
           '--ignore-space-at-eol',
+          '--binary',
         ]);
+
+        if (patch.length === 0) {
+          throw new Error(
+            `Generated patch for ${filename} was empty. Is it identical to the original?`,
+          );
+        }
+
         return patch;
       } finally {
         await this.gitClient.reset('hard');
@@ -103,18 +110,25 @@ export default class GitReactFileRepository
   /**
    * Apply a patch to the given file, returning the merged result, which may
    * include conflict markers. The underlying file is not mutated.
+   *
+   * Git is unable to generate a representation with conflict markers in the
+   * event of binary merge conflicts. In this case a null Buffer is returned.
    */
   async getPatchedFile(
     filename: string,
     reactNativeVersion: string,
     patchContent: string,
-  ): Promise<string> {
+  ): Promise<{patchedFile: Buffer | null; hasConflicts: boolean}> {
     return this.actionQueue.enqueue(async () => {
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
       const patchPath = path.join(this.gitDirectory, 'rnwgit.patch');
       try {
         await fs.promises.writeFile(patchPath, patchContent);
+
+        let hasConflicts = false;
+        let binaryConflicts = false;
+
         try {
           await this.gitClient.raw([
             'apply',
@@ -130,9 +144,16 @@ export default class GitReactFileRepository
           if (!ex.message.includes('with conflicts')) {
             throw ex;
           }
+
+          hasConflicts = true;
+          binaryConflicts = ex.message.includes('Cannot merge binary files');
         }
-        const patchedFile = await fs.promises.readFile(filePath);
-        return patchedFile.toString();
+
+        const patchedFile = binaryConflicts
+          ? null
+          : await fs.promises.readFile(filePath);
+
+        return {patchedFile, hasConflicts};
       } finally {
         await this.gitClient.reset('hard');
       }
@@ -151,8 +172,7 @@ export default class GitReactFileRepository
 
   private async tryCheckoutLocal(reactNativeVersion: string): Promise<boolean> {
     try {
-      await this.gitClient.checkout(reactNativeVersion);
-      await this.gitClient.reset('hard');
+      await this.gitClient.checkout([reactNativeVersion, '--force']);
       return true;
     } catch {
       return false;
@@ -168,10 +188,13 @@ export default class GitReactFileRepository
         `${gitRef}:${reactNativeVersion}`,
         '--depth=1',
       ]);
-      await this.gitClient.checkout(reactNativeVersion);
     } catch (ex) {
-      throw new Error(`Failed to fetch '${gitRef}'. Does it exist?`);
+      throw new Error(
+        `Failed to fetch '${gitRef}'. Does it exist? (${ex.message})`,
+      );
     }
+
+    await this.gitClient.checkout([reactNativeVersion, '--force']);
   }
 
   private async refFromVersion(reactNativeVersion: string): Promise<string> {
@@ -199,5 +222,9 @@ export default class GitReactFileRepository
     }
 
     return (await commitInfo.json()).sha;
+  }
+
+  private static async defaultGitDirectory(): Promise<string> {
+    return path.join(os.tmpdir(), (await getNpmPackage()).name, 'git');
   }
 }
