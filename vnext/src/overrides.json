@@ -1,6 +1,30 @@
 {
   "overrides": [
     {
+      "type": "patch",
+      "file": "babel-plugin-inline-view-configs\\GenerateViewConfigJs.js",
+      "baseFile": "packages\\react-native-codegen\\src\\generators\\components\\GenerateViewConfigJs.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "415a69596caa402d0f510fe2a2eb2ca792169cab",
+      "issue": 5430
+    },
+    {
+      "type": "patch",
+      "file": "babel-plugin-inline-view-configs\\index.js",
+      "baseFile": "packages\\babel-plugin-inline-view-configs\\index.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "181443fa916d64e9bd56f0c45f629941f90b15e4",
+      "issue": 5430
+    },
+    {
+      "type": "copy",
+      "file": "babel-plugin-inline-view-configs\\package.json",
+      "baseFile": "packages\\babel-plugin-inline-view-configs\\package.json",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "8d37fac510a533c0badffacd9c3aa9c392fd58c6",
+      "issue": 5430
+    },
+    {
       "type": "platform",
       "file": "index.windows.ts"
     },

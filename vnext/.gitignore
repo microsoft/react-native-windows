@@ -92,5 +92,8 @@ temp
 /third-party
 /packages/
 
+# Required to run babel-plugin-inline-view-configs - will be removed once the babel-plugin-inline-view-configs package is published
+/babel-plugin-inline-view-configs
+
 # Copied from root as part of build
 /README.md
