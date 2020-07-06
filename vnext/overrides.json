@@ -1475,7 +1475,7 @@
       "issue": 5430
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src\\babel-plugin-inline-view-configs\\package.json",
       "baseFile": "packages\\babel-plugin-inline-view-configs\\package.json",
       "baseVersion": "0.0.0-56cf99a96",
