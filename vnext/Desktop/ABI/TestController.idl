@@ -1,0 +1,10 @@
+import "IJSValueReader.idl";
+
+namespace Microsoft.Internal {
+
+  static runtimeclass TestController {
+    // Microsoft.ReactNative.IJSValueReader CreateJSValueReader();
+    static String HelloWorld();
+  };
+
+}

@@ -113,6 +113,9 @@
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
@@ -134,6 +137,7 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestControllerTests.cpp" />
     <ClCompile Include="PerfTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp" />
