@@ -83,7 +83,7 @@ export class PlatformOverride implements Override {
   }
 
   upgradeStrategy(): UpgradeStrategy {
-    return UpgradeStrategies.assumeUpToDate();
+    return UpgradeStrategies.assumeUpToDate(this.overrideFile);
   }
 
   validationStrategies(): ValidationStrategy[] {

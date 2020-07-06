@@ -13,6 +13,7 @@ const {
   series,
   task,
   tscTask,
+  tscWatchTask,
 } = require('just-scripts');
 
 task('clean', cleanTask(['lib-commonjs']));
@@ -32,3 +33,5 @@ task('eslint:fix', eslintTask({fix: true}));
 
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));
+
+task('watch', tscWatchTask({outDir: 'lib-commonjs'}));

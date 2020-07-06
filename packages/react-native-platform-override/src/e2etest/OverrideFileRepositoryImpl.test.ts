@@ -5,7 +5,7 @@
  * @format
  */
 
-import {usingOverrideRepo} from './Resource';
+import {usingOverrides} from './Resource';
 
 test('listFiles - No Glob', async () => {
   const overrideFiles = [
@@ -14,7 +14,7 @@ test('listFiles - No Glob', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingOverrideRepo(overrideFiles, async ovrRepo => {
+  await usingOverrides(overrideFiles, async ovrRepo => {
     expect((await ovrRepo.listFiles()).sort()).toEqual(overrideFiles);
   });
 });
@@ -26,7 +26,7 @@ test('listFiles - Single Glob', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingOverrideRepo(overrideFiles, async ovrRepo => {
+  await usingOverrides(overrideFiles, async ovrRepo => {
     expect(await ovrRepo.listFiles(['**/*.conflict'])).toEqual([
       '0.61.5/flowconfig.windows.conflict',
     ]);
@@ -40,7 +40,7 @@ test('listFiles - Multiple Globs', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingOverrideRepo(overrideFiles, async ovrRepo => {
+  await usingOverrides(overrideFiles, async ovrRepo => {
     expect(
       (await ovrRepo.listFiles(['**/*.conflict', '**/*.addition'])).sort(),
     ).toEqual([
@@ -57,7 +57,7 @@ test('listFiles - Negation Glob', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingOverrideRepo(overrideFiles, async ovrRepo => {
+  await usingOverrides(overrideFiles, async ovrRepo => {
     expect((await ovrRepo.listFiles(['**', '!**/*.conflict'])).sort()).toEqual([
       '0.59.9/Icon-60@2x.conflict.png',
       '0.62.2/flowconfig.windows.addition',
@@ -72,7 +72,7 @@ test('listFiles - setFileContents', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingOverrideRepo(overrideFiles, async ovrRepo => {
+  await usingOverrides(overrideFiles, async ovrRepo => {
     await ovrRepo.setFileContents(
       '0.59.9/Icon-60@2x.conflict.png',
       Buffer.from('foo'),
