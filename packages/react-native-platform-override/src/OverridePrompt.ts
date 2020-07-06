@@ -5,7 +5,9 @@
  * @format
  */
 
+import * as FileSearch from './FileSearch';
 import * as inquirer from 'inquirer';
+import * as path from 'path';
 
 import Override from './Override';
 import OverrideFactory from './OverrideFactory';
@@ -21,16 +23,20 @@ export async function overrideFromDetails(
   answers: OverridePromptAnswers,
   factory: OverrideFactory,
 ): Promise<Override> {
+  const manifestPath = await FileSearch.findManifest(overridePath);
+  const manifestDir = path.dirname(manifestPath);
+  const overrideName = path.normalize(path.relative(manifestDir, overridePath));
+
   switch (answers.type) {
     case 'derived':
       return factory.createDerivedOverride(
-        overridePath,
+        overrideName,
         answers.baseFile,
         answers.issue,
       );
     case 'patch':
       return factory.createPatchOverride(
-        overridePath,
+        overrideName,
         answers.baseFile,
         answers.issue,
       );
@@ -38,7 +44,7 @@ export async function overrideFromDetails(
       return factory.createPlatformOverride(overridePath);
     case 'copy':
       return factory.createCopyOverride(
-        overridePath,
+        overrideName,
         answers.baseFile,
         answers.issue,
       );
