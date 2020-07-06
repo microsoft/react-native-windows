@@ -11,4 +11,8 @@
 !packages/react-native-windows-init/node_modules
 !packages/rnpm-plugin-windows/node_modules
 !packages/scripts/node_modules
+!packages/@rnw-scripts/create-github-releases/node_modules
+!packages/@rnw-scripts/find-repo-root/node_modules
+!packages/@rnw-scripts/format-files/node_modules
+!packages/@rnw-scripts/promote-release/node_modules
 !.github/ISSUE_TEMPLATE

@@ -16,6 +16,13 @@ export async function findManifest(overridePath: string): Promise<string> {
 }
 
 /**
+ * Seatch for the package.json for this package (react-native-platform-override)
+ */
+export async function findThisPackage(): Promise<string> {
+  return findFileAbove(__dirname, 'package.json');
+}
+
+/**
  * Search for the target path segment in all directories above the base
  */
 async function findFileAbove(base: string, target: string): Promise<string> {

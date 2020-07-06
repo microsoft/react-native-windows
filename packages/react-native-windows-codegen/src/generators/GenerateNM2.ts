@@ -286,8 +286,8 @@ export function createNM2Generator({namespace}: {namespace: string}) {
     const nativeModules = Object.keys(schema.modules)
       .map(moduleName => {
         const modules = schema.modules[moduleName].nativeModules;
-        if (modules == null) {
-          return null;
+        if (!modules) {
+          throw new Error('modules does not exist');
         }
 
         return modules;

@@ -1,0 +1,11 @@
+/dist
+/flow
+/index.*
+/IntegrationTests
+/jest
+/lib
+/Libraries
+/packages
+/ReactCopies
+/RNTester
+/RNTester.*

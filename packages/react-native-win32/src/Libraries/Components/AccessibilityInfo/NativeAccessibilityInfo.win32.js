@@ -22,7 +22,7 @@ export interface Spec extends TurboModule {
     onSuccess: (isScreenReaderEnabled: boolean) => void,
   ) => void;
   // Windows]
-  
+
   +setAccessibilityFocus: (reactTag: number) => void;
 
   // [Windows

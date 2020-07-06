@@ -1,6 +1,6 @@
 # react-native-windows-init
 
-CLI to bootstrap the addition of the windows platform to `react-native` projects.
+CLI to bootstrap the addition of the Windows platform to `react-native` projects.
 
 ## Usage
 

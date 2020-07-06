@@ -1,8 +1,56 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 29 Jun 2020 05:04:57 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Jul 2020 05:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.112
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Changes
+
+- Enforce null/undefined safety for the CLI (ngerlem@microsoft.com)
+- Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package (dannyvv@microsoft.com)
+- Remove github actions workflow for CI and publish (dannyvv@microsoft.com)
+- Include "nuget.exe" as Package Dependency of react-native-windows (ngerlem@microsoft.com)
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+- Cleanup VS Installation Related CLI code (ngerlem@microsoft.com)
+- add guard to ensure only one version of XAML is loaded (asklar@microsoft.com)
+
+## 0.0.0-canary.111
+
+Thu, 02 Jul 2020 05:05:06 GMT
+
+### Changes
+
+- Migrate 'AppState' to turbo module (zihanc@microsoft.com)
+- Migrate 'DeviceInfo' to turbo module (zihanc@microsoft.com)
+- Migrate 'I18nManager' to turbo module (zihanc@microsoft.com)
+
+## 0.0.0-canary.110
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Changes
+
+- Fix compile warnings (dannyvv@microsoft.com)
+- Remove delayload dependencies on some winrt apisets, to reduce warning count (dannyvv@microsoft.com)
+- Migrate 'DevSettings' to turbo module (zihanc@microsoft.com)
+- Migrate 'LogBox' to turbo module (zihanc@microsoft.com)
+- Implement REACT_CONSTANT as getConstants sync method for turbo module (zihanc@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Migrate "Alert" to turbo module (zihanc@microsoft.com)
+
+## 0.0.0-canary.109
+
+Tue, 30 Jun 2020 05:06:03 GMT
+
+### Changes
+
+- Call AppPolicyGetWindowingModel dynamically since it's WACK-banned (asklar@microsoft.com)
 
 ## 0.0.0-canary.108
 

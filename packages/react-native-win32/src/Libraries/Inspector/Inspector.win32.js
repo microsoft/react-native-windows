@@ -10,7 +10,7 @@
 
 'use strict';
 
-const Dimensions = require('../Utilities/Dimensions');
+// const Dimensions = require('../Utilities/Dimensions'); [Win32]
 const InspectorOverlay = require('./InspectorOverlay');
 const InspectorPanel = require('./InspectorPanel');
 const Platform = require('../Utilities/Platform');

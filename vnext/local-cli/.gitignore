@@ -1,0 +1,6 @@
+# TS Outputs
+lib/
+lib-commonjs/
+
+# Allow Certificates
+!*.pfx

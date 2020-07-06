@@ -1,4 +1,7 @@
 {
+  "excludePatterns": [
+    "tsconfig.json"
+  ],
   "overrides": [
     {
       "type": "platform",

@@ -15,7 +15,7 @@ import * as path from 'path';
  */
 export default async (): Promise<string> => {
   const root = await findUp(
-    async (dir): Promise<findUp.Match> => {
+    async (dir: string): Promise<findUp.Match> => {
       const packagePath = path.join(dir, 'package.json');
       if (!(await findUp.exists(packagePath))) {
         return undefined;

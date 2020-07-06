@@ -5,37 +5,16 @@
  * @ts-check
  */
 
-const {
-  task,
-  series,
-  parallel,
-  option,
-  argv,
-  tscTask,
-  eslintTask,
-} = require('just-scripts');
+const {task, series, eslintTask} = require('just-scripts');
 const fs = require('fs');
 const path = require('path');
 const {execSync} = require('child_process');
-
-option('production');
-option('clean');
 
 task('eslint', () => {
   return eslintTask();
 });
 task('eslint:fix', () => {
   return eslintTask({fix: true});
-});
-task('ts', () => {
-  return tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es6',
-    module: 'commonjs',
-  });
 });
 
 task('codegen', () => {
@@ -57,6 +36,6 @@ task('prepareBundle', () => {
   ensureDirectoryExists('windows/SampleAppCPP/Bundle');
 });
 
-task('build', parallel('ts', 'codegen'));
+task('build', series('codegen'));
 task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));

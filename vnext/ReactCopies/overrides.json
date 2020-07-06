@@ -26,6 +26,14 @@
     },
     {
       "type": "copy",
+      "file": "IntegrationTests\\blue_square.png",
+      "baseFile": "IntegrationTests\\blue_square.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a565f34729e4cd9c421401dc0ad825755d1ccb3b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "file": "IntegrationTests\\GlobalEvalWithSourceUrlTest.js",
       "baseFile": "IntegrationTests\\GlobalEvalWithSourceUrlTest.js",
       "baseVersion": "0.62.0-rc.3",
@@ -62,6 +70,14 @@
       "baseFile": "IntegrationTests\\IntegrationTestsApp.js",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "5be58c2fa844770c24722dbaf776510b3032250c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "IntegrationTests\\launchWebSocketServer.command",
+      "baseFile": "IntegrationTests\\launchWebSocketServer.command",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "dadf0e006def5f367c28c6d631cc1ccb75e91d08",
       "issue": 4054
     },
     {
@@ -114,6 +130,14 @@
     },
     {
       "type": "copy",
+      "file": "IntegrationTests\\red_square.png",
+      "baseFile": "IntegrationTests\\red_square.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "50c9e4290c1c9d1595916ab23909d9cadc453624",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "file": "IntegrationTests\\SimpleSnapshotTest.js",
       "baseFile": "IntegrationTests\\SimpleSnapshotTest.js",
       "baseVersion": "0.62.0-rc.3",
@@ -158,6 +182,262 @@
       "baseFile": "IntegrationTests\\WebSocketTest.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "d651f74f1fe387b5754fb04e5f0f5035431b33bc",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\bandaged.png",
+      "baseFile": "RNTester\\js\\assets\\bandaged.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "05190e1992b1635e39500125461a1180657d9b8c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\bunny.png",
+      "baseFile": "RNTester\\js\\assets\\bunny.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "64c6f6e28badf2b83b8902057a73e2e34a481dd3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\call.png",
+      "baseFile": "RNTester\\js\\assets\\call.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "bc2dec8927b085527a657733e2f56e007530d0d0",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\dislike.png",
+      "baseFile": "RNTester\\js\\assets\\dislike.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e02300e0a5b2fc0b0d112fa7cadd039f6905b0ef",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\fist.png",
+      "baseFile": "RNTester\\js\\assets\\fist.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "38ff6472df526a0c4a2a9e0713813d82d6ed6331",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\flowers.png",
+      "baseFile": "RNTester\\js\\assets\\flowers.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "ddeacabb5d337a520546c3aa3da35ae3315d0d44",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\flux@3x.png",
+      "baseFile": "RNTester\\js\\assets\\flux@3x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "d82a16b53a7e17efa656aba2c24ddd1faa542af8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\hawk.png",
+      "baseFile": "RNTester\\js\\assets\\hawk.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "21d23198462e15475492dc677e32e2caf770ca49",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\heart.png",
+      "baseFile": "RNTester\\js\\assets\\heart.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "efa9e0be625f282d1753898a9a56cb58ca842cce",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\helloworld.html",
+      "baseFile": "RNTester\\js\\assets\\helloworld.html",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a8ed0ec343c0668402211c120e2cd8ab9fe10522",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\imageMask.png",
+      "baseFile": "RNTester\\js\\assets\\imageMask.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "70461576894f565ff53808df997bb744d051e49c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\like.png",
+      "baseFile": "RNTester\\js\\assets\\like.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e43eb241fccdcb4ef0eacfc01acc4c23e8e4534f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\liking.png",
+      "baseFile": "RNTester\\js\\assets\\liking.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "25525619085f30341b22ec4a729919d63d439a0c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\messagingtest.html",
+      "baseFile": "RNTester\\js\\assets\\messagingtest.html",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "95ff65ab8a9c7a50ab79d8f87460b559b3400dfc",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\party.png",
+      "baseFile": "RNTester\\js\\assets\\party.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "6de86090ad3a591dea6b1f7cf03fbd3ec223427a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\poke.png",
+      "baseFile": "RNTester\\js\\assets\\poke.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "e052afd42df69556eab24388e2ff7f5b43ee7976",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\relay@3x.png",
+      "baseFile": "RNTester\\js\\assets\\relay@3x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "a326f79fd1d1cd578b53057b66a6afb3e904c473",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\slider-left.png",
+      "baseFile": "RNTester\\js\\assets\\slider-left.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "6785b1a2035420568b8864ed3c31ad0a99674381",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\slider-left@2x.png",
+      "baseFile": "RNTester\\js\\assets\\slider-left@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "25947718981a2096052934a4666b47cd3748866b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\slider-right.png",
+      "baseFile": "RNTester\\js\\assets\\slider-right.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b7078c3be5a104e4ac56f1e543f4572903f9cfac",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\slider-right@2x.png",
+      "baseFile": "RNTester\\js\\assets\\slider-right@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "41a0a72be88810c2495384392dc102b1df989345",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\slider.png",
+      "baseFile": "RNTester\\js\\assets\\slider.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "0d1da60452bee3861d774022f724ac06550ea760",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\slider@2x.png",
+      "baseFile": "RNTester\\js\\assets\\slider@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "1dd9bcb5afe0899428161e746c9907083f3e079f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\superlike.png",
+      "baseFile": "RNTester\\js\\assets\\superlike.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "7f54445d4b334ff63872d4368d4815384f22b0a4",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\trees.jpg",
+      "baseFile": "RNTester\\js\\assets\\trees.jpg",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "ec21aab670cc3b9a58f2a0ffe555f1225b215b02",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\tumblr_mfqekpMktw1rn90umo1_500.gif",
+      "baseFile": "RNTester\\js\\assets\\tumblr_mfqekpMktw1rn90umo1_500.gif",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "c37cb848c6651f4312a50e4911ee0298840a6ddd",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\uie_comment_highlighted@2x.png",
+      "baseFile": "RNTester\\js\\assets\\uie_comment_highlighted@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "98329ddec64b2da11cf9a2ae551f0c619afac506",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\uie_comment_normal@2x.png",
+      "baseFile": "RNTester\\js\\assets\\uie_comment_normal@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "b73657b0db39a24357b38814f7863572afa0056f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\uie_thumb_big.png",
+      "baseFile": "RNTester\\js\\assets\\uie_thumb_big.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "25525619085f30341b22ec4a729919d63d439a0c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\uie_thumb_normal@2x.png",
+      "baseFile": "RNTester\\js\\assets\\uie_thumb_normal@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "6e24abc1425f0435d53140c34b45b54ca842b39e",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\uie_thumb_selected@2x.png",
+      "baseFile": "RNTester\\js\\assets\\uie_thumb_selected@2x.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "5e62b899e2ff87e4fcf9d222cdd0d667d5e3e097",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\assets\\victory.png",
+      "baseFile": "RNTester\\js\\assets\\victory.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "3a818eb64eb69e6ea762a1b03c9bb5ecfde1b063",
       "issue": 4054
     },
     {
@@ -290,6 +570,30 @@
     },
     {
       "type": "copy",
+      "file": "RNTester\\js\\examples\\Accessibility\\check.png",
+      "baseFile": "RNTester\\js\\examples\\Accessibility\\check.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "2ea651496270420523a0c7eb386b7912859fceb4",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Accessibility\\mixed.png",
+      "baseFile": "RNTester\\js\\examples\\Accessibility\\mixed.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "04b4d0bd9c21df33f57560a87af27d5059510b92",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Accessibility\\uncheck.png",
+      "baseFile": "RNTester\\js\\examples\\Accessibility\\uncheck.png",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "c030543efd9fd21830ad532901a599444d90a106",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "file": "RNTester\\js\\examples\\ActionSheetIOS\\ActionSheetIOSExample.js",
       "baseFile": "RNTester\\js\\examples\\ActionSheetIOS\\ActionSheetIOSExample.js",
       "baseVersion": "0.62.0-rc.3",
@@ -366,6 +670,14 @@
       "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExSet.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "beb6465fc39557971d476dc9c4ae94e37debace9",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExSlides.md",
+      "baseFile": "RNTester\\js\\examples\\Animated\\AnimatedGratuitousApp\\AnExSlides.md",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "3e04ec5d3adba039575452edebb3ee91718d64f1",
       "issue": 4054
     },
     {

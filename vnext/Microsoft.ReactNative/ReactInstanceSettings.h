@@ -31,7 +31,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   //! Should the instance run in a remote environment such as within a browser
   //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
-  //! by Metro/Haul. Debugging will start as soon as the react native instance is loaded.
+  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
   bool UseWebDebugger() noexcept;
   void UseWebDebugger(bool value) noexcept;
 

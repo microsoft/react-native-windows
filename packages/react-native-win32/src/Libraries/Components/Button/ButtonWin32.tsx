@@ -65,7 +65,7 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
   };
 
   private _setState = (select: SelectState): void => {
-    const state = this._makeState(SelectState.Selected);
+    const state = this._makeState(select);
     this.setState(state);
   };
 

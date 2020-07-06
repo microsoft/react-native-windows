@@ -2,6 +2,170 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2020 05:05:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.112",
+      "version": "0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enforce null/undefined safety for the CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "228e0bc5dc985b6eb71c94395304d99a0d054e2c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7cfed33bb3ee4118a4e2aedc0e365ff8f81cca5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove github actions workflow for CI and publish",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0accbb156142c9f8466e2b50a32c8684e6b41648",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Include \"nuget.exe\" as Package Dependency of react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b0380620601d136f4273a1245f6a60468fd375",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Replace Custom Generator Prompt With Inquirer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a25a8294ff602cc457e34dfd38cae10650092810",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Cleanup VS Installation Related CLI code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4d0fb0726278def6df793c648420422a7dbf3b62",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add guard to ensure only one version of XAML is loaded",
+            "author": "asklar@microsoft.com",
+            "commit": "e636d0d513d38cf3921887c56983b45cceb02d8e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Jul 2020 05:05:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.111",
+      "version": "0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Migrate 'AppState' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "ce0d59e4d7417b3ef6b7357d16c7a40dd709c2b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'DeviceInfo' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "6dd50410e82ff3fe157804ac170bdf670ef1e10c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'I18nManager' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "a5fd8388c9210267635153ad5d4e694db4473a7d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.110",
+      "version": "0.0.0-canary.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix compile warnings",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b075d1d832e3e19872fabbbb520dc6da041b88e3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove delayload dependencies on some winrt apisets, to reduce warning count",
+            "author": "dannyvv@microsoft.com",
+            "commit": "253db9ece2a9f505c686442a805e1da9a611dcfc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'DevSettings' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "383993d31993d9a6a1e9ab0ac6d6585c84ad24ab",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'LogBox' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "000ddd9b6332cca7be0fed0661a05b19b1b4fc88",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement REACT_CONSTANT as getConstants sync method for turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "2f30afa4f87e0b6c3a5003b573589e698d27bdef",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix a few more casing typos",
+            "author": "dannyvv@microsoft.com",
+            "commit": "532e299688d745c0d7c5d8790a681f60813eb678",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate the local-cli to TypeScript",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5b28bba588d7c2edd076a60353accad9cbe37b34",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate \"Alert\" to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "b56c5ece2a026b7029231c064030c61565a64dfd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 30 Jun 2020 05:06:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Call AppPolicyGetWindowingModel dynamically since it's WACK-banned",
+            "author": "asklar@microsoft.com",
+            "commit": "22d1cfc62a7a8fa8513704f9124ffc2429dc2847",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Stop generating extra files in MS.RN.ComponentTests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3f8b33aa954d6f3c023545b51e0a686d1986f246",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jun 2020 05:04:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.108",
       "version": "0.0.0-canary.108",

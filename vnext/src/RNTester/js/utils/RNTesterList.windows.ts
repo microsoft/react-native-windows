@@ -186,7 +186,7 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/Border/BorderExample'),
   },
   {
-    key: 'BoxShadowExample - windows NotYetImplemented',
+    key: 'BoxShadowExample - Windows NotYetImplemented',
     module: require('react-native/RNTester/js/examples/BoxShadow/BoxShadowExample'),
   },
   {
