@@ -1,12 +1,12 @@
-# React native windows initialization
+# React Native Windows initialization
 
 This document describes how the template initialization works for `react-native-windows init`.
 
 ## Where is the code:
-The main logic that determines the template values and which files to apply is function [`copyProjectTemplateAndReplace` in `vnext/local-cli/generator-windows/index.js`](https://github.com/microsoft/react-native-windows/blob/master/vnext/local-cli/generator-windows/index.js#L48).
-The parameters for `init` is located in variable [`argv` in `packages/react-native-windows-init/src/Cli.ts`](https://github.com/microsoft/react-native-windows/blob/7de1f3843a9754c7fbf744bf3e556fdca78472c1/packages/react-native-windows-init/src/Cli.ts#L27)
+The main logic that determines the template values and which files to apply is function [`copyProjectTemplateAndReplace` in `vnext/local-cli/generator-windows/index.ts`](../vnext/local-cli/src/generator-windows/index.ts#L48).
+The parameters for `init` is located in variable [`argv` in `packages/react-native-windows-init/src/Cli.ts`](../packages/react-native-windows-init/src/Cli.ts#L27)
 
-The template files can be found in [`vnext/local-cli/generator-windows/templates`](https://github.com/microsoft/react-native-windows/tree/7de1f3843a9754c7fbf744bf3e556fdca78472c1/vnext/local-cli/generator-windows/templates)
+The template files can be found in [`vnext/local-cli/generator-windows/templates`](../vnext/local-cli/templates)
 
 ## Debugging:
 To debug the template, see [Contributing to the CLI](https://github.com/microsoft/react-native-windows/wiki/Contributing-to-the-CLI) on our wiki.

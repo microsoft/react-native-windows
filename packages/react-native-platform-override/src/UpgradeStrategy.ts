@@ -7,8 +7,10 @@
 
 import GitReactFileRepository from './GitReactFileRepository';
 import {OverrideFileRepository} from './FileRepository';
+import isutf8 from 'isutf8';
 
 export interface UpgradeResult {
+  fileWritten: boolean;
   hasConflicts: boolean;
 }
 
@@ -30,7 +32,7 @@ export const UpgradeStrategies = {
    * No work needed to upgrade
    */
   assumeUpToDate: (): UpgradeStrategy => ({
-    upgrade: async () => ({hasConflicts: false}),
+    upgrade: async () => ({fileWritten: false, hasConflicts: false}),
   }),
 
   /**
@@ -54,20 +56,32 @@ export const UpgradeStrategies = {
         ovrContent,
       );
 
-      const patched = (await gitReactRepo.getPatchedFile(
+      const {patchedFile, hasConflicts} = await gitReactRepo.getPatchedFile(
         baseFile,
         newVersion,
         ovrAsPatch,
-      ))
-        .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
-        .replace(/>>>>>>> theirs/g, '>>>>>>> Override');
+      );
 
-      const hasConflicts = patched.includes('<<<<<<<');
-      if (!hasConflicts || allowConflicts) {
-        await overrideRepo.setFileContents(override, patched);
+      if (!patchedFile) {
+        return {fileWritten: false, hasConflicts};
       }
 
-      return {hasConflicts};
+      const prettyPatched =
+        hasConflicts && isutf8(patchedFile)
+          ? Buffer.from(
+              patchedFile
+                .toString('utf8')
+                .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
+                .replace(/>>>>>>> theirs/g, '>>>>>>> Override'),
+            )
+          : patchedFile;
+
+      if (!hasConflicts || allowConflicts) {
+        await overrideRepo.setFileContents(override, prettyPatched);
+        return {fileWritten: true, hasConflicts};
+      }
+
+      return {fileWritten: false, hasConflicts};
     },
   }),
 
@@ -85,7 +99,7 @@ export const UpgradeStrategies = {
       }
 
       await overrideRepo.setFileContents(override, newContent);
-      return {hasConflicts: false};
+      return {fileWritten: true, hasConflicts: false};
     },
   }),
 };

@@ -31,9 +31,9 @@ import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
 
-const npmPackage = getNpmPackage();
+doMain(async () => {
+  const npmPackage = await getNpmPackage();
 
-doMain(() => {
   return new Promise((resolve, _reject) => {
     yargs
       .command(
@@ -147,7 +147,7 @@ async function validateManifest(manifestPath: string, version?: string) {
       spinner.succeed();
     } else {
       spinner.fail();
-      printValidationErrors(validationErrors);
+      await printValidationErrors(validationErrors);
       process.exitCode = 1;
     }
   });
@@ -269,7 +269,7 @@ async function performUpgrade(
 
       upgradeResults.push(upgradeResult);
 
-      if (allowConflicts || !upgradeResult.hasConflicts) {
+      if (upgradeResult.fileWritten) {
         await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
       }
     }
@@ -316,11 +316,12 @@ function printUpgradeStats(
 /**
  * Prints validation errors in a user-readable form to stderr
  */
-function printValidationErrors(validationErrors: Array<ValidationError>) {
+async function printValidationErrors(validationErrors: Array<ValidationError>) {
   if (validationErrors.length === 0) {
     return;
   }
 
+  const npmPackage = await getNpmPackage();
   const errors = _.clone(validationErrors);
 
   // Add an initial line of separation
@@ -467,7 +468,7 @@ async function spinnerGuard<T>(
  * accessing the same local Git repo at the same time.
  */
 async function doMain(fn: () => Promise<void>): Promise<void> {
-  const lock = new CrossProcessLock(`${npmPackage.name}-cli-lock`);
+  const lock = new CrossProcessLock(`${(await getNpmPackage()).name}-cli-lock`);
 
   if (!(await lock.tryLock())) {
     const spinner = ora(

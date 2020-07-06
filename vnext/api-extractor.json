@@ -1,11 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
   "mainEntryPointFilePath": "./typings-index.d.ts",
+  "projectFolder": ".",
+  "compiler": {
+    "tsconfigFilePath": "./src/tsconfig.json"
+  },
   "docModel": {
     "enabled": true
   },
   "dtsRollup": {
-    "enabled": true
+    "enabled": false
   },
   "apiReport": {
     "enabled": true

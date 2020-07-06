@@ -261,7 +261,17 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
-            /p:AppxPackageSigningEnabled=false
+
+      - powershell: .ado/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
+        displayName: Test WACK
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload WACK report
+        condition:  succeededOrFailed()
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/WACK'
+          artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration)'
+
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
@@ -393,11 +403,13 @@ jobs:
     variables:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      #5412 - Disable XHRSample due to intermittedly crashing the test process
       Desktop.IntegrationTests.Filter: >
         (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
         (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
         (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
         (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
         (FullyQualifiedName!~WebSocketModule_)&
         (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
@@ -587,7 +599,12 @@ jobs:
     dependsOn:
      - Setup
      - RNWUniversalPR
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: |
+      and
+      (
+        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
+        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
@@ -617,6 +634,21 @@ jobs:
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      # Run unbroken checking local filebefore installing packages to avoid scanning node_modules
+      # The exclusions of unbroken don't support wildcards yet and we have many throughout the repo
+      - task: CmdLine@2
+        displayName: check local links in .md files
+        inputs:
+          script: npx unbroken -q --local-only --allow-local-line-sections
+
+      # This runs will check for web-links. If broken links are found, since external changes could affect this.
+      # It will report a warning if this step fails so we'll pay attention to fix quickly.
+      - task: CmdLine@2
+        displayName: check web links in .md files
+        inputs:
+          script: npx unbroken -q --allow-local-line-sections
+        continueOnError: true
 
       - template: templates/yarn-install.yml
 
@@ -666,7 +698,13 @@ jobs:
       - Setup
       - RNWUniversalPR
       - RNWDesktopPR
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: |
+      and
+      (
+        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
+        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+        in(dependencies.RNWDesktopPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30

@@ -5,7 +5,10 @@
  * @format
  */
 
-import * as path from 'path';
+import * as fs from 'fs';
+import {findThisPackage} from './FileSearch';
+
+let npmPackage: any = null;
 
 /**
  * Try to find the currently installed React Native version by searching for and
@@ -25,15 +28,14 @@ export async function getInstalledRNVersion(): Promise<string> {
 /**
  * Return an object representing the package.json of our current package
  */
-export function getNpmPackage(): any {
-  if (!require.main) {
-    throw new Error('Unable to determine main script');
+export async function getNpmPackage(): Promise<any> {
+  if (npmPackage !== null) {
+    return npmPackage;
   }
 
-  const npmPackageDir = path.join(
-    path.dirname(require.main.filename),
-    'package.json',
-  );
+  const npmPackagePath = await findThisPackage();
+  const npmPackageContent = await fs.promises.readFile(npmPackagePath);
+  npmPackage = JSON.parse(npmPackageContent.toString());
 
-  return require(npmPackageDir);
+  return npmPackage;
 }

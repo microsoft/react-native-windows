@@ -53,7 +53,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(ReactNativeWindowsDir);$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

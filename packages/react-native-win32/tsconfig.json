@@ -12,12 +12,7 @@
     "noEmitOnError": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "noUnusedLocals": true,
-    "paths": {
-      "@office-iss/react-native-win32": [
-        "src/Libraries/react-native/typings-main"
-      ] // This mapping is relative to "baseUrl"
-    }
+    "noUnusedLocals": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "lib"]

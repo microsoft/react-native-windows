@@ -1,8 +1,26 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sun, 28 Jun 2020 05:04:51 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Jul 2020 05:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.17
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Patches
+
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+
+## 0.1.16
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Patches
+
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
 
 ## 0.1.15
 

@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Add Support for Binary Overrides to react-native-platform-override",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-04T18:06:03.810Z"
+}

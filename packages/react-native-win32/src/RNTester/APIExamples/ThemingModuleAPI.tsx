@@ -29,7 +29,7 @@ const ifModuleAvailable = (wrappedComponent: JSX.Element) => {
   return (Theming && wrappedComponent) || <Text>Theming Native Module not available</Text>;
 };
 
-const renderThemeFunction = (key: string) => {
+const renderThemeFunction = () => {
   const [, setText] = React.useState('');
   const onChangeText = React.useCallback(t => setText(t), [setText]);
   return (
@@ -40,11 +40,11 @@ const renderThemeFunction = (key: string) => {
   );
 };
 
-const ThemingMethods: React.FunctionComponent<{}> = props => {
+const ThemingMethods: React.FunctionComponent<{}> = () => {
   return (
     <View>
       {Object.keys(Theming).map((val: string) => {
-        return typeof Theming[val] === 'function' ? withBox(val, renderThemeFunction(val)) : undefined;
+        return typeof Theming[val] === 'function' ? withBox(val, renderThemeFunction()) : undefined;
       })}
     </View>
   );
@@ -54,7 +54,7 @@ const renderNestedObject = (obj: object) => {
   return (
     <View style={styles.nestedContainer}>
       <ScrollView>
-        {Object.keys(obj).map((val: string, index: number) => {
+        {Object.keys(obj).map((val: string) => {
           return <Text key={val}>{val + ': ' + JSON.stringify(obj[val])}</Text>;
         })}
       </ScrollView>
@@ -80,7 +80,7 @@ const withBox = (key: string, component: React.Component | JSX.Element) => (
   </View>
 );
 
-const ThemingConstants: React.FunctionComponent<{}> = props => {
+const ThemingConstants: React.FunctionComponent<{}> = () => {
   return (
     <View>
       {Object.keys(Theming).map((val: string) => {

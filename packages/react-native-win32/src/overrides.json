@@ -260,6 +260,34 @@
       "file": "Libraries\\Image\\Tests\\ImageWin32Test.tsx"
     },
     {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\dpitest.png"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\dpitest@1.5x.png"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\dpitest@2x.png"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\dpitest@3x.png"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\en-us\\dpitest.png"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\en-us\\dpitest@1.5x.png"
+    },
+    {
+      "type": "platform",
+      "file": "Libraries\\Image\\Tests\\img\\en-us\\dpitest@3x.png"
+    },
+    {
       "type": "patch",
       "file": "Libraries\\Inspector\\Inspector.win32.js",
       "baseFile": "Libraries\\Inspector\\Inspector.js",

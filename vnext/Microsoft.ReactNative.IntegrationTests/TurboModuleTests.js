@@ -38,10 +38,13 @@ try {
         .syncFunction('something', 2, false)
     );
 
+  const c = sampleTurboModule.getConstants();
   sampleTurboModule
     .constants(
-      sampleTurboModule.constantString,
-      sampleTurboModule.constantInt
+      c.constantString,
+      c.constantInt,
+      c.constantString2,
+      c.constantInt2
     );
 
   sampleTurboModule

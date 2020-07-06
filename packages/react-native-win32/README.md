@@ -6,4 +6,4 @@ To better support some of our open source efforts, we are publishing this @offic
 
 # Running react-native on win32.
 
-We do have a solution for running react-native in a win32 app.  You can run react-native-windows on win32 using Xaml Islands.  We are working on expanding the set of supported windows versions to broaden the support of that, and provide more samples of how to do that.
+We do have a solution for running react-native in a win32 app.  You can run react-native-windows on win32 using Xaml Islands.  We are working on expanding the set of supported Windows versions to broaden the support of that, and provide more samples of how to do that.

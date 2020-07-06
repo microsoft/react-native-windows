@@ -42,17 +42,20 @@ function getSize(
     );
   */
 
-  NativeImageLoaderWin32.getSize(uri, (width: number, height: number, err?: string) => {
-    if (!err) {
-      success(width, height);
-    } else {
-      if (failure) {
-        failure(err);
+  NativeImageLoaderWin32.getSize(
+    uri,
+    (width: number, height: number, err?: string) => {
+      if (!err) {
+        success(width, height);
       } else {
-        console.warn('Failure to get size for image: ' + uri);
+        if (failure) {
+          failure(err);
+        } else {
+          console.warn('Failure to get size for image: ' + uri);
+        }
       }
-    }
-  });
+    },
+  );
   // ]Win32
 }
 

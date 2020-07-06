@@ -78,20 +78,24 @@ function checkFilesForChanges(
   map: Map<string, string>,
   outputDir: string,
 ): boolean {
-  map.forEach((contents: string, fileName: string) => {
+  let hasChanges = false;
+
+  for (const [contents, fileName] of map) {
     const location = path.join(outputDir, fileName);
     if (!fs.existsSync(location)) {
-      return true;
+      hasChanges = true;
+      continue;
     }
 
     const currentContents = fs.readFileSync(location, 'utf8');
     if (currentContents !== contents) {
       console.error(`- ${fileName} has changed`);
-      return true;
+      hasChanges = true;
+      continue;
     }
-  });
+  }
 
-  return false;
+  return hasChanges;
 }
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {

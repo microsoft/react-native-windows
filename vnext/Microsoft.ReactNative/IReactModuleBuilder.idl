@@ -35,7 +35,7 @@ namespace Microsoft.ReactNative {
   // A delegate to gather constants from native modules.
   delegate void ConstantProviderDelegate(IJSValueWriter constantWriter);
 
-  // Builds native modules inside of React native code based on the provided meta-data.
+  // Builds native modules inside of React Native code based on the provided meta-data.
   [webhosthidden]
   interface IReactModuleBuilder {
     void AddInitializer(InitializerDelegate initializer);

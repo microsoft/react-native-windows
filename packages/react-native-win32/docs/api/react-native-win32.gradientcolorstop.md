@@ -10,7 +10,7 @@ A color stop within a gradient. The values can either be other color values such
 
 ```typescript
 export type GradientColorStop = {
-  color: string /*ColorValue*/ | number /*ProcessedColorValue*/,
-  offset: 0 | 1,
+  color: string /*ColorValue*/ | number /*ProcessedColorValue*/;
+  offset: 0 | 1;
 };
 ```

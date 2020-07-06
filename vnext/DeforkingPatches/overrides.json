@@ -1,4 +1,8 @@
-{
+{ 
+  "excludePatterns": [
+    ".clang-format",
+    "README.md"
+  ],
   "overrides": [
     {
       "type": "patch",

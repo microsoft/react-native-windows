@@ -6,15 +6,11 @@
  * @ts-check
  */
 
-const {eslintTask, series, task, taskPresets} = require('just-scripts');
+const {jestTask, series, task} = require('just-scripts');
 
-taskPresets.lib();
+require('@rnw-scripts/just-task');
 
-task('eslint', () => {
-  return eslintTask();
-});
-task('eslint:fix', () => {
-  return eslintTask({fix: true});
-});
-task('lint', series('eslint'));
-task('lint:fix', series('eslint:fix'));
+task('unitTest', jestTask({config: './jest.config.js'}));
+task('endToEndTest', jestTask({config: './jest.e2e.config.js'}));
+
+task('test', series('unitTest', 'endToEndTest'));
