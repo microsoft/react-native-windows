@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.112",
+  "version": "0.0.0-canary.113",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -66,8 +66,8 @@
     "prettier": "1.17.0",
     "react": "16.13.0",
     "react-native": "0.0.0-56cf99a96",
-    "react-native-platform-override": "^0.0.8",
-    "react-native-windows-codegen": "0.0.8",
+    "react-native-platform-override": "^0.1.0",
+    "react-native-windows-codegen": "0.0.9",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
