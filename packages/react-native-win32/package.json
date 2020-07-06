@@ -17,8 +17,7 @@
     "run-win32-devmain": "rex-win32 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
     "run-win32": "rex-win32 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev",
     "start": "react-native start",
-    "validate-overrides": "react-native-platform-override validate ./src/overrides.json",
-    "watch": "tsc -w"
+    "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",

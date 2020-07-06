@@ -5,6 +5,8 @@
  * @format
  */
 
+import * as path from 'path';
+
 import {
   CopyOverride,
   DerivedOverride,
@@ -99,15 +101,27 @@ export class OverrideFactoryImpl implements OverrideFactory {
   }
 
   private async checkOverrideFileExists(file: string) {
+    if (path.isAbsolute(file)) {
+      throw new Error(
+        `Expected override path to be repo relative. Got '${file}'`,
+      );
+    }
+
     const contents = await this.overrideRepo.getFileContents(file);
     if (contents === null) {
-      throw new Error(`Could not find override '${file}'`);
+      throw new Error(`Could not find override at repo relative'${file}'`);
     }
   }
 
   private async getOverrideBaseInfo(
     baseFile: string,
   ): Promise<{baseFile: string; baseVersion: string; baseHash: string}> {
+    if (path.isAbsolute(baseFile)) {
+      throw new Error(
+        `Expected base path to be repo relative. Got '${baseFile}'`,
+      );
+    }
+
     const baseContent = await this.reactRepo.getFileContents(baseFile);
     if (baseContent === null) {
       throw new Error(`Could not find base file '${baseFile}'`);

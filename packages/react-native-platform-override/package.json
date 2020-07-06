@@ -3,6 +3,8 @@
   "version": "0.0.8",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
+  "main": "./lib-commonjs/Api.js",
+  "typings": "./lib-commonjs/Api.d.ts",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
@@ -14,7 +16,7 @@
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
     "test": "just-scripts test",
-    "watch": "tsc -w"
+    "watch": "just-scripts watch"
   },
   "bin": {
     "react-native-platform-override": "./bin.js"
@@ -65,7 +67,9 @@
   },
   "files": [
     "bin.js",
-    "lib-commonjs"
+    "lib-commonjs",
+    "!lib-commonjs/e2etest/**",
+    "!lib-commonjs/test/**"
   ],
   "beachball": {
     "disallowedChangeTypes": [
