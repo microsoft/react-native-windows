@@ -1,6 +1,7 @@
 {
   "version": "0.0.5",
   "name": "babel-plugin-inline-view-configs",
+  "private": true,
   "description": "Babel plugin to inline view configs for React Native",
   "repository": {
     "type": "git",
