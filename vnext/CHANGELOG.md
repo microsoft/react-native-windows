@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Jun 2020 06:37:28 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jul 2020 23:21:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.1
+
+Mon, 06 Jul 2020 23:21:53 GMT
+
+### Patches
+
+- Use Deterministic NuGet Binary (ngerlem@microsoft.com)
 
 ## 0.62.0
 

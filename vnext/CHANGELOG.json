@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Jul 2020 23:21:53 GMT",
+      "tag": "react-native-windows_v0.62.1",
+      "version": "0.62.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Only create tags for react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3632fed566436e3d5809552742737d0bd7044dc5",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Use Deterministic NuGet Binary",
+            "author": "ngerlem@microsoft.com",
+            "commit": "46823fe007f7011244e41ec7952abd9e3e8d20e0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jun 2020 06:37:28 GMT",
       "tag": "react-native-windows_v0.62.0",
       "version": "0.62.0",
