@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 07 Jul 2020 05:05:23 GMT",
+      "tag": "react-native-windows-init_v0.1.19-0",
+      "version": "0.1.19-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5570885a6573062b94acea238ee2c5348fac98dc",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "react-native-windows-init_v0.1.18",
       "version": "0.1.18",

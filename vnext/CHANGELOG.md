@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 Jul 2020 23:11:46 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Jul 2020 05:05:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.114
+
+Tue, 07 Jul 2020 05:05:23 GMT
+
+### Changes
+
+- Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.113
 

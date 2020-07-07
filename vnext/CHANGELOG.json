@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Jul 2020 05:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.114",
+      "version": "0.0.0-canary.114",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5570885a6573062b94acea238ee2c5348fac98dc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.113",
       "version": "0.0.0-canary.113",
