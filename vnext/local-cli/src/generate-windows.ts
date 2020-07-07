@@ -31,7 +31,7 @@ import {
 export interface GenerateOptions {
   overwrite: boolean;
   language: 'cpp' | 'cs';
-  experimentalNugetDependency: boolean;
+  experimentalNuGetDependency: boolean;
   nuGetTestVersion?: string;
   nuGetTestFeed?: string;
   useWinUI3: boolean;

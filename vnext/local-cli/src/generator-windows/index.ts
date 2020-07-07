@@ -130,7 +130,7 @@ export async function copyProjectTemplateAndReplace(
 
   const language = options.language;
   const namespaceCpp = toCppNamespace(namespace);
-  if (options.experimentalNugetDependency) {
+  if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
   if (options.useWinUI3) {
@@ -190,7 +190,7 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
-  if (options.experimentalNugetDependency) {
+  if (options.experimentalNuGetDependency) {
     csNugetPackages.push({
       id: 'Microsoft.ReactNative.Managed',
       version: nugetVersion,
@@ -224,7 +224,7 @@ export async function copyProjectTemplateAndReplace(
     currentUser: currentUser,
     certificateThumbprint: certificateThumbprint,
 
-    useExperimentalNuget: options.experimentalNugetDependency,
+    useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
 
     // cpp template variables
@@ -329,7 +329,7 @@ export async function copyProjectTemplateAndReplace(
   }
 
   // Once we are publishing to nuget.org, this shouldn't be needed anymore
-  if (options.experimentalNugetDependency) {
+  if (options.experimentalNuGetDependency) {
     [
       {
         from: path.join(sharedPath, projDir, 'NuGet.Config'),
