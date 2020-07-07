@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Use babel-plugin-inline-view-configs to verify viewmanager props match expected",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-07-06T21:00:59.234Z"
+}
