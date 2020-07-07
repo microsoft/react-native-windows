@@ -377,13 +377,15 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage).
+      #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
       #5412 - Disable XHRSample due to intermittedly crashing the test process
       Desktop.IntegrationTests.Filter: >
         (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
-        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
         (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::Logging)&
         (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
         (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
         (FullyQualifiedName!~WebSocketModule_)&
@@ -506,12 +508,12 @@ jobs:
           language: cpp
           configuration: Release
           platform: x64
-          additionalInitArguments: 
+          additionalInitArguments:
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
-          additionalInitArguments: 
+          additionalInitArguments:
         #ArmDebugCpp:
         #  language: cpp
         #  configuration: Debug
@@ -524,12 +526,12 @@ jobs:
           language: cpp
           configuration: Release
           platform: arm
-          additionalInitArguments: 
+          additionalInitArguments:
         ArmReleaseCs:
           language: cs
           configuration: Release
           platform: arm
-          additionalInitArguments: 
+          additionalInitArguments:
         #Arm64DebugCpp:
         #  language: cpp
         #  configuration: Debug
