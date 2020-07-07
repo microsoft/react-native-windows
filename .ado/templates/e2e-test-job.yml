@@ -43,7 +43,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --arch ${{ parameters.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
       - task: PublishBuildArtifacts@1
@@ -83,9 +83,9 @@ jobs:
           script: 'if ((Get-Process ReactUwpTestApp) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
-        displayName: run e2etest
+        displayName: run e2erntester
         inputs:
-          script: yarn run e2etest
+          script: yarn run e2erntester
           workingDirectory: packages/E2ETest
 
       - task: CopyFiles@2

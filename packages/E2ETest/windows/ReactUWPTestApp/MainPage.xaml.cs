@@ -10,11 +10,18 @@ namespace ReactUWPTestApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static bool UseRNTester
+        { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
             var app = Application.Current as App;
             myRootView.ReactNativeHost = app.Host;
+            if (UseRNTester)
+            {
+                myRootView.ComponentName = "RNTesterApp";
+            }
         }
     }
 }

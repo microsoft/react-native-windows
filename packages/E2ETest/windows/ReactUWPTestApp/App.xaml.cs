@@ -64,6 +64,15 @@ namespace ReactUWPTestApp
                 frame = new Frame();
                 Window.Current.Content = frame;
             }
+
+            if (e.Arguments == "UseRNTester")
+            {
+                MainPage.UseRNTester = true;
+                JavaScriptMainModuleName = "rntester";
+                JavaScriptBundleFile = this.InstanceSettings.JavaScriptBundleFile;
+                Host.ReloadInstance();
+            }
+
             frame.Navigate(typeof(MainPage));
             Window.Current.Activate();
 

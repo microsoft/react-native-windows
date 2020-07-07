@@ -261,10 +261,11 @@ const APIExamples: Array<IRNTesterExample> = [
     key: 'WebSocketExample',
     module: require('react-native/RNTester/js/examples/WebSocket/WebSocketExample'),
   },
-  {
-    key: 'TurboModuleExample',
-    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
-  },
+  // TODO: Will this work with web debugging turned on?
+//  {
+//    key: 'TurboModuleExample',
+//    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
+//  },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
