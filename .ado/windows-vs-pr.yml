@@ -695,8 +695,7 @@ jobs:
     timeoutInMinutes: 30
     cancelTimeoutInMinutes: 5
     steps:
-      - checkout: self
-        fetchDepth: 15
+      - checkout: none
 
       # The commit tag in the nuspec requires that we use at least NuGet 4.6
       - task: NuGetToolInstaller@0
