@@ -126,9 +126,10 @@
     Used by the 'CopyFilesToOutputDirectory' target (more specifically, its '_CopyFilesMarkedCopyLocal' dependency')
     to co-locate dependencies with the test binary.
      -->
-    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll"/>
+    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
@@ -137,7 +138,6 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestControllerTests.cpp" />
     <ClCompile Include="PerfTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp" />
