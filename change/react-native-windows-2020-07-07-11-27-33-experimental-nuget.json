@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Rever to new experimentalNuGetDependency Naming",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-07T18:27:33.473Z"
+}
