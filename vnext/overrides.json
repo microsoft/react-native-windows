@@ -607,7 +607,7 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
       "baseVersion": "0.62.2",
