@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Dont try to parseJson unless redbox error starts with {",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-07T18:46:41.021Z"
+}
