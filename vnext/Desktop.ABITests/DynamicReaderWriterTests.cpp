@@ -10,6 +10,9 @@ using namespace winrt::Microsoft::ReactNative;
 
 namespace ABITests {
 
+// The tests here are a development staging artifact owed to the incremental buildup of the C++/WinRT-based ABI of
+// the Win32 DLL. They (or their logical equivalent) should probably get rolled into other tests once C++/WinRT-based
+// instance management becomes available.
 TEST_CLASS (DynamicReaderWriterTests) {
  public:
   TEST_METHOD(WriteGetBoolean) {
@@ -57,6 +60,8 @@ TEST_CLASS (DynamicReaderWriterTests) {
     TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::String, reader.ValueType());
     TestCheckEqual(L"abc", reader.GetString());
+
+    TestCheck(!reader.GetNextArrayItem());
   }
 
   TEST_METHOD(WriteGetObject) {
@@ -65,6 +70,7 @@ TEST_CLASS (DynamicReaderWriterTests) {
     auto namePropertyName = to_hstring(L"Name");
     auto agePropertyName = to_hstring(L"Age");
     auto marriedPropertyName = to_hstring(L"Married");
+    auto emptyPropertyName = to_hstring(L"");
 
     writer.WriteObjectBegin();
 
@@ -93,6 +99,8 @@ TEST_CLASS (DynamicReaderWriterTests) {
     TestCheck(reader.GetNextObjectProperty(marriedPropertyName));
     TestCheckEqual(JSValueType::Boolean, reader.ValueType());
     TestCheckEqual(true, reader.GetBoolean());
+
+    TestCheck(!reader.GetNextObjectProperty(emptyPropertyName));
   }
 
   TEST_METHOD(WriteGetObjectArrayMix) {
@@ -101,6 +109,7 @@ TEST_CLASS (DynamicReaderWriterTests) {
     auto namePropertyName = to_hstring(L"Name");
     auto countiesPropertyName = to_hstring(L"Counties");
     auto areaPropertyName = to_hstring(L"Area");
+    auto emptyPropertyName = to_hstring(L"");
 
     writer.WriteObjectBegin();
 
@@ -141,8 +150,12 @@ TEST_CLASS (DynamicReaderWriterTests) {
     TestCheckEqual(JSValueType::String, reader.ValueType());
     TestCheckEqual(L"Pierce", reader.GetString());
 
+    TestCheck(!reader.GetNextArrayItem());
+
     TestCheck(reader.GetNextObjectProperty(areaPropertyName));
     TestCheckEqual(184827, reader.GetInt64());
+
+    TestCheck(!reader.GetNextObjectProperty(emptyPropertyName));
   }
 
   private:
