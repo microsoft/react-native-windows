@@ -250,7 +250,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     const std::string plain = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
 
-    if (boost::istarts_with(plain, "{")) {
+    if (!plain.empty() && plain[0] == '{') {
       try {
         auto json = folly::parseJson(plain);
         if (json.count("type") && json["type"] == "InternalError") {
