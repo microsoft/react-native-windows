@@ -5,13 +5,14 @@
  * @format
  */
 
+import * as path from 'path';
 import GitReactFileRepository from './GitReactFileRepository';
-import {OverrideFileRepository} from './FileRepository';
+import {WritableFileRepository} from './FileRepository';
 import isutf8 from 'isutf8';
 
 export interface UpgradeResult {
   overrideName: string;
-  fileWritten: boolean;
+  filesWritten: boolean;
   hasConflicts: boolean;
 }
 
@@ -22,7 +23,7 @@ export interface UpgradeResult {
 export default interface UpgradeStrategy {
   upgrade(
     gitReactRepo: GitReactFileRepository,
-    overrideRepo: OverrideFileRepository,
+    overrideRepo: WritableFileRepository,
     newVersion: string,
     allowConflicts: boolean,
   ): Promise<UpgradeResult>;
@@ -35,7 +36,7 @@ export const UpgradeStrategies = {
   assumeUpToDate: (overrideName: string): UpgradeStrategy => ({
     upgrade: async () => ({
       overrideName,
-      fileWritten: false,
+      filesWritten: false,
       hasConflicts: false,
     }),
   }),
@@ -50,7 +51,7 @@ export const UpgradeStrategies = {
     baseVersion: string,
   ): UpgradeStrategy => ({
     upgrade: async (gitReactRepo, overrideRepo, newVersion, allowConflicts) => {
-      const ovrContent = await overrideRepo.getFileContents(overrideName);
+      const ovrContent = await overrideRepo.readFile(overrideName);
       if (ovrContent === null) {
         throw new Error(`Could not read ${overrideName}`);
       }
@@ -68,25 +69,23 @@ export const UpgradeStrategies = {
       );
 
       if (!patchedFile) {
-        return {overrideName, fileWritten: false, hasConflicts};
+        return {overrideName, filesWritten: false, hasConflicts};
       }
 
       const prettyPatched =
         hasConflicts && isutf8(patchedFile)
-          ? Buffer.from(
-              patchedFile
-                .toString('utf8')
-                .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
-                .replace(/>>>>>>> theirs/g, '>>>>>>> Override'),
-            )
+          ? patchedFile
+              .toString('utf8')
+              .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
+              .replace(/>>>>>>> theirs/g, '>>>>>>> Override')
           : patchedFile;
 
       if (!hasConflicts || allowConflicts) {
-        await overrideRepo.setFileContents(overrideName, prettyPatched);
-        return {overrideName, fileWritten: true, hasConflicts};
+        await overrideRepo.writeFile(overrideName, prettyPatched);
+        return {overrideName, filesWritten: true, hasConflicts};
       }
 
-      return {overrideName, fileWritten: false, hasConflicts};
+      return {overrideName, filesWritten: false, hasConflicts};
     },
   }),
 
@@ -95,16 +94,42 @@ export const UpgradeStrategies = {
    */
   copyFile: (overrideName: string, baseFile: string): UpgradeStrategy => ({
     upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
-      const newContent = await gitReactRepo.getFileContents(
-        baseFile,
-        newVersion,
-      );
+      const newContent = await gitReactRepo.readFile(baseFile, newVersion);
       if (newContent === null) {
         throw new Error(`Could not read ${baseFile}@${newVersion}`);
       }
 
-      await overrideRepo.setFileContents(overrideName, newContent);
-      return {overrideName, fileWritten: true, hasConflicts: false};
+      await overrideRepo.writeFile(overrideName, newContent);
+      return {overrideName, filesWritten: true, hasConflicts: false};
+    },
+  }),
+
+  /**
+   * Overwrite our override with base file contents
+   */
+  copyDirectory: (
+    overrideDirectory: string,
+    baseDirectory: string,
+  ): UpgradeStrategy => ({
+    upgrade: async (gitReactRepo, overrideRepo, newVersion, allowConflicts) => {
+      const baseFiles = await gitReactRepo.listFiles(
+        [`${baseDirectory}/**`],
+        newVersion,
+      );
+
+      for (const baseFile of baseFiles) {
+        const relative = path.relative(baseDirectory, baseFile);
+        await UpgradeStrategies.copyFile(
+          path.join(overrideDirectory, relative),
+          baseFile,
+        ).upgrade(gitReactRepo, overrideRepo, newVersion, allowConflicts);
+      }
+
+      return {
+        overrideName: overrideDirectory,
+        filesWritten: true,
+        hasConflicts: false,
+      };
     },
   }),
 };

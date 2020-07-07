@@ -6,12 +6,11 @@
  */
 
 /**
- * Provides access to patch files
+ * A filesystem abstraction that allows listing and reading files
  */
-export interface OverrideFileRepository {
+export default interface FileRepository {
   /**
    * Return the repository-relative path to all override files
-   *
    * @param globs optional list of globs which files must match
    */
   listFiles(globs?: string[]): Promise<Array<string>>;
@@ -20,25 +19,29 @@ export interface OverrideFileRepository {
    * Read the contents of a patch file.
    * @param filename is expected to be relative to the repository root.
    */
-  getFileContents(filename: string): Promise<Buffer | null>;
+  readFile(filename: string): Promise<Buffer | null>;
 
+  /**
+   * Check whether a file exists, and if so whether its a file or directory
+   */
+  stat(filename: string): Promise<'file' | 'directory' | 'none'>;
+}
+
+/**
+ * Provides access to override files
+ */
+export interface WritableFileRepository extends FileRepository {
   /**
    * Sets the contents of an override file. Rejects the promise if the override
    * doesn't exist.
    */
-  setFileContents(filename: string, content: Buffer): Promise<void>;
+  writeFile(filename: string, content: Buffer | string): Promise<void>;
 }
 
 /**
  * Provides access to React Native source files
  */
-export interface ReactFileRepository {
-  /**
-   * Read the contents of a source file.
-   * @param filename is expected to be relative to the React Native source root.
-   */
-  getFileContents(filename: string): Promise<Buffer | null>;
-
+export interface ReactFileRepository extends FileRepository {
   /**
    * Get the React Native version the repo is exploring
    */
@@ -50,7 +53,15 @@ export interface ReactFileRepository {
  * {@see ReactFileRepository} for more details
  */
 export interface VersionedReactFileRepository {
-  getFileContents(filename: string, version: string): Promise<Buffer | null>;
+  listFiles(
+    globs: string[] | undefined,
+    version: string,
+  ): Promise<Array<string>>;
+  readFile(filename: string, version: string): Promise<Buffer | null>;
+  stat(
+    filename: string,
+    version: string,
+  ): Promise<'file' | 'directory' | 'none'>;
 }
 
 /**
@@ -61,7 +72,9 @@ export function bindVersion(
   version: string,
 ): ReactFileRepository {
   return {
-    getFileContents: filename => repository.getFileContents(filename, version),
+    listFiles: globs => repository.listFiles(globs, version),
+    readFile: filename => repository.readFile(filename, version),
+    stat: filename => repository.stat(filename, version),
     getVersion: () => version,
   };
 }

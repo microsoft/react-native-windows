@@ -6,6 +6,7 @@
  */
 
 import * as crypto from 'crypto';
+import FileRepository from './FileRepository';
 import isutf8 from 'isutf8';
 
 /**
@@ -18,8 +19,8 @@ export class Hasher {
     this.hash = crypto.createHash('sha1');
   }
 
-  feedContent(content: Buffer): Hasher {
-    if (isutf8(content)) {
+  feedContent(content: string | Buffer): Hasher {
+    if (typeof content === 'string' || isutf8(content)) {
       // Content is valid UTF8. Normalize line endings
       const normalizedStr = content
         .toString('utf8')
@@ -43,9 +44,29 @@ export class Hasher {
  * Convenience helper which hashes a single buffer
  */
 export function hashContent(content: string | Buffer): string {
-  if (typeof content === 'string') {
-    content = Buffer.from(content);
+  return new Hasher().feedContent(content).digest();
+}
+
+/**
+ * Helper to hash a file/directory belonging to a repository
+ */
+export async function hashFileOrDirectory(
+  name: string,
+  repo: FileRepository,
+): Promise<string | null> {
+  const type = await repo.stat(name);
+  if (type === 'none') {
+    return null;
   }
 
-  return new Hasher().feedContent(content).digest();
+  if (type === 'file') {
+    return hashContent((await repo.readFile(name))!);
+  } else {
+    const hasher = new Hasher();
+    for (const file of (await repo.listFiles([`${name}/**`])).sort()) {
+      const contents = await repo.readFile(file);
+      hasher.feedContent(contents!);
+    }
+    return hasher.digest();
+  }
 }

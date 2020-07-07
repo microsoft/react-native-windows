@@ -10,11 +10,12 @@ import * as path from 'path';
 import {
   CopyOverride,
   DerivedOverride,
+  DirectoryCopyOverride,
   PatchOverride,
   PlatformOverride,
 } from './Override';
-import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
-import {hashContent} from './Hash';
+import FileRepository, {ReactFileRepository} from './FileRepository';
+import {hashFileOrDirectory} from './Hash';
 
 /**
  * Allows creation of overrides, taking care of guts such as hashing, version checking, etc.
@@ -39,6 +40,12 @@ export default interface OverrideFactory {
     baseFile: string,
     issue: number | 'LEGACY_FIXME',
   ): Promise<PatchOverride>;
+
+  createDirectoryCopyOverride(
+    directory: string,
+    baseDirectory: string,
+    issue: number,
+  ): Promise<DirectoryCopyOverride>;
 }
 
 /**
@@ -46,18 +53,15 @@ export default interface OverrideFactory {
  */
 export class OverrideFactoryImpl implements OverrideFactory {
   private reactRepo: ReactFileRepository;
-  private overrideRepo: OverrideFileRepository;
+  private overrideRepo: FileRepository;
 
-  constructor(
-    reactRepo: ReactFileRepository,
-    overrideRepo: OverrideFileRepository,
-  ) {
+  constructor(reactRepo: ReactFileRepository, overrideRepo: FileRepository) {
     this.reactRepo = reactRepo;
     this.overrideRepo = overrideRepo;
   }
 
   async createPlatformOverride(file: string): Promise<PlatformOverride> {
-    await this.checkOverrideFileExists(file);
+    await this.checkoverrideFileExists(file);
     return new PlatformOverride({file});
   }
 
@@ -66,11 +70,12 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseFile: string,
     issue: number,
   ): Promise<CopyOverride> {
-    await this.checkOverrideFileExists(file);
+    await this.checkoverrideFileExists(file);
     return new CopyOverride({
       file,
+      baseFile,
       issue,
-      ...(await this.getOverrideBaseInfo(baseFile)),
+      ...(await this.getBaseInfo(baseFile)),
     });
   }
 
@@ -79,11 +84,12 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseFile: string,
     issue?: number,
   ): Promise<DerivedOverride> {
-    await this.checkOverrideFileExists(file);
+    await this.checkoverrideFileExists(file);
     return new DerivedOverride({
       file,
+      baseFile,
       issue,
-      ...(await this.getOverrideBaseInfo(baseFile)),
+      ...(await this.getBaseInfo(baseFile)),
     });
   }
 
@@ -92,44 +98,60 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseFile: string,
     issue: number | 'LEGACY_FIXME',
   ): Promise<PatchOverride> {
-    await this.checkOverrideFileExists(file);
+    await this.checkoverrideFileExists(file);
     return new PatchOverride({
       file,
+      baseFile,
       issue,
-      ...(await this.getOverrideBaseInfo(baseFile)),
+      ...(await this.getBaseInfo(baseFile)),
     });
   }
 
-  private async checkOverrideFileExists(file: string) {
-    if (path.isAbsolute(file)) {
+  async createDirectoryCopyOverride(
+    directory: string,
+    baseDirectory: string,
+    issue: number,
+  ): Promise<DirectoryCopyOverride> {
+    await this.checkoverrideFileExists(directory);
+    return new DirectoryCopyOverride({
+      directory,
+      baseDirectory,
+      issue,
+      ...(await this.getBaseInfo(baseDirectory)),
+    });
+  }
+
+  private async checkoverrideFileExists(overridePath: string) {
+    if (path.isAbsolute(overridePath)) {
       throw new Error(
-        `Expected override path to be repo relative. Got '${file}'`,
+        `Expected override path to be repo relative. Got '${overridePath}'`,
       );
     }
 
-    const contents = await this.overrideRepo.getFileContents(file);
-    if (contents === null) {
-      throw new Error(`Could not find override at repo relative'${file}'`);
+    if ((await this.overrideRepo.stat(overridePath)) === 'none') {
+      throw new Error(
+        `Could not find override at repo relative path '${overridePath}'`,
+      );
     }
   }
 
-  private async getOverrideBaseInfo(
-    baseFile: string,
-  ): Promise<{baseFile: string; baseVersion: string; baseHash: string}> {
-    if (path.isAbsolute(baseFile)) {
+  private async getBaseInfo(
+    basePath: string,
+  ): Promise<{baseVersion: string; baseHash: string}> {
+    if (path.isAbsolute(basePath)) {
       throw new Error(
-        `Expected base path to be repo relative. Got '${baseFile}'`,
+        `Expected base path to be repo relative. Got '${basePath}'`,
       );
     }
 
-    const baseContent = await this.reactRepo.getFileContents(baseFile);
-    if (baseContent === null) {
-      throw new Error(`Could not find base file '${baseFile}'`);
+    const baseType = await this.reactRepo.stat(basePath);
+    if (baseType === 'none') {
+      throw new Error(`Could not find base file/directory '${basePath}'`);
     }
 
     const baseVersion = this.reactRepo.getVersion();
-    const baseHash = hashContent(baseContent);
+    const baseHash = (await hashFileOrDirectory(basePath, this.reactRepo))!;
 
-    return {baseFile, baseVersion, baseHash};
+    return {baseVersion, baseHash};
   }
 }

@@ -5,8 +5,8 @@
  * @format
  */
 
-import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
-import {hashContent} from './Hash';
+import {ReactFileRepository, WritableFileRepository} from './FileRepository';
+import {hashFileOrDirectory} from './Hash';
 
 export interface ValidationError {
   /**
@@ -16,6 +16,8 @@ export interface ValidationError {
     | 'missingFromManifest' // An override was found that isn't listed in the manifest
     | 'overrideNotFound' // The manifest describes a file which does not exist
     | 'baseNotFound' // The base file for a manifest entry cannot be found
+    | 'expectedFile' // Expected the override to be a file but found a directory
+    | 'expectedDirectory' // Expected the override to be a directory but found a file
     | 'outOfDate' // A base file has changed since the manifested version
     | 'overrideDifferentFromBase'; // An override file is not an expact copy of the base file
 
@@ -32,7 +34,7 @@ export interface ValidationError {
  */
 export default interface ValidationStrategy {
   validate(
-    overrideRepo: OverrideFileRepository,
+    overrideRepo: WritableFileRepository,
     reactRepo: ReactFileRepository,
   ): Promise<ValidationError[]>;
 }
@@ -43,9 +45,14 @@ export const ValidationStrategies = {
    */
   overrideFileExists: (overrideName: string): ValidationStrategy => ({
     validate: async overrideRepo => {
-      return (await overrideRepo.getFileContents(overrideName))
-        ? []
-        : [{type: 'overrideNotFound', overrideName}];
+      switch (await overrideRepo.stat(overrideName)) {
+        case 'file':
+          return [];
+        case 'directory':
+          return [{type: 'expectedFile', overrideName}];
+        case 'none':
+          return [{type: 'overrideNotFound', overrideName}];
+      }
     },
   }),
 
@@ -57,49 +64,94 @@ export const ValidationStrategies = {
     baseFile: string,
   ): ValidationStrategy => ({
     validate: async (_, reactRepo) => {
-      return (await reactRepo.getFileContents(baseFile))
-        ? []
-        : [{type: 'baseNotFound', overrideName}];
+      switch (await reactRepo.stat(baseFile)) {
+        case 'file':
+          return [];
+        case 'directory':
+          return [{type: 'expectedFile', overrideName}];
+        case 'none':
+          return [{type: 'baseNotFound', overrideName}];
+      }
     },
   }),
 
   /**
-   * Validate that a base file matches an expected hash if it exists
+   * Validate that an override directory exists
    */
-  baseFileUpToDate: (
+  overrideDirectoryExists: (overrideName: string): ValidationStrategy => ({
+    validate: async overrideRepo => {
+      switch (await overrideRepo.stat(overrideName)) {
+        case 'file':
+          return [{type: 'expectedDirectory', overrideName}];
+        case 'directory':
+          return [];
+        case 'none':
+          return [{type: 'overrideNotFound', overrideName}];
+      }
+    },
+  }),
+
+  /**
+   * Validate that a base directory exists
+   */
+  baseDirectoryExists: (
     overrideName: string,
-    baseFile: string,
+    baseDirectory: string,
+  ): ValidationStrategy => ({
+    validate: async (_, reactRepo) => {
+      switch (await reactRepo.stat(baseDirectory)) {
+        case 'file':
+          return [{type: 'expectedDirectory', overrideName}];
+        case 'directory':
+          return [];
+        case 'none':
+          return [{type: 'baseNotFound', overrideName}];
+      }
+    },
+  }),
+
+  /**
+   * Validate that a base file/folder matches an expected hash if it exists
+   */
+  baseUpToDate: (
+    overrideName: string,
+    base: string,
     expectedBaseHash: string,
   ): ValidationStrategy => ({
     validate: async (_, reactRepo) => {
-      const contents = await reactRepo.getFileContents(baseFile);
-      if (!contents) {
+      const hash = await hashFileOrDirectory(base, reactRepo);
+      if (!hash) {
         return [];
       }
 
-      return hashContent(contents) === expectedBaseHash
+      return hash === expectedBaseHash
         ? []
         : [{type: 'outOfDate', overrideName}];
     },
   }),
 
   /**
-   * Validate that an override meant to be a copy of a base file has not been
-   * tampered with
+   * Validate that an override meant to be a copy of a base file/folder has not
+   * been tampered with
    */
-  overrideCopyOfBaseFile: (
+  overrideCopyOfBase: (
     overrideName: string,
-    baseFile: string,
+    base: string,
   ): ValidationStrategy => ({
     validate: async (overrideRepo, reactRepo) => {
-      const overrideContent = await overrideRepo.getFileContents(overrideName);
-      const baseContent = await reactRepo.getFileContents(baseFile);
-      if (overrideContent === null || baseContent === null) {
+      if (
+        (await overrideRepo.stat(overrideName)) === 'none' ||
+        (await reactRepo.stat(base)) === 'none'
+      ) {
         return [];
       }
 
-      // Run through hash to account for line-endings, etc
-      return hashContent(overrideContent) === hashContent(baseContent)
+      const overrideHash = await hashFileOrDirectory(
+        overrideName,
+        overrideRepo,
+      );
+      const baseHash = await hashFileOrDirectory(base, reactRepo);
+      return overrideHash === baseHash
         ? []
         : [{type: 'overrideDifferentFromBase', overrideName}];
     },

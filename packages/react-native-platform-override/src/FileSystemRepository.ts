@@ -9,13 +9,12 @@ import * as fs from 'fs';
 import * as globby from 'globby';
 import * as path from 'path';
 
-import {OverrideFileRepository} from './FileRepository';
+import {WritableFileRepository} from './FileRepository';
 
 /**
  * Allows reading phsyical override files based on a passed in directory
  */
-export default class OverrideFileRepositoryImpl
-  implements OverrideFileRepository {
+export default class FileSystemRepository implements WritableFileRepository {
   private baseDir: string;
 
   constructor(baseDir: string) {
@@ -26,11 +25,10 @@ export default class OverrideFileRepositoryImpl
     return await globby(globs, {
       cwd: this.baseDir,
       dot: true,
-      ignore: ['./overrides.json'],
     });
   }
 
-  async getFileContents(filename: string): Promise<Buffer | null> {
+  async readFile(filename: string): Promise<Buffer | null> {
     const filePath = path.join(this.baseDir, filename);
     try {
       return await fs.promises.readFile(filePath);
@@ -39,8 +37,23 @@ export default class OverrideFileRepositoryImpl
     }
   }
 
-  async setFileContents(filename: string, content: Buffer) {
+  async stat(filename: string): Promise<'file' | 'directory' | 'none'> {
     const filePath = path.join(this.baseDir, filename);
+    try {
+      const stats = await fs.promises.stat(filePath);
+      return stats.isDirectory() ? 'directory' : 'file';
+    } catch (ex) {
+      if (ex.code === 'ENOENT') {
+        return 'none';
+      } else {
+        throw ex;
+      }
+    }
+  }
+
+  async writeFile(filename: string, content: Buffer | string) {
+    const filePath = path.join(this.baseDir, filename);
+    await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
     return fs.promises.writeFile(filePath, content);
   }
 }

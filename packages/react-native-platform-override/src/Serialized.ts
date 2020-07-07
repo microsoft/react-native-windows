@@ -60,6 +60,18 @@ const CopyOverrideType = t.type({
 });
 
 /**
+ * Serialized form of {@see DirectoryCopyOverride}
+ */
+const DirectoryCopyOverrideType = t.type({
+  type: t.literal('copy'),
+  directory: t.string,
+  baseDirectory: t.string,
+  baseVersion: t.string,
+  baseHash: t.string,
+  issue: t.number,
+});
+
+/**
  * Union of all serialized override types
  */
 const OverrideType = t.union([
@@ -67,6 +79,7 @@ const OverrideType = t.union([
   PatchOverrideType,
   DerivedOverrideType,
   CopyOverrideType,
+  DirectoryCopyOverrideType,
 ]);
 
 /**
@@ -82,6 +95,7 @@ export type PlatformOverride = t.TypeOf<typeof PlatformOverrideType>;
 export type PatchOverride = t.TypeOf<typeof PatchOverrideType>;
 export type DerivedOverride = t.TypeOf<typeof DerivedOverrideType>;
 export type CopyOverride = t.TypeOf<typeof CopyOverrideType>;
+export type DirectoryCopyOverride = t.TypeOf<typeof DirectoryCopyOverrideType>;
 export type Override = t.TypeOf<typeof OverrideType>;
 export type Manifest = t.TypeOf<typeof ManifestType>;
 

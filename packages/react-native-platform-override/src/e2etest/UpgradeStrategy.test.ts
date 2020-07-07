@@ -12,8 +12,9 @@ import UpgradeStrategy, {
   UpgradeResult,
   UpgradeStrategies,
 } from '../UpgradeStrategy';
-import {acquireGitRepo, usingOverrides} from './Resource';
+import {acquireGitRepo, usingFiles} from './Resource';
 import GitReactFileRepository from '../GitReactFileRepository';
+import {hashFileOrDirectory} from '../Hash';
 import isutf8 from 'isutf8';
 
 let gitReactRepo: GitReactFileRepository;
@@ -39,7 +40,7 @@ test('assumeUpToDate', async () => {
     expected: {
       referenceFile: '0.61.5/flowconfig.windows.conflict',
       overrideName: overrideFile,
-      fileWritten: false,
+      filesWritten: false,
       hasConflicts: false,
     },
   });
@@ -64,7 +65,7 @@ test('threeWayMerge - Simple Addition', async () => {
     expected: {
       referenceFile: '0.62.2/flowconfig.windows.addition',
       overrideName: overrideFile,
-      fileWritten: true,
+      filesWritten: true,
       hasConflicts: false,
     },
   });
@@ -89,7 +90,7 @@ test('threeWayMerge - Text Conflict (Allowed)', async () => {
     expected: {
       referenceFile: '0.62.2/flowconfig.windows.conflict',
       overrideName: overrideFile,
-      fileWritten: true,
+      filesWritten: true,
       hasConflicts: true,
     },
   });
@@ -114,7 +115,7 @@ test('threeWayMerge - Text Conflict (Disallowed)', async () => {
     expected: {
       referenceFile: '0.61.5/flowconfig.windows.conflict',
       overrideName: overrideFile,
-      fileWritten: false,
+      filesWritten: false,
       hasConflicts: true,
     },
   });
@@ -140,7 +141,7 @@ test('threeWayMerge - Binary Conflict', async () => {
     expected: {
       referenceFile: '0.59.9/Icon-60@2x.conflict.png',
       overrideName: overrideFile,
-      fileWritten: false,
+      filesWritten: false,
       hasConflicts: true,
     },
   });
@@ -160,9 +161,80 @@ test('copyFile', async () => {
     expected: {
       referenceFile: '0.62.2/flowconfig.pristine',
       overrideName: overrideFile,
-      fileWritten: true,
+      filesWritten: true,
       hasConflicts: false,
     },
+  });
+});
+
+test('copyDirectory - New Files', async () => {
+  const overrideDir = 'src/bots';
+  const baseDir = 'bots';
+
+  const strategy = UpgradeStrategies.copyDirectory(overrideDir, baseDir);
+  await usingFiles([], async overrideRepo => {
+    const results = await strategy.upgrade(
+      gitReactRepo,
+      overrideRepo,
+      '0.62.2',
+      true,
+    );
+    expect(results).toEqual({
+      overrideName: overrideDir,
+      filesWritten: true,
+      hasConflicts: false,
+    });
+
+    expect((await overrideRepo.listFiles()).sort()).toEqual([
+      'src/bots/.babelrc',
+      'src/bots/README.md',
+      'src/bots/code-analysis-bot.js',
+      'src/bots/dangerfile.js',
+      'src/bots/package.json',
+      'src/bots/yarn.lock',
+    ]);
+  });
+});
+
+test('copyDirectory - New Content', async () => {
+  const overrideFiles = [
+    '0.62.2/bots/.babelrc',
+    '0.62.2/bots/README.md',
+    '0.62.2/bots/code-analysis-bot.js',
+    '0.62.2/bots/dangerfile.js',
+    '0.62.2/bots/package.json',
+    '0.62.2/bots/yarn.lock',
+  ];
+
+  const strategy = UpgradeStrategies.copyDirectory('0.62.2/bots', 'bots');
+  await usingFiles(overrideFiles, async overrideRepo => {
+    const correctHash = await hashFileOrDirectory(
+      overrideFiles[0],
+      overrideRepo,
+    );
+
+    expect(correctHash).not.toBeNull();
+
+    await overrideRepo.writeFile(overrideFiles[0], 'Garbage Data');
+    expect(
+      await hashFileOrDirectory(overrideFiles[0], overrideRepo),
+    ).not.toEqual(correctHash);
+
+    const results = await strategy.upgrade(
+      gitReactRepo,
+      overrideRepo,
+      '0.62.2',
+      true,
+    );
+    expect(results).toEqual({
+      overrideName: '0.62.2/bots',
+      filesWritten: true,
+      hasConflicts: false,
+    });
+
+    expect(await hashFileOrDirectory(overrideFiles[0], overrideRepo)).toEqual(
+      correctHash,
+    );
   });
 });
 
@@ -175,31 +247,28 @@ async function evaluateStrategy(opts: {
     referenceFile: string;
   } & UpgradeResult;
 }) {
-  await usingOverrides(
-    [opts.overrideFile],
-    async (overrideRepo, overridesPath) => {
-      const actualResult = await opts.strategy.upgrade(
-        gitReactRepo,
-        overrideRepo,
-        opts.upgradeVersion,
-        opts.allowConflicts,
-      );
+  await usingFiles([opts.overrideFile], async (overrideRepo, overridesPath) => {
+    const actualResult = await opts.strategy.upgrade(
+      gitReactRepo,
+      overrideRepo,
+      opts.upgradeVersion,
+      opts.allowConflicts,
+    );
 
-      const {referenceFile, ...expectedResult} = opts.expected;
-      expect(actualResult).toEqual(expectedResult);
+    const {referenceFile, ...expectedResult} = opts.expected;
+    expect(actualResult).toEqual(expectedResult);
 
-      const actualContent = await fs.promises.readFile(
-        path.join(overridesPath, opts.overrideFile),
-      );
-      const expectedContent = await fs.promises.readFile(
-        path.join(__dirname, 'collateral', referenceFile),
-      );
+    const actualContent = await fs.promises.readFile(
+      path.join(overridesPath, opts.overrideFile),
+    );
+    const expectedContent = await fs.promises.readFile(
+      path.join(__dirname, 'collateral', referenceFile),
+    );
 
-      if (isutf8(actualContent) && isutf8(expectedContent)) {
-        expect(actualContent.toString()).toBe(expectedContent.toString());
-      } else {
-        expect(actualContent.compare(expectedContent)).toBe(0);
-      }
-    },
-  );
+    if (isutf8(actualContent) && isutf8(expectedContent)) {
+      expect(actualContent.toString()).toBe(expectedContent.toString());
+    } else {
+      expect(actualContent.compare(expectedContent)).toBe(0);
+    }
+  });
 }

@@ -5,45 +5,36 @@
  * @format
  */
 
-import * as _ from 'lodash';
 import * as minimatch from 'minimatch';
 import * as path from 'path';
 
-import {OverrideFileRepository, ReactFileRepository} from '../FileRepository';
+import FileRepository, {
+  ReactFileRepository,
+  WritableFileRepository,
+} from '../FileRepository';
 
 export interface MockFile {
   filename: string;
   content: string | Buffer;
 }
 
-export class MockReactFileRepository implements ReactFileRepository {
-  private files: Array<MockFile>;
-
-  constructor(files: Array<MockFile>) {
-    this.files = files;
-    this.files.forEach(file => (file.filename = path.normalize(file.filename)));
-  }
-
-  async getFileContents(filename: string): Promise<Buffer | null> {
-    const matches = _.filter(this.files, file => file.filename === filename);
-    if (matches.length === 0) {
-      return null;
-    } else {
-      return Buffer.from(matches[0].content);
-    }
-  }
-
-  getVersion(): string {
-    return '0.61.5';
-  }
+export interface MockEmptyDirectory {
+  dirname: string;
 }
 
-export class MockOverrideFileRepository implements OverrideFileRepository {
-  private files: Array<MockFile>;
+export default class MockFileRepository implements FileRepository {
+  protected files: MockFile[];
+  protected directories: MockEmptyDirectory[];
 
-  constructor(files: Array<MockFile>) {
-    this.files = files;
-    this.files.forEach(file => (file.filename = path.normalize(file.filename)));
+  constructor(files: MockFile[], directories?: MockEmptyDirectory[]) {
+    this.files = files.map(file => ({
+      ...file,
+      filename: path.normalize(file.filename),
+    }));
+
+    this.directories = (directories || []).map(dir => ({
+      dirname: path.normalize(dir.dirname),
+    }));
   }
 
   async listFiles(globs: string[] = ['**']): Promise<string[]> {
@@ -57,16 +48,41 @@ export class MockOverrideFileRepository implements OverrideFileRepository {
       .filter(file => excludeGlobs.every(g => g.match(file)));
   }
 
-  async getFileContents(filename: string): Promise<Buffer | null> {
-    const matches = this.files.filter(file => file.filename === filename);
-    if (matches.length === 0) {
-      return null;
-    } else {
-      return Buffer.from(matches[0].content);
-    }
+  async readFile(filename: string): Promise<Buffer | null> {
+    const normalizedName = path.normalize(filename);
+    const file = this.files.find(f => f.filename === normalizedName);
+    return file ? Buffer.from(file.content) : null;
   }
 
-  async setFileContents(filename: string, content: Buffer) {
+  async stat(filename: string): Promise<'file' | 'directory' | 'none'> {
+    const normalizedName = path.normalize(filename);
+
+    if (this.directories.find(dir => dir.dirname === normalizedName)) {
+      return 'directory';
+    }
+
+    for (const file of this.files) {
+      if (file.filename === normalizedName) {
+        return 'file';
+      } else if (file.filename.startsWith(normalizedName)) {
+        return 'directory';
+      }
+    }
+
+    return 'none';
+  }
+}
+
+export class MockReactFileRepository extends MockFileRepository
+  implements ReactFileRepository {
+  getVersion(): string {
+    return '0.61.5';
+  }
+}
+
+export class MockWritableFileRepository extends MockFileRepository
+  implements WritableFileRepository {
+  async writeFile(filename: string, content: Buffer) {
     const matchFile = this.files.find(file => file.filename === filename)!;
     matchFile.content = content;
   }
