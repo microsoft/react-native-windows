@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Disable Override Validation for windesktop JS",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-07-07T22:33:54.314Z"
+}
