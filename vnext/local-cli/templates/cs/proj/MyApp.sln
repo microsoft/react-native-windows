@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "{{ name }}", "{{ name }}\{{ name }}.csproj", "{{ projectGuidUpper }}"
 EndProject
+{{^useExperimentalNuget}}
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "..\node_modules\react-native-windows\Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "..\node_modules\react-native-windows\ReactCommon\ReactCommon.vcxproj", "{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}"
@@ -34,7 +35,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed", "..\node_modules\react-native-windows\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj", "{F2824844-CE15-4242-9420-308923CD76C3}"
 EndProject
+{{/useExperimentalNuget}}
 Global
+	{{^useExperimentalNuget}}
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\node_modules\react-native-windows\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
 		..\node_modules\react-native-windows\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
@@ -47,6 +50,7 @@ Global
 		..\node_modules\react-native-windows\Mso\Mso.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 		..\node_modules\react-native-windows\Shared\Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 	EndGlobalSection
+	{{/useExperimentalNuget}}
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
 		Debug|ARM64 = Debug|ARM64
@@ -82,6 +86,7 @@ Global
 		{{ projectGuidUpper }}.Release|x86.ActiveCfg = Release|x86
 		{{ projectGuidUpper }}.Release|x86.Build.0 = Release|x86
 		{{ projectGuidUpper }}.Release|x86.Deploy.0 = Release|x86
+		{{^useExperimentalNuget}}
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.Build.0 = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM64.ActiveCfg = Debug|ARM64
@@ -178,10 +183,12 @@ Global
 		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.Build.0 = Release|x64
 		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.ActiveCfg = Release|x86
 		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.Build.0 = Release|x86
+		{{/useExperimentalNuget}}
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	{{^useExperimentalNuget}}
 	GlobalSection(NestedProjects) = preSolution
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
@@ -194,6 +201,7 @@ Global
 		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{F2824844-CE15-4242-9420-308923CD76C3} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 	EndGlobalSection
+	{{/useExperimentalNuget}}
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D43FAD39-F619-437D-BB40-04A3982ACB6A}
 	EndGlobalSection

@@ -1,20 +1,21 @@
 {
   "name": "@rnw-scripts/find-repo-root",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
-    "lint:fix": "just-scripts lint:fix"
+    "lint:fix": "just-scripts lint:fix",
+    "watch": "just-scripts watch"
   },
   "main": "lib-commonjs/findRepoRoot.js",
   "dependencies": {
     "find-up": "^4.1.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.0.1",
-    "@rnw-scripts/just-task": "0.0.1",
+    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.0.1",
     "@types/find-up": "^4.0.0",
     "eslint": "6.7.0",

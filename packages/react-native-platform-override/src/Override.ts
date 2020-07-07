@@ -67,7 +67,7 @@ export class PlatformOverride implements Override {
   }
 
   serialize(): Serialized.PlatformOverride {
-    return {type: 'platform', file: this.overrideFile};
+    return {type: 'platform', file: unixPath(this.overrideFile)};
   }
 
   name(): string {
@@ -83,7 +83,7 @@ export class PlatformOverride implements Override {
   }
 
   upgradeStrategy(): UpgradeStrategy {
-    return UpgradeStrategies.assumeUpToDate();
+    return UpgradeStrategies.assumeUpToDate(this.overrideFile);
   }
 
   validationStrategies(): ValidationStrategy[] {
@@ -141,8 +141,8 @@ abstract class BaseFileOverride implements Override {
 
   protected serialzeBase() {
     return {
-      file: this.overrideFile,
-      baseFile: this.baseFile,
+      file: unixPath(this.overrideFile),
+      baseFile: unixPath(this.baseFile),
       baseVersion: this.baseVersion,
       baseHash: this.baseHash,
     };
@@ -296,4 +296,8 @@ export function deserializeOverride(ovr: Serialized.Override): Override {
     case 'patch':
       return PatchOverride.fromSerialized(ovr);
   }
+}
+
+function unixPath(dir: string): string {
+  return dir.replace(/\\/g, '/');
 }

@@ -11,7 +11,7 @@ namespace Microsoft.ReactNative.Managed
   /// </summary>
   /// <typeparam name="T">This must be thea type defined in the assembly where the items for the react package should be extracted.</typeparam>
   /// <remarks>
-  /// The common use case of this type is adding this to the PackageProviders from the constructor of your application (say: in <c>App()</c> of App.g.cs) like <c>PackageProviders.Add(new ReflectionReactPackageProvider<App>());</c>.
+  /// The common use case of this type is adding this to the PackageProviders from the constructor of your application (say: in <c>App()</c> of App.g.cs) like <c>PackageProviders.Add(new ReflectionReactPackageProvider&lt;App&gt;());</c>.
   /// </remarks>
   public class ReflectionReactPackageProvider<T> : IReactPackageProvider
   {
@@ -31,12 +31,13 @@ namespace Microsoft.ReactNative.Managed
     /// </summary>
     /// <typeparam name="T">This must be thea type defined in the assembly where the items for the react package should be extracted.</typeparam>
     /// <remarks>
-    /// The common use case of this type is when you have a react library. Then you would call this from the <see cref="IReactPackageBuilder.CreatePackage"/> function in ReactPackageProvider class that implements <see cref="IReactPackageProvider"/> like: <c>
+    /// The common use case of this type is when you have a react library. Then you would call this from the <see cref="IReactPackageProvider.CreatePackage"/> function in ReactPackageProvider class that implements <see cref="IReactPackageProvider"/> like:
+    /// <c>
     /// public sealed class ReactPackageProvider : IReactPackageProvider
     /// {
     ///     public void CreatePackage(IReactPackageBuilder packageBuilder)
     ///     {
-    ///         packageBuilder.AddReflectionReactPackageProvider<ReactPackageProvider>();
+    ///         packageBuilder.AddReflectionReactPackageProvider&lt;ReactPackageProvider&gt;();
     ///     }
     /// }
     /// </c>.

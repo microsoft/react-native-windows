@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.27",
+  "version": "0.0.0-canary.28",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -17,8 +17,7 @@
     "run-win32-devmain": "rex-win32 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
     "run-win32": "rex-win32 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev",
     "start": "react-native start",
-    "validate-overrides": "react-native-platform-override validate ./src/overrides.json",
-    "watch": "tsc -w"
+    "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
@@ -45,7 +44,7 @@
   },
   "devDependencies": {
     "@office-iss/rex-win32": "0.62.0-preview.16-tenantreactnativewin-13017.2",
-    "@rnw-scripts/eslint-config": "0.0.1",
+    "@rnw-scripts/eslint-config": "0.0.2",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
@@ -58,7 +57,7 @@
     "just-scripts": "^0.36.1",
     "react": "16.13.0",
     "react-native": "0.0.0-56cf99a96",
-    "react-native-platform-override": "^0.0.8",
+    "react-native-platform-override": "^0.1.0",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {

@@ -55,10 +55,10 @@ const argv = yargs
       describe: 'Overwrite any existing files without prompting',
       default: false,
     },
-    experimentalNuGetDependency: {
+    experimentalNugetDependency: {
       type: 'boolean',
       describe:
-        'Experimental change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
+        '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
       hidden: true,
       default: false,
     },
@@ -68,10 +68,22 @@ const argv = yargs
       hidden: true,
       default: false,
     },
+    nuGetTestVersion: {
+      type: 'string',
+      describe:
+        '[internalTesting] By default the NuGet version matches the rnw package. This flag allows manually specifying the version for internal testing.',
+      hidden: true,
+    },
+    nuGetTestFeed: {
+      type: 'string',
+      describe:
+        '[internalTesting] Allows a test feed to be added to the generated NuGet configuration',
+      hidden: true,
+    },
     useDevMode: {
       type: 'boolean',
       describe:
-        'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
+        '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
       hidden: true,
       default: false,
     },
@@ -317,10 +329,10 @@ function isProjectUsingYarn(cwd: string): boolean {
     const useDevMode = argv.useDevMode;
     let version = argv.version;
 
-    if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
+    if (argv.useWinUI3 && argv.experimentalNugetDependency) {
       // WinUI3 is not yet compatible with NuGet packages
       console.error(
-        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNugetDependency' are incompatible",
       );
       process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
     }
@@ -418,8 +430,10 @@ You can either downgrade your version of ${chalk.green(
       language: argv.language as 'cs' | 'cpp',
       overwrite: argv.overwrite,
       verbose: argv.verbose,
-      experimentalNuGetDependency: argv.experimentalNuGetDependency,
+      experimentalNugetDependency: argv.experimentalNugetDependency,
       useWinUI3: argv.useWinUI3,
+      nuGetTestVersion: argv.nuGetTestVersion,
+      nuGetTestFeed: argv.nuGetTestFeed,
     });
   } catch (error) {
     console.error(chalk.red(error.message));

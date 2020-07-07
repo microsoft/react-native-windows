@@ -1,8 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add Support for Binary Overrides to react-native-platform-override",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-04T18:06:24.883Z"
-}

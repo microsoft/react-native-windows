@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.112",
+  "version": "0.0.0-canary.114",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "lint": "just-scripts lint",
     "start": "react-native start",
     "watch": "just-scripts watch",
-    "validate-overrides": "react-native-platform-override validate ./src/overrides.json ./ReactCopies/overrides.json ./DeforkingPatches/overrides.json"
+    "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
@@ -75,10 +75,8 @@
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
-    "react-native-platform-override": "^0.0.8",
-    "react-native-platform-override": "^0.0.8",
-    "react-native-windows-codegen": "0.0.8",
-    "react-native-windows-codegen": "0.0.8",
+    "react-native-platform-override": "^0.1.0",
+    "react-native-windows-codegen": "0.0.9",
     "react-native": "0.0.0-56cf99a96",
     "react-refresh": "^0.4.0",
     "react": "16.13.0",

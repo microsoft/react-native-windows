@@ -184,6 +184,11 @@ describe('LoginTest', () => {
 
 A `node` test runner is the first choice since we started the investigation for E2E test. React Native apps are written in JavaScript and it&#39;s a good choose to select a JavaScript framework to author the test case. It would be more friendly to the community, so MSTest with C# is excluded in our option.
 
+### Appium
+[Appium](http://appium.io/) is a W3C-standards based technology based on Selenium, a popular test technology for the web.  Appium supports Windows as well as Android, iOS, and MacOS.  It's recommended that you get some training on this technology before writing tests.  Plurualsight has some great courses, see:  
+[Appium the Big Picture](https://app.pluralsight.com/player?course=appium-big-picture&author=marcel-devries&name=6d3fc4a8-e30e-41f2-aaaf-252483d2b017&clip=5&mode=live)  
+[Getting Started with Appium](https://www.pluralsight.com/courses/getting-started-ui-testing-appium)  
+
 ### WinAppDriver + WebDriverIO + Jasmine
 There is not existing example we can follow to setup E2E testing on Windows for React Native, and I spent weeks to investigate, test and prototype for our E2E. Hereafter I explain what kind of decisions I made and why I made these decisions
 

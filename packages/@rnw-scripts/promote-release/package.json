@@ -1,18 +1,19 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
-    "lint:fix": "just-scripts lint:fix"
+    "lint:fix": "just-scripts lint:fix",
+    "watch": "just-scripts watch"
   },
   "bin": {
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "0.0.2",
+    "@rnw-scripts/find-repo-root": "0.0.3",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "js-yaml": "^3.14.0",
@@ -21,8 +22,8 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.0.1",
-    "@rnw-scripts/just-task": "0.0.1",
+    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.0.1",
     "@types/chalk": "^2.2.0",
     "@types/glob": "^7.1.0",

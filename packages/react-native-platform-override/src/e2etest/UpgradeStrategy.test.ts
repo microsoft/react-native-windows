@@ -12,12 +12,24 @@ import UpgradeStrategy, {
   UpgradeResult,
   UpgradeStrategies,
 } from '../UpgradeStrategy';
-import {usingGitReactRepo, usingOverrideRepo} from './Resource';
+import {acquireGitRepo, usingOverrides} from './Resource';
+import GitReactFileRepository from '../GitReactFileRepository';
 import isutf8 from 'isutf8';
+
+let gitReactRepo: GitReactFileRepository;
+let disposeReactRepo: () => Promise<void>;
+
+beforeAll(async () => {
+  [gitReactRepo, disposeReactRepo] = await acquireGitRepo();
+});
+
+afterAll(async () => {
+  await disposeReactRepo();
+});
 
 test('assumeUpToDate', async () => {
   const overrideFile = '0.61.5/flowconfig.windows.conflict';
-  const strategy = UpgradeStrategies.assumeUpToDate();
+  const strategy = UpgradeStrategies.assumeUpToDate(overrideFile);
 
   await evaluateStrategy({
     strategy,
@@ -26,6 +38,7 @@ test('assumeUpToDate', async () => {
     allowConflicts: true,
     expected: {
       referenceFile: '0.61.5/flowconfig.windows.conflict',
+      overrideName: overrideFile,
       fileWritten: false,
       hasConflicts: false,
     },
@@ -50,6 +63,7 @@ test('threeWayMerge - Simple Addition', async () => {
     allowConflicts: true,
     expected: {
       referenceFile: '0.62.2/flowconfig.windows.addition',
+      overrideName: overrideFile,
       fileWritten: true,
       hasConflicts: false,
     },
@@ -74,6 +88,7 @@ test('threeWayMerge - Text Conflict (Allowed)', async () => {
     allowConflicts: true,
     expected: {
       referenceFile: '0.62.2/flowconfig.windows.conflict',
+      overrideName: overrideFile,
       fileWritten: true,
       hasConflicts: true,
     },
@@ -98,6 +113,7 @@ test('threeWayMerge - Text Conflict (Disallowed)', async () => {
     allowConflicts: false,
     expected: {
       referenceFile: '0.61.5/flowconfig.windows.conflict',
+      overrideName: overrideFile,
       fileWritten: false,
       hasConflicts: true,
     },
@@ -123,6 +139,7 @@ test('threeWayMerge - Binary Conflict', async () => {
     allowConflicts: true,
     expected: {
       referenceFile: '0.59.9/Icon-60@2x.conflict.png',
+      overrideName: overrideFile,
       fileWritten: false,
       hasConflicts: true,
     },
@@ -142,6 +159,7 @@ test('copyFile', async () => {
     allowConflicts: true,
     expected: {
       referenceFile: '0.62.2/flowconfig.pristine',
+      overrideName: overrideFile,
       fileWritten: true,
       hasConflicts: false,
     },
@@ -157,33 +175,31 @@ async function evaluateStrategy(opts: {
     referenceFile: string;
   } & UpgradeResult;
 }) {
-  await usingOverrideRepo(
+  await usingOverrides(
     [opts.overrideFile],
     async (overrideRepo, overridesPath) => {
-      await usingGitReactRepo(async gitReactRepo => {
-        const actualResult = await opts.strategy.upgrade(
-          gitReactRepo,
-          overrideRepo,
-          opts.upgradeVersion,
-          opts.allowConflicts,
-        );
+      const actualResult = await opts.strategy.upgrade(
+        gitReactRepo,
+        overrideRepo,
+        opts.upgradeVersion,
+        opts.allowConflicts,
+      );
 
-        const {referenceFile, ...expectedResult} = opts.expected;
-        expect(actualResult).toEqual(expectedResult);
+      const {referenceFile, ...expectedResult} = opts.expected;
+      expect(actualResult).toEqual(expectedResult);
 
-        const actualContent = await fs.promises.readFile(
-          path.join(overridesPath, opts.overrideFile),
-        );
-        const expectedContent = await fs.promises.readFile(
-          path.join(__dirname, 'collateral', referenceFile),
-        );
+      const actualContent = await fs.promises.readFile(
+        path.join(overridesPath, opts.overrideFile),
+      );
+      const expectedContent = await fs.promises.readFile(
+        path.join(__dirname, 'collateral', referenceFile),
+      );
 
-        if (isutf8(actualContent) && isutf8(expectedContent)) {
-          expect(actualContent.toString()).toBe(expectedContent.toString());
-        } else {
-          expect(actualContent.compare(expectedContent)).toBe(0);
-        }
-      });
+      if (isutf8(actualContent) && isutf8(expectedContent)) {
+        expect(actualContent.toString()).toBe(expectedContent.toString());
+      } else {
+        expect(actualContent.compare(expectedContent)).toBe(0);
+      }
     },
   );
 }

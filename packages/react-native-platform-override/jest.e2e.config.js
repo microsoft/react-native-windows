@@ -20,5 +20,5 @@ module.exports = {
   testRegex: '/e2etest/.*\\.test',
 
   // Default timeout of a test in milliseconds
-  testTimeout: 60000,
+  testTimeout: 120000,
 };
