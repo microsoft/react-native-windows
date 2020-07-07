@@ -28,7 +28,8 @@ TEST_CLASS (DynamicReaderWriterTests) {
   }
 
   TEST_METHOD(WriteGetString) {
-    TestScalar<const param::hstring&, hstring>(&IJSValueWriter::WriteString, &IJSValueReader::GetString, JSValueType::String, L"abc");
+    TestScalar<const param::hstring &, hstring>(
+        &IJSValueWriter::WriteString, &IJSValueReader::GetString, JSValueType::String, L"abc");
   }
 
   TEST_METHOD(WriteNull) {
@@ -158,20 +159,20 @@ TEST_CLASS (DynamicReaderWriterTests) {
     TestCheck(!reader.GetNextObjectProperty(emptyPropertyName));
   }
 
-  private:
-   template <class TWriterValue, class TReaderValue = TWriterValue>
-   void TestScalar(
-       void (IJSValueWriter::*writerMethod)(TWriterValue) const,
-       TReaderValue (IJSValueReader::*readerMethod)() const,
-       JSValueType runtimeType,
-       TWriterValue value) {
-     IJSValueWriter writer = Microsoft::Internal::TestController::CreateDynamicWriter();
-     (writer.*writerMethod)(value);
+ private:
+  template <class TWriterValue, class TReaderValue = TWriterValue>
+  void TestScalar(
+      void (IJSValueWriter::*writerMethod)(TWriterValue) const,
+      TReaderValue (IJSValueReader::*readerMethod)() const,
+      JSValueType runtimeType,
+      TWriterValue value) {
+    IJSValueWriter writer = Microsoft::Internal::TestController::CreateDynamicWriter();
+    (writer.*writerMethod)(value);
 
-     IJSValueReader reader = Microsoft::Internal::TestController::CreateDynamicReader(writer);
-     TestCheckEqual(runtimeType, reader.ValueType());
-     TestCheckEqual(value, (reader.*readerMethod)());
-   }
+    IJSValueReader reader = Microsoft::Internal::TestController::CreateDynamicReader(writer);
+    TestCheckEqual(runtimeType, reader.ValueType());
+    TestCheckEqual(value, (reader.*readerMethod)());
+  }
 };
 
 } // namespace ABITests

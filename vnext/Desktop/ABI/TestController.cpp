@@ -54,7 +54,8 @@ struct DynamicWrapperReader : public winrt::implements<DynamicWrapperReader, Mic
 
 namespace winrt::Microsoft::Internal::implementation {
 
-Microsoft::ReactNative::IJSValueReader TestController::CreateDynamicReader(Microsoft::ReactNative::IJSValueWriter writer) {
+Microsoft::ReactNative::IJSValueReader TestController::CreateDynamicReader(
+    Microsoft::ReactNative::IJSValueWriter writer) {
   auto dw = writer.as<Microsoft::ReactNative::DynamicWriter>();
   return make<DynamicWrapperReader>(dw->TakeValue());
 }
