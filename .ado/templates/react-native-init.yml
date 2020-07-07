@@ -60,7 +60,7 @@ steps:
         artifactName: NuGetTestFeed
         downloadPath: $(System.DefaultWorkingDirectory)
     - script: |
-        echo ##vso[task.setvariable variable=nugetInitArguments]--experimentalNugetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
+        echo ##vso[task.setvariable variable=nugetInitArguments]--experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
       displayName: 'Configure additional args for nuget'
   - ${{ if not(eq(parameters.useNuGet, true)) }}:
     - script: |
