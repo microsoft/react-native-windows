@@ -14,18 +14,14 @@ function sortDevices(l: DeviceInfo, r: DeviceInfo): number {
 }
 
 class DeviceInfo {
-  public guid?: string;
-  public ip?: string;
+  constructor(
+    public readonly name: string,
+    public readonly guid: string,
+    public readonly ip: string,
 
-  public readonly name: string;
-  private index: number;
-  private type: string;
-
-  constructor(deviceIndex: number, deviceName: string, deviceType: string) {
-    this.index = deviceIndex;
-    this.name = deviceName;
-    this.type = deviceType;
-  }
+    private index: number,
+    private type: string,
+  ) {}
 
   toString() {
     return `${this.index}. ${this.name} (${this.type})`;
@@ -39,7 +35,7 @@ export default class WinAppDeployTool {
     const programFilesPath =
       process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
     this.path = path.join(
-      programFilesPath,
+      programFilesPath!,
       'Windows Kits',
       '10',
       'bin',
@@ -95,15 +91,16 @@ export default class WinAppDeployTool {
 
     const devices = matchedLines.map((line, arrayIndex) => {
       const match = line.match(LINE_TEST);
+      if (!match) {
+        throw new Error('Unexpected format of "devices" output');
+      }
+
       const ip = match[1];
       const guid = match[2];
       const name = match[3];
       const type = 'device';
 
-      const deviceInfo = new DeviceInfo(arrayIndex, name, type);
-      deviceInfo.ip = ip;
-      deviceInfo.guid = guid;
-
+      const deviceInfo = new DeviceInfo(name, guid, ip, arrayIndex, type);
       return deviceInfo;
     });
 

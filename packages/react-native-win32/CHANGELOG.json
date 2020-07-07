@@ -2,6 +2,29 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove broken watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",

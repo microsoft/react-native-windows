@@ -10,7 +10,10 @@
 // import to just this file and blacklist the file to get around it. Note that
 // we cannot import the real module because it may be in a different location
 // for older versions of RNW.
-import type {generateWindows} from 'react-native-windows/local-cli/lib-commonjs/generate-windows';
+import type {generateWindows, GenerateOptions} from 'react-native-windows/local-cli/lib-commonjs/generate-windows';
 
-type GenerateWindows = typeof generateWindows;
-export default GenerateWindows;
+// Current version
+export type GenerateWindows = typeof generateWindows;
+
+// Older versions of GenerateWindows were synchronous
+export type GenerateWindows62 = (projectDir: string, name: string, ns: string, options: GenerateOptions) => void;

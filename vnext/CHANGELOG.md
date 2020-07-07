@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Jul 2020 05:05:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.114
+
+Tue, 07 Jul 2020 05:05:23 GMT
+
+### Changes
+
+- Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package (dannyvv@microsoft.com)
+
+## 0.0.0-canary.113
+
+Mon, 06 Jul 2020 23:11:46 GMT
+
+### Changes
+
+- Add Support for Binary Overrides to react-native-platform-override (ngerlem@microsoft.com)
+- Create a Programmatic API for react-native-platform-override (ngerlem@microsoft.com)
+
+## 0.0.0-canary.112
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Changes
+
+- Enforce null/undefined safety for the CLI (ngerlem@microsoft.com)
+- Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package (dannyvv@microsoft.com)
+- Remove github actions workflow for CI and publish (dannyvv@microsoft.com)
+- Include "nuget.exe" as Package Dependency of react-native-windows (ngerlem@microsoft.com)
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+- Cleanup VS Installation Related CLI code (ngerlem@microsoft.com)
+- add guard to ensure only one version of XAML is loaded (asklar@microsoft.com)
+
+## 0.0.0-canary.111
+
+Thu, 02 Jul 2020 05:05:06 GMT
+
+### Changes
+
+- Migrate 'AppState' to turbo module (zihanc@microsoft.com)
+- Migrate 'DeviceInfo' to turbo module (zihanc@microsoft.com)
+- Migrate 'I18nManager' to turbo module (zihanc@microsoft.com)
 
 ## 0.0.0-canary.110
 

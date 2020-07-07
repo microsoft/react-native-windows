@@ -10,7 +10,6 @@ import * as http from 'http';
 import * as path from 'path';
 import * as glob from 'glob';
 import * as parse from 'xml-parser';
-import {EOL} from 'os';
 import WinAppDeployTool from './winappdeploytool';
 import {
   newInfo,
@@ -23,6 +22,7 @@ import {
 } from './commandWithProgress';
 import * as build from './build';
 import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
+import MSBuildTools from './msbuildtools';
 
 function pushd(pathArg: string): () => void {
   const cwd = process.cwd();
@@ -190,6 +190,7 @@ export async function deployToDesktop(
   options: RunWindowsOptions,
   verbose: boolean,
   slnFile: string,
+  buildTools: MSBuildTools,
 ) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
@@ -203,17 +204,7 @@ export async function deployToDesktop(
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
 
-  // This path is maintained and VS has promised to keep it valid.
-  const vsWherePath = path.join(
-    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
-    '/Microsoft Visual Studio/Installer/vswhere.exe',
-  );
-
-  const vsVersion = execSync(
-    `"${vsWherePath}" -version 16 -property catalog_productDisplayVersion`,
-  )
-    .toString()
-    .split(EOL)[0];
+  const vsVersion = buildTools.installationVersion;
 
   if (vsVersion.startsWith('16.5') || vsVersion.startsWith('16.6')) {
     // VS 16.5 and 16.6 introduced a regression in packaging where the certificates created in the UI will render the package uninstallable.
@@ -243,15 +234,7 @@ export async function deployToDesktop(
   }
 
   if (options.directDebugging) {
-    const port = parseInt(options.directDebugging, 10);
-    if (!isNaN(port) && port > 1024 && port < 65535) {
-      args.push('--direct-debugging', port.toString());
-    } else {
-      newError(
-        'Direct debugging port not specified, invalid or out of bounds.',
-      );
-      process.exit(1);
-    }
+    args.push('--direct-debugging', options.directDebugging.toString());
   }
 
   await runPowerShellScriptFunction(
@@ -277,6 +260,7 @@ export async function deployToDesktop(
     );
   } else {
     await build.buildSolution(
+      buildTools,
       slnFile,
       options.release ? 'Release' : 'Debug',
       options.arch,

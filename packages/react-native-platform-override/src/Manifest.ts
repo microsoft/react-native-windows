@@ -19,20 +19,40 @@ import {ValidationError} from './ValidationStrategy';
  * performing aggregate operations on the overrides.
  */
 export default class Manifest {
-  private overrides: Array<Override>;
+  private includePatterns?: string[];
+  private excludePatterns?: string[];
+  private overrides: Override[];
 
-  constructor(overrides: Array<Override>) {
+  /**
+   * Construct the manifest
+   *
+   * @param overrides List of overrides to evaluate
+   * @param opts Allows specifying globs to include or exclude paths to enforce
+   * exist in the manifest
+   */
+  constructor(
+    overrides: Override[],
+    opts: {
+      includePatterns?: string[];
+      excludePatterns?: string[];
+    } = {},
+  ) {
     const uniquelyNamed = _.uniqBy(overrides, ovr => ovr.name());
     if (uniquelyNamed.length !== overrides.length) {
       throw new Error('Cannot construct a manifest with duplicate overrides');
     }
 
+    this.includePatterns = opts.includePatterns;
+    this.excludePatterns = opts.excludePatterns;
     this.overrides = _.clone(overrides);
   }
 
   static fromSerialized(man: Serialized.Manifest): Manifest {
     const overrides = man.overrides.map(deserializeOverride);
-    return new Manifest(overrides);
+    return new Manifest(overrides, {
+      includePatterns: man.includePatterns,
+      excludePatterns: man.excludePatterns,
+    });
   }
 
   /**
@@ -43,10 +63,15 @@ export default class Manifest {
   async validate(
     overrideRepo: OverrideFileRepository,
     reactRepo: ReactFileRepository,
-  ): Promise<Array<ValidationError>> {
+  ): Promise<ValidationError[]> {
     const errors: ValidationError[] = [];
 
-    const overrideFiles = await overrideRepo.listFiles();
+    const globs = [
+      ...(this.includePatterns || ['**']),
+      ...(this.excludePatterns || []).map(p => '!' + p),
+    ];
+
+    const overrideFiles = await overrideRepo.listFiles(globs);
     const missingFromManifest = overrideFiles.filter(
       file => !this.overrides.some(override => override.includesFile(file)),
     );
@@ -132,6 +157,8 @@ export default class Manifest {
    */
   serialize(): Serialized.Manifest {
     return {
+      includePatterns: this.includePatterns,
+      excludePatterns: this.excludePatterns,
       overrides: this.overrides
         .sort((a, b) => a.name().localeCompare(b.name(), 'en'))
         .map(override => override.serialize()),

@@ -16,7 +16,7 @@ import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
-import GenerateWindows from './GenerateWindowsType';
+import requireGenerateWindows from './requireGenerateWindows';
 
 const npmConfReg = execSync('npm config get registry')
   .toString()
@@ -58,7 +58,7 @@ const argv = yargs
     experimentalNuGetDependency: {
       type: 'boolean',
       describe:
-        'Experimental change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
+        '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
       hidden: true,
       default: false,
     },
@@ -68,10 +68,22 @@ const argv = yargs
       hidden: true,
       default: false,
     },
+    nuGetTestVersion: {
+      type: 'string',
+      describe:
+        '[internalTesting] By default the NuGet version matches the rnw package. This flag allows manually specifying the version for internal testing.',
+      hidden: true,
+    },
+    nuGetTestFeed: {
+      type: 'string',
+      describe:
+        '[internalTesting] Allows a test feed to be added to the generated NuGet configuration',
+      hidden: true,
+    },
     useDevMode: {
       type: 'boolean',
       describe:
-        'Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
+        '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
       hidden: true,
       default: false,
     },
@@ -95,22 +107,6 @@ const EXITCODE_NO_PACKAGE_JSON = 7;
 const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
 const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
-
-function requireGenerateWindows(): GenerateWindows {
-  try {
-    // Try the path for 0.63+
-    return require(require.resolve(
-      'react-native-windows/local-cli/lib-commonjs/generate-windows',
-      {paths: [process.cwd()]},
-    )).generateWindows;
-  } catch {
-    // Fall back to trying the older path
-    return require(require.resolve(
-      'react-native-windows/local-cli/generate-windows',
-      {paths: [process.cwd()]},
-    ));
-  }
-}
 
 function getReactNativeAppName(): string {
   console.log('Reading application name from package.json...');
@@ -430,12 +426,14 @@ You can either downgrade your version of ${chalk.green(
     installReactNativeWindows(version, useDevMode);
 
     const generateWindows = requireGenerateWindows();
-    generateWindows(process.cwd(), name, ns, {
+    await generateWindows(process.cwd(), name, ns, {
       language: argv.language as 'cs' | 'cpp',
       overwrite: argv.overwrite,
       verbose: argv.verbose,
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
+      nuGetTestVersion: argv.nuGetTestVersion,
+      nuGetTestFeed: argv.nuGetTestFeed,
     });
   } catch (error) {
     console.error(chalk.red(error.message));

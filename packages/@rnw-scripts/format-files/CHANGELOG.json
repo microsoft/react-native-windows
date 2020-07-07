@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "@rnw-scripts/format-files_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "@rnw-scripts/format-files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "@rnw-scripts/format-files_v0.0.2",
       "version": "0.0.2",

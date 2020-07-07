@@ -2,6 +2,120 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Jul 2020 05:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.114",
+      "version": "0.0.0-canary.114",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5570885a6573062b94acea238ee2c5348fac98dc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.113",
+      "version": "0.0.0-canary.113",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create a Programmatic API for react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Jul 2020 05:05:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.112",
+      "version": "0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enforce null/undefined safety for the CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "228e0bc5dc985b6eb71c94395304d99a0d054e2c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7cfed33bb3ee4118a4e2aedc0e365ff8f81cca5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove github actions workflow for CI and publish",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0accbb156142c9f8466e2b50a32c8684e6b41648",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Include \"nuget.exe\" as Package Dependency of react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b0380620601d136f4273a1245f6a60468fd375",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Replace Custom Generator Prompt With Inquirer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a25a8294ff602cc457e34dfd38cae10650092810",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Cleanup VS Installation Related CLI code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4d0fb0726278def6df793c648420422a7dbf3b62",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add guard to ensure only one version of XAML is loaded",
+            "author": "asklar@microsoft.com",
+            "commit": "e636d0d513d38cf3921887c56983b45cceb02d8e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Jul 2020 05:05:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.111",
+      "version": "0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Migrate 'AppState' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "ce0d59e4d7417b3ef6b7357d16c7a40dd709c2b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'DeviceInfo' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "6dd50410e82ff3fe157804ac170bdf670ef1e10c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate 'I18nManager' to turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "a5fd8388c9210267635153ad5d4e694db4473a7d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.110",
       "version": "0.0.0-canary.110",

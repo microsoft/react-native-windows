@@ -1,0 +1,17 @@
+{
+  "search.exclude": {
+    "lib-commonjs": true,
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.format.enable": true,
+  "typescript.format.enable": false,
+  "eslint.packageManager": "yarn",
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+  ],
+}
