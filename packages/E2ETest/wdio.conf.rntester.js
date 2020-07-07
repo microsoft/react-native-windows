@@ -73,7 +73,7 @@ exports.config = {
       // This is `appium:` for all Appium Capabilities which can be found here
       'appium:deviceName': 'WindowsPC',
       'appium:app': 'ReactUWPTestApp_kc2bncckyf4ap!App',
-      'appium:appArguments' : 'UseRNTester',
+      'appium:appArguments': 'UseRNTester',
       deviceName: 'WindowsPC',
       app: 'ReactUWPTestApp_kc2bncckyf4ap!App',
       'winAppDriver:experimental-w3c': true,

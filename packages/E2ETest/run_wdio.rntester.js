@@ -139,7 +139,7 @@ function doProcess(code) {
 }
 
 function runWdio() {
-//  ensureRunningInHyperV();
+  //  ensureRunningInHyperV();
 
   // Ensure that directory exists for error screenshots to be saved to
   if (!fs.existsSync(path.resolve(__dirname, 'errorShots'))) {
