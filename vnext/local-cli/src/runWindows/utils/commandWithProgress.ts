@@ -43,13 +43,13 @@ export function newSpinner(text: string) {
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,
-  script: string,
+  script: string | null,
   funcName: string,
   verbose: boolean,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
-    const importScript = script !== '' ? `Import-Module "${script}"; ` : '';
+    const importScript = script ? `Import-Module "${script}"; ` : '';
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,

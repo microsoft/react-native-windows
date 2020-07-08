@@ -267,7 +267,7 @@ export async function deployToDesktop(
     );
     await runPowerShellScriptFunction(
       'Installing dependent framework packages',
-      '',
+      null,
       `Add-AppXPackage ${dependencies}\\*`,
       verbose,
     );
