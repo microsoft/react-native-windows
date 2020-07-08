@@ -81,6 +81,9 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="ABI\TestController.idl">
+      <Filter>ABI</Filter>
+    </Midl>
     <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -108,6 +111,9 @@
       <Filter>ABI</Filter>
     </ClCompile>
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\TestController.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
     <ClCompile Include="BeastWebSocketResource.cpp">
@@ -155,6 +161,9 @@
       <Filter>ABI</Filter>
     </ClInclude>
     <ClInclude Include="ABI\NativeTraceEventSource.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\TestController.h">
       <Filter>ABI</Filter>
     </ClInclude>
   </ItemGroup>

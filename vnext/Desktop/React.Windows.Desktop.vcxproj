@@ -127,6 +127,7 @@
     <Midl Include="ABI\MessageQueue.idl" />
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
+    <Midl Include="ABI\TestController.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
@@ -161,6 +162,10 @@
     </ClCompile>
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="ABI\TestController.cpp">
+      <DependentUpon>ABI\TestController.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
@@ -212,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="ABI\TestController.h">
+      <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
