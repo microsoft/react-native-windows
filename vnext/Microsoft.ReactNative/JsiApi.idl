@@ -1,0 +1,121 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative
+{
+  interface IJsiRuntime;
+
+  delegate void JsiDataHandler(UInt8[] data);
+
+  [webhosthidden]
+  interface IJsiBuffer
+  {
+    UInt32 Size { get; };
+    void GetData(JsiDataHandler handler);
+  };
+
+  enum JsiValueType
+  {
+    Undefined,
+    Null,
+    Boolean,
+    Number,
+    Symbol,
+    String,
+    Object,
+  };
+
+  [webhosthidden]
+  struct JsiValueData
+  {
+    JsiValueType Kind;
+    UInt64 Value;
+  };
+
+  [default_interface]
+  runtimeclass JsiPreparedJavaScript
+  {
+  };
+
+  delegate JsiValueData JsiHostFunction(IJsiRuntime runtime, JsiValueData thisValue, JsiValueData[] args);
+
+  [webhosthidden]
+  interface IJsiHostObject
+  {
+    JsiValueData GetProperty(IJsiRuntime runtime, UInt64 name);
+    void SetProperty(IJsiRuntime runtime, UInt64 name, JsiValueData value);
+    IVectorView<UInt64> GetPropertyNames(IJsiRuntime runtime);
+  };
+
+  [webhosthidden]
+  interface IJsiRuntime
+  {
+    JsiValueData EvaluateJavaScript(IJsiBuffer buffer, String sourceUrl);
+    JsiPreparedJavaScript PrepareJavaScript(IJsiBuffer buffer, String sourceUrl);
+    JsiValueData EvaluatePreparedJavaScript(JsiPreparedJavaScript js);
+    UInt64 Global { get; };
+    String Description { get; };
+    Boolean IsInspectable { get; };
+
+    UInt64 CloneSymbol(UInt64 symbol);
+    UInt64 CloneString(UInt64 str);
+    UInt64 CloneObject(UInt64 obj);
+    UInt64 ClonePropertyNameId(UInt64 propertyNameId);
+
+    UInt64 CreatePropertyNameIdFromAscii(UInt8[] ascii);
+    UInt64 CreatePropertyNameIdFromUtf8(UInt8[] utf8);
+    UInt64 CreatePropertyNameIdFromString(UInt64 str);
+    void PropertyNameIdToUtf8(UInt64 propertyNameId, JsiDataHandler utf8Handler);
+    Boolean ComparePropertyNameIds(UInt64 left, UInt64 right);
+
+    void SymbolToUtf8(UInt64 symbol, JsiDataHandler utf8Handler);
+
+    UInt64 CreateStringFromAscii(UInt8[] ascii);
+    UInt64 CreateStringFromUtf8(UInt8[] utf8);
+    void StringToUtf8(UInt64 str, JsiDataHandler utf8Handler);
+
+    JsiValueData CreateValueFromJsonUtf8(UInt8[] json);
+
+    UInt64 CreateObject();
+    UInt64 CreateObjectWithHostObject(IJsiHostObject hostObject);
+    IJsiHostObject GetHostObject(UInt64 obj);
+    JsiHostFunction GetHostFunction(UInt64 func);
+
+    JsiValueData GetProperty(UInt64 obj, UInt64 propertyNameId);
+    JsiValueData GetPropertyWithString(UInt64 obj, UInt64 name);
+    Boolean HasProperty(UInt64 obj, UInt64 propertyNameId);
+    Boolean HasPropertyWithString(UInt64 obj, UInt64 name);
+    void SetProperty(UInt64 obj, UInt64 propertyNameId, JsiValueData value);
+    void SetPropertyWithString(UInt64 obj, UInt64 nameStr, JsiValueData value);
+
+    Boolean IsArray(UInt64 obj);
+    Boolean IsArrayBuffer(UInt64 obj);
+    Boolean IsFunction(UInt64 obj);
+    Boolean IsHostObject(UInt64 obj);
+    Boolean IsHostFunction(UInt64 obj);
+    UInt64 GetPropertyNameArray(UInt64 obj);
+
+    UInt64 CreateWeakObject(UInt64 obj);
+    JsiValueData LockWeakObject(UInt64 weakObject);
+
+    UInt64 CreateArray(UInt32 size);
+    UInt32 GetArraySize(UInt64 arr);
+    UInt32 GetArrayBufferSize(UInt64 arrayBuffer);
+    void ArrayBufferToUtf8(UInt64 arrayBuffer, JsiDataHandler utf8Handler);
+    JsiValueData GetValueAtIndex(UInt64 arr, UInt32 index);
+    void SetValueAtIndex(UInt64 arr, UInt32 index, JsiValueData value);
+
+    UInt64 CreateFunctionFromHostFunction(UInt64 propNameId, UInt32 paramCount, JsiHostFunction hostFunc);
+    JsiValueData Call(UInt64 func, JsiValueData thisValue, JsiValueData[] args);
+    JsiValueData CallAsConstructor(UInt64 func, JsiValueData[] args);
+
+    UInt64 PushScope();
+    void PopScope(UInt64 scopeState);
+
+    Boolean SymbolStrictEquals(UInt64 left, UInt64 right);
+    Boolean StringStrictEquals(UInt64 left, UInt64 right);
+    Boolean ObjectStrictEquals(UInt64 left, UInt64 right);
+
+    Boolean InstanceOf(UInt64 obj, UInt64 constructor);
+  };
+}

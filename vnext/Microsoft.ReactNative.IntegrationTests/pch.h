@@ -8,3 +8,4 @@
 
 #undef GetCurrentTime
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Microsoft.ReactNative.h>

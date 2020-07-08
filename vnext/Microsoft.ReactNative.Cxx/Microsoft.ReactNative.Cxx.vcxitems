@@ -17,8 +17,12 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JsiAbiApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
@@ -57,10 +61,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JsiAbiApi.cpp" />
   </ItemGroup>
 </Project>

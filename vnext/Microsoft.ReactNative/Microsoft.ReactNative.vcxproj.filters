@@ -322,6 +322,7 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="JsiApi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -697,6 +698,7 @@
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="JsiApi.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -730,6 +732,7 @@
     <Midl Include="Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
+    <Midl Include="JsiApi.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

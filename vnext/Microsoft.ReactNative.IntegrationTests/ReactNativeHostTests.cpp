@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <NativeModules.h>
 #include "MockReactPackageProvider.h"
+#include <JsiAbiApi.h>
 
 using namespace React;
 

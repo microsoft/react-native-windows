@@ -208,6 +208,9 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="JsiApi.h">
+      <DependentUpon>JsiApi.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="JsiReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -404,6 +407,9 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="JsiApi.cpp">
+      <DependentUpon>JsiApi.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="JsiReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
@@ -573,6 +579,7 @@
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
+    <Midl Include="JsiApi.idl" />
     <Midl Include="ReactApplication.idl" />
     <Midl Include="IReactContext.idl">
       <SubType>Designer</SubType>
