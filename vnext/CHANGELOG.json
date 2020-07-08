@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 17:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "Disable Override Validation for windesktop JS",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a530a3cc575986980b1307623dac478b54d2ca52",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jul 2020 05:04:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.116",
       "version": "0.0.0-canary.116",
