@@ -2,6 +2,52 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a bunch of deps we are using but not declaring",
+            "author": "acoates@microsoft.com",
+            "commit": "82d0454ef1de3290a01c5d1beb2110f170ee27c6",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove broken watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",

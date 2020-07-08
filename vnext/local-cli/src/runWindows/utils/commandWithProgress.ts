@@ -43,12 +43,13 @@ export function newSpinner(text: string) {
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,
-  script: string,
+  script: string | null,
   funcName: string,
   verbose: boolean,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
+    const importScript = script ? `Import-Module "${script}"; ` : '';
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
@@ -57,7 +58,7 @@ export async function runPowerShellScriptFunction(
         '-NoProfile',
         '-ExecutionPolicy',
         'RemoteSigned',
-        `Import-Module "${script}"; try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`,
+        `${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`,
       ],
       verbose,
     );
@@ -85,12 +86,12 @@ export function commandWithProgress(
     const cp = spawn(command, args, spawnOptions);
     let firstErrorLine: string | null = null;
     if (!verbose) {
-      cp.stdout.on('data', chunk => {
+      cp.stdout!.on('data', chunk => {
         const text = chunk.toString();
         setSpinnerText(spinner, taskDoingName + ': ', text);
       });
-      cp.stderr.on('data', chunk => {
-        const text = chunk.toString();
+      cp.stderr!.on('data', chunk => {
+        const text: string = chunk.toString();
         if (!firstErrorLine) {
           firstErrorLine = text;
         }

@@ -156,6 +156,104 @@ test('validate - Multiple Valid Types', async () => {
   expect(errors).toEqual([]);
 });
 
+test('validate - Single Include Pattern', async () => {
+  const manifest = new Manifest(
+    [
+      new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+      new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+    ],
+    {
+      includePatterns: ['**/*.windows.js'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
+
+test('validate - Multiple Include Pattern', async () => {
+  const manifest = new Manifest(
+    [
+      new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+      new PlatformOverride({file: 'bbb\\ccc.win32.js'}),
+    ],
+    {
+      includePatterns: ['aaa/aaa*', 'bbb/ccc*'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
+
+test('validate - Include Catches Errors', async () => {
+  const manifest = new Manifest(
+    [new PlatformOverride({file: 'bbb\\ccc.win32.js'})],
+    {
+      includePatterns: ['aaa/aaa*', 'bbb/ccc*'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([
+    {overrideName: 'aaa\\aaa.windows.js', type: 'missingFromManifest'},
+  ]);
+});
+
+test('validate - Single Exclude Pattern', async () => {
+  const manifest = new Manifest(
+    [
+      new PlatformOverride({file: 'aaa\\aaa.windows.js'}),
+      new PlatformOverride({file: 'aaa\\bbb.windows.js'}),
+    ],
+    {
+      excludePatterns: ['**/*.win32.js'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
+
+test('validate - Multiple Exclude Patterns', async () => {
+  const manifest = new Manifest(
+    [new PlatformOverride({file: 'aaa\\aaa.windows.js'})],
+    {
+      excludePatterns: ['**/*.win32.js', '**/bbb*'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
+
+test('validate - Exclude Catches Errors', async () => {
+  const manifest = new Manifest(
+    [new PlatformOverride({file: 'aaa\\aaa.windows.js'})],
+    {
+      excludePatterns: ['**/*.win32.js'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([
+    {overrideName: 'aaa\\bbb.windows.js', type: 'missingFromManifest'},
+  ]);
+});
+
+test('validate - Include and Exclude Patterns', async () => {
+  const manifest = new Manifest(
+    [new PlatformOverride({file: 'aaa\\aaa.windows.js'})],
+    {
+      includePatterns: ['**/*.windows.js'],
+      excludePatterns: ['**/bbb*'],
+    },
+  );
+
+  const errors = await manifest.validate(ovrRepo, reactRepo);
+  expect(errors).toEqual([]);
+});
+
 const sampleManifest = new Manifest([
   new CopyOverride({
     file: overrideFiles[0].filename,
@@ -256,6 +354,8 @@ test('markUpToDate - Simple', async () => {
 
 test('Serialization Round-Trip', () => {
   const serializedManifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [
       {
         type: 'platform',
@@ -315,6 +415,29 @@ test('String Exact Serialization Round-Trip', () => {
         baseHash: 'sdfssfsfsf',
         issue: 'LEGACY_FIXME',
       },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: '0.65.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  const manifestString = JSON.stringify(serializedManifest);
+  const manifest = Manifest.fromSerialized(
+    Serialized.parseManifest(manifestString),
+  );
+  expect(JSON.stringify(manifest.serialize())).toEqual(manifestString);
+});
+
+test('String Exact Serialization Round-Trip (With Patterns)', () => {
+  const serializedManifest: any = {
+    includePatterns: ['src/**'],
+    excludePatterns: ['**/*.png'],
+    overrides: [
       {
         type: 'copy',
         file: 'ffgg.windows.js',

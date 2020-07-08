@@ -1,1 +1,2 @@
-# Make sure to include JS builds outputs nornmally hidden by the gitignore
+/.gitignore
+/src

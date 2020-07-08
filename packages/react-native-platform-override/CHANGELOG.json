@@ -2,6 +2,52 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-platform-override_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase Timeout for react-native-platform-override e2etest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "28edae58b3ff838a08d54d2e0be0bfd0bcb648ba",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "react-native-platform-override_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Create a Programmatic API for react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "react-native-platform-override_v0.0.8",
       "version": "0.0.8",

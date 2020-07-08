@@ -137,7 +137,7 @@ export function addProjectToSolution(
     '\tGlobalSection(SolutionConfigurationPlatforms) = preSolution',
     '\tEndGlobalSection',
     false,
-  ).map(line => line.match(/\s+([\w|]+)\s=/)[1]);
+  ).map(line => line.match(/\s+([\w|]+)\s=/)![1]);
 
   let projectConfigLines: string[] = [];
 

@@ -4,6 +4,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}</ProjectGuid>
     <RootNamespace>Playground</RootNamespace>
+    <ProjectName>playgroundwin32</ProjectName>
     <Keyword>Win32Proj</Keyword>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>

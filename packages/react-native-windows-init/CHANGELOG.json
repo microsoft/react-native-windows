@@ -2,6 +2,66 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-windows-init_v0.1.19",
+      "version": "0.1.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rever to new experimentalNuGetDependency Naming",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8c9be4d325312d97ce19aeb4ee7ab3801b7b5a20",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Jul 2020 05:05:23 GMT",
+      "tag": "react-native-windows-init_v0.1.19-0",
+      "version": "0.1.19-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5570885a6573062b94acea238ee2c5348fac98dc",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "react-native-windows-init_v0.1.18",
+      "version": "0.1.18",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Jul 2020 05:05:03 GMT",
+      "tag": "react-native-windows-init_v0.1.17",
+      "version": "0.1.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace Custom Generator Prompt With Inquirer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a25a8294ff602cc457e34dfd38cae10650092810",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Jul 2020 05:06:19 GMT",
       "tag": "react-native-windows-init_v0.1.16",
       "version": "0.1.16",

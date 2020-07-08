@@ -19,16 +19,17 @@ import {
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
+import {GenerateOptions} from '../generate-windows';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
 
-function generateCertificate(
+async function generateCertificate(
   srcPath: string,
   destPath: string,
   newProjectName: string,
   currentUser: string,
-) {
+): Promise<string | null> {
   console.log('Generating self-signed certificate...');
   let toCopyTempKey = false;
   if (os.platform() === 'win32') {
@@ -71,7 +72,7 @@ function generateCertificate(
     toCopyTempKey = true;
   }
   if (toCopyTempKey) {
-    copyAndReplaceWithChangedCallback(
+    await copyAndReplaceWithChangedCallback(
       path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
       destPath,
       path.join(
@@ -81,19 +82,34 @@ function generateCertificate(
       ),
     );
   }
+
+  return null;
 }
 
-export function copyProjectTemplateAndReplace(
+/**
+ * This represents the data to insert nuget packages
+ */
+interface NugetPackage {
+  id: string;
+  version: string;
+}
+
+/**
+ * This represents the data to insert nuget packages with Cpp specific information
+ */
+interface CppNugetPackage extends NugetPackage {
+  propsTopOfFile?: boolean;
+  propsMiddleOfFile?: boolean;
+  hasProps: boolean;
+  hasTargets: boolean;
+}
+
+export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
   newProjectName: string,
   namespace: string,
-  options: {
-    overwrite: boolean;
-    language: 'cpp' | 'cs';
-    experimentalNuGetDependency: boolean;
-    useWinUI3: boolean;
-  },
+  options: GenerateOptions,
 ) {
   if (!srcRootPath) {
     throw new Error('Need a path to copy from');
@@ -123,11 +139,13 @@ export function copyProjectTemplateAndReplace(
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, language);
+  const sharedPath = path.join(srcRootPath, 'shared');
   const projectGuid = uuid.v4();
   const rnwVersion = require('react-native-windows/package.json').version;
+  const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
-  const currentUser = username.sync(); // Gets the current username depending on the platform.
-  const certificateThumbprint = generateCertificate(
+  const currentUser = username.sync()!; // Gets the current username depending on the platform.
+  const certificateThumbprint = await generateCertificate(
     srcPath,
     destPath,
     newProjectName,
@@ -145,15 +163,18 @@ export function copyProjectTemplateAndReplace(
   );
   const winui3Props = readProjectFile(winui3PropsPath);
   const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
+  if (winui3Version === null) {
+    throw new Error('Unable to find WinUI3 version from property sheets');
+  }
 
-  const cppNugetPackages: Array<{
-    id: string;
-    version: string;
-    propsTopOfFile?: boolean;
-    propsMiddleOfFile?: boolean;
-    hasProps: boolean;
-    hasTargets: boolean;
-  }> = [
+  const csNugetPackages: NugetPackage[] = [
+    {
+      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
+      version: '6.2.9',
+    },
+  ];
+
+  const cppNugetPackages: CppNugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.200615.7',
@@ -170,9 +191,14 @@ export function copyProjectTemplateAndReplace(
   ];
 
   if (options.experimentalNuGetDependency) {
+    csNugetPackages.push({
+      id: 'Microsoft.ReactNative.Managed',
+      version: nugetVersion,
+    });
+
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative',
-      version: rnwVersion,
+      version: nugetVersion,
       propsMiddleOfFile: true,
       hasProps: false,
       hasTargets: true,
@@ -199,12 +225,16 @@ export function copyProjectTemplateAndReplace(
     certificateThumbprint: certificateThumbprint,
 
     useExperimentalNuget: options.experimentalNuGetDependency,
+    nuGetTestFeed: options.nuGetTestFeed,
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+
+    // cs template variables
+    csNugetPackages: csNugetPackages,
 
     // autolinking template variables
     autolinkProjectReferencesForTargets: '',
@@ -215,7 +245,7 @@ export function copyProjectTemplateAndReplace(
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
   };
 
-  [
+  const commonMappings = [
     {from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js'},
     {
       from: path.join(srcRootPath, '_gitignore'),
@@ -238,33 +268,37 @@ export function copyProjectTemplateAndReplace(
       from: path.join(srcPath, projDir, 'MyApp.sln'),
       to: path.join(windowsDir, newProjectName + '.sln'),
     },
-  ].forEach(mapping =>
-    copyAndReplaceWithChangedCallback(
+  ];
+
+  for (const mapping of commonMappings) {
+    await copyAndReplaceWithChangedCallback(
       mapping.from,
       destPath,
       mapping.to,
       templateVars,
       options.overwrite,
-    ),
-  );
+    );
+  }
 
   if (language === 'cs') {
-    [
+    const csMappings = [
       {
         from: path.join(srcPath, projDir, 'MyApp.csproj'),
         to: path.join(windowsDir, newProjectName, newProjectName + '.csproj'),
       },
-    ].forEach(mapping =>
-      copyAndReplaceWithChangedCallback(
+    ];
+
+    for (const mapping of csMappings) {
+      await copyAndReplaceWithChangedCallback(
         mapping.from,
         destPath,
         mapping.to,
         templateVars,
         options.overwrite,
-      ),
-    );
+      );
+    }
   } else {
-    [
+    const cppMappings = [
       {
         from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
         to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj'),
@@ -281,6 +315,26 @@ export function copyProjectTemplateAndReplace(
         from: path.join(srcPath, projDir, 'packages.config'),
         to: path.join(windowsDir, newProjectName, 'packages.config'),
       },
+    ];
+
+    for (const mapping of cppMappings) {
+      await copyAndReplaceWithChangedCallback(
+        mapping.from,
+        destPath,
+        mapping.to,
+        templateVars,
+        options.overwrite,
+      );
+    }
+  }
+
+  // Once we are publishing to nuget.org, this shouldn't be needed anymore
+  if (options.experimentalNuGetDependency) {
+    [
+      {
+        from: path.join(sharedPath, projDir, 'NuGet.Config'),
+        to: path.join(windowsDir, 'NuGet.Config'),
+      },
     ].forEach(mapping =>
       copyAndReplaceWithChangedCallback(
         mapping.from,
@@ -290,34 +344,16 @@ export function copyProjectTemplateAndReplace(
         options.overwrite,
       ),
     );
-
-    // Once we are publishing to nuget.org, this shouldn't be needed anymore
-    if (options.experimentalNuGetDependency) {
-      [
-        {
-          from: path.join(srcPath, projDir, 'NuGet.Config'),
-          to: path.join(windowsDir, 'NuGet.Config'),
-        },
-      ].forEach(mapping =>
-        copyAndReplaceWithChangedCallback(
-          mapping.from,
-          destPath,
-          mapping.to,
-          templateVars,
-          options.overwrite,
-        ),
-      );
-    }
   }
 
-  copyAndReplaceAll(
+  await copyAndReplaceAll(
     path.join(srcPath, 'assets'),
     destPath,
     path.join(windowsDir, newProjectName, 'Assets'),
     templateVars,
     options.overwrite,
   );
-  copyAndReplaceAll(
+  await copyAndReplaceAll(
     path.join(srcPath, 'src'),
     destPath,
     path.join(windowsDir, newProjectName),

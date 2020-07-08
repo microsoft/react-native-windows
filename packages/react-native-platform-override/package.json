@@ -1,8 +1,10 @@
 {
   "name": "react-native-platform-override",
-  "version": "0.0.8",
+  "version": "0.1.1",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
+  "main": "./lib-commonjs/Api.js",
+  "typings": "./lib-commonjs/Api.d.ts",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
@@ -14,15 +16,17 @@
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
     "test": "just-scripts test",
-    "watch": "tsc -w"
+    "watch": "just-scripts watch"
   },
   "bin": {
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
     "chalk": "^3.0.0",
+    "globby": "^9.2.0",
     "inquirer": "^7.1.0",
     "io-ts": "^2.1.1",
+    "isutf8": "^3.0.0",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "ora": "^4.0.3",
@@ -34,14 +38,16 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "0.0.1",
-    "@rnw-scripts/just-task": "0.0.1",
+    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.0.1",
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
+    "@types/globby": "^9.1.0",
     "@types/inquirer": "^6.5.0",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.149",
+    "@types/minimatch": "^3.0.3",
     "@types/node": "^13.7.4",
     "@types/node-fetch": "^2.5.7",
     "@types/ora": "^3.2.0",
@@ -53,14 +59,17 @@
     "fp-ts": "^2.5.0",
     "jest": "^24.9.0",
     "just-scripts": "^0.36.1",
+    "minimatch": "^3.0.4",
     "typescript": "^3.8.3"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12.0.0"
   },
   "files": [
     "bin.js",
-    "lib-commonjs"
+    "lib-commonjs",
+    "!lib-commonjs/e2etest/**",
+    "!lib-commonjs/test/**"
   ],
   "beachball": {
     "disallowedChangeTypes": [

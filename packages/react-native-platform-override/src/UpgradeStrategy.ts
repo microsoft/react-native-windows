@@ -7,8 +7,11 @@
 
 import GitReactFileRepository from './GitReactFileRepository';
 import {OverrideFileRepository} from './FileRepository';
+import isutf8 from 'isutf8';
 
 export interface UpgradeResult {
+  overrideName: string;
+  fileWritten: boolean;
   hasConflicts: boolean;
 }
 
@@ -29,8 +32,12 @@ export const UpgradeStrategies = {
   /**
    * No work needed to upgrade
    */
-  assumeUpToDate: (): UpgradeStrategy => ({
-    upgrade: async () => ({hasConflicts: false}),
+  assumeUpToDate: (overrideName: string): UpgradeStrategy => ({
+    upgrade: async () => ({
+      overrideName,
+      fileWritten: false,
+      hasConflicts: false,
+    }),
   }),
 
   /**
@@ -38,14 +45,14 @@ export const UpgradeStrategies = {
    * of it, and the base file from a newwer version of React Native.
    */
   threeWayMerge: (
-    override: string,
+    overrideName: string,
     baseFile: string,
     baseVersion: string,
   ): UpgradeStrategy => ({
     upgrade: async (gitReactRepo, overrideRepo, newVersion, allowConflicts) => {
-      const ovrContent = await overrideRepo.getFileContents(override);
+      const ovrContent = await overrideRepo.getFileContents(overrideName);
       if (ovrContent === null) {
-        throw new Error(`Could not read ${override}`);
+        throw new Error(`Could not read ${overrideName}`);
       }
 
       const ovrAsPatch = await gitReactRepo.generatePatch(
@@ -54,27 +61,39 @@ export const UpgradeStrategies = {
         ovrContent,
       );
 
-      const patched = (await gitReactRepo.getPatchedFile(
+      const {patchedFile, hasConflicts} = await gitReactRepo.getPatchedFile(
         baseFile,
         newVersion,
         ovrAsPatch,
-      ))
-        .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
-        .replace(/>>>>>>> theirs/g, '>>>>>>> Override');
+      );
 
-      const hasConflicts = patched.includes('<<<<<<<');
-      if (!hasConflicts || allowConflicts) {
-        await overrideRepo.setFileContents(override, patched);
+      if (!patchedFile) {
+        return {overrideName, fileWritten: false, hasConflicts};
       }
 
-      return {hasConflicts};
+      const prettyPatched =
+        hasConflicts && isutf8(patchedFile)
+          ? Buffer.from(
+              patchedFile
+                .toString('utf8')
+                .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')
+                .replace(/>>>>>>> theirs/g, '>>>>>>> Override'),
+            )
+          : patchedFile;
+
+      if (!hasConflicts || allowConflicts) {
+        await overrideRepo.setFileContents(overrideName, prettyPatched);
+        return {overrideName, fileWritten: true, hasConflicts};
+      }
+
+      return {overrideName, fileWritten: false, hasConflicts};
     },
   }),
 
   /**
    * Overwrite our override with base file contents
    */
-  copyFile: (override: string, baseFile: string): UpgradeStrategy => ({
+  copyFile: (overrideName: string, baseFile: string): UpgradeStrategy => ({
     upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
       const newContent = await gitReactRepo.getFileContents(
         baseFile,
@@ -84,8 +103,8 @@ export const UpgradeStrategies = {
         throw new Error(`Could not read ${baseFile}@${newVersion}`);
       }
 
-      await overrideRepo.setFileContents(override, newContent);
-      return {hasConflicts: false};
+      await overrideRepo.setFileContents(overrideName, newContent);
+      return {overrideName, fileWritten: true, hasConflicts: false};
     },
   }),
 };

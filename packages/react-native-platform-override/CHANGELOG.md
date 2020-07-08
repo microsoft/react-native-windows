@@ -1,8 +1,28 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jul 2020 01:27:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.1
+
+Wed, 08 Jul 2020 01:27:37 GMT
+
+### Patches
+
+- Normalize override manifests to unix paths (ngerlem@microsoft.com)
+
+## 0.1.0
+
+Mon, 06 Jul 2020 23:11:46 GMT
+
+### Minor changes
+
+- Add Support for Binary Overrides to react-native-platform-override (ngerlem@microsoft.com)
+
+### Patches
+
+- Create a Programmatic API for react-native-platform-override (ngerlem@microsoft.com)
 
 ## 0.0.8
 

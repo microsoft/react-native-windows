@@ -75,7 +75,7 @@ type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
 export function projectConfigWindows(
   folder: string,
   userConfig: Partial<WindowsProjectConfig> = {},
-): WindowsProjectConfig {
+): WindowsProjectConfig | null {
   if (userConfig === null) {
     return null;
   }
@@ -83,7 +83,7 @@ export function projectConfigWindows(
   const usingManualOverride = 'sourceDir' in userConfig;
 
   const sourceDir = usingManualOverride
-    ? path.join(folder, userConfig.sourceDir)
+    ? path.join(folder, userConfig.sourceDir!)
     : configUtils.findWindowsFolder(folder);
 
   if (sourceDir === null) {
@@ -116,7 +116,7 @@ export function projectConfigWindows(
         projectFile:
           'Error: Project is required but not specified in react-native.config.',
       };
-    } else if (userConfig.project === null) {
+    } else if (!userConfig.project) {
       result.project = {
         projectFile: 'Error: Project is null in react-native.config.',
       };
@@ -171,13 +171,19 @@ export function projectConfigWindows(
   }
 
   if (validProject) {
-    const projectFile = path.join(sourceDir, result.project.projectFile);
+    const projectFile = path.join(sourceDir, result.project.projectFile!);
     const projectContents = configUtils.readProjectFile(projectFile);
 
     // Add missing (auto) items
-    result.project.projectName = configUtils.getProjectName(projectContents);
+    result.project.projectName = configUtils.getProjectName(
+      projectFile,
+      projectContents,
+    );
     result.project.projectLang = configUtils.getProjectLanguage(projectFile);
-    result.project.projectGuid = configUtils.getProjectGuid(projectContents);
+    result.project.projectGuid = configUtils.getProjectGuid(
+      projectFile,
+      projectContents,
+    );
   }
 
   return result as WindowsProjectConfig;
