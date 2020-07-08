@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Normalize override manifests to unix paths",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-07T00:39:23.580Z"
-}

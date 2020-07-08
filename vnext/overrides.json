@@ -8,7 +8,8 @@
   "excludePatterns": [
     "DeforkingPatches/.clang-format",
     "DeforkingPatches/README.md",
-    "src/tsconfig.json"
+    "src/tsconfig.json",
+    "**/*.windesktop.js"
   ],
   "overrides": [
     {
@@ -59,16 +60,32 @@
       "issue": 4054
     },
     {
-      "type": "platform",
-      "file": "src/index.windows.ts"
+      "type": "patch",
+      "file": "src\\babel-plugin-inline-view-configs\\GenerateViewConfigJs.js",
+      "baseFile": "packages\\react-native-codegen\\src\\generators\\components\\GenerateViewConfigJs.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "415a69596caa402d0f510fe2a2eb2ca792169cab",
+      "issue": 5430
     },
     {
       "type": "patch",
-      "file": "src/IntegrationTests/AsyncStorageTest.windesktop.js",
-      "baseFile": "IntegrationTests/AsyncStorageTest.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "363ad4689a7058e7ab525d1b3243390377c33c17",
-      "issue": "LEGACY_FIXME"
+      "file": "src\\babel-plugin-inline-view-configs\\index.js",
+      "baseFile": "packages\\babel-plugin-inline-view-configs\\index.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "181443fa916d64e9bd56f0c45f629941f90b15e4",
+      "issue": 5430
+    },
+    {
+      "type": "patch",
+      "file": "src\\babel-plugin-inline-view-configs\\package.json",
+      "baseFile": "packages\\babel-plugin-inline-view-configs\\package.json",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "8d37fac510a533c0badffacd9c3aa9c392fd58c6",
+      "issue": 5430
+    },
+    {
+      "type": "platform",
+      "file": "src/index.windows.ts"
     },
     {
       "type": "platform",
@@ -81,13 +98,6 @@
     {
       "type": "platform",
       "file": "src/IntegrationTests/XHRTest.js"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Alert/Alert.windesktop.js",
-      "baseFile": "Libraries/Alert/Alert.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa"
     },
     {
       "type": "patch",
@@ -107,14 +117,6 @@
     },
     {
       "type": "copy",
-      "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windesktop.js",
-      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "840be6f49fe36a3bcfb568eb285bf860f0dd441d",
-      "issue": 4578
-    },
-    {
-      "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
       "baseVersion": "0.0.0-56cf99a96",
@@ -122,27 +124,11 @@
       "issue": 4578
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Components/Button.windesktop.js",
-      "baseFile": "Libraries/Components/Button.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "1bb31cc95e6e4b71ff09f024dd102a9717925e51",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "1bb31cc95e6e4b71ff09f024dd102a9717925e51",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/CheckBox/CheckBox.windesktop.js",
-      "baseFile": "Libraries/Components/CheckBox/CheckBox.ios.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "4b84d656391d454ba3409df56c05b6bfca64ad55",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -163,13 +149,6 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windesktop.js",
-      "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
       "baseVersion": "0.61.5",
@@ -181,24 +160,10 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windesktop.js",
-      "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
       "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
       "baseVersion": "0.61.5",
       "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.windesktop.js",
-      "baseFile": "Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
@@ -233,13 +198,6 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windesktop.js",
-      "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windows.js",
       "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
       "baseVersion": "0.62.0-rc.3",
@@ -255,24 +213,10 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerAndroid.windesktop.js",
-      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
       "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
       "baseVersion": "0.61.5",
       "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerIOS.windesktop.js",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
     },
     {
       "type": "derived",
@@ -303,24 +247,10 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windesktop.js",
-      "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windows.js",
       "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
       "baseVersion": "0.61.5",
       "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.windesktop.js",
-      "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
     },
     {
       "type": "derived",
@@ -339,14 +269,6 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windesktop.js",
-      "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "59dabb86baedb0088e110f8cdeb914fa3271dfd9",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
       "baseVersion": "0.62.0-rc.3",
@@ -355,26 +277,10 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windesktop.js",
-      "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windows.js",
       "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
       "baseVersion": "0.61.5",
       "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/TextInput/TextInput.windesktop.js",
-      "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "a50310f6dee460f7d1a53e0f1a21dbac9cf02094",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -392,13 +298,6 @@
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windesktop.js",
-      "baseFile": "Libraries/Components/ToastAndroid/ToastAndroid.ios.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0"
     },
     {
       "type": "derived",
@@ -465,26 +364,11 @@
     },
     {
       "type": "patch",
-      "file": "src/Libraries/core/setUpDeveloperTools.windesktop.js",
-      "baseFile": "Libraries/core/setUpDeveloperTools.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "dac10e7b4ec4b65b658f26aeeedc05cc975a53cd",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Image/Image.windesktop.js",
-      "baseFile": "Libraries/Image/Image.ios.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "26acff268b815c7b3c5da0d6c9c009073b202ea8"
     },
     {
       "type": "copy",
@@ -496,23 +380,11 @@
     },
     {
       "type": "patch",
-      "file": "src/Libraries/Inspector/InspectorOverlay.windesktop.js",
-      "baseFile": "Libraries/Inspector/InspectorOverlay.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "b8535e8c605e6c0e940aae6c04f0d573eaa4788e",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "src/Libraries/Lists/VirtualizedList.windows.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "dd3f2413c3e51f3faca34ebb71635dbdeb716e47",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Network/RCTNetworking.windesktop.js"
     },
     {
       "type": "platform",
@@ -552,23 +424,11 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Settings/Settings.windesktop.js",
-      "baseFile": "Libraries/Settings/Settings.android.js",
-      "baseVersion": "0.61.5",
-      "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Settings/Settings.windows.js",
       "baseFile": "Libraries/Settings/Settings.android.js",
       "baseVersion": "0.61.5",
       "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/StyleSheet/PlatformColorValueTypes.windesktop.js"
     },
     {
       "type": "platform",
@@ -599,14 +459,6 @@
       "issue": 5270
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Utilities/BackHandler.windesktop.js",
-      "baseFile": "Libraries/Utilities/BackHandler.ios.js",
-      "baseVersion": "0.62.0-rc.3",
-      "baseHash": "aa2d482b80ae66104d632c75c24646fdcbe916af",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
@@ -619,26 +471,11 @@
       "file": "src/Libraries/Utilities/DebugEnvironment.js"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Utilities/HMRClient.windesktop.js",
-      "baseFile": "Libraries/Utilities/HMRClient.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "76e71abd8c4128cbdf212291b1d8d8994deb3da0",
-      "issue": 4087
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
       "baseVersion": "0.61.5",
       "baseHash": "168fe4a9608c0b151237122eea94d78f7b0093e5"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Utilities/Platform.windesktop.js",
-      "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "bcaebbe089a41de46724b00e69fcdba7e6b1ed7f"
     },
     {
       "type": "derived",

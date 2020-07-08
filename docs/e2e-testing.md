@@ -176,6 +176,25 @@ describe('LoginTest', () => {
 
 1. For `yarn run e2e` or `yarn run e2ebundle`, the test continues even if one of steps like build failed. see [bug 3136](https://github.com/microsoft/react-native-windows/issues/3136) for more details
 
+# Debugging jasmine tests
+To debug in VS Code, create a configuration in your launch.json that looks like this:
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "run wdio",
+            "program": "${workspaceRoot}/run_wdio.js",
+            "stopOnEntry": true,
+            "autoAttachChildProcesses": true        
+        },
+    ]
+}
+```
+jasmine runs in a child node process, so the "autoAttachChildProcesses" : true is required for VS Code to attach to that child process.  With that setup, you can now set breakpoints in your test specs and VS Code will let you debug your tests.
+
 # More about E2E test
 
 ## Technical Decisions

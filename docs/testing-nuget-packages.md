@@ -41,7 +41,7 @@ Today we support the following projects as a NuGet package:
    1. `npx react-native init MyProj`
    1. cd `MyProj`
    1. Apply the react-native-windows template:
-      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --version 0.0.0 --useDevMode --overwrite  --language cs --experimentalNugetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
+      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --version 0.0.0 --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
          > See below for a breakdown of the arguments:
 1. Do your testing
 
@@ -71,6 +71,6 @@ This script has many options, but let's break down the ones from the sample:
 * `--version 0.0.0 --useDevMode`: The version doesn't matter when using dev mode, which means that the npm package is used that is registred as the dev package using `yarn link` per instructions above. This saves copying all the output files to your package directory, to your yarn cache. It is also a lot faster and since it is a link, you can make changes to your enlistment i.e. to `vnext\StyleSheets` and you don't have to reinstall between testing
 * `--overwrite`: This just overwites files that already exist instead of prompting. This is very usefull when running the script multiple times to test the templates or to code that emits the template.
 * `--language cs`: this is one of the public flags to generate a cs project instead of a cpp project. 
-* `--experimentalNugetDependency`: This is the critical one to let the template emit referneces to NuGet package rather than source pacakges. When we make it the default this will likely be renamed back to source for those that need a tight loop between test projects from template and the product code for developers working 'on' react-native-windows. If it proves that the sample and test apps we have in the repo satisfy this need, it can be removed and the tempaltes can be cleaned up by removing a lot of the conditionals bewteen the two.
+* `--experimentalNuGetDependency`: This is the critical one to let the template emit referneces to NuGet package rather than source pacakges. When we make it the default this will likely be renamed back to source for those that need a tight loop between test projects from template and the product code for developers working 'on' react-native-windows. If it proves that the sample and test apps we have in the repo satisfy this need, it can be removed and the tempaltes can be cleaned up by removing a lot of the conditionals bewteen the two.
 * `--nuGetTestFeed c:\temp\RnWNugetTesting\feed`: This flag adds an extra feed to the nuget.config so that for local testing you can use a different feed. This is the default location that is pushed to by the `PublishNugetPackagesLocally.cmd` script.
 * `--nuGetTestVersion 0.0.1-MyTest001`: By default the NuGet version matches the react-native version. For testing this can be cumbersome. Therefore this flag allows you to specify the version number for the NuGet packages. 

@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "comment": "Normalize override manifests to unix paths",
+  "comment": "Disable Override Validation for windesktop JS",
   "packageName": "react-native-windows",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "none",
-  "date": "2020-07-07T00:39:31.163Z"
+  "date": "2020-07-07T22:33:54.314Z"
 }

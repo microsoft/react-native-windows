@@ -31,4 +31,3 @@ steps:
         set TestFeed=$(System.DefaultWorkingDirectory)\NugetTestFeed
         if NOT EXIST %TestFeed% (mkdir %TestFeed%)
         nuget add $(System.DefaultWorkingDirectory)\NugetRootFinal\${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg -Source %TestFeed%
-      workingDirectory: packages/microsoft-reactnative-sampleapps
