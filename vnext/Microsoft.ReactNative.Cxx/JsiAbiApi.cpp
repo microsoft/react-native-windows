@@ -185,10 +185,8 @@ JsiHostFunctionWrapper::~JsiHostFunctionWrapper() noexcept {
   }
 }
 
-JsiValueData JsiHostFunctionWrapper::operator()(
-    IJsiRuntime const &runtime,
-    JsiValueData const &thisValue,
-    array_view<JsiValueData const> args) {
+JsiValueData JsiHostFunctionWrapper::
+operator()(IJsiRuntime const &runtime, JsiValueData const &thisValue, array_view<JsiValueData const> args) {
   auto rt{JsiAbiRuntime{runtime}};
   return ToJsiValueData(
       m_hostFunction(rt, ToValue(thisValue), reinterpret_cast<Value const *>(args.data()), args.size()));
@@ -230,7 +228,7 @@ JsiAbiRuntime::JsiAbiRuntime(IJsiRuntime const &runtime) noexcept : m_runtime{ru
 
 JsiAbiRuntime::~JsiAbiRuntime() = default;
 
-/*static*/ String&& JsiAbiRuntime::AsString(JsiPointerHandle &&pointer) noexcept {
+/*static*/ String &&JsiAbiRuntime::AsString(JsiPointerHandle &&pointer) noexcept {
   return reinterpret_cast<String &&>(pointer);
 }
 

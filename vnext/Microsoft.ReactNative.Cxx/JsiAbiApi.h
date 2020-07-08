@@ -181,7 +181,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   bool strictEquals(const facebook::jsi::Object &a, const facebook::jsi::Object &b) const override;
   bool instanceOf(const facebook::jsi::Object &o, const facebook::jsi::Function &f) override;
 
-  static facebook::jsi::String&& AsString(JsiPointerHandle &&pointer) noexcept;
+  static facebook::jsi::String &&AsString(JsiPointerHandle &&pointer) noexcept;
   static facebook::jsi::PropNameID &&AsPropNameID(JsiPointerHandle &&pointer) noexcept;
   static facebook::jsi::Symbol &&AsSymbol(JsiPointerHandle &&pointer) noexcept;
   static facebook::jsi::Object &&AsObject(JsiPointerHandle &&pointer) noexcept;
