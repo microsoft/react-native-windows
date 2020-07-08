@@ -8,4 +8,4 @@ void SetFeatureGate(std::string &&name) noexcept;
 
 bool GetFeatureGate(std::string &&name) noexcept;
 
-}
+} // namespace Microsoft::React
