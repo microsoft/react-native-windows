@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "winrt/base.h"
+void* winrt_make_Microsoft_Internal_TestController();
 void* winrt_make_Microsoft_ReactNative_ReactDispatcherHelper();
 void* winrt_make_Microsoft_ReactNative_ReactInstanceSettings();
 void* winrt_make_Microsoft_ReactNative_ReactNativeHost();
@@ -31,6 +32,11 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     {
         return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
     };
+
+    if (requal(name, L"Microsoft.Internal.TestController"))
+    {
+        return winrt_make_Microsoft_Internal_TestController();
+    }
 
     if (requal(name, L"Microsoft.ReactNative.ReactDispatcherHelper"))
     {

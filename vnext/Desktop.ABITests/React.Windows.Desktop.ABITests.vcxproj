@@ -113,6 +113,9 @@
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
@@ -123,9 +126,10 @@
     Used by the 'CopyFilesToOutputDirectory' target (more specifically, its '_CopyFilesMarkedCopyLocal' dependency')
     to co-locate dependencies with the test binary.
      -->
-    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll"/>
+    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />

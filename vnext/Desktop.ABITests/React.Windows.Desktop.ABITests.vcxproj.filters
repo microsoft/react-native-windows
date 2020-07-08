@@ -33,10 +33,16 @@
     <ClCompile Include="PerfTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ReactNativeHostTests.cpp">
+    <ClCompile Include="SimpleMessageQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleMessageQueue.cpp">
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicReaderWriterTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,5 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="Application.manifest" />
   </ItemGroup>
 </Project>
