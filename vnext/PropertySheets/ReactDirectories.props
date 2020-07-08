@@ -26,6 +26,7 @@
 
     <IntDir>$([MSBuild]::NormalizeDirectory($(BaseIntDir)\$(ProjectName)\))</IntDir>
     <OutDir>$([MSBuild]::NormalizeDirectory($(BaseOutDir)\$(ProjectName)\))</OutDir>
+    <PublishDir>$(OutDir)\Publish\</PublishDir>
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)\react-native-patched\</ReactNativeDir>
