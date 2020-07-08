@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 05:04:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Dont try to parseJson unless redbox error starts with {",
+            "author": "acoates@microsoft.com",
+            "commit": "16cba2e9672d636efd300b56715386a42d0122ef",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Deploy dependencies when registering from layout",
+            "author": "asklar@microsoft.com",
+            "commit": "02a7376515c1ba7831850d890255b4419add0aec",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jul 2020 01:27:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.115",
       "version": "0.0.0-canary.115",

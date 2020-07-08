@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Deploy dependencies when registering from layout",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-07T23:42:02.320Z"
-}
