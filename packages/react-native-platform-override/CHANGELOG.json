@@ -2,6 +2,29 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-platform-override_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase Timeout for react-native-platform-override e2etest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "28edae58b3ff838a08d54d2e0be0bfd0bcb648ba",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "react-native-platform-override_v0.1.0",
       "version": "0.1.0",

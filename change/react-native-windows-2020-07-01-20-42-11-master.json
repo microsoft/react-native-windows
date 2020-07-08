@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix #4809: Remove the /flow folder from the shipping npm package",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-02T03:42:11.707Z"
-}

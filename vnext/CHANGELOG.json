@@ -2,6 +2,83 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 17:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "Disable Override Validation for windesktop JS",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a530a3cc575986980b1307623dac478b54d2ca52",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 05:04:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Dont try to parseJson unless redbox error starts with {",
+            "author": "acoates@microsoft.com",
+            "commit": "16cba2e9672d636efd300b56715386a42d0122ef",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Deploy dependencies when registering from layout",
+            "author": "asklar@microsoft.com",
+            "commit": "02a7376515c1ba7831850d890255b4419add0aec",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.115",
+      "version": "0.0.0-canary.115",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a bunch of deps we are using but not declaring",
+            "author": "acoates@microsoft.com",
+            "commit": "82d0454ef1de3290a01c5d1beb2110f170ee27c6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix #4809: Remove the /flow folder from the shipping npm package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "28732cc49bf074c6068aa9cd899b4b85857c5430",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rever to new experimentalNuGetDependency Naming",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8c9be4d325312d97ce19aeb4ee7ab3801b7b5a20",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Use babel-plugin-inline-view-configs to verify viewmanager props match expected",
+            "author": "acoates@microsoft.com",
+            "commit": "4bb04f6603b5afe9bbfa38aa0a2a11d2b160ab1b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jul 2020 05:05:23 GMT",
       "tag": "react-native-windows_v0.0.0-canary.114",
       "version": "0.0.0-canary.114",

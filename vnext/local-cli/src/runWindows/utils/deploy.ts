@@ -259,6 +259,18 @@ export async function deployToDesktop(
       verbose,
     );
   } else {
+    // Install the app package's dependencies before attempting to deploy.
+    const dependencies = path.join(
+      appPackageFolder,
+      'Dependencies',
+      options.arch,
+    );
+    await runPowerShellScriptFunction(
+      'Installing dependent framework packages',
+      null,
+      `Add-AppXPackage ${dependencies}\\*`,
+      verbose,
+    );
     await build.buildSolution(
       buildTools,
       slnFile,

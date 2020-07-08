@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "add tests for DynamicReader, DynamicWriter ",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-07-08T00:23:33.522Z"
+}

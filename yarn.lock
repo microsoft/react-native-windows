@@ -2801,9 +2801,9 @@
     find-up "*"
 
 "@types/glob@*", "@types/glob@^7.1.0", "@types/glob@^7.1.1":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.2.tgz#06ca26521353a545d94a0adc74f38a59d232c987"
-  integrity sha512-VgNIkxK+j7Nz5P7jvUZlRvhuPSmsEfS03b0alKcq5V/STUKAa3Plemsn5mrQUO7am6OErJ4rhGEGJbACclrtRA==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"
+  integrity sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==
   dependencies:
     "@types/minimatch" "*"
     "@types/node" "*"
@@ -3001,9 +3001,9 @@
   integrity sha512-l5ID65aPDctN/dZYkDgLOEBuoHrD8S9TyfD5soORUtVHKyOs7Wr66iNxAtcmT/tER1GeYqp51jR6l08gmsRcZg==
 
 "@types/xmldom@^0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@types/xmldom/-/xmldom-0.1.29.tgz#c4428b0ca86d3b881475726fd94980b38a27c381"
-  integrity sha1-xEKLDKhtO4gUdXJv2UmAs4onw4E=
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/@types/xmldom/-/xmldom-0.1.30.tgz#d36d9a7d64af4693d3b18d5dc02ce432a95be12e"
+  integrity sha512-edqgAFXMEtVvaBZ3YnhamvmrHjoYpuxETmnb0lbTZmf/dXpAsO9ZKotUO4K2rn2SIZBDFCMOuA7fOe0H6dRZcA==
 
 "@types/yargs-parser@*":
   version "13.1.0"
@@ -7033,9 +7033,9 @@ forwarded@~0.1.2:
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
 fp-ts@^2.5.0:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.6.7.tgz#a86f904b86c93cd63300e6d40005e4caa57ccb6b"
-  integrity sha512-Uklx0kKrjwbYb142tbQZqWVHhvNzxZwJhr+gkIbwPt/exV0n8/dHDkAmB05vNKNnJMwoJr7i6pM3XW0bicrE7Q==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.7.0.tgz#41de65a846715ca4df6889b91c6b3aa953165198"
+  integrity sha512-J7EIg4MEVuOm1vZspQDVYRD/CTsQECQk01cP5VEBvQ5LnSSjp6sckun1m1eUPSuvtMIlGgm9NqqOxE0+QyntWQ==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -9300,9 +9300,9 @@ lodash.zip@^4.2.0:
   integrity sha1-7GZi5IlkCO1KtsVCo5kLcswIACA=
 
 lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.9, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.8.0, lodash@~4.17.10, lodash@~4.17.15:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -11660,9 +11660,9 @@ react-native@0.0.0-56cf99a96:
     whatwg-fetch "^3.0.0"
 
 react-refresh@^0.4.0:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.2.tgz#54a277a6caaac2803d88f1d6f13c1dcfbd81e334"
-  integrity sha512-kv5QlFFSZWo7OlJFNYbxRtY66JImuP2LcrFgyJfQaf85gSP+byzG21UbDQEYjU7f//ny8rwiEkO6py2Y+fEgAQ==
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.3.tgz#966f1750c191672e76e16c2efa569150cc73ab53"
+  integrity sha512-Hwln1VNuGl/6bVwnd0Xdn1e84gT/8T9aYNL+HAKDArLCS7LWjwr7StE30IEYbIkx0Vi3vs+coQxe+SQDbGbbpA==
 
 react-test-renderer@16.9.0:
   version "16.9.0"
@@ -13642,9 +13642,9 @@ url-template@^2.0.8:
   integrity sha1-/FZaPMy/93MMd19WQflVV5FDnyE=
 
 use-subscription@^1.0.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.4.0.tgz#c4e808cfed6fe6e1ac875df1369c63f3ddae9522"
-  integrity sha512-R7P7JWpeHp+dtEYsgDzIIgOmVqRfJjRjLOO0YIYk6twctUkUYe6Tz0pcabyTDGcMMRt9uMbFMfwBfxKHg9gCSw==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.4.1.tgz#edcbcc220f1adb2dd4fa0b2f61b6cc308e620069"
+  integrity sha512-7+IIwDG/4JICrWHL/Q/ZPK5yozEnvRm6vHImu0LKwQlmWGKeiF7mbAenLlK/cTNXrTtXHU/SFASQHzB6+oSJMQ==
   dependencies:
     object-assign "^4.1.1"
 
