@@ -83,6 +83,12 @@ jobs:
           script: 'if ((Get-Process ReactUwpTestApp) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
+        displayName: run e2etest
+        inputs:
+          script: yarn run e2etest
+          workingDirectory: packages/E2ETest
+
+      - task: CmdLine@2
         displayName: run e2erntester
         inputs:
           script: yarn run e2erntester
