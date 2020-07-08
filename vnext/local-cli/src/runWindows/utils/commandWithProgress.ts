@@ -49,7 +49,7 @@ export async function runPowerShellScriptFunction(
 ) {
   try {
     const printException = verbose ? '$_;' : '';
-    const importScript = script ? `Import-Module "${script}"; ` : '';
+    const importScript = script !== '' ? `Import-Module "${script}"; ` : '';
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
