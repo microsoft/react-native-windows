@@ -68,20 +68,15 @@ TEST_CLASS (DynamicReaderWriterTests) {
   TEST_METHOD(WriteGetObject) {
     IJSValueWriter writer = Microsoft::Internal::TestController::CreateDynamicWriter();
 
-    auto namePropertyName = to_hstring(L"Name");
-    auto agePropertyName = to_hstring(L"Age");
-    auto marriedPropertyName = to_hstring(L"Married");
-    auto emptyPropertyName = to_hstring(L"");
-
     writer.WriteObjectBegin();
 
-    writer.WritePropertyName(namePropertyName);
+    writer.WritePropertyName(L"Name");
     writer.WriteString(L"Bob");
 
-    writer.WritePropertyName(agePropertyName);
+    writer.WritePropertyName(L"Age");
     writer.WriteInt64(32);
 
-    writer.WritePropertyName(marriedPropertyName);
+    writer.WritePropertyName(L"Married");
     writer.WriteBoolean(true);
 
     writer.WriteObjectEnd();
@@ -89,42 +84,45 @@ TEST_CLASS (DynamicReaderWriterTests) {
     IJSValueReader reader = Microsoft::Internal::TestController::CreateDynamicReader(writer);
     TestCheckEqual(JSValueType::Object, reader.ValueType());
 
-    TestCheck(reader.GetNextObjectProperty(namePropertyName));
+    hstring propertyName;
+
+    TestCheck(reader.GetNextObjectProperty(/* out */ propertyName));
+    TestCheckEqual(L"Name", propertyName);
     TestCheckEqual(JSValueType::String, reader.ValueType());
     TestCheckEqual(L"Bob", reader.GetString());
+    propertyName.clear();
 
-    TestCheck(reader.GetNextObjectProperty(agePropertyName));
+    TestCheck(reader.GetNextObjectProperty(/* out */ propertyName));
+    TestCheckEqual(L"Age", propertyName);
     TestCheckEqual(JSValueType::Int64, reader.ValueType());
     TestCheckEqual(32, reader.GetInt64());
+    propertyName.clear();
 
-    TestCheck(reader.GetNextObjectProperty(marriedPropertyName));
+    TestCheck(reader.GetNextObjectProperty(/* out */ propertyName));
+    TestCheckEqual(L"Married", propertyName);
     TestCheckEqual(JSValueType::Boolean, reader.ValueType());
     TestCheckEqual(true, reader.GetBoolean());
+    propertyName.clear();
 
-    TestCheck(!reader.GetNextObjectProperty(emptyPropertyName));
+    TestCheck(!reader.GetNextObjectProperty(/* out */ propertyName));
   }
 
   TEST_METHOD(WriteGetObjectArrayMix) {
     IJSValueWriter writer = Microsoft::Internal::TestController::CreateDynamicWriter();
 
-    auto namePropertyName = to_hstring(L"Name");
-    auto countiesPropertyName = to_hstring(L"Counties");
-    auto areaPropertyName = to_hstring(L"Area");
-    auto emptyPropertyName = to_hstring(L"");
-
     writer.WriteObjectBegin();
 
-    writer.WritePropertyName(namePropertyName);
+    writer.WritePropertyName(L"Name");
     writer.WriteString(L"Washington");
 
-    writer.WritePropertyName(countiesPropertyName);
+    writer.WritePropertyName(L"Counties");
     writer.WriteArrayBegin();
     writer.WriteString(L"Snohomish");
     writer.WriteString(L"King");
     writer.WriteString(L"Pierce");
     writer.WriteArrayEnd();
 
-    writer.WritePropertyName(areaPropertyName);
+    writer.WritePropertyName(L"Area");
     writer.WriteInt64(184827);
 
     writer.WriteObjectEnd();
@@ -132,12 +130,18 @@ TEST_CLASS (DynamicReaderWriterTests) {
     IJSValueReader reader = Microsoft::Internal::TestController::CreateDynamicReader(writer);
     TestCheckEqual(JSValueType::Object, reader.ValueType());
 
-    TestCheck(reader.GetNextObjectProperty(namePropertyName));
+    hstring propertyName;
+
+    TestCheck(reader.GetNextObjectProperty(/* out */ propertyName));
+    TestCheckEqual(L"Name", propertyName);
     TestCheckEqual(JSValueType::String, reader.ValueType());
     TestCheckEqual(L"Washington", reader.GetString());
+    propertyName.clear();
 
-    TestCheck(reader.GetNextObjectProperty(countiesPropertyName));
+    TestCheck(reader.GetNextObjectProperty(/* out */ propertyName));
+    TestCheckEqual(L"Counties", propertyName);
     TestCheckEqual(JSValueType::Array, reader.ValueType());
+    propertyName.clear();
 
     TestCheck(reader.GetNextArrayItem());
     TestCheckEqual(JSValueType::String, reader.ValueType());
@@ -153,10 +157,12 @@ TEST_CLASS (DynamicReaderWriterTests) {
 
     TestCheck(!reader.GetNextArrayItem());
 
-    TestCheck(reader.GetNextObjectProperty(areaPropertyName));
+    TestCheck(reader.GetNextObjectProperty(/* out */ propertyName));
+    TestCheckEqual(L"Area", propertyName);
     TestCheckEqual(184827, reader.GetInt64());
+    propertyName.clear();
 
-    TestCheck(!reader.GetNextObjectProperty(emptyPropertyName));
+    TestCheck(!reader.GetNextObjectProperty(/**/ propertyName));
   }
 
  private:
