@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-windows-init_v0.1.19",
+      "version": "0.1.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rever to new experimentalNuGetDependency Naming",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8c9be4d325312d97ce19aeb4ee7ab3801b7b5a20",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jul 2020 05:05:23 GMT",
       "tag": "react-native-windows-init_v0.1.19-0",
       "version": "0.1.19-0",

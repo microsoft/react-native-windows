@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Jul 2020 05:05:23 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jul 2020 01:27:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.115
+
+Wed, 08 Jul 2020 01:27:37 GMT
+
+### Changes
+
+- Add a bunch of deps we are using but not declaring (acoates@microsoft.com)
+- Fix #4809: Remove the /flow folder from the shipping npm package (dannyvv@microsoft.com)
+- Rever to new experimentalNuGetDependency Naming (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.114
 
