@@ -358,7 +358,7 @@ void WinRTWebSocketResource::Synchronize()
 
 #pragma region IWebSocketResource
 
-void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
+void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options) noexcept
 {
   m_readyState = ReadyState::Connecting;
 
@@ -378,26 +378,26 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   PerformConnect();
 }
 
-void WinRTWebSocketResource::Ping()
+void WinRTWebSocketResource::Ping() noexcept
 {
   PerformPing();
 }
 
-void WinRTWebSocketResource::Send(const string& message)
+void WinRTWebSocketResource::Send(const string& message) noexcept
 {
   m_writeQueue.push({ message, false });
 
   PerformWrite();
 }
 
-void WinRTWebSocketResource::SendBinary(const string& base64String)
+void WinRTWebSocketResource::SendBinary(const string& base64String) noexcept
 {
   m_writeQueue.push({ base64String, true });
 
   PerformWrite();
 }
 
-void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
+void WinRTWebSocketResource::Close(CloseCode code, const string& reason) noexcept
 {
   if (m_readyState == ReadyState::Closing || m_readyState == ReadyState::Closed)
     return;
@@ -410,37 +410,37 @@ void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
   PerformClose();
 }
 
-IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
+IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const noexcept
 {
   return m_readyState;
 }
 
-void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler)
+void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler) noexcept
 {
   m_connectHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnPing(function<void()>&& handler)
+void WinRTWebSocketResource::SetOnPing(function<void()>&& handler) noexcept
 {
   m_pingHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler)
+void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler) noexcept
 {
   m_writeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler)
+void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler) noexcept
 {
   m_readHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler)
+void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler) noexcept
 {
   m_closeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
+void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler) noexcept
 {
   m_errorHandler = std::move(handler);
 }
