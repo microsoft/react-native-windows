@@ -11,6 +11,9 @@ struct TestController {
 
   static Microsoft::ReactNative::IJSValueReader CreateDynamicReader(Microsoft::ReactNative::IJSValueWriter writer);
   static Microsoft::ReactNative::IJSValueWriter CreateDynamicWriter();
+  static Microsoft::ReactNative::IReactContext CreateTestContext();
+  static Microsoft::ReactNative::IReactModuleBuilder CreateReactModuleBuilder(
+      Microsoft::ReactNative::IReactContext context);
 };
 } // namespace winrt::Microsoft::Internal::implementation
 
