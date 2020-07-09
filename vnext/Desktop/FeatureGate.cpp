@@ -14,8 +14,8 @@ void SetFeatureGate(string &&name) noexcept {
   g_featureGates.insert(std::move(name));
 }
 
-bool GetFeatureGate(string &&name) noexcept {
-  return g_featureGates.find(std::move(name)) != g_featureGates.end();
+const bool GetFeatureGate(string &&name) noexcept {
+  return g_featureGates.find(std::move(name)) != g_featureGates.cend();
 }
 
 } // namespace Microsoft::React
