@@ -10,37 +10,37 @@ MockWebSocketResource::~MockWebSocketResource() {}
 
 #pragma region IWebSocketResource overrides
 
-void MockWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept  /*override*/
+void MockWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept /*override*/
 {
   if (Mocks.Connect)
     return Mocks.Connect(protocols, options);
 }
 
-void MockWebSocketResource::Ping() noexcept  /*override*/
+void MockWebSocketResource::Ping() noexcept /*override*/
 {
   if (Mocks.Connect)
     return Mocks.Ping();
 }
 
-void MockWebSocketResource::Send(const string &message) noexcept  /*override*/
+void MockWebSocketResource::Send(const string &message) noexcept /*override*/
 {
   if (Mocks.Send)
     return Mocks.Send(message);
 }
 
-void MockWebSocketResource::SendBinary(const string &message) noexcept  /*override*/
+void MockWebSocketResource::SendBinary(const string &message) noexcept /*override*/
 {
   if (Mocks.SendBinary)
     return Mocks.SendBinary(message);
 }
 
-void MockWebSocketResource::Close(CloseCode code, const string &reason) noexcept  /*override*/
+void MockWebSocketResource::Close(CloseCode code, const string &reason) noexcept /*override*/
 {
   if (Mocks.Close)
     return Mocks.Close(code, reason);
 }
 
-IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const noexcept  /*override*/
+IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const noexcept /*override*/
 {
   if (Mocks.GetReadyState)
     return Mocks.GetReadyState();
@@ -48,7 +48,7 @@ IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const noex
   return ReadyState::Connecting;
 }
 
-void MockWebSocketResource::SetOnConnect(function<void()> &&handler) noexcept  /*override*/
+void MockWebSocketResource::SetOnConnect(function<void()> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnConnect)
     return SetOnConnect(std::move(handler));
@@ -56,7 +56,7 @@ void MockWebSocketResource::SetOnConnect(function<void()> &&handler) noexcept  /
   m_connectHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnPing(function<void()> &&handler) noexcept  /*override*/
+void MockWebSocketResource::SetOnPing(function<void()> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnPing)
     return Mocks.SetOnPing(std::move(handler));
@@ -64,7 +64,7 @@ void MockWebSocketResource::SetOnPing(function<void()> &&handler) noexcept  /*ov
   m_pingHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept  /*override*/
+void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnSend)
     return Mocks.SetOnSend(std::move(handler));
@@ -72,7 +72,7 @@ void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept
   m_writeHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> &&handler) noexcept  /*override*/
+void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnMessage)
     return Mocks.SetOnMessage(std::move(handler));
@@ -80,7 +80,7 @@ void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> 
   m_readHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept  /*override*/
+void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnClose)
     return Mocks.SetOnClose(std::move(handler));
@@ -88,7 +88,7 @@ void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)>
   m_closeHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noexcept  /*override*/
+void MockWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnError)
     return Mocks.SetOnError(std::move(handler));
