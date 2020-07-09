@@ -153,7 +153,14 @@ struct WindowData {
     HWND interopHwnd;
     winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
 
-    MoveWindow(interopHwnd, 0, 0, windowPosition->cx, windowPosition->cy, TRUE);
+    constexpr int logBoxHeight = 100;
+    MoveWindow(
+        interopHwnd,
+        0,
+        0,
+        windowPosition->cx,
+        windowPosition->cy > logBoxHeight ? windowPosition->cy - logBoxHeight : windowPosition->cy,
+        TRUE);
 
     return 0;
   }
