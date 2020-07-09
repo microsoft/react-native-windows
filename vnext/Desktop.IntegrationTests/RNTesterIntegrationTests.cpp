@@ -18,7 +18,7 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_MODULE_INITIALIZE(InitModule) {
-  Microsoft::React::SetFeatureGate("Office.CXE.React.UseWinRTWebSocket");
+  Microsoft::React::SetFeatureGate("UseWinRTWebSocket");
 }
 
 // None of these tests are runnable
