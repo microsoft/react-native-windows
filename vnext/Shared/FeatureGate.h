@@ -8,7 +8,7 @@ namespace Microsoft::React {
 /// Sets a global boolean value identified by a random string.
 /// </summary>
 /// <param name="name">Global boolean key</param>
-void __cdecl SetFeatureGate(std::string &&name) noexcept;
+void __cdecl SetFeatureGate(std::string &&name, bool value) noexcept;
 
 /// <summary>
 /// Retrieves a global boolean value for the given key.
