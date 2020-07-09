@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "add tests for DynamicReader, DynamicWriter ",
+            "author": "aeulitz@microsoft.com",
+            "commit": "9c35f6310af6622bee2bfd58ad9a1394e3693549",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jul 2020 17:05:23 GMT",
       "tag": "react-native-windows_v0.0.0-canary.116",
       "version": "0.0.0-canary.116",
