@@ -60,6 +60,7 @@ echo Invoking publish nuget packages with: %0 %*
     powershell %ScriptFolder%tfs\Layout-Headers.ps1
 
 call :ProcessNuget Microsoft.ReactNative                 strip
+call :ProcessNuget Microsoft.ReactNative.Cxx             nostrip
 call :ProcessNuget Microsoft.ReactNative.Managed         strip -preferRelease $true
 call :ProcessNuget Microsoft.ReactNative.Managed.CodeGen nostrip
 exit /b 0
@@ -71,14 +72,10 @@ exit /b 0
     set targetNuspec=%targetDir%\pkgs\%nuspecFile%
     set targetNupkg=%targetDir%\pkgs\%packageId%.%version%.nupkg
     set nugetRoot=%ScriptFolder%..\target
-    if NOT EXIST %nugetRoot%\Microsoft.ReactNative.Cxx (
-        mkdir %nugetRoot%\Microsoft.ReactNative.Cxx
-    )
+    echo.
     echo.
     echo --------------------------------
-    echo.
     echo Processing %packageId%
-    echo.
     echo --------------------------------
     if '%strip%' == 'strip' (
         powershell %ScriptFolder%StripAdditionalPlatformsFromNuspec.ps1 -nuspec %scriptFolder%%nuspecFile% -outFile %targetNuspec% -slices %slices% %3 %4 %5 %6
