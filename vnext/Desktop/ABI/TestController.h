@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 #include "Microsoft.Internal.TestController.g.h"
 #include "winrt/Microsoft.ReactNative.h"
