@@ -24,6 +24,7 @@
 #define IDM_OPENJSFILE 102
 #define IDM_SETTINGS 103
 #define IDM_REFRESH 104
+#define IDM_NEWWINDOW 105
 
 // Next default values for new objects
 //

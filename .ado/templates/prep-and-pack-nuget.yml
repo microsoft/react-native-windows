@@ -9,6 +9,7 @@ parameters:
   packDesktop: true
   packMicrosoftReactNative: true
   packMicrosoftReactNativeManaged: true
+  packMicrosoftReactNativeManagedCodeGen: true
 
 steps:
   - task: DownloadBuildArtifacts@0
@@ -39,4 +40,12 @@ steps:
         packageId: Microsoft.ReactNative.Managed
         packageVersion: ${{parameters.npmVersion}}
         slices:  ${{ parameters.slices }}
+        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+
+  - ${{ if eq(parameters.packMicrosoftReactNativeManagedCodeGen, true) }}:
+    - template: prep-and-pack-single.yml
+      parameters:
+        packageId: Microsoft.ReactNative.Managed.CodeGen
+        packageVersion: ${{parameters.npmVersion}}
+        slices: ''
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64

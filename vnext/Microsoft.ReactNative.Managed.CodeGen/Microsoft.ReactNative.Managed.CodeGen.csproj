@@ -52,10 +52,18 @@
     </PropertyGroup>
   </Target>
 
+  <!-- 
+    This is used during the PR build to ensure we have the artifacts published during the build.
+  -->
+  <Target 
+    Name="PublishToolDuringBuild" 
+    DependsOnTargets="Publish" 
+    AfterTargets="Build" 
+    Condition="'$(PublishToolDuringBuild)' == 'true' and '$(Platform)' == 'x64'">
+  </Target>
 
   <!-- Override -->
   <Target Name="_CheckForMismatchingPlatform">
-
   </Target>
 
   <Target Name="Deploy" />
