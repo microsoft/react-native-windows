@@ -10,7 +10,7 @@ using std::string;
 namespace {
 std::unordered_map<string, bool> g_featureGates;
 mutex g_featureGatesMutex;
-}
+} // namespace
 
 namespace Microsoft::React {
 
