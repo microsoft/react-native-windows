@@ -4,8 +4,8 @@
 
 namespace Microsoft::React {
 
-void SetFeatureGate(std::string &&name) noexcept;
+void __cdecl SetFeatureGate(std::string &&name) noexcept;
 
-const bool GetFeatureGate(std::string &&name) noexcept;
+const bool __cdecl GetFeatureGate(std::string &&name) noexcept;
 
 } // namespace Microsoft::React
