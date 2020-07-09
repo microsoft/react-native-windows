@@ -317,31 +317,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
   return DefWindowProc(hwnd, message, wparam, lparam);
 }
 
+constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
+
 int RunPlayground(int showCmd, bool useWebDebugger) {
   constexpr PCWSTR appName = L"React Native Playground (Win32)";
-  constexpr PCWSTR windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
   WUXH::DesktopWindowXamlSource desktopXamlSource;
-
-  static ATOM classId{[windowClassName]() {
-    WNDCLASSEXW wcex = {};
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = &WndProc;
-    wcex.cbClsExtra = DLGWINDOWEXTRA;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = WindowData::s_instance;
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
-    wcex.lpszClassName = windowClassName;
-    return RegisterClassEx(&wcex);
-  }()};
-  WINRT_VERIFY(classId);
-  winrt::check_win32(!classId);
-
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
   windowData->m_useWebDebugger = useWebDebugger;
 
@@ -349,7 +332,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
-      windowClassName,
+      c_windowClassName,
       appName,
       WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
@@ -391,6 +374,21 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   return (int)msg.wParam;
 }
 
-_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+  WNDCLASSEXW wcex = {};
+  wcex.cbSize = sizeof(WNDCLASSEX);
+  wcex.style = CS_HREDRAW | CS_VREDRAW;
+  wcex.lpfnWndProc = &WndProc;
+  wcex.cbClsExtra = DLGWINDOWEXTRA;
+  wcex.cbWndExtra = 0;
+  wcex.hInstance = WindowData::s_instance;
+  wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+  wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
+  wcex.lpszClassName = c_windowClassName;
+  ATOM classId = RegisterClassEx(&wcex);
+  WINRT_VERIFY(classId);
+  winrt::check_win32(!classId);
+
   return RunPlayground(showCmd, true);
 }
