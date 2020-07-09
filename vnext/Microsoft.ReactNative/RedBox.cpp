@@ -250,63 +250,66 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     const std::string plain = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
 
-    try {
-      auto json = folly::parseJson(plain);
-      if (json.count("type") && json["type"] == "InternalError") {
-        auto message = json["message"].asString();
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+    if (!plain.empty() && plain[0] == '{') {
+      try {
+        auto json = folly::parseJson(plain);
+        if (json.count("type") && json["type"] == "InternalError") {
+          auto message = json["message"].asString();
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
 
-        if (IsMetroBundlerError(message, json["type"].asString())) {
-          xaml::Documents::Hyperlink link;
-          link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
-          xaml::Documents::Run linkRun;
+          if (IsMetroBundlerError(message, json["type"].asString())) {
+            xaml::Documents::Hyperlink link;
+            link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
+            xaml::Documents::Run linkRun;
 
-          linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-          link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
-          link.Inlines().Append(linkRun);
-          xaml::Documents::Run normalRun;
-          normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
-          m_errorStackText.Inlines().Append(normalRun);
-          m_errorStackText.Inlines().Append(link);
-        } else {
-          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+            linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
+            link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+            link.Inlines().Append(linkRun);
+            xaml::Documents::Run normalRun;
+            normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
+            m_errorStackText.Inlines().Append(normalRun);
+            m_errorStackText.Inlines().Append(link);
+          } else {
+            m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+          }
+          return;
+        } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
+          auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
+          const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
+
+          const auto errorName = json["name"].asString();
+          std::string stack;
+
+          const auto prefix = errorName + ": " + message;
+          if (boost::starts_with(originalStack, prefix)) {
+            stack = originalStack.substr(prefix.length());
+          } else {
+            constexpr char startOfStackTrace[] = "\n    at ";
+            stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
+          }
+
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+          // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
+          m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
+
+          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+          return;
         }
-        return;
-      } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
-        auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
-        const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
-
-        const auto errorName = json["name"].asString();
-        std::string stack;
-
-        const auto prefix = errorName + ": " + message;
-        if (boost::starts_with(originalStack, prefix)) {
-          stack = originalStack.substr(prefix.length());
-        } else {
-          constexpr char startOfStackTrace[] = "\n    at ";
-          stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
-        }
-
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-        // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
-        m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
-
-        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
-        return;
-      }
-    } catch (...) {
-      std::string doctype = "<!DOCTYPE HTML>";
-      if (boost::istarts_with(plain, doctype)) {
-        winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
-
-        CreateWebView(m_stackPanel, content);
-
-        m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
-        m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
-
-        return;
+      } catch (...) {
       }
     }
+    std::string doctype = "<!DOCTYPE HTML>";
+    if (boost::istarts_with(plain, doctype)) {
+      winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
+
+      CreateWebView(m_stackPanel, content);
+
+      m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
+      m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
+
+      return;
+    }
+
     // fall back to displaying the raw message string
     m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(plain));
     m_errorStackText.Text(L"");
