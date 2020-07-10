@@ -11,14 +11,14 @@ import * as path from 'path';
 
 import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';
 import {
-  OverrideFileRepository,
   ReactFileRepository,
+  WritableFileRepository,
   bindVersion,
 } from './FileRepository';
+import FileSystemRepository from './FileSystemRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import Manifest from './Manifest';
 import Override from './Override';
-import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
 import {findManifest} from './FileSearch';
@@ -54,7 +54,8 @@ export async function hasOverride(
 }
 
 /**
- * Removes an override from the manifest
+ * Removes an override from the manifest if it exists.
+ * @returns whether the override was removed
  */
 export async function removeOverride(
   overrideName: string,
@@ -139,7 +140,7 @@ export async function upgradeOverrides(opts: {
 
     upgradeResults.push(upgradeResult);
 
-    if (upgradeResult.fileWritten) {
+    if (upgradeResult.filesWritten) {
       await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
     }
   }
@@ -169,7 +170,7 @@ async function checkFileExists(friendlyName: string, filePath: string) {
  * Context describing state centered around a single manifest
  */
 interface ManifestContext {
-  overrideRepo: OverrideFileRepository;
+  overrideRepo: WritableFileRepository;
   reactRepo: ReactFileRepository;
   gitReactRepo: GitReactFileRepository;
   overrideFactory: OverrideFactory;
@@ -192,7 +193,7 @@ async function createManifestContext(opts: {
     opts.reactNativeVersion || (await getInstalledRNVersion());
 
   const overrideDir = path.dirname(manifestPath);
-  const overrideRepo = new OverrideFileRepositoryImpl(overrideDir);
+  const overrideRepo = new FileSystemRepository(overrideDir);
 
   const gitReactRepo = await GitReactFileRepository.createAndInit();
   const reactRepo = bindVersion(gitReactRepo, reactNativeVersion);

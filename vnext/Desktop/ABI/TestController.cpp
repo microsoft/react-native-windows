@@ -5,6 +5,8 @@
 
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
+#include "IReactModuleBuilder.h"
+#include "ReactPackageBuilder.h"
 #include "TestController.h"
 
 #include "Microsoft.Internal.TestController.g.cpp"
@@ -53,6 +55,29 @@ struct DynamicWrapperReader : public winrt::implements<DynamicWrapperReader, Mic
   folly::dynamic m_value;
 };
 
+struct TestContext : public winrt::implements<TestContext, Microsoft::ReactNative::IReactContext> {
+  Microsoft::ReactNative::IReactPropertyBag Properties() noexcept {
+    return nullptr;
+  }
+  Microsoft::ReactNative::IReactNotificationService Notifications() noexcept {
+    return nullptr;
+  }
+  Microsoft::ReactNative::IReactDispatcher UIDispatcher() noexcept {
+    return nullptr;
+  }
+  Microsoft::ReactNative::IReactDispatcher JSDispatcher() noexcept {
+    return nullptr;
+  }
+  void CallJSFunction(
+      hstring const &moduleName,
+      hstring const &methodName,
+      Microsoft::ReactNative::JSValueArgWriter const &paramsArgWriter) noexcept {}
+  void EmitJSEvent(
+      hstring const &eventEmitterName,
+      hstring const &eventName,
+      Microsoft::ReactNative::JSValueArgWriter const &paramsArgWriter) noexcept {}
+};
+
 } // namespace
 
 namespace winrt::Microsoft::Internal::implementation {
@@ -65,6 +90,21 @@ Microsoft::ReactNative::IJSValueReader TestController::CreateDynamicReader(
 
 Microsoft::ReactNative::IJSValueWriter TestController::CreateDynamicWriter() {
   return make<winrt::Microsoft::ReactNative::DynamicWriter>();
+}
+
+Microsoft::ReactNative::IReactContext TestController::CreateTestContext() {
+  return make<TestContext>();
+}
+
+Microsoft::ReactNative::IReactModuleBuilder TestController::CreateReactModuleBuilder(
+    Microsoft::ReactNative::IReactContext context) {
+  return make<Microsoft::ReactNative::ReactModuleBuilder>(context);
+}
+
+Microsoft::ReactNative::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
+  auto nativeModulesProvider = std::make_shared<Microsoft::ReactNative::NativeModulesProvider>();
+  auto turboModulesProvider = std::make_shared<Microsoft::ReactNative::TurboModulesProvider>();
+  return make<Microsoft::ReactNative::ReactPackageBuilder>(nativeModulesProvider, turboModulesProvider);
 }
 
 } // namespace winrt::Microsoft::Internal::implementation

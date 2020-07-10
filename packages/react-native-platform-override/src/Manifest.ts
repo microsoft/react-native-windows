@@ -10,7 +10,7 @@ import * as Serialized from './Serialized';
 import * as _ from 'lodash';
 
 import Override, {deserializeOverride} from './Override';
-import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
+import {ReactFileRepository, WritableFileRepository} from './FileRepository';
 import OverrideFactory from './OverrideFactory';
 import {ValidationError} from './ValidationStrategy';
 
@@ -61,7 +61,7 @@ export default class Manifest {
    * with upstream.
    */
   async validate(
-    overrideRepo: OverrideFileRepository,
+    overrideRepo: WritableFileRepository,
     reactRepo: ReactFileRepository,
   ): Promise<ValidationError[]> {
     const errors: ValidationError[] = [];
@@ -73,9 +73,10 @@ export default class Manifest {
 
     const overrideFiles = await overrideRepo.listFiles(globs);
     const missingFromManifest = overrideFiles.filter(
-      file => !this.overrides.some(override => override.includesFile(file)),
+      file =>
+        file !== 'overrides.json' &&
+        !this.overrides.some(override => override.includesFile(file)),
     );
-
     for (const missingFile of missingFromManifest) {
       errors.push({type: 'missingFromManifest', overrideName: missingFile});
     }

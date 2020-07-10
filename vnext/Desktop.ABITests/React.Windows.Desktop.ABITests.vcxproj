@@ -132,6 +132,8 @@
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
+    <ClCompile Include="ReactModuleBuilderTests.cpp" />
+    <ClCompile Include="ReactPackageBuilderTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />

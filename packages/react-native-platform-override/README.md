@@ -38,12 +38,12 @@ An example override manifest
 ## Override Types
 Overrides can be registered as different types, each with differing behavior.
 
-|          |                                                                                                           |
-|----------|-----------------------------------------------------------------------------------------------------------|
-| Platform | Platform-specific logic that doesn't map to an upstream file                                              |
-| Derived  | An override derived from an upstream file. Changes to the original file will be merged into the override. |
-| Patch    | An upstream file with changes made to it. Changes to the original file will be merged into the override.  |
-| Copy     | An exact copy of an upstream file. Overrides of this type will remain identical to their originals.       |
+|          |                                                                                                                  |
+|----------|------------------------------------------------------------------------------------------------------------------|
+| Platform | Platform-specific logic that doesn't map to an upstream file                                                     |
+| Derived  | An override derived from an upstream file. Changes to the original file will be merged into the override.        |
+| Patch    | An upstream file with changes made to it. Changes to the original file will be merged into the override.         |
+| Copy     | An exact copy of an upstream file or directory. Overrides of this type will remain identical to their originals. |
 
 ## CLI
 `react-native-platform-override` offers multiple commands to manipulate and verify the override manifest.
@@ -87,5 +87,5 @@ E.g.
 ```js
 import {validateManifest} from 'react-native-platform-override';
 
-const validationErrors = validateManifest({manifestPath: 'src/overrides.json'});
+const validationErrors = await validateManifest({manifestPath: 'src/overrides.json'});
 ```
