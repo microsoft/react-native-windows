@@ -83,7 +83,7 @@ test('addOverride', async () => {
 });
 
 test('upgradeOverrides', async () => {
-  await usingRepository('sampleOverrideRepo', async (_, repoPath) => {
+  await usingRepository('sampleOverrideRepo', async (repo, repoPath) => {
     const opts = {
       manifestPath: path.join(repoPath, 'overrides.json'),
       reactNativeVersion: '0.0.0-42c8dead6',
@@ -112,6 +112,22 @@ test('upgradeOverrides', async () => {
         overrideName: 'ReactCommon\\yoga\\yoga\\Yoga.cpp',
       },
     ]);
+
+    const manifest = JSON.parse(
+      (await repo.readFile('sampleOverrideRepo/overrides.json'))!.toString(),
+    );
+
+    for (const serializedOverride of manifest.overrides) {
+      if (serializedOverride.file !== 'ReactCommon/yoga/yoga/Yoga.cpp') {
+        expect({
+          file: serializedOverride.override,
+          version: serializedOverride.baseVersion,
+        }).toEqual({
+          file: serializedOverride.override,
+          version: opts.reactNativeVersion,
+        });
+      }
+    }
   });
 });
 

@@ -170,7 +170,9 @@ export async function upgradeOverrides(opts: {
     ctx.manifestPath,
   );
 
-  return upgradeResults;
+  return upgradeResults.sort((a, b) =>
+    a.overrideName.localeCompare(b.overrideName, 'en'),
+  );
 }
 
 /**
