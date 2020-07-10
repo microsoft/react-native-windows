@@ -86,7 +86,7 @@ namespace
 namespace Microsoft::React
 {
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions) noexcept
   : m_uri{ std::move(uri) }
   , m_socket{ std::move(socket) }
   , m_writer{ std::move(writer) }
@@ -99,17 +99,17 @@ WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IData
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions) noexcept
   : WinRTWebSocketResource(std::move(socket), DataWriter{ socket.OutputStream() }, std::move(uri), std::move(certExeptions))
 {
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions) noexcept
   : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, std::move(certExeptions))
 {
 }
 
-WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
+WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 {
   Close(CloseCode::GoingAway, "Disposed");
 
@@ -118,7 +118,7 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 
 #pragma region Private members
 
-IAsyncAction WinRTWebSocketResource::PerformConnect()
+IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept
 {
   auto self = shared_from_this();
   try
@@ -146,7 +146,7 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   self->m_connectRequested = false;
 }
 
-fire_and_forget WinRTWebSocketResource::PerformPing()
+fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
 {
   auto self = shared_from_this();
   try
@@ -185,7 +185,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformWrite()
+fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
 {
   auto self = shared_from_this();
   if (self->m_writeQueue.empty())
@@ -253,7 +253,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformClose()
+fire_and_forget WinRTWebSocketResource::PerformClose() noexcept
 {
   co_await resume_background();
 
@@ -345,7 +345,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
   }
 }
 
-void WinRTWebSocketResource::Synchronize()
+void WinRTWebSocketResource::Synchronize() noexcept
 {
   // Ensure sequence of other operations
   if (m_connectRequested)

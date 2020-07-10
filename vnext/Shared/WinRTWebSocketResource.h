@@ -47,30 +47,32 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Foundation::Uri &&uri,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions) noexcept;
 
-  winrt::Windows::Foundation::IAsyncAction PerformConnect();
-  winrt::fire_and_forget PerformPing();
-  winrt::fire_and_forget PerformWrite();
-  winrt::fire_and_forget PerformClose();
+  winrt::Windows::Foundation::IAsyncAction PerformConnect() noexcept;
+  winrt::fire_and_forget PerformPing() noexcept;
+  winrt::fire_and_forget PerformWrite() noexcept;
+  winrt::fire_and_forget PerformClose() noexcept;
 
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IWebSocket const &sender,
       winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &args);
-  void Synchronize();
+  void Synchronize() noexcept;
 
  public:
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
       winrt::Windows::Foundation::Uri &&uri,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>
+          &&certExeptions) noexcept;
 
   WinRTWebSocketResource(
       const std::string &urlString,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>
+          &&certExeptions) noexcept;
 
-  ~WinRTWebSocketResource() override;
+  ~WinRTWebSocketResource() noexcept override;
 
 #pragma region IWebSocketResource
 
