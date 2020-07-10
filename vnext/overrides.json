@@ -48,7 +48,7 @@
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
       "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "a386446728151d42a47425bbae5264811180e433",
+      "baseHash": "6053056f2ec59cf60e5406d7f3986ef09da6dc22",
       "issue": 4054
     },
     {
@@ -56,29 +56,29 @@
       "directory": "ReactCopies/RNTester/js",
       "baseDirectory": "RNTester/js",
       "baseVersion": "0.0.0-56cf99a96",
-      "baseHash": "be625b7c6f140a906d6a205b23504f60a5efe94b",
+      "baseHash": "417732d887bd4edeb8c3c4cff8b5c55628c05af1",
       "issue": 4054
     },
     {
       "type": "patch",
-      "file": "src\\babel-plugin-inline-view-configs\\GenerateViewConfigJs.js",
-      "baseFile": "packages\\react-native-codegen\\src\\generators\\components\\GenerateViewConfigJs.js",
+      "file": "src/babel-plugin-inline-view-configs/GenerateViewConfigJs.js",
+      "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "415a69596caa402d0f510fe2a2eb2ca792169cab",
       "issue": 5430
     },
     {
       "type": "patch",
-      "file": "src\\babel-plugin-inline-view-configs\\index.js",
-      "baseFile": "packages\\babel-plugin-inline-view-configs\\index.js",
+      "file": "src/babel-plugin-inline-view-configs/index.js",
+      "baseFile": "packages/babel-plugin-inline-view-configs/index.js",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "181443fa916d64e9bd56f0c45f629941f90b15e4",
       "issue": 5430
     },
     {
       "type": "patch",
-      "file": "src\\babel-plugin-inline-view-configs\\package.json",
-      "baseFile": "packages\\babel-plugin-inline-view-configs\\package.json",
+      "file": "src/babel-plugin-inline-view-configs/package.json",
+      "baseFile": "packages/babel-plugin-inline-view-configs/package.json",
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "8d37fac510a533c0badffacd9c3aa9c392fd58c6",
       "issue": 5430
