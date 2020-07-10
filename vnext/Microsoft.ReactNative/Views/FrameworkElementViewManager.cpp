@@ -539,7 +539,8 @@ void FrameworkElementViewManager::StartTransformAnimation(
     comp::CompositionPropertySet transformPS) {
   auto instance = GetReactInstance().lock();
   assert(instance != nullptr);
-  auto expression = instance->GetExpressionAnimationStore().GetTransformCenteringExpression();
+  auto expression =
+      instance->GetExpressionAnimationStore().GetTransformCenteringExpression(react::uwp::GetCompositor(uielement));
   expression.SetReferenceParameter(L"PS", transformPS);
   expression.Target(L"TransformMatrix");
   uielement.StartAnimation(expression);
