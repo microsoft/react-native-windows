@@ -10,7 +10,7 @@
     <repository type="git"
       url="https://github.com/microsoft/react-native-windows.git"
       commit="$CommitId$" />
-    <tags>react react-native native-module codegen microsoft c# csharp</tags>
+    <tags>react react-native react-native-windows native-module codegen microsoft c# csharp</tags>
   </metadata>
   <files>
     <file src="$nugetroot$\Microsoft.ReactNative.Managed.CodeGen.targets" target="build"/>
