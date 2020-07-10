@@ -302,6 +302,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h">
       <Filter>Header Files\Executors</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FeatureGate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">

@@ -22,5 +22,5 @@
   </ItemGroup>
   <Target Name="Deploy" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
-          Condition="'$(ReactNativeCodeGenEnabled)' == 'true'" />
+          Condition="'$(ReactNativeCodeGenEnabled)' == 'true' and '$(UseExperimentalNuget)' != 'true'" />
 </Project>

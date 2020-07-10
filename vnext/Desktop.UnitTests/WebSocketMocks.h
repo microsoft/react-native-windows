@@ -25,29 +25,29 @@ struct MockWebSocketResource : public IWebSocketResource {
 
 #pragma region IWebSocketResource overrides
 
-  void Connect(const Protocols &, const Options &) override;
+  void Connect(const Protocols &, const Options &) noexcept override;
 
-  void Ping() override;
+  void Ping() noexcept override;
 
-  void Send(const std::string &) override;
+  void Send(const std::string &) noexcept override;
 
-  void SendBinary(const std::string &) override;
+  void SendBinary(const std::string &) noexcept override;
 
-  void Close(CloseCode, const std::string &) override;
+  void Close(CloseCode, const std::string &) noexcept override;
 
-  ReadyState GetReadyState() const override;
+  ReadyState GetReadyState() const noexcept override;
 
-  void SetOnConnect(std::function<void()> &&onConnect) override;
+  void SetOnConnect(std::function<void()> &&onConnect) noexcept override;
 
-  void SetOnPing(std::function<void()> &&) override;
+  void SetOnPing(std::function<void()> &&) noexcept override;
 
-  void SetOnSend(std::function<void(std::size_t)> &&) override;
+  void SetOnSend(std::function<void(std::size_t)> &&) noexcept override;
 
-  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&) override;
+  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&) noexcept override;
 
-  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&) override;
+  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&) noexcept override;
 
-  void SetOnError(std::function<void(Error &&)> &&) override;
+  void SetOnError(std::function<void(Error &&)> &&) noexcept override;
 
 #pragma endregion IWebSocketResource overrides
 

@@ -5,9 +5,9 @@
 #include <shobjidl.h>
 #include <windows.h>
 
-#include <memory>
-
 #include <filesystem>
+#include <memory>
+#include <thread>
 
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
@@ -25,6 +25,8 @@
 namespace WUX = winrt::Windows::UI::Xaml;
 namespace WUXC = WUX::Controls;
 namespace WUXH = WUX::Hosting;
+
+int RunPlayground(int showCmd, bool useWebDebugger);
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -108,6 +110,15 @@ struct WindowData {
 
         break;
       }
+      case IDM_NEWWINDOW: {
+        std::thread playgroundThread{([]() {
+          // For subsequent RN windows do not use the web debugger by default,
+          // since one instance can be connected to it at a time.
+          RunPlayground(SW_SHOW, false);
+        })};
+        playgroundThread.detach();
+        break;
+      }
       case IDM_ABOUT:
         DialogBox(s_instance, MAKEINTRESOURCE(IDD_ABOUTBOX), hwnd, &About);
         break;
@@ -142,7 +153,15 @@ struct WindowData {
     HWND interopHwnd;
     winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
 
-    MoveWindow(interopHwnd, 0, 0, windowPosition->cx, windowPosition->cy, TRUE);
+    constexpr int logBoxHeight = 100;
+    constexpr int scrollbarWidth = 24;
+    MoveWindow(
+        interopHwnd,
+        0,
+        0,
+        windowPosition->cx > scrollbarWidth ? windowPosition->cx - scrollbarWidth : windowPosition->cx,
+        windowPosition->cy > logBoxHeight ? windowPosition->cy - logBoxHeight : windowPosition->cy,
+        TRUE);
 
     return 0;
   }
@@ -306,36 +325,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
   return DefWindowProc(hwnd, message, wparam, lparam);
 }
 
-_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
+
+int RunPlayground(int showCmd, bool useWebDebugger) {
   constexpr PCWSTR appName = L"React Native Playground (Win32)";
-  constexpr PCWSTR windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
   WUXH::DesktopWindowXamlSource desktopXamlSource;
-
-  WNDCLASSEXW wcex = {};
-  wcex.cbSize = sizeof(WNDCLASSEX);
-  wcex.style = CS_HREDRAW | CS_VREDRAW;
-  wcex.lpfnWndProc = &WndProc;
-  wcex.cbClsExtra = DLGWINDOWEXTRA;
-  wcex.cbWndExtra = 0;
-  wcex.hInstance = instance;
-  wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-  wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
-  wcex.lpszClassName = windowClassName;
-  ATOM classId = RegisterClassEx(&wcex);
-  WINRT_VERIFY(classId);
-  winrt::check_win32(!classId);
-
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
+  windowData->m_useWebDebugger = useWebDebugger;
 
   auto xamlContent = WUXC::Grid();
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
-      windowClassName,
+      c_windowClassName,
       appName,
       WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
@@ -344,7 +349,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       CW_USEDEFAULT,
       nullptr,
       nullptr,
-      instance,
+      WindowData::s_instance,
       windowData.get());
 
   WINRT_VERIFY(hwnd);
@@ -355,7 +360,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   UpdateWindow(hwnd);
   SetFocus(hwnd);
 
-  HACCEL hAccelTable = LoadAccelerators(instance, MAKEINTRESOURCE(IDC_PLAYGROUND_WIN32));
+  HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_WIN32));
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
@@ -375,4 +380,23 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   winrt::uninit_apartment();
 
   return (int)msg.wParam;
+}
+
+_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+  WNDCLASSEXW wcex = {};
+  wcex.cbSize = sizeof(WNDCLASSEX);
+  wcex.style = CS_HREDRAW | CS_VREDRAW;
+  wcex.lpfnWndProc = &WndProc;
+  wcex.cbClsExtra = DLGWINDOWEXTRA;
+  wcex.cbWndExtra = 0;
+  wcex.hInstance = WindowData::s_instance;
+  wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+  wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
+  wcex.lpszClassName = c_windowClassName;
+  ATOM classId = RegisterClassEx(&wcex);
+  WINRT_VERIFY(classId);
+  winrt::check_win32(!classId);
+
+  return RunPlayground(showCmd, true);
 }

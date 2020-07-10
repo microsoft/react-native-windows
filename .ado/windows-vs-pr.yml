@@ -143,6 +143,7 @@ jobs:
           contents: |
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
+            Microsoft.ReactNative.Managed.CodeGen\**
 
   - job: RNW_WinUI3
     displayName: WinUI3 Playground

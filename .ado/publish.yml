@@ -169,6 +169,7 @@ jobs:
           contents: |
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
+            Microsoft.ReactNative.Managed.CodeGen\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2

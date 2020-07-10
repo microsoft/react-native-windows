@@ -50,6 +50,8 @@ EXPORTS
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ?updateProperties@ShadowNode@react@facebook@@UEAAX$$QEBUdynamic@folly@@@Z
 ?Utf16ToUtf8@Unicode@Common@Microsoft@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?SetFeatureGate@React@Microsoft@@YAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z
+?GetFeatureGate@React@Microsoft@@YA?B_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 
 YGAssert
 YGAssertWithConfig

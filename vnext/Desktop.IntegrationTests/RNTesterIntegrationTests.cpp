@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
+#include <FeatureGate.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
@@ -15,6 +16,10 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 }
 
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
+
+TEST_MODULE_INITIALIZE(InitModule) {
+  Microsoft::React::SetFeatureGate("UseWinRTWebSocket", true);
+}
 
 // None of these tests are runnable
 TEST_CLASS (RNTesterIntegrationTests) {
