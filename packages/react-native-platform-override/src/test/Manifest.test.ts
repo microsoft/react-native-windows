@@ -17,8 +17,8 @@ import {
 
 import {
   MockFile,
-  MockOverrideFileRepository,
   MockReactFileRepository,
+  MockWritableFileRepository,
 } from './MockFileRepository';
 
 import Manifest from '../Manifest';
@@ -59,10 +59,14 @@ const overrideFiles: Array<MockFile> = [
     content:
       "Cause honey I'll come get my things, but I can't let go I'm waiting for it, the fall of civilization as we know it",
   },
+  {
+    filename: 'overrides.json',
+    content: 'Manifest validation should ignore my existence',
+  },
 ];
 
 const reactRepo = new MockReactFileRepository(reactFiles);
-const ovrRepo = new MockOverrideFileRepository(overrideFiles);
+const ovrRepo = new MockWritableFileRepository(overrideFiles);
 
 test('constructor - Duplicate Override Names', () => {
   expect(
@@ -90,7 +94,7 @@ test('validate - Empty Manifest', async () => {
   const manifest = new Manifest([]);
 
   const errors = await manifest.validate(
-    new MockOverrideFileRepository([]),
+    new MockWritableFileRepository([]),
     reactRepo,
   );
   expect(errors).toEqual([]);

@@ -16,7 +16,8 @@ export type OverridePromptAnswers =
   | {type: 'derived'; baseFile: string; codeCopied: boolean; issue?: number}
   | {type: 'patch'; baseFile: string; issue: number}
   | {type: 'platform'}
-  | {type: 'copy'; baseFile: string; issue: number};
+  | {type: 'copy'; baseFile: string; issue: number}
+  | {type: 'directoryCopy'; baseDirectory: string; issue: number};
 
 export async function overrideFromDetails(
   overridePath: string,
@@ -46,6 +47,12 @@ export async function overrideFromDetails(
       return factory.createCopyOverride(
         overrideName,
         answers.baseFile,
+        answers.issue,
+      );
+    case 'directoryCopy':
+      return factory.createDirectoryCopyOverride(
+        overrideName,
+        answers.baseDirectory,
         answers.issue,
       );
   }
@@ -78,9 +85,14 @@ export async function promptForOverrideDetails(): Promise<
           short: 'Platform',
         },
         {
-          name: 'Exact copy of an upstream file',
+          name: 'Copy of an upstream file',
           value: 'copy',
           short: 'Copy',
+        },
+        {
+          name: 'Copy of an upstream directory',
+          value: 'directoryCopy',
+          short: 'Directory Copy',
         },
       ],
     },
@@ -94,7 +106,7 @@ export async function promptForOverrideDetails(): Promise<
     {
       when: res =>
         (res.type === 'derived' && res.codeCopied) ||
-        ['copy', 'patch'].includes(res.type),
+        ['copy', 'directoryCopy', 'patch'].includes(res.type),
       type: 'input',
       validate: validateIssueNumber,
       filter: filterIssueNumber,
@@ -107,6 +119,12 @@ export async function promptForOverrideDetails(): Promise<
       type: 'input',
       name: 'baseFile',
       message: 'What file is this override based off of?',
+    },
+    {
+      when: res => res.type === 'directoryCopy',
+      type: 'input',
+      name: 'baseDirectory',
+      message: 'What directory are you copying from?',
     },
   ]);
 }

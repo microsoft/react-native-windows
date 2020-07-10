@@ -11,8 +11,8 @@ import * as Serialized from '../Serialized';
 import * as ora from 'ora';
 import * as path from 'path';
 
+import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
-import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';
 
 import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../PackageUtils';
@@ -43,7 +43,7 @@ const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
   for (const file of overrideFiles) {
     spinner.text = `Creating manifest (${++i}/${overrideFiles.length})`;
 
-    const contents = (await overrides.getFileContents(file))!;
+    const contents = (await overrides.readFile(file))!;
     (await tryAddCopy(file, version, contents, reactSources, manifest)) ||
       (await tryAddPatch(file, version, contents, reactSources, manifest)) ||
       (await tryAddDerived(file, version, contents, reactSources, manifest)) ||
@@ -63,7 +63,7 @@ async function tryAddCopy(
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
 ): Promise<boolean> {
-  const baseContent = await reactSources.getFileContents(filename);
+  const baseContent = await reactSources.readFile(filename);
   if (!baseContent) {
     return false;
   }
@@ -92,7 +92,7 @@ async function tryAddPatch(
   manifest: Serialized.Manifest,
 ): Promise<boolean> {
   const baseFile = filename.replace(WIN_PLATFORM_EXT, '');
-  const baseContent = await reactSources.getFileContents(baseFile);
+  const baseContent = await reactSources.readFile(baseFile);
 
   if (!baseContent) {
     return false;
@@ -125,7 +125,7 @@ async function tryAddDerived(
   const matches: Array<{file: string; contents: Buffer; dist: number}> = [];
 
   const droidFile = filename.replace(WIN_PLATFORM_EXT, '.android');
-  const droidContents = await reactSources.getFileContents(droidFile);
+  const droidContents = await reactSources.readFile(droidFile);
   const droidSim =
     droidContents && computeSimilarity(overrideContent, droidContents);
   if (droidSim && droidSim.similar) {
@@ -137,7 +137,7 @@ async function tryAddDerived(
   }
 
   const iosFile = filename.replace(WIN_PLATFORM_EXT, '.ios');
-  const iosContents = await reactSources.getFileContents(iosFile);
+  const iosContents = await reactSources.readFile(iosFile);
   const iosSim = iosContents && computeSimilarity(overrideContent, iosContents);
   if (iosSim && iosSim.similar) {
     matches.push({
@@ -183,9 +183,9 @@ async function getFileRepos(
   overrideovrPath: string,
   rnVersion: string,
 ): Promise<
-  [FileRepository.OverrideFileRepository, FileRepository.ReactFileRepository]
+  [FileRepository.WritableFileRepository, FileRepository.ReactFileRepository]
 > {
-  const overrides = new OverrideFileRepositoryImpl(overrideovrPath);
+  const overrides = new FileSystemRepository(overrideovrPath);
 
   const versionedReactSources = await GitReactFileRepository.createAndInit();
   const reactSources = FileRepository.bindVersion(

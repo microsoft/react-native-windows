@@ -91,6 +91,25 @@ test('Well Formed Copy', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
+test('Well Formed Directory Copy', () => {
+  const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
+    overrides: [
+      {
+        type: 'copy',
+        directory: 'foo',
+        baseDirectory: 'src/foo',
+        baseVersion: '0.61.5',
+        baseHash: 'AAAABBBB',
+        issue: 4567,
+      },
+    ],
+  };
+
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
+});
+
 test('Fixme Allowed As Issue', () => {
   const manifest: Serialized.Manifest = {
     includePatterns: undefined,
