@@ -127,7 +127,7 @@ test('hashFileOrDirectory - Directory Rename', async () => {
 
   const fileRepo2 = new MockFileRepository([
     {filename: 'a/c.txt', content: 'Lorem Ipsum'},
-    {filename: 'a/d.txt', content: 'Hello World!'},
+    {filename: 'a/a.txt', content: 'Hello World!'},
     {filename: 'b/a.txt', content: 'Ignore Me'},
   ]);
 
