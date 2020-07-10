@@ -22,6 +22,7 @@
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
+    "async": "^3.2.0",
     "chalk": "^3.0.0",
     "globby": "^9.2.0",
     "inquirer": "^7.1.0",
@@ -41,6 +42,7 @@
     "@rnw-scripts/eslint-config": "0.0.2",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.0.1",
+    "@types/async": "^3.2.3",
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
     "@types/globby": "^9.1.0",

@@ -22,6 +22,7 @@ import Manifest from './Manifest';
 import Override from './Override';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
+import {eachLimit} from 'async';
 import {findManifest} from './FileSearch';
 import {getInstalledRNVersion} from './PackageUtils';
 
@@ -142,28 +143,26 @@ export async function upgradeOverrides(opts: {
   // GitReactFileRepository optimizations when multiple requests are queued at
   // once.
   let i = 0;
-  await Promise.all(
-    outOfDateOverrides.map(async override => {
-      const upgradeResult = await override
-        .upgradeStrategy()
-        .upgrade(
-          ctx.gitReactRepo,
-          ctx.overrideRepo,
-          ctx.reactNativeVersion,
-          opts.allowConflicts,
-        );
+  await eachLimit(outOfDateOverrides, 15, async override => {
+    const upgradeResult = await override
+      .upgradeStrategy()
+      .upgrade(
+        ctx.gitReactRepo,
+        ctx.overrideRepo,
+        ctx.reactNativeVersion,
+        opts.allowConflicts,
+      );
 
-      if (opts.progressListener) {
-        opts.progressListener(++i, outOfDateOverrides.length);
-      }
+    if (opts.progressListener) {
+      opts.progressListener(++i, outOfDateOverrides.length);
+    }
 
-      upgradeResults.push(upgradeResult);
+    upgradeResults.push(upgradeResult);
 
-      if (upgradeResult.filesWritten) {
-        await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
-      }
-    }),
-  );
+    if (upgradeResult.filesWritten) {
+      await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
+    }
+  });
 
   await Serialized.writeManifestToFile(
     ctx.manifest.serialize(),
