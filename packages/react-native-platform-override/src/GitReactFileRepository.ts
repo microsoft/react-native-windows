@@ -31,9 +31,9 @@ export default class GitReactFileRepository
   private gitClient: simplegit.SimpleGit;
   private checkedOutVersion?: string;
 
-  // We have a potential race condition where one call to getFileContents
-  // could checkout out a new tag while an existing call is rading a file.
-  // Queue items to ensure the read operation is performed atomically
+  // We need to ensure it is impossible to check out a new React Native
+  // version while an operation hasn't yet finished. We queue each operation to
+  // ensure they are performed atomically.
   private actionQueue: ActionQueue;
 
   private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
