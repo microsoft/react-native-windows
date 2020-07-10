@@ -106,6 +106,9 @@ Copy-Item -Force -Path $ReactWindowsRoot\Scripts\StripAdditionalPlatformsFromNus
 # Microsoft.ReactNative.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot
 
+# Microsoft.ReactNative.Cxx.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Cxx.targets -Destination $TargetRoot
+
 # Microsoft.ReactNative.Managed.CodeGen.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Managed.CodeGen.targets -Destination $TargetRoot
 

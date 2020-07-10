@@ -3,17 +3,22 @@
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
-    <description>Contains Code generation tool for React-Native for Managed code</description>
+    <description>Contains Shared code for React-Native for Windows</description>
     <authors>Microsoft</authors>
     <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <repository type="git"
       url="https://github.com/microsoft/react-native-windows.git"
       commit="$CommitId$" />
-    <tags>react react-native react-native-windows native-module codegen microsoft c# csharp</tags>
+    <tags>react react-native react-native-windows microsoft c cpp c++</tags>
+    <dependencies>
+      <group targetFramework="UAP10.0">
+        <dependency id="Microsoft.ReactNative" version="$version$" />
+      </group>
+    </dependencies>
   </metadata>
   <files>
-    <file src="$nugetroot$\Microsoft.ReactNative.Managed.CodeGen.targets" target="build"/>
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed.CodeGen\Publish\**" target="tools"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx.targets" target="build\native"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="tools\Microsoft.ReactNative.Cxx"/>
   </files>
 </package>
