@@ -98,7 +98,7 @@ function getAppxManifestPath(options) {
     options.arch
   }/${configuration},${configuration}/*,target/${
     options.arch
-  }/${configuration}}/AppxManifest.xml`;
+  }/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
   const appxPath = glob.sync(path.join(options.root, appxManifestGlob))[0];
 
   if (!appxPath) {

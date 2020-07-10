@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "run-windows cannot find built app with default init app",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-08T20:10:31.064Z"
+}
