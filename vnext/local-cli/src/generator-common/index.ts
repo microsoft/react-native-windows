@@ -101,7 +101,6 @@ async function copyAndReplace(
       let contentChanged: ContentChangedCallbackOption = 'identical';
       try {
         const origContentBuffer = fs.readFileSync(destPath);
-        // eslint-disable-next-line no-undef
         if (Buffer.compare(origContentBuffer, newContentBuffer) !== 0) {
           contentChanged = 'changed';
         }

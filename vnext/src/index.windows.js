@@ -105,9 +105,6 @@ import typeof DeprecatedViewPropTypes from './Libraries/DeprecatedPropTypes/Depr
 
 import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
 
-// Windows types
-import typeof {ColorGradientWin32} from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
-
 export type HostComponent<T> = _HostComponentInternal<T>;
 
 const invariant = require('invariant');
@@ -507,33 +504,41 @@ module.exports = {
   get ViewPropTypes(): DeprecatedViewPropTypes {
     return require('./Libraries/DeprecatedPropTypes/DeprecatedViewPropTypes');
   },
-  // Win32 Types (Typescript components exported as flow any)
-  get ColorGradientWin32(): ColorGradientWin32 {
-    return require('./Libraries/StyleSheet/PlatformColorValueTypesWin32')
-      .ColorGradientWin32;
+
+  // Additional windows exports (Typescript components exported as flow any)
+  get DatePicker(): any {
+    return (require('./Libraries/Components/DatePicker/DatePicker'): any)
+      .DatePicker;
   },
-  get ViewWin32(): any {
-    return require('./Libraries/Components/View/ViewWin32').ViewWin32;
+  get Flyout(): any {
+    return require('./Libraries/Components/Flyout/Flyout').Flyout;
   },
-  get TextWin32(): any {
-    return require('./Libraries/Components/Text/TextWin32').TextWin32;
+  get Glyph(): any {
+    return require('./Libraries/Components/Glyph/Glyph').Glyph;
   },
-  get ButtonWin32(): any {
-    return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
+  get PickerWindows(): any {
+    return require('./Libraries/Components/Picker/PickerWindows').Picker;
   },
-  get TouchableWin32(): any {
-    return require('./Libraries/Components/Touchable/TouchableWin32')
-      .TouchableWin32;
+  get Popup(): any {
+    return require('./Libraries/Components/Popup/Popup').Popup;
   },
-  get PersonaCoin(): any {
-    return require('./Libraries/PersonaCoin/PersonaCoin').PersonaCoin;
+  get supportKeyboard(): any {
+    return require('./Libraries/Components/Keyboard/KeyboardExt')
+      .supportKeyboard;
   },
-  get PersonaCoinSize(): any {
-    return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
+  get EventPhase(): any {
+    return require('./Libraries/Components/Keyboard/KeyboardExtProps')
+      .HandledEventPhase;
   },
-  get PersonaCoinPresence(): any {
-    return require('./Libraries/PersonaCoin/PersonaCoinTypes')
-      .PersonaCoinPresence;
+  get HandledEventPhase(): any {
+    return require('./Libraries/Components/Keyboard/KeyboardExtProps')
+      .HandledEventPhase;
+  },
+  get ViewWindows(): any {
+    return require('./Libraries/Components/View/ViewWindows').ViewWindows;
+  },
+  get AppTheme(): any {
+    return require('./Libraries/AppTheme/AppTheme').AppTheme;
   },
 };
 

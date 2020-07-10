@@ -10,8 +10,6 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
-<PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
-<PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
@@ -95,8 +93,10 @@ module.file_ext=.windows.js
 
 munge_underscores=true
 
-module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.js'
+module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue

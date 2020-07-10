@@ -12,8 +12,12 @@
       "baseHash": "8eab29258f5ad573e478324f10f850b7ccfb49c7"
     },
     {
-      "type": "platform",
-      "file": "src/index.win32.js"
+      "type": "derived",
+      "file": "src/index.win32.js",
+      "baseFile": "index.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "2053998d5a0b562e08086c9b6499199ffe8ead72",
+      "issue": "LEGACY_FIXME"
     },
     {
       "type": "patch",
