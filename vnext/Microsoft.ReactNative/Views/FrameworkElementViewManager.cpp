@@ -209,7 +209,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           transformMatrix.m43 = static_cast<float>(propertyValue[14].asDouble());
           transformMatrix.m44 = static_cast<float>(propertyValue[15].asDouble());
 
-          element.Loaded([=](auto&&, auto&&) -> auto {
+          element.Loaded([=](auto &&, auto &&) -> auto {
             ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
           });
         } else if (propertyValue.isNull()) {

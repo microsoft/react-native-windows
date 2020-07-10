@@ -162,8 +162,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
     borderEffect.Source(borderEffectSourceParameter);
 
-    comp::CompositionEffectFactory effectFactory{
-        m_compositor.CreateEffectFactory(borderEffect)};
+    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(borderEffect)};
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
