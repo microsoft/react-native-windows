@@ -36,6 +36,11 @@ export interface WritableFileRepository extends FileRepository {
    * doesn't exist.
    */
   writeFile(filename: string, content: Buffer | string): Promise<void>;
+
+  /**
+   * Deletes the file/directory, rejecting the promise if it doesn't exist.
+   */
+  deleteFile(filename: string): Promise<void>;
 }
 
 /**

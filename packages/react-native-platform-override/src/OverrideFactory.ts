@@ -61,7 +61,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
   }
 
   async createPlatformOverride(file: string): Promise<PlatformOverride> {
-    await this.checkoverrideFileExists(file);
+    await this.checkOverrideExists(file, 'file');
     return new PlatformOverride({file});
   }
 
@@ -70,7 +70,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseFile: string,
     issue: number,
   ): Promise<CopyOverride> {
-    await this.checkoverrideFileExists(file);
+    await this.checkOverrideExists(file, 'file');
     return new CopyOverride({
       file,
       baseFile,
@@ -84,7 +84,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseFile: string,
     issue?: number,
   ): Promise<DerivedOverride> {
-    await this.checkoverrideFileExists(file);
+    await this.checkOverrideExists(file, 'file');
     return new DerivedOverride({
       file,
       baseFile,
@@ -98,7 +98,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseFile: string,
     issue: number | 'LEGACY_FIXME',
   ): Promise<PatchOverride> {
-    await this.checkoverrideFileExists(file);
+    await this.checkOverrideExists(file, 'file');
     return new PatchOverride({
       file,
       baseFile,
@@ -112,7 +112,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
     baseDirectory: string,
     issue: number,
   ): Promise<DirectoryCopyOverride> {
-    await this.checkoverrideFileExists(directory);
+    await this.checkOverrideExists(directory, 'directory');
     return new DirectoryCopyOverride({
       directory,
       baseDirectory,
@@ -121,16 +121,19 @@ export class OverrideFactoryImpl implements OverrideFactory {
     });
   }
 
-  private async checkoverrideFileExists(overridePath: string) {
+  private async checkOverrideExists(
+    overridePath: string,
+    type: 'file' | 'directory',
+  ) {
     if (path.isAbsolute(overridePath)) {
       throw new Error(
         `Expected override path to be repo relative. Got '${overridePath}'`,
       );
     }
 
-    if ((await this.overrideRepo.stat(overridePath)) === 'none') {
+    if ((await this.overrideRepo.stat(overridePath)) !== type) {
       throw new Error(
-        `Could not find override at repo relative path '${overridePath}'`,
+        `Could not find ${type} at repo relative path '${overridePath}'`,
       );
     }
   }

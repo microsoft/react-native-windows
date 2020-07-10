@@ -108,3 +108,18 @@ test('stat - None', async () => {
     expect(await repo.stat('0.59.9/IDontExist.txt')).toBe('none');
   });
 });
+
+test('deleteFile - Exists', async () => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+    expect(await repo.stat('0.59.9/Icon-60@2x.conflict.png')).toBe('file');
+    await repo.deleteFile('0.59.9/Icon-60@2x.conflict.png');
+    expect(await repo.stat('0.59.9/Icon-60@2x.conflict.png')).toBe('none');
+  });
+});
+
+test('deleteFile - Doesnt Exist', async () => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+    // @ts-ignore Typings don't know about rejects
+    expect(repo.deleteFile('nope')).rejects.toThrow();
+  });
+});

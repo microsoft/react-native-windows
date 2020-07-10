@@ -6,6 +6,7 @@
  */
 
 import * as crypto from 'crypto';
+import * as path from 'path';
 import FileRepository from './FileRepository';
 import isutf8 from 'isutf8';
 
@@ -66,6 +67,9 @@ export async function hashFileOrDirectory(
     for (const file of (await repo.listFiles([`${name}/**`])).sort()) {
       const contents = await repo.readFile(file);
       hasher.feedContent(contents!);
+
+      // Incorporate the filename to detect if renames happen
+      hasher.feedContent(path.relative(name, file));
     }
     return hasher.digest();
   }

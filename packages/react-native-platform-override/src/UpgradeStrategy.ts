@@ -5,9 +5,11 @@
  * @format
  */
 
+import * as _ from 'lodash';
 import * as path from 'path';
+import {WritableFileRepository, bindVersion} from './FileRepository';
 import GitReactFileRepository from './GitReactFileRepository';
-import {WritableFileRepository} from './FileRepository';
+import {hashFileOrDirectory} from './Hash';
 import isutf8 from 'isutf8';
 
 export interface UpgradeResult {
@@ -111,19 +113,38 @@ export const UpgradeStrategies = {
     overrideDirectory: string,
     baseDirectory: string,
   ): UpgradeStrategy => ({
-    upgrade: async (gitReactRepo, overrideRepo, newVersion, allowConflicts) => {
-      const baseFiles = await gitReactRepo.listFiles(
+    upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
+      const baseFiles = (await gitReactRepo.listFiles(
         [`${baseDirectory}/**`],
         newVersion,
+      )).map(f => path.relative(baseDirectory, f));
+
+      const overrideFiles = (await overrideRepo.listFiles([
+        `${overrideDirectory}/**`,
+      ])).map(f => path.relative(overrideDirectory, f));
+
+      // Note that this logic can lead emopty directories. This shouldn't
+      // matter in practice as Git won't track them.
+      const deleteTasks = _.difference(overrideFiles, baseFiles).map(f =>
+        overrideRepo.deleteFile(path.join(overrideDirectory, f)),
       );
 
-      for (const baseFile of baseFiles) {
-        const relative = path.relative(baseDirectory, baseFile);
-        await UpgradeStrategies.copyFile(
-          path.join(overrideDirectory, relative),
-          baseFile,
-        ).upgrade(gitReactRepo, overrideRepo, newVersion, allowConflicts);
-      }
+      const baseRepo = bindVersion(gitReactRepo, newVersion);
+      const copyTasks = baseFiles.map(async f => {
+        const basePath = path.join(baseDirectory, f);
+        const overridePath = path.join(overrideDirectory, f);
+
+        // Con't replace files of the same content but different line endings
+        if (
+          (await hashFileOrDirectory(basePath, baseRepo)) !==
+          (await hashFileOrDirectory(overridePath, overrideRepo))
+        ) {
+          const content = await baseRepo.readFile(basePath);
+          await overrideRepo.writeFile(overridePath, content!);
+        }
+      });
+
+      await Promise.all([...deleteTasks, ...copyTasks]);
 
       return {
         overrideName: overrideDirectory,

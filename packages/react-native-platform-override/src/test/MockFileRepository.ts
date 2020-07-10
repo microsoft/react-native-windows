@@ -83,7 +83,23 @@ export class MockReactFileRepository extends MockFileRepository
 export class MockWritableFileRepository extends MockFileRepository
   implements WritableFileRepository {
   async writeFile(filename: string, content: Buffer) {
-    const matchFile = this.files.find(file => file.filename === filename)!;
-    matchFile.content = content;
+    const matchFile = this.files.find(file => file.filename === filename);
+    if (matchFile) {
+      matchFile.content = content;
+    } else {
+      this.files.push({filename, content});
+    }
+  }
+
+  async deleteFile(filename: string): Promise<void> {
+    const matchIdx = this.files.findIndex(file => file.filename === filename);
+
+    if (matchIdx === -1) {
+      const err = new Error(`Mock file ${filename} not found`);
+      (err as NodeJS.ErrnoException).code = 'ENOENT';
+      throw err;
+    }
+
+    this.files.splice(matchIdx);
   }
 }

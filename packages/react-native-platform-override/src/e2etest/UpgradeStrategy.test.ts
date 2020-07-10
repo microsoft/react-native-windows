@@ -238,6 +238,78 @@ test('copyDirectory - New Content', async () => {
   });
 });
 
+test('copyDirectory - Deleted Content', async () => {
+  const overrideFiles = [
+    '0.62.2/bots/.babelrc',
+    '0.62.2/bots/README.md',
+    '0.62.2/bots/code-analysis-bot.js',
+    '0.62.2/bots/dangerfile.js',
+    '0.62.2/bots/package.json',
+    '0.62.2/bots/yarn.lock',
+  ];
+
+  const strategy = UpgradeStrategies.copyDirectory('0.62.2/bots', 'bots');
+  await usingFiles(overrideFiles, async overrideRepo => {
+    await overrideRepo.writeFile('0.62.2/bots/extraFile.txt', 'Delete me');
+    expect(await overrideRepo.stat('0.62.2/bots/extraFile.txt')).toBe('file');
+
+    const results = await strategy.upgrade(
+      gitReactRepo,
+      overrideRepo,
+      '0.62.2',
+      true,
+    );
+    expect(results).toEqual({
+      overrideName: '0.62.2/bots',
+      filesWritten: true,
+      hasConflicts: false,
+    });
+
+    expect(await overrideRepo.stat('0.62.2/bots/extraFile.txt')).toBe('none');
+  });
+});
+
+test('copyDirectory - Preserves Line Endings', async () => {
+  const overrideFiles = [
+    '0.62.2/bots/.babelrc',
+    '0.62.2/bots/README.md',
+    '0.62.2/bots/code-analysis-bot.js',
+    '0.62.2/bots/dangerfile.js',
+    '0.62.2/bots/package.json',
+    '0.62.2/bots/yarn.lock',
+  ];
+
+  const strategy = UpgradeStrategies.copyDirectory('0.62.2/bots', 'bots');
+  await usingFiles(overrideFiles, async overrideRepo => {
+    const origContent = (await overrideRepo.readFile(
+      overrideFiles[1],
+    ))!.toString();
+    const switchedEndings = origContent.includes('\r\n')
+      ? origContent.replace(/\r\n/g, '\n')
+      : origContent.replace(/(?<!\r)\n/g, '\r\n');
+
+    expect(origContent).not.toEqual(switchedEndings);
+
+    await overrideRepo.writeFile(overrideFiles[1], switchedEndings);
+
+    const results = await strategy.upgrade(
+      gitReactRepo,
+      overrideRepo,
+      '0.62.2',
+      true,
+    );
+    expect(results).toEqual({
+      overrideName: '0.62.2/bots',
+      filesWritten: true,
+      hasConflicts: false,
+    });
+
+    expect((await overrideRepo.readFile(overrideFiles[1]))!.toString()).toEqual(
+      switchedEndings,
+    );
+  });
+});
+
 async function evaluateStrategy(opts: {
   strategy: UpgradeStrategy;
   overrideFile: string;

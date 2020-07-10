@@ -56,4 +56,9 @@ export default class FileSystemRepository implements WritableFileRepository {
     await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
     return fs.promises.writeFile(filePath, content);
   }
+
+  async deleteFile(filename: string): Promise<void> {
+    const filePath = path.join(this.baseDir, filename);
+    await fs.promises.unlink(filePath);
+  }
 }
