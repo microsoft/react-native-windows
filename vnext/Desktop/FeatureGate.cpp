@@ -19,13 +19,13 @@ void __cdecl SetFeatureGate(string &&name, bool value) noexcept {
   g_featureGates.insert_or_assign(std::move(name), value);
 }
 
-const bool __cdecl GetFeatureGate(string &&name) noexcept {
-  try {
-    lock_guard<mutex> guard{g_featureGatesMutex};
-    return g_featureGates.at(std::move(name));
-  } catch (const std::out_of_range &) {
-    return false;
-  }
+const bool __cdecl GetFeatureGate(const string &name) noexcept {
+  lock_guard<mutex> guard{g_featureGatesMutex};
+  auto itr = g_featureGates.find(name);
+  if (itr != g_featureGates.end())
+    return itr->second;
+
+  return false;
 }
 
 } // namespace Microsoft::React

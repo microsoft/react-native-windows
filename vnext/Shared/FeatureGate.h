@@ -15,6 +15,6 @@ void __cdecl SetFeatureGate(std::string &&name, bool value) noexcept;
 /// </summary>
 /// <param name="name">Global boolean key</param>
 /// <returns>Value stored for the given key, or false if the entry doesn't exist (default)</returns>
-const bool __cdecl GetFeatureGate(std::string &&name) noexcept;
+const bool __cdecl GetFeatureGate(const std::string &name) noexcept;
 
 } // namespace Microsoft::React
