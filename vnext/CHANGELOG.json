@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Jul 2020 05:06:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.117",
+      "version": "0.0.0-canary.117",
+      "comments": {
+        "none": [
+          {
+            "comment": "CR feedback, project hygiene",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f9f6f62c05748cda8910926a69ff02cb46e96164",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add ReactModuleBuilder tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "9db8df7450ad2acc04f481b8539fb1870495af51",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Make IWebSocketResource methods noexcept.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9f80a3478f8d0dd4ac98cc2d3ef2aa44850e7414",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "run-windows cannot find built app with default init app",
+            "author": "acoates@microsoft.com",
+            "commit": "d73bdcb83d3233850e695b49a547441f00fdaae8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create nuget package for Managed CodeGen",
+            "author": "dannyvv@microsoft.com",
+            "commit": "9b4d7267c3fad39f55df76f21f587c14b64633fe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jul 2020 05:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.116",
       "version": "0.0.0-canary.116",

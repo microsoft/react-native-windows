@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create nuget package for Managed CodeGen",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-08T23:26:49.866Z"
-}
