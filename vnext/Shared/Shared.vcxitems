@@ -63,6 +63,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FeatureGate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h" />
