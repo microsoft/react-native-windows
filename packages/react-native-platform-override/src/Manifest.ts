@@ -167,6 +167,13 @@ export default class Manifest {
   }
 
   /**
+   * Returns the overrides in the manfest
+   */
+  listOverrides(): Override[] {
+    return _.clone(this.overrides);
+  }
+
+  /**
    * Find the index to a given override.
    * @returns -1 if it cannot be found
    */

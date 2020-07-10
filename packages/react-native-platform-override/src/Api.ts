@@ -6,6 +6,7 @@
  */
 
 import * as Serialized from './Serialized';
+import * as _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -113,16 +114,33 @@ export async function upgradeOverrides(opts: {
 }): Promise<UpgradeResult[]> {
   const ctx = await createManifestContext(opts);
 
-  const outOfDateOverrides = (await ctx.manifest.validate(
+  const validationErrors = await ctx.manifest.validate(
     ctx.overrideRepo,
     ctx.reactRepo,
-  ))
+  );
+
+  const outOfDateOverrides = validationErrors
     .filter(err => err.type === 'outOfDate')
-    .map(err => err.overrideName)
-    .map(ovrName => ctx.manifest.findOverride(ovrName)!);
+    .map(err => ctx.manifest.findOverride(err.overrideName)!);
+
+  // Regenerate overrides that are already up to date to update the baseVersion
+  // to current. This helps to minimize the numbers of versions we have to
+  // check out for future upgrades.
+  const validOverrides = _.difference(
+    await ctx.manifest.listOverrides(),
+    validationErrors.map(err => ctx.manifest.findOverride(err.overrideName)!),
+  );
+  await Promise.all(
+    validOverrides.map(ovr =>
+      ctx.manifest.markUpToDate(ovr.name(), ctx.overrideFactory),
+    ),
+  );
 
   const upgradeResults: Array<UpgradeResult> = [];
 
+  // Perform upgrades concurrently so we can take advantage of
+  // GitReactFileRepository optimizations when multiple requests are queued at
+  // once.
   let i = 0;
   await Promise.all(
     outOfDateOverrides.map(async override => {
@@ -147,12 +165,10 @@ export async function upgradeOverrides(opts: {
     }),
   );
 
-  if (upgradeResults.length > 0) {
-    await Serialized.writeManifestToFile(
-      ctx.manifest.serialize(),
-      ctx.manifestPath,
-    );
-  }
+  await Serialized.writeManifestToFile(
+    ctx.manifest.serialize(),
+    ctx.manifestPath,
+  );
 
   return upgradeResults;
 }

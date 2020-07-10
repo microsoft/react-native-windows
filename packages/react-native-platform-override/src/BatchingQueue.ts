@@ -43,6 +43,7 @@ export default class BatchingQueue<TKey> {
     this.keyedQueues.delete(this.currentKey!);
     this.currentKey = undefined;
 
+    // If we have more batches, pick the next greedily based on size
     if (this.keyedQueues.size > 0) {
       let nextKey: TKey | undefined;
       let maxLength = 0;
