@@ -80,12 +80,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
       return winrt::Stretch::Fill;
     case ResizeMode::Contain:
       return winrt::Stretch::Uniform;
-    default: // ResizeMode::Center
-      // This function should never be called for the 'repeat' resizeMode case.
-      // That is handled by the shouldUseCompositionBrush/switchBrushes code path.
-      // #4691
-      assert(value != ResizeMode::Repeat);
-
+    default: // ResizeMode::Center || ResizeMode::Repeat
       if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
         return winrt::Stretch::None;
       } else {
