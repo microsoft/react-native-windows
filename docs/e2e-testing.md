@@ -22,43 +22,33 @@ E2E test app, test library and test cases are in packages/E2ETest/, and they are
 
 ## Procedures to setup and run E2E test
 
-1. Install React Native command line interface using NPM:
-```
-npm install -g react-native-cli
-```
+### Download and install WinAppDriver [WinAppDriver v1.1](https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi)
 
-2. Download and install WinAppDriver [WinAppDriver v1.1](https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi)
-
-3. Install node packages, build JS
+### Install node packages, build JS
 
 - C:\repo>`cd react-native-windows`
 - C:\repo\react-native-windows>`yarn install`
 - C:\repo\react-native-windows>`yarn build`
 
-4. Run the bundle server
+### Start the Metro server
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run start`
-- wait until you see 'Loading dependency graph, done.'
 
-5. Ensure debugger is running
-
-Open Chrome and navigate to `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools.
-
-6. Open a new command prompt, build native app, deploy and launch e2e testing
+### To build, deploy and run the full e2e test suite
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run e2e`
 
-## Procedures to only run E2E test
+### To run E2E tests
 
-Make sure bundle server is running(see above 'Run the bundle server' step) and chrome windows is open (see above 'Ensure debugger is running' step)
+First make sure bundle server is running (see "Start the Metro server" above)
 
-- run all specs
+- To run all test specs
 
 packages\E2ETest>`yarn run e2etest`
 
--  Run one spec
+-  To run one test spec (eg login.spec.ts)
 
 packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
@@ -186,6 +176,25 @@ describe('LoginTest', () => {
 
 1. For `yarn run e2e` or `yarn run e2ebundle`, the test continues even if one of steps like build failed. see [bug 3136](https://github.com/microsoft/react-native-windows/issues/3136) for more details
 
+# Debugging jasmine tests
+To debug in VS Code, create a configuration in your launch.json that looks like this:
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "run wdio",
+            "program": "${workspaceRoot}/run_wdio.js",
+            "stopOnEntry": true,
+            "autoAttachChildProcesses": true        
+        },
+    ]
+}
+```
+jasmine runs in a child node process, so the "autoAttachChildProcesses" : true is required for VS Code to attach to that child process.  With that setup, you can now set breakpoints in your test specs and VS Code will let you debug your tests.
+
 # More about E2E test
 
 ## Technical Decisions
@@ -193,6 +202,11 @@ describe('LoginTest', () => {
 ### MSTest vs node test runner
 
 A `node` test runner is the first choice since we started the investigation for E2E test. React Native apps are written in JavaScript and it&#39;s a good choose to select a JavaScript framework to author the test case. It would be more friendly to the community, so MSTest with C# is excluded in our option.
+
+### Appium
+[Appium](http://appium.io/) is a W3C-standards based technology based on Selenium, a popular test technology for the web.  Appium supports Windows as well as Android, iOS, and MacOS.  It's recommended that you get some training on this technology before writing tests.  Plurualsight has some great courses, see:  
+[Appium the Big Picture](https://app.pluralsight.com/player?course=appium-big-picture&author=marcel-devries&name=6d3fc4a8-e30e-41f2-aaaf-252483d2b017&clip=5&mode=live)  
+[Getting Started with Appium](https://www.pluralsight.com/courses/getting-started-ui-testing-appium)  
 
 ### WinAppDriver + WebDriverIO + Jasmine
 There is not existing example we can follow to setup E2E testing on Windows for React Native, and I spent weeks to investigate, test and prototype for our E2E. Hereafter I explain what kind of decisions I made and why I made these decisions

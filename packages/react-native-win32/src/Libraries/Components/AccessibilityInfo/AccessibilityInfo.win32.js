@@ -12,16 +12,16 @@
 
 const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
 
-// [Windows
+// [Win32
 //const UIManager = require('../../ReactNative/UIManager');
 
 const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
-// Windows]
+// Win32]
 
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
-const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
+// const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange'; [Win32]
 
 type ChangeEventName = $Keys<{
   change: string,
@@ -39,7 +39,7 @@ const _subscriptions = new Map();
  * well as to register to be notified when the state of the screen reader
  * changes.
  *
- * See http://facebook.github.io/react-native/docs/accessibilityinfo.html
+ * See https://reactnative.dev/docs/accessibilityinfo.html
  */
 
 const AccessibilityInfo = {
@@ -145,7 +145,7 @@ const AccessibilityInfo = {
   /**
    * Set accessibility focus to a react component.
    *
-   * See http://facebook.github.io/react-native/docs/accessibilityinfo.html#setaccessibilityfocus
+   * See https://reactnative.dev/docs/accessibilityinfo.html#setaccessibilityfocus
    */
   setAccessibilityFocus: function(reactTag: number): void {
     // [Windows
@@ -159,10 +159,13 @@ const AccessibilityInfo = {
   /**
    * Post a string to be announced by the screen reader.
    *
-   * See http://facebook.github.io/react-native/docs/accessibilityinfo.html#announceforaccessibility
+   * See https://reactnative.dev/docs/accessibilityinfo.html#announceforaccessibility
    */
   // [Windows] add reactTag
-  announceForAccessibility: function(announcement: string, reactTag?: ?number): void {
+  announceForAccessibility: function(
+    announcement: string,
+    reactTag?: ?number,
+  ): void {
     if (NativeAccessibilityInfo) {
       NativeAccessibilityInfo.announceForAccessibility(announcement, reactTag);
     }

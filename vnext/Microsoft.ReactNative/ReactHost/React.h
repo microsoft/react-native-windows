@@ -22,10 +22,10 @@
 #else
 // When building Desktop, the include below results in
 // fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
-#include <ReactUWP/IReactInstance.h>
+#include <IReactInstance.h>
 #endif
 
-#include <ReactUWP/ViewManagerProvider.h>
+#include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace Mso::React {
@@ -108,7 +108,7 @@ struct ReactDevOptions {
   //! {EXTENSION} = ".bundle"
   //! Specify a value for a component, or leave empty to use the default.
   std::string SourceBundleHost; // Host domain (without port) for the bundler server. Default: "localhost".
-  std::string SourceBundlePort; // Host port for the bundler server. Default: "8081".
+  uint16_t SourceBundlePort{0}; // Host port for the bundler server. Default: "8081".
   std::string SourceBundleName; // Bundle name without any extension (e.g. "index.win32"). Default: "index.{PLATFORM}"
   std::string SourceBundleExtension; // Bundle name extension. Default: ".bundle".
 
@@ -239,7 +239,7 @@ struct ReactOptions {
 
   //! Should the instance run in a remote environment such as within a browser
   //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
-  //! by Metro/Haul. Debugging will start as soon as the react native instance is loaded.
+  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
   void SetUseWebDebugger(bool enabled) noexcept;
   bool UseWebDebugger() const noexcept;
   static void SetUseWebDebugger(

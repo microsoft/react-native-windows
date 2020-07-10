@@ -19,12 +19,15 @@
     <Filter Include="ExternalFiles\Microsoft.ReactNative">
       <UniqueIdentifier>{ce42696f-7ea0-4e64-ae56-4bdaf86e73c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ExternalFiles\ReactWindowsCore">
+    <Filter Include="ExternalFiles\Shared">
       <UniqueIdentifier>{29f908a2-84b5-43af-b690-b33a68e426db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DynamicReaderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsiArgumentReaderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JsiReaderTest.cpp">
@@ -36,8 +39,8 @@
     <ClCompile Include="pch/pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\tracing.cpp">
-      <Filter>ExternalFiles\ReactWindowsCore</Filter>
+    <ClCompile Include="$(ReactNativeWindowsDir)Shared\tracing\tracing.cpp">
+      <Filter>ExternalFiles\Shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +62,8 @@
     <ClInclude Include="pch/pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeWindowsDir)ReactWindowsCore\tracing\fbsystrace.h">
-      <Filter>ExternalFiles\ReactWindowsCore</Filter>
+    <ClInclude Include="$(ReactNativeWindowsDir)Shared\tracing\fbsystrace.h">
+      <Filter>ExternalFiles\Shared</Filter>
     </ClInclude>
     <ClInclude Include="CommonReaderTest.h">
       <Filter>Source Files</Filter>

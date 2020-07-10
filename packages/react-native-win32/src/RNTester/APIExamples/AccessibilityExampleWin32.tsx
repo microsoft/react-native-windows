@@ -38,7 +38,7 @@ interface IExpandCollapseState {
   expanded: boolean;
 }
 
-const AnnotationExample: React.FunctionComponent = props => {
+const AnnotationExample: React.FunctionComponent = () => {
   return (
     <ViewWin32
       accessible
@@ -359,7 +359,7 @@ function generateList(size: number): Array<IListProps> {
   return list;
 }
 
-const AccessibilityInfoExample: React.FunctionComponent<{}> = props => {
+const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
   const onClick = React.useCallback(() => {
     AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement succeeded!');
   }, []);

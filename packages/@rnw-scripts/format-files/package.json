@@ -1,0 +1,37 @@
+{
+  "name": "@rnw-scripts/format-files",
+  "version": "0.0.3",
+  "license": "MIT",
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix",
+    "watch": "just-scripts watch"
+  },
+  "bin": {
+    "format-files": "./bin.js"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "clang-format": "1.2.4"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/just-task": "0.0.2",
+    "@rnw-scripts/ts-config": "0.0.1",
+    "@types/async": "^3.2.3",
+    "eslint": "6.7.0",
+    "just-scripts": "^0.36.1",
+    "typescript": "^3.8.3"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major"
+    ]
+  },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ]
+}

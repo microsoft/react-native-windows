@@ -44,22 +44,6 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|ARM">
-      <Configuration>WinUI3</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|ARM64">
-      <Configuration>WinUI3</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|Win32">
-      <Configuration>WinUI3</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|x64">
-      <Configuration>WinUI3</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -90,7 +74,7 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
         $(FollyDir);$(ReactNativeWindowsDir)stubs;
-        $(ReactNativeWindowsDir)\ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>

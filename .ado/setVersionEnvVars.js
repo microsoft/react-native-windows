@@ -14,7 +14,7 @@ function npmVersionToRcVersion(npmVersion) {
 
 let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
-// Record commit number, so that additional build tasks can record that commit in the nuget
+// Record commit number, so that additional build tasks can record that commit in the NuGet
 const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString().trim();
 
 let versionEnvVars = {
@@ -26,6 +26,10 @@ let versionEnvVars = {
   publishCommitId: commitId
 }
 
+// Set the build number so the build in the publish pipeline and the release pipeline are named with the convenient version
+// See: https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands?view=azure-devops&tabs=bash#updatebuildnumber-override-the-automatically-generated-build-number
+console.log(`##vso[build.updatebuildnumber]RNW_${versionEnvVars.npmVersion}`)
+
 // Set the vars using the vso format for now too - while migrating from the vso publish task to the github actions one.
 
 // Set env variable to allow VS to build dll with correct version information
@@ -36,7 +40,6 @@ console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvV
 // Set env variable to allow VS to build dll with correct version information
 console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${versionEnvVars.npmVersion}`);
 console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${versionEnvVars.publishCommitId}`);
-
 
 const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
 const scriptPath = path.resolve(dirPath, 'versionEnvVars.json');

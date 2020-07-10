@@ -12,14 +12,17 @@ const Platform = require('../Utilities/Platform');
 const React = require('react');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const Text = require('../Text/Text');
-const TouchableNativeFeedback = require('./Touchable/TouchableNativeFeedback');
-const TouchableOpacity = require('./Touchable/TouchableOpacity');
-const TouchableHighlight = require('./Touchable/TouchableHighlight'); // [Windows]
+// [Windows
+// const TouchableNativeFeedback = require('./Touchable/TouchableNativeFeedback');
+// const TouchableOpacity = require('./Touchable/TouchableOpacity');
+const TouchableHighlight = require('./Touchable/TouchableHighlight');
+// Windows]
 const View = require('./View/View');
 
 const invariant = require('invariant');
 
 import type {PressEvent} from '../Types/CoreEventTypes';
+import type {ColorValue} from '../StyleSheet/StyleSheetTypes';
 
 type ButtonProps = $ReadOnly<{|
   /**
@@ -40,7 +43,7 @@ type ButtonProps = $ReadOnly<{|
   /**
    * Color of the text (iOS), or background color of the button (Android)
    */
-  color?: ?string,
+  color?: ?ColorValue,
 
   /**
    * TV preferred focus (see documentation for the View component).

@@ -45,22 +45,6 @@
       <Configuration>Release</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|ARM">
-      <Configuration>WinUI3</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|ARM64">
-      <Configuration>WinUI3</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|Win32">
-      <Configuration>WinUI3</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="WinUI3|x64">
-      <Configuration>WinUI3</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -81,8 +65,7 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)ReactWindowsCore;$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

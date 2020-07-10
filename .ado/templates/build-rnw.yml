@@ -11,6 +11,8 @@ parameters:
   platformToolset: $(MSBuildPlatformToolset)
   msbuildArguments: ''
   yarnBuildCmd: build
+  BuildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
+
 
   # Visual Studio Installer
   vsComponents: ''
@@ -53,12 +55,16 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
+        /p:PublishToolDuringBuild=true
+        /bl:${{ parameters.BuildLogDirectory }}\MsBuild.binlog
+        /flp1:errorsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.err
+        /flp2:warningsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.wrn
+        /flp3:verbosity=diagnostic;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.log
         ${{parameters.msbuildArguments}}
 
   - task: PublishBuildArtifacts@1
+    displayName: Upload build logs
     condition:  succeededOrFailed()
-    timeoutInMinutes: 10
     inputs:
-      pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log
-      artifactName: Detailed Logs for ${{parameters.project}} $(BuildConfiguration) $(BuildPlatform)
-      publishLocation: 'Container'
+      pathtoPublish: ${{ parameters.BuildLogDirectory }}
+      artifactName: 'Build logs - $(Agent.JobName)'

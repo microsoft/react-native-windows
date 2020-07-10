@@ -16,6 +16,8 @@ import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
+import requireGenerateWindows from './requireGenerateWindows';
+
 const npmConfReg = execSync('npm config get registry')
   .toString()
   .trim();
@@ -24,40 +26,78 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-const argv = yargs.version(false).options({
-  version: {
-    type: 'string',
-    describe: 'The version of react-native-windows to use.',
-  },
-  namespace: {
-    type: 'string',
-    describe:
-      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
-  },
-  verbose: {type: 'boolean', describe: 'Enables logging.'},
-  language: {
-    type: 'string',
-    describe: 'Which language the app is written in.',
-    choices: ['cs', 'cpp'],
-    default: 'cpp',
-  },
-  overwrite: {
-    type: 'boolean',
-    describe: 'Overwrite any existing files without prompting',
-  },
-  experimentalNugetDependency: {
-    type: 'boolean',
-    describe:
-      'Experimental change to start consuming a nuget containing a pre-built dll version of Microsoft.ReactNative',
-    hidden: true,
-  },
-  useWinUI3: {
-    type: 'boolean',
-    describe: '[Experimental] Use WinUI3',
-    hidden: true,
-    default: false,
-  },
-}).argv;
+const argv = yargs
+  .version(false)
+  .strict(true)
+  .options({
+    version: {
+      type: 'string',
+      describe: 'The version of react-native-windows to use.',
+    },
+    namespace: {
+      type: 'string',
+      describe:
+        "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
+    },
+    verbose: {
+      type: 'boolean',
+      describe: 'Enables logging.',
+      default: false,
+    },
+    language: {
+      type: 'string',
+      describe: 'Which language the app is written in.',
+      choices: ['cs', 'cpp'],
+      default: 'cpp',
+    },
+    overwrite: {
+      type: 'boolean',
+      describe: 'Overwrite any existing files without prompting',
+      default: false,
+    },
+    experimentalNuGetDependency: {
+      type: 'boolean',
+      describe:
+        '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
+      hidden: true,
+      default: false,
+    },
+    useWinUI3: {
+      type: 'boolean',
+      describe: '[Experimental] Use WinUI3',
+      hidden: true,
+      default: false,
+    },
+    nuGetTestVersion: {
+      type: 'string',
+      describe:
+        '[internalTesting] By default the NuGet version matches the rnw package. This flag allows manually specifying the version for internal testing.',
+      hidden: true,
+    },
+    nuGetTestFeed: {
+      type: 'string',
+      describe:
+        '[internalTesting] Allows a test feed to be added to the generated NuGet configuration',
+      hidden: true,
+    },
+    useDevMode: {
+      type: 'boolean',
+      describe:
+        '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
+      hidden: true,
+      default: false,
+    },
+  })
+  .check(a => {
+    if (a._.length !== 0) {
+      throw `Unrecognized option ${a._}`;
+    }
+    return true;
+  }).argv;
+
+if (argv.verbose) {
+  console.log(argv);
+}
 
 const EXITCODE_UNSUPPORTED_VERION_RN = 3;
 const EXITCODE_USER_CANCEL = 4;
@@ -66,14 +106,9 @@ const EXITCODE_UNKNOWN_ERROR = 6;
 const EXITCODE_NO_PACKAGE_JSON = 7;
 const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
+const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 
-function reactNativeWindowsGeneratePath() {
-  return require.resolve('react-native-windows/local-cli/generate-windows.js', {
-    paths: [process.cwd()],
-  });
-}
-
-function getReactNativeAppName() {
+function getReactNativeAppName(): string {
   console.log('Reading application name from package.json...');
   const cwd = process.cwd();
   const pkgJsonPath = findUp.sync('package.json', {cwd});
@@ -97,7 +132,7 @@ function getReactNativeAppName() {
   return name;
 }
 
-function getReactNativeVersion() {
+function getReactNativeVersion(): string {
   console.log('Reading react-native version from node_modules...');
   const rnPkgJsonPath = require.resolve('react-native/package.json', {
     paths: [process.cwd()],
@@ -112,7 +147,7 @@ function getReactNativeVersion() {
   process.exit(EXITCODE_NO_REACTNATIVE_FOUND);
 }
 
-function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string) {
+function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string): never {
   console.error(`Error: Unsupported version of react-native: ${chalk.cyan(
     rnVersion,
   )}
@@ -122,7 +157,7 @@ react-native-windows supports react-native versions ${chalk.cyan('>=0.60')}`);
 
 function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
   rnVersion: string,
-) {
+): string {
   const validVersion = semver.valid(rnVersion);
   if (validVersion) {
     const major = semver.major(validVersion);
@@ -136,7 +171,7 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
 
 function getMatchingReactNativeSemVerForReactNativeWindowsVersion(
   rnwVersion: string,
-) {
+): string {
   const validVersion = semver.valid(rnwVersion);
   if (validVersion) {
     const major = semver.major(validVersion);
@@ -216,7 +251,7 @@ function getLatestMatchingVersion(
   });
 }
 
-async function getLatestRNWVersion() {
+async function getLatestRNWVersion(): Promise<string> {
   const rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
   if (!rnwLatestVersion) {
     console.error('Error: No version of react-native-windows@latest found');
@@ -239,18 +274,68 @@ async function getLatestMatchingRNWVersion(
   }
 }
 
+function installReactNativeWindows(version: string, useDevMode: boolean) {
+  console.log(
+    `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
+      version,
+    )}...`,
+  );
+
+  const cwd = process.cwd();
+  const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
+
+  if (useDevMode) {
+    execSync(
+      isProjectUsingYarn(cwd)
+        ? 'yarn link react-native-windows'
+        : 'npm link react-native-windows',
+      execOptions,
+    );
+  } else {
+    const pkgJsonPath = findUp.sync('package.json', {cwd});
+    if (!pkgJsonPath) {
+      throw new Error('Unable to find package.json');
+    }
+
+    let pkgJson = require(pkgJsonPath);
+    let deps = pkgJson.dependencies || {};
+    deps['react-native-windows'] = version;
+    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
+  }
+
+  console.log(
+    chalk.green(
+      `react-native-windows@${chalk.cyan(
+        require(require.resolve('react-native-windows/package.json', {
+          paths: [cwd],
+        })).version,
+      )} successfully installed.`,
+    ),
+  );
+}
+
 /**
  * Check if project is using Yarn (has `yarn.lock` in the tree)
  */
-function isProjectUsingYarn(cwd: string) {
-  return findUp.sync('yarn.lock', {cwd});
+function isProjectUsingYarn(cwd: string): boolean {
+  return !!findUp.sync('yarn.lock', {cwd});
 }
 
 (async () => {
   try {
     const name = getReactNativeAppName();
     const ns = argv.namespace || name;
+    const useDevMode = argv.useDevMode;
     let version = argv.version;
+
+    if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
+      // WinUI3 is not yet compatible with NuGet packages
+      console.error(
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
+      );
+      process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
+    }
 
     if (!version) {
       const rnVersion = getReactNativeVersion();
@@ -302,7 +387,7 @@ Please modify your application to use ${chalk.green(
         )}`,
       );
 
-      if (semver.prerelease(rnwResolvedVersion)) {
+      if (rnwResolvedVersion && semver.prerelease(rnwResolvedVersion)) {
         const rnwLatestVersion = await getLatestRNWVersion();
         console.warn(
           `
@@ -324,7 +409,7 @@ You can either downgrade your version of ${chalk.green(
 `,
         );
 
-        const confirm = (await prompts({
+        const confirm: boolean = (await prompts({
           type: 'confirm',
           name: 'confirm',
           message: `Do you wish to continue with ${chalk.green(
@@ -338,33 +423,17 @@ You can either downgrade your version of ${chalk.green(
       }
     }
 
-    const pkgmgr = isProjectUsingYarn(process.cwd())
-      ? 'yarn add'
-      : 'npm install --save';
-    const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
-    console.log(
-      `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
-        version,
-      )}...`,
-    );
-    execSync(`${pkgmgr} "react-native-windows@${version}"`, execOptions);
-    console.log(
-      chalk.green(
-        `react-native-windows@${chalk.cyan(
-          require(require.resolve('react-native-windows/package.json', {
-            paths: [process.cwd()],
-          })).version,
-        )} successfully installed.`,
-      ),
-    );
+    installReactNativeWindows(version, useDevMode);
 
-    const generateWindows = require(reactNativeWindowsGeneratePath());
-    generateWindows(process.cwd(), name, ns, {
-      language: argv.language,
+    const generateWindows = requireGenerateWindows();
+    await generateWindows(process.cwd(), name, ns, {
+      language: argv.language as 'cs' | 'cpp',
       overwrite: argv.overwrite,
       verbose: argv.verbose,
-      experimentalNugetDependency: argv.experimentalNugetDependency,
+      experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
+      nuGetTestVersion: argv.nuGetTestVersion,
+      nuGetTestFeed: argv.nuGetTestFeed,
     });
   } catch (error) {
     console.error(chalk.red(error.message));

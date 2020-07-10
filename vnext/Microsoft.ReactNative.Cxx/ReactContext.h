@@ -60,12 +60,14 @@ struct ReactContext {
     m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
   }
 
+#ifndef CORE_ABI
   // Dispatch eventName event to the view.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
   void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) const noexcept {
     m_handle.DispatchEvent(view, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
   }
+#endif
 
   friend bool operator==(ReactContext const &left, ReactContext const &right) noexcept {
     return left.m_handle == right.m_handle;

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "App.h"
+
+#include "AutolinkedNativeModules.g.h"
 #include <CppWinRTIncludes.h>
 #include <ReactPackageProvider.h>
 #include <ReactPropertyBag.h>
@@ -41,6 +44,8 @@ App::App() noexcept {
 
   ReactPropertyBag::Set(InstanceSettings().Properties(), ReactPropertyId<int>{L"Prop1"}, 42);
   ReactPropertyBag::Set(InstanceSettings().Properties(), ReactPropertyId<hstring>{L"Prop2"}, L"Hello World!");
+
+  RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
   PackageProviders().Append(winrt::SampleLibraryCpp::ReactPackageProvider());

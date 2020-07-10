@@ -81,6 +81,9 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="ABI\TestController.idl">
+      <Filter>ABI</Filter>
+    </Midl>
     <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -110,6 +113,9 @@
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
+    <ClCompile Include="ABI\TestController.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
     <ClCompile Include="BeastWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -118,12 +124,6 @@
     </ClCompile>
     <ClCompile Include="DevSupportManager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Executors\WebSocketJSExecutor.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
-      <Filter>Source Files\Executors</Filter>
     </ClCompile>
     <ClCompile Include="HttpResource.cpp">
       <Filter>Source Files</Filter>
@@ -147,6 +147,8 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -161,6 +163,9 @@
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <Filter>ABI</Filter>
     </ClInclude>
+    <ClInclude Include="ABI\TestController.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BeastWebSocketResource.h">
@@ -168,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="DevSupportManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Executors\WebSocketJSExecutor.h">
-      <Filter>Header Files\Executors</Filter>
     </ClInclude>
     <ClInclude Include="HttpResource.h">
       <Filter>Header Files</Filter>

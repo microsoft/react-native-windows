@@ -9,6 +9,7 @@
 ```typescript
 export interface ITouchableWin32Props extends IViewWin32Props 
 ```
+<b>Extends:</b> [IViewWin32Props](./react-native-win32.iviewwin32props.md)
 
 ## Properties
 

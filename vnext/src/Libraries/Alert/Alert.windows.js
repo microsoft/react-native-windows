@@ -6,9 +6,15 @@
  */
 'use strict';
 
-const NativeModules = require('../BatchedBridge/NativeModules');
-const AlertNative = NativeModules.Alert;
+import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+const AlertNative = TurboModuleRegistry.getEnforcing('Alert');
 
+export type AlertType =
+  | 'default'
+  | 'plain-text'
+  | 'secure-text'
+  | 'login-password';
+export type AlertButtonStyle = 'default' | 'cancel' | 'destructive';
 export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
@@ -21,19 +27,6 @@ type Options = {
   onDismiss?: ?() => void,
   ...
 };
-
-export type AlertType = $Keys<{
-  default: string,
-  'plain-text': string,
-  'secure-text': string,
-  'login-password': string,
-}>;
-
-export type AlertButtonStyle = $Keys<{
-  default: string,
-  cancel: string,
-  destructive: string,
-}>;
 
 class Alert {
   static alert(

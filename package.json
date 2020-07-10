@@ -10,8 +10,8 @@
     "buildci": "lerna run build --stream -- --ci",
     "change": "beachball change",
     "clean": "lerna run clean --stream -- --color",
-    "format": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
-    "format:verify": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
+    "format": "format-files -i -style=file -assume-filename=../.clang-format",
+    "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",
     "test": "lerna run test --stream -- --color",
     "validate-overrides": "lerna run validate-overrides --stream -- --color"
   },
@@ -23,11 +23,12 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "packages/@rnw-scripts/*",
       "vnext"
     ]
   },
   "devDependencies": {
-    "beachball": "^1.13.4",
+    "beachball": "^1.32.0",
     "husky": "^4.2.5",
     "lerna": "^3.16.1"
   },
@@ -47,5 +48,11 @@
     "**/@wdio/utils": "5.12.1",
     "**/webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "**/webdriverio": "5.12.1"
+  },
+  "beachball": {
+    "gitTags": false
+  },
+  "engines": {
+    "node": ">12.0.0"
   }
 }

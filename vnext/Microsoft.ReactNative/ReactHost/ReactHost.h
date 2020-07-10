@@ -20,7 +20,7 @@ class ReactViewHost;
 //! ReactHost manages lifetime of ReactNative instance.
 //! It is associated with a native queue that is used modify its state.
 //! - It can reload or unload react instance using Reload and Unload.
-//! - ReactInstance() returns current react native instance.
+//! - ReactInstance() returns current React Native instance.
 //! - NativeQueue() returns the associate native queue.
 //! - Options() - returns options used for creating ReactInstance.
 //!

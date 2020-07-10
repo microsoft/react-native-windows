@@ -1,8 +1,212 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 16 Jun 2020 00:05:48 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jul 2020 05:04:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.116
+
+Wed, 08 Jul 2020 05:04:59 GMT
+
+### Changes
+
+- Dont try to parseJson unless redbox error starts with { (acoates@microsoft.com)
+- Deploy dependencies when registering from layout (asklar@microsoft.com)
+
+## 0.0.0-canary.115
+
+Wed, 08 Jul 2020 01:27:37 GMT
+
+### Changes
+
+- Add a bunch of deps we are using but not declaring (acoates@microsoft.com)
+- Fix #4809: Remove the /flow folder from the shipping npm package (dannyvv@microsoft.com)
+- Rever to new experimentalNuGetDependency Naming (ngerlem@microsoft.com)
+
+## 0.0.0-canary.114
+
+Tue, 07 Jul 2020 05:05:23 GMT
+
+### Changes
+
+- Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package (dannyvv@microsoft.com)
+
+## 0.0.0-canary.113
+
+Mon, 06 Jul 2020 23:11:46 GMT
+
+### Changes
+
+- Add Support for Binary Overrides to react-native-platform-override (ngerlem@microsoft.com)
+- Create a Programmatic API for react-native-platform-override (ngerlem@microsoft.com)
+
+## 0.0.0-canary.112
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Changes
+
+- Enforce null/undefined safety for the CLI (ngerlem@microsoft.com)
+- Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package (dannyvv@microsoft.com)
+- Remove github actions workflow for CI and publish (dannyvv@microsoft.com)
+- Include "nuget.exe" as Package Dependency of react-native-windows (ngerlem@microsoft.com)
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+- Cleanup VS Installation Related CLI code (ngerlem@microsoft.com)
+- add guard to ensure only one version of XAML is loaded (asklar@microsoft.com)
+
+## 0.0.0-canary.111
+
+Thu, 02 Jul 2020 05:05:06 GMT
+
+### Changes
+
+- Migrate 'AppState' to turbo module (zihanc@microsoft.com)
+- Migrate 'DeviceInfo' to turbo module (zihanc@microsoft.com)
+- Migrate 'I18nManager' to turbo module (zihanc@microsoft.com)
+
+## 0.0.0-canary.110
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Changes
+
+- Fix compile warnings (dannyvv@microsoft.com)
+- Remove delayload dependencies on some winrt apisets, to reduce warning count (dannyvv@microsoft.com)
+- Migrate 'DevSettings' to turbo module (zihanc@microsoft.com)
+- Migrate 'LogBox' to turbo module (zihanc@microsoft.com)
+- Implement REACT_CONSTANT as getConstants sync method for turbo module (zihanc@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Migrate "Alert" to turbo module (zihanc@microsoft.com)
+
+## 0.0.0-canary.109
+
+Tue, 30 Jun 2020 05:06:03 GMT
+
+### Changes
+
+- Call AppPolicyGetWindowingModel dynamically since it's WACK-banned (asklar@microsoft.com)
+
+## 0.0.0-canary.108
+
+Mon, 29 Jun 2020 05:04:57 GMT
+
+### Changes
+
+- Removed references to ReactWindowsCore (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.107
+
+Sun, 28 Jun 2020 05:04:51 GMT
+
+### Changes
+
+- Fix casing typos in NuGet and MSBuild (dannyvv@microsoft.com)
+- Remove Include/ReactUWP files (vmorozov@microsoft.com)
+- Fix build errors for codegen unittest project when building in VS2019 (dannyvv@microsoft.com)
+
+## 0.0.0-canary.106
+
+Sat, 27 Jun 2020 03:52:38 GMT
+
+### Changes
+
+- Add Enterprise vs2019 support to rnw-dependencies (dannyvv@microsoft.com)
+
+## 0.0.0-canary.104
+
+Fri, 26 Jun 2020 23:59:27 GMT
+
+### Changes
+
+- Upgrade React Native to 3/22 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.103
+
+Fri, 26 Jun 2020 20:17:03 GMT
+
+### Changes
+
+- Add a null check on reload callback (acoates@microsoft.com)
+- Unify storage for sourceBundleHost/Port and debugHost (acoates@microsoft.com)
+- Remove ReactUWP project folder (vmorozov@microsoft.com)
+- Fix empty host getting passed to HMR client when SourceBundleHost not specified (acoates@microsoft.com)
+
+## 0.0.0-canary.102
+
+Thu, 25 Jun 2020 14:32:50 GMT
+
+### Changes
+
+- WinUI3 Preview 1 (asklar@microsoft.com)
+
+## 0.0.0-canary.101
+
+Thu, 25 Jun 2020 00:07:54 GMT
+
+### Changes
+
+- Use Deterministic NuGet Binary (ngerlem@microsoft.com)
+
+## 0.0.0-canary.100
+
+Wed, 24 Jun 2020 00:07:20 GMT
+
+### Changes
+
+- Fix warnings of signed/unsigned comparrison mismatches on x86 builds (dannyvv@microsoft.com)
+- update csproj to use versions from winui.props (asklar@microsoft.com)
+- Fix JSValueReaderGenerator runtime error for read-only properties (vmorozov@microsoft.com)
+
+## 0.0.0-canary.99
+
+Tue, 23 Jun 2020 00:05:47 GMT
+
+### Changes
+
+- start moving away from config and use a sentinel file instead (asklar@microsoft.com)
+
+## 0.0.0-canary.98
+
+Sat, 20 Jun 2020 00:05:18 GMT
+
+### Changes
+
+- Auto-linking for native modules (source-based) (jthysell@microsoft.com)
+- Implement AccessibilityValue from RN 62 (igklemen@microsoft.com)
+- Complete BundleUrl should be provided to JSExecutor when using fastrefresh without remote debugging (acoates@microsoft.com)
+- turbo modules should be replacable (zihanc@microsoft.com)
+
+## 0.0.0-canary.97
+
+Fri, 19 Jun 2020 00:07:58 GMT
+
+### Changes
+
+- Move the addition of folly.natvis to ReactWin32.nuspec (warleu@microsoft.com)
+- Fix building vcxproj files outside of solution (dannyvv@microsoft.com)
+
+## 0.0.0-canary.96
+
+Thu, 18 Jun 2020 00:07:44 GMT
+
+### Changes
+
+- Create Scripts for the Release Process (ngerlem@microsoft.com)
+- Run NativeModules 2.0 in JS thread (vmorozov@microsoft.com)
+- Update C++/WinRT to version 2.0.200615.7 (vmorozov@microsoft.com)
+- version agnostic msbuild log viewer (asklar@microsoft.com)
+
+## 0.0.0-canary.95
+
+Wed, 17 Jun 2020 00:05:39 GMT
+
+### Changes
+
+- Unify DevSupportManager and WebSocketJSExecutor (acoates@microsoft.com)
+- Rename "master" packages to "canary" (ngerlem@microsoft.com)
+- Don't lint target folder and don't flow check node_modules packages (dannyvv@microsoft.com)
 
 ## 0.0.0-master.94
 

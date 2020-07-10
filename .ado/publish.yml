@@ -2,21 +2,23 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
+  - template: variables/release.yml
   - template: variables/vs2019.yml
 
 schedules:
-- cron: "0 0 * * *"
-  displayName: Nightly publish build
+- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
+  displayName: Nightly master publish build
   branches:
     include:
-    - master
+      - master
 
-trigger:
-  batch: true
+- cron: "0 5 * * 1" # 5AM Monday UTC (10PM Sunday PST)
+  displayName: Weekly stable publish build
   branches:
     include:
       - "*-stable"
 
+trigger: none
 pr: none
 
 jobs:
@@ -44,7 +46,12 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
+
+      - task: CmdLine@2
+        displayName: Create GitHub Release
+        inputs:
+          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
@@ -159,7 +166,10 @@ jobs:
         parameters:
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
-          contents: Microsoft.ReactNative\**
+          contents: |
+            Microsoft.ReactNative\**
+            Microsoft.ReactNative.Managed\**
+            Microsoft.ReactNative.Managed.CodeGen\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -172,7 +182,7 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-    displayName: Publish Nuget
+    displayName: Publish NuGet
     pool:
       vmImage: $(VmImage)
 

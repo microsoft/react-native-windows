@@ -1,102 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\InstanceFactory.h">
-      <Filter>ReactUWP</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\II18nModule.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IReactInstance.h">
-      <Filter>ReactUWP</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ReactWindowsAPI.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\IXamlRootView.h">
-      <Filter>ReactUWP</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ViewManager.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactRootView.h">
-      <Filter>ReactUWP</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\cdebug.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ReactUwp.h">
-      <Filter>ReactUWP</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\AsyncStorageModuleWin32Config.h">
+      <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\II18nModule.h">
-      <Filter>ReactWindowsCore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ReactWindowsAPI.h">
-      <Filter>ReactWindowsCore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\SourceCodeModule.h">
-      <Filter>ReactWindowsCore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ViewManager.h">
-      <Filter>ReactWindowsCore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ControlViewManager.h">
-      <Filter>ReactUWP\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\FrameworkElementViewManager.h">
-      <Filter>ReactUWP\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\KeyboardEventHandler.h">
-      <Filter>ReactUWP\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ShadowNodeBase.h">
-      <Filter>ReactUWP\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Views\ViewManagerBase.h">
-      <Filter>ReactUWP\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\AccessibilityUtils.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ValueUtils.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\ViewManagerProvider.h">
-      <Filter>ReactUWP</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\XamlView.h">
-      <Filter>ReactUWP</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\CppWinrtLessExceptions.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\Helpers.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\LocalBundleReader.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyHandlerUtils.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\PropertyUtils.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\ResourceBrushUtils.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\StandardControlResourceKeyNames.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpPreparedScriptStore.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactUWP\Utils\UwpScriptStore.h">
-      <Filter>ReactUWP\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\cdebug.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="ReactUWP">
-      <UniqueIdentifier>{ea454789-44fc-4ca6-aa0d-99b15a521026}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ReactWindowsCore">
+    <Filter Include="Shared">
       <UniqueIdentifier>{2c26b820-a216-4922-b03f-56ed5c58ce25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ReactUWP\Views">
-      <UniqueIdentifier>{7d32c341-73f3-4eff-b21e-47d5a51fd12f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ReactUWP\Utils">
-      <UniqueIdentifier>{77bf1091-5dda-46a7-ac20-6540d6e396d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

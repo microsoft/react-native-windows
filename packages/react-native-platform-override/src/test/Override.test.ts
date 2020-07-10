@@ -64,6 +64,12 @@ const fileOverrides: TestCase<OverrideConstructor>[] = [
   patchOverride,
 ];
 
+const baseFileOverrides: TestCase<OverrideConstructor>[] = [
+  copyOverride,
+  derivedOverride,
+  patchOverride,
+];
+
 test.each(fileOverrides)('name - %s', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'bar.windows.js'});
   expect(override.name()).toBe('bar.windows.js');
@@ -93,3 +99,20 @@ test.each(fileOverrides)('%s Serialization Roundtrip', (_, ovrClass, args) => {
   const override = new ovrClass(args);
   expect(deserializeOverride(override.serialize())).toEqual(override);
 });
+
+test.each(fileOverrides)(
+  '%s Override File Serializes To Unix Path',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, file: 'path\\to\\bar.windows.js'});
+    expect(override.serialize().file).toEqual('path/to/bar.windows.js');
+  },
+);
+
+test.each(baseFileOverrides)(
+  '%s Base File Serializes To Unix Path',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, baseFile: 'path\\to\\bar.js'});
+    const serialized = override.serialize() as any;
+    expect(serialized.baseFile).toEqual('path/to/bar.js');
+  },
+);

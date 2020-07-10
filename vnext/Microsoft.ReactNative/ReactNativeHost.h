@@ -9,7 +9,6 @@
 #include "ReactHost/React.h"
 #include "ReactInstanceSettings.h"
 #include "ReactPropertyBag.h"
-#include "ViewManagersProvider.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

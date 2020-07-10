@@ -11,6 +11,7 @@ More fully defines an event by augmenting touchHistory
 ```typescript
 export interface IResponderSyntheticEvent<T> extends NativeSyntheticEvent<T> 
 ```
+<b>Extends:</b> NativeSyntheticEvent&lt;T&gt;
 
 ## Properties
 

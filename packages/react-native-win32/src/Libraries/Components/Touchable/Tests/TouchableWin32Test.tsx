@@ -359,7 +359,7 @@ class TouchableWithoutFeedbackExample extends React.Component<{}, IExampleState>
     );
   }
 
-  private _onPress = (e: IPressEvent) => {
+  private _onPress = () => {
     this.setState({ numberOfPresses: this.state.numberOfPresses + 1 });
   };
 }
@@ -437,7 +437,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
     }
   }
 
-  private _onPress = (e: IPressEvent) => {
+  private _onPress = () => {
     this.setState({ numberOfPresses: this.state.numberOfPresses + 1 });
   };
 }

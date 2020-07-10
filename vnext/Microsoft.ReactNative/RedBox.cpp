@@ -4,27 +4,34 @@
 #include "RedBox.h"
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
-#include <winrt/Windows.ApplicationModel.Core.h>
-#include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.Web.Http.h>
 #include <regex>
-#include "CppWinRTIncludes.h"
+#include "DevServerHelper.h"
+#include "DynamicReader.h"
 #include "Unicode.h"
-#include "Utils/Helpers.h"
 
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
+
+#ifndef CORE_ABI
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.Web.Http.h>
+#include "CppWinRTIncludes.h"
+#include "Utils/Helpers.h"
+#endif
 
 using namespace winrt::Windows::Foundation;
 
 namespace Mso::React {
 
+#ifndef CORE_ABI
 struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
       const Mso::WeakPtr<IReactHost> &weakReactHost,
@@ -243,63 +250,66 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     const std::string plain = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
 
-    try {
-      auto json = folly::parseJson(plain);
-      if (json.count("type") && json["type"] == "InternalError") {
-        auto message = json["message"].asString();
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+    if (!plain.empty() && plain[0] == '{') {
+      try {
+        auto json = folly::parseJson(plain);
+        if (json.count("type") && json["type"] == "InternalError") {
+          auto message = json["message"].asString();
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
 
-        if (IsMetroBundlerError(message, json["type"].asString())) {
-          xaml::Documents::Hyperlink link;
-          link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
-          xaml::Documents::Run linkRun;
+          if (IsMetroBundlerError(message, json["type"].asString())) {
+            xaml::Documents::Hyperlink link;
+            link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
+            xaml::Documents::Run linkRun;
 
-          linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-          link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
-          link.Inlines().Append(linkRun);
-          xaml::Documents::Run normalRun;
-          normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
-          m_errorStackText.Inlines().Append(normalRun);
-          m_errorStackText.Inlines().Append(link);
-        } else {
-          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+            linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
+            link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+            link.Inlines().Append(linkRun);
+            xaml::Documents::Run normalRun;
+            normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
+            m_errorStackText.Inlines().Append(normalRun);
+            m_errorStackText.Inlines().Append(link);
+          } else {
+            m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+          }
+          return;
+        } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
+          auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
+          const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
+
+          const auto errorName = json["name"].asString();
+          std::string stack;
+
+          const auto prefix = errorName + ": " + message;
+          if (boost::starts_with(originalStack, prefix)) {
+            stack = originalStack.substr(prefix.length());
+          } else {
+            constexpr char startOfStackTrace[] = "\n    at ";
+            stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
+          }
+
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+          // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
+          m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
+
+          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+          return;
         }
-        return;
-      } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
-        auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
-        const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
-
-        const auto errorName = json["name"].asString();
-        std::string stack;
-
-        const auto prefix = errorName + ": " + message;
-        if (boost::starts_with(originalStack, prefix)) {
-          stack = originalStack.substr(prefix.length());
-        } else {
-          constexpr char startOfStackTrace[] = "\n    at ";
-          stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
-        }
-
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-        // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
-        m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
-
-        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
-        return;
-      }
-    } catch (...) {
-      std::string doctype = "<!DOCTYPE HTML>";
-      if (boost::istarts_with(plain, doctype)) {
-        winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
-
-        CreateWebView(m_stackPanel, content);
-
-        m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
-        m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
-
-        return;
+      } catch (...) {
       }
     }
+    std::string doctype = "<!DOCTYPE HTML>";
+    if (boost::istarts_with(plain, doctype)) {
+      winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
+
+      CreateWebView(m_stackPanel, content);
+
+      m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
+      m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
+
+      return;
+    }
+
     // fall back to displaying the raw message string
     m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(plain));
     m_errorStackText.Text(L"");
@@ -328,13 +338,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
                               IInspectable const & /*sender*/, xaml::Input::TappedRoutedEventArgs const & /*e*/) {
         if (auto reactHost = weakReactHost.GetStrongPtr()) {
           auto devSettings = reactHost->Options().DeveloperSettings;
-          std::string stackFrameUri = "http://";
-          stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
-          stackFrameUri.append(":");
-          stackFrameUri.append(devSettings.SourceBundlePort.empty() ? "8081" : devSettings.SourceBundlePort);
-          stackFrameUri.append("/open-stack-frame");
-
-          Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};
+          Uri uri{
+              Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerOpenStackFrameUrl(
+                  devSettings.SourceBundleHost, devSettings.SourceBundlePort))};
           winrt::Windows::Web::Http::HttpClient httpClient{};
           winrt::Windows::Data::Json::JsonObject payload{};
 
@@ -410,6 +416,16 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
+    // Check if the rebox has been suppressed
+    if (!info.ExtraData.isNull()) {
+      auto iterator = info.ExtraData.find("suppressRedBox");
+      if (iterator != info.ExtraData.items().end()) {
+        if (iterator->second.asBool()) {
+          return;
+        }
+      }
+    }
+
     std::shared_ptr<RedBox> redbox(std::make_shared<RedBox>(
         m_weakReactHost,
         [wkthis = std::weak_ptr(shared_from_this())](uint32_t id) {
@@ -507,6 +523,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
+#endif
 
 struct RedBoxErrorFrameInfo
     : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
@@ -528,6 +545,10 @@ struct RedBoxErrorFrameInfo
     return m_frame.Column;
   }
 
+  bool Collapse() const noexcept {
+    return m_frame.Collapse;
+  }
+
  private:
   Mso::React::ErrorFrameInfo m_frame;
 };
@@ -537,6 +558,22 @@ struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Micros
 
   winrt::hstring Message() const noexcept {
     return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
+  }
+
+  winrt::hstring OriginalMessage() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.OriginalMessage).c_str();
+  }
+
+  winrt::hstring Name() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Name).c_str();
+  }
+
+  winrt::hstring ComponentStack() const noexcept {
+    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.ComponentStack).c_str();
+  }
+
+  winrt::Microsoft::ReactNative::IJSValueReader ExtraData() const noexcept {
+    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_errorInfo.ExtraData);
   }
 
   uint32_t Id() const noexcept {
@@ -600,10 +637,12 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
+#ifndef CORE_ABI
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
     Mso::DispatchQueue &&uiQueue) noexcept {
   return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
 }
+#endif
 
 } // namespace Mso::React

@@ -4,7 +4,7 @@ parameters:
   version:
   platform:
   configuration:
-  experimentalNugetDependency: false
+  useNuGet: false
   vsComponents: ''
   listVsComponents: false
   installVsComponents: false
@@ -46,19 +46,26 @@ steps:
     displayName: Add npm user to verdaccio
 
   - script: |
-      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public
+      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public $(extraPublishArgs)
     displayName: Publish packages to verdaccio
 
   - task: NuGetToolInstaller@0
     inputs:
       versionSpec: ">=4.6.0"
 
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download TestMSRNNuget Artifact'
-    inputs:
-      artifactName: TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }}
-      downloadPath: $(System.DefaultWorkingDirectory)
-    condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
+  - ${{ if eq(parameters.useNuGet, true) }}:
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Nuget Test Feed'
+      inputs:
+        artifactName: NuGetTestFeed
+        downloadPath: $(System.DefaultWorkingDirectory)
+    - script: |
+        echo ##vso[task.setvariable variable=nugetInitArguments]--experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
+      displayName: 'Configure additional args for nuget'
+  - ${{ if not(eq(parameters.useNuGet, true)) }}:
+    - script: |
+        echo ##vso[task.setvariable variable=nugetInitArguments]
+      displayName: 'No additional args for nuget'
 
   # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
@@ -70,28 +77,8 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template
     inputs:
-      script: npx react-native-windows-init --version master --overwrite --language ${{ parameters.language }} --experimentalNugetDependency ${{ parameters.experimentalNugetDependency }} ${{ parameters.additionalInitArguments }}
+      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} $(nugetInitArguments)
       workingDirectory: $(Agent.BuildDirectory)\testcli
-
-  - task: PowerShell@2
-    displayName: Install private Microsoft.ReactNative package
-    inputs:
-      targetType: inline
-      script: |
-        Install-Package Microsoft.ReactNative -Source $(System.DefaultWorkingDirectory)/TestMSRNNuget.${{ parameters.platform }}.${{ parameters.configuration }} -Destination $(Agent.BuildDirectory)\testcli\localNugets
-        $xml = [xml](gc $(Agent.BuildDirectory)\testcli\windows\Nuget.Config)
-        $newSource = $xml.CreateElement("add");
-        $keyAttr = $xml.CreateAttribute("key");
-        $keyAttr.Value ="PrPublish";
-        $valueAttr = $xml.CreateAttribute("value");
-        $valueAttr.Value ="$(Agent.BuildDirectory)\testcli\localNugets";
-        $newSource.Attributes.Append($keyAttr);
-        $newSource.Attributes.Append($valueAttr);
-        $packageSources = $xml.ChildNodes.Item(1).packageSources;
-        $packageSources.InsertBefore($newSource, $packageSources.FirstChild);
-        $xml.save("$(Agent.BuildDirectory)\testcli\windows\Nuget.Config");
-
-    condition: and(succeeded(), eq('true', ${{ parameters.experimentalNugetDependency }}))
 
   - task: PowerShell@2
     displayName: List Visual Studio Components
@@ -110,29 +97,22 @@ steps:
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
-  # Work around issue of parameters not getting expanded in conditions properly
-  - powershell: |
-      Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
+  - ${{ if not(eq(parameters.configuration, 'Release')) }}:
+    - script: |
+        echo ##vso[task.setvariable variable=releaseBuildArgs]--release
+      displayName: 'Configure extra args for Build project'
 
   - task: CmdLine@2
-    displayName: Build project (Release)
+    displayName: Build project
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs --release
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs $(releaseBuildArgs)
       workingDirectory: $(Agent.BuildDirectory)\testcli
-    condition: and(succeeded(), eq('Release', variables['localConfig']))
-
-  - task: CmdLine@2
-    displayName: Build project (Debug)
-    inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-    condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - task: PublishBuildArtifacts@1
     displayName: Upload build logs
     condition:  succeededOrFailed()
-    inputs:    
-      pathtoPublish: '$(Build.BinariesDirectory)\$(platform)\$(configuration)\BuildLogs'
+    inputs:
+      pathtoPublish: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
       artifactName: 'Build logs - $(Agent.JobName)' 
 
   - task: CmdLine@2

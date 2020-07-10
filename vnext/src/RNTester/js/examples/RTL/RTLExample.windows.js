@@ -27,14 +27,6 @@ const {
   Button,
 } = require('react-native');
 
-type State = {
-  toggleStatus: any,
-  pan: Object,
-  linear: Object,
-  isRTL: boolean,
-  ...
-};
-
 type RTLToggleState = {isRTL: boolean, ...};
 
 type AnimationState = {
