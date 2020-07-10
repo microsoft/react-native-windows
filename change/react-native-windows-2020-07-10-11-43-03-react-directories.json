@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Move contents of ReactDirectories.props to Directory.build.props",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-10T18:43:03.244Z"
+}
