@@ -247,6 +247,9 @@
     <ClInclude Include="..\Microsoft.ReactNative\IReactContext.h">
       <DependentUpon>..\Microsoft.ReactNative\IReactContext.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactDispatcher.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactDispatcher.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\JsiReader.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClInclude>
