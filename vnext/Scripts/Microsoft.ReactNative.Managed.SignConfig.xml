@@ -3,6 +3,8 @@
   <job platform="" configuration="" dest="__INPATHROOT__" jobname="microsoftreactnative" approvers="">
     <!-- Overwrite the input files to simplify downstream things like nuget package generation. -->
 
+    <!-- Is Authenticode right here? Do we need strong-signing for C# dlls? -->
+
     <!-- Sign the release binaries -->
     <file src="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
 
