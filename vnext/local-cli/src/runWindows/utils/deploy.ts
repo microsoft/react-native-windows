@@ -270,6 +270,7 @@ export async function deployToDesktop(
       null,
       `Add-AppXPackage ${dependencies}\\*`,
       verbose,
+      true, // this might throw an error if there are newer packages installed, ignore those errors.
     );
     await build.buildSolution(
       buildTools,
