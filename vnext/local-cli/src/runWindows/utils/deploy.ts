@@ -265,19 +265,12 @@ export async function deployToDesktop(
       'Dependencies',
       options.arch,
     );
-    await runPowerShellScriptFunction(
-      'Installing dependent framework packages',
-      null,
-      `Add-AppXPackage ${dependencies}\\*`,
-      verbose,
-      true, // this might throw an error if there are newer packages installed, ignore those errors.
-    );
     await build.buildSolution(
       buildTools,
       slnFile,
       options.release ? 'Release' : 'Debug',
       options.arch,
-      {DeployLayout: 'true'},
+      {DeployLayout: 'true', AppxDependenciesPath: dependencies},
       verbose,
       'Deploy',
       options.buildLogDirectory,
