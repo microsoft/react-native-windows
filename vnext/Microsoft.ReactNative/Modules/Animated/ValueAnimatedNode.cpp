@@ -13,6 +13,8 @@ ValueAnimatedNode::ValueAnimatedNode(
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
+  // TODO: Islands - need to get the XamlView associated with this animation in order to
+  // use the compositor react::uwp::GetCompositor(xamlView)
   m_propertySet = xaml::Window::Current().Compositor().CreatePropertySet();
   m_propertySet.InsertScalar(
       s_valueName, static_cast<float>(config.find(s_jsValueName).dereference().second.asDouble()));
@@ -22,6 +24,8 @@ ValueAnimatedNode::ValueAnimatedNode(
 
 ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
+  // TODO: Islands - need to get the XamlView associated with this animation in order to
+  // use the compositor react::uwp::GetCompositor(xamlView)
   m_propertySet = xaml::Window::Current().Compositor().CreatePropertySet();
   m_propertySet.InsertScalar(s_valueName, 0.0);
   m_propertySet.InsertScalar(s_offsetName, 0.0);

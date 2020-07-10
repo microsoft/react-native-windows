@@ -37,6 +37,10 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
 
   void Source(xaml::Media::LoadedImageSurface const &value);
 
+  void Compositor(comp::Compositor const &compositor) {
+    m_compositor = compositor;
+  }
+
  private:
   void UpdateCompositionBrush();
   bool IsImageSmallerThanView();
@@ -44,6 +48,7 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   comp::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
   comp::CompositionEffectBrush GetOrCreateEffectBrush(comp::CompositionSurfaceBrush const &surfaceBrush);
 
+  comp::Compositor m_compositor;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::Foundation::Size m_availableSize{};
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};

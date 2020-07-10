@@ -12,6 +12,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#include "XamlView.h"
 #include "Unicode.h"
 #include "cdebug.h"
 
@@ -164,6 +165,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   if (auto strong_this{weak_this.get()}) {
     if (strong_this->m_useCompositionBrush) {
       const auto compositionBrush{ReactImageBrush::Create()};
+      strong_this->Loaded([=](auto &&, auto &&) -> auto { compositionBrush->Compositor(react::uwp::GetCompositor(*this)); });
       compositionBrush->ResizeMode(strong_this->m_resizeMode);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
