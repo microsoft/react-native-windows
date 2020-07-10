@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "run-windows cannot find built app with default init app",
   "packageName": "react-native-windows",
   "email": "acoates@microsoft.com",
