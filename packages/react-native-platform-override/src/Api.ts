@@ -123,26 +123,28 @@ export async function upgradeOverrides(opts: {
   const upgradeResults: Array<UpgradeResult> = [];
 
   let i = 0;
-  for (const override of outOfDateOverrides) {
-    if (opts.progressListener) {
-      opts.progressListener(++i, outOfDateOverrides.length);
-    }
+  await Promise.all(
+    outOfDateOverrides.map(async override => {
+      const upgradeResult = await override
+        .upgradeStrategy()
+        .upgrade(
+          ctx.gitReactRepo,
+          ctx.overrideRepo,
+          ctx.reactNativeVersion,
+          opts.allowConflicts,
+        );
 
-    const upgradeResult = await override
-      .upgradeStrategy()
-      .upgrade(
-        ctx.gitReactRepo,
-        ctx.overrideRepo,
-        ctx.reactNativeVersion,
-        opts.allowConflicts,
-      );
+      if (opts.progressListener) {
+        opts.progressListener(++i, outOfDateOverrides.length);
+      }
 
-    upgradeResults.push(upgradeResult);
+      upgradeResults.push(upgradeResult);
 
-    if (upgradeResult.fileWritten) {
-      await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
-    }
-  }
+      if (upgradeResult.fileWritten) {
+        await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
+      }
+    }),
+  );
 
   if (upgradeResults.length > 0) {
     await Serialized.writeManifestToFile(

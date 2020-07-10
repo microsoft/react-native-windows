@@ -11,7 +11,7 @@ import * as path from 'path';
 import * as semver from 'semver';
 import * as simplegit from 'simple-git/promise';
 
-import ActionQueue from './ActionQueue';
+import BatchingQueue from './BatchingQueue';
 import {VersionedReactFileRepository} from './FileRepository';
 import fetch from 'node-fetch';
 import {getNpmPackage} from './PackageUtils';
@@ -33,10 +33,10 @@ export default class GitReactFileRepository
   // We have a potential race condition where one call to getFileContents
   // could checkout out a new tag while an existing call is rading a file.
   // Queue items to ensure the read operation is performed atomically
-  private actionQueue: ActionQueue;
+  private batchingQueue: BatchingQueue<string>;
 
   private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
-    this.actionQueue = new ActionQueue();
+    this.batchingQueue = new BatchingQueue();
     this.gitDirectory = gitDirectory;
     this.gitClient = gitClient;
   }
@@ -61,7 +61,7 @@ export default class GitReactFileRepository
     filename: string,
     reactNativeVersion: string,
   ): Promise<Buffer | null> {
-    return this.actionQueue.enqueue(async () => {
+    return this.batchingQueue.enqueue(reactNativeVersion, async () => {
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
 
@@ -82,7 +82,7 @@ export default class GitReactFileRepository
     reactNativeVersion: string,
     newContent: Buffer,
   ): Promise<string> {
-    return this.actionQueue.enqueue(async () => {
+    return this.batchingQueue.enqueue(reactNativeVersion, async () => {
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
 
@@ -119,7 +119,7 @@ export default class GitReactFileRepository
     reactNativeVersion: string,
     patchContent: string,
   ): Promise<{patchedFile: Buffer | null; hasConflicts: boolean}> {
-    return this.actionQueue.enqueue(async () => {
+    return this.batchingQueue.enqueue(reactNativeVersion, async () => {
       await this.checkoutVersion(reactNativeVersion);
       const filePath = path.join(this.gitDirectory, filename);
       const patchPath = path.join(this.gitDirectory, 'rnwgit.patch');
