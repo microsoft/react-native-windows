@@ -13,7 +13,7 @@ require('@rnw-scripts/just-task');
 task('unitTest', jestTask({config: './jest.config.js', _: ['--verbose']}));
 task(
   'endToEndTest',
-  jestTask({config: './jest.e2e.config.js', _: ['--verbose']}),
+  jestTask({config: './jest.e2e.config.js', runInBand: true, _: ['--verbose']}),
 );
 
 task('test', series('unitTest', 'endToEndTest'));
