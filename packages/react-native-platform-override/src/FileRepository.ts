@@ -10,7 +10,7 @@
  */
 export default interface FileRepository {
   /**
-   * Return the repository-relative path to all override files
+   * Return the repository-relative path to files
    * @param globs optional list of globs which files must match
    */
   listFiles(globs?: string[]): Promise<Array<string>>;
@@ -28,12 +28,12 @@ export default interface FileRepository {
 }
 
 /**
- * Provides access to override files
+ * Provides access to files
  */
 export interface WritableFileRepository extends FileRepository {
   /**
-   * Sets the contents of an override file. Rejects the promise if the override
-   * doesn't exist.
+   * Sets the contents of a file. Rejects the promise if the file doesn't
+   * exist.
    */
   writeFile(filename: string, content: Buffer | string): Promise<void>;
 
