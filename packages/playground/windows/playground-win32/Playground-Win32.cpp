@@ -329,9 +329,9 @@ constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
 int RunPlayground(int showCmd, bool useWebDebugger) {
 #ifdef USE_WINUI3
-    constexpr PCWSTR appName = L"React Native Playground (Win32 WinUI3)";
+  constexpr PCWSTR appName = L"React Native Playground (Win32 WinUI3)";
 #else
-    constexpr PCWSTR appName = L"React Native Playground (Win32)";
+  constexpr PCWSTR appName = L"React Native Playground (Win32)";
 #endif
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
