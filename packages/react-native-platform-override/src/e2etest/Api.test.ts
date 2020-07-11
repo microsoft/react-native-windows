@@ -120,10 +120,10 @@ test('upgradeOverrides', async () => {
     for (const serializedOverride of manifest.overrides) {
       if (serializedOverride.file !== 'ReactCommon/yoga/yoga/Yoga.cpp') {
         expect({
-          file: serializedOverride.override,
+          file: serializedOverride.file,
           version: serializedOverride.baseVersion,
         }).toEqual({
-          file: serializedOverride.override,
+          file: serializedOverride.file,
           version: opts.reactNativeVersion,
         });
       }

@@ -13,6 +13,7 @@ import Override, {deserializeOverride} from './Override';
 import {ReactFileRepository, WritableFileRepository} from './FileRepository';
 import OverrideFactory from './OverrideFactory';
 import {ValidationError} from './ValidationStrategy';
+import {eachLimit} from 'async';
 
 /**
  * Represents a collection of overrides listed in an on-disk manifest. Allows
@@ -85,11 +86,13 @@ export default class Manifest {
       ovr.validationStrategies(),
     );
 
-    for (const task of validationTasks) {
+    await eachLimit(validationTasks, 30, async task => {
       errors.push(...(await task.validate(overrideRepo, reactRepo)));
-    }
+    });
 
-    return errors;
+    return errors.sort((a, b) =>
+      a.overrideName.localeCompare(b.overrideName, 'en'),
+    );
   }
 
   /**
