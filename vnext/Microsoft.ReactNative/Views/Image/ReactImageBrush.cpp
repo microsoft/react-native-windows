@@ -42,6 +42,13 @@ void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
   }
 }
 
+void ReactImageBrush::BlurRadius(float value) {
+  if (m_blurRadius != value) {
+    m_blurRadius = value;
+    UpdateCompositionBrush();
+  }
+}
+
 void ReactImageBrush::AvailableSize(winrt::Size const &value) {
   if (m_availableSize != value) {
     m_availableSize = value;
@@ -70,7 +77,7 @@ void ReactImageBrush::UpdateCompositionBrush() {
     surfaceBrush.Stretch(ResizeModeToStretch());
 
     auto compositionBrush{surfaceBrush.as<comp::CompositionBrush>()};
-    if (ResizeMode() == ResizeMode::Repeat) {
+    if (ResizeMode() == ResizeMode::Repeat || BlurRadius() > 0) {
       // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
       // The CompositionSurfaceBrush holding the image is used as its source.
       compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
@@ -154,15 +161,32 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
   if (!m_effectBrush) {
-    auto borderEffect{winrt::make<EFFECTS_NAMESPACE::implementation::BorderEffect>()};
 
-    borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
-    borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+    winrt::Windows::Graphics::Effects::IGraphicsEffect effect;
 
-    comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
-    borderEffect.Source(borderEffectSourceParameter);
+    if (ResizeMode() == ResizeMode::Repeat) {
+      // BorderEffect
+      auto borderEffect{winrt::make<EFFECTS_NAMESPACE::implementation::BorderEffect>()};
 
-    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(borderEffect)};
+      borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+      borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+
+      comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
+      borderEffect.Source(borderEffectSourceParameter);
+      effect = borderEffect;
+    } else {
+      // GaussianBlurEffect
+      auto blurEffect{winrt::make<EFFECTS_NAMESPACE::implementation::GaussianBlurEffect>()};
+
+      blurEffect.BlurAmount(m_blurRadius);
+
+      comp::CompositionEffectSourceParameter blurEffectSourceParameter{L"source"};
+      blurEffect.Source(blurEffectSourceParameter);
+      effect = blurEffect;
+    }
+
+    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(effect)};
+
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
