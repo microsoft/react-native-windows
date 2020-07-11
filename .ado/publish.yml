@@ -12,7 +12,7 @@ schedules:
     include:
       - master
 
-- cron: "0 5 * * 1" # 5AM Monday UTC (10PM Sunday PST)
+- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
   displayName: Weekly stable publish build
   branches:
     include:
