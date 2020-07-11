@@ -288,3 +288,103 @@ test('overrideCopyOfBase - No Base', async () => {
     ).validate(overrideRepo, reactRepo),
   ).toEqual([]);
 });
+
+test('overrideDifferentFromBase - File Is Copy', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'foo.windows.js',
+      'foo.js',
+    ).validate(
+      new MockWritableFileRepository([
+        {filename: 'foo.windows.js', content: 'ABCD'},
+      ]),
+      new MockReactFileRepository([{filename: 'foo.js', content: 'ABCD'}]),
+    ),
+  ).toEqual([{type: 'overrideSameAsBase', overrideName: 'foo.windows.js'}]);
+});
+
+test('overrideDifferentFromBase - Directory Is Copy', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'src/foo',
+      'foo',
+    ).validate(
+      new MockWritableFileRepository([
+        {filename: 'src/foo/a.js', content: 'ABCD'},
+        {filename: 'src/foo/b.js', content: 'EFGH'},
+      ]),
+      new MockReactFileRepository([
+        {filename: 'foo/b.js', content: 'EFGH'},
+        {filename: 'foo/a.js', content: 'ABCD'},
+      ]),
+    ),
+  ).toEqual([{type: 'overrideSameAsBase', overrideName: 'src/foo'}]);
+});
+
+test('overrideDifferentFromBase - Different Line Endings', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'foo.windows.js',
+      'foo.js',
+    ).validate(
+      new MockWritableFileRepository([
+        {filename: 'foo.windows.js', content: 'ABCD\n'},
+      ]),
+      new MockReactFileRepository([{filename: 'foo.js', content: 'ABCD\r\n'}]),
+    ),
+  ).toEqual([{type: 'overrideSameAsBase', overrideName: 'foo.windows.js'}]);
+});
+
+test('overrideDifferentFromBase - File Not A Copy', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'foo.windows.js',
+      'foo.js',
+    ).validate(overrideRepo, reactRepo),
+  ).toEqual([]);
+});
+
+test('overrideDifferentFromBase - Directory Not A Copy', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'src/foo',
+      'foo',
+    ).validate(
+      new MockWritableFileRepository([
+        {filename: 'src/foo/a.js', content: 'ABCDDCBA'},
+        {filename: 'src/foo/b.js', content: 'EFGH'},
+      ]),
+      new MockReactFileRepository([
+        {filename: 'foo/b.js', content: 'EFGH'},
+        {filename: 'foo/a.js', content: 'ABCD'},
+      ]),
+    ),
+  ).toEqual([]);
+});
+
+test('overrideDifferentFromBase - Directory Has Extra File', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'bar/RNTester',
+      'RNTester',
+    ).validate(overrideRepo, reactRepo),
+  ).toEqual([]);
+});
+
+test('overrideDifferentFromBase - No Override', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'nope.js',
+      'foo.js',
+    ).validate(overrideRepo, reactRepo),
+  ).toEqual([]);
+});
+
+test('overrideDifferentFromBase - No Base', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'foo.windows.js',
+      'nope.js',
+    ).validate(overrideRepo, reactRepo),
+  ).toEqual([]);
+});

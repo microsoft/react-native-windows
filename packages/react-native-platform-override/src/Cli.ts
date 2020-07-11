@@ -278,6 +278,12 @@ async function printValidationErrors(validationErrors: Array<ValidationError>) {
   );
 
   printErrorType(
+    'overrideSameAsBase',
+    errors,
+    'The following overrides are identical to their base files. Please remove them or set their type to "copy":',
+  );
+
+  printErrorType(
     'expectedFile',
     errors,
     'The following overrides should operate on files, but list directories:',
