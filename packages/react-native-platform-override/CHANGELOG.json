@@ -2,6 +2,35 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "react-native-platform-override_v0.2.0",
+      "version": "0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Improve Override Upgrade Performance",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Support Directory Copy Overrides",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d799443d38020b5ba30c1062d8b43b151c1d7566",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Try to work around Pipelines Network Flakiness Causing Test Timeouts",
+            "author": "ngerlem@microsoft.com",
+            "commit": "db96d9962986ef1a0cc201bbfbc633e562c95371",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jul 2020 01:27:37 GMT",
       "tag": "react-native-platform-override_v0.1.1",
       "version": "0.1.1",

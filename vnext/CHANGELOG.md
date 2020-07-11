@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Jul 2020 05:06:06 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Jul 2020 05:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.118
+
+Sat, 11 Jul 2020 05:09:38 GMT
+
+### Changes
+
+- Move contents of ReactDirectories.props to Directory.build.props (ngerlem@microsoft.com)
+- Define Set/Get FeatureGate (julio.rocha@microsoft.com)
+- Create nuget package for Microsoft.ReacNative.Cxx (dannyvv@microsoft.com)
+- [Image] Remove resizemode assert (email not defined)
+- Automatically Pull In New Files from RNTester and IntegrationTests (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.117
 

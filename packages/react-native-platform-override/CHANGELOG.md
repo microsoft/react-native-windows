@@ -1,8 +1,17 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Wed, 08 Jul 2020 01:27:37 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Jul 2020 05:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.0
+
+Sat, 11 Jul 2020 05:09:38 GMT
+
+### Minor changes
+
+- Improve Override Upgrade Performance (ngerlem@microsoft.com)
+- Support Directory Copy Overrides (ngerlem@microsoft.com)
 
 ## 0.1.1
 

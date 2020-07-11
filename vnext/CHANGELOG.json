@@ -2,6 +2,65 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.118",
+      "version": "0.0.0-canary.118",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update Override Manifest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add ReactPackageBuilder tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d576f4566cf52181ad868009047247d403d9de54",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add ReactPackageBuilder tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d576f4566cf52181ad868009047247d403d9de54",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Move contents of ReactDirectories.props to Directory.build.props",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e25b4cbc122090ce09b95596a1d6f6a18ff2f442",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Define Set/Get FeatureGate",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a81276326919087a482a6e809d80df7cfc8094db",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create nuget package for Microsoft.ReacNative.Cxx",
+            "author": "dannyvv@microsoft.com",
+            "commit": "dce9fe3ab8b6ce229996fbc66da48d36065f7e99",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Image] Remove resizemode assert",
+            "author": "email not defined",
+            "commit": "009e922f8acf1079d0f71e04b9cf0435d8fe411b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Automatically Pull In New Files from RNTester and IntegrationTests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d799443d38020b5ba30c1062d8b43b151c1d7566",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Jul 2020 05:06:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.117",
       "version": "0.0.0-canary.117",

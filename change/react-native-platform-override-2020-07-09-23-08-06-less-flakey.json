@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Try to work around Pipelines Network Flakiness Causing Test Timeouts",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-07-10T06:08:06.357Z"
-}
