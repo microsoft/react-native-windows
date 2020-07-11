@@ -8,7 +8,7 @@
 #include <UI.Composition.Effects.h>
 #include <sstream>
 
-#include "BorderEffect.h"
+#include "Effects.h"
 
 namespace winrt {
 using namespace winrt::Windows::Storage::Streams;
@@ -154,7 +154,7 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
   if (!m_effectBrush) {
-    auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
+    auto borderEffect{winrt::make<EFFECTS_NAMESPACE::implementation::BorderEffect>()};
 
     borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
     borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);

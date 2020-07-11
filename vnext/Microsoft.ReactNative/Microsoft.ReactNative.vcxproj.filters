@@ -534,9 +534,6 @@
     <ClInclude Include="Polyester\IconViewManager.h">
       <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Image\BorderEffect.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
     <ClInclude Include="Views\Image\ImageViewManager.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
@@ -698,6 +695,9 @@
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Views\Image\Effects.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -722,13 +722,13 @@
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="Views\cppwinrt\BorderEffect.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
     <Midl Include="Views\cppwinrt\ViewPanel.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views\cppwinrt\Effects.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
   </ItemGroup>
