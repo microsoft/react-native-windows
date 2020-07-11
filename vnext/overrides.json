@@ -84,8 +84,12 @@
       "issue": 5430
     },
     {
-      "type": "platform",
-      "file": "src/index.windows.ts"
+      "type": "derived",
+      "file": "src/index.windows.js",
+      "baseFile": "index.js",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "2053998d5a0b562e08086c9b6499199ffe8ead72",
+      "issue": "LEGACY_FIXME"
     },
     {
       "type": "platform",
