@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 Jul 2020 05:09:38 GMT and should not be manually modified.
+This log was last generated on Sun, 12 Jul 2020 05:05:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.119
+
+Sun, 12 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Move index file to flow (acoates@microsoft.com)
 
 ## 0.0.0-canary.118
 
