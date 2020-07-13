@@ -28,9 +28,9 @@ comp::Compositor GetCompositor(const XamlView &view) {
   else {
     return TryGetXamlRoot(view).Compositor();
   }
-#else
-  throw std::exception("Could not get a compositor instance");
 #endif
+
+  throw std::exception("Could not get a compositor instance");
 }
 
 } // namespace react::uwp
