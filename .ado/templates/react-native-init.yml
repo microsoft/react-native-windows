@@ -1,14 +1,28 @@
 #
 parameters:
-  language:
-  version:
-  platform:
-  configuration:
-  useNuGet: false
-  vsComponents: ''
-  listVsComponents: false
-  installVsComponents: false
-  additionalInitArguments: ''
+  - name: language
+    type: string
+  - name: version
+    type: string
+  - name: platform
+    type: string
+  - name: configuration
+    type: string
+  - name: useNuGet
+    type: boolean
+    default: false
+  - name: vsComponents
+    type: string
+    default: ''
+  - name: listVsComponents
+    type: boolean
+    default: false
+  - name: installVsComponents
+    type: boolean
+    default: false
+  - name: additionalInitArguments
+    type: string
+    default: ''
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -60,24 +74,26 @@ steps:
       script: npx react-native init testcli --npm --version ${{ parameters.version }}
       workingDirectory: $(Agent.BuildDirectory)
 
-  - ${{ if eq(parameters.useNuGet, true) }}:
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download Nuget Test Feed'
-      inputs:
-        artifactName: NuGetTestFeed
-        downloadPath: $(System.DefaultWorkingDirectory)
-    - task: CmdLine@2
-      displayName: Apply windows template (with nuget)
-      inputs:
-        script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
-        workingDirectory: $(Agent.BuildDirectory)\testcli
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Nuget Test Feed'
+    inputs:
+      artifactName: NuGetTestFeed
+      downloadPath: $(System.DefaultWorkingDirectory)
+    condition: ${{ parameters.useNuGet }}
+    
+  - task: CmdLine@2
+    displayName: Apply windows template (with nuget)
+    inputs:
+      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+    condition: ${{ parameters.useNuGet }}
 
-  - ${{ if not(eq(parameters.useNuGet, true)) }}:
-    - task: CmdLine@2
-      displayName: Apply windows template (with nuget)
-      inputs:
-        script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
-        workingDirectory: $(Agent.BuildDirectory)\testcli
+  - task: CmdLine@2
+    displayName: Apply windows template (without nuget)
+    inputs:
+      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+    condition: ${{ not(parameters.useNuGet) }}
 
   - task: PowerShell@2
     displayName: List Visual Studio Components
@@ -96,19 +112,23 @@ steps:
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
-  - ${{ if eq(parameters.configuration, 'Release') }}:
-    - task: CmdLine@2
-      displayName: Build project (Release)
-      inputs:
-        script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release
-        workingDirectory: $(Agent.BuildDirectory)\testcli
+  # Work around issue of parameters not getting expanded in conditions properly
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
 
-  - ${{ if not(eq(parameters.configuration, 'Release')) }}:
-    - task: CmdLine@2
-      displayName: Build project (Debug)
-      inputs:
-        script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
-        workingDirectory: $(Agent.BuildDirectory)\testcli
+  - task: CmdLine@2
+    displayName: Build project (Release)
+    inputs:
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+    condition: and(succeeded(), eq('Release', variables['localConfig']))
+
+  - task: CmdLine@2
+    displayName: Build project (Debug)
+    inputs:
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+    condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - task: PublishBuildArtifacts@1
     displayName: Upload build logs
