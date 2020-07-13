@@ -262,6 +262,9 @@
     <ClInclude Include="..\Microsoft.ReactNative\IReactModuleBuilder.h">
       <DependentUpon>..\Microsoft.ReactNative\IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactNotificationService.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactNotificationService.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
     </ClInclude>
