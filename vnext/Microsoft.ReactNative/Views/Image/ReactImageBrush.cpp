@@ -131,7 +131,7 @@ comp::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    comp::CompositionSurfaceBrush surfaceBrush{xaml::Window::Current().Compositor().CreateSurfaceBrush()};
+    comp::CompositionSurfaceBrush surfaceBrush{m_compositor.CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
@@ -162,8 +162,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
     borderEffect.Source(borderEffectSourceParameter);
 
-    comp::CompositionEffectFactory effectFactory{
-        xaml::Window::Current().Compositor().CreateEffectFactory(borderEffect)};
+    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(borderEffect)};
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);

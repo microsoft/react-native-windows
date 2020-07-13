@@ -37,5 +37,8 @@ inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
   return fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
 }
 
+xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
+comp::Compositor GetCompositor(const XamlView &view);
+
 } // namespace uwp
 } // namespace react

@@ -13,6 +13,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include "Unicode.h"
+#include "XamlView.h"
 #include "cdebug.h"
 
 namespace winrt {
@@ -159,6 +160,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   if (auto strong_this{weak_this.get()}) {
     if (strong_this->m_useCompositionBrush) {
       const auto compositionBrush{ReactImageBrush::Create()};
+      // GetCompositor relies on the element's XamlRoot which is only set once the object enters the tree.
+      // This in turn happens before ReactImageBrush::GetOrCreateSurfaceBrush is called.
+      if (!strong_this->IsLoaded()) {
+        strong_this->Loaded([=](auto &&, auto &&) -> auto {
+          compositionBrush->Compositor(react::uwp::GetCompositor(*this));
+        });
+      } else {
+        compositionBrush->Compositor(react::uwp::GetCompositor(*this));
+      }
       compositionBrush->ResizeMode(strong_this->m_resizeMode);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)

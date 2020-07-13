@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Start using xamlroot's compositor when available for islands to work. This enables most of playground win32 for rnw-on-winui3 for a pre-preview 2 build",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-10T07:43:27.873Z"
+}
