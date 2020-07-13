@@ -13,81 +13,64 @@ class Pointer;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-using JsiPointerHandle = uint64_t;
-using JsiScopeHandle = uint64_t;
-
 struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   JsiRuntime(facebook::jsi::Runtime &runtime) noexcept;
 
  public: // IJsiRuntime
-  Microsoft::ReactNative::JsiValueData EvaluateJavaScript(
-      Microsoft::ReactNative::IJsiBuffer const &buffer,
-      hstring const &sourceUrl);
-  Microsoft::ReactNative::JsiPreparedJavaScript PrepareJavaScript(
-      Microsoft::ReactNative::IJsiBuffer const &buffer,
-      hstring const &sourceUrl);
-  Microsoft::ReactNative::JsiValueData EvaluatePreparedJavaScript(
-      Microsoft::ReactNative::JsiPreparedJavaScript const &js);
-  uint64_t Global() noexcept;
+  JsiValueData EvaluateJavaScript(IJsiBuffer const &buffer, hstring const &sourceUrl);
+  ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiBuffer const &buffer, hstring const &sourceUrl);
+  JsiValueData EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js);
+  JsiObjectData Global();
   hstring Description();
   bool IsInspectable();
-  JsiPointerHandle CloneSymbol(JsiPointerHandle symbol);
-  JsiPointerHandle CloneString(JsiPointerHandle str);
-  JsiPointerHandle CloneObject(JsiPointerHandle obj);
-  JsiPointerHandle ClonePropertyNameId(JsiPointerHandle propertyNameId);
-  JsiPointerHandle CreatePropertyNameIdFromAscii(array_view<uint8_t const> ascii);
-  JsiPointerHandle CreatePropertyNameIdFromUtf8(array_view<uint8_t const> utf8);
-  JsiPointerHandle CreatePropertyNameIdFromString(JsiPointerHandle str);
-  void PropertyNameIdToUtf8(JsiPointerHandle propertyNameId, Microsoft::ReactNative::JsiDataHandler const &utf8Handler);
-  bool ComparePropertyNameIds(JsiPointerHandle left, JsiPointerHandle right);
-  void SymbolToUtf8(JsiPointerHandle symbol, Microsoft::ReactNative::JsiDataHandler const &utf8Handler);
-  JsiPointerHandle CreateStringFromAscii(array_view<uint8_t const> ascii);
-  JsiPointerHandle CreateStringFromUtf8(array_view<uint8_t const> utf8);
-  void StringToUtf8(JsiPointerHandle str, Microsoft::ReactNative::JsiDataHandler const &utf8Handler);
-  Microsoft::ReactNative::JsiValueData CreateValueFromJsonUtf8(array_view<uint8_t const> json);
-  JsiPointerHandle CreateObject();
-  JsiPointerHandle CreateObjectWithHostObject(Microsoft::ReactNative::IJsiHostObject const &hostObject);
-  Microsoft::ReactNative::IJsiHostObject GetHostObject(JsiPointerHandle obj);
-  Microsoft::ReactNative::JsiHostFunction GetHostFunction(JsiPointerHandle func);
-  Microsoft::ReactNative::JsiValueData GetProperty(JsiPointerHandle obj, JsiPointerHandle propertyNameId);
-  Microsoft::ReactNative::JsiValueData GetPropertyWithString(JsiPointerHandle obj, JsiPointerHandle name);
-  bool HasProperty(JsiPointerHandle obj, JsiPointerHandle propertyNameId);
-  bool HasPropertyWithString(JsiPointerHandle obj, JsiPointerHandle name);
-  void
-  SetProperty(JsiPointerHandle obj, JsiPointerHandle propertyNameId, Microsoft::ReactNative::JsiValueData const &value);
-  void
-  SetPropertyWithString(JsiPointerHandle obj, JsiPointerHandle name, Microsoft::ReactNative::JsiValueData const &value);
-  bool IsArray(JsiPointerHandle obj);
-  bool IsArrayBuffer(JsiPointerHandle obj);
-  bool IsFunction(JsiPointerHandle obj);
-  bool IsHostObject(JsiPointerHandle obj);
-  bool IsHostFunction(JsiPointerHandle obj);
-  JsiPointerHandle GetPropertyNameArray(JsiPointerHandle obj);
-  JsiPointerHandle CreateWeakObject(JsiPointerHandle obj);
-  Microsoft::ReactNative::JsiValueData LockWeakObject(JsiPointerHandle weakObject);
-  JsiPointerHandle CreateArray(uint32_t size);
-  uint32_t GetArraySize(JsiPointerHandle arr);
-  uint32_t GetArrayBufferSize(JsiPointerHandle arrayBuffer);
-  void ArrayBufferToUtf8(JsiPointerHandle arrayBuffer, Microsoft::ReactNative::JsiDataHandler const &utf8Handler);
-  Microsoft::ReactNative::JsiValueData GetValueAtIndex(JsiPointerHandle arr, uint32_t index);
-  void SetValueAtIndex(JsiPointerHandle arr, uint32_t index, Microsoft::ReactNative::JsiValueData const &value);
-  JsiPointerHandle CreateFunctionFromHostFunction(
-      JsiPointerHandle propNameId,
-      uint32_t paramCount,
-      Microsoft::ReactNative::JsiHostFunction const &hostFunc);
-  Microsoft::ReactNative::JsiValueData Call(
-      JsiPointerHandle func,
-      Microsoft::ReactNative::JsiValueData const &thisValue,
-      array_view<Microsoft::ReactNative::JsiValueData const> args);
-  Microsoft::ReactNative::JsiValueData CallAsConstructor(
-      JsiPointerHandle func,
-      array_view<Microsoft::ReactNative::JsiValueData const> args);
-  JsiScopeHandle PushScope();
-  void PopScope(JsiScopeHandle scopeState);
-  bool SymbolStrictEquals(JsiPointerHandle left, JsiPointerHandle right);
-  bool StringStrictEquals(JsiPointerHandle left, JsiPointerHandle right);
-  bool ObjectStrictEquals(JsiPointerHandle left, JsiPointerHandle right);
-  bool InstanceOf(JsiPointerHandle obj, JsiPointerHandle constructor);
+  JsiSymbolData CloneSymbol(JsiSymbolData symbol);
+  JsiStringData CloneString(JsiStringData str);
+  JsiObjectData CloneObject(JsiObjectData obj);
+  JsiPropertyNameIdData ClonePropertyNameId(JsiPropertyNameIdData propertyNameId);
+  JsiPropertyNameIdData CreatePropertyNameIdFromAscii(array_view<uint8_t const> ascii);
+  JsiPropertyNameIdData CreatePropertyNameIdFromUtf8(array_view<uint8_t const> utf8);
+  JsiPropertyNameIdData CreatePropertyNameIdFromString(JsiStringData str);
+  void PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiDataHandler const &utf8Handler);
+  bool PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNameIdData right);
+  void SymbolToUtf8(JsiSymbolData symbol, JsiDataHandler const &utf8Handler);
+  JsiStringData CreateStringFromAscii(array_view<uint8_t const> ascii);
+  JsiStringData CreateStringFromUtf8(array_view<uint8_t const> utf8);
+  void StringToUtf8(JsiStringData str, JsiDataHandler const &utf8Handler);
+  JsiValueData CreateValueFromJsonUtf8(array_view<uint8_t const> json);
+  JsiObjectData CreateObject();
+  JsiObjectData CreateObjectWithHostObject(IJsiHostObject const &hostObject);
+  IJsiHostObject GetHostObject(JsiObjectData obj);
+  JsiHostFunction GetHostFunction(JsiFunctionData func);
+  JsiValueData GetPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId);
+  JsiValueData GetPropertyByName(JsiObjectData obj, JsiStringData name);
+  bool HasPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId);
+  bool HasPropertyByName(JsiObjectData obj, JsiStringData name);
+  void SetPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId, JsiValueData const &value);
+  void SetPropertyByName(JsiObjectData obj, JsiStringData name, JsiValueData const &value);
+  bool IsArray(JsiObjectData obj);
+  bool IsArrayBuffer(JsiObjectData obj);
+  bool IsFunction(JsiObjectData obj);
+  bool IsHostObject(JsiObjectData obj);
+  bool IsHostFunction(JsiFunctionData obj);
+  JsiArrayData GetPropertyNames(JsiObjectData obj);
+  JsiWeakObjectData CreateWeakObject(JsiObjectData obj);
+  JsiValueData LockWeakObject(JsiWeakObjectData weakObject);
+  JsiArrayData CreateArray(uint32_t size);
+  uint32_t GetArraySize(JsiArrayData arr);
+  uint32_t GetArrayBufferSize(JsiArrayBufferData arrayBuffer);
+  void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiDataHandler const &utf8Handler);
+  JsiValueData GetValueAtIndex(JsiArrayData arr, uint32_t index);
+  void SetValueAtIndex(JsiArrayData arr, uint32_t index, JsiValueData const &value);
+  JsiFunctionData
+  CreateFunctionFromHostFunction(JsiPropertyNameIdData propNameId, uint32_t paramCount, JsiHostFunction const &hostFunc);
+  JsiValueData Call(JsiFunctionData func, JsiValueData const &thisArg, array_view<JsiValueData const> args);
+  JsiValueData CallAsConstructor(JsiFunctionData func, array_view<JsiValueData const> args);
+  JsiScopeState PushScope();
+  void PopScope(JsiScopeState scopeState);
+  bool SymbolStrictEquals(JsiSymbolData left, JsiSymbolData right);
+  bool StringStrictEquals(JsiStringData left, JsiStringData right);
+  bool ObjectStrictEquals(JsiObjectData left, JsiObjectData right);
+  bool InstanceOf(JsiObjectData obj, JsiFunctionData constructor);
 
  private:
   facebook::jsi::Runtime &m_runtime;
