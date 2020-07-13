@@ -21,6 +21,10 @@
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+        name="Microsoft.ReactNative.ReactDispatcherHelper"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
         name="Microsoft.ReactNative.ReactNativeHost"
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />
