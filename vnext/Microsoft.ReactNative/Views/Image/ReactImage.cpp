@@ -167,9 +167,13 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       const auto compositionBrush{ReactImageBrush::Create()};
       // GetCompositor relies on the element's XamlRoot which is only set once the object enters the tree.
       // This in turn happens before ReactImageBrush::GetOrCreateSurfaceBrush is called.
-      strong_this->Loaded([=](auto &&, auto &&) -> auto {
+      if (!strong_this->IsLoaded()) {
+        strong_this->Loaded([=](auto &&, auto &&) -> auto {
+          compositionBrush->Compositor(react::uwp::GetCompositor(*this));
+        });
+      } else {
         compositionBrush->Compositor(react::uwp::GetCompositor(*this));
-      });
+      }
       compositionBrush->ResizeMode(strong_this->m_resizeMode);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
