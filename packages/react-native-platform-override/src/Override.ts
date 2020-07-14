@@ -236,6 +236,16 @@ export class DerivedOverride extends BaseFileOverride {
       this.baseVersion,
     );
   }
+
+  validationStrategies(): ValidationStrategy[] {
+    return [
+      ...super.validationStrategies(),
+      ValidationStrategies.overrideDifferentFromBase(
+        this.overrideFile,
+        this.baseFile,
+      ),
+    ];
+  }
 }
 
 /**
@@ -279,6 +289,16 @@ export class PatchOverride extends BaseFileOverride {
       this.baseFile,
       this.baseVersion,
     );
+  }
+
+  validationStrategies(): ValidationStrategy[] {
+    return [
+      ...super.validationStrategies(),
+      ValidationStrategies.overrideDifferentFromBase(
+        this.overrideFile,
+        this.baseFile,
+      ),
+    ];
   }
 }
 

@@ -19,7 +19,8 @@ export interface ValidationError {
     | 'expectedFile' // Expected the override to be a file but found a directory
     | 'expectedDirectory' // Expected the override to be a directory but found a file
     | 'outOfDate' // A base file has changed since the manifested version
-    | 'overrideDifferentFromBase'; // An override file is not an expact copy of the base file
+    | 'overrideDifferentFromBase' // An override file is not an exact copy of the base file
+    | 'overrideSameAsBase'; // An override file is an exact copy of the base file
 
   /**
    * What override failed validation
@@ -154,6 +155,33 @@ export const ValidationStrategies = {
       return overrideHash === baseHash
         ? []
         : [{type: 'overrideDifferentFromBase', overrideName}];
+    },
+  }),
+
+  /**
+   * Validate that an override assumed to be different from its base is not
+   * identical.
+   */
+  overrideDifferentFromBase: (
+    overrideName: string,
+    base: string,
+  ): ValidationStrategy => ({
+    validate: async (overrideRepo, reactRepo) => {
+      if (
+        (await overrideRepo.stat(overrideName)) === 'none' ||
+        (await reactRepo.stat(base)) === 'none'
+      ) {
+        return [];
+      }
+
+      const overrideHash = await hashFileOrDirectory(
+        overrideName,
+        overrideRepo,
+      );
+      const baseHash = await hashFileOrDirectory(base, reactRepo);
+      return overrideHash === baseHash
+        ? [{type: 'overrideSameAsBase', overrideName}]
+        : [];
     },
   }),
 };
