@@ -182,13 +182,8 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
       blurEffect.Source(blurEffectSourceParameter);
     }
 
-<<<<<<< HEAD
-    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(effect)};
+    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(blurEffect, {L"Blur.BlurAmount"})};
 
-=======
-    comp::CompositionEffectFactory effectFactory{
-        xaml::Window::Current().Compositor().CreateEffectFactory(blurEffect, {L"Blur.BlurAmount"})};
->>>>>>> Add blur to sample. Better match ios/android blur
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
