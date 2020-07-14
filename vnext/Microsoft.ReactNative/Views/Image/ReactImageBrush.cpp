@@ -3,12 +3,13 @@
 
 #include "pch.h"
 
-#include "ReactImageBrush.h"
-
-#include <UI.Composition.Effects.h>
-#include <sstream>
-
 #include "Effects.h"
+#include "ReactImageBrush.h"
+#include <UI.Composition.Effects.h>
+
+#include <sstream>
+#include <winrt/Windows.Graphics.Display.h>
+
 
 namespace winrt {
 using namespace winrt::Windows::Storage::Streams;
@@ -44,8 +45,7 @@ void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
 
 void ReactImageBrush::BlurRadius(float value) {
   if (m_blurRadius != value) {
-    // divide value by 4 to better match android and ios blur strength
-    m_blurRadius = value / 4;
+    m_blurRadius = value;
     UpdateCompositionBrush();
   }
 }
@@ -161,11 +161,17 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
+  // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
+  // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
+  // The units of both the standard deviation and blur radius are DIPs.
+  // A value of zero DIPs disables this effect entirely."
+  const float blurAmount = m_blurRadius / 3;
+
   if (!m_effectBrush) {
     // GaussianBlurEffect
     auto blurEffect{winrt::make<EFFECTS_NAMESPACE::implementation::GaussianBlurEffect>()};
     blurEffect.Name(L"Blur");
-    blurEffect.BlurAmount(m_blurRadius);
+    blurEffect.BlurAmount(blurAmount);
 
     if (ResizeMode() == ResizeMode::Repeat) {
       // BorderEffect
@@ -187,7 +193,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     m_effectBrush = effectFactory.CreateBrush();
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
   } else {
-    m_effectBrush.Properties().InsertScalar(L"Blur.BlurAmount", m_blurRadius);
+    m_effectBrush.Properties().InsertScalar(L"Blur.BlurAmount", blurAmount);
   }
 
   return m_effectBrush;
