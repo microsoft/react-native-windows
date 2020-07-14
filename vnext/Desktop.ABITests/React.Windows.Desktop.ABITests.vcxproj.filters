@@ -54,6 +54,15 @@
     <ClCompile Include="ReactDispatcherTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactInstanceSettingsTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNotificationServiceTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactPackageProviderTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
