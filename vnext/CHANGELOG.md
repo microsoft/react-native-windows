@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 12 Jul 2020 05:05:04 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Jul 2020 05:05:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.120
+
+Tue, 14 Jul 2020 05:05:25 GMT
+
+### Changes
+
+- don't error out on errors from installing dependent framework packages (asklar@microsoft.com)
+- Start using xamlroot's compositor when available for islands to work. This enables most of playground win32 for rnw-on-winui3 for a pre-preview 2 build (asklar@microsoft.com)
 
 ## 0.0.0-canary.119
 

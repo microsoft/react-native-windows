@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 14 Jul 2020 05:05:25 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add Validation That Patch/Derived Overrides Aren't Identical to Their Originals",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ef655c95eb7adf7616f40f43a3b7def181d95d72",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Jul 2020 05:09:38 GMT",
       "tag": "react-native-platform-override_v0.2.0",
       "version": "0.2.0",

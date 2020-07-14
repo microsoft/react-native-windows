@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add Validation That Patch/Derived Overrides Aren't Identical to Their Originals",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-11T02:05:02.296Z"
-}

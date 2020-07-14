@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Jul 2020 05:05:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.120",
+      "version": "0.0.0-canary.120",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "don't error out on errors from installing dependent framework packages",
+            "author": "asklar@microsoft.com",
+            "commit": "ecda3d0ed2bed2e3256cb30c5c2b2a722dae9e6e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Start using xamlroot's compositor when available for islands to work. This enables most of playground win32 for rnw-on-winui3 for a pre-preview 2 build",
+            "author": "asklar@microsoft.com",
+            "commit": "8765c9e5697bfa2cadee8766468b6a0c60b8a99c",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "add ReactDispatcher tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "5b94760f7d2aafb54fe8b6fcc68d0595e41c40b1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add ReactNotificationService tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d22f3879e26604711051cc7b49c0fd86ed80e68b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 12 Jul 2020 05:05:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.119",
       "version": "0.0.0-canary.119",
