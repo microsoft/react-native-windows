@@ -20,6 +20,10 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
     private const string m_ReactNativeManagedAssemblyName = "Microsoft.ReactNative.Managed";
     private const string m_ReactNativeManagedNamespace = "Microsoft.ReactNative.Managed";
 
+    public INamedTypeSymbol SystemVoid { get; }
+    public INamedTypeSymbol Task { get; set; }
+    public INamedTypeSymbol TaskOfT { get; set; }
+    
     public INamedTypeSymbol IViewManagerType { get; }
     public INamedTypeSymbol IReactPackageProvider { get; }
     public INamedTypeSymbol IReactPackageBuilder { get; }
@@ -49,11 +53,16 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
     public INamedTypeSymbol ReactSyncMethodAttribute { get; }
     public INamedTypeSymbol ReactEventAttribute { get; }
     public INamedTypeSymbol ReactFunctionAttribute { get; }
+    public INamedTypeSymbol ReactTaskExtensions { get; }
 
     private readonly ICollection<Diagnostic> m_diagnostics = new List<Diagnostic>();
 
     private ReactTypes(Compilation compilation)
     {
+      SystemVoid = compilation.GetSpecialType(SpecialType.System_Void);
+      Task = compilation.GetTypeByMetadataName("System.Threading.Tasks.Task");
+      TaskOfT = compilation.GetTypeByMetadataName("System.Threading.Tasks.Task`1")!.ConstructUnboundGenericType();
+      
       IViewManagerType = FindReactNativeType(compilation, "IViewManager");
       IReactPackageProvider = FindReactNativeType(compilation, "IReactPackageProvider");
       IReactPackageBuilder = FindReactNativeType(compilation, "IReactPackageBuilder");
@@ -85,6 +94,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
       ReactSyncMethodAttribute = FindReactNativeManagedType(compilation, "ReactSyncMethodAttribute");
       ReactEventAttribute = FindReactNativeManagedType(compilation, "ReactEventAttribute");
       ReactFunctionAttribute = FindReactNativeManagedType(compilation, "ReactFunctionAttribute");
+      ReactTaskExtensions = FindReactNativeManagedType(compilation, "ReactTaskExtensions");
     }
 
     public static bool TryLoad(Compilation compilation, ICollection<Diagnostic> diagnostics, [NotNullWhen(returnValue: true)] out ReactTypes types)

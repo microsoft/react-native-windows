@@ -23,15 +23,6 @@ namespace Microsoft.ReactNative.Managed
   // will be marked as "promise" and will return a promise when invoked from JavaScript.
   public class ReactPromise<T> : IReactPromise<T>
   {
-    private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
-    private static readonly string ErrorDefaultMessage = "Error not specified.";
-
-    // Keys for m_reject's Error object
-    private static readonly string ErrorMapKeyCode = "code";
-    private static readonly string ErrorMapKeyMessage = "message";
-    private static readonly string ErrorMapKeyUserInfo = "userInfo";
-    private static readonly string ErrorMapKeyNativeStack = "nativeStackWindows";
-
     private IJSValueWriter m_writer;
     private MethodResultCallback m_resolve;
     private MethodResultCallback m_reject;
@@ -60,22 +51,11 @@ namespace Microsoft.ReactNative.Managed
     {
       if (m_reject != null)
       {
-        var errorInfo = new Dictionary<string, JSValue>
-        {
-          [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
-          [ErrorMapKeyMessage] = new JSValue(error?.Message ?? error?.Exception?.Message ?? ErrorDefaultMessage),
-
-          // For consistency with iOS ensure userInfo key exists, even if we null it.
-          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-          [ErrorMapKeyUserInfo] = (error?.UserInfo != null) ? new JSValue(error.UserInfo) : new JSValue(),
-
-          // Attach a nativeStackWindows string if an exception was passed.
-          // This matches iOS behavior - iOS adds a `nativeStackIOS` property
-          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-          [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
-        };
-
-        m_writer.WriteArgs(errorInfo);
+        ReactPromiseWriter.WriteError(m_writer,
+          code: error?.Code,
+          message: error?.Message,
+          userInfo: error?.UserInfo,
+          stackTrace: error?.Exception?.StackTrace);
         m_reject(m_writer);
       }
 
@@ -88,5 +68,50 @@ namespace Microsoft.ReactNative.Managed
       m_reject = null;
       m_writer = null;
     }
+  }
+
+  public class ReactPromiseWriter
+  {
+    public static void WriteError(
+      IJSValueWriter writer,
+      string code,
+      string message,
+      IReadOnlyDictionary<string, JSValue> userInfo,
+      string stackTrace)
+    {
+      writer.WriteArrayBegin();
+      {
+        writer.WriteObjectBegin();
+        {
+          writer.WritePropertyName(ReactErrorConstants.Code);
+          writer.WriteString(code ?? ReactErrorConstants.DefaultCode);
+
+          writer.WritePropertyName(ReactErrorConstants.Message);
+          writer.WriteString(message ?? ReactErrorConstants.DefaultMessage);
+
+          // For consistency with iOS ensure userInfo key exists, even if we null it.
+          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+          writer.WritePropertyName(ReactErrorConstants.UserInfo);
+          if (userInfo == null)
+          {
+            writer.WriteNull();
+          }
+          else
+          {
+            writer.WriteValue(userInfo);
+          }
+
+          // Attach a nativeStackWindows string if an exception was passed.
+          // This matches iOS behavior - iOS adds a `nativeStackIOS` property
+          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+          writer.WritePropertyName(ReactErrorConstants.NativeStack);
+          writer.WriteString(stackTrace ?? string.Empty);
+        }
+        writer.WriteObjectEnd();
+
+      }
+      writer.WriteArrayEnd();
+    }
+
   }
 }

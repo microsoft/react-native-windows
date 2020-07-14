@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.ReactNative.Managed.CodeGen.Model;
@@ -354,18 +355,18 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
     private bool TryExtractMethod(IMethodSymbol method, [NotNullWhen(returnValue: true)] out ReactMethod? reactMethod)
     {
-      return TryExtractMethodFromAttributeData(method, ReactTypes.ReactMethodAttribute, synchroneous: false, out reactMethod);
+      return TryExtractMethodFromAttributeData(method, ReactTypes.ReactMethodAttribute, synchronous: false, out reactMethod);
     }
 
     private bool TryExtractSyncMethod(IMethodSymbol method, [NotNullWhen(returnValue: true)] out ReactMethod? reactMethod)
     {
-      return TryExtractMethodFromAttributeData(method, ReactTypes.ReactSyncMethodAttribute, synchroneous: true, out reactMethod);
+      return TryExtractMethodFromAttributeData(method, ReactTypes.ReactSyncMethodAttribute, synchronous: true, out reactMethod);
     }
 
     private bool TryExtractMethodFromAttributeData(
       IMethodSymbol method,
       INamedTypeSymbol attributeType,
-      bool synchroneous,
+      bool synchronous,
       [NotNullWhen(returnValue: true)] out ReactMethod? reactMethod)
     {
       if (TryFindAttribute(method, attributeType, out var attr))
@@ -395,9 +396,94 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           }
         }
 
+        ReactMethod.MethodReturnStyle? returnStyle = null;
+
+        // Compute the effective parameters
+        var effectiveParameters = new List<IParameterSymbol>();
+        ITypeSymbol effectiveReturnType = m_reactTypes.SystemVoid;
+        var parameters = method.Parameters;
+        for (int i = 0; i < parameters.Length; i++)
+        {
+          var param = parameters[i];
+          bool skipReadingArg = false;
+
+          if (!synchronous) // IsSynchronous methods don't have support for the callbacks
+          {
+            if (i == parameters.Length - 1)
+            {
+              if (IsPromiseType(parameters[i].Type, out var promiseGenericType))
+              {
+                returnStyle = ReactMethod.MethodReturnStyle.Promise;
+                effectiveReturnType = promiseGenericType;
+                skipReadingArg = true;
+              }
+
+              // if the last argument is a callback, assume this is the resolve or resolve function
+              if (IsSingleArgCallback(parameters[i].Type, out var currentCallBackType))
+              {
+                ITypeSymbol? previousCallBackType = null;
+                var isReject = parameters.Length >= 2 &&
+                               IsSingleArgCallback(parameters[i - 1].Type, out previousCallBackType);
+                effectiveReturnType = isReject
+                  ? previousCallBackType!
+                  : currentCallBackType!;
+                returnStyle = isReject
+                  ? ReactMethod.MethodReturnStyle.TwoCallbacks
+                  : ReactMethod.MethodReturnStyle.Callback;
+
+                skipReadingArg = true;
+              }
+            }
+            else if (i == parameters.Length - 2)
+            {
+              // if the last 2 argument are callbacks, assume this is the resolve function
+              if (IsSingleArgCallback(parameters[i].Type, out var resolveCallBackType) &&
+                  IsSingleArgCallback(parameters[i + 1].Type, out _))
+              {
+                effectiveReturnType = resolveCallBackType;
+                returnStyle = ReactMethod.MethodReturnStyle.TwoCallbacks;
+                skipReadingArg = true;
+              }
+            }
+          }
+
+          if (!skipReadingArg)
+          {
+            effectiveParameters.Add(param);
+          }
+        }
+
+        if (returnStyle == null)
+        {
+          if (IsTaskType(method.ReturnType, out var taskReturnType))
+          {
+            if (synchronous)
+            {
+              m_diagnostics.Add(Diagnostic.Create(
+                DiagnosticDescriptors.MethodShouldNotReturnTaskWhenSynchronous,
+                method.GetLocation() ?? Location.None,
+                method.Name,
+                attr.AttributeClass?.Name));
+              reactMethod = null;
+              return false;
+            }
+
+            effectiveReturnType = taskReturnType;
+            returnStyle = ReactMethod.MethodReturnStyle.Task;
+          }
+          else if (method.ReturnsVoid)
+          {
+            returnStyle = ReactMethod.MethodReturnStyle.Void;
+          }
+          else
+          {
+            returnStyle = ReactMethod.MethodReturnStyle.ReturnValue;
+          }
+        }
+
         name ??= method.Name;
 
-        reactMethod = new ReactMethod(method, name, synchroneous);
+        reactMethod = new ReactMethod(method, name, returnStyle.Value, effectiveReturnType, effectiveParameters, synchronous);
         return true;
       }
 
@@ -735,6 +821,59 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     {
       return symbol.DeclaredAccessibility == Accessibility.Public ||
              symbol.DeclaredAccessibility == Accessibility.Internal;
+    }
+
+    private bool IsPromiseType(ITypeSymbol type, [NotNullWhen(returnValue: true)] out ITypeSymbol? typeParameter)
+    {
+      if (type != null &&
+          type is INamedTypeSymbol namedType &&
+          namedType.IsGenericType &&
+          namedType.ConstructUnboundGenericType()
+            .Equals(m_reactTypes.IReactPromise.ConstructUnboundGenericType(), SymbolEqualityComparer.Default))
+      {
+        typeParameter = namedType.TypeArguments[0];
+        return true;
+      }
+
+      typeParameter = null;
+      return false;
+    }
+
+    private bool IsTaskType(ITypeSymbol type, [NotNullWhen(returnValue: true)] out ITypeSymbol? taskReturnType)
+    {
+      if (type == m_reactTypes.Task)
+      {
+        taskReturnType = m_reactTypes.SystemVoid;
+        return true;
+      }
+
+      if (type != null &&
+          type is INamedTypeSymbol namedType &&
+          namedType.IsGenericType &&
+          namedType.ConstructUnboundGenericType()
+            .Equals(m_reactTypes.TaskOfT, SymbolEqualityComparer.Default))
+      {
+        taskReturnType = namedType.TypeArguments[0];
+        return true;
+      }
+
+      taskReturnType = null;
+      return false;
+    }
+
+    private static bool IsSingleArgCallback(ITypeSymbol type, [NotNullWhen(returnValue: true)] out ITypeSymbol? parameterType)
+    {
+      if (type is INamedTypeSymbol namedType &&
+          namedType.DelegateInvokeMethod != null &&
+          namedType.DelegateInvokeMethod.Parameters.Length == 1
+      )
+      {
+        parameterType = namedType.DelegateInvokeMethod.Parameters[0].Type;
+        return true;
+      }
+
+      parameterType = null;
+      return false;
     }
   }
 }

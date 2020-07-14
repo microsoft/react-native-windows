@@ -534,7 +534,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           IdentifierName(ReactNativeNames.AssemblyLocalName)));
       separateRegistrationCalls.Add(
         InvocationStatement(
-          MemberAccessExpression(m_reactTypes.JSValueWriterGenerator, ReactNativeNames.RegisterAssemblyMethodName),
+          MemberAccessExpression(ReactTypes.JSValueWriterGenerator, ReactNativeNames.RegisterAssemblyMethodName),
           IdentifierName(ReactNativeNames.AssemblyLocalName)));
     }
   }

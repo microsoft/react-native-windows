@@ -18,9 +18,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// </summary>
   public partial class CodeGenerator
   {
-    private readonly ReactTypes m_reactTypes;
+    public readonly ReactTypes m_reactTypes;
 
     private readonly string m_rootNamespace;
+
+    internal ReactTypes ReactTypes => m_reactTypes;
 
     public CodeGenerator(ReactTypes reactTypes, string rootNamespace)
     {
