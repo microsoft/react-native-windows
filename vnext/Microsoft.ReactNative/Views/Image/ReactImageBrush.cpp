@@ -3,13 +3,12 @@
 
 #include "pch.h"
 
+#include <UI.Composition.Effects.h>
 #include "Effects.h"
 #include "ReactImageBrush.h"
-#include <UI.Composition.Effects.h>
 
-#include <sstream>
 #include <winrt/Windows.Graphics.Display.h>
-
+#include <sstream>
 
 namespace winrt {
 using namespace winrt::Windows::Storage::Streams;
