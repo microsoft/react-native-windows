@@ -162,5 +162,10 @@ namespace Microsoft.ReactNative
     Boolean ObjectStrictEquals(JsiObjectData left, JsiObjectData right);
 
     Boolean InstanceOf(JsiObjectData obj, JsiFunctionData constructor);
+
+    void ReleaseSymbol(JsiSymbolData symbol);
+    void ReleaseString(JsiStringData str);
+    void ReleaseObject(JsiObjectData obj);
+    void ReleasePropertyNameId(JsiPropertyNameIdData propertyNameId);
   };
 }

@@ -90,9 +90,8 @@ static facebook::jsi::Value const *AsValue(JsiValueData const &data) noexcept {
 }
 
 static JsiValueData ToJsiValueData(facebook::jsi::Value const &value) noexcept {
-  return {
-      static_cast<JsiValueKind>(static_cast<int32_t>(value.kind_)),
-      *reinterpret_cast<uint64_t const *>(&value.data_.number)};
+  return {static_cast<JsiValueKind>(static_cast<int32_t>(value.kind_)),
+          *reinterpret_cast<uint64_t const *>(&value.data_.number)};
 }
 
 static JsiPropertyNameIdData ToJsiPropertyNameIdData(facebook::jsi::PropNameID const &propNameId) noexcept {
@@ -174,7 +173,7 @@ static JsiValueData const *AsJsiValueData(facebook::jsi::Value const *value) noe
   return reinterpret_cast<Microsoft::ReactNative::JsiValueData const *>(value);
 }
 
-static facebook::jsi::Value&& ToValue(JsiValueData &&value) noexcept {
+static facebook::jsi::Value &&ToValue(JsiValueData &&value) noexcept {
   return reinterpret_cast<facebook::jsi::Value &&>(value);
 }
 
@@ -477,6 +476,22 @@ bool JsiRuntime::ObjectStrictEquals(JsiObjectData left, JsiObjectData right) {
 
 bool JsiRuntime::InstanceOf(JsiObjectData obj, JsiFunctionData constructor) {
   return m_runtime.instanceOf(*AsObject(obj), *AsFunction(constructor));
+}
+
+void JsiRuntime::ReleaseSymbol(JsiSymbolData const &symbolData) {
+  facebook::jsi::Symbol symbol{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(symbolData.Data)};
+}
+
+void JsiRuntime::ReleaseString(JsiStringData const &stringData) {
+  facebook::jsi::String str{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(stringData.Data)};
+}
+
+void JsiRuntime::ReleaseObject(JsiObjectData const &objectData) {
+  facebook::jsi::Object obj{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(objectData.Data)};
+}
+
+void JsiRuntime::ReleasePropertyNameId(JsiPropertyNameIdData const &propertyNameIdData) {
+  facebook::jsi::PropNameID prop{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(propertyNameIdData.Data)};
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -61,8 +61,10 @@ struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiDataHandler const &utf8Handler);
   JsiValueData GetValueAtIndex(JsiArrayData arr, uint32_t index);
   void SetValueAtIndex(JsiArrayData arr, uint32_t index, JsiValueData const &value);
-  JsiFunctionData
-  CreateFunctionFromHostFunction(JsiPropertyNameIdData propNameId, uint32_t paramCount, JsiHostFunction const &hostFunc);
+  JsiFunctionData CreateFunctionFromHostFunction(
+      JsiPropertyNameIdData propNameId,
+      uint32_t paramCount,
+      JsiHostFunction const &hostFunc);
   JsiValueData Call(JsiFunctionData func, JsiValueData const &thisArg, array_view<JsiValueData const> args);
   JsiValueData CallAsConstructor(JsiFunctionData func, array_view<JsiValueData const> args);
   JsiScopeState PushScope();
@@ -71,6 +73,11 @@ struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   bool StringStrictEquals(JsiStringData left, JsiStringData right);
   bool ObjectStrictEquals(JsiObjectData left, JsiObjectData right);
   bool InstanceOf(JsiObjectData obj, JsiFunctionData constructor);
+
+  void ReleaseSymbol(JsiSymbolData const &symbol);
+  void ReleaseString(JsiStringData const &str);
+  void ReleaseObject(JsiObjectData const &obj);
+  void ReleasePropertyNameId(JsiPropertyNameIdData const &propertyNameId);
 
  private:
   facebook::jsi::Runtime &m_runtime;
