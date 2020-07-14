@@ -14,10 +14,9 @@ import {GenerateWindows, GenerateWindows62} from './GenerateWindowsType';
 export default function requireGenerateWindows(): GenerateWindows {
   try {
     // Try the path for 0.63+
-    const requirePath = require.resolve(
-      'react-native-windows/local-cli/lib-commonjs/generate-windows',
-      {paths: [process.cwd()]},
-    );
+    const requirePath = require.resolve('react-native-windows/generator', {
+      paths: [process.cwd()],
+    });
 
     return require(requirePath).generateWindows;
   } catch {

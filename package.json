@@ -23,6 +23,7 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "packages/@react-native-windows/*",
       "packages/@rnw-scripts/*",
       "vnext"
     ]

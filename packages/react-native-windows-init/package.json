@@ -26,6 +26,7 @@
     "yargs": "^15.1.0"
   },
   "devDependencies": {
+    "@react-native-windows/generator-windows": "0.0.0-canary.0",
     "@rnw-scripts/eslint-config": "0.0.2",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
@@ -36,12 +37,16 @@
     "@types/yargs": "^15.0.3",
     "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
-    "react-native-windows": "^0.0.0-canary.127",
     "typescript": "^3.8.3"
   },
   "files": [
     "bin.js",
     "lib-commonjs",
     "README.md"
-  ]
+  ],
+  "beachball": {
+    "disallowedChangeTypes": [
+      "prerelease"
+    ]
+  }
 }

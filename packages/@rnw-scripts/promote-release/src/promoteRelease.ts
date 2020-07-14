@@ -124,6 +124,7 @@ async function writeAdoVariables(vars: {[key: string]: any}) {
  * @param version major + minor version
  */
 async function updateBeachballConfigs(release: ReleaseType, version: string) {
+  // TODO before check-in, parse members of the react-native-windows-packages group and apply version changes to those
   for (const packageName of [
     '@office-iss/react-native-win32',
     'react-native-windows',
