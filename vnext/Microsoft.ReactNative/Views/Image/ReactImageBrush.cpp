@@ -44,7 +44,8 @@ void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
 
 void ReactImageBrush::BlurRadius(float value) {
   if (m_blurRadius != value) {
-    m_blurRadius = value;
+    // divide value by 4 to better match android and ios blur strength
+    m_blurRadius = value / 4;
     UpdateCompositionBrush();
   }
 }
@@ -82,7 +83,7 @@ void ReactImageBrush::UpdateCompositionBrush() {
       // The CompositionSurfaceBrush holding the image is used as its source.
       compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
     }
-
+    
     // The CompositionBrush is only set after the image is first loaded and anytime
     // we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
     if (CompositionBrush() != compositionBrush) {
@@ -161,8 +162,10 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush) {
   if (!m_effectBrush) {
-
-    winrt::Windows::Graphics::Effects::IGraphicsEffect effect;
+    // GaussianBlurEffect
+    auto blurEffect{winrt::make<EFFECTS_NAMESPACE::implementation::GaussianBlurEffect>()};
+    blurEffect.Name(L"Blur");
+    blurEffect.BlurAmount(m_blurRadius);
 
     if (ResizeMode() == ResizeMode::Repeat) {
       // BorderEffect
@@ -173,23 +176,24 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
 
       comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
       borderEffect.Source(borderEffectSourceParameter);
-      effect = borderEffect;
+      blurEffect.Source(borderEffect);
     } else {
-      // GaussianBlurEffect
-      auto blurEffect{winrt::make<EFFECTS_NAMESPACE::implementation::GaussianBlurEffect>()};
-
-      blurEffect.BlurAmount(m_blurRadius);
-
       comp::CompositionEffectSourceParameter blurEffectSourceParameter{L"source"};
       blurEffect.Source(blurEffectSourceParameter);
-      effect = blurEffect;
     }
 
+<<<<<<< HEAD
     comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(effect)};
 
+=======
+    comp::CompositionEffectFactory effectFactory{
+        xaml::Window::Current().Compositor().CreateEffectFactory(blurEffect, {L"Blur.BlurAmount"})};
+>>>>>>> Add blur to sample. Better match ios/android blur
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
+  } else {
+    m_effectBrush.Properties().InsertScalar(L"Blur.BlurAmount", m_blurRadius);
   }
 
   return m_effectBrush;

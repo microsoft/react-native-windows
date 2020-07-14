@@ -61,7 +61,7 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat};
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -79,7 +79,7 @@ void ReactImage::BlurRadius(float value) {
   if (m_blurRadius != value) {
     m_blurRadius = value;
 
-    bool shouldUseCompositionBrush{m_blurRadius > 0};
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
