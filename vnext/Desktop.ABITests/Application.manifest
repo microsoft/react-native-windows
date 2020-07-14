@@ -29,6 +29,10 @@
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+        name="Microsoft.ReactNative.ReactNotificationServiceHelper"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
         name="Microsoft.ReactNative.ReactPropertyBagHelper"
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />

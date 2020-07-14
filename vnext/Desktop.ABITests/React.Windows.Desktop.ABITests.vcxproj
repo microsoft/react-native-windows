@@ -142,8 +142,9 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PerfTests.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNotificationServiceTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleMessageQueue.h" />
