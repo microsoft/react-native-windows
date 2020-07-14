@@ -47,11 +47,13 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   }
 
  private:
-  void UpdateCompositionBrush();
+  void UpdateCompositionBrush(bool const &forceEffectBrush = false);
   bool IsImageSmallerThanView();
   comp::CompositionStretch ResizeModeToStretch();
   comp::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
-  comp::CompositionEffectBrush GetOrCreateEffectBrush(comp::CompositionSurfaceBrush const &surfaceBrush);
+  comp::CompositionEffectBrush GetOrCreateEffectBrush(
+      comp::CompositionSurfaceBrush const &surfaceBrush,
+      bool const &forceEffectBrush = false);
 
   comp::Compositor m_compositor;
   float m_blurRadius{0};

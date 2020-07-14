@@ -37,8 +37,9 @@ void ReactImageBrush::OnDisconnected() {
 
 void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
+    const bool forceEffectBrush{value == ResizeMode::Repeat || m_resizeMode == ResizeMode::Repeat};
     m_resizeMode = value;
-    UpdateCompositionBrush();
+    UpdateCompositionBrush(forceEffectBrush);
   }
 }
 
@@ -71,7 +72,7 @@ void ReactImageBrush::Source(winrt::LoadedImageSurface const &value) {
   }
 }
 
-void ReactImageBrush::UpdateCompositionBrush() {
+void ReactImageBrush::UpdateCompositionBrush(bool const &forceEffectBrush) {
   if (m_loadedImageSurface) {
     comp::CompositionSurfaceBrush surfaceBrush{GetOrCreateSurfaceBrush()};
     surfaceBrush.Stretch(ResizeModeToStretch());
@@ -80,7 +81,7 @@ void ReactImageBrush::UpdateCompositionBrush() {
     if (ResizeMode() == ResizeMode::Repeat || BlurRadius() > 0) {
       // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
       // The CompositionSurfaceBrush holding the image is used as its source.
-      compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
+      compositionBrush = GetOrCreateEffectBrush(surfaceBrush, forceEffectBrush);
     }
 
     // The CompositionBrush is only set after the image is first loaded and anytime
@@ -159,14 +160,15 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 }
 
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
-    comp::CompositionSurfaceBrush const &surfaceBrush) {
+    comp::CompositionSurfaceBrush const &surfaceBrush,
+    bool const &forceEffectBrush) {
   // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
   // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
   // The units of both the standard deviation and blur radius are DIPs.
   // A value of zero DIPs disables this effect entirely."
   const float blurAmount = m_blurRadius / 3;
 
-  if (!m_effectBrush) {
+  if (!m_effectBrush || forceEffectBrush) {
     // GaussianBlurEffect
     auto blurEffect{winrt::make<EFFECTS_NAMESPACE::implementation::GaussianBlurEffect>()};
     blurEffect.Name(L"Blur");
