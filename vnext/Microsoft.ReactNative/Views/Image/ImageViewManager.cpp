@@ -189,7 +189,8 @@ folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants() con
 folly::dynamic ImageViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
   // TODO: implement native props propagation from property map
-  props.update(folly::dynamic::object("source", "Map")("resizeMode", "string")("accessibilityLabel", "string")("blurRadius", "number"));
+  props.update(folly::dynamic::object("source", "Map")("resizeMode", "string")("accessibilityLabel", "string")(
+      "blurRadius", "number"));
 
   return props;
 }

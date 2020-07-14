@@ -51,16 +51,13 @@ class BorderEffect
 };
 
 //-----------------------------------------------------------------------------------------------------------------
-class GaussianBlurEffect
-  : public GaussianBlurEffectT<GaussianBlurEffect, winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
+class GaussianBlurEffect : public GaussianBlurEffectT<
+                               GaussianBlurEffect,
+                               winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
  public:
   DECLARE_D2D_GUID(CLSID_D2D1GaussianBlur);
   DECLARE_SINGLE_SOURCE(Source);
-  DECLARE_POD_PROPERTY(
-      BlurAmount,
-      float,
-      3.0f,
-      value >= 0.0f && value <= 250.0f);
+  DECLARE_POD_PROPERTY(BlurAmount, float, 3.0f, value >= 0.0f && value <= 250.0f);
   DECLARE_POD_PROPERTY(
       Optimization,
       winrt::Microsoft::ReactNative::EffectOptimization,
@@ -102,6 +99,6 @@ class GaussianBlurEffect
 
 //-----------------------------------------------------------------------------------------------------------------
 
-} // namespace BORDEREFFECT_NAMESPACE::implementation
+} // namespace EFFECTS_NAMESPACE::implementation
 
 #pragma warning(pop)

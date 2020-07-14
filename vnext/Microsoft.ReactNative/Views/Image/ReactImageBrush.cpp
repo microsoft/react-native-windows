@@ -83,7 +83,7 @@ void ReactImageBrush::UpdateCompositionBrush() {
       // The CompositionSurfaceBrush holding the image is used as its source.
       compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
     }
-    
+
     // The CompositionBrush is only set after the image is first loaded and anytime
     // we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
     if (CompositionBrush() != compositionBrush) {
@@ -185,7 +185,6 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(blurEffect, {L"Blur.BlurAmount"})};
 
     m_effectBrush = effectFactory.CreateBrush();
-
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
   } else {
     m_effectBrush.Properties().InsertScalar(L"Blur.BlurAmount", m_blurRadius);
