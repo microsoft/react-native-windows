@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 08 Jul 2020 01:27:37 GMT and should not be manually modified.
+This log was last generated on Sun, 12 Jul 2020 05:05:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.31
+
+Sun, 12 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Move index file to flow (acoates@microsoft.com)
 
 ## 0.0.0-canary.29
 

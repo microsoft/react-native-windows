@@ -2,6 +2,186 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Jul 2020 05:05:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.120",
+      "version": "0.0.0-canary.120",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "don't error out on errors from installing dependent framework packages",
+            "author": "asklar@microsoft.com",
+            "commit": "ecda3d0ed2bed2e3256cb30c5c2b2a722dae9e6e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Start using xamlroot's compositor when available for islands to work. This enables most of playground win32 for rnw-on-winui3 for a pre-preview 2 build",
+            "author": "asklar@microsoft.com",
+            "commit": "8765c9e5697bfa2cadee8766468b6a0c60b8a99c",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "add ReactDispatcher tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "5b94760f7d2aafb54fe8b6fcc68d0595e41c40b1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add ReactNotificationService tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d22f3879e26604711051cc7b49c0fd86ed80e68b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 12 Jul 2020 05:05:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.119",
+      "version": "0.0.0-canary.119",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move index file to flow",
+            "author": "acoates@microsoft.com",
+            "commit": "1e10ef35e653031769874ee5aa042967d4cb7a97",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.118",
+      "version": "0.0.0-canary.118",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update Override Manifest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add ReactPackageBuilder tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d576f4566cf52181ad868009047247d403d9de54",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add ReactPackageBuilder tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d576f4566cf52181ad868009047247d403d9de54",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Move contents of ReactDirectories.props to Directory.build.props",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e25b4cbc122090ce09b95596a1d6f6a18ff2f442",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Define Set/Get FeatureGate",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a81276326919087a482a6e809d80df7cfc8094db",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create nuget package for Microsoft.ReacNative.Cxx",
+            "author": "dannyvv@microsoft.com",
+            "commit": "dce9fe3ab8b6ce229996fbc66da48d36065f7e99",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Image] Remove resizemode assert",
+            "author": "email not defined",
+            "commit": "009e922f8acf1079d0f71e04b9cf0435d8fe411b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Automatically Pull In New Files from RNTester and IntegrationTests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d799443d38020b5ba30c1062d8b43b151c1d7566",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Jul 2020 05:06:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.117",
+      "version": "0.0.0-canary.117",
+      "comments": {
+        "none": [
+          {
+            "comment": "CR feedback, project hygiene",
+            "author": "aeulitz@microsoft.com",
+            "commit": "f9f6f62c05748cda8910926a69ff02cb46e96164",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add ReactModuleBuilder tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "9db8df7450ad2acc04f481b8539fb1870495af51",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Make IWebSocketResource methods noexcept.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9f80a3478f8d0dd4ac98cc2d3ef2aa44850e7414",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "run-windows cannot find built app with default init app",
+            "author": "acoates@microsoft.com",
+            "commit": "d73bdcb83d3233850e695b49a547441f00fdaae8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Create nuget package for Managed CodeGen",
+            "author": "dannyvv@microsoft.com",
+            "commit": "9b4d7267c3fad39f55df76f21f587c14b64633fe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "add tests for DynamicReader, DynamicWriter ",
+            "author": "aeulitz@microsoft.com",
+            "commit": "9c35f6310af6622bee2bfd58ad9a1394e3693549",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 17:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "Disable Override Validation for windesktop JS",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a530a3cc575986980b1307623dac478b54d2ca52",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jul 2020 05:04:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.116",
       "version": "0.0.0-canary.116",

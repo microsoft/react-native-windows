@@ -537,6 +537,7 @@
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
     <ClCompile Include="Views\XamlFeatures.cpp" />
     <ClCompile Include="XamlLoadState.cpp" />
+    <ClCompile Include="XamlView.cpp" />
     <ClCompile Include="XamlUIService.cpp">
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>

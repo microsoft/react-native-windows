@@ -199,7 +199,13 @@ export async function copyProjectTemplateAndReplace(
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative',
       version: nugetVersion,
-      propsMiddleOfFile: true,
+      hasProps: false,
+      hasTargets: true,
+    });
+
+    cppNugetPackages.push({
+      id: 'Microsoft.ReactNative.Cxx',
+      version: nugetVersion,
       hasProps: false,
       hasTargets: true,
     });

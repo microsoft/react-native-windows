@@ -12,6 +12,7 @@
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="XamlLoadState.cpp" />
+    <ClCompile Include="XamlView.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>

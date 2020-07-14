@@ -28,7 +28,7 @@ let versionEnvVars = {
 
 // Set the build number so the build in the publish pipeline and the release pipeline are named with the convenient version
 // See: https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands?view=azure-devops&tabs=bash#updatebuildnumber-override-the-automatically-generated-build-number
-console.log(`##vso[build.addbuildtag]RNW_${versionEnvVars.npmVersion}`)
+console.log(`##vso[build.updatebuildnumber]RNW_${versionEnvVars.npmVersion}`)
 
 // Set the vars using the vso format for now too - while migrating from the vso publish task to the github actions one.
 

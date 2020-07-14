@@ -5,8 +5,13 @@
  * @format
  */
 
-import {Hasher, hashContent} from '../Hash';
+import {Hasher, hashContent, hashFileOrDirectory} from '../Hash';
+import MockFileRepository from './MockFileRepository';
 import isutf8 from 'isutf8';
+
+test('hashContent - Same String', () => {
+  expect(hashContent('a')).toBe(hashContent('a'));
+});
 
 test('hashContent - Different Strings', () => {
   expect(hashContent('a')).not.toBe(hashContent('b'));
@@ -14,6 +19,10 @@ test('hashContent - Different Strings', () => {
 
 test('hashContent - Insensitive to Line Ending Type', () => {
   expect(hashContent('a\r\n')).toBe(hashContent('a\n'));
+});
+
+test('Hasher - Same between strings and string buffers', () => {
+  expect(hashContent('a\r\n')).toBe(hashContent(Buffer.from('a\n')));
 });
 
 test('hashContent - Repeated Different Line Endings', () => {
@@ -53,4 +62,112 @@ test('Hasher - Multiple Buffers', () => {
   const hash2 = new Hasher().feedContent(Buffer.from('ab')).digest();
 
   expect(hash1).toBe(hash2);
+});
+
+test('hashFileOrDirectory - No File', async () => {
+  const fileRepo = new MockFileRepository([
+    {filename: 'a/b.txt', content: 'Hello World!'},
+  ]);
+
+  expect(await hashFileOrDirectory('bope', fileRepo)).toBeNull();
+});
+
+test('hashFileOrDirectory - File', async () => {
+  const fileRepo = new MockFileRepository([
+    {filename: 'a/b.txt', content: 'Hello World!'},
+  ]);
+
+  expect(await hashFileOrDirectory('a/b.txt', fileRepo)).toBe(
+    hashContent('Hello World!'),
+  );
+});
+
+test('hashFileOrDirectory - Directory', async () => {
+  const fileRepo1 = new MockFileRepository([
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'a/b.txt', content: 'Hello World!'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  const fileRepo2 = new MockFileRepository([
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'a/b.txt', content: 'Goodbye World!'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  expect(await hashFileOrDirectory('a', fileRepo1)).not.toBe(
+    await hashFileOrDirectory('a', fileRepo2),
+  );
+});
+
+test('hashFileOrDirectory - Directory Unsorted', async () => {
+  const fileRepo1 = new MockFileRepository([
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'a/b.txt', content: 'Hello World!'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  const fileRepo2 = new MockFileRepository([
+    {filename: 'a/b.txt', content: 'Hello World!'},
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  expect(await hashFileOrDirectory('a', fileRepo1)).toBe(
+    await hashFileOrDirectory('a', fileRepo2),
+  );
+});
+
+test('hashFileOrDirectory - Directory Rename', async () => {
+  const fileRepo1 = new MockFileRepository([
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'a/b.txt', content: 'Hello World!'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  const fileRepo2 = new MockFileRepository([
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'a/a.txt', content: 'Hello World!'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  expect(await hashFileOrDirectory('a', fileRepo1)).not.toBe(
+    await hashFileOrDirectory('a', fileRepo2),
+  );
+});
+
+test('hashFileOrDirectory - Different Parents', async () => {
+  const fileRepo1 = new MockFileRepository([
+    {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'a/b.txt', content: 'Hello World!'},
+    {filename: 'b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  const fileRepo2 = new MockFileRepository([
+    {filename: 'src/a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'src/a/b.txt', content: 'Hello World!'},
+    {filename: 'src/b/a.txt', content: 'Ignore Me'},
+  ]);
+
+  expect(await hashFileOrDirectory('a', fileRepo1)).toBe(
+    await hashFileOrDirectory('src/a', fileRepo2),
+  );
+});
+
+test('hashFileOrDirectory - Empty Directory', async () => {
+  const fileRepo = new MockFileRepository(
+    [
+      {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+      {filename: 'a/b.txt', content: 'Hello World!'},
+      {filename: 'b/a.txt', content: 'Ignore Me'},
+    ],
+    [{dirname: 'empty1'}, {dirname: 'empty2'}],
+  );
+
+  const hash1 = await hashFileOrDirectory('empty1', fileRepo);
+  const hash2 = await hashFileOrDirectory('empty2', fileRepo);
+
+  expect(hash1).not.toBeNull();
+  expect(hash2).not.toBeNull();
+  expect(hash1).toEqual(hash2);
 });

@@ -5,32 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Jest Tests",
+      "name": "vscode-jest-tests",
       "type": "node",
       "request": "launch",
       "runtimeArgs": [
         "--inspect-brk",
         "../../node_modules/jest/bin/jest.js",
-        "--runInBand"
+        "--runInBand",
+        "--config",
+        "./jest.debug.config.js",
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "port": 9229,
     },
-    {
-      "name": "Debug Jest E2E Tests",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "../../node_modules/jest/bin/jest.js",
-        "--config",
-        "./jest.e2e.config.js",
-        "--runInBand",
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229,
-    }
   ]
 }

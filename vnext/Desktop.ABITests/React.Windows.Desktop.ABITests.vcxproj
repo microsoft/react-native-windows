@@ -113,6 +113,9 @@
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
       <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd</WinMDPath>
       </CppWinRTDynamicProjectWinMDReferences>
@@ -123,11 +126,15 @@
     Used by the 'CopyFilesToOutputDirectory' target (more specifically, its '_CopyFilesMarkedCopyLocal' dependency')
     to co-locate dependencies with the test binary.
      -->
-    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll"/>
+    <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
+    <ClCompile Include="ReactDispatcherTests.cpp" />
+    <ClCompile Include="ReactModuleBuilderTests.cpp" />
+    <ClCompile Include="ReactPackageBuilderTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
@@ -135,8 +142,9 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PerfTests.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNotificationServiceTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleMessageQueue.h" />
