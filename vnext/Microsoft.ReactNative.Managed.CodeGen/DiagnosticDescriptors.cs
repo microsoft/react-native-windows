@@ -136,10 +136,18 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       isEnabledByDefault: true);
 
     public static readonly DiagnosticDescriptor CallbackDelegateMustReturnVoid = new DiagnosticDescriptor(
-      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1008"),
+      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1014"),
       category: ReactNativeNames.ErrorCategory,
       title: "ReactModule Events and Functions must have a void delegate",
       messageFormat: "Events and Functions of ReactModules must be a delegate that returns void. Return type of delegate for callback '{0}' of module '{1}' is '{2}'.",
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    public static readonly DiagnosticDescriptor MethodShouldNotReturnTaskWhenSynchronous = new DiagnosticDescriptor(
+      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1015"),
+      category: ReactNativeNames.ErrorCategory,
+      title: "ReactModule Methods should not return ",
+      messageFormat: "Methods of ReactModules should not return a Task when they are synchronous. Change the attribute from '[ReactSyncMethod]' to '[ReactMethod]' for method '{0}' of module '{1}'.",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
   };

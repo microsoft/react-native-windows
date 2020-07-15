@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for `Task` and `Task<T>` async methods for C# native modules.",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-14T21:48:07.511Z"
+}
