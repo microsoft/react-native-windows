@@ -19,8 +19,9 @@ steps:
       targetFolder: $(Build.StagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
       contents: ${{parameters.contents}}
 
-  - task: PublishPipelineArtifact@1
+  - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
       artifactName: ${{parameters.artifactName}}
-      targetPath: $(Build.StagingDirectory)
+      pathToPublish: $(Build.StagingDirectory)
+      parralel: true

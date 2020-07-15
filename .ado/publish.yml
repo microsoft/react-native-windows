@@ -92,7 +92,7 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)
+          path: $(Build.StagingDirectory)/VersionEnvVars
 
       - task: CmdLine@2
         inputs:
@@ -152,7 +152,7 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)
+          path: $(Build.StagingDirectory)/VersionEnvVars
 
       - task: CmdLine@2
         inputs:
@@ -193,7 +193,7 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)
+          path: $(Build.StagingDirectory)/VersionEnvVars
 
       - task: CmdLine@2
         inputs:

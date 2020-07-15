@@ -17,7 +17,7 @@ steps:
     displayName: 'Download ReactWindows Artifact'
     inputs:
       artifact: ReactWindows
-      path: $(System.DefaultWorkingDirectory)
+      path: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
