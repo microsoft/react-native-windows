@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 14 Jul 2020 05:05:25 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Jul 2020 05:04:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.121
+
+Wed, 15 Jul 2020 05:04:55 GMT
+
+### Changes
+
+- Move some templates to shared location. (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.120
 

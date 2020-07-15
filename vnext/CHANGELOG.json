@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Jul 2020 05:04:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.121",
+      "version": "0.0.0-canary.121",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move some templates to shared location.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "68db33219a6a4f0ade3dc3915a97ca27d740f58d",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add ReactInstanceSettings tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "9148c8e01d4b69091eef4817b9380bbc55327fea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Jul 2020 05:05:25 GMT",
       "tag": "react-native-windows_v0.0.0-canary.120",
       "version": "0.0.0-canary.120",
