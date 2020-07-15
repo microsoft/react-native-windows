@@ -218,6 +218,7 @@ export async function copyProjectTemplateAndReplace(
     name: newProjectName,
     namespace: namespace,
     namespaceCpp: namespaceCpp,
+    languageIsCpp: language === 'cpp',
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
@@ -353,9 +354,16 @@ export async function copyProjectTemplateAndReplace(
   }
 
   await copyAndReplaceAll(
-    path.join(srcPath, 'assets'),
+    path.join(sharedPath, 'assets'),
     destPath,
     path.join(windowsDir, newProjectName, 'Assets'),
+    templateVars,
+    options.overwrite,
+  );
+  await copyAndReplaceAll(
+    path.join(sharedPath, 'src'),
+    destPath,
+    path.join(windowsDir, newProjectName),
     templateVars,
     options.overwrite,
   );

@@ -72,6 +72,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken ValueLocalName = Identifier("value");
     public static readonly SyntaxToken AssemblyLocalName = Identifier("assembly");
     public static readonly SyntaxToken AssemblyPropertyName = Identifier("Assembly");
+
+    public static readonly SyntaxToken ContinueWith = Identifier("ContinueWith");
+    public static readonly SyntaxToken TaskLocalName = Identifier("task");
   }
 
  

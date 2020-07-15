@@ -5,9 +5,17 @@
     xmlns:local="using:{{ namespace }}"
     xmlns:react="using:Microsoft.ReactNative"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <react:ReactRootView x:Name="reactRootView" ComponentName="{{ name }}"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="500"/>
+    <react:ReactRootView 
+{{#languageIsCpp}}
+        x:Name="ReactRootView"
+{{/languageIsCpp}}
+{{^languageIsCpp}}
+        x:Name="reactRootView"
+{{/languageIsCpp}}
+        ComponentName="{{ name }}"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        MinHeight="400"/>
 </Page>
