@@ -108,11 +108,11 @@ steps:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --no-deploy --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs $(releaseBuildArgs)
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - task: PublishBuildArtifacts@1
+  - task: PublishPipelineArtifact@1
     displayName: Upload build logs
     condition:  succeededOrFailed()
     inputs:
-      pathtoPublish: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
+      targetPath: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
       artifactName: 'Build logs - $(Agent.JobName)' 
 
   - task: CmdLine@2
@@ -137,6 +137,5 @@ steps:
     inputs:
       targetPath: 'verdaccio.log'
       artifact: '$(Agent.JobName).Verdaccio.log'
-      publishLocation: 'pipeline'
     condition: failed()
 

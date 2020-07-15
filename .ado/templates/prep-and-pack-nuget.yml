@@ -13,11 +13,11 @@ parameters:
   packMicrosoftReactNativeManagedCodeGen: true
 
 steps:
-  - task: DownloadBuildArtifacts@0
+  - task: DownloadPipelineArtifact@2
     displayName: 'Download ReactWindows Artifact'
     inputs:
-      artifactName: ReactWindows
-      downloadPath: $(System.DefaultWorkingDirectory)
+      artifact: ReactWindows
+      path: $(System.DefaultWorkingDirectory)
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml

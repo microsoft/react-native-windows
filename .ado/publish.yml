@@ -61,11 +61,11 @@ jobs:
         env:
           RUNNER_TEMP: $(Build.StagingDirectory)
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: Publish VersionEnvVars
         inputs:
-          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
-          ArtifactName: VersionEnvVars
+          targetPath: $(Build.StagingDirectory)/versionEnvVars
+          artifactName: VersionEnvVars
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
@@ -88,11 +88,11 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
         inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          artifact: VersionEnvVars
+          path: $(Build.StagingDirectory)
 
       - task: CmdLine@2
         inputs:
@@ -148,11 +148,11 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
         inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          artifact: VersionEnvVars
+          path: $(Build.StagingDirectory)
 
       - task: CmdLine@2
         inputs:
@@ -189,11 +189,11 @@ jobs:
     steps:
       - checkout: none
 
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
         inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          artifact: VersionEnvVars
+          path: $(Build.StagingDirectory)
 
       - task: CmdLine@2
         inputs:
@@ -209,8 +209,8 @@ jobs:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
         inputs:
-          PathtoPublish: $(System.DefaultWorkingDirectory)\NugetRootFinal
-          ArtifactName: "ReactWindows-final-nuget"
+          targetPath: $(System.DefaultWorkingDirectory)\NugetRootFinal
+          artifactName: "ReactWindows-final-nuget"
