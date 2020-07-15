@@ -2,13 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Microsoft.ReactNative.Managed
 {
   public static class ReactTaskExtensions
   {
+    /// <summary>
+    /// Connects the given task to the React Native Module resolve and reject methods.
+    /// </summary>
+    /// <remarks>
+    /// The callback will be scheduled using the default task scheduling using the default continuation
+    /// options
+    /// </remarks>
     public static Task ContinueWith(this Task task, IJSValueWriter writer, MethodResultCallback resolve,
       MethodResultCallback reject)
     {
@@ -34,8 +40,15 @@ namespace Microsoft.ReactNative.Managed
       });
     }
 
+    /// <summary>
+    /// Connects the given task to the React Native Module resolve and reject methods.
+    /// </summary>
+    /// <remarks>
+    /// The callback will be scheduled using the default task scheduling using the default continuation
+    /// options
+    /// </remarks>
     public static Task ContinueWith<T>(this Task<T> task, IJSValueWriter writer, MethodResultCallback resolve,
-      MethodResultCallback reject)
+    MethodResultCallback reject)
     {
       return task.ContinueWith(t =>
       {

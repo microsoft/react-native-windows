@@ -23,7 +23,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
 
     public ReactMethod(IMethodSymbol method, string name, MethodReturnStyle returnStyle, ITypeSymbol effectiveReturnType, IReadOnlyList<IParameterSymbol> effectiveParameters, bool isSynchronous)
     {
-      Contract.Requires(! (IsSynchronous && returnStyle == MethodReturnStyle.Task), "Task style methods are required to be asynchronous");
+      Contract.Requires(!(IsSynchronous && returnStyle == MethodReturnStyle.Task), "Task style methods are required to be asynchronous");
       Method = method;
       Name = name;
       ReturnStyle = returnStyle;
@@ -35,11 +35,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
     public enum MethodReturnStyle
     {
       Void = 0,
-      Callback = 1,
-      TwoCallbacks = 2,
-      Promise = 3,
-      ReturnValue = 4,
-      Task = 5,
+      Callback,
+      TwoCallbacks,
+      Promise,
+      ReturnValue,
+      Task,
     }
   }
 }
