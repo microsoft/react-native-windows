@@ -17,11 +17,11 @@ namespace winrt::Microsoft::ReactNative {
 struct JsiAbiRuntime;
 
 // An ABI-safe wrapper for facebook::jsi::Buffer.
-struct JsiBufferWrapper : implements<JsiBufferWrapper, IJsiBuffer> {
-  JsiBufferWrapper(std::shared_ptr<facebook::jsi::Buffer const> const &buffer) noexcept;
-  ~JsiBufferWrapper() noexcept;
+struct JsiByteBufferWrapper : implements<JsiByteBufferWrapper, IJsiByteBuffer> {
+  JsiByteBufferWrapper(std::shared_ptr<facebook::jsi::Buffer const> const &buffer) noexcept;
+  ~JsiByteBufferWrapper() noexcept;
   uint32_t Size();
-  void GetData(JsiDataHandler const &handler);
+  void GetData(JsiByteArrayUser const &useBytes);
 
  private:
   std::shared_ptr<facebook::jsi::Buffer const> m_buffer;

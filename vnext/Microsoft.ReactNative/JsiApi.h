@@ -17,8 +17,8 @@ struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   JsiRuntime(facebook::jsi::Runtime &runtime) noexcept;
 
  public: // IJsiRuntime
-  JsiValueData EvaluateJavaScript(IJsiBuffer const &buffer, hstring const &sourceUrl);
-  ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiBuffer const &buffer, hstring const &sourceUrl);
+  JsiValueData EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
+  ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   JsiValueData EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js);
   JsiObjectData Global();
   hstring Description();
@@ -30,12 +30,12 @@ struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   JsiPropertyNameIdData CreatePropertyNameIdFromAscii(array_view<uint8_t const> ascii);
   JsiPropertyNameIdData CreatePropertyNameIdFromUtf8(array_view<uint8_t const> utf8);
   JsiPropertyNameIdData CreatePropertyNameIdFromString(JsiStringData str);
-  void PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiDataHandler const &utf8Handler);
+  void PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiByteArrayUser const &useUtf8String);
   bool PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNameIdData right);
-  void SymbolToUtf8(JsiSymbolData symbol, JsiDataHandler const &utf8Handler);
+  void SymbolToUtf8(JsiSymbolData symbol, JsiByteArrayUser const &useUtf8String);
   JsiStringData CreateStringFromAscii(array_view<uint8_t const> ascii);
   JsiStringData CreateStringFromUtf8(array_view<uint8_t const> utf8);
-  void StringToUtf8(JsiStringData str, JsiDataHandler const &utf8Handler);
+  void StringToUtf8(JsiStringData str, JsiByteArrayUser const &useUtf8String);
   JsiValueData CreateValueFromJsonUtf8(array_view<uint8_t const> json);
   JsiObjectData CreateObject();
   JsiObjectData CreateObjectWithHostObject(IJsiHostObject const &hostObject);
@@ -58,7 +58,7 @@ struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   JsiArrayData CreateArray(uint32_t size);
   uint32_t GetArraySize(JsiArrayData arr);
   uint32_t GetArrayBufferSize(JsiArrayBufferData arrayBuffer);
-  void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiDataHandler const &utf8Handler);
+  void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiByteArrayUser const &useArrayBytes);
   JsiValueData GetValueAtIndex(JsiArrayData arr, uint32_t index);
   void SetValueAtIndex(JsiArrayData arr, uint32_t index, JsiValueData const &value);
   JsiFunctionData CreateFunctionFromHostFunction(

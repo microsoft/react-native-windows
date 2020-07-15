@@ -12,16 +12,16 @@ namespace winrt::Microsoft::ReactNative {
 // JsiBufferWrapper implementation
 //===========================================================================
 
-JsiBufferWrapper::JsiBufferWrapper(std::shared_ptr<Buffer const> const &buffer) noexcept : m_buffer{buffer} {}
+JsiByteBufferWrapper::JsiByteBufferWrapper(std::shared_ptr<Buffer const> const &buffer) noexcept : m_buffer{buffer} {}
 
-JsiBufferWrapper::~JsiBufferWrapper() = default;
+JsiByteBufferWrapper::~JsiByteBufferWrapper() = default;
 
-uint32_t JsiBufferWrapper::Size() {
+uint32_t JsiByteBufferWrapper::Size() {
   return static_cast<uint32_t>(m_buffer->size());
 }
 
-void JsiBufferWrapper::GetData(JsiDataHandler const &handler) {
-  handler(winrt::array_view<uint8_t const>{m_buffer->data(), m_buffer->data() + m_buffer->size()});
+void JsiByteBufferWrapper::GetData(JsiByteArrayUser const &useBytes) {
+  useBytes(winrt::array_view<uint8_t const>{m_buffer->data(), m_buffer->data() + m_buffer->size()});
 }
 
 //===========================================================================
@@ -193,14 +193,14 @@ JsiAbiRuntime::JsiAbiRuntime(IJsiRuntime const &runtime) noexcept : m_runtime{ru
 JsiAbiRuntime::~JsiAbiRuntime() = default;
 
 Value JsiAbiRuntime::evaluateJavaScript(const std::shared_ptr<const Buffer> &buffer, const std::string &sourceURL) {
-  return MakeValue(m_runtime.EvaluateJavaScript(winrt::make<JsiBufferWrapper>(buffer), to_hstring(sourceURL)));
+  return MakeValue(m_runtime.EvaluateJavaScript(winrt::make<JsiByteBufferWrapper>(buffer), to_hstring(sourceURL)));
 }
 
 std::shared_ptr<const PreparedJavaScript> JsiAbiRuntime::prepareJavaScript(
     const std::shared_ptr<const Buffer> &buffer,
     std::string sourceURL) {
   return std::make_shared<JsiPreparedJavaScriptWrapper>(
-      m_runtime.PrepareJavaScript(winrt::make<JsiBufferWrapper>(std::move(buffer)), to_hstring(sourceURL)));
+      m_runtime.PrepareJavaScript(winrt::make<JsiByteBufferWrapper>(std::move(buffer)), to_hstring(sourceURL)));
 }
 
 Value JsiAbiRuntime::evaluatePreparedJavaScript(const std::shared_ptr<const PreparedJavaScript> &js) {

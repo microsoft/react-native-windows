@@ -234,7 +234,7 @@ std::vector<facebook::jsi::PropNameID> HostObjectWrapper::getPropertyNames(faceb
 
 JsiRuntime::JsiRuntime(facebook::jsi::Runtime &runtime) noexcept : m_runtime{runtime} {}
 
-JsiValueData JsiRuntime::EvaluateJavaScript(IJsiBuffer const &buffer, hstring const &sourceUrl) {
+JsiValueData JsiRuntime::EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl) {
   facebook::jsi::Value result;
   buffer.GetData([this, &result, &sourceUrl](array_view<uint8_t const> bytes) {
     result = m_runtime.evaluateJavaScript(std::make_shared<JsiBufferWrapper>(bytes), to_string(sourceUrl));
@@ -242,7 +242,9 @@ JsiValueData JsiRuntime::EvaluateJavaScript(IJsiBuffer const &buffer, hstring co
   return MakeJsiValueData(std::move(result));
 }
 
-ReactNative::JsiPreparedJavaScript JsiRuntime::PrepareJavaScript(IJsiBuffer const &buffer, hstring const &sourceUrl) {
+ReactNative::JsiPreparedJavaScript JsiRuntime::PrepareJavaScript(
+    IJsiByteBuffer const &buffer,
+    hstring const &sourceUrl) {
   ReactNative::JsiPreparedJavaScript result{nullptr};
   buffer.GetData([this, &result, &sourceUrl](array_view<uint8_t const> bytes) {
     result = make<JsiPreparedJavaScript>(
@@ -298,21 +300,21 @@ JsiPropertyNameIdData JsiRuntime::CreatePropertyNameIdFromString(JsiStringData s
       m_runtime.createPropNameIDFromString(*reinterpret_cast<facebook::jsi::String *>(ptr)));
 }
 
-void JsiRuntime::PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiDataHandler const &utf8Handler) {
+void JsiRuntime::PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiByteArrayUser const &useUtf8String) {
   auto ptr = reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(propertyNameId.Data);
   std::string utf8 = m_runtime.utf8(*reinterpret_cast<facebook::jsi::String *>(ptr));
   uint8_t const *data = reinterpret_cast<uint8_t const *>(utf8.data());
-  utf8Handler({data, data + utf8.size()});
+  useUtf8String({data, data + utf8.size()});
 }
 
 bool JsiRuntime::PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNameIdData right) {
   return m_runtime.compare(*AsPropNameID(left), *AsPropNameID(right));
 }
 
-void JsiRuntime::SymbolToUtf8(JsiSymbolData symbol, JsiDataHandler const &utf8Handler) {
+void JsiRuntime::SymbolToUtf8(JsiSymbolData symbol, JsiByteArrayUser const &useUtf8String) {
   std::string utf8 = m_runtime.symbolToString(*AsSymbol(symbol));
   uint8_t const *data = reinterpret_cast<uint8_t const *>(utf8.data());
-  utf8Handler({data, data + utf8.size()});
+  useUtf8String({data, data + utf8.size()});
 }
 
 JsiStringData JsiRuntime::CreateStringFromAscii(array_view<uint8_t const> ascii) {
@@ -323,10 +325,10 @@ JsiStringData JsiRuntime::CreateStringFromUtf8(array_view<uint8_t const> utf8) {
   return MakeJsiStringData(m_runtime.createStringFromUtf8(utf8.data(), utf8.size()));
 }
 
-void JsiRuntime::StringToUtf8(JsiStringData str, JsiDataHandler const &utf8Handler) {
+void JsiRuntime::StringToUtf8(JsiStringData str, JsiByteArrayUser const &useUtf8String) {
   std::string utf8 = m_runtime.utf8(*AsString(str));
   uint8_t const *data = reinterpret_cast<uint8_t const *>(utf8.data());
-  utf8Handler({data, data + utf8.size()});
+  useUtf8String({data, data + utf8.size()});
 }
 
 JsiValueData JsiRuntime::CreateValueFromJsonUtf8(array_view<uint8_t const> json) {
@@ -423,9 +425,9 @@ uint32_t JsiRuntime::GetArrayBufferSize(JsiArrayBufferData arrayBuffer) {
   return static_cast<uint32_t>(m_runtime.size(*AsArrayBuffer(arrayBuffer)));
 }
 
-void JsiRuntime::GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiDataHandler const &utf8Handler) {
+void JsiRuntime::GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiByteArrayUser const &useArrayBytes) {
   auto data = m_runtime.data(*AsArrayBuffer(arrayBuffer));
-  return utf8Handler({data, data + m_runtime.size(*AsArrayBuffer(arrayBuffer))});
+  return useArrayBytes({data, data + m_runtime.size(*AsArrayBuffer(arrayBuffer))});
 }
 
 JsiValueData JsiRuntime::GetValueAtIndex(JsiArrayData arr, uint32_t index) {

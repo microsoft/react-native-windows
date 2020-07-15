@@ -5,15 +5,39 @@ namespace Microsoft.ReactNative
 {
   interface IJsiRuntime;
 
-  delegate void JsiDataHandler(UInt8[] data);
+  // JsiByteArrayUser delegate receives a range of bytes as a byte array.
+  // The array of bytes is implemented in ABI as two parameters: array length and a pointer to the array start.
+  // It effectively provides a 'view' to the byte array provided by the delegate invoker.
+  // This delegate helps returning byte array data without copying it.
+  // The decision to copy data is deferred to the code that implements the delegate.
+  //
+  // Note that the provided byte array is only valid while the delegate is called. Your code must
+  // copy data if it wants to store it for the later use. Otherwise it may cause issues due to the memory
+  // being overwritten after the call is completed. It may happen if the provided byte array was stored
+  // on the call stack or it was a managed memory pinned for the use and then unpinned after that.
+  delegate void JsiByteArrayUser(UInt8[] bytes);
 
+  // IJsiByteBuffer encapsulates a byte array buffer.
+  // It can be in-memory data, memory-mapped file, or a resource from a DLL.
+  // IJsiByteBuffer::GetData provides ABI-safe access to the encapsulated data with help of the
+  // JsiByteArrayUser delegate. The JsiByteArrayUser delegate provides a 'view' to the buffer data and
+  // does not copy the data.
+  //
+  // Note that the IJsiByteBuffer::GetData implementation could do some work before and after calling the
+  // JsiByteArrayUser delegate. For example, .Net implementation must pin the memory before the JsiByteArrayUser
+  // delegate call and unpin it after that. It means that the provided data is only valid while the
+  // JsiByteArrayUser delegate is being called.
   [webhosthidden]
-  interface IJsiBuffer
+  interface IJsiByteBuffer
   {
+    // Size of the byte buffer data.
     UInt32 Size { get; };
-    void GetData(JsiDataHandler handler);
+
+    // Get access to the byte buffer data.
+    void GetData(JsiByteArrayUser useBytes);
   };
 
+  // Type of the JavaScript value. It is currently matching the full JavaScript set of types except for the BigInt type.
   enum JsiValueKind
   {
     Undefined,
@@ -95,8 +119,8 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IJsiRuntime
   {
-    JsiValueData EvaluateJavaScript(IJsiBuffer buffer, String sourceUrl);
-    JsiPreparedJavaScript PrepareJavaScript(IJsiBuffer buffer, String sourceUrl);
+    JsiValueData EvaluateJavaScript(IJsiByteBuffer buffer, String sourceUrl);
+    JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiValueData EvaluatePreparedJavaScript(JsiPreparedJavaScript js);
     JsiObjectData Global { get; };
     String Description { get; };
@@ -110,14 +134,14 @@ namespace Microsoft.ReactNative
     JsiPropertyNameIdData CreatePropertyNameIdFromAscii(UInt8[] ascii);
     JsiPropertyNameIdData CreatePropertyNameIdFromUtf8(UInt8[] utf8);
     JsiPropertyNameIdData CreatePropertyNameIdFromString(JsiStringData str);
-    void PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiDataHandler utf8Handler);
+    void PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiByteArrayUser useUtf8String);
     Boolean PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNameIdData right);
 
-    void SymbolToUtf8(JsiSymbolData symbol, JsiDataHandler utf8Handler);
+    void SymbolToUtf8(JsiSymbolData symbol, JsiByteArrayUser useUtf8String);
 
     JsiStringData CreateStringFromAscii(UInt8[] ascii);
     JsiStringData CreateStringFromUtf8(UInt8[] utf8);
-    void StringToUtf8(JsiStringData str, JsiDataHandler utf8Handler);
+    void StringToUtf8(JsiStringData str, JsiByteArrayUser useUtf8String);
 
     JsiValueData CreateValueFromJsonUtf8(UInt8[] json);
 
@@ -146,7 +170,7 @@ namespace Microsoft.ReactNative
     JsiArrayData CreateArray(UInt32 size);
     UInt32 GetArraySize(JsiArrayData arr);
     UInt32 GetArrayBufferSize(JsiArrayBufferData arrayBuffer);
-    void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiDataHandler dataHandler);
+    void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiByteArrayUser useArrayBytes);
     JsiValueData GetValueAtIndex(JsiArrayData arr, UInt32 index);
     void SetValueAtIndex(JsiArrayData arr, UInt32 index, JsiValueData value);
 
