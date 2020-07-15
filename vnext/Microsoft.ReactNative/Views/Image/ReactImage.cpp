@@ -151,9 +151,9 @@ template <typename TImage, typename TSourceFailedEventArgs>
 void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.loadedimagesourceloadstatus
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
-  assert((int)args.Status() < ARRAYSIZE(statusNames));
-  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[(int)args.Status()] << L")"
-          << std::endl;
+  const auto status = (int)args.Status();
+  assert(0 <= status && status < ARRAYSIZE(statusNames));
+  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")" << std::endl;
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
@@ -208,7 +208,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
       strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
           winrt::auto_revoke,
-          [=](winrt::LoadedImageSurface const & /*sender*/,
+          [weak_this, compositionBrush, surface, fireLoadEndEvent, uri](
+              winrt::LoadedImageSurface const & /*sender*/,
               winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
             if (auto strong_this{weak_this.get()}) {
               bool succeeded{false};
@@ -271,8 +272,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
               });
 
-          strong_this->m_svgImageSourceOpenFailedRevoker =
-              svgImageSource.OpenFailed(winrt::auto_revoke, [=](const auto &, const auto &args) {
+          strong_this->m_svgImageSourceOpenFailedRevoker = svgImageSource.OpenFailed(
+              winrt::auto_revoke, [weak_this, fireLoadEndEvent, svgImageSource](const auto &, const auto &args) {
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
                   strong_this->m_onLoadEndEvent(*strong_this, false);
@@ -301,8 +302,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
               });
 
-          strong_this->m_bitmapImageFailed =
-              bitmapImage.ImageFailed(winrt::auto_revoke, [=](const auto &, const auto &args) {
+          strong_this->m_bitmapImageFailed = bitmapImage.ImageFailed(
+              winrt::auto_revoke,
+              [imageBrush, weak_this, fireLoadEndEvent, bitmapImage](const auto &, const auto &args) {
                 imageBrush.Opacity(1);
 
                 auto strong_this{weak_this.get()};
