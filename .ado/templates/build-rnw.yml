@@ -61,6 +61,18 @@ steps:
         /flp2:warningsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.wrn
         /flp3:verbosity=diagnostic;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.log
         ${{parameters.msbuildArguments}}
+  
+  # Testing PDB Stamping
+  - task: PublishSymbols@2
+    inputs:
+      symbolsFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+      searchPattern: '**/*.pdb'
+      indexSources: true
+      publishSymbols: false # First Testing indexing...
+      # advanced
+      detailedLog: true
+      treatNotIndexedAsWarning: true
+      symbolsProduct: react-native-windows
 
   - task: PublishBuildArtifacts@1
     displayName: Upload build logs
