@@ -52,6 +52,11 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   }
   void ResizeMode(react::uwp::ResizeMode value);
 
+  float BlurRadius() {
+    return m_blurRadius;
+  }
+  void BlurRadius(float value);
+
  private:
   xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
@@ -59,6 +64,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
+  float m_blurRadius{0};
   ReactImageSource m_imageSource;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
 

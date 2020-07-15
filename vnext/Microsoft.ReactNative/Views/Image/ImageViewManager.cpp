@@ -128,6 +128,9 @@ bool ImageViewManager::UpdateProperty(
     auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
     auto reactImage{grid.as<ReactImage>()};
     reactImage->ResizeMode(resizeMode);
+  } else if (propertyName == "blurRadius" && propertyValue.isNumber()) {
+    auto reactImage{grid.as<ReactImage>()};
+    reactImage->BlurRadius(static_cast<float>(propertyValue.asDouble()));
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
@@ -186,7 +189,8 @@ folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants() con
 folly::dynamic ImageViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
   // TODO: implement native props propagation from property map
-  props.update(folly::dynamic::object("source", "Map")("resizeMode", "string")("accessibilityLabel", "string"));
+  props.update(folly::dynamic::object("source", "Map")("resizeMode", "string")("accessibilityLabel", "string")(
+      "blurRadius", "number"));
 
   return props;
 }

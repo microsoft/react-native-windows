@@ -61,14 +61,32 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat};
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
       m_useCompositionBrush = shouldUseCompositionBrush;
       SetBackground(false);
+    } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->ResizeMode(value);
     } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
       bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
+    }
+  }
+}
+
+void ReactImage::BlurRadius(float value) {
+  if (m_blurRadius != value) {
+    m_blurRadius = value;
+
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0};
+    bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
+
+    if (switchBrushes) {
+      m_useCompositionBrush = shouldUseCompositionBrush;
+      SetBackground(false);
+    } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->BlurRadius(value);
     }
   }
 }
@@ -197,6 +215,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         compositionBrush->Compositor(react::uwp::GetCompositor(*this));
       }
       compositionBrush->ResizeMode(strong_this->m_resizeMode);
+      compositionBrush->BlurRadius(strong_this->m_blurRadius);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
                                       : winrt::LoadedImageSurface::StartLoadFromUri(uri);

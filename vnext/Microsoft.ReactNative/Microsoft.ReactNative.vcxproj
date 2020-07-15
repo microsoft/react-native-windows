@@ -319,7 +319,7 @@
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
     <ClInclude Include="Views\FrameworkElementViewManager.h" />
-    <ClInclude Include="Views\Image\BorderEffect.h" />
+    <ClInclude Include="Views\Image\Effects.h" />
     <ClInclude Include="Views\Image\ImageViewManager.h" />
     <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
     <ClInclude Include="Views\Image\ReactImage.h" />
@@ -588,7 +588,7 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
-    <Midl Include="Views\cppwinrt\BorderEffect.idl" />
+    <Midl Include="Views\cppwinrt\Effects.idl" />
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
     <Midl Include="Views\cppwinrt\ViewPanel.idl" />
     <Midl Include="XamlUIService.idl">
