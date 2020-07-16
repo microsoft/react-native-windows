@@ -263,7 +263,9 @@ export async function deployToDesktop(
     await runPowerShellScriptFunction(
       'Installing dependent framework packages',
       windowsStoreAppUtils,
-      `Install-AppDependencies ${script} ${appPackageFolder} ${options.arch}`,
+      `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${
+        options.arch
+      }`,
       verbose,
     );
     await build.buildSolution(

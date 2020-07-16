@@ -229,14 +229,15 @@ function Start-Locally {
 
 function Map-PackageNameToPackage {
     param([Parameter(Mandatory=$true)] [string]$DependenciesPath)
-    $map = @{};
+    $mapP2N = @{};
+    [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.Zipfile') | Out-Null;
     foreach ($package in (gci $DependenciesPath)) {
-        $archive = [io.compression.zipfile]::OpenRead($package);
+        $archive = [System.IO.Compression.Zipfile]::OpenRead($package.FullName);
         $packageManifestReader = New-Object System.IO.StreamReader($archive.GetEntry('AppxManifest.xml').Open());
         $manifest = [xml]($packageManifestReader.ReadToEnd());
-        $map[$manifest.Package.Identity.Name] = $package;
+        $mapP2N[$manifest.Package.Identity.Name] = $package;
     }
-    return $map;
+    return $mapP2N;
 }
 
 function Install-AppDependencies {
@@ -254,6 +255,6 @@ function Install-AppDependencies {
         } | 
         % { $_.Name };
     $map = Map-PackageNameToPackage $AppPackagePath\Dependencies\$Architecture
-    $packageNamesToInstall | % { $map[$_] } | Add-AppxPackage
-
+    $packagePaths = $packageNamesToInstall | % { $map[$_] }
+    $packagePaths | % { Add-AppxPackage -Path $_ }
 }
