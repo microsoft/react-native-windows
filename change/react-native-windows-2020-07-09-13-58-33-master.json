@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create nuget package for Microsoft.ReacNative.Cxx",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-09T20:58:33.492Z"
-}

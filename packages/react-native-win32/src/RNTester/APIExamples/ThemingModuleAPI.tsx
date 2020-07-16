@@ -29,7 +29,7 @@ const ifModuleAvailable = (wrappedComponent: JSX.Element) => {
   return (Theming && wrappedComponent) || <Text>Theming Native Module not available</Text>;
 };
 
-const renderThemeFunction = () => {
+const RenderThemeFunction = () => {
   const [, setText] = React.useState('');
   const onChangeText = React.useCallback(t => setText(t), [setText]);
   return (
@@ -44,7 +44,7 @@ const ThemingMethods: React.FunctionComponent<{}> = () => {
   return (
     <View>
       {Object.keys(Theming).map((val: string) => {
-        return typeof Theming[val] === 'function' ? withBox(val, renderThemeFunction()) : undefined;
+        return typeof Theming[val] === 'function' ? withBox(val, RenderThemeFunction()) : undefined;
       })}
     </View>
   );

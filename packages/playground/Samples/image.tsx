@@ -9,6 +9,7 @@ import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
 
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
+
 const smallImageUri =
   'http://facebook.github.io/react-native/img/header_logo.png';
 
@@ -26,6 +27,7 @@ export default class Bootstrap extends React.Component<
       | 'repeat'
       | undefined;
     includeBorder: boolean;
+    blurRadius: number;
     selectedSource: string;
     imageUri: string;
   }
@@ -34,6 +36,7 @@ export default class Bootstrap extends React.Component<
     selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
     includeBorder: false,
+    blurRadius: 0,
     imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
@@ -82,6 +85,17 @@ export default class Bootstrap extends React.Component<
           </Picker>
         </View>
         <View style={styles.rowContainer}>
+          <Text style={styles.title}>Blur Radius</Text>
+          <Picker
+            style={{width: 125}}
+            selectedValue={this.state.blurRadius}
+            onValueChange={value => this.setState({blurRadius: value})}>
+            <Picker.Item label="0" value={0} />
+            <Picker.Item label="5" value={5} />
+            <Picker.Item label="10" value={10} />
+          </Picker>
+        </View>
+        <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
             style={{marginLeft: 10}}
@@ -103,6 +117,7 @@ export default class Bootstrap extends React.Component<
                 : {uri: this.state.imageUri}
             }
             resizeMode={this.state.selectedResizeMode}
+            blurRadius={this.state.blurRadius}
           />
         </View>
       </View>

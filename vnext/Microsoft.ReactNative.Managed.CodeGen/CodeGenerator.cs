@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// </summary>
   public partial class CodeGenerator
   {
-    private readonly ReactTypes m_reactTypes;
+    internal readonly ReactTypes ReactTypes;
 
     private readonly string m_rootNamespace;
 
@@ -26,7 +26,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     {
       Contract.Requires(!string.IsNullOrEmpty(rootNamespace));
 
-      m_reactTypes = reactTypes;
+      ReactTypes = reactTypes;
       m_rootNamespace = rootNamespace;
     }
 
@@ -103,7 +103,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 Token(SyntaxKind.PartialKeyword))
               .AddBaseListTypes(
                 SimpleBaseType(
-                  m_reactTypes.IReactPackageProvider.ToTypeSyntax()))
+                  ReactTypes.IReactPackageProvider.ToTypeSyntax()))
               .WithMembers(
                 new SyntaxList<MemberDeclarationSyntax>(providerMembers))
           );

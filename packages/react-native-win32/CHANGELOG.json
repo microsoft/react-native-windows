@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sun, 12 Jul 2020 05:05:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.31",
+      "version": "0.0.0-canary.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move index file to flow",
+            "author": "acoates@microsoft.com",
+            "commit": "1e10ef35e653031769874ee5aa042967d4cb7a97",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.30",
+      "version": "0.0.0-canary.30",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update Override Manifest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jul 2020 01:27:37 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.29",
       "version": "0.0.0-canary.29",

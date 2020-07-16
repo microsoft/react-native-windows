@@ -27,18 +27,18 @@ import {findLatestVsInstall} from './vsInstalls';
 export default class MSBuildTools {
   /**
    * @param version is something like 16.0 for 2019
-   * @param path  Path to MSBuild.exe (x86)
+   * @param msbuildPath  Path to MSBuild.exe (x86)
    * @param installationVersion is the full version e.g. 16.3.29411.108
    */
   constructor(
     public readonly version: string,
-    public readonly path: string,
+    public readonly msbuildPath: string,
     public readonly installationVersion: string,
   ) {}
 
   cleanProject(slnFile: string) {
     const cmd = `"${path.join(
-      this.path,
+      this.msbuildPath,
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
     const results = child_process
@@ -114,7 +114,7 @@ export default class MSBuildTools {
       await commandWithProgress(
         spinner,
         progressName,
-        path.join(this.path, 'msbuild.exe'),
+        path.join(this.msbuildPath, 'msbuild.exe'),
         [slnFile].concat(args),
         verbose,
       );

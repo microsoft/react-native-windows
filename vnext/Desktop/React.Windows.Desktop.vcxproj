@@ -247,6 +247,9 @@
     <ClInclude Include="..\Microsoft.ReactNative\IReactContext.h">
       <DependentUpon>..\Microsoft.ReactNative\IReactContext.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactDispatcher.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactDispatcher.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\JsiReader.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -258,6 +261,9 @@
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\IReactModuleBuilder.h">
       <DependentUpon>..\Microsoft.ReactNative\IReactModuleBuilder.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactNotificationService.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactNotificationService.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>

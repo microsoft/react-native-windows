@@ -12,7 +12,7 @@ schedules:
     include:
       - master
 
-- cron: "0 5 * * 1" # 5AM Monday UTC (10PM Sunday PST)
+- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
   displayName: Weekly stable publish build
   branches:
     include:
@@ -61,11 +61,11 @@ jobs:
         env:
           RUNNER_TEMP: $(Build.StagingDirectory)
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: Publish VersionEnvVars
         inputs:
-          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
-          ArtifactName: VersionEnvVars
+          targetPath: $(Build.StagingDirectory)/versionEnvVars
+          artifactName: VersionEnvVars
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
@@ -88,11 +88,11 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
         inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          artifact: VersionEnvVars
+          path: $(Build.StagingDirectory)/VersionEnvVars
 
       - task: CmdLine@2
         inputs:
@@ -148,11 +148,11 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
         inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          artifact: VersionEnvVars
+          path: $(Build.StagingDirectory)/VersionEnvVars
 
       - task: CmdLine@2
         inputs:
@@ -199,11 +199,11 @@ jobs:
       #     branchVersion: false
       #     nugetVer: true
 
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
         inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          artifact: VersionEnvVars
+          path: $(Build.StagingDirectory)/VersionEnvVars
 
       - task: CmdLine@2
         inputs:
@@ -221,8 +221,8 @@ jobs:
           # Disable codesign for now, until we're sure
           # signMicrosoft: true
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
         inputs:
-          PathtoPublish: $(System.DefaultWorkingDirectory)\NugetRootFinal
-          ArtifactName: "ReactWindows-final-nuget"
+          targetPath: $(System.DefaultWorkingDirectory)\NugetRootFinal
+          artifactName: "ReactWindows-final-nuget"

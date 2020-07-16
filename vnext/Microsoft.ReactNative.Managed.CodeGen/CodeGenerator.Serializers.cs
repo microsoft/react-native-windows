@@ -78,7 +78,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
               InvocationExpression(
                 MemberAccessExpression(
                   SyntaxKind.SimpleMemberAccessExpression,
-                  m_reactTypes.JSValueReader.ToTypeSyntax(),
+                  ReactTypes.JSValueReader.ToTypeSyntax(),
                   GenericName(ReactNativeNames.ReadValueMethodName, symbol.EnumUnderlyingType.ToTypeSyntax())
                 ),
                 new[]
@@ -99,7 +99,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             expression: InvocationExpression(
               MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
-                m_reactTypes.JSValueWriter.ToTypeSyntax(),
+                ReactTypes.JSValueWriter.ToTypeSyntax(),
                 GenericName(ReactNativeNames.WriteValueMethodName, symbol.EnumUnderlyingType.ToTypeSyntax())),
               IdentifierName(ReactNativeNames.WriterLocalName),
               CastExpression(
@@ -189,7 +189,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                   InvocationExpression(
                     MemberAccessExpression(
                       SyntaxKind.SimpleMemberAccessExpression,
-                      m_reactTypes.JSValueWriter.ToTypeSyntax(),
+                      ReactTypes.JSValueWriter.ToTypeSyntax(),
                       GenericName(ReactNativeNames.WriteObjectPropertyMethodName, type.ToTypeSyntax())),
                     IdentifierName(ReactNativeNames.WriterLocalName),
                     LiteralExpression(name),
@@ -236,7 +236,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 BinaryExpression(
                   SyntaxKind.EqualsExpression,
                   MemberAccessExpression(ReactNativeNames.ReaderLocalName, ReactNativeNames.ValueTypePropertyName),
-                  MemberAccessExpression(m_reactTypes.JSValueType, ReactNativeNames.ObjectEnumMemberName)),
+                  MemberAccessExpression(ReactTypes.JSValueType, ReactNativeNames.ObjectEnumMemberName)),
                 Block(
                   WhileStatement(
                     InvocationExpression(
@@ -341,7 +341,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 InvocationExpression(
                   MemberAccessExpression(
                     SyntaxKind.SimpleMemberAccessExpression,
-                    m_reactTypes.JSValueReader.ToTypeSyntax(),
+                    ReactTypes.JSValueReader.ToTypeSyntax(),
                     GenericName(ReactNativeNames.ReadValueMethodName, fieldType.ToTypeSyntax())
                   ),
                   new[]
@@ -366,12 +366,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           AssignmentExpression(
             SyntaxKind.SimpleAssignmentExpression,
             MemberAccessExpression(
-              m_reactTypes.JSValueReaderCodeGen.Construct(symbol),
+              ReactTypes.JSValueReaderCodeGen.Construct(symbol),
               ReactNativeNames.ReadValueMethodName),
             ParenthesizedLambdaExpression(
               parameterList: ParameterList(
                 Parameter(ReactNativeNames.ReaderLocalName)
-                  .WithType(m_reactTypes.IJSValueReader.ToTypeSyntax())
+                  .WithType(ReactTypes.IJSValueReader.ToTypeSyntax())
                 ,
                 Parameter(ReactNativeNames.ValueLocalName)
                   .WithModifiers(SyntaxTokenList.Create(Token(SyntaxKind.OutKeyword)))
@@ -405,7 +405,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           AssignmentExpression(
             SyntaxKind.SimpleAssignmentExpression,
             MemberAccessExpression(
-              m_reactTypes.JSValueWriterCodeGen.Construct(symbol),
+              ReactTypes.JSValueWriterCodeGen.Construct(symbol),
               ReactNativeNames.WriteValueMethodName),
             ParenthesizedLambdaExpression(
               parameterList: ParameterList(
@@ -432,7 +432,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         {
           generic.Add(InvocationStatement(
             MemberAccessExpression(
-              m_reactTypes.JSValueReaderGenerator,
+              ReactTypes.JSValueReaderGenerator,
               ReactNativeNames.RegisterCodeGeneratorGenericExtensionMethod),
             TypeOfExpression(type.ToTypeSyntax())
             ));
@@ -443,7 +443,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             AssignmentExpression(
               SyntaxKind.SimpleAssignmentExpression,
               MemberAccessExpression(
-                m_reactTypes.JSValueReaderCodeGen.Construct(type),
+                ReactTypes.JSValueReaderCodeGen.Construct(type),
                 ReactNativeNames.ReadValueMethodName),
               MemberAccessExpression(
                 method.ContainingType,
@@ -474,7 +474,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         {
           generic.Add(InvocationStatement(
             MemberAccessExpression(
-              m_reactTypes.JSValueWriterGenerator,
+              ReactTypes.JSValueWriterGenerator,
               ReactNativeNames.RegisterCodeGeneratorGenericExtensionMethod),
             TypeOfExpression(type.ToTypeSyntax())
           ));
@@ -485,7 +485,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             AssignmentExpression(
               SyntaxKind.SimpleAssignmentExpression,
               MemberAccessExpression(
-                m_reactTypes.JSValueWriterCodeGen.Construct(type),
+                ReactTypes.JSValueWriterCodeGen.Construct(type),
                 ReactNativeNames.WriteValueMethodName),
               MemberAccessExpression(
                 method.ContainingType,
@@ -530,11 +530,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             IdentifierName(ReactNativeNames.AssemblyPropertyName))));
       separateRegistrationCalls.Add(
         InvocationStatement(
-          MemberAccessExpression(m_reactTypes.JSValueReaderGenerator, ReactNativeNames.RegisterAssemblyMethodName),
+          MemberAccessExpression(ReactTypes.JSValueReaderGenerator, ReactNativeNames.RegisterAssemblyMethodName),
           IdentifierName(ReactNativeNames.AssemblyLocalName)));
       separateRegistrationCalls.Add(
         InvocationStatement(
-          MemberAccessExpression(m_reactTypes.JSValueWriterGenerator, ReactNativeNames.RegisterAssemblyMethodName),
+          MemberAccessExpression(ReactTypes.JSValueWriterGenerator, ReactNativeNames.RegisterAssemblyMethodName),
           IdentifierName(ReactNativeNames.AssemblyLocalName)));
     }
   }

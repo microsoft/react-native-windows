@@ -260,15 +260,10 @@ export async function deployToDesktop(
     );
   } else {
     // Install the app package's dependencies before attempting to deploy.
-    const dependencies = path.join(
-      appPackageFolder,
-      'Dependencies',
-      options.arch,
-    );
     await runPowerShellScriptFunction(
       'Installing dependent framework packages',
-      null,
-      `Add-AppXPackage ${dependencies}\\*`,
+      windowsStoreAppUtils,
+      `Install-AppDependencies ${script} ${appPackageFolder} ${options.arch}`,
       verbose,
     );
     await build.buildSolution(

@@ -11,7 +11,7 @@ import * as path from 'path';
 import * as semver from 'semver';
 import * as simplegit from 'simple-git/promise';
 
-import ActionQueue from './ActionQueue';
+import BatchingQueue from './BatchingQueue';
 import FileSystemRepository from './FileSystemRepository';
 import {VersionedReactFileRepository} from './FileRepository';
 import fetch from 'node-fetch';
@@ -34,10 +34,10 @@ export default class GitReactFileRepository
   // We need to ensure it is impossible to check out a new React Native
   // version while an operation hasn't yet finished. We queue each operation to
   // ensure they are performed atomically.
-  private actionQueue: ActionQueue;
+  private batchingQueue: BatchingQueue<string>;
 
   private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
-    this.actionQueue = new ActionQueue();
+    this.batchingQueue = new BatchingQueue();
     this.fileRepo = new FileSystemRepository(gitDirectory);
     this.gitClient = gitClient;
   }
@@ -170,7 +170,7 @@ export default class GitReactFileRepository
     reactNativeVersion: string,
     fn: () => Promise<T>,
   ): Promise<T> {
-    return await this.actionQueue.enqueue(async () => {
+    return await this.batchingQueue.enqueue(reactNativeVersion, async () => {
       await this.checkoutVersion(reactNativeVersion);
       return await fn();
     });

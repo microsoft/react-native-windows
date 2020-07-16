@@ -23,4 +23,5 @@ steps:
     displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
       artifactName: ${{parameters.artifactName}}
-      pathtoPublish: $(Build.StagingDirectory)
+      pathToPublish: $(Build.StagingDirectory)
+      parralel: true

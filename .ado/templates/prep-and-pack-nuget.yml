@@ -14,11 +14,11 @@ parameters:
   signMicrosoft: false
 
 steps:
-  - task: DownloadBuildArtifacts@0
+  - task: DownloadPipelineArtifact@2
     displayName: 'Download ReactWindows Artifact'
     inputs:
-      artifactName: ReactWindows
-      downloadPath: $(System.DefaultWorkingDirectory)
+      artifact: ReactWindows
+      path: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml

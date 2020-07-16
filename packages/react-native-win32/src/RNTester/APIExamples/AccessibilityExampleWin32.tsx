@@ -367,7 +367,7 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
   const onClickTag = React.useCallback(() => {
      // @ts-ignore (We changed the API for announceForAccessibility)
     AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement from tag', findNodeHandle(ref.current));
-  }, [ref.current]);
+  }, [ref]);
   return (
     <View style={styles.box}>
       <TouchableHighlight onPress={onClick}>
