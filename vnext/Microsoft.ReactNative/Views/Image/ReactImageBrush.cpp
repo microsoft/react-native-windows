@@ -170,13 +170,13 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
 
   if (!m_effectBrush || forceEffectBrush) {
     // GaussianBlurEffect
-    auto blurEffect{winrt::make<EFFECTS_NAMESPACE::implementation::GaussianBlurEffect>()};
+    auto blurEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::GaussianBlurEffect>()};
     blurEffect.Name(L"Blur");
     blurEffect.BlurAmount(blurAmount);
 
     if (ResizeMode() == ResizeMode::Repeat) {
       // BorderEffect
-      auto borderEffect{winrt::make<EFFECTS_NAMESPACE::implementation::BorderEffect>()};
+      auto borderEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::BorderEffect>()};
 
       borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
       borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);

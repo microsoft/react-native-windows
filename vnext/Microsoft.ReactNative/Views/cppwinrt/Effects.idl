@@ -1,83 +1,49 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// This file was used to generate the files in the cppwinrt subfolders
-//
-// If you modify this file, be sure to run buildcppwinrt.cmd in this folder
-// to generate new headers
-#include "NamespaceRedirect.h"
-
 namespace Microsoft.ReactNative
 {
-    [version(1)]
-    typedef enum CanvasEdgeBehavior
+    enum CanvasEdgeBehavior
     {
-        Clamp = (int)0,
-        Wrap = (int)1,
-        Mirror = (int)2
-    } CanvasEdgeBehavior;
+      Clamp = 0,
+      Wrap,
+      Mirror,
+    };
 
-    [version(1)]
-    typedef enum EffectBorderMode
+    enum EffectBorderMode
     {
       Soft = 0,
-      Hard = 1
-    } EffectBorderMode;
+      Hard,
+    };
 
-    [version(1)]
-    typedef enum EffectOptimization
+    enum EffectOptimization
     {
       Speed = 0,
-      Balanced = 1,
-      Quality = 2
-    } EffectOptimization;
+      Balanced,
+      Quality,
+    };
 
     //----------------------------------------------------------------------------------------------
 
-    runtimeclass BorderEffect;
-
-    [version(1)]
-    [uuid(31602441-15db-5b4a-98dd-ba4247548b40), exclusiveto(BorderEffect)]
-    interface IBorderEffect : IInspectable
+    [default_interface]
+    [webhosthidden]
+    runtimeclass BorderEffect : Windows.Graphics.Effects.IGraphicsEffect
     {
-        [propget] HRESULT ExtendX([out, retval] Microsoft.ReactNative.CanvasEdgeBehavior* value);
-        [propput] HRESULT ExtendX([in] Microsoft.ReactNative.CanvasEdgeBehavior value);
-
-        [propget] HRESULT ExtendY([out, retval] Microsoft.ReactNative.CanvasEdgeBehavior* value);
-        [propput] HRESULT ExtendY([in] Microsoft.ReactNative.CanvasEdgeBehavior value);
-
-        [propget] HRESULT Source([out, retval] Windows.Graphics.Effects.IGraphicsEffectSource** source);
-        [propput] HRESULT Source([in] Windows.Graphics.Effects.IGraphicsEffectSource* source);
-    };
-
-    runtimeclass BorderEffect
-        : [default] IBorderEffect, Windows.Graphics.Effects.IGraphicsEffect
-    {
+      CanvasEdgeBehavior ExtendX { get; set; };
+      CanvasEdgeBehavior ExtendY { get; set; };
+      Windows.Graphics.Effects.IGraphicsEffectSource Source { get; set; };
     }
 
     //----------------------------------------------------------------------------------------------
 
-    runtimeclass GaussianBlurEffect;
-
-    [version(1)]
-    [uuid(cc3ff255-a83d-5aed-8187-70f64bbd9e50), exclusiveto(GaussianBlurEffect)]
-    interface IGaussianBlurEffect : IInspectable {
-      [propget] HRESULT BlurAmount([out, retval] float *value);
-      [propput] HRESULT BlurAmount([in] float value);
-
-      [propget] HRESULT Optimization([out, retval] EffectOptimization * value);
-      [propput] HRESULT Optimization([in] EffectOptimization value);
-
-      [propget] HRESULT BorderMode([out, retval] EffectBorderMode * value);
-      [propput] HRESULT BorderMode([in] EffectBorderMode value);
-
-      [propget] HRESULT Source([out, retval] Windows.Graphics.Effects.IGraphicsEffectSource * *source);
-      [propput] HRESULT Source([in] Windows.Graphics.Effects.IGraphicsEffectSource * source);
-    };
-
-    runtimeclass GaussianBlurEffect
-      : [default] IGaussianBlurEffect, Windows.Graphics.Effects.IGraphicsEffect
+    [default_interface]
+    [webhosthidden]
+    runtimeclass GaussianBlurEffect : Windows.Graphics.Effects.IGraphicsEffect
     {
+      Single BlurAmount { get; set; };
+      EffectOptimization Optimization { get; set; };
+      EffectBorderMode BorderMode { get; set; };
+      Windows.Graphics.Effects.IGraphicsEffectSource Source { get; set; };
     }
 
     //----------------------------------------------------------------------------------------------
