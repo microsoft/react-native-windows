@@ -59,6 +59,10 @@
     <!-- Needed for ucrtbased.dll when running a debug build. -->
     <SDKReference Include="Microsoft.VCLibs, Version=14.0" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
+  <PropertyGroup>
+    <UseWinUI3>true</UseWinUI3>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\vnext\PropertySheets\WinUI.props" />
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
-  <Import Project="..\packages\Microsoft.WinUI.3.0.0-preview1.200515.3\build\Microsoft.WinUI.AppX.targets" />
+  <Import Project="..\packages\$(WinUIPackageName).$(WinUI3Version)\build\Microsoft.WinUI.AppX.targets" />
 </Project>

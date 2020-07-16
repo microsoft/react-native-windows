@@ -5,10 +5,10 @@
 #include "I18nManagerModule.h"
 #include <IReactDispatcher.h>
 #include <XamlUtils.h>
+#include <utils/Helpers.h>
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <winrt/Windows.Globalization.h>
 #include "Unicode.h"
-#include <utils/Helpers.h>
 
 namespace Microsoft::ReactNative {
 

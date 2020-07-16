@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="91762d19-59d8-440d-af86-4f5c16f56786"
+    Name="RNPlayground-Win32"
     Publisher="CN=asklar"
     Version="1.0.0.0" />
 

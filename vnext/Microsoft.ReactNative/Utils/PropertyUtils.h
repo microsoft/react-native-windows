@@ -310,12 +310,9 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontWeightProperty());
     }
-
   } else if (propertyName == "fontStyle") {
     if (propertyValue.isString()) {
-      element.FontStyle(
-          (propertyValue.getString() == "italic") ? winrt::Windows::UI::Text::FontStyle::Italic
-                                                  : winrt::Windows::UI::Text::FontStyle::Normal);
+      element.FontStyle((propertyValue.getString() == "italic") ? text::FontStyle::Italic : text::FontStyle::Normal);
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontStyleProperty());
     }
