@@ -155,6 +155,12 @@
     <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
     <ClCompile Include="FeatureGate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -196,6 +202,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
