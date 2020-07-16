@@ -1,32 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "NamespaceRedirect.h"
-
 namespace Microsoft.ReactNative
 {
-    [version(1)]
-    typedef enum CanvasEdgeBehavior
+    enum CanvasEdgeBehavior
     {
-      Clamp = (int)0,
-      Wrap = (int)1,
-      Mirror = (int)2
-    } CanvasEdgeBehavior;
+      Clamp = 0,
+      Wrap,
+      Mirror,
+    };
 
-    [version(1)]
-    typedef enum EffectBorderMode
+    enum EffectBorderMode
     {
       Soft = 0,
-      Hard = 1
-    } EffectBorderMode;
+      Hard,
+    };
 
-    [version(1)]
-    typedef enum EffectOptimization
+    enum EffectOptimization
     {
       Speed = 0,
-      Balanced = 1,
-      Quality = 2
-    } EffectOptimization;
+      Balanced,
+      Quality,
+    };
 
     //----------------------------------------------------------------------------------------------
 
