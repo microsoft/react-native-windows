@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Jul 2020 05:04:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.122",
+      "version": "0.0.0-canary.122",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implement Image blurRadius",
+            "author": "email not defined",
+            "commit": "25f7363207cab2a533e945140b3e57e6993e0a00",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add support for `Task` and `Task<T>` async methods for C# native modules.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c99c018e48f54d3cb9c4ed11dfde8ced14a58fc4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add debugging output for image load failures",
+            "author": "asklar@microsoft.com",
+            "commit": "c205c3740756982c9e22d5d98ebec17517470600",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Have Desktop int. tests consume DLL.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b328676d866df7359db9146ddbf6da3877a7a321",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add ReactPackageProvider tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "ac674b1faed511357f72cfc6ead7295eceaebb76",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Jul 2020 05:04:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.121",
       "version": "0.0.0-canary.121",

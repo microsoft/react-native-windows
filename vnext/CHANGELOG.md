@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Jul 2020 05:04:55 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Jul 2020 05:04:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.122
+
+Thu, 16 Jul 2020 05:04:45 GMT
+
+### Changes
+
+- Implement Image blurRadius (email not defined)
+- Add support for `Task` and `Task<T>` async methods for C# native modules. (dannyvv@microsoft.com)
+- Add debugging output for image load failures (asklar@microsoft.com)
+- Have Desktop int. tests consume DLL. (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.121
 
