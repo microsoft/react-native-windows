@@ -1,6 +1,7 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 #pragma once
 
-#define EFFECTS_NAMESPACE winrt::Microsoft::ReactNative
 #include <BorderEffect.g.h>
 #include <GaussianBlurEffect.g.h>
 
@@ -9,7 +10,7 @@
 
 #include "Microsoft.UI.Composition.Effects_Impl.h"
 
-namespace EFFECTS_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 //-----------------------------------------------------------------------------------------------------------------
 class BorderEffect
     : public BorderEffectT<BorderEffect, winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
@@ -99,6 +100,6 @@ class GaussianBlurEffect : public GaussianBlurEffectT<
 
 //-----------------------------------------------------------------------------------------------------------------
 
-} // namespace EFFECTS_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
 #pragma warning(pop)
