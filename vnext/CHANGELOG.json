@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 17 Jul 2020 05:06:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.123",
+      "version": "0.0.0-canary.123",
+      "comments": {
+        "none": [
+          {
+            "comment": "Switch Effects.idl to MIDL 3.0",
+            "author": "email not defined",
+            "commit": "eb15b65f8b478ad1e334efc59409f3da3d09f67a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add RedBox objects, tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2e26214dc90290be784968386ba61b08c966c93",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Codesign Microsoft.ReactNative binaries and nuget package (disabled)",
+            "author": "jthysell@microsoft.com",
+            "commit": "a62ce8df7759724deae248b576948e74f1a6d7a9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jul 2020 05:04:45 GMT",
       "tag": "react-native-windows_v0.0.0-canary.122",
       "version": "0.0.0-canary.122",
