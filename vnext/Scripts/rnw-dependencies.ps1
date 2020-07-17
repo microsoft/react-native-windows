@@ -196,7 +196,7 @@ foreach ($req in $requirements)
             Write-Host -ForegroundColor Red " Failed".PadLeft(50 - $req.Name.Length);
         }
         if ($req.Install) {
-            if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? ").ToUpperInvariant() -eq 'Y')) {
+            if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? [y/N]").ToUpperInvariant() -eq 'Y')) {
                 $LASTEXITCODE = 0;
                 Invoke-Command $req.Install -ErrorAction Stop;
                 if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
