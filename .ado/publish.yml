@@ -160,7 +160,7 @@ jobs:
 
       - template: templates/build-rnw.yml
         parameters:
-          project: vnext/ReactWindows-Universal.sln
+          project: vnext/Microsoft.ReactNative.sln
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
