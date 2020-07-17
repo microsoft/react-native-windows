@@ -135,6 +135,7 @@
     <ClCompile Include="ReactModuleBuilderTests.cpp" />
     <ClCompile Include="ReactPackageBuilderTests.cpp" />
     <ClCompile Include="ReactPackageProviderTests.cpp" />
+    <ClCompile Include="RedBoxTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />

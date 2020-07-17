@@ -6,7 +6,7 @@
 #include <functional/functor.h>
 #include <regex>
 #include "DevServerHelper.h"
-#include "DynamicReader.h"
+#include "RedBoxErrorInfo.h"
 #include "Unicode.h"
 
 #include <winrt/Windows.Foundation.Collections.h>
@@ -524,80 +524,6 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
 #endif
-
-struct RedBoxErrorFrameInfo
-    : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
-  RedBoxErrorFrameInfo(Mso::React::ErrorFrameInfo &&errorFrameInfo) : m_frame(std::move(errorFrameInfo)) {}
-
-  winrt::hstring File() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.File).c_str();
-  }
-
-  winrt::hstring Method() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.Method).c_str();
-  }
-
-  uint32_t Line() const noexcept {
-    return m_frame.Line;
-  }
-
-  uint32_t Column() const noexcept {
-    return m_frame.Column;
-  }
-
-  bool Collapse() const noexcept {
-    return m_frame.Collapse;
-  }
-
- private:
-  Mso::React::ErrorFrameInfo m_frame;
-};
-
-struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::IRedBoxErrorInfo> {
-  RedBoxErrorInfo(Mso::React::ErrorInfo &&errorInfo) : m_errorInfo(std::move(errorInfo)) {}
-
-  winrt::hstring Message() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
-  }
-
-  winrt::hstring OriginalMessage() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.OriginalMessage).c_str();
-  }
-
-  winrt::hstring Name() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Name).c_str();
-  }
-
-  winrt::hstring ComponentStack() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.ComponentStack).c_str();
-  }
-
-  winrt::Microsoft::ReactNative::IJSValueReader ExtraData() const noexcept {
-    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_errorInfo.ExtraData);
-  }
-
-  uint32_t Id() const noexcept {
-    return m_errorInfo.Id;
-  }
-
-  winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>
-  Callstack() noexcept {
-    if (!m_callstack) {
-      m_callstack = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>();
-      for (auto frame : m_errorInfo.Callstack) {
-        m_callstack.Append(winrt::make<RedBoxErrorFrameInfo>(std::move(frame)));
-      }
-    }
-
-    return m_callstack.GetView();
-  }
-
- private:
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> m_callstack{
-      nullptr};
-
-  Mso::React::ErrorInfo m_errorInfo;
-};
 
 struct RedBoxHandler : public Mso::React::IRedBoxHandler {
   RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}

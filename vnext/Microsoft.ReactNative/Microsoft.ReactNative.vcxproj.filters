@@ -323,6 +323,8 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="RedBoxErrorInfo.cpp" />
+    <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -695,6 +697,8 @@
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="RedBoxErrorInfo.h" />
+    <ClInclude Include="RedBoxErrorFrameInfo.h" />
     <ClInclude Include="Views\Image\Effects.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
