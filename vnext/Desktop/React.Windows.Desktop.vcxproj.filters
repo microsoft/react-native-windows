@@ -84,9 +84,6 @@
     <Midl Include="ABI\TestController.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
       <Filter>ABI</Filter>
     </Midl>
