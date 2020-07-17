@@ -52,7 +52,7 @@ TEST_CLASS (RedBoxTest) {
         Microsoft::Internal::TestController::CreateRedBoxErrorInfo(L"out of coffee", 1203, {frameInfo1, frameInfo2});
     settings.RedBoxHandler().ShowNewError(errorInfo, RedBoxErrorType::JavaScriptFatal);
 
-    TestCheckEqual(1, showNewErrorCalls.size());
+    TestCheckEqual(1ul, showNewErrorCalls.size());
     TestCheckEqual(2ul, std::get<0>(showNewErrorCalls[0]).Callstack().Size());
 
     TestCheckEqual(L"abc.js", std::get<0>(showNewErrorCalls[0]).Callstack().GetAt(0).File());
