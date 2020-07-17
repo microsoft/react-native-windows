@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 16 Jul 2020 05:04:45 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jul 2020 05:06:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.123
+
+Fri, 17 Jul 2020 05:06:31 GMT
+
+### Changes
+
+- Codesign Microsoft.ReactNative binaries and nuget package (disabled) (jthysell@microsoft.com)
 
 ## 0.0.0-canary.122
 

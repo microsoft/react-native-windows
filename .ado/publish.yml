@@ -182,12 +182,22 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-    displayName: Publish NuGet
+    displayName: Sign Binaries and Publish NuGet
     pool:
       vmImage: $(VmImage)
+      # Disable codesign for now, until we're sure
+      # vmImage: Package ES Lab E
 
     steps:
       - checkout: none
+
+      # Disable codesign for now, until we're sure
+      # - task: PkgESSetupBuild@10
+      #   displayName: 'XESSetupBuild'
+      #   inputs:
+      #     productName: microsoftreactnative
+      #     branchVersion: false
+      #     nugetVer: true
 
       - task: DownloadPipelineArtifact@2
         displayName: Download VersionEnvVars
@@ -208,6 +218,8 @@ jobs:
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
+          # Disable codesign for now, until we're sure
+          # signMicrosoft: true
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"

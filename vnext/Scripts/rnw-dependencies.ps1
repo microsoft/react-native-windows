@@ -81,6 +81,12 @@ function GetChocoPkgVersion{
     return $version;
 }
 
+function GetMsBuild64BitConfigFile{
+    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    $msbExeConfigPath=& $vsWhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\amd64\MSBuild.exe.config
+    return $msbExeConfigPath;
+}
+
 $requiredFreeSpaceGB = 15;
 
 $requirements = @(
@@ -170,6 +176,19 @@ $requirements = @(
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
          };
          Optional = $true;
+    },
+    @{
+        # The 64-bit version of MsBuild does not support long paths. A temp fix for v16 is: https://github.com/microsoft/msbuild/issues/5331
+        Name = "MSBuild 64-bit Long Path Support"
+        Valid = try { 
+            [System.IO.File]::ReadAllText( (GetMsBuild64BitConfigFile) ).Contains("Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false") 
+            } catch { $false };
+        Install = {
+            [ xml ]$msbExeConfig = Get-Content -Path (GetMsBuild64BitConfigFile)
+            $msbExeConfig.configuration.runtime.AppContextSwitchOverrides.SetAttribute("value", "Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false")
+            $msbExeConfig.Save( (GetMsBuild64BitConfigFile) )
+        };
+        Optional = $true
     }
 
     );

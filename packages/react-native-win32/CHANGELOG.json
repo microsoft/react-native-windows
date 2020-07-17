@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 17 Jul 2020 05:06:31 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump rex-win32 version",
+            "author": "email not defined",
+            "commit": "0b397f6c5dd2053adec1335267c04da86539f4f3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 12 Jul 2020 05:05:04 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.31",
       "version": "0.0.0-canary.31",
