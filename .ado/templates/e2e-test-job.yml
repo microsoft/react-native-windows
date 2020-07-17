@@ -46,12 +46,9 @@ jobs:
           script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
-      - task: PublishPipelineArtifact@1
-        displayName: Upload build logs
-        condition: succeededOrFailed()
-        inputs:    
-          targetPath: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)' 
+      - template: upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
 
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts

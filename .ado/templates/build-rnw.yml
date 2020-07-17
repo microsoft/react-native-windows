@@ -62,9 +62,6 @@ steps:
         /flp3:verbosity=diagnostic;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.log
         ${{parameters.msbuildArguments}}
 
-  - task: PublishBuildArtifacts@1
-    displayName: Upload build logs
-    condition:  succeededOrFailed()
-    inputs:
-      pathtoPublish: ${{ parameters.BuildLogDirectory }}
-      artifactName: 'Build logs - $(Agent.JobName)'
+  - template: upload-build-logs.yml
+    parameters:
+      buildLogDirectory: '${{ parameters.BuildLogDirectory }}'

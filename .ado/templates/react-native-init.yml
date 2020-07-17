@@ -130,12 +130,9 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
-  - task: PublishPipelineArtifact@1
-    displayName: Upload build logs
-    condition:  succeededOrFailed()
-    inputs:
-      targetPath: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
-      artifactName: 'Build logs - $(Agent.JobName)' 
+  - template: upload-build-logs.yml
+    parameters:
+      buildLogDirectory: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
 
   - task: CmdLine@2
     displayName: Create bundle testcli
@@ -158,6 +155,6 @@ steps:
     displayName: Upload Verdaccio.log (on failure)
     inputs:
       targetPath: 'verdaccio.log'
-      artifact: '$(Agent.JobName).Verdaccio.log'
+      artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
     condition: failed()
 
