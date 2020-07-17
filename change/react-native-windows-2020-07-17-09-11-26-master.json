@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add dotnet core runtime and sdk to setup scripts",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-17T16:11:26.823Z"
+}
