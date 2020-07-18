@@ -187,12 +187,15 @@ To debug in VS Code, create a configuration in your launch.json that looks like 
             "request": "launch",
             "name": "run wdio",
             "program": "${workspaceRoot}/run_wdio.js",
+             "args": ["controlStyle"],
             "stopOnEntry": true,
             "autoAttachChildProcesses": true        
         },
     ]
 }
 ```
+If you want to run all the tests, omit args.  If you want it to run just one test, supply just the name of the test spec without the spec.ts extension as an arg.  
+
 jasmine runs in a child node process, so the "autoAttachChildProcesses" : true is required for VS Code to attach to that child process.  With that setup, you can now set breakpoints in your test specs and VS Code will let you debug your tests.
 
 # More about E2E test
