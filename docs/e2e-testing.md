@@ -70,7 +70,7 @@ packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
 New test page should be in E2E/app/ or its subfolder.
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
 
 ```
 // LoginTestPage.ts
