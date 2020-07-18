@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix layout deploy",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-17T00:09:31.852Z"
-}

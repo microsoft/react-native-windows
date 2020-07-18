@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add fix for msbuild long paths in fixup script",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-16T23:31:03.942Z"
-}

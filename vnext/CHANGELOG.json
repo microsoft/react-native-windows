@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 18 Jul 2020 05:04:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.124",
+      "version": "0.0.0-canary.124",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix layout deploy",
+            "author": "asklar@microsoft.com",
+            "commit": "8c630a03bb65cb23a341f006884e3a3f72e325f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enabeling SourceLink support.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "8453cc9fae164f5226be50117ed6112966906964",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add fix for msbuild long paths in fixup script",
+            "author": "dannyvv@microsoft.com",
+            "commit": "dd62d60e6e834c8802afbd24151f1c4ce70348bd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Jul 2020 05:06:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.123",
       "version": "0.0.0-canary.123",
