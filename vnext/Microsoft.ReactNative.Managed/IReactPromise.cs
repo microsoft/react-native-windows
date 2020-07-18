@@ -38,4 +38,16 @@ namespace Microsoft.ReactNative.Managed
     public Exception Exception = null;
     public IReadOnlyDictionary<string, JSValue> UserInfo = null;
   }
+  
+  internal class ReactErrorConstants
+  {
+    internal const string DefaultCode = "EUNSPECIFIED";
+    internal const string DefaultMessage = "Error not specified.";
+    
+    // Keys for m_reject's Error object
+    internal const string Code = "code";
+    internal const string Message = "message";
+    internal const string UserInfo = "userInfo";
+    internal const string NativeStack = "nativeStackWindows";
+  }
 }

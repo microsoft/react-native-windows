@@ -14,8 +14,8 @@ namespace uwp {
 // resolved, so they can be reused.
 class ExpressionAnimationStore {
  public:
-  comp::ExpressionAnimation GetElementCenterPointExpression();
-  comp::ExpressionAnimation GetTransformCenteringExpression();
+  comp::ExpressionAnimation GetElementCenterPointExpression(comp::Compositor compositor);
+  comp::ExpressionAnimation GetTransformCenteringExpression(comp::Compositor compositor);
 
  private:
   // Compositor bug, see notes in GetElementCenterPointExpression()

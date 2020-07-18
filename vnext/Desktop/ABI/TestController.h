@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 #include "Microsoft.Internal.TestController.g.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -8,6 +11,16 @@ struct TestController {
 
   static Microsoft::ReactNative::IJSValueReader CreateDynamicReader(Microsoft::ReactNative::IJSValueWriter writer);
   static Microsoft::ReactNative::IJSValueWriter CreateDynamicWriter();
+  static Microsoft::ReactNative::IReactContext CreateTestContext();
+  static Microsoft::ReactNative::IReactModuleBuilder CreateReactModuleBuilder(
+      Microsoft::ReactNative::IReactContext context);
+  static Microsoft::ReactNative::IReactPackageBuilder CreateReactPackageBuilder();
+  static Microsoft::ReactNative::IRedBoxErrorFrameInfo
+  CreateRedBoxErrorFrameInfo(hstring file, hstring method, uint32_t line, uint32_t column);
+  static Microsoft::ReactNative::IRedBoxErrorInfo CreateRedBoxErrorInfo(
+      hstring message,
+      uint32_t id,
+      array_view<Microsoft::ReactNative::IRedBoxErrorFrameInfo const> callstack);
 };
 } // namespace winrt::Microsoft::Internal::implementation
 

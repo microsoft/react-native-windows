@@ -20,7 +20,8 @@
     <Deterministic>true</Deterministic>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <NoWarn>;2008</NoWarn>
-    <NoWarn>$(NoWarn);1591</NoWarn> <!-- Missing XML comment for publicly visible type or member -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <!-- Missing XML comment for publicly visible type or member -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -118,6 +119,7 @@
     <Compile Include="ReactConstantProviderInfo.cs" />
     <Compile Include="ReactContext.cs" />
     <Compile Include="ReactContextGenerator.cs" />
+    <Compile Include="ReactTaskExtensions.cs" />
     <Compile Include="ReactEnumerableExtensions.cs" />
     <Compile Include="ReactEventInfo.cs" />
     <Compile Include="ReactException.cs" />
@@ -143,7 +145,8 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'"/>
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>

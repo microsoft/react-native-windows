@@ -9,7 +9,7 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
-          Condition="'$(ReactNativeCodeGenEnabled)' == 'true'" />
+          Condition="'$(ReactNativeCodeGenEnabled)' == 'true' and '$(UseExperimentalNuget)' != 'true'" />
 
    <!-- The props file for bundling is not set up to be just defaults, it assumes to be run at the end of the project. -->
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />

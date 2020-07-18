@@ -1,8 +1,74 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Jul 2020 05:04:59 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jul 2020 05:06:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.123
+
+Fri, 17 Jul 2020 05:06:31 GMT
+
+### Changes
+
+- Codesign Microsoft.ReactNative binaries and nuget package (disabled) (jthysell@microsoft.com)
+
+## 0.0.0-canary.122
+
+Thu, 16 Jul 2020 05:04:45 GMT
+
+### Changes
+
+- Implement Image blurRadius (email not defined)
+- Add support for `Task` and `Task<T>` async methods for C# native modules. (dannyvv@microsoft.com)
+- Add debugging output for image load failures (asklar@microsoft.com)
+- Have Desktop int. tests consume DLL. (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.121
+
+Wed, 15 Jul 2020 05:04:55 GMT
+
+### Changes
+
+- Move some templates to shared location. (dannyvv@microsoft.com)
+
+## 0.0.0-canary.120
+
+Tue, 14 Jul 2020 05:05:25 GMT
+
+### Changes
+
+- don't error out on errors from installing dependent framework packages (asklar@microsoft.com)
+- Start using xamlroot's compositor when available for islands to work. This enables most of playground win32 for rnw-on-winui3 for a pre-preview 2 build (asklar@microsoft.com)
+
+## 0.0.0-canary.119
+
+Sun, 12 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Move index file to flow (acoates@microsoft.com)
+
+## 0.0.0-canary.118
+
+Sat, 11 Jul 2020 05:09:38 GMT
+
+### Changes
+
+- Move contents of ReactDirectories.props to Directory.build.props (ngerlem@microsoft.com)
+- Define Set/Get FeatureGate (julio.rocha@microsoft.com)
+- Create nuget package for Microsoft.ReacNative.Cxx (dannyvv@microsoft.com)
+- [Image] Remove resizemode assert (email not defined)
+- Automatically Pull In New Files from RNTester and IntegrationTests (ngerlem@microsoft.com)
+
+## 0.0.0-canary.117
+
+Fri, 10 Jul 2020 05:06:06 GMT
+
+### Changes
+
+- Make IWebSocketResource methods noexcept. (julio.rocha@microsoft.com)
+- run-windows cannot find built app with default init app (acoates@microsoft.com)
+- Create nuget package for Managed CodeGen (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.116
 

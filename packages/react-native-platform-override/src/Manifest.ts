@@ -10,9 +10,10 @@ import * as Serialized from './Serialized';
 import * as _ from 'lodash';
 
 import Override, {deserializeOverride} from './Override';
-import {OverrideFileRepository, ReactFileRepository} from './FileRepository';
+import {ReactFileRepository, WritableFileRepository} from './FileRepository';
 import OverrideFactory from './OverrideFactory';
 import {ValidationError} from './ValidationStrategy';
+import {eachLimit} from 'async';
 
 /**
  * Represents a collection of overrides listed in an on-disk manifest. Allows
@@ -61,7 +62,7 @@ export default class Manifest {
    * with upstream.
    */
   async validate(
-    overrideRepo: OverrideFileRepository,
+    overrideRepo: WritableFileRepository,
     reactRepo: ReactFileRepository,
   ): Promise<ValidationError[]> {
     const errors: ValidationError[] = [];
@@ -73,9 +74,10 @@ export default class Manifest {
 
     const overrideFiles = await overrideRepo.listFiles(globs);
     const missingFromManifest = overrideFiles.filter(
-      file => !this.overrides.some(override => override.includesFile(file)),
+      file =>
+        file !== 'overrides.json' &&
+        !this.overrides.some(override => override.includesFile(file)),
     );
-
     for (const missingFile of missingFromManifest) {
       errors.push({type: 'missingFromManifest', overrideName: missingFile});
     }
@@ -84,11 +86,13 @@ export default class Manifest {
       ovr.validationStrategies(),
     );
 
-    for (const task of validationTasks) {
+    await eachLimit(validationTasks, 30, async task => {
       errors.push(...(await task.validate(overrideRepo, reactRepo)));
-    }
+    });
 
-    return errors;
+    return errors.sort((a, b) =>
+      a.overrideName.localeCompare(b.overrideName, 'en'),
+    );
   }
 
   /**
@@ -163,6 +167,13 @@ export default class Manifest {
         .sort((a, b) => a.name().localeCompare(b.name(), 'en'))
         .map(override => override.serialize()),
     };
+  }
+
+  /**
+   * Returns the overrides in the manfest
+   */
+  listOverrides(): Override[] {
+    return _.clone(this.overrides);
   }
 
   /**

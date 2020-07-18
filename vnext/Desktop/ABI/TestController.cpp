@@ -1,23 +1,33 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "pch.h"
 
+#include <Shared/IRedBoxHandler.h>
+#include <unicode.h>
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
+#include "IReactModuleBuilder.h"
+#include "ReactPackageBuilder.h"
+#include "RedBoxErrorFrameInfo.h"
+#include "RedBoxErrorInfo.h"
 #include "TestController.h"
 
 #include "Microsoft.Internal.TestController.g.cpp"
 
 using namespace winrt;
+namespace msrn = ::winrt::Microsoft::ReactNative; // helps avoid collisions with 'Microsoft' namespace in unicode.h
 
 namespace {
 
 // Extends the 'DynamicReader' class with the ability the manage the lifetime of the folly::dynamic value it's reading
 // from.
-struct DynamicWrapperReader : public winrt::implements<DynamicWrapperReader, Microsoft::ReactNative::IJSValueReader> {
+struct DynamicWrapperReader : public winrt::implements<DynamicWrapperReader, msrn::IJSValueReader> {
   DynamicWrapperReader(folly::dynamic &&value) : m_value{std::move(value)} {
-    m_innerReader = make<Microsoft::ReactNative::DynamicReader>(m_value);
+    m_innerReader = make<msrn::DynamicReader>(m_value);
   }
 
-  Microsoft::ReactNative::JSValueType ValueType() noexcept {
+  msrn::JSValueType ValueType() noexcept {
     return m_innerReader.ValueType();
   }
 
@@ -46,22 +56,99 @@ struct DynamicWrapperReader : public winrt::implements<DynamicWrapperReader, Mic
   }
 
  private:
-  Microsoft::ReactNative::IJSValueReader m_innerReader;
+  msrn::IJSValueReader m_innerReader;
   folly::dynamic m_value;
+};
+
+struct TestContext : public winrt::implements<TestContext, msrn::IReactContext> {
+  msrn::IReactPropertyBag Properties() noexcept {
+    return nullptr;
+  }
+  msrn::IReactNotificationService Notifications() noexcept {
+    return nullptr;
+  }
+  msrn::IReactDispatcher UIDispatcher() noexcept {
+    return nullptr;
+  }
+  msrn::IReactDispatcher JSDispatcher() noexcept {
+    return nullptr;
+  }
+  void CallJSFunction(
+      hstring const &moduleName,
+      hstring const &methodName,
+      msrn::JSValueArgWriter const &paramsArgWriter) noexcept {}
+  void EmitJSEvent(
+      hstring const &eventEmitterName,
+      hstring const &eventName,
+      msrn::JSValueArgWriter const &paramsArgWriter) noexcept {}
 };
 
 } // namespace
 
 namespace winrt::Microsoft::Internal::implementation {
 
-Microsoft::ReactNative::IJSValueReader TestController::CreateDynamicReader(
-    Microsoft::ReactNative::IJSValueWriter writer) {
-  auto dw = writer.as<Microsoft::ReactNative::DynamicWriter>();
+msrn::IJSValueReader TestController::CreateDynamicReader(msrn::IJSValueWriter writer) {
+  auto dw = writer.as<msrn::DynamicWriter>();
   return make<DynamicWrapperReader>(dw->TakeValue());
 }
 
-Microsoft::ReactNative::IJSValueWriter TestController::CreateDynamicWriter() {
-  return make<winrt::Microsoft::ReactNative::DynamicWriter>();
+msrn::IJSValueWriter TestController::CreateDynamicWriter() {
+  return make<msrn::DynamicWriter>();
 }
 
+msrn::IReactContext TestController::CreateTestContext() {
+  return make<TestContext>();
+}
+
+msrn::IReactModuleBuilder TestController::CreateReactModuleBuilder(msrn::IReactContext context) {
+  return make<msrn::ReactModuleBuilder>(context);
+}
+
+msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
+  auto nativeModulesProvider = std::make_shared<msrn::NativeModulesProvider>();
+  auto turboModulesProvider = std::make_shared<msrn::TurboModulesProvider>();
+  return make<msrn::ReactPackageBuilder>(nativeModulesProvider, turboModulesProvider);
+}
+
+msrn::IRedBoxErrorFrameInfo
+TestController::CreateRedBoxErrorFrameInfo(hstring file, hstring method, uint32_t line, uint32_t column) {
+  Mso::React::ErrorFrameInfo frameInfo{/* File */ ::Microsoft::Common::Unicode::Utf16ToUtf8(file),
+                                       /* Method */ ::Microsoft::Common::Unicode::Utf16ToUtf8(method),
+                                       /* Line */ static_cast<int>(line),
+                                       /* Columns */ static_cast<int>(column),
+                                       /* Collapse */ false};
+
+  return make<Mso::React::RedBoxErrorFrameInfo>(std::move(frameInfo));
+}
+
+msrn::IRedBoxErrorInfo TestController::CreateRedBoxErrorInfo(
+    hstring message,
+    uint32_t id,
+    array_view<Microsoft::ReactNative::IRedBoxErrorFrameInfo const> callstack) {
+  // The repeated value conversion between CreateRedBoxErrorFrameInfo and CreateRedBoxErrorInfo is suboptimal, but
+  // deemed acceptable because we only need this functionality for ABI testing.
+
+  Mso::React::ErrorInfo errorInfo;
+  errorInfo.Message = ::Microsoft::Common::Unicode::Utf16ToUtf8(message);
+  errorInfo.Id = id;
+
+  // leaving the following ErrorInfo members out to avoid an excessive parameter list and because they probably add
+  // little test value
+  //
+  // errorInfo.OriginalMessage
+  // errorInfo.Name
+  // errorInfo.ComponentStack
+  // errorInfo.ExtraData
+
+  for (auto const &frame : callstack) {
+    Mso::React::ErrorFrameInfo frameInfo{/* File */ ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.File()),
+                                         /* Method */ ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.Method()),
+                                         /* Line */ static_cast<int>(frame.Line()),
+                                         /* Columns */ static_cast<int>(frame.Column()),
+                                         /* Collapse */ false};
+    errorInfo.Callstack.push_back(std::move(frameInfo));
+  }
+
+  return make<Mso::React::RedBoxErrorInfo>(std::move(errorInfo));
+}
 } // namespace winrt::Microsoft::Internal::implementation

@@ -209,7 +209,13 @@ bool FrameworkElementViewManager::UpdateProperty(
           transformMatrix.m43 = static_cast<float>(propertyValue[14].asDouble());
           transformMatrix.m44 = static_cast<float>(propertyValue[15].asDouble());
 
-          ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
+          if (!element.IsLoaded()) {
+            element.Loaded([=](auto &&, auto &&) -> auto {
+              ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
+            });
+          } else {
+            ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
+          }
         } else if (propertyValue.isNull()) {
           element.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
         }
@@ -537,7 +543,8 @@ void FrameworkElementViewManager::StartTransformAnimation(
     comp::CompositionPropertySet transformPS) {
   auto instance = GetReactInstance().lock();
   assert(instance != nullptr);
-  auto expression = instance->GetExpressionAnimationStore().GetTransformCenteringExpression();
+  auto expression =
+      instance->GetExpressionAnimationStore().GetTransformCenteringExpression(react::uwp::GetCompositor(uielement));
   expression.SetReferenceParameter(L"PS", transformPS);
   expression.Target(L"TransformMatrix");
   uielement.StartAnimation(expression);

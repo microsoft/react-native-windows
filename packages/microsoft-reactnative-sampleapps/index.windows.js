@@ -149,6 +149,23 @@ class SampleApp extends Component {
 
     NativeModules.SampleModuleCS.callDistanceFunction({x: 22, y: 23}, {x: 55, y: 65});
 
+    NativeModules.SampleModuleCS.TaskNoArgs()
+      .then(getCallback('SampleModuleCS.TaskNoArgs then => '))
+      .catch(getErrorCallback('SampleModuleCS.TaskNoArgs catch => '));
+
+    NativeModules.SampleModuleCS.TaskTwoArgs(11, 200)
+      .then(getCallback('SampleModuleCS.TaskTwoArgs then => '))
+      .catch(getErrorCallback('SampleModuleCS.TaskTwoArgs catch => '));
+
+    NativeModules.SampleModuleCS.TaskOfTNoArgs()
+      .then(getCallback('SampleModuleCS.TaskOfTNoArgs then => '))
+      .catch(getErrorCallback('SampleModuleCS.TaskOfTNoArgs catch => '));
+
+    NativeModules.SampleModuleCS.TaskOfTTwoArgs(11, 200)
+      .then(getCallback('SampleModuleCS.TaskOfTTwoArgs then => '))
+      .catch(getErrorCallback('SampleModuleCS.TaskOfTTwoArgs catch => '));
+
+
     log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
 
     log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));

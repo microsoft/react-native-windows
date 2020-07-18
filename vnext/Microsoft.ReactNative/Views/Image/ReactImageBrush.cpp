@@ -3,12 +3,12 @@
 
 #include "pch.h"
 
+#include <UI.Composition.Effects.h>
+#include "Effects.h"
 #include "ReactImageBrush.h"
 
-#include <UI.Composition.Effects.h>
+#include <winrt/Windows.Graphics.Display.h>
 #include <sstream>
-
-#include "BorderEffect.h"
 
 namespace winrt {
 using namespace winrt::Windows::Storage::Streams;
@@ -37,7 +37,15 @@ void ReactImageBrush::OnDisconnected() {
 
 void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
+    const bool forceEffectBrush{value == ResizeMode::Repeat || m_resizeMode == ResizeMode::Repeat};
     m_resizeMode = value;
+    UpdateCompositionBrush(forceEffectBrush);
+  }
+}
+
+void ReactImageBrush::BlurRadius(float value) {
+  if (m_blurRadius != value) {
+    m_blurRadius = value;
     UpdateCompositionBrush();
   }
 }
@@ -64,16 +72,16 @@ void ReactImageBrush::Source(winrt::LoadedImageSurface const &value) {
   }
 }
 
-void ReactImageBrush::UpdateCompositionBrush() {
+void ReactImageBrush::UpdateCompositionBrush(bool const &forceEffectBrush) {
   if (m_loadedImageSurface) {
     comp::CompositionSurfaceBrush surfaceBrush{GetOrCreateSurfaceBrush()};
     surfaceBrush.Stretch(ResizeModeToStretch());
 
     auto compositionBrush{surfaceBrush.as<comp::CompositionBrush>()};
-    if (ResizeMode() == ResizeMode::Repeat) {
+    if (ResizeMode() == ResizeMode::Repeat || BlurRadius() > 0) {
       // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
       // The CompositionSurfaceBrush holding the image is used as its source.
-      compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
+      compositionBrush = GetOrCreateEffectBrush(surfaceBrush, forceEffectBrush);
     }
 
     // The CompositionBrush is only set after the image is first loaded and anytime
@@ -131,7 +139,7 @@ comp::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    comp::CompositionSurfaceBrush surfaceBrush{xaml::Window::Current().Compositor().CreateSurfaceBrush()};
+    comp::CompositionSurfaceBrush surfaceBrush{m_compositor.CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
@@ -152,21 +160,41 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 }
 
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
-    comp::CompositionSurfaceBrush const &surfaceBrush) {
-  if (!m_effectBrush) {
-    auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
+    comp::CompositionSurfaceBrush const &surfaceBrush,
+    bool const &forceEffectBrush) {
+  // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
+  // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
+  // The units of both the standard deviation and blur radius are DIPs.
+  // A value of zero DIPs disables this effect entirely."
+  const float blurAmount = m_blurRadius / 3;
 
-    borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
-    borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+  if (!m_effectBrush || forceEffectBrush) {
+    // GaussianBlurEffect
+    auto blurEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::GaussianBlurEffect>()};
+    blurEffect.Name(L"Blur");
+    blurEffect.BlurAmount(blurAmount);
 
-    comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
-    borderEffect.Source(borderEffectSourceParameter);
+    if (ResizeMode() == ResizeMode::Repeat) {
+      // BorderEffect
+      auto borderEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::BorderEffect>()};
 
-    comp::CompositionEffectFactory effectFactory{
-        xaml::Window::Current().Compositor().CreateEffectFactory(borderEffect)};
+      borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+      borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+
+      comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
+      borderEffect.Source(borderEffectSourceParameter);
+      blurEffect.Source(borderEffect);
+    } else {
+      comp::CompositionEffectSourceParameter blurEffectSourceParameter{L"source"};
+      blurEffect.Source(blurEffectSourceParameter);
+    }
+
+    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(blurEffect, {L"Blur.BlurAmount"})};
+
     m_effectBrush = effectFactory.CreateBrush();
-
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
+  } else {
+    m_effectBrush.Properties().InsertScalar(L"Blur.BlurAmount", blurAmount);
   }
 
   return m_effectBrush;

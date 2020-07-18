@@ -226,6 +226,35 @@ namespace SampleLibraryCS
 
         #endregion
 
+        #region Methods using Task
+
+        [ReactMethod]
+        public Task TaskNoArgs()
+        {
+            return Task<int>.Factory.StartNew(() => 42);
+        }
+
+        [ReactMethod]
+        public async Task TaskTwoArgs(int x, int y)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(250));
+        }
+
+        [ReactMethod]
+        public Task<int> TaskOfTNoArgs()
+        {
+            return Task<int>.Factory.StartNew(() => 42);
+        }
+
+        [ReactMethod]
+        public async Task<int> TaskOfTTwoArgs(int x, int y)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(250));
+            return x + y;
+        }
+
+        #endregion
+
         #region Synchronous Methods
 
         [ReactSyncMethod]

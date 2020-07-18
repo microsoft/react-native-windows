@@ -46,12 +46,9 @@ jobs:
           script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
-      - task: PublishBuildArtifacts@1
-        displayName: Upload build logs
-        condition:  succeededOrFailed()
-        inputs:    
-          pathtoPublish: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)' 
+      - template: upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
 
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
@@ -61,11 +58,11 @@ jobs:
           contents: AppPackages\**
         condition: succeededOrFailed()
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
           artifactName: ReactUWPTestApp
-          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp
+          targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: succeededOrFailed()
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
@@ -124,11 +121,11 @@ jobs:
           script: ". $(Build.SourcesDirectory)\\.ado\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
         condition: failed()
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
           artifactName: ReactUWPTestAppTreeDump
-          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+          targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
       - task: PublishTestResults@2

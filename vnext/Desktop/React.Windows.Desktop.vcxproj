@@ -48,6 +48,9 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" />
+  <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" />
+  <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -144,7 +147,9 @@
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IReactDispatcher.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
     </ClCompile>
@@ -166,20 +171,32 @@
     </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IReactContext.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IReactModuleBuilder.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IReactNotificationService.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
@@ -189,10 +206,15 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IReactPackageBuilder.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
+    <ClCompile Include="FeatureGate.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
@@ -221,16 +243,45 @@
     <ClInclude Include="ABI\TestController.h">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
-      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+    <ClInclude Include="..\Microsoft.ReactNative\DynamicReader.h">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\DynamicWriter.h">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactContext.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactContext.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactDispatcher.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactDispatcher.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\JsiReader.h">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\JsiWriter.h">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactInstanceSettings.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactModuleBuilder.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactModuleBuilder.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\IReactNotificationService.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactNotificationService.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\ReactNativeHost.h">
+      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\ReactPackageBuilder.h">
+      <DependentUpon>..\Microsoft.ReactNative\IReactPackageBuilder.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\IReactPropertyBag.h">
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
@@ -270,6 +321,9 @@
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
     <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets')" />
+    <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
   </ImportGroup>
   <!-- See $(CppWinRTRootNamespace) comments above. -->
   <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
@@ -298,5 +352,11 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.6\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props'))" />
+    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets'))" />
+    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props'))" />
+    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets'))" />
+    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props'))" />
+    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets'))" />
   </Target>
 </Project>

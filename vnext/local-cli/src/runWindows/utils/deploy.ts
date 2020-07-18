@@ -105,7 +105,7 @@ function getAppxManifestPath(options: RunWindowsOptions) {
     options.arch
   }/${configuration},${configuration}/*,target/${
     options.arch
-  }/${configuration}}/AppxManifest.xml`;
+  }/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
   const appxPath = glob.sync(path.join(options.root, appxManifestGlob))[0];
 
   if (!appxPath) {
@@ -260,15 +260,12 @@ export async function deployToDesktop(
     );
   } else {
     // Install the app package's dependencies before attempting to deploy.
-    const dependencies = path.join(
-      appPackageFolder,
-      'Dependencies',
-      options.arch,
-    );
     await runPowerShellScriptFunction(
       'Installing dependent framework packages',
-      null,
-      `Add-AppXPackage ${dependencies}\\*`,
+      windowsStoreAppUtils,
+      `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${
+        options.arch
+      }`,
       verbose,
     );
     await build.buildSolution(

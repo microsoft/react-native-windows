@@ -143,6 +143,7 @@ jobs:
           contents: |
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
+            Microsoft.ReactNative.Managed.CodeGen\**
 
   - job: RNW_WinUI3
     displayName: WinUI3 Playground
@@ -345,12 +346,9 @@ jobs:
           workingDirectory: packages\microsoft-reactnative-sampleapps
         condition: succeeded()
 
-      - task: PublishBuildArtifacts@1
-        displayName: Upload build logs
-        condition:  succeededOrFailed()
-        inputs:
-          pathtoPublish: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)'
+      - template: templates/upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
 
   - job: RNWDesktopPR
     displayName: Desktop PR
