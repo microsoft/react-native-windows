@@ -290,10 +290,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/WebSocket/WebSocketExample'),
   },
   // TODO:  TurboModuleExample crashes the app if web debugging is turned on
-//  {
-//    key: 'TurboModuleExample',
-//    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
-//  },
+  //  {
+  //    key: 'TurboModuleExample',
+  //    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
+  //  },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
