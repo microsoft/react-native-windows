@@ -8,7 +8,7 @@ import ControlStyleTestPage from '../pages/ControlStylePage';
 import assert from 'assert';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
+  //  HomePage.backToHomePage();
   HomePage.clickAndGotoControlStylePage();
 });
 

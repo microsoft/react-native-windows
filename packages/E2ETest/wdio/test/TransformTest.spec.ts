@@ -8,7 +8,7 @@ import TransformTestPage from '../pages/TransformTestPage';
 import assert from 'assert';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
+  //  HomePage.backToHomePage();
   HomePage.clickAndGotoTransformTestPage();
 });
 

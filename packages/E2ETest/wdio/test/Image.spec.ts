@@ -8,7 +8,7 @@ import ImageTestPage from '../pages/ImageTestPage';
 import assert from 'assert';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
+  //  HomePage.backToHomePage();
   HomePage.clickAndGotoImagePage();
 });
 

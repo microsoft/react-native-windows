@@ -14,7 +14,8 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "strict": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "esModuleInterop": true
   },
   "include": ["."],
   "exclude": []
