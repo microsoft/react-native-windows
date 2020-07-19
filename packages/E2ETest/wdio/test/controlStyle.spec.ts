@@ -14,6 +14,7 @@ beforeAll(() => {
 
 describe('ControlStyleTest', () => {
   /* Test case #1: Controls style with regular border */
+
   it('ControlStyleTestWithRegularBorder', () => {
     const result = ControlStyleTestPage.getTreeDumpResult();
     assert(

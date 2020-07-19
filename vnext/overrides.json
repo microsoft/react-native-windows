@@ -550,6 +550,42 @@
     },
     {
       "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/Consts.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/ControlStyleTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/DirectManipulationTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/ImageTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/LoginTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/TextInputTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/TransformTestPage.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/RNTester/js/examples-win/LegacyTests/TreeDumpControl.ts"
+    },
+    {
+      "type": "platform",
       "file": "src/RNTester/js/examples-win/Picker/PickerWindowsExample.tsx"
     },
     {
