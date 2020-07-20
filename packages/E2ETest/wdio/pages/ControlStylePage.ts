@@ -4,7 +4,7 @@
  */
 
 import { BasePage, By } from './BasePage';
-import { SHOWBORDER_ON_CONTROLSTYLE } from '../../app/Consts';
+import { SHOWBORDER_ON_CONTROLSTYLE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class ControlStyleTestPage extends BasePage {
   backToHomePage() {
