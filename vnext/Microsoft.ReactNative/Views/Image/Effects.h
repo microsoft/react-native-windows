@@ -3,6 +3,8 @@
 #pragma once
 
 #include <BorderEffect.g.h>
+#include <ColorSourceEffect.g.h>
+#include <CompositeStepEffect.g.h>
 #include <GaussianBlurEffect.g.h>
 
 #pragma warning(push)
@@ -91,6 +93,72 @@ class GaussianBlurEffect : public GaussianBlurEffectT<
           return winrt::PropertyValue::CreateUInt32((UINT32)m_Optimization);
         case D2D1_GAUSSIANBLUR_PROP_BORDER_MODE:
           return winrt::PropertyValue::CreateUInt32((UINT32)m_BorderMode);
+        default:
+          throw winrt::hresult_invalid_argument();
+      }
+    });
+  }
+};
+
+//-----------------------------------------------------------------------------------------------------------------
+
+class ColorSourceEffect : public ColorSourceEffectT<
+                              ColorSourceEffect,
+                              winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
+ public:
+  DECLARE_D2D_GUID(CLSID_D2D1Flood);
+  DECLARE_POD_PROPERTY(Color, UIColor, (UIColor{255, 0, 0, 0}), true);
+  DECLARE_NAMED_PROPERTY_MAPPING(
+      {L"Color", D2D1_FLOOD_PROP_COLOR, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_COLOR_TO_VECTOR4});
+
+ public:
+  IFACEMETHODIMP GetPropertyCount(_Out_ UINT *count) override {
+    *count = 1;
+    return S_OK;
+  }
+
+  IFACEMETHODIMP GetProperty(UINT index, _Outptr_ abi::IPropertyValue **value) override {
+    return UsePropertyFactory(value, [=]() {
+      switch (index) {
+        case D2D1_FLOOD_PROP_COLOR:
+          return CreateColor<4>(m_Color);
+        default:
+          throw winrt::hresult_invalid_argument();
+      }
+    });
+  }
+};
+
+//-----------------------------------------------------------------------------------------------------------------
+// Win2D has CompositeEffect with an arbitrary number of sources,
+// but this involves having an IVector of sources and is more trouble than it's worth.
+// We declare a simplified single-step composite effect between two sources.
+
+class CompositeStepEffect : public CompositeStepEffectT<
+                                CompositeStepEffect,
+                                winrt::Microsoft::UI::Composition::Effects::implementation::EffectBase> {
+ public:
+  DECLARE_D2D_GUID(CLSID_D2D1Composite);
+  DECLARE_DUAL_SOURCES(Destination, Source);
+  DECLARE_POD_PROPERTY(
+      Mode,
+      winrt::Microsoft::ReactNative::CanvasComposite,
+      winrt::Microsoft::ReactNative::CanvasComposite::SourceOver,
+      true);
+  DECLARE_NAMED_PROPERTY_MAPPING(
+      {L"Mode", D2D1_COMPOSITE_PROP_MODE, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});
+
+ public:
+  IFACEMETHODIMP GetPropertyCount(_Out_ UINT *count) override {
+    *count = 1;
+    return S_OK;
+  }
+
+  IFACEMETHODIMP GetProperty(UINT index, _Outptr_ abi::IPropertyValue **value) override {
+    return UsePropertyFactory(value, [=]() {
+      switch (index) {
+        case D2D1_COMPOSITE_PROP_MODE:
+          return winrt::PropertyValue::CreateUInt32((UINT32)m_Mode);
         default:
           throw winrt::hresult_invalid_argument();
       }

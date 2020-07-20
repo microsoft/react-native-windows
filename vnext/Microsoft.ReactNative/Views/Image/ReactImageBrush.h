@@ -35,6 +35,11 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   }
   void BlurRadius(float value);
 
+  winrt::Windows::UI::Color TintColor() {
+    return m_tintColor;
+  }
+  void TintColor(winrt::Windows::UI::Color value);
+
   winrt::Windows::Foundation::Size AvailableSize() {
     return m_availableSize;
   }
@@ -47,17 +52,18 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   }
 
  private:
-  void UpdateCompositionBrush(bool const &forceEffectBrush = false);
+  void UpdateCompositionBrush(bool forceEffectBrush = false);
   bool IsImageSmallerThanView();
   comp::CompositionStretch ResizeModeToStretch();
   comp::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
   comp::CompositionEffectBrush GetOrCreateEffectBrush(
       comp::CompositionSurfaceBrush const &surfaceBrush,
-      bool const &forceEffectBrush = false);
+      bool forceEffectBrush = false);
 
   comp::Compositor m_compositor;
   float m_blurRadius{0};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+  winrt::Windows::UI::Color m_tintColor{winrt::Windows::UI::Colors::Transparent()};
   winrt::Windows::Foundation::Size m_availableSize{};
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
   comp::CompositionEffectBrush m_effectBrush{nullptr};
