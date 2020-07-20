@@ -7,6 +7,12 @@
 #include <winrt/Windows.Foundation.h>
 #include "CppWinRTIncludes.h"
 
+#ifdef USE_WINUI3
+namespace ui = winrt::Microsoft::UI;
+#else
+namespace ui = winrt::Windows::UI;
+#endif
+
 namespace react {
 namespace uwp {
 
@@ -35,10 +41,10 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   }
   void BlurRadius(float value);
 
-  winrt::Windows::UI::Color TintColor() {
+  ui::Color TintColor() {
     return m_tintColor;
   }
-  void TintColor(winrt::Windows::UI::Color value);
+  void TintColor(ui::Color value);
 
   winrt::Windows::Foundation::Size AvailableSize() {
     return m_availableSize;
@@ -63,7 +69,7 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   comp::Compositor m_compositor;
   float m_blurRadius{0};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
-  winrt::Windows::UI::Color m_tintColor{winrt::Windows::UI::Colors::Transparent()};
+  ui::Color m_tintColor{ui::Colors::Transparent()};
   winrt::Windows::Foundation::Size m_availableSize{};
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
   comp::CompositionEffectBrush m_effectBrush{nullptr};

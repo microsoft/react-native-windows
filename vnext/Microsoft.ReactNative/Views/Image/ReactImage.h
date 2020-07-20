@@ -9,6 +9,12 @@
 
 #include <folly/dynamic.h>
 
+#ifdef USE_WINUI3
+namespace ui = winrt::Microsoft::UI;
+#else
+namespace ui = winrt::Windows::UI;
+#endif
+
 namespace react {
 namespace uwp {
 
@@ -57,10 +63,10 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   }
   void BlurRadius(float value);
 
-  winrt::Windows::UI::Color TintColor() {
+  ui::Color TintColor() {
     return m_tintColor;
   }
-  void TintColor(winrt::Windows::UI::Color value);
+  void TintColor(ui::Color value);
 
  private:
   xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
@@ -72,7 +78,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   float m_blurRadius{0};
   ReactImageSource m_imageSource;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
-  winrt::Windows::UI::Color m_tintColor{winrt::Windows::UI::Colors::Transparent()};
+  ui::Color m_tintColor{ui::Colors::Transparent()};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
