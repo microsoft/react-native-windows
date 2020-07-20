@@ -8,7 +8,6 @@ import DirectManipulationPage from '../pages/DirectManipulationPage';
 import assert from 'assert';
 
 beforeAll(() => {
-  //  HomePage.backToHomePage();
   HomePage.clickAndGotoDirectManipulationPage();
 });
 

@@ -71,7 +71,7 @@ jobs:
         inputs:
           targetType: inline # filePath | inline
           script: |
-            Start-Sleep -Seconds 30
+            Start-Sleep -Seconds 60
 
       - task: PowerShell@2
         displayName: 'Check TestApp'
