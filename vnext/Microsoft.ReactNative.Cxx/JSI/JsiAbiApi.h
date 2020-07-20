@@ -13,6 +13,8 @@
 
 namespace winrt::Microsoft::ReactNative {
 
+static constexpr size_t MaxCallArgCount = 32;
+
 // Forward declare the facebook::jsi::Runtime implementation on top of ABI-safe IJsiRuntime.
 struct JsiAbiRuntime;
 
@@ -182,28 +184,25 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   bool instanceOf(const facebook::jsi::Object &o, const facebook::jsi::Function &f) override;
 
  private: // Convert JSI to ABI-safe JSI values
-  static JsiSymbolData AsJsiSymbolData(PointerValue const *pv) noexcept;
-  static JsiStringData AsJsiStringData(PointerValue const *pv) noexcept;
-  static JsiObjectData AsJsiObjectData(PointerValue const *pv) noexcept;
-  static JsiPropertyNameIdData AsJsiPropertyNameIdData(PointerValue const *pv) noexcept;
+  static JsiSymbolData const &AsJsiSymbolData(PointerValue const *pv) noexcept;
+  static JsiStringData const &AsJsiStringData(PointerValue const *pv) noexcept;
+  static JsiObjectData const &AsJsiObjectData(PointerValue const *pv) noexcept;
+  static JsiPropertyNameIdData const &AsJsiPropertyNameIdData(PointerValue const *pv) noexcept;
 
-  static JsiSymbolData AsJsiSymbolData(facebook::jsi::Symbol const &symbol) noexcept;
-  static JsiStringData AsJsiStringData(facebook::jsi::String const &str) noexcept;
-  static JsiObjectData AsJsiObjectData(facebook::jsi::Object const &obj) noexcept;
-  static JsiPropertyNameIdData AsJsiPropertyNameIdData(facebook::jsi::PropNameID const &propertyId) noexcept;
-  static JsiFunctionData AsJsiFunctionData(facebook::jsi::Function const &func) noexcept;
-  static JsiWeakObjectData AsJsiWeakObjectData(facebook::jsi::WeakObject const &weakObject) noexcept;
-  static JsiArrayData AsJsiArrayData(facebook::jsi::Array const &arr) noexcept;
-  static JsiArrayBufferData AsJsiArrayBufferData(facebook::jsi::ArrayBuffer const &arrayBuffer) noexcept;
-  static JsiValueData const &AsJsiValueData(facebook::jsi::Value const &value) noexcept;
+  static JsiSymbolData const &AsJsiSymbolData(facebook::jsi::Symbol const &symbol) noexcept;
+  static JsiStringData const &AsJsiStringData(facebook::jsi::String const &str) noexcept;
+  static JsiObjectData const &AsJsiObjectData(facebook::jsi::Object const &obj) noexcept;
+  static JsiPropertyNameIdData const &AsJsiPropertyNameIdData(facebook::jsi::PropNameID const &propertyId) noexcept;
+  static JsiFunctionData const &AsJsiFunctionData(facebook::jsi::Function const &func) noexcept;
+  static JsiWeakObjectData const &AsJsiWeakObjectData(facebook::jsi::WeakObject const &weakObject) noexcept;
+  static JsiArrayData const &AsJsiArrayData(facebook::jsi::Array const &arr) noexcept;
+  static JsiArrayBufferData const &AsJsiArrayBufferData(facebook::jsi::ArrayBuffer const &arrayBuffer) noexcept;
+  static JsiValueData AsJsiValueData(facebook::jsi::Value const &value) noexcept;
 
   static JsiPropertyNameIdData MakeJsiPropertyNameIdData(facebook::jsi::PropNameID &&propertyId) noexcept;
   static JsiValueData MakeJsiValueData(facebook::jsi::Value &&value) noexcept;
 
  private: // Convert ABI-safe JSI to JSI values
-  static facebook::jsi::PropNameID const *AsPropNameID(JsiPropertyNameIdData const *data) noexcept;
-  static facebook::jsi::Value const *AsValue(JsiValueData const *data) noexcept;
-
   PointerValue *MakeSymbolValue(JsiSymbolData &&symbol) const noexcept;
   PointerValue *MakeStringValue(JsiStringData &&str) const noexcept;
   PointerValue *MakeObjectValue(JsiObjectData &&obj) const noexcept;
@@ -223,40 +222,81 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   friend struct JsiHostFunctionWrapper;
 
  private: // PointerValue structures
-  struct SymbolPointerValue : PointerValue {
+  struct DataPointerValue : PointerValue {
+    DataPointerValue(winrt::weak_ref<IJsiRuntime> &&weakRuntime, uint64_t data) noexcept;
+    DataPointerValue(uint64_t data) noexcept;
+    void invalidate() override;
+
+    uint64_t m_data;
+    winrt::weak_ref<IJsiRuntime> m_weakRuntime;
+  };
+
+  struct SymbolPointerValue : DataPointerValue {
     SymbolPointerValue(winrt::weak_ref<IJsiRuntime> &&weakRuntime, JsiSymbolData &&symbol) noexcept;
     void invalidate() override;
-
-   private:
-    JsiSymbolData m_symbol;
-    winrt::weak_ref<IJsiRuntime> m_weakRuntime;
+    static JsiSymbolData const &GetData(PointerValue const *pv) noexcept;
+    static JsiSymbolData Detach(PointerValue const *pv) noexcept;
   };
 
-  struct StringPointerValue : PointerValue {
+  struct StringPointerValue : DataPointerValue {
     StringPointerValue(winrt::weak_ref<IJsiRuntime> &&weakRuntime, JsiStringData &&str) noexcept;
     void invalidate() override;
-
-   private:
-    JsiStringData m_string;
-    winrt::weak_ref<IJsiRuntime> m_weakRuntime;
+    static JsiStringData const &GetData(PointerValue const *pv) noexcept;
+    static JsiStringData Detach(PointerValue const *pv) noexcept;
   };
 
-  struct ObjectPointerValue : PointerValue {
+  struct ObjectPointerValue : DataPointerValue {
     ObjectPointerValue(winrt::weak_ref<IJsiRuntime> &&weakRuntime, JsiObjectData &&obj) noexcept;
     void invalidate() override;
-
-   private:
-    JsiObjectData m_object;
-    winrt::weak_ref<IJsiRuntime> m_weakRuntime;
+    static JsiObjectData const &GetData(PointerValue const *pv) noexcept;
+    static JsiObjectData Detach(PointerValue const *pv) noexcept;
   };
 
-  struct PropNameIDPointerValue : PointerValue {
+  struct PropNameIDPointerValue : DataPointerValue {
     PropNameIDPointerValue(winrt::weak_ref<IJsiRuntime> &&weakRuntime, JsiPropertyNameIdData &&propertyId) noexcept;
     void invalidate() override;
+    static JsiPropertyNameIdData const &GetData(PointerValue const *pv) noexcept;
+    static JsiPropertyNameIdData Detach(PointerValue const *pv) noexcept;
+  };
+
+  // This type is to represent a reference to Value based on JsiValueData.
+  // It avoids extra memory allocation by using an in-place storage.
+  // It does not release the underlying pointer on invalidate() call
+  // by proving null as runtime pointer.
+  struct ValueRef {
+    ValueRef(JsiValueData const &data) noexcept;
+    ~ValueRef() noexcept;
+    operator facebook::jsi::Value const &() const noexcept;
+
+    using StoreType = std::aligned_storage<sizeof(DataPointerValue)>;
+    static void InitValueRef(JsiValueData const &data, facebook::jsi::Value *value, StoreType *store) noexcept;
 
    private:
-    JsiPropertyNameIdData m_propertyId;
-    winrt::weak_ref<IJsiRuntime> m_weakRuntime;
+    facebook::jsi::Value m_value{};
+    StoreType m_pointerStore{};
+  };
+
+  struct ValueRefArray {
+    ValueRefArray(array_view<JsiValueData const> args) noexcept;
+    facebook::jsi::Value const *Data() const noexcept;
+    size_t Size() const noexcept;
+
+   private:
+    std::array<facebook::jsi::Value, MaxCallArgCount> m_valueArray{};
+    std::array<ValueRef::StoreType, MaxCallArgCount> m_pointerStoreArray{};
+    size_t m_size{};
+  };
+
+  struct PropNameIDRef {
+    PropNameIDRef(JsiPropertyNameIdData const &data) noexcept;
+    ~PropNameIDRef() noexcept;
+    operator facebook::jsi::PropNameID const &() const noexcept;
+
+    using StoreType = std::aligned_storage<sizeof(DataPointerValue)>;
+
+   private:
+    facebook::jsi::PropNameID m_propertyId;
+    StoreType m_pointerStore{};
   };
 
  private:

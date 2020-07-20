@@ -106,19 +106,21 @@ namespace Microsoft.ReactNative
   {
   };
 
-  delegate JsiValueData JsiHostFunction(IJsiRuntime runtime, JsiValueData thisArg, JsiValueData[] args);
+  delegate JsiValueData JsiHostFunction(JsiRuntime runtime, JsiValueData thisArg, JsiValueData[] args);
 
   [webhosthidden]
   interface IJsiHostObject
   {
-    JsiValueData GetProperty(IJsiRuntime runtime, JsiPropertyNameIdData name);
-    void SetProperty(IJsiRuntime runtime, JsiPropertyNameIdData name, JsiValueData value);
-    IVector<JsiPropertyNameIdData> GetPropertyNames(IJsiRuntime runtime);
+    JsiValueData GetProperty(JsiRuntime runtime, JsiPropertyNameIdData name);
+    void SetProperty(JsiRuntime runtime, JsiPropertyNameIdData name, JsiValueData value);
+    IVector<JsiPropertyNameIdData> GetPropertyNames(JsiRuntime runtime);
   };
 
-  [webhosthidden]
-  interface IJsiRuntime
+  [webhosthidden, default_interface]
+  runtimeclass JsiRuntime
   {
+    static JsiRuntime MakeChakraRuntime();
+
     JsiValueData EvaluateJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiValueData EvaluatePreparedJavaScript(JsiPreparedJavaScript js);

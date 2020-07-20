@@ -4,7 +4,18 @@
 #pragma once
 
 #include "JsiPreparedJavaScript.g.h"
+#include "JsiRuntime.g.h"
 #include "winrt/Microsoft.ReactNative.h"
+
+// facebook::jsi::Runtime hides all methods that we need to call.
+// We "open" them up here by redeclaring the private and protected keywords.
+#define private public
+#define protected public
+#include "jsi/jsi.h"
+#undef protected
+#undef private
+
+#include "ChakraRuntimeHolder.h"
 
 namespace facebook::jsi {
 class Runtime;
@@ -13,10 +24,14 @@ class Pointer;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
-  JsiRuntime(facebook::jsi::Runtime &runtime) noexcept;
+struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
+  JsiRuntime(
+      std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> runtimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> runtime) noexcept;
 
- public: // IJsiRuntime
+ public: // JsiRuntime
+  static Microsoft::ReactNative::JsiRuntime MakeChakraRuntime();
+
   JsiValueData EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   JsiValueData EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js);
@@ -80,7 +95,12 @@ struct JsiRuntime : implements<JsiRuntime, IJsiRuntime> {
   void ReleasePropertyNameId(JsiPropertyNameIdData const &propertyNameId);
 
  private:
-  facebook::jsi::Runtime &m_runtime;
+  std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> m_runtimeHolder;
+  std::shared_ptr<facebook::jsi::Runtime> m_runtime;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
+
+namespace winrt::Microsoft::ReactNative::factory_implementation {
+struct JsiRuntime : JsiRuntimeT<JsiRuntime, implementation::JsiRuntime> {};
+} // namespace winrt::Microsoft::ReactNative::factory_implementation
