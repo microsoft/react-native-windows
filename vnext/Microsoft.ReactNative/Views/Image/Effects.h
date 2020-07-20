@@ -108,8 +108,9 @@ class ColorSourceEffect : public ColorSourceEffectT<
  public:
   DECLARE_D2D_GUID(CLSID_D2D1Flood);
   DECLARE_POD_PROPERTY(Color, UIColor, (UIColor{255, 0, 0, 0}), true);
-  DECLARE_NAMED_PROPERTY_MAPPING(
-      {L"Color", D2D1_FLOOD_PROP_COLOR, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_COLOR_TO_VECTOR4});
+  DECLARE_NAMED_PROPERTY_MAPPING({L"Color",
+                                  D2D1_FLOOD_PROP_COLOR,
+                                  PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_COLOR_TO_VECTOR4});
 
  public:
   IFACEMETHODIMP GetPropertyCount(_Out_ UINT *count) override {
@@ -145,8 +146,9 @@ class CompositeStepEffect : public CompositeStepEffectT<
       winrt::Microsoft::ReactNative::CanvasComposite,
       winrt::Microsoft::ReactNative::CanvasComposite::SourceOver,
       true);
-  DECLARE_NAMED_PROPERTY_MAPPING(
-      {L"Mode", D2D1_COMPOSITE_PROP_MODE, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});
+  DECLARE_NAMED_PROPERTY_MAPPING({L"Mode",
+                                  D2D1_COMPOSITE_PROP_MODE,
+                                  PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});
 
  public:
   IFACEMETHODIMP GetPropertyCount(_Out_ UINT *count) override {

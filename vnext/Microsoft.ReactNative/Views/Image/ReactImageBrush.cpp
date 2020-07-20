@@ -7,8 +7,8 @@
 #include "Effects.h"
 #include "ReactImageBrush.h"
 
-#include <winrt/Windows.Graphics.Effects.h>
 #include <winrt/Windows.Graphics.Display.h>
+#include <winrt/Windows.Graphics.Effects.h>
 #include <sstream>
 
 namespace winrt {
@@ -52,8 +52,9 @@ void ReactImageBrush::BlurRadius(float value) {
 }
 
 void ReactImageBrush::TintColor(winrt::Color value) {
-  bool sameColor{
-      value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G && value.B == m_tintColor.B};
+  bool sameColor{value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G &&
+                 value.B == m_tintColor.B};
+
   if (!sameColor) {
     const bool forceEffectBrush{value.A == 0 || m_tintColor.A == 0};
     m_tintColor = value;
@@ -184,7 +185,6 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush,
     bool forceEffectBrush) {
-
   if (!m_effectBrush || forceEffectBrush) {
     // GaussianBlurEffect
     auto blurEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::GaussianBlurEffect>()};
@@ -209,7 +209,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
       comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
       borderEffect.Source(borderEffectSourceParameter);
       blurEffect.Source(borderEffect);
-    } else {      
+    } else {
       comp::CompositionEffectSourceParameter blurEffectSourceParameter{L"source"};
       blurEffect.Source(blurEffectSourceParameter);
     }
