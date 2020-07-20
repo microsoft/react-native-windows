@@ -1,5 +1,33 @@
 # Troubleshoot RNW dependencies
-param([switch]$Install = $false, [switch]$NoPrompt = $false, [switch]$Clone = $false, [switch]$Enterprise = $false)
+param(
+    [switch]$Install = $false, 
+    [switch]$NoPrompt = $false, 
+    [switch]$Clone = $false, 
+
+    [Parameter(ValueFromRemainingArguments)]
+    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2019', 'clone')]
+    [String[]]$Tags = @('appDev')
+)
+
+# Create a set to handle with case insensitivy of the tags
+$tagsToInclude = New-Object System.Collections.Generic.HashSet[string]([System.StringComparer]::OrdinalIgnorecase)
+foreach ($tag in $Tags) { $tagsToInclude.Add($tag) | Out-null }
+
+# Convert legacy flags to tasks:
+if ($Clone) {
+    $tagsToInclude.Add('clone') | Out-null;
+}
+
+# Handle expansion of tasks
+if ($tagsToInclude.Contains('buildLab')) {
+    # The build lab needs the same steps as a react-native dev
+    $tagsToInclude.Add('rnwDev') | Out-null;
+}
+if ($tagsToInclude.Contains('rnwDev')) {
+    # A react-native dev needs the same as the default
+    $tagsToInclude.Add('appDev') | Out-null;
+}
+
 $vsComponents = @('Microsoft.Component.MSBuild', 
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
@@ -92,30 +120,36 @@ $requiredFreeSpaceGB = 15;
 $requirements = @(
     @{
         Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
+        Tags = @('appDev')
         Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB;
         Optional = $true; # this requirement is fuzzy 
     },
     @{
         Name = "Installed memory >= 16 GB";
+        Tags = @('appDev')
         Valid = (Get-WmiObject -Class win32_computersystem).TotalPhysicalMemory -ge 15GB;
         Optional = $true;
     },
     @{
         Name = 'Windows version > 10.0.16299.0';
+        Tags = @('appDev')
         Valid = ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299);
     },
     @{
         Name = 'Developer mode is on';
+        Tags = @('appDev')
         Valid = try { (Get-WindowsDeveloperLicense).IsValid } catch { $false };
         Install = { EnableDevMode };
     },
     @{
         Name = 'Long path support is enabled';
+        Tags = @('appDev')
         Valid = try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1} catch { $false };
         Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord;  };
     },
     @{
         Name = 'Choco';
+        Tags = @('appDev')
         Valid = try { (Get-Command choco -ErrorAction Stop) -ne $null } catch { $false };
         Install = {
             [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; 
@@ -124,38 +158,45 @@ $requirements = @(
     },
     @{
         Name = 'git';
+        Tags = @('appDev')
         Valid = try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false };
         Install = { choco install git };
     },
     @{
         Name = 'VS 2019 with UWP and Desktop/C++';
+        Tags = @('appDev', 'vs2019')
         Valid = CheckVS;
         Install = { InstallVS };
     },
     @{
         Name = 'NodeJS 12 or 13 installed';
+        Tags = @('appDev')
         Valid = CheckNode;
         Install = { choco install -y nodejs.install --version=12.9.1 };
     },
     @{
         Name = 'Chrome';
+        Tags = @('appDev') # For now this is still required. Edge has been added, but only when it is already running...
         Valid = try { ((Get-Item (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe' -ErrorAction Stop).'(Default)').VersionInfo).ProductMajorPart
         } catch { $false } ;
         Install = { choco install -y GoogleChrome };
     },
     @{
         Name = 'Yarn';
+        Tags = @('appDev')
         Valid = try { (Get-Command yarn -ErrorAction Stop) -ne $null } catch { $false };
         Install = { choco install -y yarn };
     },
     @{
         Name = 'Appium';
+        Tags = @('rnwDev')
         Valid = (Test-Path "${env:ProgramFiles}\Appium\Appium.exe");
         Install = { choco install -y Appium-desktop };
         Optional = $true;
     },
     @{
         Name = 'WinAppDriver';
+        Tags = @('rnwDev')
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe");
         Install = { 
             # don't install from choco as we need an exact version match. appium-windows-driver checks the checksum of WAD.
@@ -168,6 +209,7 @@ $requirements = @(
     },
     @{
         Name = "MSBuild Structured Log Viewer";
+        Tags = @('rnwDev')
         Valid = (cmd "/c assoc .binlog 2>nul" )  -ne $null;
         Install = {
             choco install -y msbuild-structured-log-viewer;
@@ -180,6 +222,7 @@ $requirements = @(
     @{
         # The 64-bit version of MsBuild does not support long paths. A temp fix for v16 is: https://github.com/microsoft/msbuild/issues/5331
         Name = "MSBuild 64-bit Long Path Support"
+        Tags = @('buildLab')
         Valid = try { 
             [System.IO.File]::ReadAllText( (GetMsBuild64BitConfigFile) ).Contains("Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false") 
             } catch { $false };
@@ -189,9 +232,19 @@ $requirements = @(
             $msbExeConfig.Save( (GetMsBuild64BitConfigFile) )
         };
         Optional = $true
+    },
+    @{
+        Name = "React-Native-Windows clone"
+        Tags = @('clone')
+        Valid = try { 
+            Test-Path -Path react-native-windows
+            } catch { $false };
+        Install = {
+            & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
+        };
+        Optional = $true
     }
-
-    );
+);
 
 function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
@@ -202,9 +255,22 @@ if (!(IsElevated)) {
     return;
 }
 
-$NeedsRerun = 0
-$Installed = 0
-foreach ($req in $requirements)
+$NeedsRerun = 0;
+$Installed = 0;
+$filteredRequirements = New-Object System.Collections.Generic.List[object]
+foreach ($req in $requirements) 
+{
+    foreach ($tag in $req.Tags) 
+    {
+        if ($tagsToInclude.Contains($tag))
+        {
+            $filteredRequirements.Add($req);
+            break;
+        }
+    }
+}
+
+foreach ($req in $filteredRequirements)
 {
     Write-Host -NoNewline "Checking $($req.Name)    ";
     if (!($req.Valid)) {
@@ -234,10 +300,6 @@ foreach ($req in $requirements)
 
 if ($Installed -ne 0) {
     Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect."
-}
-
-if ($Clone) {
-    & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
 }
 
 if ($NeedsRerun -ne 0) {
