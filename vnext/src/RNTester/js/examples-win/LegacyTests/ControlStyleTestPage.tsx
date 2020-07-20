@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
 import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
-import React, { useState } from 'react';
+import * as React from 'react'
+import { useState } from 'react';
 import { SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT } from './Consts';
 import { TreeDumpControl } from './TreeDumpControl';
 

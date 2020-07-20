@@ -3,7 +3,8 @@
  * Licensed under the MIT License.
  */
 
-import React, { useState } from 'react';
+import * as React from 'react'
+import { useState } from 'react';
 import { Text, View, StyleSheet, Button, findNodeHandle } from 'react-native';
 import {
   APPLY_SCALE_TRANSFORM_BUTTON,

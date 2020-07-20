@@ -4,7 +4,8 @@
  */
 
 import { StyleSheet, View, Image, Button } from 'react-native';
-import React, { useState } from 'react';
+import * as React from 'react'
+import { useState } from 'react';
 import {
   SHOW_IMAGE_BORDER,
   SET_RTL_MODE,

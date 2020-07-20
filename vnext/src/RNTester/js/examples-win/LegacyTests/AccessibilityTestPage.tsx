@@ -4,7 +4,8 @@
  */
 
 import { View, Text, ViewProps } from 'react-native';
-import React, { useState } from 'react';
+import * as React from 'react'
+import { useState } from 'react';
 
 // MyView is a workaround. Currently in typescript, accessibilityAction doesn't allow name to be any string.
 const MyView = (props: any) => <View {...props as ViewProps} />;
