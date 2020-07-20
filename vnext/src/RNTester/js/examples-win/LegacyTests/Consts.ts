@@ -1,18 +1,10 @@
-export const APP_NAME = 'ReactUWPTestApp';
-
 // Framework
-export const SEARCH_BUTTON = 'SearchButton';
-export const HOME_BUTTON = 'REMOVETHIS!!!';
 export const BACK_BUTTON = 'BackButton';
 export const REACT_CONTROL_ERROR_TEST_ID = 'ReactControlErrorMessage';
 export const TREE_DUMP_RESULT = 'TreeDump';
 
-// UnknownTestPage
-export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
-
 // TextInputTestPage
 export const TEXTINPUT_TESTPAGE = '<LegacyTextInputTest>';
-
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
 export const CURTEXT_ON_TEXTINPUT = 'CurTextInput';
 export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
