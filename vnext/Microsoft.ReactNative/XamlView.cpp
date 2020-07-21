@@ -34,18 +34,14 @@ comp::Compositor GetCompositor(const XamlView &view) {
   return GetCompositor();
 }
 
-static DWORD tlsCompositor = 0;
+thread_local comp::Compositor tlsCompositor{nullptr};
+
 void SetCompositor(const comp::Compositor &compositor) {
-  if (tlsCompositor == 0) {
-    tlsCompositor = TlsAlloc();
-  }
   winrt::com_ptr<IUnknown> rawCompositor(winrt::get_abi(compositor), winrt::take_ownership_from_abi);
-  auto oldCompositor = TlsGetValue(tlsCompositor);
-  if (oldCompositor != nullptr) {
-    assert(oldCompositor == rawCompositor.get());
+  if (tlsCompositor != nullptr) {
+    assert(tlsCompositor == compositor);
   } else {
-    rawCompositor->AddRef();
-    TlsSetValue(tlsCompositor, rawCompositor.get());
+    tlsCompositor = compositor;
   }
 }
 
@@ -54,11 +50,8 @@ comp::Compositor GetCompositor() {
     return xaml::Window::Current().Compositor();
   }
   comp::Compositor compositor;
-  if (tlsCompositor != 0) {
-    winrt::copy_from_abi(compositor, TlsGetValue(tlsCompositor));
-  }
-  assert(compositor != nullptr);
-  return compositor;
+  assert(tlsCompositor != nullptr);
+  return tlsCompositor;
 }
 
 } // namespace react::uwp
