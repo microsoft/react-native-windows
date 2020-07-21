@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "0.1.21-4",
+  "version": "0.1.21-5",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -36,7 +36,7 @@
     "@types/yargs": "^15.0.3",
     "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
-    "react-native-windows": "^0.0.0-canary.124",
+    "react-native-windows": "^0.0.0-canary.125",
     "typescript": "^3.8.3"
   },
   "files": [

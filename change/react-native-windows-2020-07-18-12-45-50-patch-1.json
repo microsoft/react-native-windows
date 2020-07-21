@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Display expected answers and default one",
-  "packageName": "react-native-windows",
-  "email": "sam@elborai.me",
-  "dependentChangeType": "patch",
-  "date": "2020-07-18T10:45:50.782Z"
-}

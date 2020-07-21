@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Jul 2020 05:05:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.125",
+      "version": "0.0.0-canary.125",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove ReactWindows-Universal.sln and update publish.yml to use Microsoft.React-native.sln",
+            "author": "dannyvv@microsoft.com",
+            "commit": "35261299fcb2877cf90d3e03af6d129f0522ede8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Display expected answers and default one",
+            "author": "sam@elborai.me",
+            "commit": "c76b8eb611c6396d28741ff0075b575a7fe0cd70",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update e2e-testing.md",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a97a2fb331f4a7b9b929bcaec027f559e3b70fb8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add windows adk to machine setup script (for build lab)",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d1d0bcadc040a426edfe3c00f0f7acaafe591a2e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 Jul 2020 05:04:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.124",
       "version": "0.0.0-canary.124",
