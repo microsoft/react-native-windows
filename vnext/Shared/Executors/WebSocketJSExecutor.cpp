@@ -70,7 +70,11 @@ WebSocketJSExecutor::~WebSocketJSExecutor() {
   m_msgReceived.revoke();
 }
 
-void WebSocketJSExecutor::loadApplicationScript(
+void WebSocketJSExecutor::initializeRuntime() {
+  // No init needed before loading a bundle
+}
+
+void WebSocketJSExecutor::loadBundle(
     std::unique_ptr<const facebook::react::JSBigString> script,
     std::string sourceURL) {
   int requestId = ++m_requestId;
