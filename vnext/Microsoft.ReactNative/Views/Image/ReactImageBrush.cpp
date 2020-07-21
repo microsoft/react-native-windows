@@ -100,10 +100,10 @@ void ReactImageBrush::UpdateCompositionBrush(bool forceEffectBrush) {
       // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
       // The units of both the standard deviation and blur radius are DIPs.
       // A value of zero DIPs disables this effect entirely."
-      compositionBrush.Properties().InsertScalar(L"Blur.BlurAmount", m_blurRadius / 3);
+      compositionBrush.Properties().InsertScalar(BlurBlurAmount, m_blurRadius / 3);
 
       if (m_tintColor.A != 0) {
-        compositionBrush.Properties().InsertColor(L"TintColor.Color", m_tintColor);
+        compositionBrush.Properties().InsertColor(TintColorColor, m_tintColor);
       }
     }
 
@@ -197,7 +197,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     blurEffect.BlurAmount(m_blurRadius / 3);
 
     std::vector<winrt::hstring> animatedProperties;
-    animatedProperties.push_back({L"Blur.BlurAmount"});
+    animatedProperties.push_back({BlurBlurAmount});
 
     if (ResizeMode() == ResizeMode::Repeat) {
       // BorderEffect
@@ -227,7 +227,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
       compositeEffect.Destination(blurEffect);
       compositeEffect.Source(tintColorEffect);
 
-      animatedProperties.push_back({L"TintColor.Color"});
+      animatedProperties.push_back({TintColorColor});
 
       effect = compositeEffect;
     }

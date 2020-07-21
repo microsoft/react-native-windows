@@ -4,16 +4,11 @@
 #pragma once
 
 #include "ReactImageBrush.h"
+#include "CppWinRTIncludes.h"
 
 #include <UI.Xaml.Controls.h>
 
 #include <folly/dynamic.h>
-
-#ifdef USE_WINUI3
-namespace ui = winrt::Microsoft::UI;
-#else
-namespace ui = winrt::Windows::UI;
-#endif
 
 namespace react {
 namespace uwp {
@@ -78,7 +73,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   float m_blurRadius{0};
   ReactImageSource m_imageSource;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
-  winrt::Windows::UI::Color m_tintColor{ui::Colors::Transparent()};
+  winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
