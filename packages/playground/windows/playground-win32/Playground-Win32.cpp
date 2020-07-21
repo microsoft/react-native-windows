@@ -341,7 +341,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
-  WUXH::DesktopWindowXamlSource desktopXamlSource;
+  hosting::DesktopWindowXamlSource desktopXamlSource;
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
   windowData->m_useWebDebugger = useWebDebugger;
 
