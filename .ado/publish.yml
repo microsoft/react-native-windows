@@ -4,18 +4,18 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
 
-schedules:
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly master publish build
-  branches:
-    include:
-      - master
+# schedules:
+# - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
+#   displayName: Nightly master publish build
+#   branches:
+#     include:
+#       - master
 
-- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
-  displayName: Weekly stable publish build
-  branches:
-    include:
-      - "*-stable"
+# - cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
+#   displayName: Weekly stable publish build
+#   branches:
+#     include:
+#       - "*-stable"
 
 trigger: none
 pr: none
@@ -40,17 +40,17 @@ jobs:
       - script: yarn build
         displayName: yarn build
 
-      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
-        displayName: Beachball Publish (Master Branch)
-        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+      # - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+      #   displayName: Beachball Publish (Master Branch)
+      #   condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
-        displayName: Beachball Publish (Stable Branch)
-        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+      # - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+      #   displayName: Beachball Publish (Stable Branch)
+      #   condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
-      - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
-        displayName: Create GitHub Releases for New Tags (Stable Branch)
-        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+      # - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+      #   displayName: Create GitHub Releases for New Tags (Stable Branch)
+      #   condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - template: templates/set-version-vars.yml
 
@@ -101,6 +101,16 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
+          ${{ if ne(variables['Build.SourceBranchName'], 'master') }}: # Only fail on release builds
+            failOnAlert: true
+          ${{ if eq(variables['Build.SourceBranchName'], 'master') }}: # Don't fail on master builds
+            failOnAlert: false
 
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
@@ -150,6 +160,16 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
+          ${{ if ne(variables['Build.SourceBranchName'], 'master') }}: # Only fail on release builds
+            failOnAlert: true
+          ${{ if eq(variables['Build.SourceBranchName'], 'master') }}: # Don't fail on master builds
+            failOnAlert: false
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -165,19 +185,19 @@ jobs:
     displayName: Sign Binaries and Publish NuGet
     pool:
       vmImage: $(VmImage)
-      # Disable codesign for now, until we're sure
-      # vmImage: Package ES Lab E
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}: # Use Package ES for release builds
+        name: Package ES Lab E
 
     steps:
       - checkout: none
 
-      # Disable codesign for now, until we're sure
-      # - task: PkgESSetupBuild@10
-      #   displayName: 'XESSetupBuild'
-      #   inputs:
-      #     productName: microsoftreactnative
-      #     branchVersion: false
-      #     nugetVer: true
+      - ${{ if ne(variables['Build.SourceBranchName'], 'master') }}: # Setup Package ES for release builds
+        - task: PkgESSetupBuild@10
+          displayName: 'XESSetupBuild'
+          inputs:
+            productName: microsoftreactnative
+            branchVersion: false
+            nugetVer: true
 
       - template: templates/apply-published-version-vars.yml
 
@@ -190,8 +210,8 @@ jobs:
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
-          # Disable codesign for now, until we're sure
-          # signMicrosoft: true
+          ${{ if ne(variables['Build.SourceBranchName'], 'master') }}: # Enable code-signing for release builds
+            signMicrosoft: true
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
