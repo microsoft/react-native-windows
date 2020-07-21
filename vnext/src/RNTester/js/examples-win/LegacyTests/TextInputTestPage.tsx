@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react'
+import * as React from 'react';
 import {Text, TextInput, View} from 'react-native';
 import {
   TEXTINPUT_ON_TEXTINPUT,
