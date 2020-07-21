@@ -30,12 +30,14 @@ export default class Bootstrap extends React.Component<
     blurRadius: number;
     selectedSource: string;
     imageUri: string;
+    tintColor: string;
   }
 > {
   state = {
     selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
     includeBorder: false,
+    tintColor: 'transparent',
     blurRadius: 0,
     imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
@@ -96,6 +98,17 @@ export default class Bootstrap extends React.Component<
           </Picker>
         </View>
         <View style={styles.rowContainer}>
+          <Text style={styles.title}>Tint Color</Text>
+          <Picker
+            style={{width: 125}}
+            selectedValue={this.state.tintColor}
+            onValueChange={value => this.setState({tintColor: value})}>
+            <Picker.Item label="None" value="transparent" />
+            <Picker.Item label="Purple" value="purple" />
+            <Picker.Item label="Green" value="green" />
+          </Picker>
+        </View>
+        <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
             style={{marginLeft: 10}}
@@ -108,9 +121,11 @@ export default class Bootstrap extends React.Component<
         </View>
         <View style={styles.imageContainer}>
           <Image
-            style={
-              this.state.includeBorder ? styles.imageWithBorder : styles.image
-            }
+            style={[
+              styles.image,
+              this.state.includeBorder ? styles.imageWithBorder : {},
+              {tintColor: this.state.tintColor},
+            ]}
             source={
               this.state.selectedSource === 'svg'
                 ? require('../Samples/images/Microsoft-Logo.svg')
@@ -148,8 +163,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   imageWithBorder: {
-    height: '100%',
-    width: '100%',
     borderRadius: 10.0,
     borderWidth: 10,
     borderColor: 'green',
