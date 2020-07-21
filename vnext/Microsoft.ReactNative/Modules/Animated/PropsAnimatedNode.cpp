@@ -23,19 +23,18 @@ PropsAnimatedNode::PropsAnimatedNode(
     m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
   }
   auto compositor = react::uwp::GetCompositor();
-  m_subchannelPropertySet = compositor .CreatePropertySet();
+  m_subchannelPropertySet = compositor.CreatePropertySet();
   m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
   m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
 
-  m_translationCombined = compositor .CreateExpressionAnimation(
-      L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
+  m_translationCombined =
+      compositor.CreateExpressionAnimation(L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
   m_translationCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
   m_translationCombined.Target(L"Translation");
 
-  m_scaleCombined = compositor.CreateExpressionAnimation(
-      L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
+  m_scaleCombined = compositor.CreateExpressionAnimation(L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
   m_scaleCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
   m_scaleCombined.Target(L"Scale");
 }

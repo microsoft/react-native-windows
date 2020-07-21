@@ -50,7 +50,6 @@ void SetCompositor(const comp::Compositor &compositor) {
 }
 
 comp::Compositor GetCompositor() {
-
   if (!react::uwp::IsXamlIsland()) {
     return xaml::Window::Current().Compositor();
   }
