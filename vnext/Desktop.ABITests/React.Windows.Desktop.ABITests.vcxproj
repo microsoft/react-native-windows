@@ -133,6 +133,7 @@
     <ClCompile Include="MemoryTrackerTests.cpp" />
     <ClCompile Include="ReactDispatcherTests.cpp" />
     <ClCompile Include="ReactModuleBuilderTests.cpp" />
+    <ClCompile Include="ReactNonAbiValueTests.cpp" />
     <ClCompile Include="ReactPackageBuilderTests.cpp" />
     <ClCompile Include="ReactPackageProviderTests.cpp" />
     <ClCompile Include="RedBoxTests.cpp" />
