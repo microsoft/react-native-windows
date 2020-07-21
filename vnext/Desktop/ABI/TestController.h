@@ -21,6 +21,7 @@ struct TestController {
       hstring message,
       uint32_t id,
       array_view<Microsoft::ReactNative::IRedBoxErrorFrameInfo const> callstack);
+  static Microsoft::ReactNative::IReactNonAbiValue CreateNonAbiValue(int32_t value);
 };
 } // namespace winrt::Microsoft::Internal::implementation
 

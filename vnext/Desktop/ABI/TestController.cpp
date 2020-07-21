@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <ReactNonAbiValue.h>
 #include <Shared/IRedBoxHandler.h>
 #include <unicode.h>
 #include "DynamicReader.h"
@@ -151,4 +152,9 @@ msrn::IRedBoxErrorInfo TestController::CreateRedBoxErrorInfo(
 
   return make<Mso::React::RedBoxErrorInfo>(std::move(errorInfo));
 }
+
+msrn::IReactNonAbiValue TestController::CreateNonAbiValue(int32_t value) {
+  return make<msrn::implementation::ReactNonAbiValue<int32_t>>(value);
+}
+
 } // namespace winrt::Microsoft::Internal::implementation
