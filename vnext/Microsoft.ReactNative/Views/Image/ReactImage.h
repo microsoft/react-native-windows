@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "ReactImageBrush.h"
 #include "CppWinRTIncludes.h"
+#include "ReactImageBrush.h"
 
 #include <UI.Xaml.Controls.h>
 
