@@ -28,6 +28,10 @@ interface IRNTesterModuleExample {
 
 const ComponentExamples: Array<IRNTesterExample> = [
   {
+    key: 'LegacyControlStyleTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/ControlStyleTestPage'),
+  },
+  {
     key: 'LegacyTransformTest',
     module: require('react-native/RNTester/js/examples-win/LegacyTests/TransformTestPage'),
   },
@@ -40,10 +44,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples-win/LegacyTests/LoginTestPage'),
   },
   {
-    key: 'LegacyAccessibilityTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
-  },
-  {
     key: 'LegacyDirectManipulationTest',
     module: require('react-native/RNTester/js/examples-win/LegacyTests/DirectManipulationTestPage'),
   },
@@ -52,8 +52,8 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples-win/LegacyTests/ImageTestPage'),
   },
   {
-    key: 'LegacyControlStyleTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/ControlStyleTestPage'),
+    key: 'LegacyAccessibilityTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
   },
   {
     key: 'ActivityIndicatorExample',
