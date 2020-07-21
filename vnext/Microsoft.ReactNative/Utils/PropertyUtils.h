@@ -6,11 +6,11 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 
+#include <UI.Text.h>
 #include <folly/dynamic.h>
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
 
 #include <Views/ShadowNodeBase.h>
 
@@ -282,9 +282,9 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
       const std::string &value = propertyValue.getString();
       winrt::Windows::UI::Text::FontWeight fontWeight;
       if (value == "normal")
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
+        fontWeight = text::FontWeights::Normal();
       else if (value == "bold")
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Bold();
+        fontWeight = text::FontWeights::Bold();
       else if (value == "100")
         fontWeight.Weight = 100;
       else if (value == "200")
@@ -304,7 +304,7 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
       else if (value == "900")
         fontWeight.Weight = 900;
       else
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
+        fontWeight = text::FontWeights::Normal();
 
       element.FontWeight(fontWeight);
     } else if (propertyValue.isNull()) {
@@ -407,14 +407,15 @@ bool TryUpdateTextDecorationLine(
 
       const std::string &value = propertyValue.getString();
       TextDecorations decorations = TextDecorations::None;
-      if (value == "none")
+      if (value == "none") {
         decorations = TextDecorations::None;
-      else if (value == "underline")
+      } else if (value == "underline") {
         decorations = TextDecorations::Underline;
-      else if (value == "line-through")
+      } else if (value == "line-through") {
         decorations = TextDecorations::Strikethrough;
-      else if (value == "underline line-through")
+      } else if (value == "underline line-through") {
         decorations = TextDecorations::Underline | TextDecorations::Strikethrough;
+      }
 
       element.TextDecorations(decorations);
     } else if (propertyValue.isNull()) {
