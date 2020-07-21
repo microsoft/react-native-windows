@@ -12,7 +12,7 @@ import {
   IMAGE_TESTPAGE,
   CONTROL_STYLE_TESTPAGE,
   TRANSFORM_TESTPAGE,
-} from '../../app/Consts';
+} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 import LoginPage from './LoginPage';
 import DirectManipulationPage from './DirectManipulationPage';
 import ImageTestPage from './ImageTestPage';

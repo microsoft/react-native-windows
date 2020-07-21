@@ -9,7 +9,8 @@
     "DeforkingPatches/.clang-format",
     "DeforkingPatches/README.md",
     "src/tsconfig.json",
-    "**/*.windesktop.js"
+    "**/*.windesktop.js",
+    "src/RNTester/js/examples-win/**"
   ],
   "overrides": [
     {
@@ -507,66 +508,6 @@
       "baseVersion": "0.0.0-56cf99a96",
       "baseHash": "fc507321dc5cb53be93df517ba5c4b1acd0074f4",
       "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Accessibility/AccessibilityExampleWindows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/AsyncStorage/AsyncStorageExampleWindows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/CustomView/CustomViewExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/DatePicker/DatePickerExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/FastText/FastTextExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Flyout/FlyoutExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Glyph/GlyphExample.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Keyboard/KeyboardExample.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Keyboard/KeyboardExtensionExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Keyboard/KeyboardFocusExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Picker/PickerWindowsExample.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Popup/PopupExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Text/TextExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/Theming/ThemingExample.windows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples-win/TransferProperties/TransferPropertiesExample.tsx"
     },
     {
       "type": "derived",

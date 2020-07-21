@@ -43,7 +43,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
       - template: upload-build-logs.yml
@@ -72,12 +72,6 @@ jobs:
           targetType: inline # filePath | inline
           script: |
             Start-Sleep -Seconds 30
-
-      - task: PowerShell@2
-        displayName: 'Check TestApp'
-        inputs:
-          targetType: 'inline'
-          script: 'if ((Get-Process ReactUwpTestApp) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
         displayName: run e2etest

@@ -9,10 +9,10 @@
   "Height": 360,
   "HorizontalAlignment": "Stretch",
   "Margin": "0,0,0,0",
-  "RenderSize": [800, 360],
+  "RenderSize": [759, 360],
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 800,
+  "Width": 759,
   "AutomationId": "ControlStyleView",
   "children": [
   {
@@ -363,11 +363,11 @@
     "HorizontalAlignment": "Stretch",
     "Margin": "0,0,0,0",
     "Padding": "10,10,10,10",
-    "RenderSize": [800, 50],
+    "RenderSize": [759, 50],
     "Text": "",
     "VerticalAlignment": "Stretch",
     "Visibility": "Visible",
-    "Width": 800,
+    "Width": 759,
     "children": [
     {
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
@@ -380,7 +380,7 @@
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": [800, 50],
+      "RenderSize": [759, 50],
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "children": [
@@ -396,7 +396,7 @@
         "Margin": "0,0,0,0",
         "Name": "BorderElement",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 50],
+        "RenderSize": [759, 50],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       },
@@ -413,7 +413,7 @@
         "Margin": "1,1,1,1",
         "Name": "ContentElement",
         "Padding": "10,10,10,10",
-        "RenderSize": [798, 48],
+        "RenderSize": [757, 48],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible",
         "children": [
@@ -429,7 +429,7 @@
           "Margin": "0,0,0,0",
           "Name": "Root",
           "Padding": "0,0,0,0",
-          "RenderSize": [798, 48],
+          "RenderSize": [757, 48],
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "children": [
@@ -444,7 +444,7 @@
             "HorizontalAlignment": "Stretch",
             "Margin": "0,0,0,0",
             "Padding": "0,0,0,0",
-            "RenderSize": [798, 48],
+            "RenderSize": [757, 48],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -461,7 +461,7 @@
               "Margin": "10,10,10,10",
               "Name": "ScrollContentPresenter",
               "Padding": "0,0,0,0",
-              "RenderSize": [778, 28],
+              "RenderSize": [737, 28],
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "children": [
@@ -471,7 +471,7 @@
                 "FlowDirection": "LeftToRight",
                 "HorizontalAlignment": "Stretch",
                 "Margin": "0,0,0,0",
-                "RenderSize": [778, 28],
+                "RenderSize": [737, 28],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
               }
@@ -488,7 +488,7 @@
               "HorizontalAlignment": "Stretch",
               "Margin": "0,0,0,0",
               "Padding": "0,0,0,0",
-              "RenderSize": [798, 48],
+              "RenderSize": [757, 48],
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible"
             }
@@ -507,7 +507,7 @@
         "Margin": "1,1,1,1",
         "Name": "PlaceholderTextContentPresenter",
         "Padding": "10,10,10,10",
-        "RenderSize": [798, 48],
+        "RenderSize": [757, 48],
         "Text": "TextBox",
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
@@ -542,7 +542,7 @@
         "Margin": "0,0,0,0",
         "Name": "DescriptionPresenter",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 0],
+        "RenderSize": [759, 0],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       }
@@ -563,10 +563,10 @@
     "HorizontalAlignment": "Stretch",
     "Margin": "0,0,0,0",
     "Padding": "10,10,10,10",
-    "RenderSize": [800, 50],
+    "RenderSize": [759, 50],
     "VerticalAlignment": "Stretch",
     "Visibility": "Visible",
-    "Width": 800,
+    "Width": 759,
     "children": [
     {
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
@@ -579,7 +579,7 @@
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": [800, 50],
+      "RenderSize": [759, 50],
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "children": [
@@ -595,7 +595,7 @@
         "Margin": "0,0,0,0",
         "Name": "BorderElement",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 50],
+        "RenderSize": [759, 50],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       },
@@ -612,7 +612,7 @@
         "Margin": "1,1,1,1",
         "Name": "ContentElement",
         "Padding": "10,10,10,10",
-        "RenderSize": [798, 48],
+        "RenderSize": [757, 48],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible",
         "children": [
@@ -628,7 +628,7 @@
           "Margin": "0,0,0,0",
           "Name": "Root",
           "Padding": "0,0,0,0",
-          "RenderSize": [798, 48],
+          "RenderSize": [757, 48],
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "children": [
@@ -643,7 +643,7 @@
             "HorizontalAlignment": "Stretch",
             "Margin": "0,0,0,0",
             "Padding": "0,0,0,0",
-            "RenderSize": [798, 48],
+            "RenderSize": [757, 48],
             "VerticalAlignment": "Stretch",
             "Visibility": "Visible",
             "children": [
@@ -660,7 +660,7 @@
               "Margin": "10,10,10,10",
               "Name": "ScrollContentPresenter",
               "Padding": "0,0,0,0",
-              "RenderSize": [778, 28],
+              "RenderSize": [737, 28],
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "children": [
@@ -670,7 +670,7 @@
                 "FlowDirection": "LeftToRight",
                 "HorizontalAlignment": "Stretch",
                 "Margin": "0,0,0,0",
-                "RenderSize": [778, 28],
+                "RenderSize": [737, 28],
                 "VerticalAlignment": "Stretch",
                 "Visibility": "Visible"
               }
@@ -687,7 +687,7 @@
               "HorizontalAlignment": "Stretch",
               "Margin": "0,0,0,0",
               "Padding": "0,0,0,0",
-              "RenderSize": [798, 48],
+              "RenderSize": [757, 48],
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible"
             }
@@ -706,7 +706,7 @@
         "Margin": "1,1,1,1",
         "Name": "PlaceholderTextContentPresenter",
         "Padding": "10,10,10,10",
-        "RenderSize": [798, 48],
+        "RenderSize": [757, 48],
         "Text": "Password",
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
@@ -741,7 +741,7 @@
         "Margin": "0,0,0,0",
         "Name": "DescriptionPresenter",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 0],
+        "RenderSize": [759, 0],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       }
@@ -891,11 +891,11 @@
     "HorizontalAlignment": "Left",
     "Margin": "0,0,0,0",
     "Padding": "12,5,0,7",
-    "RenderSize": [800, 50],
+    "RenderSize": [759, 50],
     "Text": "",
     "VerticalAlignment": "Top",
     "Visibility": "Visible",
-    "Width": 800,
+    "Width": 759,
     "children": [
     {
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
@@ -909,7 +909,7 @@
       "Margin": "0,0,0,0",
       "Name": "LayoutRoot",
       "Padding": "0,0,0,0",
-      "RenderSize": [800, 50],
+      "RenderSize": [759, 50],
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "children": [
@@ -925,7 +925,7 @@
         "Margin": "0,0,0,0",
         "Name": "Background",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 50],
+        "RenderSize": [759, 50],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       },
@@ -941,7 +941,7 @@
         "Margin": "0,0,0,0",
         "Name": "HighlightBackground",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 50],
+        "RenderSize": [759, 50],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       },
@@ -958,7 +958,7 @@
         "Margin": "12,5,0,7",
         "Name": "ContentPresenter",
         "Padding": "0,0,0,0",
-        "RenderSize": [756, 19],
+        "RenderSize": [715, 19],
         "VerticalAlignment": "Center",
         "Visibility": "Visible",
         "children": [
@@ -971,7 +971,7 @@
           "Margin": "0,0,0,0",
           "Name": "PlaceholderTextBlock",
           "Padding": "0,0,0,0",
-          "RenderSize": [756, 19],
+          "RenderSize": [715, 19],
           "Text": "",
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible"
@@ -1070,7 +1070,7 @@
         "Margin": "0,0,0,0",
         "Name": "DescriptionPresenter",
         "Padding": "0,0,0,0",
-        "RenderSize": [800, 0],
+        "RenderSize": [759, 0],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       },
@@ -1081,7 +1081,7 @@
         "HorizontalAlignment": "Stretch",
         "Margin": "0,0,0,0",
         "Name": "Popup",
-        "RenderSize": [768, 0],
+        "RenderSize": [727, 0],
         "VerticalAlignment": "Stretch",
         "Visibility": "Visible"
       }

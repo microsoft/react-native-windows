@@ -8,7 +8,6 @@ import HomePage from '../pages/HomePage';
 import assert from 'assert';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
   HomePage.clickAndGotoLoginPage();
 });
 

@@ -3,26 +3,25 @@
  * Licensed under the MIT License.
  */
 
-import React, { useState } from 'react';
+import * as React from 'react'
+import { useState } from 'react';
 import { Text, View, StyleSheet, Button, findNodeHandle } from 'react-native';
 import {
-  MEASURE_IN_WINDOW_BUTTON,
+  APPLY_SCALE_TRANSFORM_BUTTON,
   MEASURE_LAYOUT_BUTTON,
-  DIRECT_MANIPULATION_RESULT,
+  TRANSFORM_TEST_RESULT,
 } from './Consts';
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
   text: {
     textAlign: 'center',
     fontWeight: '700',
     height: 30,
   },
   childView: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
+    marginTop: 50,
     backgroundColor: 'lightgreen',
     marginBottom: 20,
   },
@@ -31,8 +30,9 @@ const styles = StyleSheet.create({
 const rootViewRef = React.createRef<View>();
 const childViewRef = React.createRef<View>();
 
-export function DirectManipulationTestPage() {
+export function TransformTestPage() {
   const [resultTextState, setResultTextState] = useState('');
+  const [viewScale, setViewScale] = useState(1);
 
   const measureLayoutSucceeded = (
     x: number,
@@ -50,25 +50,22 @@ export function DirectManipulationTestPage() {
   };
 
   return (
-    <View ref={rootViewRef} style={styles.container}>
-      <Text style={styles.text}>DirectManipulationResult:</Text>
-      <Text testID={DIRECT_MANIPULATION_RESULT}>{resultTextState}</Text>
-      <View style={styles.childView} ref={childViewRef} />
+    <View ref={rootViewRef}>
+      <Text testID={TRANSFORM_TEST_RESULT}>{resultTextState}</Text>
+      <View
+        style={[styles.childView, { transform: [{ scale: viewScale }] }]}
+        ref={childViewRef}
+      />
       <Button
-        title="Call MeasureInWindow"
+        title="Apply ScaleTransform"
         onPress={() => {
-          rootViewRef.current &&
-            rootViewRef.current.measureInWindow((x, y, width, height) => {
-              setResultTextState(
-                `x=${x};y=${y};width=${width};height=${height}`
-              );
-            });
+          setViewScale(viewScale === 1 ? 0.5 : 1);
         }}
-        testID={MEASURE_IN_WINDOW_BUTTON}
+        testID={APPLY_SCALE_TRANSFORM_BUTTON}
       />
 
       <Button
-        title="Call MeasureLayout"
+        title="MeasureLayout"
         onPress={() => {
           if (childViewRef.current) {
             const rootViewHandle = findNodeHandle(rootViewRef.current);
@@ -86,3 +83,14 @@ export function DirectManipulationTestPage() {
     </View>
   );
 }
+
+export const displayName = (_undefined?: string) => {};
+export const title = '<LegacyTransformTest>';
+export const description = 'Legacy e2e test for Transforms';
+export const examples = [
+  {
+    render: function(): JSX.Element {
+      return <TransformTestPage />;
+    },
+  },
+];

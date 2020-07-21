@@ -11,8 +11,10 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
-import { DatePicker, Picker } from 'react-native-windows';
-import React, { useState } from 'react';
+import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
+import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import * as React from 'react'
+import { useState } from 'react';
 import { SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT } from './Consts';
 import { TreeDumpControl } from './TreeDumpControl';
 
@@ -113,3 +115,14 @@ export function ControlStyleTestPage() {
     </View>
   );
 }
+
+export const displayName = (_undefined?: string) => {};
+export const title = '<LegacyControlStyleTest>';
+export const description = 'Legacy e2e test for Control Styles';
+export const examples = [
+  {
+    render: function(): JSX.Element {
+      return <ControlStyleTestPage />;
+    },
+  },
+];
