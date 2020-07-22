@@ -16,7 +16,7 @@ class ReactQueueBackedTaskRunner {
  public:
   ReactQueueBackedTaskRunner(std::shared_ptr<facebook::react::MessageQueueThread> jsQueue)
       : jsQueue_(std::move(jsQueue)) {
-    // This thread handles the delayed tasks.
+    // This thread handles the delayed tasks
     std::thread(&ReactQueueBackedTaskRunner::TimerFunc, this).detach();
   }
 
