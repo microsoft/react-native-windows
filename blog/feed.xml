@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Mon, 01 Jun 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 22 Jul 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,6 +12,14 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[Fast refresh and more on Windows with 0.62 release]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2020/07/22/62updates.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2020/07/22/62updates.html</guid>
+            <pubDate>Wed, 22 Jul 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>React Native for Windows released latest stable <a href="https://www.npmjs.com/package/react-native-windows/v/0.62.2">0.62.2</a> with Fast Refresh, RTL support, RedBox and thread safe property storage APIs.</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Build 2020 Recap]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html</link>
