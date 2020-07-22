@@ -9,6 +9,7 @@ using namespace std;
 #include <algorithm>
 #include <iostream>
 
+#include <unicode.h>
 #include "ShadowNode.h"
 #include "ShadowNodeRegistry.h"
 #include "UIManagerModule.h"
@@ -248,20 +249,24 @@ void UIManager::createView(
     std::string &&className,
     int64_t /*rootViewTag*/,
     folly::dynamic && /*ReadableMap*/ props) {
-  m_nativeUIManager->ensureInBatch();
-  auto viewManager = GetViewManager(className);
-  auto node = viewManager->createShadow();
-  node->m_className = std::move(className);
-  node->m_tag = tag;
-  node->m_viewManager = viewManager;
+  try {
+    m_nativeUIManager->ensureInBatch();
+    auto viewManager = GetViewManager(className);
+    auto node = viewManager->createShadow();
+    node->m_className = std::move(className);
+    node->m_tag = tag;
+    node->m_viewManager = viewManager;
 
-  node->createView();
-  m_nativeUIManager->CreateView(*node, props);
+    node->createView();
+    m_nativeUIManager->CreateView(*node, props);
 
-  m_nodeRegistry.addNode(shadow_ptr(node), tag);
+    m_nodeRegistry.addNode(shadow_ptr(node), tag);
 
-  if (!props.isNull())
-    node->updateProperties(std::move(props));
+    if (!props.isNull())
+      node->updateProperties(std::move(props));
+  } catch (winrt::hresult_error &hr) {
+    throw Microsoft::Common::Unicode::Utf16ToUtf8(hr.message());
+  }
 }
 
 void UIManager::setChildren(int64_t viewTag, folly::dynamic &&childrenTags) {
