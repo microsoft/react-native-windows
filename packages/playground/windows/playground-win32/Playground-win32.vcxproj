@@ -63,6 +63,7 @@
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" />
   </ImportGroup>
+  <Import Project="..\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('..\packages\$(WinUIPackageProps)')" />
   <PropertyGroup>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>867D41FE5091AED426000143497EA4DFC29A8097</PackageCertificateThumbprint>
@@ -115,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Playground-Win32.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Island_256.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup>
