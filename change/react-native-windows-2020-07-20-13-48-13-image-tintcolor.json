@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement Image tintColor style prop",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch",
-  "date": "2020-07-20T20:48:13.710Z"
-}
