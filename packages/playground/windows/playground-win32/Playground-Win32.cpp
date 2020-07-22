@@ -358,6 +358,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   WINRT_VERIFY(hwnd);
   winrt::check_win32(!hwnd);
+
   windowData.release();
 
   ShowWindow(hwnd, showCmd);
@@ -386,7 +387,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   return (int)msg.wParam;
 }
 
-_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
   WNDCLASSEXW wcex = {};
   wcex.cbSize = sizeof(WNDCLASSEX);
   wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -398,6 +399,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE /* instance */, HINSTANCE,
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
   wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
   wcex.lpszClassName = c_windowClassName;
+  wcex.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_ICON1));
   ATOM classId = RegisterClassEx(&wcex);
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
