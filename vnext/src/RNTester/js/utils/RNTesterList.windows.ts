@@ -28,34 +28,6 @@ interface IRNTesterModuleExample {
 
 const ComponentExamples: Array<IRNTesterExample> = [
   {
-    key: 'LegacyControlStyleTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/ControlStyleTestPage'),
-  },
-  {
-    key: 'LegacyTransformTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/TransformTestPage'),
-  },
-  {
-    key: 'LegacyTextInputTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/TextInputTestPage'),
-  },
-  {
-    key: 'LegacyLoginTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/LoginTestPage'),
-  },
-  {
-    key: 'LegacyDirectManipulationTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/DirectManipulationTestPage'),
-  },
-  {
-    key: 'LegacyImageTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/ImageTestPage'),
-  },
-  {
-    key: 'LegacyAccessibilityTest',
-    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
-  },
-  {
     key: 'ActivityIndicatorExample',
     module: require('react-native/RNTester/js/examples/ActivityIndicator/ActivityIndicatorExample'),
   },
@@ -288,6 +260,34 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'WebSocketExample',
     module: require('react-native/RNTester/js/examples/WebSocket/WebSocketExample'),
+  },
+  {
+    key: 'LegacyControlStyleTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/ControlStyleTestPage'),
+  },
+  {
+    key: 'LegacyTransformTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/TransformTestPage'),
+  },
+  {
+    key: 'LegacyTextInputTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/TextInputTestPage'),
+  },
+  {
+    key: 'LegacyLoginTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/LoginTestPage'),
+  },
+  {
+    key: 'LegacyDirectManipulationTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/DirectManipulationTestPage'),
+  },
+  {
+    key: 'LegacyImageTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/ImageTestPage'),
+  },
+  {
+    key: 'LegacyAccessibilityTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
   },
   // TODO:  TurboModuleExample crashes the app if web debugging is turned on
   //  {

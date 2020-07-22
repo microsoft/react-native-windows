@@ -65,14 +65,6 @@ jobs:
           targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: succeededOrFailed()
 
-      # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
-      - task: PowerShell@2
-        displayName: Pre-warm test app
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            Start-Sleep -Seconds 30
-
       - task: CmdLine@2
         displayName: run e2etest
         inputs:
