@@ -6,6 +6,6 @@ import HomePage from '../pages/HomePage';
 
 describe('SmokeTest', () => {
   it('SmokeTest', () => {
-    HomePage.clickAndGotoControlStylePage();
+    HomePage.clickControlStylePageButton();
   });
 });
