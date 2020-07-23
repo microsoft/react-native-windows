@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Jul 2020 05:04:42 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jul 2020 05:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.127
+
+Thu, 23 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move legacy tests to end of list (kmelmon@microsoft.com)
 
 ## 0.0.0-canary.126
 

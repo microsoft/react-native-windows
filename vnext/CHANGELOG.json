@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.127",
+      "version": "0.0.0-canary.127",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move legacy tests to end of list",
+            "author": "kmelmon@microsoft.com",
+            "commit": "a197058d9cd30bd08e85edada68d79f6f8650ff3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jul 2020 05:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.126",
       "version": "0.0.0-canary.126",
