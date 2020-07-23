@@ -79,7 +79,7 @@ class ReactQueueBackedTaskRunner {
           new_ready_tasks.push(std::move(const_cast<DelayedEntry &>(delayed_entry).second));
           delayed_task_queue_.pop();
         } else {
-          // The rest are not ready ..
+          // The rest are not ready
           break;
         }
 
