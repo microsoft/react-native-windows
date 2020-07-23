@@ -6,7 +6,7 @@
 
   <PropertyGroup Label="WinUI3 versioning">
     <!-- This value is also used by the CLI, see \vnext\local-cli\src\generator-windows\index.ts -->
-    <WinUI3Version>3.0.0-development.200706.1-CI</WinUI3Version>
+    <WinUI3Version>3.0.0-preview2.200713.0</WinUI3Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(UseWinUI3)'=='true'">
     <WinUIPackageName>Microsoft.WinUI</WinUIPackageName>
