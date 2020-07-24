@@ -46,7 +46,6 @@
     "@react-native-community/eslint-config": "^1.1.0",
     "@types/react-native": "^0.62.10",
     "@types/react": "16.9.0",
-    "eslint-plugin-prettier": "2.6.2",
     "eslint": "6.7.0",
     "eslint-plugin-prettier": "2.6.2",
     "flow-bin": "^0.120.1",
