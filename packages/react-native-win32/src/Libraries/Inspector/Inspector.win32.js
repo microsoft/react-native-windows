@@ -239,21 +239,22 @@ class Inspector extends React.Component<
         );
       }
 
-    // [Win32 Avoid Dimensions call
-    const node = ReactNative.findNodeHandle(this);
-    UIManager.measure(node, (x, y, width, height, left, top) => {
-      this.setState({
-        panelPos: pointerY > height / 2 ? 'top' : 'bottom',
-        selection: selectedIndex,
-        hierarchy,
-        inspected: {
-          style: props.style,
-          frame,
-          source,
-        },
+      // [Win32 Avoid Dimensions call
+      const node = ReactNative.findNodeHandle(this);
+      UIManager.measure(node, (x, y, width, height, left, top) => {
+        this.setState({
+          panelPos: pointerY > height / 2 ? 'top' : 'bottom',
+          selection: selectedIndex,
+          hierarchy,
+          inspected: {
+            style: props.style,
+            frame,
+            source,
+          },
+        });
       });
-    });
-    
+    };
+
     // ]Win32
     getInspectorDataForViewAtPoint(
       this.state.inspectedView,

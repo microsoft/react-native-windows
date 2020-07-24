@@ -9,9 +9,3 @@
 /ReactCopies
 /RNTester
 /RNTester.*
-
-# As of 0.63 we see eslint errors because its unable to parse this file, even
-# when trying to match eslint + babel + plugin version ranges, and eslintrc
-# rules with upstream. This file only has some basic patching, so don't try to
-# parse it for now.
-src/Libraries/Inspector/Inspector.win32.js
