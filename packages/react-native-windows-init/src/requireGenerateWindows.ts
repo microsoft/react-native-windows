@@ -19,10 +19,7 @@ export default function requireGenerateWindows(): GenerateWindows {
     });
 
     return require(requirePath).generateWindows;
-  } catch (ex) {
-    // FIXME remove before checkin
-    console.log(ex);
-
+  } catch {
     // Fall back to trying the older path
     const requirePath = require.resolve(
       'react-native-windows/local-cli/generate-windows',
