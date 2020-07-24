@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ActivityIndicatorViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -26,5 +25,4 @@ class ActivityIndicatorViewManager : public ControlViewManager {
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

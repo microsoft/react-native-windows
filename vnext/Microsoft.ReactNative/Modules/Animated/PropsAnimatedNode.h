@@ -8,10 +8,9 @@
 
 #include "FacadeType.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 struct ShadowNodeBase;
-class PropsAnimatedNode : public AnimatedNode {
+class PropsAnimatedNode final : public AnimatedNode {
  public:
   PropsAnimatedNode(
       int64_t tag,
@@ -47,5 +46,4 @@ class PropsAnimatedNode : public AnimatedNode {
 
   static constexpr int64_t s_connectedViewTagUnset{-1};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

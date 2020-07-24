@@ -21,8 +21,7 @@ namespace winrt {
 using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class PopupShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -350,5 +349,4 @@ folly::dynamic PopupViewManager::GetExportedCustomDirectEventTypeConstants() con
   return directEvents;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

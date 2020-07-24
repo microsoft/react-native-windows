@@ -67,8 +67,7 @@ struct json_type_traits<react::uwp::ResizeMode> {
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ImageShadowNode : public ShadowNodeBase {
  public:
@@ -197,5 +196,4 @@ folly::dynamic ImageViewManager::GetNativeProps() const {
 
   return props;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

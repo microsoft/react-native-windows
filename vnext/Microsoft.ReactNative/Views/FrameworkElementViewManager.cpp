@@ -66,8 +66,7 @@ struct json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>> 
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -565,5 +564,4 @@ void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase *shadowN
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

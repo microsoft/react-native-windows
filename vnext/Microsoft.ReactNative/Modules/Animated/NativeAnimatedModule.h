@@ -52,8 +52,7 @@
 /// from JS and the main class that coordinates all the action:
 /// <see cref="NativeAnimatedNodeManager"/>.
 /// </remarks>
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
  public:
   NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance);
@@ -112,5 +111,4 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   static const char *s_startListeningToAnimatedNodeValueName;
   static const char *s_stopListeningToAnimatedNodeValueName;
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

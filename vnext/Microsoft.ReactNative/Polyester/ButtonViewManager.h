@@ -9,8 +9,7 @@ namespace winrt {
 using Button = xaml::Controls::Button;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 class ButtonViewManager : public ContentControlViewManager {
@@ -34,5 +33,4 @@ class ButtonViewManager : public ContentControlViewManager {
 };
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

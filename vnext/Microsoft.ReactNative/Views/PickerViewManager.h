@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class PickerViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -27,5 +26,4 @@ class PickerViewManager : public ControlViewManager {
   friend class PickerShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

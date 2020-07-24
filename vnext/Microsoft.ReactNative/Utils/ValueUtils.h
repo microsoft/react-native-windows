@@ -12,8 +12,7 @@ namespace folly {
 struct dynamic;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 
@@ -39,5 +38,4 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::Windows::Foundation::TimeSpan)
 TimeSpanFromMs(double ms);
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

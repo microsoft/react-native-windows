@@ -19,8 +19,7 @@ using namespace xaml::Media;
 using namespace comp::Effects;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 /*static*/ winrt::com_ptr<ReactImageBrush> ReactImageBrush::Create() {
   return winrt::make_self<ReactImageBrush>();
 }
@@ -240,5 +239,5 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
 
   return m_effectBrush;
 }
-} // namespace uwp
-} // namespace react
+
+} // namespace react::uwp

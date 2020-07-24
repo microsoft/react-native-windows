@@ -21,8 +21,7 @@
 #pragma optimize("", off)
 #endif
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 //
 // LocationObserverModule::LocationObserver
@@ -232,5 +231,4 @@ auto LocationObserverModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

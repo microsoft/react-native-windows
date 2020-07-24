@@ -39,6 +39,9 @@ void Clipboard::getString(React::ReactPromise<React::JSValue> result) noexcept {
           jsDispatcher.Post([result, message] { result.Reject(message.c_str()); });
           break;
         }
+        case AsyncStatus::Started: {
+          assert(false); // should never happen
+        }
       }
     });
   } // namespace Microsoft::ReactNative

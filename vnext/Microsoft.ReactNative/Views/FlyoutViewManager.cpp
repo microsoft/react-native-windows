@@ -75,8 +75,7 @@ struct json_type_traits<winrt::FlyoutPlacementMode> {
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class FlyoutShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -468,5 +467,4 @@ void FlyoutViewManager::SetLayoutProps(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

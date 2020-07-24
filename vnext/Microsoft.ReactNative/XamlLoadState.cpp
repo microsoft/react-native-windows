@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "XamlLoadState.h"
 #include <sstream>
-#include "unicode.h"
+#include "Unicode.h"
 
 #ifndef DISABLE_XAML_GUARD
 

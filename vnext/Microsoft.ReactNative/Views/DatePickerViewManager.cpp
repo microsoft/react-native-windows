@@ -15,8 +15,7 @@ namespace winrt {
 using DayOfWeek = Windows::Globalization::DayOfWeek;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class DatePickerShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -166,5 +165,4 @@ YGMeasureFunc DatePickerViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

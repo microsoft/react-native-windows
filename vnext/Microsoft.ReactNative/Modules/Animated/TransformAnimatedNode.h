@@ -6,8 +6,7 @@
 #include "AnimatedNode.h"
 #include "FacadeType.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 struct TransformConfig {
  public:
   std::string property;
@@ -15,7 +14,7 @@ struct TransformConfig {
   double value;
 };
 
-class TransformAnimatedNode : public AnimatedNode {
+class TransformAnimatedNode final : public AnimatedNode {
  public:
   TransformAnimatedNode(
       int64_t tag,
@@ -35,5 +34,4 @@ class TransformAnimatedNode : public AnimatedNode {
   static constexpr std::string_view s_nodeTagName{"nodeTag"};
   static constexpr std::string_view s_valueName{"value"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

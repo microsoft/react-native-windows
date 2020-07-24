@@ -6,8 +6,7 @@
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ViewPanel.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ViewShadowNode;
 
@@ -42,5 +41,4 @@ class ViewViewManager : public FrameworkElementViewManager {
   void TryUpdateView(ViewShadowNode *viewShadowNode, winrt::react::uwp::ViewPanel &pPanel, bool useControl);
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

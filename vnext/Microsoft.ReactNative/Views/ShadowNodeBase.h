@@ -12,8 +12,7 @@
 #include <Shared/ReactWindowsAPI.h>
 #include "KeyboardEventHandler.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ViewManagerBase;
 
@@ -123,5 +122,4 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
 };
 #pragma warning(pop)
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

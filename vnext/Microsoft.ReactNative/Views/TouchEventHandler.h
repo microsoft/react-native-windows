@@ -19,8 +19,7 @@ using namespace Windows::Foundation;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class TouchEventHandler {
  public:
@@ -103,5 +102,4 @@ class TouchEventHandler {
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

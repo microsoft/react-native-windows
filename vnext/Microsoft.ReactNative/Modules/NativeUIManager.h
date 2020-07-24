@@ -15,8 +15,7 @@
 #include <memory>
 #include <vector>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct IXamlReactControl;
 
@@ -112,5 +111,4 @@ class NativeUIManager : public facebook::react::INativeUIManager {
   std::map<int64_t, std::weak_ptr<IXamlReactControl>> m_tagsToXamlReactControl;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

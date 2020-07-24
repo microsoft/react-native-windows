@@ -21,7 +21,7 @@ int CrashHandler(const EXCEPTION_POINTERS *excPtr, uint32_t tag) noexcept {
 
 void CrashWithRecovery(uint32_t tag) noexcept {
   __try {
-    *((int *)0) = 1;
+    *((volatile int *)0) = 1;
   } __except (CrashHandler(GetExceptionInformation(), tag)) {
   }
   __fastfail(tag);
