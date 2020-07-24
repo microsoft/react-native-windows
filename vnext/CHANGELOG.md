@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 23 Jul 2020 05:04:42 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Jul 2020 05:05:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.128
+
+Fri, 24 Jul 2020 05:05:51 GMT
+
+### Changes
+
+- Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package (dannyvv@microsoft.com)
+- Update V8 package version (tudorm@microsoft.com)
 
 ## 0.0.0-canary.127
 
