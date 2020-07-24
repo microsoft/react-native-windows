@@ -87,6 +87,9 @@
     <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl">
+      <Filter>ABI</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />

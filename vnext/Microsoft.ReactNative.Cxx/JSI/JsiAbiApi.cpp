@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "JsiAbiApi.h"
 #include <utility>
+#include "winrt/Windows.Foundation.Collections.h"
 
 using namespace facebook::jsi;
 

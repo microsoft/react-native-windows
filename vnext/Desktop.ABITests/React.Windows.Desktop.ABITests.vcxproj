@@ -60,7 +60,13 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(MSBuildThisFileDirectory);
+        $(VCInstallDir)UnitTest\include;
+        $(JSI_SourcePath);
+        $(ReactNativeDir)\ReactCommon;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
       <!--
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
