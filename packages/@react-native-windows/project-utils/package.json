@@ -31,5 +31,14 @@
   },
   "files": [
     "lib-commonjs"
-  ]
+  ],
+  "beachball": {
+    "defaultNpmTag": "canary",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
+  },
+  "promoteRelease": true
 }

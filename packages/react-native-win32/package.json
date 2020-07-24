@@ -72,5 +72,6 @@
       "minor",
       "patch"
     ]
-  }
+  },
+  "promoteRelease": true
 }

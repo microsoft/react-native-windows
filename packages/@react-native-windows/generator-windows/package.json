@@ -37,5 +37,14 @@
   "files": [
     "lib-commonjs",
     "templates"
-  ]
+  ],
+  "beachball": {
+    "defaultNpmTag": "canary",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
+  },
+  "promoteRelease": true
 }

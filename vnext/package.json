@@ -65,7 +65,12 @@
   },
   "beachball": {
     "defaultNpmTag": "canary",
-    "gitTags": true
+    "gitTags": true,
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
   },
   "files": [
     "/codegen",
@@ -106,5 +111,6 @@
     "/typings-index.js",
     "/typings-index.js.map",
     "/rn-get-polyfills.js"
-  ]
+  ],
+  "promoteRelease": true
 }

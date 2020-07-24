@@ -44,5 +44,14 @@
     "lib-commonjs",
     "powershell",
     "templates"
-  ]
+  ],
+  "beachball": {
+    "defaultNpmTag": "canary",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
+  },
+  "promoteRelease": true
 }
