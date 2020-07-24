@@ -3,7 +3,8 @@
  * Licensed under the MIT License.
  */
 
-import React, { useState } from 'react';
+import * as React from 'react'
+import { useState } from 'react';
 import {
   Text,
   TextInput,
@@ -101,3 +102,15 @@ export function LoginTestPage() {
     </View>
   );
 }
+
+
+export const displayName = (_undefined?: string) => {};
+export const title = '<LegacyLoginTest>';
+export const description = 'Legacy e2e test for TextInput with password';
+export const examples = [
+  {
+    render: function(): JSX.Element {
+      return <LoginTestPage />;
+    },
+  },
+];

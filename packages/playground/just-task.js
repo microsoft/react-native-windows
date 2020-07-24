@@ -19,7 +19,7 @@ task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));
 
 task('prepareBundleWin32', () => {
-  const file = 'windows/playground-win32/Bundle';
+  const file = 'windows/playground-win32/Bundle/Samples';
   if (!fs.existsSync(file)) {
     fs.mkdirSync(file);
   }

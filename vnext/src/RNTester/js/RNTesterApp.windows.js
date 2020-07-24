@@ -74,6 +74,7 @@ const Header = ({
             {onBack && (
               <View>
                 <Button
+                  testID="BackButton"
                   title="Back"
                   onPress={onBack}
                   color={Platform.select({

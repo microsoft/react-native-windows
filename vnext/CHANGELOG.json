@@ -2,6 +2,213 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Jul 2020 05:05:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.128",
+      "version": "0.0.0-canary.128",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "062d5e1df64c7673733a960e15c6a4df7fabbe82",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudorm@microsoft.com",
+            "commit": "312e2acf3eb128e03389d5278ed252f6b32aa50c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.127",
+      "version": "0.0.0-canary.127",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move legacy tests to end of list",
+            "author": "kmelmon@microsoft.com",
+            "commit": "a197058d9cd30bd08e85edada68d79f6f8650ff3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.126",
+      "version": "0.0.0-canary.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move e2etest pages into rntester",
+            "author": "kmelmon@microsoft.com",
+            "commit": "59a2dcfd3d98bb1471706cdf07835cd6f9113ad3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement Image tintColor style prop",
+            "author": "email not defined",
+            "commit": "713ca50156dcdc928311e8ca2cb7a7a5b5b0bfed",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "move to winui3 preview 2",
+            "author": "asklar@microsoft.com",
+            "commit": "0159ffadebcd131e78a366f2c8536432ad7a4d73",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use compositor in TLS",
+            "author": "asklar@microsoft.com",
+            "commit": "97e2b81ed674d8683c77d71b911c7b5347a316ab",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add RedBox objects, tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2e26214dc90290be784968386ba61b08c966c93",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Jul 2020 05:05:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.125",
+      "version": "0.0.0-canary.125",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove ReactWindows-Universal.sln and update publish.yml to use Microsoft.React-native.sln",
+            "author": "dannyvv@microsoft.com",
+            "commit": "35261299fcb2877cf90d3e03af6d129f0522ede8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Display expected answers and default one",
+            "author": "sam@elborai.me",
+            "commit": "c76b8eb611c6396d28741ff0075b575a7fe0cd70",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update e2e-testing.md",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a97a2fb331f4a7b9b929bcaec027f559e3b70fb8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add windows adk to machine setup script (for build lab)",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d1d0bcadc040a426edfe3c00f0f7acaafe591a2e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Jul 2020 05:04:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.124",
+      "version": "0.0.0-canary.124",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix layout deploy",
+            "author": "asklar@microsoft.com",
+            "commit": "8c630a03bb65cb23a341f006884e3a3f72e325f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enabeling SourceLink support.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "8453cc9fae164f5226be50117ed6112966906964",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add fix for msbuild long paths in fixup script",
+            "author": "dannyvv@microsoft.com",
+            "commit": "dd62d60e6e834c8802afbd24151f1c4ce70348bd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Jul 2020 05:06:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.123",
+      "version": "0.0.0-canary.123",
+      "comments": {
+        "none": [
+          {
+            "comment": "Switch Effects.idl to MIDL 3.0",
+            "author": "email not defined",
+            "commit": "eb15b65f8b478ad1e334efc59409f3da3d09f67a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add RedBox objects, tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2e26214dc90290be784968386ba61b08c966c93",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Codesign Microsoft.ReactNative binaries and nuget package (disabled)",
+            "author": "jthysell@microsoft.com",
+            "commit": "a62ce8df7759724deae248b576948e74f1a6d7a9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Jul 2020 05:04:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.122",
+      "version": "0.0.0-canary.122",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implement Image blurRadius",
+            "author": "email not defined",
+            "commit": "25f7363207cab2a533e945140b3e57e6993e0a00",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add support for `Task` and `Task<T>` async methods for C# native modules.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c99c018e48f54d3cb9c4ed11dfde8ced14a58fc4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add debugging output for image load failures",
+            "author": "asklar@microsoft.com",
+            "commit": "c205c3740756982c9e22d5d98ebec17517470600",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Have Desktop int. tests consume DLL.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b328676d866df7359db9146ddbf6da3877a7a321",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add ReactPackageProvider tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "ac674b1faed511357f72cfc6ead7295eceaebb76",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Jul 2020 05:04:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.121",
       "version": "0.0.0-canary.121",

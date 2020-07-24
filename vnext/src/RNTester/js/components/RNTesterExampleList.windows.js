@@ -61,6 +61,7 @@ class RowComponent extends React.PureComponent<{
         {theme => {
           return (
             <TouchableHighlight
+              testID={item.module.title}
               onShowUnderlay={this.props.onShowUnderlay}
               onHideUnderlay={this.props.onHideUnderlay}
               onAccessibilityTap={this._onPress}

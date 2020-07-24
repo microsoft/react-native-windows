@@ -43,7 +43,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "@office-iss/rex-win32": "0.62.0-preview.16-tenantreactnativewin-13017.2",
+    "@office-iss/rex-win32": "0.62.0-preview.17-tenantreactnativewin-13114",
     "@rnw-scripts/eslint-config": "0.0.2",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",

@@ -2,11 +2,12 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
+
 import {
   REACT_CONTROL_ERROR_TEST_ID,
-  HOME_BUTTON,
+  BACK_BUTTON,
   TREE_DUMP_RESULT,
-} from '../../app/Consts';
+} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 export function By(testId: string): WebdriverIO.Element {
   // eslint-disable-next-line no-undef
@@ -65,7 +66,7 @@ export class BasePage {
   }
 
   protected get homeButton() {
-    return By(HOME_BUTTON);
+    return By(BACK_BUTTON);
   }
 
   private get reactControlErrorMessage() {

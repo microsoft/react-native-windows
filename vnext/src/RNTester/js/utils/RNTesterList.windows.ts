@@ -262,9 +262,38 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/WebSocket/WebSocketExample'),
   },
   {
-    key: 'TurboModuleExample',
-    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
+    key: 'LegacyControlStyleTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/ControlStyleTestPage'),
   },
+  {
+    key: 'LegacyTransformTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/TransformTestPage'),
+  },
+  {
+    key: 'LegacyTextInputTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/TextInputTestPage'),
+  },
+  {
+    key: 'LegacyLoginTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/LoginTestPage'),
+  },
+  {
+    key: 'LegacyDirectManipulationTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/DirectManipulationTestPage'),
+  },
+  {
+    key: 'LegacyImageTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/ImageTestPage'),
+  },
+  {
+    key: 'LegacyAccessibilityTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
+  },
+  // TODO:  TurboModuleExample crashes the app if web debugging is turned on
+  //  {
+  //    key: 'TurboModuleExample',
+  //    module: require('react-native/RNTester/js/examples/TurboModule/TurboModuleExample'),
+  //  },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',

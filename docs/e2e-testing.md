@@ -70,7 +70,7 @@ packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
 New test page should be in E2E/app/ or its subfolder.
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
 
 ```
 // LoginTestPage.ts
@@ -187,12 +187,15 @@ To debug in VS Code, create a configuration in your launch.json that looks like 
             "request": "launch",
             "name": "run wdio",
             "program": "${workspaceRoot}/run_wdio.js",
+             "args": ["controlStyle"],
             "stopOnEntry": true,
             "autoAttachChildProcesses": true        
         },
     ]
 }
 ```
+If you want to run all the tests, omit args.  If you want it to run just one test, supply just the name of the test spec without the spec.ts extension as an arg.  
+
 jasmine runs in a child node process, so the "autoAttachChildProcesses" : true is required for VS Code to attach to that child process.  With that setup, you can now set breakpoints in your test specs and VS Code will let you debug your tests.
 
 # More about E2E test
@@ -288,7 +291,7 @@ No matter what JavaScript framework you choose for native app testing, you have 
 
  WinAppDriver provides rich API to help locate the UI element. If [testID](https://facebook.github.io/react-native/docs/picker-item#testid) is specified in React Native app for Windows, the locator strategy should choose `accessibility id`.
 
-A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/app/Consts.ts), then be imported by test app and test page objects or test cases.
+A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/vnext/src/RNTester/js/examples-win/LegacyTests/Consts.ts), then be imported by test app and test page objects or test cases.
 
 | **Client API** | **Locator Strategy** | **Matched Attribute in inspect.exe** | **Example** |
 | --- | --- | --- | --- |

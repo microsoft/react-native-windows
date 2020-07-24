@@ -11,13 +11,14 @@ parameters:
   packMicrosoftReactNativeCxx: true
   packMicrosoftReactNativeManaged: true
   packMicrosoftReactNativeManagedCodeGen: true
+  signMicrosoft: false
 
 steps:
-  - task: DownloadBuildArtifacts@0
+  - task: DownloadPipelineArtifact@2
     displayName: 'Download ReactWindows Artifact'
     inputs:
-      artifactName: ReactWindows
-      downloadPath: $(System.DefaultWorkingDirectory)
+      artifact: ReactWindows
+      path: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
@@ -34,6 +35,8 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         slices:  ${{ parameters.slices }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        codesignBinaries: ${{ parameters.signMicrosoft }}
+        codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeCxx, true) }}:
     - template: prep-and-pack-single.yml
@@ -42,6 +45,7 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         slices:  ''
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
     - template: prep-and-pack-single.yml
@@ -50,6 +54,8 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         slices:  ${{ parameters.slices }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        codesignBinaries: ${{ parameters.signMicrosoft }}
+        codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManagedCodeGen, true) }}:
     - template: prep-and-pack-single.yml
@@ -58,3 +64,5 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         slices: ''
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        codesignBinaries: ${{ parameters.signMicrosoft }}
+        codesignNuget: ${{ parameters.signMicrosoft }}

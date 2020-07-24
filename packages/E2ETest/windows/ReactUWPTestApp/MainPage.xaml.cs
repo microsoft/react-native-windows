@@ -15,6 +15,7 @@ namespace ReactUWPTestApp
             this.InitializeComponent();
             var app = Application.Current as App;
             myRootView.ReactNativeHost = app.Host;
+            myRootView.ComponentName = "RNTesterApp";
         }
     }
 }

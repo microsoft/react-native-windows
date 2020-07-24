@@ -61,14 +61,50 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat};
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
       m_useCompositionBrush = shouldUseCompositionBrush;
       SetBackground(false);
+    } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->ResizeMode(value);
     } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
       bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
+    }
+  }
+}
+
+void ReactImage::BlurRadius(float value) {
+  if (m_blurRadius != value) {
+    m_blurRadius = value;
+
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
+
+    if (switchBrushes) {
+      m_useCompositionBrush = shouldUseCompositionBrush;
+      SetBackground(false);
+    } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->BlurRadius(value);
+    }
+  }
+}
+
+void ReactImage::TintColor(winrt::Color value) {
+  bool sameColor{value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G &&
+                 value.B == m_tintColor.B};
+
+  if (!sameColor) {
+    m_tintColor = value;
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
+
+    if (switchBrushes) {
+      m_useCompositionBrush = shouldUseCompositionBrush;
+      SetBackground(false);
+    } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->TintColor(value);
     }
   }
 }
@@ -128,6 +164,33 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
       co_return nullptr;
   }
 }
+template <typename TImage>
+std::wstring GetUriFromImage(const TImage &image) {
+  return image.UriSource().ToString().c_str();
+}
+template <>
+std::wstring GetUriFromImage(const winrt::Uri &uri) {
+  return uri != nullptr ? uri.ToString().c_str() : L"<no Uri available>";
+}
+
+template <typename TImage>
+void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
+  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")"
+          << std::endl;
+}
+
+// TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
+// SvgImageSourceFailedEventArgs, because they both have Status() properties
+// and the type of status are both enums with the same meaning
+// See LoadedImageSourceLoadStatus and SvgImageSourceLoadStatus.
+template <typename TImage, typename TSourceFailedEventArgs>
+void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
+  // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.loadedimagesourceloadstatus
+  constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
+  const auto status = (int)args.Status();
+  assert(0 <= status && status < ARRAYSIZE(statusNames));
+  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")" << std::endl;
+}
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
@@ -169,7 +232,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       } else {
         compositionBrush->Compositor(react::uwp::GetCompositor(*this));
       }
-      compositionBrush->ResizeMode(strong_this->m_resizeMode);
+
+      compositionBrush->BlurRadius(strong_this->m_blurRadius);
+      compositionBrush->TintColor(strong_this->m_tintColor);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
                                       : winrt::LoadedImageSurface::StartLoadFromUri(uri);
@@ -181,7 +246,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
       strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
           winrt::auto_revoke,
-          [weak_this, compositionBrush, surface, fireLoadEndEvent](
+          [weak_this, compositionBrush, surface, fireLoadEndEvent, uri](
               winrt::LoadedImageSurface const & /*sender*/,
               winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
             if (auto strong_this{weak_this.get()}) {
@@ -199,8 +264,14 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
 
                 compositionBrush->Source(surface);
+                compositionBrush->ResizeMode(strong_this->m_resizeMode);
+                compositionBrush->BlurRadius(strong_this->m_blurRadius);
+                compositionBrush->TintColor(strong_this->m_tintColor);
+
                 strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
                 succeeded = true;
+              } else {
+                ImageFailed(uri, args);
               }
 
               if (fireLoadEndEvent) {
@@ -243,12 +314,13 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
               });
 
-          strong_this->m_svgImageSourceOpenFailedRevoker =
-              svgImageSource.OpenFailed(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+          strong_this->m_svgImageSourceOpenFailedRevoker = svgImageSource.OpenFailed(
+              winrt::auto_revoke, [weak_this, fireLoadEndEvent, svgImageSource](const auto &, const auto &args) {
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
                   strong_this->m_onLoadEndEvent(*strong_this, false);
                 }
+                ImageFailed(svgImageSource, args);
               });
 
           imageBrush.ImageSource(svgImageSource);
@@ -273,13 +345,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
               });
 
           strong_this->m_bitmapImageFailed = bitmapImage.ImageFailed(
-              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+              winrt::auto_revoke,
+              [imageBrush, weak_this, fireLoadEndEvent, bitmapImage](const auto &, const auto &args) {
                 imageBrush.Opacity(1);
 
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
                   strong_this->m_onLoadEndEvent(*strong_this, false);
                 }
+                ImageFailed(bitmapImage, args);
               });
 
           imageBrush.ImageSource(bitmapImage);

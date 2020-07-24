@@ -39,6 +39,8 @@ inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
 comp::Compositor GetCompositor(const XamlView &view);
+void SetCompositor(const comp::Compositor &compositor);
+comp::Compositor GetCompositor();
 
 } // namespace uwp
 } // namespace react

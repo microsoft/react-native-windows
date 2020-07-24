@@ -1,8 +1,76 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Jul 2020 05:04:55 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Jul 2020 05:05:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.128
+
+Fri, 24 Jul 2020 05:05:51 GMT
+
+### Changes
+
+- Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package (dannyvv@microsoft.com)
+- Update V8 package version (tudorm@microsoft.com)
+
+## 0.0.0-canary.127
+
+Thu, 23 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move legacy tests to end of list (kmelmon@microsoft.com)
+
+## 0.0.0-canary.126
+
+Wed, 22 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move e2etest pages into rntester (kmelmon@microsoft.com)
+- Implement Image tintColor style prop (email not defined)
+- move to winui3 preview 2 (asklar@microsoft.com)
+- Use compositor in TLS (asklar@microsoft.com)
+
+## 0.0.0-canary.125
+
+Tue, 21 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Remove ReactWindows-Universal.sln and update publish.yml to use Microsoft.React-native.sln (dannyvv@microsoft.com)
+- Display expected answers and default one (sam@elborai.me)
+- Update e2e-testing.md (dannyvv@microsoft.com)
+- Add windows adk to machine setup script (for build lab) (dannyvv@microsoft.com)
+
+## 0.0.0-canary.124
+
+Sat, 18 Jul 2020 05:04:20 GMT
+
+### Changes
+
+- Fix layout deploy (asklar@microsoft.com)
+- Enabeling SourceLink support. (dannyvv@microsoft.com)
+- Add fix for msbuild long paths in fixup script (dannyvv@microsoft.com)
+
+## 0.0.0-canary.123
+
+Fri, 17 Jul 2020 05:06:31 GMT
+
+### Changes
+
+- Codesign Microsoft.ReactNative binaries and nuget package (disabled) (jthysell@microsoft.com)
+
+## 0.0.0-canary.122
+
+Thu, 16 Jul 2020 05:04:45 GMT
+
+### Changes
+
+- Implement Image blurRadius (email not defined)
+- Add support for `Task` and `Task<T>` async methods for C# native modules. (dannyvv@microsoft.com)
+- Add debugging output for image load failures (asklar@microsoft.com)
+- Have Desktop int. tests consume DLL. (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.121
 

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "CppWinRTIncludes.h"
 #include "ReactImageBrush.h"
 
 #include <UI.Xaml.Controls.h>
@@ -52,6 +53,16 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   }
   void ResizeMode(react::uwp::ResizeMode value);
 
+  float BlurRadius() {
+    return m_blurRadius;
+  }
+  void BlurRadius(float value);
+
+  winrt::Windows::UI::Color TintColor() {
+    return m_tintColor;
+  }
+  void TintColor(winrt::Windows::UI::Color value);
+
  private:
   xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
@@ -59,8 +70,10 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
+  float m_blurRadius{0};
   ReactImageSource m_imageSource;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+  winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;

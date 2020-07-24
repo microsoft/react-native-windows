@@ -1,0 +1,10 @@
+parameters:
+  buildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
+
+steps:
+  - task: PublishBuildArtifacts@1
+    displayName: Upload build logs
+    condition:  succeededOrFailed()
+    inputs:
+      pathtoPublish: '${{ parameters.buildLogDirectory }}'
+      artifactName: 'Build logs - $(Agent.JobName)-$(System.JobAttempt)'

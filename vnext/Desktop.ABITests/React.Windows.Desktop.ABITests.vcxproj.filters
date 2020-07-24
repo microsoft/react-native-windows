@@ -48,6 +48,9 @@
     <ClCompile Include="ReactModuleBuilderTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ReactNonAbiValueTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ReactPackageBuilderTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ReactPackageProviderTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RedBoxTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

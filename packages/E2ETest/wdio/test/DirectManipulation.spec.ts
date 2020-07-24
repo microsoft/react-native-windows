@@ -8,7 +8,6 @@ import DirectManipulationPage from '../pages/DirectManipulationPage';
 import assert from 'assert';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
   HomePage.clickAndGotoDirectManipulationPage();
 });
 
@@ -19,7 +18,6 @@ describe('DirectManipulationTest', () => {
       result.includes('width='),
       'measureInWindow response include width'
     );
-    assert.ok(result.includes('x=0;'), 'measureInWindow response x=0');
   });
 
   it('measureLayout Test', () => {
