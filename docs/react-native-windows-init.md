@@ -3,10 +3,10 @@
 This document describes how the template initialization works for `react-native-windows init`.
 
 ## Where is the code:
-The main logic that determines the template values and which files to apply is function [`copyProjectTemplateAndReplace` in `packages/@react-native-windows/generate-windows/src/index.ts`](../packages/@react-native-windows/generate-windows/src/index.ts#L48).
+The main logic that determines the template values and which files to apply is function [`copyProjectTemplateAndReplace` in `packages/@react-native-windows/cli/src/generator-windows/index.ts`](../packages/@react-native-windows/cli/src/generator-windows/index.ts#L48).
 The parameters for `init` is located in variable [`argv` in `packages/react-native-windows-init/src/Cli.ts`](../packages/react-native-windows-init/src/Cli.ts#L27)
 
-The template files can be found in [`packages/@react-native-windows/generate-windows/templates`](../packages/@react-native-windows/generate-windows/templates)
+The template files can be found in [`packages/@react-native-windows/cli/templates`](../packages/@react-native-windows/cli/templates)
 
 ## Debugging:
 To debug the template, see [Contributing to the CLI](https://github.com/microsoft/react-native-windows/wiki/Contributing-to-the-CLI) on our wiki.
