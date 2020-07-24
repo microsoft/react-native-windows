@@ -12,7 +12,7 @@ namespace facebook::jsi {
 
 std::vector<RuntimeFactory> runtimeGenerators() {
   return {RuntimeFactory([]() -> std::unique_ptr<Runtime> {
-    IJsiRuntime runtime{JsiRuntime::MakeChakraRuntime()};
+    JsiRuntime runtime{JsiRuntime::MakeChakraRuntime()};
     return std::make_unique<JsiAbiRuntime>(runtime);
   })};
 }

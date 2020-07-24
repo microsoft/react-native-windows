@@ -116,6 +116,22 @@ namespace Microsoft.ReactNative
     IVector<JsiPropertyNameIdData> GetPropertyNames(JsiRuntime runtime);
   };
 
+  enum JsiErrorType
+  {
+    JSError,         // JavaScript error
+    NativeException, // JSI native code exception
+  };
+
+  [webhosthidden, default_interface]
+  runtimeclass JsiError
+  {
+    JsiErrorType ErrorType { get; };
+    String What { get; };
+    String Message { get; };
+    String Stack { get; };
+    JsiValueData Value { get; };
+  };
+
   [webhosthidden, default_interface]
   runtimeclass JsiRuntime
   {
@@ -193,5 +209,8 @@ namespace Microsoft.ReactNative
     void ReleaseString(JsiStringData str);
     void ReleaseObject(JsiObjectData obj);
     void ReleasePropertyNameId(JsiPropertyNameIdData propertyNameId);
+
+    JsiError GetAndRemoveError();
+    void SetError(JsiErrorType errorType, String what, JsiValueData value);
   };
 }
