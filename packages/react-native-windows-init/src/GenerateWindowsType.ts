@@ -10,7 +10,7 @@
 // import to just this file and blacklist the file to get around it. Note that
 // we cannot import the real module because it may be in a different location
 // for older versions of RNW.
-import type {generateWindows, GenerateOptions} from '@react-native-windows/generator-windows';
+import type {generateWindows, GenerateOptions} from '@react-native-windows/generate-windows';
 
 // Current version
 export type GenerateWindows = typeof generateWindows;

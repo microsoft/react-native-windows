@@ -23,7 +23,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/cli": "0.0.0-canary.0",
-    "@react-native-windows/generator-windows": "0.0.0-canary.0",
+    "@react-native-windows/generate-windows": "0.0.0-canary.0",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "base64-js": "^1.1.2",
@@ -78,7 +78,7 @@
     "/Common",
     "/DeforkingPatches",
     "/Folly",
-    "/generator.js",
+    "/generate.js",
     "/include",
     "/JSI",
     "/Libraries",

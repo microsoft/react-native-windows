@@ -1,12 +1,12 @@
 {
-  "name": "@react-native-windows/generator-windows",
+  "name": "@react-native-windows/generate-windows",
   "version": "0.0.0-canary.0",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
-    "directory": "packages/@react-native-windows/generator-windows"
+    "directory": "packages/@react-native-windows/generate-windows"
   },
   "scripts": {
     "build": "just-scripts build",
