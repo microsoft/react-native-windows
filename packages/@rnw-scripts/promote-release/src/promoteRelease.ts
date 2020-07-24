@@ -177,18 +177,32 @@ async function updateBeachballConfig(
  * @param props key/values to merge into the package.json
  */
 async function updatePackage(packagePath: string, props: {[key: string]: any}) {
-  const packageContent = await fs.promises.readFile(packagePath);
-  if (!packageContent) {
-    throw new Error(`Unable to read package file "${packagePath}"`);
-  }
-
-  const packageJson = JSON.parse(packageContent.toString());
+  const packageJson = await jsonOfPackage(packagePath);
 
   _.merge(packageJson, props);
   await fs.promises.writeFile(
     packagePath,
     JSON.stringify(packageJson, null /*replacer*/, 2 /*space*/) + '\n',
   );
+}
+
+/**
+ * Returns the JSON content of a package
+ */
+async function jsonOfPackage(packagePath: string): Promise<any> {
+  const packageContent = await fs.promises.readFile(packagePath);
+  if (!packageContent) {
+    throw new Error(`Unable to read package file "${packagePath}"`);
+  }
+
+  return JSON.parse(packageContent.toString());
+}
+
+/**
+ * Returns the name of a package
+ */
+async function nameOfPackage(packagePath: string): Promise<string> {
+  return (await jsonOfPackage(packagePath)).name;
 }
 
 /**
@@ -205,7 +219,7 @@ async function enumeratePackagesToPromote(): Promise<string[]> {
  * @returns absolute paths to package.json
  */
 async function enumeratePackages(
-  pred: (pkgJson: any) => boolean,
+  pred: (pkgJson: any) => boolean = () => true,
 ): Promise<string[]> {
   const repoRoot = await findRepoRoot();
   const allPackages: string[] = await glob('**/package.json', {
@@ -216,9 +230,7 @@ async function enumeratePackages(
 
   const matchingPackages: string[] = [];
   for (const packageFile of allPackages) {
-    const packageJson = JSON.parse(
-      (await fs.promises.readFile(packageFile)).toString(),
-    );
+    const packageJson = await jsonOfPackage(packageFile);
     if (pred(packageJson)) {
       matchingPackages.push(packageFile);
     }
@@ -243,11 +255,39 @@ function distTag(release: ReleaseType, version: string): string {
 
 /**
  * Change the version of main packages to the given string
- * @param packageVersion
+ * @param version The new package version
  */
-async function updatePackageVersions(packageVersion: string) {
-  for (const packagePath of await enumeratePackagesToPromote()) {
-    await updatePackage(packagePath, {version: packageVersion});
+async function updatePackageVersions(version: string) {
+  const packagesToPromote = await enumeratePackagesToPromote();
+  const promotedPackages = await Promise.all(
+    packagesToPromote.map(nameOfPackage),
+  );
+
+  for (const packagePath of packagesToPromote) {
+    await updatePackage(packagePath, {version});
+  }
+
+  // We need to update anything that might have a dependency on what we just
+  // bumped.
+  for (const packagePath of await enumeratePackages()) {
+    for (const field of [
+      'dependencies',
+      'peerDependencies',
+      'devDependencies',
+    ]) {
+      const dependencies = (await jsonOfPackage(packagePath))[field];
+      if (!dependencies) {
+        continue;
+      }
+
+      for (const dependencyPackage of Object.keys(dependencies)) {
+        if (promotedPackages.includes(dependencyPackage)) {
+          dependencies[dependencyPackage] = version;
+        }
+      }
+
+      await updatePackage(packagePath, {[field]: dependencies});
+    }
   }
 }
 
