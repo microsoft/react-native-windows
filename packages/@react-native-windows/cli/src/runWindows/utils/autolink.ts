@@ -11,7 +11,8 @@ import {performance} from 'perf_hooks';
 
 import {newSpinner} from './commandWithProgress';
 import * as vstools from './vstools';
-import * as projectUtils from '@react-native-windows/project-utils';
+import * as generatorCommon from '../../generator-common';
+import * as configUtils from '../../config/configUtils';
 
 import {Command, Config} from '@react-native-community/cli-types';
 import {
@@ -19,10 +20,6 @@ import {
   ProjectDependency,
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
-import {
-  resolveContents,
-  Replacements,
-} from '@react-native-windows/generator-common';
 
 const templateRoot = path.join(__dirname, '../../../templates');
 
@@ -43,7 +40,10 @@ function verboseMessage(message: any, verbose: boolean) {
  * @param replacements e.g. {'TextToBeReplaced': 'Replacement'}
  * @return The contents of the file with the replacements applied.
  */
-function getNormalizedContents(srcFile: string, replacements: Replacements) {
+function getNormalizedContents(
+  srcFile: string,
+  replacements: generatorCommon.Replacements,
+) {
   // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
   for (var key in replacements) {
     replacements[key] = replacements[key].replace(/\n/g, '\r\n');
@@ -51,7 +51,7 @@ function getNormalizedContents(srcFile: string, replacements: Replacements) {
 
   replacements.useMustache = true;
 
-  return resolveContents(srcFile, replacements);
+  return generatorCommon.resolveContents(srcFile, replacements);
 }
 
 /**
@@ -161,16 +161,16 @@ async function updateAutoLink(
     if (options.proj) {
       const projFile = path.join(windowsAppConfig.folder, options.proj);
 
-      const projectContents = projectUtils.readProjectFile(projFile);
+      const projectContents = configUtils.readProjectFile(projFile);
 
       windowsAppConfig.project = {
         projectFile: path.relative(
           path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
           projFile,
         ),
-        projectName: projectUtils.getProjectName(projFile, projectContents),
-        projectLang: projectUtils.getProjectLanguage(projFile),
-        projectGuid: projectUtils.getProjectGuid(projFile, projectContents),
+        projectName: configUtils.getProjectName(projFile, projectContents),
+        projectLang: configUtils.getProjectLanguage(projFile),
+        projectGuid: configUtils.getProjectGuid(projFile, projectContents),
       };
     }
 
@@ -355,7 +355,7 @@ async function updateAutoLink(
       if (cppPackageProviders === '') {
         // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
         // therefore add a usage.
-        cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: packages/@react-native-windows/generate-windows
+        cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
       }
 
       const cppFileName = 'AutolinkedNativeModules.g.cpp';

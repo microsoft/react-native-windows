@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 
-import * as projectUtils from '@react-native-windows/project-utils';
+import * as configUtils from './configUtils.js';
 
 /*
 
@@ -143,7 +143,7 @@ export function dependencyConfigWindows(
     }
   } else if (!usingManualProjectsOverride) {
     // No manually provided projects, try to find sourceDir
-    sourceDir = projectUtils.findWindowsFolder(folder);
+    sourceDir = configUtils.findWindowsFolder(folder);
   }
 
   if (
@@ -168,7 +168,7 @@ export function dependencyConfigWindows(
     solutionFile = path.join(sourceDir, userConfig.solutionFile!);
   } else if (!usingManualSolutionFile) {
     // No manually provided solutionFile, try to find it
-    const foundSolutions = projectUtils.findSolutionFiles(sourceDir);
+    const foundSolutions = configUtils.findSolutionFiles(sourceDir);
     if (foundSolutions.length === 1) {
       solutionFile = path.join(sourceDir, foundSolutions[0]);
     }
@@ -203,15 +203,15 @@ export function dependencyConfigWindows(
 
       const projectFile = path.join(sourceDir, project.projectFile);
 
-      const projectContents = projectUtils.readProjectFile(projectFile);
+      const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
-      project.projectName = projectUtils.getProjectName(
+      project.projectName = configUtils.getProjectName(
         projectFile,
         projectContents,
       );
-      project.projectLang = projectUtils.getProjectLanguage(projectFile);
-      project.projectGuid = projectUtils.getProjectGuid(
+      project.projectLang = configUtils.getProjectLanguage(projectFile);
+      project.projectGuid = configUtils.getProjectGuid(
         projectFile,
         projectContents,
       );
@@ -219,7 +219,7 @@ export function dependencyConfigWindows(
       if (project.directDependency) {
         // Calculating more (auto) items
 
-        const projectNamespace = projectUtils.getProjectNamespace(
+        const projectNamespace = configUtils.getProjectNamespace(
           projectFile,
           projectContents,
         );
@@ -239,26 +239,26 @@ export function dependencyConfigWindows(
   } else {
     // No react-native.config, try to heurestically find any projects
 
-    const foundProjects = projectUtils.findDependencyProjectFiles(sourceDir);
+    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
 
     for (const foundProject of foundProjects) {
       const projectFile = path.join(sourceDir, foundProject);
 
-      const projectLang = projectUtils.getProjectLanguage(projectFile);
+      const projectLang = configUtils.getProjectLanguage(projectFile);
 
-      const projectContents = projectUtils.readProjectFile(projectFile);
+      const projectContents = configUtils.readProjectFile(projectFile);
 
-      const projectName = projectUtils.getProjectName(
+      const projectName = configUtils.getProjectName(
         projectFile,
         projectContents,
       );
 
-      const projectGuid = projectUtils.getProjectGuid(
+      const projectGuid = configUtils.getProjectGuid(
         projectFile,
         projectContents,
       );
 
-      const projectNamespace = projectUtils.getProjectNamespace(
+      const projectNamespace = configUtils.getProjectNamespace(
         projectFile,
         projectContents,
       );

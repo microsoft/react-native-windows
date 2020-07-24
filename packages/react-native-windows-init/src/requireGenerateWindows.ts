@@ -18,7 +18,7 @@ export default function requireGenerateWindows(): GenerateWindows {
       paths: [process.cwd()],
     });
 
-    return require(requirePath).generateWindows;
+    return require(requirePath);
   } catch {
     // Fall back to trying the older path
     const requirePath = require.resolve(

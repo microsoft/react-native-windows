@@ -12,17 +12,14 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as semver from 'semver';
-import {
-  readProjectFile,
-  findPropertyValue,
-} from '@react-native-windows/project-utils';
+import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
   createDir,
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
-} from '@react-native-windows/generator-common';
-import {GenerateOptions} from './index';
+} from '../generator-common';
+import {GenerateOptions} from '..';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';

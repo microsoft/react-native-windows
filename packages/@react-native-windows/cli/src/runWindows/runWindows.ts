@@ -13,6 +13,7 @@ import MSBuildTools from './utils/msbuildtools';
 
 import {Command, Config} from '@react-native-community/cli-types';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
+
 import {autoLinkCommand} from './utils/autolink';
 
 function ExitProcessWithError(loggingWasEnabled: boolean): never {

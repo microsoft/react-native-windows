@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 
-import * as projectUtils from '@react-native-windows/project-utils';
+import * as configUtils from './configUtils.js';
 
 /*
 
@@ -84,7 +84,7 @@ export function projectConfigWindows(
 
   const sourceDir = usingManualOverride
     ? path.join(folder, userConfig.sourceDir!)
-    : projectUtils.findWindowsFolder(folder);
+    : configUtils.findWindowsFolder(folder);
 
   if (sourceDir === null) {
     // Nothing to look for here, bail
@@ -139,7 +139,7 @@ export function projectConfigWindows(
     }
   } else {
     // No manually provided solutionFile, try to find it
-    const foundSolutions = projectUtils.findSolutionFiles(sourceDir);
+    const foundSolutions = configUtils.findSolutionFiles(sourceDir);
     if (foundSolutions.length === 0) {
       result.solutionFile =
         'Error: No app solution file found, please specify in react-native.config.';
@@ -151,7 +151,7 @@ export function projectConfigWindows(
     }
 
     // No manually provided project, try to find it
-    const foundProjects = projectUtils.findAppProjectFiles(sourceDir);
+    const foundProjects = configUtils.findAppProjectFiles(sourceDir);
     if (foundProjects.length === 0) {
       result.project = {
         projectFile:
@@ -172,15 +172,15 @@ export function projectConfigWindows(
 
   if (validProject) {
     const projectFile = path.join(sourceDir, result.project.projectFile!);
-    const projectContents = projectUtils.readProjectFile(projectFile);
+    const projectContents = configUtils.readProjectFile(projectFile);
 
     // Add missing (auto) items
-    result.project.projectName = projectUtils.getProjectName(
+    result.project.projectName = configUtils.getProjectName(
       projectFile,
       projectContents,
     );
-    result.project.projectLang = projectUtils.getProjectLanguage(projectFile);
-    result.project.projectGuid = projectUtils.getProjectGuid(
+    result.project.projectLang = configUtils.getProjectLanguage(projectFile);
+    result.project.projectGuid = configUtils.getProjectGuid(
       projectFile,
       projectContents,
     );
