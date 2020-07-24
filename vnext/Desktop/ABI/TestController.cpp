@@ -78,8 +78,8 @@ msrn::IJSValueWriter TestController::CreateDynamicWriter() {
 }
 
 msrn::IReactContext TestController::CreateContext(
-    const msrn::IReactPropertyBag& propertyBag,
-    const msrn::IReactNotificationService& notificationService) {
+    const msrn::IReactPropertyBag &propertyBag,
+    const msrn::IReactNotificationService &notificationService) {
   auto innerContext = Mso::Make<Mso::React::ReactContext>(nullptr, propertyBag, notificationService);
   return make<msrn::implementation::ReactContext>(std::move(innerContext));
 }
