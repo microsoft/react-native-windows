@@ -5,11 +5,11 @@
 #include "DeviceInfoModule.h"
 #include <IReactDispatcher.h>
 #include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <Utils/Helpers.h>
 #include <XamlUtils.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <Utils/Helpers.h>
 
 namespace Microsoft::ReactNative {
 
@@ -43,8 +43,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
               strongHolder->updateDeviceInfo();
             }
           });
-    }
-    else {
+    } else {
       assert(react::uwp::IsXamlIsland());
       // TODO: WinUI 3 Islands - set up a listener for window size changed
     }
