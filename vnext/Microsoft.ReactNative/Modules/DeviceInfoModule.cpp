@@ -9,6 +9,7 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
+#include <Utils/Helpers.h>
 
 namespace Microsoft::ReactNative {
 
@@ -32,7 +33,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
     propertyBag.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
     auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-    /// TODO: WinUI 3 islands support
+
     if (xaml::Window::Current()) {
       auto const &window = xaml::Window::Current().CoreWindow();
 
@@ -42,6 +43,10 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
               strongHolder->updateDeviceInfo();
             }
           });
+    }
+    else {
+      assert(react::uwp::IsXamlIsland());
+      // TODO: WinUI 3 Islands - set up a listener for window size changed
     }
 
     deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
@@ -100,14 +105,6 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
     /// TODO: WinUI 3 Island - mock for now
     m_windowWidth = 600;
     m_windowHeight = 800;
-
-    /*
-        auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
-
-        // Get the new child window's hwnd
-        HWND hWndXamlIsland = nullptr;
-        winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
-        */
   }
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
   m_textScaleFactor = uiSettings.TextScaleFactor();

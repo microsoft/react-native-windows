@@ -8,17 +8,17 @@ param(# Parameter help description
 # (only works for authenticated Microsoft users) 
 #
 
-if (!Test-Path $PackagePath -or $PackagePath.EndsWith('.nupkg')) {
+if (!((Test-Path $PackagePath) -and $PackagePath.EndsWith('.nupkg'))) {
     throw "PackagePath should point to the .nupkg file"
 }
-if (!Get-Command nuget -ErrorAction SilentlyContinue) {
+if (!(Get-Command nuget -ErrorAction SilentlyContinue)) {
     throw "Couldn't find nuget.exe"
 }
 
 
 
 $nugetPathToSet = Split-Path $PackagePath
-nuget sources remove WinUI 2>&1 | Out-Null
+nuget sources remove -Name WinUI 2>&1 | Out-Null
 nuget sources add -Name WinUI -Source $nugetPathToSet
 
 
@@ -42,6 +42,7 @@ foreach ($filePath in $filesToUpdate) {
 }
 
 $env:UseWinUI3='true'
+$env:UseExperimentalIXP='true'
 & "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe" $PSScriptRoot\windows\playground-win32-packaged.sln
 
 

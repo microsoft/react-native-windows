@@ -4,24 +4,22 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}</ProjectGuid>
     <RootNamespace>Playground</RootNamespace>
-    <ProjectName>playgroundwin32</ProjectName>
+    <ProjectName>Playground-win32</ProjectName>
     <Keyword>Win32Proj</Keyword>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <BuildMSRNCxx>false</BuildMSRNCxx>
     <RunAutolinkCheck>false</RunAutolinkCheck>
-  </PropertyGroup>
-  <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
-    <ProjectName>Playground-win32</ProjectName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
     <AppContainerApplication>false</AppContainerApplication>
     <AppxPackage>false</AppxPackage>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="ReactNativeWindowsProps">
@@ -110,7 +108,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Playground-Win32.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

@@ -244,6 +244,15 @@ void UIManager::configureNextLayoutAnimation(
   m_nativeUIManager->configureNextLayoutAnimation(std::move(config), success, error);
 }
 
+struct hresult_exception : public std::exception {
+  hresult_exception(winrt::hresult_error error)
+      : std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(error.message()).c_str()),
+        m_error(error)
+        {}
+
+  winrt::hresult_error m_error{};
+};
+
 void UIManager::createView(
     int64_t tag,
     std::string &&className,
@@ -265,7 +274,7 @@ void UIManager::createView(
     if (!props.isNull())
       node->updateProperties(std::move(props));
   } catch (winrt::hresult_error &hr) {
-    throw Microsoft::Common::Unicode::Utf16ToUtf8(hr.message());
+    throw hresult_exception(hr);
   }
 }
 
