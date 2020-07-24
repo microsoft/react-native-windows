@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-22T02:54:05.829Z"
-}

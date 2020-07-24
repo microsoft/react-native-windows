@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Jul 2020 05:05:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.128",
+      "version": "0.0.0-canary.128",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "062d5e1df64c7673733a960e15c6a4df7fabbe82",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudorm@microsoft.com",
+            "commit": "312e2acf3eb128e03389d5278ed252f6b32aa50c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jul 2020 05:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.127",
       "version": "0.0.0-canary.127",
