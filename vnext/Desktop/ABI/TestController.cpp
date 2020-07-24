@@ -8,11 +8,14 @@
 #include <unicode.h>
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
+#include "IReactContext.h"
 #include "IReactModuleBuilder.h"
 #include "ReactPackageBuilder.h"
 #include "RedBoxErrorFrameInfo.h"
 #include "RedBoxErrorInfo.h"
 #include "TestController.h"
+
+#include <ReactHost/ReactContext.h>
 
 #include "Microsoft.Internal.TestController.g.cpp"
 
@@ -61,29 +64,6 @@ struct DynamicWrapperReader : public winrt::implements<DynamicWrapperReader, msr
   folly::dynamic m_value;
 };
 
-struct TestContext : public winrt::implements<TestContext, msrn::IReactContext> {
-  msrn::IReactPropertyBag Properties() noexcept {
-    return nullptr;
-  }
-  msrn::IReactNotificationService Notifications() noexcept {
-    return nullptr;
-  }
-  msrn::IReactDispatcher UIDispatcher() noexcept {
-    return nullptr;
-  }
-  msrn::IReactDispatcher JSDispatcher() noexcept {
-    return nullptr;
-  }
-  void CallJSFunction(
-      hstring const &moduleName,
-      hstring const &methodName,
-      msrn::JSValueArgWriter const &paramsArgWriter) noexcept {}
-  void EmitJSEvent(
-      hstring const &eventEmitterName,
-      hstring const &eventName,
-      msrn::JSValueArgWriter const &paramsArgWriter) noexcept {}
-};
-
 } // namespace
 
 namespace winrt::Microsoft::Internal::implementation {
@@ -97,8 +77,11 @@ msrn::IJSValueWriter TestController::CreateDynamicWriter() {
   return make<msrn::DynamicWriter>();
 }
 
-msrn::IReactContext TestController::CreateTestContext() {
-  return make<TestContext>();
+msrn::IReactContext TestController::CreateContext(
+    msrn::IReactPropertyBag propertyBag,
+    msrn::IReactNotificationService notificationService) {
+  auto innerContext = Mso::Make<Mso::React::ReactContext>(nullptr, propertyBag, notificationService);
+  return make<msrn::implementation::ReactContext>(innerContext);
 }
 
 msrn::IReactModuleBuilder TestController::CreateReactModuleBuilder(msrn::IReactContext context) {

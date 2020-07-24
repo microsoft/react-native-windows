@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Add ReactContext implementation to Win32 ABI",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-07-24T00:42:00.904Z"
+}
