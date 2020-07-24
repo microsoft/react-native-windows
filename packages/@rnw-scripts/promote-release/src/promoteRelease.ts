@@ -59,7 +59,7 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
     });
 
     console.log('Updating package versions...');
-    await updatePackageVersions(`${argv.rnVersion}-preview.0`);
+    await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
   }
 
   console.log('Committing changes...');
