@@ -246,9 +246,7 @@ void UIManager::configureNextLayoutAnimation(
 
 struct hresult_exception : public std::exception {
   hresult_exception(winrt::hresult_error error)
-      : std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(error.message()).c_str()),
-        m_error(error)
-        {}
+      : std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(error.message()).c_str()), m_error(error) {}
 
   winrt::hresult_error m_error{};
 };
