@@ -6,8 +6,7 @@
 #include "MultiplicationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 MultiplicationAnimatedNode::MultiplicationAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -32,5 +31,4 @@ MultiplicationAnimatedNode::MultiplicationAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

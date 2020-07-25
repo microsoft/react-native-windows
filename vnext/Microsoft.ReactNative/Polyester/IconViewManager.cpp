@@ -22,8 +22,7 @@ using namespace xaml::Documents;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 //
@@ -161,5 +160,4 @@ XamlView IconViewManager::CreateViewCore(int64_t /*tag*/) {
 }
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

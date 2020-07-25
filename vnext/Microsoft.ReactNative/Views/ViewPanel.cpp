@@ -8,7 +8,7 @@
 
 #include <UI.Xaml.Media.h>
 #include <Utils/PropertyUtils.h>
-#include <utils/ResourceBrushUtils.h>
+#include <Utils/ResourceBrushUtils.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
@@ -267,7 +267,7 @@ void ViewPanel::FinalizeProperties() {
   bool displayBorder = hasBorderBrush && hasBorderThickness;
 
   // Determine which scenario our current properties have put us into
-  enum Scenario { OuterBorder, InnerBorder, NoBorder } scenario;
+  enum class Scenario { OuterBorder, InnerBorder, NoBorder } scenario;
   if (hasCornerRadius) {
     scenario = Scenario::OuterBorder;
     m_hasOuterBorder = true;

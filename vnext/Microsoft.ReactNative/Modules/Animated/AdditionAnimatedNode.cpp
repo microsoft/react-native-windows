@@ -7,8 +7,7 @@
 #include "AdditionAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 AdditionAnimatedNode::AdditionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -33,5 +32,4 @@ AdditionAnimatedNode::AdditionAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

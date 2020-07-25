@@ -23,7 +23,7 @@ struct DevSettings;
 namespace react {
 namespace uwp {
 
-class DevSupportManager : public facebook::react::IDevSupportManager {
+class DevSupportManager final : public facebook::react::IDevSupportManager {
  public:
   DevSupportManager() = default;
   ~DevSupportManager();

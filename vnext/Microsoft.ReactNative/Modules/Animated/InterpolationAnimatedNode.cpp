@@ -7,8 +7,7 @@
 #include "InterpolationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 InterpolationAnimatedNode::InterpolationAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -167,5 +166,4 @@ winrt::hstring InterpolationAnimatedNode::GetRightExpression(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

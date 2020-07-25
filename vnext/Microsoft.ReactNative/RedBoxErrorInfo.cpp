@@ -4,7 +4,7 @@
 #include "RedBoxErrorInfo.h"
 #include "DynamicReader.h"
 #include "RedBoxErrorFrameInfo.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include "winrt/Windows.Foundation.Collections.h"
 

@@ -24,8 +24,7 @@
 #pragma optimize("", off)
 #endif
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 //
 // NetworkingModule::NetworkingHelper
@@ -409,5 +408,4 @@ auto NetworkingModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

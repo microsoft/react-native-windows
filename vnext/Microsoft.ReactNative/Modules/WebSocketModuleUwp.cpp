@@ -27,8 +27,7 @@ namespace winrt {
 using namespace Windows::Networking::Sockets;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 void OutputDebugString(const char *format, winrt::hresult_error const &e) {
   char buffer[1024];
@@ -282,5 +281,4 @@ auto WebSocketModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

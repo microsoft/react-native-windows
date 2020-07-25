@@ -29,8 +29,7 @@ using namespace xaml::Media;
 using namespace xaml::Shapes;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 struct Selection {
   int start = -1;
   int end = -1;
@@ -46,8 +45,7 @@ bool Selection::isValid() {
     return false;
   return true;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
 
 // Such code is better to move to a seperate parser layer
 template <>
@@ -95,8 +93,7 @@ static xaml::Input::InputScopeNameValue parseKeyboardType(const folly::dynamic &
   return isTextBox ? xaml::Input::InputScopeNameValue::Default : xaml::Input::InputScopeNameValue::Password;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class TextInputShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -735,5 +732,4 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
   }
   Super::TransferProperties(oldView, newView);
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

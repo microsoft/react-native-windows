@@ -17,8 +17,7 @@ using namespace xaml::Controls;
 using namespace xaml::Documents;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 VirtualTextViewManager::VirtualTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -71,5 +70,4 @@ bool VirtualTextViewManager::RequiresYogaNode() const {
   return false;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

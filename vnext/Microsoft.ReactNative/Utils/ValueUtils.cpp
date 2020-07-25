@@ -23,8 +23,7 @@ using namespace xaml::Input;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 inline BYTE GetAFromArgb(DWORD v) {
   return ((BYTE)((v & 0xFF000000) >> 24));
@@ -202,5 +201,4 @@ REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   return winrt::TimeSpan::duration(dur);
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

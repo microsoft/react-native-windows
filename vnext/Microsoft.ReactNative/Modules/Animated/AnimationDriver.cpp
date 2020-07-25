@@ -6,8 +6,7 @@
 #include <UI.Composition.h>
 #include "AnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 AnimationDriver::AnimationDriver(
     int64_t id,
@@ -15,7 +14,7 @@ AnimationDriver::AnimationDriver(
     const Callback &endCallback,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : m_id(id), m_animatedValueTag(animatedValueTag), m_endCallback(endCallback), m_config(config), m_manager(manager) {
+    : m_id(id), m_animatedValueTag(animatedValueTag), m_config(config), m_endCallback(endCallback), m_manager(manager) {
   m_iterations = [iterations = config.find("iterations"), end = config.items().end()]() {
     if (iterations != end) {
       return static_cast<int64_t>(iterations.dereference().second.asDouble());
@@ -91,5 +90,4 @@ ValueAnimatedNode *AnimationDriver::GetAnimatedValue() {
   }
   return nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -5,8 +5,7 @@
 
 #include "FrameworkElementViewManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct ShadowNodeBase;
 
@@ -27,5 +26,4 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
   void OnViewCreated(XamlView view) override;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

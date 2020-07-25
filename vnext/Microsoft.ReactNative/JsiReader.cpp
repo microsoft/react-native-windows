@@ -97,6 +97,9 @@ bool JsiReader::GetNextArrayItem() noexcept {
       }
       break;
     }
+    default: {
+      assert(false); // should never get here
+    }
   }
 
   m_containers.pop_back();

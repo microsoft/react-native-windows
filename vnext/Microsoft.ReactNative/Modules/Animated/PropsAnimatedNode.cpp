@@ -11,8 +11,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -117,7 +116,7 @@ void PropsAnimatedNode::StartAnimations() {
       // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
       EnsureUIElementDirtyForRender(uiElement);
       uiElement.RotationAxis(m_rotationAxis);
-      for (const auto anim : m_expressionAnimations) {
+      for (const auto &anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
           m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
           uiElement.StartAnimation(m_translationCombined);
@@ -276,5 +275,4 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

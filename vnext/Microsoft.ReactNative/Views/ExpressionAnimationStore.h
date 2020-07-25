@@ -3,8 +3,7 @@
 
 #pragma once
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // Holds a cache of unique ExpressionAnimations.
 // It's better for performance to cache each unique ExpressionAnimation, as
@@ -24,5 +23,4 @@ class ExpressionAnimationStore {
   comp::ExpressionAnimation m_transformCenteringExpression{nullptr};
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

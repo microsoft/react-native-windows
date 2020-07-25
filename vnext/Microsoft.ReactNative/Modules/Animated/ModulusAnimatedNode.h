@@ -5,9 +5,8 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
-class ModulusAnimatedNode : public ValueAnimatedNode {
+namespace react::uwp {
+class ModulusAnimatedNode final : public ValueAnimatedNode {
  public:
   ModulusAnimatedNode(
       int64_t tag,
@@ -23,5 +22,4 @@ class ModulusAnimatedNode : public ValueAnimatedNode {
   static constexpr std::wstring_view s_inputParameterName{L"input"};
   static constexpr std::wstring_view s_modName{L"mod"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

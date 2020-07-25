@@ -7,8 +7,7 @@
 #include <folly/dynamic.h>
 #include "XamlView.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct IXamlReactControl {
   virtual void blur(XamlView const &xamlView) noexcept = 0;
@@ -27,5 +26,4 @@ struct IXamlRootView : public facebook::react::IReactRootView {
   virtual std::shared_ptr<IXamlReactControl> GetXamlReactControl() const noexcept = 0;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

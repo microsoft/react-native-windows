@@ -6,8 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 typedef std::function<void(std::vector<folly::dynamic>)> Callback;
 
 class ValueAnimatedNode;
@@ -74,5 +73,4 @@ class AnimationDriver {
   int m_debug_callbackAttempts{0};
 #endif // DEBUG
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

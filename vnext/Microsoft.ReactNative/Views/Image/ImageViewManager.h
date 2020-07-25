@@ -4,8 +4,7 @@
 #include <Views/FrameworkElementViewManager.h>
 #include "ReactImage.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ImageViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -31,5 +30,4 @@ class ImageViewManager : public FrameworkElementViewManager {
  private:
   void setSource(xaml::Controls::Grid grid, const folly::dynamic &sources);
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

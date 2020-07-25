@@ -6,8 +6,7 @@
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class FrameAnimationDriver : public AnimationDriver {
  public:
   FrameAnimationDriver(
@@ -30,5 +29,4 @@ class FrameAnimationDriver : public AnimationDriver {
   std::vector<double> m_frames{};
   double m_toValue{0};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

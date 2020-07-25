@@ -5,8 +5,7 @@
 
 #include "ViewManagerBase.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
@@ -43,5 +42,4 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       winrt::Windows::Foundation::Numerics::float4x4 transformMatrix);
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

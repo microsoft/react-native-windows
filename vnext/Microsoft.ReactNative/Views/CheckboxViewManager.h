@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class CheckBoxViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -33,5 +32,4 @@ class CheckBoxViewManager : public ControlViewManager {
   friend class CheckBoxShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

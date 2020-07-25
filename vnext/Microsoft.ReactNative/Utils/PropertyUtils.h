@@ -14,8 +14,7 @@
 
 #include <Views/ShadowNodeBase.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct ShadowNodeBase;
 
@@ -501,5 +500,4 @@ TryUpdateMouseEvents(ShadowNodeBase *node, const std::string &propertyName, cons
   return true;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
