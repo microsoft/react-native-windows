@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 25 Jul 2020 05:04:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "none": [
+          {
+            "comment": "Package.json formatting",
+            "author": "email not defined",
+            "commit": "c73ecd0ffb8fb4ee5205ec610ab4b6dbc7f6ee21",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Jul 2020 05:06:31 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.32",
       "version": "0.0.0-canary.32",
