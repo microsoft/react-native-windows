@@ -65,6 +65,8 @@
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
