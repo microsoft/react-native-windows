@@ -72,8 +72,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
   </ItemGroup>
 </Project>
