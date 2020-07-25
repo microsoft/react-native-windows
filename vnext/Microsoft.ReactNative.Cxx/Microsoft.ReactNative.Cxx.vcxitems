@@ -64,7 +64,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
