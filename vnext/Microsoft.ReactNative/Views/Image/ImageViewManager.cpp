@@ -67,8 +67,7 @@ struct json_type_traits<react::uwp::ResizeMode> {
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ImageShadowNode : public ShadowNodeBase {
  public:
@@ -131,6 +130,9 @@ bool ImageViewManager::UpdateProperty(
   } else if (propertyName == "blurRadius" && propertyValue.isNumber()) {
     auto reactImage{grid.as<ReactImage>()};
     reactImage->BlurRadius(static_cast<float>(propertyValue.asDouble()));
+  } else if (propertyName == "tintColor" && IsValidColorValue(propertyValue)) {
+    auto reactImage{grid.as<ReactImage>()};
+    reactImage->TintColor(ColorFrom(propertyValue));
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
@@ -194,5 +196,4 @@ folly::dynamic ImageViewManager::GetNativeProps() const {
 
   return props;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

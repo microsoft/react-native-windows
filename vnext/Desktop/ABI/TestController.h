@@ -11,7 +11,9 @@ struct TestController {
 
   static Microsoft::ReactNative::IJSValueReader CreateDynamicReader(Microsoft::ReactNative::IJSValueWriter writer);
   static Microsoft::ReactNative::IJSValueWriter CreateDynamicWriter();
-  static Microsoft::ReactNative::IReactContext CreateTestContext();
+  static Microsoft::ReactNative::IReactContext CreateContext(
+      const Microsoft::ReactNative::IReactPropertyBag &propertyBag,
+      const Microsoft::ReactNative::IReactNotificationService &notificationService);
   static Microsoft::ReactNative::IReactModuleBuilder CreateReactModuleBuilder(
       Microsoft::ReactNative::IReactContext context);
   static Microsoft::ReactNative::IReactPackageBuilder CreateReactPackageBuilder();
@@ -21,6 +23,7 @@ struct TestController {
       hstring message,
       uint32_t id,
       array_view<Microsoft::ReactNative::IRedBoxErrorFrameInfo const> callstack);
+  static Microsoft::ReactNative::IReactNonAbiValue CreateNonAbiValue(int32_t value);
 };
 } // namespace winrt::Microsoft::Internal::implementation
 

@@ -3,8 +3,10 @@
 
 #include "pch.h"
 #include "XamlView.h"
+#include <UI.Composition.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Documents.h>
+#include "Utils/Helpers.h"
 
 namespace react::uwp {
 
@@ -25,12 +27,31 @@ comp::Compositor GetCompositor(const XamlView &view) {
     return window.Compositor();
   }
 #ifdef USE_WINUI3
-  else {
-    return TryGetXamlRoot(view).Compositor();
+  else if (auto root = TryGetXamlRoot(view)) {
+    return root.Compositor();
   }
 #endif
+  return GetCompositor();
+}
 
-  throw std::exception("Could not get a compositor instance");
+thread_local comp::Compositor tlsCompositor{nullptr};
+
+void SetCompositor(const comp::Compositor &compositor) {
+  winrt::com_ptr<IUnknown> rawCompositor(winrt::get_abi(compositor), winrt::take_ownership_from_abi);
+  if (tlsCompositor != nullptr) {
+    assert(tlsCompositor == compositor);
+  } else {
+    tlsCompositor = compositor;
+  }
+}
+
+comp::Compositor GetCompositor() {
+  if (!react::uwp::IsXamlIsland()) {
+    return xaml::Window::Current().Compositor();
+  }
+  comp::Compositor compositor;
+  assert(tlsCompositor != nullptr);
+  return tlsCompositor;
 }
 
 } // namespace react::uwp

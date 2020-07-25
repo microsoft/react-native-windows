@@ -166,6 +166,25 @@ class EffectBase : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1
     CATCH_RETURN;                                                                                   \
   }
 
+#pragma push_macro("DECLARE_DUAL_SOURCES")
+#undef DECLARE_DUAL_SOURCES
+#define DECLARE_DUAL_SOURCES(Name1, Name2)                                                          \
+  DECLARE_SOURCE(Name1)                                                                             \
+  DECLARE_SOURCE(Name2)                                                                             \
+  IFACEMETHODIMP GetSourceCount(_Out_ UINT *count) override {                                       \
+    *count = 2;                                                                                     \
+    return S_OK;                                                                                    \
+  }                                                                                                 \
+  IFACEMETHODIMP GetSource(UINT index, _Outptr_ abi::IGraphicsEffectSource **source) override try { \
+    if (index == 0)                                                                                 \
+      to_winrt(*source) = m_##Name1;                                                                \
+    else if (index == 1)                                                                            \
+      to_winrt(*source) = m_##Name2;                                                                \
+    else                                                                                            \
+      throw winrt::hresult_invalid_argument();                                                      \
+    CATCH_RETURN;                                                                                   \
+  }
+
 #pragma push_macro("DECLARE_POD_PROPERTY")
 #undef DECLARE_POD_PROPERTY
 #define DECLARE_POD_PROPERTY(Name, Type, InitialValue, Condition) \

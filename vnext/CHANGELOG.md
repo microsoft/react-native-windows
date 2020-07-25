@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 21 Jul 2020 05:05:04 GMT and should not be manually modified.
+This log was last generated on Sat, 25 Jul 2020 05:04:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.129
+
+Sat, 25 Jul 2020 05:04:34 GMT
+
+### Changes
+
+- clang tidy, wave 1 (asklar@microsoft.com)
+
+## 0.0.0-canary.128
+
+Fri, 24 Jul 2020 05:05:51 GMT
+
+### Changes
+
+- Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package (dannyvv@microsoft.com)
+- Update V8 package version (tudorm@microsoft.com)
+
+## 0.0.0-canary.127
+
+Thu, 23 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move legacy tests to end of list (kmelmon@microsoft.com)
+
+## 0.0.0-canary.126
+
+Wed, 22 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move e2etest pages into rntester (kmelmon@microsoft.com)
+- Implement Image tintColor style prop (email not defined)
+- move to winui3 preview 2 (asklar@microsoft.com)
+- Use compositor in TLS (asklar@microsoft.com)
 
 ## 0.0.0-canary.125
 

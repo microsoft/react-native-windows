@@ -5,8 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 class ButtonContentViewManager : public FrameworkElementViewManager {
@@ -26,5 +25,4 @@ class ButtonContentViewManager : public FrameworkElementViewManager {
 };
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

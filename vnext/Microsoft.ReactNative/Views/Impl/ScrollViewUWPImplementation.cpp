@@ -3,8 +3,7 @@
 #include <UI.Xaml.Controls.h>
 #include "ScrollViewUWPImplementation.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 ScrollViewUWPImplementation::ScrollViewUWPImplementation(const winrt::ScrollViewer &scrollViewer) {
   assert(scrollViewer);
@@ -104,5 +103,4 @@ winrt::com_ptr<SnapPointManagingContentControl> ScrollViewUWPImplementation::Scr
   return nullptr;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

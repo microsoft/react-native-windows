@@ -2,6 +2,7 @@ import "IJSValueReader.idl";
 import "IJSValueWriter.idl";
 import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
+import "IReactNonAbiValue.idl";
 import "IReactPackageBuilder.idl";
 import "RedBoxHandler.idl";
 
@@ -14,7 +15,9 @@ namespace Microsoft.Internal {
   static runtimeclass TestController {
     static Microsoft.ReactNative.IJSValueReader CreateDynamicReader(Microsoft.ReactNative.IJSValueWriter writer);
     static Microsoft.ReactNative.IJSValueWriter CreateDynamicWriter();
-    static Microsoft.ReactNative.IReactContext CreateTestContext();
+    static Microsoft.ReactNative.IReactContext CreateContext(
+        Microsoft.ReactNative.IReactPropertyBag propertyBag,
+        Microsoft.ReactNative.IReactNotificationService notificationService);
     static Microsoft.ReactNative.IReactModuleBuilder CreateReactModuleBuilder(
         Microsoft.ReactNative.IReactContext context);
     static Microsoft.ReactNative.IReactPackageBuilder CreateReactPackageBuilder();
@@ -22,6 +25,7 @@ namespace Microsoft.Internal {
         String file, String method, UInt32 line, UInt32 column);
     static Microsoft.ReactNative.IRedBoxErrorInfo CreateRedBoxErrorInfo(
         String message, UInt32 id, Microsoft.ReactNative.IRedBoxErrorFrameInfo[] callstack);
+    static Microsoft.ReactNative.IReactNonAbiValue CreateNonAbiValue(Int32 value);
   };
 
 } // namespace Microsoft.Internal

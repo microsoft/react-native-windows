@@ -21,8 +21,7 @@ using namespace xaml::Controls::Primitives;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 HyperlinkViewManager::HyperlinkViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
@@ -87,5 +86,4 @@ bool HyperlinkViewManager::UpdateProperty(
 }
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

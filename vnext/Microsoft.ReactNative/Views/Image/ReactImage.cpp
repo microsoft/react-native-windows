@@ -28,8 +28,7 @@ using namespace Windows::Web::Http;
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
   auto reactImage = winrt::make_self<ReactImage>();
@@ -61,7 +60,7 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0};
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -79,7 +78,7 @@ void ReactImage::BlurRadius(float value) {
   if (m_blurRadius != value) {
     m_blurRadius = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0};
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -87,6 +86,24 @@ void ReactImage::BlurRadius(float value) {
       SetBackground(false);
     } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->BlurRadius(value);
+    }
+  }
+}
+
+void ReactImage::TintColor(winrt::Color value) {
+  bool sameColor{value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G &&
+                 value.B == m_tintColor.B};
+
+  if (!sameColor) {
+    m_tintColor = value;
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
+
+    if (switchBrushes) {
+      m_useCompositionBrush = shouldUseCompositionBrush;
+      SetBackground(false);
+    } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->TintColor(value);
     }
   }
 }
@@ -214,8 +231,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       } else {
         compositionBrush->Compositor(react::uwp::GetCompositor(*this));
       }
-      compositionBrush->ResizeMode(strong_this->m_resizeMode);
+
       compositionBrush->BlurRadius(strong_this->m_blurRadius);
+      compositionBrush->TintColor(strong_this->m_tintColor);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
                                       : winrt::LoadedImageSurface::StartLoadFromUri(uri);
@@ -245,6 +263,10 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 }
 
                 compositionBrush->Source(surface);
+                compositionBrush->ResizeMode(strong_this->m_resizeMode);
+                compositionBrush->BlurRadius(strong_this->m_blurRadius);
+                compositionBrush->TintColor(strong_this->m_tintColor);
+
                 strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
                 succeeded = true;
               } else {
@@ -417,5 +439,4 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsyn
 
   co_return nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

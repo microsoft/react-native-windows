@@ -17,8 +17,7 @@
 
 using namespace std::placeholders;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 ShadowNodeBase::ShadowNodeBase() : m_view(nullptr) {}
 
@@ -163,5 +162,4 @@ void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

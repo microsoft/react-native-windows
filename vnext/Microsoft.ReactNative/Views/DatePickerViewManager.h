@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class DatePickerViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -26,5 +25,4 @@ class DatePickerViewManager : public ControlViewManager {
   friend class DatePickerShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

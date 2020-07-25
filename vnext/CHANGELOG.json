@@ -2,6 +2,112 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Jul 2020 05:04:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.129",
+      "version": "0.0.0-canary.129",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add ReactContext implementation to Win32 ABI",
+            "author": "aeulitz@microsoft.com",
+            "commit": "1de261701a6cc14a17ea03243417ba2cd3b15c52",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Package.json formatting",
+            "author": "email not defined",
+            "commit": "c73ecd0ffb8fb4ee5205ec610ab4b6dbc7f6ee21",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "clang tidy, wave 1",
+            "author": "asklar@microsoft.com",
+            "commit": "3c5dadc5ab4526a2bc0df2692d75fd47ae6b7786",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Jul 2020 05:05:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.128",
+      "version": "0.0.0-canary.128",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "062d5e1df64c7673733a960e15c6a4df7fabbe82",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudorm@microsoft.com",
+            "commit": "312e2acf3eb128e03389d5278ed252f6b32aa50c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.127",
+      "version": "0.0.0-canary.127",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move legacy tests to end of list",
+            "author": "kmelmon@microsoft.com",
+            "commit": "a197058d9cd30bd08e85edada68d79f6f8650ff3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Jul 2020 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.126",
+      "version": "0.0.0-canary.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move e2etest pages into rntester",
+            "author": "kmelmon@microsoft.com",
+            "commit": "59a2dcfd3d98bb1471706cdf07835cd6f9113ad3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement Image tintColor style prop",
+            "author": "email not defined",
+            "commit": "713ca50156dcdc928311e8ca2cb7a7a5b5b0bfed",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "move to winui3 preview 2",
+            "author": "asklar@microsoft.com",
+            "commit": "0159ffadebcd131e78a366f2c8536432ad7a4d73",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use compositor in TLS",
+            "author": "asklar@microsoft.com",
+            "commit": "97e2b81ed674d8683c77d71b911c7b5347a316ab",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add RedBox objects, tests",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2e26214dc90290be784968386ba61b08c966c93",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Jul 2020 05:05:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.125",
       "version": "0.0.0-canary.125",

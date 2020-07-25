@@ -25,8 +25,7 @@ class RAMBundleRegistry;
 }
 } // namespace facebook
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class MessageQueueThread;
 
@@ -124,5 +123,4 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
   std::atomic<LONG> m_requestId{0};
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

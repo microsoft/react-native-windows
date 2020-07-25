@@ -17,9 +17,9 @@ enum class ErrorType : int32_t {
 struct ErrorFrameInfo {
   std::string File;
   std::string Method;
-  int Line;
-  int Column;
-  bool Collapse;
+  int Line{};
+  int Column{};
+  bool Collapse{false};
 };
 
 struct ErrorInfo {
@@ -28,7 +28,7 @@ struct ErrorInfo {
   std::string Name;
   std::string ComponentStack;
   std::vector<ErrorFrameInfo> Callstack;
-  uint32_t Id;
+  uint32_t Id{};
   folly::dynamic ExtraData;
 };
 

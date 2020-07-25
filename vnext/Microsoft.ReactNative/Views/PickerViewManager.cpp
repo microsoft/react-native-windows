@@ -16,8 +16,7 @@
 
 #include <winrt/Windows.Foundation.Metadata.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class PickerShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -209,5 +208,4 @@ YGMeasureFunc PickerViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class TextInputViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -30,5 +29,4 @@ class TextInputViewManager : public ControlViewManager {
   void TransferInputScope(const XamlView &oldView, const XamlView &newView, const bool copyToPasswordBox);
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

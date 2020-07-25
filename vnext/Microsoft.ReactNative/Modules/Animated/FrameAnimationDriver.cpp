@@ -5,8 +5,7 @@
 
 #include "FrameAnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 FrameAnimationDriver::FrameAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -23,7 +22,7 @@ FrameAnimationDriver::FrameAnimationDriver(
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation] = []() {
-    const auto compositor = xaml::Window::Current().Compositor();
+    const auto compositor = react::uwp::GetCompositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation());
@@ -56,5 +55,4 @@ double FrameAnimationDriver::ToValue() {
   return m_toValue;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

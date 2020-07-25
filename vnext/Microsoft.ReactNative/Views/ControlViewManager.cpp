@@ -16,8 +16,7 @@
 #define TAB_INDEX_PROPERTY xaml::Controls::Control::TabIndexProperty
 #endif
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 ControlViewManager::ControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
@@ -89,9 +88,8 @@ void ControlViewManager::OnViewCreated(XamlView view) {
   // Set the default cornerRadius to 0 for Control: WinUI usually default cornerRadius to 2
   // Only works on >= RS5 becuase Control.CornerRadius is only supported >= RS5
   if (auto control = view.try_as<xaml::Controls::Control>()) {
-    control.CornerRadius({0});
+    control.CornerRadius({0, 0, 0, 0});
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -5,8 +5,7 @@
 
 #include "CppWinRTIncludes.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 using XamlView = xaml::DependencyObject;
 
@@ -39,6 +38,7 @@ inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
 comp::Compositor GetCompositor(const XamlView &view);
+void SetCompositor(const comp::Compositor &compositor);
+comp::Compositor GetCompositor();
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

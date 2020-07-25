@@ -45,7 +45,13 @@
     <ClCompile Include="DynamicReaderWriterTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ReactContextTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ReactModuleBuilderTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactNonAbiValueTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ReactPackageBuilderTests.cpp">

@@ -7,8 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class NativeAnimatedNodeManager;
 class AnimatedNode {
  public:
@@ -20,14 +19,12 @@ class AnimatedNode {
   virtual void Update(){};
   virtual void OnDetachedFromNode(int64_t /*animatedNodeTag*/){};
   virtual void OnAttachToNode(int64_t /*animatedNodeTag*/){};
+  virtual ~AnimatedNode() = default;
 
  protected:
   AnimatedNode *GetChildNode(int64_t tag);
-  const std::weak_ptr<NativeAnimatedNodeManager> m_manager;
-
- protected:
-  std::vector<int64_t> m_children{};
   int64_t m_tag{0};
+  const std::weak_ptr<NativeAnimatedNodeManager> m_manager;
+  std::vector<int64_t> m_children{};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

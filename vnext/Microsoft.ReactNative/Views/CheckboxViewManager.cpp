@@ -17,8 +17,7 @@ namespace winrt {
 using ToggleButton = xaml::Controls::Primitives::ToggleButton;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class CheckBoxShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -146,5 +145,4 @@ void CheckBoxViewManager::DispatchCommand(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

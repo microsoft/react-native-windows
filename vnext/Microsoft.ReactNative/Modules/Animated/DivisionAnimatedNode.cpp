@@ -6,8 +6,7 @@
 #include "DivisionAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 DivisionAnimatedNode::DivisionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -22,7 +21,7 @@ DivisionAnimatedNode::DivisionAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [firstNode = m_firstInput, nodes = m_inputNodes, manager]() {
-    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
 
     anim.Expression([firstNode, nodes, manager, anim]() {
       anim.SetReferenceParameter(s_baseName, manager->GetValueAnimatedNode(firstNode)->PropertySet());
@@ -38,5 +37,4 @@ DivisionAnimatedNode::DivisionAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

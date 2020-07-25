@@ -20,8 +20,7 @@ using namespace xaml::Automation;
 using namespace xaml::Automation::Peers;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class TextShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -55,12 +54,12 @@ class TextShadowNode : public ShadowNodeBase {
     Super::AddView(child, index);
   }
 
-  void removeAllChildren() {
+  void removeAllChildren() override {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
   }
 
-  void RemoveChildAt(int64_t indexToRemove) {
+  void RemoveChildAt(int64_t indexToRemove) override {
     if (indexToRemove == 0) {
       m_firstChildNode = nullptr;
     }
@@ -176,5 +175,4 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

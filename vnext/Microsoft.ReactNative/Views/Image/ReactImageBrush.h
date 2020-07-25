@@ -7,8 +7,7 @@
 #include <winrt/Windows.Foundation.h>
 #include "CppWinRTIncludes.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 enum class ResizeMode { Cover = 0, Contain = 1, Stretch = 2, Repeat = 3, Center = 4 };
 
@@ -35,6 +34,11 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   }
   void BlurRadius(float value);
 
+  winrt::Windows::UI::Color TintColor() {
+    return m_tintColor;
+  }
+  void TintColor(winrt::Windows::UI::Color value);
+
   winrt::Windows::Foundation::Size AvailableSize() {
     return m_availableSize;
   }
@@ -47,20 +51,23 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   }
 
  private:
-  void UpdateCompositionBrush(bool const &forceEffectBrush = false);
+  static constexpr auto TintColorColor{L"TintColor.Color"};
+  static constexpr auto BlurBlurAmount{L"Blur.BlurAmount"};
+
+  void UpdateCompositionBrush(bool forceEffectBrush = false);
   bool IsImageSmallerThanView();
   comp::CompositionStretch ResizeModeToStretch();
   comp::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
   comp::CompositionEffectBrush GetOrCreateEffectBrush(
       comp::CompositionSurfaceBrush const &surfaceBrush,
-      bool const &forceEffectBrush = false);
+      bool forceEffectBrush = false);
 
   comp::Compositor m_compositor;
   float m_blurRadius{0};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+  winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
   winrt::Windows::Foundation::Size m_availableSize{};
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
   comp::CompositionEffectBrush m_effectBrush{nullptr};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

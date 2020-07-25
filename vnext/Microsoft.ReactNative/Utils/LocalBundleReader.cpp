@@ -13,8 +13,7 @@
 #pragma optimize("", off)
 #endif
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
   winrt::hstring str(Microsoft::Common::Unicode::Utf8ToUtf16(bundleUri));
@@ -77,5 +76,4 @@ void StorageFileBigString::ensure() const {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

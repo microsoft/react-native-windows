@@ -5,9 +5,9 @@
 
 #include <Views/ViewManagerBase.h>
 
+#include "Unicode.h"
 #include "ViewPanel.h"
 #include "cdebug.h"
-#include "unicode.h"
 
 #include <Modules/NativeUIManager.h>
 
@@ -22,8 +22,7 @@ namespace winrt {
 using namespace xaml;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
@@ -321,5 +320,4 @@ bool ViewManagerBase::RequiresYogaNode() const {
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
