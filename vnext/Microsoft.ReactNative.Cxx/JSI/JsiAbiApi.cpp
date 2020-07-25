@@ -369,11 +369,12 @@ PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
 }
 
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyNameId) try {
-  std::string result;
-  m_runtime.PropertyNameIdToUtf8(AsJsiPropertyNameIdData(propertyNameId), [&result](array_view<uint8_t const> utf8) {
-    result.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
-  });
-  return result;
+  std::string dataResult;
+  m_runtime.PropertyNameIdToUtf8(
+      AsJsiPropertyNameIdData(propertyNameId), [&dataResult](array_view<uint8_t const> utf8) {
+        dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
+      });
+  return dataResult;
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -387,11 +388,11 @@ bool JsiAbiRuntime::compare(const PropNameID &left, const PropNameID &right) try
 }
 
 std::string JsiAbiRuntime::symbolToString(const Symbol &symbol) try {
-  std::string result;
-  m_runtime.SymbolToUtf8(AsJsiSymbolData(symbol), [&result](array_view<uint8_t const> utf8) {
-    result.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
+  std::string dataResult;
+  m_runtime.SymbolToUtf8(AsJsiSymbolData(symbol), [&dataResult](array_view<uint8_t const> utf8) {
+    dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
   });
-  return result;
+  return dataResult;
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -413,11 +414,11 @@ String JsiAbiRuntime::createStringFromUtf8(const uint8_t *utf8, size_t length) t
 }
 
 std::string JsiAbiRuntime::utf8(const String &str) try {
-  std::string result;
-  m_runtime.StringToUtf8(AsJsiStringData(str), [&result](array_view<uint8_t const> utf8) {
-    result.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
+  std::string dataResult;
+  m_runtime.StringToUtf8(AsJsiStringData(str), [&dataResult](array_view<uint8_t const> utf8) {
+    dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
   });
-  return result;
+  return dataResult;
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -581,11 +582,11 @@ size_t JsiAbiRuntime::size(const ArrayBuffer &arrayBuffer) try {
 }
 
 uint8_t *JsiAbiRuntime::data(const ArrayBuffer &arrayBuffer) try {
-  uint8_t *result{};
-  m_runtime.GetArrayBufferData(AsJsiArrayBufferData(arrayBuffer), [&result](array_view<uint8_t const> dataView) {
-    result = const_cast<uint8_t *>(dataView.data());
+  uint8_t *dataResult{};
+  m_runtime.GetArrayBufferData(AsJsiArrayBufferData(arrayBuffer), [&dataResult](array_view<uint8_t const> dataView) {
+    dataResult = const_cast<uint8_t *>(dataView.data());
   });
-  return result;
+  return dataResult;
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
