@@ -345,7 +345,7 @@ jobs:
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
-          script: yarn bundle-cpp
+          script: yarn bundle-cpp --verbose
           workingDirectory: packages\microsoft-reactnative-sampleapps
         condition: succeeded()
 
