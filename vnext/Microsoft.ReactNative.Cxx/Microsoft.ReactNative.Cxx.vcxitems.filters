@@ -103,9 +103,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiValue.h">
-      <Filter>JSI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h">
       <Filter>JSI</Filter>
     </ClInclude>

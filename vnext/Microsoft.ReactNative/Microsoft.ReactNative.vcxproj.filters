@@ -324,6 +324,7 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="JsiApi.cpp" />
+    <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
