@@ -51,6 +51,13 @@ class AnimationDriver {
     return std::vector<double>();
   }
 
+ private:
+  Callback m_endCallback{};
+  void DoCallback(bool value);
+#ifdef DEBUG
+  int m_debug_callbackAttempts{0};
+#endif // DEBUG
+
  protected:
   ValueAnimatedNode *GetAnimatedValue();
 
@@ -65,12 +72,5 @@ class AnimationDriver {
   // auto revoker for scopedBatch.Completed is broken, tracked by internal bug
   // #22399779
   winrt::event_token m_scopedBatchCompletedToken{};
-
- private:
-  Callback m_endCallback{};
-  void DoCallback(bool value);
-#ifdef DEBUG
-  int m_debug_callbackAttempts{0};
-#endif // DEBUG
 };
 } // namespace react::uwp
