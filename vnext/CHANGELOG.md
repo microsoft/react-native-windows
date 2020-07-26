@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 25 Jul 2020 05:04:34 GMT and should not be manually modified.
+This log was last generated on Sun, 26 Jul 2020 05:06:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.130
+
+Sun, 26 Jul 2020 05:06:58 GMT
+
+### Changes
+
+- Integrate Up To The Base of React Native 0.63 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.129
 

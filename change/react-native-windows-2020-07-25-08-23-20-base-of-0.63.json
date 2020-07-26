@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate Up To The Base of React Native 0.63",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-25T15:23:20.077Z"
-}
