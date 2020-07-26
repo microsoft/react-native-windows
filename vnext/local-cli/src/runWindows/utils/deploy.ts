@@ -59,14 +59,16 @@ function getAppPackage(
   const appPackageGlob = `${
     options.root
   }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
-  const globs = glob.sync(appPackageGlob);
+  const appPackageCandidates = glob.sync(appPackageGlob);
   let appPackage;
-  if (globs.length == 1 || !projectName) {
-    appPackage = globs[0];
-  } else if (globs.length > 1) {
-    const filteredGlobs = globs.filter(x => x.indexOf(projectName) != -1);
-    if (filteredGlobs.length >= 1) {
-      appPackage = filteredGlobs[0];
+  if (appPackageCandidates.length === 1 || !projectName) {
+    appPackage = appPackageCandidates[0];
+  } else if (appPackageCandidates.length > 1) {
+    const filteredAppPackageCandidates = appPackageCandidates.filter(x =>
+      x.includes(projectName),
+    );
+    if (filteredAppPackageCandidates.length >= 1) {
+      appPackage = filteredAppPackageCandidates[0];
     }
   }
 
@@ -83,7 +85,7 @@ function getAppPackage(
 
     const result = glob.sync(newGlob);
     if (result.length > 1 && projectName) {
-      const newFilteredGlobs = result.filter(x => x.indexOf(projectName) != -1);
+      const newFilteredGlobs = result.filter(x => x.includes(projectName));
       if (newFilteredGlobs.length >= 1) {
         newWarn(`More than one app package found: ${result}`);
       }
@@ -129,7 +131,7 @@ function getAppxManifestPath(
   }/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
   const globs = glob.sync(path.join(options.root, appxManifestGlob));
   let appxPath: string;
-  if (globs.length == 1 || !projectName) {
+  if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
     const filteredGlobs = globs.filter(x => x.indexOf(projectName) != -1);
@@ -227,9 +229,10 @@ export async function deployToDesktop(
   config: Config,
   buildTools: MSBuildTools,
 ) {
-  const windowsConfig: WindowsProjectConfig = config.project.windows;
+  const windowsConfig: Partial<WindowsProjectConfig> | undefined =
+    config.project.windows;
   const slnFile =
-    windowsConfig && windowsConfig.solutionFile
+    windowsConfig && windowsConfig.solutionFile && windowsConfig.sourceDir
       ? path.join(windowsConfig.sourceDir, windowsConfig.solutionFile)
       : options.sln!;
   const projectName =
