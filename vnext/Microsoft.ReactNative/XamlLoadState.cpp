@@ -144,14 +144,14 @@ XamlLoadState::XamlLoadState() {
   }
 
   auto ntdll = GetModuleHandle(L"ntdll.dll");
-  __analysis_assume(ntdll != nullptr);
+  _Analysis_assume(ntdll != nullptr);
   auto pfn = NTDLL_FUNCTION(LdrRegisterDllNotification);
   (*pfn)(0, XamlLoadNotification, nullptr, &m_cookie);
 }
 
 XamlLoadState::~XamlLoadState() {
   auto ntdll = GetModuleHandle(L"ntdll.dll");
-  __analysis_assume(ntdll != nullptr);
+  _Analysis_assume(ntdll != nullptr);
   auto pfn = NTDLL_FUNCTION(LdrUnregisterDllNotification);
   (*pfn)(m_cookie);
 }
