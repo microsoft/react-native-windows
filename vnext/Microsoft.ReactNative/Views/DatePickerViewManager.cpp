@@ -28,8 +28,7 @@ class DatePickerShadowNode : public ShadowNodeBase {
  private:
   void OnDateChanged(IReactInstance &instance, int64_t tag, winrt::DateTime const &newDate);
 
-  int64_t m_selectedTime, m_maxTime,
-      m_minTime; // These values are expected to be in milliseconds
+  int64_t m_selectedTime{0}, m_maxTime{0}, m_minTime{0}; // These values are expected to be in milliseconds
   int64_t m_timeZoneOffsetInSeconds = 0; // Timezone offset is expected to be in seconds
 
   xaml::Controls::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};

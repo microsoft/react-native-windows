@@ -1,5 +1,3 @@
-#pragma once
-
 #include "TurboModuleManager.h"
 #include "turbomodule/samples/SampleTurboCxxModule.h"
 

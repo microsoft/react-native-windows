@@ -117,7 +117,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
 
   winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
   winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
-  int64_t m_tokenContentPropertyChangeCallback;
+  int64_t m_tokenContentPropertyChangeCallback{0};
   winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
 };
 
