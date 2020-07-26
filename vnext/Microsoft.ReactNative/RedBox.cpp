@@ -5,6 +5,7 @@
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
 #include <regex>
+#include "Base/FollyIncludes.h"
 #include "DevServerHelper.h"
 #include "RedBoxErrorInfo.h"
 #include "Unicode.h"

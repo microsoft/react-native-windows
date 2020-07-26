@@ -6,6 +6,7 @@
     <ItemsProjectGuid>{da8b35b3-da00-4b02-bde6-6a397b3fd46b}</ItemsProjectGuid>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)\..\..\node_modules\react-native</ReactNativeDir>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)\..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)\..\..\..\node_modules\react-native</ReactNativeDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)\..\..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)\..\..\..\..\node_modules\react-native</ReactNativeDir>
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
