@@ -22,10 +22,7 @@ Note that react-native-windows is a monorepo and relies on monorepo tools like y
   There are two ways to run the app.  In a fully managed easy way, or by manually running all the required steps:
 
 ## Automatic
-The playground app can be run in a completely automatic way by using `react-native run-windows --sln windows\playground.sln`.
-
-
-Then
+The playground app can be run in a completely automatic way by doing:
 
 ```cmd
 cd packages\playground
