@@ -20,7 +20,7 @@ namespace react {
 
 ChakraValue::ChakraValue(JsValueRef value) : m_value(value) {}
 
-ChakraValue::ChakraValue(ChakraValue &&other) : m_value(other.m_value) {
+ChakraValue::ChakraValue(ChakraValue &&other) noexcept : m_value(other.m_value) {
   other.m_value = nullptr;
 }
 
@@ -207,7 +207,7 @@ ChakraValue ChakraObject::getProperty(const char *propName) const {
 
 void ChakraObject::setProperty(const ChakraString &propName, const ChakraValue &value) const {
   JsValueRef exn = NULL;
-  JSObjectSetProperty(m_obj, propName, value, kJSPropertyAttributeNone, &exn);
+  JSObjectSetProperty(m_obj, propName, value, JSPropertyAttributes::kJSPropertyAttributeNone, &exn);
   if (exn) {
     std::string exceptionText = ChakraValue(exn).toString().str();
     throwJSExecutionException("Failed to set property: %s", exceptionText.c_str());

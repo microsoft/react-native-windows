@@ -53,7 +53,7 @@ class PopupShadowNode : public ShadowNodeBase {
   std::unique_ptr<TouchEventHandler> m_touchEventHandler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
-  int64_t m_targetTag;
+  int64_t m_targetTag{0};
   winrt::Popup::Closed_revoker m_popupClosedRevoker{};
   winrt::Popup::Opened_revoker m_popupOpenedRevoker{};
   xaml::FrameworkElement::SizeChanged_revoker m_popupSizeChangedRevoker{};

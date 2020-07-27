@@ -56,7 +56,7 @@ class WorkerRegistration {
   ChakraObject jsObj;
 };
 
-class ChakraExecutor : public JSExecutor {
+class ChakraExecutor final : public JSExecutor {
  public:
   /**
    * Must be invoked from thread this Executor will run on.

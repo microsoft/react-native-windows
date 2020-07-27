@@ -28,7 +28,7 @@ UIManager::UIManager(std::vector<std::unique_ptr<IViewManager>> &&viewManagers, 
   m_nativeUIManager->setHost(this);
 }
 
-UIManager::~UIManager() {
+UIManager::~UIManager() noexcept {
   m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
 
   m_nativeUIManager->setHost(nullptr);

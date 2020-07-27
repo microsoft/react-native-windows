@@ -86,7 +86,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
       const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
       const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept;
   void Initialize() noexcept override;
-  ~ReactInstanceWin() noexcept;
+  ~ReactInstanceWin() noexcept override;
 
  private:
   void LoadJSBundles() noexcept;

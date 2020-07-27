@@ -45,7 +45,7 @@ class BufferViewBuffer : public facebook::jsi::Buffer {
     return size_;
   }
 
-  const uint8_t *data() const {
+  const uint8_t *data() const override {
     return buffer_->data() + offset_;
   }
 

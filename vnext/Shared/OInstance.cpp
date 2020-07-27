@@ -381,6 +381,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // Hermes is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
@@ -397,6 +398,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         }
         case JSIEngineOverride::Chakra:
