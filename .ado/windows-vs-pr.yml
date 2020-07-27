@@ -484,11 +484,13 @@ jobs:
           configuration: Debug
           platform: x86
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          additionalRunArguments:
         X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          additionalRunArguments:
         #X86ReleaseCpp:
         #  language: cpp
         #  configuration: Release
@@ -510,11 +512,13 @@ jobs:
           configuration: Release
           platform: x64
           additionalInitArguments:
+          additionalRunArguments:
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
           additionalInitArguments:
+          additionalRunArguments:
         #ArmDebugCpp:
         #  language: cpp
         #  configuration: Debug
@@ -556,11 +560,13 @@ jobs:
           configuration: Debug
           platform: x86
           additionalInitArguments: --useWinUI3 true
+          additionalRunArguments:
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
           additionalInitArguments: --useWinUI3 true
+          additionalRunArguments:
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
