@@ -19,8 +19,7 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag);
 
@@ -510,5 +509,4 @@ std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *hos
   return tags;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

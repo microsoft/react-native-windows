@@ -12,8 +12,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::ViewManagement::Core;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class SIPEventHandler {
  public:
@@ -43,5 +42,4 @@ class SIPEventHandler {
   void InitializeCoreInputView();
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

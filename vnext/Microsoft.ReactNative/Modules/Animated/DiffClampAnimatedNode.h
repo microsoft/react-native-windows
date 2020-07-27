@@ -5,9 +5,8 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
-class DiffClampAnimatedNode : public ValueAnimatedNode {
+namespace react::uwp {
+class DiffClampAnimatedNode final : public ValueAnimatedNode {
  public:
   DiffClampAnimatedNode(
       int64_t tag,
@@ -26,5 +25,4 @@ class DiffClampAnimatedNode : public ValueAnimatedNode {
   static constexpr std::wstring_view s_minParameterName{L"min"};
   static constexpr std::wstring_view s_maxParameterName{L"max"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

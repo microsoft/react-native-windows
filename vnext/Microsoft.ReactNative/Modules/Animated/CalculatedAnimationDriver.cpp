@@ -6,8 +6,7 @@
 #include <math.h>
 #include "CalculatedAnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
@@ -55,5 +54,4 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedA
   return std::make_tuple(animation, scopedBatch);
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

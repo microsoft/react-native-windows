@@ -5,7 +5,7 @@
 #include <cassert>
 #include <string>
 
-enum AnimatedNodeType {
+enum class AnimatedNodeType {
   Style,
   Value,
   Props,

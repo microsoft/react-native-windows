@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include "pch.h"
 
 #include "DevSupportManager.h"
@@ -38,8 +36,7 @@
 
 using namespace facebook::react;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string &url) {
   winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
@@ -283,8 +280,7 @@ std::string DevSupportManager::GetJavaScriptFromServer(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
 
 namespace facebook {
 namespace react {

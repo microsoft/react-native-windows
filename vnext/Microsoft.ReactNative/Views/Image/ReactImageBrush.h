@@ -7,8 +7,7 @@
 #include <winrt/Windows.Foundation.h>
 #include "CppWinRTIncludes.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 enum class ResizeMode { Cover = 0, Contain = 1, Stretch = 2, Repeat = 3, Center = 4 };
 
@@ -71,5 +70,4 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
   comp::CompositionEffectBrush m_effectBrush{nullptr};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -24,8 +24,7 @@ using namespace xaml::Controls;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 static YogaNodePtr make_yoga_node(YGConfigRef config) {
   YogaNodePtr result(YGNodeNewWithConfig(config));
@@ -154,8 +153,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   RootShadowNode &operator=(RootShadowNode const &) = delete;
   RootShadowNode() = delete;
 
-  RootShadowNode(facebook::react::IReactRootView *rootView, facebook::react::INativeUIManagerHost *host)
-      : m_host(host) {
+  RootShadowNode(facebook::react::IReactRootView *rootView, facebook::react::INativeUIManagerHost *host) {
     auto reactRootView = static_cast<react::uwp::IXamlRootView *>(rootView);
     m_view = reactRootView->GetXamlView();
   }
@@ -173,9 +171,6 @@ struct RootShadowNode final : public ShadowNodeBase {
       panel.Children().InsertAt(static_cast<uint32_t>(index), childView);
     }
   }
-
- private:
-  facebook::react::INativeUIManagerHost *m_host;
 };
 
 void NativeUIManager::setHost(facebook::react::INativeUIManagerHost *host) {
@@ -1127,5 +1122,4 @@ std::weak_ptr<react::uwp::IXamlReactControl> NativeUIManager::GetParentXamlReact
   return {};
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

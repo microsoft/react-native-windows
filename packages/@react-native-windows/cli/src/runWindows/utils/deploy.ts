@@ -23,6 +23,8 @@ import {
 import * as build from './build';
 import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 import MSBuildTools from './msbuildtools';
+import {Config} from '@react-native-community/cli-types';
+import {WindowsProjectConfig} from '../../config/projectConfig';
 
 function pushd(pathArg: string): () => void {
   const cwd = process.cwd();
@@ -44,7 +46,10 @@ function shouldLaunchApp(options: RunWindowsOptions): boolean {
   return options.launch;
 }
 
-function getAppPackage(options: RunWindowsOptions): string {
+function getAppPackage(
+  options: RunWindowsOptions,
+  projectName?: string,
+): string {
   const configuration = getBuildConfiguration(options);
   const packageFolder =
     options.arch === 'x86'
@@ -54,7 +59,18 @@ function getAppPackage(options: RunWindowsOptions): string {
   const appPackageGlob = `${
     options.root
   }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
-  let appPackage = glob.sync(appPackageGlob)[0];
+  const appPackageCandidates = glob.sync(appPackageGlob);
+  let appPackage;
+  if (appPackageCandidates.length === 1 || !projectName) {
+    appPackage = appPackageCandidates[0];
+  } else if (appPackageCandidates.length > 1) {
+    const filteredAppPackageCandidates = appPackageCandidates.filter(x =>
+      x.includes(projectName),
+    );
+    if (filteredAppPackageCandidates.length >= 1) {
+      appPackage = filteredAppPackageCandidates[0];
+    }
+  }
 
   if (!appPackage && options.release) {
     // in the latest vs, Release is removed
@@ -68,12 +84,16 @@ function getAppPackage(options: RunWindowsOptions): string {
     }_${options.release ? '' : 'Debug_'}Test`;
 
     const result = glob.sync(newGlob);
-    if (result.length > 1) {
-      newWarn(`More than one app package found: ${result}`);
+    if (result.length > 1 && projectName) {
+      const newFilteredGlobs = result.filter(x => x.includes(projectName));
+      if (newFilteredGlobs.length >= 1) {
+        newWarn(`More than one app package found: ${result}`);
+      }
+      appPackage = newFilteredGlobs[0];
     } else if (result.length === 1) {
       // we're good
+      appPackage = result[0];
     }
-    appPackage = glob.sync(newGlob)[0];
   }
 
   if (!appPackage) {
@@ -99,14 +119,31 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
   return windowsStoreAppUtilsPath;
 }
 
-function getAppxManifestPath(options: RunWindowsOptions) {
+function getAppxManifestPath(
+  options: RunWindowsOptions,
+  projectName?: string,
+): string {
   const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
   }/${configuration},${configuration}/*,target/${
     options.arch
   }/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
-  const appxPath = glob.sync(path.join(options.root, appxManifestGlob))[0];
+  const globs = glob.sync(path.join(options.root, appxManifestGlob));
+  let appxPath: string;
+  if (globs.length === 1 || !projectName) {
+    appxPath = globs[0];
+  } else {
+    const filteredGlobs = globs.filter(x => x.indexOf(projectName) != -1);
+    if (filteredGlobs.length > 1) {
+      newWarn(
+        `More than one appxmanifest for ${projectName}: ${filteredGlobs.join(
+          ',',
+        )}`,
+      );
+    }
+    appxPath = filteredGlobs[0];
+  }
 
   if (!appxPath) {
     throw new Error(
@@ -123,7 +160,7 @@ function parseAppxManifest(appxManifestPath: string): parse.Document {
 }
 
 function getAppxManifest(options: RunWindowsOptions): parse.Document {
-  return parseAppxManifest(getAppxManifestPath(options));
+  return parseAppxManifest(getAppxManifestPath(options, undefined));
 }
 
 function handleResponseError(e: Error): never {
@@ -189,12 +226,22 @@ export async function deployToDevice(
 export async function deployToDesktop(
   options: RunWindowsOptions,
   verbose: boolean,
-  slnFile: string,
+  config: Config,
   buildTools: MSBuildTools,
 ) {
-  const appPackageFolder = getAppPackage(options);
+  const windowsConfig: Partial<WindowsProjectConfig> | undefined =
+    config.project.windows;
+  const slnFile =
+    windowsConfig && windowsConfig.solutionFile && windowsConfig.sourceDir
+      ? path.join(windowsConfig.sourceDir, windowsConfig.solutionFile)
+      : options.sln!;
+  const projectName =
+    windowsConfig && windowsConfig.project && windowsConfig.project.projectName
+      ? windowsConfig.project.projectName
+      : options.proj!;
+  const appPackageFolder = getAppPackage(options, projectName);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
-  const appxManifestPath = getAppxManifestPath(options);
+  const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
   const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'Identity';

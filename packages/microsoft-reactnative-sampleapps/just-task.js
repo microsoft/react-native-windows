@@ -25,9 +25,9 @@ task('codegen', () => {
 
 function ensureDirectoryExists(filePath) {
   const dir = path.dirname(filePath);
-  if (!fs.existsSync(dir)) {
+  if (!fs.existsSync(filePath)) {
     ensureDirectoryExists(dir);
-    fs.mkdirSync(dir);
+    fs.mkdirSync(filePath);
   }
 }
 

@@ -6,9 +6,8 @@
 #include "AnimatedNode.h"
 #include "FacadeType.h"
 
-namespace react {
-namespace uwp {
-class StyleAnimatedNode : public AnimatedNode {
+namespace react::uwp {
+class StyleAnimatedNode final : public AnimatedNode {
  public:
   StyleAnimatedNode(
       int64_t tag,
@@ -23,5 +22,4 @@ class StyleAnimatedNode : public AnimatedNode {
 
   static constexpr std::string_view s_styleName{"style"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

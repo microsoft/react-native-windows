@@ -2,6 +2,50 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 26 Jul 2020 05:06:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.130",
+      "version": "0.0.0-canary.130",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Up To The Base of React Native 0.63",
+            "author": "ngerlem@microsoft.com",
+            "commit": "39cf8bd6c948666e8f47b9a76ad74eeee3162aa7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jul 2020 05:04:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.129",
+      "version": "0.0.0-canary.129",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add ReactContext implementation to Win32 ABI",
+            "author": "aeulitz@microsoft.com",
+            "commit": "1de261701a6cc14a17ea03243417ba2cd3b15c52",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Package.json formatting",
+            "author": "email not defined",
+            "commit": "c73ecd0ffb8fb4ee5205ec610ab4b6dbc7f6ee21",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "clang tidy, wave 1",
+            "author": "asklar@microsoft.com",
+            "commit": "3c5dadc5ab4526a2bc0df2692d75fd47ae6b7786",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jul 2020 05:05:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.128",
       "version": "0.0.0-canary.128",

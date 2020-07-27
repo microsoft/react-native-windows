@@ -6,8 +6,7 @@
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class WebSocketModule : public facebook::xplat::module::CxxModule {
  public:
@@ -26,5 +25,4 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<WebSocket> m_webSocket;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -17,8 +17,7 @@ namespace winrt {
 using ToggleButton = xaml::Controls::Primitives::ToggleButton;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class SliderShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -86,5 +85,4 @@ bool SliderViewManager::UpdateProperty(
   return true;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

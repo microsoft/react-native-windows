@@ -5,8 +5,7 @@
 
 #include "FrameAnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 FrameAnimationDriver::FrameAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -56,5 +55,4 @@ double FrameAnimationDriver::ToValue() {
   return m_toValue;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

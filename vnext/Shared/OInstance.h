@@ -20,7 +20,7 @@ namespace react {
 struct IDevSupportManager;
 struct IReactRootView;
 
-class InstanceImpl : public InstanceWrapper, private ::std::enable_shared_from_this<InstanceImpl> {
+class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_from_this<InstanceImpl> {
  public:
   static std::shared_ptr<InstanceImpl> MakeNoBundle(
       std::string &&jsBundleBasePath,

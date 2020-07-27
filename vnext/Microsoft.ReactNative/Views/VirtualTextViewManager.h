@@ -5,8 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class VirtualTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
@@ -31,5 +30,4 @@ class VirtualTextViewManager : public ViewManagerBase {
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

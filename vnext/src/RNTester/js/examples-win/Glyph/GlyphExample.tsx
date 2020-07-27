@@ -22,6 +22,7 @@ class GlyphExamples extends React.Component {
         <Text>Glyph: red</Text>
         <Glyph
           style={{width: 32, height: 32, color: 'red'}}
+          emSize={24}
           fontUri="ms-appx:///Assets/seguiemj.ttf"
           glyph="300"
         />

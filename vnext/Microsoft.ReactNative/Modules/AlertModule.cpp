@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "AlertModule.h"
-// #include <XamlUtils.h>
 #include "Unicode.h"
 
 #include <Utils/ValueUtils.h>

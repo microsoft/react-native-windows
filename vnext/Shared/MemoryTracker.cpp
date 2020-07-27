@@ -12,7 +12,7 @@
 namespace facebook {
 namespace react {
 
-class MemoryTrackerImpl : public MemoryTracker {
+class MemoryTrackerImpl final : public MemoryTracker {
  public:
   MemoryTrackerImpl(std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread) noexcept;
   size_t GetCurrentMemoryUsage() const noexcept override;

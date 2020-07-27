@@ -14,8 +14,7 @@
 
 #include <Views/ShadowNodeBase.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct ShadowNodeBase;
 
@@ -33,41 +32,43 @@ static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
     {"borderWidth", ShadowEdges::AllEdges},
 };
 
-inline xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges]) {
-  const double defaultWidth = std::max<double>(0, thicknesses[ShadowEdges::AllEdges]);
-  double startWidth = DefaultOrOverride(thicknesses[ShadowEdges::Left], thicknesses[ShadowEdges::Start]);
-  double endWidth = DefaultOrOverride(thicknesses[ShadowEdges::Right], thicknesses[ShadowEdges::End]);
+inline xaml::Thickness GetThickness(double thicknesses[(int)ShadowEdges::CountEdges]) {
+  const double defaultWidth = std::max<double>(0, thicknesses[(int)ShadowEdges::AllEdges]);
+  double startWidth = DefaultOrOverride(thicknesses[(int)ShadowEdges::Left], thicknesses[(int)ShadowEdges::Start]);
+  double endWidth = DefaultOrOverride(thicknesses[(int)ShadowEdges::Right], thicknesses[(int)ShadowEdges::End]);
 
   // Compute each edge.  Most specific setting wins, so fill from broad to
   // narrow: all, horiz/vert, start/end, left/right
   xaml::Thickness thickness = {defaultWidth, defaultWidth, defaultWidth, defaultWidth};
 
-  if (thicknesses[ShadowEdges::Horizontal] != c_UndefinedEdge)
-    thickness.Left = thickness.Right = thicknesses[ShadowEdges::Horizontal];
-  if (thicknesses[ShadowEdges::Vertical] != c_UndefinedEdge)
-    thickness.Top = thickness.Bottom = thicknesses[ShadowEdges::Vertical];
+  if (thicknesses[(int)ShadowEdges::Horizontal] != c_UndefinedEdge)
+    thickness.Left = thickness.Right = thicknesses[(int)ShadowEdges::Horizontal];
+  if (thicknesses[(int)ShadowEdges::Vertical] != c_UndefinedEdge)
+    thickness.Top = thickness.Bottom = thicknesses[(int)ShadowEdges::Vertical];
 
   if (startWidth != c_UndefinedEdge)
     thickness.Left = startWidth;
   if (endWidth != c_UndefinedEdge)
     thickness.Right = endWidth;
-  if (thicknesses[ShadowEdges::Top] != c_UndefinedEdge)
-    thickness.Top = thicknesses[ShadowEdges::Top];
-  if (thicknesses[ShadowEdges::Bottom] != c_UndefinedEdge)
-    thickness.Bottom = thicknesses[ShadowEdges::Bottom];
+  if (thicknesses[(int)ShadowEdges::Top] != c_UndefinedEdge)
+    thickness.Top = thicknesses[(int)ShadowEdges::Top];
+  if (thicknesses[(int)ShadowEdges::Bottom] != c_UndefinedEdge)
+    thickness.Bottom = thicknesses[(int)ShadowEdges::Bottom];
 
   return thickness;
 }
 
-inline xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::CountCorners]) {
+inline xaml::CornerRadius GetCornerRadius(double cornerRadii[(int)ShadowCorners::CountCorners]) {
   xaml::CornerRadius cornerRadius;
-  const double defaultRadius = std::max<double>(0, cornerRadii[ShadowCorners::AllCorners]);
-  double topStartRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopLeft], cornerRadii[ShadowCorners::TopStart]);
-  double topEndRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopRight], cornerRadii[ShadowCorners::TopEnd]);
+  const double defaultRadius = std::max<double>(0, cornerRadii[(int)ShadowCorners::AllCorners]);
+  double topStartRadius =
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::TopLeft], cornerRadii[(int)ShadowCorners::TopStart]);
+  double topEndRadius =
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::TopRight], cornerRadii[(int)ShadowCorners::TopEnd]);
   double bottomStartRadius =
-      DefaultOrOverride(cornerRadii[ShadowCorners::BottomLeft], cornerRadii[ShadowCorners::BottomStart]);
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomLeft], cornerRadii[(int)ShadowCorners::BottomStart]);
   double bottomEndRadius =
-      DefaultOrOverride(cornerRadii[ShadowCorners::BottomRight], cornerRadii[ShadowCorners::BottomEnd]);
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomRight], cornerRadii[(int)ShadowCorners::BottomEnd]);
 
   cornerRadius.TopLeft = DefaultOrOverride(defaultRadius, topStartRadius);
   cornerRadius.TopRight = DefaultOrOverride(defaultRadius, topEndRadius);
@@ -79,14 +80,14 @@ inline xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::Coun
 
 template <class T>
 void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
-  node->m_padding[edge] = margin;
+  node->m_padding[(int)edge] = margin;
   xaml::Thickness thickness = GetThickness(node->m_padding);
   element.Padding(thickness);
 }
 
 template <class T>
 void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
-  node->m_border[edge] = margin;
+  node->m_border[(int)edge] = margin;
   xaml::Thickness thickness = GetThickness(node->m_border);
   element.BorderThickness(thickness);
 }
@@ -117,9 +118,9 @@ bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName,
 inline void
 UpdateCornerRadiusValueOnNode(ShadowNodeBase *node, ShadowCorners corner, const folly::dynamic &propertyValue) {
   if (propertyValue.isNumber())
-    node->m_cornerRadius[corner] = propertyValue.asDouble();
+    node->m_cornerRadius[(int)corner] = propertyValue.asDouble();
   else
-    node->m_cornerRadius[corner] = c_UndefinedEdge;
+    node->m_cornerRadius[(int)corner] = c_UndefinedEdge;
 }
 
 template <class T>
@@ -501,5 +502,4 @@ TryUpdateMouseEvents(ShadowNodeBase *node, const std::string &propertyName, cons
   return true;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
