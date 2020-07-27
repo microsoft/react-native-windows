@@ -6,8 +6,7 @@
 #include <future>
 #include <string>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class LocalBundleReader {
  public:
@@ -29,5 +28,4 @@ class StorageFileBigString : public facebook::react::JSBigString {
   mutable std::string m_string;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

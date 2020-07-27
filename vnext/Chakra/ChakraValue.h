@@ -24,7 +24,7 @@ namespace react {
 class ChakraValue;
 class ChakraObject;
 
-enum JSPropertyAttributes { kJSPropertyAttributeNone };
+enum class JSPropertyAttributes { kJSPropertyAttributeNone };
 
 class ChakraString {
  public:
@@ -39,7 +39,7 @@ class ChakraString {
     m_string = value;
   }
 
-  ChakraString(ChakraString &&other) : m_string(other.m_string) {
+  ChakraString(ChakraString &&other) noexcept : m_string(other.m_string) {
     other.m_string = nullptr;
   }
 
@@ -131,7 +131,7 @@ class ChakraObject {
     // TODO :: VEC is value is not object.
   }
 
-  ChakraObject(ChakraObject &&other) : m_obj(other.m_obj), m_isProtected(other.m_isProtected) {
+  ChakraObject(ChakraObject &&other) noexcept : m_obj(other.m_obj), m_isProtected(other.m_isProtected) {
     other.m_obj = nullptr;
     other.m_isProtected = false;
   }
@@ -142,7 +142,7 @@ class ChakraObject {
     }
   }
 
-  ChakraObject &operator=(ChakraObject &&other) {
+  ChakraObject &operator=(ChakraObject &&other) noexcept {
     std::swap(m_obj, other.m_obj);
     std::swap(m_isProtected, other.m_isProtected);
     return *this;
@@ -205,7 +205,7 @@ class ChakraValue {
   ChakraValue &operator=(const ChakraValue &) = delete;
   ChakraValue() = default;
   ChakraValue(JsValueRef value);
-  ChakraValue(ChakraValue &&);
+  ChakraValue(ChakraValue &&) noexcept;
 
   operator JsValueRef() const {
     return m_value;

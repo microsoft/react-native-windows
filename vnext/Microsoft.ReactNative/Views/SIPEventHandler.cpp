@@ -16,8 +16,7 @@ using namespace Windows::UI::ViewManagement::Core;
 using namespace xaml;
 using namespace xaml::Media;
 } // namespace winrt
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 SIPEventHandler::SIPEventHandler(const std::weak_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance), m_fireKeyboradEvents(false), m_finalRect(winrt::RectHelper::Empty()){};
@@ -116,5 +115,4 @@ void SIPEventHandler::SendEvent(std::string &&eventName, folly::dynamic &&parame
         "RCTDeviceEventEmitter", "emit", folly::dynamic::array(std::move(eventName), std::move(parameters)));
   }
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

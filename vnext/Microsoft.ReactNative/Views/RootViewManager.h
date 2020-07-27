@@ -5,8 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class RootViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -34,5 +33,4 @@ class RootViewManager : public FrameworkElementViewManager {
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

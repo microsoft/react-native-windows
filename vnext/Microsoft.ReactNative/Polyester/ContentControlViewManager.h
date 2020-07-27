@@ -6,8 +6,7 @@
 #include <Views/ControlViewManager.h>
 #include <Views/ShadowNodeBase.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 //
@@ -47,5 +46,4 @@ class ContentControlViewManager : public ControlViewManager {
 };
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

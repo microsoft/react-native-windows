@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include "ExceptionsManagerModule.h"
 #include <assert.h>
 #include <cxxreact/JsArgumentHelpers.h>

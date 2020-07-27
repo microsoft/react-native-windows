@@ -24,8 +24,7 @@ using namespace xaml::Documents;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 RawTextViewManager::RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
@@ -94,5 +93,4 @@ bool RawTextViewManager::RequiresYogaNode() const {
   return false;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

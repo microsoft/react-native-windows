@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "pch.h"
 
 #include <V8JsiRuntime.h>
@@ -16,11 +19,19 @@ class ReactQueueBackedTaskRunner {
  public:
   ReactQueueBackedTaskRunner(std::shared_ptr<facebook::react::MessageQueueThread> jsQueue)
       : jsQueue_(std::move(jsQueue)) {
-    // This thread handles the delayed tasks.
+    // This thread handles the delayed tasks
     std::thread(&ReactQueueBackedTaskRunner::TimerFunc, this).detach();
   }
 
-  ~ReactQueueBackedTaskRunner() {}
+  ~ReactQueueBackedTaskRunner() {
+    stop_requested_ = true;
+
+    delayed_tasks_available_cond_.notify_all();
+
+    // Wait until the thread is done
+    std::unique_lock<std::mutex> worker_stopped_lock(delayed_queue_access_mutex_);
+    delayed_tasks_available_cond_.wait(worker_stopped_lock, [this]() { return timer_stopped_; });
+  }
 
   void PostTask(std::unique_ptr<v8runtime::JSITask> task) {
     std::shared_ptr<v8runtime::JSITask> shared_task(task.release());
@@ -91,7 +102,7 @@ class ReactQueueBackedTaskRunner {
     }
 
     timer_stopped_ = true;
-    timer_stopped_cond_.notify_all();
+    delayed_tasks_available_cond_.notify_all();
   }
 
  private:
@@ -115,9 +126,6 @@ class ReactQueueBackedTaskRunner {
   std::condition_variable delayed_tasks_available_cond_;
 
   std::atomic<bool> stop_requested_{false};
-
-  std::mutex timer_stopped_mutex_;
-  std::condition_variable timer_stopped_cond_;
   bool timer_stopped_{false};
 };
 

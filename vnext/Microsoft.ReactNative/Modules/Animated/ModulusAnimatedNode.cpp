@@ -6,8 +6,7 @@
 #include "ModulusAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 ModulusAnimatedNode::ModulusAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -26,5 +25,4 @@ ModulusAnimatedNode::ModulusAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

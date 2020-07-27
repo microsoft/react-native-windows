@@ -22,13 +22,25 @@ const View = require('../Components/View/View');
 
 const invariant = require('invariant');
 
+import type {
+  HostComponent,
+  TouchedViewDataAtPoint,
+} from '../Renderer/shims/ReactNativeTypes';
+
+type HostRef = React.ElementRef<HostComponent<mixed>>;
+
 const UIManager = require('../ReactNative/UIManager'); // [Win32]
 
-import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
-
 export type ReactRenderer = {
-  getInspectorDataForViewTag: (viewTag: number) => Object,
-  ...
+  rendererConfig: {
+    getInspectorDataForViewAtPoint: (
+      inspectedView: ?HostRef,
+      locationX: number,
+      locationY: number,
+      callback: Function,
+    ) => void,
+    ...
+  },
 };
 
 const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -51,29 +63,33 @@ function findRenderers(): $ReadOnlyArray<ReactRenderer> {
   return allRenderers;
 }
 
-function getInspectorDataForViewTag(touchedViewTag: number) {
+function getInspectorDataForViewAtPoint(
+  inspectedView: ?HostRef,
+  locationX: number,
+  locationY: number,
+  callback: (viewData: TouchedViewDataAtPoint) => void,
+) {
+  // Check all renderers for inspector data.
   for (let i = 0; i < renderers.length; i++) {
     const renderer = renderers[i];
-    if (
-      Object.prototype.hasOwnProperty.call(
-        renderer,
-        'getInspectorDataForViewTag',
-      )
-    ) {
-      const inspectorData = renderer.getInspectorDataForViewTag(touchedViewTag);
-      if (inspectorData.hierarchy.length > 0) {
-        return inspectorData;
-      }
+    if (renderer?.rendererConfig?.getInspectorDataForViewAtPoint != null) {
+      renderer.rendererConfig.getInspectorDataForViewAtPoint(
+        inspectedView,
+        locationX,
+        locationY,
+        viewData => {
+          // Only return with non-empty view data since only one renderer will have this view.
+          if (viewData && viewData.hierarchy.length > 0) {
+            callback(viewData);
+          }
+        },
+      );
     }
   }
-  throw new Error('Expected to find at least one React renderer.');
 }
-
-type HostRef = React.ElementRef<HostComponent<mixed>>;
 
 class Inspector extends React.Component<
   {
-    isFabric: boolean,
     inspectedView: ?HostRef,
     onRequestRerenderApp: (callback: (instance: ?HostRef) => void) => void,
     ...
@@ -93,6 +109,7 @@ class Inspector extends React.Component<
 > {
   _hideTimeoutID: TimeoutID | null = null;
   _subs: ?Array<() => void>;
+  _setTouchedViewData: ?(TouchedViewDataAtPoint) => void;
 
   constructor(props: Object) {
     super(props);
@@ -123,6 +140,7 @@ class Inspector extends React.Component<
       this._subs.map(fn => fn());
     }
     hook.off('react-devtools', this._attachToDevtools);
+    this._setTouchedViewData = null;
   }
 
   UNSAFE_componentWillReceiveProps(newProps: Object) {
@@ -200,34 +218,55 @@ class Inspector extends React.Component<
     });
   }
 
-  onTouchViewTag(touchedViewTag: number, frame: Object, pointerY: number) {
-    // Most likely the touched instance is a native wrapper (like RCTView)
-    // which is not very interesting. Most likely user wants a composite
-    // instance that contains it (like View)
-    const {hierarchy, props, selection, source} = getInspectorDataForViewTag(
-      touchedViewTag,
-    );
-
-    if (this.state.devtoolsAgent) {
-      // Skip host leafs
-      this.state.devtoolsAgent.selectNode(touchedViewTag);
-    }
-
-    // [Win32 Avoid Dimensions call
-    const node = ReactNative.findNodeHandle(this);
-    UIManager.measure(node, (x, y, width, height, left, top) => {
-      this.setState({
-        panelPos: pointerY > height / 2 ? 'top' : 'bottom',
-        selection,
+  onTouchPoint(locationX: number, locationY: number) {
+    this._setTouchedViewData = viewData => {
+      const {
         hierarchy,
-        inspected: {
-          style: props.style,
-          frame,
-          source,
-        },
+        props,
+        selectedIndex,
+        source,
+        frame,
+        pointerY,
+        touchedViewTag,
+      } = viewData;
+
+      // Sync the touched view with React DevTools.
+      // Note: This is Paper only. To support Fabric,
+      // DevTools needs to be updated to not rely on view tags.
+      if (this.state.devtoolsAgent && touchedViewTag) {
+        this.state.devtoolsAgent.selectNode(
+          ReactNative.findNodeHandle(touchedViewTag),
+        );
+      }
+
+      // [Win32 Avoid Dimensions call
+      const node = ReactNative.findNodeHandle(this);
+      UIManager.measure(node, (x, y, width, height, left, top) => {
+        this.setState({
+          panelPos: pointerY > height / 2 ? 'top' : 'bottom',
+          selection: selectedIndex,
+          hierarchy,
+          inspected: {
+            style: props.style,
+            frame,
+            source,
+          },
+        });
       });
-    });
+    };
+
     // ]Win32
+    getInspectorDataForViewAtPoint(
+      this.state.inspectedView,
+      locationX,
+      locationY,
+      viewData => {
+        if (this._setTouchedViewData != null) {
+          this._setTouchedViewData(viewData);
+          this._setTouchedViewData = null;
+        }
+      },
+    );
   }
 
   setPerfing(val: boolean) {
@@ -271,10 +310,8 @@ class Inspector extends React.Component<
       <View style={styles.container} pointerEvents="box-none">
         {this.state.inspecting && (
           <InspectorOverlay
-            isFabric={this.props.isFabric}
             inspected={this.state.inspected}
-            inspectedView={this.state.inspectedView}
-            onTouchViewTag={this.onTouchViewTag.bind(this)}
+            onTouchPoint={this.onTouchPoint.bind(this)}
           />
         )}
         <View style={[styles.panelContainer, panelContainerStyle]}>

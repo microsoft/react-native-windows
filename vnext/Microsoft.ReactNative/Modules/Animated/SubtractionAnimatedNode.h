@@ -5,9 +5,8 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
-class SubtractionAnimatedNode : public ValueAnimatedNode {
+namespace react::uwp {
+class SubtractionAnimatedNode final : public ValueAnimatedNode {
  public:
   SubtractionAnimatedNode(
       int64_t tag,
@@ -22,5 +21,4 @@ class SubtractionAnimatedNode : public ValueAnimatedNode {
 
   static constexpr std::wstring_view s_baseName{L"base"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

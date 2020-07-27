@@ -8,8 +8,7 @@
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 ButtonContentViewManager::ButtonContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
@@ -51,5 +50,4 @@ XamlView ButtonContentViewManager::CreateViewCore(int64_t /*tag*/) {
 }
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

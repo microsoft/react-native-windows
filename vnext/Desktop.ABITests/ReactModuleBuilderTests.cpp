@@ -16,7 +16,9 @@ namespace ABITests {
 TEST_CLASS (ReactModuleBuilderTests) {
  public:
   ReactModuleBuilderTests() {
-    IReactContext context = Microsoft::Internal::TestController::CreateTestContext();
+    IReactPropertyBag propertyBag = ReactPropertyBagHelper::CreatePropertyBag();
+    IReactNotificationService notificationService = ReactNotificationServiceHelper::CreateNotificationService();
+    IReactContext context = Microsoft::Internal::TestController::CreateContext(propertyBag, notificationService);
     m_builder = Microsoft::Internal::TestController::CreateReactModuleBuilder(context);
   }
 

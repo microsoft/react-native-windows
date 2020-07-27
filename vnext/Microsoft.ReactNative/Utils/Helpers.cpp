@@ -17,8 +17,7 @@ using namespace xaml::Media;
 using namespace Windows::Foundation::Metadata;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // Not only react-native, native modules could set tag too for controls.
 // For example, to identify an clicked item, customer may add tag in
@@ -103,5 +102,4 @@ bool IsXamlIsland() {
   return false;
 }
 
-} // namespace uwp
-}; // namespace react
+} // namespace react::uwp

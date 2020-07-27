@@ -10,8 +10,7 @@ namespace winrt {
 using namespace comp;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class ValueAnimatedNode : public AnimatedNode {
  public:
   ValueAnimatedNode(
@@ -54,5 +53,4 @@ class ValueAnimatedNode : public AnimatedNode {
   std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

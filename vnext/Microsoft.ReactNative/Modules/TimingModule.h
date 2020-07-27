@@ -11,8 +11,7 @@
 #include <vector>
 
 #include <winrt/Windows.Foundation.h>
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 typedef winrt::Windows::Foundation::DateTime TDateTime;
 typedef winrt::Windows::Foundation::TimeSpan TTimeSpan;
@@ -89,5 +88,4 @@ class TimingModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<Timing> m_timing;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

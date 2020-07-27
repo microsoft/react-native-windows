@@ -5,8 +5,7 @@
 
 #include "ContentControlViewManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 class HyperlinkViewManager : public ContentControlViewManager {
@@ -29,5 +28,4 @@ class HyperlinkViewManager : public ContentControlViewManager {
 };
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

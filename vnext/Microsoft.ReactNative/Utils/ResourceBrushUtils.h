@@ -5,8 +5,7 @@
 #include <UI.Xaml.Media.h>
 #include "CppWinRTIncludes.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // Helper per-UI-thread singleton class to cache brushes used as defaults.
 class DefaultBrushStore {
@@ -48,5 +47,4 @@ void UpdateToggleSwitchTrackResourceBrushes(
     const xaml::Media::Brush onTrackBrush,
     const xaml::Media::Brush offTrackBrush);
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
