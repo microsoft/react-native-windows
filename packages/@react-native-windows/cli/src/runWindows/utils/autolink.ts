@@ -519,7 +519,7 @@ interface AutoLinkOptions {
   proj?: string;
 }
 
-const autoLinkCommand: Command = {
+export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,
@@ -548,5 +548,3 @@ const autoLinkCommand: Command = {
     },
   ],
 };
-
-export = autoLinkCommand;

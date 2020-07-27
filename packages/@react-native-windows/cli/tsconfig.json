@@ -1,7 +1,7 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
-    "outDir": "lib-commonjs",
+    // Change the default to allow ES2019.String "trimEnd"
     "lib": [
       "DOM",
       "ES6",
@@ -13,4 +13,5 @@
     "strictFunctionTypes": false,
   },
   "include": ["src"],
+  "exclude": ["node_modules"]
 }

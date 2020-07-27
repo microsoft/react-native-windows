@@ -19,7 +19,7 @@ import {
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
-import {GenerateOptions} from '../generate-windows';
+import {GenerateOptions} from '..';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
