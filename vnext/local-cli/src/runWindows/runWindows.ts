@@ -138,7 +138,7 @@ async function runWindows(
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {
-        await deploy.deployToDesktop(options, verbose, slnFile, buildTools);
+        await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
     } catch (e) {
       newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
