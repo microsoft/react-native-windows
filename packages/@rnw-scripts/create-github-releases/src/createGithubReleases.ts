@@ -55,7 +55,7 @@ interface Changelog {
 interface Release {
   packageName: string;
   tag: string;
-  version: string;
+  version: semver.SemVer;
   comments: Comment[];
 }
 
@@ -195,6 +195,7 @@ async function publishRelease(release: Release, token: string) {
       name: `${packageTitle(release.packageName)} ${release.version}`,
       body: createReleaseMarkdown(release),
       prerelease: !!pre,
+      draft: shouldBeDraft(release),
     }),
   });
 
@@ -221,7 +222,7 @@ function aggregateReleases(changelog: Changelog): Release[] {
   return Object.keys(commentsByTag).map(tag => ({
     packageName: changelog.name,
     tag,
-    version: entriesByTag[tag][0].version,
+    version: semver.parse(entriesByTag[tag][0].version)!,
     comments: commentsByTag[tag],
   }));
 }
@@ -260,4 +261,23 @@ function packageTitle(packageName: string): string {
   } else {
     return packageName;
   }
+}
+
+/**
+ * Should a release be created as a draft?
+ */
+function shouldBeDraft(release: Release): boolean {
+  if (release.packageName !== 'react-native-windows') {
+    return false;
+  }
+
+  // First preview and first non-prerelease get manually curated notes. Create
+  // them as a draft to allow setting notes before the initial email notification.
+  const pre = release.version.prerelease;
+  const isPrerelease = pre.length !== 0;
+
+  return (
+    (isPrerelease && pre[0] === 'preview' && pre[1] === 1) || // 0.x.0-preview.1 is the first preview build
+    (!isPrerelease && release.version.patch === 0) // 0.x.0 is the first non-prerelease build
+  );
 }
