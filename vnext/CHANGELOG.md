@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 26 Jul 2020 05:06:58 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jul 2020 05:06:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.131
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Changes
+
+- Separate local-cli into its own package (ngerlem@microsoft.com)
+- Clang tidy, wave 2 (asklar@microsoft.com)
+- Deploy apps in CI because we want to ensure we are catching cli deployment issues (asklar@microsoft.com)
 
 ## 0.0.0-canary.130
 

@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.131",
+      "version": "0.0.0-canary.131",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Separate local-cli into its own package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clang tidy, wave 2",
+            "author": "asklar@microsoft.com",
+            "commit": "d5b96878bcef3eb3b25b54b9755e2760f5bd1f03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Deploy apps in CI because we want to ensure we are catching cli deployment issues",
+            "author": "asklar@microsoft.com",
+            "commit": "e96cf312babf0998c615590a882cc036047509d4",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Gave glyph a fixed emSize",
+            "author": "tannerjsteele@gmail.com",
+            "commit": "78cbd5868901140562640e6c30771fcdbd607547",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 26 Jul 2020 05:06:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.130",
       "version": "0.0.0-canary.130",

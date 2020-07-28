@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Clang tidy, wave 2",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-26T01:52:13.216Z"
-}

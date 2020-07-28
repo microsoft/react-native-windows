@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Support packages opting into promotion",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "@rnw-scripts/promote-release_v0.0.3",
       "version": "0.0.3",
