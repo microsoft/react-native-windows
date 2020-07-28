@@ -46,10 +46,10 @@
   <!-- 
     This target returns the location of the deployed executable.
   -->
-  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="$(_PublishedToolExecutable)">
-    <PropertyGroup>
-      <_PublishedToolExecutable>$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)</_PublishedToolExecutable>
-    </PropertyGroup>
+  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="@(_PublishedToolExecutable)">
+    <ItemGroup>
+      <_PublishedToolExecutable Include="$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)" />
+    </ItemGroup>
   </Target>
 
   <!-- 

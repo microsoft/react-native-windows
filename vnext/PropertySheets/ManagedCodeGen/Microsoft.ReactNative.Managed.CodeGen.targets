@@ -35,31 +35,17 @@
     <Error Condition="'$(ReactNativeWindowsDir)' == ''" Text="CodeGen is only supported when property ReactNativeWindowsDir is set." />
 
     <MSBuild Projects="$(_ReactNativeCodeGenProjectPath)" Targets="PublishTool" BuildInParallel="$(BuildInParallel)" Properties="$(_ReactNativeCodeGenProjectProperties)" ContinueOnError="!$(BuildingProject)" RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
-
       <!-- This target will return all the files of the tool so we can track these for incrementality-->
-      <Output TaskParameter="TargetOutputs" ItemName="_ReactNativeCodeGenToolFilesTemp" />
+      <Output TaskParameter="TargetOutputs" ItemName="_ReactNativeCodeGenToolFiles" />
     </MSBuild>
 
     <MSBuild Projects="$(_ReactNativeCodeGenProjectPath)" Targets="GetPublishedToolPath" BuildInParallel="$(BuildInParallel)" Properties="$(_ReactNativeCodeGenProjectProperties)" ContinueOnError="!$(BuildingProject)" RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
-
       <!-- This target will return the tools executable. We unfortunately have ot use a separate target invocation
          - because msbuid does not allow returning multiple pieces of data from a single invocation nor is it easy
          - to setup a convention where the first element would be the executable
          -->
-      <Output TaskParameter="TargetOutputs" ItemName="_ReactNativeCodeGenToolExecutableTemp" />
-
+      <Output TaskParameter="TargetOutputs" PropertyName="_ReactNativeCodeGenToolExecutable" />
     </MSBuild>
-
-    <ItemGroup>
-      <!-- MSBuild does not allow targets to return properties, so map it to a property from an itemgroup -->
-      <_ReactNativeCodeGenToolFiles Include="@(_ReactNativeCodeGenToolFilesTemp)" />
-    </ItemGroup>
-
-    <PropertyGroup>
-      <!-- MSBuild does not allow targets to return properties, so map it to a property from an itemgroup -->
-      <_ReactNativeCodeGenToolExecutable>@(_ReactNativeCodeGenToolExecutableTemp)</_ReactNativeCodeGenToolExecutable>
-    </PropertyGroup>
-
   </Target>
 
   <Target Name="ReactNativeManagedCodeGen" DependsOnTargets="_ReactNativeManagedCodeGenPublishTool" Inputs="$(MSBuildProjectFullPath);@(Compile);@(_ReactNativeCodeGenToolFiles)" Outputs="$(ReactNativeCodeGenFile);$(_ReactNativeCodeGenResponseFile)" Condition="'$(DesignTimeBuild)' != 'true'">
