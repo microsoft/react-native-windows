@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "pch.h"
+
 #include "PackagerConnection.h"
 
 #include <Shared/DevServerHelper.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Windows.Storage.Streams.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -61,11 +64,11 @@ void PackagerConnection::CreateOrReusePackagerConnection(const facebook::react::
   auto packager = GetOrCreate(settings.sourceBundleHost, settings.sourceBundlePort);
   packager->SubscribeReloadEvent(
       [callback = settings.liveReloadCallback](
-          winrt::IInspectable const & /*sender*/,
+          winrt::Windows::Foundation::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::IReactNotificationArgs const & /*args*/) { callback(); });
   packager->SubscribeDevMenuEvent(
       [callback = settings.showDevMenuCallback](
-          winrt::IInspectable const & /*sender*/,
+          winrt::Windows::Foundation::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::IReactNotificationArgs const & /*args*/) { callback(); });
 }
 
@@ -83,7 +86,7 @@ void PackagerConnection::SubscribeDevMenuEvent(winrt::Microsoft::ReactNative::Re
   m_notificationService.Subscribe(DevMenuEventName(), nullptr, handler);
 }
 
-std::future<void> PackagerConnection::Connect() {
+winrt::fire_and_forget PackagerConnection::Connect() {
   m_ws = winrt::Windows::Networking::Sockets::MessageWebSocket();
 
   m_wsMessageRevoker = m_ws.MessageReceived(

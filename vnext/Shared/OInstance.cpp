@@ -497,9 +497,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // First attempt to get download the Js locally, to catch any bundling
       // errors before attempting to load the actual script.
 
-      std::string jsBundleString;
-      bool success;
-      std::tie(jsBundleString, success) = Microsoft::ReactNative::GetJavaScriptFromServer(
+      auto [jsBundleString, success] = Microsoft::ReactNative::GetJavaScriptFromServer(
           m_devSettings->sourceBundleHost,
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,

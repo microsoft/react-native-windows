@@ -17,7 +17,7 @@ struct PackagerConnection : std::enable_shared_from_this<PackagerConnection> {
   static void CreateOrReusePackagerConnection(const facebook::react::DevSettings &settings);
 
  private:
-  std::future<void> Connect();
+  winrt::fire_and_forget Connect();
   void SubscribeReloadEvent(winrt::Microsoft::ReactNative::ReactNotificationHandler const &handler);
   void SubscribeDevMenuEvent(winrt::Microsoft::ReactNative::ReactNotificationHandler const &handler);
 
