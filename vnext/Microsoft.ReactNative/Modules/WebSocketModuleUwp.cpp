@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
+#include <Windows.Storage.Streams.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -57,7 +58,7 @@ class WebSocketModule::WebSocket {
   void sendBinary(const std::string &base64String, int64_t id);
   void ping(int64_t id);
 
-  void onError(int64_t id, winrt::hresult_error const &e);
+  void onError(int64_t id, winrt::hresult hr);
   void sendEvent(std::string &&eventName, folly::dynamic &&parameters);
 
  private:
@@ -111,7 +112,18 @@ void WebSocketModule::WebSocket::connect(
   m_msgReceiveds[id] = socket.MessageReceived(winrt::auto_revoke, [this, connectionId = id](auto &&, auto &&args) {
     try {
       std::string response;
-      winrt::Windows::Storage::Streams::DataReader reader = args.GetDataReader();
+
+      // Use ABI to avoid throwing exceptions on standard errors
+      winrt::com_ptr<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> abiArgs{
+          args.as<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs>()};
+      winrt::com_ptr<ABI::Windows::Storage::Streams::IDataReader> abiReader;
+      auto hr = abiArgs->GetDataReader(abiReader.put());
+      if (FAILED(hr)) {
+        onError(connectionId, hr);
+        return;
+      }
+
+      winrt::Windows::Storage::Streams::DataReader reader{abiReader.as<winrt::Windows::Storage::Streams::DataReader>()};
 
       uint32_t len = reader.UnconsumedBufferLength();
       if (args.MessageType() == winrt::SocketMessageType::Utf8) {
@@ -132,7 +144,7 @@ void WebSocketModule::WebSocket::connect(
       sendEvent("websocketMessage", std::move(params));
     } catch (winrt::hresult_error const &e) {
       OutputDebugString("Read failed (0x%8X) %ls\n", e);
-      onError(connectionId, e);
+      onError(connectionId, e.code());
     }
   });
 
@@ -153,7 +165,7 @@ void WebSocketModule::WebSocket::connect(
   if (!SUCCEEDED(hr)) {
     winrt::hresult_error e{hr};
     OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
-    onError(id, e);
+    onError(id, e.code());
   }
 }
 
@@ -175,7 +187,7 @@ void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
     dataWriter.StoreAsync();
   } catch (winrt::hresult_error const &e) {
     OutputDebugString("WebSocket.send failed (0x%8X) %ls\n", e);
-    onError(id, e);
+    onError(id, e.code());
   }
 }
 
@@ -191,7 +203,7 @@ void WebSocketModule::WebSocket::sendBinary(const std::string &base64String, int
     dataWriter.StoreAsync();
   } catch (winrt::hresult_error const &e) {
     OutputDebugString("WebSocket.sendBinary failed (0x%8X) %ls\n", e);
-    onError(id, e);
+    onError(id, e.code());
   }
 }
 
@@ -209,12 +221,12 @@ void WebSocketModule::WebSocket::ping(int64_t id) {
     dataWriter.StoreAsync();
   } catch (winrt::hresult_error const &e) {
     OutputDebugString("WebSocket.ping failed (0x%8X) %ls\n", e);
-    onError(id, e);
+    onError(id, e.code());
   }
 }
 
-void WebSocketModule::WebSocket::onError(int64_t id, winrt::hresult_error const &e) {
-  folly::dynamic errorObj = folly::dynamic::object("id", id)("message", static_cast<int32_t>(e.code()));
+void WebSocketModule::WebSocket::onError(int64_t id, winrt::hresult hr) {
+  folly::dynamic errorObj = folly::dynamic::object("id", id)("message", static_cast<int32_t>(hr));
   sendEvent("websocketFailed", std::move(errorObj));
 }
 

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -106,7 +107,21 @@ winrt::fire_and_forget SendRequestAsync(
     auto completion = httpClient.SendRequestAsync(request);
     networking->AddRequest(requestId, completion);
 
+    // lessthrow
+#ifdef DEFAULT_CPPWINRT_EXCEPTIONS
     winrt::Windows::Web::Http::HttpResponseMessage response = co_await completion;
+#else
+    co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperationWithProgress<
+        winrt::Windows::Web::Http::HttpResponseMessage,
+        winrt::Windows::Web::Http::HttpProgress>>{completion};
+    HRESULT hr = completion.ErrorCode();
+    if (FAILED(hr)) {
+      networking->OnRequestError(requestId, "Unhandled exception during request", false /*isTimeout*/);
+      networking->RemoveRequest(requestId);
+      co_return;
+    }
+    winrt::Windows::Web::Http::HttpResponseMessage response = completion.GetResults();
+#endif
     if (response != nullptr)
       networking->OnResponseReceived(requestId, response);
 
