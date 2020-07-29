@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Share packager connection between instances to same packager",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-07-29T20:39:44.819Z"
+}
