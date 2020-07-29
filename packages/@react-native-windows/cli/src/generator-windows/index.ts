@@ -174,7 +174,7 @@ export async function copyProjectTemplateAndReplace(
     },
     {
       id: 'XamlStraddle',
-      version: '0.0.2',
+      version: '0.0.3',
     },
   ];
 
@@ -194,7 +194,7 @@ export async function copyProjectTemplateAndReplace(
     },
     {
       id: 'XamlStraddle',
-      version: '0.0.2',
+      version: '0.0.3',
       hasProps: false,
       hasTargets: true,
     },
