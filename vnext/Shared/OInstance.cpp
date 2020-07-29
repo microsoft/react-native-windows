@@ -38,11 +38,12 @@
 #include <BatchingMessageQueueThread.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
-#include <IDevSupportManager.h>
+#include <DevSupportManager.h>
 #include <IReactRootView.h>
 #include <IUIManager.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
+#include "PackagerConnection.h"
 
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
@@ -365,6 +366,10 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
+    if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
+      Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
+    }
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
@@ -491,13 +496,14 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
         m_devSettings->useFastRefresh) {
       // First attempt to get download the Js locally, to catch any bundling
       // errors before attempting to load the actual script.
-      auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+
+      auto [jsBundleString, success] = Microsoft::ReactNative::GetJavaScriptFromServer(
           m_devSettings->sourceBundleHost,
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName);
 
-      if (m_devManager->HasException()) {
+      if (!success) {
         m_devSettings->errorCallback(jsBundleString);
         return;
       }

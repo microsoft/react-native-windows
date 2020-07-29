@@ -20,8 +20,13 @@ struct DevSettings;
 }
 } // namespace facebook
 
-namespace react {
-namespace uwp {
+namespace Microsoft::ReactNative {
+
+std::pair<std::string, bool> GetJavaScriptFromServer(
+    const std::string &sourceBundleHost,
+    const uint16_t sourceBundlePort,
+    const std::string &jsBundleName,
+    const std::string &platform);
 
 class DevSupportManager final : public facebook::react::IDevSupportManager {
  public:
@@ -29,11 +34,6 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
   ~DevSupportManager();
 
   virtual facebook::react::JSECreator LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) override;
-  virtual std::string GetJavaScriptFromServer(
-      const std::string &sourceBundleHost,
-      const uint16_t sourceBundlePort,
-      const std::string &jsBundleName,
-      const std::string &platform) override;
   virtual void StartPollingLiveReload(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort,
@@ -44,15 +44,8 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
   }
 
  private:
-  void LaunchDevTools(const facebook::react::DevSettings &settings);
-  std::future<void> CreatePackagerConnection(const facebook::react::DevSettings &settings);
-
- private:
-  winrt::Windows::Networking::Sockets::MessageWebSocket m_ws{nullptr};
-  winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_wsMessageRevoker;
   bool m_exceptionCaught = false;
   std::atomic_bool m_cancellation_token;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace Microsoft::ReactNative

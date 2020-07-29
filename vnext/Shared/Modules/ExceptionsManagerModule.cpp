@@ -156,11 +156,12 @@ std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants() {
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods() {
+  auto redboxHandler = m_redboxHandler;
   return {Method(
               "reportFatalException",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
-                  m_redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSFatal);
+              [redboxHandler](folly::dynamic args) noexcept {
+                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+                  redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSFatal);
                 }
                 /*
                 // TODO - fatal errors should throw if there is no redbox handler
@@ -171,18 +172,18 @@ std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule:
 
           Method(
               "reportSoftException",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
-                  m_redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSSoft);
+              [redboxHandler](folly::dynamic args) noexcept {
+                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+                  redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSSoft);
                 }
               }),
 
           Method(
               "reportException",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+              [redboxHandler](folly::dynamic args) noexcept {
+                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
                   auto isFatal = RetrieveOptionalBoolFromMap(args[0], "isFatal");
-                  m_redboxHandler->showNewError(
+                  redboxHandler->showNewError(
                       std::move(CreateErrorInfo2(args[0])),
                       isFatal ? Mso::React::ErrorType::JSFatal : Mso::React::ErrorType::JSSoft);
                 }
@@ -190,15 +191,15 @@ std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule:
 
           Method(
               "updateExceptionMessage",
-              [this](folly::dynamic args) noexcept {
-                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
-                  m_redboxHandler->updateError(std::move(CreateErrorInfo(args)));
+              [redboxHandler](folly::dynamic args) noexcept {
+                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+                  redboxHandler->updateError(std::move(CreateErrorInfo(args)));
                 }
               }),
 
-          Method("dismissRedbox", [this](folly::dynamic /*args*/) noexcept {
-            if (m_redboxHandler)
-              m_redboxHandler->dismissRedbox();
+          Method("dismissRedbox", [redboxHandler](folly::dynamic /*args*/) noexcept {
+            if (redboxHandler)
+              redboxHandler->dismissRedbox();
           })};
 }
 

@@ -16,11 +16,6 @@ struct DevSettings;
 
 struct IDevSupportManager {
   virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) = 0;
-  virtual std::string GetJavaScriptFromServer(
-      const std::string &sourceBundleHost,
-      const uint16_t sourceBundlePort,
-      const std::string &jsBundleName,
-      const std::string &platform) = 0;
   virtual void StartPollingLiveReload(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort,
