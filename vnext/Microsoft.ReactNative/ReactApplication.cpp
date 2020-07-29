@@ -17,7 +17,6 @@
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.UI.Core.h>
 
-
 using namespace winrt;
 using namespace Windows::ApplicationModel;
 using namespace Windows::Foundation;
