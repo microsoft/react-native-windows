@@ -9,12 +9,12 @@
 #include <Shared/DevSettings.h>
 
 #include <Executors/WebSocketJSExecutor.h>
+#include "PackagerConnection.h"
 
 #include "Unicode.h"
 #include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
-#include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Filters.h>
@@ -36,97 +36,75 @@
 
 using namespace facebook::react;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
-std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string &url) {
-  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
-  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
-  winrt::Windows::Web::Http::HttpClient httpClient(filter);
-  winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
+std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std::string &url) {
+    winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
+    filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
+    winrt::Windows::Web::Http::HttpClient httpClient(filter);
+    winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
-  co_await winrt::resume_background();
+    co_await winrt::resume_background();
 
-  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
-  winrt::Windows::Web::Http::HttpResponseMessage response = co_await httpClient.SendRequestAsync(request);
+    winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
+    auto asyncRequest = httpClient.SendRequestAsync(request);
+#ifdef DEFAULT_CPPWINRT_EXCEPTIONS
+    try {
+      winrt::Windows::Web::Http::HttpResponseMessage response = co_await asyncRequest;
+    } catch (winrt::hresult_error const &e) {
+      co_return std::make_pair(
+          Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str(), false);
+    }
+#else
+    co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperationWithProgress<
+        winrt::Windows::Web::Http::HttpResponseMessage,
+        winrt::Windows::Web::Http::HttpProgress>>{asyncRequest};
 
-  winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
-  auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+    HRESULT hr = asyncRequest.ErrorCode();
+    if (FAILED(hr)) {
+      std::ostringstream sstream;
+      if (hr == WININET_E_CANNOT_CONNECT) {
+        sstream << "A connection with the server " << url
+                << " could not be established\n\nIs the packager running?";
+      } else {
+        sstream << "Error " << std::hex << static_cast<int>(asyncRequest.ErrorCode()) << " downloading " << url;
+      }
+      co_return std::make_pair(sstream.str(), false);
+    }
 
-  reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-  uint32_t len = reader.UnconsumedBufferLength();
-  std::string result;
-  if (len > 0 || response.IsSuccessStatusCode()) {
-    std::vector<uint8_t> data(len);
-    reader.ReadBytes(data);
-    result = std::string(reinterpret_cast<char *>(data.data()), data.size());
-  } else {
-    std::ostringstream sstream;
-    sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
-    result = sstream.str();
+    winrt::Windows::Web::Http::HttpResponseMessage response = asyncRequest.GetResults();
+#endif
+
+    winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
+    auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+
+    reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+    uint32_t len = reader.UnconsumedBufferLength();
+    std::string result;
+    if (len > 0 || response.IsSuccessStatusCode()) {
+      std::vector<uint8_t> data(len);
+      reader.ReadBytes(data);
+      result = std::string(reinterpret_cast<char *>(data.data()), data.size());
+    } else {
+      std::ostringstream sstream;
+      sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
+      result = sstream.str();
+    }
+
+    co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
   }
 
-  co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
-}
+void LaunchDevTools(const facebook::react::DevSettings &settings) {
+    winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
+    filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
+    winrt::Windows::Web::Http::HttpClient httpClient(filter);
+    winrt::Windows::Foundation::Uri uri(
+        Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(
+            settings.sourceBundleHost, settings.sourceBundlePort)));
 
-void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings &settings) {
-  DownloadFromAsync(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(
-                        settings.sourceBundleHost, settings.sourceBundlePort))
-      .get();
-}
-
-std::future<void> DevSupportManager::CreatePackagerConnection(const facebook::react::DevSettings &settings) {
-  m_ws = winrt::Windows::Networking::Sockets::MessageWebSocket();
-
-  m_wsMessageRevoker = m_ws.MessageReceived(
-      winrt::auto_revoke, [reloadCallback = settings.liveReloadCallback](auto && /*sender*/, auto &&args) noexcept {
-        try {
-          auto reader = args.GetDataReader();
-
-          uint32_t len = reader.UnconsumedBufferLength();
-          if (args.MessageType() == winrt::Windows::Networking::Sockets::SocketMessageType::Utf8) {
-            reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-            std::vector<uint8_t> data(len);
-            reader.ReadBytes(data);
-
-            auto response =
-                std::string(Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
-            auto json =
-                winrt::Windows::Data::Json::JsonObject::Parse(Microsoft::Common::Unicode::Utf8ToUtf16(response));
-
-            auto version = (int)json.GetNamedNumber(L"version", 0.0);
-            if (version != 2) {
-              return;
-            }
-            auto method = std::wstring(json.GetNamedString(L"method", L""));
-            if (method.empty()) {
-              return;
-            }
-
-            if (!method.compare(L"reload")) {
-              if (reloadCallback) {
-                reloadCallback();
-              }
-            } else if (!method.compare(L"devMenu")) {
-              // TODO showDevMenu
-            } else if (!method.compare(L"captureHeap")) {
-              // TODO captureHeap
-            }
-          }
-        } catch (winrt::hresult_error const &e) {
-        }
-      });
-
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerConnectionUrl(
-          settings.sourceBundleHost, settings.sourceBundlePort)));
-  auto async = m_ws.ConnectAsync(uri);
-
-#ifdef DEFAULT_CPPWINRT_EXCEPTIONS
-  co_await async;
-#else
-  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
-#endif
-}
+    winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
+    httpClient.SendRequestAsync(request);
+  }
 
 facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) {
   // Reset exception state since client is requesting new service
@@ -134,12 +112,12 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const f
 
   try {
     LaunchDevTools(settings);
-    CreatePackagerConnection(settings);
+    Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(settings);
 
     return [this, settings](
                std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
                std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
-      auto websocketJSE = std::make_unique<WebSocketJSExecutor>(delegate, jsQueue);
+      auto websocketJSE = std::make_unique<react::uwp::WebSocketJSExecutor>(delegate, jsQueue);
       try {
         websocketJSE
             ->ConnectAsync(
@@ -255,38 +233,29 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-std::string DevSupportManager::GetJavaScriptFromServer(
+std::pair<std::string, bool> GetJavaScriptFromServer(
     const std::string &sourceBundleHost,
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform) {
-  // Reset exception state since client is requesting new service
-  m_exceptionCaught = false;
 
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
       sourceBundleHost, sourceBundlePort, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
   try {
-    std::string s;
-    bool success;
-    std::tie(s, success) = DownloadFromAsync(bundleUrl).get();
-
-    if (!success)
-      m_exceptionCaught = true;
-
-    return s;
+    return GetJavaScriptFromServerAsync(bundleUrl).get();
   } catch (winrt::hresult_error const &e) {
-    m_exceptionCaught = true;
-    return "Error:" + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
+    return std::make_pair(
+        "Error: " + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()), false);
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
 
 namespace facebook {
 namespace react {
 
 std::shared_ptr<IDevSupportManager> CreateDevSupportManager() {
-  return std::make_shared<::react::uwp::DevSupportManager>();
+  return std::make_shared<::Microsoft::ReactNative::DevSupportManager>();
 }
 
 } // namespace react

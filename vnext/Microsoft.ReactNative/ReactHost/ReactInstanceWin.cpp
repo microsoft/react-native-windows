@@ -241,6 +241,13 @@ void ReactInstanceWin::Initialize() noexcept {
 
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
+          devSettings->showDevMenuCallback = [weakThis]() noexcept {
+            if (auto strongThis = weakThis.GetStrongPtr()) {
+              strongThis->m_uiQueue.Post([context = strongThis->m_reactContext]() {
+                Microsoft::ReactNative::DevMenuManager::Show(context->Properties());
+              });
+            }
+          };
 
           // Now that ReactNativeWindows is building outside devmain, it is missing
           // fix given by PR https://github.com/microsoft/react-native-windows/pull/2624 causing
