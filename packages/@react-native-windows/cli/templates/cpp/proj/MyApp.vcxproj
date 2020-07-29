@@ -2,7 +2,7 @@
 <Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   {{#cppNugetPackages}}
   {{#propsTopOfFile}}
-  <Import Project="..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
+  <Import Project="..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.props" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.props')" />
   {{/propsTopOfFile}}
   {{/cppNugetPackages}}
   <PropertyGroup Label="Globals">
@@ -81,7 +81,7 @@
   </PropertyGroup>
   {{#cppNugetPackages}}
   {{#propsMiddleOfFile}}
-  <Import Project="..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
+  <Import Project="..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.props" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.props')" />
   {{/propsMiddleOfFile}}
   {{/cppNugetPackages}}
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -198,7 +198,7 @@
   <ImportGroup Label="ExtensionTargets">
     {{#cppNugetPackages}}
     {{#hasTargets}}
-    <Import Project="..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" />
+    <Import Project="..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.targets" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.targets')" />
     {{/hasTargets}}
     {{/cppNugetPackages}}
     <Import Project="..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
@@ -209,10 +209,10 @@
     </PropertyGroup>
     {{#cppNugetPackages}}
     {{#hasProps}}
-    <Error Condition="!Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props'))" />
+    <Error Condition="!Exists('..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.props'))" />
     {{/hasProps}}
     {{#hasTargets}}
-    <Error Condition="!Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets'))" />
+    <Error Condition="!Exists('..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\{{ id }}.{{ version }}\build\{{ framework }}\{{ id }}.targets'))" />
     {{/hasTargets}}
     {{/cppNugetPackages}}
     <Error Condition="!Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />

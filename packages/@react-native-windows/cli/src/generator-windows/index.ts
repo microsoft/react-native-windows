@@ -102,6 +102,7 @@ interface CppNugetPackage extends NugetPackage {
   propsMiddleOfFile?: boolean;
   hasProps: boolean;
   hasTargets: boolean;
+  framework?: string;
 }
 
 export async function copyProjectTemplateAndReplace(
@@ -185,12 +186,14 @@ export async function copyProjectTemplateAndReplace(
       propsTopOfFile: true,
       hasProps: true,
       hasTargets: true,
+      framework: 'native',
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? winui3Version : '2.3.191129002',
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
+      framework: 'native',
     },
     {
       id: 'XamlStraddle',
