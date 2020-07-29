@@ -193,7 +193,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
-    <Import Project="..\packages\XamlStraddle.0.0.2\build\XamlStraddle.targets" Condition="Exists('..\packages\XamlStraddle.0.0.2\build\XamlStraddle.targets')" />
+    <Import Project="..\packages\XamlStraddle.0.0.3\build\XamlStraddle.targets" Condition="Exists('..\packages\XamlStraddle.0.0.3\build\XamlStraddle.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -202,6 +202,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
-    <Error Condition="!Exists('..\packages\XamlStraddle.0.0.2\build\XamlStraddle.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XamlStraddle.0.0.2\build\XamlStraddle.targets'))" />
+    <Error Condition="!Exists('..\packages\XamlStraddle.0.0.3\build\XamlStraddle.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XamlStraddle.0.0.3\build\XamlStraddle.targets'))" />
   </Target>
 </Project>

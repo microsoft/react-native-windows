@@ -164,7 +164,7 @@
     <Import Project="$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="..\Microsoft.ReactNative.IntegrationTests\TestBundle.targets" />
-    <Import Project="$(SolutionDir)packages\XamlStraddle.0.0.2\build\XamlStraddle.targets" Condition="Exists('$(SolutionDir)packages\XamlStraddle.0.0.2\build\XamlStraddle.targets')" />
+    <Import Project="$(SolutionDir)packages\XamlStraddle.0.0.3\build\XamlStraddle.targets" Condition="Exists('$(SolutionDir)packages\XamlStraddle.0.0.3\build\XamlStraddle.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -172,6 +172,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\XamlStraddle.0.0.2\build\XamlStraddle.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\XamlStraddle.0.0.2\build\XamlStraddle.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\XamlStraddle.0.0.3\build\XamlStraddle.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\XamlStraddle.0.0.3\build\XamlStraddle.targets'))" />
   </Target>
 </Project>
