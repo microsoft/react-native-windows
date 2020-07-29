@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "remove straddle headers from repo",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-29T07:08:27.791Z"
+}

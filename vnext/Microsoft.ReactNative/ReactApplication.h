@@ -7,6 +7,8 @@
 #include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
 
+#include <XamlStraddle.Activation.h>
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 // NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
