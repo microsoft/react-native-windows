@@ -7,12 +7,6 @@
 #include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
 
-#ifdef USE_WINUI3
-namespace activation = xaml;
-#else
-namespace activation = winrt::Windows::ApplicationModel::Activation;
-#endif
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
 // NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
