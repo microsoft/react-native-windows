@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Jul 2020 05:04:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.132",
+      "version": "0.0.0-canary.132",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update codegen targets for source mode to use property instead of items",
+            "author": "dannyvv@microsoft.com",
+            "commit": "9c1f3791b40a15d80dcc07790bcde6ae1032b8b9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jul 2020 05:06:13 GMT",
       "tag": "react-native-windows_v0.0.0-canary.131",
       "version": "0.0.0-canary.131",
