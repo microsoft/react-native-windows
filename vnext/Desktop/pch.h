@@ -7,8 +7,9 @@
 #define NOGDI
 #endif
 
-#include <windows.h>
 #include "unknwn.h"
+
+#include <windows.h>
 #include <winrt/base.h>
 #include <mutex>
 
