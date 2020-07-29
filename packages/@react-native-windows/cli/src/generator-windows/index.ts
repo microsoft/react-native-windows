@@ -172,6 +172,10 @@ export async function copyProjectTemplateAndReplace(
       id: 'Microsoft.NETCore.UniversalWindowsPlatform',
       version: '6.2.9',
     },
+    {
+      id: 'XamlStraddle',
+      version: '0.0.2',
+    },
   ];
 
   const cppNugetPackages: CppNugetPackage[] = [
@@ -187,6 +191,12 @@ export async function copyProjectTemplateAndReplace(
       version: options.useWinUI3 ? winui3Version : '2.3.191129002',
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
+    },
+    {
+      id: 'XamlStraddle',
+      version: '0.0.2',
+      hasProps: false,
+      hasTargets: true,
     },
   ];
 
