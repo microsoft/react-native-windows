@@ -366,7 +366,6 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
-    
     if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }

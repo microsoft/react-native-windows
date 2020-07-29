@@ -22,7 +22,6 @@ struct DevSettings;
 
 namespace Microsoft::ReactNative {
 
-
 std::pair<std::string, bool> GetJavaScriptFromServer(
     const std::string &sourceBundleHost,
     const uint16_t sourceBundlePort,

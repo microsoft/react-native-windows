@@ -5,10 +5,10 @@
 
 #include <Shared/DevServerHelper.h>
 #include <Utils/CppWinrtLessExceptions.h>
+#include <Windows.Storage.Streams.h>
+#include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.Data.Json.h>
-#include <Windows.Storage.Streams.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
@@ -32,35 +32,35 @@ winrt::Microsoft::ReactNative::IReactPropertyName ReloadEventName() {
 
 winrt::Microsoft::ReactNative::IReactPropertyName DevMenuEventName() {
   static const winrt::Microsoft::ReactNative::IReactPropertyName propName =
-      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(PackagerNamespace(),
-          L"DevMenu");
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(PackagerNamespace(), L"DevMenu");
   return propName;
 }
 
-/* static */ std::shared_ptr<PackagerConnection> PackagerConnection::GetOrCreate(const std::string& sourceBundleHost, uint16_t sourceBundlePort) 
-{
-    std::shared_ptr<PackagerConnection> packager;
-    {
-        std::lock_guard<std::mutex> guard(m_mutexPackagers);
-        auto key = std::pair<std::string, uint16_t>(sourceBundleHost, sourceBundlePort);
-        auto it = m_connections.find(key);
+/* static */ std::shared_ptr<PackagerConnection> PackagerConnection::GetOrCreate(
+    const std::string &sourceBundleHost,
+    uint16_t sourceBundlePort) {
+  std::shared_ptr<PackagerConnection> packager;
+  {
+    std::lock_guard<std::mutex> guard(m_mutexPackagers);
+    auto key = std::pair<std::string, uint16_t>(sourceBundleHost, sourceBundlePort);
+    auto it = m_connections.find(key);
 
-        if (it != m_connections.end()) {
-            return it->second;
-        }
-
-        packager = std::make_shared<PackagerConnection>(sourceBundleHost, sourceBundlePort);
-        m_connections.emplace(key, packager);
+    if (it != m_connections.end()) {
+      return it->second;
     }
 
-    packager->Connect();
-    return packager;
-}
+    packager = std::make_shared<PackagerConnection>(sourceBundleHost, sourceBundlePort);
+    m_connections.emplace(key, packager);
+  }
 
+  packager->Connect();
+  return packager;
+}
 
 void PackagerConnection::CreateOrReusePackagerConnection(const facebook::react::DevSettings &settings) {
   auto packager = GetOrCreate(settings.sourceBundleHost, settings.sourceBundlePort);
-  packager->SubscribeReloadEvent([callback = settings.liveReloadCallback](
+  packager->SubscribeReloadEvent(
+      [callback = settings.liveReloadCallback](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::IReactNotificationArgs const & /*args*/) { callback(); });
   packager->SubscribeDevMenuEvent(
@@ -69,18 +69,18 @@ void PackagerConnection::CreateOrReusePackagerConnection(const facebook::react::
           winrt::Microsoft::ReactNative::IReactNotificationArgs const & /*args*/) { callback(); });
 }
 
+PackagerConnection::PackagerConnection(const std::string &sourceBundleHost, uint16_t sourceBundlePort)
+    : m_sourceBundleHost(sourceBundleHost),
+      m_sourceBundlePort(sourceBundlePort),
+      m_notificationService(
+          winrt::Microsoft::ReactNative::ReactNotificationServiceHelper::CreateNotificationService()) {}
 
-PackagerConnection::PackagerConnection(const std::string& sourceBundleHost, uint16_t sourceBundlePort) 
-: m_sourceBundleHost(sourceBundleHost) , m_sourceBundlePort(sourceBundlePort), m_notificationService(winrt::Microsoft::ReactNative::ReactNotificationServiceHelper::CreateNotificationService()) {}
-
-
-void PackagerConnection::SubscribeReloadEvent(winrt::Microsoft::ReactNative::ReactNotificationHandler const &handler)
-{
-    m_notificationService.Subscribe(ReloadEventName(), nullptr, handler);
+void PackagerConnection::SubscribeReloadEvent(winrt::Microsoft::ReactNative::ReactNotificationHandler const &handler) {
+  m_notificationService.Subscribe(ReloadEventName(), nullptr, handler);
 }
 
 void PackagerConnection::SubscribeDevMenuEvent(winrt::Microsoft::ReactNative::ReactNotificationHandler const &handler) {
-    m_notificationService.Subscribe(DevMenuEventName(), nullptr, handler);
+  m_notificationService.Subscribe(DevMenuEventName(), nullptr, handler);
 }
 
 std::future<void> PackagerConnection::Connect() {
@@ -135,9 +135,8 @@ std::future<void> PackagerConnection::Connect() {
         }
       });
 
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerConnectionUrl(
-          m_sourceBundleHost, m_sourceBundlePort)));
+  winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(
+      facebook::react::DevServerHelper::get_PackagerConnectionUrl(m_sourceBundleHost, m_sourceBundlePort)));
   auto async = m_ws.ConnectAsync(uri);
 
 #ifdef DEFAULT_CPPWINRT_EXCEPTIONS
@@ -147,5 +146,4 @@ std::future<void> PackagerConnection::Connect() {
 #endif
 }
 
-
-}
+} // namespace Microsoft::ReactNative
