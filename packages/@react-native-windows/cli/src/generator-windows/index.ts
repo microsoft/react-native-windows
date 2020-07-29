@@ -214,6 +214,7 @@ export async function copyProjectTemplateAndReplace(
       version: nugetVersion,
       hasProps: false,
       hasTargets: true,
+      framework: 'native',
     });
 
     cppNugetPackages.push({
@@ -221,6 +222,7 @@ export async function copyProjectTemplateAndReplace(
       version: nugetVersion,
       hasProps: false,
       hasTargets: true,
+      framework: 'native',
     });
   }
 
