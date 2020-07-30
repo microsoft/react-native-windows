@@ -13,6 +13,7 @@ import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
+
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
@@ -107,16 +108,17 @@ const EXITCODE_NO_PACKAGE_JSON = 7;
 const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
 const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
+const EXITCODE_DEVMODE_VERSION_MISMATCH = 11;
 
 function getReactNativeAppName(): string {
   console.log('Reading application name from package.json...');
   const cwd = process.cwd();
   const pkgJsonPath = findUp.sync('package.json', {cwd});
   if (!pkgJsonPath) {
-    console.error(
+    userError(
       'Unable to find package.json.  This should be run from within an existing react-native app.',
+      EXITCODE_NO_PACKAGE_JSON,
     );
-    process.exit(EXITCODE_NO_PACKAGE_JSON);
   }
   let name = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')).name;
   if (!name) {
@@ -141,18 +143,10 @@ function getReactNativeVersion(): string {
     return require(rnPkgJsonPath).version;
   }
 
-  console.error(
-    'Error: Must be run from a project that already depends on react-native, and has react-native installed.',
+  userError(
+    'Must be run from a project that already depends on react-native, and has react-native installed.',
+    EXITCODE_NO_REACTNATIVE_FOUND,
   );
-  process.exit(EXITCODE_NO_REACTNATIVE_FOUND);
-}
-
-function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string): never {
-  console.error(`Error: Unsupported version of react-native: ${chalk.cyan(
-    rnVersion,
-  )}
-react-native-windows supports react-native versions ${chalk.cyan('>=0.60')}`);
-  process.exit(EXITCODE_UNSUPPORTED_VERION_RN);
 }
 
 function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
@@ -166,7 +160,15 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
       return `^${major}.${minor}.0-0`;
     }
   }
-  errorOutOnUnsupportedVersionOfReactNative(rnVersion);
+
+  userError(
+    `Error: Unsupported version of react-native: ${chalk.cyan(
+      rnVersion,
+    )} react-native-windows supports react-native versions ${chalk.cyan(
+      '>=0.60',
+    )}`,
+    EXITCODE_UNSUPPORTED_VERION_RN,
+  );
 }
 
 function getMatchingReactNativeSemVerForReactNativeWindowsVersion(
@@ -254,8 +256,10 @@ function getLatestMatchingVersion(
 async function getLatestRNWVersion(): Promise<string> {
   const rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
   if (!rnwLatestVersion) {
-    console.error('Error: No version of react-native-windows@latest found');
-    process.exit(EXITCODE_NO_LATEST_RNW);
+    userError(
+      'Error: No version of react-native-windows@latest found',
+      EXITCODE_NO_LATEST_RNW,
+    );
   }
   return rnwLatestVersion;
 }
@@ -274,35 +278,51 @@ async function getLatestMatchingRNWVersion(
   }
 }
 
-function installReactNativeWindows(version: string, useDevMode: boolean) {
+function installReactNativeWindows(
+  version: string | undefined,
+  useDevMode: boolean,
+) {
+  const cwd = process.cwd();
+  const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
+
+  if (useDevMode) {
+    const packageCmd = isProjectUsingYarn(cwd) ? 'yarn' : 'npm';
+    execSync(`${packageCmd} link react-native-windows`, execOptions);
+    const rnwPkgJsonPath = require.resolve(
+      'react-native-windows/package.json',
+      {paths: [cwd]},
+    );
+    const rnwVersion = require(rnwPkgJsonPath).version;
+    if (version && version !== rnwVersion) {
+      userError(
+        `Requested react-native-windows version: '${version}' does not match version '${rnwVersion}' of the linked module. When using '--useDevMode' you do not need to pass a version. If you do, you should pass '--version ${rnwVersion}'`,
+        EXITCODE_DEVMODE_VERSION_MISMATCH,
+      );
+    } else if (!version) {
+      version = rnwVersion;
+    }
+  } else if (!version) {
+    internalError(
+      'Unexpected error ecountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
+    );
+  }
+
   console.log(
     `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
       version,
     )}...`,
   );
 
-  const cwd = process.cwd();
-  const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
-
-  if (useDevMode) {
-    execSync(
-      isProjectUsingYarn(cwd)
-        ? 'yarn link react-native-windows'
-        : 'npm link react-native-windows',
-      execOptions,
-    );
-  } else {
-    const pkgJsonPath = findUp.sync('package.json', {cwd});
-    if (!pkgJsonPath) {
-      throw new Error('Unable to find package.json');
-    }
-
-    let pkgJson = require(pkgJsonPath);
-    let deps = pkgJson.dependencies || {};
-    deps['react-native-windows'] = version;
-    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
-    execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
+  const pkgJsonPath = findUp.sync('package.json', {cwd});
+  if (!pkgJsonPath) {
+    internalError('Unable to find package.json');
   }
+
+  let pkgJson = require(pkgJsonPath);
+  let deps = pkgJson.dependencies || {};
+  deps['react-native-windows'] = version;
+  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+  execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
 
   console.log(
     chalk.green(
@@ -313,6 +333,21 @@ function installReactNativeWindows(version: string, useDevMode: boolean) {
       )} successfully installed.`,
     ),
   );
+}
+
+/**
+ * Prints error message for a user error and exits the process with the given exitcode
+ */
+function userError(text: string, exitCode: number): never {
+  console.error(chalk.redBright('[Error] ' + text));
+  process.exit(exitCode);
+}
+
+/**
+ * Throw new internal error
+ */
+function internalError(text: string): never {
+  throw new Error(text);
 }
 
 /**
@@ -330,95 +365,96 @@ function isProjectUsingYarn(cwd: string): boolean {
     let version = argv.version;
 
     if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
-      // WinUI3 is not yet compatible with NuGet packages
-      console.error(
+      userError(
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
-      );
-      process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
-    }
-
-    if (!version) {
-      const rnVersion = getReactNativeVersion();
-      version = getDefaultReactNativeWindowsSemVerForReactNativeVersion(
-        rnVersion,
+        EXITCODE_INCOMPATIBLE_OPTIONS,
       );
     }
 
-    const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
-
-    if (!rnwResolvedVersion) {
-      if (argv.version) {
-        console.warn(
-          `Warning: Querying npm to find react-native-windows@${
-            argv.version
-          } failed.  Attempting to continue anyway...`,
+    if (!useDevMode) {
+      if (!version) {
+        const rnVersion = getReactNativeVersion();
+        version = getDefaultReactNativeWindowsSemVerForReactNativeVersion(
+          rnVersion,
         );
-      } else {
-        const rnwLatestVersion = await getLatestRNWVersion();
-        console.error(
-          `
-No compatible version of ${chalk.green('react-native-windows')} found.
-The latest supported version is ${chalk.green(
-            'react-native-windows',
-          )}@${chalk.cyan(rnwLatestVersion)}.
-Please modify your application to use ${chalk.green(
-            'react-native',
-          )}@${chalk.cyan(
-            getMatchingReactNativeSemVerForReactNativeWindowsVersion(
-              rnwLatestVersion,
-            ),
-          )} or another supported version of ${chalk.green(
-            'react-native',
-          )} and try again.
-`,
-        );
-        process.exit(EXITCODE_NO_AUTO_MATCHING_RNW);
       }
-    }
 
-    if (!argv.version) {
-      console.log(
-        `Latest matching version of ${chalk.bold(
-          'react-native-windows',
-        )} for ${chalk.green('react-native')}@${chalk.cyan(
-          getReactNativeVersion(),
-        )} is ${chalk.green('react-native-windows')}@${chalk.cyan(
-          rnwResolvedVersion,
-        )}`,
-      );
+      const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
 
-      if (rnwResolvedVersion && semver.prerelease(rnwResolvedVersion)) {
-        const rnwLatestVersion = await getLatestRNWVersion();
-        console.warn(
-          `
-${chalk.green('react-native-windows')}@${chalk.cyan(
-            rnwResolvedVersion,
-          )} is a ${chalk.yellow('pre-release')} version.
-The latest supported version is ${chalk.green(
+      if (!rnwResolvedVersion) {
+        if (argv.version) {
+          console.warn(
+            `Warning: Querying npm to find react-native-windows@${
+              argv.version
+            } failed.  Attempting to continue anyway...`,
+          );
+        } else {
+          const rnwLatestVersion = await getLatestRNWVersion();
+          userError(
+            `
+  No compatible version of ${chalk.green('react-native-windows')} found.
+  The latest supported version is ${chalk.green(
+    'react-native-windows',
+  )}@${chalk.cyan(rnwLatestVersion)}.
+  Please modify your application to use ${chalk.green(
+    'react-native',
+  )}@${chalk.cyan(
+              getMatchingReactNativeSemVerForReactNativeWindowsVersion(
+                rnwLatestVersion,
+              ),
+            )} or another supported version of ${chalk.green(
+              'react-native',
+            )} and try again.
+  `,
+            EXITCODE_NO_AUTO_MATCHING_RNW,
+          );
+        }
+      }
+
+      if (!argv.version) {
+        console.log(
+          `Latest matching version of ${chalk.bold(
             'react-native-windows',
-          )}@${chalk.cyan(rnwLatestVersion)}.
-You can either downgrade your version of ${chalk.green(
-            'react-native',
-          )} to ${chalk.cyan(
-            getMatchingReactNativeSemVerForReactNativeWindowsVersion(
-              rnwLatestVersion,
-            ),
-          )}, or continue with a ${chalk.yellow(
-            'pre-release',
-          )} version of ${chalk.bold('react-native-windows')}.
-`,
+          )} for ${chalk.green('react-native')}@${chalk.cyan(
+            getReactNativeVersion(),
+          )} is ${chalk.green('react-native-windows')}@${chalk.cyan(
+            rnwResolvedVersion,
+          )}`,
         );
 
-        const confirm: boolean = (await prompts({
-          type: 'confirm',
-          name: 'confirm',
-          message: `Do you wish to continue with ${chalk.green(
-            'react-native-windows',
-          )}@${chalk.cyan(rnwResolvedVersion)}?`,
-        })).confirm;
+        if (rnwResolvedVersion && semver.prerelease(rnwResolvedVersion)) {
+          const rnwLatestVersion = await getLatestRNWVersion();
+          console.warn(
+            `
+  ${chalk.green('react-native-windows')}@${chalk.cyan(
+              rnwResolvedVersion,
+            )} is a ${chalk.yellow('pre-release')} version.
+  The latest supported version is ${chalk.green(
+    'react-native-windows',
+  )}@${chalk.cyan(rnwLatestVersion)}.
+  You can either downgrade your version of ${chalk.green(
+    'react-native',
+  )} to ${chalk.cyan(
+              getMatchingReactNativeSemVerForReactNativeWindowsVersion(
+                rnwLatestVersion,
+              ),
+            )}, or continue with a ${chalk.yellow(
+              'pre-release',
+            )} version of ${chalk.bold('react-native-windows')}.
+  `,
+          );
 
-        if (!confirm) {
-          process.exit(EXITCODE_USER_CANCEL);
+          const confirm: boolean = (await prompts({
+            type: 'confirm',
+            name: 'confirm',
+            message: `Do you wish to continue with ${chalk.green(
+              'react-native-windows',
+            )}@${chalk.cyan(rnwResolvedVersion)}?`,
+          })).confirm;
+
+          if (!confirm) {
+            process.exit(EXITCODE_USER_CANCEL);
+          }
         }
       }
     }
