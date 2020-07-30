@@ -13,7 +13,6 @@ import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
-import * as path from 'path';
 
 // @ts-ignore
 import * as Registry from 'npm-registry';
@@ -116,10 +115,10 @@ function getReactNativeAppName(): string {
   const cwd = process.cwd();
   const pkgJsonPath = findUp.sync('package.json', {cwd});
   if (!pkgJsonPath) {
-    console.error(
+    userError(
       'Unable to find package.json.  This should be run from within an existing react-native app.',
+      EXITCODE_NO_PACKAGE_JSON,
     );
-    process.exit(EXITCODE_NO_PACKAGE_JSON);
   }
   let name = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')).name;
   if (!name) {
@@ -144,18 +143,10 @@ function getReactNativeVersion(): string {
     return require(rnPkgJsonPath).version;
   }
 
-  console.error(
-    'Error: Must be run from a project that already depends on react-native, and has react-native installed.',
+  userError(
+    'Must be run from a project that already depends on react-native, and has react-native installed.',
+    EXITCODE_NO_REACTNATIVE_FOUND,
   );
-  process.exit(EXITCODE_NO_REACTNATIVE_FOUND);
-}
-
-function errorOutOnUnsupportedVersionOfReactNative(rnVersion: string): never {
-  console.error(`Error: Unsupported version of react-native: ${chalk.cyan(
-    rnVersion,
-  )}
-react-native-windows supports react-native versions ${chalk.cyan('>=0.60')}`);
-  process.exit(EXITCODE_UNSUPPORTED_VERION_RN);
 }
 
 function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
@@ -169,7 +160,15 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
       return `^${major}.${minor}.0-0`;
     }
   }
-  errorOutOnUnsupportedVersionOfReactNative(rnVersion);
+
+  userError(
+    `Error: Unsupported version of react-native: ${chalk.cyan(
+      rnVersion,
+    )} react-native-windows supports react-native versions ${chalk.cyan(
+      '>=0.60',
+    )}`,
+    EXITCODE_UNSUPPORTED_VERION_RN,
+  );
 }
 
 function getMatchingReactNativeSemVerForReactNativeWindowsVersion(
@@ -257,8 +256,10 @@ function getLatestMatchingVersion(
 async function getLatestRNWVersion(): Promise<string> {
   const rnwLatestVersion = await getLatestMatchingRNWVersion('latest');
   if (!rnwLatestVersion) {
-    console.error('Error: No version of react-native-windows@latest found');
-    process.exit(EXITCODE_NO_LATEST_RNW);
+    userError(
+      'Error: No version of react-native-windows@latest found',
+      EXITCODE_NO_LATEST_RNW,
+    );
   }
   return rnwLatestVersion;
 }
@@ -287,23 +288,22 @@ function installReactNativeWindows(
   if (useDevMode) {
     const packageCmd = isProjectUsingYarn(cwd) ? 'yarn' : 'npm';
     execSync(`${packageCmd} link react-native-windows`, execOptions);
-    const rnwPkgJsonPath = path.resolve(
-      './node_modules/react-native-windows/package.json',
+    const rnwPkgJsonPath = require.resolve(
+      'react-native-windows/package.json',
+      {paths: [cwd]},
     );
     const rnwVersion = require(rnwPkgJsonPath).version;
     if (version && version !== rnwVersion) {
-      console.error(
-        chalk.redBright(
-          `[Error] Requested react-native-windows version: '${version}' does not match version '${rnwVersion}' of the linked module. When using '--useDevMode' you do not need to pass a version. If you do, you should pass '--version ${rnwVersion}'`,
-        ),
+      userError(
+        `Requested react-native-windows version: '${version}' does not match version '${rnwVersion}' of the linked module. When using '--useDevMode' you do not need to pass a version. If you do, you should pass '--version ${rnwVersion}'`,
+        EXITCODE_DEVMODE_VERSION_MISMATCH,
       );
-      process.exit(EXITCODE_DEVMODE_VERSION_MISMATCH);
     } else if (!version) {
       version = rnwVersion;
     }
   } else if (!version) {
-    throw new Error(
-      'Unexpected error. Version is expected to be set when not using devMode.',
+    internalError(
+      'Unexpected error ecountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
     );
   }
 
@@ -315,7 +315,7 @@ function installReactNativeWindows(
 
   const pkgJsonPath = findUp.sync('package.json', {cwd});
   if (!pkgJsonPath) {
-    throw new Error('Unable to find package.json');
+    internalError('Unable to find package.json');
   }
 
   let pkgJson = require(pkgJsonPath);
@@ -336,6 +336,21 @@ function installReactNativeWindows(
 }
 
 /**
+ * Prints error message for a user error and exits the process with the given exitcode
+ */
+function userError(text: string, exitCode: number): never {
+  console.error(chalk.redBright('[Error] ' + text));
+  process.exit(exitCode);
+}
+
+/**
+ * Throw new internal error
+ */
+function internalError(text: string): never {
+  throw new Error(text);
+}
+
+/**
  * Check if project is using Yarn (has `yarn.lock` in the tree)
  */
 function isProjectUsingYarn(cwd: string): boolean {
@@ -350,11 +365,10 @@ function isProjectUsingYarn(cwd: string): boolean {
     let version = argv.version;
 
     if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
-      // WinUI3 is not yet compatible with NuGet packages
-      console.error(
+      userError(
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
+        EXITCODE_INCOMPATIBLE_OPTIONS,
       );
-      process.exit(EXITCODE_INCOMPATIBLE_OPTIONS);
     }
 
     if (!useDevMode) {
@@ -376,7 +390,7 @@ function isProjectUsingYarn(cwd: string): boolean {
           );
         } else {
           const rnwLatestVersion = await getLatestRNWVersion();
-          console.error(
+          userError(
             `
   No compatible version of ${chalk.green('react-native-windows')} found.
   The latest supported version is ${chalk.green(
@@ -392,8 +406,8 @@ function isProjectUsingYarn(cwd: string): boolean {
               'react-native',
             )} and try again.
   `,
+            EXITCODE_NO_AUTO_MATCHING_RNW,
           );
-          process.exit(EXITCODE_NO_AUTO_MATCHING_RNW);
         }
       }
 
