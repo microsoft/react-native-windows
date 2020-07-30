@@ -19,6 +19,10 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
 
+#ifdef WINUI3_PREVIEW3
+#include <winrt/Microsoft.UI.Input2.Experimental.h>
+#endif
+
 namespace react::uwp {
 
 std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag);
@@ -201,12 +205,18 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
   pointer.target = tag;
   pointer.identifier = m_touchId++;
   pointer.pointerId = point.PointerId();
+#ifndef WINUI3_PREVIEW3
   pointer.deviceType = point.PointerDevice().PointerDeviceType();
+#else
+  pointer.deviceType = point.PointerDeviceType();
+#endif
   pointer.isLeftButton = props.IsLeftButtonPressed();
   pointer.isRightButton = props.IsRightButtonPressed();
   pointer.isMiddleButton = props.IsMiddleButtonPressed();
   pointer.isHorizontalScrollWheel = props.IsHorizontalMouseWheel();
+#ifndef WINUI3_PREVIEW3
   pointer.isEraser = props.IsEraser();
+#endif
 
   UpdateReactPointer(pointer, args, sourceElement);
 
@@ -225,7 +235,9 @@ void TouchEventHandler::UpdateReactPointer(
   pointer.positionRoot = rootPoint.Position();
   pointer.positionView = point.Position();
   pointer.timestamp = point.Timestamp() / 1000; // us -> ms
+#ifndef WINUI3_PREVIEW3
   pointer.pressure = props.Pressure();
+#endif
   pointer.isBarrelButton = props.IsBarrelButtonPressed();
   pointer.shiftKey = 0 != (keyModifiers & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Shift));
   pointer.ctrlKey = 0 != (keyModifiers & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Control));
