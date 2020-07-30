@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Jul 2020 05:04:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.133",
+      "version": "0.0.0-canary.133",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Share packager connection between instances to same packager",
+            "author": "email not defined",
+            "commit": "1c35b8d85a7124b88aba8a741635915bfbeb5fb6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jul 2020 05:04:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.132",
       "version": "0.0.0-canary.132",

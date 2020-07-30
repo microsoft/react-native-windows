@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Jul 2020 05:04:59 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Jul 2020 05:04:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.133
+
+Thu, 30 Jul 2020 05:04:47 GMT
+
+### Changes
+
+- Share packager connection between instances to same packager (email not defined)
 
 ## 0.0.0-canary.132
 
