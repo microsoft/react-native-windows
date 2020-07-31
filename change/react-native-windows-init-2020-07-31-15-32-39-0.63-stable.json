@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Promote 0.63 to preview",
-  "packageName": "react-native-windows-init",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-07-31T22:32:26.347Z"
-}
