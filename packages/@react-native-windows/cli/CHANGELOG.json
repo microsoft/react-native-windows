@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 31 Jul 2020 23:32:31 GMT",
+      "tag": "@react-native-windows/cli_v0.63.0-preview.1",
+      "version": "0.63.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote 0.63 to preview",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5192bfdf1c1572d091f96f1ef70cf1e375a90ba7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jul 2020 05:06:13 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.1",
       "version": "0.0.0-canary.1",

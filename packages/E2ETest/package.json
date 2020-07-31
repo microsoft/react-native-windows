@@ -25,7 +25,7 @@
     "prompt-sync": "^4.2.0",
     "react": "16.13.0",
     "react-native": "0.63.0",
-    "react-native-windows": "0.63.0-preview.0"
+    "react-native-windows": "0.63.0-preview.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
