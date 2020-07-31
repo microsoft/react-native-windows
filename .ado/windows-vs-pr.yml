@@ -12,7 +12,7 @@ variables:
   - template: variables/release.yml
   - template: variables/vs2019.yml
   - name: reactNativeVersion
-    value: 0.0.0-4a48b021d
+    value: 0.63.0
 
 jobs:
   - job: Setup

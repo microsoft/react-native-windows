@@ -57,14 +57,14 @@
     "jscodeshift": "^0.7.0",
     "just-scripts": "^0.36.1",
     "react": "16.13.0",
-    "react-native": "0.0.0-4a48b021d",
+    "react-native": "0.63.0",
     "react-native-platform-override": "^0.2.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "0.0.0-4a48b021d"
+    "react-native": "^0.63.0-0"
   },
   "beachball": {
     "defaultNpmTag": "preview",
