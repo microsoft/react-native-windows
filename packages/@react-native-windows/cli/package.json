@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.1",
+  "version": "0.63.0-preview.0",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -56,7 +56,7 @@
     "templates"
   ],
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

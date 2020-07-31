@@ -8,7 +8,7 @@
     "lint:fix": "lerna run lint:fix --stream -- --color",
     "api": "lerna run api --stream -- --color",
     "buildci": "lerna run build --stream -- --ci",
-    "change": "beachball change",
+    "change": "beachball change --branch 0.63-stable",
     "clean": "lerna run clean --stream -- --color",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",

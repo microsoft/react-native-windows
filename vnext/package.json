@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.134",
+  "version": "0.63.0-preview.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/cli": "0.0.0-canary.1",
+    "@react-native-windows/cli": "0.63.0-preview.0",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "base64-js": "^1.1.2",
@@ -65,7 +65,7 @@
     "react-native": "0.0.0-4a48b021d"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "gitTags": true,
     "disallowedChangeTypes": [
       "major",
