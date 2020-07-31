@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Jul 2020 05:04:47 GMT and should not be manually modified.
+This log was last generated on Fri, 31 Jul 2020 05:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.134
+
+Fri, 31 Jul 2020 05:05:10 GMT
+
+### Changes
+
+- WinUI 3 islands support (asklar@microsoft.com)
 
 ## 0.0.0-canary.133
 

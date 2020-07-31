@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 31 Jul 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.134",
+      "version": "0.0.0-canary.134",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI 3 islands support",
+            "author": "asklar@microsoft.com",
+            "commit": "958ebb9ceb5cab3241369c7305cab0d82e1c01a0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jul 2020 05:04:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.133",
       "version": "0.0.0-canary.133",

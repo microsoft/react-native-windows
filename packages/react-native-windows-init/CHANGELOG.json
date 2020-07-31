@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 31 Jul 2020 05:05:10 GMT",
+      "tag": "react-native-windows-init_v0.1.22",
+      "version": "0.1.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix devmode for react-native-windows-init to add the package to packages.config as well",
+            "author": "dannyvv@microsoft.com",
+            "commit": "692c20db03f2246e10ae8f1767952645ad52050f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jul 2020 05:06:13 GMT",
       "tag": "react-native-windows-init_v0.1.21",
       "version": "0.1.21",
