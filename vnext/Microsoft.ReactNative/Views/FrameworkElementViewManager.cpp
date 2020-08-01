@@ -462,11 +462,11 @@ bool FrameworkElementViewManager::UpdateProperty(
           const folly::dynamic &innerValue = pair.second;
 
           if (innerName == "min" && innerValue.isNumber()) {
-            DynamicAutomationProperties::SetAccessibilityValueMin(element, static_cast<double>(innerValue.getInt()));
+            DynamicAutomationProperties::SetAccessibilityValueMin(element, innerValue.asDouble());
           } else if (innerName == "max" && innerValue.isNumber()) {
-            DynamicAutomationProperties::SetAccessibilityValueMax(element, static_cast<double>(innerValue.getInt()));
+            DynamicAutomationProperties::SetAccessibilityValueMax(element, innerValue.asDouble());
           } else if (innerName == "now" && innerValue.isNumber()) {
-            DynamicAutomationProperties::SetAccessibilityValueNow(element, static_cast<double>(innerValue.getInt()));
+            DynamicAutomationProperties::SetAccessibilityValueNow(element, innerValue.asDouble());
           } else if (innerName == "text" && innerValue.isString()) {
             auto value = react::uwp::asHstring(innerValue);
             DynamicAutomationProperties::SetAccessibilityValueText(element, value);
