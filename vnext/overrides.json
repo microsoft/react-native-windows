@@ -441,6 +441,14 @@
     },
     {
       "type": "patch",
+      "file": "src/Libraries/StyleSheet/StyleSheetValidation.windows.js",
+      "baseFile": "Libraries/StyleSheet/StyleSheetValidation.js",
+      "baseVersion": "0.63.2",
+      "baseHash": "00145fb07af1746e25fe01e828770c1229525265",
+      "issue": 5269
+    },
+    {
+      "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
       "baseVersion": "0.63.2",
