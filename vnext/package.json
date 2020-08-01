@@ -53,7 +53,7 @@
     "jscodeshift": "^0.7.0",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
-    "react": "16.13.0",
+    "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-platform-override": "^0.2.1",
     "react-native-windows-codegen": "0.0.10",
