@@ -2,6 +2,26 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Aug 2020 19:10:14 GMT",
+      "tag": "react-native-windows_v0.62.4",
+      "version": "0.62.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixed external targets for apps and libs",
+            "author": "jthysell@microsoft.com",
+            "commit": "b4ef0e16161187af6486354bf5201b8d71231302",
+            "package": "react-native-windows"
+          },
+          {
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0d8b0e9ea98762b167e1323c9f33427b74fd8b32",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Jul 2020 15:06:12 GMT",
       "tag": "react-native-windows_v0.62.3",
       "version": "0.62.3",

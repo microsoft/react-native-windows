@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed external targets for apps and libs",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-07-23T20:43:02.786Z"
-}

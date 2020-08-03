@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Jul 2020 15:06:12 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Aug 2020 19:10:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.4
+
+Mon, 03 Aug 2020 19:10:14 GMT
+
+### Patches
+
+- Fixed external targets for apps and libs (jthysell@microsoft.com)
+- undefined (asklar@winse.microsoft.com)
 
 ## 0.62.3
 
