@@ -56,8 +56,8 @@
     "flow-bin": "^0.122.0",
     "jscodeshift": "^0.7.0",
     "just-scripts": "^0.36.1",
-    "react": "16.13.0",
-    "react-native": "0.63.0",
+    "react": "16.13.1",
+    "react-native": "0.63.2",
     "react-native-platform-override": "^0.2.1",
     "typescript": "^3.8.3"
   },
