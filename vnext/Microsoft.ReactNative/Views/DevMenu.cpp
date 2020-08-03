@@ -22,10 +22,19 @@ React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DevMenuManager>>>
   return propId;
 }
 
-/*static*/ void DevMenuManager::InitDevMenu(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> ConfigureBundlerProperty() noexcept {
+  static React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> propId{L"ReactNative.DevMenuManager",
+                                                                                  L"ConfigureBundler"};
+  return propId;
+}
+
+/*static*/ void DevMenuManager::InitDevMenu(
+    Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
+    Mso::VoidFunctor &&configureBundler) noexcept {
   auto devMenu = std::make_shared<DevMenuManager>(reactContext);
   devMenu->Init();
   React::ReactPropertyBag(reactContext->Properties()).Set(DevMenuManagerProperty(), devMenu);
+  React::ReactPropertyBag(reactContext->Properties()).Set(ConfigureBundlerProperty(), std::move(configureBundler));
 }
 
 bool IsCtrlShiftD(winrt::Windows::System::VirtualKey key) noexcept {
@@ -124,14 +133,14 @@ void DevMenuManager::CreateAndShowUI() noexcept {
       <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
         <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE8AF;'/>
         <TextBlock Grid.Column='1' Grid.Row='0' x:Name='RemoteDebugText'/>
-        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.</TextBlock>
+        <TextBlock Grid.Column='1' Grid.Row='1' x:Name='RemoteDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
       </Grid>
     </Button>
     <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='DirectDebug' Style='{StaticResource ButtonRevealStyle}'>
       <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
         <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xEBE8;'/>
         <TextBlock Grid.Column='1' Grid.Row='0' x:Name='DirectDebugText'/>
-        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.</TextBlock>
+        <TextBlock Grid.Column='1' Grid.Row='1' x:Name='DirectDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
       </Grid>
     </Button>
     <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='BreakOnNextLine' Style='{StaticResource ButtonRevealStyle}'>
@@ -155,6 +164,15 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Will bring up an overlay that lets you tap on any UI element and see information about it</TextBlock>
       </Grid>
     </Button>
+  <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='ConfigBundler' Style='{StaticResource ButtonRevealStyle}'>
+    <StackPanel Orientation="Horizontal">
+      <FontIcon  VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE713;'/>
+      <StackPanel>
+        <TextBlock>Configure Bundler</TextBlock>
+        <TextBlock FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Provide a custom bundler address, port and entrypoint.</TextBlock>
+      </StackPanel>
+    </StackPanel>
+    </Button>
     <Button HorizontalAlignment='Stretch' x:Name='Cancel' Style='{StaticResource ButtonRevealStyle}'>Cancel</Button>
   </StackPanel>)";
   auto devMenu = winrt::unbox_value<xaml::Controls::Panel>(xaml::Markup::XamlReader::Load(xamlString));
@@ -163,6 +181,10 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   remoteDebugJSText.Text(
       Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) ? L"Disable Remote JS Debugging"
                                                                         : L"Enable Remote JS Debugging");
+  devMenu.FindName(L"RemoteDebugDesc")
+      .as<xaml::Controls::TextBlock>()
+      .Text(
+          L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
 
   auto fastRefreshText = devMenu.FindName(L"FastRefreshText").as<xaml::Controls::TextBlock>();
   fastRefreshText.Text(
@@ -173,6 +195,10 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   directDebugText.Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
                                                                            : L"Enable Direct Debugging");
+  devMenu.FindName(L"DirectDebugDesc")
+      .as<xaml::Controls::TextBlock>()
+      .Text(
+          L"If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.");
 
   auto breakOnNextLineText = devMenu.FindName(L"BreakOnNextLineText").as<xaml::Controls::TextBlock>();
   breakOnNextLineText.Text(
@@ -228,6 +254,19 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         Hide();
         DevSettings::ToggleElementInspector(*m_context);
       });
+
+  auto configBundler = devMenu.FindName(L"ConfigBundler").as<xaml::Controls::Button>();
+  m_configBundlerRevoker = configBundler.Click(
+      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        Hide();
+        React::ReactPropertyBag(m_context->Properties()).Get(ConfigureBundlerProperty())();
+      });
+  // Only show Configure Bundler when connected to a bundler
+  configBundler.Visibility(
+      (Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ||
+       Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()))
+          ? xaml::Visibility::Visible
+          : xaml::Visibility::Collapsed);
 
   auto cancelButton = devMenu.FindName(L"Cancel").as<xaml::Controls::Button>();
   m_cancelRevoker = cancelButton.Click(
