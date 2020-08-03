@@ -28,6 +28,9 @@
     <ClCompile Include="ReactHost\MsoUtils.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
+    <ClCompile Include="ReactHost\ReactContext.cpp">
+      <Filter>ReactHost</Filter>
+    </ClCompile>
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
@@ -365,6 +368,9 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\React_Win.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactHost\ReactContext.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactErrorProvider.h">

@@ -134,6 +134,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                   VerifyElseCrash(args[count - 2].isObject() && args[count - 2].asObject(runtime).isFunction(runtime));
                   serializableArgumentCount -= 2;
                   break;
+                case MethodReturnType::Void:
+                case MethodReturnType::Promise:
+                  // handled below
+                  break;
               }
               auto argReader = winrt::make<JsiReader>(runtime, args, serializableArgumentCount);
 

@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class SwitchViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -31,5 +30,4 @@ class SwitchViewManager : public ControlViewManager {
   friend class SwitchShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

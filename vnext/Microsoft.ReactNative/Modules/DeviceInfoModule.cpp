@@ -4,7 +4,10 @@
 #include "pch.h"
 #include "DeviceInfoModule.h"
 #include <IReactDispatcher.h>
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <Utils/Helpers.h>
 #include <XamlUtils.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
@@ -30,14 +33,20 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
     propertyBag.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
     auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-    auto const &window = xaml::Window::Current().CoreWindow();
 
-    deviceInfoHolder->m_sizeChangedRevoker =
-        window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
-          if (auto strongHolder = weakHolder.lock()) {
-            strongHolder->updateDeviceInfo();
-          }
-        });
+    if (xaml::Window::Current()) {
+      auto const &window = xaml::Window::Current().CoreWindow();
+
+      deviceInfoHolder->m_sizeChangedRevoker =
+          window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
+            if (auto strongHolder = weakHolder.lock()) {
+              strongHolder->updateDeviceInfo();
+            }
+          });
+    } else {
+      assert(react::uwp::IsXamlIsland());
+      // TODO: WinUI 3 Islands - set up a listener for window size changed
+    }
 
     deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
         winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
@@ -86,14 +95,20 @@ void DeviceInfoHolder::SetCallback(
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
-  auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  auto const window = xaml::Window::Current().CoreWindow();
-  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+  if (xaml::Window::Current()) {
+    auto const window = xaml::Window::Current().CoreWindow();
 
-  m_windowWidth = window.Bounds().Width;
-  m_windowHeight = window.Bounds().Height;
-  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+    m_windowWidth = window.Bounds().Width;
+    m_windowHeight = window.Bounds().Height;
+  } else {
+    /// TODO: WinUI 3 Island - mock for now
+    m_windowWidth = 600;
+    m_windowHeight = 800;
+  }
+  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
   m_textScaleFactor = uiSettings.TextScaleFactor();
+  auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
   m_dpi = displayInfo.LogicalDpi();
   m_screenWidth = displayInfo.ScreenWidthInRawPixels();
   m_screenHeight = displayInfo.ScreenHeightInRawPixels();

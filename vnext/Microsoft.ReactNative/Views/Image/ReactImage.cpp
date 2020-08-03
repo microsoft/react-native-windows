@@ -28,8 +28,7 @@ using namespace Windows::Web::Http;
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
   auto reactImage = winrt::make_self<ReactImage>();
@@ -440,5 +439,4 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsyn
 
   co_return nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

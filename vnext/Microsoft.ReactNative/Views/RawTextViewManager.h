@@ -7,8 +7,7 @@
 
 #include <folly/dynamic.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class RawTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
@@ -39,5 +38,4 @@ class RawTextViewManager : public ViewManagerBase {
   void NotifyAncestorsTextChanged(IReactInstance *instance, ShadowNodeBase *nodeToUpdate);
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

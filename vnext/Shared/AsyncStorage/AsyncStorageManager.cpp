@@ -104,7 +104,7 @@ void AsyncStorageManager::executeAsyncKVOperation(
         break;
 
       default:
-        [this, jsCallback] { jsCallback({makeError("Invalid AsyncStorage operation")}); };
+        jsCallback({makeError("Invalid AsyncStorage operation")});
         break;
     }
   } catch (std::exception &e) {

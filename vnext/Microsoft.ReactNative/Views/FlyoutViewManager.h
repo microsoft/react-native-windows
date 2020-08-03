@@ -6,8 +6,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class FlyoutViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -32,5 +31,4 @@ class FlyoutViewManager : public FrameworkElementViewManager {
   friend class FlyoutShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

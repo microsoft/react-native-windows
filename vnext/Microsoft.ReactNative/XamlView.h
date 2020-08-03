@@ -5,8 +5,7 @@
 
 #include "CppWinRTIncludes.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 using XamlView = xaml::DependencyObject;
 
@@ -42,5 +41,4 @@ comp::Compositor GetCompositor(const XamlView &view);
 void SetCompositor(const comp::Compositor &compositor);
 comp::Compositor GetCompositor();
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

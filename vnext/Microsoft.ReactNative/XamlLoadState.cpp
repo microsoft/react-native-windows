@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "XamlLoadState.h"
 #include <sstream>
-#include "unicode.h"
+#include "Unicode.h"
 
 #ifndef DISABLE_XAML_GUARD
 
@@ -144,12 +144,14 @@ XamlLoadState::XamlLoadState() {
   }
 
   auto ntdll = GetModuleHandle(L"ntdll.dll");
+  _Analysis_assume_(ntdll != nullptr);
   auto pfn = NTDLL_FUNCTION(LdrRegisterDllNotification);
   (*pfn)(0, XamlLoadNotification, nullptr, &m_cookie);
 }
 
 XamlLoadState::~XamlLoadState() {
   auto ntdll = GetModuleHandle(L"ntdll.dll");
+  _Analysis_assume_(ntdll != nullptr);
   auto pfn = NTDLL_FUNCTION(LdrUnregisterDllNotification);
   (*pfn)(m_cookie);
 }

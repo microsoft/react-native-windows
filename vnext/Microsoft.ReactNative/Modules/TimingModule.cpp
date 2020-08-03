@@ -28,8 +28,7 @@ using namespace xaml::Media;
 } // namespace winrt
 using namespace std;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 //
 // TimerQueue
@@ -207,8 +206,7 @@ auto TimingModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
 
 namespace facebook {
 namespace react {

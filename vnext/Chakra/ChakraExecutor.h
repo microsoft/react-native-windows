@@ -56,7 +56,7 @@ class WorkerRegistration {
   ChakraObject jsObj;
 };
 
-class ChakraExecutor : public JSExecutor {
+class ChakraExecutor final : public JSExecutor {
  public:
   /**
    * Must be invoked from thread this Executor will run on.
@@ -67,7 +67,9 @@ class ChakraExecutor : public JSExecutor {
       ChakraInstanceArgs &&instanceArgs);
   ~ChakraExecutor() override;
 
-  virtual void loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) override;
+  virtual void initializeRuntime() override;
+
+  virtual void loadBundle(std::unique_ptr<const JSBigString> script, std::string sourceURL) override;
 
   virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
 

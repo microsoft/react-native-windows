@@ -489,7 +489,11 @@ static std::string simpleBasename(const std::string &path) {
   return (pos != std::string::npos) ? path.substr(pos) : path;
 }
 
-void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) {
+void ChakraExecutor::initializeRuntime() {
+  // Initialization was already done in the constructor
+}
+
+void ChakraExecutor::loadBundle(std::unique_ptr<const JSBigString> script, std::string sourceURL) {
   SystraceSection s("ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
 
   JSContextHolder ctx(m_context);

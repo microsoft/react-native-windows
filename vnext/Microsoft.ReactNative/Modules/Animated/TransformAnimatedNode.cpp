@@ -6,8 +6,7 @@
 #include "FacadeType.h"
 #include "TransformAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 TransformAnimatedNode::TransformAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -34,5 +33,4 @@ std::unordered_map<FacadeType, int64_t> TransformAnimatedNode::GetMapping() {
   }
   return mapping;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

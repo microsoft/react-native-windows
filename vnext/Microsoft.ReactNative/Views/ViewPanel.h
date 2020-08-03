@@ -96,7 +96,7 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
   // Child Elements
   xaml::Controls::Border m_border{nullptr};
-  bool m_hasOuterBorder;
+  bool m_hasOuterBorder{false};
 
  private:
   static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);

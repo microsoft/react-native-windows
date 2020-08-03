@@ -5,8 +5,7 @@
 
 #include "ScrollContentViewManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 ScrollContentViewManager::ScrollContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -15,5 +14,4 @@ const char *ScrollContentViewManager::GetName() const {
   return "RCTScrollContentView";
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

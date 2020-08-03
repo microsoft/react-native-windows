@@ -2,8 +2,7 @@
 #include <ScriptStore.h>
 #include <future>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class UwpScriptStore : public facebook::jsi::ScriptStore {
  public:
@@ -20,5 +19,4 @@ class UwpScriptStore : public facebook::jsi::ScriptStore {
   std::future<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(const std::string &bundleUri);
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

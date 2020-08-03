@@ -6,8 +6,7 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 DefaultBrushStore::DefaultBrushStore() {}
 
@@ -182,5 +181,4 @@ void UpdateControlBorderResourceBrushes(const xaml::FrameworkElement &element, c
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

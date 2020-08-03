@@ -6,8 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 ValueAnimatedNode::ValueAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -125,5 +124,4 @@ void ValueAnimatedNode::UpdateTrackingNodes() {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

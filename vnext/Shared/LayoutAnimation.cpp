@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "LayoutAnimation.h"
 
 #include <folly/dynamic.h>

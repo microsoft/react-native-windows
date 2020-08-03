@@ -5,9 +5,8 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
-class AdditionAnimatedNode : public ValueAnimatedNode {
+namespace react::uwp {
+class AdditionAnimatedNode final : public ValueAnimatedNode {
  public:
   AdditionAnimatedNode(
       int64_t tag,
@@ -17,5 +16,4 @@ class AdditionAnimatedNode : public ValueAnimatedNode {
  private:
   std::unordered_set<int64_t> m_inputNodes{};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

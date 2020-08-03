@@ -6,8 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "StyleAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 StyleAnimatedNode::StyleAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -34,5 +33,4 @@ std::unordered_map<FacadeType, int64_t> StyleAnimatedNode::GetMapping() {
   }
   return mapping;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

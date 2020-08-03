@@ -6,8 +6,7 @@
 #include "AnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class ValueAnimatedNode;
 class EventAnimationDriver {
  public:
@@ -22,5 +21,4 @@ class EventAnimationDriver {
   int64_t m_animatedValueTag{};
   std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

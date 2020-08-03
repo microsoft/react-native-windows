@@ -48,6 +48,10 @@ class HomePage extends BasePage {
     ImageTestPage.waitForPageLoaded();
   }
 
+  clickControlStylePageButton() {
+    this.ControlStylePageButton.click();
+  }
+
   clickAndGotoControlStylePage() {
     this.ControlStylePageButton.click();
     ControlStyleTestPage.waitForPageLoaded();

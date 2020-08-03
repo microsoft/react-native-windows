@@ -6,8 +6,7 @@
 #include <Views/ControlViewManager.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ScrollViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -36,5 +35,4 @@ class ScrollViewManager : public ControlViewManager {
   friend class ScrollViewShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -25,8 +25,7 @@
 #include <Modules/NativeUIManager.h>
 #include <Windows.Foundation.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 void NativeAnimatedNodeManager::CreateAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -400,5 +399,4 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t
 void NativeAnimatedNodeManager::RemoveActiveAnimation(int64_t tag) {
   m_activeAnimations.erase(tag);
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

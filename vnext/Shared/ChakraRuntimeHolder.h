@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <DevSettings.h>
@@ -9,7 +12,7 @@
 
 namespace Microsoft::JSI {
 
-class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class ChakraRuntimeHolder final : public facebook::jsi::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
 

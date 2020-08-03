@@ -25,8 +25,7 @@
 #include <winrt/Windows.Foundation.h>
 #endif
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // ViewShadowNode
 
@@ -535,5 +534,4 @@ void ViewViewManager::SetLayoutProps(
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
