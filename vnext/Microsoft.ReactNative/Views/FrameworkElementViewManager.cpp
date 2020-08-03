@@ -484,9 +484,7 @@ bool FrameworkElementViewManager::UpdateProperty(
       }
     } else if (propertyName == "tooltip") {
       if (propertyValue.isString()) {
-        winrt::TextBlock tooltip = winrt::TextBlock();
-        tooltip.Text(asHstring(propertyValue));
-        winrt::ToolTipService::SetToolTip(element, tooltip);
+        winrt::ToolTipService::SetToolTip(element, asHstring(propertyValue));
       }
     } else if (propertyName == "zIndex") {
       if (propertyValue.isNumber()) {
