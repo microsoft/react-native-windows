@@ -118,8 +118,9 @@ void ConfigureBundlerDlg::CreateAndShowUI() noexcept {
 
     auto cancelButton = configureUI.FindName(L"Cancel").as<xaml::Controls::Button>();
     m_cancelRevoker = cancelButton.Click(
-        winrt::auto_revoke,
-        [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept { Hide(); });
+        winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          Hide();
+        });
 
     m_flyout = xaml::Controls::Flyout{};
     m_flyout.Content(configureUI);
@@ -129,11 +130,12 @@ void ConfigureBundlerDlg::CreateAndShowUI() noexcept {
     }
 
     configureUI.Tag(*this);
-    m_flyout.Closing([](xaml::Controls::Primitives::FlyoutBase const &sender,
-                        xaml::Controls::Primitives::FlyoutBaseClosingEventArgs const & /*args*/) noexcept {
-      // Remove the tag to disconnect the ref cycle
-      sender.as<xaml::Controls::Flyout>().Content().as<xaml::FrameworkElement>().Tag(nullptr);
-    });
+    m_flyout.Closing(
+        [](xaml::Controls::Primitives::FlyoutBase const &sender,
+           xaml::Controls::Primitives::FlyoutBaseClosingEventArgs const & /*args*/) noexcept {
+          // Remove the tag to disconnect the ref cycle
+          sender.as<xaml::Controls::Flyout>().Content().as<xaml::FrameworkElement>().Tag(nullptr);
+        });
 
     xaml::UIElement root{nullptr};
     auto xamlRoot = winrt::Microsoft::ReactNative::XamlUIService::GetXamlRoot(reactHost->Options().Properties);
