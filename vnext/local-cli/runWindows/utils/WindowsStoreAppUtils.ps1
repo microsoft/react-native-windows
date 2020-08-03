@@ -217,3 +217,36 @@ function Start-Locally {
         }
     }
 }
+
+
+function Map-PackageNameToPackage {
+    param([Parameter(Mandatory=$true)] [string]$DependenciesPath)
+    $mapP2N = @{};
+    [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.Zipfile') | Out-Null;
+    foreach ($package in (gci $DependenciesPath)) {
+        $archive = [System.IO.Compression.Zipfile]::OpenRead($package.FullName);
+        $packageManifestReader = New-Object System.IO.StreamReader($archive.GetEntry('AppxManifest.xml').Open());
+        $manifest = [xml]($packageManifestReader.ReadToEnd());
+        $mapP2N[$manifest.Package.Identity.Name] = $package;
+    }
+    return $mapP2N;
+}
+
+function Install-AppDependencies {
+    param(
+        [Parameter(Mandatory=$true)] [string]$AppxManifestPath,
+        [Parameter(Mandatory=$true)] [string]$AppPackagePath,
+        [Parameter(Mandatory=$true)] [string]$Architecture        
+    )
+
+    $xml=[xml] (gc $AppxManifestPath);
+    $packageNamesToInstall = $xml.Package.Dependencies.PackageDependency | 
+        Where-Object { 
+            $installed = Get-AppxPackage $_.Name;
+            $installed -eq $null -or $installed.Version -lt $_.MinVersion 
+        } | 
+        % { $_.Name };
+    $map = Map-PackageNameToPackage $AppPackagePath\Dependencies\$Architecture
+    $packagePaths = $packageNamesToInstall | % { $map[$_] }
+    $packagePaths | % { Add-AppxPackage -Path $_ }
+}
