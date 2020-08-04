@@ -199,7 +199,7 @@ void ReactInstanceWin::Initialize() noexcept {
   InitUIManager();
 
   Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
-    winrt::make<Microsoft::ReactNative::ConfigureBundlerDlg>(weakReactHost);
+    Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
   });
 
   Mso::PostFuture(
