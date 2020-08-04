@@ -212,6 +212,9 @@
     <ClCompile Include="Views\CheckboxViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\ConfigureBundlerDlg.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>

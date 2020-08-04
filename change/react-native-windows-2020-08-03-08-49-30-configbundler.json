@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add option to devmenu to configure bundler",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-08-03T15:49:30.262Z"
+}
