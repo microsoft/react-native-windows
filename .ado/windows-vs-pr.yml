@@ -11,8 +11,6 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/release.yml
   - template: variables/vs2019.yml
-  - name: reactNativeVersion
-    value: 0.0.0-4a48b021d
 
 jobs:
   - job: Setup
@@ -578,7 +576,7 @@ jobs:
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
-          version: $(reactNativeVersion)
+          version: $(reactNativeDevDependency)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
 
@@ -611,7 +609,7 @@ jobs:
           language: $(Language)
           configuration: Debug
           platform: x86
-          version: $(reactNativeVersion)
+          rnVersion: $(reactNativeDevDependency)
           useNuGet: true
 
   - job: RNWExtraChecks
@@ -705,7 +703,21 @@ jobs:
     timeoutInMinutes: 30
     cancelTimeoutInMinutes: 5
     steps:
-      - checkout: none
+      - checkout: self
+      
+      - template: yarn-install.yml
+
+      - script: |
+          npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+        displayName: Bump Packages
+
+      - task: CmdLine@2
+        displayName: Set Version Env Vars
+        name: setVersionEnvVars
+        inputs:
+          script: node ./.ado/setVersionEnvVars.js
+        env:
+          RUNNER_TEMP: $(Build.StagingDirectory)
 
       # The commit tag in the nuspec requires that we use at least NuGet 4.6
       - task: NuGetToolInstaller@0
@@ -715,7 +727,7 @@ jobs:
       - template: templates/prep-and-pack-nuget.yml
         parameters:
           slices: '("x64.Release", "x86.Debug", "ARM.Release")'
-          npmVersion: $(reactNativeVersion)
+          npmVersion: $(npmVersion)
 
       - task: PublishBuildArtifacts@1
         displayName: Upload PR NuGet Test feed

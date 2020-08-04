@@ -44,7 +44,6 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   console.log('Updating CI variables...');
   await writeAdoVariables({
-    npmTag: distTag(argv.release as ReleaseType, argv.rnVersion),
     extraPublishArgs: '',
     githubReleaseNpxArgs: '--ignore-existing',
   });
