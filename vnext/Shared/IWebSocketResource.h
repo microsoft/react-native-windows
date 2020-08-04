@@ -83,7 +83,7 @@ struct IWebSocketResource {
   /// WebSocket URL address the instance will connect to.
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
-  static std::shared_ptr<IWebSocketResource> Make(const std::string &url);
+  static std::shared_ptr<IWebSocketResource> Make(std::string &&url);
 
   virtual ~IWebSocketResource() noexcept {}
 

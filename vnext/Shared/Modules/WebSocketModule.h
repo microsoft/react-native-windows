@@ -60,7 +60,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// <summary>
   /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
   /// </summary>
-  std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> m_resourceFactory;
+  std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> m_resourceFactory;
 };
 
 } // namespace Microsoft::React

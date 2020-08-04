@@ -43,7 +43,7 @@ void HttpResource::SendRequest(
   // Validate verb.
   unique_ptr<Url> url;
   try {
-    url = make_unique<Url>(urlString);
+    url = make_unique<Url>(string{urlString});
   } catch (...) {
     m_errorHandler("Malformed URL");
     return;
