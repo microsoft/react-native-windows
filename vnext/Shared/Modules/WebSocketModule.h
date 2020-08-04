@@ -38,8 +38,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 
 #pragma endregion CxxModule overrides
 
-  void SetResourceFactory(
-      std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> &&resourceFactory);
+  void SetResourceFactory(std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> &&resourceFactory);
 
  private:
   /// <summary>

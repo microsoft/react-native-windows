@@ -15,8 +15,7 @@ namespace Microsoft::React {
 #pragma region IWebSocketResource static members
 
 /*static*/
-shared_ptr<IWebSocketResource>
-IWebSocketResource::Make(const string &urlString) {
+shared_ptr<IWebSocketResource> IWebSocketResource::Make(const string &urlString) {
   if (!GetFeatureGate("UseBeastWebSocket")) {
     std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
     if (GetFeatureGate("WebSocket.AcceptSelfSigned")) {

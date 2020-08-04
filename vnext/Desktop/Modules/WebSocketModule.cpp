@@ -13,6 +13,7 @@
 using namespace facebook::xplat;
 using namespace folly;
 
+using Microsoft::Common::Unicode::Utf16ToUtf8;
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 using std::shared_ptr;
@@ -26,9 +27,7 @@ constexpr char moduleName[] = "WebSocketModule";
 namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule()
-    : m_resourceFactory{[](const string &url) {
-        return IWebSocketResource::Make(url);
-      }} {}
+    : m_resourceFactory{[](const string &url) { return IWebSocketResource::Make(url); }} {}
 
 void WebSocketModule::SetResourceFactory(
     std::function<shared_ptr<IWebSocketResource>(const string &)> &&resourceFactory) {
@@ -150,12 +149,29 @@ void WebSocketModule::SendEvent(string &&eventName, dynamic &&args) {
 }
 
 // clang-format off
-std::shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
+shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
   auto itr = m_webSockets.find(id);
   if (itr == m_webSockets.end())
   {
-    auto ws = m_resourceFactory(std::move(url));
+    shared_ptr<IWebSocketResource> ws;
+    try
+    {
+      ws = m_resourceFactory(std::move(url));
+    }
+    catch (const winrt::hresult_error& e)
+    {
+      SendEvent("webSocketFailed", dynamic::object("id", id)("message", Utf16ToUtf8(e.message())));
+
+      return nullptr;
+    }
+    catch (const std::exception& e)
+    {
+      SendEvent("webSocketFailed", dynamic::object("id", id)("message", e.what()));
+
+      return nullptr;
+    }
+
     auto weakInstance = this->getInstance();
     ws->SetOnError([this, id, weakInstance](const IWebSocketResource::Error& err)
     {
