@@ -1,5 +1,5 @@
 ---
-name: React Native Windows feature request
+name: Feature request
 about: Suggest a new feature or idea
 title: Your feature request
 labels: Proposal

@@ -1,8 +1,8 @@
 ---
-name: React Native Windows Community Module support request
-about: Suggest that RNW support be added to a community module
+name: Community Module support request
+about: Suggest that Windows support be added to a community module
 title: Support react-native-foo
-labels: Proposal, Extensions
+labels: Extensions, Proposal
 assignees: ''
 
 ---
