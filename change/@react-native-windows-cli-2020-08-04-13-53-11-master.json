@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Make C# CodeGen the default",
+  "packageName": "@react-native-windows/cli",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-04T20:53:08.556Z"
+}
