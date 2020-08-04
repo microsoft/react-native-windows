@@ -1,13 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import "IReactContext.idl";
 import "IReactPackageProvider.idl";
 import "ReactInstanceSettings.idl";
 
 namespace Microsoft.ReactNative {
 
   [webhosthidden]
-  delegate void OnResumeAction();
+  [default_interface]
+  runtimeclass InstanceCreatedEventArgs {
+    IReactContext Context { get; };
+  }
+
+  [webhosthidden]
+  [default_interface]
+  runtimeclass InstanceLoadedEventArgs {
+    IReactContext Context { get; };
+    Boolean Failed { get; };
+  }
+
+  [webhosthidden]
+  [default_interface] runtimeclass InstanceDestroyedEventArgs {
+    IReactContext Context { get; };
+  }
 
   [webhosthidden]
   [default_interface]
@@ -20,5 +36,9 @@ namespace Microsoft.ReactNative {
     Windows.Foundation.IAsyncAction LoadInstance();
     Windows.Foundation.IAsyncAction ReloadInstance();
     Windows.Foundation.IAsyncAction UnloadInstance();
+
+    event Windows.Foundation.EventHandler<InstanceCreatedEventArgs> InstanceCreated;
+    event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
+    event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }
 } // namespace Microsoft.ReactNative

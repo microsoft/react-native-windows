@@ -34,6 +34,7 @@ namespace Mso::React {
 struct IReactInstance;
 struct IReactViewHost;
 struct ReactOptions;
+struct IReactContext;
 
 enum class LogLevel : int32_t {
   Trace = 0,
@@ -45,9 +46,10 @@ enum class LogLevel : int32_t {
 
 using OnErrorCallback = Mso::Functor<void(const Mso::ErrorCode &)>;
 using OnLoggingCallback = Mso::Functor<void(LogLevel logLevel, const char *message)>;
-using OnReactInstanceCreatedCallback = Mso::Functor<void(IReactInstance &)>;
-using OnReactInstanceLoadedCallback = Mso::Functor<void(IReactInstance &, const Mso::ErrorCode &)>;
-using OnReactInstanceDestroyedCallback = Mso::Functor<void(IReactInstance &)>;
+using OnReactInstanceCreatedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&, IReactInstance &)>;
+using OnReactInstanceLoadedCallback =
+    Mso::Functor<void(Mso::CntPtr<IReactContext> &&, IReactInstance &, const Mso::ErrorCode &)>;
+using OnReactInstanceDestroyedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&, IReactInstance &)>;
 
 //! Returns default OnError handler.
 LIBLET_PUBLICAPI OnErrorCallback GetDefaultOnErrorHandler() noexcept;
