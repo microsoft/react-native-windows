@@ -64,7 +64,7 @@
 <p><strong>This documentation and the underlying platform code is a work in progress.</strong></p>
 </blockquote>
 <p>A common scenario for <a href="/react-native-windows/docs/next/native-modules">Native Modules</a> is to call one or more native asynchronous methods from a JS asynchronous method. However it may not be immediately obvious how to properly bridge both asynchronous worlds, which can lead to unstable, difficult to debug code.</p>
-<p>This document proposes some best patterns to follow when bridging asynchronous methods from JS to native code for React Native Windows. It assumes you've already familliar with the basics of setting up and writing <a href="/react-native-windows/docs/next/native-modules">Native Modules</a>.</p>
+<p>This document proposes some best patterns to follow when bridging asynchronous methods from JS to native code for React Native Windows. It assumes you've already familiar with the basics of setting up and writing <a href="/react-native-windows/docs/next/native-modules">Native Modules</a>.</p>
 <blockquote>
 <p>The complete source for the examples below are provided within the <a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample">Native Module Sample in microsoft/react-native-windows-samples</a>.</p>
 </blockquote>
@@ -93,7 +93,7 @@
 </code></pre>
 <p>The <code>GetHttpResponseAsync</code> method is pretty straight-forward at this point, it takes a <code>string</code> uri and &quot;returns&quot; a <code>Task</code> (which is to say, the method is asynchronous and doesn't actually return a value when it's done).</p>
 <blockquote>
-<p>If you're not familliar with writing asynchronous C# code, see <a href="https://docs.microsoft.com/en-us/windows/uwp/threading-async/call-asynchronous-apis-in-csharp-or-visual-basic">Call asynchronous APIs in C# or Visual Basic</a>.</p>
+<p>If you're not familiar with writing asynchronous C# code, see <a href="https://docs.microsoft.com/en-us/windows/uwp/threading-async/call-asynchronous-apis-in-csharp-or-visual-basic">Call asynchronous APIs in C# or Visual Basic</a>.</p>
 </blockquote>
 <p>Inside <code>GetHttpResponseAsync</code>, we see it:</p>
 <ol>
@@ -153,7 +153,7 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <p>Looks simple enough, right? We call <code>GetHttpResponseAsync</code> with the <code>uri</code> and <code>promise</code> parameters, and get back an <code>Task</code> object which we store in <code>task</code>. When this executes, <code>GetHttpResponseAsync</code> will return control when it hits its first <code>await</code>, which in turn will return control for the JS code to continure running. When everything in <code>GetHttpResponseAsync</code> succeeds, it itself is responsible for resolving the promise with the result.</p>
-<p>But wait, what happens if <code>GetHttpResponseAsync</code> doesn't succeed? We don't handle any exceptions in this exmaple, so if an exception is thrown, how do we marshal an error back to the JS? We have one more thing to do, and that's to check for unhandled exceptions:</p>
+<p>But wait, what happens if <code>GetHttpResponseAsync</code> doesn't succeed? We don't handle any exceptions in this example, so if an exception is thrown, how do we marshal an error back to the JS? We have one more thing to do, and that's to check for unhandled exceptions:</p>
 <pre><code class="hljs css language-csharp"><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ReactMethod</span></span><span class="token punctuation">]</span>
 <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">GetHttpResponse</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> uri<span class="token punctuation">,</span> <span class="token class-name">ReactPromise<span class="token punctuation">&lt;</span>JSValue<span class="token punctuation">></span></span> promise<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -193,7 +193,7 @@
 </code></pre>
 <p>The <code>GetHttpResponseAsync</code> method is pretty straight-forward at this point, it takes a <code>wstring</code> uri and &quot;returns&quot; an <code>IAsyncAction</code> (which is to say, the method is asynchronous and doesn't actually return a value when it's done).</p>
 <blockquote>
-<p>If you're not familliar with writing asynchronous C++/WinRT code, see <a href="https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/concurrency">Concurrency and asynchronous operations with C++/WinRT</a>.</p>
+<p>If you're not familiar with writing asynchronous C++/WinRT code, see <a href="https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/concurrency">Concurrency and asynchronous operations with C++/WinRT</a>.</p>
 </blockquote>
 <p>Inside <code>GetHttpResponseAsync</code>, we see it:</p>
 <ol>
