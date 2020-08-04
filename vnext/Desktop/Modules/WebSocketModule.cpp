@@ -161,13 +161,20 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
     }
     catch (const winrt::hresult_error& e)
     {
-      SendEvent("webSocketFailed", dynamic::object("id", id)("message", Utf16ToUtf8(e.message())));
+      string message =  string{"[" + e.code()} + "] " + Utf16ToUtf8(e.message());
+      SendEvent("webSocketFailed", dynamic::object("id", id)("message", std::move(message)));
 
       return nullptr;
     }
     catch (const std::exception& e)
     {
       SendEvent("webSocketFailed", dynamic::object("id", id)("message", e.what()));
+
+      return nullptr;
+    }
+    catch (...)
+    {
+      SendEvent("webSocketFailed", dynamic::object("id", id)("message", "Unidentified error creating IWebSocketResource"));
 
       return nullptr;
     }
