@@ -95,64 +95,65 @@ static facebook::jsi::ArrayBuffer const &AsArrayBuffer(facebook::jsi::Runtime::P
   return *reinterpret_cast<facebook::jsi::ArrayBuffer const *>(ptr);
 }
 
-static facebook::jsi::Value const *AsValue(JsiValueData const &data) noexcept {
+static facebook::jsi::Value const *AsValue(JsiValueRef const &data) noexcept {
   return reinterpret_cast<facebook::jsi::Value const *>(&data);
 }
 
-static JsiValueData ToJsiValueData(facebook::jsi::Value const &value) noexcept {
-  return {static_cast<JsiValueKind>(static_cast<int32_t>(value.kind_)),
-          *reinterpret_cast<uint64_t const *>(&value.data_.number)};
+static JsiValueRef ToJsiValueData(facebook::jsi::Value const &value) noexcept {
+  return {
+      static_cast<JsiValueKind>(static_cast<int32_t>(value.kind_)),
+      *reinterpret_cast<uint64_t const *>(&value.data_.number)};
 }
 
-static JsiPropertyNameIdData ToJsiPropertyNameIdData(facebook::jsi::PropNameID const &propNameId) noexcept {
+static JsiPropertyIdRef ToJsiPropertyNameIdData(facebook::jsi::PropNameID const &propNameId) noexcept {
   return {reinterpret_cast<uint64_t>(propNameId.ptr_)};
 }
 
-static JsiSymbolData MakeJsiSymbolData(facebook::jsi::Runtime::PointerValue *pointerValue) {
+static JsiSymbolRef MakeJsiSymbolData(facebook::jsi::Runtime::PointerValue *pointerValue) {
   return {reinterpret_cast<uint64_t>(pointerValue)};
 }
 
-static JsiStringData MakeJsiStringData(facebook::jsi::Runtime::PointerValue *pointerValue) {
+static JsiStringRef MakeJsiStringData(facebook::jsi::Runtime::PointerValue *pointerValue) {
   return {reinterpret_cast<uint64_t>(pointerValue)};
 }
 
-static JsiObjectData MakeJsiObjectData(facebook::jsi::Runtime::PointerValue *pointerValue) {
+static JsiObjectRef MakeJsiObjectData(facebook::jsi::Runtime::PointerValue *pointerValue) {
   return {reinterpret_cast<uint64_t>(pointerValue)};
 }
 
-static JsiPropertyNameIdData MakeJsiPropertyNameIdData(facebook::jsi::Runtime::PointerValue *pointerValue) {
+static JsiPropertyIdRef MakeJsiPropertyNameIdData(facebook::jsi::Runtime::PointerValue *pointerValue) {
   return {reinterpret_cast<uint64_t>(pointerValue)};
 }
 
-static JsiSymbolData MakeJsiSymbolData(facebook::jsi::Symbol &&obj) {
+static JsiSymbolRef MakeJsiSymbolData(facebook::jsi::Symbol &&obj) {
   return {reinterpret_cast<uint64_t>(std::exchange(obj.ptr_, nullptr))};
 }
 
-static JsiStringData MakeJsiStringData(facebook::jsi::String &&obj) {
+static JsiStringRef MakeJsiStringData(facebook::jsi::String &&obj) {
   return {reinterpret_cast<uint64_t>(std::exchange(obj.ptr_, nullptr))};
 }
 
-static JsiObjectData MakeJsiObjectData(facebook::jsi::Object &&obj) {
+static JsiObjectRef MakeJsiObjectData(facebook::jsi::Object &&obj) {
   return {reinterpret_cast<uint64_t>(std::exchange(obj.ptr_, nullptr))};
 }
 
-static JsiPropertyNameIdData MakeJsiPropertyNameIdData(facebook::jsi::PropNameID &&propertyNameId) {
+static JsiPropertyIdRef MakeJsiPropertyNameIdData(facebook::jsi::PropNameID &&propertyNameId) {
   return {reinterpret_cast<uint64_t>(std::exchange(propertyNameId.ptr_, nullptr))};
 }
 
-static JsiArrayData MakeJsiArrayData(facebook::jsi::Array &&arr) {
+static JsiObjectRef MakeJsiArrayData(facebook::jsi::Array &&arr) {
   return {reinterpret_cast<uint64_t>(std::exchange(arr.ptr_, nullptr))};
 }
 
-static JsiWeakObjectData MakeJsiWeakObjectData(facebook::jsi::WeakObject &&weakObj) {
+static JsiWeakObjectRef MakeJsiWeakObjectData(facebook::jsi::WeakObject &&weakObj) {
   return {reinterpret_cast<uint64_t>(std::exchange(weakObj.ptr_, nullptr))};
 }
 
-static JsiFunctionData MakeJsiFunctionData(facebook::jsi::Function &&func) {
+static JsiObjectRef MakeJsiFunctionData(facebook::jsi::Function &&func) {
   return {reinterpret_cast<uint64_t>(std::exchange(func.ptr_, nullptr))};
 }
 
-static JsiValueData MakeJsiValueData(facebook::jsi::Value &&value) {
+static JsiValueRef MakeJsiValueData(facebook::jsi::Value &&value) {
   return {
       static_cast<JsiValueKind>(static_cast<int32_t>(std::exchange(value.kind_, facebook::jsi::Value::UndefinedKind))),
       *reinterpret_cast<uint64_t *>(&value.data_.number)};
@@ -163,11 +164,11 @@ static std::shared_ptr<facebook::jsi::HostObject> MakeHostObject(
   return std::make_shared<HostObjectWrapper>(hostObject);
 }
 
-static JsiValueData const *AsJsiValueData(facebook::jsi::Value const *value) noexcept {
-  return reinterpret_cast<Microsoft::ReactNative::JsiValueData const *>(value);
+static JsiValueRef const *AsJsiValueData(facebook::jsi::Value const *value) noexcept {
+  return reinterpret_cast<Microsoft::ReactNative::JsiValueRef const *>(value);
 }
 
-static facebook::jsi::Value &&ToValue(JsiValueData &&value) noexcept {
+static facebook::jsi::Value &&ToValue(JsiValueRef &&value) noexcept {
   return reinterpret_cast<facebook::jsi::Value &&>(value);
 }
 
@@ -180,7 +181,7 @@ static facebook::jsi::HostFunctionType MakeHostFunction(Microsoft::ReactNative::
              size_t count) -> facebook::jsi::Value {
     try {
       ReactNative::JsiRuntime jsiRuntime = JsiRuntime::FromRuntime(runtime);
-      auto argsData = reinterpret_cast<JsiValueData const *>(args);
+      auto argsData = reinterpret_cast<JsiValueRef const *>(args);
       return ToValue(hostFunc(jsiRuntime, ToJsiValueData(thisVal), {argsData, argsData + count}));
     } catch (hresult_error const &) {
       JsiRuntime::RethrowJsiError(runtime);
@@ -220,10 +221,10 @@ void HostObjectWrapper::set(
 std::vector<facebook::jsi::PropNameID> HostObjectWrapper::getPropertyNames(facebook::jsi::Runtime &runtime) try {
   std::vector<facebook::jsi::PropNameID> result;
   ReactNative::JsiRuntime jsiRuntime = JsiRuntime::FromRuntime(runtime);
-  auto names = m_hostObject.GetPropertyNames(jsiRuntime);
+  auto names = m_hostObject.GetPropertyIds(jsiRuntime);
   result.reserve(names.Size());
   constexpr uint32_t bufferSize = 200;
-  JsiPropertyNameIdData nameBuffer[bufferSize];
+  JsiPropertyIdRef nameBuffer[bufferSize];
   for (uint32_t startIndex = 0; startIndex < names.Size(); startIndex += bufferSize) {
     names.GetMany(startIndex, nameBuffer);
     size_t bufferLength = std::min(bufferSize, names.Size() - startIndex);
@@ -253,7 +254,7 @@ JsiErrorType JsiError::ErrorType() noexcept {
   return m_errorType;
 }
 
-hstring JsiError::What() noexcept {
+hstring JsiError::ErrorDetails() noexcept {
   if (m_errorType == JsiErrorType::JSError) {
     return to_hstring(m_jsError->what());
   } else {
@@ -277,7 +278,7 @@ hstring JsiError::Stack() noexcept {
   }
 }
 
-JsiValueData JsiError::Value() noexcept {
+JsiValueRef JsiError::Value() noexcept {
   if (m_errorType == JsiErrorType::JSError) {
     return ToJsiValueData(m_jsError->value());
   } else {
@@ -346,7 +347,7 @@ JsiRuntime::~JsiRuntime() noexcept {
   s_jsiRuntimeMap.erase(reinterpret_cast<uintptr_t>(m_runtime.get()));
 }
 
-JsiValueData JsiRuntime::EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl) try {
+JsiValueRef JsiRuntime::EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl) try {
   facebook::jsi::Value result;
   buffer.GetData([this, &result, &sourceUrl](array_view<uint8_t const> bytes) {
     try {
@@ -377,13 +378,13 @@ ReactNative::JsiPreparedJavaScript JsiRuntime::PrepareJavaScript(
   throw;
 }
 
-JsiValueData JsiRuntime::EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js) try {
+JsiValueRef JsiRuntime::EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js) try {
   return MakeJsiValueData(m_runtime->evaluatePreparedJavaScript(get_self<JsiPreparedJavaScript>(js)->Get()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiObjectData JsiRuntime::Global() try { return MakeJsiObjectData(m_runtime->global()); } catch (JSI_SET_ERROR) {
+JsiObjectRef JsiRuntime::Global() try { return MakeJsiObjectData(m_runtime->global()); } catch (JSI_SET_ERROR) {
   throw;
 }
 
@@ -395,51 +396,67 @@ bool JsiRuntime::IsInspectable() try { return m_runtime->isInspectable(); } catc
   throw;
 }
 
-JsiSymbolData JsiRuntime::CloneSymbol(JsiSymbolData symbol) try {
+JsiSymbolRef JsiRuntime::CloneSymbol(JsiSymbolRef symbol) try {
   return MakeJsiSymbolData(m_runtime->cloneSymbol(AsPointerValue(symbol)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiStringData JsiRuntime::CloneString(JsiStringData str) try {
+JsiStringRef JsiRuntime::CloneString(JsiStringRef str) try {
   return MakeJsiStringData(m_runtime->cloneString(AsPointerValue(str)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiObjectData JsiRuntime::CloneObject(JsiObjectData obj) try {
+JsiObjectRef JsiRuntime::CloneObject(JsiObjectRef obj) try {
   return MakeJsiObjectData(m_runtime->cloneObject(AsPointerValue(obj)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiPropertyNameIdData JsiRuntime::ClonePropertyNameId(JsiPropertyNameIdData propertyNameId) try {
+JsiPropertyIdRef JsiRuntime::ClonePropertyId(JsiPropertyIdRef propertyNameId) try {
   return MakeJsiPropertyNameIdData(m_runtime->clonePropNameID(AsPointerValue(propertyNameId)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiPropertyNameIdData JsiRuntime::CreatePropertyNameIdFromAscii(array_view<uint8_t const> ascii) try {
+JsiPropertyIdRef JsiRuntime::CreatePropertyId(hstring const &name) try {
+  std::string utf8Name = to_string(name);
+  return MakeJsiPropertyNameIdData(
+      m_runtime->createPropNameIDFromUtf8(reinterpret_cast<uint8_t const *>(utf8Name.data()), utf8Name.size()));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromAscii(array_view<uint8_t const> ascii) try {
   return MakeJsiPropertyNameIdData(
       m_runtime->createPropNameIDFromAscii(reinterpret_cast<char const *>(ascii.data()), ascii.size()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiPropertyNameIdData JsiRuntime::CreatePropertyNameIdFromUtf8(array_view<uint8_t const> utf8) try {
+JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromUtf8(array_view<uint8_t const> utf8) try {
   return MakeJsiPropertyNameIdData(m_runtime->createPropNameIDFromUtf8(utf8.data(), utf8.size()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiPropertyNameIdData JsiRuntime::CreatePropertyNameIdFromString(JsiStringData str) try {
+JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromString(JsiStringRef str) try {
   auto strPtr = AsPointerValue(str);
   return MakeJsiPropertyNameIdData(m_runtime->createPropNameIDFromString(AsString(&strPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-void JsiRuntime::PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiByteArrayUser const &useUtf8String) try {
+hstring JsiRuntime::PropertyIdToString(JsiPropertyIdRef propertyId) try {
+  auto ptr = AsPointerValue(propertyId);
+  std::string utf8 = m_runtime->utf8(AsPropNameID(&ptr));
+  return to_hstring(utf8);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+void JsiRuntime::PropertyIdToUtf8(JsiPropertyIdRef propertyNameId, JsiByteArrayUser const &useUtf8String) try {
   auto ptr = AsPointerValue(propertyNameId);
   std::string utf8 = m_runtime->utf8(AsPropNameID(&ptr));
   uint8_t const *data = reinterpret_cast<uint8_t const *>(utf8.data());
@@ -448,7 +465,7 @@ void JsiRuntime::PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiB
   throw;
 }
 
-bool JsiRuntime::PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNameIdData right) try {
+bool JsiRuntime::PropertyIdEquals(JsiPropertyIdRef left, JsiPropertyIdRef right) try {
   auto leftPtr = AsPointerValue(left);
   auto rightPtr = AsPointerValue(right);
   return m_runtime->compare(AsPropNameID(&leftPtr), AsPropNameID(&rightPtr));
@@ -456,7 +473,15 @@ bool JsiRuntime::PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNam
   throw;
 }
 
-void JsiRuntime::SymbolToUtf8(JsiSymbolData symbol, JsiByteArrayUser const &useUtf8String) try {
+hstring JsiRuntime::SymbolToString(JsiSymbolRef symbol) try {
+  auto symbolPtr = AsPointerValue(symbol);
+  std::string utf8 = m_runtime->symbolToString(AsSymbol(&symbolPtr));
+  return to_hstring(utf8);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+void JsiRuntime::SymbolToUtf8(JsiSymbolRef symbol, JsiByteArrayUser const &useUtf8String) try {
   auto symbolPtr = AsPointerValue(symbol);
   std::string utf8 = m_runtime->symbolToString(AsSymbol(&symbolPtr));
   uint8_t const *data = reinterpret_cast<uint8_t const *>(utf8.data());
@@ -465,20 +490,35 @@ void JsiRuntime::SymbolToUtf8(JsiSymbolData symbol, JsiByteArrayUser const &useU
   throw;
 }
 
-JsiStringData JsiRuntime::CreateStringFromAscii(array_view<uint8_t const> ascii) try {
+JsiStringRef JsiRuntime::CreateString(hstring const &value) try {
+  std::string utf8Value = to_string(value);
   return MakeJsiStringData(
-      m_runtime->createStringFromAscii(reinterpret_cast<char const *>(ascii.data()), ascii.size()));
+      m_runtime->createStringFromUtf8(reinterpret_cast<uint8_t const *>(utf8Value.data()), utf8Value.size()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiStringData JsiRuntime::CreateStringFromUtf8(array_view<uint8_t const> utf8) try {
+JsiStringRef JsiRuntime::CreateStringFromAscii(array_view<uint8_t const> ascii) try {
+  return MakeJsiStringData(m_runtime->createStringFromUtf8(ascii.data(), ascii.size()));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiStringRef JsiRuntime::CreateStringFromUtf8(array_view<uint8_t const> utf8) try {
   return MakeJsiStringData(m_runtime->createStringFromUtf8(utf8.data(), utf8.size()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-void JsiRuntime::StringToUtf8(JsiStringData str, JsiByteArrayUser const &useUtf8String) try {
+hstring JsiRuntime::StringToString(JsiStringRef str) try {
+  auto strPtr = AsPointerValue(str);
+  std::string utf8 = m_runtime->utf8(AsString(&strPtr));
+  return to_hstring(utf8);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+void JsiRuntime::StringToUtf8(JsiStringRef str, JsiByteArrayUser const &useUtf8String) try {
   auto strPtr = AsPointerValue(str);
   std::string utf8 = m_runtime->utf8(AsString(&strPtr));
   uint8_t const *data = reinterpret_cast<uint8_t const *>(utf8.data());
@@ -487,25 +527,32 @@ void JsiRuntime::StringToUtf8(JsiStringData str, JsiByteArrayUser const &useUtf8
   throw;
 }
 
-JsiValueData JsiRuntime::CreateValueFromJsonUtf8(array_view<uint8_t const> json) try {
+JsiValueRef JsiRuntime::CreateValueFromJson(hstring const &json) try {
+  std::string utf8Json = to_string(json);
+  return MakeJsiValueData(m_runtime->createValueFromJsonUtf8(reinterpret_cast<uint8_t const*>(utf8Json.data()), utf8Json.size()));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiValueRef JsiRuntime::CreateValueFromJsonUtf8(array_view<uint8_t const> json) try {
   return MakeJsiValueData(m_runtime->createValueFromJsonUtf8(json.data(), json.size()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiObjectData JsiRuntime::CreateObject() try {
+JsiObjectRef JsiRuntime::CreateObject() try {
   return MakeJsiObjectData(m_runtime->createObject());
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiObjectData JsiRuntime::CreateObjectWithHostObject(IJsiHostObject const &hostObject) try {
+JsiObjectRef JsiRuntime::CreateObjectWithHostObject(IJsiHostObject const &hostObject) try {
   return MakeJsiObjectData(m_runtime->createObject(MakeHostObject(hostObject)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-IJsiHostObject JsiRuntime::GetHostObject(JsiObjectData obj) try {
+IJsiHostObject JsiRuntime::GetHostObject(JsiObjectRef obj) try {
   auto objPtr = AsPointerValue(obj);
   auto hostObject = m_runtime->getHostObject(AsObject(&objPtr));
   // TODO: using static_pointer_cast is unsafe here. How to use shared_ptr without RTTI?
@@ -515,7 +562,7 @@ IJsiHostObject JsiRuntime::GetHostObject(JsiObjectData obj) try {
   throw;
 }
 
-JsiHostFunction JsiRuntime::GetHostFunction(JsiFunctionData func) try {
+JsiHostFunction JsiRuntime::GetHostFunction(JsiObjectRef func) try {
   auto funcPtr = AsPointerValue(func);
   // auto hostFunction = m_runtime->getHostFunction(AsFunction(func));
   // TODO: implement mapping
@@ -524,137 +571,108 @@ JsiHostFunction JsiRuntime::GetHostFunction(JsiFunctionData func) try {
   throw;
 }
 
-JsiValueData JsiRuntime::GetPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId) try {
+JsiValueRef JsiRuntime::GetProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId) try {
   auto objPtr = AsPointerValue(obj);
-  auto propertyIdPtr = AsPointerValue(propertyNameId);
+  auto propertyIdPtr = AsPointerValue(propertyId);
   return MakeJsiValueData(m_runtime->getProperty(AsObject(&objPtr), AsPropNameID(&propertyIdPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiValueData JsiRuntime::GetPropertyByName(JsiObjectData obj, JsiStringData name) try {
+bool JsiRuntime::HasProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId) try {
   auto objPtr = AsPointerValue(obj);
-  auto namePtr = AsPointerValue(name);
-  return MakeJsiValueData(m_runtime->getProperty(
-      *reinterpret_cast<facebook::jsi::Object *>(&objPtr), *reinterpret_cast<facebook::jsi::String *>(&namePtr)));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-bool JsiRuntime::HasPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId) try {
-  auto objPtr = AsPointerValue(obj);
-  auto propertyIdPtr = AsPointerValue(propertyNameId);
+  auto propertyIdPtr = AsPointerValue(propertyId);
   return m_runtime->hasProperty(AsObject(&objPtr), AsPropNameID(&propertyIdPtr));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-bool JsiRuntime::HasPropertyByName(JsiObjectData obj, JsiStringData name) try {
+void JsiRuntime::SetProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId, JsiValueRef const &value) try {
   auto objPtr = AsPointerValue(obj);
-  auto namePtr = AsPointerValue(name);
-  return m_runtime->hasProperty(AsObject(&objPtr), AsString(&namePtr));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-void JsiRuntime::SetPropertyById(
-    JsiObjectData obj,
-    JsiPropertyNameIdData propertyNameId,
-    JsiValueData const &value) try {
-  auto objPtr = AsPointerValue(obj);
-  auto propertyIdPtr = AsPointerValue(propertyNameId);
+  auto propertyIdPtr = AsPointerValue(propertyId);
   m_runtime->setPropertyValue(
       const_cast<facebook::jsi::Object &>(AsObject(&objPtr)), AsPropNameID(&propertyIdPtr), *AsValue(value));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-void JsiRuntime::SetPropertyByName(JsiObjectData obj, JsiStringData name, JsiValueData const &value) try {
-  auto objPtr = AsPointerValue(obj);
-  auto namePtr = AsPointerValue(name);
-  m_runtime->setPropertyValue(
-      const_cast<facebook::jsi::Object &>(AsObject(&objPtr)), AsString(&namePtr), *AsValue(value));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-bool JsiRuntime::IsArray(JsiObjectData obj) try {
-  auto objPtr = AsPointerValue(obj);
-  return m_runtime->isArray(AsObject(&objPtr));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-bool JsiRuntime::IsArrayBuffer(JsiObjectData obj) try {
-  auto objPtr = AsPointerValue(obj);
-  return m_runtime->isArrayBuffer(AsObject(&objPtr));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-bool JsiRuntime::IsFunction(JsiObjectData obj) try {
-  auto objPtr = AsPointerValue(obj);
-  return m_runtime->isFunction(AsObject(&objPtr));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-bool JsiRuntime::IsHostObject(JsiObjectData obj) try {
-  auto objPtr = AsPointerValue(obj);
-  return m_runtime->isHostObject(AsObject(&objPtr));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-bool JsiRuntime::IsHostFunction(JsiFunctionData func) try {
-  auto funcPtr = AsPointerValue(func);
-  return m_runtime->isHostFunction(AsFunction(&funcPtr));
-} catch (JSI_SET_ERROR) {
-  throw;
-}
-
-JsiArrayData JsiRuntime::GetPropertyNames(JsiObjectData obj) try {
+JsiObjectRef JsiRuntime::GetPropertyIdArray(JsiObjectRef obj) try {
   auto objPtr = AsPointerValue(obj);
   return MakeJsiArrayData(m_runtime->getPropertyNames(AsObject(&objPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiWeakObjectData JsiRuntime::CreateWeakObject(JsiObjectData obj) try {
+bool JsiRuntime::IsArray(JsiObjectRef obj) try {
+  auto objPtr = AsPointerValue(obj);
+  return m_runtime->isArray(AsObject(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::IsArrayBuffer(JsiObjectRef obj) try {
+  auto objPtr = AsPointerValue(obj);
+  return m_runtime->isArrayBuffer(AsObject(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::IsFunction(JsiObjectRef obj) try {
+  auto objPtr = AsPointerValue(obj);
+  return m_runtime->isFunction(AsObject(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::IsHostObject(JsiObjectRef obj) try {
+  auto objPtr = AsPointerValue(obj);
+  return m_runtime->isHostObject(AsObject(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::IsHostFunction(JsiObjectRef func) try {
+  auto funcPtr = AsPointerValue(func);
+  return m_runtime->isHostFunction(AsFunction(&funcPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiWeakObjectRef JsiRuntime::CreateWeakObject(JsiObjectRef obj) try {
   auto objPtr = AsPointerValue(obj);
   return MakeJsiWeakObjectData(m_runtime->createWeakObject(AsObject(&objPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiValueData JsiRuntime::LockWeakObject(JsiWeakObjectData weakObject) try {
+JsiValueRef JsiRuntime::LockWeakObject(JsiWeakObjectRef weakObject) try {
   auto weakObjectPtr = AsPointerValue(weakObject);
   return MakeJsiValueData(m_runtime->lockWeakObject(AsWeakObject(&weakObjectPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiArrayData JsiRuntime::CreateArray(uint32_t size) try {
+JsiObjectRef JsiRuntime::CreateArray(uint32_t size) try {
   return MakeJsiArrayData(m_runtime->createArray(size));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-uint32_t JsiRuntime::GetArraySize(JsiArrayData arr) try {
+uint32_t JsiRuntime::GetArraySize(JsiObjectRef arr) try {
   auto arrPtr = AsPointerValue(arr);
   return static_cast<uint32_t>(m_runtime->size(AsArray(&arrPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-uint32_t JsiRuntime::GetArrayBufferSize(JsiArrayBufferData arrayBuffer) try {
+uint32_t JsiRuntime::GetArrayBufferSize(JsiObjectRef arrayBuffer) try {
   auto arrayBufferPtr = AsPointerValue(arrayBuffer);
   return static_cast<uint32_t>(m_runtime->size(AsArrayBuffer(&arrayBufferPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-void JsiRuntime::GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiByteArrayUser const &useArrayBytes) try {
+void JsiRuntime::GetArrayBufferData(JsiObjectRef arrayBuffer, JsiByteArrayUser const &useArrayBytes) try {
   auto arrayBufferPtr = AsPointerValue(arrayBuffer);
   auto data = m_runtime->data(AsArrayBuffer(&arrayBufferPtr));
   return useArrayBytes({data, data + m_runtime->size(AsArrayBuffer(&arrayBufferPtr))});
@@ -662,22 +680,22 @@ void JsiRuntime::GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiByteArray
   throw;
 }
 
-JsiValueData JsiRuntime::GetValueAtIndex(JsiArrayData arr, uint32_t index) try {
+JsiValueRef JsiRuntime::GetValueAtIndex(JsiObjectRef arr, uint32_t index) try {
   auto arrPtr = AsPointerValue(arr);
   return MakeJsiValueData(AsArray(&arrPtr).getValueAtIndex(*m_runtime, index));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-void JsiRuntime::SetValueAtIndex(JsiArrayData arr, uint32_t index, JsiValueData const &value) try {
+void JsiRuntime::SetValueAtIndex(JsiObjectRef arr, uint32_t index, JsiValueRef const &value) try {
   auto arrPtr = AsPointerValue(arr);
   m_runtime->setValueAtIndexImpl(const_cast<facebook::jsi::Array &>(AsArray(&arrPtr)), index, *AsValue(value));
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-JsiFunctionData JsiRuntime::CreateFunctionFromHostFunction(
-    JsiPropertyNameIdData propNameId,
+JsiObjectRef JsiRuntime::CreateFunctionFromHostFunction(
+    JsiPropertyIdRef propNameId,
     uint32_t paramCount,
     JsiHostFunction const &hostFunc) try {
   auto propertyIdPtr = AsPointerValue(propNameId);
@@ -687,8 +705,7 @@ JsiFunctionData JsiRuntime::CreateFunctionFromHostFunction(
   throw;
 }
 
-JsiValueData
-JsiRuntime::Call(JsiFunctionData func, JsiValueData const &thisArg, array_view<JsiValueData const> args) try {
+JsiValueRef JsiRuntime::Call(JsiObjectRef func, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
   auto funcPtr = AsPointerValue(func);
   return MakeJsiValueData(m_runtime->call(
       AsFunction(&funcPtr),
@@ -699,7 +716,7 @@ JsiRuntime::Call(JsiFunctionData func, JsiValueData const &thisArg, array_view<J
   throw;
 }
 
-JsiValueData JsiRuntime::CallAsConstructor(JsiFunctionData func, array_view<JsiValueData const> args) try {
+JsiValueRef JsiRuntime::CallAsConstructor(JsiObjectRef func, array_view<JsiValueRef const> args) try {
   auto funcPtr = AsPointerValue(func);
   return MakeJsiValueData(m_runtime->callAsConstructor(
       AsFunction(&funcPtr), reinterpret_cast<facebook::jsi::Value const *>(args.data()), args.size()));
@@ -719,7 +736,7 @@ void JsiRuntime::PopScope(JsiScopeState scopeState) try {
   throw;
 }
 
-bool JsiRuntime::SymbolStrictEquals(JsiSymbolData left, JsiSymbolData right) try {
+bool JsiRuntime::SymbolStrictEquals(JsiSymbolRef left, JsiSymbolRef right) try {
   auto leftPtr = AsPointerValue(left);
   auto rightPtr = AsPointerValue(right);
   return m_runtime->strictEquals(AsSymbol(&leftPtr), AsSymbol(&rightPtr));
@@ -727,7 +744,7 @@ bool JsiRuntime::SymbolStrictEquals(JsiSymbolData left, JsiSymbolData right) try
   throw;
 }
 
-bool JsiRuntime::StringStrictEquals(JsiStringData left, JsiStringData right) try {
+bool JsiRuntime::StringStrictEquals(JsiStringRef left, JsiStringRef right) try {
   auto leftPtr = AsPointerValue(left);
   auto rightPtr = AsPointerValue(right);
   return m_runtime->strictEquals(AsString(&leftPtr), AsString(&rightPtr));
@@ -735,7 +752,7 @@ bool JsiRuntime::StringStrictEquals(JsiStringData left, JsiStringData right) try
   throw;
 }
 
-bool JsiRuntime::ObjectStrictEquals(JsiObjectData left, JsiObjectData right) try {
+bool JsiRuntime::ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right) try {
   auto leftPtr = AsPointerValue(left);
   auto rightPtr = AsPointerValue(right);
   return m_runtime->strictEquals(AsObject(&leftPtr), AsObject(&rightPtr));
@@ -743,7 +760,7 @@ bool JsiRuntime::ObjectStrictEquals(JsiObjectData left, JsiObjectData right) try
   throw;
 }
 
-bool JsiRuntime::InstanceOf(JsiObjectData obj, JsiFunctionData constructor) try {
+bool JsiRuntime::InstanceOf(JsiObjectRef obj, JsiObjectRef constructor) try {
   auto objPtr = AsPointerValue(obj);
   auto ctorPtr = AsPointerValue(constructor);
   return m_runtime->instanceOf(AsObject(&objPtr), AsFunction(&ctorPtr));
@@ -751,35 +768,35 @@ bool JsiRuntime::InstanceOf(JsiObjectData obj, JsiFunctionData constructor) try 
   throw;
 }
 
-void JsiRuntime::ReleaseSymbol(JsiSymbolData const &symbolData) {
+void JsiRuntime::ReleaseSymbol(JsiSymbolRef const &symbolData) {
   facebook::jsi::Symbol symbol{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(symbolData.Data)};
 }
 
-void JsiRuntime::ReleaseString(JsiStringData const &stringData) {
+void JsiRuntime::ReleaseString(JsiStringRef const &stringData) {
   facebook::jsi::String str{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(stringData.Data)};
 }
 
-void JsiRuntime::ReleaseObject(JsiObjectData const &objectData) {
+void JsiRuntime::ReleaseObject(JsiObjectRef const &objectData) {
   facebook::jsi::Object obj{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(objectData.Data)};
 }
 
-void JsiRuntime::ReleasePropertyNameId(JsiPropertyNameIdData const &propertyNameIdData) {
+void JsiRuntime::ReleasePropertyId(JsiPropertyIdRef const &propertyNameIdData) {
   facebook::jsi::PropNameID prop{reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(propertyNameIdData.Data)};
 }
 
-ReactNative::JsiError JsiRuntime::GetAndRemoveError() noexcept {
+ReactNative::JsiError JsiRuntime::GetAndClearError() noexcept {
   std::scoped_lock lock{m_mutex};
   ReactNative::JsiError result{std::move(m_error)};
   return result;
 }
 
-void JsiRuntime::SetError(JsiErrorType errorType, hstring const &what, JsiValueData const &value) noexcept {
+void JsiRuntime::SetError(JsiErrorType errorType, hstring const &errorDetails, JsiValueRef const &value) noexcept {
   std::scoped_lock lock{m_mutex};
   if (errorType == JsiErrorType::JSError) {
     m_error = make<JsiError>(
-        facebook::jsi::JSError{to_string(what), *m_runtime, facebook::jsi::Value{*m_runtime, *AsValue(value)}});
+        facebook::jsi::JSError{to_string(errorDetails), *m_runtime, facebook::jsi::Value{*m_runtime, *AsValue(value)}});
   } else {
-    m_error = make<JsiError>(facebook::jsi::JSINativeException{to_string(what)});
+    m_error = make<JsiError>(facebook::jsi::JSINativeException{to_string(errorDetails)});
   }
 }
 
@@ -795,7 +812,7 @@ void JsiRuntime::SetError(facebook::jsi::JSINativeException const &nativeExcepti
 
 /*static*/ void JsiRuntime::RethrowJsiError(facebook::jsi::Runtime &runtime) {
   ReactNative::JsiRuntime jsiRuntime = JsiRuntime::FromRuntime(runtime);
-  if (auto abiError = jsiRuntime.GetAndRemoveError()) {
+  if (auto abiError = jsiRuntime.GetAndClearError()) {
     get_self<JsiError>(abiError)->RethrowError();
   }
 }

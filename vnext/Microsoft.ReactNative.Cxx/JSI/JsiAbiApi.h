@@ -45,17 +45,17 @@ struct JsiHostObjectWrapper : implements<JsiHostObjectWrapper, IJsiHostObject> {
   JsiHostObjectWrapper(std::shared_ptr<facebook::jsi::HostObject> &&hostObject) noexcept;
   ~JsiHostObjectWrapper() noexcept;
 
-  JsiValueData GetProperty(JsiRuntime const &runtime, JsiPropertyNameIdData const &name);
-  void SetProperty(JsiRuntime const &runtime, JsiPropertyNameIdData const &name, JsiValueData const &value);
-  Windows::Foundation::Collections::IVector<JsiPropertyNameIdData> GetPropertyNames(JsiRuntime const &runtime);
+  JsiValueRef GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name);
+  void SetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name, JsiValueRef const &value);
+  Windows::Foundation::Collections::IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime const &runtime);
 
-  static void RegisterHostObject(JsiObjectData const &objectData, JsiHostObjectWrapper *hostObject) noexcept;
-  static bool IsHostObject(JsiObjectData const &objectData) noexcept;
-  static std::shared_ptr<facebook::jsi::HostObject> GetHostObject(JsiObjectData const &objectData) noexcept;
+  static void RegisterHostObject(JsiObjectRef const &objectData, JsiHostObjectWrapper *hostObject) noexcept;
+  static bool IsHostObject(JsiObjectRef const &objectData) noexcept;
+  static std::shared_ptr<facebook::jsi::HostObject> GetHostObject(JsiObjectRef const &objectData) noexcept;
 
  private:
   std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
-  JsiObjectData m_objectData{};
+  JsiObjectRef m_objectData{};
 
   static std::mutex s_mutex;
   static std::map<uint64_t, JsiHostObjectWrapper *> s_objectDataToObjectWrapper;
@@ -73,17 +73,16 @@ struct JsiHostFunctionWrapper {
   JsiHostFunctionWrapper(JsiHostFunctionWrapper const &other) = delete;
   JsiHostFunctionWrapper &operator=(JsiHostFunctionWrapper const &other) = delete;
 
-  JsiValueData
-  operator()(JsiRuntime const &runtime, JsiValueData const &thisValue, array_view<JsiValueData const> args);
+  JsiValueRef operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args);
 
   static uint32_t GetNextFunctionId() noexcept;
-  static void RegisterHostFunction(uint32_t functionId, JsiFunctionData const &functionData) noexcept;
-  static bool IsHostFunction(JsiFunctionData const &functionData) noexcept;
-  static facebook::jsi::HostFunctionType &GetHostFunction(JsiFunctionData const &functionData) noexcept;
+  static void RegisterHostFunction(uint32_t functionId, JsiObjectRef const &func) noexcept;
+  static bool IsHostFunction(JsiObjectRef const &func) noexcept;
+  static facebook::jsi::HostFunctionType &GetHostFunction(JsiObjectRef const &func) noexcept;
 
  private:
   facebook::jsi::HostFunctionType m_hostFunction;
-  JsiFunctionData m_functionData{};
+  JsiObjectRef m_functionData{};
   uint32_t m_functionId{};
 
   static std::mutex s_functionMutex;
@@ -192,38 +191,35 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   void SetJsiError(std::exception const &nativeException) noexcept;
 
  private: // Convert JSI to ABI-safe JSI values
-  static JsiSymbolData const &AsJsiSymbolData(PointerValue const *pv) noexcept;
-  static JsiStringData const &AsJsiStringData(PointerValue const *pv) noexcept;
-  static JsiObjectData const &AsJsiObjectData(PointerValue const *pv) noexcept;
-  static JsiPropertyNameIdData const &AsJsiPropertyNameIdData(PointerValue const *pv) noexcept;
+  static JsiSymbolRef const &AsJsiSymbolRef(PointerValue const *pv) noexcept;
+  static JsiStringRef const &AsJsiStringRef(PointerValue const *pv) noexcept;
+  static JsiObjectRef const &AsJsiObjectRef(PointerValue const *pv) noexcept;
+  static JsiPropertyIdRef const &AsJsiPropertyIdRef(PointerValue const *pv) noexcept;
 
-  static JsiSymbolData const &AsJsiSymbolData(facebook::jsi::Symbol const &symbol) noexcept;
-  static JsiStringData const &AsJsiStringData(facebook::jsi::String const &str) noexcept;
-  static JsiObjectData const &AsJsiObjectData(facebook::jsi::Object const &obj) noexcept;
-  static JsiPropertyNameIdData const &AsJsiPropertyNameIdData(facebook::jsi::PropNameID const &propertyId) noexcept;
-  static JsiFunctionData const &AsJsiFunctionData(facebook::jsi::Function const &func) noexcept;
-  static JsiWeakObjectData const &AsJsiWeakObjectData(facebook::jsi::WeakObject const &weakObject) noexcept;
-  static JsiArrayData const &AsJsiArrayData(facebook::jsi::Array const &arr) noexcept;
-  static JsiArrayBufferData const &AsJsiArrayBufferData(facebook::jsi::ArrayBuffer const &arrayBuffer) noexcept;
-  static JsiValueData AsJsiValueData(facebook::jsi::Value const &value) noexcept;
+  static JsiSymbolRef const &AsJsiSymbolRef(facebook::jsi::Symbol const &symbol) noexcept;
+  static JsiStringRef const &AsJsiStringRef(facebook::jsi::String const &str) noexcept;
+  static JsiObjectRef const &AsJsiObjectRef(facebook::jsi::Object const &obj) noexcept;
+  static JsiPropertyIdRef const &AsJsiPropertyIdRef(facebook::jsi::PropNameID const &propertyId) noexcept;
+  static JsiWeakObjectRef const &AsJsiWeakObjectRef(facebook::jsi::WeakObject const &weakObject) noexcept;
+  static JsiValueRef AsJsiValueRef(facebook::jsi::Value const &value) noexcept;
 
-  static JsiPropertyNameIdData DetachJsiPropertyNameIdData(facebook::jsi::PropNameID &&propertyId) noexcept;
-  static JsiValueData DetachJsiValueData(facebook::jsi::Value &&value) noexcept;
+  static JsiPropertyIdRef DetachJsiPropertyIdRef(facebook::jsi::PropNameID &&propertyId) noexcept;
+  static JsiValueRef DetachJsiValueRef(facebook::jsi::Value &&value) noexcept;
 
  private: // Convert ABI-safe JSI to JSI values
-  PointerValue *MakeSymbolValue(JsiSymbolData &&symbol) const noexcept;
-  PointerValue *MakeStringValue(JsiStringData &&str) const noexcept;
-  PointerValue *MakeObjectValue(JsiObjectData &&obj) const noexcept;
-  PointerValue *MakePropNameIDValue(JsiPropertyNameIdData &&propertyId) const noexcept;
+  PointerValue *MakeSymbolValue(JsiSymbolRef &&symbol) const noexcept;
+  PointerValue *MakeStringValue(JsiStringRef &&str) const noexcept;
+  PointerValue *MakeObjectValue(JsiObjectRef &&obj) const noexcept;
+  PointerValue *MakePropNameIDValue(JsiPropertyIdRef &&propertyId) const noexcept;
 
-  facebook::jsi::Symbol MakeSymbol(JsiSymbolData &&symbol) const noexcept;
-  facebook::jsi::String MakeString(JsiStringData &&str) const noexcept;
-  facebook::jsi::Object MakeObject(JsiObjectData &&obj) const noexcept;
-  facebook::jsi::PropNameID MakePropNameID(JsiPropertyNameIdData &&propertyId) const noexcept;
-  facebook::jsi::Array MakeArray(JsiArrayData &&arr) noexcept;
-  facebook::jsi::WeakObject MakeWeakObject(JsiWeakObjectData &&weakObject) const noexcept;
-  facebook::jsi::Function MakeFunction(JsiFunctionData &&func) noexcept;
-  facebook::jsi::Value MakeValue(JsiValueData &&value) const noexcept;
+  facebook::jsi::Symbol MakeSymbol(JsiSymbolRef &&symbol) const noexcept;
+  facebook::jsi::String MakeString(JsiStringRef &&str) const noexcept;
+  facebook::jsi::Object MakeObject(JsiObjectRef &&obj) const noexcept;
+  facebook::jsi::PropNameID MakePropNameID(JsiPropertyIdRef &&propertyId) const noexcept;
+  facebook::jsi::Array MakeArray(JsiObjectRef &&arr) noexcept;
+  facebook::jsi::WeakObject MakeWeakObject(JsiWeakObjectRef &&weakObject) const noexcept;
+  facebook::jsi::Function MakeFunction(JsiObjectRef &&func) noexcept;
+  facebook::jsi::Value MakeValue(JsiValueRef &&value) const noexcept;
 
   // Allow access to the helper function
   friend struct JsiByteBufferWrapper;
@@ -243,31 +239,31 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   };
 
   struct SymbolPointerValue : DataPointerValue {
-    SymbolPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiSymbolData &&symbol) noexcept;
+    SymbolPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiSymbolRef &&symbol) noexcept;
     void invalidate() override;
-    static JsiSymbolData const &GetData(PointerValue const *pv) noexcept;
-    static JsiSymbolData Detach(PointerValue const *pv) noexcept;
+    static JsiSymbolRef const &GetData(PointerValue const *pv) noexcept;
+    static JsiSymbolRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct StringPointerValue : DataPointerValue {
-    StringPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiStringData &&str) noexcept;
+    StringPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiStringRef &&str) noexcept;
     void invalidate() override;
-    static JsiStringData const &GetData(PointerValue const *pv) noexcept;
-    static JsiStringData Detach(PointerValue const *pv) noexcept;
+    static JsiStringRef const &GetData(PointerValue const *pv) noexcept;
+    static JsiStringRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct ObjectPointerValue : DataPointerValue {
-    ObjectPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiObjectData &&obj) noexcept;
+    ObjectPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiObjectRef &&obj) noexcept;
     void invalidate() override;
-    static JsiObjectData const &GetData(PointerValue const *pv) noexcept;
-    static JsiObjectData Detach(PointerValue const *pv) noexcept;
+    static JsiObjectRef const &GetData(PointerValue const *pv) noexcept;
+    static JsiObjectRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct PropNameIDPointerValue : DataPointerValue {
-    PropNameIDPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiPropertyNameIdData &&propertyId) noexcept;
+    PropNameIDPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiPropertyIdRef &&propertyId) noexcept;
     void invalidate() override;
-    static JsiPropertyNameIdData const &GetData(PointerValue const *pv) noexcept;
-    static JsiPropertyNameIdData Detach(PointerValue const *pv) noexcept;
+    static JsiPropertyIdRef const &GetData(PointerValue const *pv) noexcept;
+    static JsiPropertyIdRef Detach(PointerValue const *pv) noexcept;
   };
 
   // This type is to represent a reference to Value based on JsiValueData.
@@ -275,12 +271,12 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   // It does not release the underlying pointer on invalidate() call
   // by proving null as runtime pointer.
   struct ValueRef {
-    ValueRef(JsiValueData const &data) noexcept;
+    ValueRef(JsiValueRef const &data) noexcept;
     ~ValueRef() noexcept;
     operator facebook::jsi::Value const &() const noexcept;
 
     using StoreType = std::aligned_storage_t<sizeof(DataPointerValue)>;
-    static void InitValueRef(JsiValueData const &data, facebook::jsi::Value *value, StoreType *store) noexcept;
+    static void InitValueRef(JsiValueRef const &data, facebook::jsi::Value *value, StoreType *store) noexcept;
 
    private:
     StoreType m_pointerStore{};
@@ -288,7 +284,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   };
 
   struct ValueRefArray {
-    ValueRefArray(array_view<JsiValueData const> args) noexcept;
+    ValueRefArray(array_view<JsiValueRef const> args) noexcept;
     facebook::jsi::Value const *Data() const noexcept;
     size_t Size() const noexcept;
 
@@ -299,7 +295,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   };
 
   struct PropNameIDRef {
-    PropNameIDRef(JsiPropertyNameIdData const &data) noexcept;
+    PropNameIDRef(JsiPropertyIdRef const &data) noexcept;
     ~PropNameIDRef() noexcept;
     operator facebook::jsi::PropNameID const &() const noexcept;
 

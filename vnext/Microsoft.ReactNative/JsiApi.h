@@ -33,10 +33,10 @@ struct JsiError : JsiErrorT<JsiError> {
   JsiError(facebook::jsi::JSINativeException &&nativeException) noexcept;
 
   JsiErrorType ErrorType() noexcept;
-  hstring What() noexcept;
+  hstring ErrorDetails() noexcept;
   hstring Message() noexcept;
   hstring Stack() noexcept;
-  JsiValueData Value() noexcept;
+  JsiValueRef Value() noexcept;
 
   void RethrowError();
 
@@ -57,70 +57,84 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
  public: // JsiRuntime
   static Microsoft::ReactNative::JsiRuntime MakeChakraRuntime();
 
-  JsiValueData EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
+  JsiValueRef EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
-  JsiValueData EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js);
-  JsiObjectData Global();
+  JsiValueRef EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js);
+  JsiObjectRef Global();
   hstring Description();
   bool IsInspectable();
-  JsiSymbolData CloneSymbol(JsiSymbolData symbol);
-  JsiStringData CloneString(JsiStringData str);
-  JsiObjectData CloneObject(JsiObjectData obj);
-  JsiPropertyNameIdData ClonePropertyNameId(JsiPropertyNameIdData propertyNameId);
-  JsiPropertyNameIdData CreatePropertyNameIdFromAscii(array_view<uint8_t const> ascii);
-  JsiPropertyNameIdData CreatePropertyNameIdFromUtf8(array_view<uint8_t const> utf8);
-  JsiPropertyNameIdData CreatePropertyNameIdFromString(JsiStringData str);
-  void PropertyNameIdToUtf8(JsiPropertyNameIdData propertyNameId, JsiByteArrayUser const &useUtf8String);
-  bool PropertyNameIdEquals(JsiPropertyNameIdData left, JsiPropertyNameIdData right);
-  void SymbolToUtf8(JsiSymbolData symbol, JsiByteArrayUser const &useUtf8String);
-  JsiStringData CreateStringFromAscii(array_view<uint8_t const> ascii);
-  JsiStringData CreateStringFromUtf8(array_view<uint8_t const> utf8);
-  void StringToUtf8(JsiStringData str, JsiByteArrayUser const &useUtf8String);
-  JsiValueData CreateValueFromJsonUtf8(array_view<uint8_t const> json);
-  JsiObjectData CreateObject();
-  JsiObjectData CreateObjectWithHostObject(IJsiHostObject const &hostObject);
-  IJsiHostObject GetHostObject(JsiObjectData obj);
-  JsiHostFunction GetHostFunction(JsiFunctionData func);
-  JsiValueData GetPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId);
-  JsiValueData GetPropertyByName(JsiObjectData obj, JsiStringData name);
-  bool HasPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId);
-  bool HasPropertyByName(JsiObjectData obj, JsiStringData name);
-  void SetPropertyById(JsiObjectData obj, JsiPropertyNameIdData propertyNameId, JsiValueData const &value);
-  void SetPropertyByName(JsiObjectData obj, JsiStringData name, JsiValueData const &value);
-  bool IsArray(JsiObjectData obj);
-  bool IsArrayBuffer(JsiObjectData obj);
-  bool IsFunction(JsiObjectData obj);
-  bool IsHostObject(JsiObjectData obj);
-  bool IsHostFunction(JsiFunctionData obj);
-  JsiArrayData GetPropertyNames(JsiObjectData obj);
-  JsiWeakObjectData CreateWeakObject(JsiObjectData obj);
-  JsiValueData LockWeakObject(JsiWeakObjectData weakObject);
-  JsiArrayData CreateArray(uint32_t size);
-  uint32_t GetArraySize(JsiArrayData arr);
-  uint32_t GetArrayBufferSize(JsiArrayBufferData arrayBuffer);
-  void GetArrayBufferData(JsiArrayBufferData arrayBuffer, JsiByteArrayUser const &useArrayBytes);
-  JsiValueData GetValueAtIndex(JsiArrayData arr, uint32_t index);
-  void SetValueAtIndex(JsiArrayData arr, uint32_t index, JsiValueData const &value);
-  JsiFunctionData CreateFunctionFromHostFunction(
-      JsiPropertyNameIdData propNameId,
-      uint32_t paramCount,
-      JsiHostFunction const &hostFunc);
-  JsiValueData Call(JsiFunctionData func, JsiValueData const &thisArg, array_view<JsiValueData const> args);
-  JsiValueData CallAsConstructor(JsiFunctionData func, array_view<JsiValueData const> args);
+
+  JsiSymbolRef CloneSymbol(JsiSymbolRef symbol);
+  JsiStringRef CloneString(JsiStringRef str);
+  JsiObjectRef CloneObject(JsiObjectRef obj);
+  JsiPropertyIdRef ClonePropertyId(JsiPropertyIdRef propertyId);
+
+  JsiPropertyIdRef CreatePropertyId(hstring const &name);
+  JsiPropertyIdRef CreatePropertyIdFromAscii(array_view<uint8_t const> ascii);
+  JsiPropertyIdRef CreatePropertyIdFromUtf8(array_view<uint8_t const> utf8);
+  JsiPropertyIdRef CreatePropertyIdFromString(JsiStringRef str);
+  hstring PropertyIdToString(JsiPropertyIdRef propertyId);
+  void PropertyIdToUtf8(JsiPropertyIdRef propertyId, JsiByteArrayUser const &useUtf8String);
+  bool PropertyIdEquals(JsiPropertyIdRef left, JsiPropertyIdRef right);
+
+  hstring SymbolToString(JsiSymbolRef symbol);
+  void SymbolToUtf8(JsiSymbolRef symbol, JsiByteArrayUser const &useUtf8String);
+
+  JsiStringRef CreateString(hstring const &value);
+  JsiStringRef CreateStringFromAscii(array_view<uint8_t const> utf8);
+  JsiStringRef CreateStringFromUtf8(array_view<uint8_t const> utf8);
+  hstring StringToString(JsiStringRef str);
+  void StringToUtf8(JsiStringRef str, JsiByteArrayUser const &useUtf8String);
+
+  JsiValueRef CreateValueFromJson(hstring const &json);
+  JsiValueRef CreateValueFromJsonUtf8(array_view<uint8_t const> json);
+
+  JsiObjectRef CreateObject();
+  JsiObjectRef CreateObjectWithHostObject(IJsiHostObject const &hostObject);
+  IJsiHostObject GetHostObject(JsiObjectRef obj);
+  JsiHostFunction GetHostFunction(JsiObjectRef func);
+
+  JsiValueRef GetProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId);
+  bool HasProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId);
+  void SetProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId, JsiValueRef const &value);
+  JsiObjectRef GetPropertyIdArray(JsiObjectRef obj);
+
+  bool IsArray(JsiObjectRef obj);
+  bool IsArrayBuffer(JsiObjectRef obj);
+  bool IsFunction(JsiObjectRef obj);
+  bool IsHostObject(JsiObjectRef obj);
+  bool IsHostFunction(JsiObjectRef obj);
+
+  JsiWeakObjectRef CreateWeakObject(JsiObjectRef obj);
+  JsiValueRef LockWeakObject(JsiWeakObjectRef weakObject);
+
+  JsiObjectRef CreateArray(uint32_t size);
+  uint32_t GetArraySize(JsiObjectRef arr);
+  uint32_t GetArrayBufferSize(JsiObjectRef arrayBuffer);
+  void GetArrayBufferData(JsiObjectRef arrayBuffer, JsiByteArrayUser const &useArrayBytes);
+  JsiValueRef GetValueAtIndex(JsiObjectRef arr, uint32_t index);
+  void SetValueAtIndex(JsiObjectRef arr, uint32_t index, JsiValueRef const &value);
+
+  JsiObjectRef
+  CreateFunctionFromHostFunction(JsiPropertyIdRef funcName, uint32_t paramCount, JsiHostFunction const &hostFunc);
+  JsiValueRef Call(JsiObjectRef func, JsiValueRef const &thisArg, array_view<JsiValueRef const> args);
+  JsiValueRef CallAsConstructor(JsiObjectRef func, array_view<JsiValueRef const> args);
+
   JsiScopeState PushScope();
   void PopScope(JsiScopeState scopeState);
-  bool SymbolStrictEquals(JsiSymbolData left, JsiSymbolData right);
-  bool StringStrictEquals(JsiStringData left, JsiStringData right);
-  bool ObjectStrictEquals(JsiObjectData left, JsiObjectData right);
-  bool InstanceOf(JsiObjectData obj, JsiFunctionData constructor);
 
-  void ReleaseSymbol(JsiSymbolData const &symbol);
-  void ReleaseString(JsiStringData const &str);
-  void ReleaseObject(JsiObjectData const &obj);
-  void ReleasePropertyNameId(JsiPropertyNameIdData const &propertyNameId);
+  bool SymbolStrictEquals(JsiSymbolRef left, JsiSymbolRef right);
+  bool StringStrictEquals(JsiStringRef left, JsiStringRef right);
+  bool ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right);
+  bool InstanceOf(JsiObjectRef obj, JsiObjectRef constructor);
 
-  ReactNative::JsiError GetAndRemoveError() noexcept;
-  void SetError(JsiErrorType errorType, hstring const &what, JsiValueData const &value) noexcept;
+  void ReleaseSymbol(JsiSymbolRef const &symbol);
+  void ReleaseString(JsiStringRef const &str);
+  void ReleaseObject(JsiObjectRef const &obj);
+  void ReleasePropertyId(JsiPropertyIdRef const &propertyId);
+
+  ReactNative::JsiError GetAndClearError() noexcept;
+  void SetError(JsiErrorType errorType, hstring const &errorDetails, JsiValueRef const &value) noexcept;
   static void RethrowJsiError(facebook::jsi::Runtime &runtime);
 
  private:

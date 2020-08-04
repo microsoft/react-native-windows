@@ -28,7 +28,7 @@ facebook::jsi::JSError const &jsError) {                          \
 
 struct AbiJSError : facebook::jsi::JSError {
   AbiJSError(JsiAbiRuntime &rt, JsiError &&jsiError) noexcept
-      : facebook::jsi::JSError{to_string(jsiError.What()),
+      : facebook::jsi::JSError{to_string(jsiError.ErrorDetails()),
                                rt,
                                facebook::jsi::Value(rt, JsiAbiRuntime::ValueRef(jsiError.Value()))},
         m_jsiError{std::move(jsiError)} {}
@@ -43,7 +43,7 @@ struct AbiJSError : facebook::jsi::JSError {
 
 struct AbiJSINativeException : facebook::jsi::JSINativeException {
   AbiJSINativeException(JsiError &&jsiError) noexcept
-      : facebook::jsi::JSINativeException{to_string(jsiError.What())}, m_jsiError{std::move(jsiError)} {}
+      : facebook::jsi::JSINativeException{to_string(jsiError.ErrorDetails())}, m_jsiError{std::move(jsiError)} {}
 
  private:
   JsiError m_jsiError;
@@ -102,54 +102,54 @@ JsiHostObjectWrapper::~JsiHostObjectWrapper() noexcept {
   }
 }
 
-JsiValueData JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyNameIdData const &name) try {
+JsiValueRef JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
   JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
   JsiAbiRuntime::PropNameIDRef nameRef{name};
-  return JsiAbiRuntime::DetachJsiValueData(m_hostObject->get(*rt, nameRef));
+  return JsiAbiRuntime::DetachJsiValueRef(m_hostObject->get(*rt, nameRef));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
 }
 
 void JsiHostObjectWrapper::SetProperty(
     JsiRuntime const &runtime,
-    JsiPropertyNameIdData const &name,
-    JsiValueData const &value) try {
+    JsiPropertyIdRef const &name,
+    JsiValueRef const &value) try {
   JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
   m_hostObject->set(*rt, JsiAbiRuntime::PropNameIDRef{name}, JsiAbiRuntime::ValueRef(value));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
 }
 
-Windows::Foundation::Collections::IVector<JsiPropertyNameIdData> JsiHostObjectWrapper::GetPropertyNames(
+Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper::GetPropertyIds(
     JsiRuntime const &runtime) try {
   JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
   auto names = m_hostObject->getPropertyNames(*rt);
-  std::vector<JsiPropertyNameIdData> result;
+  std::vector<JsiPropertyIdRef> result;
   result.reserve(names.size());
   for (auto &name : names) {
-    result.push_back(JsiAbiRuntime::DetachJsiPropertyNameIdData(std::move(name)));
+    result.push_back(JsiAbiRuntime::DetachJsiPropertyIdRef(std::move(name)));
   }
 
-  return winrt::single_threaded_vector<JsiPropertyNameIdData>(std::move(result));
+  return winrt::single_threaded_vector<JsiPropertyIdRef>(std::move(result));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
 }
 
 /*static*/ void JsiHostObjectWrapper::RegisterHostObject(
-    JsiObjectData const &objectData,
+    JsiObjectRef const &objectData,
     JsiHostObjectWrapper *hostObject) noexcept {
   std::scoped_lock lock{s_mutex};
   s_objectDataToObjectWrapper[objectData.Data] = hostObject;
   hostObject->m_objectData = objectData;
 }
 
-/*static*/ bool JsiHostObjectWrapper::IsHostObject(JsiObjectData const &objectData) noexcept {
+/*static*/ bool JsiHostObjectWrapper::IsHostObject(JsiObjectRef const &objectData) noexcept {
   std::scoped_lock lock{s_mutex};
   auto it = s_objectDataToObjectWrapper.find(objectData.Data);
   return it != s_objectDataToObjectWrapper.end();
 }
 
-/*static*/ std::shared_ptr<HostObject> JsiHostObjectWrapper::GetHostObject(JsiObjectData const &objectData) noexcept {
+/*static*/ std::shared_ptr<HostObject> JsiHostObjectWrapper::GetHostObject(JsiObjectRef const &objectData) noexcept {
   auto it = s_objectDataToObjectWrapper.find(objectData.Data);
   if (it != s_objectDataToObjectWrapper.end()) {
     return it->second->m_hostObject;
@@ -201,11 +201,11 @@ JsiHostFunctionWrapper::~JsiHostFunctionWrapper() noexcept {
   }
 }
 
-JsiValueData JsiHostFunctionWrapper::
-operator()(JsiRuntime const &runtime, JsiValueData const &thisArg, array_view<JsiValueData const> args) try {
+JsiValueRef JsiHostFunctionWrapper::
+operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
   JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
   JsiAbiRuntime::ValueRefArray valueRefArgs{args};
-  return JsiAbiRuntime::DetachJsiValueData(
+  return JsiAbiRuntime::DetachJsiValueRef(
       m_hostFunction(*rt, JsiAbiRuntime::ValueRef{thisArg}, valueRefArgs.Data(), valueRefArgs.Size()));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
@@ -217,7 +217,7 @@ operator()(JsiRuntime const &runtime, JsiValueData const &thisArg, array_view<Js
 
 /*static*/ void JsiHostFunctionWrapper::RegisterHostFunction(
     uint32_t functionId,
-    JsiFunctionData const &functionData) noexcept {
+    JsiObjectRef const &functionData) noexcept {
   std::scoped_lock lock{s_functionMutex};
   auto it = s_functionIdToFunctionWrapper.find(functionId);
   VerifyElseCrashSz(it != s_functionIdToFunctionWrapper.end(), "Function Id is not found.");
@@ -226,12 +226,12 @@ operator()(JsiRuntime const &runtime, JsiValueData const &thisArg, array_view<Js
   functionWrapper->m_functionData = functionData;
 }
 
-/*static*/ bool JsiHostFunctionWrapper::IsHostFunction(JsiFunctionData const &functionData) noexcept {
+/*static*/ bool JsiHostFunctionWrapper::IsHostFunction(JsiObjectRef const &functionData) noexcept {
   std::scoped_lock lock{s_functionMutex};
   return s_functionDataToFunctionWrapper.find(functionData.Data) != s_functionDataToFunctionWrapper.end();
 }
 
-/*static*/ HostFunctionType &JsiHostFunctionWrapper::GetHostFunction(JsiFunctionData const &functionData) noexcept {
+/*static*/ HostFunctionType &JsiHostFunctionWrapper::GetHostFunction(JsiObjectRef const &functionData) noexcept {
   std::scoped_lock lock{s_functionMutex};
   auto it = s_functionDataToFunctionWrapper.find(functionData.Data);
   if (it != s_functionDataToFunctionWrapper.end()) {
@@ -319,28 +319,28 @@ Instrumentation &JsiAbiRuntime::instrumentation() try {
 }
 
 Runtime::PointerValue *JsiAbiRuntime::cloneSymbol(const Runtime::PointerValue *pv) try {
-  return new SymbolPointerValue{make_weak(m_runtime), m_runtime.CloneSymbol(AsJsiSymbolData(pv))};
+  return new SymbolPointerValue{make_weak(m_runtime), m_runtime.CloneSymbol(AsJsiSymbolRef(pv))};
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Runtime::PointerValue *JsiAbiRuntime::cloneString(const Runtime::PointerValue *pv) try {
-  return new StringPointerValue{make_weak(m_runtime), m_runtime.CloneString(AsJsiStringData(pv))};
+  return new StringPointerValue{make_weak(m_runtime), m_runtime.CloneString(AsJsiStringRef(pv))};
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Runtime::PointerValue *JsiAbiRuntime::cloneObject(const Runtime::PointerValue *pv) try {
-  return new ObjectPointerValue{make_weak(m_runtime), m_runtime.CloneObject(AsJsiObjectData(pv))};
+  return new ObjectPointerValue{make_weak(m_runtime), m_runtime.CloneObject(AsJsiObjectRef(pv))};
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Runtime::PointerValue *JsiAbiRuntime::clonePropNameID(const Runtime::PointerValue *pv) try {
-  return new PropNameIDPointerValue{make_weak(m_runtime), m_runtime.ClonePropertyNameId(AsJsiPropertyNameIdData(pv))};
+  return new PropNameIDPointerValue{make_weak(m_runtime), m_runtime.ClonePropertyId(AsJsiPropertyIdRef(pv))};
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -348,30 +348,30 @@ Runtime::PointerValue *JsiAbiRuntime::clonePropNameID(const Runtime::PointerValu
 
 PropNameID JsiAbiRuntime::createPropNameIDFromAscii(const char *str, size_t length) try {
   auto data = reinterpret_cast<uint8_t const *>(str);
-  return MakePropNameID(m_runtime.CreatePropertyNameIdFromAscii({data, data + length}));
+  return MakePropNameID(m_runtime.CreatePropertyIdFromAscii({data, data + length}));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 PropNameID JsiAbiRuntime::createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) try {
-  return MakePropNameID(m_runtime.CreatePropertyNameIdFromUtf8({utf8, utf8 + length}));
+  return MakePropNameID(m_runtime.CreatePropertyIdFromUtf8({utf8, utf8 + length}));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
-  return MakePropNameID(m_runtime.CreatePropertyNameIdFromString(AsJsiStringData(str)));
+  return MakePropNameID(m_runtime.CreatePropertyIdFromString(AsJsiStringRef(str)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
-std::string JsiAbiRuntime::utf8(const PropNameID &propertyNameId) try {
+std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;
-  m_runtime.PropertyNameIdToUtf8(
-      AsJsiPropertyNameIdData(propertyNameId), [&dataResult](array_view<uint8_t const> utf8) {
+  m_runtime.PropertyIdToUtf8(
+      AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
         dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
       });
   return dataResult;
@@ -381,7 +381,7 @@ std::string JsiAbiRuntime::utf8(const PropNameID &propertyNameId) try {
 }
 
 bool JsiAbiRuntime::compare(const PropNameID &left, const PropNameID &right) try {
-  return m_runtime.PropertyNameIdEquals(AsJsiPropertyNameIdData(left), AsJsiPropertyNameIdData(right));
+  return m_runtime.PropertyIdEquals(AsJsiPropertyIdRef(left), AsJsiPropertyIdRef(right));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -389,7 +389,7 @@ bool JsiAbiRuntime::compare(const PropNameID &left, const PropNameID &right) try
 
 std::string JsiAbiRuntime::symbolToString(const Symbol &symbol) try {
   std::string dataResult;
-  m_runtime.SymbolToUtf8(AsJsiSymbolData(symbol), [&dataResult](array_view<uint8_t const> utf8) {
+  m_runtime.SymbolToUtf8(AsJsiSymbolRef(symbol), [&dataResult](array_view<uint8_t const> utf8) {
     dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
   });
   return dataResult;
@@ -415,7 +415,7 @@ String JsiAbiRuntime::createStringFromUtf8(const uint8_t *utf8, size_t length) t
 
 std::string JsiAbiRuntime::utf8(const String &str) try {
   std::string dataResult;
-  m_runtime.StringToUtf8(AsJsiStringData(str), [&dataResult](array_view<uint8_t const> utf8) {
+  m_runtime.StringToUtf8(AsJsiStringRef(str), [&dataResult](array_view<uint8_t const> utf8) {
     dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
   });
   return dataResult;
@@ -441,7 +441,7 @@ Object JsiAbiRuntime::createObject() try {
 Object JsiAbiRuntime::createObject(std::shared_ptr<HostObject> ho) try {
   auto hostObjectWrapper = winrt::make<JsiHostObjectWrapper>(std::move(ho));
   Object result = MakeObject(m_runtime.CreateObjectWithHostObject(hostObjectWrapper));
-  JsiHostObjectWrapper::RegisterHostObject(AsJsiObjectData(result), get_self<JsiHostObjectWrapper>(hostObjectWrapper));
+  JsiHostObjectWrapper::RegisterHostObject(AsJsiObjectRef(result), get_self<JsiHostObjectWrapper>(hostObjectWrapper));
   return result;
 } catch (hresult_error const &) {
   RethrowJsiError();
@@ -449,112 +449,118 @@ Object JsiAbiRuntime::createObject(std::shared_ptr<HostObject> ho) try {
 }
 
 std::shared_ptr<HostObject> JsiAbiRuntime::getHostObject(const Object &obj) try {
-  return JsiHostObjectWrapper::GetHostObject(AsJsiObjectData(obj));
+  return JsiHostObjectWrapper::GetHostObject(AsJsiObjectRef(obj));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 HostFunctionType &JsiAbiRuntime::getHostFunction(const Function &func) try {
-  return JsiHostFunctionWrapper::GetHostFunction(AsJsiFunctionData(func));
+  return JsiHostFunctionWrapper::GetHostFunction(AsJsiObjectRef(func));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Value JsiAbiRuntime::getProperty(const Object &obj, const PropNameID &name) try {
-  return MakeValue(m_runtime.GetPropertyById(AsJsiObjectData(obj), AsJsiPropertyNameIdData(name)));
+  return MakeValue(m_runtime.GetProperty(AsJsiObjectRef(obj), AsJsiPropertyIdRef(name)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Value JsiAbiRuntime::getProperty(const Object &obj, const String &name) try {
-  return MakeValue(m_runtime.GetPropertyByName(AsJsiObjectData(obj), AsJsiStringData(name)));
+  // TODO: delete propertyId
+  auto propertyId = m_runtime.CreatePropertyIdFromString(AsJsiStringRef(name));
+  return MakeValue(m_runtime.GetProperty(AsJsiObjectRef(obj), propertyId));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::hasProperty(const Object &obj, const PropNameID &name) try {
-  return m_runtime.HasPropertyById(AsJsiObjectData(obj), AsJsiPropertyNameIdData(name));
+  return m_runtime.HasProperty(AsJsiObjectRef(obj), AsJsiPropertyIdRef(name));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::hasProperty(const Object &obj, const String &name) try {
-  return m_runtime.HasPropertyByName(AsJsiObjectData(obj), AsJsiStringData(name));
+  // TODO: delete propertyId
+  auto propertyId = m_runtime.CreatePropertyIdFromString(AsJsiStringRef(name));
+  return m_runtime.HasProperty(AsJsiObjectRef(obj), propertyId);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 void JsiAbiRuntime::setPropertyValue(Object &obj, const PropNameID &name, const Value &value) try {
-  m_runtime.SetPropertyById(AsJsiObjectData(obj), AsJsiPropertyNameIdData(name), AsJsiValueData(value));
+  m_runtime.SetProperty(AsJsiObjectRef(obj), AsJsiPropertyIdRef(name), AsJsiValueRef(value));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 void JsiAbiRuntime::setPropertyValue(Object &obj, const String &name, const Value &value) try {
-  m_runtime.SetPropertyByName(AsJsiObjectData(obj), AsJsiStringData(name), AsJsiValueData(value));
+  // TODO: delete propertyId
+  auto propertyId = m_runtime.CreatePropertyIdFromString(AsJsiStringRef(name));
+  m_runtime.SetProperty(AsJsiObjectRef(obj), propertyId, AsJsiValueRef(value));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::isArray(const Object &obj) const try {
-  return m_runtime.IsArray(AsJsiObjectData(obj));
+  return m_runtime.IsArray(AsJsiObjectRef(obj));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::isArrayBuffer(const Object &obj) const try {
-  return m_runtime.IsArrayBuffer(AsJsiObjectData(obj));
+  return m_runtime.IsArrayBuffer(AsJsiObjectRef(obj));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::isFunction(const Object &obj) const try {
-  return m_runtime.IsFunction(AsJsiObjectData(obj));
+  return m_runtime.IsFunction(AsJsiObjectRef(obj));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::isHostObject(const Object &obj) const try {
-  return m_runtime.IsHostObject(AsJsiObjectData(obj));
+  return m_runtime.IsHostObject(AsJsiObjectRef(obj));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::isHostFunction(const Function &func) const try {
-  return JsiHostFunctionWrapper::IsHostFunction(AsJsiFunctionData(func));
+  return JsiHostFunctionWrapper::IsHostFunction(AsJsiObjectRef(func));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Array JsiAbiRuntime::getPropertyNames(const Object &obj) try {
-  return MakeArray(m_runtime.GetPropertyNames(AsJsiObjectData(obj)));
+  return MakeArray(m_runtime.GetPropertyIdArray(AsJsiObjectRef(obj)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 WeakObject JsiAbiRuntime::createWeakObject(const Object &obj) try {
-  return MakeWeakObject(m_runtime.CreateWeakObject(AsJsiObjectData(obj)));
+  return MakeWeakObject(m_runtime.CreateWeakObject(AsJsiObjectRef(obj)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 Value JsiAbiRuntime::lockWeakObject(const WeakObject &weakObj) try {
-  return MakeValue(m_runtime.LockWeakObject(AsJsiWeakObjectData(weakObj)));
+  return MakeValue(m_runtime.LockWeakObject(AsJsiWeakObjectRef(weakObj)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -568,14 +574,14 @@ Array JsiAbiRuntime::createArray(size_t length) try {
 }
 
 size_t JsiAbiRuntime::size(const Array &arr) try {
-  return m_runtime.GetArraySize(AsJsiArrayData(arr));
+  return m_runtime.GetArraySize(AsJsiObjectRef(arr));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 size_t JsiAbiRuntime::size(const ArrayBuffer &arrayBuffer) try {
-  return m_runtime.GetArrayBufferSize(AsJsiArrayBufferData(arrayBuffer));
+  return m_runtime.GetArrayBufferSize(AsJsiObjectRef(arrayBuffer));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -583,7 +589,7 @@ size_t JsiAbiRuntime::size(const ArrayBuffer &arrayBuffer) try {
 
 uint8_t *JsiAbiRuntime::data(const ArrayBuffer &arrayBuffer) try {
   uint8_t *dataResult{};
-  m_runtime.GetArrayBufferData(AsJsiArrayBufferData(arrayBuffer), [&dataResult](array_view<uint8_t const> dataView) {
+  m_runtime.GetArrayBufferData(AsJsiObjectRef(arrayBuffer), [&dataResult](array_view<uint8_t const> dataView) {
     dataResult = const_cast<uint8_t *>(dataView.data());
   });
   return dataResult;
@@ -593,14 +599,14 @@ uint8_t *JsiAbiRuntime::data(const ArrayBuffer &arrayBuffer) try {
 }
 
 Value JsiAbiRuntime::getValueAtIndex(const Array &arr, size_t i) try {
-  return MakeValue(m_runtime.GetValueAtIndex(AsJsiArrayData(arr), static_cast<uint32_t>(i)));
+  return MakeValue(m_runtime.GetValueAtIndex(AsJsiObjectRef(arr), static_cast<uint32_t>(i)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 void JsiAbiRuntime::setValueAtIndexImpl(Array &arr, size_t i, const Value &value) try {
-  m_runtime.SetValueAtIndex(AsJsiArrayData(arr), static_cast<uint32_t>(i), AsJsiValueData(value));
+  m_runtime.SetValueAtIndex(AsJsiObjectRef(arr), static_cast<uint32_t>(i), AsJsiValueRef(value));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -612,8 +618,8 @@ Function JsiAbiRuntime::createFunctionFromHostFunction(
     HostFunctionType func) try {
   uint32_t functionId = JsiHostFunctionWrapper::GetNextFunctionId();
   Function result = MakeFunction(m_runtime.CreateFunctionFromHostFunction(
-      AsJsiPropertyNameIdData(name), paramCount, JsiHostFunctionWrapper(std::move(func), functionId)));
-  JsiHostFunctionWrapper::RegisterHostFunction(functionId, AsJsiFunctionData(result));
+      AsJsiPropertyIdRef(name), paramCount, JsiHostFunctionWrapper(std::move(func), functionId)));
+  JsiHostFunctionWrapper::RegisterHostFunction(functionId, AsJsiObjectRef(result));
   return result;
 } catch (hresult_error const &) {
   RethrowJsiError();
@@ -622,13 +628,13 @@ Function JsiAbiRuntime::createFunctionFromHostFunction(
 
 Value JsiAbiRuntime::call(const Function &func, const Value &jsThis, const Value *args, size_t count) try {
   VerifyElseCrashSz(count <= MaxCallArgCount, "Argument count must not exceed the supported max arg count.");
-  std::array<JsiValueData, MaxCallArgCount> argsData;
+  std::array<JsiValueRef, MaxCallArgCount> argsData;
   for (size_t i = 0; i < count; ++i) {
-    argsData[i] = AsJsiValueData(*(args + i));
+    argsData[i] = AsJsiValueRef(*(args + i));
   }
 
   return MakeValue(
-      m_runtime.Call(AsJsiFunctionData(func), AsJsiValueData(jsThis), {argsData.data(), argsData.data() + count}));
+      m_runtime.Call(AsJsiObjectRef(func), AsJsiValueRef(jsThis), {argsData.data(), argsData.data() + count}));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -636,12 +642,12 @@ Value JsiAbiRuntime::call(const Function &func, const Value &jsThis, const Value
 
 Value JsiAbiRuntime::callAsConstructor(const Function &func, const Value *args, size_t count) try {
   VerifyElseCrashSz(count <= MaxCallArgCount, "Argument count must not exceed the supported max arg count.");
-  std::array<JsiValueData, MaxCallArgCount> argsData;
+  std::array<JsiValueRef, MaxCallArgCount> argsData;
   for (size_t i = 0; i < count; ++i) {
-    argsData[i] = AsJsiValueData(*(args + i));
+    argsData[i] = AsJsiValueRef(*(args + i));
   }
 
-  return MakeValue(m_runtime.CallAsConstructor(AsJsiFunctionData(func), {argsData.data(), argsData.data() + count}));
+  return MakeValue(m_runtime.CallAsConstructor(AsJsiObjectRef(func), {argsData.data(), argsData.data() + count}));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -662,35 +668,35 @@ void JsiAbiRuntime::popScope(ScopeState *scope) try {
 }
 
 bool JsiAbiRuntime::strictEquals(const Symbol &a, const Symbol &b) const try {
-  return m_runtime.SymbolStrictEquals(AsJsiSymbolData(a), AsJsiSymbolData(b));
+  return m_runtime.SymbolStrictEquals(AsJsiSymbolRef(a), AsJsiSymbolRef(b));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::strictEquals(const String &a, const String &b) const try {
-  return m_runtime.StringStrictEquals(AsJsiStringData(a), AsJsiStringData(b));
+  return m_runtime.StringStrictEquals(AsJsiStringRef(a), AsJsiStringRef(b));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::strictEquals(const Object &a, const Object &b) const try {
-  return m_runtime.ObjectStrictEquals(AsJsiObjectData(a), AsJsiObjectData(b));
+  return m_runtime.ObjectStrictEquals(AsJsiObjectRef(a), AsJsiObjectRef(b));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 bool JsiAbiRuntime::instanceOf(const Object &o, const Function &f) try {
-  return m_runtime.InstanceOf(AsJsiObjectData(o), AsJsiFunctionData(f));
+  return m_runtime.InstanceOf(AsJsiObjectRef(o), AsJsiObjectRef(f));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 void JsiAbiRuntime::RethrowJsiError() const {
-  auto jsiError = m_runtime.GetAndRemoveError();
+  auto jsiError = m_runtime.GetAndClearError();
   if (jsiError.ErrorType() == JsiErrorType::JSError) {
     throw AbiJSError{*const_cast<JsiAbiRuntime *>(this), std::move(jsiError)};
   } else {
@@ -699,72 +705,59 @@ void JsiAbiRuntime::RethrowJsiError() const {
 }
 
 void JsiAbiRuntime::SetJsiError(facebook::jsi::JSError const &jsError) noexcept {
-  m_runtime.SetError(JsiErrorType::JSError, to_hstring(jsError.what()), AsJsiValueData(jsError.value()));
+  m_runtime.SetError(JsiErrorType::JSError, to_hstring(jsError.what()), AsJsiValueRef(jsError.value()));
 }
 
 void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept {
   m_runtime.SetError(
       JsiErrorType::NativeException,
       to_hstring(nativeException.what()),
-      AsJsiValueData(facebook::jsi::Value::undefined()));
+      AsJsiValueRef(facebook::jsi::Value::undefined()));
 }
 
 //===========================================================================
 // JsiAbiRuntime utility functions implementation
 //===========================================================================
 
-/*static*/ JsiSymbolData const &JsiAbiRuntime::AsJsiSymbolData(PointerValue const *pv) noexcept {
+/*static*/ JsiSymbolRef const &JsiAbiRuntime::AsJsiSymbolRef(PointerValue const *pv) noexcept {
   return SymbolPointerValue::GetData(pv);
 }
 
-/*static*/ JsiStringData const &JsiAbiRuntime::AsJsiStringData(PointerValue const *pv) noexcept {
+/*static*/ JsiStringRef const &JsiAbiRuntime::AsJsiStringRef(PointerValue const *pv) noexcept {
   return StringPointerValue::GetData(pv);
 }
 
-/*static*/ JsiObjectData const &JsiAbiRuntime::AsJsiObjectData(PointerValue const *pv) noexcept {
+/*static*/ JsiObjectRef const &JsiAbiRuntime::AsJsiObjectRef(PointerValue const *pv) noexcept {
   return ObjectPointerValue::GetData(pv);
 }
 
-/*static*/ JsiPropertyNameIdData const &JsiAbiRuntime::AsJsiPropertyNameIdData(PointerValue const *pv) noexcept {
+/*static*/ JsiPropertyIdRef const &JsiAbiRuntime::AsJsiPropertyIdRef(PointerValue const *pv) noexcept {
   return PropNameIDPointerValue::GetData(pv);
 }
 
-/*static*/ JsiSymbolData const &JsiAbiRuntime::AsJsiSymbolData(Symbol const &symbol) noexcept {
+/*static*/ JsiSymbolRef const &JsiAbiRuntime::AsJsiSymbolRef(Symbol const &symbol) noexcept {
   return SymbolPointerValue::GetData(getPointerValue(symbol));
 }
 
-/*static*/ JsiStringData const &JsiAbiRuntime::AsJsiStringData(String const &str) noexcept {
+/*static*/ JsiStringRef const &JsiAbiRuntime::AsJsiStringRef(String const &str) noexcept {
   return StringPointerValue::GetData(getPointerValue(str));
 }
 
-/*static*/ JsiObjectData const &JsiAbiRuntime::AsJsiObjectData(Object const &obj) noexcept {
+/*static*/ JsiObjectRef const &JsiAbiRuntime::AsJsiObjectRef(Object const &obj) noexcept {
   return ObjectPointerValue::GetData(getPointerValue(obj));
 }
 
-/*static*/ JsiPropertyNameIdData const &JsiAbiRuntime::AsJsiPropertyNameIdData(PropNameID const &propertyId) noexcept {
+/*static*/ JsiPropertyIdRef const &JsiAbiRuntime::AsJsiPropertyIdRef(PropNameID const &propertyId) noexcept {
   return PropNameIDPointerValue::GetData(getPointerValue(propertyId));
 }
 
-/*static*/ JsiFunctionData const &JsiAbiRuntime::AsJsiFunctionData(Function const &func) noexcept {
-  return reinterpret_cast<JsiFunctionData const &>(ObjectPointerValue::GetData(getPointerValue(func)));
+/*static*/ JsiWeakObjectRef const &JsiAbiRuntime::AsJsiWeakObjectRef(WeakObject const &weakObject) noexcept {
+  return reinterpret_cast<JsiWeakObjectRef const &>(ObjectPointerValue::GetData(getPointerValue(weakObject)));
 }
 
-/*static*/ JsiWeakObjectData const &JsiAbiRuntime::AsJsiWeakObjectData(WeakObject const &weakObject) noexcept {
-  return reinterpret_cast<JsiWeakObjectData const &>(ObjectPointerValue::GetData(getPointerValue(weakObject)));
-}
-
-/*static*/ JsiArrayData const &JsiAbiRuntime::AsJsiArrayData(facebook::jsi::Array const &arr) noexcept {
-  return reinterpret_cast<JsiArrayData const &>(ObjectPointerValue::GetData(getPointerValue(arr)));
-}
-
-/*static*/ JsiArrayBufferData const &JsiAbiRuntime::AsJsiArrayBufferData(
-    facebook::jsi::ArrayBuffer const &arrayBuffer) noexcept {
-  return reinterpret_cast<JsiArrayBufferData const &>(ObjectPointerValue::GetData(getPointerValue(arrayBuffer)));
-}
-
-/*static*/ JsiValueData JsiAbiRuntime::AsJsiValueData(Value const &value) noexcept {
-  // We assume that the JsiValueData and Value have the same layout.
-  auto valuePtr = reinterpret_cast<JsiValueData const *>(&value);
+/*static*/ JsiValueRef JsiAbiRuntime::AsJsiValueRef(Value const &value) noexcept {
+  // We assume that the JsiValueRef and Value have the same layout.
+  auto valuePtr = reinterpret_cast<JsiValueRef const *>(&value);
   // Fix up the data part
   switch (valuePtr->Kind) {
     case JsiValueKind::Symbol:
@@ -778,19 +771,19 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   }
 }
 
-/*static*/ JsiPropertyNameIdData JsiAbiRuntime::DetachJsiPropertyNameIdData(PropNameID &&propertyId) noexcept {
-  // This method detaches JsiPropertyNameIdData from the PropNameID.
+/*static*/ JsiPropertyIdRef JsiAbiRuntime::DetachJsiPropertyIdRef(PropNameID &&propertyId) noexcept {
+  // This method detaches JsiPropertyIdRef from the PropNameID.
   // It lets the PropNameIDPointerValue destructor run, but it must not destroy the underlying JS engine object.
   return PropNameIDPointerValue::Detach(getPointerValue(propertyId));
 }
 
-/*static*/ JsiValueData JsiAbiRuntime::DetachJsiValueData(facebook::jsi::Value &&value) noexcept {
-  // Here we should move data from Value to JsiValueData.
+/*static*/ JsiValueRef JsiAbiRuntime::DetachJsiValueRef(facebook::jsi::Value &&value) noexcept {
+  // Here we should move data from Value to JsiValueRef.
   // For Pointer types it means that we should allow running the PointerValue
   // destructor, but it must not call the Release method to keep the underlying
   // data alive. Thus, we must detach the value.
-  // We assume that the JsiValueData and Value have the same layout.
-  auto valuePtr = reinterpret_cast<JsiValueData *>(&value);
+  // We assume that the JsiValueRef and Value have the same layout.
+  auto valuePtr = reinterpret_cast<JsiValueRef *>(&value);
   switch (valuePtr->Kind) {
     case JsiValueKind::Symbol:
       return {valuePtr->Kind, SymbolPointerValue::Detach(getPointerValue(value)).Data};
@@ -803,51 +796,51 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   }
 }
 
-Runtime::PointerValue *JsiAbiRuntime::MakeSymbolValue(JsiSymbolData &&symbol) const noexcept {
+Runtime::PointerValue *JsiAbiRuntime::MakeSymbolValue(JsiSymbolRef &&symbol) const noexcept {
   return new SymbolPointerValue{make_weak(m_runtime), std::move(symbol)};
 }
 
-Runtime::PointerValue *JsiAbiRuntime::MakeStringValue(JsiStringData &&str) const noexcept {
+Runtime::PointerValue *JsiAbiRuntime::MakeStringValue(JsiStringRef &&str) const noexcept {
   return new StringPointerValue{make_weak(m_runtime), std::move(str)};
 }
 
-Runtime::PointerValue *JsiAbiRuntime::MakeObjectValue(JsiObjectData &&obj) const noexcept {
+Runtime::PointerValue *JsiAbiRuntime::MakeObjectValue(JsiObjectRef &&obj) const noexcept {
   return new ObjectPointerValue{make_weak(m_runtime), std::move(obj)};
 }
 
-Runtime::PointerValue *JsiAbiRuntime::MakePropNameIDValue(JsiPropertyNameIdData &&propertyId) const noexcept {
+Runtime::PointerValue *JsiAbiRuntime::MakePropNameIDValue(JsiPropertyIdRef &&propertyId) const noexcept {
   return new PropNameIDPointerValue{make_weak(m_runtime), std::move(propertyId)};
 }
 
-Symbol JsiAbiRuntime::MakeSymbol(JsiSymbolData &&symbol) const noexcept {
+Symbol JsiAbiRuntime::MakeSymbol(JsiSymbolRef &&symbol) const noexcept {
   return make<Symbol>(MakeSymbolValue(std::move(symbol)));
 }
 
-String JsiAbiRuntime::MakeString(JsiStringData &&str) const noexcept {
+String JsiAbiRuntime::MakeString(JsiStringRef &&str) const noexcept {
   return make<String>(MakeStringValue(std::move(str)));
 }
 
-Object JsiAbiRuntime::MakeObject(JsiObjectData &&obj) const noexcept {
+Object JsiAbiRuntime::MakeObject(JsiObjectRef &&obj) const noexcept {
   return make<Object>(MakeObjectValue(std::move(obj)));
 }
 
-PropNameID JsiAbiRuntime::MakePropNameID(JsiPropertyNameIdData &&propertyId) const noexcept {
+PropNameID JsiAbiRuntime::MakePropNameID(JsiPropertyIdRef &&propertyId) const noexcept {
   return make<PropNameID>(MakePropNameIDValue(std::move(propertyId)));
 }
 
-Array JsiAbiRuntime::MakeArray(JsiArrayData &&arr) noexcept {
+Array JsiAbiRuntime::MakeArray(JsiObjectRef &&arr) noexcept {
   return MakeObject({arr.Data}).getArray(*this);
 }
 
-WeakObject JsiAbiRuntime::MakeWeakObject(JsiWeakObjectData &&weakObject) const noexcept {
+WeakObject JsiAbiRuntime::MakeWeakObject(JsiWeakObjectRef &&weakObject) const noexcept {
   return make<WeakObject>(MakeObjectValue({weakObject.Data}));
 }
 
-Function JsiAbiRuntime::MakeFunction(JsiFunctionData &&func) noexcept {
+Function JsiAbiRuntime::MakeFunction(JsiObjectRef &&func) noexcept {
   return MakeObject({func.Data}).getFunction(*this);
 }
 
-Value JsiAbiRuntime::MakeValue(JsiValueData &&value) const noexcept {
+Value JsiAbiRuntime::MakeValue(JsiValueRef &&value) const noexcept {
   switch (value.Kind) {
     case JsiValueKind::Undefined:
       return Value();
@@ -858,11 +851,11 @@ Value JsiAbiRuntime::MakeValue(JsiValueData &&value) const noexcept {
     case JsiValueKind::Number:
       return Value(*reinterpret_cast<double *>(&value.Data));
     case JsiValueKind::Symbol:
-      return Value(MakeSymbol(JsiSymbolData{value.Data}));
+      return Value(MakeSymbol(JsiSymbolRef{value.Data}));
     case JsiValueKind::String:
-      return Value(MakeString(JsiStringData{value.Data}));
+      return Value(MakeString(JsiStringRef{value.Data}));
     case JsiValueKind::Object:
-      return Value(MakeObject(JsiObjectData{value.Data}));
+      return Value(MakeObject(JsiObjectRef{value.Data}));
     default:
       VerifyElseCrashSz(false, "Unexpected JsiValueKind value");
   }
@@ -885,7 +878,7 @@ void JsiAbiRuntime::DataPointerValue::invalidate() {}
 
 JsiAbiRuntime::SymbolPointerValue::SymbolPointerValue(
     winrt::weak_ref<JsiRuntime> &&weakRuntime,
-    JsiSymbolData &&symbol) noexcept
+    JsiSymbolRef &&symbol) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(symbol.Data, 0)} {}
 
 void JsiAbiRuntime::SymbolPointerValue::invalidate() {
@@ -897,11 +890,11 @@ void JsiAbiRuntime::SymbolPointerValue::invalidate() {
   }
 }
 
-/*static*/ JsiSymbolData const &JsiAbiRuntime::SymbolPointerValue::GetData(PointerValue const *pv) noexcept {
-  return *reinterpret_cast<JsiSymbolData const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
+/*static*/ JsiSymbolRef const &JsiAbiRuntime::SymbolPointerValue::GetData(PointerValue const *pv) noexcept {
+  return *reinterpret_cast<JsiSymbolRef const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
 }
 
-/*static*/ JsiSymbolData JsiAbiRuntime::SymbolPointerValue::Detach(PointerValue const *pv) noexcept {
+/*static*/ JsiSymbolRef JsiAbiRuntime::SymbolPointerValue::Detach(PointerValue const *pv) noexcept {
   return {std::exchange(static_cast<DataPointerValue *>(const_cast<PointerValue *>(pv))->m_data, 0)};
 }
 
@@ -911,7 +904,7 @@ void JsiAbiRuntime::SymbolPointerValue::invalidate() {
 
 JsiAbiRuntime::StringPointerValue::StringPointerValue(
     winrt::weak_ref<JsiRuntime> &&weakRuntime,
-    JsiStringData &&str) noexcept
+    JsiStringRef &&str) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(str.Data, 0)} {}
 
 void JsiAbiRuntime::StringPointerValue::invalidate() {
@@ -925,11 +918,11 @@ void JsiAbiRuntime::StringPointerValue::invalidate() {
   delete this;
 }
 
-/*static*/ JsiStringData const &JsiAbiRuntime::StringPointerValue::GetData(PointerValue const *pv) noexcept {
-  return *reinterpret_cast<JsiStringData const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
+/*static*/ JsiStringRef const &JsiAbiRuntime::StringPointerValue::GetData(PointerValue const *pv) noexcept {
+  return *reinterpret_cast<JsiStringRef const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
 }
 
-/*static*/ JsiStringData JsiAbiRuntime::StringPointerValue::Detach(PointerValue const *pv) noexcept {
+/*static*/ JsiStringRef JsiAbiRuntime::StringPointerValue::Detach(PointerValue const *pv) noexcept {
   return {std::exchange(static_cast<DataPointerValue *>(const_cast<PointerValue *>(pv))->m_data, 0)};
 }
 
@@ -939,7 +932,7 @@ void JsiAbiRuntime::StringPointerValue::invalidate() {
 
 JsiAbiRuntime::ObjectPointerValue::ObjectPointerValue(
     winrt::weak_ref<JsiRuntime> &&weakRuntime,
-    JsiObjectData &&obj) noexcept
+    JsiObjectRef &&obj) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(obj.Data, 0)} {}
 
 void JsiAbiRuntime::ObjectPointerValue::invalidate() {
@@ -953,11 +946,11 @@ void JsiAbiRuntime::ObjectPointerValue::invalidate() {
   delete this;
 }
 
-/*static*/ JsiObjectData const &JsiAbiRuntime::ObjectPointerValue::GetData(PointerValue const *pv) noexcept {
-  return *reinterpret_cast<JsiObjectData const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
+/*static*/ JsiObjectRef const &JsiAbiRuntime::ObjectPointerValue::GetData(PointerValue const *pv) noexcept {
+  return *reinterpret_cast<JsiObjectRef const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
 }
 
-/*static*/ JsiObjectData JsiAbiRuntime::ObjectPointerValue::Detach(PointerValue const *pv) noexcept {
+/*static*/ JsiObjectRef JsiAbiRuntime::ObjectPointerValue::Detach(PointerValue const *pv) noexcept {
   return {std::exchange(static_cast<DataPointerValue *>(const_cast<PointerValue *>(pv))->m_data, 0)};
 }
 
@@ -967,26 +960,26 @@ void JsiAbiRuntime::ObjectPointerValue::invalidate() {
 
 JsiAbiRuntime::PropNameIDPointerValue::PropNameIDPointerValue(
     winrt::weak_ref<JsiRuntime> &&weakRuntime,
-    JsiPropertyNameIdData &&propertyId) noexcept
+    JsiPropertyIdRef &&propertyId) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(propertyId.Data, 0)} {}
 
 void JsiAbiRuntime::PropNameIDPointerValue::invalidate() {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
-      runtime.ReleasePropertyNameId({m_data});
+      runtime.ReleasePropertyId({m_data});
     }
   }
 
   delete this;
 }
 
-/*static*/ JsiPropertyNameIdData const &JsiAbiRuntime::PropNameIDPointerValue::GetData(
+/*static*/ JsiPropertyIdRef const &JsiAbiRuntime::PropNameIDPointerValue::GetData(
     PointerValue const *pv) noexcept {
-  return *reinterpret_cast<JsiPropertyNameIdData const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
+  return *reinterpret_cast<JsiPropertyIdRef const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
 }
 
-/*static*/ JsiPropertyNameIdData JsiAbiRuntime::PropNameIDPointerValue::Detach(PointerValue const *pv) noexcept {
+/*static*/ JsiPropertyIdRef JsiAbiRuntime::PropNameIDPointerValue::Detach(PointerValue const *pv) noexcept {
   return {std::exchange(static_cast<DataPointerValue *>(const_cast<PointerValue *>(pv))->m_data, 0)};
 }
 
@@ -994,7 +987,7 @@ void JsiAbiRuntime::PropNameIDPointerValue::invalidate() {
 // JsiAbiRuntime::ValueRef implementation
 //===========================================================================
 
-JsiAbiRuntime::ValueRef::ValueRef(JsiValueData const &data) noexcept {
+JsiAbiRuntime::ValueRef::ValueRef(JsiValueRef const &data) noexcept {
   InitValueRef(data, &m_value, std::addressof(m_pointerStore));
 }
 
@@ -1005,9 +998,9 @@ JsiAbiRuntime::ValueRef::operator Value const &() const noexcept {
 }
 
 /*static*/ void
-JsiAbiRuntime::ValueRef::InitValueRef(JsiValueData const &data, Value *value, StoreType *store) noexcept {
-  // We assume that the JsiValueData and Value have the same layout.
-  auto valueAsDataPtr = reinterpret_cast<JsiValueData *>(value);
+JsiAbiRuntime::ValueRef::InitValueRef(JsiValueRef const &data, Value *value, StoreType *store) noexcept {
+  // We assume that the JsiValueRef and Value have the same layout.
+  auto valueAsDataPtr = reinterpret_cast<JsiValueRef *>(value);
   valueAsDataPtr->Kind = data.Kind;
   switch (valueAsDataPtr->Kind) {
     case JsiValueKind::Symbol:
@@ -1026,7 +1019,7 @@ JsiAbiRuntime::ValueRef::InitValueRef(JsiValueData const &data, Value *value, St
 // JsiAbiRuntime::ValueRefArray implementation
 //===========================================================================
 
-JsiAbiRuntime::ValueRefArray::ValueRefArray(array_view<JsiValueData const> args) noexcept : m_size{args.size()} {
+JsiAbiRuntime::ValueRefArray::ValueRefArray(array_view<JsiValueRef const> args) noexcept : m_size{args.size()} {
   VerifyElseCrashSz(m_size <= MaxCallArgCount, "Argument count must not exceed the MaxCallArgCount");
   for (uint32_t i = 0; i < args.size(); ++i) {
     ValueRef::InitValueRef(args[i], &m_valueArray[i], std::addressof(m_pointerStoreArray[i]));
@@ -1045,7 +1038,7 @@ size_t JsiAbiRuntime::ValueRefArray::Size() const noexcept {
 // JsiAbiRuntime::PropNameIDRef implementation
 //===========================================================================
 
-JsiAbiRuntime::PropNameIDRef::PropNameIDRef(JsiPropertyNameIdData const &data) noexcept
+JsiAbiRuntime::PropNameIDRef::PropNameIDRef(JsiPropertyIdRef const &data) noexcept
     : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
 
 JsiAbiRuntime::PropNameIDRef::~PropNameIDRef() noexcept {}
