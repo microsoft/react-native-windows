@@ -33,20 +33,7 @@ IAsyncAction ThrowAsync() {
 } // namespace
 
 namespace Microsoft::React::Test {
-
 TEST_CLASS (WinRTWebSocketResourceUnitTest) {
-  TEST_METHOD(InternalSocketThrowsHResult) {
-    shared_ptr<WinRTWebSocketResource> rc;
-
-    auto lambda = [&rc]() mutable {
-      rc = make_shared<WinRTWebSocketResource>(
-          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
-    };
-
-    Assert::ExpectException<winrt::hresult_error>(lambda);
-    Assert::IsTrue(nullptr == rc);
-  }
-
   TEST_METHOD(ConnectSucceeds) {
     bool connected = true;
     string errorMessage;
@@ -97,6 +84,18 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     Assert::AreNotEqual({}, errorMessage);
     Assert::IsFalse(connected);
+  }
+
+  TEST_METHOD(InternalSocketThrowsHResult) {
+    shared_ptr<WinRTWebSocketResource> rc;
+
+    auto lambda = [&rc]() mutable {
+      rc = make_shared<WinRTWebSocketResource>(
+          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+    };
+
+    Assert::ExpectException<winrt::hresult_error>(lambda);
+    Assert::IsTrue(nullptr == rc);
   }
 };
 
