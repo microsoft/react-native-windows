@@ -48,6 +48,7 @@
     <WriteLinesToFile
         File="$(ReactNativeCodeGenDummyFile)"
         Lines="@(_DesignTimeCodeGenFile)"
+        Overwrite="true"
         WriteOnlyWhenDifferent="true" />
   </Target>
 

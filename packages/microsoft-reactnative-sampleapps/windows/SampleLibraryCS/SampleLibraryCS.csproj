@@ -113,6 +113,7 @@
     <Compile Include="CustomUserControlViewManagerCS.cs" />
     <Compile Include="CircleViewManagerCS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="SampleModuleCS.cs" />
   </ItemGroup>
   <ItemGroup>
