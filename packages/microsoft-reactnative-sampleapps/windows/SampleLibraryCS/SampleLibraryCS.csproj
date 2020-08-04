@@ -22,7 +22,6 @@
     <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
     <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
     <LangVersion>7.3</LangVersion>
-    <ReactNativeCodeGenEnabled>true</ReactNativeCodeGenEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
