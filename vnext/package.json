@@ -87,6 +87,7 @@
     "/Microsoft.ReactNative",
     "/Microsoft.ReactNative.Cxx",
     "/Microsoft.ReactNative.Managed",
+    "/Microsoft.ReactNative.Managed.CodeGen",
     "/Microsoft.ReactNative.SharedManaged",
     "/Mso",
     "/PropertySheets",
