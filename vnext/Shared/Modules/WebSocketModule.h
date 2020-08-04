@@ -39,7 +39,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule overrides
 
   void SetResourceFactory(
-      std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> &&resourceFactory = nullptr);
+      std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> &&resourceFactory);
 
  private:
   /// <summary>
@@ -61,7 +61,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// <summary>
   /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
   /// </summary>
-  std::function<std::shared_ptr<IWebSocketResource>(const std::string &, bool, bool)> m_resourceFactory;
+  std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> m_resourceFactory;
 };
 
 } // namespace Microsoft::React

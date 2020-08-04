@@ -84,7 +84,7 @@ struct IWebSocketResource {
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
   static std::shared_ptr<IWebSocketResource>
-  Make(const std::string &url, bool legacyImplementation = false, bool acceptSelfSigned = false);
+  Make(const std::string &url);
 
   virtual ~IWebSocketResource() noexcept {}
 
