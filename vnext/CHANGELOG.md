@@ -1,8 +1,58 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 24 Jul 2020 05:05:51 GMT and should not be manually modified.
+This log was last generated on Fri, 31 Jul 2020 05:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.134
+
+Fri, 31 Jul 2020 05:05:10 GMT
+
+### Changes
+
+- WinUI 3 islands support (asklar@microsoft.com)
+
+## 0.0.0-canary.133
+
+Thu, 30 Jul 2020 05:04:47 GMT
+
+### Changes
+
+- Share packager connection between instances to same packager (email not defined)
+
+## 0.0.0-canary.132
+
+Wed, 29 Jul 2020 05:04:59 GMT
+
+### Changes
+
+- Update codegen targets for source mode to use property instead of items (dannyvv@microsoft.com)
+
+## 0.0.0-canary.131
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Changes
+
+- Separate local-cli into its own package (ngerlem@microsoft.com)
+- Clang tidy, wave 2 (asklar@microsoft.com)
+- Deploy apps in CI because we want to ensure we are catching cli deployment issues (asklar@microsoft.com)
+
+## 0.0.0-canary.130
+
+Sun, 26 Jul 2020 05:06:58 GMT
+
+### Changes
+
+- Integrate Up To The Base of React Native 0.63 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.129
+
+Sat, 25 Jul 2020 05:04:34 GMT
+
+### Changes
+
+- clang tidy, wave 1 (asklar@microsoft.com)
 
 ## 0.0.0-canary.128
 

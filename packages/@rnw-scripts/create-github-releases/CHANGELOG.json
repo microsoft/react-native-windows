@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Wed, 29 Jul 2020 05:04:59 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Create release notes for first preview + stable release as a draft",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8aa2e2b12e122fd1bf0e9126a6f73cee0f37e1b6",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "@rnw-scripts/create-github-releases_v0.0.3",
       "version": "0.0.3",

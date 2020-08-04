@@ -15,8 +15,7 @@ using namespace xaml::Controls;
 using namespace Windows::Foundation;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class RefreshControlShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -115,5 +114,4 @@ folly::dynamic RefreshControlViewManager::GetExportedCustomDirectEventTypeConsta
   directEvents["topOnRefresh"] = folly::dynamic::object("registrationName", "onRefresh");
   return directEvents;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -38,11 +38,12 @@
 #include <BatchingMessageQueueThread.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
-#include <IDevSupportManager.h>
+#include <DevSupportManager.h>
 #include <IReactRootView.h>
 #include <IUIManager.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
+#include "PackagerConnection.h"
 
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
@@ -160,21 +161,6 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #endif
 }
 
-class BridgeCallInvoker : public CallInvoker {
- public:
-  BridgeCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
-      : messageQueueThread_(std::move(messageQueueThread)) {}
-
-  void invokeAsync(std::function<void()> &&func) override {
-    if (auto queue = messageQueueThread_.lock()) {
-      queue->runOnQueue(std::move(func));
-    }
-  }
-
- private:
-  std::weak_ptr<MessageQueueThread> messageQueueThread_;
-};
-
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -191,8 +177,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    auto turboModuleManager =
-        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeCallInvoker>(jsQueue));
+    auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
@@ -213,14 +198,17 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
-      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry) noexcept
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
-        turboModuleRegistry_{std::move(turboModuleRegistry)} {}
+        turboModuleRegistry_{std::move(turboModuleRegistry)},
+        jsCallInvoker_{std::move(jsCallInvoker)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
+  std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
 };
 
@@ -378,11 +366,18 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
+    if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
+      Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
+    }
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -391,6 +386,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // Hermes is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
@@ -407,6 +403,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         }
         case JSIEngineOverride::Chakra:
@@ -417,7 +414,10 @@ InstanceImpl::InstanceImpl(
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
     } else {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of
       // now. This will go away once we completely move to JSI flow.
@@ -496,13 +496,14 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
         m_devSettings->useFastRefresh) {
       // First attempt to get download the Js locally, to catch any bundling
       // errors before attempting to load the actual script.
-      auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+
+      auto [jsBundleString, success] = Microsoft::ReactNative::GetJavaScriptFromServer(
           m_devSettings->sourceBundleHost,
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName);
 
-      if (m_devManager->HasException()) {
+      if (!success) {
         m_devSettings->errorCallback(jsBundleString);
         return;
       }

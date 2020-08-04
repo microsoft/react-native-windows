@@ -14,8 +14,7 @@ using namespace xaml;
 using namespace xaml::Controls;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 RootViewManager::RootViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
@@ -64,5 +63,4 @@ void RootViewManager::destroyShadow(facebook::react::ShadowNode * /*node*/) cons
   // it creates it.
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

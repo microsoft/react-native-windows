@@ -17,8 +17,7 @@ using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Storage;
 }; // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
   if (!uri.empty()) {
     m_byteCodeFileAsync = winrt::StorageFile::GetFileFromApplicationUriAsync(winrt::Uri(uri));
@@ -105,5 +104,4 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
 
   return byteCodeVersion > scriptSignature.version ? file : nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

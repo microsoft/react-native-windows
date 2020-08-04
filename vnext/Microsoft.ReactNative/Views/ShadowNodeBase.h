@@ -12,14 +12,24 @@
 #include <Shared/ReactWindowsAPI.h>
 #include "KeyboardEventHandler.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ViewManagerBase;
 
-enum ShadowEdges : uint8_t { Left = 0, Top, Right, Bottom, Start, End, Horizontal, Vertical, AllEdges, CountEdges };
+enum class ShadowEdges : uint8_t {
+  Left = 0,
+  Top,
+  Right,
+  Bottom,
+  Start,
+  End,
+  Horizontal,
+  Vertical,
+  AllEdges,
+  CountEdges
+};
 
-enum ShadowCorners : uint8_t {
+enum class ShadowCorners : uint8_t {
   TopLeft = 0,
   TopRight,
   BottomRight,
@@ -103,9 +113,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   comp::CompositionPropertySet m_transformPS{nullptr};
 
  public:
-  double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
-  double m_border[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
-  double m_cornerRadius[ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
+  double m_padding[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
+  double m_border[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
+  double m_cornerRadius[(int)ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
 
   // Bound event types
   bool m_onLayout = false;
@@ -123,5 +133,4 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
 };
 #pragma warning(pop)
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

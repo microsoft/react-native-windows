@@ -2,7 +2,7 @@
 #include <cassert>
 #include <string>
 
-enum ExtrapolationType {
+enum class ExtrapolationType {
   Identity,
   Clamp,
   Extend,

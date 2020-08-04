@@ -5,9 +5,8 @@
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
 
-namespace react {
-namespace uwp {
-class TrackingAnimatedNode : public AnimatedNode {
+namespace react::uwp {
+class TrackingAnimatedNode final : public AnimatedNode {
  public:
   TrackingAnimatedNode(
       int64_t tag,
@@ -29,6 +28,5 @@ class TrackingAnimatedNode : public AnimatedNode {
   static constexpr std::string_view s_valueIdName{"value"};
   static constexpr std::string_view s_animationConfigName{"animationConfig"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
 #pragma once

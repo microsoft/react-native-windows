@@ -23,6 +23,7 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "packages/@react-native-windows/*",
       "packages/@rnw-scripts/*",
       "vnext"
     ]
@@ -33,6 +34,8 @@
     "lerna": "^3.16.1"
   },
   "resolutions": {
+    "acorn": "^7.1.1",
+    "logkitty": "^0.7.1",
     "**/eslint-plugin-react": "^7.14.1",
     "**/@wdio/appium-service": "5.12.1",
     "**/@wdio/cli": "5.12.1",

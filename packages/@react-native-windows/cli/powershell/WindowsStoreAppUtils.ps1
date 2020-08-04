@@ -126,6 +126,10 @@ function EnableDevmode {
     if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
         Invoke-Expression-MayElevate("Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop") -ErrorAction Stop;
     }
+    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -ErrorAction SilentlyContinue
+    if (($value -eq $null) -or ($value.AllowAllTrustedApps -ne 1)) {
+        Invoke-Expression-MayElevate("Set-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -Value 1 -ErrorAction Stop") -ErrorAction Stop;
+    }
 }
 
 #

@@ -10,8 +10,7 @@
 
 #include <folly/dynamic.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, Svg = 3 };
 
@@ -90,5 +89,4 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::In
 GetImageStreamAsync(ReactImageSource source);
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
 GetImageInlineDataAsync(ReactImageSource source);
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

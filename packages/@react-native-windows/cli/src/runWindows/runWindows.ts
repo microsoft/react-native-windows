@@ -14,7 +14,7 @@ import MSBuildTools from './utils/msbuildtools';
 import {Command, Config} from '@react-native-community/cli-types';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 
-import autolink = require('./utils/autolink');
+import {autoLinkCommand} from './utils/autolink';
 
 function ExitProcessWithError(loggingWasEnabled: boolean): never {
   if (!loggingWasEnabled) {
@@ -67,7 +67,7 @@ async function runWindows(
       proj: options.proj,
       sln: options.sln,
     };
-    await autolink.func(autolinkArgs, autolinkConfig, autoLinkOptions);
+    await autoLinkCommand.func(autolinkArgs, autolinkConfig, autoLinkOptions);
   } else {
     newInfo('Autolink step is skipped');
   }
@@ -138,7 +138,7 @@ async function runWindows(
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {
-        await deploy.deployToDesktop(options, verbose, slnFile, buildTools);
+        await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
     } catch (e) {
       newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
@@ -162,12 +162,10 @@ runWindows({
 /**
  * Starts the app on a connected Windows emulator or mobile device.
  */
-const runWindowsCommand: Command = {
+export const runWindowsCommand: Command = {
   name: 'run-windows',
   description:
     'builds your app and starts it on a connected Windows desktop, emulator or device',
   func: runWindows,
   options: runWindowsOptions,
 };
-
-export = runWindowsCommand;

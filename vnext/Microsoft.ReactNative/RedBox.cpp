@@ -318,7 +318,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   void PopulateFrameStackUI() noexcept {
     m_stackPanel.Children().Clear();
-    for (const auto frame : m_errorInfo.Callstack) {
+    for (const auto &frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
           LR"(
           <StackPanel Margin='0,5,0,5'
@@ -398,7 +398,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 /*
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
-struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
+struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
   DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
       : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
 
@@ -410,7 +410,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       std::swap(m_redBoxes, redBoxes);
     }
     m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
-      for (const auto redBox : redBoxes) {
+      for (const auto &redBox : redBoxes) {
         redBox->Dismiss();
       }
     });
@@ -526,7 +526,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
 };
 #endif
 
-struct RedBoxHandler : public Mso::React::IRedBoxHandler {
+struct RedBoxHandler final : public Mso::React::IRedBoxHandler {
   RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
 
   static_assert(

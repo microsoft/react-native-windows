@@ -5,8 +5,7 @@
 
 #include <Views/ViewViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class ScrollContentViewManager : public ViewViewManager {
   using Super = ViewViewManager;
@@ -17,5 +16,4 @@ class ScrollContentViewManager : public ViewViewManager {
   const char *GetName() const override;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

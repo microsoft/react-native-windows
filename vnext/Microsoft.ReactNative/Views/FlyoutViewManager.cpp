@@ -75,8 +75,7 @@ struct json_type_traits<winrt::FlyoutPlacementMode> {
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class FlyoutShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -118,7 +117,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
 
   winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
   winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
-  int64_t m_tokenContentPropertyChangeCallback;
+  int64_t m_tokenContentPropertyChangeCallback{0};
   winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
 };
 
@@ -468,5 +467,4 @@ void FlyoutViewManager::SetLayoutProps(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

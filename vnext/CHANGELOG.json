@@ -2,6 +2,130 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 31 Jul 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.134",
+      "version": "0.0.0-canary.134",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI 3 islands support",
+            "author": "asklar@microsoft.com",
+            "commit": "958ebb9ceb5cab3241369c7305cab0d82e1c01a0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jul 2020 05:04:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.133",
+      "version": "0.0.0-canary.133",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Share packager connection between instances to same packager",
+            "author": "email not defined",
+            "commit": "1c35b8d85a7124b88aba8a741635915bfbeb5fb6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Jul 2020 05:04:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.132",
+      "version": "0.0.0-canary.132",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update codegen targets for source mode to use property instead of items",
+            "author": "dannyvv@microsoft.com",
+            "commit": "9c1f3791b40a15d80dcc07790bcde6ae1032b8b9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.131",
+      "version": "0.0.0-canary.131",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Separate local-cli into its own package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clang tidy, wave 2",
+            "author": "asklar@microsoft.com",
+            "commit": "d5b96878bcef3eb3b25b54b9755e2760f5bd1f03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Deploy apps in CI because we want to ensure we are catching cli deployment issues",
+            "author": "asklar@microsoft.com",
+            "commit": "e96cf312babf0998c615590a882cc036047509d4",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Gave glyph a fixed emSize",
+            "author": "tannerjsteele@gmail.com",
+            "commit": "78cbd5868901140562640e6c30771fcdbd607547",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 26 Jul 2020 05:06:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.130",
+      "version": "0.0.0-canary.130",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Up To The Base of React Native 0.63",
+            "author": "ngerlem@microsoft.com",
+            "commit": "39cf8bd6c948666e8f47b9a76ad74eeee3162aa7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jul 2020 05:04:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.129",
+      "version": "0.0.0-canary.129",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add ReactContext implementation to Win32 ABI",
+            "author": "aeulitz@microsoft.com",
+            "commit": "1de261701a6cc14a17ea03243417ba2cd3b15c52",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Package.json formatting",
+            "author": "email not defined",
+            "commit": "c73ecd0ffb8fb4ee5205ec610ab4b6dbc7f6ee21",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "clang tidy, wave 1",
+            "author": "asklar@microsoft.com",
+            "commit": "3c5dadc5ab4526a2bc0df2692d75fd47ae6b7786",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jul 2020 05:05:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.128",
       "version": "0.0.0-canary.128",

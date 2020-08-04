@@ -8,8 +8,7 @@
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 namespace ScrollViewCommands {
 constexpr const char *ScrollTo = "scrollTo";
@@ -102,8 +101,8 @@ void ScrollViewShadowNode::createView() {
 
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(
       winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto & /*args*/) {
-        const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
-        const auto zoomFactor = scrollViewerNotNull.ZoomFactor();
+        const auto scrollViewerNotNull{sender.as<winrt::ScrollViewer>()};
+        const auto zoomFactor{scrollViewerNotNull.ZoomFactor()};
         if (m_zoomFactor != zoomFactor) {
           m_zoomFactor = zoomFactor;
           scrollViewUWPImplementation.UpdateScrollableSize();
@@ -360,7 +359,7 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic 
     if (propertyValue.isArray()) {
       return std::make_tuple(true, [propertyValue]() {
         const auto vector = winrt::single_threaded_vector<float>();
-        for (const auto val : propertyValue) {
+        for (const auto &val : propertyValue) {
           if (val.isDouble())
             vector.Append(static_cast<float>(val.getDouble()));
           else if (val.isInt())
@@ -491,5 +490,4 @@ void ScrollViewManager::SnapToOffsets(const XamlView &parent, const winrt::IVect
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -7,8 +7,7 @@
 #include <math.h>
 #include "SpringAnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 SpringAnimationDriver::SpringAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -16,8 +15,8 @@ SpringAnimationDriver::SpringAnimationDriver(
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager,
     const folly::dynamic &dynamicToValues)
-    : m_dynamicToValues(dynamicToValues),
-      CalculatedAnimationDriver(id, animatedValueTag, endCallback, config, manager) {
+    : CalculatedAnimationDriver(id, animatedValueTag, endCallback, config, manager),
+      m_dynamicToValues(dynamicToValues) {
   m_springStiffness = config.find(s_springStiffnessParameterName).dereference().second.asDouble();
   m_springDamping = config.find(s_springDampingParameterName).dereference().second.asDouble();
   m_springMass = config.find(s_springMassParameterName).dereference().second.asDouble();
@@ -86,5 +85,4 @@ double SpringAnimationDriver::ToValue() {
   return m_endValue;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

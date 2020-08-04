@@ -11,6 +11,11 @@ import {
   installDependencies,
 } from './generator-windows';
 
+import {autoLinkCommand} from './runWindows/utils/autolink';
+import {runWindowsCommand} from './runWindows/runWindows';
+import {dependencyConfigWindows} from './config/dependencyConfig';
+import {projectConfigWindows} from './config/projectConfig';
+
 /**
  * Project generation options
  *
@@ -77,3 +82,7 @@ const assertStableInterface: typeof generateWindows extends (
   ? true
   : never = true;
 assertStableInterface;
+
+export const commands = [autoLinkCommand, runWindowsCommand];
+export const dependencyConfig = dependencyConfigWindows;
+export const projectConfig = projectConfigWindows;

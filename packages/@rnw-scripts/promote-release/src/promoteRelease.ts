@@ -51,12 +51,15 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   if (argv.release === 'preview') {
     console.log('Updating root change script...');
-    await updatePackage('react-native-windows-repo', {
+    const [rootPkg] = await enumeratePackages(
+      pkgJson => pkgJson.name === 'react-native-windows-repo',
+    );
+    await updatePackage(rootPkg, {
       scripts: {change: `beachball change --branch ${branchName}`},
     });
 
     console.log('Updating package versions...');
-    await updatePackageVersions(`${argv.rnVersion}-preview.0`);
+    await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
   }
 
   console.log('Committing changes...');
@@ -124,29 +127,26 @@ async function writeAdoVariables(vars: {[key: string]: any}) {
  * @param version major + minor version
  */
 async function updateBeachballConfigs(release: ReleaseType, version: string) {
-  for (const packageName of [
-    '@office-iss/react-native-win32',
-    'react-native-windows',
-  ]) {
-    await updateBeachballConfig(packageName, release, version);
+  for (const packagePath of await enumeratePackagesToPromote()) {
+    await updateBeachballConfig(packagePath, release, version);
   }
 }
 
 /**
  * Modifies beachball config to the right npm tag and version bump restrictions
  *
- * @param packageName name of the package to update
+ * @param packagePath path of the package to update
  * @param release the release type
  * @param version major + minor version
  */
 async function updateBeachballConfig(
-  packageName: string,
+  packagePath: string,
   release: ReleaseType,
   version: string,
 ) {
   switch (release) {
     case 'preview':
-      return updatePackage(packageName, {
+      return updatePackage(packagePath, {
         beachball: {
           defaultNpmTag: distTag(release, version),
           disallowedChangeTypes: ['major', 'minor', 'patch'],
@@ -154,7 +154,7 @@ async function updateBeachballConfig(
       });
 
     case 'latest':
-      return updatePackage(packageName, {
+      return updatePackage(packagePath, {
         beachball: {
           defaultNpmTag: distTag(release, version),
           disallowedChangeTypes: ['major', 'minor', 'prerelease'],
@@ -162,7 +162,7 @@ async function updateBeachballConfig(
       });
 
     case 'legacy':
-      return updatePackage(packageName, {
+      return updatePackage(packagePath, {
         beachball: {
           defaultNpmTag: distTag(release, version),
           disallowedChangeTypes: ['major', 'minor', 'prerelease'],
@@ -173,36 +173,70 @@ async function updateBeachballConfig(
 
 /**
  * Assign properties to the npm package of the given name
- *
- * @param packageName
- * @param props
+ * @param packagePath path path to a package
+ * @param props key/values to merge into the package.json
  */
-async function updatePackage(packageName: string, props: {[key: string]: any}) {
-  const repoRoot = await findRepoRoot();
-  const packages = await glob('**/package.json', {
-    cwd: repoRoot,
-    ignore: '**/node_modules/**',
-  });
+async function updatePackage(packagePath: string, props: {[key: string]: any}) {
+  const packageJson = await jsonOfPackage(packagePath);
 
-  for (const packageFile of packages) {
-    const fullPath = path.join(repoRoot, packageFile);
-    const packageJson = JSON.parse(
-      (await fs.promises.readFile(fullPath)).toString(),
-    );
-    if (packageJson.name !== packageName) {
-      continue;
-    }
+  _.merge(packageJson, props);
+  await fs.promises.writeFile(
+    packagePath,
+    JSON.stringify(packageJson, null /*replacer*/, 2 /*space*/) + '\n',
+  );
+}
 
-    _.merge(packageJson, props);
-    await fs.promises.writeFile(
-      fullPath,
-      JSON.stringify(packageJson, null /*replacer*/, 2 /*space*/) + '\n',
-    );
-    return;
+/**
+ * Returns the JSON content of a package
+ */
+async function jsonOfPackage(packagePath: string): Promise<any> {
+  const packageContent = await fs.promises.readFile(packagePath);
+  if (!packageContent) {
+    throw new Error(`Unable to read package file "${packagePath}"`);
   }
 
-  console.error(chalk.red(`Unable to find package ${packageName}`));
-  process.exit(1);
+  return JSON.parse(packageContent.toString());
+}
+
+/**
+ * Returns the name of a package
+ */
+async function nameOfPackage(packagePath: string): Promise<string> {
+  return (await jsonOfPackage(packagePath)).name;
+}
+
+/**
+ * Finds packages where we need to update version number + beachball config
+ * @returns absolute paths to package.json
+ */
+async function enumeratePackagesToPromote(): Promise<string[]> {
+  return enumeratePackages(pkgJson => pkgJson.promoteRelease === true);
+}
+
+/**
+ * Finds packages matching a given predicate
+ * @param pred predicate describing whether to match a package.json
+ * @returns absolute paths to package.json
+ */
+async function enumeratePackages(
+  pred: (pkgJson: any) => boolean = () => true,
+): Promise<string[]> {
+  const repoRoot = await findRepoRoot();
+  const allPackages: string[] = await glob('**/package.json', {
+    cwd: repoRoot,
+    ignore: '**/node_modules/**',
+    absolute: true,
+  });
+
+  const matchingPackages: string[] = [];
+  for (const packageFile of allPackages) {
+    const packageJson = await jsonOfPackage(packageFile);
+    if (pred(packageJson)) {
+      matchingPackages.push(packageFile);
+    }
+  }
+
+  return matchingPackages;
 }
 
 /**
@@ -221,14 +255,39 @@ function distTag(release: ReleaseType, version: string): string {
 
 /**
  * Change the version of main packages to the given string
- * @param packageVersion
+ * @param version The new package version
  */
-async function updatePackageVersions(packageVersion: string) {
-  for (const packageName of [
-    '@office-iss/react-native-win32',
-    'react-native-windows',
-  ]) {
-    await updatePackage(packageName, {version: packageVersion});
+async function updatePackageVersions(version: string) {
+  const packagesToPromote = await enumeratePackagesToPromote();
+  const promotedPackages = await Promise.all(
+    packagesToPromote.map(nameOfPackage),
+  );
+
+  for (const packagePath of packagesToPromote) {
+    await updatePackage(packagePath, {version});
+  }
+
+  // We need to update anything that might have a dependency on what we just
+  // bumped.
+  for (const packagePath of await enumeratePackages()) {
+    for (const field of [
+      'dependencies',
+      'peerDependencies',
+      'devDependencies',
+    ]) {
+      const dependencies = (await jsonOfPackage(packagePath))[field];
+      if (!dependencies) {
+        continue;
+      }
+
+      for (const dependencyPackage of Object.keys(dependencies)) {
+        if (promotedPackages.includes(dependencyPackage)) {
+          dependencies[dependencyPackage] = version;
+        }
+      }
+
+      await updatePackage(packagePath, {[field]: dependencies});
+    }
   }
 }
 

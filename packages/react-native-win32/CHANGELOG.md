@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sun, 12 Jul 2020 05:05:04 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jul 2020 05:06:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.34
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Changes
+
+- Update for promoteRelease changes (ngerlem@microsoft.com)
+
+## 0.0.0-canary.33
+
+Sun, 26 Jul 2020 05:06:58 GMT
+
+### Changes
+
+- Integrate Up To The Base of React Native 0.63 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.31
 

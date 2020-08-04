@@ -7,8 +7,7 @@
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class CalculatedAnimationDriver : public AnimationDriver {
  public:
   using AnimationDriver::AnimationDriver;
@@ -22,5 +21,4 @@ class CalculatedAnimationDriver : public AnimationDriver {
   virtual bool IsAnimationDone(double currentValue, double currentVelocity) = 0;
   double m_startValue{0};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

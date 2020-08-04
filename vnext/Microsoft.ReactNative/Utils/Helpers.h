@@ -7,8 +7,7 @@
 #include <folly/dynamic.h>
 #include <stdint.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 using namespace std;
 
@@ -31,5 +30,4 @@ bool IsRS5OrHigher();
 bool Is19H1OrHigher();
 
 bool IsXamlIsland();
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
