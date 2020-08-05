@@ -49,21 +49,20 @@ void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly
 #endif
 }
 
+#ifndef CORE_ABI
 ReactInstanceState ReactContext::State() const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->State();
   }
-#endif
+
   return ReactInstanceState::Unloaded;
 }
 
 bool ReactContext::IsLoaded() const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->IsLoaded();
   }
-#endif
+
   return false;
 }
 
@@ -76,21 +75,20 @@ std::string ReactContext::GetBundleRootPath() const noexcept {
 }
 
 facebook::react::INativeUIManager *ReactContext::NativeUIManager() const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->NativeUIManager();
   }
-#endif
+
   return nullptr;
 }
 
 std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->GetInnerInstance();
   }
-#endif
+
   return nullptr;
 }
+#endif
 
 } // namespace Mso::React
