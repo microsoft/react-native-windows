@@ -31,9 +31,9 @@ console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_MINOR]${versionEnvV
 console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvVars.RNW_PKG_VERSION_PATCH}`);
 
 // Set other version related variables used by CI
-console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${versionEnvVars.npmVersion}`);
-console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${versionEnvVars.publishCommitId}`);
-console.log(`##vso[task.setvariable variable=reactNativeDevDependency;isOutput=true]${versionEnvVars.reactNativeDevDependency}`);
+console.log(`##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}`);
+console.log(`##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}`);
+console.log(`##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}`);
 
 const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
 fs.mkdirSync(dirPath, {recursive: true});
@@ -46,5 +46,5 @@ console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MINOR]${versionEnvV
 console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}");
 console.log("##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}");
-console.log("##vso[task.setvariable variable=reactNativeDevDependency;isOutput=true]${versionEnvVars.reactNativeDevDependency}");
+console.log("##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}");
 `);
