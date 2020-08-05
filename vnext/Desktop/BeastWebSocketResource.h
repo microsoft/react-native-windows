@@ -282,7 +282,7 @@ class TestWebSocket : public BaseWebSocketResource<
                                           // next/lowest layer.
                           MockStream> {
  public:
-  TestWebSocket(facebook::react::Url &&url);
+  TestWebSocketResource(Url &&url);
 
   void SetConnectResult(std::function<boost::system::error_code()> &&resultFunc);
   void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)> &&resultFunc);
