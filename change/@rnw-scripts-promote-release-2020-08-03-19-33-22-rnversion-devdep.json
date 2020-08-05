@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "Don't put CI specific logic into release variables",
+  "comment": "Don't write release variables",
   "packageName": "@rnw-scripts/promote-release",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch",
