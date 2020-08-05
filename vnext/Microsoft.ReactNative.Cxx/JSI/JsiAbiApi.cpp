@@ -370,10 +370,9 @@ PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
 
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;
-  m_runtime.PropertyIdToUtf8(
-      AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
-        dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
-      });
+  m_runtime.PropertyIdToUtf8(AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
+    dataResult.assign(reinterpret_cast<char const *>(utf8.data()), utf8.size());
+  });
   return dataResult;
 } catch (hresult_error const &) {
   RethrowJsiError();
@@ -974,8 +973,7 @@ void JsiAbiRuntime::PropNameIDPointerValue::invalidate() {
   delete this;
 }
 
-/*static*/ JsiPropertyIdRef const &JsiAbiRuntime::PropNameIDPointerValue::GetData(
-    PointerValue const *pv) noexcept {
+/*static*/ JsiPropertyIdRef const &JsiAbiRuntime::PropNameIDPointerValue::GetData(PointerValue const *pv) noexcept {
   return *reinterpret_cast<JsiPropertyIdRef const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
 }
 

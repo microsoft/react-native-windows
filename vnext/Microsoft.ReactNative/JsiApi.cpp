@@ -100,9 +100,8 @@ static facebook::jsi::Value const *AsValue(JsiValueRef const &data) noexcept {
 }
 
 static JsiValueRef ToJsiValueData(facebook::jsi::Value const &value) noexcept {
-  return {
-      static_cast<JsiValueKind>(static_cast<int32_t>(value.kind_)),
-      *reinterpret_cast<uint64_t const *>(&value.data_.number)};
+  return {static_cast<JsiValueKind>(static_cast<int32_t>(value.kind_)),
+          *reinterpret_cast<uint64_t const *>(&value.data_.number)};
 }
 
 static JsiPropertyIdRef ToJsiPropertyNameIdData(facebook::jsi::PropNameID const &propNameId) noexcept {
@@ -529,7 +528,8 @@ void JsiRuntime::StringToUtf8(JsiStringRef str, JsiByteArrayUser const &useUtf8S
 
 JsiValueRef JsiRuntime::CreateValueFromJson(hstring const &json) try {
   std::string utf8Json = to_string(json);
-  return MakeJsiValueData(m_runtime->createValueFromJsonUtf8(reinterpret_cast<uint8_t const*>(utf8Json.data()), utf8Json.size()));
+  return MakeJsiValueData(
+      m_runtime->createValueFromJsonUtf8(reinterpret_cast<uint8_t const *>(utf8Json.data()), utf8Json.size()));
 } catch (JSI_SET_ERROR) {
   throw;
 }
