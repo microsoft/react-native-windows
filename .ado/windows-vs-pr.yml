@@ -705,7 +705,7 @@ jobs:
     steps:
       - checkout: self
       
-      - template: yarn-install.yml
+      - template: templates/yarn-install.yml
 
       - script: |
           npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
