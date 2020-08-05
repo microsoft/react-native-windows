@@ -643,11 +643,10 @@ jobs:
 
       - template: templates/yarn-install.yml
 
-      - template: templates/bump-packages.yml
-
-      - template: templates/set-version-vars.yml
-
-      - template: templates/publish-version-vars.yml
+      - task: CmdLine@2
+        displayName: Check for change files
+        inputs:
+          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn buildci
@@ -678,6 +677,12 @@ jobs:
         displayName: yarn api
         inputs:
           script: yarn api
+
+      - template: templates/bump-packages.yml
+
+      - template: templates/set-version-vars.yml
+
+      - template: templates/publish-version-vars.yml
 
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
