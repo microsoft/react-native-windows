@@ -17,7 +17,7 @@ const versionEnvVars = {
   RNW_PKG_VERSION_PATCH: semver.patch(pkgJson.version),
   npmVersion: pkgJson.version,
   publishCommitId: commitId,
-  reactNativeDevDependency: semver.minVersion(pkgJson.devDependencies['react-native']),
+  reactNativeDevDependency: pkgJson.devDependencies['react-native'],
 }
 
 // Set the build number so the build in the publish pipeline and the release pipeline are named with the convenient version

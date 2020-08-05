@@ -74,7 +74,7 @@ steps:
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: npx react-native init testcli --npm --version $(reactNativeDevDependency)
+      script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: DownloadBuildArtifacts@0
