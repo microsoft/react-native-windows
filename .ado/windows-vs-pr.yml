@@ -576,7 +576,7 @@ jobs:
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
-          version: $(reactNativeDevDependency)
+          rnVersion: $(reactNativeDevDependency)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
 
