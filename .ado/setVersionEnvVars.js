@@ -36,6 +36,7 @@ console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${ver
 console.log(`##vso[task.setvariable variable=reactNativeDevDependency;isOutput=true]${versionEnvVars.reactNativeDevDependency}`);
 
 const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
+fs.mkdirSync(dirPath, {recursive: true});
 
 fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'), 
 `
