@@ -46,12 +46,18 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
+          ${{ if eq(variables.releaseType, 'canary') }}:
+           script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+          ${{ if ne(variables.releaseType, 'canary') }}:
+           script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
 
       - task: CmdLine@2
         displayName: Create GitHub Release
         inputs:
-          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+          ${{ if eq(variables.releaseType, 'canary') }}:
+            script: npx --no-install @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+          ${{ if ne(variables.releaseType, 'canary') }}:
+            script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
 
       - template: templates/set-version-vars.yml
 

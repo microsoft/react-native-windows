@@ -44,8 +44,7 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   console.log('Updating CI variables...');
   await writeAdoVariables({
-    extraPublishArgs: '',
-    githubReleaseNpxArgs: '--ignore-existing',
+    releaseType: argv.release,
   });
 
   if (argv.release === 'preview') {
