@@ -82,7 +82,7 @@ steps:
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: npx react-native init testcli --npm --version ${{ parameters.rnVersion }}
+      script: npx react-native init testcli --npm --version $(npmVersion)
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: DownloadBuildArtifacts@0
