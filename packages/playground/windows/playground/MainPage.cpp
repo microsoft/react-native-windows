@@ -28,6 +28,20 @@ MainPage::MainPage() {
     x_rootComponentNameCombo().IsEditable(true);
     x_entryPointCombo().IsEditable(true);
   }
+
+#if !defined(USE_HERMES)
+  x_engineHermes().IsEnabled(false);
+#endif
+
+#if !defined(USE_V8)
+  x_engineV8().IsEnabled(false);
+#endif
+
+#if !defined(USE_QUICKJS)
+  x_engineQuickJS().IsEnabled(false);
+#endif
+
+  x_JsEngine().SelectedIndex(0);
 }
 
 void MainPage::OnLoadClick(
@@ -54,6 +68,7 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
+  host.InstanceSettings().JSIEngineOverride(static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
   if (!m_bundlerHostname.empty()) {
     host.InstanceSettings().DebugHost(m_bundlerHostname);
   }
