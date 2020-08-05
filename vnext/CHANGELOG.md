@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 31 Jul 2020 05:05:10 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Aug 2020 05:05:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.135
+
+Wed, 05 Aug 2020 05:05:11 GMT
+
+### Changes
+
+- Use string object for tooltips instead of textblocks since that breaks wordwrap etc (asklar@microsoft.com)
+- Handle MessageWebSocket constructor exceptions (julio.rocha@microsoft.com)
+- Fix Crash Using accessibilityValue Without Web Debugging (ngerlem@microsoft.com)
+- Add option to devmenu to configure bundler (email not defined)
 
 ## 0.0.0-canary.134
 

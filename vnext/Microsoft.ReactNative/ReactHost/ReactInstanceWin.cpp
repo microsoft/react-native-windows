@@ -27,6 +27,7 @@
 #include <Shared/DevServerHelper.h>
 #include <Shared/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "ConfigureBundlerDlg.h"
 #include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
@@ -197,7 +198,9 @@ void ReactInstanceWin::Initialize() noexcept {
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
 
-  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext);
+  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
+    Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
+  });
 
   Mso::PostFuture(
       m_uiQueue,
