@@ -678,7 +678,9 @@ jobs:
         inputs:
           script: yarn api
 
-      - template: templates/bump-packages.yml
+      - script: |
+          npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch)
+        displayName: Bump packages
 
       - template: templates/set-version-vars.yml
 
