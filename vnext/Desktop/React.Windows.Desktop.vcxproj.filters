@@ -57,9 +57,6 @@
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IViewManager.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -85,6 +82,9 @@
       <Filter>ABI</Filter>
     </Midl>
     <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
   </ItemGroup>
