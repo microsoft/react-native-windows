@@ -1,0 +1,6 @@
+# Bumps packages to a new version
+
+steps:
+  - script: |
+      npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+    displayName: Bump Packages

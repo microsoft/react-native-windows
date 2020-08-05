@@ -2,8 +2,6 @@
 parameters:
   - name: language
     type: string
-  - name: rnVersion
-    type: string
   - name: platform
     type: string
   - name: configuration
@@ -66,13 +64,7 @@ steps:
       npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file." $(extraPublishArgs)
     displayName: Publish packages to verdaccio
 
-  - task: CmdLine@2
-    displayName: Set Version Env Vars
-    name: setVersionEnvVars
-    inputs:
-      script: node ./.ado/setVersionEnvVars.js
-    env:
-      RUNNER_TEMP: $(Build.StagingDirectory)
+  - template: templates/set-version-vars.yml
 
   - task: NuGetToolInstaller@0
     inputs:

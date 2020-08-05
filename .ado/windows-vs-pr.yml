@@ -576,7 +576,6 @@ jobs:
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
-          rnVersion: $(reactNativeDevDependency)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
 
@@ -612,8 +611,8 @@ jobs:
           rnVersion: $(reactNativeDevDependency)
           useNuGet: true
 
-  - job: RNWExtraChecks
-    displayName: Extra Checks
+  - job: JSTasks
+    displayName: JavaScript Tasks
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
@@ -645,10 +644,11 @@ jobs:
 
       - template: templates/yarn-install.yml
 
-      - task: CmdLine@2
-        displayName: Check for change files
-        inputs:
-          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+      - template: templates/bump-packages.yml
+
+      - template: templates/set-version-vars.yml
+
+      - template: templates/publish-version-vars.yml
 
       - task: CmdLine@2
         displayName: yarn buildci
@@ -691,6 +691,7 @@ jobs:
       - Setup
       - RNWUniversalPR
       - RNWDesktopPR
+      - JSTasks
     condition: |
       and
       (
@@ -703,21 +704,9 @@ jobs:
     timeoutInMinutes: 30
     cancelTimeoutInMinutes: 5
     steps:
-      - checkout: self
-      
-      - template: templates/yarn-install.yml
+      - checkout: none
 
-      - script: |
-          npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
-        displayName: Bump Packages
-
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ./.ado/setVersionEnvVars.js
-        env:
-          RUNNER_TEMP: $(Build.StagingDirectory)
+      - template: templates/apply-published-version-vars.yml
 
       # The commit tag in the nuspec requires that we use at least NuGet 4.6
       - task: NuGetToolInstaller@0

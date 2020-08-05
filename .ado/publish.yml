@@ -53,19 +53,9 @@ jobs:
         inputs:
           script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
 
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ./.ado/setVersionEnvVars.js
-        env:
-          RUNNER_TEMP: $(Build.StagingDirectory)
+      - template: templates/set-version-vars.yml
 
-      - task: PublishPipelineArtifact@1
-        displayName: Publish VersionEnvVars
-        inputs:
-          targetPath: $(Build.StagingDirectory)/versionEnvVars
-          artifactName: VersionEnvVars
+      - template: templates/publish-version-vars.yml
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
@@ -88,15 +78,7 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadPipelineArtifact@2
-        displayName: Download VersionEnvVars
-        inputs:
-          artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)/VersionEnvVars
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
         parameters:
@@ -148,15 +130,7 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadPipelineArtifact@2
-        displayName: Download VersionEnvVars
-        inputs:
-          artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)/VersionEnvVars
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
         parameters:
@@ -199,15 +173,7 @@ jobs:
       #     branchVersion: false
       #     nugetVer: true
 
-      - task: DownloadPipelineArtifact@2
-        displayName: Download VersionEnvVars
-        inputs:
-          artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)/VersionEnvVars
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
