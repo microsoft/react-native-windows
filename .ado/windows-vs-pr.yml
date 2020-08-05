@@ -608,7 +608,6 @@ jobs:
           language: $(Language)
           configuration: Debug
           platform: x86
-          rnVersion: $(reactNativeDevDependency)
           useNuGet: true
 
   - job: JSTasks
