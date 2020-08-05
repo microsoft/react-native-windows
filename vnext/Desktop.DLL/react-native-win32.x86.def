@@ -24,7 +24,7 @@ EXPORTS
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YGXPAUINativeTraceHandler@12@@Z
-?Make@IWebSocketResource@React@Microsoft@@SG?AV?$shared_ptr@UIWebSocketResource@React@Microsoft@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N1@Z
+?Make@IWebSocketResource@React@Microsoft@@SG?AV?$shared_ptr@UIWebSocketResource@React@Microsoft@@@std@@$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?MakeMemoryMappedBuffer@JSI@Microsoft@@YG?AV?$shared_ptr@VBuffer@jsi@facebook@@@std@@QB_WI@Z
 ?moduleNames@ModuleRegistry@react@facebook@@QAE?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
@@ -54,7 +54,6 @@ EXPORTS
 ?GetFeatureGate@React@Microsoft@@YA?B_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 ?makeChakraRuntime@JSI@Microsoft@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraRuntimeArgs@12@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
-??0WebSocketModule@React@Microsoft@@QAE@XZ
 ??0WebSocketModule@React@Microsoft@@QAE@XZ
 ?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
 ?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
