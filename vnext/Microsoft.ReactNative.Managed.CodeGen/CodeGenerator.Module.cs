@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.ReactNative.Managed.CodeGen.Model;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -73,7 +73,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             ParenthesizedLambdaExpression(
               parameterList: ParameterList(
                   Parameter(ReactNativeNames.ModuleBuilder)
-                    .WithType(m_reactTypes.IReactModuleBuilder.ToTypeSyntax())),
+                    .WithType(ReactTypes.IReactModuleBuilder.ToTypeSyntax())),
                 block: Block(
                   addMemberStatements),
                 expressionBody: null)
@@ -110,7 +110,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         //   JSValueWriter.WriteObjectProperty(writer, "MyConst", module.MyConst);
         statements.Add(
           InvocationStatement(
-            MemberAccessExpression(m_reactTypes.JSValueWriter, ReactNativeNames.WriteObjectPropertyMethodName),
+            MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteObjectPropertyMethodName),
             IdentifierName(ReactNativeNames.WriterLocalName),
             LiteralExpression(constant.Name),
             MemberAccessExpression(ReactNativeNames.Module, Identifier(constant.Symbol.Name))));
@@ -124,7 +124,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           ParenthesizedLambdaExpression(
             parameterList: ParameterList(
                 Parameter(ReactNativeNames.WriterLocalName)
-                  .WithType(m_reactTypes.IJSValueWriter.ToTypeSyntax())),
+                  .WithType(ReactTypes.IJSValueWriter.ToTypeSyntax())),
             block: Block(
               statements),
             expressionBody: null
@@ -146,13 +146,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         ParenthesizedLambdaExpression(
           parameterList: ParameterList(
               Parameter(ReactNativeNames.WriterLocalName)
-                .WithType(m_reactTypes.IJSValueWriter.ToTypeSyntax())),
+                .WithType(ReactTypes.IJSValueWriter.ToTypeSyntax())),
           block: Block(
             LocalDeclarationStatement(
-              m_reactTypes.ReactConstantProvider,
+              ReactTypes.ReactConstantProvider,
               ReactNativeNames.ProviderLocalName,
               ObjectCreationExpression(
-                m_reactTypes.ReactConstantProvider,
+                ReactTypes.ReactConstantProvider,
                 IdentifierName(ReactNativeNames.WriterLocalName))),
             InvocationStatement(
               MemberAccessExpression(ReactNativeNames.Module, Identifier(constantProvider.Method.Name)),
@@ -166,8 +166,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     {
       var statements = new List<StatementSyntax>();
 
-      string methodReturnType = "Void";
-
       var parameters = method.Method.Parameters;
 
       var readArgsArguments = new List<ArgumentSyntax>(parameters.Length);
@@ -178,76 +176,47 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       //   (out ArgType0 arg0, out ArgType1 arg1, ...);
       // as well as
       //   (arg0, arg1, ... )
-      for (int i = 0; i < parameters.Length; i++)
+      for (int i = 0; i < method.EffectiveParameters.Count; i++)
       {
-        var param = parameters[i];
-        bool skipReadingArg = false;
+        var param = method.EffectiveParameters[i];
+        var variableName = "arg" + i.ToString(CultureInfo.InvariantCulture);
 
-        if (!method.IsSynchronous) // IsSynchronous methods don't have support for the callbacks
-        {
-          if (i == parameters.Length - 1)
-          {
-            if (IsPromiseType(parameters[i].Type, out var typeParameter))
-            {
-              // outArgs: Do not add an extra out parameter to be extracted from the JS side
+        readArgsArguments.Add(Argument(
+          nameColon: null,
+          refKindKeyword: Token(SyntaxKind.OutKeyword),
+          expression: DeclarationExpression(
+            param.Type.ToTypeSyntax(),
+            SingleVariableDesignation(
+              Identifier(variableName))
+          )
+        ));
 
-              // generates:
-              //    new ReactPromise<TResult>(writer, resolve, reject)
-              // to (arg0, arg1, ...) to be passed when calling the remoted method.
-              args.Add(ObjectCreationExpression(
-                m_reactTypes.ReactPromise.Construct(typeParameter),
-                IdentifierName(ReactNativeNames.WriterLocalName),
-                IdentifierName(ReactNativeNames.ResolveLocalName),
-                IdentifierName(ReactNativeNames.RejectLocalName)
-              ));
-              methodReturnType = "Promise";
-              skipReadingArg = true;
-            }
+        args.Add(IdentifierName(variableName));
+      }
 
-            // if the last argument is a callback, assume this is the resolve or resolve function
-            if (IsSingleArgCallback(parameters[i].Type, out _))
-            {
-              var isReject = parameters.Length >= 2 &&
-                             IsSingleArgCallback(parameters[i - 1].Type, out _);
-              args.Add(GeneratePromiseInvocation(isReject));
-              methodReturnType = isReject ? "TwoCallbacks" : "Callback";
-              skipReadingArg = true;
-            }
-          }
-          else if (i == parameters.Length - 2)
-          {
-            // if the last 2 argument is a callback, assume this is the resolve function
-            if (IsSingleArgCallback(parameters[i].Type, out _) &&
-                IsSingleArgCallback(parameters[i + 1].Type, out _))
-            {
-              args.Add(GeneratePromiseInvocation(isReject: false));
-              skipReadingArg = true;
-            }
-          }
-        }
-
-        if (!skipReadingArg)
-        {
-          var variableName = "arg" + i.ToString(CultureInfo.InvariantCulture);
-
-          readArgsArguments.Add(Argument(
-            nameColon: null,
-            refKindKeyword: Token(SyntaxKind.OutKeyword),
-            expression: DeclarationExpression(
-              param.Type.ToTypeSyntax(),
-              SingleVariableDesignation(
-                Identifier(variableName))
-            )
+      switch (method.ReturnStyle)
+      {
+        case ReactMethod.MethodReturnStyle.Promise:
+          args.Add(ObjectCreationExpression(
+            ReactTypes.ReactPromise.Construct(method.EffectiveReturnType),
+            IdentifierName(ReactNativeNames.WriterLocalName),
+            IdentifierName(ReactNativeNames.ResolveLocalName),
+            IdentifierName(ReactNativeNames.RejectLocalName)
           ));
-
-          args.Add(IdentifierName(variableName));
-        }
+          break;
+        case ReactMethod.MethodReturnStyle.Callback:
+          args.Add(GeneratePromiseInvocation(isReject: false));
+          break;
+        case ReactMethod.MethodReturnStyle.TwoCallbacks:
+          args.Add(GeneratePromiseInvocation(isReject: false));
+          args.Add(GeneratePromiseInvocation(isReject: true));
+          break;
       }
 
       // generates:
       //  reader.ReadArgs( ... )
       statements.Add(InvocationStatement(
-        MemberAccessExpression(m_reactTypes.JSValueReader, ReactNativeNames.ReadArgsMethodName),
+        MemberAccessExpression(ReactTypes.JSValueReader, ReactNativeNames.ReadArgsMethodName),
         readArgsArguments));
 
       var methodCall = InvocationStatement(
@@ -263,7 +232,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       }
       else
       {
-        methodReturnType = "Callback";
         // generate:
         //   MyResult result = module.MyMethod(arg0, arg1, ...);
         statements.Add(
@@ -271,26 +239,42 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             method.Method.ReturnType,
             ReactNativeNames.ResultLocalName,
             methodCall.Expression));
-        // generate:
-        //   writer.WriteArgs(result);
-        var writeArgs = InvocationExpression(
-          MemberAccessExpression(m_reactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
-          IdentifierName(ReactNativeNames.WriterLocalName),
-          IdentifierName(ReactNativeNames.ResultLocalName));
 
-        if (method.IsSynchronous)
+        if (method.ReturnStyle == ReactMethod.MethodReturnStyle.Task)
         {
-          statements.Add(ExpressionStatement(writeArgs));
+          // generate:
+          //  ReactTaskExtension.ContinueWith(result, writer, resolve, reject);
+          statements.Add(InvocationStatement(
+            MemberAccessExpression(ReactTypes.ReactTaskExtensions, ReactNativeNames.ContinueWith),
+            IdentifierName(ReactNativeNames.ResultLocalName),
+            IdentifierName(ReactNativeNames.WriterLocalName),
+            IdentifierName(ReactNativeNames.ResolveLocalName),
+            IdentifierName(ReactNativeNames.RejectLocalName)
+            ));
         }
         else
         {
           // generate:
-          //   resolve(.. writeargs ..);
-          statements.Add(
-            InvocationStatement(
-              IdentifierName(ReactNativeNames.ResolveLocalName),
-              writeArgs
-            ));
+          //   writer.WriteArgs(result);
+          var writeArgs = InvocationExpression(
+            MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
+            IdentifierName(ReactNativeNames.WriterLocalName),
+            IdentifierName(ReactNativeNames.ResultLocalName));
+
+          if (method.IsSynchronous)
+          {
+            statements.Add(ExpressionStatement(writeArgs));
+          }
+          else
+          {
+            // generate:
+            //   resolve(.. writeargs ..);
+            statements.Add(
+              InvocationStatement(
+                IdentifierName(ReactNativeNames.ResolveLocalName),
+                writeArgs
+              ));
+          }
         }
       }
 
@@ -312,9 +296,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             parameterList:
             ParameterList(
               Parameter(ReactNativeNames.ReaderLocalName)
-                .WithType(m_reactTypes.IJSValueReader.ToTypeSyntax()),
+                .WithType(ReactTypes.IJSValueReader.ToTypeSyntax()),
               Parameter(ReactNativeNames.WriterLocalName)
-                .WithType(m_reactTypes.IJSValueWriter.ToTypeSyntax())),
+                .WithType(ReactTypes.IJSValueWriter.ToTypeSyntax())),
             block: Block(statements),
             expressionBody: null));
       }
@@ -339,19 +323,19 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           LiteralExpression(method.Name),
           MemberAccessExpression(
             SyntaxKind.SimpleMemberAccessExpression,
-            m_reactTypes.MethodReturnType.ToTypeSyntax(),
-            SyntaxFactory.IdentifierName(methodReturnType)),
+            ReactTypes.MethodReturnType.ToTypeSyntax(),
+            SyntaxFactory.IdentifierName(GetMethodReturnTypeFromStyle(method.ReturnStyle))),
           ParenthesizedLambdaExpression(
             parameterList:
             ParameterList(
               Parameter(ReactNativeNames.ReaderLocalName)
-                .WithType(m_reactTypes.IJSValueReader.ToTypeSyntax()),
+                .WithType(ReactTypes.IJSValueReader.ToTypeSyntax()),
               Parameter(ReactNativeNames.WriterLocalName)
-                .WithType(m_reactTypes.IJSValueWriter.ToTypeSyntax()),
+                .WithType(ReactTypes.IJSValueWriter.ToTypeSyntax()),
               Parameter(ReactNativeNames.ResolveLocalName)
-                .WithType(m_reactTypes.MethodResultCallback.ToTypeSyntax()),
+                .WithType(ReactTypes.MethodResultCallback.ToTypeSyntax()),
               Parameter(ReactNativeNames.RejectLocalName)
-                .WithType(m_reactTypes.MethodResultCallback.ToTypeSyntax())),
+                .WithType(ReactTypes.MethodResultCallback.ToTypeSyntax())),
             block: Block(
               statements),
             expressionBody: null));
@@ -373,42 +357,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         expressionBody: InvocationExpression(
           IdentifierName(isReject ? ReactNativeNames.RejectLocalName : ReactNativeNames.ResolveLocalName),
           InvocationExpression(
-            MemberAccessExpression(m_reactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
+            MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
             IdentifierName(ReactNativeNames.WriterLocalName),
             IdentifierName(ReactNativeNames.ValueLocalName))
           )
         );
-    }
-
-    private bool IsPromiseType(ITypeSymbol type, [NotNullWhen(returnValue: true)] out ITypeSymbol? typeParameter)
-    {
-      if (type != null &&
-             type is INamedTypeSymbol namedType &&
-             namedType.IsGenericType &&
-             namedType.ConstructUnboundGenericType()
-               .Equals(m_reactTypes.IReactPromise.ConstructUnboundGenericType(), SymbolEqualityComparer.Default))
-      {
-        typeParameter = namedType.TypeArguments[0];
-        return true;
-      }
-
-      typeParameter = null;
-      return false;
-    }
-
-    private bool IsSingleArgCallback(ITypeSymbol type, [NotNullWhen(returnValue: true)] out ITypeSymbol? parameterType)
-    {
-      if (type is INamedTypeSymbol namedType &&
-          namedType.DelegateInvokeMethod != null &&
-          namedType.DelegateInvokeMethod.Parameters.Length == 1
-          )
-      {
-        parameterType = namedType.DelegateInvokeMethod.Parameters[0].Type;
-        return true;
-      }
-
-      parameterType = null;
-      return false;
     }
 
     internal StatementSyntax AddEvent(ReactEvent evnt)
@@ -420,7 +373,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         MemberAccessExpression(ReactNativeNames.ModuleBuilder, ReactNativeNames.AddInitializer),
         ParenthesizedLambdaExpression(
           parameterList: ParameterList(
-            Parameter(ReactNativeNames.ReactContextLocalName).WithType(m_reactTypes.IReactContext.ToTypeSyntax())),
+            Parameter(ReactNativeNames.ReactContextLocalName).WithType(ReactTypes.IReactContext.ToTypeSyntax())),
           block: null,
           expressionBody: GenerateCallback(evnt, ReactNativeNames.EmitJSEventFunctionName)));
     }
@@ -434,7 +387,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         MemberAccessExpression(ReactNativeNames.ModuleBuilder, ReactNativeNames.AddInitializer),
         ParenthesizedLambdaExpression(
           parameterList: ParameterList(
-            Parameter(ReactNativeNames.ReactContextLocalName).WithType(m_reactTypes.IReactContext.ToTypeSyntax())),
+            Parameter(ReactNativeNames.ReactContextLocalName).WithType(ReactTypes.IReactContext.ToTypeSyntax())),
           block: null,
           expressionBody: GenerateCallback(function, ReactNativeNames.CallJSFunctionFunctionName)));
     }
@@ -447,11 +400,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         MemberAccessExpression(ReactNativeNames.ModuleBuilder, ReactNativeNames.AddInitializer),
         ParenthesizedLambdaExpression(
           parameterList: ParameterList(
-            Parameter(ReactNativeNames.ReactContextLocalName).WithType(m_reactTypes.IReactContext.ToTypeSyntax())),
+            Parameter(ReactNativeNames.ReactContextLocalName).WithType(ReactTypes.IReactContext.ToTypeSyntax())),
           block: null,
           expressionBody: InvocationExpression(
             MemberAccessExpression(ReactNativeNames.Module, Identifier(initializer.Method.Name)),
-            ObjectCreationExpression(m_reactTypes.ReactContext, IdentifierName((ReactNativeNames.ReactContextLocalName)))
+            ObjectCreationExpression(ReactTypes.ReactContext, IdentifierName((ReactNativeNames.ReactContextLocalName)))
             )));
     }
 
@@ -493,9 +446,28 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 parameterList: ParameterList(Parameter(ReactNativeNames.WriterLocalName)),
                 block: null,
                 expressionBody: InvocationExpression(
-                  MemberAccessExpression(m_reactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
+                  MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
                   arguments
                   )))));
+    }
+
+    private string GetMethodReturnTypeFromStyle(ReactMethod.MethodReturnStyle returnStyle)
+    {
+      switch (returnStyle)
+      {
+        case ReactMethod.MethodReturnStyle.Void:
+          return "Void";
+        case ReactMethod.MethodReturnStyle.Task:
+        case ReactMethod.MethodReturnStyle.Promise:
+          return "Promise";
+        case ReactMethod.MethodReturnStyle.Callback:
+        case ReactMethod.MethodReturnStyle.ReturnValue:
+          return "Callback";
+        case ReactMethod.MethodReturnStyle.TwoCallbacks:
+          return "TwoCallbacks";
+        default:
+          throw new InvalidOperationException("Unexpected ReturnStyle");
+      }
     }
   }
 }

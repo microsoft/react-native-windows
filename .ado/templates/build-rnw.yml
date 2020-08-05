@@ -55,15 +55,14 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
+        /p:PublishToolDuringBuild=true
+        /p:EnableSourceLink=true
         /bl:${{ parameters.BuildLogDirectory }}\MsBuild.binlog
         /flp1:errorsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.err
         /flp2:warningsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.wrn
         /flp3:verbosity=diagnostic;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.log
         ${{parameters.msbuildArguments}}
 
-  - task: PublishBuildArtifacts@1
-    displayName: Upload build logs
-    condition:  succeededOrFailed()
-    inputs:
-      pathtoPublish: ${{ parameters.BuildLogDirectory }}
-      artifactName: 'Build logs - $(Agent.JobName)'
+  - template: upload-build-logs.yml
+    parameters:
+      buildLogDirectory: '${{ parameters.BuildLogDirectory }}'

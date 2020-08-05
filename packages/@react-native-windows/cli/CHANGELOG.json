@@ -1,0 +1,20 @@
+{
+  "name": "@react-native-windows/cli",
+  "entries": [
+    {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.1",
+      "version": "0.0.0-canary.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Separate local-cli into its own package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    }
+  ]
+}

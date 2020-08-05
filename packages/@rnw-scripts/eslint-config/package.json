@@ -1,0 +1,15 @@
+{
+  "name": "@rnw-scripts/eslint-config",
+  "version": "0.0.2",
+  "license": "MIT",
+  "main": "eslintrc.js",
+  "dependencies": {
+    "@react-native-community/eslint-config": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "6.7.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=6.7.0"
+  }
+}

@@ -67,7 +67,7 @@ export class PlatformOverride implements Override {
   }
 
   serialize(): Serialized.PlatformOverride {
-    return {type: 'platform', file: this.overrideFile};
+    return {type: 'platform', file: unixPath(this.overrideFile)};
   }
 
   name(): string {
@@ -83,7 +83,7 @@ export class PlatformOverride implements Override {
   }
 
   upgradeStrategy(): UpgradeStrategy {
-    return UpgradeStrategies.assumeUpToDate();
+    return UpgradeStrategies.assumeUpToDate(this.overrideFile);
   }
 
   validationStrategies(): ValidationStrategy[] {
@@ -131,7 +131,7 @@ abstract class BaseFileOverride implements Override {
     return [
       ValidationStrategies.baseFileExists(this.overrideFile, this.baseFile),
       ValidationStrategies.overrideFileExists(this.overrideFile),
-      ValidationStrategies.baseFileUpToDate(
+      ValidationStrategies.baseUpToDate(
         this.overrideFile,
         this.baseFile,
         this.baseHash,
@@ -141,8 +141,8 @@ abstract class BaseFileOverride implements Override {
 
   protected serialzeBase() {
     return {
-      file: this.overrideFile,
-      baseFile: this.baseFile,
+      file: unixPath(this.overrideFile),
+      baseFile: unixPath(this.baseFile),
       baseVersion: this.baseVersion,
       baseHash: this.baseHash,
     };
@@ -187,10 +187,7 @@ export class CopyOverride extends BaseFileOverride {
   validationStrategies(): ValidationStrategy[] {
     return [
       ...super.validationStrategies(),
-      ValidationStrategies.overrideCopyOfBaseFile(
-        this.overrideFile,
-        this.baseFile,
-      ),
+      ValidationStrategies.overrideCopyOfBase(this.overrideFile, this.baseFile),
     ];
   }
 }
@@ -239,6 +236,16 @@ export class DerivedOverride extends BaseFileOverride {
       this.baseVersion,
     );
   }
+
+  validationStrategies(): ValidationStrategy[] {
+    return [
+      ...super.validationStrategies(),
+      ValidationStrategies.overrideDifferentFromBase(
+        this.overrideFile,
+        this.baseFile,
+      ),
+    ];
+  }
 }
 
 /**
@@ -283,6 +290,102 @@ export class PatchOverride extends BaseFileOverride {
       this.baseVersion,
     );
   }
+
+  validationStrategies(): ValidationStrategy[] {
+    return [
+      ...super.validationStrategies(),
+      ValidationStrategies.overrideDifferentFromBase(
+        this.overrideFile,
+        this.baseFile,
+      ),
+    ];
+  }
+}
+
+/**
+ * DirectoryCopy overrides copy files from an upstream directory
+ */
+export class DirectoryCopyOverride implements Override {
+  private diretory: string;
+  private baseDirectory: string;
+  private baseVersion: string;
+  private baseHash: string;
+  private issue: number;
+
+  constructor(args: {
+    directory: string;
+    baseDirectory: string;
+    baseVersion: string;
+    baseHash: string;
+    issue: number;
+  }) {
+    this.diretory = path.normalize(args.directory);
+    this.baseDirectory = path.normalize(args.baseDirectory);
+    this.baseVersion = args.baseVersion;
+    this.baseHash = args.baseHash;
+    this.issue = args.issue;
+  }
+
+  static fromSerialized(
+    serialized: Serialized.DirectoryCopyOverride,
+  ): DirectoryCopyOverride {
+    return new DirectoryCopyOverride(serialized);
+  }
+
+  serialize(): Serialized.DirectoryCopyOverride {
+    return {
+      type: 'copy',
+      directory: unixPath(this.diretory),
+      baseDirectory: unixPath(this.baseDirectory),
+      baseVersion: this.baseVersion,
+      baseHash: this.baseHash,
+      issue: this.issue,
+    };
+  }
+
+  name(): string {
+    return this.diretory;
+  }
+
+  includesFile(filename: string): boolean {
+    const relativeToDir = path.relative(
+      this.diretory,
+      path.normalize(filename),
+    );
+
+    return relativeToDir.split(path.sep)[0] !== '..';
+  }
+
+  async createUpdated(factory: OverrideFactory): Promise<Override> {
+    return factory.createDirectoryCopyOverride(
+      this.diretory,
+      this.baseDirectory,
+      this.issue,
+    );
+  }
+
+  upgradeStrategy(): UpgradeStrategy {
+    return UpgradeStrategies.copyDirectory(this.diretory, this.baseDirectory);
+  }
+
+  validationStrategies(): ValidationStrategy[] {
+    return [
+      ValidationStrategies.overrideDirectoryExists(this.diretory),
+      ValidationStrategies.baseDirectoryExists(
+        this.diretory,
+        this.baseDirectory,
+      ),
+      ValidationStrategies.baseUpToDate(
+        this.diretory,
+        this.baseDirectory,
+        this.baseHash,
+      ),
+      ValidationStrategies.overrideCopyOfBase(
+        this.diretory,
+        this.baseDirectory,
+      ),
+    ];
+  }
 }
 
 export function deserializeOverride(ovr: Serialized.Override): Override {
@@ -290,10 +393,16 @@ export function deserializeOverride(ovr: Serialized.Override): Override {
     case 'platform':
       return PlatformOverride.fromSerialized(ovr);
     case 'copy':
-      return CopyOverride.fromSerialized(ovr);
+      return 'directory' in ovr
+        ? DirectoryCopyOverride.fromSerialized(ovr)
+        : CopyOverride.fromSerialized(ovr);
     case 'derived':
       return DerivedOverride.fromSerialized(ovr);
     case 'patch':
       return PatchOverride.fromSerialized(ovr);
   }
+}
+
+function unixPath(dir: string): string {
+  return dir.replace(/\\/g, '/');
 }

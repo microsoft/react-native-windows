@@ -8,7 +8,7 @@ using std::string;
 
 namespace Microsoft::React {
 
-Url::Url(const string &source) {
+Url::Url(string &&source) {
   //                           ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
   std::regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
   //                          scheme              host       port      path      query

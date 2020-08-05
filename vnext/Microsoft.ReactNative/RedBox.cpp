@@ -6,7 +6,7 @@
 #include <functional/functor.h>
 #include <regex>
 #include "DevServerHelper.h"
-#include "DynamicReader.h"
+#include "RedBoxErrorInfo.h"
 #include "Unicode.h"
 
 #include <winrt/Windows.Foundation.Collections.h>
@@ -250,63 +250,66 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     const std::string plain = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
 
-    try {
-      auto json = folly::parseJson(plain);
-      if (json.count("type") && json["type"] == "InternalError") {
-        auto message = json["message"].asString();
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+    if (!plain.empty() && plain[0] == '{') {
+      try {
+        auto json = folly::parseJson(plain);
+        if (json.count("type") && json["type"] == "InternalError") {
+          auto message = json["message"].asString();
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
 
-        if (IsMetroBundlerError(message, json["type"].asString())) {
-          xaml::Documents::Hyperlink link;
-          link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
-          xaml::Documents::Run linkRun;
+          if (IsMetroBundlerError(message, json["type"].asString())) {
+            xaml::Documents::Hyperlink link;
+            link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
+            xaml::Documents::Run linkRun;
 
-          linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-          link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
-          link.Inlines().Append(linkRun);
-          xaml::Documents::Run normalRun;
-          normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
-          m_errorStackText.Inlines().Append(normalRun);
-          m_errorStackText.Inlines().Append(link);
-        } else {
-          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+            linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
+            link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+            link.Inlines().Append(linkRun);
+            xaml::Documents::Run normalRun;
+            normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
+            m_errorStackText.Inlines().Append(normalRun);
+            m_errorStackText.Inlines().Append(link);
+          } else {
+            m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+          }
+          return;
+        } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
+          auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
+          const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
+
+          const auto errorName = json["name"].asString();
+          std::string stack;
+
+          const auto prefix = errorName + ": " + message;
+          if (boost::starts_with(originalStack, prefix)) {
+            stack = originalStack.substr(prefix.length());
+          } else {
+            constexpr char startOfStackTrace[] = "\n    at ";
+            stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
+          }
+
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+          // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
+          m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
+
+          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+          return;
         }
-        return;
-      } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
-        auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
-        const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
-
-        const auto errorName = json["name"].asString();
-        std::string stack;
-
-        const auto prefix = errorName + ": " + message;
-        if (boost::starts_with(originalStack, prefix)) {
-          stack = originalStack.substr(prefix.length());
-        } else {
-          constexpr char startOfStackTrace[] = "\n    at ";
-          stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
-        }
-
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-        // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
-        m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
-
-        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
-        return;
-      }
-    } catch (...) {
-      std::string doctype = "<!DOCTYPE HTML>";
-      if (boost::istarts_with(plain, doctype)) {
-        winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
-
-        CreateWebView(m_stackPanel, content);
-
-        m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
-        m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
-
-        return;
+      } catch (...) {
       }
     }
+    std::string doctype = "<!DOCTYPE HTML>";
+    if (boost::istarts_with(plain, doctype)) {
+      winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
+
+      CreateWebView(m_stackPanel, content);
+
+      m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
+      m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
+
+      return;
+    }
+
     // fall back to displaying the raw message string
     m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(plain));
     m_errorStackText.Text(L"");
@@ -314,7 +317,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   void PopulateFrameStackUI() noexcept {
     m_stackPanel.Children().Clear();
-    for (const auto frame : m_errorInfo.Callstack) {
+    for (const auto &frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
           LR"(
           <StackPanel Margin='0,5,0,5'
@@ -394,7 +397,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 /*
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
-struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
+struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
   DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
       : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
 
@@ -406,7 +409,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       std::swap(m_redBoxes, redBoxes);
     }
     m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
-      for (const auto redBox : redBoxes) {
+      for (const auto &redBox : redBoxes) {
         redBox->Dismiss();
       }
     });
@@ -522,81 +525,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
 };
 #endif
 
-struct RedBoxErrorFrameInfo
-    : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
-  RedBoxErrorFrameInfo(Mso::React::ErrorFrameInfo &&errorFrameInfo) : m_frame(std::move(errorFrameInfo)) {}
-
-  winrt::hstring File() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.File).c_str();
-  }
-
-  winrt::hstring Method() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.Method).c_str();
-  }
-
-  uint32_t Line() const noexcept {
-    return m_frame.Line;
-  }
-
-  uint32_t Column() const noexcept {
-    return m_frame.Column;
-  }
-
-  bool Collapse() const noexcept {
-    return m_frame.Collapse;
-  }
-
- private:
-  Mso::React::ErrorFrameInfo m_frame;
-};
-
-struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::IRedBoxErrorInfo> {
-  RedBoxErrorInfo(Mso::React::ErrorInfo &&errorInfo) : m_errorInfo(std::move(errorInfo)) {}
-
-  winrt::hstring Message() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
-  }
-
-  winrt::hstring OriginalMessage() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.OriginalMessage).c_str();
-  }
-
-  winrt::hstring Name() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Name).c_str();
-  }
-
-  winrt::hstring ComponentStack() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.ComponentStack).c_str();
-  }
-
-  winrt::Microsoft::ReactNative::IJSValueReader ExtraData() const noexcept {
-    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_errorInfo.ExtraData);
-  }
-
-  uint32_t Id() const noexcept {
-    return m_errorInfo.Id;
-  }
-
-  winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>
-  Callstack() noexcept {
-    if (!m_callstack) {
-      m_callstack = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>();
-      for (auto frame : m_errorInfo.Callstack) {
-        m_callstack.Append(winrt::make<RedBoxErrorFrameInfo>(std::move(frame)));
-      }
-    }
-
-    return m_callstack.GetView();
-  }
-
- private:
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> m_callstack{
-      nullptr};
-
-  Mso::React::ErrorInfo m_errorInfo;
-};
-
-struct RedBoxHandler : public Mso::React::IRedBoxHandler {
+struct RedBoxHandler final : public Mso::React::IRedBoxHandler {
   RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
 
   static_assert(

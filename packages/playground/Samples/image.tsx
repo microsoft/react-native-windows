@@ -9,6 +9,7 @@ import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
 
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
+
 const smallImageUri =
   'http://facebook.github.io/react-native/img/header_logo.png';
 
@@ -26,14 +27,18 @@ export default class Bootstrap extends React.Component<
       | 'repeat'
       | undefined;
     includeBorder: boolean;
+    blurRadius: number;
     selectedSource: string;
     imageUri: string;
+    tintColor: string;
   }
 > {
   state = {
     selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
     includeBorder: false,
+    tintColor: 'transparent',
+    blurRadius: 0,
     imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
@@ -82,6 +87,28 @@ export default class Bootstrap extends React.Component<
           </Picker>
         </View>
         <View style={styles.rowContainer}>
+          <Text style={styles.title}>Blur Radius</Text>
+          <Picker
+            style={{width: 125}}
+            selectedValue={this.state.blurRadius}
+            onValueChange={value => this.setState({blurRadius: value})}>
+            <Picker.Item label="0" value={0} />
+            <Picker.Item label="5" value={5} />
+            <Picker.Item label="10" value={10} />
+          </Picker>
+        </View>
+        <View style={styles.rowContainer}>
+          <Text style={styles.title}>Tint Color</Text>
+          <Picker
+            style={{width: 125}}
+            selectedValue={this.state.tintColor}
+            onValueChange={value => this.setState({tintColor: value})}>
+            <Picker.Item label="None" value="transparent" />
+            <Picker.Item label="Purple" value="purple" />
+            <Picker.Item label="Green" value="green" />
+          </Picker>
+        </View>
+        <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
             style={{marginLeft: 10}}
@@ -94,15 +121,18 @@ export default class Bootstrap extends React.Component<
         </View>
         <View style={styles.imageContainer}>
           <Image
-            style={
-              this.state.includeBorder ? styles.imageWithBorder : styles.image
-            }
+            style={[
+              styles.image,
+              this.state.includeBorder ? styles.imageWithBorder : {},
+              {tintColor: this.state.tintColor},
+            ]}
             source={
               this.state.selectedSource === 'svg'
                 ? require('../Samples/images/Microsoft-Logo.svg')
                 : {uri: this.state.imageUri}
             }
             resizeMode={this.state.selectedResizeMode}
+            blurRadius={this.state.blurRadius}
           />
         </View>
       </View>
@@ -133,8 +163,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   imageWithBorder: {
-    height: '100%',
-    width: '100%',
     borderRadius: 10.0,
     borderWidth: 10,
     borderColor: 'green',

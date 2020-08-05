@@ -1,0 +1,51 @@
+parameters:
+  packageId: ''
+  packageVersion: ''
+  slices: ''
+  buildProperties: ''
+  codesignBinaries: false
+  codesignNuget: false
+
+steps:
+
+  # Strip down the binaries from NuGet because we may not have built all the flavours.
+  - task: PowerShell@2 
+    displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
+    inputs:
+      targetType: filePath
+      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
+      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -slices ${{ parameters.slices }} -debug
+    condition: and(succeeded(), ne('', '${{ parameters.slices }}'))
+
+  - ${{ if eq(parameters.codesignBinaries, true) }}:
+    - task: PkgESCodeSign@10
+      displayName: '${{ parameters.packageId }} CodeSign Binaries'
+      inputs:
+        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\${{ parameters.packageId }}.SignConfig.xml
+        inPathRoot: ${{parameters.nugetroot}}
+        outPathRoot: ${{parameters.nugetroot}}
+
+  - task: NuGetCommand@2
+    displayName: '${{ parameters.packageId }} - Nuget pack'
+    inputs:
+      command: pack
+      verbosityPack: 'Detailed'
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.packageId }}.nuspec
+      packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
+      buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
+  
+  - ${{ if eq(parameters.codesignNuget, true) }}:
+    - task: PkgESCodeSign@10
+      displayName: '${{ parameters.packageId }} CodeSign NuGet'
+      inputs:
+        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\${{ parameters.packageId }}.NugetSignConfig.xml
+        inPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
+        outPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
+
+  - task: CmdLine@2
+    displayName: '${{ parameters.packageId }} - Nuget push to local test feed'
+    inputs:
+      script: |
+        set TestFeed=$(System.DefaultWorkingDirectory)\NugetTestFeed
+        if NOT EXIST %TestFeed% (mkdir %TestFeed%)
+        nuget add $(System.DefaultWorkingDirectory)\NugetRootFinal\${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg -Source %TestFeed%

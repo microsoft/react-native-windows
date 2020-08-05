@@ -13,12 +13,16 @@ test('Empty Manifest Invalid', () => {
 
 test('Well Formed No Overrides', () => {
   expect(Serialized.parseManifest('{"overrides": []}')).toEqual({
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [],
   });
 });
 
 test('Well Formed Platform', () => {
   const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [
       {
         type: 'platform',
@@ -32,6 +36,8 @@ test('Well Formed Platform', () => {
 
 test('Well Formed Patch', () => {
   const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [
       {
         type: 'patch',
@@ -49,6 +55,8 @@ test('Well Formed Patch', () => {
 
 test('Well Formed Derived', () => {
   const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [
       {
         type: 'derived',
@@ -66,6 +74,8 @@ test('Well Formed Derived', () => {
 
 test('Well Formed Copy', () => {
   const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [
       {
         type: 'copy',
@@ -81,8 +91,29 @@ test('Well Formed Copy', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
+test('Well Formed Directory Copy', () => {
+  const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
+    overrides: [
+      {
+        type: 'copy',
+        directory: 'foo',
+        baseDirectory: 'src/foo',
+        baseVersion: '0.61.5',
+        baseHash: 'AAAABBBB',
+        issue: 4567,
+      },
+    ],
+  };
+
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
+});
+
 test('Fixme Allowed As Issue', () => {
   const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
     overrides: [
       {
         type: 'patch',
@@ -184,4 +215,30 @@ test('Well Formed Copy Must Have Metadata', () => {
   };
 
   expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
+});
+
+test('Valid includePatterns', () => {
+  const includePatterns = ['src/**', 'copies/**'];
+
+  const manifest = {
+    includePatterns,
+    overrides: [],
+  };
+
+  expect(
+    Serialized.parseManifest(JSON.stringify(manifest)).includePatterns,
+  ).toEqual(includePatterns);
+});
+
+test('Valid excludePatterns', () => {
+  const excludePatterns = ['**/*.md', '**/README.md'];
+
+  const manifest = {
+    excludePatterns,
+    overrides: [],
+  };
+
+  expect(
+    Serialized.parseManifest(JSON.stringify(manifest)).excludePatterns,
+  ).toEqual(excludePatterns);
 });

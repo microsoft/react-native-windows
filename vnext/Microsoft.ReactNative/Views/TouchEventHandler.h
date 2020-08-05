@@ -5,6 +5,7 @@
 #include <IReactInstance.h>
 #include <UI.Xaml.Documents.h>
 #include <folly/dynamic.h>
+#include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
 #include "XamlView.h"
@@ -19,8 +20,7 @@ using namespace Windows::Foundation;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class TouchEventHandler {
  public:
@@ -51,7 +51,8 @@ class TouchEventHandler {
     uint64_t timestamp = 0;
     winrt::Point positionRoot = {0, 0};
     winrt::Point positionView = {0, 0};
-    winrt::Windows::Devices::Input::PointerDeviceType deviceType;
+    winrt::Windows::Devices::Input::PointerDeviceType deviceType{
+        winrt::Windows::Devices::Input::PointerDeviceType::Mouse};
     float pressure = 0;
     bool isLeftButton = false;
     bool isRightButton = false;
@@ -103,5 +104,4 @@ class TouchEventHandler {
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

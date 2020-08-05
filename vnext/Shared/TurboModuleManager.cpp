@@ -1,4 +1,5 @@
-#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 #include "TurboModuleManager.h"
 #include "turbomodule/samples/SampleTurboCxxModule.h"

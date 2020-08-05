@@ -5,9 +5,11 @@
  * @format
  */
 
+import * as path from 'path';
 import Override, {
   CopyOverride,
   DerivedOverride,
+  DirectoryCopyOverride,
   PatchOverride,
   PlatformOverride,
   deserializeOverride,
@@ -29,11 +31,11 @@ function testCase<T extends OverrideConstructor>(
   return [type, ovrClass, args];
 }
 
-const platformOverride = testCase('platform', PlatformOverride, {
+const platformOverride = testCase('Platform', PlatformOverride, {
   file: 'foo.windows.js',
 });
 
-const copyOverride = testCase('copy', CopyOverride, {
+const copyOverride = testCase('Copy', CopyOverride, {
   file: 'foo.windows.js',
   baseFile: 'foo.js',
   baseVersion: '0.62.2',
@@ -41,7 +43,7 @@ const copyOverride = testCase('copy', CopyOverride, {
   issue: 1234,
 });
 
-const derivedOverride = testCase('derived', DerivedOverride, {
+const derivedOverride = testCase('Derived', DerivedOverride, {
   file: 'foo.windows.js',
   baseFile: 'foo.js',
   baseVersion: '0.62.2',
@@ -49,13 +51,33 @@ const derivedOverride = testCase('derived', DerivedOverride, {
   issue: 1234,
 });
 
-const patchOverride = testCase('patch', PatchOverride, {
+const patchOverride = testCase('Patch', PatchOverride, {
   file: 'foo.windows.js',
   baseFile: 'foo.js',
   baseVersion: '0.62.2',
   baseHash: 'abcde',
   issue: 1234,
 });
+
+const directoryCopyOverride = testCase(
+  'Directory Copy',
+  DirectoryCopyOverride,
+  {
+    directory: 'src/foo',
+    baseDirectory: 'foo',
+    baseVersion: '0.62.2',
+    baseHash: 'abcde',
+    issue: 1234,
+  },
+);
+
+const overrides: TestCase<OverrideConstructor>[] = [
+  platformOverride,
+  copyOverride,
+  derivedOverride,
+  patchOverride,
+  directoryCopyOverride,
+];
 
 const fileOverrides: TestCase<OverrideConstructor>[] = [
   platformOverride,
@@ -64,32 +86,121 @@ const fileOverrides: TestCase<OverrideConstructor>[] = [
   patchOverride,
 ];
 
+const baseFileOverrides: TestCase<OverrideConstructor>[] = [
+  copyOverride,
+  derivedOverride,
+  patchOverride,
+];
+
+const directoryOverrides: TestCase<OverrideConstructor>[] = [
+  directoryCopyOverride,
+];
+
 test.each(fileOverrides)('name - %s', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'bar.windows.js'});
   expect(override.name()).toBe('bar.windows.js');
 });
 
-test.each(fileOverrides)('includesFile - %s Has File', (_, ovrClass, args) => {
-  const override = new ovrClass({...args, file: 'bar.windows.js'});
-  expect(override.includesFile('bar.windows.js')).toBe(true);
+test.each(directoryOverrides)('name - %s', (_, ovrClass, args) => {
+  const override = new ovrClass({...args, directory: 'src/foo/abc'});
+  expect(override.name()).toBe(path.normalize('src/foo/abc'));
 });
 
-test.each(fileOverrides)('includesFile - %s No File', (_, ovrClass, args) => {
+test.each(fileOverrides)(
+  'includesFile - Has File (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, file: 'bar.windows.js'});
+    expect(override.includesFile('bar.windows.js')).toBe(true);
+  },
+);
+
+test.each(directoryOverrides)(
+  'includesFile - Has File (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, directory: 'src/foo/abc'});
+    expect(override.includesFile('src/foo/abc/d.txt')).toBe(true);
+  },
+);
+
+test.each(fileOverrides)('includesFile - No File (%s)', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'bar.windows.js'});
   expect(override.includesFile('foo.windows.js')).toBe(false);
 });
 
-test.each(fileOverrides)('includesFile - %s Backslash', (_, ovrClass, args) => {
-  const override = new ovrClass({...args, file: 'foo/bar.windows.js'});
-  expect(override.includesFile('foo\\bar.windows.js')).toBe(true);
-});
+test.each(directoryOverrides)(
+  'includesFile - No File (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, directory: 'src/foo/abc'});
+    expect(override.includesFile('src/foo/abcd/e.txt')).toBe(false);
+  },
+);
 
-test.each(fileOverrides)('includesFile - %s Slash', (_, ovrClass, args) => {
+test.each(fileOverrides)(
+  'includesFile - Backslash (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, file: 'foo/bar.windows.js'});
+    expect(override.includesFile('foo\\bar.windows.js')).toBe(true);
+  },
+);
+
+test.each(directoryOverrides)(
+  'includesFile - Backslash (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, directory: 'src/foo/abc'});
+    expect(override.includesFile('src\\foo\\abc\\d.txt')).toBe(true);
+  },
+);
+
+test.each(fileOverrides)('includesFile - Slash (%s)', (_, ovrClass, args) => {
   const override = new ovrClass({...args, file: 'foo\\bar.windows.js'});
   expect(override.includesFile('foo/bar.windows.js')).toBe(true);
 });
 
-test.each(fileOverrides)('%s Serialization Roundtrip', (_, ovrClass, args) => {
+test.each(directoryOverrides)(
+  'includesFile - Slash (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, directory: 'src/foo/abc'});
+    expect(override.includesFile('src/foo/abc/d.txt')).toBe(true);
+  },
+);
+
+test.each(overrides)('serialize - Roundtrip (%s)', (_, ovrClass, args) => {
   const override = new ovrClass(args);
   expect(deserializeOverride(override.serialize())).toEqual(override);
 });
+
+test.each(fileOverrides)(
+  'serialize - Override Unix Path (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, file: 'path\\to\\bar.windows.js'});
+    const serialized = override.serialize() as any;
+    expect(serialized.file).toEqual('path/to/bar.windows.js');
+  },
+);
+
+test.each(directoryOverrides)(
+  'serialize - Override Unix Path (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, directory: 'a\\b\\c'});
+    const serialized = override.serialize() as any;
+    expect(serialized.directory).toEqual('a/b/c');
+  },
+);
+
+test.each(baseFileOverrides)(
+  'serialize - Base Unix Path (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, baseFile: 'path\\to\\bar.js'});
+    const serialized = override.serialize() as any;
+    expect(serialized.baseFile).toEqual('path/to/bar.js');
+  },
+);
+
+test.each(directoryOverrides)(
+  'serialize - Base Unix Path (%s)',
+  (_, ovrClass, args) => {
+    const override = new ovrClass({...args, baseDirectory: 'a\\b\\c'});
+    const serialized = override.serialize() as any;
+    expect(serialized.baseDirectory).toEqual('a/b/c');
+  },
+);

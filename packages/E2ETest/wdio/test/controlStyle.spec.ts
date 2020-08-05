@@ -8,12 +8,12 @@ import ControlStyleTestPage from '../pages/ControlStylePage';
 import assert from 'assert';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
   HomePage.clickAndGotoControlStylePage();
 });
 
 describe('ControlStyleTest', () => {
   /* Test case #1: Controls style with regular border */
+
   it('ControlStyleTestWithRegularBorder', () => {
     const result = ControlStyleTestPage.getTreeDumpResult();
     assert(

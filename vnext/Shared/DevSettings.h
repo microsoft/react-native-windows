@@ -78,7 +78,7 @@ struct DevSettings {
 
   /// Enables debugging by running the JavaScript in a web browser (Chrome)
   /// using http://localhost:8081/debugger-ui from the React Native packager
-  /// (Metro / Haul). Debugging will start as soon as the react native instance
+  /// (Metro / Haul). Debugging will start as soon as the React Native instance
   /// is loaded.
   bool useWebDebugger{false};
 
@@ -104,6 +104,9 @@ struct DevSettings {
   /// Superseded by PreparedScriptStore on the JSI stack, and will be removed
   /// soon. (See #3603)
   ChakraBundleUrlMetadataMap chakraBundleUrlMetadataMap;
+
+  /// Callback to show the devmenu
+  std::function<void()> showDevMenuCallback;
 };
 
 } // namespace react

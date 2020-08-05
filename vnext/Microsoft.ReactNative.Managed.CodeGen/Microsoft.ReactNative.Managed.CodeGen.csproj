@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
 
@@ -47,16 +46,24 @@
   <!-- 
     This target returns the location of the deployed executable.
   -->
-  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="$(_PublishedToolExecutable)">
-    <PropertyGroup>
-      <_PublishedToolExecutable>$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)</_PublishedToolExecutable>
-    </PropertyGroup>
+  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="@(_PublishedToolExecutable)">
+    <ItemGroup>
+      <_PublishedToolExecutable Include="$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)" />
+    </ItemGroup>
   </Target>
 
+  <!-- 
+    This is used during the PR build to ensure we have the artifacts published during the build.
+  -->
+  <Target 
+    Name="PublishToolDuringBuild" 
+    DependsOnTargets="Publish" 
+    AfterTargets="Build" 
+    Condition="'$(PublishToolDuringBuild)' == 'true' and '$(Platform)' == 'x64'">
+  </Target>
 
   <!-- Override -->
   <Target Name="_CheckForMismatchingPlatform">
-
   </Target>
 
   <Target Name="Deploy" />

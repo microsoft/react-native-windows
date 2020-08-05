@@ -14,8 +14,7 @@ class MessageQueueThread;
 }
 } // namespace facebook
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class LocationObserverModule : public facebook::xplat::module::CxxModule {
  public:
@@ -34,5 +33,4 @@ class LocationObserverModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<LocationObserver> m_locationObserver;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

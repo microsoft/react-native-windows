@@ -9,8 +9,7 @@
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 ActivityIndicatorViewManager::ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -51,5 +50,4 @@ bool ActivityIndicatorViewManager::UpdateProperty(
   return true;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

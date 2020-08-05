@@ -2,6 +2,175 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.34",
+      "version": "0.0.0-canary.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update for promoteRelease changes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 26 Jul 2020 05:06:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.33",
+      "version": "0.0.0-canary.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Up To The Base of React Native 0.63",
+            "author": "ngerlem@microsoft.com",
+            "commit": "39cf8bd6c948666e8f47b9a76ad74eeee3162aa7",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jul 2020 05:04:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "none": [
+          {
+            "comment": "Package.json formatting",
+            "author": "email not defined",
+            "commit": "c73ecd0ffb8fb4ee5205ec610ab4b6dbc7f6ee21",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Jul 2020 05:06:31 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump rex-win32 version",
+            "author": "email not defined",
+            "commit": "0b397f6c5dd2053adec1335267c04da86539f4f3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 12 Jul 2020 05:05:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.31",
+      "version": "0.0.0-canary.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move index file to flow",
+            "author": "acoates@microsoft.com",
+            "commit": "1e10ef35e653031769874ee5aa042967d4cb7a97",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.30",
+      "version": "0.0.0-canary.30",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update Override Manifest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a bunch of deps we are using but not declaring",
+            "author": "acoates@microsoft.com",
+            "commit": "82d0454ef1de3290a01c5d1beb2110f170ee27c6",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove broken watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.27",
+      "version": "0.0.0-canary.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Migrate the local-cli to TypeScript",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5b28bba588d7c2edd076a60353accad9cbe37b34",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Update Alert.(windows|win32).js to enable turbo module",
+            "author": "zihanc@microsoft.com",
+            "commit": "b56c5ece2a026b7029231c064030c61565a64dfd",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Fix a few more casing typos",
+            "author": "dannyvv@microsoft.com",
+            "commit": "532e299688d745c0d7c5d8790a681f60813eb678",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jun 2020 23:59:27 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.25",
       "version": "0.0.0-canary.25",

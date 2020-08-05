@@ -15,8 +15,7 @@ struct ShadowNode;
 }
 } // namespace facebook
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct IReactInstance;
 struct ShadowNodeBase;
@@ -98,5 +97,4 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
 };
 #pragma warning(pop)
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

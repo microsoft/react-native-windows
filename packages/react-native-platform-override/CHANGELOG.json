@@ -2,6 +2,111 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 14 Jul 2020 05:05:25 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add Validation That Patch/Derived Overrides Aren't Identical to Their Originals",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ef655c95eb7adf7616f40f43a3b7def181d95d72",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "react-native-platform-override_v0.2.0",
+      "version": "0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Improve Override Upgrade Performance",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Support Directory Copy Overrides",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d799443d38020b5ba30c1062d8b43b151c1d7566",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Try to work around Pipelines Network Flakiness Causing Test Timeouts",
+            "author": "ngerlem@microsoft.com",
+            "commit": "db96d9962986ef1a0cc201bbfbc633e562c95371",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-platform-override_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase Timeout for react-native-platform-override e2etest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "28edae58b3ff838a08d54d2e0be0bfd0bcb648ba",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "react-native-platform-override_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Create a Programmatic API for react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "react-native-platform-override_v0.0.8",
+      "version": "0.0.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Jun 2020 03:29:52 GMT",
       "tag": "react-native-platform-override_v0.0.7",
       "version": "0.0.7",

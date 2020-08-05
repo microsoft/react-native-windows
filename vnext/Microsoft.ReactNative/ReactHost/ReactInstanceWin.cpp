@@ -27,6 +27,7 @@
 #include <Shared/DevServerHelper.h>
 #include <Shared/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "ConfigureBundlerDlg.h"
 #include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
@@ -75,82 +76,6 @@ std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
 using namespace winrt::Microsoft::ReactNative;
 
 namespace Mso::React {
-
-//=============================================================================================
-// ReactContext implementation
-//=============================================================================================
-
-ReactContext::ReactContext(
-    Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
-    IReactPropertyBag const &properties,
-    IReactNotificationService const &notifications) noexcept
-    : m_reactInstance{std::move(reactInstance)}, m_properties{properties}, m_notifications{notifications} {}
-
-void ReactContext::Destroy() noexcept {
-  if (auto notificationService = winrt::get_self<implementation::ReactNotificationService>(m_notifications)) {
-    notificationService->UnsubscribeAll();
-  }
-}
-
-IReactPropertyBag ReactContext::Properties() noexcept {
-  return m_properties;
-}
-
-IReactNotificationService ReactContext::Notifications() noexcept {
-  return m_notifications;
-}
-
-void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    instance->CallJsFunction(std::move(module), std::move(method), std::move(params));
-  }
-}
-
-void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
-  }
-}
-
-ReactInstanceState ReactContext::State() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->State();
-  }
-
-  return ReactInstanceState::Unloaded;
-}
-
-bool ReactContext::IsLoaded() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->IsLoaded();
-  }
-
-  return false;
-}
-
-std::string ReactContext::GetBundleRootPath() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->GetBundleRootPath();
-  }
-
-  return "";
-}
-
-facebook::react::INativeUIManager *ReactContext::NativeUIManager() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->NativeUIManager();
-  }
-
-  return nullptr;
-}
-
-std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->GetInnerInstance();
-  }
-
-  return nullptr;
-}
 
 //=============================================================================================
 // LoadedCallbackGuard ensures that the OnReactInstanceLoaded is always called.
@@ -208,6 +133,59 @@ ReactInstanceWin::ReactInstanceWin(
 
 ReactInstanceWin::~ReactInstanceWin() noexcept {}
 
+void ReactInstanceWin::LoadModules(
+    const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
+    const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
+  auto registerNativeModule = [&nativeModulesProvider](
+      const wchar_t *name, const ReactModuleProvider &provider) noexcept {
+    nativeModulesProvider->AddModuleProvider(name, provider);
+  };
+
+  auto registerTurboModule = [ this, &nativeModulesProvider, &turboModulesProvider ](
+      const wchar_t *name, const ReactModuleProvider &provider) noexcept {
+    if (m_options.UseWebDebugger()) {
+      nativeModulesProvider->AddModuleProvider(name, provider);
+    } else {
+      turboModulesProvider->AddModuleProvider(name, provider);
+    }
+  };
+
+  registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
+
+  registerTurboModule(
+      L"AppState",
+      winrt::Microsoft::ReactNative::
+          MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
+  registerTurboModule(
+      L"LogBox",
+      winrt::Microsoft::ReactNative::
+          MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox, ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
+
+  registerTurboModule(
+      L"Clipboard",
+      winrt::Microsoft::ReactNative::
+          MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard, ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+
+  registerTurboModule(
+      L"DeviceInfo",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::DeviceInfo,
+          ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
+
+  registerTurboModule(
+      L"DevSettings",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::DevSettings,
+          ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+
+  registerTurboModule(
+      L"I18nManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::I18nManager,
+          ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
+}
+
 //! Initialize() is called from the native queue.
 void ReactInstanceWin::Initialize() noexcept {
   InitJSMessageThread();
@@ -217,7 +195,9 @@ void ReactInstanceWin::Initialize() noexcept {
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
 
-  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext);
+  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
+    Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
+  });
 
   Mso::PostFuture(
       m_uiQueue,
@@ -261,6 +241,13 @@ void ReactInstanceWin::Initialize() noexcept {
 
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
+          devSettings->showDevMenuCallback = [weakThis]() noexcept {
+            if (auto strongThis = weakThis.GetStrongPtr()) {
+              strongThis->m_uiQueue.Post([context = strongThis->m_reactContext]() {
+                Microsoft::ReactNative::DevMenuManager::Show(context->Properties());
+              });
+            }
+          };
 
           // Now that ReactNativeWindows is building outside devmain, it is missing
           // fix given by PR https://github.com/microsoft/react-native-windows/pull/2624 causing
@@ -280,59 +267,13 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
-          nmp->AddModuleProvider(
-              L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
-
-          nmp->AddModuleProvider(
-              L"AppState",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::AppState,
-                  ::Microsoft::ReactNativeSpecs::AppStateSpec>());
-
-          nmp->AddModuleProvider(
-              L"LogBox",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::LogBox,
-                  ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
-
-          if (m_options.UseWebDebugger()) {
-            nmp->AddModuleProvider(
-                L"Clipboard",
-                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                    ::Microsoft::ReactNative::Clipboard,
-                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
-          } else {
-            m_options.TurboModuleProvider->AddModuleProvider(
-                L"Clipboard",
-                winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                    ::Microsoft::ReactNative::Clipboard,
-                    ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
-          }
-
           ::Microsoft::ReactNative::DevSettings::SetReload(
               strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
                 if (auto reactHost = weakReactHost.GetStrongPtr()) {
                   reactHost->ReloadInstance();
                 }
               });
-
-          nmp->AddModuleProvider(
-              L"DeviceInfo",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::DeviceInfo,
-                  ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
-
-          nmp->AddModuleProvider(
-              L"DevSettings",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::DevSettings,
-                  ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
-
-          nmp->AddModuleProvider(
-              L"I18nManager",
-              winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-                  ::Microsoft::ReactNative::I18nManager,
-                  ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
+          LoadModules(nmp, m_options.TurboModuleProvider);
 
           auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());
           cxxModules.insert(

@@ -1,10 +1,12 @@
-**/node_modules
 /dist
 /flow
 /index.*
+/IntegrationTests
 /jest
 /lib
 /Libraries
+/local-cli/lib
+/local-cli/lib-commonjs
 /packages
 /ReactCopies
 /RNTester

@@ -5,7 +5,9 @@
  * @format
  */
 
+import * as FileSearch from './FileSearch';
 import * as inquirer from 'inquirer';
+import * as path from 'path';
 
 import Override from './Override';
 import OverrideFactory from './OverrideFactory';
@@ -14,23 +16,28 @@ export type OverridePromptAnswers =
   | {type: 'derived'; baseFile: string; codeCopied: boolean; issue?: number}
   | {type: 'patch'; baseFile: string; issue: number}
   | {type: 'platform'}
-  | {type: 'copy'; baseFile: string; issue: number};
+  | {type: 'copy'; baseFile: string; issue: number}
+  | {type: 'directoryCopy'; baseDirectory: string; issue: number};
 
 export async function overrideFromDetails(
   overridePath: string,
   answers: OverridePromptAnswers,
   factory: OverrideFactory,
 ): Promise<Override> {
+  const manifestPath = await FileSearch.findManifest(overridePath);
+  const manifestDir = path.dirname(manifestPath);
+  const overrideName = path.normalize(path.relative(manifestDir, overridePath));
+
   switch (answers.type) {
     case 'derived':
       return factory.createDerivedOverride(
-        overridePath,
+        overrideName,
         answers.baseFile,
         answers.issue,
       );
     case 'patch':
       return factory.createPatchOverride(
-        overridePath,
+        overrideName,
         answers.baseFile,
         answers.issue,
       );
@@ -38,8 +45,14 @@ export async function overrideFromDetails(
       return factory.createPlatformOverride(overridePath);
     case 'copy':
       return factory.createCopyOverride(
-        overridePath,
+        overrideName,
         answers.baseFile,
+        answers.issue,
+      );
+    case 'directoryCopy':
+      return factory.createDirectoryCopyOverride(
+        overrideName,
+        answers.baseDirectory,
         answers.issue,
       );
   }
@@ -72,9 +85,14 @@ export async function promptForOverrideDetails(): Promise<
           short: 'Platform',
         },
         {
-          name: 'Exact copy of an upstream file',
+          name: 'Copy of an upstream file',
           value: 'copy',
           short: 'Copy',
+        },
+        {
+          name: 'Copy of an upstream directory',
+          value: 'directoryCopy',
+          short: 'Directory Copy',
         },
       ],
     },
@@ -88,7 +106,7 @@ export async function promptForOverrideDetails(): Promise<
     {
       when: res =>
         (res.type === 'derived' && res.codeCopied) ||
-        ['copy', 'patch'].includes(res.type),
+        ['copy', 'directoryCopy', 'patch'].includes(res.type),
       type: 'input',
       validate: validateIssueNumber,
       filter: filterIssueNumber,
@@ -101,6 +119,12 @@ export async function promptForOverrideDetails(): Promise<
       type: 'input',
       name: 'baseFile',
       message: 'What file is this override based off of?',
+    },
+    {
+      when: res => res.type === 'directoryCopy',
+      type: 'input',
+      name: 'baseDirectory',
+      message: 'What directory are you copying from?',
     },
   ]);
 }

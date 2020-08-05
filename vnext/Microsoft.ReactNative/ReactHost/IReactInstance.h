@@ -18,8 +18,7 @@ struct INativeUIManager;
 }
 } // namespace facebook
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct IXamlRootView;
 class ExpressionAnimationStore;
@@ -60,5 +59,4 @@ struct IReactInstance {
   virtual bool IsLoaded() const noexcept = 0;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -135,9 +135,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.cpp">
-      <Filter>jscallinvoker\ReactCommon</Filter>
-    </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
       <Filter>yoga\event</Filter>
     </ClCompile>
@@ -262,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h">
       <Filter>turbomodule\core</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.h">
-      <Filter>jscallinvoker\ReactCommon</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h">
       <Filter>jscallinvoker\ReactCommon</Filter>

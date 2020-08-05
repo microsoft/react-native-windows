@@ -5,10 +5,9 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
-class InterpolationAnimatedNode : public ValueAnimatedNode {
+class InterpolationAnimatedNode final : public ValueAnimatedNode {
  public:
   InterpolationAnimatedNode(
       int64_t tag,
@@ -56,5 +55,4 @@ class InterpolationAnimatedNode : public ValueAnimatedNode {
   static constexpr std::wstring_view s_inputName{L"i"};
   static constexpr std::wstring_view s_outputName{L"o"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

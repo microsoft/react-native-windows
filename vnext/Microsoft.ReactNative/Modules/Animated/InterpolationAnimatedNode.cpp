@@ -7,8 +7,7 @@
 #include "InterpolationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 InterpolationAnimatedNode::InterpolationAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -43,7 +42,7 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
   const auto [rawValueAnimation, offsetAnimation] = [this]() {
     if (const auto manager = m_manager.lock()) {
       if (const auto parent = manager->GetValueAnimatedNode(m_parentTag)) {
-        const auto compositor = xaml::Window::Current().Compositor();
+        const auto compositor = react::uwp::GetCompositor();
 
         const auto rawValueAnimation = CreateExpressionAnimation(compositor, *parent);
         rawValueAnimation.Expression(
@@ -167,5 +166,4 @@ winrt::hstring InterpolationAnimatedNode::GetRightExpression(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

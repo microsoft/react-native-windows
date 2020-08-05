@@ -17,8 +17,7 @@
 
 using namespace std::placeholders;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 ShadowNodeBase::ShadowNodeBase() : m_view(nullptr) {}
 
@@ -103,7 +102,7 @@ void ShadowNodeBase::ReparentView(XamlView view) {
 
 comp::CompositionPropertySet ShadowNodeBase::EnsureTransformPS() {
   if (m_transformPS == nullptr) {
-    m_transformPS = xaml::Window::Current().Compositor().CreatePropertySet();
+    m_transformPS = GetCompositor(GetView()).CreatePropertySet();
     UpdateTransformPS();
   }
 
@@ -124,7 +123,8 @@ void ShadowNodeBase::UpdateTransformPS() {
     m_transformPS.InsertVector3(L"center", {0, 0, 0});
     auto instance = GetViewManager()->GetReactInstance().lock();
     assert(instance != nullptr);
-    auto centeringAnimation = instance->GetExpressionAnimationStore().GetElementCenterPointExpression();
+    auto centeringAnimation =
+        instance->GetExpressionAnimationStore().GetElementCenterPointExpression(GetCompositor(GetView()));
     centeringAnimation.SetExpressionReferenceParameter(L"uielement", uielement);
     m_transformPS.StartAnimation(L"center", centeringAnimation);
 
@@ -162,5 +162,4 @@ void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -55,6 +55,7 @@ BEGIN
     POPUP "&File"
     BEGIN
         MENUITEM "&Open Javascript File...\tCtrl+O", IDM_OPENJSFILE
+        MENUITEM "&New Window\tCtrl+N",         IDM_NEWWINDOW
         MENUITEM "&Refresh\tF5",                IDM_REFRESH
         MENUITEM SEPARATOR
         MENUITEM "&Settings...\tAlt+S",         IDM_SETTINGS
@@ -77,6 +78,7 @@ IDC_PLAYGROUND_WIN32 ACCELERATORS
 BEGIN
     "?",            IDM_ABOUT,              ASCII,  ALT
     "/",            IDM_ABOUT,              ASCII,  ALT
+    "N",            IDM_NEWWINDOW,          VIRTKEY, CONTROL
     "O",            IDM_OPENJSFILE,         VIRTKEY, CONTROL
     "S",            IDM_SETTINGS,           VIRTKEY, ALT
     VK_F5,          IDM_REFRESH,            VIRTKEY 
@@ -148,6 +150,16 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "Island_256.ico"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

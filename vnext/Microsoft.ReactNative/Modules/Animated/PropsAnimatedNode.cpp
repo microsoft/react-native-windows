@@ -11,8 +11,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -22,20 +21,19 @@ PropsAnimatedNode::PropsAnimatedNode(
   for (const auto &entry : config.find("props").dereference().second.items()) {
     m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
   }
-
-  m_subchannelPropertySet = xaml::Window::Current().Compositor().CreatePropertySet();
+  auto compositor = react::uwp::GetCompositor();
+  m_subchannelPropertySet = compositor.CreatePropertySet();
   m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
   m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
 
-  m_translationCombined = xaml::Window::Current().Compositor().CreateExpressionAnimation(
-      L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
+  m_translationCombined =
+      compositor.CreateExpressionAnimation(L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
   m_translationCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
   m_translationCombined.Target(L"Translation");
 
-  m_scaleCombined = xaml::Window::Current().Compositor().CreateExpressionAnimation(
-      L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
+  m_scaleCombined = compositor.CreateExpressionAnimation(L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
   m_scaleCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
   m_scaleCombined.Target(L"Scale");
 }
@@ -118,7 +116,7 @@ void PropsAnimatedNode::StartAnimations() {
       // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
       EnsureUIElementDirtyForRender(uiElement);
       uiElement.RotationAxis(m_rotationAxis);
-      for (const auto anim : m_expressionAnimations) {
+      for (const auto &anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
           m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
           uiElement.StartAnimation(m_translationCombined);
@@ -137,7 +135,7 @@ void PropsAnimatedNode::StartAnimations() {
       }
       if (m_needsCenterPointAnimation) {
         if (!m_centerPointAnimation) {
-          m_centerPointAnimation = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+          m_centerPointAnimation = react::uwp::GetCompositor().CreateExpressionAnimation();
           m_centerPointAnimation.Target(L"CenterPoint");
           m_centerPointAnimation.SetReferenceParameter(
               L"centerPointPropertySet", GetShadowNodeBase()->EnsureTransformPS());
@@ -188,7 +186,7 @@ void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
 void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType) {
   if (const auto manager = m_manager.lock()) {
     if (const auto valueNode = manager->GetValueAnimatedNode(valueNodeTag)) {
-      const auto animation = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+      const auto animation = react::uwp::GetCompositor().CreateExpressionAnimation();
       animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
       animation.Expression(
           static_cast<winrt::hstring>(L"ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
@@ -277,5 +275,4 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

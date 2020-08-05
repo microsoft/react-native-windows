@@ -1,16 +1,5 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "target": "es6",
-        "sourceMap": true,
-        "declaration": true,
-        "strict": true,
-        "preserveConstEnums": true,
-        "moduleResolution": "node",
-        "noUnusedLocals": true,
-        "skipLibCheck": true,
-        "rootDirs": ["src"],
-    },
-    "include": ["src"],
-    "exclude": ["node_modules"]
+  "extends": "@rnw-scripts/ts-config",
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

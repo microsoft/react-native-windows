@@ -13,6 +13,9 @@
     <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
+    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Debug'" Label="Configuration">true</LinkIncremental>
+    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Release'" Label="Configuration">false</LinkIncremental>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">
@@ -28,7 +31,7 @@
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
 
     <USE_V8 Condition="('$(USE_V8)' == '') Or ('$(Platform)' == 'ARM' OR '$(Platform)' == 'ARM64')">false</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.2.7</V8_Version>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.3.2</V8_Version>
     <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
 
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
@@ -95,6 +98,9 @@
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
         WIN32_LEAN_AND_MEAN;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(EnableWinRtLeanAndMean)' == 'true'">
         WINRT_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>

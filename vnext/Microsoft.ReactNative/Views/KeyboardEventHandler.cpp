@@ -50,8 +50,7 @@ struct json_type_traits<react::uwp::HandledKeyboardEvent> {
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const &obj) {
   return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
@@ -639,5 +638,4 @@ bool KeyboardHelper::IsModifiedKeyLocked(
       winrt::CoreVirtualKeyStates::Locked;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -1,0 +1,86 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative
+{
+    enum CanvasComposite {
+      SourceOver = 0,
+      DestinationOver,
+      SourceIn,
+      DestinationIn,
+      SourceOut,
+      DestinationOut,
+      SourceAtop,
+      DestinationAtop,
+      Xor,
+      Add,
+      Copy,
+      BoundedCopy,
+      MaskInvert,
+    } ;
+
+    enum CanvasEdgeBehavior
+    {
+      Clamp = 0,
+      Wrap,
+      Mirror,
+    };
+
+    enum EffectBorderMode
+    {
+      Soft = 0,
+      Hard,
+    };
+
+    enum EffectOptimization
+    {
+      Speed = 0,
+      Balanced,
+      Quality,
+    };
+
+    //----------------------------------------------------------------------------------------------
+
+    [default_interface]
+    [webhosthidden]
+    runtimeclass BorderEffect : Windows.Graphics.Effects.IGraphicsEffect
+    {
+      CanvasEdgeBehavior ExtendX { get; set; };
+      CanvasEdgeBehavior ExtendY { get; set; };
+      Windows.Graphics.Effects.IGraphicsEffectSource Source { get; set; };
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    [default_interface]
+    [webhosthidden]
+    runtimeclass GaussianBlurEffect : Windows.Graphics.Effects.IGraphicsEffect
+    {
+      Single BlurAmount { get; set; };
+      EffectOptimization Optimization { get; set; };
+      EffectBorderMode BorderMode { get; set; };
+      Windows.Graphics.Effects.IGraphicsEffectSource Source { get; set; };
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // A variation on the Win2D CompositeEffect that only accepts two sources
+    [default_interface]
+    [webhosthidden]
+    runtimeclass CompositeStepEffect : Windows.Graphics.Effects.IGraphicsEffect
+    {
+      CanvasComposite Mode { get; set; };
+      Windows.Graphics.Effects.IGraphicsEffectSource Destination { get; set; };
+      Windows.Graphics.Effects.IGraphicsEffectSource Source { get; set; };
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    [default_interface]
+    [webhosthidden]
+    runtimeclass ColorSourceEffect : Windows.Graphics.Effects.IGraphicsEffect
+    {
+      Windows.UI.Color Color { get; set; };
+    }
+
+    //----------------------------------------------------------------------------------------------
+}

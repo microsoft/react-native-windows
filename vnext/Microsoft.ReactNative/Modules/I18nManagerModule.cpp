@@ -5,6 +5,7 @@
 #include "I18nManagerModule.h"
 #include <IReactDispatcher.h>
 #include <XamlUtils.h>
+#include <utils/Helpers.h>
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <winrt/Windows.Globalization.h>
 #include "Unicode.h"
@@ -27,7 +28,8 @@ static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
 }
 
 void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  if (xaml::TryGetCurrentApplication()) {
+  if (xaml::TryGetCurrentApplication() && !react::uwp::IsXamlIsland()) {
+    // TODO: Figure out packaged win32 app story for WinUI 3
     auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
                                .GetForCurrentView()
                                .QualifierValues()

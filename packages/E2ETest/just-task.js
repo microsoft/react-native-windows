@@ -8,22 +8,16 @@
 const {
   task,
   series,
-  option,
   argv,
   tscTask,
   eslintTask,
+  cleanTask,
 } = require('just-scripts');
 const fs = require('fs');
 
-option('production');
-option('clean');
-
-task('eslint', () => {
-  return eslintTask();
-});
-task('eslint:fix', () => {
-  return eslintTask({ fix: true });
-});
+task('clean', cleanTask({ paths: ['dist'] }));
+task('eslint', eslintTask());
+task('eslint:fix', eslintTask({ fix: true }));
 task('ts', () => {
   return tscTask({
     pretty: true,

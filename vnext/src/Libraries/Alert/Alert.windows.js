@@ -6,8 +6,8 @@
  */
 'use strict';
 
-const NativeModules = require('../BatchedBridge/NativeModules');
-const AlertNative = NativeModules.Alert;
+import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+const AlertNative = TurboModuleRegistry.getEnforcing('Alert');
 
 export type AlertType =
   | 'default'

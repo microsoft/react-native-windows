@@ -1,8 +1,265 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 28 Jun 2020 05:04:51 GMT and should not be manually modified.
+This log was last generated on Fri, 31 Jul 2020 05:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.134
+
+Fri, 31 Jul 2020 05:05:10 GMT
+
+### Changes
+
+- WinUI 3 islands support (asklar@microsoft.com)
+
+## 0.0.0-canary.133
+
+Thu, 30 Jul 2020 05:04:47 GMT
+
+### Changes
+
+- Share packager connection between instances to same packager (email not defined)
+
+## 0.0.0-canary.132
+
+Wed, 29 Jul 2020 05:04:59 GMT
+
+### Changes
+
+- Update codegen targets for source mode to use property instead of items (dannyvv@microsoft.com)
+
+## 0.0.0-canary.131
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Changes
+
+- Separate local-cli into its own package (ngerlem@microsoft.com)
+- Clang tidy, wave 2 (asklar@microsoft.com)
+- Deploy apps in CI because we want to ensure we are catching cli deployment issues (asklar@microsoft.com)
+
+## 0.0.0-canary.130
+
+Sun, 26 Jul 2020 05:06:58 GMT
+
+### Changes
+
+- Integrate Up To The Base of React Native 0.63 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.129
+
+Sat, 25 Jul 2020 05:04:34 GMT
+
+### Changes
+
+- clang tidy, wave 1 (asklar@microsoft.com)
+
+## 0.0.0-canary.128
+
+Fri, 24 Jul 2020 05:05:51 GMT
+
+### Changes
+
+- Stop placing Microsoft.ReactNative.Cxx in the Microsoft.ReactNative nuget package (dannyvv@microsoft.com)
+- Update V8 package version (tudorm@microsoft.com)
+
+## 0.0.0-canary.127
+
+Thu, 23 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move legacy tests to end of list (kmelmon@microsoft.com)
+
+## 0.0.0-canary.126
+
+Wed, 22 Jul 2020 05:04:42 GMT
+
+### Changes
+
+- move e2etest pages into rntester (kmelmon@microsoft.com)
+- Implement Image tintColor style prop (email not defined)
+- move to winui3 preview 2 (asklar@microsoft.com)
+- Use compositor in TLS (asklar@microsoft.com)
+
+## 0.0.0-canary.125
+
+Tue, 21 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Remove ReactWindows-Universal.sln and update publish.yml to use Microsoft.React-native.sln (dannyvv@microsoft.com)
+- Display expected answers and default one (sam@elborai.me)
+- Update e2e-testing.md (dannyvv@microsoft.com)
+- Add windows adk to machine setup script (for build lab) (dannyvv@microsoft.com)
+
+## 0.0.0-canary.124
+
+Sat, 18 Jul 2020 05:04:20 GMT
+
+### Changes
+
+- Fix layout deploy (asklar@microsoft.com)
+- Enabeling SourceLink support. (dannyvv@microsoft.com)
+- Add fix for msbuild long paths in fixup script (dannyvv@microsoft.com)
+
+## 0.0.0-canary.123
+
+Fri, 17 Jul 2020 05:06:31 GMT
+
+### Changes
+
+- Codesign Microsoft.ReactNative binaries and nuget package (disabled) (jthysell@microsoft.com)
+
+## 0.0.0-canary.122
+
+Thu, 16 Jul 2020 05:04:45 GMT
+
+### Changes
+
+- Implement Image blurRadius (email not defined)
+- Add support for `Task` and `Task<T>` async methods for C# native modules. (dannyvv@microsoft.com)
+- Add debugging output for image load failures (asklar@microsoft.com)
+- Have Desktop int. tests consume DLL. (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.121
+
+Wed, 15 Jul 2020 05:04:55 GMT
+
+### Changes
+
+- Move some templates to shared location. (dannyvv@microsoft.com)
+
+## 0.0.0-canary.120
+
+Tue, 14 Jul 2020 05:05:25 GMT
+
+### Changes
+
+- don't error out on errors from installing dependent framework packages (asklar@microsoft.com)
+- Start using xamlroot's compositor when available for islands to work. This enables most of playground win32 for rnw-on-winui3 for a pre-preview 2 build (asklar@microsoft.com)
+
+## 0.0.0-canary.119
+
+Sun, 12 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Move index file to flow (acoates@microsoft.com)
+
+## 0.0.0-canary.118
+
+Sat, 11 Jul 2020 05:09:38 GMT
+
+### Changes
+
+- Move contents of ReactDirectories.props to Directory.build.props (ngerlem@microsoft.com)
+- Define Set/Get FeatureGate (julio.rocha@microsoft.com)
+- Create nuget package for Microsoft.ReacNative.Cxx (dannyvv@microsoft.com)
+- [Image] Remove resizemode assert (email not defined)
+- Automatically Pull In New Files from RNTester and IntegrationTests (ngerlem@microsoft.com)
+
+## 0.0.0-canary.117
+
+Fri, 10 Jul 2020 05:06:06 GMT
+
+### Changes
+
+- Make IWebSocketResource methods noexcept. (julio.rocha@microsoft.com)
+- run-windows cannot find built app with default init app (acoates@microsoft.com)
+- Create nuget package for Managed CodeGen (dannyvv@microsoft.com)
+
+## 0.0.0-canary.116
+
+Wed, 08 Jul 2020 05:04:59 GMT
+
+### Changes
+
+- Dont try to parseJson unless redbox error starts with { (acoates@microsoft.com)
+- Deploy dependencies when registering from layout (asklar@microsoft.com)
+
+## 0.0.0-canary.115
+
+Wed, 08 Jul 2020 01:27:37 GMT
+
+### Changes
+
+- Add a bunch of deps we are using but not declaring (acoates@microsoft.com)
+- Fix #4809: Remove the /flow folder from the shipping npm package (dannyvv@microsoft.com)
+- Rever to new experimentalNuGetDependency Naming (ngerlem@microsoft.com)
+
+## 0.0.0-canary.114
+
+Tue, 07 Jul 2020 05:05:23 GMT
+
+### Changes
+
+- Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package (dannyvv@microsoft.com)
+
+## 0.0.0-canary.113
+
+Mon, 06 Jul 2020 23:11:46 GMT
+
+### Changes
+
+- Add Support for Binary Overrides to react-native-platform-override (ngerlem@microsoft.com)
+- Create a Programmatic API for react-native-platform-override (ngerlem@microsoft.com)
+
+## 0.0.0-canary.112
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Changes
+
+- Enforce null/undefined safety for the CLI (ngerlem@microsoft.com)
+- Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package (dannyvv@microsoft.com)
+- Remove github actions workflow for CI and publish (dannyvv@microsoft.com)
+- Include "nuget.exe" as Package Dependency of react-native-windows (ngerlem@microsoft.com)
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+- Cleanup VS Installation Related CLI code (ngerlem@microsoft.com)
+- add guard to ensure only one version of XAML is loaded (asklar@microsoft.com)
+
+## 0.0.0-canary.111
+
+Thu, 02 Jul 2020 05:05:06 GMT
+
+### Changes
+
+- Migrate 'AppState' to turbo module (zihanc@microsoft.com)
+- Migrate 'DeviceInfo' to turbo module (zihanc@microsoft.com)
+- Migrate 'I18nManager' to turbo module (zihanc@microsoft.com)
+
+## 0.0.0-canary.110
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Changes
+
+- Fix compile warnings (dannyvv@microsoft.com)
+- Remove delayload dependencies on some winrt apisets, to reduce warning count (dannyvv@microsoft.com)
+- Migrate 'DevSettings' to turbo module (zihanc@microsoft.com)
+- Migrate 'LogBox' to turbo module (zihanc@microsoft.com)
+- Implement REACT_CONSTANT as getConstants sync method for turbo module (zihanc@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Migrate "Alert" to turbo module (zihanc@microsoft.com)
+
+## 0.0.0-canary.109
+
+Tue, 30 Jun 2020 05:06:03 GMT
+
+### Changes
+
+- Call AppPolicyGetWindowingModel dynamically since it's WACK-banned (asklar@microsoft.com)
+
+## 0.0.0-canary.108
+
+Mon, 29 Jun 2020 05:04:57 GMT
+
+### Changes
+
+- Removed references to ReactWindowsCore (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.107
 

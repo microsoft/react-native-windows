@@ -66,7 +66,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <IncludePath>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

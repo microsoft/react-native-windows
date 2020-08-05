@@ -1,0 +1,31 @@
+import "IJSValueReader.idl";
+import "IJSValueWriter.idl";
+import "IReactContext.idl";
+import "IReactModuleBuilder.idl";
+import "IReactNonAbiValue.idl";
+import "IReactPackageBuilder.idl";
+import "RedBoxHandler.idl";
+
+namespace Microsoft.Internal {
+
+  // This class is a development staging artifact owed to the incremental buildup of the C++/WinRT-based ABI of
+  // the Win32 DLL. It enables testing of "peripheral" components prior to the availability of more "central" components
+  // (e.g. instance management components). This class should get removed once the peripheral components can get tested
+  // via the more central components.
+  static runtimeclass TestController {
+    static Microsoft.ReactNative.IJSValueReader CreateDynamicReader(Microsoft.ReactNative.IJSValueWriter writer);
+    static Microsoft.ReactNative.IJSValueWriter CreateDynamicWriter();
+    static Microsoft.ReactNative.IReactContext CreateContext(
+        Microsoft.ReactNative.IReactPropertyBag propertyBag,
+        Microsoft.ReactNative.IReactNotificationService notificationService);
+    static Microsoft.ReactNative.IReactModuleBuilder CreateReactModuleBuilder(
+        Microsoft.ReactNative.IReactContext context);
+    static Microsoft.ReactNative.IReactPackageBuilder CreateReactPackageBuilder();
+    static Microsoft.ReactNative.IRedBoxErrorFrameInfo CreateRedBoxErrorFrameInfo(
+        String file, String method, UInt32 line, UInt32 column);
+    static Microsoft.ReactNative.IRedBoxErrorInfo CreateRedBoxErrorInfo(
+        String message, UInt32 id, Microsoft.ReactNative.IRedBoxErrorFrameInfo[] callstack);
+    static Microsoft.ReactNative.IReactNonAbiValue CreateNonAbiValue(Int32 value);
+  };
+
+} // namespace Microsoft.Internal

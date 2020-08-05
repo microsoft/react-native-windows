@@ -58,7 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertyS
 		PropertySheets\Debug.props = PropertySheets\Debug.props
 		PropertySheets\React.Cpp.props = PropertySheets\React.Cpp.props
 		PropertySheets\ReactCommunity.cpp.props = PropertySheets\ReactCommunity.cpp.props
-		PropertySheets\ReactDirectories.props = PropertySheets\ReactDirectories.props
 		PropertySheets\ReactPatches.targets = PropertySheets\ReactPatches.targets
 		PropertySheets\Release.props = PropertySheets\Release.props
 		PropertySheets\Warnings.props = PropertySheets\Warnings.props

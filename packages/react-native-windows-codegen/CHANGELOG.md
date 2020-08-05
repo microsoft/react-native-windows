@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-codegen
 
-This log was last generated on Fri, 26 Jun 2020 23:59:27 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.8
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Patches
+
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
 
 ## 0.0.7
 

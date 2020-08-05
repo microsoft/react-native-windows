@@ -1,8 +1,58 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sun, 28 Jun 2020 05:04:51 GMT and should not be manually modified.
+This log was last generated on Fri, 31 Jul 2020 05:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.22
+
+Fri, 31 Jul 2020 05:05:10 GMT
+
+### Patches
+
+- Fix devmode for react-native-windows-init to add the package to packages.config as well (dannyvv@microsoft.com)
+
+## 0.1.21
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Patches
+
+- Separate local-cli into its own package (ngerlem@microsoft.com)
+
+## 0.1.19
+
+Wed, 08 Jul 2020 01:27:37 GMT
+
+### Patches
+
+- Rever to new experimentalNuGetDependency Naming (ngerlem@microsoft.com)
+
+## 0.1.19-0
+
+Tue, 07 Jul 2020 05:05:23 GMT
+
+### Changes
+
+- Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package (dannyvv@microsoft.com)
+
+## 0.1.17
+
+Fri, 03 Jul 2020 05:05:03 GMT
+
+### Patches
+
+- Replace Custom Generator Prompt With Inquirer (ngerlem@microsoft.com)
+
+## 0.1.16
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Patches
+
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
 
 ## 0.1.15
 

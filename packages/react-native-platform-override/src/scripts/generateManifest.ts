@@ -11,15 +11,15 @@ import * as Serialized from '../Serialized';
 import * as ora from 'ora';
 import * as path from 'path';
 
+import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
-import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';
 
 import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../PackageUtils';
 import {hashContent} from '../Hash';
+import isutf8 from 'isutf8';
 
 const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
-const WHITESPACE_PATTERN = /\s/g;
 
 (async () => {
   const ovrPath = process.argv[2];
@@ -32,14 +32,18 @@ const WHITESPACE_PATTERN = /\s/g;
 
   const version = await getInstalledRNVersion();
   const [overrides, reactSources] = await getFileRepos(ovrPath, version);
-  const manifest: Serialized.Manifest = {overrides: []};
+  const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
+    overrides: [],
+  };
   const overrideFiles = await overrides.listFiles();
 
   let i = 0;
   for (const file of overrideFiles) {
     spinner.text = `Creating manifest (${++i}/${overrideFiles.length})`;
 
-    const contents = (await overrides.getFileContents(file))!;
+    const contents = (await overrides.readFile(file))!;
     (await tryAddCopy(file, version, contents, reactSources, manifest)) ||
       (await tryAddPatch(file, version, contents, reactSources, manifest)) ||
       (await tryAddDerived(file, version, contents, reactSources, manifest)) ||
@@ -55,15 +59,16 @@ const WHITESPACE_PATTERN = /\s/g;
 async function tryAddCopy(
   filename: string,
   rnVersion: string,
-  override: string,
+  overrideContent: Buffer,
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
 ): Promise<boolean> {
-  const baseContents = (await reactSources.getFileContents(filename))!;
+  const baseContent = await reactSources.readFile(filename);
+  if (!baseContent) {
+    return false;
+  }
 
-  const baseSignificantChars = baseContents.replace(WHITESPACE_PATTERN, '');
-  const ovrSignificantChars = override.replace(WHITESPACE_PATTERN, '');
-  if (baseSignificantChars !== ovrSignificantChars) {
+  if (hashContent(baseContent) !== hashContent(overrideContent)) {
     return false;
   }
 
@@ -72,7 +77,7 @@ async function tryAddCopy(
     file: filename,
     baseFile: filename,
     baseVersion: rnVersion,
-    baseHash: hashContent(baseContents),
+    baseHash: hashContent(baseContent),
     issue: 0,
   });
 
@@ -82,25 +87,25 @@ async function tryAddCopy(
 async function tryAddPatch(
   filename: string,
   rnVersion: string,
-  override: string,
+  overrideContent: Buffer,
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
 ): Promise<boolean> {
   const baseFile = filename.replace(WIN_PLATFORM_EXT, '');
-  const baseContents = await reactSources.getFileContents(baseFile);
+  const baseContent = await reactSources.readFile(baseFile);
 
-  if (!baseContents) {
+  if (!baseContent) {
     return false;
   }
 
-  const {similar} = computeSimilarity(override, baseContents);
+  const {similar} = computeSimilarity(overrideContent, baseContent);
   if (similar) {
     manifest.overrides.push({
       type: 'patch',
       file: filename,
       baseFile: baseFile,
       baseVersion: rnVersion,
-      baseHash: hashContent(baseContents),
+      baseHash: hashContent(baseContent),
       issue: 'LEGACY_FIXME',
     });
   } else {
@@ -113,15 +118,16 @@ async function tryAddPatch(
 async function tryAddDerived(
   filename: string,
   rnVersion: string,
-  override: string,
+  overrideContent: Buffer,
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
 ): Promise<boolean> {
-  const matches: Array<{file: string; contents: string; dist: number}> = [];
+  const matches: Array<{file: string; contents: Buffer; dist: number}> = [];
 
   const droidFile = filename.replace(WIN_PLATFORM_EXT, '.android');
-  const droidContents = await reactSources.getFileContents(droidFile);
-  const droidSim = droidContents && computeSimilarity(override, droidContents);
+  const droidContents = await reactSources.readFile(droidFile);
+  const droidSim =
+    droidContents && computeSimilarity(overrideContent, droidContents);
   if (droidSim && droidSim.similar) {
     matches.push({
       file: droidFile,
@@ -131,8 +137,8 @@ async function tryAddDerived(
   }
 
   const iosFile = filename.replace(WIN_PLATFORM_EXT, '.ios');
-  const iosContents = await reactSources.getFileContents(iosFile);
-  const iosSim = iosContents && computeSimilarity(override, iosContents);
+  const iosContents = await reactSources.readFile(iosFile);
+  const iosSim = iosContents && computeSimilarity(overrideContent, iosContents);
   if (iosSim && iosSim.similar) {
     matches.push({
       file: iosFile,
@@ -177,9 +183,9 @@ async function getFileRepos(
   overrideovrPath: string,
   rnVersion: string,
 ): Promise<
-  [FileRepository.OverrideFileRepository, FileRepository.ReactFileRepository]
+  [FileRepository.WritableFileRepository, FileRepository.ReactFileRepository]
 > {
-  const overrides = new OverrideFileRepositoryImpl(overrideovrPath);
+  const overrides = new FileSystemRepository(overrideovrPath);
 
   const versionedReactSources = await GitReactFileRepository.createAndInit();
   const reactSources = FileRepository.bindVersion(
@@ -191,17 +197,25 @@ async function getFileRepos(
 }
 
 function computeSimilarity(
-  override: string,
-  source: string,
+  override: Buffer,
+  source: Buffer,
 ): {similar: boolean; editDistance: number} {
-  override = stripCopyrightHeaders(override);
-  source = stripCopyrightHeaders(source);
+  if (!isutf8(override) || !isutf8(source)) {
+    return {similar: false, editDistance: NaN};
+  }
+
+  let overrideStr = override.toString();
+  let sourceStr = source.toString();
+
+  overrideStr = stripCopyrightHeaders(overrideStr);
+  sourceStr = stripCopyrightHeaders(sourceStr);
 
   const differ = new diff_match_patch();
-  const diffs = differ.diff_main(source, override);
+  const diffs = differ.diff_main(sourceStr, overrideStr);
 
   const editDistance = differ.diff_levenshtein(diffs);
-  const similar = editDistance / Math.max(override.length, source.length) < 0.8;
+  const similar =
+    editDistance / Math.max(overrideStr.length, sourceStr.length) < 0.8;
   return {similar, editDistance};
 }
 

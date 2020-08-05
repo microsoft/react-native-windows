@@ -12,16 +12,16 @@
 
 const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
 
-// [Windows
+// [Win32
 //const UIManager = require('../../ReactNative/UIManager');
 
 const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
-// Windows]
+// Win32]
 
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
-const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
+// const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange'; [Win32]
 
 type ChangeEventName = $Keys<{
   change: string,
@@ -100,7 +100,7 @@ const AccessibilityInfo = {
    */
   get fetch(): () => Promise<boolean> {
     console.warn(
-      'AccessibilityInfo.fetch is deprecated, call Accessibility.isScreenReaderEnabled instead',
+      'AccessibilityInfo.fetch is deprecated, call AccessibilityInfo.isScreenReaderEnabled instead',
     );
     return this.isScreenReaderEnabled;
   },
@@ -162,7 +162,10 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#announceforaccessibility
    */
   // [Windows] add reactTag
-  announceForAccessibility: function(announcement: string, reactTag?: ?number): void {
+  announceForAccessibility: function(
+    announcement: string,
+    reactTag?: ?number,
+  ): void {
     if (NativeAccessibilityInfo) {
       NativeAccessibilityInfo.announceForAccessibility(announcement, reactTag);
     }

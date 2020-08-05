@@ -5,8 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class RefreshControlViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -25,5 +24,4 @@ class RefreshControlViewManager : public FrameworkElementViewManager {
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -8,7 +8,7 @@
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "watch": "tsc -w",
+    "watch": "just-scripts watch",
     "windows": "react-native run-windows",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run e2etest",
@@ -24,12 +24,14 @@
   "dependencies": {
     "prompt-sync": "^4.2.0",
     "react": "16.13.0",
-    "react-native": "0.0.0-56cf99a96",
-    "react-native-windows": "0.0.0-canary.107"
+    "react-native": "0.0.0-4a48b021d",
+    "react-native-windows": "0.0.0-canary.134"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
+    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/ts-config": "0.1.0",
     "@types/jasmine": "2.8.7",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
@@ -42,7 +44,7 @@
     "@wdio/local-runner": "5.12.1",
     "@wdio/sync": "5.12.1",
     "appium": "1.14.1",
-    "eslint": "5.1.0",
+    "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "^1.18.2",

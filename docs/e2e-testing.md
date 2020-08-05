@@ -70,7 +70,7 @@ packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
 New test page should be in E2E/app/ or its subfolder.
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
 
 ```
 // LoginTestPage.ts
@@ -176,6 +176,28 @@ describe('LoginTest', () => {
 
 1. For `yarn run e2e` or `yarn run e2ebundle`, the test continues even if one of steps like build failed. see [bug 3136](https://github.com/microsoft/react-native-windows/issues/3136) for more details
 
+# Debugging jasmine tests
+To debug in VS Code, create a configuration in your launch.json that looks like this:
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "run wdio",
+            "program": "${workspaceRoot}/run_wdio.js",
+             "args": ["controlStyle"],
+            "stopOnEntry": true,
+            "autoAttachChildProcesses": true        
+        },
+    ]
+}
+```
+If you want to run all the tests, omit args.  If you want it to run just one test, supply just the name of the test spec without the spec.ts extension as an arg.  
+
+jasmine runs in a child node process, so the "autoAttachChildProcesses" : true is required for VS Code to attach to that child process.  With that setup, you can now set breakpoints in your test specs and VS Code will let you debug your tests.
+
 # More about E2E test
 
 ## Technical Decisions
@@ -183,6 +205,11 @@ describe('LoginTest', () => {
 ### MSTest vs node test runner
 
 A `node` test runner is the first choice since we started the investigation for E2E test. React Native apps are written in JavaScript and it&#39;s a good choose to select a JavaScript framework to author the test case. It would be more friendly to the community, so MSTest with C# is excluded in our option.
+
+### Appium
+[Appium](http://appium.io/) is a W3C-standards based technology based on Selenium, a popular test technology for the web.  Appium supports Windows as well as Android, iOS, and MacOS.  It's recommended that you get some training on this technology before writing tests.  Plurualsight has some great courses, see:  
+[Appium the Big Picture](https://app.pluralsight.com/player?course=appium-big-picture&author=marcel-devries&name=6d3fc4a8-e30e-41f2-aaaf-252483d2b017&clip=5&mode=live)  
+[Getting Started with Appium](https://www.pluralsight.com/courses/getting-started-ui-testing-appium)  
 
 ### WinAppDriver + WebDriverIO + Jasmine
 There is not existing example we can follow to setup E2E testing on Windows for React Native, and I spent weeks to investigate, test and prototype for our E2E. Hereafter I explain what kind of decisions I made and why I made these decisions
@@ -264,7 +291,7 @@ No matter what JavaScript framework you choose for native app testing, you have 
 
  WinAppDriver provides rich API to help locate the UI element. If [testID](https://facebook.github.io/react-native/docs/picker-item#testid) is specified in React Native app for Windows, the locator strategy should choose `accessibility id`.
 
-A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/app/Consts.ts), then be imported by test app and test page objects or test cases.
+A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/vnext/src/RNTester/js/examples-win/LegacyTests/Consts.ts), then be imported by test app and test page objects or test cases.
 
 | **Client API** | **Locator Strategy** | **Matched Attribute in inspect.exe** | **Example** |
 | --- | --- | --- | --- |
