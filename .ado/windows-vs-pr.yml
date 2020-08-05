@@ -9,7 +9,6 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/release.yml
   - template: variables/vs2019.yml
 
 jobs:

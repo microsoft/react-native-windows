@@ -2,7 +2,6 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/release.yml
   - template: variables/vs2019.yml
 
 schedules:
