@@ -64,7 +64,7 @@ steps:
       npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file." $(extraPublishArgs)
     displayName: Publish packages to verdaccio
 
-  - template: templates/set-version-vars.yml
+  - template: set-version-vars.yml
 
   - task: NuGetToolInstaller@0
     inputs:
