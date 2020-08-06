@@ -70,32 +70,30 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
-  # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
-  - task: CmdLine@2
-    displayName: Init new project
-    inputs:
-      script: npx react-native init testcli --npm --version ${{ parameters.version }}
-      workingDirectory: $(Agent.BuildDirectory)
-
   - task: DownloadBuildArtifacts@0
     displayName: 'Download Nuget Test Feed'
     inputs:
       artifactName: NuGetTestFeed
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: ${{ parameters.useNuGet }}
-    
-  - task: CmdLine@2
-    displayName: Apply windows template (with nuget)
-    inputs:
-      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+
+  # Alias yarn to midgard-yarn which has some fixes for yarns fragility when redirected to a different server (such as verdaccio)
+  - script: |
+      yarn global add midgard-yarn@1.23.14
+      doskey yarn=midgard-yarn $*
+      cd $(Agent.BuildDirectory)
+      npx react-native init testcli --version ${{ parameters.version }}
+      cd testcli
+      npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
     condition: ${{ parameters.useNuGet }}
 
-  - task: CmdLine@2
-    displayName: Apply windows template (without nuget)
-    inputs:
-      script: npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+  - script: |
+      yarn global add midgard-yarn@1.23.14
+      doskey yarn=midgard-yarn $*
+      cd $(Agent.BuildDirectory)
+      npx react-native init testcli --version ${{ parameters.version }}
+      cd testcli
+      npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
     condition: ${{ not(parameters.useNuGet) }}
 
   - task: PowerShell@2
