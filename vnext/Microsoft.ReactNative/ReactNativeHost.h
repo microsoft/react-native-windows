@@ -28,21 +28,6 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   Windows::Foundation::IAsyncAction ReloadInstance() noexcept;
   Windows::Foundation::IAsyncAction UnloadInstance() noexcept;
 
-  winrt::event_token InstanceCreated(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
-          &handler) noexcept;
-  void InstanceCreated(winrt::event_token const &token) noexcept;
-
-  winrt::event_token InstanceLoaded(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
-          &handler) noexcept;
-  void InstanceLoaded(winrt::event_token const &token) noexcept;
-
-  winrt::event_token InstanceDestroyed(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
-          &handler) noexcept;
-  void InstanceDestroyed(winrt::event_token const &token) noexcept;
-
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
   static winrt::Microsoft::ReactNative::ReactNativeHost GetReactNativeHost(ReactPropertyBag const &properties) noexcept;

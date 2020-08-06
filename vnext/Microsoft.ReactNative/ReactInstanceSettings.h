@@ -159,11 +159,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
       winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs const &args) noexcept;
 
  private:
-  int64_t GetNextEventToken() {
-    return ++m_nextToken;
-  }
-
-  int64_t m_nextToken{0};
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{

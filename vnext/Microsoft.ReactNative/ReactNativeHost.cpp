@@ -135,16 +135,12 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.OnInstanceLoaded = [](Mso::CntPtr<Mso::React::IReactContext> &&context,
                                      Mso::React::IReactInstance &instance,
                                      const Mso::ErrorCode &err) {
-    context->Notifications().SendNotification(
-        ReactInstanceSettings::InstanceLoadedEventName(),
-        nullptr,
-        winrt::make<InstanceLoadedEventArgs>(std::move(context), !!err));
+    ReactInstanceSettings::RaiseInstanceLoaded(
+        context->Notifications(), winrt::make<InstanceLoadedEventArgs>(std::move(context), !!err));
   };
   reactOptions.OnInstanceDestroyed = [](Mso::CntPtr<Mso::React::IReactContext> &&context,
                                         Mso::React::IReactInstance &) {
-    context->Notifications().SendNotification(
-        ReactInstanceSettings::InstanceDestroyedEventName(),
-        nullptr,
+    ReactInstanceSettings::RaiseInstanceDestroyed(context->Notifications(),
         winrt::make<InstanceDestroyedEventArgs>(std::move(context)));
   };
 
