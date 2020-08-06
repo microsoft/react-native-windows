@@ -247,8 +247,7 @@ jobs:
         condition:  succeededOrFailed()
         inputs:
           pathtoPublish: '$(Build.StagingDirectory)/WACK'
-          artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration)'
-
+          artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration) ($(System.JobAttempt))'
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
