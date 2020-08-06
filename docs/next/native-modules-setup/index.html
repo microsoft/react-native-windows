@@ -254,8 +254,9 @@ The simplest way to do this is to get <a href="https://raw.githubusercontent.com
 <li>Open <code>sln</code> and <code>vxcproj</code> files and check <code>node_module</code> reference paths. Fix the paths if necessary based on how the folders are structured in native module repo (<a href="https://github.com/react-native-community/react-native-webview/blob/master/example/windows/WebViewWindows.sln#L11-L42">example</a>).</li>
 <li>Open the solution with Visual Studio and <a href="/react-native-windows/docs/next/native-modules-using">link native module</a>.</li>
 </ol>
-<pre><code class="hljs">&gt;The project should build correctly at this point, but we still need to setup some special metro configurations for Windows in order to run the app without breaking iOS and Android bundling.
-</code></pre>
+<blockquote>
+<p>The project should build correctly at this point, but we still need to setup some special metro configurations for Windows in order to run the app without breaking iOS and Android bundling.</p>
+</blockquote>
 <ol start="5">
 <li>Add <code>metro.config.windows</code> for Windows bundling (<a href="https://github.com/react-native-community/react-native-webview/blob/master/metro.config.windows.js">example</a>).</li>
 <li>In <code>package.json</code>, add a separate start command for windows and attach a special argument to tell metro to use the windows config we just created (<a href="https://github.com/react-native-community/react-native-webview/blob/master/package.json#L18">example</a>).</li>
