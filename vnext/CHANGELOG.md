@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 05 Aug 2020 05:05:11 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Aug 2020 05:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.136
+
+Thu, 06 Aug 2020 05:05:16 GMT
+
+### Changes
+
+- Split IViewManager into core and ui-dependent parts to remove dependency on XAML from Core projects (asklar@microsoft.com)
 
 ## 0.0.0-canary.135
 

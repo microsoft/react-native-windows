@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Split IViewManager into core and ui-dependent parts to remove dependency on XAML from Core projects",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-05T19:35:53.142Z"
-}
