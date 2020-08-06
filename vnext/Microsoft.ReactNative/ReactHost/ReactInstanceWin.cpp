@@ -336,7 +336,7 @@ void ReactInstanceWin::Initialize() noexcept {
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
             if (auto onCreated = m_options.OnInstanceCreated.Get()) {
-              onCreated->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext), *this);
+              onCreated->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
             }
 
             LoadJSBundles();
@@ -448,7 +448,7 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
           }
 
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
-            onLoaded->Invoke(Mso::CntPtr<IReactContext>(strongThis->m_reactContext), *strongThis, errorCode);
+            onLoaded->Invoke(Mso::CntPtr<IReactContext>(strongThis->m_reactContext), errorCode);
           }
 
           strongThis->m_whenLoaded.SetValue();
@@ -475,7 +475,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   }
 
   if (auto onDestroyed = m_options.OnInstanceDestroyed.Get()) {
-    onDestroyed->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext), *this);
+    onDestroyed->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
   }
 
   // Make sure that the instance is not destroyed yet
