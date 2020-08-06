@@ -47,8 +47,7 @@ enum class LogLevel : int32_t {
 using OnErrorCallback = Mso::Functor<void(const Mso::ErrorCode &)>;
 using OnLoggingCallback = Mso::Functor<void(LogLevel logLevel, const char *message)>;
 using OnReactInstanceCreatedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
-using OnReactInstanceLoadedCallback =
-    Mso::Functor<void(Mso::CntPtr<IReactContext> &&, const Mso::ErrorCode &)>;
+using OnReactInstanceLoadedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&, const Mso::ErrorCode &)>;
 using OnReactInstanceDestroyedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
 
 //! Returns default OnError handler.

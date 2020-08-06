@@ -163,15 +163,17 @@ IReactPropertyName InstanceDestroyedEventName() noexcept {
   notificationService.SendNotification(InstanceDestroyedEventName(), nullptr, args);
 }
 
-// Subscribes to a notification from a ReactNotificationService, then returns the IReactNotificationSubscription as a event_token
-// This allows easy implementation of winrt events which are implemented using the ReactNotifictionService.
+// Subscribes to a notification from a ReactNotificationService, then returns the IReactNotificationSubscription as a
+// event_token This allows easy implementation of winrt events which are implemented using the ReactNotifictionService.
 template <typename argsT>
 winrt::event_token subscribeToNotifications(
     IReactNotificationService const &notifications,
     IReactPropertyName const &property,
     Windows::Foundation::EventHandler<argsT> const &handler) {
   auto subscription = notifications.Subscribe(
-      property, nullptr, [handler](winrt::Windows::Foundation::IInspectable sender, const IReactNotificationArgs &args) {
+      property,
+      nullptr,
+      [handler](winrt::Windows::Foundation::IInspectable sender, const IReactNotificationArgs &args) {
         handler(sender, args.Data().as<argsT>());
       });
 
