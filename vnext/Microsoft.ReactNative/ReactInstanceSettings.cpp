@@ -171,7 +171,7 @@ winrt::event_token subscribeToNotifications(
     IReactPropertyName const &property,
     Windows::Foundation::EventHandler<argsT> const &handler) {
   auto subscription = notifications.Subscribe(
-      property, nullptr, [handler](winrt::IInspectable sender, const IReactNotificationArgs &args) {
+      property, nullptr, [handler](winrt::Windows::Foundation::IInspectable sender, const IReactNotificationArgs &args) {
         handler(sender, args.Data().as<argsT>());
       });
 
