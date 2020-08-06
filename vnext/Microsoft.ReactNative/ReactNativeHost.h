@@ -3,9 +3,6 @@
 
 #pragma once
 
-#include "InstanceCreatedEventArgs.g.h"
-#include "InstanceDestroyedEventArgs.g.h"
-#include "InstanceLoadedEventArgs.g.h"
 #include "ReactNativeHost.g.h"
 
 #include "NativeModulesProvider.h"
@@ -14,38 +11,6 @@
 #include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
-
-struct InstanceCreatedEventArgs : InstanceCreatedEventArgsT<InstanceCreatedEventArgs> {
-  InstanceCreatedEventArgs() = default;
-  InstanceCreatedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context);
-
-  winrt::Microsoft::ReactNative::IReactContext Context() noexcept;
-
- private:
-  winrt::Microsoft::ReactNative::IReactContext m_context;
-};
-
-struct InstanceLoadedEventArgs : InstanceLoadedEventArgsT<InstanceLoadedEventArgs> {
-  InstanceLoadedEventArgs() = default;
-  InstanceLoadedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context, bool failed);
-
-  winrt::Microsoft::ReactNative::IReactContext Context() noexcept;
-  bool Failed() noexcept;
-
- private:
-  winrt::Microsoft::ReactNative::IReactContext m_context;
-  bool m_failed;
-};
-
-struct InstanceDestroyedEventArgs : InstanceDestroyedEventArgsT<InstanceDestroyedEventArgs> {
-  InstanceDestroyedEventArgs() = default;
-  InstanceDestroyedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context);
-
-  winrt::Microsoft::ReactNative::IReactContext Context() noexcept;
-
- private:
-  winrt::Microsoft::ReactNative::IReactContext m_context;
-};
 
 // WinRT ABI-safe implementation of ReactHost.
 struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
@@ -84,13 +49,6 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
  private:
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;
-
-  winrt::event<Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs>>
-      m_instanceCreatedEvent;
-  winrt::event<Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs>>
-      m_instanceLoadedEvent;
-  winrt::event<Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs>>
-      m_instanceDestroyedEvent;
 
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   ReactNative::IReactPackageBuilder m_packageBuilder;
