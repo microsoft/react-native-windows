@@ -10,13 +10,6 @@ import * as fs from 'fs';
 import * as ora from 'ora';
 import * as path from 'path';
 import * as semver from 'semver';
-import {exec, ExecOptions} from 'child_process';
-import {
-  upgradeOverrides,
-  validateManifest,
-  ValidationError,
-} from 'react-native-platform-override';
-
 import * as yargs from 'yargs';
 
 import {
@@ -25,21 +18,31 @@ import {
   WritableNpmPackage,
 } from '@rnw-scripts/package-utils';
 
+import {exec, ExecOptions} from 'child_process';
+import {
+  upgradeOverrides,
+  validateManifest,
+  ValidationError,
+} from 'react-native-platform-override';
+
 import findRepoRoot from '@rnw-scripts/find-repo-root';
 
 (async () => {
-  const {argv} = yargs.check(args => {
-    if (args._.length === 1 && semver.valid(args._[0])) {
-      return true;
-    } else {
-      throw new Error('Usage: integrate-rn <version>');
-    }
-  });
+  const {argv} = yargs
+    .check(args => {
+      if (args._.length === 1 && semver.valid(args._[0])) {
+        return true;
+      } else {
+        throw new Error('Usage: integrate-rn <version>');
+      }
+    })
+    .showHelpOnFail(false);
+
   const version = argv._[0];
 
   await funcStep(
-    `Updating packages and dependencies to react-native@${version}`,
-    async () => await updateDependencies(version),
+    `Updating packages and dependants to react-native@${version}`,
+    async () => await updatePackages(version),
   );
 
   await funcStep('Upgrading out-of-date overrides', upgradePlatformOverrides);
@@ -54,7 +57,7 @@ import findRepoRoot from '@rnw-scripts/find-repo-root';
 })();
 
 /**
- * Enumerate packages for out of-tree platforms
+ * Enumerate packages for out-of-tree platforms
  */
 async function enumeratePlatformPackages(): Promise<WritableNpmPackage[]> {
   return await enumerateLocalPackages(async pkg => {
@@ -71,12 +74,24 @@ async function enumeratePlatformPackages(): Promise<WritableNpmPackage[]> {
  * Update all package.json dependencies in the repo to account for a new
  * version of React Native
  */
-async function updateDependencies(newVersion: string) {
+async function updatePackages(newVersion: string) {
+  const localPackages = await enumerateLocalPackages();
+  const platformPackages = await enumeratePlatformPackages();
+
+  if (platformPackages.length === 0) {
+    throw new Error(
+      'Expected to find a package for at least 1 out-of-tree platform',
+    );
+  }
+
+  // Use one of the out-of-tree platforms to locate a version of react-native
+  const findRnOpts = {searchPath: platformPackages[0].path};
+
   // 1. Cache a copy of the previous RN package.json
-  const origRnPackageJson = (await findPackage('react-native'))!.json;
+  const origRnJson = (await findPackage('react-native', findRnOpts))!.json;
 
   // 2. Update everything to use the new version of RN
-  for (const pkg of await enumerateLocalPackages()) {
+  for (const pkg of localPackages) {
     await updateDependency(pkg, 'react-native', newVersion);
   }
 
@@ -84,16 +99,14 @@ async function updateDependencies(newVersion: string) {
   await runCommand('yarn install');
 
   // 4.Update out of tree platforms with RN dependency changes
-  const newRnPackageJson = (await findPackage('react-native'))!.json;
-  for (const pkg of await enumeratePlatformPackages()) {
-    await applyRnDependencyChanges(pkg, origRnPackageJson, newRnPackageJson);
+  const newRnJson = (await findPackage('react-native', findRnOpts))!.json;
+  for (const pkg of platformPackages) {
+    await applyRnDependencyChanges(pkg, origRnJson, newRnJson);
   }
 
   // 5. Update packages to account for any changed peerDependencies (e.g. react)
-  for (const pkg of await enumerateLocalPackages()) {
-    for (const [name, version] of Object.entries(
-      newRnPackageJson.peerDependencies,
-    )) {
+  for (const pkg of localPackages) {
+    for (const [name, version] of Object.entries(newRnJson.peerDependencies)) {
       await updateDependency(pkg, name, version as string);
     }
   }
@@ -136,9 +149,9 @@ async function applyRnDependencyChanges(
     ...newRNJson.peerDependencies,
   };
 
-  // We can be more relaxed for devDependencies since developer environment
-  // differs more and customers don't see the dependencies. Just make sure our
-  // versions match core where we were matching before
+  // We can be more relaxed for devDependencies since developer environments
+  // differs more and react-native itself cannot depend on these. Just make
+  // sure our versions match core where we were matching before.
   const newDevDeps = pkg.json.devDependencies;
   for (const [name, version] of Object.entries(newRNJson.devDependencies)) {
     if (
@@ -159,7 +172,7 @@ async function applyRnDependencyChanges(
 /**
  * Sort an object by keys
  */
-function sortKeys(obj: Record<string, any>): Record<string, any> {
+function sortKeys<T>(obj: Record<string, T>): Record<string, T> {
   return _(obj)
     .toPairs()
     .sortBy(0)
@@ -187,12 +200,16 @@ async function updateDependency(
     devDeps[depName] = bumpSemver(devDeps[depName], newVersion);
   }
 
-  // Be more permissive with peerDependencies and only update if we're moving
-  // to something incompatible
+  // Note that updating our peerDependencies has an effect on restricting users
+  // ability to update. E.g. upgrading our repo from RN 0.63.0 to 0.63.2 would
+  // change our peerDependency from ^0.63.0 to ^0.63.2, raising the minimum
+  // version.
+  // This is probably better than the alternative though, since we require at
+  // least the version we test against, react-native-windows-init will upgrade
+  // projects based on peerDependency, and a mismatch would only show as a
+  // warning.
   if (Object.keys(peerDeps || {}).includes(depName)) {
-    if (!semver.satisfies(newVersion, peerDeps[depName])) {
-      peerDeps[depName] = bumpSemver(peerDeps[depName], newVersion);
-    }
+    peerDeps[depName] = bumpSemver(peerDeps[depName], newVersion);
   }
 
   await pkg.mergeProps({
@@ -203,7 +220,7 @@ async function updateDependency(
 }
 
 /**
- * Updates s semver version or range to use a new version, preserving previous
+ * Updates semver version or range to use a new version, preserving previous
  * range semantics. Only simple cases are supported.
  *
  * @param origVersion the original semver range/value
@@ -216,7 +233,7 @@ function bumpSemver(origVersion: string, newVersion: string): string {
 
   // Semver allows multiple ranges, hypen ranges, star ranges, etc. Don't try
   // to reason about how to bump all of those and just bail if we see them.
-  const simpleSemver = /([\^~]?)(\d+\.\d+\.\d+(-\w+\.\d+)?)/;
+  const simpleSemver = /([\^~]?)(\d+\.\d+(\.\d+)?(-\w+\.\d+)?)/;
   if (!simpleSemver.test(origVersion)) {
     throw new Error(`Unable to bump complicated semver '${origVersion}'`);
   }

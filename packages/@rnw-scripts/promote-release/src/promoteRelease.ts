@@ -52,7 +52,7 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
     });
 
     console.log('Updating package versions...');
-    await mergePropsToPackageVersions(`${argv.rnVersion}.0-preview.0`);
+    await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
   }
 
   console.log('Committing changes...');
@@ -175,7 +175,7 @@ function distTag(release: ReleaseType, version: string): string {
  * Change the version of main packages to the given string
  * @param version The new package version
  */
-async function mergePropsToPackageVersions(version: string) {
+async function updatePackageVersions(version: string) {
   const packagesToPromote = await enumeratePackagesToPromote();
   const promotedPackages = packagesToPromote.map(p => p.json.name);
 

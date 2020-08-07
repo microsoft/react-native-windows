@@ -49,17 +49,17 @@ export class WritableNpmPackage extends NpmPackage {
    * @param props key/values to merge into the package.json
    */
   async mergeProps(props: Record<string, any>) {
-    await this.mutate(p => _.merge(p, props));
+    await this.setJson(_.merge(this.json, props));
   }
 
   /**
-   * Assign properties to the package. Object.assign semantics to assign
+   * Assign properties to the package. Uses Object.assign semantics to assign
    * properties (i.e. shallow merge)
    *
    * @param props key/values to merge into the package.json
    */
   async assignProps(props: Record<string, any>) {
-    await this.mutate(p => Object.assign(p, props));
+    await this.setJson(Object.assign(this.json, props));
   }
 
   /**
@@ -68,15 +68,14 @@ export class WritableNpmPackage extends NpmPackage {
    * @param json the new JSON
    */
   async setJson(json: any) {
-    await this.mutate(_p => json);
+    this.pkgJson = json;
+    await this.wriiteJson();
   }
 
   /**
-   * Helper function to apply a mutation to package json and write to it
+   * Flush JSON to disk
    */
-  private async mutate(fn: (p: any) => any) {
-    this.pkgJson = fn(this.json);
-
+  private async wriiteJson() {
     await fs.promises.writeFile(
       path.join(this.path, 'package.json'),
       JSON.stringify(this.json, null /*replacer*/, 2 /*space*/) + '\n',
@@ -110,13 +109,16 @@ export async function enumerateLocalPackages(
 /**
  * Finds a package with a given name (local or dependency)
  */
-export async function findPackage(name: string): Promise<NpmPackage | null> {
+export async function findPackage(
+  name: string,
+  opts: {searchPath?: string} = {},
+): Promise<NpmPackage | null> {
   const resolvePaths = require.resolve.paths(`${name}/package.json`)!;
 
   let pkgJsonPath: string;
   try {
     pkgJsonPath = require.resolve(`${name}/package.json`, {
-      paths: [process.cwd(), ...resolvePaths],
+      paths: [opts.searchPath || process.cwd(), ...resolvePaths],
     });
   } catch (ex) {
     if (ex.code === 'MODULE_NOT_FOUND') {

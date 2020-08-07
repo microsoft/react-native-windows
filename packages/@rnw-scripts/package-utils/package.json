@@ -30,7 +30,6 @@
     ]
   },
   "files": [
-    "bin.js",
     "lib-commonjs"
   ]
 }
