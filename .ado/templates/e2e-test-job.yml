@@ -61,7 +61,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
-          artifactName: ReactUWPTestApp
+          artifactName: ReactUWPTestApp-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: succeededOrFailed()
 
@@ -110,7 +110,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
-          artifactName: ReactUWPTestAppTreeDump
+          artifactName: ReactUWPTestAppTreeDump-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
