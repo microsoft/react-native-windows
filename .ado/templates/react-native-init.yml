@@ -77,23 +77,32 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: ${{ parameters.useNuGet }}
 
-  - script: yarn global add midgard-yarn@1.23.14
-
   # Alias yarn to midgard-yarn which has some fixes for yarns fragility when redirected to a different server (such as verdaccio)
-  - script: |
-      echo midgard-yarn %* > yarn.cmd
-      npx react-native init testcli --template react-native@$(reactNativeDevDependency)
+  - script: yarn global add midgard-yarn@1.23.14
+    displayName: Install midgard-yarn
+
+  - script: mkdir midgard
+    displayName: Make midgard alias dir
     workingDirectory: $(Agent.BuildDirectory)
 
-  - script: |
-      echo midgard-yarn %* > yarn.cmd
-      npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+  - script: echo midgard-yarn %* > yarn.cmd
+    displayName: Alias yarn -> midgard-yarn in root
+    workingDirectory: $(Agent.BuildDirectory)/midgard
+
+  - script: setx PATH "$(Agent.BuildDirectory)/midgard;%PATH%"
+    displayName: Add midgard alias dir to path dirs
+    
+  - script: npx react-native init testcli --template react-native@$(reactNativeDevDependency)
+    displayName: react-native init
+    workingDirectory: $(Agent.BuildDirectory)
+    
+  - script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+    displayName: react-native-windows-init
     workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ parameters.useNuGet }}
 
-  - script: |
-      echo midgard-yarn %* > yarn.cmd
-      npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
+  - script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
+    displayName: react-native-windows-init
     workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ not(parameters.useNuGet) }}
 
