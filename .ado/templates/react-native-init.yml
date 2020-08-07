@@ -77,23 +77,24 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
     condition: ${{ parameters.useNuGet }}
 
+  - script: yarn global add midgard-yarn@1.23.14
+
   # Alias yarn to midgard-yarn which has some fixes for yarns fragility when redirected to a different server (such as verdaccio)
   - script: |
-      yarn global add midgard-yarn@1.23.14
       doskey yarn=midgard-yarn $*
-      cd $(Agent.BuildDirectory)
       npx react-native init testcli --version ${{ parameters.version }}
-      cd testcli
+    workingDirectory: $(Agent.BuildDirectory)
+
+  - script: |
+      doskey yarn=midgard-yarn $*
       npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
+    workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ parameters.useNuGet }}
 
   - script: |
-      yarn global add midgard-yarn@1.23.14
       doskey yarn=midgard-yarn $*
-      cd $(Agent.BuildDirectory)
-      npx react-native init testcli --version ${{ parameters.version }}
-      cd testcli
       npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
+    workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ not(parameters.useNuGet) }}
 
   - task: PowerShell@2
