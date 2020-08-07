@@ -19,8 +19,7 @@ void __cdecl SetRuntimeOptionBool(string &&name, bool value) noexcept {
   g_runtimeOptions.insert_or_assign(std::move(name), value ? 1 : 0);
 }
 
-void __cdecl SetRuntimeOptionInt(string&& name, int32_t value) noexcept
-{
+void __cdecl SetRuntimeOptionInt(string &&name, int32_t value) noexcept {
   lock_guard<mutex> guard{g_runtimeOptionsMutex};
   g_runtimeOptions.insert_or_assign(std::move(name), value);
 }
@@ -34,8 +33,7 @@ const bool __cdecl GetRuntimeOptionBool(const string &name) noexcept {
   return false;
 }
 
-const int32_t __cdecl GetRuntimeOptionInt(const string& name) noexcept
-{
+const int32_t __cdecl GetRuntimeOptionInt(const string &name) noexcept {
   lock_guard<mutex> guard{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptions.find(name);
   if (itr != g_runtimeOptions.end())
