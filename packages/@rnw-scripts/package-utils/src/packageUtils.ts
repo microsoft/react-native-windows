@@ -87,13 +87,7 @@ export class WritableNpmPackage extends NpmPackage {
    */
   async setJson(jsonObj: any) {
     this.pkgJson = jsonObj;
-    await this.wriiteJson();
-  }
 
-  /**
-   * Flush JSON to disk
-   */
-  private async wriiteJson() {
     await fs.promises.writeFile(
       path.join(this.path, 'package.json'),
       JSON.stringify(this.json, null /*replacer*/, 2 /*space*/) + '\n',

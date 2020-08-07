@@ -150,7 +150,6 @@ async function updateBeachballConfig(
 
 /**
  * Finds packages where we need to update version number + beachball config
- * @returns absolute paths to package.json
  */
 async function enumeratePackagesToPromote(): Promise<WritableNpmPackage[]> {
   return enumerateLocalPackages(async pkg => pkg.json.promoteRelease === true);
