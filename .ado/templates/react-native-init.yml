@@ -81,18 +81,18 @@ steps:
 
   # Alias yarn to midgard-yarn which has some fixes for yarns fragility when redirected to a different server (such as verdaccio)
   - script: |
-      doskey yarn=midgard-yarn $*
+      echo midgard-yarn %* > yarn.cmd
       npx react-native init testcli --template react-native@$(reactNativeDevDependency)
     workingDirectory: $(Agent.BuildDirectory)
 
   - script: |
-      doskey yarn=midgard-yarn $*
+      echo midgard-yarn %* > yarn.cmd
       npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
     workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ parameters.useNuGet }}
 
   - script: |
-      doskey yarn=midgard-yarn $*
+      echo midgard-yarn %* > yarn.cmd
       npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
     workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ not(parameters.useNuGet) }}
