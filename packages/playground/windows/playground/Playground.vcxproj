@@ -68,7 +68,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup>
-    <USE_HERMES Condition="'$(USE_HERMES)' == ''">true</USE_HERMES>
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
