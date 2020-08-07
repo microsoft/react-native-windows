@@ -29,13 +29,10 @@ MainPage::MainPage() {
     x_entryPointCombo().IsEditable(true);
   }
 
-#if !defined(USE_HERMES)
-  x_engineHermes().IsEnabled(false);
-#endif
-
-#if !defined(USE_V8)
-  x_engineV8().IsEnabled(false);
-#endif
+  // TODO: a way to determine which engines are actually available
+  x_engineChakra().IsEnabled(true);
+  x_engineHermes().IsEnabled(true);
+  x_engineV8().IsEnabled(true);
 
   x_JsEngine().SelectedIndex(0);
 }

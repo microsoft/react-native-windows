@@ -31,16 +31,16 @@ class DevServerHelper {
       const uint16_t sourceBundlePort,
       const std::string &jsbundle,
       const std::string &platform,
-      const std::string &dev,
-      const std::string &hot,
+      bool dev,
+      bool hot,
       bool inlineSourceMap) {
     return string_format(
         BundleUrlFormat,
         GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str(),
         jsbundle.c_str(),
         platform.c_str(),
-        dev.c_str(),
-        hot.c_str(),
+        dev ? "true" : "false",
+        hot ? "true" : "false",
         inlineSourceMap ? "true" : "false");
   }
 

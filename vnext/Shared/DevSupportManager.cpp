@@ -239,7 +239,7 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const std::string &platform,
     bool inlineSourceMap) {
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
-      sourceBundleHost, sourceBundlePort, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/, inlineSourceMap);
+      sourceBundleHost, sourceBundlePort, jsBundleName, platform, true /*dev*/, false /*hot*/, inlineSourceMap);
   try {
     return GetJavaScriptFromServerAsync(bundleUrl).get();
   } catch (winrt::hresult_error const &e) {
