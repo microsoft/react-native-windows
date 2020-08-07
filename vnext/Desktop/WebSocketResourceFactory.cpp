@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <FeatureGate.h>
+#include <RuntimeOptions.h>
 #include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
 

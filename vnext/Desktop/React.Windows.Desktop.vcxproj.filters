@@ -158,7 +158,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
-    <ClCompile Include="FeatureGate.cpp">
+    <ClCompile Include="RuntimeOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">

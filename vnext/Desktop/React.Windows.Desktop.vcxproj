@@ -215,7 +215,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
-    <ClCompile Include="FeatureGate.cpp" />
+    <ClCompile Include="RuntimeOptions.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />

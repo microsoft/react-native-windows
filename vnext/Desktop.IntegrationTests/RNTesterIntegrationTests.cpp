@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <FeatureGate.h>
+#include <RuntimeOptions.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
