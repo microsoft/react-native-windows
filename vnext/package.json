@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.134",
+  "version": "0.0.0-canary.136",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -87,6 +87,7 @@
     "/Microsoft.ReactNative",
     "/Microsoft.ReactNative.Cxx",
     "/Microsoft.ReactNative.Managed",
+    "/Microsoft.ReactNative.Managed.CodeGen",
     "/Microsoft.ReactNative.SharedManaged",
     "/Mso",
     "/PropertySheets",

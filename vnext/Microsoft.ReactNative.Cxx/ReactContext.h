@@ -5,7 +5,9 @@
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
+#ifndef CORE_ABI
 #include <CppWinRTIncludes.h>
+#endif
 #include <string_view>
 #include "JSValueWriter.h"
 #include "ReactNotificationService.h"
