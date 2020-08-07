@@ -36,9 +36,15 @@ class ViewViewManager : public FrameworkElementViewManager {
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
       const folly::dynamic &propertyValue) override;
+  void OnPropertiesUpdated(ShadowNodeBase *node) override;
 
   XamlView CreateViewCore(int64_t tag) override;
   void TryUpdateView(ViewShadowNode *viewShadowNode, winrt::react::uwp::ViewPanel &pPanel, bool useControl);
+
+  static xaml::Media::SolidColorBrush EnsureTransparentBrush();
+
+ private:
+  static xaml::Media::SolidColorBrush s_transparentBrush;
 };
 
 } // namespace react::uwp
