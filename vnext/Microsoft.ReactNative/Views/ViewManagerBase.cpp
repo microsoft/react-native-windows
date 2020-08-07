@@ -231,6 +231,8 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
       NotifyUnimplementedProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
+
+  OnPropertiesUpdated(nodeToUpdate);
 }
 
 bool ViewManagerBase::UpdateProperty(

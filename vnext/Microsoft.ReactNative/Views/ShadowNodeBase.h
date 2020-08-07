@@ -107,6 +107,10 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   comp::CompositionPropertySet EnsureTransformPS();
   void UpdateTransformPS();
 
+  bool IsRegisteredForMouseEvents() const {
+    return m_onMouseEnter || m_onMouseLeave || m_onMouseMove;
+  }
+
  protected:
   XamlView m_view;
   bool m_updating = false;
