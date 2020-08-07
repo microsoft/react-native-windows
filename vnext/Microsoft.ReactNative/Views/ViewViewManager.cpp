@@ -403,9 +403,15 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto panel = viewShadowNode->GetViewPanel();
 
   if (panel.Background() == nullptr) {
+    // In XAML, a null background means no hit-test will happen.
+    // We actually want hit-testing to happen if the app has registered
+    // for mouse events, so detect that case and add a transparent brush.
     if (viewShadowNode->IsHitTestBrushRequired()) {
       panel.Background(EnsureTransparentBrush());
     }
+    // Note:  Technically we could detect when the transparent brush is
+    // no longer needed, but this adds complexity and it can't hurt to
+    // keep it around, so not adding that code (yet).
   }
 
   bool shouldBeControl = viewShadowNode->IsFocusable();
