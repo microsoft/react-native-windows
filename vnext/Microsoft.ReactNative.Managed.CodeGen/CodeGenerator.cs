@@ -72,9 +72,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       //  }
       var createPackageMethod = MethodDeclaration(
           PredefinedType(Token(SyntaxKind.VoidKeyword)),
-          ReactNativeNames.CreatePackage)
+          ReactNativeNames.CreatePackageImplementation)
         .AddModifiers(
-          Token(SyntaxKind.PublicKeyword))
+          Token(SyntaxKind.PartialKeyword))
         .AddParameterListParameters(
           GetPackageBuilderArgument())
         .WithBody(
@@ -88,7 +88,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       // Generates:
       //    namespace "MyNS"
       //    {
-      //      public sealed partial ReactPackageProvider : IReactPackageProvider
+      //      public sealed partial ReactPackageProvider
       //      {
       //        ... providerMembers
       //      }
@@ -101,9 +101,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 Token(SyntaxKind.PublicKeyword),
                 Token(SyntaxKind.SealedKeyword),
                 Token(SyntaxKind.PartialKeyword))
-              .AddBaseListTypes(
-                SimpleBaseType(
-                  ReactTypes.IReactPackageProvider.ToTypeSyntax()))
               .WithMembers(
                 new SyntaxList<MemberDeclarationSyntax>(providerMembers))
           );
