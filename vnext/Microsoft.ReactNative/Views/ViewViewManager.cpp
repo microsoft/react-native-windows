@@ -309,6 +309,8 @@ bool TryUpdateBorderProperties(
 
 // ViewViewManager
 
+xaml::Media::SolidColorBrush ViewViewManager::s_transparentBrush{nullptr};
+
 ViewViewManager::ViewViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *ViewViewManager::GetName() const {
@@ -405,7 +407,7 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   if (panel.Background() == nullptr) {
     // In XAML, a null background means no hit-test will happen.
     // We actually want hit-testing to happen if the app has registered
-    // for mouse events, so detect that case and add a transparent brush.
+    // for mouse events, so detect that case and add a transparent background.
     if (viewShadowNode->IsHitTestBrushRequired()) {
       panel.Background(EnsureTransparentBrush());
     }
@@ -562,10 +564,10 @@ void ViewViewManager::SetLayoutProps(
 }
 
 xaml::Media::SolidColorBrush ViewViewManager::EnsureTransparentBrush() {
-  if (!m_transparentBrush) {
-    m_transparentBrush = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
+  if (!s_transparentBrush) {
+    s_transparentBrush = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
   }
-  return m_transparentBrush;
+  return s_transparentBrush;
 }
 
 } // namespace react::uwp
