@@ -19,7 +19,6 @@ import * as yargs from 'yargs';
 
 import {
   enumerateLocalPackages,
-  findLocalPackage,
   WritableNpmPackage,
 } from '@rnw-scripts/package-utils';
 import findRepoRoot from '@rnw-scripts/find-repo-root';
@@ -42,7 +41,7 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   if (argv.release === 'preview') {
     console.log('Updating root change script...');
-    const rootPkg = await findLocalPackage('react-native-windows-repo');
+    const rootPkg = await WritableNpmPackage.fromPath(await findRepoRoot());
     if (!rootPkg) {
       throw new Error('Unable to find root npm package');
     }

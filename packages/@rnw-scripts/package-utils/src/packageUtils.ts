@@ -24,6 +24,13 @@ export class NpmPackage {
   private pkgPath: string;
   protected pkgJson: any;
 
+  /**
+   * Create a NpmPackage from a given path to a package
+   */
+  static async fromPath(pkgPath: string): Promise<NpmPackage | null> {
+    return WritableNpmPackage.fromPath(pkgPath);
+  }
+
   constructor(pkgPath: string, pkgJson: any) {
     this.pkgPath = pkgPath;
     this.pkgJson = pkgJson;
@@ -39,9 +46,22 @@ export class NpmPackage {
 }
 
 /**
- * Represents an NPM package which may be modified
+ * Represents an NPM package with methods to modify its on-disk package.json
  */
 export class WritableNpmPackage extends NpmPackage {
+  /**
+   * Create a WritableNpmPackage from a given path to a package
+   */
+  static async fromPath(pkgPath: string): Promise<WritableNpmPackage | null> {
+    const jsonPath = path.join(pkgPath, 'package.json');
+    const jsonBuffer = await fs.promises.readFile(jsonPath);
+    if (!jsonBuffer) {
+      return null;
+    }
+
+    return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
+  }
+
   /**
    * Assign properties to the package. Uses lodash merge semantics to assign
    * properties (i.e. deep merge instead of shallow)
@@ -63,12 +83,10 @@ export class WritableNpmPackage extends NpmPackage {
   }
 
   /**
-   * Set new JSON for the package
-   *
-   * @param json the new JSON
+   * Set new JSON for the package from the given object
    */
-  async setJson(json: any) {
-    this.pkgJson = json;
+  async setJson(jsonObj: any) {
+    this.pkgJson = jsonObj;
     await this.wriiteJson();
   }
 
@@ -84,7 +102,8 @@ export class WritableNpmPackage extends NpmPackage {
 }
 
 /**
- * Finds local packages matching a given predicate
+ * Finds monorepo-local packages matching a given predicate. The root package
+ * is not included.
  *
  * @param pred predicate describing whether to match a package
  */
@@ -135,7 +154,7 @@ export async function findPackage(
 }
 
 /**
- * Finds a local package with a given name
+ * Finds a monorepo-local package with a given name
  */
 export async function findLocalPackage(
   name: string,
