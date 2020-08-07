@@ -2,8 +2,6 @@
 parameters:
   - name: language
     type: string
-  - name: version
-    type: string
   - name: platform
     type: string
   - name: configuration
@@ -63,8 +61,10 @@ steps:
     displayName: Add npm user to verdaccio
 
   - script: |
-      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public $(extraPublishArgs)
+      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
+
+  - template: set-version-vars.yml
 
   - task: NuGetToolInstaller@0
     inputs:
@@ -82,18 +82,18 @@ steps:
   # Alias yarn to midgard-yarn which has some fixes for yarns fragility when redirected to a different server (such as verdaccio)
   - script: |
       doskey yarn=midgard-yarn $*
-      npx react-native init testcli --version ${{ parameters.version }}
+      npx react-native init testcli --template react-native@$(reactNativeDevDependency)
     workingDirectory: $(Agent.BuildDirectory)
 
   - script: |
       doskey yarn=midgard-yarn $*
-      npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed --nuGetTestVersion ${{ parameters.version }}
+      npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
     workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ parameters.useNuGet }}
 
   - script: |
       doskey yarn=midgard-yarn $*
-      npx react-native-windows-init --verbose --version $(npmTag) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
+      npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
     workingDirectory: $(Agent.BuildDirectory)/testcli
     condition: ${{ not(parameters.useNuGet) }}
 
