@@ -44,8 +44,7 @@ namespace ReactUWPTestApp
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
-            PackageProviders.Add(new ReflectionReactPackageProvider<App>());
-            PackageProviders.Add(new TreeDumpLibrary.ReactPackageProvider());
+            PackageProviders.Add(new ReactUWPTestApp.ReactPackageProvider());
 
             this.InitializeComponent();
         }
