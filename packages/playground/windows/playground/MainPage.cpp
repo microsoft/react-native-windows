@@ -37,10 +37,6 @@ MainPage::MainPage() {
   x_engineV8().IsEnabled(false);
 #endif
 
-#if !defined(USE_QUICKJS)
-  x_engineQuickJS().IsEnabled(false);
-#endif
-
   x_JsEngine().SelectedIndex(0);
 }
 
@@ -68,7 +64,8 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
-  host.InstanceSettings().JSIEngineOverride(static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
+  host.InstanceSettings().JSIEngineOverride(
+      static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
   if (!m_bundlerHostname.empty()) {
     host.InstanceSettings().DebugHost(m_bundlerHostname);
   }
