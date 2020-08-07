@@ -309,8 +309,6 @@ bool TryUpdateBorderProperties(
 
 // ViewViewManager
 
-xaml::Media::SolidColorBrush ViewViewManager::s_transparentBrush{nullptr};
-
 ViewViewManager::ViewViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *ViewViewManager::GetName() const {
@@ -564,10 +562,10 @@ void ViewViewManager::SetLayoutProps(
 }
 
 xaml::Media::SolidColorBrush ViewViewManager::EnsureTransparentBrush() {
-  if (!s_transparentBrush) {
-    s_transparentBrush = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
+  if (!m_transparentBrush) {
+    m_transparentBrush = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
   }
-  return s_transparentBrush;
+  return m_transparentBrush;
 }
 
 } // namespace react::uwp

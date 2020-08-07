@@ -41,10 +41,10 @@ class ViewViewManager : public FrameworkElementViewManager {
   XamlView CreateViewCore(int64_t tag) override;
   void TryUpdateView(ViewShadowNode *viewShadowNode, winrt::react::uwp::ViewPanel &pPanel, bool useControl);
 
-  static xaml::Media::SolidColorBrush EnsureTransparentBrush();
+  xaml::Media::SolidColorBrush EnsureTransparentBrush();
 
  private:
-  static xaml::Media::SolidColorBrush s_transparentBrush;
+  xaml::Media::SolidColorBrush m_transparentBrush{nullptr};
 };
 
 } // namespace react::uwp
