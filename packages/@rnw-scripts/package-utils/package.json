@@ -1,6 +1,6 @@
 {
-  "name": "@rnw-scripts/promote-release",
-  "version": "0.1.0",
+  "name": "@rnw-scripts/package-utils",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -9,22 +9,17 @@
     "lint:fix": "just-scripts lint:fix",
     "watch": "just-scripts watch"
   },
-  "bin": {
-    "promote-release": "./bin.js"
-  },
+  "main": "lib-commonjs/packageUtils.js",
   "dependencies": {
     "@rnw-scripts/find-repo-root": "^0.0.4",
-    "@rnw-scripts/package-utils": "^0.0.0",
-    "chalk": "^4.1.0",
-    "simple-git": "^1.131.0",
-    "yargs": "^15.3.1"
+    "get-monorepo-packages": "^1.2.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "0.0.2",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
-    "@types/chalk": "^2.2.0",
-    "@types/yargs": "^15.0.5",
+    "@types/lodash": "^4.14.157",
     "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"

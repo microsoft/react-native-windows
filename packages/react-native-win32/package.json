@@ -20,7 +20,10 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.4",
+    "@babel/runtime": "^7.0.0",
+    "@react-native-community/cli": "^4.2.4",
+    "@react-native-community/cli-platform-android": "^4.2.3",
+    "@react-native-community/cli-platform-ios": "^4.2.3",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "art": "^0.10.0",
@@ -28,9 +31,14 @@
     "event-target-shim": "^5.0.1",
     "fbjs": "^1.0.0",
     "fbjs-scripts": "^1.1.0",
+    "hermes-engine": "~0.4.0",
     "invariant": "^2.2.4",
-    "nullthrows": "^1.1.0",
-    "pretty-format": "^24.7.0",
+    "jsc-android": "^245459.0.0",
+    "metro-babel-register": "0.59.0",
+    "metro-react-native-babel-transformer": "0.59.0",
+    "metro-source-map": "0.59.0",
+    "nullthrows": "^1.1.1",
+    "pretty-format": "^24.9.0",
     "promise": "^8.0.3",
     "prop-types": "^15.7.2",
     "react-clone-referenced-element": "^1.0.1",
@@ -56,14 +64,13 @@
     "flow-bin": "^0.122.0",
     "jscodeshift": "^0.7.0",
     "just-scripts": "^0.36.1",
-    "react": "16.13.0",
+    "react": "16.13.1",
     "react-native": "0.0.0-4a48b021d",
     "react-native-platform-override": "^0.2.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-dom": "16.13.1",
     "react-native": "0.0.0-4a48b021d"
   },
   "beachball": {

@@ -12,17 +12,17 @@
  * @format
  */
 
-import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as child_process from 'child_process';
-import * as fs from 'fs';
 import * as simplegit from 'simple-git/promise';
-import * as util from 'util';
 import * as yargs from 'yargs';
 
+import {
+  enumerateLocalPackages,
+  findLocalPackage,
+  WritableNpmPackage,
+} from '@rnw-scripts/package-utils';
 import findRepoRoot from '@rnw-scripts/find-repo-root';
-
-const glob = util.promisify(require('glob').glob);
 
 type ReleaseType = 'preview' | 'latest' | 'legacy';
 
@@ -42,15 +42,17 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   if (argv.release === 'preview') {
     console.log('Updating root change script...');
-    const [rootPkg] = await enumeratePackages(
-      pkgJson => pkgJson.name === 'react-native-windows-repo',
-    );
-    await updatePackage(rootPkg, {
+    const rootPkg = await findLocalPackage('react-native-windows-repo');
+    if (!rootPkg) {
+      throw new Error('Unable to find root npm package');
+    }
+
+    await rootPkg.mergeProps({
       scripts: {change: `beachball change --branch ${branchName}`},
     });
 
     console.log('Updating package versions...');
-    await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
+    await mergePropsToPackageVersions(`${argv.rnVersion}.0-preview.0`);
   }
 
   console.log('Committing changes...');
@@ -103,26 +105,26 @@ function collectArgs() {
  * @param version major + minor version
  */
 async function updateBeachballConfigs(release: ReleaseType, version: string) {
-  for (const packagePath of await enumeratePackagesToPromote()) {
-    await updateBeachballConfig(packagePath, release, version);
+  for (const pkg of await enumeratePackagesToPromote()) {
+    await updateBeachballConfig(pkg, release, version);
   }
 }
 
 /**
  * Modifies beachball config to the right npm tag and version bump restrictions
  *
- * @param packagePath path of the package to update
+ * @param pkg the package to update
  * @param release the release type
  * @param version major + minor version
  */
 async function updateBeachballConfig(
-  packagePath: string,
+  pkg: WritableNpmPackage,
   release: ReleaseType,
   version: string,
 ) {
   switch (release) {
     case 'preview':
-      return updatePackage(packagePath, {
+      return pkg.mergeProps({
         beachball: {
           defaultNpmTag: distTag(release, version),
           disallowedChangeTypes: ['major', 'minor', 'patch'],
@@ -130,7 +132,7 @@ async function updateBeachballConfig(
       });
 
     case 'latest':
-      return updatePackage(packagePath, {
+      return pkg.mergeProps({
         beachball: {
           defaultNpmTag: distTag(release, version),
           disallowedChangeTypes: ['major', 'minor', 'prerelease'],
@@ -138,7 +140,7 @@ async function updateBeachballConfig(
       });
 
     case 'legacy':
-      return updatePackage(packagePath, {
+      return pkg.mergeProps({
         beachball: {
           defaultNpmTag: distTag(release, version),
           disallowedChangeTypes: ['major', 'minor', 'prerelease'],
@@ -148,71 +150,11 @@ async function updateBeachballConfig(
 }
 
 /**
- * Assign properties to the npm package of the given name
- * @param packagePath path path to a package
- * @param props key/values to merge into the package.json
- */
-async function updatePackage(packagePath: string, props: {[key: string]: any}) {
-  const packageJson = await jsonOfPackage(packagePath);
-
-  _.merge(packageJson, props);
-  await fs.promises.writeFile(
-    packagePath,
-    JSON.stringify(packageJson, null /*replacer*/, 2 /*space*/) + '\n',
-  );
-}
-
-/**
- * Returns the JSON content of a package
- */
-async function jsonOfPackage(packagePath: string): Promise<any> {
-  const packageContent = await fs.promises.readFile(packagePath);
-  if (!packageContent) {
-    throw new Error(`Unable to read package file "${packagePath}"`);
-  }
-
-  return JSON.parse(packageContent.toString());
-}
-
-/**
- * Returns the name of a package
- */
-async function nameOfPackage(packagePath: string): Promise<string> {
-  return (await jsonOfPackage(packagePath)).name;
-}
-
-/**
  * Finds packages where we need to update version number + beachball config
  * @returns absolute paths to package.json
  */
-async function enumeratePackagesToPromote(): Promise<string[]> {
-  return enumeratePackages(pkgJson => pkgJson.promoteRelease === true);
-}
-
-/**
- * Finds packages matching a given predicate
- * @param pred predicate describing whether to match a package.json
- * @returns absolute paths to package.json
- */
-async function enumeratePackages(
-  pred: (pkgJson: any) => boolean = () => true,
-): Promise<string[]> {
-  const repoRoot = await findRepoRoot();
-  const allPackages: string[] = await glob('**/package.json', {
-    cwd: repoRoot,
-    ignore: '**/node_modules/**',
-    absolute: true,
-  });
-
-  const matchingPackages: string[] = [];
-  for (const packageFile of allPackages) {
-    const packageJson = await jsonOfPackage(packageFile);
-    if (pred(packageJson)) {
-      matchingPackages.push(packageFile);
-    }
-  }
-
-  return matchingPackages;
+async function enumeratePackagesToPromote(): Promise<WritableNpmPackage[]> {
+  return enumerateLocalPackages(async pkg => pkg.json.promoteRelease === true);
 }
 
 /**
@@ -233,25 +175,23 @@ function distTag(release: ReleaseType, version: string): string {
  * Change the version of main packages to the given string
  * @param version The new package version
  */
-async function updatePackageVersions(version: string) {
+async function mergePropsToPackageVersions(version: string) {
   const packagesToPromote = await enumeratePackagesToPromote();
-  const promotedPackages = await Promise.all(
-    packagesToPromote.map(nameOfPackage),
-  );
+  const promotedPackages = packagesToPromote.map(p => p.json.name);
 
-  for (const packagePath of packagesToPromote) {
-    await updatePackage(packagePath, {version});
+  for (const pkg of packagesToPromote) {
+    await pkg.mergeProps({version});
   }
 
   // We need to update anything that might have a dependency on what we just
   // bumped.
-  for (const packagePath of await enumeratePackages()) {
+  for (const pkg of await enumerateLocalPackages()) {
     for (const field of [
       'dependencies',
       'peerDependencies',
       'devDependencies',
     ]) {
-      const dependencies = (await jsonOfPackage(packagePath))[field];
+      const dependencies = pkg.json[field];
       if (!dependencies) {
         continue;
       }
@@ -262,7 +202,7 @@ async function updatePackageVersions(version: string) {
         }
       }
 
-      await updatePackage(packagePath, {[field]: dependencies});
+      await pkg.mergeProps({[field]: dependencies});
     }
   }
 }
