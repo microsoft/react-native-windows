@@ -7,7 +7,8 @@ import { BasePage, By } from '../pages/BasePage';
 
 let pages = [
   '<ActivityIndicator>',
-  /*
+  /*  TODO:  Disabling most of the test for now due to
+             instability, tracked by #5661
   '<Button>',
   '<CheckBox>',
   //  'Custom Views',
