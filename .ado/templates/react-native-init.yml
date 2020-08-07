@@ -99,12 +99,12 @@ steps:
   - script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
     displayName: react-native-windows-init
     workingDirectory: $(Agent.BuildDirectory)/testcli
-    condition: ${{ parameters.useNuGet }}
+    condition: and(succeeded(), ${{ parameters.useNuGet }})
 
   - script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
     displayName: react-native-windows-init
     workingDirectory: $(Agent.BuildDirectory)/testcli
-    condition: ${{ not(parameters.useNuGet) }}
+    condition: and(succeeded(), ${{ not(parameters.useNuGet) }})
 
   - task: PowerShell@2
     displayName: List Visual Studio Components
