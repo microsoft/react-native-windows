@@ -7,6 +7,7 @@ import { BasePage, By } from '../pages/BasePage';
 
 let pages = [
   '<ActivityIndicator>',
+  /*
   '<Button>',
   '<CheckBox>',
   //  'Custom Views',
@@ -67,6 +68,7 @@ let pages = [
   //  '<LegacyDirectManipulationTest>',
   //  '<LegacyImageTest>',
   //  '<LegacyAccessibilityTest>',
+*/
 ];
 
 class TestPage extends BasePage {
