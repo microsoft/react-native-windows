@@ -6,7 +6,7 @@
 #include <DevSettings.h>
 
 #include <JSI/Shared/RuntimeHolder.h>
-#include <ScriptStore.h>
+#include <JSI/Shared/ScriptStore.h>
 
 #include <Logging.h>
 

@@ -43,7 +43,7 @@
   <PropertyGroup>
     <!-- We need $(ReactNativeWindowsDir)Chakra for ChakraCoreDebugger.h.
     We should remove it from IncludePath once we retire the ChakraExecutor stack. -->
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)ReactCommon\callinvoker;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Chakra;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)ReactCommon\callinvoker;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Chakra;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

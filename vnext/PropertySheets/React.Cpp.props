@@ -27,8 +27,10 @@
 
   <PropertyGroup>
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
-    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.1.6</HERMES_Version>
+    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.5.0-f56606a8</HERMES_Version>
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
+    <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
+    <HERMES_ARCH Condition="'$(HERMES_ARCH)' == ''">uwp</HERMES_ARCH>
 
     <USE_V8 Condition="('$(USE_V8)' == '') Or ('$(Platform)' == 'ARM' OR '$(Platform)' == 'ARM64')">false</USE_V8>
     <V8_Version Condition="'$(V8_Version)' == ''">0.3.2</V8_Version>
@@ -57,11 +59,11 @@
   <PropertyGroup>
     <!-- This prop is used for shared JSI code and headers -->
     <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
-    <JSI_Source Condition="'$(USE_HERMES)' == 'true'">$(HERMES_Package)\installed\$(PlatformTarget)-windows\include\jsi_ref</JSI_Source>
 
     <!-- This prop is used for JSI code that may be overridden in external JSI implementations -->
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
     <JSI_SourcePath Condition="'$(USE_V8)' == 'true'">$(V8_Package)\build\native\include</JSI_SourcePath>
+    <JSI_SourcePath Condition="'$(USE_HERMES)' == 'true'">$(HERMES_Package)\build\native\include</JSI_SourcePath>
 
     <!-- This disables copying the v8 DLL to outputs; it is re-enabled locally in win32 projects -->
     <V8JSI_NODLLCOPY>true</V8JSI_NODLLCOPY>

@@ -1,5 +1,5 @@
 #pragma once
-#include <ScriptStore.h>
+#include <JSI/Shared/ScriptStore.h>
 #include <future>
 
 namespace react::uwp {

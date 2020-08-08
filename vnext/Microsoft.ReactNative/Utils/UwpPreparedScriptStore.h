@@ -1,5 +1,5 @@
 #pragma once
-#include <ScriptStore.h>
+#include <JSI/Shared/ScriptStore.h>
 #include <cxxreact/JSBigString.h>
 #include <jsi/jsi.h>
 #include <winrt/Windows.Foundation.h>
