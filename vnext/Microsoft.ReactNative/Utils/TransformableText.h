@@ -12,6 +12,7 @@ struct TransformableText final {
   std::wstring TransformText() {
     switch (m_textTransform) {
       case TextTransform::Undefined:
+        [[fallthrough]];
       case TextTransform::None:
         return m_originalText;
       case TextTransform::Uppercase:
