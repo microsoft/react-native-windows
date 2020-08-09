@@ -711,6 +711,9 @@
     <ClInclude Include="Views\Image\Effects.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\TransformableText.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />

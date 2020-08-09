@@ -44,6 +44,9 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
+  } else if (propertyName == "textTransform") {
+    auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+    node->m_transformableText.m_textTransform = TransformableText::GetTextTransform(propertyValue);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
