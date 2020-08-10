@@ -169,6 +169,16 @@ $requirements = @(
         Install = { InstallVS };
     },
     @{
+        Name = 'DotNet Core';
+        Valid = (Test-Path "${env:ProgramFiles}\dotnet\shared\Microsoft.NETCore.App\3.1.5");
+        Install = { choco install -y dotnetcore --version=3.1.5 };
+    },
+    @{
+        Name = 'DotNet Core Sdk';
+        Valid = (Test-Path "${env:ProgramFiles}\dotnet\sdk\3.1.301");
+        Install = { choco install -y dotnetcore-sdk --version=3.1.301 };
+    },
+    @{
         Name = 'NodeJS 12 or 13 installed';
         Tags = @('appDev');
         Valid = CheckNode;

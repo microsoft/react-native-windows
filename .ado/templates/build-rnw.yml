@@ -13,7 +13,6 @@ parameters:
   yarnBuildCmd: build
   BuildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
-
   # Visual Studio Installer
   vsComponents: ''
   listVsComponents: false
