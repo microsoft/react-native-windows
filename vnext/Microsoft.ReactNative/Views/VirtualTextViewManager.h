@@ -17,8 +17,7 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childSNB = static_cast<ShadowNodeBase &>(child);
     if (auto run = childSNB.GetView().try_as<xaml::Documents::Run>()) {
-      std::wstring text(run.Text().c_str());
-      m_transformableText.m_originalText = text;
+      m_transformableText.m_originalText = run.Text().c_str();
       run.Text(m_transformableText.TransformText());
     } else if (auto span = childSNB.GetView().try_as<xaml::Documents::Span>()) {
       auto &childVTSN = static_cast<VirtualTextShadowNode &>(child);
@@ -26,7 +25,6 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
 
       for (const auto &i : span.Inlines()) {
         if (auto run = i.try_as<xaml::Documents::Run>()) {
-          std::wstring text(run.Text().c_str());
           if (transform == TransformableText::TextTransform::Undefined) {
             // project the parent transform onto the child
             childVTSN.m_transformableText.m_textTransform = m_transformableText.m_textTransform;

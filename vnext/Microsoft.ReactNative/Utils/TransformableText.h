@@ -20,18 +20,16 @@ struct TransformableText final {
       case TextTransform::Lowercase:
         return boost::to_lower_copy(m_originalText);
       case TextTransform::Capitalize: {
-        PWSTR str = new wchar_t[m_originalText.length() + 1];
+        auto str = std::make_unique<wchar_t[]>(m_originalText.length() + 1);
         const int nChars = LCMapStringW(
             LOCALE_NAME_USER_DEFAULT,
             LCMAP_TITLECASE,
             m_originalText.c_str(),
             static_cast<int>(m_originalText.length()),
-            str,
+            str.get(),
             static_cast<int>(m_originalText.length() + 1));
 
-        std::wstring result(str, nChars);
-        delete[] str;
-        return result;
+        return std::move(str.get());
       }
     }
     nyi();
