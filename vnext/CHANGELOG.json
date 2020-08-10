@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Aug 2020 15:04:54 GMT",
+      "tag": "react-native-windows_v0.63.0-preview.2",
+      "version": "0.63.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix label of RedBox reload button",
+            "author": "email not defined",
+            "commit": "e0f389ee9b04e0ad3cdff3fa78f2d37121736d83",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Crash Using accessibilityValue Without Web Debugging",
+            "author": "ngerlem@microsoft.com",
+            "commit": "57db9c327776071730e5ba1e0d7771b6e89993b2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 0.63.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "901cf591acb83fa1ee2d23584c2456681dfabec0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.63] Fix word-wrapping behavior of tooltips",
+            "author": "asklar@microsoft.com",
+            "commit": "7f1cfbc8dd17aba6a0f8b292849653ad8633eda0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jul 2020 23:32:31 GMT",
       "tag": "react-native-windows_v0.63.0-preview.1",
       "version": "0.63.0-preview.1",
