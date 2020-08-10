@@ -160,7 +160,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   static void RaiseInstanceDestroyed(
       IReactNotificationService const &notificationService,
       winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs const &args) noexcept;
-      
+
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
