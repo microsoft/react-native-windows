@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <FeatureGate.h>
+#include <RuntimeOptions.h>
 #include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
 
@@ -16,9 +16,9 @@ namespace Microsoft::React {
 
 /*static*/
 shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
-  if (!GetFeatureGate("UseBeastWebSocket")) {
+  if (!GetRuntimeOptionBool("UseBeastWebSocket")) {
     std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
-    if (GetFeatureGate("WebSocket.AcceptSelfSigned")) {
+    if (GetRuntimeOptionBool("WebSocket.AcceptSelfSigned")) {
       certExceptions.emplace_back(
           winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::Untrusted);
       certExceptions.emplace_back(
