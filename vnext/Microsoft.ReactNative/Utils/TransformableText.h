@@ -25,7 +25,7 @@ struct TransformableText final {
             LOCALE_NAME_USER_DEFAULT,
             LCMAP_TITLECASE,
             m_originalText.c_str(),
-            m_originalText.length(),
+            static_cast<int>(m_originalText.length()),
             str,
             static_cast<int>(m_originalText.length() + 1));
 
