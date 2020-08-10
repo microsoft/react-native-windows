@@ -5,7 +5,9 @@ import "IJSValueWriter.idl";
 import "IReactNotificationService.idl";
 import "IReactPropertyBag.idl";
 
+#ifndef CORE_ABI
 #include "NamespaceRedirect.h"
+#endif
 
 namespace Microsoft.ReactNative {
 

@@ -107,6 +107,8 @@ struct DevSettings {
 
   /// Callback to show the devmenu
   std::function<void()> showDevMenuCallback;
+
+  bool inlineSourceMap{true};
 };
 
 } // namespace react

@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "Add option to devmenu to configure bundler",
+  "comment": "Fix label of RedBox reload button",
   "packageName": "react-native-windows",
   "email": "email not defined",
   "dependentChangeType": "patch",
-  "date": "2020-08-03T15:49:30.262Z"
+  "date": "2020-08-07T16:24:14.476Z"
 }

@@ -1,5 +1,5 @@
 ---
-name: React Native Windows feature request
+name: Feature request
 about: Suggest a new feature or idea
 title: Your feature request
 labels: Proposal
@@ -10,6 +10,8 @@ assignees: ''
 <!-- This is a template for new feature or API proposals for React Native Windows. Use this to submit new API/component requests or behavior updates that are specific to Windows-only. For feature requests to React Native, go [here](https://github.com/react-native-community/discussions-and-proposals) instead. 
 
 It's fine if you don't have all the details for the template below: you can start with the Summary and Rationale. Read more about React Native for Windows proposal process [here](https://github.com/microsoft/react-native-windows/tree/master/vnext/proposals)
+
+Your request will be triaged by the RNW team according to this process: https://github.com/microsoft/react-native-windows/wiki/Triage-Process
 -->
 
 # Proposal: [your title here] 

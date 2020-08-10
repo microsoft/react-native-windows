@@ -107,6 +107,10 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   comp::CompositionPropertySet EnsureTransformPS();
   void UpdateTransformPS();
 
+  bool IsRegisteredForMouseEvents() const {
+    return m_onMouseEnterRegistered || m_onMouseLeaveRegistered || m_onMouseMoveRegistered;
+  }
+
  protected:
   XamlView m_view;
   bool m_updating = false;
@@ -118,10 +122,10 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   double m_cornerRadius[(int)ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
 
   // Bound event types
-  bool m_onLayout = false;
-  bool m_onMouseEnter = false;
-  bool m_onMouseLeave = false;
-  bool m_onMouseMove = false;
+  bool m_onLayoutRegistered = false;
+  bool m_onMouseEnterRegistered = false;
+  bool m_onMouseLeaveRegistered = false;
+  bool m_onMouseMoveRegistered = false;
 
   // Support Keyboard
  public:

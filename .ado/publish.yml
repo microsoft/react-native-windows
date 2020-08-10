@@ -2,7 +2,6 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/release.yml
   - template: variables/vs2019.yml
 
 schedules:
@@ -46,26 +45,22 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
+          ${{ if eq(Build.SourceBranchName, 'master') }}:
+           script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+          ${{ if ne(Build.SourceBranchName, 'master') }}:
+           script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
 
       - task: CmdLine@2
         displayName: Create GitHub Release
         inputs:
-          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+          ${{ if eq(Build.SourceBranchName, 'master') }}:
+            script: npx --no-install @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+          ${{ if ne(Build.SourceBranchName, 'master') }}:
+            script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
 
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ./.ado/setVersionEnvVars.js
-        env:
-          RUNNER_TEMP: $(Build.StagingDirectory)
+      - template: templates/set-version-vars.yml
 
-      - task: PublishPipelineArtifact@1
-        displayName: Publish VersionEnvVars
-        inputs:
-          targetPath: $(Build.StagingDirectory)/versionEnvVars
-          artifactName: VersionEnvVars
+      - template: templates/publish-version-vars.yml
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
@@ -88,15 +83,7 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadPipelineArtifact@2
-        displayName: Download VersionEnvVars
-        inputs:
-          artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)/VersionEnvVars
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
         parameters:
@@ -148,15 +135,7 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadPipelineArtifact@2
-        displayName: Download VersionEnvVars
-        inputs:
-          artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)/VersionEnvVars
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
         parameters:
@@ -199,15 +178,7 @@ jobs:
       #     branchVersion: false
       #     nugetVer: true
 
-      - task: DownloadPipelineArtifact@2
-        displayName: Download VersionEnvVars
-        inputs:
-          artifact: VersionEnvVars
-          path: $(Build.StagingDirectory)/VersionEnvVars
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0

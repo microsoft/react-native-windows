@@ -26,7 +26,8 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const std::string &sourceBundleHost,
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
-    const std::string &platform);
+    const std::string &platform,
+    bool inlineSourceMap);
 
 class DevSupportManager final : public facebook::react::IDevSupportManager {
  public:

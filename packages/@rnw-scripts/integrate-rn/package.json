@@ -1,0 +1,45 @@
+{
+  "name": "@rnw-scripts/integrate-rn",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix",
+    "watch": "just-scripts watch"
+  },
+  "bin": {
+    "integrate-rn": "./bin.js"
+  },
+  "dependencies": {
+    "@rnw-scripts/find-repo-root": "^0.0.4",
+    "@rnw-scripts/package-utils": "^0.0.0",
+    "lodash": "^4.17.15",
+    "ora": "^4.0.3",
+    "react-native-platform-override": "^0.2.1",
+    "semver": "^7.3.2",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/just-task": "0.0.2",
+    "@rnw-scripts/ts-config": "0.1.0",
+    "@types/lodash": "^4.14.157",
+    "@types/ora": "^3.2.0",
+    "@types/semver": "^7.3.1",
+    "@types/yargs": "^15.0.5",
+    "eslint": "6.7.0",
+    "just-scripts": "^0.36.1",
+    "typescript": "^3.8.3"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major"
+    ]
+  },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ]
+}

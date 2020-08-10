@@ -60,7 +60,7 @@ TEST_CLASS (WebSocketModuleTest) {
     auto instance = CreateMockInstance(jsef);
     auto module = make_unique<WebSocketModule>();
     module->setInstance(instance);
-    module->SetResourceFactory([](const string &, bool, bool) {
+    module->SetResourceFactory([](const string &) {
       auto rc = make_shared<MockWebSocketResource>();
       rc->Mocks.Connect = [rc](const IWebSocketResource::Protocols &, const IWebSocketResource::Options &) {
         rc->OnConnect();

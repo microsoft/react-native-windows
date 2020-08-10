@@ -2,6 +2,54 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Aug 2020 05:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.136",
+      "version": "0.0.0-canary.136",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Split IViewManager into core and ui-dependent parts to remove dependency on XAML from Core projects",
+            "author": "asklar@microsoft.com",
+            "commit": "ebba4db6e46e82d7a25c9ebaf09bc31fe7601ed9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Aug 2020 05:05:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.135",
+      "version": "0.0.0-canary.135",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use string object for tooltips instead of textblocks since that breaks wordwrap etc",
+            "author": "asklar@microsoft.com",
+            "commit": "0b50503ac662d761d9ba1aab473e251ef208e7b7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Handle MessageWebSocket constructor exceptions",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3892ec0503ce452be5541480eb83bdb4024680d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Crash Using accessibilityValue Without Web Debugging",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f7250194bd32f087d1d1d89268154633b95d409",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add option to devmenu to configure bundler",
+            "author": "email not defined",
+            "commit": "496a61b9e22007a2d4ed44114782f365e8f20c7c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jul 2020 05:05:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.134",
       "version": "0.0.0-canary.134",

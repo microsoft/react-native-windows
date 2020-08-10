@@ -19,11 +19,10 @@
 
 #ifdef CORE_ABI
 #include <folly/dynamic.h>
-#else
-// When building Desktop, the include below results in
-// fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
-#include <IReactInstance.h>
+#undef GetCurrentTime
 #endif
+
+#include <IReactInstance.h>
 
 #include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
@@ -201,9 +200,7 @@ struct ReactOptions {
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
   bool UseJsi{true};
-#ifndef CORE_ABI
   react::uwp::JSIEngine JsiEngine{react::uwp::JSIEngine::Chakra};
-#endif
 
   //! Enable function nativePerformanceNow.
   //! Method nativePerformanceNow() returns high resolution time info.

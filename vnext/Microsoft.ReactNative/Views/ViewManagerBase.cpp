@@ -231,6 +231,8 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
       NotifyUnimplementedProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
+
+  OnPropertiesUpdated(nodeToUpdate);
 }
 
 bool ViewManagerBase::UpdateProperty(
@@ -238,7 +240,7 @@ bool ViewManagerBase::UpdateProperty(
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "onLayout") {
-    nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
+    nodeToUpdate->m_onLayoutRegistered = !propertyValue.isNull() && propertyValue.asBool();
   } else if (propertyName == "keyDownEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "keyUpEvents") {
@@ -297,7 +299,7 @@ void ViewManagerBase::SetLayoutProps(
   fe.Height(height);
 
   // Fire Events
-  if (nodeToUpdate.m_onLayout) {
+  if (nodeToUpdate.m_onLayoutRegistered) {
     int64_t tag = GetTag(viewToUpdate);
     folly::dynamic layout = folly::dynamic::object("x", left)("y", top)("height", height)("width", width);
 

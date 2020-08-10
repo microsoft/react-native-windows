@@ -36,7 +36,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     string scheme = "ws";
     if (isSecure)
       scheme += "s";
-    auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/", false, true);
+    auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/");
     promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
     {

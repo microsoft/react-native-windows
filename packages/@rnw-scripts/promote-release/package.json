@@ -13,11 +13,9 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "0.0.4",
+    "@rnw-scripts/find-repo-root": "^0.0.4",
+    "@rnw-scripts/package-utils": "^0.0.0",
     "chalk": "^4.1.0",
-    "glob": "^7.1.6",
-    "js-yaml": "^3.14.0",
-    "lodash": "^4.17.15",
     "simple-git": "^1.131.0",
     "yargs": "^15.3.1"
   },
@@ -26,9 +24,6 @@
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",
-    "@types/glob": "^7.1.0",
-    "@types/js-yaml": "^3.12.5",
-    "@types/lodash": "^4.14.157",
     "@types/yargs": "^15.0.5",
     "eslint": "6.7.0",
     "just-scripts": "^0.36.1",
