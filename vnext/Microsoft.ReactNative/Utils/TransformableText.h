@@ -27,7 +27,7 @@ struct TransformableText final {
             m_originalText.c_str(),
             m_originalText.length(),
             str,
-            m_originalText.length() + 1);
+            static_cast<int>(m_originalText.length() + 1));
 
         std::wstring result(str, nChars);
         delete[] str;
