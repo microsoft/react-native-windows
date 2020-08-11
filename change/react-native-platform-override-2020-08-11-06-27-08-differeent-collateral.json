@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Switch react-native-platform-override collateral to avoid lockfile",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-08-11T13:27:08.962Z"
+}
