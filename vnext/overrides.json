@@ -511,6 +511,14 @@
     },
     {
       "type": "patch",
+      "file": "src/RNTester/js/examples/TextInput/TextInputExample.windows.js",
+      "baseFile": "RNTester/js/examples/TextInput/TextInputExample.android.js",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "1755bffd6ae353838f1779007dc4a512b8dddcdc",
+      "issue": 5688
+    },
+    {
+      "type": "patch",
       "file": "src/RNTester/js/examples/View/ViewExample.windows.js",
       "baseFile": "RNTester/js/examples/View/ViewExample.js",
       "baseVersion": "0.0.0-2c473e1a3",

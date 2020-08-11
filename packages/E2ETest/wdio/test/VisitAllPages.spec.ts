@@ -29,6 +29,7 @@ let pages = [
   //  '<SectionList>',
   '<Switch>',
   '<Text>',
+  '<TextInput>',
   '<Touchable*> and onPress',
   '<TransferProperties>',
   '<TransparentHitTestExample>',

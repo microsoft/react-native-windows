@@ -21,6 +21,7 @@ const TouchableWithoutFeedback = require('../Touchable/TouchableWithoutFeedback'
 
 // [Windows
 const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
+import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
 // Windows]
 
 const invariant = require('invariant');
@@ -65,9 +66,10 @@ if (Platform.OS === 'android') {
 }
 // [Windows
 else if (Platform.OS === 'windows') {
-  const nativeComponent = requireNativeComponent('RCTTextInput');
-  WindowsTextInput = nativeComponent;
-  WindowsTextInputCommands = nativeComponent.Commands;
+  WindowsTextInput = requireNativeComponent('RCTTextInput');
+  WindowsTextInputCommands = codegenNativeCommands<
+    TextInputNativeCommands<HostComponent<any>>,
+  >({supportedCommands: ['focus', 'blur', 'setTextAndSelection']});
 }
 // Windows]
 
