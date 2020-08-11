@@ -8,7 +8,6 @@ import * as React from 'react';
 import {
   AppRegistry,
   Button,
-  CheckBox,
   StyleSheet,
   ScrollView,
   Switch,
@@ -58,7 +57,7 @@ class PopupButton extends React.Component<
   {
     buttonTitle: string;
     isFlyoutVisible: boolean;
-    popupCheckBoxState: boolean;
+    popupSwitchState: boolean;
     isLightDismissEnabled: boolean;
   }
 > {
@@ -70,7 +69,7 @@ class PopupButton extends React.Component<
     this.state = {
       buttonTitle: 'Open Flyout',
       isFlyoutVisible: false,
-      popupCheckBoxState: true,
+      popupSwitchState: true,
       isLightDismissEnabled: false,
     };
   }
@@ -79,7 +78,7 @@ class PopupButton extends React.Component<
     return (
       <View style={{flexDirection: 'row', padding: 20}}>
         <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
-        <CheckBox
+        <Switch
           value={this.state.isLightDismissEnabled}
           onValueChange={value => this.setState({isLightDismissEnabled: value})}
         />
@@ -98,12 +97,10 @@ class PopupButton extends React.Component<
             <Text style={{justifyContent: 'center', paddingTop: 10}}>
               This is a flyout
             </Text>
-            <CheckBox
+            <Switch
               style={{justifyContent: 'center', padding: 20}}
-              value={this.state.popupCheckBoxState}
-              onValueChange={value =>
-                this.setState({popupCheckBoxState: value})
-              }
+              value={this.state.popupSwitchState}
+              onValueChange={value => this.setState({popupSwitchState: value})}
             />
             <Button onPress={this._onPopupButtonPressed} title="Close" />
           </View>
@@ -671,18 +668,6 @@ export default class Bootstrap extends React.Component<
                   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
               }}
             />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 15,
-            }}>
-            <CheckBox
-              onValueChange={value => this.setState({checkBoxIsOn: value})}
-              value={this.state.checkBoxIsOn}
-            />
-            <Text>Checkbox {this.state.checkBoxIsOn ? 'ON' : 'OFF'}</Text>
           </View>
           <View
             style={{

@@ -5,7 +5,6 @@
 
 import {
   Switch,
-  CheckBox,
   TextInput,
   View,
   StyleSheet,
@@ -71,9 +70,6 @@ export function ControlStyleTestPage() {
             thumbColor="blue"
           />
         }
-        <CheckBox
-          style={showRoundBorder ? styles.roundBorder : styles.regularBorder}
-        />
         <TextInput
           style={showRoundBorder ? styles.roundBorder : styles.regularBorder}
           placeholder="TextBox"
