@@ -44,8 +44,8 @@ class TextShadowNode final : public ShadowNodeBase {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
         std::wstring text(run.Text().c_str());
-        m_transformableText.m_originalText = text;
-        text = m_transformableText.TransformText();
+        transformableText.originalText = text;
+        text = transformableText.TransformText();
         textBlock.Text(winrt::hstring(text));
         return;
       }
@@ -70,7 +70,7 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::RemoveChildAt(indexToRemove);
   }
 
-  TransformableText m_transformableText{};
+  TransformableText transformableText{};
 };
 
 TextViewManager::TextViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
@@ -102,7 +102,7 @@ bool TextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
     auto textTransform = TransformableText::GetTextTransform(propertyValue);
-    textNode->m_transformableText.m_textTransform = textTransform;
+    textNode->transformableText.textTransform = textTransform;
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {

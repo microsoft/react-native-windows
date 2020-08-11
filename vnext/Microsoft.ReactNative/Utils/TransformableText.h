@@ -1,45 +1,62 @@
-#pragma once
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
-#include <boost/algorithm/string.hpp>
+#pragma once
 
 namespace react::uwp {
 struct TransformableText final {
-  enum class TextTransform { Undefined, None, Uppercase, Lowercase, Capitalize };
+  enum class TextTransform : uint8_t { Undefined, None, Uppercase, Lowercase, Capitalize };
 
-  TextTransform m_textTransform{TextTransform::Undefined};
-  std::wstring m_originalText{};
+  TextTransform textTransform{TextTransform::Undefined};
+  std::wstring originalText{};
 
-  std::wstring TransformText() {
-    switch (m_textTransform) {
-      case TextTransform::Undefined:
-        [[fallthrough]];
-      case TextTransform::None:
-        return m_originalText;
-      case TextTransform::Uppercase:
-        return boost::to_upper_copy(m_originalText);
-      case TextTransform::Lowercase:
-        return boost::to_lower_copy(m_originalText);
-      case TextTransform::Capitalize: {
-        auto str = std::make_unique<wchar_t[]>(m_originalText.length() + 1);
-        const int nChars = LCMapStringW(
-            LOCALE_NAME_USER_DEFAULT,
-            LCMAP_TITLECASE,
-            m_originalText.c_str(),
-            static_cast<int>(m_originalText.length()),
-            str.get(),
-            static_cast<int>(m_originalText.length() + 1));
-
-        return std::move(str.get());
-      }
+  std::wstring TransformText() const noexcept {
+    if (textTransform == TextTransform::Undefined || textTransform == TextTransform::None) {
+      return originalText;
     }
-    nyi();
-    return m_originalText;
+    DWORD dwMapFlags{};
+    switch (textTransform) {
+      case TextTransform::Uppercase:
+        dwMapFlags |= LCMAP_UPPERCASE | LCMAP_LINGUISTIC_CASING;
+        break;
+      case TextTransform::Lowercase:
+        dwMapFlags |= LCMAP_LOWERCASE | LCMAP_LINGUISTIC_CASING;
+        break;
+      case TextTransform::Capitalize:
+        dwMapFlags |= LCMAP_TITLECASE;
+        break;
+      default:
+        nyi();
+        return originalText;
+    }
+
+    const int reqChars = LCMapStringW(
+        LOCALE_NAME_USER_DEFAULT,
+        dwMapFlags,
+        originalText.c_str(),
+        static_cast<int>(originalText.length()),
+        nullptr,
+        0);
+
+    std::wstring str;
+    str.resize(reqChars);
+    const int nChars = LCMapStringW(
+        LOCALE_NAME_USER_DEFAULT,
+        dwMapFlags,
+        originalText.c_str(),
+        static_cast<int>(originalText.length()),
+        str.data(),
+        reqChars);
+    str.resize(nChars);
+    assert(nChars == reqChars);
+    return str;
   }
 
-  static TextTransform GetTextTransform(const folly::dynamic &propertyValue) {
+  static TextTransform GetTextTransform(const folly::dynamic &propertyValue) noexcept {
     if (propertyValue.isString()) {
       auto value = propertyValue.asString();
       if (value == "none") {
+        return TextTransform::None;
       } else if (value == "lowercase") {
         return TextTransform::Lowercase;
       } else if (value == "uppercase") {
@@ -48,7 +65,7 @@ struct TransformableText final {
         return TextTransform::Capitalize;
       }
     }
-    return TextTransform::None;
+    return TextTransform::Undefined;
   }
 };
 

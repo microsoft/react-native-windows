@@ -13,28 +13,9 @@ namespace react::uwp {
 
 struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
-  TransformableText m_transformableText{};
-  void AddView(ShadowNode &child, int64_t index) override {
-    auto &childSNB = static_cast<ShadowNodeBase &>(child);
-    if (auto run = childSNB.GetView().try_as<xaml::Documents::Run>()) {
-      m_transformableText.m_originalText = run.Text().c_str();
-      run.Text(m_transformableText.TransformText());
-    } else if (auto span = childSNB.GetView().try_as<xaml::Documents::Span>()) {
-      auto &childVTSN = static_cast<VirtualTextShadowNode &>(child);
-      auto transform = childVTSN.m_transformableText.m_textTransform;
+  TransformableText transformableText{};
 
-      for (const auto &i : span.Inlines()) {
-        if (auto run = i.try_as<xaml::Documents::Run>()) {
-          if (transform == TransformableText::TextTransform::Undefined) {
-            // project the parent transform onto the child
-            childVTSN.m_transformableText.m_textTransform = m_transformableText.m_textTransform;
-            run.Text(childVTSN.m_transformableText.TransformText());
-          }
-        }
-      }
-    }
-    Super::AddView(child, index);
-  }
+  void AddView(ShadowNode &child, int64_t index) override;
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
