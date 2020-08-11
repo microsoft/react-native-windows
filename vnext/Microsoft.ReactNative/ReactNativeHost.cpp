@@ -130,16 +130,19 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.TurboModuleProvider = turboModulesProvider;
 
   reactOptions.OnInstanceCreated = [](Mso::CntPtr<Mso::React::IReactContext> &&context) {
+    auto notifications = context->Notifications();
     ReactInstanceSettings::RaiseInstanceCreated(
-        context->Notifications(), winrt::make<InstanceCreatedEventArgs>(std::move(context)));
+        notifications, winrt::make<InstanceCreatedEventArgs>(std::move(context)));
   };
   reactOptions.OnInstanceLoaded = [](Mso::CntPtr<Mso::React::IReactContext> &&context, const Mso::ErrorCode &err) {
+    auto notifications = context->Notifications();
     ReactInstanceSettings::RaiseInstanceLoaded(
-        context->Notifications(), winrt::make<InstanceLoadedEventArgs>(std::move(context), !!err));
+        notifications, winrt::make<InstanceLoadedEventArgs>(std::move(context), !!err));
   };
   reactOptions.OnInstanceDestroyed = [](Mso::CntPtr<Mso::React::IReactContext> &&context) {
+    auto notifications = context->Notifications();
     ReactInstanceSettings::RaiseInstanceDestroyed(
-        context->Notifications(), winrt::make<InstanceDestroyedEventArgs>(std::move(context)));
+        notifications, winrt::make<InstanceDestroyedEventArgs>(std::move(context)));
   };
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
