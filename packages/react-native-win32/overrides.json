@@ -52,14 +52,6 @@
       "file": "src/Libraries/Components/Button/ButtonWin32.tsx"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Components/CheckBox/CheckBox.win32.js",
-      "baseFile": "Libraries/Components/CheckBox/CheckBox.android.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "278d7049749ba8b5f3840f21ef6b3d528183829f",
-      "issue": "LEGACY_FIXME"
-    },
-    {
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.win32.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
@@ -166,8 +158,8 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "a50310f6dee460f7d1a53e0f1a21dbac9cf02094",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "9d9e65ecd506387e98d0ef5a58321c568a95ad41",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -454,8 +446,8 @@
       "type": "derived",
       "file": "src/RNTester/js/utils/RNTesterList.win32.js",
       "baseFile": "RNTester/js/utils/RNTesterList.android.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "65c3876bdbc2755cd568b2779ed962fa7a4edf6a",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "20a6f5c42266beb017dccc7f22d45bde02907d89",
       "issue": "LEGACY_FIXME"
     },
     {
