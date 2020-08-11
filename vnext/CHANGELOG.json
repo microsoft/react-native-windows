@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.137",
+      "version": "0.0.0-canary.137",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Get/SetRuntimeOptionInt.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c69af5e9826330fe98edea188c7448a82a2d5076",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update ChakraCore to 1.11.20",
+            "author": "jthysell@microsoft.com",
+            "commit": "72d01a1e10cba76a71feb27792b20b03ef18a69e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make C# CodeGen the default",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7a65915e82d6bc6884e267a8c96d0fa7fadb0e9e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Keep dependencies in sync with react-native",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add transparent background to fix hit-testing issue",
+            "author": "kmelmon@microsoft.com",
+            "commit": "d2a8b9bcfe115209dddd959e5b0032ee35a8d8d8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "change to member as static DOs aren't safe in multi window apps",
+            "author": "kmelmon@microsoft.com",
+            "commit": "bfa32e084cac08c4d1a91b5dfcef27aa0de4f99d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix label of RedBox reload button",
+            "author": "email not defined",
+            "commit": "8f97338eb1f67b32408525d37ac59bd930a02ca1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable Hermes by default",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "60e137c319cb6e50a9efd5f7ffc80353cb980123",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Aug 2020 05:05:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.136",
       "version": "0.0.0-canary.136",

@@ -2,6 +2,29 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.0",
+      "version": "0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Don't write release variables",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b71674471bdfa88f6ec226d7cb1f7d17b9ef3c9c",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Package-Editing Utilities To Its Own Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jul 2020 05:06:13 GMT",
       "tag": "@rnw-scripts/promote-release_v0.1.0",
       "version": "0.1.0",

@@ -1,0 +1,20 @@
+{
+  "name": "@rnw-scripts/integrate-rn",
+  "entries": [
+    {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Initial Version of Automatic React Native Integration Script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    }
+  ]
+}

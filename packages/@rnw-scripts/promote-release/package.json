@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@rnw-scripts/find-repo-root": "^0.0.4",
-    "@rnw-scripts/package-utils": "^0.0.0",
+    "@rnw-scripts/package-utils": "^0.0.1",
     "chalk": "^4.1.0",
     "simple-git": "^1.131.0",
     "yargs": "^15.3.1"

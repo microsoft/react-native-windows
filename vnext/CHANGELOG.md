@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 06 Aug 2020 05:05:16 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Aug 2020 07:36:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.137
+
+Tue, 11 Aug 2020 07:36:05 GMT
+
+### Changes
+
+- Add Get/SetRuntimeOptionInt. (julio.rocha@microsoft.com)
+- Update ChakraCore to 1.11.20 (jthysell@microsoft.com)
+- Make C# CodeGen the default (dannyvv@microsoft.com)
+- Keep dependencies in sync with react-native (ngerlem@microsoft.com)
+- add transparent background to fix hit-testing issue (kmelmon@microsoft.com)
+- change to member as static DOs aren't safe in multi window apps (kmelmon@microsoft.com)
+- Fix label of RedBox reload button (email not defined)
+- Disable Hermes by default (tudor.mihai@microsoft.com)
 
 ## 0.0.0-canary.136
 

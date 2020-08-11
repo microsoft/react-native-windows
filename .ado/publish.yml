@@ -37,26 +37,20 @@ jobs:
 
       - template: templates/yarn-install.yml
 
-      - task: CmdLine@2
+      - script: yarn build
         displayName: yarn build
-        inputs:
-          script: yarn build
 
-      - task: CmdLine@2
-        displayName: Beachball Publish
-        inputs:
-          ${{ if eq(Build.SourceBranchName, 'master') }}:
-           script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
-          ${{ if ne(Build.SourceBranchName, 'master') }}:
-           script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+        displayName: Beachball Publish (Master Branch)
+        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - task: CmdLine@2
-        displayName: Create GitHub Release
-        inputs:
-          ${{ if eq(Build.SourceBranchName, 'master') }}:
-            script: npx --no-install @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
-          ${{ if ne(Build.SourceBranchName, 'master') }}:
-            script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+        displayName: Beachball Publish (Stable Branch)
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+
+      - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+        displayName: Create GitHub Releases for New Tags (Stable Branch)
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - template: templates/set-version-vars.yml
 
