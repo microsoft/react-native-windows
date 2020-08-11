@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix label of RedBox reload button",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch",
-  "date": "2020-08-07T16:24:14.476Z"
-}

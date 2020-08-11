@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Tue, 28 Jul 2020 05:06:13 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Aug 2020 07:36:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.0
+
+Tue, 11 Aug 2020 07:36:05 GMT
+
+### Minor changes
+
+- Don't write release variables (ngerlem@microsoft.com)
+
+### Patches
+
+- Package-Editing Utilities To Its Own Package (ngerlem@microsoft.com)
 
 ## 0.1.0
 

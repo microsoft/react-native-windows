@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "change to member as static DOs aren't safe in multi window apps",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-07T09:41:33.882Z"
-}

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update ChakraCore to 1.11.20",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-10T22:34:22.738Z"
-}

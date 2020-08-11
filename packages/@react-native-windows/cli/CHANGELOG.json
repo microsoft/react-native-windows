@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make C# CodeGen the default",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7a65915e82d6bc6884e267a8c96d0fa7fadb0e9e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jul 2020 05:06:13 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.1",
       "version": "0.0.0-canary.1",
