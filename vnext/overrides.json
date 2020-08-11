@@ -40,8 +40,8 @@
       "type": "patch",
       "file": "DeforkingPatches/ReactCommon/yoga/yoga/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "8d6ec976334a009920300bd700cb04adf11e0f03",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "baf6b8bf6893f2929abc8614ddecf4095191231b",
       "issue": 3994
     },
     {
@@ -238,8 +238,8 @@
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
       "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "f15d5ab6c73a202608d66eb90f41497cb1fc6dc4",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "1a94e2e99474b15141d1c67c1211ac1dc2c2a62d",
       "issue": 4611
     },
     {
@@ -292,8 +292,8 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "a50310f6dee460f7d1a53e0f1a21dbac9cf02094",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "9d9e65ecd506387e98d0ef5a58321c568a95ad41",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -501,8 +501,8 @@
       "type": "derived",
       "file": "src/RNTester/js/examples/PlatformColor/PlatformColorExample.windows.js",
       "baseFile": "RNTester/js/examples/PlatformColor/PlatformColorExample.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "f1c2babe02e11d237dbab875b8a7cd63fce048b6",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "a63038b104bcf3caa0984d994bf3916ef1aa38ee",
       "issue": 4055
     },
     {
@@ -541,8 +541,8 @@
       "type": "derived",
       "file": "src/RNTester/js/utils/RNTesterList.windows.ts",
       "baseFile": "RNTester/js/utils/RNTesterList.android.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "65c3876bdbc2755cd568b2779ed962fa7a4edf6a",
+      "baseVersion": "0.0.0-2c473e1a3",
+      "baseHash": "20a6f5c42266beb017dccc7f22d45bde02907d89",
       "issue": "LEGACY_FIXME"
     },
     {

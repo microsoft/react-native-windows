@@ -36,10 +36,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/Button/ButtonExample'),
   },
   {
-    key: 'CheckBoxExample',
-    module: require('react-native/RNTester/js/examples/CheckBox/CheckBoxExample'),
-  },
-  {
     key: 'CustomViewExample',
     module: require('./../examples-win/CustomView/CustomViewExample'),
   },
