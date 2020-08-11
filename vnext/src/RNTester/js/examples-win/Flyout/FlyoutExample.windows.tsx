@@ -5,7 +5,7 @@
  */
 
 import React = require('react');
-import {Button, CheckBox, Text, TextInput, View} from 'react-native';
+import {Button, Switch, Text, TextInput, View} from 'react-native';
 import {Flyout} from '../../../../Libraries/Components/Flyout/Flyout';
 import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
 import {Popup} from '../../../../Libraries/Components/Popup/Popup';
@@ -18,7 +18,7 @@ interface IFlyoutExampleState {
   buttonTitle: string;
   isLightDismissEnabled: boolean;
   isOverlayEnabled: boolean;
-  popupCheckBoxState: boolean;
+  popupSwitchState: boolean;
   placementOptions: Placement;
 }
 
@@ -50,7 +50,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
     isOverlayEnabled: false,
-    popupCheckBoxState: true,
+    popupSwitchState: true,
     placementOptions: 'top',
   };
 
@@ -107,12 +107,12 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
               <Button onPress={this._onFlyoutButtonPressed} title="Close" />
               <View style={{flexDirection: 'row'}}>
                 <Text style={{padding: 10}}>isLightDismissEnabled: </Text>
-                <CheckBox
+                <Switch
                   style={{justifyContent: 'center', padding: 20}}
-                  value={this.state.popupCheckBoxState}
+                  value={this.state.popupSwitchState}
                   onValueChange={value =>
                     this.setState({
-                      popupCheckBoxState: value,
+                      popupSwitchState: value,
                       isLightDismissEnabled: value,
                     })
                   }
@@ -120,7 +120,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{padding: 10}}>isOverlayEnabled: </Text>
-                <CheckBox
+                <Switch
                   style={{justifyContent: 'center', padding: 20}}
                   value={this.state.isOverlayEnabled}
                   onValueChange={value =>

@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {ColorValue} from './StyleSheetTypes';
+import type {ColorValue} from './StyleSheet';
 import type {GradientColorValueWin32} from './PlatformColorValueTypes';
 import {ColorGradientWin32Private} from './PlatformColorValueTypes';
 

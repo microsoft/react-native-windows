@@ -36,10 +36,6 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/Button/ButtonExample'),
   },
   {
-    key: 'CheckBoxExample',
-    module: require('react-native/RNTester/js/examples/CheckBox/CheckBoxExample'),
-  },
-  {
     key: 'CustomViewExample',
     module: require('./../examples-win/CustomView/CustomViewExample'),
   },
@@ -110,6 +106,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'TextExample',
     module: require('./../examples-win/Text/TextExample'),
+  },
+  {
+    key: 'TextInputExample',
+    module: require('react-native/RNTester/js/examples/TextInput/TextInputExample'),
   },
   {
     key: 'TouchableExample',

@@ -209,9 +209,6 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\CheckboxViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -564,9 +561,6 @@
       <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="Views\ActivityIndicatorViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\CheckboxViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\ControlViewManager.h">

@@ -304,7 +304,6 @@
     <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
-    <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\ControlViewManager.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\DevMenu.h" />
@@ -491,7 +490,6 @@
     <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
-    <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\DatePickerViewManager.cpp" />

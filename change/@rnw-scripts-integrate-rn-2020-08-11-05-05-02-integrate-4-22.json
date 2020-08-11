@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix integrate-rn bug with dependency syncing added late PR",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-11T12:05:02.815Z"
+}

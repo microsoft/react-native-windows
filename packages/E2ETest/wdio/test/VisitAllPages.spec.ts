@@ -10,7 +10,6 @@ let pages = [
   /*  TODO:  Disabling most of the test for now due to
              instability, tracked by #5661
   '<Button>',
-  '<CheckBox>',
   //  'Custom Views',
   '<DatePicker>',
   'Fast Path Texts',
@@ -29,6 +28,7 @@ let pages = [
   //  '<SectionList>',
   '<Switch>',
   '<Text>',
+  '<TextInput>',
   '<Touchable*> and onPress',
   '<TransferProperties>',
   '<TransparentHitTestExample>',

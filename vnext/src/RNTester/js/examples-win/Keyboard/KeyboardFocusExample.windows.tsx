@@ -6,7 +6,6 @@
 
 import * as React from 'react';
 import {
-  CheckBox,
   View,
   StyleSheet,
   Text,
@@ -65,8 +64,6 @@ const touchableHighlightRef = React.createRef<TouchableHighlight>();
 const touchableOpacityRef = React.createRef<TouchableOpacity>();
 const touchableWithoutFeedbackRef = React.createRef<TouchableWithoutFeedback>();
 
-const checkBoxRef = React.createRef<CheckBox>();
-
 class KeyboardFocusExample extends React.Component<
   {},
   IKeyboardFocusComponentState
@@ -88,7 +85,6 @@ class KeyboardFocusExample extends React.Component<
       'Picker',
       'TextInput',
       'TextInput2',
-      'CheckBox',
       'TouchableHighlight',
       'TouchableOpacity',
     ];
@@ -141,10 +137,6 @@ class KeyboardFocusExample extends React.Component<
             ref={textInputRef2}
           />
           <Text>Key {this.state.keyOnKeyDown}</Text>
-        </View>
-        <View>
-          <CheckBox ref={checkBoxRef} />
-          <Text>Checkbox accept focus</Text>
         </View>
         <View>
           <TouchableHighlight
@@ -210,9 +202,6 @@ class KeyboardFocusExample extends React.Component<
             textInputRef2.current && textInputRef2.current.blur();
           }, 10000);
         }
-        break;
-      case 'CheckBox':
-        // checkBoxRef.current && checkBoxRef.current.focus();
         break;
       case 'TouchableHighlight':
         touchableHighlightRef.current && touchableHighlightRef.current.focus();

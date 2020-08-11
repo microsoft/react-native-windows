@@ -10,7 +10,6 @@
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
-#include <Views/CheckboxViewManager.h>
 #include <Views/DatePickerViewManager.h>
 #include <Views/FlyoutViewManager.h>
 #include <Views/Image/ImageViewManager.h>
@@ -41,7 +40,6 @@ void AddStandardViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
     std::shared_ptr<IReactInstance> const &instance) noexcept {
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
-  viewManagers.push_back(std::make_unique<CheckBoxViewManager>(instance));
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
