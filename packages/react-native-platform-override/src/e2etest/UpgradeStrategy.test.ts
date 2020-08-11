@@ -168,8 +168,8 @@ test('copyFile', async () => {
 });
 
 test('copyDirectory - New Files', async () => {
-  const overrideDir = 'src/bots';
-  const baseDir = 'bots';
+  const overrideDir = 'src/jest';
+  const baseDir = 'jest';
 
   const strategy = UpgradeStrategies.copyDirectory(overrideDir, baseDir);
   await usingFiles([], async overrideRepo => {
@@ -186,27 +186,27 @@ test('copyDirectory - New Files', async () => {
     });
 
     expect((await overrideRepo.listFiles()).sort()).toEqual([
-      'src/bots/.babelrc',
-      'src/bots/README.md',
-      'src/bots/code-analysis-bot.js',
-      'src/bots/dangerfile.js',
-      'src/bots/package.json',
-      'src/bots/yarn.lock',
+      'src/jest/MockNativeMethods.js',
+      'src/jest/assetFileTransformer.js',
+      'src/jest/mockComponent.js',
+      'src/jest/preprocessor.js',
+      'src/jest/renderer.js',
+      'src/jest/setup.js',
     ]);
   });
 });
 
 test('copyDirectory - New Content', async () => {
   const overrideFiles = [
-    '0.62.2/bots/.babelrc',
-    '0.62.2/bots/README.md',
-    '0.62.2/bots/code-analysis-bot.js',
-    '0.62.2/bots/dangerfile.js',
-    '0.62.2/bots/package.json',
-    '0.62.2/bots/yarn.lock',
+    '0.62.2/jest/MockNativeMethods.js',
+    '0.62.2/jest/assetFileTransformer.js',
+    '0.62.2/jest/mockComponent.js',
+    '0.62.2/jest/preprocessor.js',
+    '0.62.2/jest/renderer.js',
+    '0.62.2/jest/setup.js',
   ];
 
-  const strategy = UpgradeStrategies.copyDirectory('0.62.2/bots', 'bots');
+  const strategy = UpgradeStrategies.copyDirectory('0.62.2/jest', 'jest');
   await usingFiles(overrideFiles, async overrideRepo => {
     const correctHash = await hashFileOrDirectory(
       overrideFiles[0],
@@ -227,7 +227,7 @@ test('copyDirectory - New Content', async () => {
       true,
     );
     expect(results).toEqual({
-      overrideName: '0.62.2/bots',
+      overrideName: '0.62.2/jest',
       filesWritten: true,
       hasConflicts: false,
     });
@@ -240,18 +240,18 @@ test('copyDirectory - New Content', async () => {
 
 test('copyDirectory - Deleted Content', async () => {
   const overrideFiles = [
-    '0.62.2/bots/.babelrc',
-    '0.62.2/bots/README.md',
-    '0.62.2/bots/code-analysis-bot.js',
-    '0.62.2/bots/dangerfile.js',
-    '0.62.2/bots/package.json',
-    '0.62.2/bots/yarn.lock',
+    '0.62.2/jest/MockNativeMethods.js',
+    '0.62.2/jest/assetFileTransformer.js',
+    '0.62.2/jest/mockComponent.js',
+    '0.62.2/jest/preprocessor.js',
+    '0.62.2/jest/renderer.js',
+    '0.62.2/jest/setup.js',
   ];
 
-  const strategy = UpgradeStrategies.copyDirectory('0.62.2/bots', 'bots');
+  const strategy = UpgradeStrategies.copyDirectory('0.62.2/jest', 'jest');
   await usingFiles(overrideFiles, async overrideRepo => {
-    await overrideRepo.writeFile('0.62.2/bots/extraFile.txt', 'Delete me');
-    expect(await overrideRepo.stat('0.62.2/bots/extraFile.txt')).toBe('file');
+    await overrideRepo.writeFile('0.62.2/jest/extraFile.txt', 'Delete me');
+    expect(await overrideRepo.stat('0.62.2/jest/extraFile.txt')).toBe('file');
 
     const results = await strategy.upgrade(
       gitReactRepo,
@@ -260,26 +260,26 @@ test('copyDirectory - Deleted Content', async () => {
       true,
     );
     expect(results).toEqual({
-      overrideName: '0.62.2/bots',
+      overrideName: '0.62.2/jest',
       filesWritten: true,
       hasConflicts: false,
     });
 
-    expect(await overrideRepo.stat('0.62.2/bots/extraFile.txt')).toBe('none');
+    expect(await overrideRepo.stat('0.62.2/jest/extraFile.txt')).toBe('none');
   });
 });
 
 test('copyDirectory - Preserves Line Endings', async () => {
   const overrideFiles = [
-    '0.62.2/bots/.babelrc',
-    '0.62.2/bots/README.md',
-    '0.62.2/bots/code-analysis-bot.js',
-    '0.62.2/bots/dangerfile.js',
-    '0.62.2/bots/package.json',
-    '0.62.2/bots/yarn.lock',
+    '0.62.2/jest/MockNativeMethods.js',
+    '0.62.2/jest/assetFileTransformer.js',
+    '0.62.2/jest/mockComponent.js',
+    '0.62.2/jest/preprocessor.js',
+    '0.62.2/jest/renderer.js',
+    '0.62.2/jest/setup.js',
   ];
 
-  const strategy = UpgradeStrategies.copyDirectory('0.62.2/bots', 'bots');
+  const strategy = UpgradeStrategies.copyDirectory('0.62.2/jest', 'jest');
   await usingFiles(overrideFiles, async overrideRepo => {
     const origContent = (await overrideRepo.readFile(
       overrideFiles[1],
@@ -299,7 +299,7 @@ test('copyDirectory - Preserves Line Endings', async () => {
       true,
     );
     expect(results).toEqual({
-      overrideName: '0.62.2/bots',
+      overrideName: '0.62.2/jest',
       filesWritten: true,
       hasConflicts: false,
     });
