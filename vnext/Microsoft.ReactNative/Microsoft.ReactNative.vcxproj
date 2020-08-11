@@ -299,6 +299,7 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Utils\ResourceBrushUtils.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="Utils\TransformableText.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
     <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
