@@ -30,12 +30,7 @@ namespace {{ namespace }}
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
-{{^useExperimentalNuget}}
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReflectionReactPackageProvider<App>());
-{{/useExperimentalNuget}}
-{{#useExperimentalNuget}}
             PackageProviders.Add(new ReactPackageProvider());
-{{/useExperimentalNuget}}
 
             InitializeComponent();
         }
