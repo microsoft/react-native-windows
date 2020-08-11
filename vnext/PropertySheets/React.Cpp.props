@@ -113,19 +113,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
-  <!--
-    #4804: CxxFrameHandler4 leads to generated code that incompatible with VS
-    2015 and 2017. Disable it until consumers are updated or on an ABI-safe API
-  -->
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <AdditionalOptions>/d2FH4- %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <AdditionalOptions>/d2:-FH4- %(AdditionalOptions)</AdditionalOptions>
-    </Link>
-  </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(ConfigurationType)' == 'Application' OR '$(ConfigurationType)' == 'DynamicLibrary'">
     <Link>
       <SubSystem>Console</SubSystem>
