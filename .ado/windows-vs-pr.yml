@@ -199,8 +199,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-    pool:
-      vmImage: $(VmImage)
+    pool: rnw-ci
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -438,7 +437,7 @@ jobs:
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
-          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true" -UseBasicParsing
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
@@ -563,8 +562,7 @@ jobs:
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
+    pool: rnw-ci
     steps:
       - template: templates/react-native-init.yml
         parameters:
@@ -589,8 +587,7 @@ jobs:
       )
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
+    pool: rnw-ci
     strategy:
       matrix:
         cpp:
@@ -609,8 +606,7 @@ jobs:
     displayName: JavaScript Tasks
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    pool:
-      vmImage: $(VmImage)
+    pool: rnw-ci
     timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -700,8 +696,7 @@ jobs:
         in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
         in(dependencies.RNWDesktopPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
       )
-    pool:
-      vmImage: $(VmImage)
+    pool: rnw-ci
     timeoutInMinutes: 30
     cancelTimeoutInMinutes: 5
     steps:

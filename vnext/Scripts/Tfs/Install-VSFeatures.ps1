@@ -32,6 +32,7 @@ if ($UseWebInstaller) {
 
 	Invoke-WebRequest -Method Get `
 		-Uri $InstallerUri `
+		-UseBasicParsing
 		-OutFile $VsInstaller
 
 	New-Item -ItemType directory -Path $VsInstallOutputDir
@@ -92,6 +93,7 @@ if ($UseWebInstaller) {
 if ($Collect) {
 	Invoke-WebRequest -Method Get `
 		-Uri 'https://download.microsoft.com/download/8/3/4/834E83F6-C377-4DCE-A757-69A418B6C6DF/Collect.exe' `
+		-UseBasicParsing
 		-OutFile ${env:System_DefaultWorkingDirectory}\Collect.exe
 
 	# Should generate ${env:Temp}\vslogs.zip
