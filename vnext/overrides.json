@@ -137,18 +137,6 @@
       "issue": "LEGACY_FIXME"
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Components/CheckBox/CheckBox.windows.js",
-      "baseFile": "Libraries/Components/CheckBox/CheckBox.android.js",
-      "baseVersion": "0.0.0-4a48b021d",
-      "baseHash": "278d7049749ba8b5f3840f21ef6b3d528183829f",
-      "issue": 4694
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/CheckBox/CheckBoxProps.ts"
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/DatePicker/DatePicker.tsx"
     },
