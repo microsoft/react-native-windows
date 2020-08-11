@@ -6,6 +6,7 @@
  */
 
 import * as _ from 'lodash';
+import * as async from 'async';
 import * as fs from 'fs';
 import * as ora from 'ora';
 import * as path from 'path';
@@ -15,6 +16,7 @@ import * as yargs from 'yargs';
 import {
   enumerateLocalPackages,
   findPackage,
+  NpmPackage,
   WritableNpmPackage,
 } from '@rnw-scripts/package-utils';
 
@@ -60,14 +62,19 @@ import findRepoRoot from '@rnw-scripts/find-repo-root';
  * Enumerate packages for out-of-tree platforms
  */
 async function enumeratePlatformPackages(): Promise<WritableNpmPackage[]> {
-  return await enumerateLocalPackages(async pkg => {
-    try {
-      await fs.promises.access(path.join(pkg.path, 'overrides.json'));
-      return true;
-    } catch {
-      return false;
-    }
-  });
+  return await enumerateLocalPackages(isOutOfTreePlatform);
+}
+
+/**
+ * Does the NPM package correspond to an out-of-tree platform?
+ */
+async function isOutOfTreePlatform(pkg: NpmPackage): Promise<boolean> {
+  try {
+    await fs.promises.access(path.join(pkg.path, 'overrides.json'));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -75,8 +82,13 @@ async function enumeratePlatformPackages(): Promise<WritableNpmPackage[]> {
  * version of React Native
  */
 async function updatePackages(newVersion: string) {
+  // Be careful to share package objects since writing to one may invalidate
+  // copies
   const localPackages = await enumerateLocalPackages();
-  const platformPackages = await enumeratePlatformPackages();
+  const platformPackages = await async.filter(
+    localPackages,
+    isOutOfTreePlatform,
+  );
 
   if (platformPackages.length === 0) {
     throw new Error(
