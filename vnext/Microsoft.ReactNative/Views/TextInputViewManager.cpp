@@ -95,10 +95,6 @@ class TextInputShadowNode : public ShadowNodeBase {
 
   void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
 
-  void removeAllChildren() override {
-    // NYI #5689
-    YellowBox("Nested elements in TextInput are currently unsupported on Windows");
-  }
   void AddView(ShadowNode & /*child*/, int64_t /*index*/) override {
     // NYI #5689
     YellowBox("Nested elements in TextInput are currently unsupported on Windows");
