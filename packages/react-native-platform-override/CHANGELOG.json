@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 12 Aug 2020 05:05:16 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Switch react-native-platform-override collateral to avoid lockfile",
+            "author": "ngerlem@microsoft.com",
+            "commit": "179cc3c8738d9bef71d138f21e6faf12bff19a03",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Jul 2020 05:05:25 GMT",
       "tag": "react-native-platform-override_v0.2.1",
       "version": "0.2.1",

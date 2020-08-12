@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Aug 2020 07:36:05 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Aug 2020 05:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.138
+
+Wed, 12 Aug 2020 05:05:16 GMT
+
+### Changes
+
+- Expose instance life cycle events (email not defined)
+- Implement textTransform (asklar@microsoft.com)
+- Integrate 4/22 Nightly Build (ngerlem@microsoft.com)
+- Remove compiler flags disabling FH4 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.137
 

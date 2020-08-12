@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Aug 2020 05:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.138",
+      "version": "0.0.0-canary.138",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose instance life cycle events",
+            "author": "email not defined",
+            "commit": "ac620ae2bba544a559506e7d511dd928203f77c0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement textTransform",
+            "author": "asklar@microsoft.com",
+            "commit": "4119de0c3881d3722d076a6676801d5dd5004605",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 4/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4af6037c9b5bb8f81668dd5b3466b758bae19e6b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove compiler flags disabling FH4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c4c1c1a9ea97dc8f3fdfe97f989e275fa71d4013",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Aug 2020 07:36:05 GMT",
       "tag": "react-native-windows_v0.0.0-canary.137",
       "version": "0.0.0-canary.137",
