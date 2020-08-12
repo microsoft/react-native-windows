@@ -18,7 +18,7 @@
 #include "Chakra/ChakraExecutor.h"
 #include "Chakra/ChakraHelpers.h"
 #include "Chakra/ChakraUtils.h"
-#include "JSI/Shared/RuntimeHolder.h"
+#include "JSI/RuntimeHolder.h"
 
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>

@@ -109,7 +109,11 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        "$(ReactNativeWindowsDir)\Microsoft.ReactNative";
+        "$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx";
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
       <!--
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
@@ -207,6 +211,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
+    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp" />
     <ClCompile Include="RuntimeOptions.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
@@ -297,9 +302,6 @@
     </ProjectReference>
     <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
       <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj">
-      <Project>{17dd1b17-3094-40dd-9373-ac2497932eca}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>

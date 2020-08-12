@@ -106,7 +106,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp">
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraObjectRef.cpp">
+      <Filter>Source Files\JSI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp">
+      <Filter>Source Files\JSI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -147,6 +155,12 @@
     </Filter>
     <Filter Include="Header Files\Executors">
       <UniqueIdentifier>{d2b54f2c-7e3c-48a6-8df6-dea9fb7ab4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JSI">
+      <UniqueIdentifier>{1a42673d-71ac-4393-ade1-472b665abd06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\JSI">
+      <UniqueIdentifier>{fefb2ea8-62a7-4181-b2d2-bde60fcf9ac7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +319,27 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraObjectRef.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">
+      <Filter>Header Files\JSI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
