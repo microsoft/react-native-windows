@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "ChakraObjectRef.h"
+#include "ChakraApi.h"
 #include "ChakraRuntimeArgs.h"
 
 #include <jsi/jsi.h>
@@ -18,7 +18,7 @@
 #include "jsrt.h"
 #endif
 
-#include <memory>
+#include <array>
 #include <mutex>
 #include <sstream>
 
@@ -29,7 +29,8 @@ class DebugService {};
 
 namespace Microsoft::JSI {
 
-class ChakraRuntime : public facebook::jsi::Runtime {
+// Implementation of Chakra JSI Runtime
+class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExceptionThrower {
  public:
   ChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
   ~ChakraRuntime() noexcept;
@@ -58,9 +59,9 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
  private:
   // Despite the name "clone" suggesting a deep copy, a return value of these
-  // functions points to a new heap allocated ChakraPointerValue whose memeber
-  // ChakraObjectRef refers to the same JavaScript object as the member
-  // ChakraObjectRef of *pointerValue. This behavior is consistent with that of
+  // functions points to a new heap allocated ChakraPointerValue whose member
+  // JsRefHolder refers to the same JavaScript object as the member
+  // JsRefHolder of *pointerValue. This behavior is consistent with that of
   // HermesRuntime and JSCRuntime. Also, Like all ChakraPointerValues, the
   // return value must only be used as an argument to the constructor of
   // jsi::Pointer or one of its derived classes.
@@ -153,8 +154,32 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     return m_args;
   }
 
+ private: //  ChakraApi::IExceptionThrower members
+  [[noreturn]] void ThrowJsExceptionOverride(JsErrorCode errorCode, JsValueRef jsError) override;
+  [[noreturn]] void ThrowNativeExceptionOverride(char const *errorMessage) override;
+  void RewriteErrorMessage(JsValueRef jsError);
+
  private:
-  void VerifyJsErrorElseThrow(JsErrorCode error);
+  // ChakraPointerValueView is the base class for ChakraPointerValue.
+  // It holds the JsRef, but unlike the ChakraPointerValue does nothing in the
+  // invalidate() method.
+  // It is used by the JsiValueView, JsiValueViewArray, and JsiPropNameIDView classes
+  // to keep temporary PointerValues on the call stack to avoid extra memory allocations.
+  struct ChakraPointerValueView : PointerValue {
+    ChakraPointerValueView(JsRef ref) noexcept : m_ref{ref} {}
+
+    ChakraPointerValueView(ChakraPointerValueView const &) = delete;
+    ChakraPointerValueView &operator=(ChakraPointerValueView const &) = delete;
+
+    void invalidate() noexcept override {}
+
+    JsRef GetRef() const noexcept {
+      return m_ref;
+    }
+
+   private:
+    JsRef m_ref;
+  };
 
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
   // and must only be used for this purpose. Every instance of
@@ -168,123 +193,117 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   //     make<Pointer>(new ChakraPointerValue(...));
   //
   // or you can use the helper function MakePointer(), as defined below.
-  template <typename T>
-  struct ChakraPointerValueTemplate : PointerValue {
-   public:
-    ChakraPointerValueTemplate(const T &ref) noexcept : m_ref{ref} {
-      static_assert(
-          std::is_same<T, ChakraObjectRef>::value ||
-              // Since only ChakraCore offers the JsWeakRef type alias, we
-              // cannot use it here; so void* is the best alternative we can use
-              // here.
-              std::is_same<T, void *>::value,
-          "ChakraPointerValueTemplate should only be instantiated for "
-          "ChakraObjectRef and JsWeakRef.");
+  struct ChakraPointerValue final : ChakraPointerValueView {
+    ChakraPointerValue(JsRef ref) noexcept : ChakraPointerValueView{ref} {
+      if (ref) {
+        AddRef(ref);
+      }
     }
 
-    ChakraPointerValueTemplate(T &&ref) noexcept : m_ref{std::move(ref)} {}
-
-    // Declaring ~ChakraPointerValueTemplate() private prevents the compiler
-    // from implicitly generating the following functions, so we have to tell
-    // the compiler to do so.
-    ChakraPointerValueTemplate(const ChakraPointerValueTemplate &other) noexcept = default;
-    ChakraPointerValueTemplate(ChakraPointerValueTemplate &&other) noexcept = default;
-    ChakraPointerValueTemplate &operator=(const ChakraPointerValueTemplate &rhs) noexcept = default;
-    ChakraPointerValueTemplate &operator=(ChakraPointerValueTemplate &&rhs) noexcept = default;
-
-    inline void invalidate() noexcept override {
+    void invalidate() noexcept override {
       delete this;
     }
 
-    inline const T &GetRef() const noexcept {
-      return m_ref;
-    }
-
    private:
-    // ~ChakraPointerValueTemplate() should only be invoked by invalidate().
+    // ~ChakraPointerValue() should only be invoked by invalidate().
     // Hence we make it private.
-    ~ChakraPointerValueTemplate() noexcept = default;
-
-    T m_ref;
+    ~ChakraPointerValue() noexcept override {
+      if (JsRef ref = GetRef()) {
+        // JSI allows the destructor to be run on a random thread.
+        // To handle it correctly we must schedule a task to the thread associated
+        // with the Chakra context. Fir now we just leak the value.
+        // TODO: Implement proper ref count release if it is called on a wrong thread.
+        JsRelease(ref, nullptr); // We ignore the error until we fix the TODO above.
+      }
+    }
   };
 
-  using ChakraPointerValue = ChakraPointerValueTemplate<ChakraObjectRef>;
-
-  template <typename T>
-  inline T MakePointer(JsValueRef ref) {
-    return MakePointer<T>(ChakraObjectRef(ref));
-  }
-
-  template <typename T>
-  inline T MakePointer(ChakraObjectRef &&ref) {
-    static_assert(
-        std::is_base_of<facebook::jsi::Pointer, T>::value,
-        "MakePointer should only be instantiated for classes derived from "
-        "facebook::jsi::Pointer.");
-    return make<T>(new ChakraPointerValue(std::move(ref)));
+  template <typename T, std::enable_if_t<std::is_base_of_v<facebook::jsi::Pointer, T>, int> = 0>
+  static T MakePointer(JsRef ref) {
+    return make<T>(new ChakraPointerValue(ref));
   }
 
   // The pointer passed to this function must point to a ChakraPointerValue.
-  inline static ChakraPointerValue *CloneChakraPointerValue(const PointerValue *pointerValue) {
-    return new ChakraPointerValue(*(static_cast<const ChakraPointerValue *>(pointerValue)));
+  static ChakraPointerValue *CloneChakraPointerValue(const PointerValue *pointerValue) {
+    return new ChakraPointerValue(static_cast<const ChakraPointerValue *>(pointerValue)->GetRef());
   }
 
   // The jsi::Pointer passed to this function must hold a ChakraPointerValue.
-  inline static const ChakraObjectRef &GetChakraObjectRef(const facebook::jsi::Pointer &p) {
-    return static_cast<const ChakraPointerValue *>(getPointerValue(p))->GetRef();
+  static JsRef GetJsRef(const facebook::jsi::Pointer &p) {
+    return static_cast<const ChakraPointerValueView *>(getPointerValue(p))->GetRef();
   }
 
   // These three functions only performs shallow copies.
-  facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
-  ChakraObjectRef ToChakraObjectRef(const facebook::jsi::Value &value);
-  std::vector<ChakraObjectRef> ToChakraObjectRefs(const facebook::jsi::Value *value, size_t count);
+  facebook::jsi::Value ToJsiValue(JsValueRef ref);
+  JsValueRef ToJsValueRef(const facebook::jsi::Value &value);
 
-  // Convenience functions for property access.
-  ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
-
-  inline ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name) {
-    return GetProperty(obj, GetChakraObjectRef(createPropNameIDFromAscii(name, strlen(name))));
-  }
-
-  // Since the function
-  //   Object::getProperty(Runtime& runtime, const char* name)
-  // causes mulitple copies of name, we do not want to use it when implementing
-  // ChakraRuntime methods. This function does the same thing as
-  // Object::getProperty, but without the extra overhead. This function is
-  // declared as const so that it can be used when implementing
-  // isHostFunction and isHostObject.
-  inline facebook::jsi::Value GetProperty(const facebook::jsi::Object &obj, const char *const name) const {
-    // We have to use const_casts here because ToJsiValue and GetProperty cannnot
-    // be marked as const.
-    return const_cast<ChakraRuntime *>(this)->ToJsiValue(
-        const_cast<ChakraRuntime *>(this)->GetProperty(GetChakraObjectRef(obj), name));
-  }
+  JsValueRef CreateExternalFunction(
+      JsPropertyIdRef name,
+      int32_t paramCount,
+      JsNativeFunction nativeFunction,
+      void *callbackState);
 
   // Host function helper
   static JsValueRef CALLBACK HostFunctionCall(
       JsValueRef callee,
       bool isConstructCall,
-      JsValueRef *argumentsIncThis,
-      unsigned short argumentCountIncThis,
+      JsValueRef *args,
+      unsigned short argCount,
       void *callbackState);
 
   // Host object helpers; runtime must be referring to a ChakraRuntime.
-  static facebook::jsi::Value HostObjectGetTrap(
-      Runtime &runtime,
-      const facebook::jsi::Value & /*thisVal*/,
-      const facebook::jsi::Value *args,
-      size_t count);
-  static facebook::jsi::Value HostObjectSetTrap(
-      Runtime &runtime,
-      const facebook::jsi::Value & /*thisVal*/,
-      const facebook::jsi::Value *args,
-      size_t count);
-  static facebook::jsi::Value HostObjectOwnKeysTrap(
-      Runtime &runtime,
-      const facebook::jsi::Value & /*thisVal*/,
-      const facebook::jsi::Value *args,
-      size_t count);
-  facebook::jsi::Object createHostObjectProxyHandler() noexcept;
+  static JsValueRef CALLBACK HostObjectGetTrap(
+      JsValueRef callee,
+      bool isConstructCall,
+      JsValueRef *args,
+      unsigned short argCount,
+      void *callbackState) noexcept;
+  static JsValueRef CALLBACK HostObjectSetTrap(
+      JsValueRef callee,
+      bool isConstructCall,
+      JsValueRef *args,
+      unsigned short argCount,
+      void *callbackState) noexcept;
+  static JsValueRef CALLBACK HostObjectOwnKeysTrap(
+      JsValueRef callee,
+      bool isConstructCall,
+      JsValueRef *args,
+      unsigned short argCount,
+      void *callbackState) noexcept;
+  JsValueRef GetHostObjectProxyHandler();
+
+  // Evaluate lambda and augment exception messages with the methodName.
+  template <typename TLambda>
+  static auto RunInMethodContext(char const *methodName, TLambda lambda) {
+    try {
+      return lambda();
+    } catch (facebook::jsi::JSError const &) {
+      throw; // do not augment the JSError exceptions.
+    } catch (std::exception const &ex) {
+      ChakraVerifyElseThrow(false, (std::string{"Exception in "} + methodName + ": " + ex.what()).c_str());
+    } catch (...) {
+      ChakraVerifyElseThrow(false, (std::string{"Exception in "} + methodName + ": <unknown>").c_str());
+    }
+  }
+
+  // Evaluate lambda and convert all exceptions to Chakra engine exceptions.
+  template <typename TLambda>
+  JsValueRef HandleCallbackExceptions(TLambda lambda) noexcept {
+    try {
+      try {
+        return lambda();
+      } catch (facebook::jsi::JSError const &jsError) {
+        // This block may throw exceptions
+        SetException(ToJsValueRef(jsError.value()));
+      }
+    } catch (std::exception const &ex) {
+      SetException(ex.what());
+    } catch (...) {
+      SetException(L"Unexpected error");
+    }
+
+    return m_undefinedValue;
+  }
 
   // Promise Helpers
   static void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept;
@@ -328,7 +347,99 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,
-      const std::string &sourceURL);
+      const std::string &sourceURL,
+      JsValueRef *result);
+
+  enum class PropertyAttibutes {
+    None = 0,
+    ReadOnly = 1 << 1,
+    DontEnum = 1 << 2,
+    DontDelete = 1 << 3,
+    Frozen = ReadOnly | DontDelete,
+    DontEnumAndFrozen = DontEnum | Frozen,
+  };
+
+  friend constexpr PropertyAttibutes operator&(PropertyAttibutes left, PropertyAttibutes right) {
+    return (PropertyAttibutes)((int)left & (int)right);
+  }
+
+  friend constexpr bool operator!(PropertyAttibutes attrs) {
+    return attrs == PropertyAttibutes::None;
+  }
+
+  JsValueRef CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs);
+
+  // This type represents a view to Value based on JsValueRef.
+  // It avoids extra memory allocation by using an in-place storage.
+  // It uses ChakraPointerValueView that does nothing in the invalidate() method.
+  struct JsiValueView {
+    JsiValueView(JsValueRef jsValue);
+    ~JsiValueView() noexcept;
+    operator facebook::jsi::Value const &() const noexcept;
+
+    using StoreType = std::aligned_storage_t<sizeof(ChakraPointerValueView)>;
+    static facebook::jsi::Value InitValue(JsValueRef jsValue, StoreType *store);
+
+   private:
+    StoreType m_pointerStore{};
+    facebook::jsi::Value m_value{};
+  };
+
+  constexpr static size_t MaxCallArgCount = 32;
+
+  // This class helps to use stack storage for passing arguments that must be temporary converted from
+  // JsValueRef to facebook::jsi::Value.
+  struct JsiValueViewArray {
+    JsiValueViewArray(JsValueRef *args, size_t argCount) noexcept;
+    facebook::jsi::Value const *Data() const noexcept;
+    size_t Size() const noexcept;
+
+   private:
+    std::array<JsiValueView::StoreType, MaxCallArgCount> m_pointerStoreArray{};
+    std::array<facebook::jsi::Value, MaxCallArgCount> m_valueArray{};
+    size_t m_size{};
+  };
+
+  // PropNameIDView helps to use the stack storage for temporary conversion from
+  // JsPropertyIdRef to facebook::jsi::PropNameID.
+  struct PropNameIDView {
+    PropNameIDView(JsPropertyIdRef propertyId) noexcept;
+    ~PropNameIDView() noexcept;
+    operator facebook::jsi::PropNameID const &() const noexcept;
+
+    using StoreType = std::aligned_storage_t<sizeof(ChakraPointerValueView)>;
+
+   private:
+    StoreType m_pointerStore{};
+    facebook::jsi::PropNameID m_propertyId;
+  };
+
+ private:
+  // Property ID cache to improve execution speed
+  struct PropertyId {
+    JsRefHolder Object;
+    JsRefHolder Proxy;
+    JsRefHolder Symbol;
+    JsRefHolder byteLength;
+    JsRefHolder configurable;
+    JsRefHolder enumerable;
+    JsRefHolder get;
+    JsRefHolder hostFunctionSymbol;
+    JsRefHolder hostObjectSymbol;
+    JsRefHolder length;
+    JsRefHolder message;
+    JsRefHolder ownKeys;
+    JsRefHolder propertyIsEnumerable;
+    JsRefHolder prototype;
+    JsRefHolder set;
+    JsRefHolder toString;
+    JsRefHolder value;
+    JsRefHolder writable;
+  } m_propertyId;
+
+  JsRefHolder m_undefinedValue;
+  JsRefHolder m_proxyConstructor;
+  JsRefHolder m_hostObjectProxyHandler;
 
   static std::once_flag s_runtimeVersionInitFlag;
   static uint64_t s_runtimeVersion;
@@ -337,7 +448,11 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   ChakraRuntimeArgs m_args;
 
   JsRuntimeHandle m_runtime;
-  ChakraObjectRef m_context;
+  JsRefHolder m_context;
+  JsRefHolder m_prevContext;
+
+  // Set the Chakra API exception thrower on this thread
+  ExceptionThrowerHolder m_exceptionThrower{this};
 
   // Note: For simplicity, We are pinning the script and serialized script
   // buffers in the facebook::jsi::Runtime instance assuming as these buffers

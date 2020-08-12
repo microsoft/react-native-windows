@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ChakraEdgeRuntimeTests.cpp" />
+    <ClCompile Include="$(JSI_SourcePath)\jsi\test\testlib.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Common\Unicode.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+      <Filter>JSI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)JSI\Universal\ChakraJsiRuntime_edgemode.cpp">
+      <Filter>ChakraJSI</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\test\testlib.h" />
+    <ClInclude Include="$(ReactNativeWindowsDir)Common\Unicode.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{a96cc37b-4edb-4f34-a5b5-23efd8b99c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSI">
+      <UniqueIdentifier>{72303d56-cd56-4d97-abe1-b32091db1ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ChakraJSI">
+      <UniqueIdentifier>{5b856313-d8c6-4386-bc82-a54e8c602679}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
