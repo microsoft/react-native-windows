@@ -10,8 +10,7 @@
 
 #include <Logging.h>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
 class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
@@ -44,5 +43,4 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   bool useDirectDebugger_;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

@@ -396,10 +396,10 @@ InstanceImpl::InstanceImpl(
 
           char tempPath[MAX_PATH];
           if (GetTempPathA(MAX_PATH, tempPath)) {
-            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+            preparedScriptStore = std::make_unique<Microsoft::React::BasePreparedScriptStoreImpl>(tempPath);
           }
 
-          m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+          m_devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::React::V8JSIRuntimeHolder>(
               m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
           break;
 #else

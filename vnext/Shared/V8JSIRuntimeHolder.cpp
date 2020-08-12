@@ -12,8 +12,7 @@
 using namespace facebook;
 using namespace facebook::react;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
 class ReactQueueBackedTaskRunner {
  public:
@@ -187,5 +186,4 @@ void V8JSIRuntimeHolder::initRuntime() noexcept {
   own_thread_id_ = std::this_thread::get_id();
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

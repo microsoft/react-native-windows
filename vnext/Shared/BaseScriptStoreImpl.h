@@ -11,8 +11,7 @@
 #include <tuple>
 #include <vector>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
 struct BufferStore {
   virtual std::unique_ptr<const facebook::jsi::Buffer> getBuffer(const std::string &bufferId) noexcept = 0;
@@ -89,5 +88,4 @@ class BaseScriptStoreImpl : public facebook::jsi::ScriptStore {
   std::shared_ptr<ScriptVersionProvider> versionProvider_;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React
