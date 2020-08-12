@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "TestHook.h"
-#include <cdebug.h>
+#include <Shared/cdebug.h>
 
 #ifdef DEBUG
 

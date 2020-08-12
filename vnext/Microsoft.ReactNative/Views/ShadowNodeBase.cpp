@@ -7,7 +7,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <UI.Composition.h>
-#include <ViewManager.h>
+#include <Shared/ViewManager.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>

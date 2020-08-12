@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ReactWindowsAPI.h>
+#include "ReactWindowsAPI.h"
 #include <string>
 
 namespace react {

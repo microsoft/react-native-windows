@@ -7,7 +7,7 @@
 
 #include "Unicode.h"
 #include "ViewPanel.h"
-#include "cdebug.h"
+#include <Shared/cdebug.h>
 
 #include <Modules/NativeUIManager.h>
 

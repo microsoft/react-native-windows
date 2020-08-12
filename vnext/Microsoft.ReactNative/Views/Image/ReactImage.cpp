@@ -14,7 +14,7 @@
 
 #include "Unicode.h"
 #include "XamlView.h"
-#include "cdebug.h"
+#include <Shared/cdebug.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
