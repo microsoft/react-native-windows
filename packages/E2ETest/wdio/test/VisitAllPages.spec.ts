@@ -52,7 +52,7 @@ let pages = [
   'Layout - Flexbox',
   'Native Animated Example',
   'PanResponder Sample',
-  'PlatformColor',
+//  'PlatformColor',
   'Pointer Events',
   'RTLExample',
   'Share',
