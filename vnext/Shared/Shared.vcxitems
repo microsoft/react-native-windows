@@ -53,6 +53,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Unicode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(USE_V8)' != 'true'">true</ExcludedFromBuild>
@@ -116,6 +117,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Unicode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
