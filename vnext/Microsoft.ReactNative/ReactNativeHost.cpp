@@ -11,6 +11,7 @@
 
 #include <future/futureWinRT.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include "IReactContext.h"
 #include "ReactInstanceSettings.h"
 
 using namespace winrt;
@@ -127,6 +128,22 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.ViewManagerProvider = viewManagersProvider;
 #endif
   reactOptions.TurboModuleProvider = turboModulesProvider;
+
+  reactOptions.OnInstanceCreated = [](Mso::CntPtr<Mso::React::IReactContext> &&context) {
+    auto notifications = context->Notifications();
+    ReactInstanceSettings::RaiseInstanceCreated(
+        notifications, winrt::make<InstanceCreatedEventArgs>(std::move(context)));
+  };
+  reactOptions.OnInstanceLoaded = [](Mso::CntPtr<Mso::React::IReactContext> &&context, const Mso::ErrorCode &err) {
+    auto notifications = context->Notifications();
+    ReactInstanceSettings::RaiseInstanceLoaded(
+        notifications, winrt::make<InstanceLoadedEventArgs>(std::move(context), !!err));
+  };
+  reactOptions.OnInstanceDestroyed = [](Mso::CntPtr<Mso::React::IReactContext> &&context) {
+    auto notifications = context->Notifications();
+    ReactInstanceSettings::RaiseInstanceDestroyed(
+        notifications, winrt::make<InstanceDestroyedEventArgs>(std::move(context)));
+  };
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
