@@ -71,13 +71,24 @@ let pages = [
 
 class TestPage extends BasePage {
   goToTestPage(page: string) {
+    this.waitForItemLoaded(page);
     let pageItem = By(page);
     pageItem.click();
     this.waitForPageLoaded();
   }
   backToHomePage() {
     this.homeButton.click();
-    By('explorer_search');
+  }
+
+  waitForItemLoaded(item: string, timeout?: number) {
+    // eslint-disable-next-line no-undef
+    browser.waitUntil(
+      () => {
+        return By(item).isExisting();
+      },
+      this.timeoutForPageLoaded(timeout),
+      'Wait for item ' + item + ' timeout'
+    );
   }
 }
 
