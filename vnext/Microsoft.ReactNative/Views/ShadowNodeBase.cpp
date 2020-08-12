@@ -6,8 +6,8 @@
 #include <IReactInstance.h>
 
 #include <Modules/NativeUIManager.h>
-#include <UI.Composition.h>
 #include <Shared/ViewManager.h>
+#include <UI.Composition.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>

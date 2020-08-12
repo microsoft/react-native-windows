@@ -3,7 +3,6 @@
 
 #include <JSI/ChakraRuntime.h>
 
-
 #include <JSI/ByteArrayBuffer.h>
 #include "Unicode.h"
 

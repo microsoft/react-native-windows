@@ -9,9 +9,9 @@
 #include <string>
 #include <vector>
 
+#include <Shared/ViewManager.h>
 #include <TurboModuleManager.h>
 #include <cxxreact/Instance.h>
-#include <Shared/ViewManager.h>
 #include "InstanceManager.h"
 
 namespace facebook {

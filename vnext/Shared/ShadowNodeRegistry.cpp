@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include <Shared/ViewManager.h>
 #include "ShadowNodeRegistry.h"
+#include <Shared/ViewManager.h>
 #include "ShadowNode.h"
 
 #include <glog/logging.h>

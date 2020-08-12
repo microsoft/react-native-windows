@@ -6,8 +6,8 @@
 //#include "ChakraRuntimeFactory.h"
 #include <JSI/ChakraRuntimeFactory.h>
 
-#include <cxxreact/MessageQueueThread.h>
 #include <JSI/ByteArrayBuffer.h>
+#include <cxxreact/MessageQueueThread.h>
 #include "Unicode.h"
 
 // This file contains non-edge-mode (or win32) implementations.

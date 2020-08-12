@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include "AsyncStorageModuleWin32.h"
 #include <Shared/AsyncStorageModuleWin32Config.h>
+#include "AsyncStorageModuleWin32.h"
 
 #include <cstdio>
 

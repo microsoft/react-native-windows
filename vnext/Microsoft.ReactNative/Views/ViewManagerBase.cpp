@@ -5,9 +5,9 @@
 
 #include <Views/ViewManagerBase.h>
 
+#include <Shared/cdebug.h>
 #include "Unicode.h"
 #include "ViewPanel.h"
-#include <Shared/cdebug.h>
 
 #include <Modules/NativeUIManager.h>
 

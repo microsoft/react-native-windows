@@ -12,9 +12,9 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#include <Shared/cdebug.h>
 #include "Unicode.h"
 #include "XamlView.h"
-#include <Shared/cdebug.h>
 
 namespace winrt {
 using namespace Windows::Foundation;

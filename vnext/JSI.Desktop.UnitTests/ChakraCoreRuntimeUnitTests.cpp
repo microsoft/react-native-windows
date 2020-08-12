@@ -15,14 +15,14 @@
 
 #include <vector>
 
-using Microsoft::React::Test::JsiRuntimeUnitTests;
-using Microsoft::React::Test::JsiRuntimeUnitTests_Chakra;
 using facebook::jsi::Runtime;
-using Microsoft::React::Test::RuntimeFactory;
 using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::JSI::ChakraRuntimeArgs;
 using Microsoft::JSI::makeChakraRuntime;
+using Microsoft::React::Test::JsiRuntimeUnitTests;
+using Microsoft::React::Test::JsiRuntimeUnitTests_Chakra;
+using Microsoft::React::Test::RuntimeFactory;
 using Microsoft::React::Test::TestMessageQueueThread;
 
 // TODO (yicyao): #2729 We need to add tests for ChakraCoreRuntime specific

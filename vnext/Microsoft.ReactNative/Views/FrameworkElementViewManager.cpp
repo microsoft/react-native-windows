@@ -21,9 +21,9 @@
 
 #include "DynamicAutomationProperties.h"
 
+#include <Shared/cdebug.h>
 #include <Views/ViewPanel.h>
 #include "Unicode.h"
-#include <Shared/cdebug.h>
 
 namespace winrt {
 using namespace xaml;
