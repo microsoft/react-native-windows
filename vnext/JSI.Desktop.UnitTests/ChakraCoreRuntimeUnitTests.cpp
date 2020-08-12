@@ -15,10 +15,10 @@
 
 #include <vector>
 
-using facebook::jsi::JsiRuntimeUnitTests;
-using facebook::jsi::JsiRuntimeUnitTests_Chakra;
+using Microsoft::React::Test::JsiRuntimeUnitTests;
+using Microsoft::React::Test::JsiRuntimeUnitTests_Chakra;
 using facebook::jsi::Runtime;
-using facebook::jsi::RuntimeFactory;
+using Microsoft::React::Test::RuntimeFactory;
 using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::JSI::ChakraRuntimeArgs;

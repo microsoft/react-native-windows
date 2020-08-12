@@ -18,6 +18,7 @@
 #include <unordered_set>
 
 using namespace facebook::jsi;
+using namespace Microsoft::React::Test;
 
 TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
