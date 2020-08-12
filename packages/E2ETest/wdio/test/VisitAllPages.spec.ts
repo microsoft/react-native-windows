@@ -51,7 +51,7 @@ let pages = [
   'Linking',
   'Layout - Flexbox',
   'Native Animated Example',
-//  'PanResponder Sample',
+  'PanResponder Sample',
   'PlatformColor',
   'Pointer Events',
   'RTLExample',
@@ -77,6 +77,7 @@ class TestPage extends BasePage {
   }
   backToHomePage() {
     this.homeButton.click();
+    By('explorer_search');
   }
 }
 
