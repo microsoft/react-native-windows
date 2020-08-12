@@ -82,21 +82,21 @@ steps:
     inputs:
       artifactName: NuGetTestFeed
       downloadPath: $(System.DefaultWorkingDirectory)
-    condition: ${{ parameters.useNuGet }}
+    condition: and(succeeded(), ${{ parameters.useNuGet }})
     
   - task: CmdLine@2
     displayName: Apply windows template (with nuget)
     inputs:
       script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       workingDirectory: $(Agent.BuildDirectory)\testcli
-    condition: ${{ parameters.useNuGet }}
+    condition: and(succeeded(), ${{ parameters.useNuGet }})
 
   - task: CmdLine@2
     displayName: Apply windows template (without nuget)
     inputs:
       script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
-    condition: ${{ not(parameters.useNuGet) }}
+    condition: and(succeeded(), ${{ not(parameters.useNuGet) }})
 
   - task: PowerShell@2
     displayName: List Visual Studio Components
