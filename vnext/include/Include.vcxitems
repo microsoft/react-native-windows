@@ -4,6 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}</ItemsProjectGuid>
+    <ItemsProjectName>Microsoft.ReactNative.Shared.Include</ItemsProjectName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -19,8 +20,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\II18nModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ReactWindowsAPI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ViewManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />
   </ItemGroup>
 </Project>

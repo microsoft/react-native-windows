@@ -11,8 +11,8 @@
 
 #include <TurboModuleManager.h>
 #include <cxxreact/Instance.h>
+#include <Shared/ViewManager.h>
 #include "InstanceManager.h"
-#include "ViewManager.h"
 
 namespace facebook {
 namespace react {

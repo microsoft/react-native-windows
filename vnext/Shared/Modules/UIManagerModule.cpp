@@ -15,7 +15,7 @@ using namespace std;
 #include "UIManagerModule.h"
 
 #include <IReactRootView.h>
-#include <cdebug.h>
+#include <Shared/cdebug.h>
 #include <winrt/base.h>
 
 using namespace folly;

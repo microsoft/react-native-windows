@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <ViewManager.h>
 #include <cxxreact/CxxModule.h>
+#include <Shared/ViewManager.h>
 #include <vector>
 
 namespace Microsoft::React::Test {

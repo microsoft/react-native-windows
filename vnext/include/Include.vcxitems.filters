@@ -22,7 +22,4 @@
       <UniqueIdentifier>{2c26b820-a216-4922-b03f-56ed5c58ce25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <Midl Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />
-  </ItemGroup>
 </Project>

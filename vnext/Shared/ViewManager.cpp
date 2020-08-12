@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include <ViewManager.h>
+#include <Shared/ViewManager.h>
 
 using namespace std;
 using namespace folly;

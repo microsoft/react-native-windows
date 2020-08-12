@@ -3,8 +3,8 @@
 
 #include <CppUnitTest.h>
 
+#include <Shared/ViewManager.h>
 #include <EmptyUIManagerModule.h>
-#include <ViewManager.h>
 
 using namespace facebook::react;
 using namespace Microsoft::React::Test;

@@ -1,7 +1,7 @@
 #include "JsiRuntimeUnitTests.h"
 
-#include "JSI/Shared/ChakraRuntimeArgs.h"
-#include "JSI/Shared/ChakraRuntimeFactory.h"
+#include <JSI/ChakraRuntimeArgs.h>
+#include <JSI/ChakraRuntimeFactory.h>
 #include "MemoryTracker.h"
 #if defined(USE_V8)
 #include <V8JsiRuntime.h>

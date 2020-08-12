@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <Shared/ViewManager.h>
 #include <INativeUIManager.h>
 #include <IUIManager.h>
 #include <ShadowNodeRegistry.h>
-#include <ViewManager.h>
 #include <memory>
 #include <vector>
 

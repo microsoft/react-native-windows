@@ -6,10 +6,10 @@
 #include <INativeUIManager.h>
 #include <InstanceManager.h>
 #include <ShadowNode.h>
-#include <ViewManager.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/ReactMarker.h>
 #include <folly/dynamic.h>
+#include <Shared/ViewManager.h>
 
 #include <queue>
 
