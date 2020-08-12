@@ -46,7 +46,7 @@ function getReactDiffProcessValue(typeAnnotation) {
     case 'StringEnumTypeAnnotation':
     case 'Int32EnumTypeAnnotation':
       return j.literal(true);
-    case 'NativePrimitiveTypeAnnotation':
+    case 'ReservedPropTypeAnnotation':
       switch (typeAnnotation.name) {
         case 'ColorPrimitive':
           // [Win applied https://github.com/facebook/react-native/pull/29230
@@ -75,7 +75,7 @@ function getReactDiffProcessValue(typeAnnotation) {
           );
       }
     case 'ArrayTypeAnnotation':
-      if (typeAnnotation.elementType.type === 'NativePrimitiveTypeAnnotation') {
+      if (typeAnnotation.elementType.type === 'ReservedPropTypeAnnotation') {
         switch (typeAnnotation.elementType.name) {
           case 'ColorPrimitive':
             // [Win applied https://github.com/facebook/react-native/pull/29230
