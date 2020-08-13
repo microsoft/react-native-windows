@@ -93,10 +93,8 @@ async function runWindows(
     const buildType = deploy.getBuildConfiguration(options);
     var msBuildProps = build.parseMsBuildProps(options);
 
-    if (!options.autolink) {
-      // Disable the autolink check if --no-autolink was passed
-      msBuildProps.RunAutolinkCheck = 'false';
-    }
+    // Disable the autolink check since we just ran it
+    msBuildProps.RunAutolinkCheck = 'false';
 
     try {
       await build.buildSolution(
