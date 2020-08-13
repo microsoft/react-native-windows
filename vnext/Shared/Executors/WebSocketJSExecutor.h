@@ -29,7 +29,8 @@ namespace react::uwp {
 
 class MessageQueueThread;
 
-class WebSocketJSExecutor : public facebook::react::JSExecutor {
+class WebSocketJSExecutor : public facebook::react::JSExecutor,
+                            public std::enable_shared_from_this<WebSocketJSExecutor> {
  public:
   WebSocketJSExecutor(
       std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
