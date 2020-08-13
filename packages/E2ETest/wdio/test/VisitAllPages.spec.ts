@@ -90,7 +90,7 @@ class TestPage extends BasePage {
         return By('explorer_search').isDisplayed();
       },
       this.timeoutForPageLoaded(timeout),
-      'Wait for HomePage load timeout'
+      'Wait for HomePage load timed out'
     );
   }
 }
